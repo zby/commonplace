@@ -1,8 +1,8 @@
-"""External effects a run's code jobs perform outside the engine's store.
+"""External effects an analysis performs outside its run directory.
 
-The engine commits attempts; an effect that changes files elsewhere keeps its
-own journal so a retry can recognize an earlier outcome instead of repeating
-it. An outcome it cannot establish raises ``UncertainEffectError``.
+An effect that changes files elsewhere keeps its own journal so a rerun can
+recognize an earlier outcome instead of repeating it. An outcome it cannot
+establish raises ``UncertainEffectError``.
 """
 from __future__ import annotations
 
@@ -17,7 +17,13 @@ from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.artifactrun import UncertainEffectError
+
+class UncertainEffectError(RuntimeError):
+    """An external effect's outcome cannot be established; do not blindly repeat it.
+
+    Recognition and recovery stay with the effect's journal; the run stops
+    for the operator.
+    """
 
 
 def atomic_write(path: Path, content: bytes) -> None:
@@ -75,7 +81,7 @@ def install_tree(*, journal: Path, destination: Path, archive_root: Path,
     ``archive_root``. ``identity`` fields bind the journal to its run. A
     partial effect raises ``UncertainEffectError``.
 
-    Caller holds the publication lock after any per-run engine lock, through
+    Caller holds the publication lock after the run lock, through
     journal recognition, incumbent inspection, mutation and rollback. Byte
     guards preserve detected unexpected writes, but cannot prevent TOCTOU from
     non-cooperating writers: those still require authority-level exclusivity.

@@ -50,9 +50,10 @@ it is retained in.
   schema owns the manifest's metadata. A type rule computes what needs a
   grammar, such as record declarations and references. Nothing else about
   the directory's structure is declared anywhere.
-- The artifact-run engine runs plans against typed directory artifacts and
-  derives their relations from the layout; a role, a relation and a member
-  mean here what they mean there.
+- The analysis workflow runs a method's roles against a typed directory
+  artifact and takes their relations from the layout; a role, a relation
+  and a member mean here what they mean there
+  ([ADR 118](../adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)).
 
 The exact checks are in the
 [validation contract](../validation-contract.md#directory-artifacts); the

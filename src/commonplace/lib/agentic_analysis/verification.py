@@ -7,7 +7,7 @@ author refused by it reads the peer records its blockers cite.
 
 from __future__ import annotations
 
-from commonplace.artifactrun.checks import ARTIFACT_CHECK_HEADING, Candidate
+from commonplace.lib.agentic_analysis.checks import ARTIFACT_CHECK_HEADING, Candidate
 from commonplace.lib.agentic_analysis.records import (
     record_declaration,
     record_references,

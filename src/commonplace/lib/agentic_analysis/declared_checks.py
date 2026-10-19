@@ -9,9 +9,9 @@ from __future__ import annotations
 
 import json
 
-from commonplace.artifactrun.checks import Candidate, source_field
 from commonplace.lib.agentic_analysis.analyses import CAPTURE_DIRECTORY
 from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
+from commonplace.lib.agentic_analysis.checks import Candidate, source_field
 from commonplace.lib.agentic_analysis.guards import checkout
 
 

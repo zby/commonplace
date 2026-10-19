@@ -1,4 +1,4 @@
-"""Analysis preparation isolates committed bytes without weakening startup checks."""
+"""Analysis preparation isolates committed bytes; worktree pins hold the run to that commit."""
 
 from __future__ import annotations
 
@@ -11,9 +11,8 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.artifactrun import worktree as iso
 from commonplace.cli.analysis import main
-from commonplace.cli.run import main as run_main
+from commonplace.lib.agentic_analysis import preparation as iso
 from commonplace.lib.agentic_analysis import worktree as aw
 
 
@@ -35,7 +34,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         "AGENTS.md": "Committed instructions\n",
         "pyproject.toml": '[project]\nname = "llm-commonplace"\n',
         "uv.lock": "version = 1\n",
-        "src/commonplace/artifactrun/engine.py": "# committed runtime\n",
+        iso.RUNTIME_MARKER: "# committed runtime\n",
         "note.md": "Committed note\n",
         "kb/instructions/worker/SKILL.md": "Committed skill\n",
         "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml":
@@ -130,73 +129,77 @@ def test_prepare_cli_rejects_obsolete_dirty_origin_option(monkeypatch, capsys) -
     assert "unrecognized arguments: --allow-dirty-origin" in capsys.readouterr().err
 
 
-def _startup_change(origin: Path, kind: str) -> Path | None:
+def _startup_change(tree: Path, kind: str) -> Path | None:
     """Make one local change; return the path a refusal must name, or None if exempt."""
     # A user-wide ignore file must not decide the unignored cases.
-    git(origin, "config", "core.excludesFile", "/dev/null")
-    changed = origin / "AGENTS.md"
-    if kind in {"unstaged", "staged", "cancelling"}:
+    git(tree, "config", "core.excludesFile", "/dev/null")
+    changed = tree / "AGENTS.md"
+    if kind in {"unstaged", "staged", "cancelling", "committed"}:
         changed.write_text("New instructions\n")
-        if kind in {"staged", "cancelling"}:
-            git(origin, "add", "AGENTS.md")
+        if kind in {"staged", "cancelling", "committed"}:
+            git(tree, "add", "AGENTS.md")
         if kind == "cancelling":
             changed.write_text("Committed instructions\n")
+        elif kind == "committed":
+            git(tree, "commit", "--quiet", "-m", "Change startup instructions")
     elif kind == "skill":
-        changed = origin / "kb/instructions/worker/SKILL.md"
+        changed = tree / "kb/instructions/worker/SKILL.md"
         changed.write_text("Modified linked skill\n")
     elif kind in {"untracked", "ignored"}:
-        changed = origin / ".pi/settings.json"
+        changed = tree / ".pi/settings.json"
         changed.parent.mkdir()
         changed.write_text("{}\n")
         if kind == "ignored":
-            (origin / ".git/info/exclude").write_text(".pi/\n")
+            (tree / ".git/info/exclude").write_text(".pi/\n")
     elif kind in {"local-settings", "ignored-local-settings"}:
-        changed = origin / ".claude/settings.local.json"
+        changed = tree / ".claude/settings.local.json"
         changed.parent.mkdir()
         changed.write_text("{}\n")
         if kind == "ignored-local-settings":
-            (origin / ".git/info/exclude").write_text("**/.claude/settings.local.json\n")
+            (tree / ".git/info/exclude").write_text("**/.claude/settings.local.json\n")
             return None
     else:  # Harness runtime state and READMEs are not startup inputs.
         for name in (".claude/scheduled_tasks.lock", ".pi/README.md", ".codex/state.sqlite"):
-            path = origin / name
+            path = tree / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("Local runtime state or documentation\n")
         return None
     return changed
 
 
-@pytest.mark.parametrize("kind", ["unstaged", "staged", "cancelling", "untracked", "ignored", "skill",
-                                  "local-settings", "ignored-local-settings", "harness-state"])
-@pytest.mark.parametrize("require_clean_origin", [False, True])
-def test_startup_changes_are_never_omitted(origin: Path, kind: str, require_clean_origin: bool) -> None:
+@pytest.mark.parametrize("kind", ["unstaged", "staged", "cancelling", "committed", "untracked", "ignored",
+                                  "skill", "local-settings", "ignored-local-settings", "harness-state"])
+def test_startup_changes_against_the_pinned_commit_are_never_omitted(origin: Path, kind: str) -> None:
+    commit = git(origin, "rev-parse", "HEAD")
     changed = _startup_change(origin, kind)
     if changed is None:
-        if require_clean_origin and git(origin, "status", "--porcelain"):
-            with pytest.raises(ValueError, match="--require-clean-origin"):
-                iso.prepare_worktree(origin, name="example", require_clean_origin=True)
-        else:
-            assert iso.prepare_worktree(
-                origin, name="example", require_clean_origin=require_clean_origin,
-            )["status"] == "ready"
+        iso.require_committed_startup(origin, commit)
         return
     with pytest.raises(ValueError, match="startup instructions or configuration") as error:
-        iso.prepare_worktree(origin, name="example", require_clean_origin=require_clean_origin)
+        iso.require_committed_startup(origin, commit)
     assert changed.relative_to(origin).as_posix() in str(error.value)
-    assert "mandatory even without --require-clean-origin" in str(error.value)
-    assert not (origin / ".commonplace").exists()
 
 
-@pytest.mark.parametrize("require_clean_origin", [False, True])
-def test_selected_revision_must_match_the_origins_startup_instructions(
-    origin: Path, require_clean_origin: bool,
-) -> None:
-    old = git(origin, "rev-parse", "HEAD")
-    (origin / "AGENTS.md").write_text("New committed instructions\n")
-    git(origin, "add", "AGENTS.md")
-    git(origin, "commit", "--quiet", "-m", "Change startup instructions")
+def test_analysis_start_refuses_worktree_startup_changes(origin: Path, tmp_path: Path, monkeypatch) -> None:
+    tree = Path(str(iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")["worktree"]))
+    monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
+    (tree / "AGENTS.md").write_text("Changed after preparation\n")
     with pytest.raises(ValueError, match="AGENTS.md"):
-        iso.prepare_worktree(origin, name="example", revision=old, require_clean_origin=require_clean_origin)
+        aw.start_analysis(tree, system="Example", source_identity="https://github.com/Example/Repo",
+                          source="repository", worker_profile="pi-luna")
+    assert not (tree / aw.STATE_ROOT).exists()
+
+
+def test_analysis_start_refuses_a_head_moved_from_the_preparation_commit(
+    origin: Path, tmp_path: Path, monkeypatch,
+) -> None:
+    tree = Path(str(iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")["worktree"]))
+    monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
+    git(tree, "-c", "user.name=Test", "-c", "user.email=test@example.com",
+        "commit", "--quiet", "--allow-empty", "-m", "Later method")
+    with pytest.raises(ValueError, match="HEAD differs from its preparation commit"):
+        aw.start_analysis(tree, system="Example", source_identity="https://github.com/Example/Repo",
+                          source="repository", worker_profile="pi-luna")
 
 
 def test_an_existing_destination_is_never_reused(origin: Path, tmp_path: Path) -> None:
@@ -222,10 +225,6 @@ def test_analysis_start_allocates_token_and_pins_parameters(origin: Path, tmp_pa
     prepared = iso.prepare_worktree(origin, name="example", worktree=tmp_path / "chosen")
     tree = Path(str(prepared["worktree"]))
     monkeypatch.setattr(aw, "require_run_code", lambda *args, **kwargs: None)
-    import commonplace.artifactrun
-
-    for name in ("start_run", "advance"):
-        monkeypatch.setattr(commonplace.artifactrun, name, lambda *args, **kwargs: pytest.fail("must not run the engine"))
     params = {"system": "Example", "source_identity": "https://github.com/Example/Repo.git/", "source": "repository",
               "worker_profile": "pi-luna"}
     first = aw.start_analysis(tree, **params)
@@ -241,20 +240,13 @@ def test_analysis_start_allocates_token_and_pins_parameters(origin: Path, tmp_pa
     assert [path.name for path in first.iterdir()] == [aw.PARAMETERS]
 
 
-@pytest.mark.parametrize("failure,message", [
-    ("installation", "installation failed"), ("startup-change", "AGENTS.md"),
-])
-def test_failed_setup_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys,
-                                                     failure: str, message: str) -> None:
+def test_failed_installation_is_recorded_and_never_launched(origin: Path, monkeypatch, capsys) -> None:
     def install(tree):
-        if failure == "installation":
-            raise ValueError("installation failed")
-        (origin / "AGENTS.md").write_text("Changed during setup\n")
-        return {}
+        raise ValueError("installation failed")
     monkeypatch.setattr(iso, "_install", install)
     monkeypatch.chdir(origin)
     assert main(["prepare", "--name", "example", "--", "must-not-launch"]) == 1
-    assert message in capsys.readouterr().err
+    assert "installation failed" in capsys.readouterr().err
     (record_path,) = (origin / ".commonplace/worktrees").glob("*.preparation.json")
     record = json.loads(record_path.read_text())
     assert record["status"] == "failed"
@@ -283,14 +275,13 @@ def test_launcher_binds_cwd_commands_and_committed_agents(origin: Path, monkeypa
     assert child["agents"] == "Committed instructions\n"
 
 
-@pytest.mark.parametrize("wrong", [None, "module", "analysis", "run", "validate"])
+@pytest.mark.parametrize("wrong", [None, "module", "analysis", "validate"])
 def test_installation_probe_requires_worktree_local_commands(tmp_path: Path, monkeypatch, wrong) -> None:
     # Exercise the installer itself, separately from the real Git preparation tests.
     local_bin = tmp_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     found = {
         "module": str(tmp_path / iso.RUNTIME_MARKER),
         "analysis": str(local_bin / "commonplace-analysis"),
-        "run": str(local_bin / "commonplace-run"),
         "validate": str(local_bin / "commonplace-validate"),
     }
     if wrong is not None:
@@ -303,25 +294,13 @@ def test_installation_probe_requires_worktree_local_commands(tmp_path: Path, mon
         iso._install(tmp_path)
 
 
-def test_implicit_head_behind_the_default_branch_is_refused(origin: Path) -> None:
-    git(origin, "branch", "-M", "main")
-    first = git(origin, "rev-parse", "HEAD")
-    (origin / "note.md").write_text("Later method\n")
-    git(origin, "commit", "--quiet", "-am", "Later")
-    git(origin, "checkout", "--quiet", "--detach", first)
-    with pytest.raises(ValueError, match="1 commits behind main"):
-        iso.prepare_worktree(origin, name="example")
-    assert not (origin / ".commonplace").exists()
-    # A deliberate selection of the same revision is the operator's choice.
-    assert iso.prepare_worktree(origin, name="example", revision=first)["commit"] == first
-
-
 def fake_checkout(root: Path) -> Path:
     marker = root / iso.RUNTIME_MARKER
     marker.parent.mkdir(parents=True)
     marker.write_text("")
-    run = root / "kb/agentic-system-analyses/state/AAS-2026-01-01-example-01"
+    run = root / aw.STATE_ROOT / "AAS-2026-01-01-example-01"
     run.mkdir(parents=True)
+    (run / aw.PARAMETERS).write_text("{}")
     return run
 
 
@@ -329,21 +308,21 @@ def test_run_code_must_be_the_runs_checkout(tmp_path: Path, monkeypatch, capsys)
     import commonplace
 
     # A run outside any source checkout is not bound to one.
-    aw.require_run_code(tmp_path / "run", cwd=tmp_path)
+    iso.require_run_code(tmp_path / "run", cwd=tmp_path)
     run = fake_checkout(tmp_path / "worktree")
     (tmp_path / "worktree/.venv/bin").mkdir(parents=True)
     with pytest.raises(ValueError, match=r"runs code from .*; run it from .*worktree, calling the command in .*\.venv/bin/"):
-        aw.require_run_code(run)
-    # The workflow refuses before touching the run.
+        iso.require_run_code(run)
+    # The command refuses before touching the run.
     monkeypatch.chdir(tmp_path / "worktree")
-    assert run_main(["advance", str(run)]) == 1
+    assert main(["run", str(run)]) == 1
     assert capsys.readouterr().err.count("runs code from") == 1
-    assert list(run.iterdir()) == []
+    assert [path.name for path in run.iterdir()] == [aw.PARAMETERS]
 
     monkeypatch.setattr(commonplace, "__file__", str(tmp_path / "worktree/src/commonplace/__init__.py"))
-    aw.require_run_code(run, cwd=tmp_path / "worktree")
+    iso.require_run_code(run, cwd=tmp_path / "worktree")
     with pytest.raises(ValueError, match="working directory"):
-        aw.require_run_code(run, cwd=tmp_path)
+        iso.require_run_code(run, cwd=tmp_path)
 
 
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])

@@ -7,19 +7,20 @@ from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.artifactrun import effects
-from commonplace.artifactrun.worktree import (
-    require_clean_worktree,
-    require_run_code,
-    require_running_package_unchanged,
-    run_command,
-    source_checkout,
-)
+from commonplace.lib.agentic_analysis import effects
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
     RETAINED_ROOT,
     current_analyses,
     is_review_path,
+)
+from commonplace.lib.agentic_analysis.preparation import (
+    require_clean_worktree,
+    require_committed_startup,
+    require_run_code,
+    require_running_package_unchanged,
+    run_command,
+    source_checkout,
 )
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.source_identity import normalize_source_identity
@@ -49,10 +50,15 @@ def run_checkout(run_dir: Path, library: Path, *, job: str) -> Path:
 
 
 def require_prepared_method(repo: Path, commit: str, preparation: dict, *, job: str) -> None:
-    """The worktree is at its preparation commit, clean, and runs that commit's package."""
+    """The worktree is at its preparation commit, clean, carries its committed startup files and runs that commit's package.
+
+    A worker loads the worktree's startup instructions, which the clean
+    check does not cover when they are untracked or ignored.
+    """
     if run_command(["git", "rev-parse", "HEAD"], cwd=repo) != commit or preparation.get("commit") != commit:
         raise ValueError(f"{job}: analysis worktree HEAD differs from its preparation commit")
     require_publishable_worktree(repo)
+    require_committed_startup(repo, commit)
     require_running_package_unchanged(commit)
 
 

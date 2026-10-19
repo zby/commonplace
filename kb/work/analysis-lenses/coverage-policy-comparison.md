@@ -26,10 +26,10 @@ comparison status; no detection or efficiency benefit has been measured.
 
 ## Checked baseline and premise corrections
 
-Read the [runtime instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-runtime.md),
-[lens instructions](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/analyse-memory.md),
-[epistemic instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/trace-epistemic.md),
-[verifier instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-reports.md)
+Read the [runtime instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/trace-runtime.md),
+[lens instructions](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/analyse-memory.md),
+[epistemic instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/trace-epistemic.md),
+[verifier instruction](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-reports.md)
 and [verification type](../../agentic-system-analyses/types/agentic-system-verification.md)
 together on 2026-10-11. Consequential corrections are:
 
@@ -41,7 +41,7 @@ together on 2026-10-11. Consequential corrections are:
   epistemic includes operations runtime omitted. Runtime already selects a small
   warranted set of forcing cases for guarantees. None of the policies should
   replace these duties with centrally assigned directories.
-- **Source-read authority needs clarification.** [Shared worker rules](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md)
+- **Source-read authority needs clarification.** [Shared worker rules](../../agentic-system-analyses/instructions/analyse-agentic-system/jobs/follow-worker-rules.md)
   restrict post-analyst reads to named ambiguities at cited paths, whereas report
   verification asks for tree-based coverage. The recommendation must explicitly
   permit bounded report-verifier omission searches, not silently assume authority.
@@ -102,7 +102,7 @@ assessment at minimal disruption, but may miss alternative producers, consumers
 or instruction channels the worker never considers. Expected work is close to
 today's, with a small explanation burden; no savings are established.
 
-**Footprint.** `jobs-engine/verify-reports.md` and its shared worker-rule
+**Footprint.** `jobs/verify-reports.md` and its shared worker-rule
 source-read clause; optional explanatory type prose. No plan, layout, schema,
 analysis-code or engine change.
 
@@ -274,8 +274,8 @@ for preserving review, not adding reviewers or weakening it.
 
 **Implemented change footprint:**
 
-- Instructions/type prose: clarify `jobs-engine/verify-reports.md`; reconcile
-  the source-read clause in `jobs-engine/follow-worker-rules.md` specifically
+- Instructions/type prose: clarify `jobs/verify-reports.md`; reconcile
+  the source-read clause in `jobs/follow-worker-rules.md` specifically
   for report verification. A brief search-account requirement is added to
   `types/agentic-system-verification.md`; analyst discovery remains intact.
 - Plan/layout and schemas: unchanged. No split memory, new verifier or dependency

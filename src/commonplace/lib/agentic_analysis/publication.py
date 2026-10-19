@@ -1,12 +1,12 @@
 """Pinned assembly and publication.
 
 Whole-artifact validation uses closed criterion and member snapshots and refuses
-missing dependencies. Effect recovery
-is independent of engine attempt commits and never infers success from an overview
-alone. Only complete dispositions replace a public artifact.
+missing dependencies. Effect recovery is independent of the run's records and
+never infers success from an overview alone. Only complete dispositions
+replace a public artifact.
 
-Assembly and publication take plain values; the engine adapters live in
-``handlers``. The publication reset hook reads engine run records directly.
+Assembly and publication take plain values; the workflow calls them with its
+accepted members and their provenance.
 """
 from __future__ import annotations
 
@@ -20,11 +20,6 @@ from pathlib import Path
 
 import yaml
 
-from commonplace.artifactrun import UncertainEffectError
-from commonplace.artifactrun.effects import hashes, install_tree, safe, tree
-from commonplace.artifactrun.worktree import (
-    preparation_for,
-)
 from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
@@ -33,12 +28,22 @@ from commonplace.lib.agentic_analysis.analyses import (
     publication_slug,
 )
 from commonplace.lib.agentic_analysis.boundary import acquired_source, boundary_refusals
+from commonplace.lib.agentic_analysis.effects import (
+    UncertainEffectError,
+    hashes,
+    install_tree,
+    safe,
+    tree,
+)
 from commonplace.lib.agentic_analysis.guards import (
     checkout,
     inspect_destination,
     publication_lock,
     require_prepared_method,
     run_checkout,
+)
+from commonplace.lib.agentic_analysis.preparation import (
+    preparation_for,
 )
 from commonplace.lib.agentic_analysis.records import amendment_index
 from commonplace.lib.directory_artifact import MANIFEST_NAME, UniqueKeyLoader
@@ -51,15 +56,6 @@ JOURNAL = "effects/publish.json"
 
 def _digest(data: bytes) -> str:
     return sha256(data).hexdigest()
-
-
-def _json(data: bytes | None, label: str) -> dict:
-    if data is None:
-        raise ValueError(f"{label} requires a declared present input")
-    value = json.loads(data)
-    if not isinstance(value, dict):
-        raise TypeError(f"{label} must be an object")
-    return value
 
 
 def _document(data: bytes):
@@ -90,9 +86,8 @@ def _opened_environment(metadata: bytes | None, run_dir: Path, library: Path, *,
 def _classified_boundary(members: Mapping[str, bytes]):
     """The boundary member's document, which must carry a classified disposition.
 
-    Every member must parse. The required coverage input gates the job: the
-    engine has established that every required member is present, accepted
-    and related as declared.
+    Every member must parse. The workflow asserts before assembly that every
+    required member is present and accepted by its current check.
     """
     documents = {role: _document(data) for role, data in members.items()}
     boundary = documents.get("boundary")
@@ -107,9 +102,8 @@ class Provenance:
     """The model that produced a role's published output, and that output's digest.
 
     `model` is the model actually used, as the harness records it (None when
-    nothing recorded one). Until the artifact-run engine is retired, its adapter
-    supplies the worker-reported model here. `output_sha256` is the digest of
-    the completed primary output the record pins.
+    nothing recorded one). `output_sha256` is the digest of the completed
+    primary output the record pins.
     """
     model: str | None
     output_sha256: str
@@ -120,8 +114,7 @@ def _provenance(members: Mapping[str, bytes], provenance: Mapping[str, Provenanc
 
     Opening resolved the worker profile the run started with; every worker is
     launched with its model and effort. Every producer record must name the same
-    model actually used, as the harness records it (the engine adapter supplies
-    the worker-reported model until the engine is retired).
+    model actually used, as the harness records it.
     """
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
@@ -304,7 +297,7 @@ def publish_analysis(members: Mapping[str, bytes], *, metadata: bytes | None, so
         if decision["expected_incumbent_sha256"] != opened["expected-incumbent-sha256"]:
             raise ValueError("publication destination changed since opening inspection")
 
-    # The engine already holds the per-run lock. Never take it inside this lock.
+    # The caller already holds the run lock. Never take it inside this lock.
     with publication_lock(repo):
         install_tree(journal=run_dir / JOURNAL, destination=destination,
                      archive_root=repo / ARCHIVE_ROOT, files=files, anchor=layout.path("overview"),
@@ -373,47 +366,6 @@ def _unreleased_publication(run_dir: Path, repo: Path, metadata: dict, anchor: s
     return destination, archive, journal, "established", record
 
 
-@contextmanager
-def reset_publish_analysis(run_dir: Path, job):
-    """Lock publication, then prepare withdrawal of an engine run's unreleased effect.
-
-    Restore the opening incumbent (if any), so ordinary publication can run again
-    with its unchanged opening metadata. The debugging snapshot retains withdrawn
-    bytes and journals. Already integrated results are not reset by this hook.
-    """
-    from commonplace.artifactrun.reset import Replacement
-    from commonplace.artifactrun.run import Run
-    from commonplace.artifactrun.store import RunStore
-
-    # Acquisition of the same lock also works while a reset is pending; do not
-    # read active records until the returned preparation callable is invoked.
-    from commonplace.artifactrun.worktree import source_checkout
-
-    repo = source_checkout(run_dir)
-    if repo is None:
-        raise ValueError("publication reset requires an analysis worktree")
-
-    def prepare():
-        run = Run(RunStore(run_dir))
-        opened = run.latest_completed("opening")
-        if opened is None:
-            raise ValueError("publication reset requires opening metadata")
-        metadata = _json(run.store.get(opened["outputs"]["metadata"]), "opening metadata")
-        destination, archive, journal, state, _ = _unreleased_publication(
-            run_dir, repo, metadata, run.layout.path("overview"))
-        if state == "none":
-            return []
-        if state == "rolled-back":
-            return [Replacement(journal)]
-        replacements = [Replacement(destination, archive), Replacement(journal)]
-        if archive is not None:
-            replacements.append(Replacement(archive))
-        return replacements
-
-    with publication_lock(repo):
-        yield prepare
-
-
 def withdraw_publication(run_dir: Path, metadata: dict, *, anchor: str) -> dict:
     """Withdraw a workflow run's unreleased worktree publication and restore the opening incumbent.
 
@@ -431,12 +383,12 @@ def withdraw_publication(run_dir: Path, metadata: dict, *, anchor: str) -> dict:
     import shutil
     import uuid
 
-    from commonplace.artifactrun.effects import write_json
-    from commonplace.artifactrun.worktree import source_checkout
+    from commonplace.lib.agentic_analysis.effects import write_json
+    from commonplace.lib.agentic_analysis.preparation import source_checkout
 
     repo = source_checkout(run_dir)
     if repo is None:
-        raise ValueError("publication reset requires an analysis worktree")
+        raise ValueError("publication withdrawal requires an analysis worktree")
     with publication_lock(repo):
         destination, archive, journal, state, record = _unreleased_publication(run_dir, repo, metadata, anchor)
         if state == "none":

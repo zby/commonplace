@@ -8,6 +8,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-10-10
+**Amended by:** [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md) (2026-10-19): the plan is read as role data by the workflow and no longer expands into check and apply jobs; standard handlers and judgment inputs are gone with the engine; the verification protocol, the prompt composition and the rule-ownership rules stay.
 **Amends:** [ADR 113](./113-artifact-runs-execute-declared-plans-with-pinned-judgments.md): its open items, standard handlers and plan compaction, are decided, and its consequence that every check job needs a handler no longer holds.
 
 **Amended 2026-10-10:** revision 1 memory profiles and their compatibility path are removed, the schema requires version 2, and the profile's comparison-version check went with them; the analysis keeps two declared checks, the boundary's binding to acquisition and the report-check gate. The verification protocol's grammar is one layout finding for any role with `verifies`, its addressees taken from that list, so the apply handler enforces nothing the validator does not.

@@ -164,7 +164,7 @@ def publication_slug(identity: str, system: str) -> str:
     Other source kinds retain their existing naming. GitHub owner/repository
     spelling follows the source-checkout convention, lowercased for stable paths.
     """
-    from commonplace.artifactrun.sources import github_checkout_path
+    from commonplace.lib.agentic_analysis.sources import github_checkout_path
 
     checkout = github_checkout_path(identity)
     return checkout.name.lower() if checkout is not None else source_slug(identity, system)

@@ -587,16 +587,12 @@ def check_role_draft(
     """Print the shared findings for the draft in its role, not an acceptance verdict."""
     if not role or "/" in role or role in {".", ".."}:
         raise ValueError("--role must name a role the artifact type declares")
-    # A run's working artifact binds identity fields to the run's values: the parameters an analysis
-    # run pinned at start, or an engine run's.
+    # A run's working artifact binds identity fields to the run's values: the parameters the
+    # analysis run pinned at start.
     run_dir = directory.resolve().parent
     values = None
     if directory.resolve().name == "artifact" and (run_dir / "parameters.json").is_file():
         values = {**json.loads((run_dir / "parameters.json").read_text(encoding="utf-8")), "run-id": run_dir.name}
-    elif directory.resolve().name == "artifact" and (run_dir / "run.json").is_file():
-        from commonplace.artifactrun import run_values
-
-        values = run_values(run_dir)
     findings = [
         finding for finding in validate_draft_in_role(
             directory, role, candidate, repo_root=repo_root, run_values=values,

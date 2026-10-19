@@ -129,7 +129,7 @@ These hold throughout and are not the implementer's to trade.
 - **Validation writes nothing.** A draft placed in its role replaces the
   incumbent for every check in one invocation and leaves `output/` as it was.
 - **Replay is byte-idempotent.** Copying a verification or synthesis into
-  its role is a coordinator write in a replayable sequence and must behave
+  its role is a workflow write in a replayable sequence and must behave
   as the report copies do.
 - **ADR 102 is unchanged.** The overview's path and its role as the public
   entry stay; the boundary and the new members are members, not entries.
@@ -162,7 +162,7 @@ Within the boundaries, the implementer decides, and need not ask:
   invocation joins the residue.
 - The overview's form within its end state, for instance a list or a table
   of members.
-- How the worker rules and the handout name the residue to analysts.
+- How the worker rules and the worker prompt name the residue to analysts.
 - Whether the regeneration run and the test run proceed in parallel.
 
 ## Reserved to the operator

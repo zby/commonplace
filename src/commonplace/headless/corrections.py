@@ -1,7 +1,7 @@
 """A producer's attempts at one output: the first, and corrections of refusals.
 
-The engine's protocol (`src/commonplace/artifactrun/checks.py` and
-`engine.py`, ADRs 098-117), kept unchanged by the port: a producer whose
+The correction protocol (`commonplace.lib.agentic_analysis.checks`, ADRs
+098-118): a producer whose
 output was refused is asked again with the input `refusal` (a body with
 `## Findings`, `## Blockers` and any further sections, with or without
 frontmatter) and `previous-<name>` for each output of its previous attempt.
@@ -19,19 +19,17 @@ other sections of the refusal it answered (if any) carried forward, since only
 the latest refusal is in force. Its previous outputs are the rejected
 attempt's, so repeating that attempt's bytes is refused too. So one call
 covers a first attempt without a refusal (`refusal=None`) and its check-driven
-retries, as well as a correction of a verifier's refusal. As the engine did,
-a rerun of a job hands `previous-<name>` whether or not a refusal is in force.
-
-`correction_findings` and `refusal_findings` are the engine's own functions;
-they already take plain values. Phase 6 of the port moves them out of the
-engine package. Until then this module needs the `commonplace` package on the
-path, as the worktree's venv provides.
+retries, as well as a correction of a verifier's refusal. A rerun of a job
+hands `previous-<name>` whether or not a refusal is in force.
 """
 
 from __future__ import annotations
 
-from commonplace.artifactrun.checks import correction_findings, refusal_findings
 from commonplace.headless.jobs import Answer, Run, digest
+from commonplace.lib.agentic_analysis.checks import (
+    correction_findings,
+    refusal_findings,
+)
 
 ANSWERS = "answers"
 
@@ -48,8 +46,8 @@ def produce(run: Run, job: str, build_prompt, check, outputs: list[str], *, memb
     the inputs `given`: the job's own `inputs`, `previous-<name>` for each
     of the previous attempt's outputs when there was one, and `refusal` when
     one is in force. `check(answer)` is the job's own content check; the
-    correction findings follow its findings, as in the engine. Attempt
-    counting is `Run.checked`'s.
+    correction findings follow its findings. Attempt counting is
+    `Run.checked`'s.
     """
     primary, auxiliary = outputs[0], list(outputs[1:])
     state = {"refusal": refusal, "previous": dict(previous or {}), "given": {}}

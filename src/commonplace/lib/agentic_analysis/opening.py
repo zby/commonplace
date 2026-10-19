@@ -1,8 +1,8 @@
 """Analysis opening and acquisition.
 
 Opening is read-only and returns the run metadata. Acquisition passes the
-opening's source pins to the shared effect. Both take plain values; the
-engine adapters live in ``handlers``.
+opening's source pins to the shared effect. Both take plain values and are
+called by the workflow as its code jobs.
 """
 
 from __future__ import annotations
@@ -13,12 +13,6 @@ from collections.abc import Mapping
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.artifactrun.sources import acquire, github_checkout_path
-from commonplace.artifactrun.worktree import (
-    preparation_for,
-    require_running_package_unchanged,
-    run_command,
-)
 from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     RETAINED_ROOT,
@@ -34,6 +28,12 @@ from commonplace.lib.agentic_analysis.guards import (
     require_publishable_worktree,
     run_checkout,
 )
+from commonplace.lib.agentic_analysis.preparation import (
+    preparation_for,
+    require_running_package_unchanged,
+    run_command,
+)
+from commonplace.lib.agentic_analysis.sources import acquire, github_checkout_path
 from commonplace.lib.source_identity import normalize_source_identity
 
 
@@ -49,7 +49,7 @@ def open_analysis(
 ) -> bytes:
     """Open a prepared analysis by returning checked run metadata as JSON bytes.
 
-    Run parameters are fixed by start_run, not read from a file input. The
+    Run parameters are fixed by `start_analysis`, not read from a file input. The
     executing code, library, run location, preparation token, method commit,
     worktree cleanliness and incumbent all pass the opening guards. No source
     is acquired. Analysis runs require a ready token-bearing preparation record.

@@ -48,14 +48,14 @@ for (const [name, model] of [["inherited", ""], ["pinned", "model: pinned-model\
   fs.writeFileSync(path.join(root, ".pi", "agents", `${name}.md`),
     `---\nname: ${name}\ndescription: Test agent\n${model}---\n`);
 }
-// Exercise the shipped definitions, not a duplicate tools fixture.
-for (const name of ["commonplace-worker", "commonplace-coordinator"]) {
-  fs.copyFileSync(fileURLToPath(new URL(`../../../agents/${name}.md`, import.meta.url)),
-    path.join(root, ".pi", "agents", `${name}.md`));
+const delegatorBody = "Delegate the commissioned work.";
+for (const [name, tools, body] of [
+  ["worker", "read, bash, edit, write", "Do the assigned job."],
+  ["delegator", "read, bash, edit, write, subagent", delegatorBody],
+]) {
+  fs.writeFileSync(path.join(root, ".pi", "agents", `${name}.md`),
+    `---\nname: ${name}\ndescription: Test agent\ntools: ${tools}\n---\n\n${body}\n`);
 }
-const coordinatorBody = fs.readFileSync(
-  path.join(root, ".pi", "agents", "commonplace-coordinator.md"), "utf8",
-).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "").trim();
 let tool;
 try {
   const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
@@ -96,17 +96,17 @@ test("launch overrides and inheritance", async t => {
       await assert.rejects(launch({ agent: "inherited", task: "test", chain: [] }), /Chain mode/);
       assert.equal(launches.length, 0);
     });
-    await t.test("omitted fields preserve coordinator inheritance", async () => {
+    await t.test("omitted fields preserve parent inheritance", async () => {
       const result = await launch({ agent: "inherited", task: "test" });
       assert.equal(flag(0, "--model"), "test/parent");
       assert.equal(flag(0, "--thinking"), "medium");
       assert.equal(result.details.results[0].thinkingLevel, "medium");
       assert.ok(launches[0].args.includes("--no-session"));
     });
-    await t.test("coordinator can select delegation without exposing it to ordinary workers", async () => {
+    await t.test("a definition can select delegation without exposing it to ordinary workers", async () => {
       for (const [agent, tools] of [
-        ["commonplace-worker", "read,bash,edit,write"],
-        ["commonplace-coordinator", "read,bash,edit,write,subagent"],
+        ["worker", "read,bash,edit,write"],
+        ["delegator", "read,bash,edit,write,subagent"],
       ]) {
         await launch({ agent, task: "test", model: "openai/gpt-6.1-sol", thinkingLevel: "medium", cwd: root });
         assert.equal(flag(0, "--tools"), tools);
@@ -116,21 +116,12 @@ test("launch overrides and inheritance", async t => {
         assert.ok(launches[0].args.includes("--no-session"));
       }
     });
-    await t.test("shipped coordinator explicitly loads the canonical contract and fails closed", () => {
-      const body = coordinatorBody.replace(/\s+/g, " ");
-      assert.match(body, /Before any delegation or opening a workflow, read the complete `\.pi\/APPEND_SYSTEM\.md`/);
-      assert.match(body, /from the repository root of your current worktree and follow it as the canonical Pi delegation contract/);
-      assert.match(body, /Do not assume it was inherited from the parent or loaded at startup/);
-      assert.match(body, /If it is absent or unreadable, stop and report the exact path and read failure; do not guess the launch contract/);
-      // Launch details belong in APPEND_SYSTEM.md, not a second contract here.
-      assert.doesNotMatch(body, /agentScope|COMMONPLACE_WORKER_OK/);
-    });
-    await t.test("coordinator launch transports the full contract-loading instruction without commission help", async () => {
-      const task = "Coordinate the commissioned workflow.";
-      await launch({ agent: "commonplace-coordinator", task, cwd: root });
+    await t.test("launch transports the definition body without commission help", async () => {
+      const task = "Coordinate the commissioned work.";
+      await launch({ agent: "delegator", task, cwd: root });
       assert.equal(launches.length, 1);
       assert.ok(flag(0, "--append-system-prompt"));
-      assert.equal(launches[0].systemPrompt.trim(), coordinatorBody);
+      assert.equal(launches[0].systemPrompt.trim(), delegatorBody);
       assert.equal(launches[0].args.at(-1), `Task: ${task}`);
       assert.equal(launches[0].options.cwd, root);
     });
@@ -172,7 +163,7 @@ test("launch overrides and inheritance", async t => {
       assert.equal(flag(0, "--model"), "pinned-model");
       assert.equal(flag(0, "--thinking"), undefined);
     });
-    await t.test("explicit settings override agent and coordinator", async () => {
+    await t.test("explicit settings override agent and parent", async () => {
       const result = await launch({ agent: "pinned", task: "test", model: "chosen", thinkingLevel: "off" });
       assert.equal(flag(0, "--model"), "chosen");
       assert.equal(flag(0, "--thinking"), "off");
@@ -184,7 +175,7 @@ test("launch overrides and inheritance", async t => {
       assert.equal(flag(0, "--model"), "pinned-model");
       assert.equal(flag(0, "--thinking"), "high");
     });
-    await t.test("model-only override inherits coordinator effort", async () => {
+    await t.test("model-only override inherits parent effort", async () => {
       await launch({ agent: "pinned", task: "test", model: "chosen" });
       assert.equal(flag(0, "--thinking"), "medium");
     });

@@ -12,14 +12,13 @@ Starting Pi from a worktree alone does not isolate the shared editable Commonpla
 Keep the run's code and method files unchanged until completion.
 
 [`APPEND_SYSTEM.md`](APPEND_SYSTEM.md) is the canonical Pi delegation contract,
-including the worker call format and coordinator preflight. Pi can load it at
-startup when project trust permits; do not assume a child inherits it. The
-coordinator definition explicitly requires reading the complete file from the
-current worktree's repository root before any delegation or opening a workflow,
-then following it. An absent or unreadable file is a blocker, not permission to
-guess launch arguments. The coordinator rules apply only when `subagent` is
-exposed. Ordinary worker selection excludes that tool; coordinator selection
-includes it. Keep runtime-specific guidance here rather than in shared `AGENTS.md`.
+including the call format. Pi can load it at startup when project trust
+permits; do not assume a child inherits it. Keep runtime-specific guidance here
+rather than in shared `AGENTS.md`.
+
+An analysis run (`commonplace-analysis run`) launches its own workers through
+the worker profile's headless harness (`pi -p` for a Pi profile); it needs no
+`subagent` launches.
 
 `extensions/subagent/{index.ts,agents.ts}` were copied from the subagent
 example shipped with `@earendil-works/pi-coding-agent` 1.0.0. The adapter now uses
@@ -34,7 +33,7 @@ files came from:
 ```
 
 The extension launches separate Pi processes with fresh, non-persisted
-sessions. It does not copy the coordinator's conversation. Children still load
+sessions. It does not copy the parent's conversation. Children still load
 applicable repository context and resources. This is not a filesystem sandbox.
 
 Worker results use the latest assistant response and process outcome to classify
@@ -44,28 +43,19 @@ assistant error or abort, nonzero process exit, process error or missing assista
 result still fails. Recovery does not certify the worker's output; the workflow
 checks it through its normal completion and acceptance path.
 
-## Worker configuration
+## Launch configuration
 
-`agents/commonplace-worker.md` allows `read`, `bash`, `edit`, and `write`.
-It omits `model`, so the worker inherits the dispatching session's model and
-thinking level unless the tool call overrides them. Configure OpenAI
-authentication in Pi, not in this repository.
-
-`agents/commonplace-coordinator.md` additionally selects `subagent`. Use it
-when commissioning an entire standard skill that must launch its own workers;
-keep individual scheduled jobs on `commonplace-worker`. Both definitions are
-discovered afresh on each invocation, so this role selection needs no extension
-reload. The extension passes the definition body through a temporary file via
-`--append-system-prompt`; that body instructs the child coordinator to explicitly
-read the canonical contract rather than relying on automatic startup loading.
-Before opening a run, it must successfully launch the required diagnostic
-worker. This tests the intended parent → coordinator → worker path, not a
-maximum supported depth. Do not use agent CLIs through Bash as a substitute.
+The repository ships no agent definitions. A definition supplies the child's
+system instructions and tools; one that omits `model` inherits the dispatching
+session's model and thinking level unless the call overrides them. The
+extension passes the definition body through a temporary file via
+`--append-system-prompt`. Definitions are discovered afresh on each invocation.
+Configure model authentication in Pi, not in this repository.
 
 The tool accepts optional `model` and `thinkingLevel` at the top level in all
 modes and on each item in `tasks`. Item values override top-level
 values independently. Model precedence is item, top-level, agent definition,
-then coordinator. Thinking precedence is item, top-level, then coordinator
+then parent. Thinking precedence is item, top-level, then parent
 when the model is inherited or explicitly overridden. With no model override,
 an agent definition that pins a model retains Pi's own default thinking level
 unless the call supplies `thinkingLevel`.
@@ -79,11 +69,11 @@ Example single launch:
 
 ```json
 {
-  "agent": "commonplace-worker",
+  "agent": "<definition name>",
   "agentScope": "project",
   "model": "openai/gpt-6.1-sol",
   "thinkingLevel": "medium",
-  "task": "<workflow handoff>",
+  "task": "<handoff>",
   "cwd": "<absolute worktree root>"
 }
 ```
@@ -103,10 +93,10 @@ construction, shared capacity and lifecycle. Real-process tests launch harmless 
 shutdown, escalation and (on Linux) descendant termination. No test launches Pi
 agents or makes model calls. Real model/resource inheritance remains untested.
 
-Select the worker with `agentScope: "project"`; the default remains user agents.
-Definitions are discovered afresh from each child's effective `cwd`, not the
-parent checkout. Set it to the prepared worktree's absolute root. For parallel
-calls each item can name its own worktree. Results identify the child directory.
+`agentScope: "project"` selects definitions from the child's `.pi/agents/`;
+the default remains user agents. Project definitions are discovered afresh from
+each child's effective `cwd`, not the parent checkout. For parallel calls each
+item can name its own directory. Results identify the child directory.
 
 The subagent extension loads destination agent definitions without a separate
 approval dialog in either interactive or non-interactive mode. Choose only
@@ -119,37 +109,21 @@ agent, never fall back to Pi's defaults. Omitting `tools` still selects defaults
 Names are syntax-checked, not checked against the destination's loaded tool
 registry; extension-defined tools can differ between worktrees.
 
-Before starting or resuming a workflow, use the exposed `subagent` tool for a
-single diagnostic with this task:
-
-```text
-This is a Commonplace worker-launch diagnostic. Reply with
-COMMONPLACE_WORKER_OK and any agent-depth or nesting-limit values explicitly
-exposed in your runtime instructions; report unknown otherwise. Do not read
-files, use tools, invoke skills, spawn workers, or modify anything.
-```
-
-Success establishes that one worker can run, not a maximum depth or capacity.
-An analysis run (`commonplace-analysis run`) launches its own workers through
-the worker profile's headless harness; it needs no `subagent` launches.
-
 ## Rolling dispatch
 
 After updating the extension, use `/reload` **before** launching work. Check that
 `subagent` exposes `action` and `handles`; an already-loaded old schema cannot
 use these operations. Do not reload while jobs are active.
 
-Start each independent system pipeline separately:
+Start each independent job separately:
 
 ```json
 {
   "action": "start",
-  "agent": "commonplace-coordinator",
+  "agent": "<definition name>",
   "agentScope": "project",
-  "cwd": "<absolute prepared system worktree>",
-  "model": "openai/gpt-6.1-sol",
-  "thinkingLevel": "medium",
-  "task": "<source-only workflow commission>"
+  "cwd": "<absolute directory>",
+  "task": "<handoff>"
 }
 ```
 
@@ -163,10 +137,8 @@ map in the workflow's bookkeeping. Start up to four jobs, then call:
 `wait` returns the first finished selected job, including failure or cancellation,
 not the whole group. Remove that handle from the pending set. A completed result
 is repeatable: passing its handle again returns it again. Launch the next job
-for that slot while the others continue. For the rerun workshop, the next job is
-the fresh audit; only after its disposition may the slot receive a new system.
-The extension limits active jobs, not workflow pipelines; the orchestrator owns
-that distinction. Synchronous parallel mode remains a wait-for-all operation.
+for that slot while the others continue. The extension limits active jobs, not
+pipelines of dependent jobs; the dispatching session owns that distinction. Synchronous parallel mode remains a wait-for-all operation.
 
 Other handle-only calls accept `action` and `handles`, not launch fields:
 
@@ -198,16 +170,14 @@ Parallel calls permit at most eight tasks. All modes share one four-active-job
 limit per session. Blocking calls wait for capacity and release their handles
 when they return; async `start` rejects when full. Interrupting a blocking call
 cancels its children, unlike interrupting async `wait`. Shutdown prevents queued
-blocking tasks from spawning. Nested coordinators have independent pools; four
-outer system pipelines can still launch their own analytical workers.
+blocking tasks from spawning. A child that has `subagent` has its own pool.
 
 There is no chain mode or automatic answer forwarding. Use explicit workflow
 handoffs. There is no explicit nesting limit or continuing-worker interface:
 each launch creates a fresh child.
-The ordinary worker does not have `subagent`; the coordinator does. Neither
-selection is a filesystem sandbox: the no-launch and write-scope rules are
-instructions, not OS enforcement. Nested results remain embedded in the
-parent's tool details; coordinators also use non-persisted sessions.
+A child has `subagent` only when its definition selects it. No selection is a
+filesystem sandbox: no-launch and write-scope rules are instructions, not OS
+enforcement. Nested results remain embedded in the parent's tool details.
 
 Loading this extension does not release an already-blocked workflow. Follow the
 workflow's operator recovery procedure separately; do not edit workflow state.

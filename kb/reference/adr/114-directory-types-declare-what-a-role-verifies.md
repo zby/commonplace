@@ -10,6 +10,7 @@ status: accepted
 **Date:** 2026-10-09
 **Amends:** [ADR 111](./111-directory-types-declare-their-layout.md): a role's layout entry gains `verifies`, a second relation kind beside `cites` and `identity`, with engine semantics the other two do not have.
 
+**Amended by:** [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md) (2026-10-19): a `verifies` relation is settled by the workflow applying the verifying role's verdict to the handed subjects in code; no judgment record, scope or coverage state exists.
 **Amended 2026-10-10:** the role is `report-verification`, renamed under ADR 116; the verification document's own `verifies` field, the item left open below, was dropped, the role determining the stage; and the compact-plan loader named in Consequences is built ([ADR 117](./117-plans-derive-their-structural-jobs-from-the-type.md)).
 
 ## Context

@@ -24,8 +24,8 @@ import sys
 import time
 from pathlib import Path
 
-from commonplace.artifactrun import UncertainEffectError
-from commonplace.artifactrun.worktree import (
+from commonplace.lib.agentic_analysis.effects import UncertainEffectError
+from commonplace.lib.agentic_analysis.preparation import (
     command_environment,
     prepare_worktree,
     require_run_code,
@@ -51,7 +51,7 @@ def _parser() -> argparse.ArgumentParser:
     prepare.add_argument("--worktree", type=Path)
     prepare.add_argument(
         "--require-clean-origin", action="store_true",
-        help="reject unrelated uncommitted origin changes (otherwise excluded); startup mismatches always fail",
+        help="reject unrelated uncommitted origin changes (otherwise excluded from the worktree)",
     )
     prepare.add_argument("launch", nargs=argparse.REMAINDER, help="optional fresh harness command after --")
     run = commands.add_parser("run", help="run an analysis in this prepared worktree, or resume one")

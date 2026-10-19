@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.artifactrun import sources
 from commonplace.lib.agentic_analysis import boundary as agentic_boundary
+from commonplace.lib.agentic_analysis import sources
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
 from commonplace.lib.type_resolver import CriterionSnapshot
 from commonplace.lib.validation import (

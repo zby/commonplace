@@ -8,6 +8,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-10-02
+**Amended by:** [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md) (2026-10-19): opening runs at the start of `commonplace-analysis run`, in the process that runs the workflow, before any worker; the preflight, method pin and incumbent expectation are unchanged.
 
 ## Context
 

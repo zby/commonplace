@@ -16,15 +16,6 @@ import os
 from hashlib import sha256
 from pathlib import Path
 
-from commonplace.artifactrun.worktree import (
-    committed_tree,
-    merge_paths,
-    preparation_for,
-    prepared_origin,
-    require_committed_startup,
-    require_run_code,
-    run_command,
-)
 from commonplace.lib.agentic_analysis import run_ids
 from commonplace.lib.agentic_analysis.analyses import (
     ARCHIVE_ROOT,
@@ -33,6 +24,15 @@ from commonplace.lib.agentic_analysis.analyses import (
     analysis_layout,
     resolve_worker_profile,
     source_slug,
+)
+from commonplace.lib.agentic_analysis.preparation import (
+    committed_tree,
+    merge_paths,
+    preparation_for,
+    prepared_origin,
+    require_committed_startup,
+    require_run_code,
+    run_command,
 )
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.source_identity import normalize_source_identity
@@ -46,7 +46,7 @@ OPENING = Path("code") / "opening.json"
 def start_analysis(worktree: Path, *, system: str, source_identity: str, source: str,
                    source_revision: str | None = None, worker_profile: str) -> Path:
     """Allocate a run directory in a prepared worktree and pin its parameters, without running it."""
-    from commonplace.artifactrun.sources import github_checkout_path
+    from commonplace.lib.agentic_analysis.sources import github_checkout_path
 
     worktree = worktree.resolve()
     preparation = preparation_for(worktree)
@@ -196,7 +196,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
     hold the method commit's exact incumbent. The effect's own journal is
     recovery evidence for publication, not read here.
     """
-    from commonplace.artifactrun.effects import hashes, tree
+    from commonplace.lib.agentic_analysis.effects import hashes, tree
 
     if not (run_dir / OPENING).is_file() or not (run_dir / RECEIPT).is_file():
         raise ValueError("integration requires the run's opening metadata and publication receipt")

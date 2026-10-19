@@ -224,21 +224,19 @@ def test_plan_classifications_retain_fixture_findings_and_limits(specification, 
     assert profile == before
 
 
-def declared_packet(job_name):
-    """Inspect declared model inputs without executing jobs or manufacturing handouts."""
+def declared_packet(role):
+    """The files a role's prompt names: its instruction, member type, read types and criteria groups."""
     from pathlib import Path
 
-    import yaml
-
-    from commonplace.artifactrun import load_plan
-    from commonplace.lib.agentic_analysis.analyses import analysis_layout
-    from tests.commonplace.agentic_analysis.fixtures import expanded
+    from commonplace.lib.agentic_analysis.workflow import Method
 
     library = Path(__file__).resolve().parents[3] / "kb"
-    declaration = load_plan(yaml.safe_dump(expanded(library)), analysis_layout().roles)
-    job = declaration.job(job_name)
-    paths = [library / item.source for item in job.inputs.values() if item.address == "file"]
-    assert paths
+    method = Method(library)
+    layout = method.layout
+    paths = [method.instruction(role), library / layout.roles[role].type]
+    paths += [library / layout.roles[source].type for source in method.reads(role)
+              if source in layout.roles and source != role]
+    paths += [library / path for path in method.files(role).values()]
     assert not any("kb/work/" in str(path) for path in paths)
     return " ".join(" ".join(path.read_text().split()) for path in paths)
 

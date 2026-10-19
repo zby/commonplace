@@ -1,7 +1,5 @@
-"""Drive the opening job in local Git fixtures, never an analysis run.
+"""Call the opening and acquisition code jobs in a local prepared checkout.
 
-A restricted declaration stops at a test-owned acquisition handler. Its
-"acquisition disabled in opening-only fixture" sentinel is fixture-only; the shipped graph is bound.
 No workers, external source acquisition, package installation or publication run.
 """
 
@@ -12,41 +10,50 @@ import shutil
 
 import pytest
 
-from commonplace.artifactrun import worktree
-from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import opening
+from commonplace.lib.agentic_analysis import opening, preparation
+from commonplace.lib.agentic_analysis.preparation import RUNTIME_MARKER
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     PARAMETERS,
     ROOT,
     RUN_ID,
     TOKEN,
-    assert_stopped,
     git,
-    output,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared,  # noqa: PLC0414 - explicit fixture registration
 )
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared_template as prepared_template,  # noqa: PLC0414 - session baseline registration
+)
+
+WORKER_PROFILES = "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
 
 
-def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
-    c = prepared.start(parameters={**PARAMETERS, "source-revision": "a" * 40})
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    metadata = output(c)
-    assert metadata == {
+def open_directly(prepared, parameters=PARAMETERS, *, name=RUN_ID, library=None):
+    """Open a run named `name` under the prepared checkout's state root; return (metadata, run_dir)."""
+    run_dir = prepared.repo / "kb/agentic-system-analyses/state" / name
+    run_dir.mkdir(parents=True, exist_ok=True)
+    profiles = (prepared.repo / WORKER_PROFILES).read_bytes()
+    library = prepared.repo / "kb" if library is None else library
+    return opening.open_analysis(parameters, profiles, run_dir, library), run_dir
+
+
+def test_opening_returns_pinned_metadata_without_acquiring(prepared):
+    metadata, _ = open_directly(prepared, {**PARAMETERS, "source-revision": "a" * 40})
+    assert metadata.endswith(b"\n")
+    record = json.loads(metadata)
+    assert record == {
         "run-id": RUN_ID, "system": "Example System",
         "source-identity": "https://github.com/example/system",
         "source": PARAMETERS["source"], "source-revision": "a" * 40,
         "worker": {"profile": "pi-luna", "harness": "pi", "launch-model": "gpt-6-luna", "effort": "medium"},
-        "inputs-commit": prepared.commit, "run-date": metadata["run-date"],
+        "inputs-commit": prepared.commit, "run-date": record["run-date"],
         "review-path": "kb/agentic-system-analyses/retained/example--system/overview.md",
         "expected-incumbent-sha256": "absent",
     }
-    assert len(metadata["run-date"]) == 10
+    assert len(record["run-date"]) == 10
     assert not (prepared.repo / "related-systems").exists()
     assert not (prepared.repo / "kb/agentic-system-analyses/retained").exists()
-    assert {p.name for p in (c.run_dir / "artifact").iterdir()} == {"ARTIFACT.yaml"}
 
 
 @pytest.mark.parametrize("changes,reason", [
@@ -66,12 +73,8 @@ def test_opening_commits_metadata_then_stops_before_acquisition(prepared):
 ])
 def test_opening_refuses_invalid_or_missing_parameters(prepared, changes, reason):
     parameters = {name: value for name, value in {**PARAMETERS, **changes}.items() if value is not None}
-    c = prepared.start(parameters=parameters)
-    c.advance()
-    assert_stopped(c, "opening", reason)
-    records = RunStore(c.run_dir).attempt_records()
-    assert len(records) == 1 and records[0]["state"] == "failed"
-    assert not records[0]["pins"] and "outputs" not in records[0]
+    with pytest.raises(ValueError, match=reason):
+        open_directly(prepared, parameters)
 
 
 @pytest.mark.parametrize("changes,reason", [
@@ -87,9 +90,8 @@ def test_opening_enforces_ready_preparation_binding(prepared, changes, reason):
         prepared.preparation.unlink()
     else:
         prepared.record(**changes)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "opening", reason)
+    with pytest.raises(ValueError, match=reason):
+        open_directly(prepared)
 
 
 @pytest.mark.parametrize("name", (
@@ -98,48 +100,43 @@ def test_opening_enforces_ready_preparation_binding(prepared, changes, reason):
     f"AAS-2026-10-07-system-{'b' * 12}-01",
 ))
 def test_opening_requires_the_token_bearing_source_slug_run_id(prepared, name):
-    c = prepared.start(name=name)
-    c.advance()
-    assert_stopped(c, "opening", "does not match the source slug and worktree preparation token")
+    with pytest.raises(ValueError, match="does not match the source slug and worktree preparation token"):
+        open_directly(prepared, name=name)
 
 
 @pytest.mark.parametrize("path,tracked", [
-    ("src/commonplace/artifactrun/engine.py", True),
+    (RUNTIME_MARKER, True),
     ("kb/untracked.md", False),
 ])
 def test_opening_refuses_an_unpublishable_worktree(prepared, path, tracked):
     target = prepared.repo / path
     old = target.read_bytes() if tracked else None
     target.write_text("Uncommitted method content.\n")
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "opening", "publication requires a clean worktree")
+    with pytest.raises(ValueError, match="publication requires a clean worktree"):
+        open_directly(prepared)
     if tracked:
         target.write_bytes(old)
     else:
         target.unlink()
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    assert output(c)["inputs-commit"] == prepared.commit
+    metadata, _ = open_directly(prepared)
+    assert json.loads(metadata)["inputs-commit"] == prepared.commit
 
 
 def test_opening_checks_the_executing_package_not_only_the_worktree(prepared, monkeypatch):
     other = prepared.repo.with_name("running-package")
     shutil.copytree(prepared.repo, other)
-    (other / "src/commonplace/artifactrun/engine.py").write_text("# Different executing code.\n")
-    monkeypatch.setattr(worktree, "running_package_root", lambda: other)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "opening", "running commonplace source")
-    assert "differs from inputs-commit" in c.stop("opening").reason
+    (other / RUNTIME_MARKER).write_text("# Different executing code.\n")
+    monkeypatch.setattr(preparation, "running_package_root", lambda: other)
+    with pytest.raises(ValueError, match="running commonplace source") as refused:
+        open_directly(prepared)
+    assert "differs from inputs-commit" in str(refused.value)
     assert git(prepared.repo, "status", "--porcelain") == ""
 
 
 def test_opening_refuses_a_library_outside_the_worktree(prepared):
     # Code and working-directory binding: test_worktree::test_run_code_must_be_the_runs_checkout.
-    c = prepared.start(library=ROOT / "kb")
-    c.advance()
-    assert_stopped(c, "opening", "recorded library must be the analysis worktree's")
+    with pytest.raises(ValueError, match="recorded library must be the analysis worktree's"):
+        open_directly(prepared, library=ROOT / "kb")
 
 
 def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
@@ -150,10 +147,8 @@ def test_opening_records_the_inspected_incumbent_digest(prepared, monkeypatch):
         return {"exists": True, "expected_incumbent_sha256": "c" * 64}
 
     monkeypatch.setattr(opening, "inspect_destination", inspect)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "acquire", "acquisition disabled in opening-only fixture")
-    assert output(c)["expected-incumbent-sha256"] == "c" * 64
+    metadata, _ = open_directly(prepared)
+    assert json.loads(metadata)["expected-incumbent-sha256"] == "c" * 64
     assert calls == [{
         "repo_root": prepared.repo,
         "generated_destination": "kb/agentic-system-analyses/retained/example--system/overview.md",
@@ -173,43 +168,16 @@ def test_opening_rechecks_the_worktree_after_incumbent_inspection(prepared, monk
         if change == "commit":
             git(prepared.repo, "commit", "--allow-empty", "--quiet", "-m", "Concurrent commit")
         else:
-            (prepared.repo / "src/commonplace/artifactrun/engine.py").write_text("# Concurrent modification.\n")
+            (prepared.repo / RUNTIME_MARKER).write_text("# Concurrent modification.\n")
         return decision
 
     monkeypatch.setattr(opening, "inspect_destination", concurrent)
-    c = prepared.start()
-    c.advance()
-    assert_stopped(c, "opening", reason)
-    assert all("outputs" not in r for r in RunStore(c.run_dir).attempt_records())
-
-
-WORKER_PROFILES = "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
-
-
-def open_directly(prepared, parameters=PARAMETERS):
-    """Call the plain opening function with the values the engine adapter passes."""
-    run_dir = prepared.repo / "kb/agentic-system-analyses/state" / RUN_ID
-    run_dir.mkdir(parents=True)
-    profiles = (prepared.repo / WORKER_PROFILES).read_bytes()
-    return opening.open_analysis(parameters, profiles, run_dir, prepared.repo / "kb"), run_dir
-
-
-def test_open_analysis_returns_metadata_bytes_from_plain_values(prepared):
-    metadata, _ = open_directly(prepared)
-    record = json.loads(metadata)
-    assert metadata.endswith(b"\n")
-    assert record["run-id"] == RUN_ID and record["inputs-commit"] == prepared.commit
-    assert record["source-revision"] is None and record["expected-incumbent-sha256"] == "absent"
-    assert record["worker"]["profile"] == "pi-luna"
-
-
-def test_open_analysis_refuses_invalid_parameters_without_an_engine(prepared):
-    with pytest.raises(ValueError, match="system must be a single-line name"):
-        open_directly(prepared, {**PARAMETERS, "system": "System\ninjected"})
+    with pytest.raises(ValueError, match=reason):
+        open_directly(prepared)
 
 
 def test_acquire_analysis_returns_a_null_source_for_a_non_git_identity(prepared):
-    # Git acquisition from a local origin: test_acquisition, through the engine adapter.
+    # Git acquisition from a local origin: test_acquisition.
     opened, run_dir = open_directly(prepared)
     metadata = json.dumps({**json.loads(opened), "source-identity": "local snapshot"}).encode()
     assert opening.acquire_analysis(metadata, run_dir) == b"null\n"

@@ -9,6 +9,7 @@ The site generates the current-analyses list from `retained/`. Systems enter
 this population through newly commissioned runs. Historical sets under
 `kb/agentic-systems/reports/` remain outside it.
 
-Authors read [the collection contract](./COLLECTION.md). Coordinators follow
+Authors read [the collection contract](./COLLECTION.md). The operator's session
+running the analysis skill follows
 [publication](./instructions/publish-analysis.md). Method authors follow
 [method maintenance](./instructions/maintain-analysis-method.md).

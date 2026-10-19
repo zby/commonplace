@@ -5,6 +5,8 @@ type: reference/types/design-proposal.md
 
 # Coded engine stops
 
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 118](../../adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md): the artifact-run engine and its coordinator are gone; `commonplace-analysis run` reports why it stopped and exits 2. The 2026-10-08 stop sites of the engine, the gbrain comparison and the two options weighed remain here — design texture only.
+
 The engine reports why an invocation ended only in prose. This
 proposal gives each stop a kind from a small closed set, and gives an
 uncertain stop the evidence to inspect before anyone retries. It is
@@ -37,7 +39,7 @@ analysis publication that is the effect journal and the run report, and
 finding the journal today means reading `publication.py`. The failure
 record already keeps the handler's trace.
 
-gbrain ([retained analysis](../../agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md),
+gbrain ([retained analysis](../../../agentic-systems/reports/retained-archive/AAS-2026-09-23-gbrain-01/result.md),
 commit `61d577470`) gives every error a
 registered code, a class that fixes retryability and exit code, and a fix
 expressed as data. It never answers an unknown mutation outcome with
@@ -91,7 +93,7 @@ answers a scale or a caller Commonplace does not have.
   disposition is found, option 2 serves only the tests.
 - A handler that raises to say "not yet" looks like a handler error. The
   analysis assembly job does this today for an uncovered relation
-  ([consumer surface](../../work/workflow-requirements/consumer-surface.md)).
+  ([consumer surface](../../../work/workflow-requirements/consumer-surface.md)).
   A coded handler-error kind would carry that misuse forward without
   telling it from a bug; the remedy is readiness, not a stop code. This is
   the strongest reason to keep handler errors out of the set.

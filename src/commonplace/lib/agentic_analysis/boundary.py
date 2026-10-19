@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from commonplace.artifactrun.sources import frozen_source_refusals
+from commonplace.lib.agentic_analysis.sources import frozen_source_refusals
 from commonplace.lib.note_parser import parse_document
 
 

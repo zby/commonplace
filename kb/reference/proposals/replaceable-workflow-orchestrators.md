@@ -7,8 +7,11 @@ description: "Proposal: separate Commonplace workflow requirements from executio
 
 ## Problem
 
-Commonplace needs workflows that run across agent harnesses. Its current
-orchestration combines an orchestrator agent with a replayable Python script.
+Commonplace needs workflows that run across agent harnesses. When this was
+proposed, its orchestration combined an orchestrator agent with a replayable
+Python script. [ADR 118](../adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)
+has since replaced that, for analyses, with one Python process that launches
+headless workers.
 That arrangement supports a harness whose agent invokes separate commands and
 launches workers through native tools. It need not be the required execution
 model for every harness.
@@ -23,7 +26,7 @@ TypeScript, without a model acting as the workflow scheduler.
 The workflow's requirements would remain portable. Its command protocol and
 internal recovery representation would not automatically become universal
 requirements. This is an unadopted design, not authority to replace the current
-engine or relax any workflow safeguard.
+workflow or relax any workflow safeguard.
 
 ## Current state (as of 2026-10-03)
 
@@ -93,7 +96,7 @@ the same workflow requirements. It would not have to emulate `step`.
 
 **Consumption path:** a workflow invocation would select an orchestrator
 implementation. Each implementation would consume the shared workflow contract
-as binding requirements. TypeScript code, rather than the coordinator model,
+as binding requirements. TypeScript code, rather than a coordinator model,
 would determine execution transitions in Pi. The contract and native
 orchestrator do not exist yet; both would need to be built.
 
@@ -149,7 +152,7 @@ shared components even when scheduling differs. Rewriting them would need a
 separate benefit and evidence of preserved behavior.
 
 No TypeScript orchestration library, checkpoint format, selection interface,
-or migration procedure is selected here. The current engine remains operative
+or migration procedure is selected here. The current analysis workflow remains operative
 until an alternative has been adopted for a named workflow.
 
 ## Acceptance and evaluation warrant

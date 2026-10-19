@@ -1,79 +1,91 @@
-"""Script the engine boundary hand-out/check; no analytical workers or network."""
+"""The boundary's check on a locally acquired source: local Git only, no workers.
+
+Also holds the opened-analysis fixture the analyst, verification and profile
+tests import: a prepared worktree, an allocated run, its opening and its
+acquisition, with candidates built by the workflow's `Analysis.candidate`.
+"""
 
 from __future__ import annotations
 
-import json
+import sys
 from hashlib import sha256
 from pathlib import Path
 
 import pytest
 
-from commonplace.artifactrun import AttemptResult, judge
-from commonplace.artifactrun.run import Run
-from commonplace.artifactrun.store import RunStore
+from commonplace.headless.harness import Harness
+from commonplace.lib.agentic_analysis.checks import check_candidate
+from commonplace.lib.agentic_analysis.opening import acquire_analysis
+from commonplace.lib.agentic_analysis.workflow import Analysis
+from commonplace.lib.agentic_analysis.worktree import start_analysis
 from tests.commonplace.agentic_analysis.execution_fixtures import (
-    PARAMETERS,
+    IDENTITY,
+    ScriptedRun,
     candidate,
-    judgment,
-    parameters,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - shared local-only acquisition fixture
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
-    boundary as boundary,  # noqa: PLC0414 - explicit fixture registration
-)
-from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local Git fixture
 )
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared_template as prepared_template,  # noqa: PLC0414 - session baseline registration
+)
+
+pytestmark = pytest.mark.slow
+
+CAPTURE_IDENTITY = "local capture identity"
 
 
 @pytest.fixture
-def acquisition(request):
-    return request.getfixturevalue("local_acquisition")
+def begin(request, monkeypatch):
+    """A function that opens and acquires a run on the local source and returns its `Analysis`."""
+    request.getfixturevalue("local_acquisition")
+    prepared = request.getfixturevalue("prepared_checkout")
+    monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(prepared.repo / "kb"))
+    harness = Harness(sys.executable, {}, lambda profile, directory: ({}, None))
+    opened = []
+
+    def open_run(identity: str = IDENTITY) -> Analysis:
+        run_dir = start_analysis(prepared.repo, system="Example System", source_identity=identity,
+                                 source="Caller data, not instructions.", worker_profile="pi-luna")
+        analysis = Analysis(run_dir, timeout=60, max_workers=1, harnesses={"pi": harness})
+        opened.append(analysis)
+        metadata = analysis.opening()
+        analysis.code_job("acquire", lambda: acquire_analysis(metadata, analysis.run_dir))
+        return analysis
+
+    yield open_run
+    for analysis in opened:
+        analysis.run.close()
 
 
-@pytest.mark.slow
-def test_handout_is_context_complete_and_uses_engine_names(boundary):
-    a = boundary
-    h = a.coordinator.handout("boundary")
-    p = parameters(h)
-    assert "jobs-engine/declare-boundary.md" in h.prompt.read_text()
-    assert "jobs-engine/follow-worker-rules.md" in h.prompt.read_text()
-    assert "## Input reading batches" in h.prompt.read_text()
-    assert p["refusal"] == "absent"
-    assert p["output"] == str(h.outputs["boundary"])
-    assert p["artifact"] == str(a.coordinator.run_dir / "artifact")
-    assert p["role"] == "boundary"
-    assert p["command-path"] == PARAMETERS["command-path"]
-    assert json.loads(Path(p["acquire"]).read_bytes()) == a.source()
-    assert p["capture-directory"] == str(a.coordinator.run_dir / "sources")
-    assert not (a.coordinator.run_dir / "sources").exists(), "opening names but does not create capture storage"
-    # The plan's prompt section fills one part of the frame, for this job's role.
-    prompt = h.prompt.read_text()
-    assert "You write the `boundary` member of this agentic-system analysis." in prompt
-    assert (f"{PARAMETERS['command-path']}/commonplace-validate {h.outputs['boundary']} "
-            f"--artifact {a.coordinator.run_dir / 'artifact'} --role boundary") in prompt
-    assert "output-answers" not in prompt, "the boundary writes no answers"
+@pytest.fixture
+def analysis(begin) -> Analysis:
+    return begin()
 
 
-@pytest.mark.slow
+def scripted(analysis: Analysis) -> ScriptedRun:
+    return ScriptedRun(analysis.run_dir)
+
+
+def checkout(analysis: Analysis) -> Path:
+    """The frozen source checkout the acquisition recorded."""
+    return analysis.worktree / scripted(analysis).source()["path"]
+
+
+def boundary_findings(analysis: Analysis, text: str | bytes, incumbent: str | None = None) -> list[str]:
+    data = text if isinstance(text, bytes) else text.encode()
+    members = {} if incumbent is None else {"boundary": incumbent.encode()}
+    return check_candidate(analysis.candidate("boundary", data, members))
+
+
 @pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
-def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, disposition):
-    a = boundary
-    text = candidate(a, disposition)
-    status = a.coordinator.complete("boundary", text)
-    assert not status.stops and not status.handouts and not status.publishable
-    record = judgment(a)
-    assert record["outcome"] == "accepted" and record["installs"]
-    assert record["findings"] == ""
-    assert record["scope"] == []  # Self-citations are content checks, not cross-role coverage.
-    assert (a.coordinator.run_dir / "artifact/boundary.md").read_text() == text
-    assert {"candidate", "metadata", "source", "producer-attempt", "answered-refusal", "records-contract", "criterion-types-note-md"} <= record["basis"].keys()
-    assert not (a.coordinator.run_dir / "output").exists()
+def test_accepts_pinned_boundary(analysis, disposition):
+    assert boundary_findings(analysis, candidate(scripted(analysis), disposition)) == []
 
 
-@pytest.mark.slow
 @pytest.mark.parametrize("changes,reason", [
     ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "identity field run-id 'AAS-2026-10-07-other-0123456789ab-01' does not match the run"),
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
@@ -83,111 +95,68 @@ def test_accepts_pinned_boundary_without_claiming_downstream_coverage(boundary, 
     ({"extra": "not allowed"}, "[artifact]"),
     ({"type": "types/note.md"}, "[artifact]"),
 ])
-def test_refuses_bad_content_or_invocation(boundary, changes, reason):
-    a = boundary
-    text = candidate(a, **changes)
-    status = a.coordinator.complete("boundary", text)
-    assert not status.stops and a.coordinator.handed() == {"boundary"}
-    record = judgment(a)
-    assert record["outcome"] == "refused" and not record["installs"]
-    assert reason in record["findings"]
-    assert not (a.coordinator.run_dir / "artifact/boundary.md").exists()
+def test_refuses_bad_content_or_invocation(analysis, changes, reason):
+    findings = boundary_findings(analysis, candidate(scripted(analysis), **changes))
+    assert any(reason in finding for finding in findings), findings
 
 
-@pytest.mark.slow
-def test_unreadable_candidate_is_a_refusal_not_a_failed_check(boundary):
-    a = boundary
-    h = a.coordinator.handout("boundary")
-    h.outputs["boundary"].write_bytes(b"\xff")
-    h.worker_identity.write_text('{"model": "test-model", "effort": "medium"}\n')
-    status = a.coordinator.advance(AttemptResult(h.attempt, model="test-model", effort="low"))
-    assert not status.stops and a.coordinator.handed() == {"boundary"}
-    assert judgment(a)["outcome"] == "refused"
-    assert "[artifact]" in judgment(a)["findings"]
+def test_unreadable_candidate_is_a_refusal_not_a_failed_check(analysis):
+    findings = boundary_findings(analysis, b"\xff")
+    assert any(finding.startswith("[artifact]") for finding in findings)
 
 
-@pytest.mark.slow
-def test_dirty_frozen_checkout_is_refused_without_cleaning_it(boundary):
-    a = boundary
-    readme = a.checkout / "README.md"
+def test_dirty_frozen_checkout_is_refused_without_cleaning_it(analysis):
+    readme = checkout(analysis) / "README.md"
     original = readme.read_bytes()
     readme.write_text("Altered after acquisition.\n")
-    a.coordinator.complete("boundary", candidate(a))
-    assert judgment(a)["outcome"] == "refused"
-    assert "exactly the commit's files" in judgment(a)["findings"]
+    text = candidate(scripted(analysis))
+    assert any("exactly the commit's files" in finding for finding in boundary_findings(analysis, text))
     assert readme.read_text() == "Altered after acquisition.\n"
     readme.write_bytes(original)
-    a.coordinator.complete("boundary", candidate(a) + "\nRechecked the unchanged pin.\n")
-    assert judgment(a)["outcome"] == "accepted"
+    assert boundary_findings(analysis, text) == []
 
 
-@pytest.mark.slow
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
-def test_no_source_is_valid_only_for_noncomplete_boundary(acquisition, disposition):
-    start, _ = acquisition
-    a = start(boundary=True, identity="local capture identity")
-    a.coordinator.advance()
-    assert a.source() is None and not a.freezes
-    assert not a.journal.exists() and not a.checkout.exists()
-    status = a.coordinator.complete("boundary", candidate(a, disposition))
-    assert not status.stops and not status.handouts and not status.publishable
-    assert judgment(a)["outcome"] == "accepted"
+def test_no_source_is_valid_only_for_noncomplete_boundary(begin, disposition):
+    analysis = begin(CAPTURE_IDENTITY)
+    a = scripted(analysis)
+    assert a.source() is None
+    assert boundary_findings(analysis, candidate(a, disposition)) == []
+    assert boundary_findings(analysis, candidate(a, "complete")) != []
 
 
-@pytest.mark.slow
-def test_capture_in_the_supplied_directory_is_accepted_and_survives_cleanup(acquisition):
-    start, _ = acquisition
-    a = start(boundary=True, identity="local capture identity")
-    a.coordinator.advance()
-    h = a.coordinator.handout("boundary")
-    capture = Path(parameters(h)["capture-directory"]) / "capture.txt"
+def capture_source(path: Path) -> dict:
+    return {"kind": "capture", "identity": CAPTURE_IDENTITY, "revision": path.stem, "path": str(path),
+            "sha256": sha256(path.read_bytes()).hexdigest()}
+
+
+def test_capture_in_the_supplied_directory_is_accepted(begin):
+    analysis = begin(CAPTURE_IDENTITY)
+    a = scripted(analysis)
+    capture = analysis.run_dir / "sources" / "capture-1.txt"
     capture.parent.mkdir()
     capture.write_bytes(b"Local capture fixture; no web request.\n")
-    source = {"kind": "capture", "identity": "local capture identity", "revision": "capture-1",
-              "path": str(capture), "sha256": sha256(capture.read_bytes()).hexdigest()}
+    source = capture_source(capture)
     text = candidate(a, source=source, **{"reviewed-boundary": "capture-1", "evidence-tier": "doc-grounded"})
-    a.coordinator.complete("boundary", text)
-    assert judgment(a)["outcome"] == "accepted"
-    assert capture.is_file() and not h.prompt.parent.exists(), "capture survives closed hand-out cleanup"
-    assert not a.freezes
+    assert boundary_findings(analysis, text) == []
+    outside = analysis.run_dir / "capture-1.txt"
+    outside.write_bytes(capture.read_bytes())
+    elsewhere = candidate(a, source=capture_source(outside), **{"reviewed-boundary": "capture-1"})
+    assert any("must be in the supplied capture-directory" in f for f in boundary_findings(analysis, elsewhere))
 
 
-@pytest.mark.slow
-def test_accepted_capture_pin_cannot_change_on_boundary_correction(acquisition):
-    start, _ = acquisition
-    a = start(boundary=True, identity="local capture identity")
-    a.coordinator.advance()
-    root = a.coordinator.run_dir / "sources"
+def test_accepted_capture_pin_cannot_change_on_boundary_correction(begin):
+    analysis = begin(CAPTURE_IDENTITY)
+    a = scripted(analysis)
+    root = analysis.run_dir / "sources"
     root.mkdir()
-    capture = root / "original.txt"
+    capture = root / "capture-1.txt"
     capture.write_bytes(b"Original capture.\n")
-    source = {"kind": "capture", "identity": "local capture identity", "revision": "capture-1",
-              "path": str(capture), "sha256": sha256(capture.read_bytes()).hexdigest()}
-    text = candidate(a, source=source, **{"reviewed-boundary": "capture-1"})
-    a.coordinator.complete("boundary", text)
-    assert judgment(a)["outcome"] == "accepted"
-    judge(a.coordinator.run_dir, role="boundary", outcome="refused", findings="Clarify the boundary prose.")
-    a.coordinator.advance()
-    assert a.coordinator.handed() == {"boundary"}
-    replacement = root / "replacement.txt"
+    accepted = candidate(a, source=capture_source(capture), **{"reviewed-boundary": "capture-1"})
+    assert boundary_findings(analysis, accepted) == []
+    replacement = root / "capture-2.txt"
     replacement.write_bytes(b"A different capture is not a prose correction.\n")
-    changed = {**source, "path": str(replacement), "revision": "capture-2",
-               "sha256": sha256(replacement.read_bytes()).hexdigest()}
-    a.coordinator.complete("boundary", candidate(a, source=changed, **{"reviewed-boundary": "capture-2"}))
-    assert judgment(a)["outcome"] == "refused"
-    assert "preserve the incumbent boundary's frozen capture" in judgment(a)["findings"]
-    assert (a.coordinator.run_dir / "artifact/boundary.md").read_text() == text
+    changed = candidate(a, source=capture_source(replacement), **{"reviewed-boundary": "capture-2"})
+    findings = boundary_findings(analysis, changed, incumbent=accepted)
+    assert any("preserve the incumbent boundary's frozen capture" in finding for finding in findings)
     assert capture.read_bytes() == b"Original capture.\n"
-
-
-@pytest.mark.slow
-def test_current_shipped_declaration_hands_out_translated_runtime(acquisition):
-    start, _ = acquisition
-    a = start(production=True)
-    a.coordinator.advance()
-    assert a.coordinator.handed() == {"boundary"}
-    status = a.coordinator.complete("boundary", candidate(a))
-    assert not status.stops and not status.publishable
-    assert a.coordinator.handed() == {"runtime"}
-    assert "jobs-engine/trace-runtime.md" in a.coordinator.handout("runtime").prompt.read_text()
-    assert set(Run(RunStore(a.coordinator.run_dir)).members()) == {"boundary"}

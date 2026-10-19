@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Coded engine stops](./coded-engine-stops.md) — retired by ADR 118, 2026-10-19. The 2026-10-08 stop sites of the artifact-run engine, the gbrain error-code comparison, and the two options weighed: a closed set of stop kinds coded by disposition, and an evidence pointer on uncertain stops.
 - [Plans without structural wrapper code](./plans-without-structural-wrapper-code.md) — adopted by ADR 117, 2026-10-10. The 2026-10-09 state of the analysis plan with 25 hand-written jobs and wrapper handlers, the six options weighed, the compact-plan syntax rulings in the order made, the five implementation steps with their measurements, and the implementation review's findings.
 - [Code-scheduled workflows](./code-scheduled-workflows.md) — adopted by ADR 113, 2026-10-09. The 2026-09-29 state with a 518-line prose schedule, the `step`/`report`/`agent()` vocabulary of the first engine, and the recovery, core-placement and rerun-timing choices weighed before the engine was rebuilt.
 - [Record acceptance reads and judged versions](./record-acceptance-reads-and-judged-versions.md) — retired by ADR 113, 2026-10-09. The 2026-10-07 replay-recheck engine, the later-verification mismatch it could reach, the build-systems classification of that engine as a volatile verifying-trace rebuilder, and the snapshot-and-commit alternative set aside.

@@ -1,17 +1,15 @@
-"""The checks a code job applies to a model candidate in a typed artifact.
+"""The checks the workflow applies to a worker's candidate in a typed artifact.
 
 Everything here takes plain values. A `Candidate` carries the candidate at
 its role, the partner members it is judged against and the run facts
-validation needs (the type's layout and relations, the pinned criteria, the
-run values, the artifact directory); nothing in it reaches back to an engine.
-The engine's handlers (`handlers`) build one from a code attempt and stage
-the judgments these functions return; a workflow script can build one from
-files and records.
+validation needs (the type's layout, the pinned criteria, the run values,
+the artifact directory). The workflow builds one from its accepted members
+and acts on the findings and judgments these functions return.
 
 The functions validate a candidate as a draft at its role against its
 partners and the run's pinned criteria, check a frozen source when one
-member pins it, check the producer's answers to the refusal it answered,
-and scope a judgment over the relations its validation examined.
+member pins it, and check the producer's answers to the refusal it
+answered.
 
 A refusal's body is Markdown. Its `## Blockers` list holds obligations: the
 producer answers each, in order, with `- corrected: ` or `- declined: ` and a
@@ -35,14 +33,17 @@ refusal of a subject carries the verdict's Limits.
 
 from __future__ import annotations
 
+import importlib
 import re
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field, replace
-from pathlib import Path
+from hashlib import sha256
+from pathlib import Path, PurePosixPath
+from typing import Any
 
-from commonplace.artifactrun.plan import relation, relation_parts, resolve_dotted
-from commonplace.artifactrun.sources import frozen_source_refusals
-from commonplace.artifactrun.store import digest
+import yaml
+
+from commonplace.lib.agentic_analysis.sources import frozen_source_refusals
 from commonplace.lib.directory_artifact import MANIFEST_NAME, type_manifest
 from commonplace.lib.directory_layout import (
     Layout,
@@ -52,7 +53,7 @@ from commonplace.lib.directory_layout import (
 )
 from commonplace.lib.note_parser import parse_document, section
 from commonplace.lib.project_paths import kb_root
-from commonplace.lib.type_resolver import CriterionSnapshot
+from commonplace.lib.type_resolver import SCHEMA_URI_SCHEME, CriterionSnapshot
 from commonplace.lib.validation import ValidationRun, validate_draft_in_role
 
 ARTIFACT_CHECK_HEADING = "# Artifact check"
@@ -70,9 +71,10 @@ class Candidate:
     `snapshot` holds the present partners at their roles' paths. `source` is
     the frozen source the run may inspect, None when the plan names none or
     the candidate fills that role. `criteria` are the pinned library files
-    plus the type's text, keyed by library path. `inputs` are the job's
-    declared inputs' bytes, which declared checks read by name. `extensions`
-    are the job's declared `checks` and `feedback`, as dotted paths.
+    plus the type's text, keyed by library path. `inputs` are the bytes of
+    the reads the role's declared checks take, by the checks' input names.
+    `extensions` are the role's declared `checks` and `feedback`, as dotted
+    paths.
     """
 
     role: str
@@ -83,7 +85,6 @@ class Candidate:
     incumbent: bytes | None = None
     run_dir: Path = field(kw_only=True)
     layout: Layout = field(kw_only=True)
-    relations: tuple[tuple[str, str, str], ...] = field(kw_only=True)
     type_spec: str = field(kw_only=True)
     criteria: Mapping[str, bytes] = field(kw_only=True)
     run_values: Mapping[str, str] = field(kw_only=True, default_factory=dict)
@@ -108,7 +109,14 @@ class Candidate:
 
 @dataclass(frozen=True)
 class Correction:
-    """What the producer answered: the handed refusal, its answers and its previous version."""
+    """What the producer answered: the handed refusal, its answers and its previous version.
+
+    The workflow applies the correction protocol through
+    `commonplace.headless.corrections.produce`, which calls
+    `correction_findings` beside the role's check; `check_candidate` and
+    `apply_verdict` take a `Correction` so the protocol can be checked at
+    the candidate level too.
+    """
 
     refusal: bytes | None
     answers: bytes | None
@@ -117,12 +125,17 @@ class Correction:
 
 @dataclass(frozen=True)
 class Judgment:
-    """A judgment of a handed subject at `role`, for the caller to record."""
+    """A verdict's judgment of a handed subject at `role`: accepted, or refused with findings."""
 
     role: str
     outcome: str
-    scope: tuple[str, ...]
     findings: str = ""
+
+
+def resolve_dotted(path: str) -> Callable:
+    """The callable a dotted `module.attribute` path names."""
+    module, _, attribute = path.rpartition(".")
+    return getattr(importlib.import_module(module), attribute)
 
 
 def source_field(data: bytes) -> dict | None:
@@ -191,7 +204,7 @@ def correction_blockers(refusal: bytes | None, member: str) -> str:
     """Extract preserved blockers; treat unstructured operator findings as one."""
     if refusal is None:
         return "none"
-    # The engine's published refusal format: fields as frontmatter, findings as body.
+    # A refusal as the run records it: fields as frontmatter, findings as body.
     document, _ = parse_document(refusal.decode("utf-8"))
     findings = (document.body if document is not None else "").strip()
     blockers = protocol_sections(findings)["Blockers"]
@@ -217,7 +230,7 @@ def correction_findings(candidate: bytes, *, member: str, refusal: bytes | None,
             f"correction answers: output-answers needs exactly {wanted} entries in blocker order, "
             "each starting `- corrected: ` or `- declined: ` with its reason"
         )]
-    if previous_version == digest(candidate) and any(line.startswith("- corrected:") for line in entries):
+    if previous_version == sha256(candidate).hexdigest() and any(line.startswith("- corrected:") for line in entries):
         return ["correction answers: an entry says corrected but the output is identical to its predecessor"]
     return []
 
@@ -248,21 +261,8 @@ def refusal_findings(findings: list[str], *, member: str, answered: bytes | None
     return refusal_body(findings, correction_blockers(answered, member), [item for item in carried if item[1]])
 
 
-def judgment_scope(check: Candidate) -> tuple[str, ...]:
-    """The relations a content judgment of the candidate covers.
-
-    The scope is the type's `cites` and `identity` relations from the
-    candidate's role to partners in the snapshot. A `verifies` relation is
-    never in it: a content check cannot settle a verification gate, which
-    only a judgment of the handed subject covers (ADR 114).
-    """
-    return tuple(name for origin, partner, name in check.relations
-                 if origin == check.role and relation_parts(name)[1] != "verifies"
-                 and check.layout.path(partner) in check.snapshot)
-
-
 def check_candidate(check: Candidate, correction: Correction | None = None) -> list[str]:
-    """Judge a candidate at its role: content, relations and correction answers.
+    """Judge a candidate at its role: content, declared checks and correction answers.
 
     The findings refuse the candidate when nonempty. A candidate filling the
     frozen-source role names the source its quotations are checked against:
@@ -285,9 +285,7 @@ def apply_verdict(verdict: Candidate, correction: Correction | None = None,
 
     The subjects are the roles the verdict's role verifies, read from the
     snapshot; a verified role absent from it was not handed and is not judged.
-    A verdict that fails its own check judges nothing. Its own judgment
-    covers its cites and identity relations (`judgment_scope`); only the
-    subject judgments cover the verifies relations.
+    A verdict that fails its own check judges nothing.
     """
     layout = verdict.layout
     verified = layout.roles[verdict.role].verifies
@@ -313,14 +311,13 @@ def apply_verdict(verdict: Candidate, correction: Correction | None = None,
                                  members={**verdict.snapshot, layout.path(verdict.role): verdict.data})
         invalid = [finding for finding in beside if finding not in alone]
         own = [entry for entry in entries if len(verified) == 1 or addressee(entry) == role]
-        relation_scope = (relation(verdict.role, "verifies", role),)
         if invalid or own:
             packet = refusal_body(invalid, "\n".join(own), [("Limits", limits)])
             if feedback is not None:
                 packet += feedback(role, own, verdict)
-            judgments.append(Judgment(role, "refused", relation_scope, packet))
+            judgments.append(Judgment(role, "refused", packet))
         elif not entries:
-            judgments.append(Judgment(role, "accepted", relation_scope))
+            judgments.append(Judgment(role, "accepted"))
     return [], judgments
 
 
@@ -349,3 +346,49 @@ def artifact_check(members: Mapping[str, bytes], *, run_dir: Path, repo: Path, s
         findings.append(f"[artifact] artifact input cannot be checked: {exc}")
     text = f"{ARTIFACT_CHECK_HEADING}\n\n" + ("\n".join(f"- {finding}" for finding in findings) or "none") + "\n"
     return text.encode("utf-8")
+
+
+def type_closure(library: Path, type_paths: list[str]) -> list[str]:
+    """Each type spec, its schema and every schema those reference, as library paths."""
+    seen: list[str] = []
+
+    def add(path: str) -> None:
+        if path in seen or not (library / path).is_file():
+            return
+        seen.append(path)
+        text = (library / path).read_text(encoding="utf-8")
+        if path.endswith(".md"):
+            document, _ = parse_document(text)
+            schema = (document.frontmatter or {}).get("schema") if document is not None else None
+            if isinstance(schema, str):
+                add(_relative(path, schema))
+        else:
+            for ref in _refs(yaml.safe_load(text)):
+                target = ref.partition("#")[0]
+                # The validator's resolver reads `commonplace:<path>` from the library root.
+                prefix = f"{SCHEMA_URI_SCHEME}:"
+                add(target[len(prefix):] if target.startswith(prefix) else _relative(path, target))
+
+    for path in type_paths:
+        add(path)
+    return seen
+
+
+def _relative(origin: str, target: str) -> str:
+    joined = PurePosixPath(origin).parent / target
+    parts: list[str] = []
+    for part in joined.parts:
+        if part == "..":
+            parts.pop()
+        elif part != ".":
+            parts.append(part)
+    return "/".join(parts)
+
+
+def _refs(node: Any) -> list[str]:
+    if isinstance(node, dict):
+        found = [node["$ref"]] if isinstance(node.get("$ref"), str) and not node["$ref"].startswith("#") else []
+        return found + [ref for value in node.values() for ref in _refs(value)]
+    if isinstance(node, list):
+        return [ref for value in node for ref in _refs(value)]
+    return []

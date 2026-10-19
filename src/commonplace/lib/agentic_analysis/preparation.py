@@ -1,8 +1,10 @@
-"""Commit-bound worktrees, the code that runs in them, and transfer back to main.
+"""Prepared worktrees: the commit they pin, the code that runs in them, and transfer back to main.
 
 A run's method is the commit its worktree was prepared at. These checks keep
-the running code, the startup instructions and the worktree tied to that
-commit, and move a finished result back to ``main`` as one merge.
+the running code, the worktree's startup instructions and the worktree tied
+to that commit, and move a finished result back to ``main`` as one merge.
+The origin checkout is not checked beyond what Git needs: a headless run is
+a process, and nothing the origin's session loaded reaches a worker.
 """
 
 from __future__ import annotations
@@ -50,7 +52,7 @@ def _git_paths(origin: Path, args: list[str]) -> set[str]:
 
 
 def require_committed_startup(origin: Path, commit: str) -> None:
-    """Preparation never permits startup instructions that differ from the commit.
+    """A worktree whose startup instructions differ from the commit runs another method.
 
     Inspect index and working tree independently (their changes can cancel),
     plus untracked and ignored startup files, except ignored local harness
@@ -97,7 +99,7 @@ def require_committed_startup(origin: Path, commit: str) -> None:
         raise ValueError(
             "startup instructions or configuration differ from the selected commit: "
             + ", ".join(changed)
-            + "; commit or remove these changes first; this check is mandatory even without --require-clean-origin"
+            + "; the worktree must carry the committed startup instructions of its method"
         )
 
 
@@ -140,10 +142,9 @@ def _install(worktree: Path) -> dict[str, str]:
     # will be inherited by the harness and its child processes.
     probe = run_command(
         [str(python), "-c", (
-            "import json, shutil; import commonplace.artifactrun.engine as m; "
+            "import json, shutil; import commonplace.lib.agentic_analysis.workflow as m; "
             "print(json.dumps({'module': m.__file__, "
             "'analysis': shutil.which('commonplace-analysis'), "
-            "'run': shutil.which('commonplace-run'), "
             "'validate': shutil.which('commonplace-validate')}))"
         )],
         cwd=worktree,
@@ -154,7 +155,7 @@ def _install(worktree: Path) -> dict[str, str]:
         expected = worktree / RUNTIME_MARKER
         if Path(found["module"]).resolve() != expected.resolve():
             raise ValueError("the installed package resolves outside the prepared worktree")
-        for key in ("analysis", "run", "validate"):
+        for key in ("analysis", "validate"):
             # Resolve the directory, not the executable: uv may use symlinks.
             if not found[key] or Path(found[key]).parent.resolve() != bin_dir.resolve():
                 raise ValueError(f"{key} command resolves outside the local environment")
@@ -163,7 +164,8 @@ def _install(worktree: Path) -> dict[str, str]:
     return {"python": str(python), "path-prefix": str(bin_dir)}
 
 
-RUNTIME_MARKER = "src/commonplace/artifactrun/engine.py"
+RUNTIME_MARKER = "src/commonplace/lib/agentic_analysis/workflow.py"
+"""The file whose presence marks a Commonplace source checkout that carries the analysis workflow."""
 
 
 def source_checkout(path: Path) -> Path | None:
@@ -206,23 +208,6 @@ def require_run_code(run: Path, *, cwd: Path | None = None) -> None:
         )
 
 
-def _require_current_revision(origin: Path, commit: str) -> None:
-    """An implicit HEAD behind the default branch is a stale launching checkout."""
-    for branch in ("main", "master"):
-        ref = f"refs/heads/{branch}"
-        if _git(origin, "rev-parse", "--verify", "--quiet", ref).returncode:
-            continue
-        behind = int(run_command(["git", "rev-list", "--count", f"{commit}..{ref}"], cwd=origin))
-        ahead = int(run_command(["git", "rev-list", "--count", f"{ref}..{commit}"], cwd=origin))
-        if behind and not ahead:
-            raise ValueError(
-                f"HEAD is {behind} commits behind {branch}: this checkout and the "
-                "session started in it hold an older method; start from the "
-                f"current {branch}, or pass --revision to select this revision deliberately"
-            )
-        return
-
-
 def prepare_worktree(
     origin: Path,
     *,
@@ -243,9 +228,6 @@ def prepare_worktree(
         ["git", "rev-parse", "--verify", "--end-of-options", f"{revision or 'HEAD'}^{{commit}}"],
         cwd=origin,
     )
-    if revision is None:
-        _require_current_revision(origin, commit)
-    require_committed_startup(origin, commit)
     dirty = bool(run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin))
     if dirty and require_clean_origin:
         raise ValueError(
@@ -303,7 +285,6 @@ def prepare_worktree(
             raise ValueError("the prepared worktree commit changed during setup")
         if run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=worktree):
             raise ValueError("the new prepared worktree is not clean")
-        require_committed_startup(origin, commit)
         record["status"] = "ready"
     except ValueError as error:
         record.update(status="failed", error=str(error))

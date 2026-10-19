@@ -1,11 +1,10 @@
 """Closed local draft snapshots: no models, acquisition or publication."""
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
 
-from commonplace.artifactrun.handlers import criterion_bytes
 from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
+from commonplace.lib.agentic_analysis.workflow import Method
 from commonplace.lib.validation import validate_draft_in_role
 
 LIBRARY = Path(__file__).resolve().parents[3] / "kb"
@@ -24,14 +23,6 @@ def criteria():
                         b"---\n# Boundary type\n"),
         BOUNDARY_SCHEMA: b"type: object\n",
     }
-
-
-def fixed_type(**kwargs):
-    """An attempt double carrying the artifact type a run fixes at start."""
-    from commonplace.lib.agentic_analysis.analyses import analysis_layout
-
-    return SimpleNamespace(type_text=(LIBRARY / ANALYSIS_TYPE).read_text(), type_spec=ANALYSIS_TYPE,
-                           layout=analysis_layout(), **kwargs)
 
 
 def draft(tmp_path, pinned, candidate=CANDIDATE, **kwargs):
@@ -69,10 +60,16 @@ def test_non_complete_boundary_source_does_not_crash(tmp_path, source):
         assert result  # Malformed sources still fail; they just do not crash.
 
 
-def test_criteria_are_the_pinned_library_files_plus_the_fixed_artifact_type():
-    files = {BOUNDARY_TYPE: b"pinned", "types/note.schema.yaml": b"schema"}
-    result = criterion_bytes(fixed_type(read_files=lambda: dict(files)))
-    assert result == {**files, ANALYSIS_TYPE: (LIBRARY / ANALYSIS_TYPE).read_bytes()}
+def test_criteria_are_the_pinned_groups_plus_the_types_closure():
+    method = Method(LIBRARY)
+    pinned = method.criteria()
+    grouped = {path for group in method.groups.values() for path in group.values()}
+    assert grouped <= pinned.keys()
+    member_types = {role.type for role in method.layout.roles.values()}
+    schemas = {path.removesuffix(".md") + ".schema.yaml" for path in member_types | {ANALYSIS_TYPE}}
+    assert member_types | schemas | {ANALYSIS_TYPE, "types/note.schema.yaml"} <= pinned.keys()
+    assert not any(path.startswith("work/") for path in pinned)
+    assert all(data == (LIBRARY / path).read_bytes() for path, data in pinned.items())
 
 
 def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
@@ -100,7 +97,7 @@ def test_boundary_capture_inspection_requires_exact_source_pin(tmp_path):
 
 
 def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path, monkeypatch):
-    from commonplace.artifactrun import checks as module
+    from commonplace.lib.agentic_analysis import checks as module
     from commonplace.lib.agentic_analysis.analyses import analysis_layout
 
     source = {"kind": "capture", "identity": "fixture", "revision": "pin", "path": str(tmp_path)}
@@ -117,7 +114,7 @@ def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path,
     monkeypatch.setattr(module, "validate_draft_in_role", validate)
     monkeypatch.setattr(module, "frozen_source_refusals", lambda _: [])
     check = module.Candidate("reconciliation", CANDIDATE, {"boundary.md": boundary}, tmp_path, source,
-                             run_dir=tmp_path, layout=analysis_layout(), relations=(), type_spec=ANALYSIS_TYPE,
+                             run_dir=tmp_path, layout=analysis_layout(), type_spec=ANALYSIS_TYPE,
                              criteria=pinned, run_values=run_values)
     assert module.review(check) == []
     args, kwargs = seen[0]
@@ -126,3 +123,20 @@ def test_candidate_review_forwards_pinned_criteria_snapshot_and_source(tmp_path,
     assert kwargs["criteria"] == pinned
     assert kwargs["frozen_source"] == source
     assert kwargs["run_values"] == {"source-identity": "fixture", "run-id": tmp_path.name}
+
+
+def test_the_type_closure_follows_library_root_schema_references(tmp_path):
+    import yaml
+
+    from commonplace.lib.agentic_analysis.checks import type_closure
+
+    types = tmp_path / "kb" / "types"
+    types.mkdir(parents=True)
+    (types / "toy-report.md").write_text(
+        "---\ntype: types/type-spec.md\nname: toy-report\ndescription: Fixture\n"
+        "schema: ./toy-report.schema.yaml\n---\n# Toy report\n", encoding="utf-8")
+    (types / "base.schema.yaml").write_text(yaml.safe_dump({"type": "object"}), encoding="utf-8")
+    schema = {"type": "object", "allOf": [{"$ref": "commonplace:types/base.schema.yaml#/definitions/x"}]}
+    (types / "toy-report.schema.yaml").write_text(yaml.safe_dump(schema), encoding="utf-8")
+    closure = type_closure(tmp_path / "kb", ["types/toy-report.md"])
+    assert closure == ["types/toy-report.md", "types/toy-report.schema.yaml", "types/base.schema.yaml"]

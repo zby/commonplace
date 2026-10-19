@@ -57,10 +57,14 @@ keys. The validator checks from the layout: membership, with
 `membership: open` admitting it; each member's expected type;
 requiredness, always and by the discriminating field's value; and
 `identity`, that the listed fields equal the source member's, or the run's
-values when the source is `run` and validation runs inside an engine run.
-`verifies` is checked only for naming roles; its meaning is the
-artifact-run engine's, which covers each `verifies` relation only by a
-judgment of the verified version (ADR 114). Type rules registered for the
+values when the source is `run` and validation runs inside an analysis run.
+`verifies` is checked only for naming roles. Its meaning belongs to the
+analysis workflow: code (`apply_verdict`) applies the verifying role's verdict to the
+subjects it was handed, refusing or accepting each, and that application
+settles the relation for the verified version
+([ADR 114](./adr/114-directory-types-declare-what-a-role-verifies.md),
+kept by [ADR 118](./adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)).
+Type rules registered for the
 directory type compute what needs a grammar, such as record citations
 within each role's `cites` scope.
 

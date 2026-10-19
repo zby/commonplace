@@ -1,4 +1,7 @@
-"""Scripted completion evidence and temporary Git fixtures, not real analyses."""
+"""Integration's publication proof and transfer over scripted run records in temporary repositories.
+
+`test_workflow.py` integrates a run published through the workflow.
+"""
 from __future__ import annotations
 
 import json
@@ -10,8 +13,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace.artifactrun import effects
-from commonplace.lib.agentic_analysis import publication
+from commonplace.lib.agentic_analysis import effects
 from commonplace.lib.agentic_analysis import worktree as aw
 from commonplace.lib.agentic_analysis.plan import PLAN
 
@@ -92,7 +94,7 @@ def test_exact_retained_tree_required(proof, change):
         path.symlink_to(proof.destination / "overview.md")
     else:
         path.write_text("changed")
-    with pytest.raises((ValueError, publication.UncertainEffectError)):
+    with pytest.raises((ValueError, effects.UncertainEffectError)):
         verify(proof)
     assert git(proof.root, "diff", "--cached", "--name-only") == ""
 
@@ -205,20 +207,3 @@ def test_integration_git_actions_are_scoped_and_merge(proof, monkeypatch, tmp_pa
     assert (origin / destination.relative_to(tree) / "overview.md").read_bytes() == proof.files["overview.md"]
     changed = git(tree, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").splitlines()
     assert changed and all(name.startswith(destination.relative_to(tree).as_posix() + "/") for name in changed)
-
-
-def test_a_real_compact_plan_s_fixed_identity_names_the_shipped_file(tmp_path, monkeypatch):
-    """The run fixes the expansion; integration compares the plan file the operator shipped."""
-    from commonplace.artifactrun import inspect, start_run
-    from commonplace.artifactrun.engine import library_root
-
-    library = Path(__file__).resolve().parents[3] / "kb"
-    monkeypatch.setattr("commonplace.artifactrun.engine.library_root", lambda: library)
-    assert library_root() == library
-    run = tmp_path / "run"
-    start_run(run, library / PLAN, parameters={"system": "x", "source": "y", "source-identity": "z", "command-path": "/c"})
-    fixed = inspect(run)["declaration"]
-    shipped = library / PLAN
-    assert fixed["plan"] == str(shipped.resolve())
-    assert fixed["plan_sha256"] == sha256(shipped.read_bytes()).hexdigest()
-    assert fixed["declaration_sha256"] != fixed["plan_sha256"], "the fixed declaration is the expansion, not the file"

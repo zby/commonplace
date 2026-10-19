@@ -34,7 +34,7 @@ Python and TypeScript/JavaScript are the initial coverage priorities. Rust and G
 
 ## Options and consumption paths
 
-A proposed change must reach workers through a specified consumer, channel, and force—the path required for an [operative change](../../notes/definitions/operative-change.md). The relevant horizon here is a worker's analysis invocation. Installed tools that only the coordinator can access do not satisfy it.
+A proposed change must reach workers through a specified consumer, channel, and force—the path required for an [operative change](../../notes/definitions/operative-change.md). The relevant horizon here is a worker's analysis invocation. Installed tools that only the operator's session can access do not satisfy it.
 
 ### A. Keep existing search and bounded reads
 

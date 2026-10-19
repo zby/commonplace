@@ -54,7 +54,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.environ["FAKE_ROOT"])
 from tests.commonplace.agentic_analysis.execution_fixtures import (
-    candidate, memory_profile, reconciliation, report, report_verdict, subject_verdict, synthesis,
+    ScriptedRun, candidate, memory_profile, reconciliation, report, report_verdict, subject_verdict, synthesis,
 )
 
 prompt_path = Path(re.search(r"`([^`]+prompt\.md)`", sys.argv[-1]).group(1))
@@ -71,20 +71,7 @@ counter = counts / role
 call = int(counter.read_text()) + 1 if counter.exists() else 1
 counter.write_text(str(call))
 
-
-class Coordinator:
-    pass
-
-
-class A:
-    coordinator = Coordinator()
-    coordinator.run_dir = run_dir
-
-    def source(self):
-        return json.loads((run_dir / "code" / "acquire.json").read_text())
-
-
-a = A()
+a = ScriptedRun(run_dir)
 if call in scenario.get("problem", {}).get(role, []):
     Path(frame["problem"]).write_text(f"{role}: the fixture cannot do this job (call {call})")
     sys.exit(0)

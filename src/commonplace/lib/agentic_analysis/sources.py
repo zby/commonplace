@@ -10,10 +10,10 @@ no partial checkout behind. An existing clean checkout is moved to the
 commit; it is never cleaned: local changes, a foreign origin, or a commit the
 origin does not have stop the run for the operator.
 
-Acquisition keeps its own effect journal, separate from the engine's attempt
-state. It records intent before mutation and the source before the engine
-commits an output. A retry never silently selects a new revision when a
-completed or uncertain acquisition may already have selected one.
+Acquisition keeps its own effect journal, separate from the run's records.
+It records intent before mutation and the source before the run records
+its output. A rerun never silently selects a new revision when a completed
+or uncertain acquisition may already have selected one.
 """
 
 from __future__ import annotations
@@ -28,8 +28,7 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from commonplace.artifactrun import UncertainEffectError
-from commonplace.artifactrun.effects import write_json
+from commonplace.lib.agentic_analysis.effects import UncertainEffectError, write_json
 from commonplace.lib.source_identity import normalize_source_identity
 
 JOURNAL = "effects/acquire.json"

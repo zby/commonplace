@@ -17,7 +17,7 @@ import yaml
 PROFILES_FILE = "kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml"
 WORKSHOP = Path("kb/work/analysis-workflow-calibration")
 METHOD_FILES = (
-    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/verify-synthesis.md",
+    "kb/agentic-system-analyses/instructions/analyse-agentic-system/jobs/verify-synthesis.md",
     "kb/agentic-system-analyses/types/agentic-system-verification.md",
     "kb/agentic-system-analyses/types/agentic-system-synthesis.md",
     "kb/agentic-system-analyses/instructions/agentic-analysis-records.md",

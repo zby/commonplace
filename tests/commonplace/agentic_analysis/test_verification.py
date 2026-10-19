@@ -1,22 +1,21 @@
-"""Restricted scripted record jobs: local fixture sources, no model or publication."""
+"""The report verification protocol on local fixture members: no model or publication.
+
+A verdict is applied with `apply_verdict` to the members it was handed; the
+report check is `artifact_check` over the pinned members.
+"""
 
 from __future__ import annotations
 
-from pathlib import Path
+from hashlib import sha256
 
 import pytest
-import yaml
 
-from commonplace.artifactrun import start_run
-from commonplace.artifactrun.handlers import apply_verification, artifact_check
-from commonplace.artifactrun.run import CodeAttempt, Resolved, Run
-from commonplace.artifactrun.store import RunStore, digest
-from tests.commonplace.agentic_analysis.execution_fixtures import (
-    PARAMETERS,
-    parameters,
-    reconciliation,
-    report,
-    through_analysts,
+from commonplace.lib.agentic_analysis.checks import (
+    Correction,
+    apply_verdict,
+    artifact_check,
+    check_candidate,
+    refusal_findings,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
@@ -28,76 +27,60 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared as prepared_checkout,  # noqa: F401 - transitive local fixture
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
+    prepared_template as prepared_template,  # noqa: PLC0414 - session baseline registration
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
+    reconciliation,
+    report,
+)
+from tests.commonplace.agentic_analysis.execution_fixtures import (
     report_verdict as verdict,
 )
-from tests.commonplace.artifactrun.support import Coordinator
+from tests.commonplace.agentic_analysis.test_boundary import (
+    analysis as analysis,  # noqa: PLC0414 - explicit fixture registration
+)
+from tests.commonplace.agentic_analysis.test_boundary import (
+    begin as begin,  # noqa: PLC0414 - explicit fixture registration
+)
+from tests.commonplace.agentic_analysis.test_boundary import checkout, scripted
 
 pytestmark = pytest.mark.slow
 
 RECORDS = ("runtime", "memory", "epistemic", "workflow", "reconciliation")
 """The roles report verification verifies."""
+CLEAN = b"# Artifact check\n\nnone\n"
 
 
 @pytest.fixture
-def records(request, tmp_path):
-    start, _ = request.getfixturevalue("local_acquisition")
-    a = start(analysts=True)
-    data = a.prepared.plan()
-    data["jobs"] = data["jobs"][:17]
-    declaration = tmp_path / "restricted-record-jobs.yaml"
-    declaration.write_text(yaml.safe_dump(data))
-    run_dir = a.coordinator.run_dir.with_name(a.coordinator.run_dir.name[:-2] + "02")
-    start_run(run_dir, declaration, parameters=PARAMETERS)
-    a.coordinator = Coordinator(run_dir, tmp_path, tmp_path / "handlers.log")
-    c = a.coordinator
-    c.advance()
-    c.complete("boundary", boundary_candidate(a))
-    through_analysts(a)
-    assert c.handed() == {"reconciliation"}
-    return a
+def records(analysis):
+    """The accepted boundary, reports and reconciliation; a clean report check is handed."""
+    a = scripted(analysis)
+    texts = {"boundary": boundary_candidate(a), **{role: report(a, role) for role in RECORDS[:4]},
+             "reconciliation": reconciliation(a)}
+    analysis.members = {role: text.encode() for role, text in texts.items()}
+    analysis.code["report-check"] = CLEAN
+    return analysis
 
 
-def judgments(a, job):
-    return [j for j in RunStore(a.coordinator.run_dir).judgment_records() if j["job"] == job]
+def apply(analysis, text, **handed):
+    members = {**analysis.members, **{role: data.encode() for role, data in handed.items()}}
+    return apply_verdict(analysis.candidate("report-verification", text.encode(), members))
 
 
-def to_verifier(a):
-    a.coordinator.complete("reconciliation", reconciliation(a))
-    assert not a.coordinator.status.stops
-    assert a.coordinator.handed() == {"report-verification"}
+def report_check(analysis, **changed):
+    members = {**analysis.members, **changed}
+    layout = analysis.layout
+    snapshot = {layout.path(role): data for role, data in members.items()}
+    return artifact_check(snapshot, run_dir=analysis.run_dir, repo=analysis.worktree,
+                          source=scripted(analysis).source(), type_spec=analysis.method.type_spec,
+                          criteria=analysis.criteria).decode()
 
 
-def code_attempt(a, name, replacements=None):
-    """Pin declared inputs for narrow handler-only tests, never discover files."""
-    run = Run(RunStore(a.coordinator.run_dir))
-    job = run.jobs.job(name)
-    pins = {key: run.resolve(key, job.inputs) for key in job.inputs}
-    for key, data in (replacements or {}).items():
-        old = pins[key]
-        pins[key] = Resolved(digest(data), data, old.role, old.producer)
-    return CodeAttempt(run, job, pins)
-
-
-def test_blocker_free_verdict_covers_only_checked_relations(records):
-    a = records
-    for name in ("reconciliation", "report-verification"):
-        h = a.coordinator.handout(name)
-        assert "## Input reading batches" in h.prompt.read_text()
-        assert "jobs-engine/" in h.prompt.read_text()
-        assert "opening" not in parameters(h)
-        assert not (h.prompt.parent / "inputs" / "opening.md").exists()
-        if name == "reconciliation":
-            to_verifier(a)
-    assert judgments(a, "check-reconciliation")[-1]["outcome"] == "accepted"
-    p = parameters(a.coordinator.handout("report-verification"))
-    assert Path(p["report-check"]).read_text() == "# Artifact check\n\nnone\n"
-    a.coordinator.complete("report-verification", verdict(a))
-    applied = judgments(a, "apply-report-verification")
-    assert len(applied) == 6
-    assert all(j["outcome"] == "accepted" and not j["overrides"] for j in applied)
-    assert {j["subject"]["role"] for j in applied} == {"report-verification", *RECORDS}
-    assert all({"verifier-attempt", "report-check-handed"} <= j["basis"].keys() for j in applied)
-    assert not a.coordinator.status.publishable
+def test_clean_members_pass_the_report_check_and_a_blocker_free_verdict_accepts_all(records):
+    assert report_check(records) == CLEAN.decode()
+    own, judgments = apply(records, verdict(scripted(records)))
+    assert own == []
+    assert {(j.role, j.outcome) for j in judgments} == {(role, "accepted") for role in RECORDS}
 
 
 @pytest.mark.parametrize("body,changes,reason", [
@@ -107,11 +90,9 @@ def test_blocker_free_verdict_covers_only_checked_relations(records):
     ("SRC-1", {"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "run-id"),
 ])
 def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes, reason):
-    a = records
-    a.coordinator.complete("reconciliation", reconciliation(a, body, **changes))
-    j = judgments(a, "check-reconciliation")[-1]
-    assert j["outcome"] == "refused" and reason in j["findings"]
-    assert not (a.coordinator.run_dir / "artifact/reconciliation.md").exists()
+    text = reconciliation(scripted(records), body, **changes).encode()
+    findings = check_candidate(records.candidate("reconciliation", text))
+    assert any(reason in finding for finding in findings), findings
 
 
 @pytest.mark.parametrize("blockers,changes,reason", [
@@ -121,116 +102,87 @@ def test_reconciliation_content_is_not_a_semantic_verdict(records, body, changes
     ("none", {"reviewed-boundary": "b" * 40}, "identity"),
 ])
 def test_malformed_verdict_never_judges_records(records, blockers, changes, reason):
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a, blockers, **changes))
-    applied = judgments(a, "apply-report-verification")
-    assert len(applied) == 1 and applied[0]["outcome"] == "refused"
-    assert reason in applied[0]["findings"]
-    assert applied[0]["subject"]["role"] == "report-verification"
+    own, judgments = apply(records, verdict(scripted(records), blockers, **changes))
+    assert judgments == []
+    assert any(reason in finding for finding in own), own
 
 
 def test_routes_only_addressed_blockers_and_preserves_continuations(records):
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a, "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."))
-    applied = judgments(a, "apply-report-verification")
-    assert [j["subject"]["role"] for j in applied] == ["report-verification", "runtime", "reconciliation"]
-    assert {e["relation"] for e in applied[0]["scope"]} == {
-        "report-verification:identity:boundary",
-        *(f"report-verification:cites:{role}" for role in ("boundary", *RECORDS))}, \
-        "a verdict's content acceptance covers its citations, never a verifies relation"
-    p = parameters(a.coordinator.handout("runtime"))
-    feedback = Path(p["refusal"]).read_text()
-    assert "The reader inference is unsupported." in feedback
-    assert "clarify the relation" not in feedback
-    assert "## Cited records from other reports" in feedback
+    blockers = "- runtime: reconsider SRC-1.\n  The reader inference is unsupported.\n- reconciliation: clarify the relation."
+    own, judgments = apply(records, verdict(scripted(records), blockers))
+    assert own == []
+    assert [(j.role, j.outcome) for j in judgments] == [("runtime", "refused"), ("reconciliation", "refused")], \
+        "a subject no blocker addresses is not judged"
+    runtime = judgments[0].findings
+    assert "The reader inference is unsupported." in runtime
+    assert "clarify the relation" not in runtime
+    assert "## Cited records from other reports" in runtime
 
 
-@pytest.mark.parametrize("member", ["runtime", "workflow"])
-def test_declined_answers_rerun_verifier_without_semantic_override(records, member):
-    a = records
-    to_verifier(a)
-    blocker = f"- {member}: reconsider SRC-1."
-    a.coordinator.complete("report-verification", verdict(a, blocker))
-    a.coordinator.complete(member, report(a, member), answers="- declined: SRC-1 still supports the bounded finding.\n")
-    assert a.coordinator.handed() == {"report-verification"}, a.coordinator.status
-    assert judgments(a, f"check-{member}")[-1]["outcome"] == "accepted", "a decline may keep the exact report"
-    refused = next(j for j in judgments(a, "apply-report-verification") if j["outcome"] == "refused")
-    assert refused["id"] not in judgments(a, f"check-{member}")[-1]["overrides"]
-    p = parameters(a.coordinator.handout("report-verification"))
-    assert Path(p[f"{member}-answers"]).read_text().startswith("- declined:")
-    assert Path(p["previous-verification"]).read_text() == verdict(a, blocker)
-    a.coordinator.complete("report-verification", verdict(a))
-    accepted = judgments(a, "apply-report-verification")[-(len(RECORDS) + 1):]
-    assert all(j["outcome"] == "accepted" for j in accepted)
+def test_declined_answer_may_keep_the_exact_report(records):
+    a = scripted(records)
+    blocker = "- workflow: reconsider SRC-1."
+    _, (judgment,) = apply(records, verdict(a, blocker))
+    text = report(a, "workflow")
+    correction = Correction(judgment.findings.encode(), b"- declined: SRC-1 still supports the bounded finding.\n",
+                            sha256(text.encode()).hexdigest())
+    assert check_candidate(records.candidate("workflow", text.encode()), correction) == []
 
 
-def test_record_check_uses_pinned_content_not_projection_or_later_members(records):
-    a = records
-    to_verifier(a)
-    clean = code_attempt(a, "report-check")
-    baseline = artifact_check(clean)
-    (a.coordinator.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
-    (a.coordinator.run_dir / "artifact/synthesis.md").write_text("untracked later member")
-    assert artifact_check(clean) == baseline
-    bad = report(a, "runtime").replace("## Runtime account", "## Wrong section").encode()
-    findings = artifact_check(code_attempt(a, "report-check", {"runtime": bad}))["findings"].decode()
+def test_report_check_uses_pinned_content_not_projection_or_later_members(records):
+    baseline = report_check(records)
+    (records.run_dir / "artifact/runtime.md").write_text("untracked malformed projection")
+    (records.run_dir / "artifact/synthesis.md").write_text("untracked later member")
+    assert report_check(records) == baseline
+    bad = report(scripted(records), "runtime").replace("## Runtime account", "## Wrong section").encode()
+    findings = report_check(records, runtime=bad)
     assert "Runtime account" in findings
     assert "synthesis" not in findings and "overview" not in findings
 
 
-def test_handed_record_check_failure_cannot_be_ignored(records):
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a))
-    attempt = code_attempt(a, "apply-report-verification", {"report-check-handed": b"# Artifact check\n\n- runtime.md: fixture failure\n"})
-    apply_verification(attempt)
-    result = attempt.judgments({}, 100, "scripted")
-    assert len(result) == 1 and result[0]["outcome"] == "refused"
-    assert "structural failures require explicit blockers" in result[0]["findings"]
+def test_handed_report_check_failure_cannot_be_ignored(records):
+    records.code["report-check"] = b"# Artifact check\n\n- runtime.md: fixture failure\n"
+    own, judgments = apply(records, verdict(scripted(records)))
+    assert judgments == []
+    assert any("structural failures require explicit blockers" in finding for finding in own)
+    own, judgments = apply(records, verdict(scripted(records), "- runtime: repair the structural failure."))
+    assert own == [] and [j.role for j in judgments] == ["runtime"]
 
 
 def test_per_addressee_peer_fragments_are_cut_from_handed_reports(records):
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a))
+    a = scripted(records)
     memory = report(a, "memory").replace(
         "### Operative objects\n\nnone declared in this member\n",
         "### Operative objects\n\n#### MEM-OBJ-store\n\nLabel: Fixture store\n\nPinned peer finding at SRC-1.\n",
-    ).encode()
+    )
     text = verdict(a, "- runtime: reconsider [MEM-OBJ-store](memory.md#mem-obj-store) and SRC-1.\n"
-                   "- epistemic: reconsider SRC-1.").encode()
-    attempt = code_attempt(a, "apply-report-verification", {"candidate": text, "memory-handed": memory})
-    apply_verification(attempt)
-    result = attempt.judgments({}, 100, "scripted")
-    runtime = next(j for j in result if j["subject"]["role"] == "runtime")
-    epistemic = next(j for j in result if j["subject"]["role"] == "epistemic")
-    assert "#### MEM-OBJ-store\n\nLabel: Fixture store" in runtime["findings"]
-    assert "Pinned peer finding at SRC-1." in runtime["findings"]
-    assert "MEM-OBJ-store" not in epistemic["findings"]
-    assert "## Boundary and evidence" not in runtime["findings"]
+                   "- epistemic: reconsider SRC-1.")
+    own, judgments = apply(records, text, memory=memory)
+    assert own == []
+    runtime = next(j.findings for j in judgments if j.role == "runtime")
+    epistemic = next(j.findings for j in judgments if j.role == "epistemic")
+    assert "#### MEM-OBJ-store\n\nLabel: Fixture store" in runtime
+    assert "Pinned peer finding at SRC-1." in runtime
+    assert "MEM-OBJ-store" not in epistemic
+    assert "## Boundary and evidence" not in runtime
 
 
 def test_reconciliation_structural_repair_preserves_semantic_feedback(records):
-    a = records
-    to_verifier(a)
-    a.coordinator.complete("report-verification", verdict(a, "- reconciliation: clarify SRC-1 relations."))
-    a.coordinator.complete("reconciliation", reconciliation(a, "Amendment: RT-OBJ-missing has a new value."))
-    refused = judgments(a, "check-reconciliation")[-1]
-    assert refused["outcome"] == "refused"
-    assert "- reconciliation: clarify SRC-1 relations." in refused["findings"]
-    p = parameters(a.coordinator.handout("reconciliation"))
-    assert "- reconciliation: clarify SRC-1 relations." in Path(p["refusal"]).read_text()
-    a.coordinator.complete("reconciliation", reconciliation(a, "Clarified the fixture relations at SRC-1."))
-    repaired = judgments(a, "check-reconciliation")[-1]
-    assert repaired["outcome"] == "accepted" and not repaired["overrides"]
-    assert all(not e["relation"].startswith("report-verification:") for e in repaired["scope"])
+    a = scripted(records)
+    _, (judgment,) = apply(records, verdict(a, "- reconciliation: clarify SRC-1 relations."))
+    malformed = reconciliation(a, "Amendment: RT-OBJ-missing has a new value.").encode()
+    answers = b"- corrected: clarified the relations.\n"
+    findings = check_candidate(records.candidate("reconciliation", malformed),
+                               Correction(judgment.findings.encode(), answers, None))
+    assert findings
+    structural = refusal_findings(findings, member="reconciliation", answered=judgment.findings.encode())
+    assert "- reconciliation: clarify SRC-1 relations." in structural
+    assert "## Limits" in structural, "the verdict's Limits are carried forward"
+    repaired = reconciliation(a, "Clarified the fixture relations at SRC-1.").encode()
+    assert check_candidate(records.candidate("reconciliation", repaired),
+                           Correction(structural.encode(), answers, None)) == []
 
 
-def test_source_drift_is_a_record_check_finding(records):
-    a = records
-    to_verifier(a)
-    attempt = code_attempt(a, "report-check")
-    (a.checkout / "DIRTY.md").write_text("Local source drift; never execute.\n")
-    assert "does not hold exactly" in artifact_check(attempt)["findings"].decode()
+def test_source_drift_is_a_report_check_finding(records):
+    (checkout(records) / "DIRTY.md").write_text("Local source drift; never execute.\n")
+    assert "does not hold exactly" in report_check(records)

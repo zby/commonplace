@@ -2,25 +2,25 @@
 # (commonplace.lib.agentic_analysis.workflow). Each role entry declares its
 # mission only: instruction, reads, attempts, criteria groups and the
 # analysis's own checks and feedback; the workflow's control flow (the order
-# of roles, the correction cascade, assembly and publication) is code, and a
-# role's check partners come from the type's layout. Every worker also
-# receives its member type, the types of the members it reads and the prompt
-# section, rendered into its prompt. Instructions and the prompt section are
-# relative to this file; other file inputs are library paths. Opening consumes
-# the run parameters system, source-identity, source and optional
-# source-revision. Every worker prompt prints system, command-path (the
-# prepared checkout's command directory), source-identity and
+# of roles, the correction cascade, the code jobs opening, acquire,
+# report-check, assemble and publish) is code, and a role's check partners
+# come from the type's layout. Every worker also receives its member type,
+# the types of the members it reads and the prompt section, rendered into
+# its prompt. Instructions and the prompt section are relative to this
+# file; other file inputs are library paths. A read names a role, or a code
+# job's output as `opening:metadata`, `acquire:source` or
+# `report-check:findings`, or a role's second output as `<role>:answers`.
+# Opening consumes the run parameters system, source-identity, source and
+# optional source-revision. Every worker prompt prints system, command-path
+# (the prepared checkout's command directory), source-identity and
 # capture-directory as lines.
-# Until the artifact-run engine is retired, commonplace.artifactrun.compact
-# still expands this file into the engine's full form (a derived check-<role>
-# or apply-<role> job per role; the code jobs below).
 type: agentic-system-analyses/types/agentic-system-analysis-set.md
 frozen-source: boundary
-prompt-section: jobs-engine/prompt-section.md
+prompt-section: jobs/prompt-section.md
 criteria:
   worker:
     collection: agentic-system-analyses/COLLECTION.md
-    worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs-engine/follow-worker-rules.md
+    worker-rules: agentic-system-analyses/instructions/analyse-agentic-system/jobs/follow-worker-rules.md
   # The contract the record-citing member types refer to; their writers and
   # every derived job receive it, the derived jobs with its own type.
   contracts:
@@ -66,20 +66,8 @@ defaults:
   parameters: {system: '{param:system}', command-path: '{param:command-path}',
                source-identity: '{param:source-identity}', capture-directory: '{run}/sources'}
 jobs:
-- name: opening
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.open_analysis
-  inputs:
-    worker-profiles: {address: file, source: agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml}
-  outputs: [metadata]
-- name: acquire
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.acquire_analysis
-  inputs:
-    metadata: {address: output, source: 'opening:metadata'}
-  outputs: [source]
 - role: boundary
-  instruction: jobs-engine/declare-boundary.md
+  instruction: jobs/declare-boundary.md
   max-attempts: 2
   criteria: [worker]
   reads: {'opening:metadata': required, 'acquire:source': required}
@@ -87,33 +75,30 @@ jobs:
   - function: commonplace.lib.agentic_analysis.declared_checks.bound_boundary
     inputs: {metadata: 'opening:metadata', source: 'acquire:source'}
 - role: runtime
-  instruction: jobs-engine/trace-runtime.md
+  instruction: jobs/trace-runtime.md
   outputs: [report, answers]
   criteria: [worker, contracts]
   reads: {boundary: required}
 - role: memory
-  instruction: jobs-engine/analyse-memory.md
+  instruction: jobs/analyse-memory.md
   outputs: [report, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
 - role: epistemic
-  instruction: jobs-engine/trace-epistemic.md
+  instruction: jobs/trace-epistemic.md
   outputs: [report, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
 - role: workflow
-  instruction: jobs-engine/trace-workflow.md
+  instruction: jobs/trace-workflow.md
   outputs: [report, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: order-only}
 - role: reconciliation
-  instruction: jobs-engine/reconcile-records.md
+  instruction: jobs/reconcile-records.md
   criteria: [worker, contracts]
-- job: report-check
-  handler: commonplace.artifactrun.handlers.artifact_check
-  inputs: [boundary, runtime, memory, epistemic, workflow, reconciliation]
 - role: report-verification
-  instruction: jobs-engine/verify-reports.md
+  instruction: jobs/verify-reports.md
   outputs: [verification]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
@@ -123,74 +108,30 @@ jobs:
   checks: [commonplace.lib.agentic_analysis.verification.report_check_gate]
   feedback: commonplace.lib.agentic_analysis.verification.cited_records
 - role: memory-profile
-  instruction: jobs-engine/map-memory-profile.md
+  instruction: jobs/map-memory-profile.md
   outputs: [profile, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           workflow: required, reconciliation: required}
-  verified-by: [report-verification]
 - role: profile-verification
-  instruction: jobs-engine/verify-memory-profile.md
+  instruction: jobs/verify-memory-profile.md
   outputs: [verification, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
-          workflow: required, reconciliation: required, memory-profile: required, 'memory-profile:answers': optional,
-          'refusal:memory-profile': optional}
+          workflow: required, reconciliation: required, memory-profile: required, 'memory-profile:answers': optional}
 - role: synthesis
-  instruction: jobs-engine/synthesize-analysis.md
+  instruction: jobs/synthesize-analysis.md
   max-attempts: 2
   outputs: [synthesis, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           workflow: required, reconciliation: required, memory-profile: required, report-verification: required,
           profile-verification: required}
-  verified-by: [report-verification, profile-verification]
 - role: synthesis-verification
-  instruction: jobs-engine/verify-synthesis.md
+  instruction: jobs/verify-synthesis.md
   max-attempts: 2
   outputs: [verification, answers]
   criteria: [worker, contracts]
   reads: {boundary: required, runtime: required, memory: required, epistemic: required,
           workflow: required, reconciliation: required, synthesis: required, report-verification: required,
-          profile-verification: required, 'synthesis:answers': optional, 'refusal:synthesis': optional}
-- name: assemble
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.assemble_analysis
-  role: overview
-  criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
-  inputs: &published
-    coverage: {address: coverage}
-    source: {address: output, source: 'acquire:source'}
-    metadata: {address: output, source: 'opening:metadata'}
-    boundary-attempt: {address: attempt, source: boundary}
-    runtime-attempt: {address: attempt, source: runtime, required: false}
-    memory-attempt: {address: attempt, source: memory, required: false}
-    epistemic-attempt: {address: attempt, source: epistemic, required: false}
-    workflow-attempt: {address: attempt, source: workflow, required: false}
-    reconciliation-attempt: {address: attempt, source: reconciliation, required: false}
-    report-verification-attempt: {address: attempt, source: report-verification, required: false}
-    memory-profile-attempt: {address: attempt, source: memory-profile, required: false}
-    profile-verification-attempt: {address: attempt, source: profile-verification, required: false}
-    synthesis-attempt: {address: attempt, source: synthesis, required: false}
-    synthesis-verification-attempt: {address: attempt, source: synthesis-verification, required: false}
-    boundary: {address: role, source: boundary}
-    runtime: {address: role, source: runtime, required: false}
-    memory: {address: role, source: memory, required: false}
-    epistemic: {address: role, source: epistemic, required: false}
-    workflow: {address: role, source: workflow, required: false}
-    reconciliation: {address: role, source: reconciliation, required: false}
-    memory-profile: {address: role, source: memory-profile, required: false}
-    synthesis: {address: role, source: synthesis, required: false}
-    report-verification: {address: role, source: report-verification, required: false}
-    profile-verification: {address: role, source: profile-verification, required: false}
-    synthesis-verification: {address: role, source: synthesis-verification, required: false}
-  outputs: [overview, manifest]
-- name: publish
-  kind: code
-  handler: commonplace.lib.agentic_analysis.handlers.publish_analysis
-  criteria: [contracts, types, reports, reconciliation, verification, profile, synthesis, publication]
-  inputs:
-    <<: *published
-    overview: {address: role, source: overview}
-    manifest: {address: output, source: 'assemble:manifest'}
-  outputs: [receipt]
+          profile-verification: required, 'synthesis:answers': optional}

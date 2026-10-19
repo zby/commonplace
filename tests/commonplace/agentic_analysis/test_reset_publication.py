@@ -1,132 +1,139 @@
-"""Unreleased replacement reuses the ordinary exact-byte publication effect."""
+"""Withdrawing an unreleased publication: the journal states it recognises and the ones it refuses.
+
+Publication runs for real with scripted guards; `withdraw_publication` runs
+without mocks except the preparation record naming the origin.
+`test_workflow.py` covers withdrawal through the CLI, with and without an
+incumbent, a withdrawal interrupted before any incumbent existed, and the
+refusal when nothing was published.
+"""
 import json
 from pathlib import Path
 
 import pytest
-import yaml
 
-from commonplace.artifactrun import effects
-from commonplace.artifactrun.reset import reset_run
-from commonplace.artifactrun.store import RunStore
-from commonplace.lib.agentic_analysis import handlers, publication
+from commonplace.lib.agentic_analysis import effects, publication
+from commonplace.lib.agentic_analysis.analyses import ANALYSIS_TYPE
+from commonplace.lib.agentic_analysis.preparation import RUNTIME_MARKER
+from commonplace.lib.agentic_analysis.publication import withdraw_publication
 from tests.commonplace.agentic_analysis.test_publication import (
-    ANALYSIS_TYPE,
-    ROOT,
-    assembled_publish_attempt,
+    LAYOUT,
+    OLD_ID,
+    WORKER,
     doc,
-    scripted,  # noqa: F401 - fixture used by the assembled attempt
+    fixture,
+    scripted,  # noqa: F401 - fixture used by `published`
 )
 
+ANCHOR = "overview.md"
 
-@pytest.fixture(params=[False, True])
+
+@pytest.fixture(params=[False, True], ids=["no-incumbent", "incumbent"])
 def published(tmp_path, monkeypatch, request):
-    checked = request.getfixturevalue("scripted")
-    attempt = assembled_publish_attempt(tmp_path, checked)
-    repo = attempt.run_dir.parent
-    destination = repo / publication.RETAINED_ROOT / publication.publication_slug(
-        attempt.metadata["source-identity"], attempt.metadata["system"])
-    attempt.metadata["review-path"] = (destination / "overview.md").relative_to(repo).as_posix()
-    old_id = "AAS-2026-10-06-example-0123456789ab-01"
-    old = {"overview.md": doc({"run-id": old_id}), "memory.md": b"old memory\r\n"} if request.param else None
+    """A complete publication in a source checkout, over an incumbent or none; returns (fixture, destination, old)."""
+    request.getfixturevalue("scripted")
+    f = fixture(tmp_path / "repo", "complete")
+    (f.repo / RUNTIME_MARKER).parent.mkdir(parents=True)
+    (f.repo / RUNTIME_MARKER).write_text("# Source-checkout marker.\n")
+    destination = f.destination()
+    f.metadata["review-path"] = (destination / ANCHOR).relative_to(f.repo).as_posix()
+    old = {ANCHOR: doc({"run-id": OLD_ID}), "memory.md": b"old memory\r\n"} if request.param else None
     if old:
         destination.mkdir(parents=True)
         for name, data in old.items():
             (destination / name).write_bytes(data)
-        attempt.metadata["expected-incumbent-sha256"] = publication._digest(old["overview.md"])
+        f.metadata["expected-incumbent-sha256"] = publication._digest(old[ANCHOR])
     monkeypatch.setattr(publication, "inspect_destination", lambda **kwargs: {
-        "expected_incumbent_sha256": attempt.metadata["expected-incumbent-sha256"],
-    })
-    receipt = handlers.publish_analysis(attempt)["receipt"]
-    store = RunStore(attempt.run_dir)
-    store.create({"type": (ROOT / "kb" / ANALYSIS_TYPE).read_text(), "type_spec": ANALYSIS_TYPE,
-                  "library": str(repo / "kb"), "plan": "fixture.yaml", "parameters": {},
-                  "declaration": yaml.safe_dump({"type": ANALYSIS_TYPE, "jobs": [
-                      {"name": "opening", "kind": "code", "handler": "unused.handler", "inputs": {}, "outputs": ["metadata"]},
-                      {"name": "publish", "kind": "code", "handler": "commonplace.lib.agentic_analysis.handlers.publish_analysis",
-                       "inputs": {"metadata": {"address": "output", "source": "opening:metadata"}}, "outputs": ["receipt"]},
-                  ]})})
-    store.commit_attempt({"id": "000001-opening", "seq": 1, "job": "opening", "kind": "code", "pins": {},
-                          "outputs": {"metadata": store.put(json.dumps(attempt.metadata).encode())}})
-    store.commit_attempt({"id": "000002-publish", "seq": 2, "job": "publish", "kind": "code", "pins": {},
-                          "outputs": {"receipt": store.put(receipt)}})
-    store.write_bytes(store.state / "seq", b"2\n")
-    # A source checkout and preparation are fixture-supplied; the actual reset,
-    # publication hook, journals, snapshots and install_tree run without mocks.
+        "expected_incumbent_sha256": f.metadata["expected-incumbent-sha256"]})
     origin = tmp_path / "origin"
-    monkeypatch.setattr("commonplace.artifactrun.worktree.source_checkout", lambda _: repo)
     monkeypatch.setattr(publication, "preparation_for", lambda _: {"origin": str(origin)})
-    return attempt, destination, old, origin
+    overview, manifest = f.assemble()
+    assert f.publish(overview, manifest)["published"] is True
+    f.overview, f.origin = overview, origin
+    return f, destination, old
 
 
-def test_reset_withdraws_and_republishes_new_bytes(published):
-    attempt, destination, old, _ = published
+def withdraw(f):
+    return withdraw_publication(f.run_dir, f.metadata, anchor=ANCHOR)
+
+
+def test_withdrawal_restores_the_incumbent_and_new_bytes_publish(published):
+    f, destination, old = published
     original = effects.tree(destination)
-    report = reset_run(attempt.run_dir, "publish")
+    report = withdraw(f)
+    assert report["state"] == "established"
     assert effects.tree(destination) == old
-    assert not (attempt.run_dir / publication.JOURNAL).exists()
-    archived = Path(report["archive"])
-    assert effects.tree(archived / "effects/0/before") == original
-    assert not (attempt.run_dir / "state/attempts/000002-publish.json").exists()
-    assert (attempt.run_dir / "state/attempts/000001-opening.json").is_file()
-    # Fresh, validated assembly input; no old receipt/journal is repinned.
-    attempt.inputs["overview"] += b"\nCorrected unreleased account.\n"
-    manifest = yaml.safe_load(attempt.inputs["manifest"])
-    manifest["members"]["overview.md"]["sha256"] = publication._digest(attempt.inputs["overview"])
-    attempt.inputs["manifest"] = yaml.safe_dump(manifest, sort_keys=False).encode()
-    receipt = json.loads(handlers.publish_analysis(attempt)["receipt"])
+    evidence = Path(report["evidence"])
+    assert effects.tree(evidence / destination.name) == original
+    assert (evidence / "publish.json").is_file()
+    assert not (f.run_dir / publication.JOURNAL).exists()
+    # A corrected overview, freshly pinned, publishes over the restored incumbent.
+    corrected = {**f.members, "overview": f.overview + b"\nCorrected unreleased account.\n"}
+    manifest = publication._manifest(LAYOUT, ANALYSIS_TYPE, corrected, {**WORKER, "model": "fixture-model-1"})
+    receipt = f.publish(corrected["overview"], manifest)
     assert receipt["published"] is True
     assert effects.tree(destination) != original
     assert effects.hashes(effects.tree(destination)) == receipt["members"]
-    journal = json.loads((attempt.run_dir / publication.JOURNAL).read_text())
+    journal = json.loads((f.run_dir / publication.JOURNAL).read_text())
     assert journal["new"] == receipt["members"] and journal["state"] == "completed"
     assert journal["old"] == effects.hashes(old)
 
 
-def test_reset_refuses_altered_publication_without_mutation(published):
-    attempt, destination, _, _ = published
+def test_withdrawal_refuses_altered_publication_bytes_without_mutation(published):
+    f, destination, _ = published
     (destination / "memory.md").write_bytes(b"unexpected external edit")
-    journal = (attempt.run_dir / publication.JOURNAL).read_bytes()
+    journal = (f.run_dir / publication.JOURNAL).read_bytes()
     with pytest.raises(ValueError, match="exact established"):
-        reset_run(attempt.run_dir, "publish")
+        withdraw(f)
     assert (destination / "memory.md").read_bytes() == b"unexpected external edit"
-    assert (attempt.run_dir / publication.JOURNAL).read_bytes() == journal
-    assert not (attempt.run_dir.parent / ".reset-history").exists()
+    assert (f.run_dir / publication.JOURNAL).read_bytes() == journal
+    assert not (f.run_dir / "withdrawn").exists()
 
 
-def test_reset_refuses_integrated_publication(published):
-    attempt, destination, _, origin = published
-    integrated = origin / destination.relative_to(attempt.run_dir.parent)
+def test_withdrawal_refuses_an_integrated_publication(published):
+    f, destination, _ = published
+    integrated = f.origin / destination.relative_to(f.repo)
     integrated.mkdir(parents=True)
-    (integrated / "overview.md").write_bytes(attempt.inputs["overview"])
+    (integrated / ANCHOR).write_bytes(f.overview)
     with pytest.raises(ValueError, match="already integrated"):
-        reset_run(attempt.run_dir, "publish")
-    assert (attempt.run_dir / publication.JOURNAL).exists()
+        withdraw(f)
+    assert (f.run_dir / publication.JOURNAL).exists()
 
 
-def test_interrupted_publication_reset_does_not_clobber_new_writes(published, monkeypatch):
-    from commonplace.artifactrun import reset
-
-    attempt, destination, old, _ = published
-    original = reset._replace
-
-    def interrupt(source, target):
-        original(source, target)
-        raise OSError("interrupted reset")
-
-    monkeypatch.setattr(reset, "_replace", interrupt)
-    with pytest.raises(OSError, match="interrupted"):
-        reset_run(attempt.run_dir, "publish")
-    assert effects.tree(destination) == old
-    destination.mkdir(parents=True, exist_ok=True)
-    (destination / "unexpected.md").write_bytes(b"a later writer")
-    monkeypatch.setattr(reset, "_replace", original)
-    with pytest.raises(ValueError, match="changed since preparation"):
-        reset_run(attempt.run_dir, "publish")
-    assert (destination / "unexpected.md").read_bytes() == b"a later writer"
-    (destination / "unexpected.md").unlink()
-    if old is None:
+def test_a_rolled_back_journal_is_set_aside_without_moving_the_destination(published):
+    f, destination, old = published
+    journal = f.run_dir / publication.JOURNAL
+    record = json.loads(journal.read_text())
+    # What a rolled-back publication leaves: the opening incumbent in place, no archive.
+    archive = Path(record["archive"]) if record["archive"] else None
+    if archive is not None:
+        destination.rename(destination.with_name("published"))
+        archive.rename(destination)
+    else:
+        for path in destination.iterdir():
+            path.unlink()
         destination.rmdir()
-    report = reset_run(attempt.run_dir, "publish")
-    assert report["state"] == "completed"
+    journal.write_text(json.dumps({**record, "state": "rolled-back"}))
+    report = withdraw(f)
+    assert report["state"] == "rolled-back"
     assert effects.tree(destination) == old
-    assert not (attempt.run_dir / publication.JOURNAL).exists()
+    assert not journal.exists()
+    assert (Path(report["evidence"]) / "publish.json").is_file()
+
+
+@pytest.mark.parametrize("published", [True], ids=["incumbent"], indirect=True)
+def test_a_second_withdrawal_finishes_one_interrupted_before_the_archive_returned(published):
+    f, destination, old = published
+    journal = f.run_dir / publication.JOURNAL
+    record = json.loads(journal.read_text())
+    original = effects.tree(destination)
+    # Interrupted after marking the journal and moving the destination away, before the archive moved back.
+    journal.write_text(json.dumps({**record, "state": "withdrawing"}))
+    interrupted = f.run_dir / "withdrawn" / "20260101T000000Z-crash0"
+    interrupted.mkdir(parents=True)
+    destination.rename(interrupted / destination.name)
+    report = withdraw(f)
+    assert report["state"] == "established"
+    assert effects.tree(destination) == old
+    assert not Path(record["archive"]).exists()
+    assert not journal.exists()
+    assert effects.tree(interrupted / destination.name) == original

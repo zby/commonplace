@@ -61,7 +61,7 @@ The role is one the artifact's type declares; its path comes from the layout. Th
 replaces the incumbent in memory for every check in the invocation. Findings
 are restricted to that role, with rule, location and repair text;
 absent-member findings are deliberately omitted for a working artifact. When the
-directory is an engine run's `artifact/`, fields the layout binds to `run` are
+directory is an analysis run's `artifact/`, fields the layout binds to `run` are
 checked against the run's parameters and `run-id`. This mode
 writes nothing and refuses `--output`. A content pass is not job acceptance:
 the workflow adds separately labelled invocation residue. It establishes
@@ -144,7 +144,7 @@ Capture an X/Twitter post, thread, or article under the ignored
 is reported rather than replaced; `--reobserve` captures it again as a new
 observation under a basename ending in the capture date.
 
-## Artifact runs
+## Agentic-system analyses
 
 ### commonplace-analysis
 
@@ -205,81 +205,10 @@ and on `main`. A conflict leaves the branch and worktree for review while
 `main` stays unchanged. An agent supplies `--model <model-id>` for its commit
 trailer.
 
-Old engine run directories (`run.json`) are not read by these commands; their
-worktrees keep their own pinned commands.
-
-### commonplace-run
-
-Run the generic engine on a plan. The analysis workflow no longer runs on it
-(`commonplace-analysis run` above); the engine stays until its retirement.
-`start <run> <plan.yaml>` writes
-the run's metadata, fixing the declaration for the run; a compact plan is
-expanded first, deriving each role's check or verdict application from the
-type's layout, and the expansion is what the run fixes. `--param key=value`
-records run parameters. `advance <run>` closes the attempts reported with
-`--completed <attempt>` and `--failed <attempt>=<reason>` (`--model` and
-`--effort` record the actual worker identity on those results), runs every ready
-code job, hands out every ready model job, and prints the exact prompt paths,
-open attempts, stops and whether the artifact is publishable; `--json` prints the
-same as data. It exits 0 when the run continues, 2 when the run stopped and
-1 when the command itself failed. The coordinator launches fresh workers without parent conversation
-and settles all round hand-outs before advancing. The analysis manifest still
-requires one consistent worker model/effort identity.
-`status <run>` lists members, open hand-outs with their original prompt paths,
-current failed attempts, historical `worker_problems` with full retained report
-text, and refusals with identifiers; use it before resuming. `--json` includes
-these independently: a completed attempt can retain a worker problem without
-being a current failure. See the inspection limitations above.
-Publishability means engine coverage, not publication or content validation.
-
-`reset <run> --from <job>` archives debugging evidence outside active discovery,
-withdraws that job's active attempts and dependent completions, and rebuilds the
-working artifact from retained upstream acceptance records. It does not launch
-workers or supply audit feedback. After the external reset, the agent follows
-the existing step program without special instructions. Verification can send
-retained author work through the normal correction loop. Correction attempt
-budgets restart, including for retained authors. Independent work stays active.
-`--json` reports the reset jobs and debugging archive path.
-
-Reset requires no open attempts or unresolved uncertain effects. Settle workers
-before invoking it; do not delete open records to simulate idleness. Refusals
-and optional candidate-check context are not forward reset edges. The debugging
-archive holds the pre-reset run, withdrawn external effects and prepared next
-state. A pending-reset marker blocks normal engine operations after interruption;
-repeat the same reset command to finish applying that prepared state.
-
-Handlers with external effects must supply the reset hook described in
-`src/commonplace/artifactrun/reset.py`. The analysis publication hook withdraws
-an exact unreleased worktree publication and restores its opening incumbent, if
-any, so unchanged opening metadata can support ordinary replacement publication.
-It rejects altered publication bytes and already integrated results. Reset does
-not alter the frozen plan, opening method commit, source snapshot or run identity;
-use the run's matching command environment.
-
-`validate-output <prompt-path>` gives a worker read-only validation feedback for
-its open attempt's primary output. It resolves the output, artifact directory
-and role from recorded run metadata and invokes the same role-draft validator
-as `commonplace-validate <draft> --artifact <directory> --role <role>`.
-Diagnostics and validation exit statuses are preserved; path/attempt lookup
-errors exit 1. It neither completes the attempt nor replaces workflow checks.
-Auxiliary outputs remain subject to their existing workflow checks.
-
-**Layout coupling:** this command identifies the run and attempt from the
-canonical `RUN/state/handouts/ATTEMPT/prompt.md` location, then verifies the
-recorded model job and reconstructed handout path. It does not parse prompt
-prose or infer a role from the attempt name. Copied prompts outside that layout,
-unknown or closed attempts, and jobs without a validation role are rejected.
-Moving the handout layout requires updating the resolver in
-`src/commonplace/artifactrun/handouts.py`, its tests and generated invocations
-together. Use the run's own command environment, as with `advance`.
-
-`judge <run> --role <role> --outcome accepted|refused` records an operator
-judgment of a role's member: `--findings` carries the reason, `--scope`
-names covered relations with their partners among `--basis` roles,
-`--override` names a refusal the acceptance cancels, and `--version` judges an
-earlier version as evidence only. An operator's judgment leaves the same
-record as a code job's; a refusal of a member whose acceptances all hold does
-not by itself block publication.
+Run directories made by the retired artifact-run engine (`run.json`) are not
+read by these commands. Inspect or integrate such a run from inside its own
+worktree, whose `.venv` installs its pinned source; see
+[ADR 118](./adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md).
 
 ## Review system
 

@@ -23,7 +23,7 @@ states, as ordinary calls:
 
 Every worker call is cached by content, so a rerun of the script resumes from
 the cache (`commonplace.headless.jobs`). Attempt budgets are the plan's `max-attempts`, counted
-per job over the whole run as the engine counted them: a check's rejection, a
+per job over the whole run: a check's rejection, a
 verifier's correction, a re-ask after an input changed and a timed-out or
 incomplete launch each spend one; the verifier's own budget bounds the number
 of verifications (ADR 108's three record verifications; the plan's budgets
@@ -47,27 +47,11 @@ import shutil
 import sys
 import time
 from collections.abc import Callable, Iterable, Mapping
+from hashlib import sha256
 from pathlib import Path
 
 import yaml
 
-from commonplace.artifactrun import UncertainEffectError
-from commonplace.artifactrun.checks import (
-    Candidate,
-    apply_verdict,
-    artifact_check,
-    check_candidate,
-    frozen_source,
-    refusal_findings,
-)
-from commonplace.artifactrun.compact import type_closure
-from commonplace.artifactrun.handouts import (
-    ABSENT_LINE,
-    layout_bindings,
-    render_prompt_section,
-)
-from commonplace.artifactrun.store import digest as sha256_of
-from commonplace.artifactrun.worktree import preparation_for
 from commonplace.headless.corrections import produce
 from commonplace.headless.harness import HARNESSES, LaunchFailed, Profile
 from commonplace.headless.jobs import Answer, OutOfAttempts, Run, digest, gather
@@ -75,9 +59,25 @@ from commonplace.lib.agentic_analysis.analyses import (
     WORKER_PROFILES,
     resolve_worker_profile,
 )
+from commonplace.lib.agentic_analysis.checks import (
+    Candidate,
+    apply_verdict,
+    artifact_check,
+    check_candidate,
+    frozen_source,
+    refusal_findings,
+    type_closure,
+)
+from commonplace.lib.agentic_analysis.effects import UncertainEffectError
 from commonplace.lib.agentic_analysis.guards import require_prepared_method
 from commonplace.lib.agentic_analysis.opening import acquire_analysis, open_analysis
 from commonplace.lib.agentic_analysis.plan import PLAN
+from commonplace.lib.agentic_analysis.preparation import preparation_for
+from commonplace.lib.agentic_analysis.prompts import (
+    ABSENT_LINE,
+    layout_bindings,
+    render_prompt_section,
+)
 from commonplace.lib.agentic_analysis.publication import (
     Provenance,
     assemble_analysis,
@@ -87,7 +87,6 @@ from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, type_manifest
 from commonplace.lib.directory_layout import Layout, type_layout
 from commonplace.lib.note_parser import parse_document
-from commonplace.lib.reading_batches import READ_BATCH_BYTES
 
 RUNTIME = "runtime"
 PARALLEL_ANALYSTS = ("memory", "epistemic", "workflow")
@@ -96,11 +95,19 @@ ANALYSTS = (RUNTIME, *PARALLEL_ANALYSTS)
 RECONCILIATION = "reconciliation"
 REPORT_VERIFICATION = "report-verification"
 REPORT_CHECK = "report-check"
+CODE_OUTPUTS = {"opening": "metadata", "acquire": "source", REPORT_CHECK: "findings"}
+"""The code jobs' outputs, which a role's read names as `job:output`."""
 UNATTENDED = {"claude-code": {"permission-mode": "acceptEdits"}, "codex": {"sandbox": "workspace-write"},
               "pi": {"approve": True}}
 """Per-harness flags that let a worker read, write and run commands without a prompt (phase 0)."""
 COMPLETE = "complete"
 PLACEHOLDER = re.compile(r"\{(param:)?([A-Za-z0-9_-]+)\}")
+READ_BATCH_BYTES = 24 * 1024
+"""Byte budget for a prompt's reading batches and line ranges.
+
+Kept below the harnesses' tool-result delivery limit, leaving room for
+wrappers; workers must still recover actual truncation.
+"""
 
 
 class Stopped(Exception):
@@ -153,14 +160,10 @@ class Method:
         defaults = data.get("defaults") or {}
         self.default_attempts: int = defaults.get("max-attempts", 3)
         self.parameters: dict[str, str] = dict(defaults.get("parameters") or {})
-        self.roles: dict[str, dict] = {entry["role"]: entry for entry in data["jobs"] if "role" in entry}
-        # Every job's outputs, so a read `job:output` is named as the engine named it.
-        self.job_outputs: dict[str, list[str]] = {}
-        for entry in data["jobs"]:
-            if "role" in entry:
-                self.job_outputs[entry["role"]] = self.outputs(entry["role"])
-            else:
-                self.job_outputs[entry.get("name") or entry["job"]] = list(entry.get("outputs") or ["findings"])
+        self.roles: dict[str, dict] = {entry["role"]: entry for entry in data["jobs"]}
+        # Every job's outputs, so a read `job:output` names a code job's output or a role's second output.
+        self.job_outputs: dict[str, list[str]] = {role: self.outputs(role) for role in self.roles}
+        self.job_outputs |= {name: [output] for name, output in CODE_OUTPUTS.items()}
 
     def outputs(self, role: str) -> list[str]:
         return list(self.roles[role].get("outputs") or [role])
@@ -172,22 +175,16 @@ class Method:
         return (self.plan_dir / self.roles[role]["instruction"]).resolve()
 
     def reads(self, role: str) -> dict[str, str]:
-        """What the role reads, as `source: mode`; by default its identity sources and citations.
-
-        A `refusal:<role>` read is left out: the engine handed a refusal of
-        the role's latest output, which never exists when a verifier runs
-        (it runs once that output is accepted), so the engine always resolved
-        it as absent. The plan keeps the entry for the engine until phase 6.
-        """
+        """What the role reads, as `source: mode`; by default its identity sources and citations."""
         declared = self.layout.roles[role]
         reads = self.roles[role].get("reads")
         if reads is None:
             sources = [*(s.role for s in declared.identity), *declared.cites]
             reads = {source: "required" for source in dict.fromkeys(sources) if source != role}
-        return {source: mode for source, mode in reads.items() if not source.startswith("refusal:")}
+        return dict(reads)
 
     def extensions(self, role: str) -> dict:
-        """The role's declared checks and feedback, as the engine's derived job received them."""
+        """The role's declared checks and feedback."""
         entry = self.roles[role]
         return {key: entry[key] for key in ("checks", "feedback") if entry.get(key)}
 
@@ -245,7 +242,7 @@ class Analysis:
         require_harness(profile, harnesses)
         self.run = Run(self.run_dir, self.worktree, profile, timeout=timeout, harnesses=harnesses,
                        sleep=sleep, max_workers=max_workers)
-        # The working artifact's manifest names the type, as the engine materialized it: a worker's
+        # The working artifact's manifest names the type: a worker's
         # self-validation (`commonplace-validate <draft> --artifact <dir> --role <role>`) reads it.
         if not (self.run.artifact / MANIFEST_NAME).exists():
             self.run.accept(MANIFEST_NAME, type_manifest(self.method.type_spec).decode("utf-8"))
@@ -358,7 +355,7 @@ class Analysis:
     # Candidates and checks
 
     def candidate(self, role: str, data: bytes, members: Mapping[str, bytes] | None = None) -> Candidate:
-        """The candidate at its role beside its partners, as the engine's derived check or apply job built it.
+        """The candidate at its role beside its partners.
 
         A producer's partners are its identity sources, its citations and
         the frozen source, with the accepted member as incumbent; a
@@ -383,7 +380,7 @@ class Analysis:
             inputs |= {f"{method.read_name(s)}-handed": self.read_value(s) for s in method.reads(role)}
         return Candidate(
             role, data, snapshot, self.worktree, frozen_source(method.frozen, role, snapshot, layout, job=role),
-            None if verifying else members.get(role), run_dir=self.run_dir, layout=layout, relations=(),
+            None if verifying else members.get(role), run_dir=self.run_dir, layout=layout,
             type_spec=method.type_spec, criteria=self.criteria,
             run_values={**self.parameters, "run-id": self.run_dir.name}, frozen_source=method.frozen,
             extensions=method.extensions(role),
@@ -429,8 +426,7 @@ class Analysis:
         """Ask the role's worker, correcting `refusal` over the current member when given; accept the result.
 
         Without a refusal, a member whose reads are unchanged since it was
-        produced is current: nothing is asked and no attempt is spent, as the
-        engine ran a job only when an input changed.
+        produced is current: nothing is asked and no attempt is spent.
         """
         outputs = self.method.outputs(role)
         inputs = self.inputs(role)
@@ -460,9 +456,8 @@ class Analysis:
     def recheck(self, roles: Iterable[str]) -> None:
         """Re-check accepted members against their current partners; correct any that no longer pass.
 
-        The engine re-ran a role's check whenever a cited partner changed
-        and refused the member when it failed; here the same refusal is a
-        structural one the producer answers, until every member passes.
+        A member whose check fails against a changed partner is refused with
+        a structural refusal the producer answers, until every member passes.
         """
         roles = list(roles)
         while True:
@@ -551,7 +546,7 @@ class Analysis:
         return {role: self.members[role] for role in self.layout.roles if role in self.members}
 
     def provenance(self) -> dict[str, Provenance]:
-        return {role: Provenance(self.latest[role].record["model"], sha256_of(data))
+        return {role: Provenance(self.latest[role].record["model"], sha256(data).hexdigest())
                 for role, data in self.ordered_members().items()}
 
     def publish(self, metadata: bytes, source: bytes) -> bytes:
@@ -571,7 +566,7 @@ class Analysis:
 
 
 def batches(sized: list[tuple[str, bytes]]) -> list[list[str]]:
-    """Reading batches over (path, bytes) pairs; as `reading_batches`, but over content known before the files exist."""
+    """Reading batches over (path, bytes) pairs, grouped under the byte budget in input order."""
     result: list[list[str]] = []
     batch: list[str] = []
     total = 0
@@ -589,7 +584,7 @@ def batches(sized: list[tuple[str, bytes]]) -> list[list[str]]:
 
 
 def ranges(data: bytes) -> list[tuple[int, int]]:
-    """Line ranges fitting the read budget, as `reading_ranges` computes them for a file."""
+    """Line ranges fitting the read budget, for a file too large for one bounded read."""
     result = []
     start, size, end = 1, 0, 0
     for end, line in enumerate(data.splitlines(keepends=True), 1):

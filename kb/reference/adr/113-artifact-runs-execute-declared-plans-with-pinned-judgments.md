@@ -1,12 +1,12 @@
 ---
-description: "A generic engine runs the analysis workflow: a plan declares jobs over a typed artifact's roles, one command advances the run from disk, code jobs judge member versions against pinned inputs, and a draft validates in its role"
+description: "Superseded historical decision: a generic engine ran the analysis workflow from a plan of jobs over a typed artifact's roles, one command advanced the run from disk and code jobs judged member versions against pinned inputs; role-scoped draft validation survives"
 type: reference/types/adr.md
-status: accepted
+status: superseded
 ---
 
 # 113 — Artifact runs execute declared plans with pinned judgments
 
-**Status:** accepted
+**Status:** superseded by [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md) (2026-10-19): the engine, its plan model, hand-outs, judgments, coverage and run state are retired; `commonplace-validate <draft> --artifact <dir> --role <role>` stays.
 **Date:** 2026-10-09
 
 **Amended by:** [ADR 117](./117-plans-derive-their-structural-jobs-from-the-type.md). The two open items below, standard handlers and plan compaction, are decided there; the consequence that every check job needs a handler no longer holds; the analysis command's `report` subcommand is `inspect` (ADR 116).

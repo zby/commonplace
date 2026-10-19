@@ -11,10 +11,8 @@ from pathlib import Path
 import yaml
 from jsonschema import Draft202012Validator
 
-from commonplace.artifactrun.compact import expand_text
 from commonplace.lib import systems_matrix, validation
 from commonplace.lib.agentic_analysis import analyses
-from commonplace.lib.agentic_analysis.plan import PLAN
 from commonplace.lib.agentic_analysis.records import (
     amendment_index,
     artifact_record_findings,
@@ -36,12 +34,6 @@ STATE_DIR = Path("kb/agentic-system-analyses/state")
 
 
 INPUTS_COMMIT = "f" * 40
-
-
-def expanded(library: Path) -> dict:
-    """The full plan the engine runs for the analysis plan under `library`."""
-    path = library / PLAN
-    return yaml.safe_load(expand_text(path.read_text(encoding="utf-8"), library=library, plan_dir=path.parent))
 
 
 def artifact_record_errors(sources, bodies, *, cites=None):

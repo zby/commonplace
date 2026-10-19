@@ -45,10 +45,10 @@ export default function (pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "subagent", label: "Subagent", parameters,
 		description: "Delegate isolated tasks to fresh agents. Omit action for blocking single (agent/task) or parallel (tasks, max 8) calls. " +
-			"action=start launches one job immediately and returns a handle. All modes share four active slots per session; nested coordinators own separate pools. " +
+			"action=start launches one job immediately and returns a handle. All modes share four active slots per session; a nested parent owns a separate pool. " +
 			"action=wait with handles returns the first finished selected result; remove its handle before waiting again. Interrupted waits leave jobs running. " +
 			"status lists jobs; cancel requests termination; forget releases terminal results. Handle operations accept only action and handles; status may omit handles. " +
-			"Shutdown/reload cancels jobs and loses handles. Project definitions are discovered from each child's cwd; select agentScope=project for Commonplace. " +
+			"Shutdown/reload cancels jobs and loses handles. Project definitions, when agentScope=project, are discovered from each child's cwd. " +
 			"Model/thinking overrides apply per call or per task. There is no chain mode or automatic forwarding of outputs.",
 		async execute(_id, params, signal, onUpdate, ctx) {
 			const registry = jobs;
