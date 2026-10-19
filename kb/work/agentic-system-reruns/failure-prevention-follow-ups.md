@@ -1,5 +1,7 @@
 # Failure prevention follow-ups
 
+**Historical discussion list.** The [successor's triage](../agentic-system-completion/method-follow-ups.md) records current dispositions as of 2026-10-19. In particular, the local-negative rule below has been superseded, generic verification questions and publication naming have shipped, and the new headless engine changes path delivery and attempt evidence. Read the triage before commissioning follow-up work; the original observations and decisions below remain historical.
+
 ## Purpose and decisions
 
 Retain the operational review requested on 2026-10-15: which observed rerun

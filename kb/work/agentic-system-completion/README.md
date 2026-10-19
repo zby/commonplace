@@ -48,6 +48,8 @@ Do not select a feedback-assisted correction route without an explicit change
 to that direction. A new run's positive result does not clear predecessor
 operational incidents.
 
+Before commissioning further work, read the [method follow-up dispositions](./method-follow-ups.md): they distinguish implemented changes, existing proposals and operator decision triggers without adding new engineering scope.
+
 The next decision for each target is in the handoff. Bring source ambiguity,
 conceptual-versus-implemented scope, incident disposition and unsupported
 recovery choices to the operator before launching. Timeout diagnosis is not
