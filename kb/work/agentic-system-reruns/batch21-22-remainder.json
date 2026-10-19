@@ -1,20 +1,23 @@
 {
-  "observed_at": "2026-10-19T06:16:48.792125+00:00",
+  "historical_observed_at": "2026-10-19T06:16:48.792125+00:00",
   "inventory_targets": 206,
-  "complete": 181,
-  "pending": 21,
-  "older_target_holds": 4,
-  "unchecked": 25,
-  "canonical_sets": 182,
-  "canonical_members": 2366,
+  "complete": 189,
+  "pending": 14,
+  "older_target_holds": 3,
+  "unchecked": 17,
+  "canonical_sets": 190,
+  "canonical_members": 2470,
   "outside_inventory": [
     "rociiu--talorys"
   ],
-  "integrated_this_commission": 0,
+  "integrated_this_commission": 8,
+  "completion_evidence": "kb/work/agentic-system-reruns/batch21-22-final-preservation-resume.json",
+  "count_recipe": "206 actual checkbox rows: 189 checked, 17 unchecked; remaining prior-status rows: 14 pending and 3 older-target-hold. Seven pending plus one older-held target integrated, not eight pending targets.",
+  "integrated_keys": ["modularrsi", "agent-skills-for-context-engineering", "ai-context-os", "llm-wiki-v3", "llmwiki-marimo", "nams", "secure-llm-wiki", "siftly"],
+  "unchecked_keys": ["supermemory", "contextpilot", "openrsi", "jaz", "autogenesis", "mehmetgoekce--llm-wiki", "clawvault", "arex-skill", "agentic-harness-engineering", "awesome-agent-memory", "dualgraph", "fintool", "fragility-grid", "letta", "operational-ontology-framework", "ace", "sift-kg"],
   "ordinary_wholly_untouched_targets": 0,
   "selected_but_analysis_unstarted_after_preparation_refusal": 5,
   "category_counts": {
-    "approved-clean-origin-blocked": 8,
     "completed-local-source-stop": 2,
     "exact-publication-hold": 5,
     "failed-runtime-input": 1,
@@ -23,7 +26,8 @@
     "operator-deferred-not-selected": 2,
     "technical-gate-not-selected": 1
   },
-  "rows": [
+  "historical_rows_note": "The following 25 rows retain the pre-transfer decisions and then-current statuses verbatim. Current integrated_keys and unchecked_keys supersede only their completion/category status, not predecessor holds, source decisions or scope limits. Exact publication and merge commits are in completion_evidence.",
+  "historical_rows": [
     {
       "key": "supermemory",
       "name": "supermemory",
@@ -535,5 +539,5 @@
     "Interactive parent Pi session remains; /proc observations do not prove future writer idleness.",
     "Pre-write filesystem contents and collateral effects of operational incidents remain unresolved; fresh lineage does not clear predecessor incidents."
   ],
-  "coverage": "All 25 unchecked rows reconciled against current registered/baseline worktrees: 49 native runs, no inaccessible referenced worktree; all 25 baseline run/preparation/attempt/publication bindings preserved. No target silently dropped. Full 206 inventory checkbox count verified separately."
+  "coverage": "All 25 original targets remain accounted for: eight integrated with recorded limits and 17 unchecked. Final separate read-only preservation passed for all 49 run/preparation/own-publication maps, 44 frozen Git-source fingerprints and 57 log/exit fingerprints. Corpus is exactly the old 182/2366 map plus 104 approved members, now 190/2470; root .gitignore and archives unchanged. Full 206 inventory checkbox rows recounted: 189 complete, 14 pending, three older target holds. Ontology gate and all predecessor incidents remain. Historical clean-origin refusal and outer 200-second verification timeout are retained in their evidence, not current blockers."
 }

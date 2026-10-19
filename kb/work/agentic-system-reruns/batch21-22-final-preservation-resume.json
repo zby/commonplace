@@ -1,0 +1,836 @@
+{
+  "observed_at": "2026-10-19T09:24:22.046777+00:00",
+  "authority": "Read-only final verification after historical outer 200-second timeout; no integration replay.",
+  "runs": {
+    "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/kb/agentic-system-analyses/state/AAS-2026-10-15-supermemory-ae21530d128d-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/kb/agentic-system-analyses/state/AAS-2026-10-18-supermemory-75d21b14316b-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/kb/agentic-system-analyses/state/AAS-2026-10-13-contextpilot-30d0d09e6cdc-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-contextpilot/kb/agentic-system-analyses/state/AAS-2026-10-18-contextpilot-1394d2080dc8-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/kb/agentic-system-analyses/state/AAS-2026-10-14-openrsi-c72dec9967a3-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-openrsi/kb/agentic-system-analyses/state/AAS-2026-10-18-openrsi-29674d2f0830-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/kb/agentic-system-analyses/state/AAS-2026-10-14-modularrsi-96b89989168e-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/kb/agentic-system-analyses/state/AAS-2026-10-18-modularrsi-4218ceff5530-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/kb/agentic-system-analyses/state/AAS-2026-10-15-jaz-a94bea79c61a-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/autogenesis-63415b37b96e/kb/agentic-system-analyses/state/AAS-2026-10-13-autogenesis-63415b37b96e-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/kb/agentic-system-analyses/state/AAS-2026-10-15-autogenesis-9bcfa57fd7c1-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-18-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-16-llm-wiki-38d98e5340c9-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-17-llm-wiki-1c5eb6f83ce5-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/clawvault-d44ad402971c/kb/agentic-system-analyses/state/AAS-2026-10-13-clawvault-d44ad402971c-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/kb/agentic-system-analyses/state/AAS-2026-10-17-clawvault-38c16ae4ab34-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/arex-skill-db1b68297b6b/kb/agentic-system-analyses/state/AAS-2026-10-13-arex-skill-db1b68297b6b-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/kb/agentic-system-analyses/state/AAS-2026-10-15-arex-skill-1871063034b5-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-49c4f24b03c3/kb/agentic-system-analyses/state/AAS-2026-10-12-agentic-harness-engineering-49c4f24b03c3-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-914fd0094689/kb/agentic-system-analyses/state/AAS-2026-10-13-agentic-harness-engineering-914fd0094689-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-b7fb59b2f7bd/kb/agentic-system-analyses/state/AAS-2026-10-12-agentic-harness-engineering-b7fb59b2f7bd-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/kb/agentic-system-analyses/state/AAS-2026-10-13-awesome-agent-memory-ad0b4035706a-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-awesome-agent-memory-8e0e01c02b3a-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/dki-llm-da75a840ca8d/kb/agentic-system-analyses/state/AAS-2026-10-14-dki-llm-da75a840ca8d-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/fintool-e109159e0559/kb/agentic-system-analyses/state/AAS-2026-10-14-2015174818497437834-e109159e0559-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/kb/agentic-system-analyses/state/AAS-2026-10-14-fragility-grid-f011bbbfc307-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/kb/agentic-system-analyses/state/AAS-2026-10-18-fragility-grid-38b12f71fceb-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/kb/agentic-system-analyses/state/AAS-2026-10-11-letta-d460b458ddad-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-letta-527f0244ee20-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/kb/agentic-system-analyses/state/AAS-2026-10-14-operational-ontology-framework-c5cd99471671-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-operational-ontology-framework-2b5d9616baa4-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/kb/agentic-system-analyses/state/AAS-2026-10-15-secure-llm-wiki-c9867e0e576a-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-19-secure-llm-wiki-df02f419bddb-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/kb/agentic-system-analyses/state/AAS-2026-10-12-ace-a22ddd59ed57-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/kb/agentic-system-analyses/state/AAS-2026-10-18-ace-007571102a54-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/kb/agentic-system-analyses/state/AAS-2026-10-12-agent-skills-for-context-engineering-2423c2f20f83-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/kb/agentic-system-analyses/state/AAS-2026-10-19-agent-skills-for-context-engineering-7e663338370b-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/ai-context-os-4f81c8c12f62/kb/agentic-system-analyses/state/AAS-2026-10-12-ai-context-os-4f81c8c12f62-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/kb/agentic-system-analyses/state/AAS-2026-10-15-ai-context-os-4a0e34822f96-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-ai-context-os-82777c0c3926-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/nams-605887a7f7a0/kb/agentic-system-analyses/state/AAS-2026-10-14-from-agent-memory-to-portable-skills-605887a7f7a0-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-from-agent-memory-to-portable-skills-4a509c7732b1-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/kb/agentic-system-analyses/state/AAS-2026-10-14-llm-wiki-v3-3bd68241f463-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llm-wiki-v3-0c553a3118eb-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/kb/agentic-system-analyses/state/AAS-2026-10-14-llmwiki-marimo-56b2c84667fe-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llmwiki-marimo-58054ccd9ae7-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/kb/agentic-system-analyses/state/AAS-2026-10-15-siftly-71a1181fbc3d-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-siftly-b81c94cf0f77-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/kb/agentic-system-analyses/state/AAS-2026-10-15-sift-kg-dca68bc45a2c-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/kb/agentic-system-analyses/state/AAS-2026-10-18-sift-kg-e56bce0de992-01": {
+      "state_map": true,
+      "preparation": true,
+      "own_publication": true,
+      "head_matches_authorized_method_or_publication": true,
+      "tracked_clean": true
+    }
+  },
+  "logs": {
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/arex-skill.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/arex-skill.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/autogenesis.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/autogenesis.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/clawvault.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/clawvault.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/contextpilot.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/contextpilot.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/jaz.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/jaz.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/mehmetgoekce--llm-wiki.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/mehmetgoekce--llm-wiki.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/modularrsi.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/modularrsi.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/openrsi.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/supermemory.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21/supermemory.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ace.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ace.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/agent-skills-for-context-engineering.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/agent-skills-for-context-engineering.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ai-context-os-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ai-context-os-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ai-context-os.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/ai-context-os.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/awesome-agent-memory-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/awesome-agent-memory-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/awesome-agent-memory.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/awesome-agent-memory.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/fragility-grid.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/fragility-grid.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/letta-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/letta-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/letta.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/letta.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llm-wiki-v3-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llm-wiki-v3-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llm-wiki-v3.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llm-wiki-v3.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llmwiki-marimo-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llmwiki-marimo-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/llmwiki-marimo.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/nams-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/nams-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/nams.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/nams.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/operational-ontology-framework-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/operational-ontology-framework-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/operational-ontology-framework.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/operational-ontology-framework.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/secure-llm-wiki.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/secure-llm-wiki.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/sift-kg.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/sift-kg.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/siftly-retry-1.exit": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/siftly-retry-1.output": true,
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22/siftly.output": true
+  },
+  "transfers": [
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/kb/agentic-system-analyses/state/AAS-2026-10-18-modularrsi-4218ceff5530-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "a72c54e5034e84c32d92f9ab4034e2e3f3c0f396",
+      "publication_commit": "3c7d1b947ccc5eed19401df56bf9ce418a829ee7",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/kb/agentic-system-analyses/state/AAS-2026-10-19-agent-skills-for-context-engineering-7e663338370b-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "3209307c16595c62cb5b70afb95b7b2ad0c95433",
+      "publication_commit": "412e615b605b7c3659aab3bef69177bad18b3a88",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-ai-context-os-82777c0c3926-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "9c52cb41c463ecae3b253f3eb1baa373e3da0425",
+      "publication_commit": "fd889a23c8abfb7dc4d94020685ad25b62a3a1cb",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llm-wiki-v3-0c553a3118eb-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "2b7e12d5866306f4e33e4570a483313a02242b39",
+      "publication_commit": "a0e64c745fdb4787da82e91f845a5c7474d211de",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-llmwiki-marimo-58054ccd9ae7-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "50e1cc451ea7ee40a49585162fe8900b7916ecb7",
+      "publication_commit": "4f5f2aa81f2a09ad684569ad5dabd23fa177c1f0",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-nams-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-from-agent-memory-to-portable-skills-4a509c7732b1-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "892bea5b76936e665d37d13d2b31d54841032edf",
+      "publication_commit": "39db8859e495e6da097e699aaf6fcd9819e33984",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/kb/agentic-system-analyses/state/AAS-2026-10-19-secure-llm-wiki-df02f419bddb-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "3f79b3040e95008f354dc1c58aee1defd5ee7146",
+      "publication_commit": "70a3dd435946d56e66bb367f2ce5ed4e1c3a34a6",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    },
+    {
+      "run": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/kb/agentic-system-analyses/state/AAS-2026-10-18-siftly-b81c94cf0f77-01",
+      "exact_corpus": true,
+      "archive_unchanged": true,
+      "own_publication_unchanged": true,
+      "merged_commit": "ad2a7fe929009e301b2df34e1c50788475ceea78",
+      "publication_commit": "bd02ed8f31b2fbd5947208079cfded8bc56dec6f",
+      "added_members": 13,
+      "sealed_report_effect_and_committed_bytes_match": true
+    }
+  ],
+  "corpus": {
+    "exact_old_map_plus_approved": true,
+    "baseline_members": 2366,
+    "added_members": 104,
+    "canonical_sets": 190,
+    "canonical_members": 2470,
+    "root_gitignore_unchanged": true,
+    "archive_unchanged": true,
+    "map_sha256": "1cc0648770addc988a24de57bf54b902b39e8e13b2c67e5de7513df4ecef8b61"
+  },
+  "sealed_approvals_sha256": "2ad147eba47ef9ed4bf34922c490057983eaee2ea4ea91f4d61ca2a45cffba81",
+  "historical_refusal_sha256": "dafa2a717ada58cad561c29a370a106bd2a96472a879944d5736163a1c45b1d3",
+  "drift": [],
+  "sources": {
+    "/home/zby/llm/commonplace/.commonplace/worktrees/supermemory-ae21530d128d/related-systems/supermemoryai--supermemory": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-supermemory/related-systems/supermemoryai--supermemory": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/contextpilot-30d0d09e6cdc/related-systems/Tencent--ContextPilot": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-contextpilot/related-systems/Tencent--ContextPilot": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/openrsi-c72dec9967a3/related-systems/FrontisAI--OpenRSI": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-openrsi/related-systems/FrontisAI--OpenRSI": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/modularrsi-96b89989168e/related-systems/IQuestLab--ModularRSI": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-21-fresh-modularrsi/related-systems/IQuestLab--ModularRSI": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/jaz-a94bea79c61a/related-systems/jaz-lang--JAZ": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/autogenesis-63415b37b96e/related-systems/DVampire--Autogenesis": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-autogenesis/related-systems/DVampire--Autogenesis": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-mehmetgoekce--llm-wiki/related-systems/MehmetGoekce--llm-wiki": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-20-clawvault/related-systems/Versatly--clawvault": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/arex-skill-db1b68297b6b/related-systems/VectorSpaceLab--AREX-Skill": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-arex-skill/related-systems/VectorSpaceLab--AREX-Skill": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-49c4f24b03c3/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-914fd0094689/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agentic-harness-engineering-b7fb59b2f7bd/related-systems/china-qijizhifeng--agentic-harness-engineering": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/awesome-agent-memory-ad0b4035706a/related-systems/TeleAI-UAGI--Awesome-Agent-Memory": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-awesome-agent-memory-retry-1/related-systems/TeleAI-UAGI--Awesome-Agent-Memory": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/dki-llm-da75a840ca8d/related-systems/microsoft--DKI_LLM": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/fragility-grid-f011bbbfc307/related-systems/NikolaTesla-007--fragility-grid": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-fragility-grid/related-systems/NikolaTesla-007--fragility-grid": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/letta-d460b458ddad/related-systems/letta-ai--letta": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-letta-retry-1/related-systems/letta-ai--letta": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/operational-ontology-framework-c5cd99471671/related-systems/fstech-digital--operational-ontology-framework": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-operational-ontology-framework-retry-1/related-systems/fstech-digital--operational-ontology-framework": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/secure-llm-wiki-c9867e0e576a/related-systems/nicobleh--secure-llm-wiki": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-secure-llm-wiki/related-systems/nicobleh--secure-llm-wiki": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/ace-a22ddd59ed57/related-systems/ace-agent--ace": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ace/related-systems/ace-agent--ace": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/agent-skills-for-context-engineering-2423c2f20f83/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-agent-skills-for-context-engineering/related-systems/muratcankoylan--Agent-Skills-for-Context-Engineering": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/ai-context-os-4f81c8c12f62/related-systems/alexdcd--AI-Context-OS": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-17-ai-context-os/related-systems/alexdcd--AI-Context-OS": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-ai-context-os-retry-1/related-systems/alexdcd--AI-Context-OS": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/llm-wiki-v3-3bd68241f463/related-systems/vvvvvivekkk--LLM-Wiki-v3": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llm-wiki-v3-retry-1/related-systems/vvvvvivekkk--LLM-Wiki-v3": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/llmwiki-marimo-56b2c84667fe/related-systems/Clod--llmwiki-marimo": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-llmwiki-marimo-retry-1/related-systems/Clod--llmwiki-marimo": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/siftly-71a1181fbc3d/related-systems/ViperrCrypto--Siftly": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-siftly-retry-1/related-systems/ViperrCrypto--Siftly": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/home/zby/llm/commonplace/.commonplace/worktrees/sift-kg-dca68bc45a2c/related-systems/juanceresa--sift-kg": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    },
+    "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees/batch-22-sift-kg/related-systems/juanceresa--sift-kg": {
+      "tracked_digest": true,
+      "tracked_count": true,
+      "head": true,
+      "tree": true,
+      "status": true
+    }
+  },
+  "sources_observed_at": "2026-10-19T09:24:57.967209+00:00",
+  "tracked_source_paths": 92148,
+  "final_preservation": "PASS",
+  "additional_binding_checks": {
+    "sealed_approval_bytes_match_commit_c6bd06642": true,
+    "all_57_retained_execution_records_equal_external_originals": true,
+    "all_8_publication_commits_have_prepared_method_parent": true,
+    "all_8_publication_commit_diffs_are_exact_approved_paths_only": true,
+    "all_16_saved_publication_validation_exits_zero": true
+  },
+  "inventory_reconciliation": {
+    "actual_checkbox_rows": 206,
+    "checked": 189,
+    "unchecked": 17,
+    "pending_from_remaining_prior_status_rows": 14,
+    "older_target_holds_from_remaining_prior_status_rows": 3,
+    "integrated_former_pending_targets": 7,
+    "integrated_former_older_held_targets": 1,
+    "former_older_held_target": "agent-skills-for-context-engineering",
+    "unchecked_keys_equal_remainder_ledger": true,
+    "unchecked_category_counts_equal_remainder_ledger": true
+  },
+  "verification_recipe": "SHA256 of complete regular-file maps for corpus/archive/run/own publications, compared by exact key and digest equality with intake; preparations and logs hashed separately. Git source recipe is the prior source-intake JSON sorted-map recipe, including symlink targets/missing markers. Git reads use --no-optional-locks. Commit parent/path checks use rev-list and diff-tree; all approved publication/merge member blobs rehashed with git show. Read-only commands were separately bounded at 300 and 600 seconds; no native integration or source acquisition was invoked."
+}
