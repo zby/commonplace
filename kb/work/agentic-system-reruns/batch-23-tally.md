@@ -4,6 +4,10 @@
 timeouts.** This is the operator-requested status tally on 2026-10-19, not a
 semantic or operational audit, recovery commission or integration approval.
 
+## Subsequent independent audit and integration
+
+The later [batch-23 audit results](./batch-23-audit-results.md) record six fresh parent-reviewed audits: five holds and Supermemory approved with recorded limits. Only Supermemory transferred through native merge `814bb5ac5e33b0655e53ec64f2d63b1193e130c5`, adding 13 exact members. Current corpus: **191 sets / 2,483 members**; inventory **190 complete, 13 pending and three older target holds**. Both unpublished timeout cases remained excluded and preserved. The tally below retains its original pre-audit observations and counts; no old hold or incident was cleared.
+
 ## Per-target outcomes
 
 All run identifiers below have the prefix `AAS-`.

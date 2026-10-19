@@ -1,0 +1,23 @@
+{
+  "baseline-190-sets-2470-members-preserved": true,
+  "canonical-after": {
+    "sets": 191,
+    "members": 2483
+  },
+  "archives-root-gitignore-retained-gitignore-unrelated-preserved": true,
+  "all-six-source-run-publication-effect-preparation-log-maps-unchanged": true,
+  "all-six-reviewed-report-hashes-unchanged": true,
+  "origin-head": "814bb5ac5e33b0655e53ec64f2d63b1193e130c5",
+  "snapshot": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-23-audit-execution-wbEMVAav/final-snapshot.json",
+  "snapshot-sha256": "3abbf7684032967ab58eed3ed22a283833c4deba11a76feda641e475270cce54",
+  "status-before-final-artifact-commit": " M kb/work/agentic-system-reruns/README.md\n M kb/work/agentic-system-reruns/batch-23-tally.md\n M kb/work/agentic-system-reruns/systems.md\n?? kb/work/agentic-system-reruns/batch-23-audit-final-validation.json\n?? kb/work/agentic-system-reruns/batch-23-audit-integration.json\n?? kb/work/agentic-system-reruns/batch-23-audit-results.md\n",
+  "inventory": {
+    "rows": 206,
+    "complete": 190,
+    "pending": 13,
+    "older-target-holds": 3,
+    "unchecked": 16
+  },
+  "excluded-timeouts": "No worktree reads/audits/recovery/cleanup; preserved as commissioned",
+  "no-push-cleanup-termination": true
+}
