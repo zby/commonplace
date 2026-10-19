@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of llmwiki-marimo's public knowledge-loop account at the frozen Git revision."
+run-id: AAS-2026-10-18-llmwiki-marimo-58054ccd9ae7-01
+reviewed-boundary: "0df06b0499a6242a4a5edfb1495e1d55a3e3c8b7"
+---
+
+# llmwiki-marimo synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded implementation account. I checked its substantive statements against the supplied records, their qualifications and reconciliation dispositions, and read it independently of the supporting reports for intelligibility. No blocker or additional limit was found. This judgment establishes neither successful target operation nor factual accuracy or improvement. No refusal was supplied; the synthesis answers input is empty.
+
+**Boundary and generation.** The opening accurately carries the whole-system functional scope, frozen revision, cutoff and implementation/design evidence basis from the [boundary](boundary.md#boundary-and-evidence). It does not equate that scope with an exhaustive audit. The progression from committed source text through generated pages to later merging and retrieval is supported by [RT-RTE-document-ingest](runtime.md#rt-rte-document-ingest), [MEM-OBJ-source-text](memory.md#mem-obj-source-text), [MEM-OBJ-wiki-pages](memory.md#mem-obj-wiki-pages) and [MEM-OBJ-document-chunks](memory.md#mem-obj-document-chunks). The text preserves software admission, malformed-extraction fallback and unenforced semantic preservation. Its treatment of compilation as reuse rather than accepted novel knowledge follows [EPI-CLM-wiki-compilation](epistemic.md#epi-clm-wiki-compilation) and [EPI-OBJ-wiki-pages](epistemic.md#epi-obj-wiki-pages).
+
+**Selection and return controls.** The account distinguishes code-selected evidence, optional question rewriting, model tool choice and caller-held history. Count budgets are not promoted into token limits, and reduced history is not described as reloadable archival memory. These statements follow [RT-RTE-preretrieval-chat](runtime.md#rt-rte-preretrieval-chat) and the [memory annotations](memory.md#annotations). Crucially, the public grounding comparison keeps the tool-result predicate beside strict mode, the injected-context and raw-tier conditions beside pre-retrieval, and immediate unchecked emission beside streaming. Neither [RT-RTE-strict-chat](runtime.md#rt-rte-strict-chat) nor [RT-RTE-streaming-chat](runtime.md#rt-rte-streaming-chat) is widened into an unconditional factual guarantee. Standard grants, arbitrary caller extensions and host effects remain distinct under [RT-CLM-readonly-chat](runtime.md#rt-clm-readonly-chat), [RT-RTE-configure-grants](runtime.md#rt-rte-configure-grants) and the [runtime control envelope](runtime.md#control-envelope-and-forcing-cases).
+
+**Structured derivation.** The finance passage retains validation and eligibility before arithmetic, separates variable alternatives, and limits projections to encoded premises and a constant-rate model. It does not claim authenticated or predictive financial truth. The marker-dependent append qualification preserves the countercase in [EPI-RTE-answer-format](epistemic.md#epi-rte-answer-format). These findings are supported by [MEM-OBJ-datasets](memory.md#mem-obj-datasets), [EPI-RTE-finance-check](epistemic.md#epi-rte-finance-check), [EPI-RTE-finance-select](epistemic.md#epi-rte-finance-select) and [EPI-RTE-finance-derive](epistemic.md#epi-rte-finance-derive). Dataset citations use the surviving identity selected by reconciliation; no superseded finding is strengthened.
+
+**Admission and delivery.** The representative web workflow is supported by the [workflow account](workflow.md#workflow-account) and [RT-RTE-chat-save](runtime.md#rt-rte-chat-save). The synthesis distinguishes answer display, an unwritten draft and a retained page. It preserves human editing/cancel opportunity without claiming enforced draft provenance or a verification veto. Marimo/convenience admission, deterministic web repair, optional Git and partial failed-save effects remain explicit. The local conversation-to-page contribution is appropriately described as a wired trace-fed update, not demonstrated benefit or automatic admission on the reviewed web path. [MEM-OBJ-spans](memory.md#mem-obj-spans) supports keeping raw traces separate from saved pages and reduced turn history.
+
+**Diagnostics and independent properties.** Sentence scoring, retained probabilities and current-threshold classifications are diagnostic rather than universal gates, consistent with [EPI-RTE-verify-check](epistemic.md#epi-rte-verify-check), [MEM-OBJ-page-verifications](memory.md#mem-obj-page-verifications) and [EPI-RTE-verify-use](epistemic.md#epi-rte-verify-use). Contradiction warnings do not become adjudication; lexical reminder replacement does not become semantic acceptance. Source withdrawal leaves stale derivatives eligible, and snapshot recovery is not equated with file-only reindex. The corresponding records support each distinction: [EPI-RTE-contradiction-note](epistemic.md#epi-rte-contradiction-note), [EPI-RTE-gap-note](epistemic.md#epi-rte-gap-note), [MEM-RTE-source-withdrawal](memory.md#mem-rte-source-withdrawal) and [MEM-OBJ-index-snapshots](memory.md#mem-obj-index-snapshots).
+
+The theory-builder conditions are identified separately as unestablished rather than absent. Learning benefit, reflection, computational performance of all internal roles and exercised self-improvement are not inferred from one another or from persistence. The positive update contribution precedes those unresolved questions. This follows the [epistemic bounded conclusion](epistemic.md#bounded-conclusion), [RT-RTE-chat-save](runtime.md#rt-rte-chat-save) and [RT-RTE-configure-grants](runtime.md#rt-rte-configure-grants). The proposed evidence and system changes are tied to the particular missing acceptance, activation, causal attribution and enforcement claims rather than generic adoption advice.
+
+**Carried limitations.** I compared the complete [Limitations table](synthesis.md#limitations) with both supplied verification judgments and the reconciliation. The report judgment's partial evaluator inventory, additional service-driven battery results, cross-caller refresh uncertainty and incomplete recovery comparison all retain their consequences and supporting record citations. The profile judgment declares no additional limits; the public table nevertheless preserves its partial lineage, admission, authority, selection and trace-update inventories. The table also preserves missing operation/causal evidence, unresolved source truth, local verification coverage and incomplete persistence horizons. No unresolved reconciliation conflict was omitted. These qualifications leave the positive mechanisms intact without permitting complete inventory comparisons or system-wide negatives. Their faithful carriage does not create additional verification limits.
+
+I added no evidence or corrected text and read no target source files. The supplied records suffice for this meaning-level judgment; structural validation is separate from support.
+
+## Blockers
+
+none
+
+## Limits
+
+none
