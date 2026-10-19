@@ -119,7 +119,8 @@ Each phase ends with the selected tests passing and a commit.
    verification, synthesis and its verification, assemble, publish. Prompts
    are composed from the existing `jobs-engine/*.md` instructions and prompt
    section. A fake-harness end-to-end test drives the complete, blocked and
-   out-of-scope branches.
+   out-of-scope branches. Bound by the exclusions below; the correction
+   cascade in explicit order is the main result.
 4. **Commands and instructions.** `commonplace-analysis prepare` stays;
    `start` plus the driver become one `run` command without `--harness`;
    `inspect`, `integrate` and the publication reset read the new records.
@@ -212,6 +213,55 @@ only for the coordinator; the operator decided to simplify ("OK - simplify"):
 
 Each item is a behaviour change the retiring ADR states; gap 5 is resolved
 by item 1 and gap 9's usage half by phase 1.
+
+## Exclusions for phase 3 (2026-10-19)
+
+Astra's review of `1c7542336` (relayed by the operator) accepts the audit
+and asks that the requirements the port declines be stated once, bindingly,
+so that later "robustness" work cannot restore them, and that phase 3 be
+judged by whether each exclusion removes machinery. The list:
+
+| Declined requirement | What it removes |
+|---|---|
+| Several controllers advancing one run | Readiness, replay, `step`/`fill`; one process owns control flow and the run lock rejects a second |
+| Workers reporting asynchronously to a coordinator | Reporting, hand-out validation; calls return outputs |
+| Resuming an engine run with the new code | Migration; old runs keep their pinned worktree and venv (phase 6 confirms) |
+| Cancelling a parallel group at its first failure | Cancellation; `gather` waits for the group, then propagates |
+| Automatic recovery from every operational failure | Launch ownership and reconciliation; the run stops, the operator repairs and reruns |
+| Exact attempt counts across an abrupt interruption | Durable launch ownership; see below |
+| A general scheduler or judgment-coverage state in the script | `Judgment.scope`, holds, coverage input (audit item 7) |
+
+Three contracts follow from it:
+
+- **Cache.** The key covers the prompt, the supplied inputs' digests, the
+  output names and the profile; it does not cover what a worker reads from
+  the worktree or the project's configuration. The contract is that a run
+  belongs to one pinned method and source environment: the worktree-side
+  pins (HEAD equals the preparation commit, clean tree, running package
+  equals the method commit) hold for the run's whole life, and a changed
+  environment is a new run, not a cache invalidation. Phase 3 asserts the
+  pins when the script starts and does not try to discover filesystem
+  dependencies.
+- **Interruption.** `ask` records an answer or failure after the launch
+  returns, so a process killed in between leaves the worker's output
+  unrecorded; the rerun asks again and the work repeats. This is accepted:
+  the ADR 108 budgets bound correction rounds and the evidence the script
+  records, not the number of executions that ever occurred. The ADR revising
+  113 states attempts as recorded executions.
+- **Publication.** The intermediate cache tolerates a repeated call;
+  publication does not. `publish_analysis` keeps the publication lock, the
+  exact manifests, the destination checks and the reset's journal
+  reconciliation, because they protect the retained artifact against a
+  silently replaced incumbent. Simplification stops at the publication
+  boundary.
+
+Phase 3's decision gate gains a second trigger beside the line count: needing
+a scheduler inside the script (any readiness or coverage state beyond the
+call stack) means the simpler model has failed, and the declarative layer is
+reconsidered rather than a scheduler written. The correction cascade (a
+refusal leads directly to the affected correction calls and the renewed
+verification, in explicit order) is the part the primitives have not yet
+demonstrated; it is phase 3's main result.
 
 ## Phase 2 results (2026-10-18)
 
