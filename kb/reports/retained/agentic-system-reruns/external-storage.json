@@ -1,0 +1,752 @@
+{
+  "role": "Storage retention boundary at workshop closure, not a cleanup plan, integrity audit or future writer-ownership clearance.",
+  "observed_at_utc": "2026-10-19T21:08:50.394232+00:00",
+  "repository_revision_before_closure": "927b3137ebfef7061834e6d1306f65d1faaf0505",
+  "retired_workshop": {
+    "path": "kb/work/agentic-system-reruns",
+    "tracked_files": 493,
+    "untracked_or_ignored_files": 0,
+    "git_tree": "235a1c03ced7a1566204008b9491b2b287ed37eb"
+  },
+  "roots": [
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs",
+      "observed": "directory",
+      "immediate_children": {
+        "directories": 24,
+        "preparation_records": 0,
+        "files": 163,
+        "symlinks": 0
+      }
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees",
+      "observed": "directory",
+      "immediate_children": {
+        "directories": 92,
+        "preparation_records": 89,
+        "files": 89,
+        "symlinks": 0
+      }
+    },
+    {
+      "path": "/home/zby/llm/commonplace/.commonplace/worktrees",
+      "observed": "directory",
+      "immediate_children": {
+        "directories": 225,
+        "preparation_records": 218,
+        "files": 218,
+        "symlinks": 0
+      }
+    }
+  ],
+  "referenced_external_top_level_candidates": [
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/agno-agentos.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/aide2.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/audit-next-61-2026-10-15.json",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-13",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-14",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-15",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-16",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-17",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-18",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19-launch.exit",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-19-launch.log",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-20",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-20-preparation",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21-correction-preparation",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21-fresh",
+      "observed": "unavailable",
+      "error": "[Errno 2] No such file or directory: '/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21-fresh'"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-21-preparation",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-22",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-23",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batch-23-audit-execution-wbEMVAav",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batches-19-20-audit",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/batches-19-20-integration",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/claude-code-dynamic-workflows.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/claude-workstream-kit.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/closure-sdk.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/cludebot.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/cobusgreyling--llm-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/cocoindex.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/cognee.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktree-archives",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/commonplace-worktrees",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/company-brain.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/compound-engineering-plugin.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/context-constitution.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/contextpilot.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/continuity.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/coral.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/cq.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/crewai-memory.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/decapod.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/deja-vu.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/dense-mem.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/docmason.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/eal-bench.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/ecdysis.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/echel.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/echoes-vault-opencode.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/echowiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/eidetic.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/eigenius.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/engraph.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/enoch.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/equipa.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/evoontology.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/exo.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/exocomp.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/expel.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/fractal.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/funes.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/g-memory.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/getsentry-skills.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/gnosis.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/halo.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/hermes-agent.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/hindsight.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/hyalo.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/hyperagents.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/incremental-self-improvement.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-audited-2026-10-15.json",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-cleared-2026-10-16",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-cleared-2026-10-16-path-corrected",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/integration-later-nine-2026-10-16",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/interview-doc-agent.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/isaacclupus-mnemosyn-spec.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/jaz-evals.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/jaz.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/jepa-anything.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/kblam.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/kgai.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/kompl.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/lacp.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/lhtb.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/link.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llm-context-base.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llm-project-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llm-wiki-coordination.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llm-wiki-mcp.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llm-wiki-v3.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/llmwiki-marimo.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/mem0.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/memex.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/mempalace.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/memwiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/mentisdb.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/merchantbench.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/meta-harness.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/meta-n.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/miroshark.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/modularrsi.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/nams.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/nao.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/nuggets.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/o-o.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/oh-my-pi.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/okf-harness.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/openclerk.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/openrsi.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/opensage.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/openviking.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/openwiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/origin.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/pageindex.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/phantom.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/pi-posthorse.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/pi-self-learning.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/playground.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/pond.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/pratiyush--llm-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/prime-agent.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/primescientist.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/prove2me.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/publication-audit-current",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/quicky-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/reasoning-bank.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/reentry-pilots-ai-memex-supermemory",
+      "observed": "directory"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/reflexion.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/reframeweb.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/rem.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/rsiagent.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sage-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sage.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/scroll.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/self-training-llm.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/semiont.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sift-kg.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/siftly.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sig.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/signetai.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/skilllift.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/skillnote.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/skillrl.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/skillweaver.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/skillx.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/smriti-mcp.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sol-pi.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/spacebot.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/sparks.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/stash.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/supermemory.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/swamp.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/swarmworld.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/synapptic.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/synthadoc.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/synto.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/tardigrade.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/tendril.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/thalo.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/theafh--ai-modules.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/theknowledge.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/tolaria.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/tracecraft.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/trajectory-informed-memory-generation.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/virtual-context.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/vlm-wiki.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/voiden.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/voyager.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/weknora.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/wikiskill-stahl-g.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/wikiskill.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/wuphf.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/xmemory.output",
+      "observed": "file"
+    },
+    {
+      "path": "/media/zby/2b5e98b6-baf0-4e97-90d2-03321ea23372/outputs/zikkaron.output",
+      "observed": "file"
+    }
+  ],
+  "candidate_limits": "Literal first path components extracted from the workshop records, not a complete evidence inventory. May include examples and historical incorrect paths. Unavailable candidates do not alone establish evidence loss. No file contents, recursive source/trace trees or process ownership were inspected.",
+  "retain": {
+    "raw_logs": "Keep campaign coordinator/worker traces and exit records, including predecessor incidents for completed targets.",
+    "worktrees": "Keep failed, held, unpublished and historical run worktrees, preparations, frozen sources, effects and any integration branches pending separate disposition.",
+    "execution_snapshots": "Keep external audit/integration execution directories; historical /tmp records needed for batches 21-22 are embedded in committed integration-resume.json.",
+    "local_captures": "Unresolved publication and audit captures are owned by the successor workshop; they do not replace full external sources and incident traces."
+  },
+  "disposal_authority": "No external path is authorized for deletion, relocation, termination, recovery or modification by this record. Any later cleanup requires a separate operator decision and then-current native removal checks.",
+  "historical_read_path": "git show 927b3137ebfef7061834e6d1306f65d1faaf0505:kb/work/agentic-system-reruns/<record-path>",
+  "bindings_read_paths": [
+    "kb/work/agentic-system-completion/evidence/manifest.json",
+    "kb/work/agentic-system-completion/evidence/bindings.json",
+    "kb/reports/retained/agentic-system-reruns/checkpoint.json"
+  ]
+}

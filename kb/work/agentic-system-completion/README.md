@@ -79,12 +79,12 @@ worktrees remain in place and are not owned for cleanup by this workshop's
 opening. Recheck their actual availability and recorded byte bindings before
 using them; the handoff is not a fresh ownership or integrity clearance.
 
-`agentic-system-reruns` now retains only its separate closeout/extraction work;
-this workshop owns subsequent decisions about these sixteen targets. The
-predecessor is not deleted by opening this successor. Its closeout must retain
-any exact evidence with an active consumer, or a sufficient Git retrieval
-record, before deletion. Do not copy all its batch plans, JSON snapshots or
-completed-target history into this workshop.
+The predecessor `agentic-system-reruns` closed on 2026-10-19. Its
+[retained campaign record](../../reports/retained/agentic-system-reruns/README.md)
+provides the final checkpoint, pre-closure Git retrieval paths and external
+storage retention boundary. This workshop owns subsequent decisions about the
+sixteen targets. Batch plans, launchers and completed-target history remain in
+Git rather than another live archive. No external cleanup follows from closure.
 
 ## Closure
 

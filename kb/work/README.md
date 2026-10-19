@@ -10,7 +10,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [headless-workflow-extraction](./headless-workflow-extraction/README.md) — extract a reusable base for direct headless execution, retries and resumable results; keep KB types and environment preparation with callers, with Treadle as the predecessor
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
-- [agentic-system-reruns](./agentic-system-reruns/README.md) — closeout and durable evidence/method extraction for the completed rerun campaign; unresolved-target decisions now belong to agentic-system-completion
 
 - [analysis-lenses](./analysis-lenses/README.md) — decide how limited analysis resources should cover large repositories; compare depth, stopping and coverage rules against the current runtime-plus-lenses arrangement with minimal change
 

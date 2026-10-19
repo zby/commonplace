@@ -1,7 +1,0 @@
-# Operator correction: ContextPilot conditional training dispatch
-
-This is explicit audit-assisted correction feedback. Verify against frozen SRC-1 and correct only your assigned role using its ordinary draft/refusal-answer channel. Do not edit other roles, retained publications, source, method or state. No acquisition, target execution or training run is authorized. Preserve valid source identity, scope and unrelated records.
-
-The training account omits its selection condition. `train/verl/experimental/agent_loop/agent_loop.py:1006–1008,1080–1121` uses dataset `agent_name` or configuration `agent.default_agent_loop`; `statelm_agent_loop.py:451–452` registers `statelm_tool_agent`. `train/verl/trainer/config/rollout/rollout.yaml:207–208` defaults to `single_turn_agent`. The inspected launcher/configuration does not override that default, while the transformed external Parquet payload is outside the frozen evidence.
-
-Align boundary entry narrative and runtime `RT-RTE-training-rollout` with conditional ContextPilot dispatch and the generic single-turn alternative. Carry the condition publicly through dependent work. This does not show that actual training chose the wrong loop, that the dataset lacks `agent_name`, or that training is broken. Retain supported implementation and existing public limits. Answer with a correction or concrete frozen-evidence disagreement; do not acquire the missing dataset.
