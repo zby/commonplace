@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-# Nine fresh analyses, one Pi session per target. No old-run recovery or integration.
+# Eight unfinished targets remain; existing outputs/workspaces are skipped.
+# One Pi session per target. No old-run recovery or integration.
+# Post-restart check (2026-10-18): Supermemory published all 13 members;
+# hashes match effects/publish.json in batch-21-fresh-supermemory, run
+# AAS-2026-10-18-supermemory-75d21b14316b-01. Removed from launch list only;
+# independent audit and integration remain separate.
+# ContextPilot stopped at failed 000009-workflow (runtime input defect).
+# OpenRSI was interrupted with 000019-reconciliation open, without publication.
+# Preserve both runs; the existing-path guard below skips them, not retries them.
 set -u
 cd "$(dirname "${BASH_SOURCE[0]}")/../../.." || exit 1
 
@@ -28,7 +36,6 @@ run() {
   printf 'Finished %s: process exit %s (not an analysis verdict).\n' "$system" "$code"
 }
 
-run supermemory https://github.com/supermemoryai/supermemory
 run contextpilot https://github.com/Tencent/ContextPilot
 run openrsi https://github.com/FrontisAI/OpenRSI
 run modularrsi https://github.com/IQuestLab/ModularRSI
