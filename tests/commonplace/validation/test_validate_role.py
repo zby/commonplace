@@ -10,7 +10,7 @@ import yaml
 from commonplace.cli import validate_notes
 from commonplace.lib.directory_layout import Finding
 from commonplace.lib.validation import validate_draft_in_role
-from tests.commonplace.agentic_analysis.fixtures import member_fixture
+from tests.commonplace.agentic_analysis.fixtures import RUN_ID, SOURCE, member_fixture
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -205,3 +205,37 @@ def test_an_analyst_s_self_check_refuses_a_correction_that_drops_a_record(tmp_pa
     monkeypatch.chdir(tmp_path)
     assert validate_notes.main([str(candidate), "--artifact", str(directory), "--role", role]) == 1
     assert f"drops identifiers its accepted version declared: {record}" in capsys.readouterr().out
+
+
+def test_an_analysis_run_s_artifact_is_checked_against_its_parameters(tmp_path, monkeypatch, capsys):
+    """An analysis run records its values in `parameters.json`; its run id is the run directory's name."""
+    run = member_fixture(tmp_path)
+    directory = run / "artifact"
+    assert not (run / "run.json").exists()
+    parameters = {"system": "Example System", "source-identity": SOURCE, "source": SOURCE,
+                  "worker-profile": "pi-luna", "source-revision": "a" * 40}
+    (run / "parameters.json").write_text(json.dumps(parameters))
+    candidate = tmp_path / "draft.md"
+    monkeypatch.chdir(tmp_path)
+
+    def check(role: str) -> tuple[int, str]:
+        capsys.readouterr()
+        code = validate_notes.main([str(candidate), "--artifact", str(directory), "--role", role])
+        return code, capsys.readouterr().out
+
+    boundary = (directory / "boundary.md").read_text()
+    candidate.write_text(boundary)
+    code, out = check("boundary")
+    assert code == 0 and "identity field" not in out, out
+
+    other = "AAS-2026-01-01-other-01"
+    candidate.write_text(boundary.replace(f"run-id: {RUN_ID}", f"run-id: {other}"))
+    code, out = check("boundary")
+    assert code == 1, out
+    assert f"identity field run-id {other!r} does not match the run; expected {RUN_ID!r}" in out, out
+
+    candidate.write_text((directory / "memory.md").read_text())
+    assert "identity field" not in check("memory")[1]
+    (run / "parameters.json").write_text(json.dumps({**parameters, "source-identity": "https://github.com/a/b"}))
+    code, out = check("memory")
+    assert code == 1 and "identity field source-identity" in out and "'https://github.com/a/b'" in out, out

@@ -3,9 +3,10 @@
 The fake worker reads the invocation it is pointed at, finds the frame lines
 (`role`, `output`, `output-answers`, `refusal`, `artifact`), and writes a
 member that passes the real checks, built with the execution fixtures'
-generators. A scenario file (`FAKE_SCENARIO`) says what each role does per
-call: the boundary's disposition, the report verifier's blockers per verdict,
-and the calls at which a role writes a problem instead.
+generators. It then validates the member in its role, as a real worker does,
+and writes a problem if that fails. A scenario file (`FAKE_SCENARIO`) says what
+each role does per call: the boundary's disposition, the report verifier's
+blockers per verdict, and the calls at which a role writes a problem instead.
 """
 
 from __future__ import annotations
@@ -116,6 +117,20 @@ elif role == "synthesis":
 else:
     raise SystemExit(f"unknown role {role}")
 Path(frame["output"]).write_text(member)
+
+# Self-validate as a real worker does, in-process instead of through `commonplace-validate`.
+import contextlib, io
+from commonplace.cli.validate_notes import main as validate
+captured = io.StringIO()
+with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
+    try:
+        code = validate([frame["output"], "--artifact", frame["artifact"], "--role", role])
+    except SystemExit as exit:
+        code = exit.code
+if code:
+    Path(frame["problem"]).write_text(f"{role}: self-validation failed (exit {code}):\n{captured.getvalue()}")
+    sys.exit(0)
+
 answers = "".join(f"- corrected: revised the member for blocker {i + 1}.\n" for i in range(len(blockers)))
 if "output-answers" in frame:
     Path(frame["output-answers"]).write_text(answers)
@@ -246,6 +261,23 @@ def test_complete_run_with_one_correction_round(workflow):
     assert len(status["jobs"]["runtime"]["answers"]) == 2
     assert status["problems"] == []
     assert set(status["members"]) == complete_members(analysis) | {"ARTIFACT.yaml"}
+
+
+def test_construction_writes_the_type_manifest_that_publication_replaces(workflow):
+    run_dir, new = workflow(disposition="complete")
+    manifest = run_dir / "artifact" / "ARTIFACT.yaml"
+    with new().run:      # construction holds the run's lock; release it before the run
+        assert yaml.safe_load(manifest.read_text()) == {
+            "type": "agentic-system-analyses/types/agentic-system-analysis-set.md"}
+        assert not (run_dir / "log.jsonl").exists() or launches(run_dir) == []
+
+    analysis, receipt = run(new)
+    assert receipt["published"] is True, receipt
+    pinned = yaml.safe_load(manifest.read_text())
+    assert pinned["type"] == "agentic-system-analyses/types/agentic-system-analysis-set.md"
+    assert set(pinned["members"]) == complete_members(analysis), pinned
+    for name, entry in pinned["members"].items():
+        assert entry["sha256"] == sha256((run_dir / "artifact" / name).read_bytes()).hexdigest(), name
 
 
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])

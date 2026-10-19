@@ -283,6 +283,51 @@ The plan's phase 3, phase 4, phase 6 and the decision gate carry these into
 the work. The correction cascade in explicit order is the part the
 primitives have not yet demonstrated; it is phase 3's main result.
 
+## Phase 5 pilot (2026-10-19)
+
+System: Dynamic Cheatsheet (`https://github.com/suzgunmirac/dynamic-cheatsheet`
+at `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`), chosen by the operator as the
+system covered by the most engine runs. Engine baseline: the integrated run
+`AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01` (profile `pi-sol`,
+method `bb155f68`), whose worktree and records were removed; the surviving
+engine worktrees for the same system, profile and revision supply the
+attempts, corrections and wall time instead. Headless run: a worktree
+prepared from the branch head with the same profile and revision.
+
+Engine baseline, from the surviving worktrees under the main checkout's
+`.commonplace/worktrees/` (records read only; the attempt records carry no
+times, so launch and result times come from the coordinators' Pi sessions,
+and the three parallel analysts share one end time):
+
+| Engine run (token, method, date) | Worker attempts | Corrections | Wall time | Worker minutes |
+|---|---|---|---|---|
+| `004374829a63`, `935b1919`, 10-10 | 10 (no workflow role yet) | 0 | 41:17 | 47:16 |
+| `41e85fccfcaf`, `1a20deff`, 10-10 | 10 | 0 | 43:05 | 49:54 |
+| `43cd203254e8`, `5153e267`, 10-10 | 13 | 1 (runtime, then reconciliation and verification rerun) | 46:52 | 51:26 |
+| `11e3e77c2265`, `b9e0e0c1`, 10-15 | 11 | 0 | 39:40 | 50:24 |
+
+No failed attempts, worker problems or operator judgments in any of the
+four; every check accepted. Per worker, the engine runs took about 3–4 min
+for the boundary, 4–7 min per analyst, 3 min for reconciliation, 3–5 min
+per verification, 4–6 min for the profile and 4 min for the synthesis.
+The engine's self-validation and prompt frame are what the headless prompt
+reproduces, so differences in attempts and corrections are the port's
+(or the model's variance), not the method's.
+
+First attempt (worktree `3def3fbc6430`, run
+`AAS-2026-10-19-dynamic-cheatsheet-3def3fbc6430-01`): opening and acquisition
+ran (about 90 s and 5 s), the boundary worker launched under Pi (`pi --print
+--model gpt-6.1-sol:medium`), read the frame and wrote a well-formed boundary
+candidate in 225 s, then reported a problem: its self-validation
+(`commonplace-validate <draft> --artifact <run>/artifact --role boundary`)
+found no `ARTIFACT.yaml` in the run's artifact directory. The engine
+materialized a type-only manifest there and the workflow did not; the fake
+worker of the end-to-end test never validates, so the test did not catch it.
+Fixed: `Analysis` writes the type-only manifest at start, the validator
+binds identity values from the run's `parameters.json` as it did from the
+engine's `run.json`, and the fake worker now self-validates like a real
+worker. The pinned environment means a new worktree and run for the retry.
+
 ## Phase 4 results (2026-10-19)
 
 The code moved into the package and is pinned by the worktree guards like

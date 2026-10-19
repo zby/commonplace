@@ -84,7 +84,7 @@ from commonplace.lib.agentic_analysis.publication import (
     publish_analysis,
 )
 from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
-from commonplace.lib.directory_artifact import MANIFEST_NAME
+from commonplace.lib.directory_artifact import MANIFEST_NAME, type_manifest
 from commonplace.lib.directory_layout import Layout, type_layout
 from commonplace.lib.note_parser import parse_document
 from commonplace.lib.reading_batches import READ_BATCH_BYTES
@@ -245,6 +245,10 @@ class Analysis:
         require_harness(profile, harnesses)
         self.run = Run(self.run_dir, self.worktree, profile, timeout=timeout, harnesses=harnesses,
                        sleep=sleep, max_workers=max_workers)
+        # The working artifact's manifest names the type, as the engine materialized it: a worker's
+        # self-validation (`commonplace-validate <draft> --artifact <dir> --role <role>`) reads it.
+        if not (self.run.artifact / MANIFEST_NAME).exists():
+            self.run.accept(MANIFEST_NAME, type_manifest(self.method.type_spec).decode("utf-8"))
         self.budget = {role: self.method.attempts(role) for role in self.method.roles}
         self.members: dict[str, bytes] = {}          # accepted members by role
         self.latest: dict[str, Answer] = {}          # the answer each member came from
