@@ -120,9 +120,10 @@ Each phase ends with the selected tests passing and a commit.
    are composed from the existing `jobs-engine/*.md` instructions and prompt
    section. A fake-harness end-to-end test drives the complete, blocked and
    out-of-scope branches.
-4. **Commands and instructions.** `commonplace-analysis prepare` and
-   `integrate` stay; `start` plus the driver become one `run` command;
-   `inspect` reads the new records. Rewrite `SKILL.md`; delete
+4. **Commands and instructions.** `commonplace-analysis prepare` stays;
+   `start` plus the driver become one `run` command without `--harness`;
+   `inspect`, `integrate` and the publication reset read the new records.
+   Rewrite `SKILL.md` and the worker rules (audit items 5 and 8); delete
    `drive-a-code-scheduled-run.md` and the Pi coordinator agent if nothing
    else needs them; update `commands.md` and the prompt section.
 5. **Equivalence pilot.** Run one system already analysed on the engine,
@@ -134,8 +135,83 @@ Each phase ends with the selected tests passing and a commit.
    start and IDs change). Decide how old worktree runs stay inspectable and
    integrable (likely: their own pinned `.venv`, since `prepare` installs one
    per worktree; verify). Delete `artifactrun/`, its tests, `commonplace-run`,
-   and `run_values` in `validate_notes`. Close this workshop and
+   `run_values` in `validate_notes`, and `prepare`'s origin startup guard and
+   HEAD-behind-main stop (audit item 6). Close this workshop and
    `headless-analysis`.
+
+## Architecture audit (2026-10-19)
+
+Posed by the operator after phase 2: does the port carry requirements of the
+engine and its coordinating agent that make no sense when code launches the
+workers? The audit read the plan, the job instructions, the driver, the
+engine's hand-out and check code, publication and the primitives, with an
+independent survey of ADRs 098–117 classifying each requirement as workflow,
+engine or mixed. Result: the workflow requirements (roles, types, acceptance,
+the correction protocol, the verification protocol, pinned judgments,
+publication from a prepared worktree, integration) stand. Ten items existed
+only for the coordinator; the operator decided to simplify ("OK - simplify"):
+
+1. **Provenance from launch and harness records.** Workers no longer
+   self-report model and effort: no ADR asks for it, the script sets the
+   launch model, and each harness records the model it used (phase 0).
+   `Provenance` is the recorded model and the output digest; the manifest's
+   `worker` block keeps profile, harness, launch-model, effort and model and
+   drops the per-role `reported-effort` (optional in the schema; retained
+   manifests keep theirs). The worker rules' "Report your runtime" section
+   and the `worker-identity` file go with the engine. Done in phase 2's code.
+2. **Attempt counting by ADR 108's budgets.** An attempt is one execution of
+   a job (ADR 113); the engine counted failed launches because the coordinator
+   reported them. Now a timeout or an incomplete result spends an attempt (the
+   worker spent its work); a launch that still exits nonzero after its
+   relaunches is an environment failure that stops the run and spends none,
+   so a rerun after the repair asks again. The script implements ADR 108's
+   budgets (three record verifications, two profile corrections, one
+   synthesis correction, runtime corrections before memory and epistemic ones)
+   directly, not as per-job attempt records. Done in the primitives.
+3. **Relaunch on any nonzero exit, bounded.** The driver's three provider
+   messages were observed in a launch tool's results and its "only when the
+   caller authorizes" clause has no referent in code. Two relaunches with
+   30 s and 120 s waits, usage limits excluded, timeouts not relaunched. Done
+   in the primitives; re-derive from observed headless failures in phase 5.
+4. **`problem`, not `refusal`, for a worker's inability report.** The
+   primitives had reused "refusal", which names code's rejection of a
+   candidate (ADR 116). A problem is a result the script stops on; the
+   operator clears the cache entry to retry. Done in the primitives.
+5. **One profile per run stays as a research choice** (compare same-model
+   runs), no longer a mechanism. `--harness` on start, the per-harness default
+   profile and the refusal of a profile from another harness existed because
+   the coordinator could launch only its own harness; they go with the
+   coordinator route in phase 4.
+6. **The origin checkout's startup guard and the HEAD-behind-main stop in
+   `prepare`** existed because the coordinating agent had loaded the origin's
+   AGENTS.md, skills and settings. A headless run is a process; nothing it
+   loaded reaches a worker. Both go when the coordinator route is deleted
+   (phase 6); the worktree-side pins (HEAD equals the preparation commit,
+   clean tree, running package equals the method commit) stay. This also
+   removes the reason this port needed a sibling worktree.
+7. **The judgment, scope and coverage record model** (scoped judgments,
+   holds, superseded, refusal in force, coverage input, `verified-by` gates,
+   order-only reads) served readiness with several open attempts. The script's
+   call stack replaces it: when a verifier refuses a subject, the script
+   reruns the correction, its check and the verifier; publication asserts
+   that every required member is accepted by its current check. The script
+   does not reimplement `Judgment.scope`.
+8. **Coordinator residue in the worker rules and hand-out** (`job`,
+   `attempt`, `prompt-path`, `workspace`; "closed attempt workspaces are
+   disposable"; "read engine state only through this prompt's inputs"; "the
+   coordinator owns scheduling"; the hand-out's duplicate-read validator; the
+   launch pointer's "you may read this supplied prompt file") is deleted, not
+   rephrased, in phase 4. Reading batches stay: truncation is a harness
+   property.
+9. **`integrate` and the publication reset read engine records** (run.json,
+   the inspect view, the publish job's current outputs, the run store). The
+   plan's "integrate stays" was wrong; phase 4 re-points both at the script's
+   records.
+10. **Self-validation** (ADR 105) stays as the analysts' convenience; the code
+    check runs regardless. Phase 1's replacement of the resolver stands.
+
+Each item is a behaviour change the retiring ADR states; gap 5 is resolved
+by item 1 and gap 9's usage half by phase 1.
 
 ## Phase 2 results (2026-10-18)
 
@@ -154,11 +230,11 @@ of the diff by a fresh agent:
   parameters, the worker profiles, the run directory and the library.
 - **Assembly and publication** (`lib/agentic_analysis/publication.py`) take
   the members by role, the metadata, the acquisition result, a `Provenance`
-  per role (coordinator-reported model and effort, worker-reported model and
-  effort, the output digest), the layout, type, criteria and run directory.
-  The record-structure part of provenance (kind, job, output key) stays in
-  the adapter; the headless script will fill `Provenance` from harness
-  records (gap 5).
+  per role (since the audit: the model the harness recorded and the output
+  digest), the layout, type, criteria and run directory. The
+  record-structure part of provenance (kind, job, output key) stays in the
+  adapter, which feeds the engine's worker-reported model until the engine
+  is retired; the headless script fills `Provenance` from its launch records.
 
 The analysis's engine adapters live in `lib/agentic_analysis/handlers.py`,
 which `plan.yaml` names; it also re-exports the publication reset hook,

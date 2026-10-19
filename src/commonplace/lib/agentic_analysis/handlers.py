@@ -49,11 +49,8 @@ def _provenance(attempt: CodeAttempt, members: dict[str, bytes]) -> dict[str, pu
         digest = record.get("outputs", {}).get(filler.outputs[0])
         if record.get("kind") != "model" or record.get("job") != filler.name or not isinstance(digest, str):
             raise ValueError(f"{role} provenance does not identify its completed output")
-        provenance[role] = publication.Provenance(
-            model=record.get("model"), effort=record.get("effort"),
-            worker_model=record.get("worker_model"), worker_effort=record.get("worker_effort"),
-            output_sha256=digest,
-        )
+        # The engine records only the worker-reported model; the adapter goes with the engine.
+        provenance[role] = publication.Provenance(model=record.get("worker_model"), output_sha256=digest)
     return provenance
 
 

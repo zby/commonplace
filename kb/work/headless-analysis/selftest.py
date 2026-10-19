@@ -6,15 +6,16 @@
 `commonplace` package that corrections.py imports.)
 
 The fake worker reads the prompt file it is pointed at and writes each listed
-output. Words in the prompt choose its behaviour: TRANSIENT fails once with a
-provider-overload message, BROKEN exits 1, FLAKY-<name> exits 1 on its first
-launch only (its marker is in the working directory, so it spans attempts and
-runs), USAGE prints a usage-limit message and exits 1, SERIAL exits 1 with
-OVERLAP if another SERIAL worker is running, REFUSE writes a refusal, and
-"Problems found" in a retry prompt makes it write an accepted answer. It
-checks that every listed input file exists and is not empty. In a correction
-(a `refusal` input), ANSWERS=<n> writes n `- corrected:` lines to `answers`,
-and SAME on a first attempt repeats the previous primary output's bytes.
+output. Words in the prompt choose its behaviour: TRANSIENT exits 1 once with
+a provider-overload message, BROKEN exits 1, SLOW-<name> sleeps past the run's
+timeout on its first launch only (its marker is in the working directory, so
+it spans attempts and runs), INCOMPLETE exits 0 without writing, USAGE prints
+a usage-limit message and exits 1, SERIAL exits 1 with OVERLAP if another
+SERIAL worker is running, PROBLEM writes a problem, and "Problems found" in a
+retry prompt makes it write an accepted answer. It checks that every listed
+input file exists and is not empty. In a correction (a `refusal` input),
+ANSWERS=<n> writes n `- corrected:` lines to `answers`, and SAME on a first
+attempt repeats the previous primary output's bytes.
 """
 
 import hashlib
@@ -42,11 +43,12 @@ if "TRANSIENT" in prompt and not marker.exists():
 if "USAGE" in prompt:
     print("Usage limit reached. Your limit resets at 5pm.")
     sys.exit(1)
-flaky = re.search(r"FLAKY-(\w+)", prompt)
-if flaky and not (Path.cwd() / f"flaky-{flaky.group(1)}").exists():
-    (Path.cwd() / f"flaky-{flaky.group(1)}").write_text("1")
-    print("tool error", file=sys.stderr)
-    sys.exit(1)
+slow = re.search(r"SLOW-(\w+)", prompt)
+if slow and not (Path.cwd() / f"slow-{slow.group(1)}").exists():
+    (Path.cwd() / f"slow-{slow.group(1)}").write_text("1")
+    time.sleep(5)
+if "INCOMPLETE" in prompt:
+    sys.exit(0)
 if "SERIAL" in prompt:
     try:
         fd = os.open(Path.cwd() / "running", os.O_CREAT | os.O_EXCL | os.O_WRONLY)
@@ -61,8 +63,8 @@ for name, path in re.findall(r"- `([\w-]+)`: `([^`]+/inputs/[^`]+)`", prompt):
 if "BROKEN" in prompt:
     print("tool error", file=sys.stderr)
     sys.exit(1)
-if "REFUSE" in prompt:
-    Path(re.search(r"reason to `([^`]+)`", prompt).group(1)).write_text("out of scope")
+if "PROBLEM" in prompt:
+    Path(re.search(r"write why to `([^`]+)`", prompt).group(1)).write_text("source unavailable")
     sys.exit(0)
 good = "Problems found" in prompt or "GOOD" in prompt
 inputs = dict(re.findall(r"- `([\w-]+)`: `([^`]+/inputs/[^`]+)`", prompt))
@@ -79,7 +81,8 @@ for name, path in re.findall(r"- `([\w-]+)`(?: \(optional\))?: write to `([^`]+)
 
 
 def fake_harness(script):
-    return Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile, d: ({}, "fake-session"))
+    return Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile, d: ({}, "fake-session"),
+                   model_used=lambda launch: "fake-model-1" if launch.ok else None)
 
 
 def check_commands():
@@ -116,21 +119,23 @@ def main():
 
         a = run.ask("draft", "Write GOOD things.", ["report"])
         assert a.outputs == {"report": "report: good"}, a.outputs
+        assert a.record["model"] == "fake-model-1", "the harness-recorded model is the provenance"
         again = run.ask("draft", "Write GOOD things.", ["report"])
         assert again.record["attempt"] == a.record["attempt"], "second ask must be a cache hit"
 
         t = run.ask("draft", "TRANSIENT then GOOD.", ["report"])
-        assert sleeps == [30] and len(t.record["transient-failures"]) == 1, (sleeps, t.record)
+        assert sleeps == [30] and len(t.record["failed-launches"]) == 1, (sleeps, t.record)
 
         try:
             run.ask("draft", "BROKEN.", ["report"])
             raise AssertionError("BROKEN must raise")
         except LaunchFailed as e:
-            assert len(e.launches) == 1, "a non-transient failure is not relaunched"
+            assert len(e.launches) == 3, "a nonzero exit is relaunched twice"
+        assert sleeps == [30, 30, 120], sleeps
         assert list((run.root / "answers").glob("*.json")), "earlier answers remain"
 
-        r = run.ask("boundary", "REFUSE.", ["boundary"])
-        assert r.refusal == "out of scope" and r.outputs == {}
+        r = run.ask("boundary", "PROBLEM.", ["boundary"])
+        assert r.problem == "source unavailable" and r.outputs == {}
 
         def prompt(problems):
             return "Write the report." + (f"\n\nProblems found: {problems}" if problems else "")
@@ -160,8 +165,8 @@ def main():
 
 
 def fake_run(root, script, **kw):
-    """A Run on the fake harness whose workers run in root's parent directory."""
-    return Run(root, root.parent, Profile("fake", "m", "low"),
+    """A Run on the fake harness whose workers run in root's parent directory, with a 1 s timeout."""
+    return Run(root, root.parent, Profile("fake", "m", "low"), timeout=1,
                harnesses={"fake": fake_harness(script)}, sleep=lambda s: None, **kw)
 
 
@@ -199,25 +204,49 @@ def check_usage_limit(run, sleeps, check):
 def check_attempt_counting(tmp, script, check):
     root = tmp / "counting"
     with fake_run(root, script) as run:
-        ok = run.checked("runtime", lambda p: "FLAKY-a then GOOD.", check, ["report"], attempts=2)
+        ok = run.checked("runtime", lambda p: "SLOW-a then GOOD.", check, ["report"], attempts=2)
         assert ok.outputs["report"] == "report: good" and run.failures(ok.key) == 1
+        assert run.failure_records(ok.key)[0]["kind"] == "timeout"
         try:
-            run.checked("runtime", lambda p: "FLAKY-b then GOOD.", check, ["report"], attempts=1)
+            run.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=1)
             raise AssertionError("one attempt must not suffice")
         except OutOfAttempts as e:
-            assert e.problems == [] and "exit 1" in e.failure, (e.problems, e.failure)
-        key_b = run.key("FLAKY-b then GOOD.", ["report"], [])
+            assert e.problems == [] and "timed out" in e.failure, (e.problems, e.failure)
+        key_b = run.key("SLOW-b then GOOD.", ["report"], [])
         launches = (root / "log.jsonl").read_text().count('"launch"')
     with fake_run(root, script) as rerun:   # a fresh Run sees the persisted failure
         assert rerun.failures(key_b) == 1
         try:
-            rerun.checked("runtime", lambda p: "FLAKY-b then GOOD.", check, ["report"], attempts=1)
+            rerun.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=1)
             raise AssertionError("the persisted failure must count")
         except OutOfAttempts:
             pass
         assert (root / "log.jsonl").read_text().count('"launch"') == launches, "stopped before launching"
-        b = rerun.checked("runtime", lambda p: "FLAKY-b then GOOD.", check, ["report"], attempts=2)
+        b = rerun.checked("runtime", lambda p: "SLOW-b then GOOD.", check, ["report"], attempts=2)
         assert b.outputs["report"] == "report: good"
+
+        # An incomplete result spends an attempt; a persistent nonzero exit stops the run without one.
+        try:
+            rerun.checked("memory", lambda p: "INCOMPLETE.", check, ["report"], attempts=2)
+            raise AssertionError("incomplete results must exhaust the attempts")
+        except OutOfAttempts as e:
+            assert "without outputs ['report']" in e.failure, e.failure
+        assert rerun.failures(rerun.key("INCOMPLETE.", ["report"], [])) == 2
+        try:
+            rerun.checked("memory", lambda p: "BROKEN.", check, ["report"], attempts=1)
+            raise AssertionError("a persistent nonzero exit must propagate")
+        except LaunchFailed:
+            pass
+        key_broken = rerun.key("BROKEN.", ["report"], [])
+        assert rerun.failures(key_broken) == 0 and rerun.failure_records(key_broken)[0]["kind"] == "exit"
+        launches = (root / "log.jsonl").read_text().count('"launch"')
+    with fake_run(root, script) as third:    # the exit failure is evidence, not a spent attempt
+        try:
+            third.checked("memory", lambda p: "BROKEN.", check, ["report"], attempts=1)
+            raise AssertionError("BROKEN still exits 1")
+        except LaunchFailed:
+            pass
+        assert (root / "log.jsonl").read_text().count('"launch"') == launches + 1, "asked again after the rerun"
 
 
 def check_worker_limit(tmp, script):

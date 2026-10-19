@@ -3,10 +3,12 @@
 A worker profile names a harness, a launch model and an effort, as in
 kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml.
 `launch()` starts that harness once, non-interactively, in the given working
-directory, and waits for it. `run_with_retries()` repeats a launch only after
-a transient provider failure. A failed launch that reports an exhausted usage
+directory, and waits for it. `run_with_retries()` relaunches after a nonzero
+exit, with backoff, at most twice; a timeout is not relaunched, since the
+worker may have done its work. A failed launch that reports an exhausted usage
 window raises `UsageLimited` without a relaunch, so the script stops and the
-operator reruns it after the reset.
+operator reruns it after the reset. `model_used()` reads the model the harness
+itself recorded for a launch, which is the run's provenance.
 
 Workers load their normal configuration. The working directory is the
 prepared worktree, so the harness reads the project's AGENTS.md / CLAUDE.md,
@@ -113,11 +115,14 @@ class Harness:
     `translate(profile, attempt_dir)` returns the profile's flags for this
     harness and the session ID chosen in advance, or None if the harness
     reports one itself. Precedence, as in mdflow: defaults < translation < profile.flags.
+    `model_used(launch)` reads the model the harness recorded for a finished
+    launch, or None when it recorded none.
     """
     executable: str
     defaults: dict
     translate: Callable[[Profile, Path], tuple[dict, str | None]]
     session_from_output: Callable[[str], str | None] | None = None
+    model_used: Callable[[Launch], str | None] | None = None
 
     def command(self, profile: Profile, prompt: str, attempt_dir: Path) -> tuple[CommandSpec, str | None]:
         translated, session = self.translate(profile, attempt_dir)
@@ -156,16 +161,66 @@ def _codex_session(stdout: str) -> str | None:
     return None
 
 
+def _models(values: set[str]) -> str | None:
+    """One recorded model, or every recorded model joined, so a mixed launch shows as such."""
+    return ", ".join(sorted(values)) or None
+
+
+def _claude_model(launch: Launch) -> str | None:
+    """Claude Code's JSON result lists the models used under `modelUsage`."""
+    try:
+        usage = json.loads(launch.stdout).get("modelUsage", {})
+    except (json.JSONDecodeError, AttributeError):
+        return None
+    return _models(set(usage)) if isinstance(usage, dict) else None
+
+
+def _session_model(root: Path, launch: Launch, holder: str) -> str | None:
+    """The `model` values in the session file named by the launch's session ID.
+
+    codex writes `payload.model` on its turn_context events under
+    ~/.codex/sessions; pi writes `message.model` on each reply under
+    ~/.pi/agent/sessions (phase 0 probes).
+    """
+    if not launch.session:
+        return None
+    models = set()
+    for path in root.rglob(f"*{launch.session}*.jsonl"):
+        for line in path.read_text(errors="replace").splitlines():
+            try:
+                event = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            value = event.get(holder) if isinstance(event, dict) else None
+            if isinstance(value, dict) and isinstance(value.get("model"), str):
+                models.add(value["model"])
+    return _models(models)
+
+
+def _codex_model(launch: Launch) -> str | None:
+    return _session_model(Path.home() / ".codex" / "sessions", launch, "payload")
+
+
+def _pi_model(launch: Launch) -> str | None:
+    return _session_model(Path.home() / ".pi" / "agent" / "sessions", launch, "message")
+
+
 HARNESSES = {
     "claude-code": Harness("claude", {
         "print": True, "output-format": "json",
         # Print mode ends the run when background tasks are still alive after
         # 600 s; "0" disables that ceiling (mdflow's claude adapter).
         "_env": {"CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0"},
-    }, _claude),
-    "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, _codex_session),
-    "pi": Harness("pi", {"print": True}, _pi),
+    }, _claude, model_used=_claude_model),
+    "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, _codex_session, _codex_model),
+    "pi": Harness("pi", {"print": True}, _pi, model_used=_pi_model),
 }
+
+
+def model_used(profile: Profile, launch: Launch, harnesses=HARNESSES) -> str | None:
+    """The model the profile's harness recorded for `launch`, or None."""
+    reader = harnesses[profile.harness].model_used
+    return reader(launch) if reader else None
 
 
 @dataclass
@@ -226,21 +281,11 @@ def _kill_group(proc: subprocess.Popen, grace: float = 10) -> None:
             continue
 
 
-# Provider failures that establish no task defect, from the analysis driver's
-# transient-worker rule. Matched only in a failed launch's stderr, not in the
-# worker's own output, so an analyst quoting these words does not qualify.
-TRANSIENT = (
-    "Our servers are currently overloaded. Please try again later.",
-    "An error occurred while processing your request.",
-    "OpenAI Responses stream ended before a terminal response event",
-)
-
-# After the first transient failure wait 30 s, after the second 120 s, after the third stop.
+# After the first nonzero exit wait 30 s, after the second 120 s, after the
+# third stop. The coordinator-era rule relaunched only on three known provider
+# messages, observed in a launch tool's results; headless exits were not
+# observed in a failure yet, so any nonzero exit gets the bounded relaunch.
 BACKOFF = (30, 120)
-
-
-def is_transient(result: Launch) -> bool:
-    return result.exit_code not in (0, None) and any(m in result.stderr for m in TRANSIENT)
 
 
 # Claude Code says "Usage limit reached", codex "You've hit your usage limit";
@@ -271,17 +316,17 @@ class UsageLimited(LaunchFailed):
 @dataclass
 class Delivered:
     launch: Launch
-    failed: list[Launch] = field(default_factory=list)   # transient failures before it
+    failed: list[Launch] = field(default_factory=list)   # nonzero exits relaunched before it
 
 
 def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path,
                      timeout: float | None = None, backoff=BACKOFF, sleep=time.sleep,
                      harnesses=HARNESSES) -> Delivered:
-    """Launch, and relaunch the same prompt only after a transient provider failure.
+    """Launch, and relaunch the same prompt after a nonzero exit, at most twice.
 
-    A failure that mentions a usage limit raises UsageLimited at once. Any
-    other failure (a nonzero exit without a transient message, or a timeout,
-    whose effects are uncertain) raises LaunchFailed at once.
+    A failure that mentions a usage limit raises UsageLimited at once. A
+    timeout raises LaunchFailed at once: the worker was killed, so it may
+    have spent its work. A third nonzero exit raises LaunchFailed.
     """
     launches: list[Launch] = []
     for n in range(len(backoff) + 1):
@@ -291,7 +336,7 @@ def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path
             return Delivered(result, launches[:-1])
         if is_usage_limited(result):
             raise UsageLimited(launches)
-        if not is_transient(result) or n == len(backoff):
+        if result.exit_code is None or n == len(backoff):
             raise LaunchFailed(launches)
         sleep(backoff[n])
     raise AssertionError("unreachable")

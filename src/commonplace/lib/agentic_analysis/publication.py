@@ -104,29 +104,24 @@ def _classified_boundary(members: Mapping[str, bytes]):
 
 @dataclass(frozen=True)
 class Provenance:
-    """What a role's producer record reports about the output it completed.
+    """The model that produced a role's published output, and that output's digest.
 
-    `model` and `effort` are what the coordinator reported (None when it did
-    not); `worker_model` and `worker_effort` are what the worker reported;
-    `output_sha256` is the digest of the completed primary output the record pins.
+    `model` is the model actually used, as the harness records it (None when
+    nothing recorded one). Until the artifact-run engine is retired, its adapter
+    supplies the worker-reported model here. `output_sha256` is the digest of
+    the completed primary output the record pins.
     """
     model: str | None
-    effort: str | None
-    worker_model: str | None
-    worker_effort: str | None
     output_sha256: str
 
 
 def _provenance(members: Mapping[str, bytes], provenance: Mapping[str, Provenance], metadata: dict) -> dict:
-    """The run's worker profile and the exact model its workers report.
+    """The run's worker profile and the exact model its workers used.
 
-    Opening resolved the worker profile the run started with; every worker uses it.
-    A producer record that a coordinator reported with a model or effort must
-    agree with it. Every producer must report the same model from its
-    environment, which may be `not stated`. Reported effort is retained per
-    role as the harness states it, not compared with the profile: harnesses
-    express effort on their own scales, and the launch-side effort above is
-    the gate.
+    Opening resolved the worker profile the run started with; every worker is
+    launched with its model and effort. Every producer record must name the same
+    model actually used, as the harness records it (the engine adapter supplies
+    the worker-reported model until the engine is retired).
     """
     worker = metadata.get("worker")
     if not isinstance(worker, dict) or not all(
@@ -134,28 +129,19 @@ def _provenance(members: Mapping[str, bytes], provenance: Mapping[str, Provenanc
             for field in ("profile", "harness", "launch-model", "effort")):
         raise ValueError("the opening metadata records no worker profile")
     reported = set()
-    efforts = {}
     for role, data in members.items():
         if role == "overview":
             continue  # Code-written, never a model worker.
         record = provenance.get(role)
         # The member can be older than the producer's latest completed output,
-        # so the digest ties the worker identity to the member actually published.
+        # so the digest ties the model to the member actually published.
         if record is None or record.output_sha256 != _digest(data):
             raise ValueError(f"{role} provenance does not identify its completed output")
-        for field, profiled in (("model", "launch-model"), ("effort", "effort")):
-            value = getattr(record, field)
-            if value is not None and value != worker[profiled]:
-                raise ValueError(f"{role} was reported with {field} {value!r}, "
-                                 f"not the run's worker profile's {worker[profiled]!r}")
-        if not isinstance(record.worker_effort, str) or not record.worker_effort:
-            raise ValueError(f"{role} reported no worker effort")
-        efforts[role] = record.worker_effort
-        reported.add(record.worker_model)
+        reported.add(record.model)
     if len(reported) != 1 or not all(isinstance(model, str) and model for model in reported):
         raise ValueError("every worker must report the same model; reported: "
                          + ", ".join(sorted(map(str, reported))))
-    return {**worker, "model": reported.pop(), "reported-effort": efforts}
+    return {**worker, "model": reported.pop()}
 
 
 def validate_pinned_artifact(*, repo: Path, members: Mapping[str, bytes], manifest: bytes, layout: Layout,

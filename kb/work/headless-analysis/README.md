@@ -31,27 +31,35 @@ of that isolation is copied.
   arguments, with `_subcommand` and `_env` for the builder and variadic flags
   such as `--add-dir` written as `--flag=value` so they cannot swallow the
   prompt. Stdin is closed, the worker's process group is killed on a timeout,
-  and a harness session ID is recorded for finding the transcript. `run_with_retries` relaunches the same
-  prompt only after one of the three provider messages that the analysis
-  driver's transient-worker rule lists, waiting 30 s and then 120 s, at most two
-  relaunches. A failed launch whose stdout or stderr contains "usage limit"
-  (any case) raises `UsageLimited` without a relaunch. Any other failure,
-  including a timeout, raises `LaunchFailed` at once.
+  and a harness session ID is recorded for finding the transcript.
+  `run_with_retries` relaunches the same prompt after a nonzero exit, waiting
+  30 s and then 120 s, at most two relaunches; the coordinator-era rule that
+  relaunched only on three known provider messages was dropped on 2026-10-19,
+  since those messages were observed in a launch tool's results, not in
+  headless exits. A failed launch whose stdout or stderr contains "usage limit"
+  (any case) raises `UsageLimited` without a relaunch. A timeout raises
+  `LaunchFailed` at once. `model_used` reads the model the harness recorded
+  for a launch: Claude Code's JSON result (`modelUsage`), codex's session file
+  (`payload.model`) or pi's (`message.model`).
 - `jobs.py`: `Run.ask(job, prompt, outputs, optional, inputs)` writes the
   prompt and each input (`inputs/<name>.md`, listed under "## Inputs") to an
-  attempt directory, points the worker at it with the driver's current
-  launch sentence, and returns the output files' contents. Answers are cached by
-  the hash of the prompt, the inputs' sha256 digests, output names and profile;
-  only successes are stored, each with its provenance and input digests. A
-  failed launch or incomplete result is appended to
-  `answers/<key>.failures.jsonl`; a usage-limited launch is not. A worker may
-  write `refusal.md` instead, which is a result. `Run.checked` is the content
-  retry loop: a failing check asks again with the problems in the prompt; a
-  failed launch or incomplete result asks the same prompt again. Answered asks
-  and persisted failures count toward the attempt limit, including failures
-  from an earlier run of the script; at the limit it raises `OutOfAttempts`.
-  `UsageLimited` propagates, so the script stops and a rerun after the reset
-  resumes from the cache. `Run(max_workers=n)` bounds concurrent launches;
+  attempt directory, points the worker at it, and returns the output files'
+  contents. Answers are cached by the hash of the prompt, the inputs' sha256
+  digests, output names and profile; only successes are stored, each with its
+  provenance (profile, the harness-recorded model, session, times) and input
+  digests. A failed launch or incomplete result is appended to
+  `answers/<key>.failures.jsonl` with its kind (`timeout`, `incomplete` or
+  `exit`); a usage-limited launch is not. A worker may write `problem.md`
+  instead, which is a result the script decides about (the workflow's
+  `problem`; a refusal is code's rejection of a candidate). `Run.checked` is
+  the content retry loop: a failing check asks again with the problems in the
+  prompt; a timeout or incomplete result asks the same prompt again. Answered
+  asks, timeouts and incomplete results count toward the attempt limit,
+  including ones from an earlier run of the script; at the limit it raises
+  `OutOfAttempts`. A launch that still exits nonzero after its relaunches is
+  an environment failure: logged, not counted, and propagated like
+  `UsageLimited`, so the script stops and a rerun after the repair or the
+  reset resumes from the cache. `Run(max_workers=n)` bounds concurrent launches;
   `gather` runs independent calls in parallel. A `Run` holds an exclusive
   flock on `<root>/lock` until `close()` (it is a context manager); a second
   `Run` on the root raises `RunLocked`. `Run.accept(path, content)` writes an
@@ -85,7 +93,13 @@ calls real models.
 - The selftest passes (2026-10-18): the built commands for all three
   harnesses, a cache hit, one transient failure retried
   after 30 s, a non-transient failure not relaunched, a refusal, one rejected
-  attempt then acceptance, three parallel jobs.
+  attempt then acceptance, three parallel jobs. Revised 2026-10-19 with the
+  simplifications: a nonzero exit is relaunched twice (waits 30 s, 120 s) and
+  then propagates without spending an attempt, and a rerun asks again; a
+  timed-out first launch succeeds with two attempts and stops with one, and
+  a fresh `Run` counts the persisted timeout; incomplete results exhaust the
+  attempts; a worker's `problem.md` is returned as a result; the record holds
+  the harness-recorded model.
 - The extended selftest passes (2026-10-18): an input written and listed
   before the outputs, its digest in the record and the key (changed bytes ask
   again); a job whose first launch fails succeeds with two attempts and stops
@@ -124,9 +138,6 @@ calls real models.
 - **Permissions.** A headless worker cannot answer a permission prompt. The
   project's settings must allow what analysts do, or the profile passes a
   permission mode; which is right for the worktree is undecided.
-- **Domain code.** Whether opening, acquisition, the declared checks, the
-  verification gate, assembly and publication take engine inputs (attempt
-  records, role addresses, coverage) or plain values is unchecked.
 - **Status.** A command that summarises `log.jsonl` and the answer cache, to
   replace `commonplace-analysis inspect`.
 
