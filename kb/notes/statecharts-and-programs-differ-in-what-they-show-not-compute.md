@@ -7,11 +7,11 @@ tags: [computational-model]
 
 # Statecharts and programs differ in what they show, not in what they can compute
 
-Two familiar arguments talk past each other. One says state machines are less expressive than general programs. The other says a statechart is more readable than the equivalent conditionals. Both representations can encode the other, so neither wins on what can be computed. What differs is which control structure each shows natively and which it pushes into data. A representation is readable for the structure it shows; the structure it encodes becomes invisible. The choice between a chart and a program is therefore decided by which control structure dominates the workflow.
+Two familiar arguments talk past each other. One says state machines are less expressive than general programs. The other says a statechart is more readable than the equivalent conditionals. Both representations can encode the other, so neither wins on what can be computed. What differs is which control structure each shows natively and which it pushes into variables. A representation is readable for the structure it shows; the structure it encodes becomes invisible. The choice between a chart and a program is therefore decided by which control structure dominates the workflow.
 
 ## The expressiveness contest is empty
 
-A finite-state machine proper cannot do what a pushdown automaton does. One stack already carries a machine beyond regular languages. But that comparison does not reach practice. Every program on a finite computer is a finite-state machine over its whole memory. A statechart in the Harel tradition pairs its drawn states with extended state variables, guards and actions, and the actions are arbitrary code. So a statechart runtime computes whatever its host language computes, and a program can carry an explicit state variable and dispatch on it. Neither side can win on computational power, so the argument has to move to what each representation makes visible.
+A finite-state machine proper cannot do what a pushdown automaton does. One stack already carries a machine beyond regular languages. But that comparison does not reach practice. Every program on a finite computer is a finite-state machine over its whole memory. A statechart in the Harel tradition pairs its drawn states with variables (its extended state), guards and actions, and the actions are arbitrary code. So a statechart runtime computes whatever its host language computes, and a program can carry an explicit state variable and dispatch on it. Neither side can win on computational power, so the argument has to move to what each representation makes visible.
 
 The [conversion lemma](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) is this encoding made deliberately. It reifies the stack, pending work and control position into explicit state `K` so that any barrier-delimited program becomes one select/call loop. The lemma states why that is useful: it fixes the LLM-call projection for analysis. It also states that the source program may stay in its natural form. The loop is the analytic state machine; the program is what someone reads.
 
@@ -21,8 +21,8 @@ The [conversion lemma](./any-symbolic-program-with-llm-calls-is-a-select-call-pr
 |---|---|---|
 | Which events each state handles, and what each does | native: every transition out of a state is visible together | encoded: a state variable plus a dispatch over events |
 | Run one step to completion, then the next | encoded: one state per step plus a done event | native: statement order |
-| Recursion with resumption | encoded: a stack of frames in extended state; nesting depth is fixed at design time | native: the call stack |
-| Fan-out whose width is decided by data | encoded: a counter or collection in extended state; orthogonal regions are fixed in number | native: a comprehension over the data plus a join |
+| Recursion with resumption | encoded: a stack of frames in the chart's variables; nesting depth is fixed at design time | native: the call stack |
+| Fan-out whose width is decided by data | encoded: a counter or collection in the chart's variables; orthogonal regions are fixed in number | native: a comprehension over the data plus a join |
 | Control structure produced at run time, such as a plan | encoded: the chart becomes an interpreter inside one state | native: execute the plan |
 
 Each encoded cell has the same shape. The real control flow moves into variables, and the drawn or written structure stops depicting it.
@@ -40,11 +40,11 @@ async def solve(task):
     return await llm_merge(task, results)
 ```
 
-A statechart for this has three states, planning, waiting on children and merging, plus an extended-state stack of frames holding the task, the pending children and the collected results. The chart is a three-node loop. The recursion and the fan-out are in the frame stack, where a reader of the chart does not see them. The function shows both.
+A statechart for this has three states, planning, waiting on children and merging, plus a stack of frames in its variables holding the task, the pending children and the collected results. The chart is a three-node loop. The recursion and the fan-out are in the frame stack, where a reader of the chart does not see them. The function shows both.
 
 The reverse encoding is the challenge "show me your statechart as conditionals". A reactive controller with a dozen states and a handful of events becomes a state variable and nested dispatch. Every transition is still present, but the reader can no longer see all exits from one state together, and a missing case appears at run time instead of as a blank cell in the table.
 
-The same chart-direction encoding explains a common difficulty with event-based modelling of sequential work. When a workflow is a sequence of steps that wait on results, modelling it as event handlers makes the author maintain the continuation by hand. Which step comes next and what was in flight live in extended state, split across handlers. That is the call stack reified without the language's help. Coroutines and async/await remove this cost: they reify the continuation automatically, so code that waits on events can still be written in statement order. They do not restore the per-state event table, so they bridge one direction only.
+The same chart-direction encoding explains a common difficulty with event-based modelling of sequential work. When a workflow is a sequence of steps that wait on results, modelling it as event handlers makes the author maintain the continuation by hand. Which step comes next and what was in flight live in variables, split across handlers. That is the call stack reified without the language's help. Coroutines and async/await remove this cost: they reify the continuation automatically, so code that waits on events can still be written in statement order. They do not restore the per-state event table, so they bridge one direction only.
 
 ## Choosing by the dominant structure
 
