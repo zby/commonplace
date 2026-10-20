@@ -8,6 +8,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [step-program-demo](./step-program-demo/README.md) — meetup demo of memoized replay with computed and reported jobs; decide whether to extract it as a standalone module
 - [headless-workflow-extraction](./headless-workflow-extraction/README.md) — extract a reusable base for direct headless execution, retries and resumable results; keep KB types and environment preparation with callers, with Treadle as the predecessor
+- [workjig-port](./workjig-port/README.md) — reimplement the analysis workflow over the Workjig runtime: consumer-side identity, budget and command mapping settled; closes on fake-harness parity, one production comparison and deletion of the old runtime layer
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
 
