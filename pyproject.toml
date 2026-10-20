@@ -25,7 +25,7 @@ dependencies = [
     "PyYAML>=6.0.0",
     "python-dotenv",
     "referencing>=0.31.0",
-    "workjig",
+    "workjig>=0.1.0",
     "xdk>=0.10.4",
 ]
 
@@ -66,11 +66,8 @@ dev = ["properdocs", "pytest", "ruff"]
 [tool.uv]
 # Pin the resolution window here so uv.lock does not depend on each machine's user-level uv config.
 exclude-newer = "7 days"
-
-[tool.uv.sources]
-# Workjig is not on PyPI yet; uv.lock pins the GitHub commit, so prepared worktrees
-# install the same runtime wherever they live. Move forward with `uv lock --upgrade-package workjig`.
-workjig = { git = "https://github.com/zby/workjig" }
+# Workjig is released alongside Commonplace, so its releases enter the lock without waiting out the window.
+exclude-newer-package = { workjig = false }
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]

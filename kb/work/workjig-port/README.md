@@ -28,7 +28,8 @@ workflow in `src/commonplace/lib/agentic_analysis/workflow.py` calling
   the same range. One run is operational context, not a controlled trial.
 - The old runtime modules, the extraction workshop and its package copy are
   deleted; an ADR records the runtime dependency and amends ADR 118 where the
-  guarantees changed; INSTALL.md gains the dependency step.
+  guarantees changed. INSTALL.md needs no step: Workjig installs from PyPI
+  as an ordinary dependency.
 
 Until the last item lands, Workjig is not mentioned in any Commonplace
 documentation outside this workshop (operator rule, 2026-10-20).
@@ -52,11 +53,12 @@ documentation outside this workshop (operator rule, 2026-10-20).
 
 Landed on main, 2026-10-20:
 
-- **Dependency.** `workjig` is a runtime dependency through a uv git source
-  on its GitHub repository, pinned to a commit in `uv.lock`, so prepared
-  worktrees install the same runtime wherever they live. The next
-  `llm-commonplace` release is blocked until Workjig is on PyPI and the git
-  source becomes a version pin.
+- **Dependency.** `workjig>=0.1.0` is a runtime dependency from PyPI, and
+  `uv.lock` pins the release, so prepared worktrees install the same runtime
+  wherever they live. Workjig is exempt from the lock's seven-day
+  `exclude-newer` window. A user-level uv config with its own window needs
+  `--exclude-newer-package workjig=false` on `uv tool install` until the
+  release is a week old.
 - **Consumer layer.** `headless/harness.py` turns a profile into a
   `CommandWorker` with the harness's machine-readable output and its Workjig
   output protocol, and reads the served model from each launch's
