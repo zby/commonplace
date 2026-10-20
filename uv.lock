@@ -250,7 +250,7 @@ requires-dist = [
     { name = "python-dotenv" },
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "referencing", specifier = ">=0.31.0" },
-    { name = "workjig", editable = "../workjig" },
+    { name = "workjig", git = "https://github.com/zby/workjig" },
     { name = "xdk", specifier = ">=0.10.4" },
 ]
 provides-extras = ["docs", "all"]
@@ -975,15 +975,7 @@ wheels = [
 [[package]]
 name = "workjig"
 version = "0.1.0"
-source = { editable = "../workjig" }
-
-[package.metadata]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=7" },
-    { name = "ruff", specifier = ">=0.5" },
-]
+source = { git = "https://github.com/zby/workjig#c92fb91d6d92d889dd2d41c6d527925760e7eb73" }
 
 [[package]]
 name = "xdk"

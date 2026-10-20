@@ -68,8 +68,9 @@ dev = ["properdocs", "pytest", "ruff"]
 exclude-newer = "7 days"
 
 [tool.uv.sources]
-# Workjig is unpublished; use the sibling checkout until it is on PyPI.
-workjig = { path = "../workjig", editable = true }
+# Workjig is not on PyPI yet; uv.lock pins the GitHub commit, so prepared worktrees
+# install the same runtime wherever they live. Move forward with `uv lock --upgrade-package workjig`.
+workjig = { git = "https://github.com/zby/workjig" }
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]
