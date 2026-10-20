@@ -52,10 +52,11 @@ documentation outside this workshop (operator rule, 2026-10-20).
 
 Landed on main, 2026-10-20:
 
-- **Dependency.** `workjig` is a runtime dependency through a uv path source
-  (editable, `../workjig`). The project venv and the user-level editable tool
-  both import the sibling checkout. The next `llm-commonplace` release is
-  blocked until Workjig is on PyPI and the path source becomes a version pin.
+- **Dependency.** `workjig` is a runtime dependency through a uv git source
+  on its GitHub repository, pinned to a commit in `uv.lock`, so prepared
+  worktrees install the same runtime wherever they live. The next
+  `llm-commonplace` release is blocked until Workjig is on PyPI and the git
+  source becomes a version pin.
 - **Consumer layer.** `headless/harness.py` turns a profile into a
   `CommandWorker` with the harness's machine-readable output and its Workjig
   output protocol, and reads the served model from each launch's
@@ -71,6 +72,9 @@ Landed on main, 2026-10-20:
   file. `acknowledge <run> <launch>` settles a launch an earlier controller
   left unsettled. The skill and the command reference describe both without
   naming the runtime.
+- **Tests.** Consumer tests that only exercised launch mechanics (fresh
+  outputs per relaunch, backoff, problem-over-exit) were deleted; the two
+  Workjig lacked moved to its acceptance suite.
 - **Verification.** The complete suite passes, the fake-harness suites
   included. One tiny ask through each real harness (Claude Code haiku, Pi
   and Codex on gpt-6-luna) delivered and recorded the served model.

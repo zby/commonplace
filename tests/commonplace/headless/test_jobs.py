@@ -1,17 +1,17 @@
 """Tests for the headless job primitives on a fake harness over Workjig; no model is called.
 
 The fake worker reads the frame file it is pointed at and writes each listed
-output. Words in the task choose its behaviour: TRANSIENT exits 1 once with a
-provider-overload message, BROKEN exits 1, SLOW-<name> sleeps past the run's
-timeout on its first launch only, INCOMPLETE exits 0 without writing, USAGE
-reports a usage limit in the problem file and exits 1, SERIAL exits 1 with
-OVERLAP if another SERIAL worker is running, PROBLEM writes a problem, and
-"Problems found" in a retry prompt makes it write an accepted answer. On its
-first launch only, PARTIAL-EXIT writes every listed output and exits 1, its
-relaunch then exiting 0 without writing, and PROBLEM-EXIT writes a problem and
-exits 1. First-launch markers live in the working directory, keyed by the
-task, so they span launches and runs. It checks that every listed input file
-exists and is not empty. In a correction (a `refusal` input), ANSWERS=<n>
+output. Words in the task choose its behaviour: BROKEN exits 1, SLOW-<name>
+sleeps past the run's timeout on its first launch only (its marker is in the
+working directory, so it spans launches and runs), INCOMPLETE exits 0 without
+writing, USAGE reports a usage limit in the problem file and exits 1, SERIAL
+exits 1 with OVERLAP if another SERIAL worker is running, PROBLEM writes a
+problem, and "Problems found" in a retry prompt makes it write an accepted
+answer. It checks that every listed input file exists and is not empty.
+
+Launch mechanics Commonplace does not configure, such as fresh output paths
+per relaunch, the backoff wait and problem-over-exit classification, are
+Workjig's own tests. In a correction (a `refusal` input), ANSWERS=<n>
 writes n `- corrected:` lines to `answers`, and SAME on a first attempt
 repeats the previous primary output's bytes.
 """
@@ -27,7 +27,6 @@ import pytest
 from commonplace.headless.corrections import produce
 from commonplace.headless.harness import HARNESSES, Harness, Profile
 from commonplace.headless.jobs import (
-    Exhausted,
     LaunchFailed,
     OutOfAttempts,
     Run,
@@ -40,7 +39,7 @@ from commonplace.headless.jobs import (
 )
 
 FAKE = r"""
-import hashlib, json, os, re, sys, time
+import json, os, re, sys, time
 from pathlib import Path
 prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
@@ -58,28 +57,12 @@ for line in prompt.splitlines():
 problem_file = Path(prompt.split("write a JSON object to this problem file:\n", 1)[1].splitlines()[0])
 inputs = sections.get("Inputs", {})
 outputs = {**sections.get("Required outputs", {}), **sections.get("Optional outputs", {})}
-marker = Path.cwd() / ("seen-" + hashlib.sha256(task.encode()).hexdigest()[:12])
 
 
 def problem(kind, message):
     problem_file.write_text(json.dumps({"kind": kind, "message": message}))
 
 
-if "TRANSIENT" in task and not marker.exists():
-    marker.write_text("1")
-    print("Our servers are currently overloaded. Please try again later.", file=sys.stderr)
-    sys.exit(1)
-if "PARTIAL-EXIT" in task:
-    if marker.exists():
-        sys.exit(0)
-    marker.write_text("1")
-    for name, path in outputs.items():
-        Path(path).write_text(f"{name}: from the failed launch")
-    sys.exit(1)
-if "PROBLEM-EXIT" in task and not marker.exists():
-    marker.write_text("1")
-    problem("unable", "left by the failed launch")
-    sys.exit(1)
 if "USAGE" in task:
     problem("usage_limit", "Usage limit reached. Your limit resets at 5pm.")
     sys.exit(1)
@@ -198,11 +181,6 @@ def test_ask_records_model_and_second_ask_replays(run):
     assert launch_count(run.root) == 1
 
 
-def test_transient_failure_relaunches_after_backoff(run, sleeps):
-    t = run.ask("draft", "TRANSIENT then GOOD.", ["report"])
-    assert sleeps == [30] and len(t.record["launches"]) == 2, (sleeps, t.record)
-
-
 def test_broken_launch_raises_after_two_relaunches(run, sleeps):
     run.ask("draft", "Write GOOD things.", ["report"])
     with pytest.raises(LaunchFailed) as e:
@@ -210,24 +188,6 @@ def test_broken_launch_raises_after_two_relaunches(run, sleeps):
     assert len(e.value.result.launches) == 3, "a nonzero exit is relaunched twice"
     assert sleeps == [30, 30], sleeps
     assert run.ask("draft", "Write GOOD things.", ["report"]).record["model"], "earlier answers remain"
-
-
-def test_a_failed_launchs_outputs_are_not_the_relaunchs_result(run, sleeps):
-    with pytest.raises(Exhausted) as e:
-        run.ask("draft", "PARTIAL-EXIT.", ["report"], attempts=1)
-    assert "without outputs ['report.md']" in e.value.failure, e.value.failure
-    assert len([event for event in events(run.root) if event["event"] == "failed"]) == 1
-    first, relaunch = [run.root / "calls" / "launches" / event["launch"] for event in events(run.root)
-                       if event["event"] == "launch"]
-    assert (first / "outputs" / "report.md").read_text() == "report: from the failed launch"
-    assert list((relaunch / "outputs").iterdir()) == [], "the relaunch starts from an empty outputs directory"
-    assert sleeps == [30]
-
-
-def test_a_failed_launchs_problem_is_the_result(run):
-    a = run.ask("draft", "PROBLEM-EXIT then GOOD.", ["report"])
-    assert a.problem == "left by the failed launch" and a.outputs == {}, (a.problem, a.outputs)
-    assert len(a.record["launches"]) == 1, "a problem is not relaunched, whatever the exit status"
 
 
 def test_problem_is_a_result_not_a_failure(run):
