@@ -176,8 +176,8 @@ publication. Optional `--source-revision <full-40-hex-commit>` requires a
 GitHub identity; `--max-workers` (default 3) bounds concurrent workers and
 `--timeout` (default 10800 s) each launch. `run <run>` resumes an allocated,
 stopped or interrupted run: every worker answer is recorded under its full
-request, timeout included, so only jobs whose request changed are asked
-again; resume with the original `--timeout`. The run holds a lock; a second
+request, so only jobs whose request changed are asked again; a changed
+`--timeout` applies to launches not yet made. The run holds a lock; a second
 `run` on the same directory is refused. Exit status 0 prints the publication
 receipt (`published: false` for a local `blocked` or `out-of-scope` result),
 2 means the run stopped and printed why (a usage limit, an environment

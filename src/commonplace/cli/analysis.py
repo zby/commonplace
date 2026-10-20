@@ -16,10 +16,10 @@ launch failure, a usage limit, a guard's refusal, an environment error or an
 uncertain publication effect; a rerun after the repair resumes), and 1 when
 the command failed, including when another process holds the run.
 
-A resumed run replays Workjig's records only for requests it repeats exactly;
-the per-launch timeout is part of each request, so resume with the same
-`--timeout`. A run whose earlier controller died mid-launch stops until the
-operator confirms that worker stopped with `acknowledge`.
+A resumed run replays every worker request whose work is unchanged; a
+changed `--timeout` applies to launches not yet made. A run whose earlier
+controller died mid-launch stops until the operator confirms that worker
+stopped with `acknowledge`.
 """
 
 from __future__ import annotations

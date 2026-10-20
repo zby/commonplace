@@ -975,7 +975,7 @@ wheels = [
 [[package]]
 name = "workjig"
 version = "0.1.0"
-source = { git = "https://github.com/zby/workjig#c92fb91d6d92d889dd2d41c6d527925760e7eb73" }
+source = { git = "https://github.com/zby/workjig#f2c14e83f46441d48a5db75f48227fad8813be4c" }
 
 [[package]]
 name = "xdk"

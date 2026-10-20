@@ -2,23 +2,25 @@
 
 `ask()` is the one agent call: it hands a task and its named inputs to a
 headless worker that writes named output files, and returns their contents.
-Each ask is a chain of Workjig calls whose identity is the job name and the
-call's position in the chain; Workjig keys each call's record by the full
-request, so a rerun of the script after a crash, an edit or a stop replays
-what is already answered:
+Each request is one Workjig call named after its job, and Workjig keys the
+call's record by the work it asks for, so a rerun of the script after a
+crash, an edit or a stop replays what is already answered:
 
-- changing the task, an input, the outputs, the worker profile or the
-  timeout asks again; restoring them reuses the answer;
+- changing the task, an input, the outputs or the worker profile asks
+  again; restoring them reuses the answer; a changed timeout does not;
+- every launch is `ask`'s decision: it raises the call's launch ceiling by
+  one per launch it allows, and a call at its ceiling replays its launches
+  without launching, so a rerun counts them again;
 - a timed-out launch, an incomplete result or a malformed problem file is
   not an answer, but it is an attempt, since the worker spent its work: it
-  stays in the run record, counts toward `checked()`'s attempt limit across
-  reruns, and the next call in the chain asks again;
-- a launch that exits nonzero is relaunched by Workjig after a backoff, at
-  most twice; one that still fails is an environment failure: it does not
+  counts toward `checked()`'s attempt limit across reruns;
+- a launch that exits nonzero is relaunched after a backoff, at most twice
+  in a row; one that still fails is an environment failure: it does not
   count and propagates, so the script stops, and a rerun after the repair
-  moves past it to the next call in the chain;
+  continues the call;
 - a usage-limited launch is neither an answer nor an attempt; it propagates
-  the same way, and a rerun after the reset asks again;
+  the same way, and a rerun after the reset approves continuing past that
+  recorded stop;
 - every answer keeps its provenance: profile, the model the harness
   recorded, input digests and the Workjig call and launches it came from.
 
@@ -26,7 +28,9 @@ A worker that cannot do its job writes Workjig's problem file instead of its
 outputs; the problem is a result the script decides about, not a failure or a
 refusal (a refusal is code's rejection of a candidate, which the worker
 answers). A rerun replays a problem, like an answer, until the operator
-dismisses it with `dismiss()`; the next call in the chain then asks again.
+dismisses it with `dismiss()`. A call that cannot launch again, after a
+dismissed answer or a malformed problem file, continues under the next
+identity, `<job>#1`, `<job>#2` and so on.
 
 The task names its inputs and outputs by reference, `<Inputs: name.md>` and
 `<Required outputs: name.md>`: Workjig writes fresh inputs for every launch
@@ -69,15 +73,18 @@ SUFFIX = ".md"
 COUNTED = ("timeout", "incomplete", "protocol_error")
 """Workjig statuses that spend an attempt: the worker ran and returned no answer."""
 LAUNCHES = 3
-"""Launches per call: the first and two relaunches after a nonzero exit."""
-RELAUNCH = RetryPolicy(on=("process_error", "launch_error"), backoff_seconds=30)
+"""Launches in a row a nonzero exit may take: the first and two relaunches."""
+RETRY = RetryPolicy(on=("timeout", "incomplete", "worker_problem", "process_error", "launch_error",
+                        "interrupted"),
+                    backoff_seconds=30)
+"""What may continue a call; whether it does is `ask`'s decision, one launch at a time."""
 DEFAULT_TIMEOUT = 24 * 3600.0
 """Workjig needs a timeout; a run without one gets a day per launch."""
 PROBLEM = "problem"
 CALLS = "calls"
 """The directory under a run's root holding Workjig's records."""
 DISMISSED = "dismissed.json"
-"""The answers and worker problems the operator dismissed, as `[call, key]` pairs."""
+"""The launches whose answer or worker problem the operator dismissed, by launch ID."""
 
 
 def digest(text: str) -> str:
@@ -229,65 +236,79 @@ class Run:
         path.mkdir(parents=True, exist_ok=True)
         return path
 
-    def _call(self, request: Request) -> CallResult:
+    def _call(self, request: Request, resume: str | None) -> CallResult:
         if self._workers is None:
-            return self.records.call(request)
+            return self.records.call(request, resume_usage_stop=resume)
         with self._workers:
-            return self.records.call(request)
+            return self.records.call(request, resume_usage_stop=resume)
 
     def ask(self, job: str, prompt: str, outputs: list[str], optional: list[str] = (),
             inputs: dict[str, str] | None = None, attempts: int = 1) -> Answer:
         """Ask a worker for named output files; return them, replayed if answered.
 
         `prompt` names inputs and outputs with `input_ref` and `output_ref`.
-        Results that are not answers spend attempts and are asked again, up
-        to `attempts`, then raise `Exhausted`; a replayed one spends again. An
-        environment failure raises `LaunchFailed` and a usage limit
-        `UsageLimited`; a rerun moves past either.
+        Each request is one Workjig call, and every launch is this method's
+        decision: it raises the call's launch ceiling by one per launch it
+        allows. A call at its ceiling replays without launching, so a rerun
+        walks the recorded launches and counts them again. Results that are
+        not answers spend attempts, up to `attempts`, then raise `Exhausted`.
+        A nonzero exit is relaunched at most twice in a row, then raises
+        `LaunchFailed`; a usage limit raises `UsageLimited`. A rerun after
+        the repair continues the same call, approving a recorded usage stop.
         """
         inputs = dict(inputs or {})
         names = list(outputs) + list(optional)
         spent, failure = 0, None
-        for position in itertools.count():
-            request = Request(
-                call_id=f"{job}#{position}", task=prompt,
-                inputs={name + SUFFIX: text for name, text in inputs.items()},
-                required_outputs=tuple(name + SUFFIX for name in outputs),
-                optional_outputs=tuple(name + SUFFIX for name in optional),
-                worker=self.worker, timeout_seconds=self.timeout, max_launches=LAUNCHES, retry=RELAUNCH)
-            result = self._call(request)
-            key = result.request_hash
-            if not result.reused:
-                for launch in result.launches:
-                    self.log(event="launch", job=job, key=key, launch=launch.launch_id, status=launch.status)
-            if result.reused and (request.call_id, key) in self._dismissed:
-                continue                  # the operator dismissed this result: ask again, spending nothing
-            if result.status in ("delivered", "worker_problem"):
-                produced = {name: result.outputs[name + SUFFIX] for name in names
-                            if name + SUFFIX in result.outputs}
-                last = result.launches[-1]
-                problem = last.problem["message"] if result.status == "worker_problem" else None
-                record = {
-                    "job": job, "key": key, "call": request.call_id, "prompt": prompt,
-                    "inputs": {name: digest(text) for name, text in inputs.items()},
-                    "outputs": produced, PROBLEM: problem, "profile": asdict(self.profile),
-                    "model": model_used(self.profile, last, self.harnesses),
-                    "launches": [launch.launch_dir for launch in result.launches],
-                }
-                if not result.reused:
-                    self.log(event="answered", job=job, key=key, problem=problem is not None)
-                return Answer(key, produced, problem, record, spent + 1)
-            if result.status in COUNTED:
-                spent, failure = spent + 1, describe(result)
-                if not result.reused:
-                    self.log(event="failed", job=job, key=key, reason=failure)
-                if spent >= attempts:
-                    raise Exhausted(job, failure)
-                continue
-            if result.reused:
-                continue                  # an earlier run's stop, repaired since: ask again
-            self.log(event="stopped-call", job=job, key=key, reason=describe(result))
-            raise (UsageLimited if result.status == "usage_limit" else LaunchFailed)(job, result)
+        for identity in itertools.count():
+            call_id = job if identity == 0 else f"{job}#{identity}"
+            ceiling, resume, exits = 1, None, 0
+            while True:
+                request = Request(
+                    call_id=call_id, task=prompt,
+                    inputs={name + SUFFIX: text for name, text in inputs.items()},
+                    required_outputs=tuple(name + SUFFIX for name in outputs),
+                    optional_outputs=tuple(name + SUFFIX for name in optional),
+                    worker=self.worker, timeout_seconds=self.timeout, max_launches=ceiling, retry=RETRY)
+                result = self._call(request, resume)
+                key, last, fresh = result.request_hash, result.launches[-1], not result.reused
+                if fresh:
+                    self.log(event="launch", job=job, key=key, launch=last.launch_id, status=last.status)
+                ceiling, resume = len(result.launches) + 1, None
+                status = result.status
+                if last.launch_id in self._dismissed:
+                    if status == "delivered":
+                        break                 # a delivered call cannot launch again: a new identity
+                    continue                  # the operator dismissed this problem: ask again, spending nothing
+                if status in ("delivered", "worker_problem"):
+                    produced = {name: result.outputs[name + SUFFIX] for name in names
+                                if name + SUFFIX in result.outputs}
+                    problem = last.problem["message"] if status == "worker_problem" else None
+                    record = {
+                        "job": job, "key": key, "call": call_id, "prompt": prompt,
+                        "inputs": {name: digest(text) for name, text in inputs.items()},
+                        "outputs": produced, PROBLEM: problem, "profile": asdict(self.profile),
+                        "model": model_used(self.profile, last, self.harnesses),
+                        "launches": [launch.launch_dir for launch in result.launches],
+                    }
+                    if fresh:
+                        self.log(event="answered", job=job, key=key, problem=problem is not None)
+                    return Answer(key, produced, problem, record, spent + 1)
+                if status in COUNTED:
+                    spent, failure, exits = spent + 1, describe(result), 0
+                    if fresh:
+                        self.log(event="failed", job=job, key=key, reason=failure)
+                    if spent >= attempts:
+                        raise Exhausted(job, failure)
+                    if status == "protocol_error":
+                        break                 # Workjig never relaunches a protocol error: a new identity
+                    continue
+                if fresh:
+                    exits += status in ("process_error", "launch_error")
+                    if status == "usage_limit" or exits >= LAUNCHES:
+                        self.log(event="stopped-call", job=job, key=key, reason=describe(result))
+                        raise (UsageLimited if status == "usage_limit" else LaunchFailed)(job, result)
+                elif status == "usage_limit":
+                    resume = last.launch_id   # rerunning after the reset is the operator's approval
         raise AssertionError("unreachable")
 
     def checked(self, job: str, build_prompt, check, outputs: list[str], optional: list[str] = (),
@@ -349,15 +370,16 @@ class Run:
         return target
 
 
-def _dismissed(root: Path) -> set[tuple[str, str]]:
+def _dismissed(root: Path) -> set[str]:
     path = Path(root) / DISMISSED
-    return {tuple(pair) for pair in json.loads(path.read_text())} if path.is_file() else set()
+    return set(json.loads(path.read_text())) if path.is_file() else set()
 
 
 def recorded_calls(root: Path) -> list[dict]:
-    """The run's Workjig calls, oldest record first, as `job`, `call`, `key`, `status`, `launches`, `problem`.
+    """The run's Workjig calls as `job`, `call`, `key`, `status`, `launches`, `problem`, `dismissed`.
 
-    Reads only; Workjig replaces its record atomically, so a running controller does not tear it.
+    `status` and `problem` are the latest launch's. Reads only; Workjig
+    replaces its record atomically, so a running controller does not tear it.
     """
     path = Path(root) / CALLS / "run.json"
     if not path.is_file():
@@ -365,14 +387,15 @@ def recorded_calls(root: Path) -> list[dict]:
     dismissed = _dismissed(root)
     calls = []
     for call_id, versions in json.loads(path.read_text(encoding="utf-8"))["calls"].items():
-        job = call_id.rpartition("#")[0]
         for key, entry in versions.items():
-            last = entry["attempts"][-1] if entry["attempts"] else None
-            status = "delivered" if entry["result"] is not None else (last["status"] if last else "reserved")
-            problem = last["problem"]["message"] if status == "worker_problem" else None
-            calls.append({"job": job, "call": call_id, "key": key, "status": status,
+            if not entry["attempts"]:
+                continue
+            last = entry["attempts"][-1]
+            status = "delivered" if entry["result"] is not None else last["status"]
+            calls.append({"job": call_id.partition("#")[0], "call": call_id, "key": key, "status": status,
                           "launches": [attempt["launch_id"] for attempt in entry["attempts"]],
-                          "problem": problem, "dismissed": (call_id, key) in dismissed})
+                          "problem": last["problem"]["message"] if status == "worker_problem" else None,
+                          "dismissed": last["launch_id"] in dismissed})
     return calls
 
 
@@ -390,9 +413,9 @@ def dismiss(root: Path, job: str, key: str | None = None) -> list[dict]:
                          else call["key"] == key and call["status"] == "delivered")]
         if not standing:
             raise ValueError(f"{job} has no {'worker problem' if key is None else f'answer {key}'} to dismiss")
-        pairs = sorted(_dismissed(root) | {(call["call"], call["key"]) for call in standing})
+        launches = sorted(_dismissed(root) | {call["launches"][-1] for call in standing})
         tmp = root / f"{DISMISSED}.tmp"
-        tmp.write_text(json.dumps([list(pair) for pair in pairs], indent=2))
+        tmp.write_text(json.dumps(launches, indent=2))
         tmp.replace(root / DISMISSED)
     return standing
 

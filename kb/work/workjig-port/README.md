@@ -62,11 +62,15 @@ Landed on main, 2026-10-20:
   output protocol, and reads the served model from each launch's
   `stdout.log`. `headless/jobs.py` keeps `ask`, `checked`, `accept`, `log`
   and `gather` over `workjig.Run`; records live under the run's `calls/`.
-- **Identity and budgets.** An ask is a chain of calls `<job>#<position>`.
-  A timed-out, incomplete or malformed result spends an attempt and moves to
-  the next position; a usage limit or environment failure inherited from an
-  earlier run is skipped, so a rerun after the repair asks again. `gather`
-  stays: parallel rounds run checks and corrections, not single requests.
+- **Identity and budgets.** Each request is one Workjig call named after
+  its job. `ask` grants one launch at a time by raising the call's ceiling,
+  so every launch decision and the attempt count stay in Commonplace; a
+  rerun walks the recorded launches and counts them again. A rerun after a
+  usage limit approves the recorded stop. Only a call that cannot launch
+  again, after a dismissed answer or a malformed problem file, moves to
+  `<job>#1`. `gather` stays: parallel rounds run checks and corrections,
+  not single requests. This rests on Workjig's separation of execution
+  controls from work identity (its ADR 003).
 - **Operator affordances.** `commonplace-analysis retry <run> <job> [--key]`
   dismisses a worker problem or an answer, replacing deletion of a cache
   file. `acknowledge <run> <launch>` settles a launch an earlier controller
@@ -81,9 +85,6 @@ Landed on main, 2026-10-20:
 
 Behaviour that differs from ADR 118, for the ADR that closes this workshop:
 
-- **Timeout is part of request identity.** Resuming with a different
-  `--timeout` asks every job again. The skill and command reference say to
-  resume with the original timeout.
 - **Fixed relaunch delay.** Relaunches wait 30 seconds each, not 30 then 120.
 - **A problem written by a failing launch is the result.** Workjig reads the
   problem file before the exit status; the old layer relaunched and kept the
@@ -101,9 +102,6 @@ Behaviour that differs from ADR 118, for the ADR that closes this workshop:
   relaunch where the delay mattered.
 - **Persisted harness evidence.** Consumer-side parsing is a helper per
   harness; revisit if provenance code grows past that.
-- **Timeout identity.** If resuming with a longer timeout turns out to be a
-  common repair, raise with Workjig whether the timeout belongs in request
-  identity.
 - **Pilot integration.** The ADR 118 pilot is published in its worktree but
   not integrated; that decision is independent of this port.
 

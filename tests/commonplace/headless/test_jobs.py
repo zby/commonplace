@@ -380,12 +380,30 @@ def test_dismissed_results_are_asked_again_without_spending_attempts(tmp_path, s
         assert run.ask("boundary", "PROBLEM.", ["boundary"]).problem
     with pytest.raises(RunLocked), fake_run(root, script):
         dismiss(root, "draft", answer.key)
-    assert [call["call"] for call in dismiss(root, "draft", answer.key)] == ["draft#0"]
-    assert [call["call"] for call in dismiss(root, "boundary")] == ["boundary#0"]
+    assert [call["call"] for call in dismiss(root, "draft", answer.key)] == ["draft"]
+    assert [call["call"] for call in dismiss(root, "boundary")] == ["boundary"]
     with pytest.raises(ValueError, match="no worker problem"):
         dismiss(root, "boundary")
     with fake_run(root, script) as rerun:
         again = rerun.ask("draft", "Write GOOD things.", ["report"], attempts=1)
         assert again.record["call"] == "draft#1" and again.attempts == 1, again.record
-        assert rerun.ask("boundary", "PROBLEM.", ["boundary"]).record["call"] == "boundary#1"
+        # A dismissed problem continues its own call; a delivered call cannot, so it takes the next identity.
+        problem = rerun.ask("boundary", "PROBLEM.", ["boundary"])
+        assert problem.record["call"] == "boundary" and len(problem.record["launches"]) == 2
     assert launch_count(root) == 4
+
+
+def test_a_changed_timeout_replays_answers_and_continues_failures(tmp_path, script):
+    root = tmp_path / "timeouts"
+    with fake_run(root, script) as run:
+        answer = run.ask("draft", "Write GOOD things.", ["report"])
+        with pytest.raises(OutOfAttempts):
+            run.checked("runtime", lambda p: "SLOW-c then GOOD.", check, ["report"], attempts=1)
+        launches = launch_count(root)
+    with Run(root, root.parent, Profile("fake", "m", "low"), timeout=30,
+             harnesses={"fake": fake_harness(script)}, sleep=lambda s: None) as rerun:
+        assert rerun.ask("draft", "Write GOOD things.", ["report"]).record["launches"] == answer.record["launches"]
+        assert launch_count(root) == launches, "a longer timeout replays the delivered answer"
+        b = rerun.checked("runtime", lambda p: "SLOW-c then GOOD.", check, ["report"], attempts=2)
+        assert b.outputs["report"] == "report: good" and b.attempts == 2
+        assert b.record["call"] == "runtime" and len(b.record["launches"]) == 2, "one call, its timeout counted"

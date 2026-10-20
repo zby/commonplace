@@ -186,8 +186,8 @@ commonplace-analysis run <run>
 ```
 
 resumes a stopped or interrupted run from where it was, without asking any
-worker again whose request is unchanged. The per-launch timeout is part of
-the request: resume with the run's original `--timeout`. A run stops on:
+worker again whose request is unchanged; a changed `--timeout` applies to
+launches not yet made. A run stops on:
 
 - a usage limit of the harness: rerun after the limit resets;
 - an environment failure (a launch still exiting nonzero after its
