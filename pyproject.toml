@@ -25,6 +25,7 @@ dependencies = [
     "PyYAML>=6.0.0",
     "python-dotenv",
     "referencing>=0.31.0",
+    "workjig",
     "xdk>=0.10.4",
 ]
 
@@ -65,6 +66,10 @@ dev = ["properdocs", "pytest", "ruff"]
 [tool.uv]
 # Pin the resolution window here so uv.lock does not depend on each machine's user-level uv config.
 exclude-newer = "7 days"
+
+[tool.uv.sources]
+# Workjig is unpublished; use the sibling checkout until it is on PyPI.
+workjig = { path = "../workjig", editable = true }
 
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]
