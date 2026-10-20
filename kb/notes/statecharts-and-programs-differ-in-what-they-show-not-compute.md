@@ -27,7 +27,7 @@ The [conversion lemma](./any-symbolic-program-with-llm-calls-is-a-select-call-pr
 
 Each encoded cell has the same shape. The real control flow moves into variables, and the drawn or written structure stops depicting it.
 
-## Encoding in either direction destroys readability
+## Encoding in either direction hides the control structure
 
 Take a recursive planner:
 
@@ -40,15 +40,15 @@ async def solve(task):
     return await llm_merge(task, results)
 ```
 
-A statechart for this has three states, planning, waiting on children and merging, plus an extended-state stack of frames holding the task, the pending children and the collected results. The chart is a three-node loop that says nothing about the workflow. The function shows all of it.
+A statechart for this has three states, planning, waiting on children and merging, plus an extended-state stack of frames holding the task, the pending children and the collected results. The chart is a three-node loop. The recursion and the fan-out are in the frame stack, where a reader of the chart does not see them. The function shows both.
 
 The reverse encoding is the challenge "show me your statechart as conditionals". A reactive controller with a dozen states and a handful of events becomes a state variable and nested dispatch. Every transition is still present, but the reader can no longer see all exits from one state together, and a missing case appears at run time instead of as a blank cell in the table.
 
-The same chart-direction encoding explains a common difficulty with event-based modelling of sequential work. When a workflow is a sequence of steps that wait on results, modelling it as event handlers makes the author maintain the continuation by hand. Which step comes next and what was in flight live in extended state, split across handlers. That is the call stack reified without the language's help. Coroutines and async/await exist to undo this: they reify the continuation automatically, so code that waits on events can still be written in statement order. They do not restore the per-state event table, so they bridge one direction only.
+The same chart-direction encoding explains a common difficulty with event-based modelling of sequential work. When a workflow is a sequence of steps that wait on results, modelling it as event handlers makes the author maintain the continuation by hand. Which step comes next and what was in flight live in extended state, split across handlers. That is the call stack reified without the language's help. Coroutines and async/await remove this cost: they reify the continuation automatically, so code that waits on events can still be written in statement order. They do not restore the per-state event table, so they bridge one direction only.
 
 ## Choosing by the dominant structure
 
-Run-to-completion workflows with recursion, data-dependent width or plans produced at run time read better as programs. Reactive control with a fixed finite state set, where the question is what happens on each event in each state, reads better as a chart. Many agent systems contain both: a finite lifecycle such as queued, running, completed and failed around a sequential job. The lifecycle is chart-shaped and the job is program-shaped. Forcing either into the other's representation produces the encodings above.
+Run-to-completion workflows with recursion, data-dependent width or plans produced at run time read better as programs. Reactive control with a fixed finite state set, where the question is what happens on each event in each state, reads better as a chart. An agent system can contain both, for example a finite lifecycle such as queued, running, completed and failed around a sequential job. The lifecycle is chart-shaped and the job is program-shaped. Forcing either into the other's representation produces the encodings above.
 
 This is the same boundary the [bounded-context orchestration model](./bounded-context-orchestration-model.md) draws for itself. Barriered run-to-completion calls fit the select/call form; streaming interaction and independently mutable environments need an event-driven extension. The present claim adds that the readable representation changes at the same boundary.
 
