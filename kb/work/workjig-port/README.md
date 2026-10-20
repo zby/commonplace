@@ -94,10 +94,15 @@ Behaviour that differs from ADR 118, for the ADR that closes this workshop:
 
 ## Open items and how they return to decision
 
-- **Production comparison.** The next step: one analysis on the production
-  profile, compared with the ADR 118 pilot. Run it from a fresh prepared
-  worktree, at the operator's call, since it spends a production
-  budget.
+- **Production comparison: done, 2026-10-20.** Run
+  `AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01` (pi-sol, commit
+  14fa721) published with 11 launches, no failures or corrections and 37:26
+  wall, against the pilot's 11 and 39:56. Classifications and consequential
+  claims agree except for memory-profile unit judgments, a few epistemic
+  ledger values and the scope of adapter chat history, the same kind of
+  variance the pilot showed against the engine runs; details in `kb/log.md`.
+  The run did not exercise relaunches, usage stops, `retry` or `acknowledge`.
+  It is published in its worktree and not integrated.
 - **Escalating backoff.** Ask Workjig only if the production run shows a
   relaunch where the delay mattered.
 - **Persisted harness evidence.** Consumer-side parsing is a helper per
