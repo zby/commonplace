@@ -21,8 +21,8 @@ states, as ordinary calls:
     synthesis, synthesis-verification      workers, corrected until accepted
     every member re-checked, then assemble, publish   code
 
-Every worker call is cached by content, so a rerun of the script resumes from
-the cache (`commonplace.headless.jobs`). Attempt budgets are the plan's `max-attempts`, counted
+Every worker call is recorded by Workjig under its full request, so a rerun of
+the script replays what is answered (`commonplace.headless.jobs`). Attempt budgets are the plan's `max-attempts`, counted
 per job over the whole run: a check's rejection, a
 verifier's correction, a re-ask after an input changed and a timed-out or
 incomplete launch each spend one; the verifier's own budget bounds the number
@@ -51,10 +51,21 @@ from hashlib import sha256
 from pathlib import Path
 
 import yaml
+from workjig import RecordError, UncertainLaunchError
 
 from commonplace.headless.corrections import produce
-from commonplace.headless.harness import HARNESSES, LaunchFailed, Profile
-from commonplace.headless.jobs import Answer, OutOfAttempts, Run, digest, gather
+from commonplace.headless.harness import HARNESSES, Profile
+from commonplace.headless.jobs import (
+    PROBLEM_REF,
+    Answer,
+    LaunchFailed,
+    OutOfAttempts,
+    Run,
+    digest,
+    gather,
+    input_ref,
+    output_ref,
+)
 from commonplace.lib.agentic_analysis.analyses import (
     WORKER_PROFILES,
     resolve_worker_profile,
@@ -283,8 +294,8 @@ class Analysis:
         """The frame the analysis workers follow: the instruction, `name = value` lines, the prompt section.
 
         `given` are the attempt's inputs: the role's reads, `previous-*` on a
-        rerun and `refusal` when correcting; each is placed with an
-        `{input:<name>}` token that `Run.ask` fills.
+        rerun and `refusal` when correcting; each is named by reference to
+        the input list Workjig appends with each launch's paths.
         """
         method, layout, library = self.method, self.layout, self.library
         outputs = method.outputs(role)
@@ -298,18 +309,19 @@ class Analysis:
         values |= {name: str(library / path) for name, path in files.items()}
         for source in method.reads(role):
             name = method.read_name(source)
-            values[name] = f"{{input:{name}}}" if name in given else ABSENT_LINE
-        values["refusal"] = "{input:refusal}" if "refusal" in given else ABSENT_LINE
-        values |= {name: f"{{input:{name}}}" for name in given if name.startswith("previous-")}
-        values["output"] = f"{{output:{outputs[0]}}}"
+            values[name] = input_ref(name) if name in given else ABSENT_LINE
+        values["refusal"] = input_ref("refusal") if "refusal" in given else ABSENT_LINE
+        values |= {name: input_ref(name) for name in given if name.startswith("previous-")}
+        values["output"] = output_ref(outputs[0])
         if len(outputs) > 1:
-            values["output-answers"] = f"{{output:{outputs[1]}}}"
-        values |= {"problem": "{problem}", "artifact": str(self.run.artifact), "scratch": "{scratch}"}
+            values["output-answers"] = output_ref(outputs[1], optional=True)
+        values |= {"problem": PROBLEM_REF, "artifact": str(self.run.artifact),
+                   "scratch": str(self.run.scratch(role))}
         instruction = method.instruction(role)
         lines = [f"Follow {instruction} with:", *(f"{key} = {value}" for key, value in values.items()), "",
                  render_prompt_section(method.prompt_section, values)]
         sized = [(str(library / path), (library / path).read_bytes()) for path in files.values()]
-        sized += [(f"{{input:{name}}}", text.encode("utf-8")) for name, text in given.items()]
+        sized += [(input_ref(name), text.encode("utf-8")) for name, text in given.items()]
         lines += ["", "## Input reading batches", "",
                   f"Read the named job instruction {instruction} before these reading batches.", "",
                   ("Load inputs in these batches to avoid truncated reads. Read each batch's files, "
@@ -617,7 +629,9 @@ def run_analysis(run_dir: Path, *, timeout: float | None, max_workers: int | Non
             return None
 
 
-STOPS = (Stopped, OutOfAttempts, LaunchFailed, ValueError, OSError, UncertainEffectError)
+STOPS = (Stopped, OutOfAttempts, LaunchFailed, ValueError, OSError, UncertainEffectError, UncertainLaunchError,
+         RecordError)
 """What stops a run rather than being a defect: the workflow's own stops, a launch that failed or was
 usage-limited, a guard's refusal (a dirty source checkout, the opening pins), an environment error such as
-a missing harness command, and an uncertain publication effect. A rerun after the repair resumes."""
+a missing harness command, an uncertain publication effect, a worker launch an earlier controller left
+unsettled, and an unreadable run record. A rerun after the repair resumes."""

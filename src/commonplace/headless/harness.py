@@ -1,41 +1,38 @@
-"""Run one agent job through a harness's headless mode.
+"""Worker profiles as Workjig command workers for the harnesses' headless modes.
 
 A worker profile names a harness, a launch model and an effort, as in
 kb/agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml.
-`launch()` starts that harness once, non-interactively, in the given working
-directory, and waits for it. `run_with_retries()` relaunches after a nonzero
-exit, with backoff, at most twice; a timeout is not relaunched, since the
-worker may have done its work. A failed launch that reports an exhausted usage
-window raises `UsageLimited` without a relaunch, so the script stops and the
-operator reruns it after the reset. `model_used()` reads the model the harness
-itself recorded for a launch, which is the run's provenance.
+`Harness.worker()` turns a profile into a `workjig.CommandWorker`: the
+harness's print-mode command with its machine-readable output, so Workjig
+classifies the launch from the harness's terminal event. `model_used()` reads
+the model the harness itself recorded for a finished launch, from the launch's
+retained stdout or the harness's session file; that is the run's provenance.
 
 Workers load their normal configuration. The working directory is the
 prepared worktree, so the harness reads the project's AGENTS.md / CLAUDE.md,
 skills, settings and permissions exactly as an interactive session there
-would. Unlike mdflow (../../../../treadle/external/mdflow, MIT), whose process
-handling this adapts, nothing here strips ambient context: no --safe-mode,
+would. Nothing here strips ambient context: no --safe-mode,
 --ignore-user-config, --no-skills or --no-context-files.
 
-Adapted from mdflow: the command builder that turns a dictionary of flags
-into arguments (src/command-builder.ts), the per-harness print-mode defaults
-(src/adapters/{claude,codex,pi}.ts), stdin closed for print-mode engines and a
-process group killed on timeout (src/command.ts), and Claude's background-task
+Adapted from mdflow (MIT): the command builder that turns a dictionary of
+flags into arguments (src/command-builder.ts), the per-harness print-mode
+defaults (src/adapters/{claude,codex,pi}.ts) and Claude's background-task
 ceiling disabled (src/adapters/claude.ts).
 """
 
 from __future__ import annotations
 
 import json
-import os
-import shlex
-import signal
-import subprocess
-import time
-import uuid
 from collections.abc import Callable
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from pathlib import Path
+
+from workjig import CommandWorker, LaunchRecord
+from workjig.adapters import parse_evidence
+
+POINTER = ("Read the complete invocation at `{prompt}` and follow it. "
+           "Recover any truncated read before proceeding.")
+"""The prompt argument; Workjig fills `{prompt}` with each launch's frame file."""
 
 
 @dataclass
@@ -51,21 +48,6 @@ class Profile:
 
 
 # --- Building commands (ported from mdflow's src/command-builder.ts) ---------
-
-@dataclass
-class CommandSpec:
-    executable: str
-    subcommands: list[str]            # e.g. ["exec"] for codex exec
-    args: list[str]                   # flags and their values
-    positionals: list[str]            # the prompt
-    env: dict[str, str]               # merged over os.environ at launch
-
-    def argv(self) -> list[str]:
-        return [self.executable, *self.subcommands, *self.args, *self.positionals]
-
-    def display(self) -> str:
-        return shlex.join(self.argv())
-
 
 # Variadic flags consume every following argument, so they are written as
 # --flag=value; otherwise `--add-dir x PROMPT` would take the prompt as a directory.
@@ -112,53 +94,43 @@ def subcommands(flags: dict) -> list[str]:
 class Harness:
     """A harness's executable, its print-mode defaults and how a profile maps onto its flags.
 
-    `translate(profile, attempt_dir)` returns the profile's flags for this
-    harness and the session ID chosen in advance, or None if the harness
-    reports one itself. Precedence, as in mdflow: defaults < translation < profile.flags.
+    `translate(profile)` returns the profile's flags for this harness.
+    Precedence, as in mdflow: defaults < translation < profile.flags.
+    `protocol` names the Workjig output protocol of the harness's stdout, or
+    None to classify by exit status and the file protocol alone.
     `model_used(launch)` reads the model the harness recorded for a finished
     launch, or None when it recorded none.
     """
     executable: str
     defaults: dict
-    translate: Callable[[Profile, Path], tuple[dict, str | None]]
-    session_from_output: Callable[[str], str | None] | None = None
-    model_used: Callable[[Launch], str | None] | None = None
+    translate: Callable[[Profile], dict]
+    protocol: str | None = None
+    model_used: Callable[[LaunchRecord], str | None] | None = None
 
-    def command(self, profile: Profile, prompt: str, attempt_dir: Path) -> tuple[CommandSpec, str | None]:
-        translated, session = self.translate(profile, attempt_dir)
-        flags = {**self.defaults, **translated, **profile.flags}
+    def worker(self, profile: Profile) -> CommandWorker:
+        flags = {**self.defaults, **self.translate(profile), **profile.flags}
         env = {str(k): str(v) for k, v in (flags.get("_env") or {}).items()}
-        return CommandSpec(self.executable, subcommands(flags), build_args(flags), [prompt], env), session
+        argv = (self.executable, *subcommands(flags), *build_args(flags), POINTER)
+        return CommandWorker(argv=argv, name=profile.harness, env=env, output_protocol=self.protocol)
 
 
-def _claude(profile: Profile, attempt_dir: Path) -> tuple[dict, str]:
-    session = str(uuid.uuid4())
-    return {"model": profile.launch_model, "effort": profile.effort, "session-id": session}, session
+def _claude(profile: Profile) -> dict:
+    return {"model": profile.launch_model, "effort": profile.effort}
 
 
-def _codex(profile: Profile, attempt_dir: Path) -> tuple[dict, None]:
+def _codex(profile: Profile) -> dict:
     return {"model": profile.launch_model, "config": [f"model_reasoning_effort={profile.effort}"],
-            "output-last-message": str(attempt_dir / "last-message.md")}, None
+            "output-last-message": "{launch_dir}/last-message.md"}
 
 
-def _pi(profile: Profile, attempt_dir: Path) -> tuple[dict, str]:
-    session = str(uuid.uuid4())
+def _pi(profile: Profile) -> dict:
     # pi takes the thinking level as a ":<level>" suffix on the model.
-    return {"model": f"{profile.launch_model}:{profile.effort}", "session-id": session}, session
+    return {"model": f"{profile.launch_model}:{profile.effort}"}
 
 
-def _codex_session(stdout: str) -> str | None:
-    """The session ID from codex's --json events; it names the rollout file under ~/.codex/sessions."""
-    for line in stdout.splitlines():
-        try:
-            event = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        if isinstance(event, dict):
-            for key in ("thread_id", "session_id", "conversation_id"):
-                if isinstance(event.get(key), str):
-                    return event[key]
-    return None
+def stdout(launch: LaunchRecord) -> str:
+    path = Path(launch.launch_dir) / "stdout.log"
+    return path.read_text(encoding="utf-8", errors="replace") if path.is_file() else ""
 
 
 def _models(values: set[str]) -> str | None:
@@ -166,185 +138,54 @@ def _models(values: set[str]) -> str | None:
     return ", ".join(sorted(values)) or None
 
 
-def _claude_model(launch: Launch) -> str | None:
-    """Claude Code's JSON result lists the models used under `modelUsage`."""
-    try:
-        usage = json.loads(launch.stdout).get("modelUsage", {})
-    except (json.JSONDecodeError, AttributeError):
-        return None
-    return _models(set(usage)) if isinstance(usage, dict) else None
+def _claude_model(launch: LaunchRecord) -> str | None:
+    """Claude Code's result event lists the models used under `modelUsage`."""
+    evidence = parse_evidence("claude", stdout(launch))
+    usage = evidence.get("model_usage")
+    if isinstance(usage, dict) and usage:
+        return _models(set(usage))
+    reported = evidence.get("reported_model")
+    return reported if isinstance(reported, str) else None
 
 
-def _session_model(root: Path, launch: Launch, holder: str) -> str | None:
-    """The `model` values in the session file named by the launch's session ID.
-
-    codex writes `payload.model` on its turn_context events under
-    ~/.codex/sessions; pi writes `message.model` on each reply under
-    ~/.pi/agent/sessions (phase 0 probes).
-    """
-    if not launch.session:
+def _codex_model(launch: LaunchRecord) -> str | None:
+    """codex writes `payload.model` on its turn_context events in the session file under ~/.codex/sessions."""
+    session = parse_evidence("codex", stdout(launch)).get("session_id")
+    if not isinstance(session, str):
         return None
     models = set()
-    for path in root.rglob(f"*{launch.session}*.jsonl"):
+    for path in (Path.home() / ".codex" / "sessions").rglob(f"*{session}*.jsonl"):
         for line in path.read_text(errors="replace").splitlines():
             try:
                 event = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            value = event.get(holder) if isinstance(event, dict) else None
+            value = event.get("payload") if isinstance(event, dict) else None
             if isinstance(value, dict) and isinstance(value.get("model"), str):
                 models.add(value["model"])
     return _models(models)
 
 
-def _codex_model(launch: Launch) -> str | None:
-    return _session_model(Path.home() / ".codex" / "sessions", launch, "payload")
-
-
-def _pi_model(launch: Launch) -> str | None:
-    return _session_model(Path.home() / ".pi" / "agent" / "sessions", launch, "message")
+def _pi_model(launch: LaunchRecord) -> str | None:
+    """pi's assistant `message_end` events carry the model that answered."""
+    evidence = parse_evidence("pi", stdout(launch))
+    model = evidence.get("served_model") or evidence.get("reported_model")
+    return model if isinstance(model, str) else None
 
 
 HARNESSES = {
     "claude-code": Harness("claude", {
-        "print": True, "output-format": "json",
+        "print": True, "output-format": "stream-json", "verbose": True,
         # Print mode ends the run when background tasks are still alive after
         # 600 s; "0" disables that ceiling (mdflow's claude adapter).
         "_env": {"CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0"},
-    }, _claude, model_used=_claude_model),
-    "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, _codex_session, _codex_model),
-    "pi": Harness("pi", {"print": True}, _pi, model_used=_pi_model),
+    }, _claude, "claude-stream-json", _claude_model),
+    "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, "codex-json", _codex_model),
+    "pi": Harness("pi", {"print": True, "mode": "json"}, _pi, "pi-json", _pi_model),
 }
 
 
-def model_used(profile: Profile, launch: Launch, harnesses=HARNESSES) -> str | None:
+def model_used(profile: Profile, launch: LaunchRecord, harnesses=HARNESSES) -> str | None:
     """The model the profile's harness recorded for `launch`, or None."""
     reader = harnesses[profile.harness].model_used
     return reader(launch) if reader else None
-
-
-@dataclass
-class Launch:
-    argv: list[str]
-    session: str | None               # the harness's session ID, for finding its transcript
-    exit_code: int | None             # None: killed at the timeout
-    stdout: str
-    stderr: str
-    started: float
-    seconds: float
-    attempt_dir: str
-
-    @property
-    def ok(self) -> bool:
-        return self.exit_code == 0
-
-
-def launch(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path,
-           timeout: float | None = None, harnesses=HARNESSES) -> Launch:
-    """Start the harness once and wait for it. Never raises on worker failure."""
-    attempt_dir.mkdir(parents=True, exist_ok=True)
-    harness = harnesses[profile.harness]
-    spec, session = harness.command(profile, prompt, attempt_dir)
-    argv = spec.argv()
-    started = time.time()
-    proc = subprocess.Popen(
-        argv, cwd=cwd, env={**os.environ, **spec.env}, text=True,
-        stdin=subprocess.DEVNULL,           # codex exec otherwise waits for stdin EOF
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        start_new_session=True,             # own process group, so a timeout kills its children
-    )
-    try:
-        stdout, stderr = proc.communicate(timeout=timeout)
-        exit_code = proc.returncode
-    except subprocess.TimeoutExpired:
-        _kill_group(proc)
-        stdout, stderr = proc.communicate()
-        exit_code = None
-    if harness.session_from_output:
-        session = harness.session_from_output(stdout)
-    result = Launch(argv, session, exit_code, stdout, stderr, started,
-                    time.time() - started, str(attempt_dir))
-    (attempt_dir / "launch.json").write_text(json.dumps(asdict(result), indent=2))
-    return result
-
-
-def _kill_group(proc: subprocess.Popen, grace: float = 10) -> None:
-    for sig in (signal.SIGTERM, signal.SIGKILL):
-        try:
-            os.killpg(proc.pid, sig)
-        except ProcessLookupError:
-            return
-        try:
-            proc.wait(timeout=grace)
-            return
-        except subprocess.TimeoutExpired:
-            continue
-
-
-# After the first nonzero exit wait 30 s, after the second 120 s, after the
-# third stop. The coordinator-era rule relaunched only on three known provider
-# messages, observed in a launch tool's results; headless exits were not
-# observed in a failure yet, so any nonzero exit gets the bounded relaunch.
-BACKOFF = (30, 120)
-
-
-# Claude Code says "Usage limit reached", codex "You've hit your usage limit";
-# pi passes provider errors through (phase 0 probes, strings in the installed
-# builds; neither the stream nor the exit status was observed), so both
-# streams of a failed launch are searched, ignoring case.
-USAGE_LIMIT = "usage limit"
-
-
-def is_usage_limited(result: Launch) -> bool:
-    # A timeout (exit None) is a kill, not a report; it says nothing about limits.
-    return result.exit_code not in (0, None) and USAGE_LIMIT in (result.stdout + result.stderr).lower()
-
-
-class LaunchFailed(Exception):
-    def __init__(self, launches: list[Launch]):
-        last = launches[-1]
-        reason = "timed out" if last.exit_code is None else f"exit {last.exit_code}"
-        super().__init__(f"{reason} after {len(launches)} launch(es): {last.stderr.strip()[-500:]}")
-        self.launches = launches
-
-
-class UsageLimited(LaunchFailed):
-    """The harness reported an exhausted usage window. Relaunching before the
-    reset cannot succeed, and the failure says nothing about the task."""
-
-
-@dataclass
-class Delivered:
-    launch: Launch
-    failed: list[Launch] = field(default_factory=list)   # nonzero exits relaunched before it
-
-
-def run_with_retries(profile: Profile, prompt: str, cwd: Path, attempt_dir: Path,
-                     timeout: float | None = None, backoff=BACKOFF, sleep=time.sleep,
-                     harnesses=HARNESSES, outputs: Path | None = None) -> Delivered:
-    """Launch, and relaunch the same prompt after a nonzero exit, at most twice.
-
-    A failure that mentions a usage limit raises UsageLimited at once. A
-    timeout raises LaunchFailed at once: the worker was killed, so it may
-    have spent its work. A third nonzero exit raises LaunchFailed. Whatever
-    a failed launch wrote under `outputs` is moved into that launch's
-    directory before the relaunch, so the files found after a successful
-    launch are that launch's alone: a report or a problem left by a failed
-    launch is evidence, not the result.
-    """
-    launches: list[Launch] = []
-    for n in range(len(backoff) + 1):
-        launch_dir = attempt_dir / f"launch-{n + 1}"
-        result = launch(profile, prompt, cwd, launch_dir, timeout, harnesses)
-        launches.append(result)
-        if result.ok:
-            return Delivered(result, launches[:-1])
-        if is_usage_limited(result):
-            raise UsageLimited(launches)
-        if result.exit_code is None or n == len(backoff):
-            raise LaunchFailed(launches)
-        if outputs is not None and outputs.is_dir() and any(outputs.iterdir()):
-            outputs.rename(launch_dir / outputs.name)
-            outputs.mkdir()
-        sleep(backoff[n])
-    raise AssertionError("unreachable")

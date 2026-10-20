@@ -179,34 +179,40 @@ stopped and printed why; 1 means the command itself failed.
 
 ## 2. Stops and reruns
 
-Every worker answer is cached by its content, so
+Every worker answer is recorded under its full request, so
 
 ```bash
 commonplace-analysis run <run>
 ```
 
 resumes a stopped or interrupted run from where it was, without asking any
-worker again whose inputs are unchanged. A run stops on:
+worker again whose request is unchanged. The per-launch timeout is part of
+the request: resume with the run's original `--timeout`. A run stops on:
 
 - a usage limit of the harness: rerun after the limit resets;
 - an environment failure (a launch still exiting nonzero after its
   relaunches, a missing command): give the operator the message; rerun after
   the repair;
 - a worker's problem report (it could not do its job): `inspect` shows the
-  report; the operator decides. To ask that job again, delete its cache entry
-  (`inspect` prints each answer's `cache` path under `answers/`) and rerun;
+  report; the operator decides. To ask that job again, run
+  `commonplace-analysis retry <run> <job>` and rerun;
+- a worker launch an earlier run left unsettled (the run was killed while a
+  worker ran): give the operator the launch ID; after they confirm that the
+  worker and its children have stopped, they run
+  `commonplace-analysis acknowledge <run> <launch>`, then rerun;
 - an exhausted attempt budget, or blockers at a verifier's last attempt: the
   run has failed under the method's budgets; stop and report. A new run, or a
   method change, is the operator's call.
 
-Deleting an answer's cache file is the one change you make under a run:
-never edit the artifact, an answer, the log or the records, and never claim
+`retry` is the one change you make under a run: never edit the artifact,
+an answer, the log or the records, and never claim
 completion for a stopped run. A run that published in the worktree and must
 publish again after a changed member is first withdrawn with
 `commonplace-analysis reset <run>`, which requires the publication journal,
 restores the opening incumbent, keeps the withdrawn bytes under the run's
-`withdrawn/` as evidence and deletes the receipt; then delete the cache
-entries to redo and rerun. A reset interrupted midway is finished by running
+`withdrawn/` as evidence and deletes the receipt; then dismiss each answer
+to redo with `commonplace-analysis retry <run> <job> --key <key>` (`inspect`
+lists each answer's key) and rerun. A reset interrupted midway is finished by running
 it again. Already integrated results cannot be reset. If a run or reset
 reports an uncertain publication effect, change nothing, preserve the
 evidence and give the operator the exact output.

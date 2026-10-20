@@ -44,7 +44,7 @@ def begin(request, monkeypatch):
     request.getfixturevalue("local_acquisition")
     prepared = request.getfixturevalue("prepared_checkout")
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(prepared.repo / "kb"))
-    harness = Harness(sys.executable, {}, lambda profile, directory: ({}, None))
+    harness = Harness(sys.executable, {}, lambda profile: {})
     opened = []
 
     def open_run(identity: str = IDENTITY) -> Analysis:

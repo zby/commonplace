@@ -1,7 +1,8 @@
 """Drive the analysis workflow end to end with a fake harness: local Git source, prepared worktree, no model.
 
 The fake worker reads the invocation it is pointed at, finds the frame lines
-(`role`, `output`, `output-answers`, `refusal`, `artifact`), and writes a
+(`role`, `output`, `output-answers`, `refusal`, `artifact`), resolves their
+references to the input and output paths Workjig lists, and writes a
 member that passes the real checks, built with the execution fixtures'
 generators. It then validates the member in its role, as a real worker does,
 and writes a problem if that fails. A scenario file (`FAKE_SCENARIO`) says what
@@ -24,7 +25,7 @@ import yaml
 
 from commonplace.cli.analysis import main
 from commonplace.headless.harness import HARNESSES, Harness
-from commonplace.headless.jobs import OutOfAttempts, run_lock
+from commonplace.headless.jobs import OutOfAttempts, dismiss, run_lock
 from commonplace.lib.agentic_analysis.workflow import Analysis, Problem, Stopped
 from commonplace.lib.agentic_analysis.worktree import (
     inspect_analysis,
@@ -57,11 +58,27 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
     ScriptedRun, candidate, memory_profile, reconciliation, report, report_verdict, subject_verdict, synthesis,
 )
 
-prompt_path = Path(re.search(r"`([^`]+prompt\.md)`", sys.argv[-1]).group(1))
+prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
+sections, current = {}, None
+for line in prompt.splitlines():
+    header = re.fullmatch(r"(Inputs|Required outputs|Optional outputs)(?: \(.*\))?:", line)
+    if header:
+        current = sections.setdefault(header.group(1), {})
+    elif current is not None and line.startswith("- "):
+        name, _, path = line[2:].partition(": ")
+        current[name] = path
+    else:
+        current = None
+problem_file = prompt.split("write a JSON object to this problem file:\n", 1)[1].splitlines()[0]
 frame = {}
 for name, value in re.findall(r"^([\w-]+) = (.*)$", prompt, re.M):
-    frame.setdefault(name, value)
+    ref = re.fullmatch(r"<(Inputs|Required outputs|Optional outputs): (.+)>", value)
+    frame.setdefault(name, sections[ref.group(1)][ref.group(2)] if ref else value)
+
+
+def problem(message):
+    Path(problem_file).write_text(json.dumps({"kind": "unable", "message": message}))
 role = frame["role"]
 run_dir = Path(frame["artifact"]).parent
 scenario = json.loads(Path(os.environ["FAKE_SCENARIO"]).read_text())
@@ -73,7 +90,7 @@ counter.write_text(str(call))
 
 a = ScriptedRun(run_dir)
 if call in scenario.get("problem", {}).get(role, []):
-    Path(frame["problem"]).write_text(f"{role}: the fixture cannot do this job (call {call})")
+    problem(f"{role}: the fixture cannot do this job (call {call})")
     sys.exit(0)
 
 refusal = frame.get("refusal")
@@ -119,16 +136,16 @@ with contextlib.redirect_stdout(captured), contextlib.redirect_stderr(captured):
     except SystemExit as exit:
         code = exit.code
 if code:
-    Path(frame["problem"]).write_text(f"{role}: self-validation failed (exit {code}):\n{captured.getvalue()}")
+    problem(f"{role}: self-validation failed (exit {code}):\n{captured.getvalue()}")
     sys.exit(0)
 
 answers = "".join(f"- corrected: revised the member for blocker {i + 1}.\n" for i in range(len(blockers)))
 if "output-answers" in frame:
     Path(frame["output-answers"]).write_text(answers)
 elif refusal is not None:
-    match = re.search(r"- `answers` \(optional\): write to `([^`]+)`", prompt)
-    if match:
-        Path(match.group(1)).write_text(answers)
+    path = sections.get("Optional outputs", {}).get("answers.md")
+    if path:
+        Path(path).write_text(answers)
 '''
 
 REFUSE_RUNTIME_AND_MEMORY = "- runtime: reconsider the SRC-1 runtime account.\n- memory: reconsider the SRC-1 memory account."
@@ -149,8 +166,8 @@ def workflow(request, tmp_path, monkeypatch):
     script.write_text(FAKE)
     scenario = fake_dir / "scenario.json"
     monkeypatch.setenv("FAKE_SCENARIO", str(scenario))
-    harness = Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile, d: ({}, "fake-session"),
-                      model_used=lambda launch: "fake-model-1" if launch.ok else None)
+    harness = Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile: {},
+                      model_used=lambda launch: "fake-model-1" if launch.status == "delivered" else None)
     # The CLI builds its Analysis on the shared mapping; this test's entry is restored afterwards.
     monkeypatch.setitem(HARNESSES, "pi", harness)
 
@@ -239,9 +256,9 @@ def test_complete_run_with_one_correction_round(workflow):
     assert counts["report-verification"] == 2, counts
     assert counts["memory-profile"] == counts["profile-verification"] == 1, counts
     assert counts["synthesis"] == counts["synthesis-verification"] == 1, counts
-    correction = (Path(log[memory_launches[1]]["attempt"]) / "prompt.md").read_text()
-    inputs = correction[correction.index("## Inputs"):]
-    assert "- `refusal`:" in inputs and "- `previous-report`:" in inputs, inputs
+    correction = (run_dir / "calls" / "launches" / log[memory_launches[1]]["launch"] / "prompt.txt").read_text()
+    inputs = correction[correction.index("Inputs (read these exact files):"):]
+    assert "- refusal.md:" in inputs and "- previous-report.md:" in inputs, inputs
     assert "refusal = " in correction and "previous-report = " in correction
 
     status = inspect_analysis(run_dir)
@@ -250,7 +267,7 @@ def test_complete_run_with_one_correction_round(workflow):
     assert status["result-disposition"] == "complete"
     assert {job: entry["launches"] for job, entry in status["jobs"].items()} == counts
     answers = [answer for entry in status["jobs"].values() for answer in entry["answers"]]
-    assert answers and all(Path(answer["cache"]).is_file() for answer in answers)
+    assert answers and all(answer["launches"] for answer in answers)
     assert len(status["jobs"]["runtime"]["answers"]) == 2
     assert status["problems"] == []
     assert set(status["members"]) == complete_members(analysis) | {"ARTIFACT.yaml"}
@@ -405,7 +422,7 @@ def test_rerun_resumes_from_the_cache(workflow):
     assert [problem["job"] for problem in status["problems"]] == ["synthesis"]
     answers = status["jobs"]["synthesis"]["answers"]
     assert len(answers) == 1 and answers[0]["problem"]
-    Path(answers[0]["cache"]).unlink()
+    assert [call["call"] for call in dismiss(run_dir, "synthesis")] == [answers[0]["call"]]
     _, receipt = run(new)
     assert receipt["published"] is True, receipt
     after = launch_counts(run_dir)
@@ -440,9 +457,10 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     code, out, _ = cli(capsys, "inspect", str(run_dir))
     assert code == 0 and json.loads(out)["state"] == "stopped"
 
-    # A retry is deleting the cached problem and rerunning.
+    # A retry is dismissing the recorded problem and rerunning.
     workflow.set_scenario(disposition="complete")
-    Path(answer["cache"]).unlink()
+    code, _, err = cli(capsys, "retry", str(run_dir), "synthesis")
+    assert code == 0, err
     code, out, err = cli(capsys, "run", str(run_dir))
     assert code == 0, err
     first, _, rest = out.partition("\n")

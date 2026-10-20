@@ -48,51 +48,58 @@ documentation outside this workshop (operator rule, 2026-10-20).
   `docs/handoff-from-commonplace-2026-10-20.md` there carries the theory
   mapping with public-site links and no internal decision records.
 
-## Mapping settled by reading both codebases
+## State of the port
 
-These are the consumer-side changes the port implies. They are findings, not
-frozen method; execution may find a better cut.
+Landed on main, 2026-10-20:
 
-- `Run.ask` becomes `Run.call(Request)`; `gather` becomes `run.parallel`.
-  Corrections, budgets, checks, `accept` and `log.jsonl` stay in Commonplace;
-  Workjig has no artifact directory or event log by design.
-- **Identity.** Today's answers are keyed by content alone. Workjig needs a
-  stable `call_id` plus request material, and the material includes timeout,
-  launch allowance, retry policy and worker argv. Call ids derive from role
-  and round; a changed timeout or profile relaunches instead of replaying.
-- **Budget accounting.** Timeouts and incomplete results are counted from
-  `result.launches` statuses instead of the failure log. A re-ask after a
-  settled failure needs a new call id, since a settled call replays its
-  recorded outcome.
-- **Worker commands.** Profiles are harness, model, effort and free flags.
-  Build `CommandWorker` argv from the profile in Commonplace; Workjig's adapter
-  factories cover a narrower set. Argv enters the request hash as the profile
-  enters today's key.
-- **Problem reporting.** Workers write `problem.json` with `kind` and
-  `message` instead of free-text `problem.md`; the `Problem` path and role
-  instructions follow.
-- **Provenance.** Served model and session come from Workjig's
-  `parse_evidence` over each launch's `stdout.log`; nothing persists them yet.
-- **Recovery in the CLI.** A rerun after a kill stops on
-  `UncertainLaunchError` until `acknowledge_stopped` is called. `inspect` or
-  `reset` needs an affordance for that.
-- **Run layout.** Readers of `answers/` and `attempts/` move to `run.json` and
-  `launches/`; `log.jsonl` stays.
-- **Usage limits and parallel rounds** keep today's behaviour: the same
-  substring policy, and parallel workers in one shared worktree.
+- **Dependency.** `workjig` is a runtime dependency through a uv path source
+  (editable, `../workjig`). The project venv and the user-level editable tool
+  both import the sibling checkout. The next `llm-commonplace` release is
+  blocked until Workjig is on PyPI and the path source becomes a version pin.
+- **Consumer layer.** `headless/harness.py` turns a profile into a
+  `CommandWorker` with the harness's machine-readable output and its Workjig
+  output protocol, and reads the served model from each launch's
+  `stdout.log`. `headless/jobs.py` keeps `ask`, `checked`, `accept`, `log`
+  and `gather` over `workjig.Run`; records live under the run's `calls/`.
+- **Identity and budgets.** An ask is a chain of calls `<job>#<position>`.
+  A timed-out, incomplete or malformed result spends an attempt and moves to
+  the next position; a usage limit or environment failure inherited from an
+  earlier run is skipped, so a rerun after the repair asks again. `gather`
+  stays: parallel rounds run checks and corrections, not single requests.
+- **Operator affordances.** `commonplace-analysis retry <run> <job> [--key]`
+  dismisses a worker problem or an answer, replacing deletion of a cache
+  file. `acknowledge <run> <launch>` settles a launch an earlier controller
+  left unsettled. The skill and the command reference describe both without
+  naming the runtime.
+- **Verification.** The complete suite passes, the fake-harness suites
+  included. One tiny ask through each real harness (Claude Code haiku, Pi
+  and Codex on gpt-6-luna) delivered and recorded the served model.
+
+Behaviour that differs from ADR 118, for the ADR that closes this workshop:
+
+- **Timeout is part of request identity.** Resuming with a different
+  `--timeout` asks every job again. The skill and command reference say to
+  resume with the original timeout.
+- **Fixed relaunch delay.** Relaunches wait 30 seconds each, not 30 then 120.
+- **A problem written by a failing launch is the result.** Workjig reads the
+  problem file before the exit status; the old layer relaunched and kept the
+  problem as evidence.
+- **Usage limits** are read from the harness's terminal event or a
+  `usage_limit` problem, no longer from a substring of either stream.
 
 ## Open items and how they return to decision
 
-- **Dependency form.** Path dependency, git dependency or a published package.
-  Decide before the user-level editable tool is re-synced; the choice gates
-  INSTALL.md. Workjig has not published and has not registered a name.
-- **Escalating backoff.** ADR 118 relaunches after 30 then 120 seconds;
-  `RetryPolicy` has one fixed delay. A fixed delay is acceptable for the
-  first port. Ask Workjig only if the production run shows a relaunch where
-  the delay mattered.
-- **Persisted harness evidence.** Workjig could attach parsed evidence to the
-  launch record. Consumer-side parsing is acceptable for the first port;
-  revisit if provenance code grows past a helper.
+- **Production comparison.** The next step: one analysis on the production
+  profile, compared with the ADR 118 pilot. Run it from a fresh prepared
+  worktree, at the operator's call, since it spends a production
+  budget.
+- **Escalating backoff.** Ask Workjig only if the production run shows a
+  relaunch where the delay mattered.
+- **Persisted harness evidence.** Consumer-side parsing is a helper per
+  harness; revisit if provenance code grows past that.
+- **Timeout identity.** If resuming with a longer timeout turns out to be a
+  common repair, raise with Workjig whether the timeout belongs in request
+  identity.
 - **Pilot integration.** The ADR 118 pilot is published in its worktree but
   not integrated; that decision is independent of this port.
 

@@ -128,7 +128,7 @@ def _locked(run_dir: Path) -> bool:
 
 
 def inspect_analysis(run_dir: Path) -> dict:
-    """A status view over the run's log, answer cache, artifact and receipt; reads only.
+    """A status view over the run's log, Workjig records, artifact and receipt; reads only.
 
     ``state`` is read from the latest `run`'s events (those after its ``start``):
     ``running`` (a process holds the lock), ``published`` (the run ended with
@@ -137,9 +137,11 @@ def inspect_analysis(run_dir: Path) -> dict:
     has its reason), ``withdrawn`` (the publication was reset; a rerun
     publishes again), ``interrupted`` (the run neither ended nor holds the
     lock) or ``allocated`` (never run). ``jobs`` lists each worker job's
-    launches, answers (with the cache file to delete for a retry), counted
-    failures and rejections.
+    launches, answers (Workjig calls that delivered or reported a problem, each
+    with the key ``retry`` dismisses), counted failures and rejections.
     """
+    from commonplace.headless.jobs import recorded_calls
+
     run_dir, worktree = analysis_run(run_dir)
     events = _events(run_dir)
     receipt = json.loads((run_dir / RECEIPT).read_text()) if (run_dir / RECEIPT).exists() else None
@@ -156,20 +158,18 @@ def inspect_analysis(run_dir: Path) -> dict:
         state = "interrupted" if latest else "allocated"
     stop = ended if ended is not None and ended["event"] == "stopped" else None
     jobs: dict[str, dict] = {}
-    answers = run_dir / "answers"
-    for path in sorted(answers.glob("*.json")) if answers.is_dir() else []:
-        record = json.loads(path.read_text())
-        job = jobs.setdefault(record["job"], {"launches": 0, "answers": [], "failures": [], "rejected": 0})
-        job["answers"].append({"cache": str(path), "attempt": record["attempt"], "model": record.get("model"),
-                               "seconds": record.get("seconds"), "problem": record.get("problem"),
-                               "inputs": sorted(record.get("inputs", {}))})
+    calls = recorded_calls(run_dir)
+    for call in calls:
+        if call["status"] in ("delivered", "worker_problem"):
+            job = jobs.setdefault(call["job"], {"launches": 0, "answers": [], "failures": [], "rejected": 0})
+            job["answers"].append({key: call[key] for key in ("call", "key", "launches", "problem", "dismissed")})
     for event in events:
         if event["event"] == "launch":
             jobs.setdefault(event["job"], {"launches": 0, "answers": [], "failures": [], "rejected": 0})
             jobs[event["job"]]["launches"] += 1
-        elif event["event"] in ("failed", "incomplete"):
+        elif event["event"] == "failed":
             jobs.setdefault(event["job"], {"launches": 0, "answers": [], "failures": [], "rejected": 0})
-            jobs[event["job"]]["failures"].append({k: v for k, v in event.items() if k in ("kind", "reason", "missing")})
+            jobs[event["job"]]["failures"].append({k: v for k, v in event.items() if k in ("key", "reason")})
         elif event["event"] == "rejected":
             jobs[event["job"]]["rejected"] += 1
     artifact = run_dir / "artifact"
@@ -183,7 +183,8 @@ def inspect_analysis(run_dir: Path) -> dict:
         "opening": json.loads((run_dir / OPENING).read_text()) if (run_dir / OPENING).exists() else None,
         "result-disposition": boundary,
         "verdicts": [{k: v for k, v in e.items() if k != "time"} for e in events if e["event"] == "verdict"],
-        "problems": [{"job": e["job"], "key": e["key"]} for e in events if e["event"] == "answered" and e["problem"]],
+        "problems": [{"job": c["job"], "key": c["key"]} for c in calls
+                     if c["status"] == "worker_problem" and not c["dismissed"]],
         "jobs": jobs, "members": members, "receipt": receipt,
     }
 

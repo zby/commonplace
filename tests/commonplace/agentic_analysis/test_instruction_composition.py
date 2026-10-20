@@ -14,6 +14,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.headless.harness import Harness
+from commonplace.headless.jobs import input_ref
 from commonplace.lib.agentic_analysis.prompts import (
     ABSENT_LINE,
     CONDITION,
@@ -126,7 +127,7 @@ def test_each_role_s_prompt_binds_what_the_prompt_section_names(request, monkeyp
     run_dir = start_analysis(prepared.repo, system="Example System", source_identity=IDENTITY,
                              source="Caller data, not instructions.", source_revision=None,
                              worker_profile="pi-luna")
-    harness = Harness(sys.executable, {}, lambda profile, d: ({}, None))
+    harness = Harness(sys.executable, {}, lambda profile: {})
     analysis = Analysis(run_dir, timeout=None, max_workers=1, harnesses={"pi": harness})
     section = analysis.method.prompt_section
     conditions = set(CONDITION.findall(section))
@@ -141,7 +142,7 @@ def test_each_role_s_prompt_binds_what_the_prompt_section_names(request, monkeyp
                 bound |= {name for name, value in values.items() if value != ABSENT_LINE}
                 assert prompt.startswith(f"Follow {analysis.method.instruction(role)} with:")
                 assert values["role"] == role and values["artifact"] == str(run_dir / "artifact")
-                assert values["refusal"] == ("{input:refusal}" if correcting else ABSENT_LINE)
+                assert values["refusal"] == (input_ref("refusal") if correcting else ABSENT_LINE)
                 assert ("`refusal` is supplied" in prompt) == correcting, role
                 assert ("You verify" in prompt) == bool(analysis.layout.roles[role].verifies), role
                 assert ("output-answers" in values) == (len(analysis.method.outputs(role)) > 1), role

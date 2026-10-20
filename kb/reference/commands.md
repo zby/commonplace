@@ -149,7 +149,7 @@ observation under a basename ending in the capture date.
 ### commonplace-analysis
 
 The analysis lifecycle: prepare a worktree, run the analysis in it, inspect,
-reset and integrate the run. The workflow is `commonplace.lib.agentic_analysis.workflow`
+retry, reset and integrate the run. The workflow is `commonplace.lib.agentic_analysis.workflow`
 over the headless primitives in `commonplace.headless`; see
 [the analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md).
 
@@ -175,21 +175,29 @@ verification and corrections under the plan's attempt budgets, assembly and
 publication. Optional `--source-revision <full-40-hex-commit>` requires a
 GitHub identity; `--max-workers` (default 3) bounds concurrent workers and
 `--timeout` (default 10800 s) each launch. `run <run>` resumes an allocated,
-stopped or interrupted run: every worker answer is cached by its content, so
-only jobs whose inputs changed are asked again. The run holds a lock; a second
+stopped or interrupted run: every worker answer is recorded under its full
+request, timeout included, so only jobs whose request changed are asked
+again; resume with the original `--timeout`. The run holds a lock; a second
 `run` on the same directory is refused. Exit status 0 prints the publication
 receipt (`published: false` for a local `blocked` or `out-of-scope` result),
 2 means the run stopped and printed why (a usage limit, an environment
 failure, a worker's problem, an exhausted budget, blockers at a verifier's
-last attempt), 1 means the command failed. A job is retried by deleting its
-cache entry under `answers/` and rerunning.
+last attempt, a launch an earlier run left unsettled), 1 means the command
+failed.
 
 `inspect <run>` prints the run's state (`published`, `local`, `stopped` with
 its reason, `running`, `interrupted`), parameters, opening metadata, boundary
 disposition, verdicts, worker problems, each job's launches, answers (with
-their cache files) and failures, the accepted members' digests and the
-receipt, as JSON, from `log.jsonl`, the answer cache, `artifact/` and
-`receipt.json`. It changes nothing and is not a retained-filesystem audit.
+their keys) and failures, the accepted members' digests and the receipt, as
+JSON, from `log.jsonl`, the run's call records under `calls/`, `artifact/`
+and `receipt.json`. It changes nothing and is not a retained-filesystem audit.
+
+`retry <run> <job>` dismisses the job's standing worker problems, and
+`retry <run> <job> --key <key>` one recorded answer, so the next `run` asks
+that job again without spending an attempt. `acknowledge <run> <launch>`
+records the operator's confirmation that a worker launch an earlier run left
+unsettled has stopped; it inspects and kills nothing, so confirm first that
+the process and its children are gone. Both take the run's lock.
 
 `reset <run>` withdraws the run's unreleased worktree publication: it
 requires the publication journal and the exact published bytes, keeps them

@@ -3,8 +3,10 @@
     commonplace-analysis prepare --name LABEL [--revision COMMIT] [--worktree PATH] [-- COMMAND ...]
     commonplace-analysis run --system NAME --source-identity ID --source TEXT --worker-profile NAME
                              [--source-revision COMMIT] [--timeout SECONDS] [--max-workers N]
-    commonplace-analysis run RUN [--timeout SECONDS] [--max-workers N]      # resume from the cache
+    commonplace-analysis run RUN [--timeout SECONDS] [--max-workers N]      # resume from the records
     commonplace-analysis inspect RUN
+    commonplace-analysis retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
+    commonplace-analysis acknowledge RUN LAUNCH # confirm a launch an earlier controller left unsettled has stopped
     commonplace-analysis reset RUN      # withdraw an unreleased worktree publication
     commonplace-analysis integrate RUN [--model ID]
 
@@ -13,6 +15,11 @@ result), 2 when it stopped and printed why (a budget, a worker's problem, a
 launch failure, a usage limit, a guard's refusal, an environment error or an
 uncertain publication effect; a rerun after the repair resumes), and 1 when
 the command failed, including when another process holds the run.
+
+A resumed run replays Workjig's records only for requests it repeats exactly;
+the per-launch timeout is part of each request, so resume with the same
+`--timeout`. A run whose earlier controller died mid-launch stops until the
+operator confirms that worker stopped with `acknowledge`.
 """
 
 from __future__ import annotations
@@ -67,6 +74,14 @@ def _parser() -> argparse.ArgumentParser:
     inspect.add_argument("run", type=Path)
     reset = commands.add_parser("reset", help="withdraw the run's unreleased publication so a rerun can publish")
     reset.add_argument("run", type=Path)
+    retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
+    retry.add_argument("run", type=Path)
+    retry.add_argument("job")
+    retry.add_argument("--key", help="the answer to dismiss, as `inspect` lists it; otherwise the worker problems")
+    acknowledge = commands.add_parser(
+        "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
+    acknowledge.add_argument("run", type=Path)
+    acknowledge.add_argument("launch")
     integrate = commands.add_parser("integrate", help="commit exact published bytes and merge into main")
     integrate.add_argument("run", type=Path)
     integrate.add_argument("--model")
@@ -120,6 +135,27 @@ def _reset(run: Path) -> None:
     print(json.dumps(report, indent=2))
 
 
+def _retry(run: Path, job: str, key: str | None) -> None:
+    from commonplace.headless.jobs import RunLocked, dismiss
+
+    run_dir, _ = analysis_run(run)
+    try:
+        print(json.dumps(dismiss(run_dir, job, key), indent=2))
+    except RunLocked as held:
+        raise ValueError(f"another process runs this analysis: {held}") from held
+
+
+def _acknowledge(run: Path, launch: str) -> None:
+    from commonplace.headless.jobs import RunLocked, acknowledge_stopped
+
+    run_dir, worktree = analysis_run(run)
+    try:
+        acknowledge_stopped(run_dir, worktree, launch)
+    except RunLocked as held:
+        raise ValueError(f"another process runs this analysis: {held}") from held
+    print(f"acknowledged: {launch}")
+
+
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     try:
@@ -131,6 +167,10 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(inspect_analysis(arguments.run), indent=2, sort_keys=True))
         elif arguments.command == "reset":
             _reset(arguments.run)
+        elif arguments.command == "retry":
+            _retry(arguments.run, arguments.job, arguments.key)
+        elif arguments.command == "acknowledge":
+            _acknowledge(arguments.run, arguments.launch)
         else:
             preparation = prepare_worktree(
                 Path.cwd(), name=arguments.name, require_clean_origin=arguments.require_clean_origin,
