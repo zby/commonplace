@@ -10,8 +10,9 @@ hash still verifies.
 These are superseded projections. They are not read by the comparison
 loaders and are not regenerated in place: each system returns to
 `kb/agentic-systems/reviews/` only as a fresh run under the current
-method, scheduled by the corpus-refresh workshop
-(`kb/work/agentic-memory-refresh`). Hand-authored reviews were never
+method; the corpus-refresh workshop that scheduled this closed on
+2026-10-21, superseded by the rerun campaign, and the sixteen unresolved
+targets are owned by `kb/work/agentic-system-completion/`. Hand-authored reviews were never
 generated and stay in `kb/agentic-systems/reviews/`.
 
 The 2026-10-01 relocation changes pin paths while retaining archived payload
