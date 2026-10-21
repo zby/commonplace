@@ -59,10 +59,9 @@ This workshop owns resource allocation and coverage limits in analysis; lens
 and scope design are possible means of addressing that question. The
 [audit evidence workshop](../analysis-audit-evidence/README.md) continues to own
 audit accumulation and cross-run evidence, including any coverage audit this
-workshop asks for. The
-[amendments workshop](../analyse-agentic-system-amendments/README.md) contains
-related correction and contract-design history; its candidates are not an
-implementation backlog for this workshop.
+workshop asks for. The amendments workshop that held related correction and
+contract-design history closed on 2026-10-21 (in git history); its candidates
+are not an implementation backlog for this workshop.
 
 The initial commission authorized workshop framing, navigation and comparison.
 The operator subsequently authorized revising and implementing the comparison's

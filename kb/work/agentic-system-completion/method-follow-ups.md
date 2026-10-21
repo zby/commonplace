@@ -44,7 +44,7 @@ Useful implementation anchors:
   publication names from run IDs. Current instructions, not historical job
   paths, are the consumption surface.
 
-The active standalone headless extraction's [boundary](../headless-workflow-extraction/README.md)
+The headless runtime's boundary ([ADR 119](../../reference/adr/119-analysis-workers-launch-through-workjig.md))
 explicitly leaves filesystem permissions and process isolation to the caller's
 harness/environment. It is context for item 6, not a commissioned task for that
 separately owned workshop. No files in that workshop were changed.
