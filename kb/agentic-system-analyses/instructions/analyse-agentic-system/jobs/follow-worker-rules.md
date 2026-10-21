@@ -199,8 +199,7 @@ Do not call agent listings or read style exemplars,
 `kb/agent-memory-systems/`, `kb/agentic-systems/reviews/`,
 `kb/agentic-systems/reviews-archive/`, `kb/agentic-systems/reports/`,
 `kb/agentic-system-analyses/retained/`,
-`kb/agentic-system-analyses/retained-archive/`,
-`kb/work/analyse-agentic-system/`, other runs under
+`kb/agentic-system-analyses/retained-archive/`, other runs under
 `kb/agentic-system-analyses/state/`, or Commonplace surveys or comparison
 outputs. A path filter does not make an agent listing safe. If any tool exposes prohibited
 prior-analysis content, stop and write `problem` saying so; this run cannot
