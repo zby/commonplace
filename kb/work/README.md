@@ -6,9 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [step-program-demo](./step-program-demo/README.md) — meetup demo of memoized replay with computed and reported jobs; decide whether to extract it as a standalone module
-- [headless-workflow-extraction](./headless-workflow-extraction/README.md) — extract a reusable base for direct headless execution, retries and resumable results; keep KB types and environment preparation with callers, with Treadle as the predecessor
-- [workjig-port](./workjig-port/README.md) — reimplement the analysis workflow over the Workjig runtime: consumer-side identity, budget and command mapping settled; closes on fake-harness parity, one production comparison and deletion of the old runtime layer
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
 
@@ -16,14 +13,9 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [analysis-audit-evidence](./analysis-audit-evidence/README.md) — accumulate correctness and session-trace audits; require cross-report evidence before recommending general analysis-method changes
 
-- [analysis-workflow-calibration](./analysis-workflow-calibration/README.md) — paired synthesis-support calibration cases and profile-pinned packets; Luna/low exploratory pilot completed, one control needs adjudication
 
-- [analysis-collection-split](./analysis-collection-split/README.md) — moving agentic-system analysis into a self-contained collection with stable per-system paths and a separate comparison-profile job; design decided 2026-10-03, implementation commissioned by its plan, nothing built yet
-- [analyse-agentic-system-amendments](./analyse-agentic-system-amendments/README.md) — evaluate correction designs under the durable analysis design brief; current candidate and unresolved Sol follow-up are separate from historical ID investigations and run audits
 - [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open
 - [code-simplification](./code-simplification/README.md) — backlog of verified-by-review duplication, test clean-up, and design-level simplifications left after the 2026-09-28 dead-code sweep; one commit per item
-- [workflow-requirements](./workflow-requirements/README.md) — redesigning the analysis machinery around one compact, reusable abstraction: directory-declared jobs, one advancing command, relative judgments; requirements drafted, awaiting operator acceptance
-- [agentic-memory-refresh](./agentic-memory-refresh/README.md) — 162 legacy memory analyses inventoried; per-value evidence adopted and three fresh pilots verified; 159 refreshes remain
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
 - [decision-lifecycle-evidence](./decision-lifecycle-evidence/README.md) — exploring proposals and ADRs as views of a continuing decision record, separating deliberation, implementation, and outcome evidence; records ADR 089's premature placement as the motivating case
 - [framework-delivery](./framework-delivery/README.md) — follow-ups to ADR 086 (library served from the installed package, adopted 2026-09-25): release, probe replies from other harnesses, sub-agent emulation for `cp-skill-ingest`
@@ -46,7 +38,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [change-operations-catalogue](./change-operations-catalogue/README.md) — a working list of the operations by which Commonplace gets changed, each admitted by an observed instance, with the premises it must read and where they live; used to audit `kb/reference/` in both directions under ADR 074. Carries no completeness claim
 - [adr-routing](./adr-routing/README.md) — 71 ADRs, no index, and no instruction that routes a self-improvement run into them; the change loop is the only loop without an instruction, so the decisions that bind a change are consulted by luck. Shape is open: index, instruction, subsystem-keyed routing, or none of these
 - [explanatory-theories-deployment-time-learning](./explanatory-theories-deployment-time-learning/README.md) — testing whether explicit system theories improve candidate search, candidate choice, and evidence acquisition in deployment-time learning, including on-the-spot versus retained theories, SPADE-inspired procedure generation, and an Exo-specific compounding track
-- [analyse-agentic-system](./analyse-agentic-system/README.md) — promoted the system-first workflow with mandatory proportionate memory/context and epistemic lenses; now owns collection/schema design and source-regeneration migration, including the parked Scroll/context-operation follow-up
 - [epistemic-architectures](./epistemic-architectures/README.md) — comparing six systems (Commonplace, Eigenius, ScienceFlow, AI Research OS, a private research-ontology draft, and ARC); ARC failed the system-level participation × containment 2×2 unchanged and moved the working comparison to route-specific target, timing, force, and epistemic-versus-operational authority
 - [popperian-maintenance-episode](./popperian-maintenance-episode/README.md) — four worked Popperian-maintenance episodes and the 23-run validation series for the machinery they produced (ADR 066). The series verdict: mode conversion is rare because mode landings require mode-appropriate warrant, and counterexample-shaped defeats route scope and category repairs instead. The genre-drift cohort question is closed and refuted; the maxim reconciliation and the episode record's disposition are what remain
 - [natural-language-theory-human-agent-contribution](./natural-language-theory-human-agent-contribution/README.md) — attributing the human and agent interventions behind the natural-language-theory warrant note, with frozen pre-revision evidence and an occurrence/revision-surface/compounding analysis
