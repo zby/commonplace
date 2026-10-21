@@ -93,7 +93,7 @@ answers a scale or a caller Commonplace does not have.
   disposition is found, option 2 serves only the tests.
 - A handler that raises to say "not yet" looks like a handler error. The
   analysis assembly job does this today for an uncovered relation
-  ([consumer surface](../../../work/workflow-requirements/consumer-surface.md)).
+  (the workshop's consumer-surface review, `kb/work/workflow-requirements/consumer-surface.md`, deleted with the workshop on 2026-10-21; in git history).
   A coded handler-error kind would carry that misuse forward without
   telling it from a bug; the remedy is readiness, not a stop code. This is
   the strongest reason to keep handler errors out of the set.

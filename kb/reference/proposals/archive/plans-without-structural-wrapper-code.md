@@ -66,7 +66,7 @@ Pinned-artifact validation refuses a member type with no Python type rule,
 registered through one hard import at the end of
 `src/commonplace/lib/validation.py`.
 
-The workshop's [consumer surface](../../../work/workflow-requirements/consumer-surface.md)
+The workshop's consumer-surface review (`kb/work/workflow-requirements/consumer-surface.md`, deleted with the workshop on 2026-10-21; in git history)
 review rejected engine-generated check pairs because the engine must not
 know what a content check is, and recorded a movable boundary: the
 coordinator may take over a code job's interpretation while bookkeeping
