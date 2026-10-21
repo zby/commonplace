@@ -6,7 +6,7 @@ Both runs preserve the central supported account: local file retention, explicit
 
 The revised omission procedure is visible in the new verification, including selected questions, bounded source searches, dispositions and a stopping rationale. Its local limits preserve supported claims rather than asserting exhaustive coverage. This is evidence of procedure uptake, not proof of better detection or lower cost. The new run used fewer workers and tool calls but took longer, including longer summed worker spans.
 
-Audit date: 2026-10-11. This is a static, post-run audit under [Audit an analysis](../audit-an-analysis.md). The [old audit](napkin-analysis-and-trace-audit.md) and [coverage-policy comparison](../../analysis-lenses/coverage-policy-comparison.md) supplied hypotheses, not accepted findings. No target execution, engine invocation, source/method/run-state change, integration, commit or delegation was performed. Only this report was authored; the workshop README was intentionally left unchanged under the commission.
+Audit date: 2026-10-11. This is a static, post-run audit under [Audit an analysis](../audit-an-analysis.md). The [old audit](napkin-analysis-and-trace-audit.md) and [coverage-policy comparison](../../../reference/adr/120-report-verification-selects-omission-questions-by-consequence.md) supplied hypotheses, not accepted findings. No target execution, engine invocation, source/method/run-state change, integration, commit or delegation was performed. Only this report was authored; the workshop README was intentionally left unchanged under the commission.
 
 ## Identities and evidence locators
 

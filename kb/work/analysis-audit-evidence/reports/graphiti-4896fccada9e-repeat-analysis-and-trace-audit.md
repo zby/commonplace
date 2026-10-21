@@ -55,7 +55,7 @@ Original sessions, all under `/home/zby/.pi/agent/sessions/--home-zby-llm-common
 
 N's original commission is at session line 5; publication-producing advance returns at line 72, inspect at 74 and final response at 75. Worker messages survive handout cleanup inside `message.details.results[R].messages[m]`. Trace anchors below use **one-based JSONL lines L**, **zero-based result R** and **zero-based message m**. A's prior report instead uses zero-based parent record numbers; add one to those P anchors when comparing.
 
-The [A audit](./graphiti-analysis-and-trace-audit.md), [B audit](./graphiti-85a21a06d35c-analysis-and-trace-audit.md) and [coverage-policy comparison](../../analysis-lenses/coverage-policy-comparison.md) supplied hypotheses. The comparisons below return to retained wording and frozen source. Older trace incidents not re-investigated here remain attributed to those audits; all new analytical workers and the timing/publication measurements were independently inspected.
+The [A audit](./graphiti-analysis-and-trace-audit.md), [B audit](./graphiti-85a21a06d35c-analysis-and-trace-audit.md) and [coverage-policy comparison](../../../reference/adr/120-report-verification-selects-omission-questions-by-consequence.md) supplied hypotheses. The comparisons below return to retained wording and frozen source. Older trace incidents not re-investigated here remain attributed to those audits; all new analytical workers and the timing/publication measurements were independently inspected.
 
 ## Source-backed comparison
 

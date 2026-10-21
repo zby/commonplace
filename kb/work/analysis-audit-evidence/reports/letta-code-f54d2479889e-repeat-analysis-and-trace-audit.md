@@ -40,7 +40,7 @@ edited. No agent was launched, target executed, network used, engine command
 invoked, integration attempted or commit made.
 
 The [old audit](./letta-code-analysis-and-trace-audit.md) and
-[coverage-policy comparison](../../analysis-lenses/coverage-policy-comparison.md)
+[coverage-policy comparison](../../../reference/adr/120-report-verification-selects-omission-questions-by-consequence.md)
 were hypotheses and navigation aids, not independent proof. This audit is not
 blind. Direct frozen-source inspection was expressly commissioned; no ingest,
 brief or ancillary report was created outside the sole write scope.
