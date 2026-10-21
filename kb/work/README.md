@@ -6,11 +6,10 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [tool-failure-scanners](./tool-failure-scanners/README.md) — expose failed tool calls without judging recovery; Pi-only scope, run-wide collection and durable retention under consideration
+
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
-
-
-- [analysis-audit-evidence](./analysis-audit-evidence/README.md) — accumulate correctness and session-trace audits; require cross-report evidence before recommending general analysis-method changes
 
 
 - [use-and-outcome-records](./use-and-outcome-records/README.md) — working out how uncontrolled operational observations can guide decisions through compact use records, retained evidence, and summaries as histories grow; storage, retrieval, feedback, and maintenance costs remain open
