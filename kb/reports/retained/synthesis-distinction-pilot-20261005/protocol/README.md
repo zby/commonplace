@@ -39,7 +39,7 @@ The prepared bundle's SHA-256 is
   invocation packets, source identity and run metadata. The packet generator
   withholds history except a selected fixed diagnostic draft.
 
-The historical audit is [second-run outcome check](../../../../work/analysis-collection-split/reliability/second-run-outcome-check-audit.md).
+The historical audit is the second-run outcome check, `kb/work/analysis-collection-split/reliability/second-run-outcome-check-audit.md` before that workshop closed on 2026-10-21 (in git history).
 Its source interpretation needs a precision correction: the runtime route
 record describes prompt-guided selection and useful-content preservation;
 it does not itself quote the explicit accuracy instruction. That wording
