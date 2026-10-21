@@ -9,7 +9,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
 
-- [analysis-lenses](./analysis-lenses/README.md) — decide how limited analysis resources should cover large repositories; compare depth, stopping and coverage rules against the current runtime-plus-lenses arrangement with minimal change
 
 - [analysis-audit-evidence](./analysis-audit-evidence/README.md) — accumulate correctness and session-trace audits; require cross-report evidence before recommending general analysis-method changes
 
