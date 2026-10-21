@@ -6,8 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [tool-failure-scanners](./tool-failure-scanners/README.md) — expose failed tool calls without judging recovery; Pi-only scope, run-wide collection and durable retention under consideration
-
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
 
