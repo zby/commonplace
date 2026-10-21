@@ -148,7 +148,8 @@ def inspect_analysis(run_dir: Path) -> dict:
     starts = [i for i, e in enumerate(events) if e["event"] == "start"]
     latest = events[starts[-1]:] if starts else events
     ended = next((e for e in reversed(latest) if e["event"] in ("stopped", "published", "withdrawn")), None)
-    if _locked(run_dir):
+    locked = _locked(run_dir)
+    if locked:
         state = "running"
     elif receipt is not None and (ended is None or ended["event"] == "published"):
         state = "published" if receipt.get("published") else "local"     # the receipt stands until a later stop
@@ -176,6 +177,11 @@ def inspect_analysis(run_dir: Path) -> dict:
     members = {p.name: sha256(p.read_bytes()).hexdigest() for p in sorted(artifact.iterdir())
                if p.is_file()} if artifact.is_dir() else {}
     boundary = next((e.get("disposition") for e in events if e["event"] == "boundary"), None)
+    audit_path = run_dir / "audit/status.json"
+    audit = json.loads(audit_path.read_text()) if audit_path.is_file() else None
+    if audit is not None and audit.get("state") == "running" and not locked:
+        audit = {**audit, "state": "interrupted",
+                 "reason": "controller no longer holds the run lock; confirm the audit process has stopped"}
     return {
         "run-id": run_dir.name, "worktree": str(worktree), "state": state,
         "stopped": None if stop is None else stop["reason"],
@@ -186,6 +192,7 @@ def inspect_analysis(run_dir: Path) -> dict:
         "problems": [{"job": c["job"], "key": c["key"]} for c in calls
                      if c["status"] == "worker_problem" and not c["dismissed"]],
         "jobs": jobs, "members": members, "receipt": receipt,
+        "advisory-audit": audit,
     }
 
 

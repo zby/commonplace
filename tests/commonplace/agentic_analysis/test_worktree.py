@@ -339,6 +339,22 @@ def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, capsys, disp
     assert result["parameters"] == {"system": "Example"}
 
 
+@pytest.mark.parametrize("locked", [True, False])
+def test_inspect_audit_separates_interrupted_controller_from_publication(tmp_path, monkeypatch, locked):
+    run = fake_checkout(tmp_path / "worktree")
+    (run / aw.RECEIPT).write_text(json.dumps({"published": True}))
+    directory = run / "audit"
+    directory.mkdir()
+    path = directory / "status.json"
+    path.write_text(json.dumps({"state": "running", "directory": "snapshot"}))
+    before = path.read_bytes()
+    monkeypatch.setattr(aw, "_locked", lambda root: locked)
+    status = aw.inspect_analysis(run)
+    assert status["state"] == ("running" if locked else "published")
+    assert status["advisory-audit"]["state"] == ("running" if locked else "interrupted")
+    assert path.read_bytes() == before, "inspection must not rewrite the audit record"
+
+
 def test_run_cli_requires_start_options_or_a_run_alone(tmp_path: Path, capsys) -> None:
     assert main(["run"]) == 1
     assert "--system, --source-identity, --source, --worker-profile" in capsys.readouterr().err

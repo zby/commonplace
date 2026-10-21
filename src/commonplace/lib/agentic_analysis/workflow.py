@@ -20,12 +20,14 @@ states, as ordinary calls:
     memory-profile, profile-verification   workers, corrected until accepted
     synthesis, synthesis-verification      workers, corrected until accepted
     every member re-checked, then assemble, publish   code
+    save all-attempt trace scan, advisory meta-analysis   code, then Pi worker
 
-Every worker call is recorded by Workjig under its full request, so a rerun of
+Every analysis-role worker call is recorded by Workjig under its full request, so a rerun of
 the script replays what is answered (`commonplace.headless.jobs`). Attempt budgets are the plan's `max-attempts`, counted
 per job over the whole run: a check's rejection, a
 verifier's correction, a re-ask after an input changed and a timed-out or
-incomplete launch each spend one; the verifier's own budget bounds the number
+incomplete launch each spend one; the advisory audit has its separate budget.
+The verifier's own budget bounds the number
 of verifications (ADR 108's three record verifications; the plan's budgets
 give two profile corrections and one synthesis correction). The run stops on
 an exhausted budget, blockers at a verifier's last attempt, a worker's
@@ -70,6 +72,7 @@ from commonplace.lib.agentic_analysis.analyses import (
     WORKER_PROFILES,
     resolve_worker_profile,
 )
+from commonplace.lib.agentic_analysis.audit import advisory_audit
 from commonplace.lib.agentic_analysis.checks import (
     Candidate,
     apply_verdict,
@@ -619,14 +622,19 @@ def run_analysis(run_dir: Path, *, timeout: float | None, max_workers: int | Non
     analysis = Analysis(run_dir, timeout=timeout, max_workers=max_workers)
     with analysis.run:
         analysis.run.log(event="start")
+        completed = False
         try:
-            return analysis.analyse()
+            receipt = analysis.analyse()
+            completed = True
+            return receipt
         except Exception as stop:
             analysis.run.log(event="stopped", reason=f"{type(stop).__name__}: {stop}")
             if not isinstance(stop, STOPS):
                 raise
             print(f"stopped: {stop}", file=sys.stderr)
             return None
+        finally:
+            advisory_audit(analysis, completed=completed)
 
 
 STOPS = (Stopped, OutOfAttempts, LaunchFailed, ValueError, OSError, UncertainEffectError, UncertainLaunchError,

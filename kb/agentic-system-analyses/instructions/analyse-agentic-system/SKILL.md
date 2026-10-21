@@ -44,6 +44,8 @@ The run also needs a worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, the model it
 launches and the effort. Every worker of the run uses it, verification
 included, and it is fixed for the run; another profile means another run.
+The advisory meta-analyser also uses that model and effort, but only on Pi,
+with ambient instructions, skills and extensions disabled.
 The caller names it in the request, for example:
 
 ```text
@@ -177,6 +179,37 @@ a complete disposition or `published: false` for a `blocked` or
 `out-of-scope` boundary, which completes locally. Exit status 2 means the run
 stopped and printed why; 1 means the command itself failed.
 
+### Advisory trace audit
+
+Before `run` exits, code saves a scan of every manifest-recorded attempt,
+including failed and superseded ones. The scanner detects explicit Pi tool
+failures; missing, incomplete and unsupported traces remain visible as coverage
+limits. It does not discover nested workers outside the manifest.
+
+After a completed Pi analysis, code passes the scan, attempt inventory and
+accepted artifact paths to a fresh [meta-analyser](./meta-analyser.md). It uses
+failures as leads for at most three verification questions and 30 tool calls,
+with a timeout of 900 seconds or `--timeout`, whichever is shorter. The question
+and call limits are prompt instructions, not a tool sandbox. Only read and bash
+tools are exposed; read-only authority is prompt-enforced. Code saves the
+returned text. No findings is not a correctness certificate.
+
+`<run>/audit/status.json` identifies the latest snapshot. Each
+`audit/<input-digest>/` keeps `scanner.json`, `attempts.json`, the input digests,
+exact prompt, launch record, stdout, stderr, status and any completed report.
+An unchanged rerun reuses its snapshot, including a failed audit; changed inputs
+create a new one. Audit failure, timeout or incomplete coverage does not change
+the analysis receipt or exit status. A stopped analysis is scanned but does not
+launch the meta-analyser. Other harnesses do not launch it.
+
+The audit is advisory: report material findings and unresolved concerns to the
+operator. Do not repair accepted artifacts or rerun workers on its authority.
+Audit evidence is local run state, not included by `integrate`. Before authorized
+worktree removal, extract useful audit evidence to a retained destination or
+obtain the operator's explicit decision that none needs retention. After an
+abrupt controller death, inspect the audit's recorded PID and confirm its process
+and children have stopped; an interrupted snapshot is not automatically retried.
+
 ## 2. Stops and reruns
 
 Every worker answer is recorded under its full request, so
@@ -226,7 +259,9 @@ completed without publication), `stopped` (with the reason), `withdrawn`
 (reset; a rerun publishes again), `running`, `interrupted` (the latest run
 neither ended nor holds the lock) or `allocated` (never run). The view
 lists each job's launches, answers and failures, the accepted members and the
-receipt; it is not a fresh audit of retained files. After a published
+receipt, plus the separate `advisory-audit` status and evidence directory;
+it is not a fresh audit of retained files. Read any completed audit report and
+include its outcome and limits, or state why it was skipped or failed. After a published
 analysis, add that outputs under `kb/agentic-systems/comparisons/` are stale
 unless rebuilt under separate authority, and a prior landscape synthesis is
 historical unless refreshed under separate authority. Transfer scans and

@@ -10,9 +10,11 @@ bytes. Only the agent running the analysis loads this instruction; workers do
 not. Analyst obligations end at their assigned outputs. No regeneration or Git
 authority follows from this instruction.
 
-Assembly and publication are the last steps of `commonplace-analysis run` in
-the prepared worktree. They require exact members, every member passing its
-check against the current members, pinned validation criteria, producer
+Assembly and publication finish acceptance in `commonplace-analysis run` in
+the prepared worktree. The subsequent trace scan and Pi meta-analysis are
+advisory; they neither change the receipt nor gate publication or integration.
+Assembly and publication require exact members, every member passing its check
+against the current members, pinned validation criteria, producer
 provenance from the harness records, frozen source and unchanged method/code.
 Assembly produces the exact-byte manifest; publication consumes the pinned
 manifest and members from the run's `artifact/`. There is no standalone

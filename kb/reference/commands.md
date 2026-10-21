@@ -185,12 +185,25 @@ failure, a worker's problem, an exhausted budget, blockers at a verifier's
 last attempt, a launch an earlier run left unsettled), 1 means the command
 failed.
 
+Before returning, `run` saves an all-attempt Pi trace scan under
+`<run>/audit/<input-digest>/`. Completed Pi analyses then receive an advisory,
+read-only meta-analysis using the saved scan and accepted outputs. It has a
+900-second ceiling (or the shorter `--timeout`), with prompt limits of three
+questions and 30 tool calls. Missing and unsupported traces are coverage gaps,
+not successful scans. An unchanged rerun reuses the snapshot; changed inputs
+create a new one. Audit failure does not change the analysis exit status or
+receipt. The [analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#advisory-trace-audit)
+sets the evidence and reporting obligations. Audit files are local state, not
+included by `integrate`; evidence extraction precedes worktree removal.
+
 `inspect <run>` prints the run's state (`published`, `local`, `stopped` with
 its reason, `running`, `interrupted`), parameters, opening metadata, boundary
 disposition, verdicts, worker problems, each job's launches, answers (with
 their keys) and failures, the accepted members' digests and the receipt, as
 JSON, from `log.jsonl`, the run's call records under `calls/`, `artifact/`
-and `receipt.json`. It changes nothing and is not a retained-filesystem audit.
+and `receipt.json`. The separate `advisory-audit` field reports the latest audit
+status and evidence directory from `audit/status.json`, or null when none was
+saved. It changes nothing and is not a retained-filesystem audit.
 
 `retry <run> <job>` dismisses the job's standing worker problems, and
 `retry <run> <job> --key <key>` one recorded answer, so the next `run` asks

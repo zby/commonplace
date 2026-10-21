@@ -1,5 +1,6 @@
 # Worker profiles for analyse-agentic-system runs. A run names one profile
-# when it starts; opening records it, and every worker of the run uses it.
+# when it starts; opening records it, and every analysis-role worker uses it.
+# The Pi advisory auditor reuses its model and effort, not its extra flags.
 # `launch-model` is the name the harness selects a model by, such as Claude
 # Code's aliases, not a resolved version; the manifest records the model the
 # harness reports. Optional `flags` are extra harness command-line flags, as

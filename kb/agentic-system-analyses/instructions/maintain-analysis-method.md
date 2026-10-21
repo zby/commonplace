@@ -52,7 +52,9 @@ Workflow execution inputs enter through declared dependencies. Do not make
 reviews, archives or workshops execution inputs.
 
 For run evidence records and failed-run retention, follow the collection
-contract. Do not make audit files workflow execution inputs.
+contract. Keep audit files out of analyst, verifier and publication inputs.
+The advisory meta-analyser consumes its own saved scan and attempt inventory;
+its report never drives acceptance or correction.
 
 State each rule once, in its owner ([ADR 117](../../reference/adr/117-plans-derive-their-structural-jobs-from-the-type.md)):
 a member type owns its member's content, the

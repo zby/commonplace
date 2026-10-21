@@ -60,6 +60,12 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 
 prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
+if "--no-context-files" in sys.argv:
+    assert "scanner_report" in prompt and "attempt_inventory" in prompt
+    print(json.dumps({"type": "message_end", "message": {"role": "assistant", "model": "fake-auditor",
+                      "stopReason": "stop", "content": [{"type": "text", "text": "Fixture audit only."}]}}))
+    print(json.dumps({"type": "agent_end"}))
+    sys.exit(0)
 sections, current = {}, None
 for line in prompt.splitlines():
     header = re.fullmatch(r"(Inputs|Required outputs|Optional outputs)(?: \(.*\))?:", line)
@@ -450,6 +456,8 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     assert status["state"] == "stopped", status["state"]
     assert "synthesis" in status["stopped"], status["stopped"]
     assert status["receipt"] is None
+    assert status["advisory-audit"]["state"] == "skipped"
+    assert (Path(status["advisory-audit"]["directory"]) / "scanner.json").is_file()
     assert [problem["job"] for problem in status["problems"]] == ["synthesis"]
     (answer,) = status["jobs"]["synthesis"]["answers"]
     assert answer["problem"]
@@ -468,9 +476,38 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     receipt = json.loads(rest)
     assert receipt["published"] is True, receipt
     assert receipt == json.loads((run_dir / "receipt.json").read_text())
+    audit = inspect_analysis(run_dir)["advisory-audit"]
+    assert audit["state"] == "complete", audit
+    audit_dir = Path(audit["directory"])
+    assert (audit_dir / "report.md").read_text() == "Fixture audit only.\n"
+    inventory = json.loads((audit_dir / "attempts.json").read_text())
+    assert len([i for i in inventory if i["job"] == "synthesis"]) == 2
+    assert all(i["scan_status"] == "unscanned" for i in inventory), "fake analysts use no Pi protocol"
+    assert "advisory audit: complete" in err
+    code, _, err = cli(capsys, "run", str(run_dir))
+    assert code == 0, err
+    assert inspect_analysis(run_dir)["advisory-audit"] == audit, "unchanged rerun must reuse the audit"
 
     code, out, _ = cli(capsys, "inspect", str(run_dir))
     assert code == 0 and json.loads(out)["state"] == "published"
+
+
+def test_advisory_failure_does_not_block_published_result(workflow, capsys, monkeypatch):
+    from commonplace.lib.agentic_analysis import audit
+
+    run_dir, _ = workflow(disposition="complete")
+
+    def broken_capture(root):
+        raise ValueError("fixture scanner failure")
+
+    monkeypatch.setattr(audit, "collect", broken_capture)
+    code, out, err = cli(capsys, "run", str(run_dir))
+    assert code == 0, err
+    assert json.loads(out.partition("\n")[2])["published"] is True
+    status = inspect_analysis(run_dir)
+    assert status["state"] == "published"
+    assert status["advisory-audit"]["state"] == "failed"
+    assert "fixture scanner failure" in err
 
 
 def link_to_origin(prepared, monkeypatch) -> Path:
