@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(commonplace-*)"
+      "Bash(commonplace-*)",
+      "Bash(*/.venv/bin/commonplace-*)",
+      "Bash(rg)",
+      "Bash(rg *)"
     ]
   },
   "hooks": {
