@@ -1,6 +1,6 @@
 # MVP: two execution profiles resolved by the runner
 
-Status: brainstorm, not adopted.
+Status: brainstorm, not adopted. It assumes in-session sub-agent dispatch; the analysis workflow instead launches headless harness workers with one concrete profile per run (see the README's 2026-10-22 status).
 
 ## Candidate system
 

@@ -1,6 +1,6 @@
 # Execution-policy inventory
 
-Status: initial repository-grounded catalogue, 2026-07-11. This is not complete until the repeatable completeness sweep and runner capability verification are recorded.
+Status: initial repository-grounded catalogue, 2026-07-11; skill rows and surfaces rechecked against the code on 2026-10-22. The delegated-loci rows were checked for existence only, not re-read. This is not complete until the repeatable completeness sweep and runner capability verification are recorded.
 
 ## Catalogue fields
 
@@ -22,15 +22,14 @@ Each execution locus should eventually carry:
 
 ## Declarative whole-skill model policy
 
-Nine canonical skills currently declare Claude-style `model:` frontmatter. The declaration applies to the skill invocation as a whole; it does not express different models for roles the skill later delegates.
+Eight canonical skills currently declare Claude-style `model:` frontmatter. The declaration applies to the skill invocation as a whole; it does not express different models for roles the skill later delegates.
 
 | Source | Current model | Context | Notes |
 |---|---|---|---|
 | `cp-skill-connect/SKILL.md` | `opus` | fork | Discovery and connection judgment |
 | `cp-skill-write/SKILL.md` | `opus` | fork | Note authoring |
 | `cp-skill-ingest/SKILL.md` | `opus` | fork | Source analysis |
-| `write-agent-memory-system-review/SKILL.md` | `opus` | fork | Parent plus delegated drafting and semantic QA |
-| `cp-skill-revise-iterative/SKILL.md` | `opus` | fork | Parent invokes non-interactive Claude revision calls; nested runner model/effort is not declared |
+| `cp-skill-ground/SKILL.md` | `opus` | fork | Quote retention for one claim |
 | `cp-skill-revise-autoreason/SKILL.md` | `opus` | fork | Parent plus many Codex actor roles, all currently inherited/unspecified |
 | `cp-skill-convert/SKILL.md` | `sonnet` | fork | Structured conversion |
 | `cp-skill-snapshot-web/SKILL.md` | `sonnet` | fork | Snapshot routing and capture |
@@ -52,7 +51,7 @@ Questions the catalogue must resolve:
 | `critique-note.md` | adversarial critic | Fresh worker or different runner from author | Independence is specified; strength/cost posture and effort are not |
 | `composition-friction-gate.md` | adversarial friction analyst | Fresh worker, different runner from author | Independence is specified; model/effort are not |
 | `cp-skill-revise-autoreason/SKILL.md` | critic, revision author, synthesizer, auditor, three judges, reruns | Fresh Codex workers; whole skill uses `opus`; judges parallelized | Role count is explicit but every role effectively shares one unspecified worker policy |
-| `write-agent-memory-system-review/SKILL.md` | drafting worker, semantic QA workers | Fresh minimal-context worker; harness mechanism only; whole skill uses `opus` | Drafting and semantic judgment cannot be configured independently |
+| `analyse-agentic-system/SKILL.md` and `src/commonplace/lib/agentic_analysis/workflow.py` | boundary, runtime, memory, epistemic, workflow, reconciliation, report/profile/synthesis verification, memory profile, synthesis, correction rounds | Headless harness launches from code; one `worker-profiles.yaml` profile per run for every role; served model recorded per launch | No per-role profile; verifiers and fixers share the analysts' profile (operator: not worth changing, 2026-10-22) |
 | `fix-warnings/fix-review-warnings-sweep.md` | one fixer per note | Parallel sub-agents; model/effort unspecified | No mapping from finding complexity to worker strength or escalation |
 | `FIX-SYSTEM.md` | one fixer per note | Delegation and parallelism only | Same policy gap as the sweep instruction |
 | `revise-note.md` | tag-change follow-up worker | Spawned only after tag changes; narrow write scope | Likely mechanical role, but no cheap-model declaration or verification |
@@ -68,7 +67,7 @@ Incidental mentions that are not execution loci—examples, theory, or prose mer
 | Harness sub-agent tools | Fresh/forked worker prose in instructions | Uniform portable arguments and capability detection |
 | Review job | `model_partition`; finalization provenance `runner`, concrete model, effort | Choosing the worker before dispatch; portable cost/quality policy |
 | Review model registry | Concrete aliases grouped into freshness partitions; effort normalization | It is epistemic identity/validation, not a general task-routing table |
-| External CLI calls | `cp-skill-revise-iterative` invokes `claude -p` | Authorized cross-runner procedure, nested model/effort selection, portability |
+| Headless worker profile | `worker-profiles.yaml` entries resolved by `src/commonplace/headless/harness.py`; served model read back per launch (ADR 118, 119) | Per-role selection; any consumer besides the analysis workflow; portable intent above concrete profiles |
 
 ## Initial fragmentation findings
 

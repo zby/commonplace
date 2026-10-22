@@ -6,6 +6,38 @@ Build uniform, runner-portable procedures for choosing the model and thinking ef
 
 The motivating case is the full improvement pass, whose stages range from mechanical report handling and copyediting to adversarial critique, semantic judgment, synthesis, and closing controls. The same problem already appears elsewhere: skills declare whole-skill `model:` overrides, instructions launch workers without a model policy, and the review subsystem records model partitions plus concrete runner provenance. This workshop treats those as one execution-policy problem while preserving their different semantics.
 
+## Status (rebaselined 2026-10-22)
+
+The analysis workflow now launches its workers itself, so part of this design
+exists in code for that one consumer:
+
+- **Launch route.** [ADR 118](../../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)
+  runs each analysis role as a headless `claude`, `codex` or `pi` launch, and
+  [ADR 119](../../reference/adr/119-analysis-workers-launch-through-workjig.md)
+  puts those launches on the Workjig runtime. The CLI launches listed as out of
+  scope below are now the sanctioned route for this workflow, not a fallback.
+- **Runner resolution.** [`worker-profiles.yaml`](../../agentic-system-analyses/instructions/analyse-agentic-system/worker-profiles.yaml)
+  names concrete profiles (harness, launch model, effort, optional flags);
+  `Profile` and `HARNESSES` in `src/commonplace/headless/harness.py` turn one
+  into a command. There is no portable tier: a profile is already concrete.
+- **Observed provenance.** `model_used()` reads the model each harness reports
+  from the launch's retained output, and the run manifest records it apart from
+  the requested launch model.
+- **Granularity.** One profile per run, used by every role including
+  verification; another profile means another run. There is no per-role routing.
+- **Context isolation.** Workers load their harness's normal configuration in
+  the prepared worktree; nothing is stripped. Ambient context therefore differs
+  by harness (the 2026-10-21 harness2 run on Claude Code loaded operator
+  auto-memory until it was disabled user-wide).
+
+The other workflows in the inventory (full pass, review batches, sub-agent
+dispatch from skills) are unchanged and have no profile mechanism.
+
+On 2026-10-22 the operator judged per-role routing not worth pursuing in the
+current analysis workflow. The [MVP](./mvp.md) and [schema sketch](./schema-sketch.md)
+stay unadopted. Reopen the routing question when a second workflow runs on the
+headless engine or a workflow's cost makes cheaper roles worth measuring.
+
 ## Evaluation boundary
 
 In scope:
@@ -77,3 +109,4 @@ This workshop closes when:
 - [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — the retained account of execution policy and its platform-specific boundaries.
 - [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — existing runner-specific per-call model surface.
 - [Model partition registry proposal](../../reference/proposals/model-partition-registry.md) — adjacent design that must not be conflated with portable role routing.
+- [ADR 118](../../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) and [ADR 119](../../reference/adr/119-analysis-workers-launch-through-workjig.md) — the shipped headless launch route and its per-run worker profile.
