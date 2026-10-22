@@ -9,7 +9,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Definition](./definition.md) — operational vocabulary definitions
 - [Review gate](./review-gate.md) — one judgment-based quality criterion
 - [Tag README](./tag-readme.md) — a tag's curated landing page at `kb/tags/<tag>-README.md`, with optional validated marks
-- [Collection contract](./collection-contract.md) — a `COLLECTION.md` that carries frontmatter, such as the tag collection's `participating` list
+- [Collection contract](./collection-contract.md) — a collection's `COLLECTION.md`, with optional control fields such as the tag collection's `participating` list
 
 ## Type-system contracts
 

@@ -1,3 +1,7 @@
+---
+type: types/collection-contract.md
+---
+
 # Writing conventions for kb/work/ (workshop layer)
 
 ## Workshop layer, not a register

@@ -1,3 +1,7 @@
+---
+type: types/collection-contract.md
+---
+
 # Writing conventions for kb/<collection>/
 
 > **Experimental collection prototype.** This opt-in starting contract has a

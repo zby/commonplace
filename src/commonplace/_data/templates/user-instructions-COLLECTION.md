@@ -1,3 +1,7 @@
+---
+type: types/collection-contract.md
+---
+
 # Writing conventions for kb/instructions/
 
 These defaults are ready to use. Customize them only when the project needs

@@ -10,9 +10,9 @@ schema: ./collection-contract.schema.yaml
 A collection contract is a `COLLECTION.md`: the one binding local contract of
 its [collection](../reference/definitions/collection.md), supplying the text
 contract for every artifact under it ([ADR 071](../reference/adr/071-text-contract-is-part-of-the-collection-definition.md)).
-Most contracts carry no frontmatter and are [text](./text.md). A contract
-takes this type only when it needs frontmatter, which is when it declares a
-control field that code reads.
+Every authored contract declares this type, and the scaffold templates do too.
+A contract without frontmatter, such as an older installed KB's or an exact
+copy inside a captured bundle, still validates as [text](./text.md).
 
 The contract is not collection content: collection-scoped validation and tag
 membership leave it out, and conformance reviews read it as the gate rather

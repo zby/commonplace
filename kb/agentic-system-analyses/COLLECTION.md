@@ -1,3 +1,7 @@
+---
+type: types/collection-contract.md
+---
+
 # Writing conventions for kb/agentic-system-analyses/
 
 ## Purpose and quality

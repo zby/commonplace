@@ -1,3 +1,7 @@
+---
+type: types/collection-contract.md
+---
+
 # Writing conventions for kb/articles/
 
 This collection publishes outward-facing articles distilled from the KB on the [documentation site](../reference/documentation-site.md). Its local contract and lifecycle were adopted by [ADR 057](../reference/adr/057-articles-use-an-editorial-profile-and-excluded-drafts.md); draft circulation was simplified by [ADR 063](../reference/adr/063-all-article-drafts-circulate-behind-a-banner.md).
