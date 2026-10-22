@@ -12,6 +12,10 @@ Memory also has structured comparison fields in each set's memory profile.
 The [comparison builds](../README.md) turn them into `memory-systems.csv` and
 `memory-systems-table.md` in this directory; regenerate them after analyses
 land, and read each table's selected population before relying on it.
+
+Current tables: [memory-systems-table.md](./memory-systems-table.md) and
+[memory-systems.csv](./memory-systems.csv), generated 2026-10-22 from all 191
+current analyses at commit `5f92f75e5`.
 Cross-system syntheses come from the
 [landscape synthesis](../../instructions/synthesize-agent-memory-landscape/SKILL.md),
 commissioned separately; none is current.
