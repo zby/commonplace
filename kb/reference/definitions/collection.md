@@ -6,7 +6,7 @@ tags: []
 
 # Collection
 
-A **collection** in a Commonplace KB is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the collection's complete local text contract and governs every artifact in the subtree.
+A **collection** in a Commonplace KB is a subtree under `kb/` whose root contains `COLLECTION.md`. That file is the collection's complete local text contract and governs every artifact in the subtree. It declares the [collection-contract](../../types/collection-contract.md) type.
 
 ## Text contract
 

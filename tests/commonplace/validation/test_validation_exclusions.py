@@ -12,7 +12,7 @@ def write(path: Path, content: str = "# Title\n") -> Path:
 
 def configure_collection(tmp_path: Path) -> Path:
     notes = tmp_path / "kb" / "notes"
-    write(notes / "COLLECTION.md", "# Notes collection\n")
+    write(notes / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
     return notes
 
 
@@ -41,7 +41,7 @@ def test_collection_structure_ignores_nested_collection_in_excluded_subtree(
     notes = configure_collection(tmp_path)
     ignored_dir = notes / "experiment"
     write(ignored_dir / project_paths.VALIDATION_IGNORE_MARKER, "")
-    write(ignored_dir / "COLLECTION.md", "# Experimental fixture\n")
+    write(ignored_dir / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Experimental fixture\n")
 
     failures = validation.validate_collection_structure(notes, repo_root=tmp_path)
 

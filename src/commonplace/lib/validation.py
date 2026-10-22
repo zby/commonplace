@@ -36,6 +36,7 @@ from commonplace.lib.index_generated import (
     tags_collection,
 )
 from commonplace.lib.naming import (
+    COLLECTION_CONTRACT_TYPE,
     MAX_NOTE_SLUG_LENGTH,
     MAX_NOTE_TITLE_LENGTH,
     WRITE_BRIEF_TYPE,
@@ -51,6 +52,7 @@ from commonplace.lib.note_parser import (
 from commonplace.lib.project_paths import (
     collection_for_path,
     is_collection_dir,
+    is_collection_metadata,
     is_type_definition_content,
     iter_validation_markdown_files,
     kb_root,
@@ -1447,6 +1449,22 @@ def _file_available(path: Path, run: ValidationRun) -> bool:
     return path.resolve() in run.content_overrides or path.is_file()
 
 
+def validate_collection_contract_name(results: CheckResults, parsed: ParsedNote) -> None:
+    """A COLLECTION.md declares the collection-contract type, and only a
+    COLLECTION.md does."""
+    is_typed = parsed.document.frontmatter is not None
+    type_identity = canonical_type_identity(parsed.profile) if is_typed else None
+    if is_collection_metadata(parsed.path) and type_identity != COLLECTION_CONTRACT_TYPE:
+        results.fails.append(
+            f"collection contract: COLLECTION.md must declare `type: {COLLECTION_CONTRACT_TYPE}`"
+        )
+    elif type_identity == COLLECTION_CONTRACT_TYPE and not is_collection_metadata(parsed.path):
+        results.fails.append(
+            f"collection contract: {parsed.path.name} is of type {COLLECTION_CONTRACT_TYPE} "
+            "but only a COLLECTION.md may be"
+        )
+
+
 def validate_write_brief_pairing(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1561,6 +1579,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
             repo_root=run.repo_root,
         )
         validate_write_brief_pairing(base, parsed, run=run)
+        validate_collection_contract_name(base, parsed)
         _merge_labelled(results, base, "base")
         return results
 
@@ -1592,6 +1611,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     )
     validate_tag_heads(base, parsed, run=run)
     validate_write_brief_pairing(base, parsed, run=run)
+    validate_collection_contract_name(base, parsed)
     quote_results = run.verbatim_quotes(parsed)
     validate_verbatim_quotes(base, quote_results)
     if run.criteria is not None:
@@ -1720,6 +1740,13 @@ def validate_collection_structure(
         return []
 
     failures: list[tuple[Path, str]] = []
+    contract = collection / "COLLECTION.md"
+    declared = frontmatter.parse(contract.read_text(encoding="utf-8")).data.get("type")
+    if declared != COLLECTION_CONTRACT_TYPE:
+        failures.append((contract, (
+            f"collection contract: {contract.relative_to(repo_root)} must declare "
+            f"`type: {COLLECTION_CONTRACT_TYPE}`"
+        )))
     for path in iter_validation_markdown_files(collection):
         if path.name != "COLLECTION.md" or path.parent == collection:
             continue

@@ -19,7 +19,7 @@ def test_status_omits_review_and_does_not_create_store_by_default(
     tmp_path: Path,
     capsys,
 ) -> None:
-    write(tmp_path / "kb/notes/COLLECTION.md", "# Notes\n")
+    write(tmp_path / "kb/notes/COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes\n")
     write(tmp_path / "kb/notes/example.md", "# Example\n")
     write(tmp_path / "kb/work/README.md", "# Work\n")
     db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
@@ -41,7 +41,7 @@ def test_status_review_flag_reports_missing_store_without_creating_it(
     tmp_path: Path,
     capsys,
 ) -> None:
-    write(tmp_path / "kb/notes/COLLECTION.md", "# Notes\n")
+    write(tmp_path / "kb/notes/COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes\n")
     write(tmp_path / "kb/notes/example.md", "# Example\n")
     write(tmp_path / "kb/work/README.md", "# Work\n")
     db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
@@ -80,7 +80,7 @@ def test_status_reports_basic_project_command_version_skew(
         tmp_path / "pyproject.toml",
         '[project]\nname = "example"\nversion = "1.2.3"\n',
     )
-    write(tmp_path / "kb/notes/COLLECTION.md", "# Notes\n")
+    write(tmp_path / "kb/notes/COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes\n")
     write(tmp_path / "kb/notes/example.md", "# Example\n")
     write(tmp_path / "kb/work/README.md", "# Work\n")
     monkeypatch.setattr(project_status, "_command_version", lambda: "9.9.9")

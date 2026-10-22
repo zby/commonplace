@@ -72,7 +72,7 @@ def install_schema_tree(tmp_path: Path, tree_name: str) -> None:
 
 def configure_temp_repo(tmp_path: Path) -> Path:
     install_schema_tree(tmp_path, "flat")
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
     write_type_spec(
         tmp_path,
         "kb/types/note.md",
@@ -100,7 +100,7 @@ def configure_tag_readme_repo(tmp_path: Path) -> Path:
 
 
 def configure_type_spec_repo(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
     copy_repo_file(tmp_path, "kb/types/type-spec.schema.yaml")
     write_type_spec(
         tmp_path,
@@ -122,7 +122,7 @@ def configure_snapshot_repo(tmp_path: Path) -> None:
 
 def configure_sources_collection(tmp_path: Path) -> Path:
     sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
+    write(sources / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Sources\n")
     return sources
 
 
@@ -365,7 +365,7 @@ traits: []
 """,
     )
     work = tmp_path / "kb/work"
-    write(work / "COLLECTION.md", "# Workshop collection\n")
+    write(work / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Workshop collection\n")
     workshop_note = write(
         work / "audit.md",
         f"# Audit\n\n[Retired proposal]({os.path.relpath(archived, work)})\n",
@@ -574,7 +574,7 @@ traits: []
 
 def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
     notes_root = tmp_path / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    write(notes_root / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
     today_note = write(
         notes_root / "today.md",
         """---
@@ -610,8 +610,8 @@ traits: []
 
 
 def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
-    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
+    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Reports collection\n")
     note = write(
         tmp_path / "kb" / "notes" / "note.md",
         """---
@@ -758,7 +758,7 @@ def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> No
     configure_temp_repo(tmp_path)
     write(
         tmp_path / "kb" / "agent-memory-systems" / "COLLECTION.md",
-        "# Agent memory systems\n",
+        "---\ntype: types/collection-contract.md\n---\n\n# Agent memory systems\n",
     )
     collection_note = write(
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
@@ -849,7 +849,7 @@ traits: []
 def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
     write(
-        tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "# Definitions\n"
+        tmp_path / "kb" / "notes" / "definitions" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Definitions\n"
     )
 
     failures = validation.validate_collection_structure(
@@ -863,6 +863,25 @@ def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -
             "nested COLLECTION.md: kb/notes/definitions/COLLECTION.md is inside collection kb/notes",
         )
     ]
+
+
+def test_collection_contract_type_and_name_go_together(tmp_path: Path) -> None:
+    configure_temp_repo(tmp_path)
+    for name in ("collection-contract.md", "collection-contract.schema.yaml"):
+        shutil.copy(REPO_ROOT / "kb" / "types" / name, tmp_path / "kb" / "types" / name)
+    untyped = write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    misnamed = write(
+        tmp_path / "kb" / "notes" / "contract.md",
+        "---\ntype: types/collection-contract.md\n---\n\n# Contract\n",
+    )
+
+    structure = validation.validate_collection_structure(tmp_path / "kb" / "notes", repo_root=tmp_path)
+
+    assert [path for path, _ in structure] == [untyped]
+    assert any("must declare" in fail
+               for fail in validation.validate_note(untyped, repo_root=tmp_path).fails)
+    misnamed_fails = validation.validate_note(misnamed, repo_root=tmp_path).fails
+    assert any("only a COLLECTION.md" in fail for fail in misnamed_fails), misnamed_fails
 
 
 def test_source_snapshot_cache_warns_about_redundant_alternate_copy(

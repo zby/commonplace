@@ -72,6 +72,7 @@ def slugify_note_filename(text: str) -> str:
 # rather than repeating the suffix check.
 WRITE_BRIEF_SUFFIX = ".brief.md"
 WRITE_BRIEF_TYPE = "types/write-brief.md"
+COLLECTION_CONTRACT_TYPE = "types/collection-contract.md"
 
 
 def is_write_brief_path(path: Path | str) -> bool:
