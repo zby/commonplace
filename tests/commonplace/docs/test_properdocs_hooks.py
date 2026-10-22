@@ -287,9 +287,9 @@ def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_lib
     assert "current-analyses.md" in properdocs_hooks.on_page_markdown("# Analyses\n", page)
 
 
-def test_on_config_groups_agentic_systems_and_hides_agent_memory_systems(tmp_path: Path) -> None:
+def test_on_config_groups_agentic_systems_and_hides_unlisted_collections(tmp_path: Path) -> None:
     docs_dir = tmp_path / "kb"
-    for collection in ("agent-memory-systems", "agentic-system-analyses", "agentic-systems", "notes"):
+    for collection in ("agent-memory-systems", "agentic-system-analyses", "agentic-systems", "notes", "types"):
         write(docs_dir / collection / "README.md", f"# {collection}\n")
     write(docs_dir / "agentic-systems/comparisons/memory/README.md", "# Memory lens\n")
 
@@ -303,6 +303,8 @@ def test_on_config_groups_agentic_systems_and_hides_agent_memory_systems(tmp_pat
     labels = [next(iter(entry)) for entry in nav]
     assert "Agent Memory Systems" not in labels
     assert "Agentic System Analyses" not in labels
+    assert "Types" not in labels
+    assert "Recent Changes" not in labels
     assert labels.index("Agentic Systems") < labels.index("Notes")
 
 

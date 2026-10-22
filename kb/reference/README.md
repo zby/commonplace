@@ -191,6 +191,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 
 ### Type system and collection model
 
+- [Global type specs](../types/README.md) — the shared type specs and schemas every collection can use
 - [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how type values resolve as spec paths on the library and KB roots, common examples, and where both kinds of type spec live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates

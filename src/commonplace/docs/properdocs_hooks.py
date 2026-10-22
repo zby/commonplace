@@ -27,7 +27,7 @@ COLLECTION_MAX_DEPTH = {"instructions": 1}
 UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
 
 # Published collections left out of the main menu; their pages still build.
-HIDDEN_FROM_NAV = frozenset({"agent-memory-systems"})
+HIDDEN_FROM_NAV = frozenset({"agent-memory-systems", "types"})
 
 # The "Agentic Systems" menu entry gathers these two collections into one
 # dropdown: the analyses list, each landed lens, then the authored accounts.
@@ -53,7 +53,7 @@ def on_config(config):
     top-nav entries. Tags comes first, followed by alphabetical discovery;
     the operational mailbox and HIDDEN_FROM_NAV are omitted, and the two
     agentic-systems collections share one dropdown with the landed lenses.
-    Fixed Home and external entries bracket the auto-discovered list.
+    Fixed Home and GitHub entries bracket the auto-discovered list.
     """
     _tag_space.cache_clear()
     docs_dir = Path(config["docs_dir"])
@@ -77,12 +77,11 @@ def on_config(config):
         label = child.name.replace("-", " ").title()
         collection_entries.append({label: str(readme.relative_to(docs_dir))})
 
-    # TODO: read external links (Recent Changes, GitHub, etc.) from properdocs.yml
+    # TODO: read external links (GitHub, etc.) from properdocs.yml
     # so consuming projects don't have to fork this hook to change them.
     config["nav"] = [
         {"Home": "index.md"},
         *collection_entries,
-        {"Recent Changes": "https://github.com/zby/commonplace/commits/main/"},
         {"GitHub": "https://github.com/zby/commonplace"},
     ]
     return config

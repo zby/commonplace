@@ -30,8 +30,8 @@ The [theory builder definition](./notes/definitions/theory-builder.md) states th
 
 - [Notes](./notes/README.md) — research claims
 - [Tags](./tags/README.md) — browse by topic across notes, reference, instructions, and system reviews
-- [Reference](./reference/README.md) and [Types](./types/README.md) — the current system, decisions, and artifact contracts
-- [Agentic Systems](./agentic-systems/README.md) and [Agentic-system analyses](./agentic-system-analyses/README.md) — external-system accounts and workflow analyses, compared by lens
+- [Reference](./reference/README.md) — the current system, decisions, and artifact contracts
+- [Agentic Systems](./agentic-systems/README.md) — external-system accounts and workflow analyses, compared by lens
 - [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md) — evidence, procedures, and work in flight
 
 ## Use it yourself
