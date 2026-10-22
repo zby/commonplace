@@ -26,6 +26,21 @@ COLLECTION_MAX_DEPTH = {"instructions": 1}
 # public navigation or receiving generated directory listings.
 UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
 
+# Published collections left out of the main menu; their pages still build.
+HIDDEN_FROM_NAV = frozenset({"agent-memory-systems"})
+
+# The "Agentic Systems" menu entry gathers these two collections into one
+# dropdown: the analyses list, each landed lens, then the authored accounts.
+AGENTIC_SYSTEMS_GROUP = ("agentic-system-analyses", "agentic-systems")
+
+# Lens directories under agentic-systems/comparisons/ hold cross-system pages
+# for one analyst member; each gets a build-time list of that member across
+# the current analyses. A lens joins the menu when its README.md lands.
+LENS_ROOT = Path("agentic-systems/comparisons")
+LENSES = {"runtime": "Runtime", "memory": "Memory", "epistemic": "Epistemic", "workflow": "Workflow"}
+# Extra members a lens list links beside its own member.
+LENS_COMPANIONS = {"memory": {"memory-profile": "Profile"}}
+
 # Directories that received a virtual dir-index page in on_files, so
 # on_page_markdown can link each collection README to its full listing.
 _generated_index_dirs: set[Path] = set()
@@ -36,21 +51,28 @@ def on_config(config):
 
     Public directories directly under docs_dir with a README.md become
     top-nav entries. Tags comes first, followed by alphabetical discovery;
-    the operational mailbox is omitted. Fixed Home and external entries
-    bracket the auto-discovered list.
+    the operational mailbox and HIDDEN_FROM_NAV are omitted, and the two
+    agentic-systems collections share one dropdown with the landed lenses.
+    Fixed Home and external entries bracket the auto-discovered list.
     """
     _tag_space.cache_clear()
     docs_dir = Path(config["docs_dir"])
     collection_entries = []
+    grouped = False
     for child in sorted(
         docs_dir.iterdir(), key=lambda path: (path.name != "tags", path.name)
     ):
         if not child.is_dir() or child.name.startswith("."):
             continue
-        if child.name in UNPUBLISHED_COLLECTIONS:
+        if child.name in UNPUBLISHED_COLLECTIONS | HIDDEN_FROM_NAV:
             continue
         readme = child / "README.md"
         if not readme.exists():
+            continue
+        if child.name in AGENTIC_SYSTEMS_GROUP:
+            if not grouped:
+                collection_entries.append(_agentic_systems_entry(docs_dir))
+                grouped = True
             continue
         label = child.name.replace("-", " ").title()
         collection_entries.append({label: str(readme.relative_to(docs_dir))})
@@ -64,6 +86,47 @@ def on_config(config):
         {"GitHub": "https://github.com/zby/commonplace"},
     ]
     return config
+
+
+def _agentic_systems_entry(docs_dir: Path) -> dict:
+    entries = []
+    if (docs_dir / "agentic-system-analyses" / "README.md").exists():
+        entries.append({"Analyses": "agentic-system-analyses/current-analyses.md"})
+    for lens, label in LENSES.items():
+        if (docs_dir / LENS_ROOT / lens / "README.md").exists():
+            entries.append({label: (LENS_ROOT / lens / "README.md").as_posix()})
+    if (docs_dir / "agentic-systems" / "README.md").exists():
+        entries.append({"Authored accounts": "agentic-systems/README.md"})
+    return {"Agentic Systems": entries}
+
+
+def _cell(value) -> str:
+    return str(value).replace("|", "\\|").replace("\n", " ")
+
+
+def _lens_listing(lens: str, analyses, lens_dir: Path) -> str:
+    companions = LENS_COMPANIONS.get(lens, {})
+    header = ["System", f"{LENSES[lens]} account", *companions.values()]
+    lines = [f"# {LENSES[lens]}: current analyses", "",
+             "| " + " | ".join(header) + " |", "|" + "---|" * len(header)]
+    for analysis in analyses:
+        member = analysis.roles[lens]
+        href = os.path.relpath(member.path, lens_dir)
+        cells = [_cell(analysis.overview.frontmatter["system"]),
+                 f"[{_cell(member.frontmatter.get('description', lens))}]({href})"]
+        cells += [f"[{label.lower()}]({os.path.relpath(analysis.roles[role].path, lens_dir)})"
+                  for role, label in companions.items()]
+        lines.append("| " + " | ".join(cells) + " |")
+    if not analyses:
+        lines += ["", "No current analyses. Regeneration is separately commissioned."]
+    return "\n".join(lines) + "\n"
+
+
+def _replace_generated(files, config, src_uri: str, content: str) -> None:
+    for existing in list(files):
+        if existing.src_uri == src_uri:
+            files.remove(existing)
+    files.append(File.generated(config, src_uri, content=content, inclusion=InclusionLevel.INCLUDED))
 
 
 def on_files(files, config):
@@ -109,23 +172,23 @@ def on_files(files, config):
     collection = docs_dir / "agentic-system-analyses"
     if collection.is_dir():
         from commonplace.lib.agentic_analysis.analyses import current_analyses
+        analyses = current_analyses(root)
         lines = ["# Current agentic-system analyses", "",
                  "| System | Description | Boundary | Run | Date | Evidence |", "|---|---|---|---|---|---|"]
-        for analysis in current_analyses(root):
+        for analysis in analyses:
             data = analysis.overview.frontmatter
             href = analysis.overview.path.relative_to(collection).as_posix()
-            escape = lambda value: str(value).replace("|", "\\|").replace("\n", " ")
-            values = [f"[{escape(data['system'])}]({href})", *[escape(data[key]) for key in
+            values = [f"[{_cell(data['system'])}]({href})", *[_cell(data[key]) for key in
                       ("description", "reviewed-boundary", "run-id", "run-date", "evidence-tier")]]
             lines.append("| " + " | ".join(values) + " |")
         if len(lines) == 4:
             lines += ["", "No current analyses. Regeneration is separately commissioned."]
-        current_page = "agentic-system-analyses/current-analyses.md"
-        for existing in list(files):
-            if existing.src_uri == current_page:
-                files.remove(existing)
-        files.append(File.generated(config, current_page,
-                                    content="\n".join(lines) + "\n", inclusion=InclusionLevel.INCLUDED))
+        _replace_generated(files, config, "agentic-system-analyses/current-analyses.md", "\n".join(lines) + "\n")
+        for lens in LENSES:
+            lens_dir = docs_dir / LENS_ROOT / lens
+            if (lens_dir / "README.md").exists():
+                _replace_generated(files, config, (LENS_ROOT / lens / "systems.md").as_posix(),
+                                   _lens_listing(lens, analyses, lens_dir.resolve()))
     return files
 
 
@@ -202,6 +265,8 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
         path = Path(page.file.abs_src_path)
         if path.name == "README.md" and path.parent.name == "agentic-system-analyses":
             markdown += "\n\n[Current analyses](./current-analyses.md) *(generated at build time)*\n"
+        if path.name == "README.md" and path.parent.name in LENSES and path.parent.parent.name == LENS_ROOT.name:
+            markdown += "\n\n[Current analyses](./systems.md) *(generated at build time)*\n"
 
 
     status = meta.get("status")

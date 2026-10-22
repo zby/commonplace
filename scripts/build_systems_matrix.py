@@ -21,7 +21,7 @@ from commonplace.lib.agentic_analysis.effects import atomic_write
 from commonplace.lib.systems_matrix import csv_text, load_results
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SYSTEMS_CSV = REPO_ROOT / "kb/agentic-systems/comparisons/memory-systems.csv"
+SYSTEMS_CSV = REPO_ROOT / "kb/agentic-systems/comparisons/memory/memory-systems.csv"
 
 
 def main(argv: list[str] | None = None) -> int:

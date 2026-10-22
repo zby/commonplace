@@ -20,7 +20,9 @@ is historical. New workflow analyses belong in `kb/agentic-system-analyses/`.
 
 The root holds README.md and COLLECTION.md. `reviews/` holds ordinary authored
 accounts. `comparisons/` holds cross-system
-analyses and generated tables. `instructions/` owns landscape synthesis and
+analyses and generated tables, in one subdirectory per analysis lens
+(`runtime/`, `memory/`, `epistemic/`, `workflow/`). Each lens directory has an
+authored README; the site generates its list of current members at build time. `instructions/` owns landscape synthesis and
 taxonomy maintenance. `reports/` is frozen history from before the analysis
 collection existed; it is excluded from validation and from comparison.
 `types/` owns local types for artifacts that remain here. There are no nested

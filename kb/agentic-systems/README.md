@@ -8,6 +8,9 @@ Memory comparisons now consume the main analysis's retained results; see
 legacy reviews and historical comparison snapshots.
 
 [Workflow analyses](../agentic-system-analyses/README.md) now have their own collection.
+Lens pages list each current analysis's member by lens:
+[runtime](./comparisons/runtime/README.md), [memory](./comparisons/memory/README.md),
+[epistemic](./comparisons/epistemic/README.md) and [workflow](./comparisons/workflow/README.md).
 The current comparison population is empty until regeneration.
 
 ## Method and evidence

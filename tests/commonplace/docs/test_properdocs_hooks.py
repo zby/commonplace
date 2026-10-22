@@ -285,3 +285,44 @@ def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_lib
     assert not (readme.parent / "current-analyses.md").exists()
     page = SimpleNamespace(meta={}, file=SimpleNamespace(abs_src_path=str(readme)))
     assert "current-analyses.md" in properdocs_hooks.on_page_markdown("# Analyses\n", page)
+
+
+def test_on_config_groups_agentic_systems_and_hides_agent_memory_systems(tmp_path: Path) -> None:
+    docs_dir = tmp_path / "kb"
+    for collection in ("agent-memory-systems", "agentic-system-analyses", "agentic-systems", "notes"):
+        write(docs_dir / collection / "README.md", f"# {collection}\n")
+    write(docs_dir / "agentic-systems/comparisons/memory/README.md", "# Memory lens\n")
+
+    nav = properdocs_hooks.on_config({"docs_dir": str(docs_dir)})["nav"]
+
+    assert {"Agentic Systems": [
+        {"Analyses": "agentic-system-analyses/current-analyses.md"},
+        {"Memory": "agentic-systems/comparisons/memory/README.md"},
+        {"Authored accounts": "agentic-systems/README.md"},
+    ]} in nav
+    labels = [next(iter(entry)) for entry in nav]
+    assert "Agent Memory Systems" not in labels
+    assert "Agentic System Analyses" not in labels
+    assert labels.index("Agentic Systems") < labels.index("Notes")
+
+
+def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> None:
+    retained_fixture(tmp_path)
+    docs_dir = tmp_path / "kb"
+    write(docs_dir / "agentic-system-analyses/README.md", "# Analyses\n")
+    readme = write(docs_dir / "agentic-systems/comparisons/memory/README.md", "# Memory lens\n")
+    class Config(dict):
+        site_dir = str(tmp_path / "site")
+        use_directory_urls = False
+        plugins = SimpleNamespace(_current_plugin="test")
+    config = Config(docs_dir=str(docs_dir))
+    files = Files([])
+    properdocs_hooks.on_files(files, config)
+
+    listing = files.get_file_from_path("agentic-systems/comparisons/memory/systems.md").content_string
+    member = "../../../agentic-system-analyses/retained/example-system/"
+    assert f"]({member}memory.md)" in listing
+    assert f"[profile]({member}memory-profile.md)" in listing
+    assert files.get_file_from_path("agentic-systems/comparisons/runtime/systems.md") is None
+    page = SimpleNamespace(meta={}, file=SimpleNamespace(abs_src_path=str(readme)))
+    assert "[Current analyses](./systems.md)" in properdocs_hooks.on_page_markdown("# Memory lens\n", page)

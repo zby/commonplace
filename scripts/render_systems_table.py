@@ -11,7 +11,7 @@ from commonplace.lib.agentic_analysis.effects import atomic_write
 from commonplace.lib.systems_matrix import load_results
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-OUT = REPO_ROOT / "kb/agentic-systems/comparisons/memory-systems-table.md"
+OUT = REPO_ROOT / "kb/agentic-systems/comparisons/memory/memory-systems-table.md"
 DISPLAY = {
     "storage_substrate": "Storage",
     "write_agency": "Write agency",

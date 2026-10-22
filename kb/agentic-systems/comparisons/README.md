@@ -28,7 +28,7 @@ uv run python scripts/analyze_matrix.py
 ```
 
 The first two commands write `memory-systems.csv` and `memory-systems-table.md`
-in this directory. All three read the retained sets directly; the renderer and
+in the [memory lens](./memory/README.md) directory. All three read the retained sets directly; the renderer and
 analyzer do not depend on the CSV being present. Repeat `--review <current-overview-path>`
 to select a bounded population. Otherwise every current accepted analysis is
 selected, and missing or invalid evidence blocks the operation. Select only one
