@@ -1,0 +1,34 @@
+Q5 basis set over all axes, all tiers: Counter({'wired': 7958, 'claimed': 1246, 'afforded': 648})
+Q5b union trace_learning (code): Counter({('yes',): 150, (): 26})
+Q5c union trace_learning (doc): Counter({('yes',): 10, (): 5})
+Q5d systems with local strong no: [('EchoWiki', 'not-determinable', '[]'), ('ModularRSI', 'partial', '["yes"]'), ('Phantom', 'partial', '["yes"]'), ('REM', 'partial', '["yes"]'), ('secure-llm-wiki', 'partial', '[]')]
+Q6 strong yes trace learning: 130
+  among these, strong trace_source values: Counter({'session-logs': 85, 'tool-traces': 82, 'event-streams': 35, 'trajectories': 24})
+  among these, no strong trace_source value: 7
+  among these, number of distinct source values: Counter({2: 59, 1: 42, 3: 22, 0: 7})
+  among these, learning authority strong: 122
+  among these, model-weights strong: ['AgentFly', 'SAGE', 'Self-Training-LLM', 'SkillRL']
+  among these, trace-extracted lineage strong: 129
+Q6b learning authority strong but no strong trace yes: 1 Counter({'uninspected': 1})
+Q7 model-weights strong: ['AgentFly', 'JEPA-Anything', 'KBLaM', 'SAGE', 'Self-Training-LLM', 'SkillRL', 'Thalo']
+Q7b parametric strong & model-weights strong: 7
+Q8 manual any basis: 88 strong 46 weak-only 42
+  weak-only manual basis split: Counter({'claimed': 35, 'afforded': 21})
+  automatic strong but no manual at any basis: 88
+  write_agency unit assessments (code): Counter({'known': 657, 'not-determinable': 240, 'uninspected': 113, 'partial': 31})
+Q9 strong push: 139
+  push with strong inferred-* signal: 56
+  push with only coarse/identifier strong signals: 83
+  push with no strong signal: 0
+  any strong inferred-* (all code): 56
+  pull-only strong (no push any basis): 30
+  inapplicable signal systems: [('Agent Workflow Memory', '["pull"]', 'known'), ('Cortex', '["pull"]', 'known'), ('gnosis', '["pull"]', 'known'), ('MemWiki', '["pull"]', 'known'), ('REM', '["pull"]', 'known'), ('smriti-mcp', '["pull"]', 'known'), ('Sparks', '["pull"]', 'known')]
+Q10 synthesize strong: ['Agent-R', 'cass_memory_system', 'deja-vu', 'DocMason', 'eal-bench', 'Engraph', 'Kompl', 'LACP', 'Sparks', 'Swamp', 'VLM-wiki', 'Zikkaron']
+Q10b no strong curation value: 11
+  curation count of strong ops distribution: [(0, 11), (1, 14), (2, 31), (3, 35), (4, 37), (5, 26), (6, 17), (7, 5)]
+Q11 storage files strong but not other: 25 files+in-memory only 56
+  no files strong: ['A-MEM', 'archie', 'Ars Contexta', 'Atomic', 'beever-atlas', 'CocoIndex', 'Company Brain', 'eigenius', 'llm-wiki-coordination', 'Mem0', 'REM', 'Sentry Skills', 'Stash', 'supermemory', 'talorys', 'Zikkaron'] 16
+  any db (sqlite/rdbms/vector/graph/kv) strong: 95
+Q12 boundary kind code: Counter({'whole-system': 148, 'complete artifact, partial loop': 24, 'subsystem-only': 4})
+Q13 doc tier names: ['AgeMem', 'aide2', 'arsumbris', 'claude-code-dynamic-workflows', 'context-constitution', 'From Agent Memory to Portable Skills', 'incremental-self-improvement', 'interview-doc-agent', 'IsaacCLupus_mnemosyn_spec', 'llm-context-base', 'llm-project-wiki', 'Prove2Me_workspace', 'sig-releases', 'trajectory-informed-memory-generation', 'wikiskill']
+Q13b doc tier basis: Counter({'claimed': 495, 'wired': 21, 'afforded': 15})

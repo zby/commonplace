@@ -1,0 +1,101 @@
+Q0 population 191 code 176 doc 15 versions Counter({'2': 191})
+
+== storage_substrate
+ Q1 axis assessment (code): {'partial': 134, 'known': 41, 'not-determinable': 1}
+ Q1 axis assessment (doc): {'partial': 11, 'not-determinable': 1, 'known': 3}
+ Q2 existence (code, strong basis, systems): {'files': 160, 'in-memory': 95, 'sqlite': 60, 'vector': 49, 'repo': 29, 'graph': 26, 'rdbms': 25, 'kv': 12, 'service-object': 12, 'model-weights': 7}
+ Q3 weak-only values (code, claimed/afforded only): {'repo': 10, 'service-object': 4, 'files': 3, 'vector': 2, 'graph': 2, 'in-memory': 1, 'kv': 1}
+ Q3b finding basis counts (code): {'wired': 940, 'afforded': 50, 'claimed': 37}
+ Q4 complete-set eligible (code, known axis, all strong): 26
+   distribution: {('files', 'in-memory'): 4, ('files',): 4, ('files', 'sqlite'): 2, ('files', 'repo'): 2, ('files', 'in-memory', 'model-weights'): 1, ('files', 'graph', 'sqlite'): 1, ('files', 'in-memory', 'repo', 'sqlite'): 1, ('files', 'kv'): 1, ('files', 'rdbms', 'repo', 'vector'): 1, ('files', 'in-memory', 'repo'): 1, ('files', 'model-weights'): 1, ('files', 'repo', 'sqlite'): 1}
+   known but weak finding excluded: 15
+
+== representational_form
+ Q1 axis assessment (code): {'partial': 154, 'known': 22}
+ Q1 axis assessment (doc): {'partial': 13, 'known': 2}
+ Q2 existence (code, strong basis, systems): {'symbolic': 172, 'natural-language': 163, 'parametric': 82}
+ Q3 weak-only values (code, claimed/afforded only): {'natural-language': 11, 'parametric': 3, 'symbolic': 3}
+ Q3b finding basis counts (code): {'wired': 1032, 'claimed': 68, 'afforded': 65}
+ Q4 complete-set eligible (code, known axis, all strong): 15
+   distribution: {('natural-language', 'symbolic'): 7, ('natural-language', 'parametric', 'symbolic'): 7, ('symbolic',): 1}
+   known but weak finding excluded: 7
+
+== lineage
+ Q1 axis assessment (code): {'partial': 175, 'known': 1}
+ Q1 axis assessment (doc): {'partial': 15}
+ Q2 existence (code, strong basis, systems): {'other-compiled': 164, 'imported': 158, 'trace-extracted': 140, 'authored': 105}
+ Q3 weak-only values (code, claimed/afforded only): {'authored': 35, 'trace-extracted': 17, 'imported': 11, 'other-compiled': 6}
+ Q3b finding basis counts (code): {'wired': 983, 'afforded': 63, 'claimed': 130}
+ Q4 complete-set eligible (code, known axis, all strong): 0
+   distribution: {}
+   known but weak finding excluded: 1
+
+== behavioral_authority
+ Q1 axis assessment (code): {'partial': 168, 'known': 7, 'not-determinable': 1}
+ Q1 axis assessment (doc): {'partial': 14, 'known': 1}
+ Q2 existence (code, strong basis, systems): {'routing': 164, 'knowledge': 160, 'enforcement': 149, 'ranking': 138, 'validation': 135, 'learning': 123, 'instruction': 94}
+ Q3 weak-only values (code, claimed/afforded only): {'instruction': 33, 'learning': 24, 'knowledge': 15, 'ranking': 10, 'validation': 7, 'routing': 7, 'enforcement': 3}
+ Q3b finding basis counts (code): {'wired': 1602, 'afforded': 168, 'claimed': 140}
+ Q4 complete-set eligible (code, known axis, all strong): 1
+   distribution: {('enforcement', 'instruction', 'knowledge', 'learning', 'ranking', 'routing', 'validation'): 1}
+   known but weak finding excluded: 6
+
+== write_agency
+ Q1 axis assessment (code): {'partial': 174, 'known': 2}
+ Q1 axis assessment (doc): {'partial': 15}
+ Q2 existence (code, strong basis, systems): {'automatic': 173, 'manual': 46}
+ Q3 weak-only values (code, claimed/afforded only): {'manual': 42, 'automatic': 3}
+ Q3b finding basis counts (code): {'wired': 565, 'claimed': 81, 'afforded': 62}
+ Q4 complete-set eligible (code, known axis, all strong): 2
+   distribution: {('automatic', 'manual'): 2}
+   known but weak finding excluded: 0
+
+== curation_operations
+ Q1 axis assessment (code): {'partial': 174, 'known': 2}
+ Q1 axis assessment (doc): {'partial': 14, 'not-determinable': 1}
+ Q2 existence (code, strong basis, systems): {'evolve': 148, 'consolidate': 126, 'decay': 111, 'invalidate': 89, 'dedup': 64, 'promote': 46, 'synthesize': 12}
+ Q3 weak-only values (code, claimed/afforded only): {'consolidate': 29, 'evolve': 22, 'invalidate': 17, 'dedup': 17, 'promote': 8, 'synthesize': 8, 'decay': 7}
+ Q3b finding basis counts (code): {'wired': 820, 'claimed': 160, 'afforded': 67}
+ Q4 complete-set eligible (code, known axis, all strong): 1
+   distribution: {('evolve',): 1}
+   known but weak finding excluded: 1
+
+== read_back_direction
+ Q1 axis assessment (code): {'partial': 158, 'known': 18}
+ Q1 axis assessment (doc): {'partial': 15}
+ Q2 existence (code, strong basis, systems): {'pull': 169, 'push': 139}
+ Q3 weak-only values (code, claimed/afforded only): {'pull': 7, 'push': 5}
+ Q3b finding basis counts (code): {'wired': 658, 'afforded': 98, 'claimed': 41}
+ Q4 complete-set eligible (code, known axis, all strong): 7
+   distribution: {('pull',): 4, ('pull', 'push'): 3}
+   known but weak finding excluded: 11
+
+== read_back_signal
+ Q1 axis assessment (code): {'partial': 133, 'inapplicable': 7, 'not-determinable': 16, 'known': 10, 'uninspected': 10}
+ Q1 axis assessment (doc): {'partial': 9, 'not-determinable': 4, 'uninspected': 2}
+ Q2 existence (code, strong basis, systems): {'coarse': 133, 'identifier': 106, 'inferred-lexical': 32, 'inferred-embedding': 30, 'inferred-judgment': 21}
+ Q3 weak-only values (code, claimed/afforded only): {'coarse': 4, 'identifier': 3, 'inferred-judgment': 1}
+ Q3b finding basis counts (code): {'wired': 663, 'claimed': 13, 'afforded': 11}
+ Q4 complete-set eligible (code, known axis, all strong): 9
+   distribution: {('coarse', 'identifier'): 5, ('coarse',): 2, ('coarse', 'identifier', 'inferred-lexical'): 1, ('coarse', 'identifier', 'inferred-embedding', 'inferred-lexical'): 1}
+   known but weak finding excluded: 1
+
+== trace_learning
+ Q1 axis assessment (code): {'not-determinable': 24, 'partial': 151, 'uninspected': 1}
+ Q1 axis assessment (doc): {'partial': 10, 'not-determinable': 5}
+ Q2 existence (code, strong basis, systems): {'yes': 130, 'no': 5}
+ Q3 weak-only values (code, claimed/afforded only): {'yes': 20}
+ Q3b finding basis counts (code): {'wired': 300, 'claimed': 40, 'afforded': 22}
+ Q4 complete-set eligible (code, known axis, all strong): 0
+   distribution: {}
+   known but weak finding excluded: 0
+
+== trace_source
+ Q1 axis assessment (code): {'not-determinable': 35, 'partial': 140, 'uninspected': 1}
+ Q1 axis assessment (doc): {'partial': 9, 'not-determinable': 6}
+ Q2 existence (code, strong basis, systems): {'session-logs': 85, 'tool-traces': 82, 'event-streams': 35, 'trajectories': 24}
+ Q3 weak-only values (code, claimed/afforded only): {'session-logs': 17, 'tool-traces': 12, 'trajectories': 3, 'event-streams': 2}
+ Q3b finding basis counts (code): {'wired': 374, 'claimed': 41, 'afforded': 27}
+ Q4 complete-set eligible (code, known axis, all strong): 0
+   distribution: {}
+   known but weak finding excluded: 0

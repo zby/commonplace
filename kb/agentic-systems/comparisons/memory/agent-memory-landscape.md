@@ -139,7 +139,7 @@ AgeMem ([profile](../../../agentic-system-analyses/retained/2601-01885v1/memory-
 
 ## Query ledger
 
-The query scripts and their output lived in a temporary working directory. Each query decodes `<axis>_units` as JSON. `strong` means basis ∈ {`wired`, `observed`, `causally supported`}. Denominator: the 176 code-grounded rows unless stated otherwise.
+The query scripts and their output are in the repository at `scripts/memory_landscape_queries/`. Each query decodes `<axis>_units` as JSON. `strong` means basis ∈ {`wired`, `observed`, `causally supported`}. Denominator: the 176 code-grounded rows unless stated otherwise.
 
 | Query | Test | Result |
 |---|---|---|

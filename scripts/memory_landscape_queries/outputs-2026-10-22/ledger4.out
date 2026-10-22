@@ -1,0 +1,6 @@
+Q15 storage_substrate eligible 26 value membership {'files': 23, 'in-memory': 11, 'model-weights': 2, 'graph': 2, 'sqlite': 8, 'repo': 6, 'kv': 1, 'rdbms': 2, 'vector': 5, 'service-object': 2} names 
+Q15 representational_form eligible 15 value membership {'natural-language': 14, 'symbolic': 15, 'parametric': 7} names 
+Q15 read_back_direction eligible 7 value membership {'pull': 7, 'push': 3} names ['Cortex', 'REM', 'Voyager', 'gnosis', 'pi-posthorse', 'smriti-mcp', 'talorys']
+Q15 read_back_signal eligible 9 value membership {'coarse': 9, 'identifier': 7, 'inferred-lexical': 2, 'inferred-embedding': 1} names ['LLM-Wiki-v3', 'Voyager', 'ai-memex-cli', 'claude-workstream-kit', 'llm-wiki', 'o-o', 'pi-posthorse', 'pi-self-learning', 'talorys']
+Q16 known-axis counts all tiers: {'storage_substrate': 44, 'representational_form': 24, 'lineage': 1, 'behavioral_authority': 8, 'write_agency': 2, 'curation_operations': 2, 'read_back_direction': 18, 'read_back_signal': 10, 'trace_learning': 0, 'trace_source': 0}
+Q17 runs: 191 cutoff dist [('2026-10-11', 1), ('2026-10-12', 16), ('2026-10-13', 10), ('2026-10-14', 74), ('2026-10-15', 65), ('2026-10-16', 9), ('2026-10-17', 7), ('2026-10-18', 6), ('2026-10-19', 3)]

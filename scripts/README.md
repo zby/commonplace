@@ -104,6 +104,11 @@ publication, runner success, or semantic correctness. In-flight attempts that
 never produced reports cannot be detected. Exit status is 2 for root scan
 errors, otherwise 0 even when report findings exist. See `--help` for options.
 
+## Memory landscape queries
+
+`scripts/memory_landscape_queries/` holds the query ledger behind the
+2026-10-22 agent-memory landscape synthesis; see its README.
+
 ## Tool failure scanning
 
 `python3 scripts/scan_tool_failures.py --format pi-json /path/to/stdout.log`
