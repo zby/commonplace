@@ -25,6 +25,14 @@ def test_missing_target_requires_an_answer_before_preparation():
     assert "local checkout" in text and "snapshot, bundle or documents" in text
 
 
+def test_profile_defaults_to_pi_sol_but_resumes_keep_their_profile():
+    text = intake()
+    assert "Use **`pi-sol`** (`gpt-6.1-sol`, medium effort)" in text
+    assert "An explicit profile overrides the default." in text
+    assert "A resumed run always keeps its\nrecorded profile" in text
+    assert "ask which profile" not in text
+
+
 def test_preparation_label_correction_is_not_general_setup_recovery():
     text = " ".join(SKILL.read_text().split("## Isolated run setup\n", 1)[1].split("## 1. Run the analysis", 1)[0].split())
     assert "only lowercase letters, digits and hyphens" in text

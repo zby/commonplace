@@ -40,20 +40,23 @@ This is a plausibility check, not proof that cloning will succeed. Do not run
 `git ls-remote`, clone, fetch or test credentials during intake. Acquisition
 handles unavailable repositories, permissions and clone failures later.
 
-The run also needs a worker profile from
+The run uses a worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, the model it
 launches and the effort. Every worker of the run uses it, verification
 included, and it is fixed for the run; another profile means another run.
 The advisory meta-analyser also uses that model and effort, but only on Pi,
 with ambient instructions, skills and extensions disabled.
-The caller names it in the request, for example:
+Use **`pi-sol`** (`gpt-6.1-sol`, medium effort) when the caller does not name a
+profile. The command defaults to it for new runs. The caller can override it,
+for example:
 
 ```text
 /analyse-agentic-system https://github.com/suzgunmirac/dynamic-cheatsheet
 Use worker profile pi-ultramarine.
 ```
 
-Without one, ask which profile to use. Do not pick one.
+An explicit profile overrides the default. A resumed run always keeps its
+recorded profile; changing the default does not change existing runs.
 
 ## Isolated run setup
 

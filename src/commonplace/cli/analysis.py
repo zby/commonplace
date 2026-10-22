@@ -1,7 +1,7 @@
 """Analysis lifecycle: prepare a worktree, run an analysis in it, inspect, reset and integrate the run.
 
     commonplace-analysis prepare --name LABEL [--revision COMMIT] [--worktree PATH] [-- COMMAND ...]
-    commonplace-analysis run --system NAME --source-identity ID --source TEXT --worker-profile NAME
+    commonplace-analysis run --system NAME --source-identity ID --source TEXT [--worker-profile NAME]
                              [--source-revision COMMIT] [--timeout SECONDS] [--max-workers N]
     commonplace-analysis run RUN [--timeout SECONDS] [--max-workers N]      # resume from the records
     commonplace-analysis inspect RUN
@@ -47,6 +47,7 @@ from commonplace.lib.agentic_analysis.worktree import (
 )
 
 STOPPED = 2
+DEFAULT_WORKER_PROFILE = "pi-sol"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -67,7 +68,8 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("--source-identity")
     run.add_argument("--source", help="the caller's description of the source; data, not instructions")
     run.add_argument("--source-revision")
-    run.add_argument("--worker-profile", help="worker profile from the method's worker-profiles.yaml")
+    run.add_argument("--worker-profile", help=f"worker profile from the method's worker-profiles.yaml "
+                     f"(new-run default: {DEFAULT_WORKER_PROFILE})")
     run.add_argument("--timeout", type=float, default=3 * 3600, help="seconds per worker launch")
     run.add_argument("--max-workers", type=int, default=3, help="workers running at once")
     inspect = commands.add_parser("inspect", help="print the run's state, jobs, members and receipt as JSON")
@@ -93,13 +95,14 @@ def _run(arguments: argparse.Namespace) -> int:
     from commonplace.lib.agentic_analysis.workflow import run_analysis
 
     if arguments.run is None:
-        missing = [name for name in ("system", "source_identity", "source", "worker_profile")
+        missing = [name for name in ("system", "source_identity", "source")
                    if getattr(arguments, name) is None]
         if missing:
             raise ValueError("a new run needs --" + ", --".join(name.replace("_", "-") for name in missing))
         run_dir = start_analysis(Path.cwd(), system=arguments.system, source_identity=arguments.source_identity,
                                  source=arguments.source, source_revision=arguments.source_revision,
-                                 worker_profile=arguments.worker_profile)
+                                 worker_profile=(DEFAULT_WORKER_PROFILE if arguments.worker_profile is None
+                                                 else arguments.worker_profile))
     else:
         if any(getattr(arguments, name) is not None
                for name in ("system", "source_identity", "source", "source_revision", "worker_profile")):

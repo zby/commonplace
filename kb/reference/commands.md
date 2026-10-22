@@ -167,12 +167,14 @@ commands require the prepared checkout and its local executing code. See
 [isolated run setup](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#isolated-run-setup).
 
 `run --system <name> --source-identity <identity> --source <input>
---worker-profile <profile>` allocates a token-bearing run ID under
+[--worker-profile <profile>]` allocates a token-bearing run ID under
 `kb/agentic-system-analyses/state/`, prints its path and runs the whole
 workflow there: opening, source acquisition, each role's worker launched as a
 fresh headless session of the profile's harness, the analysis's checks,
 verification and corrections under the plan's attempt budgets, assembly and
-publication. Optional `--source-revision <full-40-hex-commit>` requires a
+publication. New runs default to `pi-sol` (`gpt-6.1-sol`, medium effort);
+`--worker-profile` overrides it. Resumed runs keep their recorded profile.
+Optional `--source-revision <full-40-hex-commit>` requires a
 GitHub identity; `--max-workers` (default 3) bounds concurrent workers and
 `--timeout` (default 10800 s) each launch. `run <run>` resumes an allocated,
 stopped or interrupted run: every worker answer is recorded under its full

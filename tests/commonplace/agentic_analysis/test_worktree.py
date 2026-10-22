@@ -357,13 +357,54 @@ def test_inspect_audit_separates_interrupted_controller_from_publication(tmp_pat
 
 def test_run_cli_requires_start_options_or_a_run_alone(tmp_path: Path, capsys) -> None:
     assert main(["run"]) == 1
-    assert "--system, --source-identity, --source, --worker-profile" in capsys.readouterr().err
+    error = capsys.readouterr().err
+    assert "--system, --source-identity, --source" in error
+    assert "--worker-profile" not in error
     run = tmp_path / "worktree" / aw.STATE_ROOT / "AAS-2026-01-01-example-abcdefabcdef-01"
     run.mkdir(parents=True)
     (run / aw.PARAMETERS).write_text("{}")
     assert main(["run", str(run), "--system", "x"]) == 1
     assert "a resumed run takes its parameters from its records" in capsys.readouterr().err
     assert [path.name for path in run.iterdir()] == [aw.PARAMETERS]
+
+
+@pytest.mark.parametrize("profile,expected", [(None, "pi-sol"), ("pi-luna", "pi-luna"), ("", "")])
+def test_new_run_cli_defaults_profile_without_overriding_explicit_choice(tmp_path, monkeypatch, capsys,
+                                                                       profile, expected):
+    from commonplace.cli import analysis
+    from commonplace.lib.agentic_analysis import workflow
+
+    selected = {}
+
+    def start(root, **parameters):
+        selected.update(parameters)
+        return tmp_path / "run"
+
+    monkeypatch.setattr(analysis, "start_analysis", start)
+    monkeypatch.setattr(workflow, "run_analysis", lambda *args, **kw: b'{"published": true}')
+    arguments = ["run", "--system", "Example", "--source-identity", "https://github.com/example/repo",
+                 "--source", "https://github.com/example/repo"]
+    if profile is not None:
+        arguments += ["--worker-profile", profile]
+    assert main(arguments) == 0
+    assert selected["worker_profile"] == expected
+    capsys.readouterr()
+
+
+def test_resumed_run_ignores_new_run_default_and_refuses_profile_override(tmp_path, monkeypatch, capsys):
+    from commonplace.cli import analysis
+    from commonplace.lib.agentic_analysis import workflow
+
+    run = fake_checkout(tmp_path / "worktree")
+    (run / aw.PARAMETERS).write_text(json.dumps({"worker-profile": "pi-luna"}))
+    monkeypatch.setattr(analysis, "require_run_code", lambda *args, **kw: None)
+    monkeypatch.setattr(analysis, "start_analysis", lambda *args, **kw: pytest.fail("must not allocate a new run"))
+    monkeypatch.setattr(workflow, "run_analysis", lambda *args, **kw: b'{"published": true}')
+    assert main(["run", str(run)]) == 0
+    assert json.loads((run / aw.PARAMETERS).read_text())["worker-profile"] == "pi-luna"
+    capsys.readouterr()
+    assert main(["run", str(run), "--worker-profile", "pi-sol"]) == 1
+    assert "a resumed run takes its parameters from its records" in capsys.readouterr().err
 
 
 def test_analysis_start_refuses_an_unknown_worker_profile(origin: Path, tmp_path: Path, monkeypatch) -> None:
