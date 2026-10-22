@@ -18,4 +18,6 @@ Current tables: [memory-systems-table.md](./memory-systems-table.md) and
 current analyses at commit `5f92f75e5`.
 Cross-system syntheses come from the
 [landscape synthesis](../../instructions/synthesize-agent-memory-landscape/SKILL.md),
-commissioned separately; none is current.
+commissioned separately. Current synthesis:
+[agent-memory landscape](./agent-memory-landscape.md), 2026-10-22, all 191
+current analyses at inputs commit `5f92f75e5`.
