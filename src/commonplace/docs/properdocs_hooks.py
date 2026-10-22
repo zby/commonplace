@@ -15,7 +15,7 @@ from pathlib import Path
 from properdocs.structure.files import File, InclusionLevel
 
 from commonplace.lib import index_directory, index_generated
-from commonplace.lib.project_paths import collection_dirs
+from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER, collection_dirs
 
 # Recursion caps for per-collection dir-index generation. instructions stops
 # at one level because each cp-skill-* subdir is essentially a single SKILL.md
@@ -25,6 +25,12 @@ COLLECTION_MAX_DEPTH = {"instructions": 1}
 # Operational directories can have local landings without appearing in the
 # public navigation or receiving generated directory listings.
 UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
+
+# Report retained/ pages are published, except subtrees carrying the
+# validation-ignore marker: exact captures and trial bundles are data, not
+# pages whose links or types the KB vouches for. properdocs.yml excludes the
+# local state/ and cache/ areas.
+REPORTS = "reports"
 
 # Published collections left out of the main menu; their pages still build.
 HIDDEN_FROM_NAV = frozenset({"agent-memory-systems", "types"})
@@ -137,6 +143,7 @@ def on_files(files, config):
     leftover) is replaced by the generated version.
     """
     _generated_index_dirs.clear()
+    _exclude_marked_reports(files, Path(config["docs_dir"]).resolve())
     docs_dir = Path(config["docs_dir"]).resolve()
     root = docs_dir.parent
     published_paths = {
@@ -146,7 +153,9 @@ def on_files(files, config):
     }
 
     for collection in collection_dirs(root):
-        if collection.name in UNPUBLISHED_COLLECTIONS:
+        # Copied KBs inside report bundles have their own collections; they
+        # get no listings, since generated pages bypass exclude_docs.
+        if collection.resolve().relative_to(docs_dir).parts[0] in UNPUBLISHED_COLLECTIONS:
             continue
         pages = index_directory.collect_index_pages(
             collection,
@@ -189,6 +198,23 @@ def on_files(files, config):
                 _replace_generated(files, config, (LENS_ROOT / lens / "systems.md").as_posix(),
                                    _lens_listing(lens, analyses, lens_dir.resolve()))
     return files
+
+
+def _exclude_marked_reports(files, docs_dir: Path) -> None:
+    reports = docs_dir / REPORTS
+    marked: dict[Path, bool] = {}
+
+    def is_marked(directory: Path) -> bool:
+        if directory not in marked:
+            marked[directory] = (directory / VALIDATION_IGNORE_MARKER).exists() or (
+                directory != reports and is_marked(directory.parent))
+        return marked[directory]
+
+    for file in files:
+        if file.abs_src_path is None or not file.src_uri.startswith(f"{REPORTS}/"):
+            continue
+        if is_marked(Path(file.abs_src_path).resolve().parent):
+            file.inclusion = InclusionLevel.EXCLUDED
 
 
 @cache

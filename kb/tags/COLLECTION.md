@@ -1,5 +1,5 @@
 ---
-participating: [notes, reference, instructions, agent-memory-systems, agentic-systems]
+participating: [notes, reference, instructions, agent-memory-systems, agentic-systems, reports]
 ---
 
 # Tag heads for kb/tags/
@@ -27,13 +27,15 @@ The `participating:` list in this file's frontmatter names the collections
 whose `tags:` lines are membership claims. Every `complete`
 mark, the generated listing on the site, and the head requirement range over
 exactly those collections, through one collector. Tags on artifacts elsewhere
-(`work`, `sources`, `reports`, `types`, and the proposal archive under
-`reference/proposals/archive/`) are not read. Nothing is inferred from the
+(`work`, `sources`, `types`, and the proposal archive under
+`reference/proposals/archive/`) are not read, nor are tags inside a
+validation-ignored subtree, such as `reports/state/`, `reports/cache/` and
+exact captures under `reports/retained/`. Nothing is inferred from the
 directory tree: a collection joins the tag space by being listed here.
 
 Within the participating collections, tags are carried by notes, by the
-system analyses in `agent-memory-systems` and `agentic-systems`, and by
-reference proposals. Instructions, ADRs, and the other reference pages route
+system analyses in `agent-memory-systems` and `agentic-systems`, by
+reference proposals, and by evidence notes in `reports/retained/`. Instructions, ADRs, and the other reference pages route
 through their own indexes and carry no tags; that is a rule, not a gap
 (operator decision, 2026-09-26).
 

@@ -21,15 +21,14 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert not excluded.match_file("sources/README.md")
 
 
-def test_only_retained_analysis_sets_are_published() -> None:
+def test_only_retained_reports_and_analysis_sets_are_published() -> None:
     config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
     excluded = PathSpec().run_validation(config["exclude_docs"])
 
-    assert excluded.match_file("reports/README.md")
-    assert excluded.match_file("reports/COLLECTION.md")
+    assert not excluded.match_file("reports/README.md")
     assert excluded.match_file("reports/cache/connect/example.connect.md")
     assert excluded.match_file("reports/state/reviews/example.md")
-    assert excluded.match_file("reports/retained/example.md")
+    assert not excluded.match_file("reports/retained/example.md")
     run = "example/"
     for member in ("ARTIFACT.yaml", *(role.path for role in analysis_layout().roles.values())):
         assert not excluded.match_file("agentic-system-analyses/retained/" + run + member)

@@ -110,9 +110,9 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `contradicts` | sym | notes | wants to resolve a disagreement |
 | `contrasts` | sym | notes | wants the neighbouring-shape distinction |
 | `defined-in` | asym | notes/definitions, reference/definitions | reader may not know the term |
-| `evidenced-by` | asym | notes, types, reference, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion; corroboration requires a test the claim could have failed (see "Origin is not corroboration") |
+| `evidenced-by` | asym | notes, types, reference, reports/retained, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion; corroboration requires a test the claim could have failed (see "Origin is not corroboration") |
 | `derived-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
-| `abstracted-from` | asym | notes/evidence, reference, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
+| `abstracted-from` | asym | notes/evidence, reference, reports/retained, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
 | `see-also` | asym | reference, agent-memory-systems, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
@@ -136,7 +136,7 @@ Commonplace selection, contract, or implemented classification belong under
 
 ## Evidence placement
 
-Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
+Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. Apply the placement test to the inference: when, after Commonplace's choices are scoped, it concerns only those fixed choices or their measured effects (no free variable), the evidence note belongs in `kb/reports/retained/` beside the raw evidence, keeping the note type; a theory note may still cite it. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
 
 ## Proposal placement
 

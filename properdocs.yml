@@ -5,7 +5,8 @@ docs_dir: kb
 # Explicit filenames also let readers follow links when opening HTML from disk.
 use_directory_urls: false
 exclude_docs: |
-  reports/**
+  reports/state/**
+  reports/cache/**
   agentic-systems/reports/**
   !agentic-systems/reports/retained/AAS-*/ARTIFACT.yaml
   !agentic-systems/reports/retained/AAS-*/overview.md

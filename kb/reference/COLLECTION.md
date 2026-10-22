@@ -94,7 +94,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `defined-in` | notes/definitions, reference/definitions | reader may not know the term |
 | `derived-from` | sources, agent-memory-systems, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
 | `abstracted-from` | sources, agent-memory-systems, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
-| `evidenced-by` | reference, sources, agent-memory-systems, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
+| `evidenced-by` | reference, reports/retained, sources, agent-memory-systems, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
 | `procedure` | instructions | for how to do this, see this instruction |
 | `see-also` | reference, notes, agent-memory-systems, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
 
@@ -111,6 +111,7 @@ not decide placement.
 
 - Transferable claims about KB methodology → `kb/notes/`
 - Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/notes/evidence/`
+- Evidence whose bounded inference concerns only Commonplace's own choices or their measured effects, such as the evidence behind an ADR → `kb/reports/retained/`, as an evidence note beside its raw records
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/reviews/` for whole agentic systems and harnesses
 - Work in progress → `kb/work/` (workshops)

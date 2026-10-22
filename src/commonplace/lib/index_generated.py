@@ -21,7 +21,7 @@ from commonplace.lib.project_paths import (
     is_collection_dir,
     is_proposal_archive,
     is_replaced_archive,
-    iter_visible_markdown_files,
+    iter_validation_markdown_files,
     kb_root,
 )
 
@@ -142,7 +142,9 @@ def _is_member_candidate(path: Path, collection: Path) -> bool:
 def _scan_members(
     collection: Path, load_document: LoadDocument, by_tag: dict[str, list[Entry]]
 ) -> None:
-    for path in sorted(iter_visible_markdown_files(collection)):
+    # Validation-ignored subtrees (exact captures, local report state) carry
+    # no membership claims.
+    for path in sorted(iter_validation_markdown_files(collection)):
         if not _is_member_candidate(path, collection):
             continue
         document = load_document(path)
