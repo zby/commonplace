@@ -1,0 +1,25 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required:
+  - frontmatter
+properties:
+  frontmatter:
+    type: object
+    required:
+      - type
+    properties:
+      type:
+        const: types/collection-contract.md
+      description:
+        type: string
+        minLength: 1
+      participating:
+        type: array
+        items:
+          type: string
+          minLength: 1
+    # A contract is not collection content; it never enters tag membership.
+    not:
+      required:
+        - tags
+    additionalProperties: true

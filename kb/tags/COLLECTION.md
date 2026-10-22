@@ -1,4 +1,5 @@
 ---
+type: types/collection-contract.md
 participating: [notes, reference, instructions, agent-memory-systems, agentic-systems, reports]
 ---
 
