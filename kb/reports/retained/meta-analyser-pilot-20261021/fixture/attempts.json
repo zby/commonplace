@@ -1,0 +1,10 @@
+[
+  {
+    "role": "runtime",
+    "launch_id": "fixture-runtime-1",
+    "prompt": "/home/zby/llm/commonplace/kb/reports/retained/meta-analyser-pilot-20261021/fixture/method/worker.md",
+    "stdout": "/home/zby/llm/commonplace/kb/reports/retained/meta-analyser-pilot-20261021/fixture/worker.jsonl",
+    "status": "delivered",
+    "accepted": true
+  }
+]

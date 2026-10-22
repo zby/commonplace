@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "traces": [
+    {
+      "trace": "/home/zby/llm/commonplace/kb/reports/retained/meta-analyser-pilot-20261021/fixture/worker.jsonl",
+      "format": "pi-json",
+      "session_id": "synthetic-import-worker",
+      "completed_tools": 8,
+      "failures": [
+        {
+          "line": 5,
+          "entry_id": null,
+          "tool_call_id": "c1",
+          "tool_name": "read",
+          "call_line": 4,
+          "arguments": {
+            "path": "/home/zby/llm/commonplace/kb/reports/retained/meta-analyser-pilot-20261021/fixture/source/import_policy.py"
+          },
+          "command": null,
+          "exit_code": null,
+          "signals": [
+            "isError"
+          ],
+          "diagnostic_excerpt": "ENOENT: no such file import_policy.py",
+          "diagnostic_truncated": false,
+          "recovery": "not_assessed"
+        },
+        {
+          "line": 13,
+          "entry_id": null,
+          "tool_call_id": "c5",
+          "tool_name": "bash",
+          "call_line": 12,
+          "arguments": {
+            "command": "commonplace-validate outputs/report.md"
+          },
+          "command": "commonplace-validate outputs/report.md",
+          "exit_code": 1,
+          "signals": [
+            "isError",
+            "nonzero_exit"
+          ],
+          "diagnostic_excerpt": "report cannot retain 'Validation: pending'\n\nCommand exited with code 1",
+          "diagnostic_truncated": false,
+          "recovery": "not_assessed"
+        }
+      ],
+      "scan_issues": []
+    }
+  ]
+}

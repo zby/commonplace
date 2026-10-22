@@ -1,0 +1,118 @@
+[
+  {
+    "name": "openresearch-trace-first",
+    "model": "openai/gpt-6.1-sol",
+    "thinking": "medium",
+    "models": [
+      [
+        "openai",
+        "gpt-6.1-sol"
+      ]
+    ],
+    "prompt_sha256": "1af6a6ee1cead4d49cb5e2e1d4d54874bc598d7eb3bf66268288920c7683c947",
+    "returncode": 0,
+    "timed_out": false,
+    "elapsed_seconds": 212.39,
+    "tool_calls": 15,
+    "usage": {
+      "input": 89562,
+      "output": 5677,
+      "cacheRead": 791424,
+      "cacheWrite": 0
+    },
+    "settled": {
+      "type": "agent_settled",
+      "aborted": false
+    },
+    "report_sha256": "92feee7767c0ab995e837550358f319f9b9b990a03a7b4d8bcf5d31f7f7b95a0",
+    "report_words": 1442,
+    "tool_errors": 0
+  },
+  {
+    "name": "openresearch-claim-first",
+    "model": "openai/gpt-6.1-sol",
+    "thinking": "medium",
+    "models": [
+      [
+        "openai",
+        "gpt-6.1-sol"
+      ]
+    ],
+    "prompt_sha256": "3778b8d64cbd7b0411a71c877593bf2956626413d83372ceab0eeee762c06524",
+    "returncode": 0,
+    "timed_out": false,
+    "elapsed_seconds": 263.32,
+    "tool_calls": 27,
+    "usage": {
+      "input": 104343,
+      "output": 6223,
+      "cacheRead": 1805440,
+      "cacheWrite": 0
+    },
+    "settled": {
+      "type": "agent_settled",
+      "aborted": false
+    },
+    "report_sha256": "f26efff6a3e380f76f01d29b15d57d155f4b2f7a3b2de6acffe81447b0d1141a",
+    "report_words": 1430,
+    "tool_errors": 0
+  },
+  {
+    "name": "import-case-trace-first",
+    "model": "openai/gpt-6.1-sol",
+    "thinking": "medium",
+    "models": [
+      [
+        "openai",
+        "gpt-6.1-sol"
+      ]
+    ],
+    "prompt_sha256": "54898d89f39f421a6230eef22d82eae18ea0c075434bbca44294b30ceaa50374",
+    "returncode": 0,
+    "timed_out": false,
+    "elapsed_seconds": 74.95,
+    "tool_calls": 10,
+    "usage": {
+      "input": 11362,
+      "output": 1979,
+      "cacheRead": 11776,
+      "cacheWrite": 0
+    },
+    "settled": {
+      "type": "agent_settled",
+      "aborted": false
+    },
+    "report_sha256": "4347aec700a7df69808ac20d268ee293cbb96ead4e7f27516280f8c088eda427",
+    "report_words": 827,
+    "tool_errors": 0
+  },
+  {
+    "name": "import-case-claim-first",
+    "model": "openai/gpt-6.1-sol",
+    "thinking": "medium",
+    "models": [
+      [
+        "openai",
+        "gpt-6.1-sol"
+      ]
+    ],
+    "prompt_sha256": "38514cea8c98e0e3f907a5d07452fc8d0d8f307fc8fcdb2ef2f2db0762e03f9a",
+    "returncode": 0,
+    "timed_out": false,
+    "elapsed_seconds": 77.82,
+    "tool_calls": 10,
+    "usage": {
+      "input": 6378,
+      "output": 2270,
+      "cacheRead": 13696,
+      "cacheWrite": 0
+    },
+    "settled": {
+      "type": "agent_settled",
+      "aborted": false
+    },
+    "report_sha256": "3c12659525818a6f3109b693c380aa79c7b547f4b4bfea687b777ef0949a835f",
+    "report_words": 921,
+    "tool_errors": 0
+  }
+]

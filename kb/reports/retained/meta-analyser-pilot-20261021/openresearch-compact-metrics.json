@@ -1,0 +1,35 @@
+{
+  "name": "openresearch-compact",
+  "model": "openai/gpt-6.1-sol",
+  "thinking": "medium",
+  "models": [
+    [
+      "openai",
+      "gpt-6.1-sol"
+    ]
+  ],
+  "prompt_sha256": "255f5adc6512dedfd7dc1a39809c69abd5866cd031937ab5a267d8f5461dd90a",
+  "returncode": 0,
+  "timed_out": false,
+  "elapsed_seconds": 199.18,
+  "tool_calls": 23,
+  "usage": {
+    "input": 76110,
+    "output": 4458,
+    "cacheRead": 1128960,
+    "cacheWrite": 0
+  },
+  "settled": {
+    "type": "agent_settled",
+    "aborted": false
+  },
+  "report_sha256": "ce4796277f187b6d9c54c04151770f6e19c09966d9a0f3f1b3955d16bb93e5d8",
+  "report_words": 773,
+  "tool_errors": 0,
+  "integrity_checks": {
+    "original_trace_hashes_unchanged": true,
+    "manifest_unchanged": true,
+    "receipt_unchanged": true,
+    "publication_and_artifact_hashes_match": true
+  }
+}
