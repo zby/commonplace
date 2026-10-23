@@ -50,6 +50,10 @@ different filename, when an alternate file redundantly duplicates an already
 valid pair, and when no ingest matches either the URL or checksum. A tracked
 ingest whose ignored snapshot is simply absent does not warn.
 
+Frontmatter-free Markdown is for deliberate unstructured source work only.
+Captures under `.snapshots/` use the global `types/snapshot.md` contract even
+though they are not collection content.
+
 ## Quotes in ingest reports
 
 Every ingest report has exactly one `## Quotes` section immediately before
@@ -107,13 +111,3 @@ context phrase that states why the reader should follow the link.
 
 The destination collection's contract decides whether it may author a
 reciprocal link.
-
-## Type eligibility
-
-A typed artifact in this collection may use a local type spec under
-`kb/sources/types/`, named by its path under the KB root such as
-`sources/types/<name>.md`, or a global Commonplace type, named by its path under
-the library root such as `types/ingest-report.md`. Frontmatter-free Markdown is
-implicit `text` only for deliberate unstructured source work. Captures under
-`.snapshots/` use the global `types/snapshot.md` contract even though they are
-not collection content.

@@ -74,10 +74,6 @@ external article reader.
 
 In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
 
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: articles/types/article.md`. Frontmatter-free Markdown is implicit `text`.
-
 ## What does NOT belong here
 
 - Transferable claims and theory → `kb/notes/`

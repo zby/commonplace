@@ -58,6 +58,11 @@ still need task-specific disjoint ownership or an explicit coordination rule.
 
 The Active Workshops list in [`kb/work/README.md`](./README.md) is the curated operational navigation surface — add a one-line entry when starting, remove it when the workshop closes. If the README already has unrelated uncommitted edits, do not partially stage it just to keep navigation immediately complete; commit the workshop artifacts atomically and update the README in a later navigation cleanup.
 
+A workshop artifact may declare any valid type in the project, including
+another collection's local type, so a draft can be validated against the
+contract of the collection it is headed for. Only `kb/work/` allows this; the
+type still belongs to its own collection.
+
 ## Title conventions
 
 No constraint. Title fits whatever the workshop produces — claim, topic, plan, question.
@@ -87,10 +92,6 @@ Library collections do not link **into** `kb/work/` — workshops are sinks, not
 When the workshop's question is answered, extract the durable conclusions into the right library collection (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/reference/adr/`), delete the workshop directory, and remove its entry from `kb/work/README.md`. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md` for the rationale.
 
 **No redirect, deliberately.** Workshops are published — `kb/work/` is not in `properdocs.yml`'s `exclude_docs`, because a live workshop is worth showing to someone for consultation. But closure does not add a `redirect_maps` entry the way [retiring a library artifact](../instructions/retire-artifact.md) does. The layer is temporary by design: a workshop URL was never a durable address, and a closed workshop often has several successors or none, so there is frequently no honest target to point at. Dead workshop URLs are an accepted cost, not an oversight — 84 closed workshops have left one redirect between them. Do not "fix" this by back-filling redirects.
-
-## Type eligibility
-
-An artifact anywhere under `kb/work/` may reference any valid type spec under `kb/`. This lifecycle exception lets a workshop stage an artifact for any target collection and test the real target contract; it does not relocate ownership of that type. Frontmatter-free Markdown remains implicit `text`.
 
 ## What does NOT belong here
 

@@ -64,7 +64,3 @@ report state. Connection discovery does not search the open web; `external`
 authorizes links to already identified targets.
 
 A useful note need not have connections to existing notes.
-
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: notes/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.

@@ -67,11 +67,3 @@ Revisit an artifact when attribution no longer matches what a party asserts
 or when a newly sourced position changes the map of disagreement. A change in
 the maintainer's own view, or a judgment that one side lost, does not by
 itself make the artifact stale.
-
-## Type eligibility
-
-<!--
-Declare the destination collection's eligible global and local type specs.
-The worked case used a plain note type; attribution and citation remained
-collection-contract clauses rather than frontmatter fields.
--->

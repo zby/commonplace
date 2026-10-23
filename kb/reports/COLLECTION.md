@@ -110,15 +110,7 @@ file being present. Summarize the needed evidence in the tracked artifact or
 promote the exact report to `retained/` first. Tracked artifacts may cite a
 `retained/` report when the exact record is useful to their reader.
 
-## Type eligibility and validation
-
-A typed report may use a global type, named by its path under the library root
-(the report types Commonplace procedures produce, such as
-`types/connect-report.md` and `types/full-pass-report.md`, are global), or a
-collection-local type under `kb/reports/types/`, named by its path under the KB
-root such as `reports/types/<name>.md`. The retention policy and output
-boundaries are why `kb/reports/` is a collection rather than an uncontracted
-support directory.
+## Validation markers
 
 The tracked `.commonplace-validation-ignore` markers at `cache/` and `state/`
 exclude their data-bearing subtrees from collection-scoped validation. The

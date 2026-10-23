@@ -65,10 +65,6 @@ Organised per destination: when to prospect for links, and the authorised labels
 
 `compares-with` (a difference in *systems* on a design axis) is distinct from theoretical `contrasts` (a difference in *claims*); use `compares-with` here.
 
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: agent-memory-systems/types/agent-memory-system-review.md`. Frontmatter-free Markdown is implicit `text`.
-
 ## What does NOT belong here
 
 - Transferable claims about KB methodology → `kb/notes/`

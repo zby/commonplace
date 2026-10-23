@@ -69,7 +69,3 @@ Use relative Markdown links for local targets. Link only to existing artifacts.
 Do not link to temporary work, ignored snapshots, report caches, or local
 report state. Connection discovery does not search the open web; `external`
 authorizes links to already identified targets.
-
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: instructions/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.

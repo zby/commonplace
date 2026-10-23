@@ -71,10 +71,9 @@ purpose and the project's goals; do not add requirements nobody asked for.
    collections and the reader need it serves. Use labels already declared in
    the project's other contracts where they fit.
 
-Add a "Type eligibility" section: artifacts may use a global type
-(`type: types/note.md`) or a local type under `kb/<name>/types/`, named
-`type: <name>/types/<type>.md`. Create `types/` only when a local type is
-needed now.
+Do not restate which types the collection may use; validation enforces that
+for every collection. Create `kb/<name>/types/` only when a local type is
+needed now; its artifacts then name it `type: <name>/types/<type>.md`.
 
 ## 3. Write the landing
 

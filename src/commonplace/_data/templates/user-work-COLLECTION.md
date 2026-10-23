@@ -38,6 +38,11 @@ List each active workshop with a one-line entry in
 [`kb/work/README.md`](./README.md). Add the entry when the workshop starts and
 remove it when the workshop closes.
 
+A workshop artifact may declare any valid type in the project, including
+another collection's local type, so a draft can be validated against the
+contract of the collection it is headed for. Only `kb/work/` allows this; the
+type still belongs to its own collection.
+
 ## Titles and descriptions
 
 No constraint. A title fits whatever the workshop produces: a claim, topic,
@@ -59,12 +64,3 @@ something they should cite, extract it into that collection first.
 When the workshop's question is answered, move its durable conclusions into
 the right collection, delete the workshop directory, and remove its entry from
 `kb/work/README.md`.
-
-## Type eligibility
-
-An artifact under `kb/work/` may use any valid type spec in the project, named
-by its path under the KB root such as `reference/types/<name>.md`, or a global
-Commonplace type, named by its path under the library root such as
-`types/note.md`. This lets a
-workshop stage an artifact for its target collection and test that
-collection's contract. Frontmatter-free Markdown is implicit `text`.

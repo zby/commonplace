@@ -55,7 +55,7 @@ Type-wide restrictions remain owned by their type specs; collection-local placem
 
 **Teach the write skills a workshop-specific lookup rule.** This would preserve peer-local workshop types without changing validation. Rejected because lookup does not differ: the `type:` value identifies the same spec everywhere. Only eligibility differs, so branching in agent instructions would duplicate a rule the validator can decide from paths.
 
-Free choice left open: whether the derivation rule is stated per collection or stated once and referenced. Stated per collection for now, since `COLLECTION.md` is meant to be readable standalone; a shared statement is worth revisiting if the sentence proves identical across all of them.
+Free choice left open: whether the derivation rule is stated per collection or stated once and referenced. Stated per collection for now, since `COLLECTION.md` is meant to be readable standalone; a shared statement is worth revisiting if the sentence proves identical across all of them. Resolved 2026-10-23: the sentence had become identical in every contract, and neither validation nor the write skills read it, so contracts no longer restate the rule. It is stated once in [collections and types](../collections-and-types.md); a contract keeps only local placement rules, such as where definitions go.
 
 ## Consequences
 

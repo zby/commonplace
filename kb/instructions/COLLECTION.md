@@ -138,10 +138,6 @@ type: types/instruction.md
 - {How to confirm the procedure succeeded}
 ```
 
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: instructions/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.
-
 ## What does NOT belong here
 
 - Transferable claims about KB methodology → `kb/notes/`

@@ -48,6 +48,8 @@ The ingest skill picks the snapshot backend by URL: GitHub API for issues and
 pull requests, the X SDK for posts, Poppler for PDFs, and Trafilatura for
 ordinary web pages.
 
+A raw capture awaiting classification may stay frontmatter-free; once classified, it follows the selected type contract.
+
 ## Local cache validation
 
 `commonplace-validate kb/sources` keeps hidden captures outside ordinary
@@ -129,10 +131,6 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `compares-with` | notes, sources, agent-memory-systems, agentic-systems | compare this source or analysis with a target on a named shared axis |
 | `defined-in` | notes/definitions | reader may not know the term |
 | `see-also` | notes, reference, sources, agent-memory-systems, agentic-systems, external | adjacent companion; use sparingly |
-
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: sources/types/<name>.md`. A raw capture awaiting classification may remain frontmatter-free as implicit `text`; once classified, it follows the selected type contract.
 
 ## What does NOT belong here
 

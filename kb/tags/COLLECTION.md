@@ -22,6 +22,9 @@ tag. A tag not worth a head is not worth assigning. A head is not a note: it
 makes no claim and is judged on whether a reader can tell from it what the tag
 means and where to go next.
 
+Heads are the only artifacts here. `README.md` is the collection's landing
+and carries no type.
+
 ## Participating collections
 
 The `participating:` list in this file's frontmatter names the collections
@@ -83,8 +86,3 @@ carries the audit workflow.
 Link members by relative path (`../notes/<file>.md`) with a context phrase.
 Link other heads under `## Related Tags` with a phrase saying how the tags
 connect. Do not link into `kb/work/`. Heads carry no `tags:` of their own.
-
-## Type eligibility
-
-Heads use the global `types/tag-readme.md`. `README.md` is this collection's
-landing and carries no type. No other artifact belongs here.

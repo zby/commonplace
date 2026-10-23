@@ -20,6 +20,9 @@ Every tag in use has a head. Validation reports a tag on an artifact in a
 participating collection whose head does not exist; write the head or drop
 the tag. A tag not worth a head is not worth assigning.
 
+Heads are the only artifacts here. `README.md` is the collection's landing
+and carries no type.
+
 ## Tag assignment
 
 Before assigning a tag, read its head. Assign it only when the artifact
@@ -53,8 +56,3 @@ true. See the `tag-readme` type spec in the Commonplace library.
 Link members with a relative path (`../notes/<file>.md`) and a context phrase.
 Link other heads under a `## Related Tags` heading. Do not link into
 `kb/work/`.
-
-## Type eligibility
-
-Heads use the global `types/tag-readme.md`. `README.md` is this collection's
-landing and carries no type.

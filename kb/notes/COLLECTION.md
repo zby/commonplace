@@ -130,9 +130,7 @@ Two conventions keep the bound honest:
 - **A source cited as evidence is cited in the body.** A footer-only source citation has no sentence to carry its use, so nothing in the note can be checked against it and nothing can quote it. Either host it in a sentence or drop the entry.
 - **A casebook hosts its retained evidence in prose.** When sources sit in table rows, put the quotes in a short block under the table — one sentence per source, naming the row — rather than in the cells.
 
-## Type eligibility
-
-A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: notes/types/structured-claim.md`. Frontmatter-free Markdown is implicit `text`.
+## Definition placement
 
 Definitions whose intended contribution supplies vocabulary for transferable
 theory belong under `kb/notes/definitions/`. Definitions constituted by a

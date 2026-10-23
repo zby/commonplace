@@ -75,8 +75,3 @@ titles and trigger descriptions. Comparison titles name their question and scope
 - Reference: direct Commonplace analogues; `see-also`.
 - Instructions: directly mapped procedures; `procedure`, `see-also`.
 - Local instructions: composition, conditions and operation targets; `composition`, `precondition`, `invokes`, `applies-when`, `operates-on`, `rests-on`, `see-also`. Do not use review, archive or workshop links as method execution inputs.
-
-## Type eligibility
-
-Use global types under `types/` or local types under
-`agentic-systems/types/`. Frontmatter-free Markdown is text.
