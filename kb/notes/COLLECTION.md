@@ -1,5 +1,6 @@
 ---
 type: types/collection-contract.md
+unquoted-source-limit: 5
 ---
 
 # Writing conventions for kb/notes/
@@ -122,7 +123,7 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 
 ## Source grounding
 
-A note's grounding check must fit one pass, so the note is bounded on the artifact side ([ADR 082](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)): at most five distinct tracked sources (`kb/sources/*.ingest.md`) cited without a verbatim quotation paired to each. `commonplace-validate` fails past five. A source is discharged by quoting it: a quoted span in the same paragraph as its link, marked `verbatim`, whose words occur in that ingest's `## Quotes` section — retain the quote through `cp-skill-ground`, never by editing the ingest. A source linked with `(snapshot required)` anywhere in the note always counts. Links to other notes never count; a linked note has passed its own grounding review, and this note owes it faithful representation, not re-grounding. Over the bound, quote or split by claim; a claim carried jointly by several sources is quoted together, not split.
+A note's grounding check must fit one pass, so the note is bounded on the artifact side ([ADR 082](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)): at most five distinct tracked sources (`kb/sources/*.ingest.md`) cited without a verbatim quotation paired to each. This contract sets the bound in its `unquoted-source-limit` field, so it holds for every artifact here, definitions and proposals included ([ADR 122](../reference/adr/122-collections-set-the-unquoted-source-limit.md)); `commonplace-validate` fails past five. A source is discharged by quoting it: a quoted span in the same paragraph as its link, marked `verbatim`, whose words occur in that ingest's `## Quotes` section — retain the quote through `cp-skill-ground`, never by editing the ingest. A source linked with `(snapshot required)` anywhere in the note always counts. Links to other notes never count; a linked note has passed its own grounding review, and this note owes it faithful representation, not re-grounding. Over the bound, quote or split by claim; a claim carried jointly by several sources is quoted together, not split.
 
 Two conventions keep the bound honest:
 

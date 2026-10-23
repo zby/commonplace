@@ -89,11 +89,12 @@ TAG_README_HARD_BYTES = 16 * 1024
 # is self-routing (ADR 026).
 _TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
 
-# Artifact-side grounding bound: a note may cite at most this many distinct
-# tracked sources without a verified verbatim quotation paired to each, so
-# that its grounding review fits one pass. Note links are exempt;
+# Artifact-side grounding bound (ADR 122): a collection contract that sets
+# this field limits how many distinct tracked sources each of its artifacts
+# may cite without a verified verbatim quotation paired to each, so that the
+# artifact's grounding review fits one pass. Note links are exempt;
 # `(snapshot required)` sources always count.
-MAX_UNQUOTED_SOURCES = 5
+UNQUOTED_SOURCE_LIMIT_FIELD = "unquoted-source-limit"
 _UNQUOTED_SOURCES_FIX_HINT = (
     "quote the supporting passage verbatim via cp-skill-ground, or split the claim"
 )
@@ -288,6 +289,16 @@ class ValidationRun:
         )
         self._notes[key] = result
         return result
+
+    def unquoted_source_limit(self, path: Path) -> int | None:
+        """The `unquoted-source-limit` the path's collection contract sets, if any."""
+        try:
+            collection = collection_for_path(path, self.repo_root)
+        except ValueError:
+            return None
+        result = self.load_frontmatter(collection / "COLLECTION.md")
+        limit = result.data.get(UNQUOTED_SOURCE_LIMIT_FIELD) if result.data else None
+        return limit if isinstance(limit, int) and not isinstance(limit, bool) else None
 
     def tag_space(self) -> TagSpace:
         """Scan the KB's tag space once per run (ADR 089)."""
@@ -1246,21 +1257,24 @@ def validate_article(
         )
 
 
-@type_rule(
-    "types/note.md",
-    "notes/types/structured-claim.md",
-    "articles/types/article.md",
-)
 def validate_unquoted_sources(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """Bound the tracked sources a note cites without a verified verbatim quote.
+    """Bound the tracked sources an artifact cites without a verified verbatim quote.
 
-    Each unquoted tracked source is a full read a grounding reviewer has to
-    perform; past the bound the review no longer fits one pass. A source marked
+    The bound applies only where the artifact's collection contract sets
+    `unquoted-source-limit`; the collection, not the artifact's type, decides
+    that its content is held to a one-pass grounding review. Each unquoted
+    tracked source is a full read a grounding reviewer has to perform; past the
+    bound the review no longer fits one pass. A source marked
     `(snapshot required)` counts even when a quote resolves, because the claim
     it carries needs the snapshot rather than the retained extract.
     """
+    if is_collection_metadata(parsed.path):
+        return
+    limit = run.unquoted_source_limit(parsed.path)
+    if limit is None:
+        return
     repo_root = run.repo_root.resolve()
     targets: dict[Path, bool] = {}
     for text, link in find_markdown_links_with_text(parsed.document.body):
@@ -1295,17 +1309,17 @@ def validate_unquoted_sources(
         key=lambda target: target.name,
     )
 
-    if len(unquoted) > MAX_UNQUOTED_SOURCES:
+    if len(unquoted) > limit:
         names = ", ".join(target.name for target in unquoted)
         results.fails.append(
             f"unquoted sources: {len(unquoted)} distinct tracked sources cited "
-            f"without a verified verbatim quote (limit {MAX_UNQUOTED_SOURCES}); "
+            f"without a verified verbatim quote (limit {limit}); "
             f"{_UNQUOTED_SOURCES_FIX_HINT}: {names}"
         )
     else:
         results.passes.append(
             f"unquoted sources: {len(unquoted)} of {len(targets)} tracked sources "
-            f"need a full read (limit {MAX_UNQUOTED_SOURCES})"
+            f"need a full read (limit {limit})"
         )
 
 
@@ -1581,6 +1595,9 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         validate_write_brief_pairing(base, parsed, run=run)
         validate_collection_contract_name(base, parsed)
         _merge_labelled(results, base, "base")
+        collection_results = CheckResults(note_type="text")
+        validate_unquoted_sources(collection_results, parsed, run=run)
+        _merge_labelled(results, collection_results, "collection")
         return results
 
     results = CheckResults(note_type=parsed.note_type)
@@ -1624,6 +1641,10 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     )
     validate_ingest_quotes(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
+
+    collection_results = CheckResults(note_type=parsed.note_type)
+    validate_unquoted_sources(collection_results, parsed, run=run)
+    _merge_labelled(results, collection_results, "collection")
 
     type_identity = canonical_type_identity(parsed.profile)
     for rule in _TYPE_RULES.get(type_identity, []):

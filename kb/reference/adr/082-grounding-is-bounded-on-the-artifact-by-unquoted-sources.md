@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-08-27
+**Amended by:** [122-Collections set the unquoted-source limit](./122-collections-set-the-unquoted-source-limit.md) — collection contracts, not type paths, select where the bound applies
 
 ## Context
 

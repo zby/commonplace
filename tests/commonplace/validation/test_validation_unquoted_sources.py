@@ -21,10 +21,18 @@ def setup_repo(tmp_path: Path, *, passage: str = QUOTED_PASSAGE) -> None:
         "kb/articles/types/article.md",
         "kb/articles/types/article.schema.yaml",
     )
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
-    write(tmp_path / "kb" / "articles" / "COLLECTION.md", "# Articles collection\n")
+    for collection in ("notes", "articles"):
+        contract(tmp_path, collection, limit=5)
     for slug in SLUGS:
         ingest(tmp_path, slug, passage=passage)
+
+
+def contract(tmp_path: Path, collection: str, *, limit: int | None) -> Path:
+    field = f"unquoted-source-limit: {limit}\n" if limit is not None else ""
+    return write(
+        tmp_path / "kb" / collection / "COLLECTION.md",
+        f"---\ntype: types/collection-contract.md\n{field}---\n\n# {collection} collection\n",
+    )
 
 
 def ingest(tmp_path: Path, slug: str, *, passage: str, summary: str = "Analysis.") -> Path:
@@ -55,9 +63,10 @@ def note(
     *,
     collection: str = "notes",
     type_path: str = "types/note.md",
+    name: str = "test-note.md",
 ) -> Path:
     return write(
-        tmp_path / "kb" / collection / "test-note.md",
+        tmp_path / "kb" / collection / name,
         f"""---
 description: "a note used by the unquoted-sources validation tests"
 type: {type_path}
@@ -173,3 +182,50 @@ def test_quote_matching_only_ingest_analysis_does_not_discharge(tmp_path: Path) 
 
     assert len(fails) == 1
     assert "6 distinct tracked sources" in fails[0]
+
+
+def _six_unquoted() -> str:
+    return "The claim rests on several tracked sources " + ", ".join(_cite(slug) for slug in SLUGS) + "."
+
+
+@pytest.mark.parametrize(
+    "type_path", ["types/definition.md", "types/text.md"],
+)
+def test_the_contract_binds_every_artifact_whatever_its_type(
+    tmp_path: Path, type_path: str
+) -> None:
+    setup_repo(tmp_path)
+    copy_repo_files(tmp_path, "kb/types/definition.md", "kb/types/definition.schema.yaml")
+    if type_path == "types/text.md":
+        path = write(tmp_path / "kb" / "notes" / "plain.md", f"# Plain\n\n{_six_unquoted()}\n")
+    else:
+        path = note(tmp_path, _six_unquoted(), type_path=type_path)
+
+    fails = unquoted_fails(path, tmp_path)
+
+    assert len(fails) == 1
+    assert "6 distinct tracked sources" in fails[0]
+
+
+def test_a_collection_without_the_field_is_not_bound(tmp_path: Path) -> None:
+    setup_repo(tmp_path)
+    contract(tmp_path, "work", limit=None)
+    path = note(tmp_path, _six_unquoted(), collection="work")
+
+    results = validate_note(path, repo_root=tmp_path)
+
+    assert not any(
+        "unquoted sources" in line
+        for line in results.passes + results.warns + results.fails
+    )
+
+
+def test_the_contract_sets_the_limit(tmp_path: Path) -> None:
+    setup_repo(tmp_path)
+    contract(tmp_path, "work", limit=6)
+    path = note(tmp_path, _six_unquoted(), collection="work")
+
+    results = validate_note(path, repo_root=tmp_path)
+
+    assert not [fail for fail in results.fails if "unquoted sources" in fail]
+    assert any("(limit 6)" in line for line in results.passes)

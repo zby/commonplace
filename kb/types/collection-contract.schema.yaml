@@ -18,6 +18,9 @@ properties:
         items:
           type: string
           minLength: 1
+      unquoted-source-limit:
+        type: integer
+        minimum: 0
     # A contract is not collection content; it never enters tag membership.
     not:
       required:

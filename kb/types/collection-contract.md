@@ -50,6 +50,13 @@ belong in that kind's type spec, not here
 - `participating` (optional, tag collection only): the collections whose
   `tags:` lines count as tag membership, named relative to the KB root. The
   tag collection's contract explains it.
+- `unquoted-source-limit` (optional): the most distinct tracked sources an
+  artifact in the collection may cite without a verified verbatim quotation
+  paired to each. Set it where the collection holds its artifacts to a
+  one-pass grounding review; `commonplace-validate` then fails every artifact
+  over it, whatever its type
+  ([ADR 122](../reference/adr/122-collections-set-the-unquoted-source-limit.md)).
+  The contract's prose states the authoring conventions that go with it.
 
 The type does not yet require the three roles' sections by name, because
 existing contracts title them differently.
