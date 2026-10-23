@@ -49,7 +49,7 @@ That's the whole install. Reading needs no Python, no venv, and no skills — th
 ### Check the reader install
 
 ```bash
-rg "^description:" commonplace/kb/notes/ --glob "*.md" | head
+rg "^description:" commonplace/kb/theory/ --glob "*.md" | head
 ```
 
 Then ask your agent a design question in the KB's domain — "should our agent memory get vector retrieval, or navigation structure first?" — and check the answer cites notes from `commonplace/kb/`.
@@ -375,6 +375,14 @@ my-project/
 The project contains its own collections and their collection-local types, the two control-plane files, and init's uncommitted outputs. It contains no library files, no global types, and no skill bodies. Each person who clones the project runs `commonplace-init` once in their clone, because the uncommitted outputs name paths on their machine.
 
 ## Updating
+
+**Theory library layout.** The Commonplace library's former `notes/` collection
+is now `theory/`; the note type is unchanged. Project scaffolds still create
+`kb/notes/`, and existing projects keep their collection names. Before upgrading
+library references or command recipes from the old layout, follow
+[Upgrade the Theory library layout](./kb/instructions/upgrade-the-theory-library-layout.md).
+Init refreshes pointers; it does not rename project collections or repair
+project-authored library references.
 
 Upgrade the published user-level tool:
 

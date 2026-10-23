@@ -86,7 +86,7 @@ For a promoted skill, edit its directory under `kb/instructions/`; installed pro
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers, subject to this collection's exceptional-link posture; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits (e.g. `after [title](path)`, `if [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/instructions/`, `kb/notes/`, `kb/reference/`, and `kb/tags/` for link targets. Collection-specific procedures and their declared input contracts under `kb/agentic-systems/` are permitted when a procedure consumes that interface. Do not link into its research corpus, `kb/agent-memory-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
+Scan `kb/instructions/`, `kb/theory/`, `kb/reference/`, and `kb/tags/` for link targets. Collection-specific procedures and their declared input contracts under `kb/agentic-systems/` are permitted when a procedure consumes that interface. Do not link into its research corpus, `kb/agent-memory-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
 
 **Labels:**
 
@@ -98,7 +98,7 @@ Scan `kb/instructions/`, `kb/notes/`, `kb/reference/`, and `kb/tags/` for link t
 | `applies-when` | instructions | conditional branch; reader follows only if the trigger applies |
 | `see-also` | instructions | reserved for error procedures and conditional fallbacks |
 | `operates-on` | reference | the system component this procedure acts on |
-| `rests-on` | notes | (meta-reader) this procedure or rule depends on the target theoretical claim |
+| `rests-on` | theory | (meta-reader) this procedure or rule depends on the target theoretical claim |
 
 ## Frontmatter
 
@@ -109,7 +109,7 @@ Minimal. Plain instructions need `description` and `type: types/instruction.md`.
 Some subdirectories are promoted skills, listed in `MANIFEST.promoted_skills`. In this checkout the runtime skill directories (`.claude/skills/`, `.agents/skills/`) hold relative symlinks to them; in an installed project `commonplace-init` writes a stub per skill that points to the real `SKILL.md` in the installed library. Promoted skills:
 
 - Link to other library files by relative paths, which resolve from the skill's own file in the library
-- Name the invoking project's own collections by workspace-root paths (`kb/notes/`, `kb/instructions/COLLECTION.md`)
+- Name the invoking project's own collections by workspace-root paths (`kb/<collection>/`, `kb/instructions/COLLECTION.md`); derive the collection from explicit input or the project's authored routing, not the installed library's collection names
 - Treat `kb/instructions/` as the only source; runtime skill directories hold stubs or symlinks, never copies
 
 ## Default template
@@ -140,7 +140,7 @@ type: types/instruction.md
 
 ## What does NOT belong here
 
-- Transferable claims about KB methodology → `kb/notes/`
+- Transferable claims about KB methodology → `kb/theory/`
 - Descriptions of how the system works → `kb/reference/`
 - Report outputs and review evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
 - Collection-specific analysis, synthesis and taxonomy procedures → their owning collection's `instructions/`

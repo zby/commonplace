@@ -44,7 +44,7 @@ test -d .claude/skills && echo ".claude/skills: present" || true
 Interpretation:
 
 - Installed project: `.commonplace/library.md` exists and names the library root in the installed package. The project holds no library files.
-- Source repository: `pyproject.toml`, `src/commonplace/`, and top-level `kb/{notes,reference,instructions}/` exist. Its `kb/` is the library.
+- Source repository: `pyproject.toml`, `src/commonplace/`, and top-level `kb/{theory,reference,instructions}/` exist. Its `kb/` is the library.
 - Old library copy: `kb/commonplace/` comes from a release that copied the library into projects. Report it as requiring separate cleanup. `commonplace-init` leaves these files and their review baselines untouched; inspect local changes and references before removing copies.
 - Neither: the wrong directory is open or `commonplace-init` has not run.
 - `.venv` is not a Commonplace layout requirement. A project may still own one for unrelated dependencies.

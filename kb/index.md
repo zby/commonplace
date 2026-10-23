@@ -28,7 +28,7 @@ The [theory builder definition](./theory/definitions/theory-builder.md) states t
 
 ## Browse
 
-- [Notes](./theory/README.md) — research claims
+- [Theory](./theory/README.md) — research claims
 - [Tags](./tags/README.md) — browse by topic across notes, reference, instructions, and system reviews
 - [Reference](./reference/README.md) — the current system, decisions, and artifact contracts
 - [Agentic Systems](./agentic-systems/README.md) — external-system accounts and workflow analyses, compared by lens

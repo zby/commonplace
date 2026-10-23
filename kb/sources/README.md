@@ -14,7 +14,7 @@ analysis.
   are not published or distributed with the repository.
 - **`*.ingest.md` reports** — tracked source records and analyses produced by
   `cp-skill-ingest`. Each report classifies and summarizes the source and
-  connects it to `kb/notes/` and other collections.
+  connects it to `kb/theory/` and other collections.
 - **Types** — the artifacts here use global library types: `types/ingest-report.md`, `types/source-review.md`, and `types/snapshot.md` for captures.
 
 ## How to add a source

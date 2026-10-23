@@ -64,7 +64,7 @@ These represent different trust models for who curates always-loaded state. The 
 Some always-loaded values are static within one installation but variable across installations: sibling repo paths, local tool paths, environment-specific endpoints. These are resolved before the agent sees them, either at build time or at session start.
 
 **Mechanisms:**
-- Build-time template expansion: `{{claw_root}}/notes/` → `commonplace/kb/notes/`
+- Build-time template expansion: `{{claw_root}}/theory/` → `commonplace/kb/theory/`
 - Settings merge: defaults → global config → project config → session overrides
 - Environment variable injection
 

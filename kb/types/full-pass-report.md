@@ -29,7 +29,7 @@ Render the `Resolution` section exactly from the structured fields. Quote a term
 ---
 description: "Full improvement pass over <pass-start source title>"
 type: types/full-pass-report.md
-source: kb/notes/example.md
+source: kb/theory/example.md
 source_capture: source.txt
 source_sha256: <lowercase SHA-256>
 pass_id: <unique pass ID>

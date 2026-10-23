@@ -9,7 +9,7 @@ another collection is invalid and reported by validation.
 
 In this source repository, common collection roots include:
 
-- `kb/notes/`
+- `kb/theory/`
 - `kb/reference/`
 - `kb/instructions/`
 - `kb/tags/`

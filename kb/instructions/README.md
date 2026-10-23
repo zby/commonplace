@@ -20,7 +20,7 @@ The stub carries the skill's frontmatter and tells the agent to read the real `S
 Because the agent reads the skill at its real location, relative links resolve the same way in both places. When writing or editing a promoted skill:
 
 - Link to the skill's own files, to other instructions, and to types with ordinary relative links, such as `../re-ingest.md` or `../../types/note.md`
-- Name the project's own collections by workspace-root paths, such as `kb/notes/` and `kb/notes/COLLECTION.md`; those are paths in the project, not in the library
+- Name the project's own collections by workspace-root paths, such as `kb/theory/` and `kb/theory/COLLECTION.md`; those are paths in the project, not in the library
 - Name a type by its path under a KB root, such as `type: types/note.md`
 - Do not branch the text between a source checkout and an installed project; the two layouts agree
 

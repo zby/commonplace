@@ -13,7 +13,7 @@ retention policy and consumer, not by its filename or by the fact that a tool
 generated it.
 
 A report belongs here only when a named operation consumes the report itself.
-Transferable claims belong in `kb/notes/`; descriptions of the shipped system
+Transferable claims belong in `kb/theory/`; descriptions of the shipped system
 and its decisions belong in `kb/reference/`; executable procedures belong in
 `kb/instructions/`; and reasoning whose value is consumed by unfinished work
 belongs in `kb/work/`.
@@ -80,7 +80,7 @@ understandable from a clean checkout without relying on ignored files.
   concerns only Commonplace's own choices or their measured effects, beside
   the raw records it interprets. Its formal edges use this collection's labels
   below. An inference that keeps a free variable belongs in
-  `kb/notes/evidence/`.
+  `kb/theory/evidence/`.
 - If a report develops a transferable claim, binding rule, system premise, or
   unfinished-work lifecycle, extract that content to its proper collection.
   Do not broaden `retained/` into a second notes, reference, instructions, or
@@ -96,8 +96,8 @@ small authorized set:
 | label | destinations | reader need |
 |---|---|---|
 | `derived-from` | sources, external | inspect the source material from which the report was produced |
-| `is-evidence-for` | notes, reference, reports | inspect the durable claim, decision, or report record on which this output bears |
-| `compares-with` | notes, reference, sources, reports | compare two artifacts on a named shared axis |
+| `is-evidence-for` | theory, reference, reports | inspect the durable claim, decision, or report record on which this output bears |
+| `compares-with` | theory, reference, sources, reports | compare two artifacts on a named shared axis |
 | `see-also` | any durable collection, external | inspect useful adjacent context when no stronger relation applies |
 
 The destination collection separately decides whether it may author a
@@ -120,7 +120,7 @@ one typed report still applies its type contract.
 ## What does not belong here
 
 - A generated explanation or synthesis whose claim should survive the run →
-  `kb/notes/` or `kb/reference/` according to its consumer.
+  `kb/theory/` or `kb/reference/` according to its consumer.
 - A procedure named "report" because it produces one → `kb/instructions/`.
 - Drafts, deliberation, and run traces consumed by an unfinished investigation
   → `kb/work/`.

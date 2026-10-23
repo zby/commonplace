@@ -54,7 +54,7 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
   who owns the next decision, and what invalidates prior work or ends retries.
   Do not add this machinery to ordinary queueing or harmless, cheap-to-reverse
   choices merely because they happen later.
-- Keep rationale minimal. Put durable reasoning in `kb/notes/` and link from there.
+- Keep rationale minimal. Put durable reasoning in `kb/theory/` and link from there.
 - Prefer outcome and boundary over a prescribed sequence when several means can
   satisfy the goal and execution evidence can discriminate among them. Fix an
   exact command, ordering, output grammar, or handoff protocol when a machine

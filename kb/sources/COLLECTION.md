@@ -118,23 +118,23 @@ checksums. Never author a durable link to
 
 **Ingest reports and source reviews** carry the active outbound surface — the analysis cites where the source lands in the rest of the KB. Inline for strongest commitment, with a connective word that fits (e.g. `as in [title](path)`); footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/tags/`, and other sources for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported) or `kb/instructions/` (executing readers don't follow source links).
+Scan `kb/theory/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/tags/`, and other sources for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported) or `kb/instructions/` (executing readers don't follow source links).
 
 **Labels (apply to ingest reports and source reviews; the snapshot itself is never the link author):**
 
 | label | destinations | reader-need |
 |---|---|---|
 | `derived-from` | external | this ingest analysis or source review is worked out from the original external source already in hand |
-| `is-evidence-for` | notes, agent-memory-systems | this source bears materially on the target claim or analysis, without asserting that the target has incorporated it |
-| `abstracted-from` | notes | this claim was abstracted from this source |
-| `rests-on` | notes | this source-side design or rule depends on this theoretical claim |
-| `compares-with` | notes, sources, agent-memory-systems, agentic-systems | compare this source or analysis with a target on a named shared axis |
-| `defined-in` | notes/definitions | reader may not know the term |
-| `see-also` | notes, reference, sources, agent-memory-systems, agentic-systems, external | adjacent companion; use sparingly |
+| `is-evidence-for` | theory, agent-memory-systems | this source bears materially on the target claim or analysis, without asserting that the target has incorporated it |
+| `abstracted-from` | theory | this claim was abstracted from this source |
+| `rests-on` | theory | this source-side design or rule depends on this theoretical claim |
+| `compares-with` | theory, sources, agent-memory-systems, agentic-systems | compare this source or analysis with a target on a named shared axis |
+| `defined-in` | theory/definitions | reader may not know the term |
+| `see-also` | theory, reference, sources, agent-memory-systems, agentic-systems, external | adjacent companion; use sparingly |
 
 ## What does NOT belong here
 
-- Transferable claims about KB methodology → `kb/notes/`
+- Transferable claims about KB methodology → `kb/theory/`
 - Descriptions of the commonplace system → `kb/reference/`
 - Procedures and how-to guidance → `kb/instructions/`
 - External agent-memory system reviews → `kb/agent-memory-systems/`

@@ -37,7 +37,7 @@ Complete generated listings — per-collection `dir-index.md` pages and per-tag 
 By tag — path plus description for every artifact carrying a tag, over the participating collections:
 
 ```bash
-rg -l '^tags:.*\bTAG\b' kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
+rg -l '^tags:.*\bTAG\b' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
   | xargs -r rg -N --no-heading '^description:\s*' -r ''
 ```
 

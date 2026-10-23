@@ -6,7 +6,7 @@ user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
 context: fork
 model: sonnet
-argument-hint: "[note] — path or filename in kb/notes/"
+argument-hint: "[note] — explicit artifact path or unambiguous filename in the project's KB"
 ---
 
 ## EXECUTE NOW
@@ -26,7 +26,7 @@ The primary conversion. Adds frontmatter to a raw text file, making it structure
 
 #### Step 1: Locate and verify
 
-Resolve the target to a file path. If just a name, search `kb/notes/` recursively.
+Resolve the target to a file path. If just a name, search the project's `kb/` for that filename and require one match. Ask for an explicit path if there are zero or multiple matches. Discovery resolves this one requested artifact; it does not authorize a directory sweep.
 
 Read the file. Verify it has **no frontmatter** (does not start with `---`). If it already has frontmatter, report that it's already structured and stop.
 

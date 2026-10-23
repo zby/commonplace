@@ -7,7 +7,7 @@ This collection answers two kinds of question:
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
 - **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../theory/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
+Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/theory/](../theory/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
 
 ## Mental model
 
@@ -33,9 +33,9 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "I just realized our retry logic is swallowing errors. Write that up."
 - "Capture the decision we just made about moving auth to a sidecar."
 
-*What happens.* The agent searches the KB for related notes, picks a type, reads the writing conventions, drafts the file under `kb/notes/`, and connects it to related notes and indexes.
+*What happens.* The agent searches the KB for related notes, picks a type, reads the writing conventions, drafts the file under `kb/theory/`, and connects it to related notes and indexes.
 
-*What you get.* A new markdown file under `kb/notes/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
+*What you get.* A new markdown file under `kb/theory/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
 
 *Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals and Scope` section in `AGENTS.md`. The out-of-scope list is load-bearing; without it, scope creeps.
 
@@ -51,7 +51,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 
 *What happens.* The agent snapshots the source into ignored `kb/sources/.snapshots/`, reads it, finds related notes, and writes a tracked analysis whose frontmatter carries the durable URL, capture provenance, genre, and exact snapshot checksum. In this repo, external system analysis enters through `analyse-agentic-system`. Its memory analyst works against the frozen evidence boundary and runtime records and returns a typed report. Code retains the accepted report unchanged in the analysis set and publishes one compact whole-system review.
 
-*What you get.* A local snapshot under `kb/sources/.snapshots/` and a tracked ingest report at `kb/sources/<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
+*What you get.* A local snapshot under `kb/sources/.snapshots/` and a tracked ingest report at `kb/sources/<slug>.ingest.md` with summary, claims, and links into `kb/theory/`.
 
 *Limitations.* Paywalled or JavaScript-heavy pages can snapshot incompletely. Classification into "related system" versus "source" is sometimes a judgment call.
 
@@ -79,7 +79,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *How to ask.*
 
-- "Connect `kb/notes/my-new-note.md` to related notes."
+- "Connect `kb/theory/my-new-note.md` to related notes."
 - "I just wrote a note on X. Find what it should link to."
 
 *What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (curated indexes, scoped `rg` description listings, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
@@ -94,7 +94,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *How to ask.*
 
-- "Convert `kb/notes/scratch.md` from text to a note."
+- "Convert `kb/theory/scratch.md` from text to a note."
 
 *What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: types/note.md`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
 
@@ -108,7 +108,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *How to ask.*
 
-- "Revise `kb/notes/foo.md` for flow and clarity. Don't change what it argues."
+- "Revise `kb/theory/foo.md` for flow and clarity. Don't change what it argues."
 - "This note feels redundant in the middle section. Tighten it."
 
 *What happens.* The agent makes a revision pass, writes the result to a numbered copy, and asks you to compare before applying.
@@ -123,10 +123,10 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *How to ask.*
 
-- "Validate `kb/notes/foo.md`."
+- "Validate `kb/theory/foo.md`."
 - "Run validation across the whole KB and report any failures."
 - "Check the collection landings and published redirects."
-- Or run `commonplace-validate kb/notes/foo.md`.
+- Or run `commonplace-validate kb/theory/foo.md`.
 
 *What happens.* Artifact targets check schemas, links, filename constraints, and type-specific structural requirements. The `landings` target requires a non-colliding `README.md` for every collection directly under `kb/`; `redirects` checks `properdocs.yml` against the live published tree.
 
@@ -140,7 +140,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *How to ask.*
 
-- "Review `kb/notes/foo.md` with the prose bundle."
+- "Review `kb/theory/foo.md` with the prose bundle."
 - "Run the semantic review sweep over anything I've changed recently."
 - "Ack the trivial changes in the review queue."
 
@@ -257,7 +257,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 
 ## Collection boundary
 
-- Use `kb/notes/` for beliefs about the design space whose particular system choices are bound.
+- Use `kb/theory/` for beliefs about the design space whose particular system choices are bound.
 - Use `kb/reference/` for Commonplace's selections and the current or historical state they produced.
 - Use `kb/instructions/` for imperative procedures and operator-facing process details.
 

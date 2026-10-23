@@ -6,7 +6,7 @@ tags: [learning-theory, discovery, context-engineering, document-system]
 
 # Short composable notes maximize combinatorial discovery
 
-The library layer (`kb/notes/`) exists for co-loading. [Recognizing shared structure across particulars](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) requires co-presence: you can't find that three notes share unnamed structure if only one fits in context. Under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), the number of notes that fit determines the surface area for cross-cutting connections. Short, atomic notes maximize that surface area.
+The library layer (`kb/theory/`) exists for co-loading. [Recognizing shared structure across particulars](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) requires co-presence: you can't find that three notes share unnamed structure if only one fits in context. Under [bounded context](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), the number of notes that fit determines the surface area for cross-cutting connections. Short, atomic notes maximize that surface area.
 
 The gain is probabilistic, not mechanical — not every pair yields a discovery. What matters is breadth of *independent* perspectives. Notes from distant domains are more likely to reveal shared structure than additional notes within the same topic. The library should be optimized for this: many small, independently authored claims that can be loaded together in varied combinations.
 

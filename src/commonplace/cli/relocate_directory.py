@@ -1,9 +1,9 @@
 """Relocate a KB collection directory: move all contents, update links, add one redirect.
 
 Usage:
-    commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems
-    commonplace-relocate-directory kb/notes/related-systems kb/agent-memory-systems \\
-        --redirect notes/related-systems/related-systems-index.md:agent-memory-systems/index.md \\
+    commonplace-relocate-directory kb/theory/examples kb/reference/examples
+    commonplace-relocate-directory kb/theory/examples kb/reference/examples \\
+        --redirect theory/examples/README.md:reference/examples/README.md \\
         --apply
 """
 
@@ -25,7 +25,7 @@ def main() -> None:
     parser.add_argument(
         "--redirect",
         dest="redirect",
-        help="Single ProperDocs redirect to add, formatted as OLD:NEW (e.g. notes/old/index.md:new/index.md)",
+        help="Single ProperDocs redirect to add, formatted as OLD:NEW (e.g. theory/old/README.md:reference/new/README.md)",
     )
     parser.add_argument("--apply", action="store_true", help="Write changes instead of dry-running")
     args = parser.parse_args()

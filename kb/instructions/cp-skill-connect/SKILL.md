@@ -21,11 +21,11 @@ If the skill and type both mention the same report-content rule, prefer the type
 
 ## Input
 
-Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, ask which artifact to connect. Determine the source **collection** from the artifact's path (`kb/notes/` -> notes, `kb/reference/` -> reference, etc.).
+Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, ask which artifact to connect. Determine the source **collection** from the artifact's path (`kb/theory/` -> theory, `kb/reference/` -> reference, etc.).
 
 ## Setup
 
-1. Determine the source collection from the target artifact's path (`kb/notes/...` -> `notes`, `kb/reports/retained/foo.md` -> `reports`, etc.). **Hard fail immediately if `kb/<source-collection>/COLLECTION.md` does not exist** — do not attempt discovery, do not fall back to defaults, do not soldier on. Report the missing file path to the user and stop. The COLLECTION.md is the only linking-rules surface; without it the skill has no authorised destinations or labels and any output would be invented.
+1. Determine the source collection from the target artifact's path (`kb/theory/...` -> `theory`, `kb/reports/retained/foo.md` -> `reports`, etc.). **Hard fail immediately if `kb/<source-collection>/COLLECTION.md` does not exist** — do not attempt discovery, do not fall back to defaults, do not soldier on. Report the missing file path to the user and stop. The COLLECTION.md is the only linking-rules surface; without it the skill has no authorised destinations or labels and any output would be invented.
 2. Read the global [`connect-report`](../../types/connect-report.md) type spec before candidate discovery. It defines the report sections, quality standards, and template you will use while judging candidates.
 3. Read the target artifact fully. Identify its claim, mechanism, implications, scope, and tensions. If the target has no frontmatter (`text` file), continue discovery from its title/body and mark the report as provisional.
 4. Read `kb/<source-collection>/COLLECTION.md` and find its **outbound-linking section** (heading varies — look for the one that names destinations and labels). Read it as authoritative guidance — extract three things, regardless of whether the section is structured as per-destination blocks, a single labels table with a destinations column, prose, or any mix:

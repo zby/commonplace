@@ -31,7 +31,7 @@ Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in 
 
 - `complete: true` (optional) — every artifact carrying the tag, across the participating collections, is linked from this head or carries a tag whose head is linked from this head: the head reaches every member in one hop. Validator-enforced; readers may skip the by-tag `rg` sweep. Children are the heads the body links; no list names them, and a link's context phrase says whether the linked head is a child or a neighbour ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
 
-The mark is a **validated cache** of tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping the mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md`). A mark that cannot be made true without a weak child tag or a tag created to hold a few notes is dropped, or those members are linked by hand, which satisfies it. ADR 026 is the decision record for marks; ADR 090 folded its two marks into this one; the theory is the value half (`kb/notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) composed with the safety half (`kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`); the PKM grounding is `kb/notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
+The mark is a **validated cache** of tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping the mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md`). A mark that cannot be made true without a weak child tag or a tag created to hold a few notes is dropped, or those members are linked by hand, which satisfies it. ADR 026 is the decision record for marks; ADR 090 folded its two marks into this one; the theory is the value half (`kb/theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) composed with the safety half (`kb/theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`); the PKM grounding is `kb/theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
 
 ## The weight contract
 
@@ -67,7 +67,7 @@ type: types/tag-readme.md
 
 ## {Grouping}
 
-- [note](../notes/note.md) — why it matters here
+- [note](../theory/note.md) — why it matters here
 
 ## Related Tags
 

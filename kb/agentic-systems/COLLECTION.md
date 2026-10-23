@@ -56,7 +56,7 @@ It supplies the independent conditions and separately evidenced properties.
 
 Durable analysis excludes current Commonplace differences, adoption advice and
 watch items. Those belong in separately commissioned transfer scans under
-`kb/reports/state/agentic-system-transfer/`. Transferable claims go to `kb/notes/`,
+`kb/reports/state/agentic-system-transfer/`. Transferable claims go to `kb/theory/`,
 raw captures to source snapshots, descriptions of Commonplace to `kb/reference/`,
 and in-flight work to `kb/work/`.
 
@@ -68,7 +68,7 @@ titles and trigger descriptions. Comparison titles name their question and scope
 
 - Sources: tracked ingests, never snapshots; `derived-from`, `evidenced-by`, `see-also`.
 - External: source evidence already used, preferably version-pinned; `evidenced-by`, `see-also`.
-- Notes: theoretical mappings; `rests-on`, `defined-in`, rare `is-evidence-for`, `see-also`.
+- Theory: theoretical mappings; `rests-on`, `defined-in`, rare `is-evidence-for`, `see-also`.
 - Agent-memory systems: related subsystem accounts; `contains`, `part-of`, `compares-with`, `see-also`.
 - Agentic system analyses: accepted overview/member evidence; `see-also`.
 - Reports: separately retained evidence; `evidenced-by`, `see-also`.

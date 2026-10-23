@@ -16,7 +16,7 @@ owns that behavior, and `commonplace.lib.library` locates the library; find
 them from an installed project with `commonplace-source`.
 
 In this page, *the library* means everything Commonplace owns and a project
-only reads: the notes, reference, and instructions collections, the global
+only reads: the Theory, Reference, and Instructions collections, the global
 types and their schemas, the review gates, the critique instruction, and the
 promoted skills.
 
@@ -37,7 +37,7 @@ project/
 user-level uv tool
   commonplace-* commands             command runtime for every project
   share/commonplace/                 the library, laid out like the source repository's kb/:
-    instructions/ notes/ reference/ types/
+    instructions/ theory/ reference/ tags/ types/
 ```
 
 This is an orientation map, not a file manifest. `commonplace-init` output and

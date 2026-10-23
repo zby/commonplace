@@ -17,7 +17,7 @@ Parse immediately:
 - a scenario name → evaluate only that scenario
 - `compare` → evaluate all and compare against a previous run if one exists
 
-This harness measures **operational overhead**: the framework instructions an agent must read on top of the task's own content. The unit is the **fork**, not the operation — every `cp-skill-*` runs `context: fork`, so each fork pays its overhead from a fresh context. See `kb/notes/feasibility-is-the-heaviest-forks-net-load.md` for the model.
+This harness measures **operational overhead**: the framework instructions an agent must read on top of the task's own content. The unit is the **fork**, not the operation — every `cp-skill-*` runs `context: fork`, so each fork pays its overhead from a fresh context. See `kb/theory/feasibility-is-the-heaviest-forks-net-load.md` for the model.
 
 ### 1. Discover scenario files
 

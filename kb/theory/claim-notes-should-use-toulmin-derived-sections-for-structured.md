@@ -42,7 +42,7 @@ Most claims don't need the structure — only the ones worth structuring do.
 
 ### The promotion path
 
-A note with a claim title can start as `type: types/note.md`. When its evidence and reasoning become explicit and fit the Toulmin scaffold, its pointer can change to `type: notes/types/structured-claim.md`. Other claim-titled notes keep `type: types/note.md`. This is structural refinement, not a global maturity or verification verdict.
+A note with a claim title can start as `type: types/note.md`. When its evidence and reasoning become explicit and fit the Toulmin scaffold, its pointer can change to `type: theory/types/structured-claim.md`. Other claim-titled notes keep `type: types/note.md`. This is structural refinement, not a global maturity or verification verdict.
 
 ### Evidence vs Reasoning (from Toulmin)
 
@@ -52,12 +52,12 @@ The key insight from Toulmin that a simple Reasoning/Caveats split misses: **evi
 2. Does the warrant actually connect this evidence to this claim? (bounded logical judgment)
 3. Are the caveats reasonable? (completeness check)
 
-## Section template for `type: notes/types/structured-claim.md`
+## Section template for `type: theory/types/structured-claim.md`
 
 ```markdown
 ---
 description: Developed argument whose evidence and reasoning are explicit enough for the structured-claim contract
-type: notes/types/structured-claim.md
+type: theory/types/structured-claim.md
 traits: [title-as-claim]
 tags: []
 ---
@@ -94,7 +94,7 @@ this evidence imply this claim?
 
 **Deterministic checks enabled:**
 
-- `type: notes/types/structured-claim.md` → file must contain `## Evidence` and `## Reasoning` headings
+- `type: theory/types/structured-claim.md` → file must contain `## Evidence` and `## Reasoning` headings
 - Optional: `## Caveats`
 - Opening paragraph exists (first non-heading content after title)
 
@@ -110,7 +110,7 @@ Each of these is a bounded judgment within a known section, not an open-ended do
 
 The adoption retired the `has-claim` trait. Artifacts split into:
 
-- **`type: notes/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections
+- **`type: theory/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections
 - **`type: types/note.md`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
 
 The other traits (`has-comparison`, `has-implementation`, `has-external-sources`) remain as traits — they describe properties within a document, not its overall shape. A `structured-claim` can still carry `traits: [has-comparison]` if it uses a comparison table as evidence.
@@ -119,7 +119,7 @@ The other traits (`has-comparison`, `has-implementation`, `has-external-sources`
 
 - **Warrant is often implicit.** Toulmin acknowledges warrants are frequently unstated. Forcing authors to articulate them is the point — but it adds friction. The bet is that explicit warrants produce more trustworthy claims, worth the cost.
 - **Migration effort.** At adoption, 30 notes carried `has-claim`. Most only needed the trait removed; the few that adopted the structured contract needed a deliberate rewrite rather than a mechanical field change.
-- **New collection-local contract.** `structured-claim` adds a type spec under `kb/notes/types/`; instances point to that contract directly. No global type enum changes.
+- **New collection-local contract.** `structured-claim` adds a type spec under `kb/theory/types/`; instances point to that contract directly. No global type enum changes.
 - **In practice, without additional methodology (warrant extraction, claim sharpening, revision for flow after structuring), the Toulmin sections create flow problems.** Notes written with Evidence/Reasoning/Caveats sections tend to read as stiff academic scaffolding rather than flowing argument. In multiple cases, notes promoted to `structured-claim` had to be demoted back to `note` and the Toulmin sections dissolved to restore readability. The type is experimental — don't promote notes to `structured-claim` unless the argument genuinely fits the scaffold without forcing.
 
 ---

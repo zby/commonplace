@@ -27,9 +27,9 @@ This note is that staging ground.
 - Procedure status: staging
 
 ```bash
-for f in kb/notes/*.md; do
+for f in kb/theory/*.md; do
   fname=$(basename "$f")
-  rg -q "$fname" --glob "*.md" kb/notes/ || echo "Orphan: $f"
+  rg -q "$fname" --glob "*.md" kb/theory/ || echo "Orphan: $f"
 done
 ```
 
@@ -40,7 +40,7 @@ done
 - Procedure status: staging
 
 ```bash
-rg -L "^---" kb/notes/*.md
+rg -L "^---" kb/theory/*.md
 ```
 
 ### Neighborhood tension review (target note + linked notes)
@@ -65,14 +65,14 @@ Procedure:
 Helper commands:
 
 ```bash
-NOTE="kb/notes/<target>.md"
+NOTE="kb/theory/<target>.md"
 BASENAME=$(basename "$NOTE")
 
 # Outbound markdown links declared in the target note
 rg -o '\]\(([^)]+\.md)\)' "$NOTE" -r '$1' --no-filename | sort -u
 
-# Inbound references to the target note from kb/notes
-rg -l "$BASENAME" kb/notes --glob "*.md"
+# Inbound references to the target note from kb/theory
+rg -l "$BASENAME" kb/theory --glob "*.md"
 ```
 
 ---

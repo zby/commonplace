@@ -20,7 +20,7 @@ This instruction is also the route for fixing validator warnings on tag-READMEs 
 ### 1. Inventory tags and sizes
 
 ```bash
-rg -N --no-heading '^tags:' kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
+rg -N --no-heading '^tags:' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
   | grep -o '\[.*\]' | tr -d '[]' | tr ',' '\n' | sed 's/^ *//' \
   | sort | uniq -c | sort -rn
 ```
@@ -32,7 +32,7 @@ This shows how many artifacts each tag has across the participating collections 
 Load the index and list the tag's full membership:
 
 ```bash
-rg -l '^tags:.*\bTAG\b' kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
+rg -l '^tags:.*\bTAG\b' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
   | xargs -r rg -N --no-heading '^description:\s*' -r ''
 ```
 
@@ -48,7 +48,7 @@ Ask:
 
 ```bash
 # Notes with no tags field at all
-rg -L "^tags:" kb/notes/*.md
+rg -L "^tags:" kb/theory/*.md
 ```
 
 For each orphan, consider whether adding tags would help future readers find it. Read each candidate head and assign the tag only when the note meets its inclusion condition. Clarify an ambiguous condition before assigning.

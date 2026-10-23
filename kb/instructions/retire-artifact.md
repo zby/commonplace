@@ -31,7 +31,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 2. **Extract first, one piece per commit.** If the artifact holds content worth keeping, move each piece to its new home, retarget that piece's own inbound references, and commit before starting the next. Do not bundle extraction into the retirement — a retirement commit that also moves content cannot be reviewed for either.
 
-   Under the archive destination this step is a gate, not an option. Shipped behavior goes to reference docs, decision-relevant reasoning — options weighed, deciding forces, free choices — to the superseding ADR's `## Considered alternatives`, transferable requirements to `kb/notes/`. What stays behind is the irreproducible remainder: dated current-state anchors and the measurements the design rested on. Deliberation left in an archived file means the extraction is not finished.
+   Under the archive destination this step is a gate, not an option. Shipped behavior goes to reference docs, decision-relevant reasoning — options weighed, deciding forces, free choices — to the superseding ADR's `## Considered alternatives`, transferable requirements to `kb/theory/`. What stays behind is the irreproducible remainder: dated current-state anchors and the measurements the design rested on. Deliberation left in an archived file means the extraction is not finished.
 
 3. **Find references that delegate ownership.** Some references do not merely link the artifact; they name it as the owner of a criterion, test, or vocabulary. Retargeting such a link without moving the thing it names leaves a pointer to nothing:
 
@@ -59,7 +59,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    - a claim → the artifact that now carries that claim
    - one property → that property's owning note
 
-   In `kb/notes/`, `kb/reference/`, and `kb/instructions/`, rewrite the link text and the footer label context to match the new target; a footer entry whose context describes the old artifact is wrong even when its path resolves. In `kb/sources/*.ingest.md` and `kb/work/`, repoint the path and adjust link text only. Those are dated records of past passes: leave their narratives alone, including recommendations that have since been carried out.
+   In `kb/theory/`, `kb/reference/`, and `kb/instructions/`, rewrite the link text and the footer label context to match the new target; a footer entry whose context describes the old artifact is wrong even when its path resolves. In `kb/sources/*.ingest.md` and `kb/work/`, repoint the path and adjust link text only. Those are dated records of past passes: leave their narratives alone, including recommendations that have since been carried out.
 
    **Archive:** retarget nothing into the archive. A live inbound link makes an archived document load-bearing again and ends the frontier's completeness, so every remaining reference resolves one of two ways — re-extract what it needs into the frontier and point there, or demote the reference to naming the artifact by title in prose, with no path and no link. An ADR records the proposal it adopted or retired this second way.
 
@@ -92,7 +92,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 8. **Add a published redirect.** Both destinations need one — archiving changes the artifact's URL just as deletion ends it. Insert into `redirect_maps` in `properdocs.yml`, keeping the map alphabetical:
 
    ```yaml
-   'notes/<old-slug>.md': 'notes/<successor-slug>.md'
+   'theory/<old-slug>.md': 'theory/<successor-slug>.md'
    ```
 
    Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `commonplace-validate redirects` enforces all three conditions.
@@ -108,7 +108,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    **Scope the retirement to the retired path.** The report covers the whole store, and this repository already carries orphaned baselines from earlier retirements; retiring everything it lists would destroy unrelated ones. Filter by artifact path:
 
    ```bash
-   RETIRED=kb/notes/<artifact>.md
+   RETIRED=kb/theory/<artifact>.md
    commonplace-freshness-status --missing --json \
      | python3 -c '
    import json, sys
@@ -126,7 +126,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 ## Verify
 
 - `commonplace-validate` on each touched artifact — clean, link health in particular.
-- `commonplace-validate kb/notes` — no new orphan.
+- `commonplace-validate kb/theory` — no new orphan.
 - `commonplace-validate kb/tags` — no weight-gate warning on a curated head that absorbed routing.
 - `commonplace-freshness-status --missing` — does not name the retired path.
 - `rg -l '<artifact-slug>' -g '*.md' kb/` — for delete, nothing outside gitignored reports; for archive, nothing outside the archive directory and `kb/work/`.

@@ -23,7 +23,7 @@ Linked material is of three kinds, and each is read differently. There is no
 reading budget: a conforming note bounds what this gate must open, and a note
 that does not conform is the validator's finding, not this gate's.
 
-**Linked library artifacts** — targets under `kb/notes/`, `kb/reference/`,
+**Linked library artifacts** — targets under `kb/theory/`, `kb/reference/`,
 `kb/instructions/`, `kb/agent-memory-systems/`, or `kb/agentic-systems/`. A
 linked note has passed its own grounding review against its own sources; this
 gate does not re-ground it. Check representation instead: read the target's

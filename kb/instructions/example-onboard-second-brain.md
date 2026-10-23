@@ -17,7 +17,7 @@ Treat each phase as a gate: confirm it works before moving on. If a step fails, 
 - `rg` available for fast local search. No semantic-search service is required; the baseline is generated indexes plus keyword search.
 - The operator available for an interview (Phase 1 is conversational, not a form).
 
-Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` before starting so the routing and local contract vocabulary is loaded.
+Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` before starting so the routing and local contract vocabulary is loaded. Read `.commonplace/library.md` for the installed library root; `<library>` below means that root, not a project directory. The library's `theory/` does not rename the project's Notes collection.
 
 ## Phase 1 — Profile and collection design
 
@@ -51,8 +51,8 @@ A Second Brain usually needs more. Interview the operator about what else they w
 
 For each agreed collection:
 
-1. Decide whether it is a library collection (value accumulates) or workshop material (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
-2. For each library collection, run `/cp-skill-add-collection` with its name and the agreed purpose. It writes the `COLLECTION.md` and landing, adds tag participation and the routing row, and validates the result. For outbound linking conventions beyond the labels the project already uses, see `kb/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture.
+1. Decide whether it is a library collection (value accumulates) or workshop material (value is consumed). In-flight project work belongs in `kb/work/<project-name>/`, not in a long-lived collection. See `<library>/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md`.
+2. For each library collection, run `/cp-skill-add-collection` with its name and the agreed purpose. It writes the `COLLECTION.md` and landing, adds tag participation and the routing row, and validates the result. For outbound linking conventions beyond the labels the project already uses, see `<library>/reference/link-vocabulary.md` for the catalogue and ADRs 019 and 059 for the architecture.
 
 The write and connect skills read each new `COLLECTION.md` directly — there is no compile step to run after editing.
 
@@ -134,4 +134,4 @@ Three feedback loops, separately useful:
 
 - The canonical Commonplace onboarding. Commonplace itself does not require a profile, context summaries, hooks, or learning loops.
 - A spec for Phases 4–5. The hook and skill bodies sketched there are illustrative; treat them as prompts for design, not finished code.
-- A justification of *why* these choices work. The reasoning lives in the methodology notes under `kb/notes/` (context summaries, collection boundaries, workshop layer). This file is execution-only.
+- A justification of *why* these choices work. The reasoning lives in the methodology notes under `<library>/theory/` (context summaries, collection boundaries, workshop layer). This file is execution-only.

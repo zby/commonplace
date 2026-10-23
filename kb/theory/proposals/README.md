@@ -16,7 +16,7 @@ What binds a proposal is in two places:
 
 - [Theory proposal type](../types/theory-proposal.md) — what a proposal
   must state, and how it is adopted or deleted.
-- [`kb/notes/COLLECTION.md`](../COLLECTION.md) — where proposals live and
+- [`kb/theory/COLLECTION.md`](../COLLECTION.md) — where proposals live and
   how other notes may point to them.
 
 Lifecycle at a glance: workshop (`kb/work/`, active, closes) → proposal

@@ -13,7 +13,7 @@ PASS:
 - [base] link health: all local relative links resolve
 - [schema] type schema: note requirements satisfied
 FAIL:
-- [type: tag-readme] complete mark: missing entry for kb/notes/foo.md
+- [type: tag-readme] complete mark: missing entry for kb/theory/foo.md
 ```
 
 In one sentence: **a type declares what the document must contain; the framework checks that what it points at is really there.**
@@ -196,7 +196,7 @@ artifact in it, whatever its type, to that many **unquoted tracked sources**
 ([ADR 082](./adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md),
 [ADR 122](./adr/122-collections-set-the-unquoted-source-limit.md)). A collection
 without the field is not checked; the nearest contract governs. This repository
-sets five in `kb/notes/` and `kb/articles/`.
+sets five in `kb/theory/` and `kb/articles/`.
 
 The limit exists so that the artifact's grounding review fits one pass: each
 unquoted source is a full read for the reviewer of

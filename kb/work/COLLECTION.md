@@ -71,17 +71,17 @@ No constraint. Title fits whatever the workshop produces — claim, topic, plan,
 
 Permissive. Workshops freely cite the library to scaffold new work — library citation is how a workshop grounds itself in established knowledge before adding to it. Inline for prose connectives; footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/instructions/`, `kb/sources/`, and peer workshops in `kb/work/` for link targets. Workshop links are working notes, not durable graph contracts — borrow from theoretical/descriptive/prescriptive labels as the work calls for, or use a local phrase. Authorisation is loose; the articulation test still applies.
+Scan `kb/theory/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/instructions/`, `kb/sources/`, and peer workshops in `kb/work/` for link targets. Workshop links are working notes, not durable graph contracts — borrow from theoretical/descriptive/prescriptive labels as the work calls for, or use a local phrase. Authorisation is loose; the articulation test still applies.
 
 **Labels (suggestions, not authoritative):**
 
 | label | destinations | reader-need / when to use |
 |---|---|---|
-| `extends`, `grounds`, `mechanism`, `contradicts`, `contrasts` | notes | theoretical-shaped (see `kb/reference/link-vocabulary.md`) |
-| `evidenced-by`, `abstracted-from` | notes, reference, agent-memory-systems, agentic-systems, sources, external, work | the target bears on this working assertion / the workshop was abstracted from this |
-| `is-evidence-for` | notes, reference, work | this working observation bears materially on the target assertion without implying target-side uptake |
-| `rests-on` | notes | this working design or rule depends on this claim |
-| `defined-in` | notes/definitions | reader may not know the term |
+| `extends`, `grounds`, `mechanism`, `contradicts`, `contrasts` | theory | theoretical-shaped (see `kb/reference/link-vocabulary.md`) |
+| `evidenced-by`, `abstracted-from` | theory, reference, agent-memory-systems, agentic-systems, sources, external, work | the target bears on this working assertion / the workshop was abstracted from this |
+| `is-evidence-for` | theory, reference, work | this working observation bears materially on the target assertion without implying target-side uptake |
+| `rests-on` | theory | this working design or rule depends on this claim |
+| `defined-in` | theory/definitions | reader may not know the term |
 | `draws-on`, `tests`, `depends-on`, `produces`, `supersedes` | any | working-state labels — use whichever fits the workshop's progress |
 | `see-also` | any | adjacent companion |
 
@@ -89,7 +89,7 @@ Library collections do not link **into** `kb/work/` — workshops are sinks, not
 
 ## Closing a workshop
 
-When the workshop's question is answered, extract the durable conclusions into the right library collection (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/reference/adr/`), delete the workshop directory, and remove its entry from `kb/work/README.md`. See `kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md` for the rationale.
+When the workshop's question is answered, extract the durable conclusions into the right library collection (`kb/theory/`, `kb/reference/`, `kb/instructions/`, `kb/reference/adr/`), delete the workshop directory, and remove its entry from `kb/work/README.md`. See `kb/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md` for the rationale.
 
 **No redirect, deliberately.** Workshops are published — `kb/work/` is not in `properdocs.yml`'s `exclude_docs`, because a live workshop is worth showing to someone for consultation. But closure does not add a `redirect_maps` entry the way [retiring a library artifact](../instructions/retire-artifact.md) does. The layer is temporary by design: a workshop URL was never a durable address, and a closed workshop often has several successors or none, so there is frequently no honest target to point at. Dead workshop URLs are an accepted cost, not an oversight — 84 closed workshops have left one redirect between them. Do not "fix" this by back-filling redirects.
 

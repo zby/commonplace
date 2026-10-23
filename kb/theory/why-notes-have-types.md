@@ -26,7 +26,7 @@ Different knowledge domains need different document structures. [Directory-scope
 
 ## Collection and type remain separate inputs
 
-Types do not identify the local writing contract. The containing path selects the collection's `COLLECTION.md`, while `type:` selects a structural and semantic type contract. A `note` in `kb/notes/` therefore receives explanatory-reach from the notes collection; a `note` in `kb/reference/` receives fidelity and economy from the reference collection. The same type can compose with different local quality goals without changing its own meaning.
+Types do not identify the local writing contract. The containing path selects the collection's `COLLECTION.md`, while `type:` selects a structural and semantic type contract. A `note` in `kb/theory/` therefore receives explanatory-reach from the notes collection; a `note` in `kb/reference/` receives fidelity and economy from the reference collection. The same type can compose with different local quality goals without changing its own meaning.
 
 This connects the type system to [the classifier that separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md). Validation and review can combine the independently resolved collection and type contracts without adding a duplicate frontmatter field. Neither contract classifies every region or consumption path.
 

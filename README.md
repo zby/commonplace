@@ -55,7 +55,7 @@ the analysis workflow or its acceptance checks.
 
 ```text
 kb/                       Knowledge base
-  notes/                  Transferable research claims and theory
+  theory/                 Transferable research claims and theory
   articles/               Self-standing technical explanations
   reference/              Current system documentation and ADRs
   types/                  Global artifact contracts and schemas
@@ -102,7 +102,7 @@ The [rendered site](https://zby.github.io/commonplace/) is the main route into t
 Commands are deterministic Python entry points called by name. Examples:
 
 ```bash
-commonplace-validate kb/notes
+commonplace-validate kb/theory
 commonplace-init --root .
 commonplace-github-snapshot https://github.com/owner/repo/issues/123
 ```

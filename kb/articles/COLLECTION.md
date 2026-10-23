@@ -56,7 +56,7 @@ Article bodies expose their graph through ordinary reader-facing prose. The rela
 
 Author each link from the external reader's need at its source. Search these destinations:
 
-- **→ `kb/notes/`** — when a term needs its definition, a claim needs corroboration or a material boundary, or the reader needs the fuller theoretical argument or a neighbouring distinction. Relationships: `defined-in`, `evidenced-by`, `extends`, `contrasts`, `see-also`.
+- **→ `kb/theory/`** — when a term needs its definition, a claim needs corroboration or a material boundary, or the reader needs the fuller theoretical argument or a neighbouring distinction. Relationships: `defined-in`, `evidenced-by`, `extends`, `contrasts`, `see-also`.
 - **→ `kb/reference/`** — when a claim about Commonplace needs an operative trace, shipped-system detail, or decision background. Relationships: `evidenced-by`, `see-also`.
 - **→ `kb/sources/`** — when an empirical or externally attributed claim needs the captured source analysis behind it. Relationships: `evidenced-by`, `see-also`.
 - **→ `kb/agent-memory-systems/` and `kb/agentic-systems/`** — when a system-specific claim needs descriptive evidence, or when the article compares systems on a named axis. Relationships: `evidenced-by`, `compares-with`, `see-also`.
@@ -76,7 +76,7 @@ In-prose links to the `external` destination are authorized for primary attribut
 
 ## What does NOT belong here
 
-- Transferable claims and theory → `kb/notes/`
+- Transferable claims and theory → `kb/theory/`
 - Shipped-system description → `kb/reference/`
 - Procedures and how-to guidance → `kb/instructions/`
 - In-flight exploration → `kb/work/`

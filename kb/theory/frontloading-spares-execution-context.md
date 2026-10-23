@@ -11,7 +11,7 @@ When instructing LLMs, frontloading means computing instruction inputs before th
 
 ## The context saving
 
-Doing a procedure inside an LLM call costs more context than inserting its result. The procedure text itself may be small. For example, "search for X in `kb/notes/`" is a single line. Carrying it out can still produce tool calls, search results, reasoning traces, and interpretation work. It can sometimes also produce additional LLM calls. When it does, their outputs occupy the context window. All of this competes with the call's real task. The cost recurs on every invocation.
+Doing a procedure inside an LLM call costs more context than inserting its result. The procedure text itself may be small. For example, "search for X in `kb/theory/`" is a single line. Carrying it out can still produce tool calls, search results, reasoning traces, and interpretation work. It can sometimes also produce additional LLM calls. When it does, their outputs occupy the context window. All of this competes with the call's real task. The cost recurs on every invocation.
 
 The comparison that matters is the *realized* execution context, not the instruction's size. A pointer can be shorter than the result but cost more. For example, "read file X" is one line, but executing it pulls the whole of file X into the window. So frontloading's saving is largest on the operation and complexity dimensions — the discovery, derivation, and indirection the call no longer performs. On raw volume, frontloading saves only when the inserted result is *smaller* than the material it replaces. Inlining content that the call would have loaded anyway only defers those tokens; it does not remove them. A model-facing pointer that the LLM must resolve is [model-resolved indirection](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md).
 
@@ -25,7 +25,7 @@ The basic test is whether the value is known before the consuming call runs.
 
 **Static (frontloadable):**
 - Variable resolution — paths, project names, configuration values known at setup time (the [model-resolved binding elimination](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) case)
-- File listings — "here are the files in `kb/notes/`" rather than "list the files in `kb/notes/`"
+- File listings — "here are the files in `kb/theory/`" rather than "list the files in `kb/theory/`"
 - Aggregations — counts, summaries of known datasets, pre-computed indexes
 - Template expansion — [build-time generation](./generate-instructions-at-build-time.md) of skills and instructions
 - Caller-resolved inputs — what a parent agent has discovered, decided, or framed at runtime, packaged into instructions for a sub-agent that doesn't see the parent's conversation

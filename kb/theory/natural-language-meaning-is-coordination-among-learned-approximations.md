@@ -45,7 +45,7 @@ On this hypothesis, communication pressure produces competence whose composition
 
 **LLMs are a second-order case.** A language model learns from text written by speakers who each hold only approximations. Nothing in the chain is the real meaning, which weakens arguments that a model lacks a semantics that humans possess.
 
-**KB vocabulary.** The vocabulary section of `AGENTS.md`, the `kb/notes/definitions/` directory, and the one-term-per-concept rule install small local symbol systems for agents and sessions to approximate. They raise oracle strength for a few terms without reaching codification, because the checker is still a reader. One term per concept concentrates checking pressure on one word so its approximations converge; a synonym splits the pressure and lets both words drift.
+**KB vocabulary.** The vocabulary section of `AGENTS.md`, the `kb/theory/definitions/` directory, and the one-term-per-concept rule install small local symbol systems for agents and sessions to approximate. They raise oracle strength for a few terms without reaching codification, because the checker is still a reader. One term per concept concentrates checking pressure on one word so its approximations converge; a synonym splits the pressure and lets both words drift.
 
 [Vocabulary-collision controls](./vocabulary-collisions-prevented-at-write-time-not-read-time.md) make this proposal more concrete: distinct terms and explicit clause frames help delimit a technical sense, while validator-defined positions can enforce its use. A definition alone supplies no such enforcement. These are candidate mechanisms for improving local alignment; their availability does not establish this hypothesis.
 

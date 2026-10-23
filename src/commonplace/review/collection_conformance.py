@@ -55,8 +55,8 @@ def resolve_collection_criterion_id(repo_root: Path, criterion_id: str) -> str:
     """Resolve a `collection/{path}` gate id to the repo-relative COLLECTION.md path.
 
     `{path}` is the collection directory relative to `kb/`, so a collection
-    below a non-collection directory stays unambiguous: `collection/notes`
-    names `kb/notes/COLLECTION.md`.
+    below a non-collection directory stays unambiguous: `collection/theory`
+    names `kb/theory/COLLECTION.md`.
     """
     rel = criterion_id.strip().removeprefix(f"{COLLECTION_CONFORMANCE_LENS}/").strip("/")
     parts = PurePosixPath(rel).parts

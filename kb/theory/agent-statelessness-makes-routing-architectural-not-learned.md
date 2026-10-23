@@ -9,7 +9,7 @@ tags: []
 
 A human developer who works in a knowledge base gradually builds intuition: "for this kind of task, look here." They learn which wiki page covers authentication, which convention governs naming, which template fits a design note. Eventually they navigate without conscious effort.
 
-An LLM agent never does this. Each session starts cold. It cannot learn "last time I needed the structured-claim template, I found it in `notes/types/`." It cannot develop a hunch that a relevant skill might exist. Every session is day one.
+An LLM agent never does this. Each session starts cold. It cannot learn "last time I needed the structured-claim template, I found it in `theory/types/`." It cannot develop a hunch that a relevant skill might exist. Every session is day one.
 
 This means every mechanism that directs the agent to the right knowledge at the right time — routing tables, skill descriptions, type templates, naming conventions, directory structure, activation triggers, area indexes — is permanent architecture. For a human, these are conveniences you outgrow. For an agent, they're prosthetics you never stop needing.
 

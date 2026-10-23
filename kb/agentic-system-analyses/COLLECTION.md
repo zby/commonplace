@@ -39,7 +39,7 @@ Other sources retain their existing directory naming. Publication names are
 independent of immutable run IDs. `retained-archive/` holds
 superseded analyses. `instructions/` holds the analysis method.
 Comparative writing belongs in `kb/agentic-systems/`; current Commonplace transfer advice belongs in
-its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/notes/`;
+its separately commissioned transfer scan. Neither belongs in an analysis. Transferable KB theory belongs in `kb/theory/`;
 raw source captures belong in source snapshot storage.
 
 ## Run evidence
@@ -63,6 +63,6 @@ local types or instructions. Analysts do not load it.
 - `kb/sources/`: cite tracked ingests, never snapshots; `evidenced-by`.
 - External: cite evidence used, preferably version-pinned; do not prospect the open
   web; `evidenced-by`.
-- `kb/notes/`: cite theory used in a mapping; `rests-on`, `defined-in`.
+- `kb/theory/`: cite theory used in a mapping; `rests-on`, `defined-in`.
 - Within this collection: point to supporting members or records; `see-also`.
 - Local instructions and types: link their governing contracts; `composition`, `see-also`.

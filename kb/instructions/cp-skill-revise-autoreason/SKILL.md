@@ -27,7 +27,7 @@ Three fresh judge agents rank blind candidate packets. Aggregate with Borda coun
 
 ## Step 0: Resolve The File
 
-Resolve `$ARGUMENTS` to a full path. If it is a bare filename, search `kb/notes/` for a match. Read the file in full to confirm it exists and capture the original content.
+Resolve `$ARGUMENTS` to a full path. If it is a bare filename, search the project's `kb/` for that filename and require one match; ask for an explicit path if there are zero or multiple matches. Discovery resolves this one requested artifact, not a directory-wide revision scope. Read the file in full to confirm it exists and capture the original content.
 
 Before running the loop, report the call budget: up to 5 passes. A normal pass uses 7 fresh Codex sub-agents (critic, revision author, synthesizer, post-candidate auditor, 3 judges). Early stops may use fewer, bounded reruns may use more, and the substantive-revision sidecar uses one additional sub-agent when triggered.
 

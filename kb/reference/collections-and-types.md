@@ -11,7 +11,7 @@ Every authored artifact in Commonplace is governed by two independent contracts:
 - Its location selects a [**collection**](./definitions/collection.md). The nearest containing `COLLECTION.md` supplies that collection's [text contract](./definitions/collection.md#text-contract): purpose, quality goal, title and description conventions, lifecycle, and outbound-link rules.
 - Its `type:` frontmatter points to a **type spec**. The type spec supplies the artifact's structural and semantic contract: frontmatter fields, required sections, schema, authoring guidance, and any template.
 
-The collection answers what role the artifact serves in this part of the KB. The type answers what shape the artifact takes. A `note` in `kb/notes/` is theoretical, while a `note` in `kb/reference/` describes the shipped system; both use the same structural type contract. A collection does not redefine the meaning of a type's fields.
+The collection answers what role the artifact serves in this part of the KB. The type answers what shape the artifact takes. A `note` in `kb/theory/` is theoretical, while a `note` in `kb/reference/` describes the shipped system; both use the same structural type contract. A collection does not redefine the meaning of a type's fields.
 
 ## Special collections
 
@@ -104,7 +104,7 @@ The collection contract is reviewed separately against the artifact's containing
 The filesystem is the live inventory. There are two normal locations:
 
 - **Global type specs** live in the library's `types/` directory, authored in this repository as [`kb/types/`](../types/README.md). They are intended for reuse across collections, and a project does not hold copies of them.
-- **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md) and [`kb/notes/types/`](../theory/types/structured-claim.md).
+- **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md) and [`kb/theory/types/`](../theory/types/structured-claim.md).
 
 Open those directories—or follow an artifact's `type:` value—to see the current definitions. From an installed project, `.commonplace/library.md` gives the path of the library's `types/` directory. A prose list elsewhere is only a snapshot and is not the authority for what exists.
 
@@ -119,7 +119,7 @@ These examples illustrate the model; they are not an exhaustive catalogue.
 | [`instruction`](../types/instruction.md) | global | Procedures, skills, prompts, and work packets. |
 | [`definition`](../types/definition.md) | global | Operational vocabulary definitions. |
 | [`adr`](./types/adr.md) | `kb/reference/` | Architecture decisions about the shipped system. |
-| [`structured-claim`](../theory/types/structured-claim.md) | `kb/notes/` | Developed arguments whose shape fits its Evidence and Reasoning contract. |
+| [`structured-claim`](../theory/types/structured-claim.md) | `kb/theory/` | Developed arguments whose shape fits its Evidence and Reasoning contract. |
 | [`snapshot`](../types/snapshot.md) | global | Local faithful captures of external source material, kept under `kb/sources/.snapshots/`. |
 | [`connect-report`](../types/connect-report.md) | global | Discovery-only connection output, written under the reports collection's retention policy. |
 

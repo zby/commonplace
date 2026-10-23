@@ -34,8 +34,8 @@ The project holds no copy of the library. The agent's normal path:
 |------|---------------|----------------|
 | Route to the correct location | Routing table, library location | `AGENTS.md`, `.commonplace/library.md` |
 | Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals and Scope` |
-| Find related notes | Searchable user and library notes | `kb/notes/`, the library's `notes/` |
-| Know how to write well | Writing conventions | target collection's `COLLECTION.md` (e.g. `kb/notes/COLLECTION.md`) |
+| Find related notes | Searchable user and library notes | The project's note collection (scaffold: `kb/notes/`), the library's `theory/` |
+| Know how to write well | Writing conventions | target collection's `COLLECTION.md` (scaffold example: `kb/notes/COLLECTION.md`) |
 | Know the structure | Global or collection-local type definitions | the library's `types/`, `kb/<collection>/types/` |
 | Write the file | All of the above | `kb/notes/` or another user collection |
 | Connect it to existing knowledge | Skill or manual linking workflow | promoted `cp-skill-connect` skill plus indexes |
@@ -48,7 +48,7 @@ The shipped system still needs a place for deeper explanation, and that explanat
 
 - the library's `reference/` explains how the shipped system works
 - the library's `reference/adr/` records why major architectural choices were made
-- project-local notes in `kb/notes/` can extend that explanation when the shipped docs are not enough
+- project-local notes in `kb/notes/` or another user collection can extend that explanation when the shipped docs are not enough
 
 Explanatory material is part of the installed library, not an external escalation target. It stays outside the project's collection paths, so project searches and version history show only the project's own files.
 

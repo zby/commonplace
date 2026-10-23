@@ -19,7 +19,7 @@ The article lists three categories of cross-contamination when memory is flat:
 
 3. **Insights trapped in session state.** Genuine discoveries made during processing never graduate to the knowledge graph because there is no explicit boundary between "working memory" and "permanent memory." The insight lives and dies in the session that produced it.
 
-These are concrete enough to observe. We don't need to build a flat-memory alternative — we already run a system with partial separation (`kb/notes/` for knowledge, `kb/tasks/` for operational artifacts, session state in context). The validation is observational: watch for evidence of the failure modes during normal use and record what we find.
+These are concrete enough to observe. We don't need to build a flat-memory alternative — we already run a system with partial separation (`kb/theory/` for knowledge, `kb/tasks/` for operational artifacts, session state in context). The validation is observational: watch for evidence of the failure modes during normal use and record what we find.
 
 ## Observation protocol
 
@@ -44,7 +44,7 @@ Each observation gets a short log entry: date, which failure mode, what happened
 
 ## What counts as evidence
 
-**For the claim (separation helps):** Failure modes are rare or absent in the spaces that are well-separated, but appear where separation is weakest. For example, if `kb/notes/` stays clean but task artifacts leak into knowledge searches, that's evidence the boundary matters.
+**For the claim (separation helps):** Failure modes are rare or absent in the spaces that are well-separated, but appear where separation is weakest. For example, if `kb/theory/` stays clean but task artifacts leak into knowledge searches, that's evidence the boundary matters.
 
 **Against the claim (separation is decorative):** Failure modes don't manifest at our current scale, or they manifest equally regardless of separation. If 30 notes in a flat directory are just as navigable as 30 notes in three directories, the overhead isn't justified yet.
 

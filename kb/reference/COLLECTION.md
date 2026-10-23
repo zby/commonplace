@@ -83,7 +83,7 @@ Exceptions: ADRs use numbered-decision format (`012-types-for-structure-traits-f
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits the argument (e.g. `implements [title](path)`, `rests on [title](path)`, `defined in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/instructions/`, and `kb/tags/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rests-on` edge to `kb/notes/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/`, `kb/agentic-systems/`, and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
+Scan `kb/reference/`, `kb/theory/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/instructions/`, and `kb/tags/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). The `rests-on` edge to `kb/theory/` is the primary theory-ward edge; outbound edges to `kb/agent-memory-systems/`, `kb/agentic-systems/`, and `kb/sources/` are uncommon (use them when a design choice was informed by a specific external system or source).
 
 **Labels:**
 
@@ -94,25 +94,25 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
 | `decided-by` | reference/adr | the decision record that fixed what this doc describes; read it before changing the described state |
 | `compares-with` | reference | compare this artifact with a peer on a named design or contract axis |
-| `rests-on` | notes | this design, description, or decision depends on this theoretical claim |
-| `defined-in` | notes/definitions, reference/definitions | reader may not know the term |
+| `rests-on` | theory | this design, description, or decision depends on this theoretical claim |
+| `defined-in` | theory/definitions, reference/definitions | reader may not know the term |
 | `derived-from` | sources, agent-memory-systems, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
 | `abstracted-from` | sources, agent-memory-systems, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
 | `evidenced-by` | reference, reports/retained, sources, agent-memory-systems, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
 | `procedure` | instructions | for how to do this, see this instruction |
-| `see-also` | reference, notes, agent-memory-systems, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
+| `see-also` | reference, theory, agent-memory-systems, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
 
 ## Definition placement
 
 Definitions constituted by a Commonplace selection, contract, or implemented
 classification belong under `kb/reference/definitions/`. Transferable theory
-vocabulary belongs under `kb/notes/definitions/`. The `definition` type does
+vocabulary belongs under `kb/theory/definitions/`. The `definition` type does
 not decide placement.
 
 ## What does NOT belong here
 
-- Transferable claims about KB methodology → `kb/notes/`
-- Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/notes/evidence/`
+- Transferable claims about KB methodology → `kb/theory/`
+- Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/theory/evidence/`
 - Evidence whose bounded inference concerns only Commonplace's own choices or their measured effects, such as the evidence behind an ADR → `kb/reports/retained/`, as an evidence note beside its raw records
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/reviews/` for whole agentic systems and harnesses

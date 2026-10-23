@@ -32,7 +32,7 @@ These outputs belong to the project. Init creates each one only when it is missi
 
 **Directories** (from `MANIFEST.directories`) — empty directory shells the practitioner fills in:
 
-- `kb/notes/`, `kb/notes/types/` — user's notes collection
+- `kb/notes/`, `kb/notes/types/` — user's notes collection (not the library's `theory/`)
 - `kb/reference/`, `kb/reference/types/` — user's reference collection
 - `kb/instructions/` — user's instructions collection
 - `kb/sources/`, `kb/sources/types/` — user's tracked source records, and a place for project-authored source types

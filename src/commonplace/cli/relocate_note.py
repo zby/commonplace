@@ -1,10 +1,10 @@
 """Relocate a KB note by renaming it, moving it, or both.
 
 Usage:
-    commonplace-relocate-note kb/notes/my-note.md "New note title"
-    commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions
-    commonplace-relocate-note kb/notes/my-note.md --to kb/reference/my-note.md
-    commonplace-relocate-note kb/notes/my-note.md --to kb/notes/definitions/new-note.md --apply
+    commonplace-relocate-note kb/theory/my-note.md "New note title"
+    commonplace-relocate-note kb/theory/my-note.md --to kb/theory/definitions
+    commonplace-relocate-note kb/theory/my-note.md --to kb/reference/my-note.md
+    commonplace-relocate-note kb/theory/my-note.md --to kb/theory/definitions/new-note.md --apply
 """
 
 from __future__ import annotations

@@ -19,7 +19,7 @@ papers, READMEs or articles. These records carry `source-tier: doc-grounded`
 and the legacy comparison elements. Newly available implementation evidence
 requires a fresh main-analysis run, not a tier change in a frozen review.
 
-**Collection root** — navigation (`README.md` plus build-time directory listings), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/notes/`.
+**Collection root** — navigation (`README.md` plus build-time directory listings), cross-system analyses (comparative reviews, focused comparisons), and any analysis grounded in multiple reviews. When an analysis makes a claim general enough to transfer beyond this landscape, consider promoting it to `kb/theory/`.
 
 Reviews record each external mechanism absolutely, even when it resembles Commonplace. The shared ontology chooses the distinctions and names comparable solutions; it does not turn the review into a Commonplace delta. Closed controlled fields feed the matrix. Open-ended mechanisms and ontology boundary cases support qualitative synthesis but no prevalence claim until the full corpus has been assayed for that concept.
 
@@ -48,7 +48,7 @@ Selective Commonplace implications are living transfer scans under `kb/reports/s
 **Root-level analyses.** Two cases:
 
 - **Surveys and overviews** — use a topical title naming the subject (e.g., `agentic-memory-systems-comparative-review.md`).
-- **Argumentative analyses** — analyses asserting a specific claim — use a claim-shaped title and add the `title-as-claim` trait, following the same conventions as `kb/notes/` (see `kb/notes/COLLECTION.md`).
+- **Argumentative analyses** — analyses asserting a specific claim — use a claim-shaped title and add the `title-as-claim` trait, following the same conventions as `kb/theory/` (see `kb/theory/COLLECTION.md`).
 
 ## Outbound linking conventions
 
@@ -57,7 +57,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 - **→ `kb/agent-memory-systems/`** (within collection) — search when a review touches a component of a larger reviewed system, realizes a contract named in another review, or shares a design axis with another system (the core cross-system work). Labels: `part-of` / `contains`, `implements` / `implemented-by`, `compares-with`, `see-also`.
 - **→ `kb/sources/`** — for lightweight coverage, link back to the tracked ingest of the source it was abstracted from, never the local snapshot. Labels: `derived-from`, `evidenced-by`, `see-also`.
 - **→ `external`** — cite the reviewed repository, code, documents, or papers already in hand. Code-grounded reviews follow the type's commit-pinning and citation-shape rules; do not prospect the open web. Labels: `evidenced-by`, `see-also`.
-- **→ `kb/notes/`** — search when a system's design depends on a theoretical claim. Use `rests-on` for that design dependency and rare `is-evidence-for` when the reviewed system instead bears on the target claim; promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
+- **→ `kb/theory/`** — search when a system's design depends on a theoretical claim. Use `rests-on` for that design dependency and rare `is-evidence-for` when the reviewed system instead bears on the target claim; promote a novel claim to `kb/theory/` rather than author theory in a review. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/agentic-systems/reports/retained/`** — cite the exact main-analysis result when a current comparison needs its canonical records or full evidence. These results are published and hash-identified. Labels: `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 - **→ `kb/agentic-systems/`** — search when the reviewed memory, knowledge, or context-engineering subsystem is part of a broader agentic harness, or when a whole-system analysis supplies useful comparison context. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
@@ -67,7 +67,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 
 ## What does NOT belong here
 
-- Transferable claims about KB methodology → `kb/notes/`
+- Transferable claims about KB methodology → `kb/theory/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
 - Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/reports/state/agentic-system-transfer/`

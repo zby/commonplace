@@ -41,7 +41,7 @@ Organise the outbound-linking section **per destination**, not per inherited
 content-mode label. Name local destinations by their actual directory paths,
 either in full (`kb/agent-memory-systems/`) or relative to `kb/`
 (`agent-memory-systems`). Preserve subdirectory restrictions such as
-`notes/definitions`. Use the reserved token `external` for targets outside the
+`theory/definitions`. Use the reserved token `external` for targets outside the
 KB. For each destination your source links to, declare:
 
 1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
@@ -53,7 +53,7 @@ If a destination isn't listed, it isn't an active link target from this collecti
 
 **Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
 
-Per-destination rules enable fine-grained experimentation. `kb/notes/ -> kb/reference/` can diverge from `kb/notes/ -> kb/agent-memory-systems/` even when both destinations have similar text-contract shapes.
+Per-destination rules enable fine-grained experimentation. `kb/theory/ -> kb/reference/` can diverge from `kb/theory/ -> kb/agent-memory-systems/` even when both destinations have similar text-contract shapes.
 
 ## Label catalogue
 
@@ -131,7 +131,7 @@ If the source were removed or materially changed, the target's actual content wo
 
 Record this edge at the source in a dedicated `Adapted into:` footer, using the same forward-pointer and context-phrase convention as the other lineage footers. Do not use it when the source only motivated, corroborated, or inspired an independently authored target; use `rests-on`, `evidenced-by`, `is-evidence-for`, `grounds`, or `see-also` instead.
 
-**Operationalized** — `operationalized-from` and `Operationalized into:`. The edge narrows the adapted test: the target adds ordering, defaults, or stopping conditions the source does not fix, while adding no substantive claims beyond it. It is currently authorized for the `kb/notes/` methodology → `kb/instructions/` procedure pairing; the truth condition is portable, but a new source pairing needs its source collection's authorization before a footer is written.
+**Operationalized** — `operationalized-from` and `Operationalized into:`. The edge narrows the adapted test: the target adds ordering, defaults, or stopping conditions the source does not fix, while adding no substantive claims beyond it. It is currently authorized for the `kb/theory/` methodology → `kb/instructions/` procedure pairing; the truth condition is portable, but a new source pairing needs its source collection's authorization before a footer is written.
 
 This is an authoring-time alternative to `adapted-from` for one relationship, never a second edge stacked on the same source and target. Its maintenance consequence is the same as adaptation: a source change flags a judgmental recheck rather than a recomputation. Record it at the source in an `Operationalized into:` footer with a reader-need context phrase.
 
@@ -165,7 +165,7 @@ Derived into:
 - [cp-skill-write SKILL.md](../instructions/cp-skill-write/SKILL.md) — the duplicate-check rule
 ```
 
-The downstream artifact carries no backlinks to its sources by default. Its reader is the consumer it was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now need attention" with zero hops: for derived artifacts, recheck or re-derive; for abstracted artifacts, re-examine whether the generalization still holds. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/notes/`.
+The downstream artifact carries no backlinks to its sources by default. Its reader is the consumer it was shaped for — not always an executor (a paper, a reference doc), but the executor case is demanding and common enough to set the default: provenance links dilute focus and add indirection cost exactly where the artifact must work unassisted. The forward pointer sits where change happens — editing a source note surfaces "these downstream artifacts may now need attention" with zero hops: for derived artifacts, recheck or re-derive; for abstracted artifacts, re-examine whether the generalization still holds. The reverse query ("what informed this artifact?") is rare and runs as a search: `rg "<artifact-name>" kb/theory/`.
 
 Rationale: [source changes should surface downstream review targets, while reverse lineage can remain searchable](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md).
 

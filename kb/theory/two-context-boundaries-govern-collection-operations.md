@@ -50,7 +50,7 @@ The [connect skill's discovery strategy](../reference/adr/003-connect-skill-disc
 The [quality scores note](./notes-need-quality-scores-to-scale-curation.md) identifies the same threshold from the other direction: `/connect` stops scaling without filtering once the candidate list exceeds what an agent can evaluate in context.
 
 ADR 003's scaling strategy is implicitly a response to the index boundary:
-- **Keep the main collection below the index boundary** by curating what goes in `kb/notes/` — workshop artifacts and machine-generated notes go elsewhere
+- **Keep the main collection below the index boundary** by curating what goes in `kb/theory/` — workshop artifacts and machine-generated notes go elsewhere
 - **Use semantic search as backup** for what the index scan can't reach (sources, which have no curated index)
 - **Load the index in portions** as a degraded-but-functional fallback
 

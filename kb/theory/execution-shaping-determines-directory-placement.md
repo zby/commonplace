@@ -7,7 +7,7 @@ tags: []
 
 # Execution shaping determines directory placement
 
-The `kb/instructions/` directory collects procedures shaped for execution. The `kb/notes/` directory collects discursive reasoning. This note proposes sharpening that boundary into an organizational principle: if an artifact has been turned *into a procedure* — reasoning stripped, steps sequenced, optimized for an agent that needs to act — it belongs in `instructions/`. The criterion is not "compressed" or "frequently loaded" but specifically "shaped as an executable procedure."
+The `kb/instructions/` directory collects procedures shaped for execution. The `kb/theory/` directory collects discursive reasoning. This note proposes sharpening that boundary into an organizational principle: if an artifact has been turned *into a procedure* — reasoning stripped, steps sequenced, optimized for an agent that needs to act — it belongs in `instructions/`. The criterion is not "compressed" or "frequently loaded" but specifically "shaped as an executable procedure."
 
 The immediate trigger: `kb/instructions/WRITING.md` sits at the top of the KB directory as a writing guide. It is a procedure — checklists, templates, imperative steps extracted from methodology notes. An agent loading WRITING.md is executing a procedure (how to write a note), not reasoning about knowledge design. By the execution-shaping criterion, it belongs in `kb/instructions/`.
 

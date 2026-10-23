@@ -70,7 +70,7 @@ Only the per-installation rows require human input. Framework rows are shipped f
 - A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Version control` section that makes versioned maintenance the default while leaving commit, branch, and review semantics to the project
 - A stock `## Delegation` section that makes task packets deltas from a verified Commonplace doctrine, preserves task authority and parent integration, and classifies unstated choices
-- A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`, with a `### The Commonplace library` subsection that sends the agent to `.commonplace/library.md` for the library's location and tells it to stop and ask for `commonplace-init` when that file is missing
+- A stock `## Using the KB` routing section pointing at `kb/theory/`, `kb/reference/`, and `kb/instructions/`, with a `### The Commonplace library` subsection that sends the agent to `.commonplace/library.md` for the library's location and tells it to stop and ask for `commonplace-init` when that file is missing
 - A stock Skills and Commands section listing the Commonplace-provided skills
 
 Neither template names a path on the practitioner's machine. The library's location is machine-specific, so it lives only in the gitignored `.commonplace/library.md`, which init rewrites on every run.

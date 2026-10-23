@@ -44,8 +44,11 @@ ambiguous.
   invalid; no frontmatter means implicit `text`. Save byte-exact `original.md`,
   its lowercase SHA-256, and one backlinks query before any worker runs. The
   incumbent is a reconciliation and rollback input, never evidence for itself.
-- **New:** resolve the requested collection and type. Default to `kb/notes/`
-  and `note`; an instruction goes to `kb/instructions/`. Reject
+- **New:** resolve the requested collection and type. Use an explicit collection
+  or the project's authored routing for this contribution; ask if it does not
+  select one collection. This KB routes theoretical notes to `kb/theory/`;
+  scaffold projects commonly use `kb/notes/`. Default the type to
+  `types/note.md`; an instruction goes to `kb/instructions/`. Reject
   `kb/work/` as a library target. Verify an explicit type path or resolve type
   shorthand to exactly one type spec. Run a targeted near-duplicate search.
   Preserve a valid user-supplied path; otherwise use a provisional filename.

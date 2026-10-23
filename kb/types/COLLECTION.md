@@ -23,7 +23,7 @@ Quality goal is **self-contained checkability + economy**. A type spec must tell
 
 Author each outbound link from the reader need at its source. Inline links may supply definitions or shipped-system context; footer links carry an authorized label and context phrase.
 
-- **→ `kb/notes/`** — search when a theoretical claim explains why a global type contract has its shape, or when a defined term is needed to interpret it. Labels: `rests-on`, `defined-in`, `see-also`.
+- **→ `kb/theory/`** — search when a theoretical claim explains why a global type contract has its shape, or when a defined term is needed to interpret it. Labels: `rests-on`, `defined-in`, `see-also`.
 - **→ `kb/reference/`** — search when an accepted decision or shipped subsystem determines how a global type contract operates. Labels: `depends-on`, `evidenced-by`, `see-also`.
 
 Do not link to external sources or into `kb/work/`, `kb/sources/`, `kb/agent-memory-systems/`, or `kb/agentic-systems/` from global type specs. Put supporting evidence or unfinished design work in the appropriate collection and link to the promoted result.
@@ -36,6 +36,6 @@ Every Markdown artifact in this collection other than `COLLECTION.md`, `README.m
 
 - Collection-local type contracts → that collection's `types/` directory
 - Shipped architecture and decisions → `kb/reference/`
-- Transferable theory → `kb/notes/`
+- Transferable theory → `kb/theory/`
 - Procedures not defining a type's content contract → `kb/instructions/`
 - Work in progress → `kb/work/`

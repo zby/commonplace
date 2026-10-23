@@ -7,7 +7,7 @@ type: types/instruction.md
 
 **Target: $ARGUMENTS**
 
-If target is empty, ask which note to fix. If target is a name without path, search `kb/notes/` for a matching `.md` file.
+If target is empty, ask which note to fix. If target is a name without path, search `kb/theory/` for a matching `.md` file.
 
 ## What this is
 
