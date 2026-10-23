@@ -152,15 +152,18 @@ Record the accepted choices in a new ADR before implementation proceeds.
    Keep the remaining subareas intact unless separately directed. Refresh the
    move and redirect manifests after the prerequisite. This inventory does
    not commission those content changes or approve the provisional sort.
-3. **Installed-project policy.** New scaffolds use `theory`; existing consumers
-   may keep their own `notes` or other collection names. Generic runtime code
-   must support them without a dual-name fallback or mandatory directory
-   migration. All consumers still need to reconcile references to the renamed
-   shipped library and changed command/status APIs. Renaming a consumer-owned
-   collection is optional, not a prerequisite for runtime support. Decide how
-   init refresh avoids creating an unwanted second collection in an existing
-   project. A compatibility shim needs a named consumer, owner and removal
-   condition; do not invent that need.
+3. **Installed-project policy: decided (operator, 2026-10-23).** The scaffold
+   keeps seeding `kb/notes/` from the existing soft `user-notes-*` templates: a
+   project's general domain-understanding layer, a different concept from this
+   KB's strict Theory, so it keeps its own name. Only this checkout's
+   collection and the shipped library (`commonplace:theory/...`,
+   `<library>/theory/...`) rename. Init never creates a Theory collection, so
+   refresh cannot create a twin, and existing consumers keep their collections
+   unchanged. Consumers still reconcile references into the shipped library and
+   changed command/status APIs. A compatibility shim needs a named consumer,
+   owner and removal condition; do not invent that need. An optional
+   add-collection skill offering Theory as a prototype was discussed and
+   deferred until a project asks for it.
 4. **Frozen backlink policy.** Decide whether the command's mechanical rewrite
    is allowed in frozen reviews, ADRs and source-annotation links. Recommend
    allowing navigational backlink changes in those authored records while
@@ -268,6 +271,13 @@ Edit canonical skill files only. `CLAUDE.md` remains a symlink to `AGENTS.md`;
 do not turn it into a second independently edited root instruction file.
 
 ## 2. Scaffold and consuming-project control plane
+
+**Superseded in part by Gate 3's decision:** the scaffold keeps `kb/notes/`,
+the `user-notes-*` templates keep their names, and the tags template keeps
+`participating: [notes, ...]`. What remains here: `AGENTS.md.template`'s
+*library* routing row and library search recipe change to `theory`, while its
+project `kb/notes/` rows stay; consumer upgrade reconciles library references
+only. Read the rest of this section with that in mind.
 
 Rename these template files to `user-theory-COLLECTION.md` and
 `user-theory-README.md` under the same template directory:

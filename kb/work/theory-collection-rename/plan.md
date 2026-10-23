@@ -81,9 +81,9 @@ These were not in the framing's starting evidence and change the plan.
      collection contract's `unquoted-source-limit` field, in Notes and
      Articles ([ADR 122](../../reference/adr/122-collections-set-the-unquoted-source-limit.md)); it moves with `COLLECTION.md`, so the
      rename needs no validator change. Verify the relocated contract still binds.
-   - Layout declarations: change `hatch_build.SHIPPED`, scaffold/templates,
-     repository-specific scripts and CI to the shipped Theory layout.
-     Address init refresh for consumers keeping their original collection names.
+   - Layout declarations: change `hatch_build.SHIPPED`, repository-specific
+     scripts and CI to the shipped Theory layout, and the library rows of
+     `AGENTS.md.template`. The project scaffold keeps `kb/notes/` (question 10).
    - Preserve the arbitrary/namespaced-collection regressions added with Track 1.
      Re-run integration checks after the layout change; do not remove non-Theory
      fixtures merely to make the test tree match the shipped default.
@@ -123,10 +123,9 @@ In addition to the six in the [README](./README.md):
 9. **Library address.** Does `commonplace:notes/...` change to
    `commonplace:theory/...` for installed KBs, and how are their existing
    references found and rewritten?
-10. **Existing consumers and init refresh.** Consumers may keep `notes/` or
-    another name; runtime support must not require renaming it. Decide how
-    init refresh avoids creating an unwanted empty Theory twin while refreshing
-    library pointers and skills. Any consumer-owned rename remains optional.
+10. **Existing consumers and init refresh: decided 2026-10-23.** The scaffold
+    keeps `kb/notes/` (soft template) for projects; only this KB's collection
+    and the shipped library become Theory. No Theory twin can arise.
 11. **Review store.** Migrate keys in place, or record rename events that
     target identity follows? Does a renamed note keep its freshness, or must
     its reviews be redone?
