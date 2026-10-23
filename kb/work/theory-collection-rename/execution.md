@@ -67,23 +67,31 @@ virtual index, matching `index_directory.SKIP_DIR_NAMES`.
    retain the repository-wide search. Update build/CI, local schemas and type
    instances, procedures, root instructions, current reference, tests and site
    publication class by class. Generic runtime refactoring is complete; do not
-   replace it with Theory-specific eligibility. Namespace follow-up pending.
+   replace it with Theory-specific eligibility. Namespace and portable skill
+   routing landed in `e4c1bfcf1` and `f698aa90d`; live workshop follow-up is
+   `af299464c`. Final historical/workshop residual disposition remains open.
 4. **Byte pins:** preserve the exact subset above and all published analysis
-   members. No repinning or review-baseline migration. Verification pending.
+   members. No repinning or review-baseline migration. All protected hashes,
+   Quotes sections, affected ingest frontmatter and baseline store rows were
+   reverified after the namespace/publication batch.
 5. **Spellings:** baseline searches cover `kb/notes/`, relative Markdown links,
    `notes/types/`, collection slots, `<library>/notes/`, `commonplace:notes/`,
    Python path components and brace-list examples. Generic note terms stay.
 6. **Generated/projected forms:** switch shipped build layout and library
    routing; site discovers Theory. Init stubs keep their existing destinations.
-   Installation and site probes pending.
+   Installation and site probes passed; the generated-index redirect test
+   additionally verifies actual emitted HTML, not just validator acceptance.
 7. **Fresh install:** must still create Notes, not Theory; test both library
    availability and scaffold independence.
 8. **Existing installs/clones:** consumers keep custom collections and refresh
    pointers through init; reconcile library references separately. This source
    checkout never runs init. No compatibility alias is commissioned.
 9. **Diagnostics:** no new diagnostic promises or migration command are added.
-10. **Acceptance probe:** full suite, validation, site build, wheel/sdist and
-    disposable fresh/existing consumer scenarios remain required.
+10. **Acceptance probe:** 1,437 tests passed including slow wheel/sdist builds;
+    authored-file, redirect and landing validation passed. The site built and
+    all 593 rename redirects and targets were checked. Fresh non-editable
+    install and all six installed scenarios passed. Customized Notes refresh
+    is covered by the installation regressions and disposable consumer probe.
 11. **Drift guard:** retain generic arbitrary-collection tests and packaging/
     landing integrity checks; add explicit library-Theory/scaffold-Notes checks.
 12. **Historical witnesses:** baseline inventories, exact captures, old review
@@ -125,15 +133,39 @@ virtual index, matching `index_directory.SKIP_DIR_NAMES`.
 - Disposable consumer `/tmp/commonplace-theory-consumer-ukTvqz`: fresh init,
   `--check`, custom Notes contract preservation on refresh, library-Theory
   routing and absence of a Theory twin all passed. Init was not run here.
-- Redirect-map follow-up is prepared in `properdocs.yml`, not yet accepted:
-  validation reports eight pre-existing missing analysis-method/type targets
-  and six new virtual-index targets that the physical-file-only validator
-  cannot recognize. Resolve the generated-page discrepancy and account for
-  baseline failures before declaring publication verified.
-- Remaining: current cross-collection contracts, instruction/default and prose
-  residuals, consumer upgrade instruction, generated-index redirect validation,
-  wheel/sdist and complete installed scenarios, site build and final rescan.
-  The full rename is not release-ready.
+- Publication committed as `138bb42ab`. Shared generated-index selection fixes
+  validator recognition. An early site-hook event makes virtual pages visible
+  before the redirect plugin snapshots its inputs. Both regression tests failed
+  before that event-order fix and passed afterward. Four obsolete analysis-method
+  destinations now resolve to their replacements; four keys targeting deleted
+  types without a successor were removed. All 220 historical Notes source keys
+  remain. Redirect and landing validation report no failures or warnings.
+- Site build completed in 147.29 seconds. All 593 manifest changes have emitted
+  redirect HTML and built targets, including the six virtual indexes. Historical
+  capture links and unrelated anchor/index warnings remain; the build is not
+  claimed warning-free. Evidence: `/tmp/theory-site-final-build.log` and
+  `/tmp/theory-site-redirect-acceptance.json`.
+- Current contracts, instruction defaults, routing, prose and consumer upgrade
+  guidance committed as `f698aa90d`. All 76 changed KB documents validate.
+  Complete suite: 1,437 passed in 286.82 seconds, including slow tests
+  (`/tmp/theory-rename-final-integration.log`); Ruff and diff checks pass.
+- Preservation recheck: 1,072 protected paths, 516 Quotes sections and all 516
+  affected ingest frontmatters unchanged. No current pinned analysis member
+  changed. All rows in all seven backed-up SQLite tables remain byte-equivalent
+  at the row-value level, with identical counts; integrity check is `ok`.
+  `CLAUDE.md` remains a symlink to `AGENTS.md`.
+- Non-editable installed rehearsal passed all stages with automatic project
+  instruction loading and unchanged installation inventories. See
+  [installed rehearsal](./installed-rehearsal.md). It uses Codex CLI, not Pi;
+  no live source capture or PyPI release installation is claimed.
+- Final rescan found two additional live workshop draft type pointers and
+  current framing routes. Commit `af299464c` repairs those in 11 validated
+  artifacts without changing exact records or provisional lifecycle choices.
+- [Residual audit checkpoint](./residual-audit.md) records tracked and ignored
+  spelling searches, established dispositions and the remaining per-role work.
+  Remaining: finish historical/workshop residual disposition, retain the final
+  acceptance record and close this workshop. Do not call the
+  full rename release-ready until that audit and closeout are complete.
 
 Do not release an intermediate tree. Keep relocation/backlinks in their own
 commit. Do not remove this workshop until the final verification and consumer

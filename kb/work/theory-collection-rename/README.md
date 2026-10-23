@@ -3,6 +3,21 @@
 Posed by the operator on 2026-10-22, after the site menu was trimmed to
 Agentic Systems, Reference and the other collections.
 
+## Current execution status
+
+The full source/library rename is implemented under
+[ADR 123](../../reference/adr/123-theory-names-the-commonplace-library-collection.md).
+This KB and the shipped library use Theory; consuming projects keep their soft
+Notes scaffold and customized collections. The complete 1,437-test suite, site
+redirect acceptance and all six isolated installed-project stages pass. The
+[execution record](./execution.md) names commits, preservation checks and the
+remaining residual audit and closeout. Do not release before that closeout.
+
+The original framing, inventories and questions below are planning history,
+not unresolved authority gates. In particular, their original suggestion to
+scaffold Theory was superseded: init keeps Notes. Actual execution counts and
+operator decisions are in the execution record and ADR, not the pre-sort counts.
+
 ## Goal
 
 Rename the collection now at `kb/notes/` to **Theory**, so its name states its
@@ -94,7 +109,7 @@ state.
   name `kb/notes/`; `properdocs.yml` holds 215 redirect entries from
   `notes/` paths.
 
-## Prepared implementation inventory
+## Prepared implementation inventory (historical baseline)
 
 Read the [implementation plan](./implementation-plan.md) before executing.
 It provides the decision gates, runtime/build/scaffold changes, exact file
@@ -107,8 +122,9 @@ workshop/archive policies and tag roots; distinguishes intentional layout and
 state paths; and fixes coordination with the agent typing collection specs.
 Use it for the completed runtime work and its verification status; this
 workshop's other plans retain the rename/migration worklist. The generic scope
-refactor and collection-owned source bound are implemented. No collection has
-been renamed. The inventories remain pinned to their recorded pre-sort HEAD.
+refactor and collection-owned source bound were implemented at this planning
+checkpoint, before the collection rename. These inventories remain pinned to
+their recorded pre-sort HEAD.
 
 The dry run moves 431 files (429 Markdown and two schemas) and would rewrite
 2,119 Markdown paths, including 997 untracked local report files. It does not
@@ -121,7 +137,10 @@ inventories after it. The detailed implementation plan distinguishes that
 recorded decision from recommendations still awaiting approval, including
 consumer handling, protected records and review-state migration.
 
-## Open questions
+## Original decision questions
+
+These were the initial questions. ADR 123 and the execution record supersede
+their unresolved framing; they are retained to explain the preparation.
 
 1. **Depth.** Label only (menu and README heading), or rename the directory to
    `kb/theory/` with code, scaffold and declarations. ADR 116 favours the full

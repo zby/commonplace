@@ -2,14 +2,19 @@
 
 ## Intent and authority
 
-Make the existing theoretical collection consistently **Theory** in current
-code, paths, scaffold, contracts, navigation and operator instructions. Its
-members remain **notes**. This packet prepares that change; it does not
-approve or execute it. The operator is inclined toward a full rename and
-commissioned repository-wide preparation before deciding.
+Make this KB's theoretical collection and shipped library consistently
+**Theory** in paths, packaging, contracts, navigation and operator instructions.
+Its members remain **notes**. Project scaffolds keep their separate, soft Notes
+collection. The operator authorized implementation; ADR 123 records the policy
+and [execution](./execution.md) records landed changes and acceptance.
+
+This inventory originated before the evidence sort and implementation. Its
+pinned TSVs retain that baseline; the post-sort `execution-*.tsv` files governed
+the actual relocation. Do not treat historical counts or superseded suggestions
+as current mutation instructions.
 
 A successful implementation leaves `kb/theory/` in place of `kb/notes/`, ships
-`theory/` in the installed library, scaffolds `kb/theory/` for new projects,
+`theory/` in the installed library, keeps `kb/notes/` for new projects,
 and lets runtime commands operate on eligible collections without depending
 on their names. Existing published addresses continue to resolve. Historical records and arbitrary user collection names
 are not silently relabelled. The current workshop framing records an evidence
@@ -48,7 +53,8 @@ operation scope and shipped layout are separate concerns:
   metadata without a concrete requirement and an approved contract.
 - Build/scaffold manifests, this KB's routing instructions, and shipped-library
   addresses legitimately name the selected layout. Those declarations change
-  to Theory; generic runtime helpers and status fields must not.
+  to Theory for this KB and library, while project scaffolds keep Notes;
+  generic runtime helpers and status fields must not.
 
 The TSVs remain observations of the old code, not instructions to rename its
 identifiers. This revised runtime table and scope gate supersede the original
