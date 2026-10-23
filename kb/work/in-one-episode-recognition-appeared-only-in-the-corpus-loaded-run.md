@@ -28,16 +28,16 @@ and prior context from reviewing the research-program article.
 The pasted synthesis re-derived retained content and proposed two framings the
 KB had already settled against: a "proof-governed limit case" reading of the
 Gödel machine, where [the retained note treats it as one corner of the design
-space rather than an endpoint](../goedel-machines-are-a-proof-governed-case-of-self-modification.md),
+space rather than an endpoint](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md),
 and a split between explanatory and constructive work that sits in tension with
-[commitment, not derivation, creating new ground truth](../commitment-not-derivation-creates-new-ground-truth.md).
+[commitment, not derivation, creating new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md).
 It also proposed a new note that would have duplicated that Gödel note together
-with [universal software factory needs a declared universality axis](../universal-software-factory-needs-a-declared-universality-axis.md).
+with [universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md).
 
 The corpus-loaded session identified those retained notes, declined the
 duplicate proposal, raised the tension, and integrated only the convergence
 claim it judged genuinely new, as [open-ended theory learning and factory
-learning close the same reflective loop](../open-ended-theory-learning-and-factory-learning-close-the-same.md)
+learning close the same reflective loop](../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md)
 (mainline squash commit `d07f067a` for PR 172). That commit preserves the
 accepted output, not the intermediate decision trace.
 
@@ -49,7 +49,7 @@ day. This is a descriptive contrast between two bundled conditions, not an
 estimate of the corpus's effect. Retained theory and holding it are different —
 the corpus is the stored object, and holding it is a capacity of the composite
 that reads it, as
-[Naur's human-binding argument](../naur-equates-machine-execution-with-formulated-criteria.md)
+[Naur's human-binding argument](../notes/naur-equates-machine-execution-with-formulated-criteria.md)
 is corrected to say. The episode is a minimal witness that one deployed
 composite used retained material to place a cued proposal against what the KB
 already held.
@@ -64,10 +64,10 @@ necessary nor that access would be sufficient in another run.
 - **The contrast identifies a bundle, not a cause.** Corpus access, the loaded
   doctrine, the repository navigation tools, and the session's prior priming from
   the article review all moved together, so no component can be named as the
-  cause: [an experiment identifies only the contrast it actually runs](../an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+  cause: [an experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 - **Access is not sufficiency.** The episode shows one run in which the corpus
   was used, not that having it makes recognition happen, since
-  [knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md).
+  [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
 - **No comparative claim about the two products or models.** Their identities
   and configurations were not controlled, and the two runs did not face matched
   demands: the second was handed the first's output and asked to judge it, which
@@ -79,7 +79,7 @@ necessary nor that access would be sufficient in another run.
   rejected* is that session's own.
 - **The other side of the contrast is gone.** The ChatGPT-side transcript was
   never captured; only the pasted conclusion survives in the session record, and
-  [history has one chance to become checkable](../history-has-one-chance-to-become-checkable.md).
+  [history has one chance to become checkable](../notes/history-has-one-chance-to-become-checkable.md).
 - **The cue was handed over.** The pasted demand named Gödel machines, so
   reaching the relevant retained notes needed only a topic-level pointer.
   Recognition without such a cue was not tested.
@@ -100,8 +100,8 @@ necessary nor that access would be sufficient in another run.
 
 Relevant Notes:
 
-- [The deployed system, not the model alone, is the unit of learning](../the-deployed-system-not-the-model-is-the-unit-of-learning.md) — exemplifies: the episode's observed unit was a corpus, doctrine, and tooling composite rather than a model
-- [An experiment identifies only the contrast it actually runs](../an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: the premise behind refusing component-level attribution across the uncontrolled bundle
-- [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the premise behind reading the episode as one activation instance rather than a sufficiency claim
-- [Naur binds program theory to humans by equating machine execution with formulated criteria](../naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the retained-versus-held distinction the supported claim is stated in
-- [History has one chance to become checkable](../history-has-one-chance-to-become-checkable.md) — exemplifies: the uncaptured transcript is one instance of the closed conversion window
+- [The deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) — exemplifies: the episode's observed unit was a corpus, doctrine, and tooling composite rather than a model
+- [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: the premise behind refusing component-level attribution across the uncontrolled bundle
+- [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — grounds: the premise behind reading the episode as one activation instance rather than a sufficiency claim
+- [Naur binds program theory to humans by equating machine execution with formulated criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the retained-versus-held distinction the supported claim is stated in
+- [History has one chance to become checkable](../notes/history-has-one-chance-to-become-checkable.md) — exemplifies: the uncaptured transcript is one instance of the closed conversion window
