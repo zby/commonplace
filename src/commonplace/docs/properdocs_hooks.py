@@ -12,19 +12,12 @@ import re
 from functools import cache
 from pathlib import Path
 
+from properdocs.plugins import event_priority
 from properdocs.structure.files import File, InclusionLevel
 
 from commonplace.lib import index_directory, index_generated
-from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER, collection_dirs
-
-# Recursion caps for per-collection dir-index generation. instructions stops
-# at one level because each cp-skill-* subdir is essentially a single SKILL.md
-# and the review-gates/ tree is a deep but flat catalog of gate definitions.
-COLLECTION_MAX_DEPTH = {"instructions": 1}
-
-# Operational directories can have local landings without appearing in the
-# public navigation or receiving generated directory listings.
-UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
+from commonplace.lib.index_directory import UNPUBLISHED_COLLECTIONS
+from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER
 
 # Report retained/ pages are published, except subtrees carrying the
 # validation-ignore marker: exact captures and trial bundles are data, not
@@ -134,6 +127,10 @@ def _replace_generated(files, config, src_uri: str, content: str) -> None:
     files.append(File.generated(config, src_uri, content=content, inclusion=InclusionLevel.INCLUDED))
 
 
+# Redirect plugins snapshot documentation pages at their default-priority
+# on_files event. Materialize virtual pages first so their old URLs get HTML
+# redirects too, rather than a warning and no redirect file at post-build.
+@event_priority(50)
 def on_files(files, config):
     """Add per-collection dir-index pages as build-time virtual files.
 
@@ -152,30 +149,23 @@ def on_files(files, config):
         if file.abs_src_path is not None
     }
 
-    for collection in collection_dirs(root):
-        # Copied KBs inside report bundles have their own collections; they
-        # get no listings, since generated pages bypass exclude_docs.
-        if collection.resolve().relative_to(docs_dir).parts[0] in UNPUBLISHED_COLLECTIONS:
-            continue
-        pages = index_directory.collect_index_pages(
-            collection,
-            max_depth=COLLECTION_MAX_DEPTH.get(collection.name),
-            include=lambda path: path.resolve() in published_paths,
-        )
-        for output_path, content in pages:
-            src_uri = output_path.relative_to(docs_dir).as_posix()
-            stale = files.get_file_from_path(src_uri)
-            if stale is not None:
-                files.remove(stale)
-            files.append(
-                File.generated(
-                    config,
-                    src_uri,
-                    content=content,
-                    inclusion=InclusionLevel.INCLUDED,
-                )
+    pages = index_directory.collect_site_index_pages(
+        root, include=lambda path: path.resolve() in published_paths,
+    )
+    for output_path, content in pages:
+        src_uri = output_path.relative_to(docs_dir).as_posix()
+        stale = files.get_file_from_path(src_uri)
+        if stale is not None:
+            files.remove(stale)
+        files.append(
+            File.generated(
+                config,
+                src_uri,
+                content=content,
+                inclusion=InclusionLevel.INCLUDED,
             )
-            _generated_index_dirs.add(output_path.parent)
+        )
+        _generated_index_dirs.add(output_path.parent)
 
     collection = docs_dir / "agentic-system-analyses"
     if collection.is_dir():

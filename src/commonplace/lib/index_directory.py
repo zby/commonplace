@@ -16,6 +16,11 @@ from commonplace.lib.project_paths import (
 SKIP_DIR_NAMES = {"types"}
 INDEX_TYPE = "types/generated-index.md"
 
+# The shipped site's directory-listing policy. Keep the hook and redirect
+# validation on this same selection path; a directory name alone is not a page.
+COLLECTION_MAX_DEPTH = {"instructions": 1}
+UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
+
 
 def entry_sort_key(entry: tuple[str, str, str, str]) -> tuple[str, str]:
     """Sort by visible link text first, then by path for deterministic ties."""
@@ -181,6 +186,33 @@ def generate(
         lines.append("")
 
     return "\n".join(lines)
+
+
+def collect_site_index_pages(
+    root: Path,
+    *,
+    include: Callable[[Path], bool] | None = None,
+) -> list[tuple[Path, str]]:
+    """Directory listings supplied by the shipped site hook.
+
+    The build supplies its published-file filter. Without that filter this
+    describes generated addresses, not publication/exclusion acceptance; the
+    site build must still verify the configured published surface.
+    """
+    from commonplace.lib.project_paths import collection_dirs, kb_root
+
+    docs_dir = kb_root(root).resolve()
+    pages = []
+    for collection in collection_dirs(root):
+        # Copied collections in report bundles never receive virtual pages.
+        if collection.resolve().relative_to(docs_dir).parts[0] in UNPUBLISHED_COLLECTIONS:
+            continue
+        pages.extend(collect_index_pages(
+            collection,
+            max_depth=COLLECTION_MAX_DEPTH.get(collection.name),
+            include=include,
+        ))
+    return pages
 
 
 def collect_index_pages(

@@ -1994,10 +1994,24 @@ def validate_redirect_map(*, repo_root: Path) -> CheckResults:
         results.fails.append("[repository] redirect_maps: keys and targets must be paths")
         return results
 
+    generated_paths: set[str] = set()
+    shipped_hook = Path(__file__).resolve().parents[1] / "docs/properdocs_hooks.py"
+    hooks = config.get("hooks", [])
+    if isinstance(hooks, list) and any(
+        isinstance(hook, str) and (repo_root / hook).resolve() == shipped_hook
+        for hook in hooks
+    ):
+        from commonplace.lib.index_directory import collect_site_index_pages
+
+        generated_paths = {
+            path.relative_to(docs_dir).as_posix()
+            for path, _ in collect_site_index_pages(repo_root)
+        }
+
     broken = sorted(
         f"{old} -> {new}"
         for old, new in redirect_maps.items()
-        if not (docs_dir / new).is_file()
+        if not (docs_dir / new).is_file() and new not in generated_paths
     )
     if broken:
         results.fails.extend(
@@ -2008,7 +2022,10 @@ def validate_redirect_map(*, repo_root: Path) -> CheckResults:
             f"[repository] redirect targets: all {len(redirect_maps)} resolve"
         )
 
-    shadowed = sorted(old for old in redirect_maps if (docs_dir / old).exists())
+    shadowed = sorted(
+        old for old in redirect_maps
+        if (docs_dir / old).exists() or old in generated_paths
+    )
     if shadowed:
         results.fails.extend(
             f"[repository] redirect key shadows a live page: {old}" for old in shadowed

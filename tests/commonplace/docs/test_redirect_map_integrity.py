@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 import yaml
 
 from commonplace.cli import validate_notes
@@ -79,6 +80,65 @@ def test_redirect_map_validation_reports_live_key_and_chain(tmp_path: Path) -> N
         "[repository] redirect chain is not flat: notes/old.md -> notes/middle.md"
         in results.fails
     )
+
+
+def enable_shipped_hook(root: Path) -> None:
+    from commonplace.lib import validation
+
+    path = root / "properdocs.yml"
+    config = yaml.safe_load(path.read_text(encoding="utf-8"))
+    config["hooks"] = [str(Path(validation.__file__).resolve().parents[1] / "docs/properdocs_hooks.py")]
+    path.write_text(yaml.safe_dump(config), encoding="utf-8")
+
+
+@pytest.mark.parametrize("collection", ["theory", "claims", "research/knowledge"])
+def test_redirect_map_accepts_actual_generated_directory_addresses(
+    tmp_path: Path, collection: str,
+) -> None:
+    write_page(tmp_path, f"{collection}/COLLECTION.md")
+    write_page(tmp_path, f"{collection}/evidence/result.md")
+    write_config(tmp_path, {"old/list.md": f"{collection}/evidence/dir-index.md"})
+    enable_shipped_hook(tmp_path)
+
+    assert validate_redirect_map(repo_root=tmp_path).fails == []
+
+
+@pytest.mark.parametrize("target", [
+    "claims/types/dir-index.md", "claims/missing/dir-index.md",
+    "reports/cache/copied/dir-index.md", "instructions/skill/dir-index.md",
+])
+def test_redirect_map_rejects_addresses_the_hook_does_not_generate(
+    tmp_path: Path, target: str,
+) -> None:
+    for collection in ("claims", "reports/cache/copied", "instructions"):
+        write_page(tmp_path, f"{collection}/COLLECTION.md")
+    for page in ("claims/types/spec.md", "reports/cache/copied/n.md", "instructions/skill/SKILL.md"):
+        write_page(tmp_path, page)
+    write_config(tmp_path, {"old/list.md": target})
+    enable_shipped_hook(tmp_path)
+
+    assert validate_redirect_map(repo_root=tmp_path).fails == [
+        f"[repository] redirect target does not exist: old/list.md -> {target}"
+    ]
+
+
+def test_redirect_map_does_not_assume_a_generator_without_the_hook(tmp_path: Path) -> None:
+    write_page(tmp_path, "claims/COLLECTION.md")
+    write_page(tmp_path, "claims/n.md")
+    write_config(tmp_path, {"old/list.md": "claims/dir-index.md"})
+
+    assert validate_redirect_map(repo_root=tmp_path).fails
+
+
+def test_redirect_map_reports_shadowed_generated_page(tmp_path: Path) -> None:
+    write_page(tmp_path, "claims/COLLECTION.md")
+    write_page(tmp_path, "claims/n.md")
+    write_config(tmp_path, {"claims/dir-index.md": "claims/n.md"})
+    enable_shipped_hook(tmp_path)
+
+    assert validate_redirect_map(repo_root=tmp_path).fails == [
+        "[repository] redirect key shadows a live page: claims/dir-index.md"
+    ]
 
 
 def test_redirects_cli_target_reports_repository_validation(
