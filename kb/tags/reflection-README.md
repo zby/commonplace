@@ -37,7 +37,7 @@ Notes on reflective systems: systems that read and change their own organization
 
 - [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) — the witness: one reflective self-improving pathway despite uneven coverage and human-gated design judgment
 - [The tag-readme change as an observed causal-connection trace](../notes/evidence/tag-readme-trace-observed-causal-connection.md) — one bounded trace showing self-representation exerting causal force in both directions
-- [Six Commonplace paths establish broad addressability, not completeness](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) — an audit across six paths, with admission and model-realization gaps left open
+- [Six Commonplace paths establish broad addressability, not completeness](../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md) — an audit across six paths, with admission and model-realization gaps left open
 - [A vibe-noting trace shows persistence enables revision, not certification](../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) — one note history: retention made later revision possible without certifying the content
 
 ## Related Tags
