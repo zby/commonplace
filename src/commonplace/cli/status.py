@@ -27,7 +27,7 @@ def format_status(status: ProjectStatus) -> str:
         ),
         f"Git: {git_summary}",
         (
-            "Notes validation: "
+            f"Notes validation ({status.notes_validation.scope}): "
             f"{status.notes_validation.status}; "
             f"{status.notes_validation.failures} failures, "
             f"{status.notes_validation.warnings} warnings across "
@@ -76,6 +76,10 @@ def format_status_json(status: ProjectStatus) -> str:
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument("--json", action="store_true", help="Print structured status.")
+    parser.add_argument(
+        "--collection", required=True,
+        help="Collection name or path to validate; other status components keep their own scope.",
+    )
     # TODO: reconsider review-by-default after the review system is stable and
     # regularly used as an operational surface rather than accumulated state.
     parser.add_argument(
@@ -91,11 +95,15 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     if args.db and not args.review:
         parser.error("--db requires --review")
 
-    status = load_project_status(
-        repo_root=cwd if cwd is not None else Path.cwd(),
-        db_override=args.db,
-        include_review=args.review,
-    )
+    try:
+        status = load_project_status(
+            repo_root=cwd if cwd is not None else Path.cwd(),
+            collection=args.collection,
+            db_override=args.db,
+            include_review=args.review,
+        )
+    except (FileNotFoundError, ValueError) as exc:
+        parser.error(str(exc))
     print(format_status_json(status) if args.json else format_status(status))
     return 1 if status.status == "failed" else 0
 

@@ -185,8 +185,14 @@ Open-ended methods therefore remain report-shaped rather than being forced into 
 
 - positional gate ids, bundle names, conformance requests, and/or `critique` (e.g. `prose`, `semantic/grounding-alignment`, `type`, `collection/notes`, `critique`)
 - `--all-gates` selects every applicable verdict criterion in place of naming ids/bundles (mutually exclusive with them): all catalog gates plus each note's type- and collection-conformance pairs. It intentionally excludes report assays. Like every selector flag it only *chooses* pairs — the selected pairs still run through create-jobs → worker → finalize; it is not a one-shot "run all gates" command
-- `--note` to filter to specific note paths or directories
-- `--user-verified` to filter exactly to notes with committed `user-verified: true`
+- `--note` is required to select specific note paths or directories; collection
+  names do not define an implicit review set. Directory scopes inspect direct
+  frontmatter-bearing children, not nested content, and exclude collection
+  contracts, indexes and type definitions. A validation-ignored directory must
+  be selected by individual file paths rather than a directory sweep.
+- `--user-verified` filters the explicit `--note` scope to notes with committed
+  `user-verified: true`; it does not initiate a global scan. The same selection
+  rule applies to `commonplace-ack-trivial-note-changes`.
 - `--model-partition {model-partition}` selects the review model partition to inspect or write; omit it only for model-agnostic missing-baseline coverage
 - `--json`
 - `--reason {missing-baseline,criterion-changed,note-changed}`; changed-input filters match membership in `reasons`

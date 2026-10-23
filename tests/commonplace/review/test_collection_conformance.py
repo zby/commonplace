@@ -179,6 +179,7 @@ class TestSelectorCollectionPairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["collection/reference"],
+            note_filter=["kb/notes", "kb/reference"],
             user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id) for s in stale] == [
@@ -199,6 +200,7 @@ class TestSelectorCollectionPairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["collection"],
+            note_filter=["kb/notes", "kb/reference"],
             user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [

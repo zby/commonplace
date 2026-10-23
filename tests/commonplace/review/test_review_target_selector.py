@@ -240,6 +240,7 @@ class TestMissingReview:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes"],
             user_verified_only=True,
         )
 
@@ -261,6 +262,7 @@ class TestMissingReview:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["prose/source-residue"],
+            note_filter=["kb/notes", "kb/reference"],
             user_verified_only=True,
         )
 
@@ -331,7 +333,7 @@ class TestMissingReview:
         make_note(notes_dir / "verified.md", "Verified", "\nBody.\n", user_verified=True)
         make_gate(gates_dir / "prose" / "source-residue.md", "prose/source-residue", "prose")
 
-        with pytest.raises(ValueError, match="provide note paths/directories or --user-verified"):
+        with pytest.raises(ValueError, match="provide note paths/directories"):
             review_target_selector.select_stale_criteria(
                 tmp_path,
                 model=TEST_MODEL,

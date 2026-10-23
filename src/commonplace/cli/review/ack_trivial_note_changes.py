@@ -45,7 +45,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--user-verified",
         action="store_true",
-        help="Filter to notes with frontmatter user-verified: true.",
+        help="Filter the explicit --note scope to frontmatter user-verified: true (requires --note).",
     )
     parser.add_argument(
         "--model-partition",

@@ -41,8 +41,11 @@ running commands.
 
 Show one compact, read-only situation report assembled from project and command
 versions, Git state, notes validation, and workshop-and-task lifecycle
-validation. The default view gives stable next-action IDs and drill-down
-commands without embedding underlying rows. Review warnings, jobs, and
+validation. `--collection NAME_OR_PATH` is required and scopes notes validation;
+Git, lifecycle, and optional review summaries retain their separate project
+scopes. The JSON `notes_validation.scope` and each check's `scope` identify
+what was inspected. The default view gives stable next-action IDs and
+drill-down commands without embedding underlying rows. Review warnings, jobs, and
 freshness state are deliberately absent from the normal path while the review
 system remains irregular operational state; request them with `--review`.
 `--json` emits `commonplace.status.v1`. The command does not mutate, rank with a
@@ -51,6 +54,10 @@ model, schedule work, or become an authority for any displayed state.
 ### commonplace-validate
 
 Accepts a member file, artifact directory, ordinary subtree, or collection.
+Collection names resolve generically; there is no special Notes or Theory
+target. `today` and `recent` require `--collection NAME_OR_PATH` and filter
+that collection's validation targets by local-date modification time. They
+retain collection structure checks and ignore-marker exclusions.
 A directory containing `ARTIFACT.yaml` receives artifact checks and ordinary member
 checks, grouped as one artifact. Explicit file validation stays file-scoped.
 See [directory artifacts](./validation-contract.md#directory-artifacts).
@@ -124,9 +131,12 @@ The command dry-runs unless `--apply` is supplied.
 
 ### commonplace-promotion-candidates
 
-Rank unstructured note files by incoming links and write
-`kb/reports/cache/promotion-candidates.md`, separating invalid frontmatter from text
-candidates.
+Rank unstructured note files in the required `NAME_OR_PATH` collection argument
+by incoming links. Write `kb/reports/cache/promotion-candidates/<collection>/report.md`,
+where `<collection>` is the collection's path relative to `kb/`, including any
+namespace directories. Reports for distinct collections do not overwrite one
+another. Invalid frontmatter is separate from text candidates; validation-ignored
+subtrees are not candidates. Links resolve relative to the actual report path.
 
 ## Snapshots
 

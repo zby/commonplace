@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument(
         "--user-verified",
         action="store_true",
-        help="Filter to notes with frontmatter user-verified: true.",
+        help="Filter the explicit --note scope to frontmatter user-verified: true (requires --note).",
     )
     parser.add_argument("--json", action="store_true", help="JSON output with per-changed-input diffs and hashes.")
     parser.add_argument(

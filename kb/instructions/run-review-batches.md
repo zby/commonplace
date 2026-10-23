@@ -16,7 +16,10 @@ Inputs:
 
 - `{model-partition}` — review model partition, for example `claude-sonnet-5` or `codex`. Required: Commonplace designates no default review model or partition, so choose one that maps to a model the current harness can actually run.
 - which criteria to select — gate ids, bundle names, conformance requests (`type`, `collection`, or a narrowed virtual id), or `critique`. `--all-gates` selects the applicable verdict-kind catalog and conformance gates; report assays remain explicit opt-ins
-- note scope — `--note {note-or-dir}...` or `--user-verified`
+- note scope — required `--note {note-or-dir}...`; optionally add
+  `--user-verified` to filter that explicit scope. Directory scopes inspect
+  direct children only and exclude collection contracts, indexes and type
+  definitions; select individual files to inspect validation-ignored content.
 - selector mode — `requested` for explicit execution, or default stale selection
 - grouping — `note` or `criterion`
 
@@ -46,7 +49,7 @@ commonplace-review-target-selector --mode requested --model-partition {model-par
 For a user-verified sweep over explicit gates:
 
 ```bash
-commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --user-verified --json \
+commonplace-review-target-selector --mode requested --model-partition {model-partition} {gate-or-bundle}... --note {note-or-dir}... --user-verified --json \
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 
@@ -62,7 +65,7 @@ commonplace-review-target-selector --model-partition {model-partition} {gate-or-
 For all gates over user-verified notes:
 
 ```bash
-commonplace-review-target-selector --model-partition {model-partition} --all-gates --user-verified --json \
+commonplace-review-target-selector --model-partition {model-partition} --all-gates --note {note-or-dir}... --user-verified --json \
   | commonplace-create-review-jobs --input - --grouping {note|criterion} [--batch-size {n}]
 ```
 

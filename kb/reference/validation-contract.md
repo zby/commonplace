@@ -44,6 +44,17 @@ grouped under directory artifacts. It is not the total number of targets.
 Presentation does not change severities or exit behavior: warnings exit zero;
 failures exit nonzero.
 
+## Explicit collection and date scopes
+
+Collection names and paths use generic target resolution, without a privileged
+Notes or Theory collection. `today` and `recent` require
+`--collection NAME_OR_PATH`. They enumerate that collection's validation
+surface, apply the local-date modification-time filter to each target file or
+artifact directory, and retain the collection's structure checks and ignored
+subtree notices. They do not scan other collections or bypass validation-ignore
+markers. A directory artifact's target timestamp is the directory's mtime,
+not an aggregation of its members' mtimes.
+
 ## Directory artifacts
 
 A [directory artifact](./definitions/directory-artifact.md) is a directory

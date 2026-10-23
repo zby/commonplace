@@ -11,6 +11,10 @@ from commonplace.freshness.selector import ChangedInput
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.library import artifact_file
+from commonplace.lib.project_paths import (
+    VALIDATION_IGNORE_MARKER,
+    is_collection_metadata,
+)
 from commonplace.review.collection_conformance import (
     COLLECTION_CONFORMANCE_LENS,
     is_collection_conformance_request,
@@ -44,9 +48,6 @@ from commonplace.review.type_conformance import (
     resolve_type_criterion_id,
 )
 
-NOTES_ROOT = Path("kb/notes")
-REFERENCE_ROOT = Path("kb/reference")
-REVIEWABLE_ROOTS: tuple[Path, ...] = (NOTES_ROOT, REFERENCE_ROOT)
 SELECTOR_SCHEMA = "commonplace-review-targets/2"
 
 
@@ -76,9 +77,16 @@ def _expand_note_filter(repo_root: Path, raw: str) -> list[Path]:
     if path.is_file():
         return [path]
     if path.is_dir():
+        if any(
+            (parent / VALIDATION_IGNORE_MARKER).exists()
+            for parent in (path, *path.parents)
+            if parent == repo_root.resolve() or repo_root.resolve() in parent.parents
+        ):
+            raise ValueError(f"Review directory is validation-ignored; select files explicitly: {raw}")
         notes: list[Path] = []
         for child in sorted(path.glob("*.md")):
-            if _is_index(child) or _is_type_definition_content(child, repo_root):
+            if (_is_index(child) or is_collection_metadata(child)
+                    or _is_type_definition_content(child, repo_root)):
                 continue
             if not _has_frontmatter(child):
                 continue
@@ -98,37 +106,12 @@ def _is_user_verified(path: Path) -> bool:
     return result.ok and result.data.get("user-verified") is True
 
 
-def list_reviewable_notes(repo_root: Path) -> list[Path]:
-    """Top-level `*.md` notes under each reviewable scan root that have YAML frontmatter."""
-    found: list[Path] = []
-    for rel_root in REVIEWABLE_ROOTS:
-        root = repo_root / rel_root
-        if not root.is_dir():
-            continue
-        for path in root.glob("*.md"):
-            if _is_index(path) or not _has_frontmatter(path):
-                continue
-            found.append(path)
-    return sorted(found)
-
-
-def list_user_verified_notes(repo_root: Path) -> list[Path]:
-    return [
-        path
-        for path in list_reviewable_notes(repo_root)
-        if _is_user_verified(path)
-    ]
-
-
 def _select_notes(
     repo_root: Path,
     *,
     note_filter: list[str] | None,
     user_verified_only: bool,
 ) -> list[Path]:
-    if note_filter and user_verified_only:
-        raise ValueError("--note and --user-verified are mutually exclusive")
-
     if note_filter:
         notes: list[Path] = []
         seen: set[Path] = set()
@@ -137,11 +120,10 @@ def _select_notes(
                 if path in seen:
                     continue
                 seen.add(path)
-                notes.append(path)
+                if not user_verified_only or _is_user_verified(path):
+                    notes.append(path)
         return notes
-    if user_verified_only:
-        return list_user_verified_notes(repo_root)
-    raise ValueError("provide note paths/directories or --user-verified")
+    raise ValueError("provide note paths/directories; --user-verified only filters explicit scope")
 
 
 def _normalize_requested_criterion_ids(

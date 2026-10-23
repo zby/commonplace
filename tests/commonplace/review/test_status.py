@@ -24,7 +24,7 @@ def test_status_omits_review_and_does_not_create_store_by_default(
     write(tmp_path / "kb/work/README.md", "# Work\n")
     db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
 
-    exit_code = status_main(["--json"], cwd=tmp_path)
+    exit_code = status_main(["--collection", "notes", "--json"], cwd=tmp_path)
     payload = json.loads(capsys.readouterr().out)
 
     assert exit_code == 0
@@ -46,7 +46,7 @@ def test_status_review_flag_reports_missing_store_without_creating_it(
     write(tmp_path / "kb/work/README.md", "# Work\n")
     db_path = tmp_path / "kb/reports/state/commonplace-store.sqlite"
 
-    exit_code = status_main(["--review", "--json"], cwd=tmp_path)
+    exit_code = status_main(["--collection", "notes", "--review", "--json"], cwd=tmp_path)
     payload = json.loads(capsys.readouterr().out)
 
     assert exit_code == 1
@@ -85,7 +85,7 @@ def test_status_reports_basic_project_command_version_skew(
     write(tmp_path / "kb/work/README.md", "# Work\n")
     monkeypatch.setattr(project_status, "_command_version", lambda: "9.9.9")
 
-    status_main(["--json"], cwd=tmp_path)
+    status_main(["--collection", "notes", "--json"], cwd=tmp_path)
     payload = json.loads(capsys.readouterr().out)
 
     assert payload["actions"][0] == {

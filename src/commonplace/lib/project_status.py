@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import shlex
 import sqlite3
 import subprocess
 import tomllib
@@ -12,8 +13,8 @@ from pathlib import Path
 from commonplace.freshness.status import load_target_status
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
-    kb_root,
     list_collection_validation_paths,
+    resolve_collection,
 )
 from commonplace.lib.validation import run_validation
 from commonplace.review.review_db import connect
@@ -44,6 +45,7 @@ class CheckStatus:
     failures: int
     warnings: int
     details_command: str
+    scope: str
 
 
 @dataclass(frozen=True)
@@ -130,8 +132,8 @@ def _command_version() -> str | None:
         return None
 
 
-def load_notes_validation_status(repo_root: Path) -> CheckStatus:
-    collection = (kb_root(repo_root) / "notes").resolve()
+def load_notes_validation_status(repo_root: Path, collection: str) -> CheckStatus:
+    collection = resolve_collection(collection, repo_root)
     paths = tuple(list_collection_validation_paths(collection))
     outcome = run_validation(
         paths,
@@ -148,7 +150,10 @@ def load_notes_validation_status(repo_root: Path) -> CheckStatus:
         subjects=len(outcome.paths),
         failures=failures,
         warnings=warnings,
-        details_command="commonplace-validate notes",
+        details_command=shlex.join([
+            "commonplace-validate", collection.relative_to(repo_root).as_posix(),
+        ]),
+        scope=collection.relative_to(repo_root).as_posix(),
     )
 
 
@@ -163,6 +168,7 @@ def load_lifecycle_status(repo_root: Path) -> CheckStatus:
         failures=failures,
         warnings=warnings,
         details_command="commonplace-validate lifecycle",
+        scope="kb/work and kb/tasks",
     )
 
 
@@ -353,13 +359,14 @@ def _actions(
 def load_project_status(
     *,
     repo_root: Path,
+    collection: str,
     db_override: str | None = None,
     include_review: bool = False,
 ) -> ProjectStatus:
     resolved_root = repo_root.resolve()
     project_version = _project_version(resolved_root)
     command_version = _command_version()
-    notes_validation = load_notes_validation_status(resolved_root)
+    notes_validation = load_notes_validation_status(resolved_root, collection)
     lifecycle = load_lifecycle_status(resolved_root)
     review = (
         load_review_status(resolved_root, db_override=db_override)

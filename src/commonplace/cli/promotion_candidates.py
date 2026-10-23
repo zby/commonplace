@@ -1,4 +1,4 @@
-"""Generate a promotion candidates report for kb/notes/."""
+"""Generate a promotion candidates report for an explicit collection."""
 
 from __future__ import annotations
 
@@ -14,11 +14,12 @@ from commonplace.lib.promotion import write_promotion_candidates_report
 @checks_library
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args(argv)
+    parser.add_argument("collection", help="Collection name or path under this KB.")
+    args = parser.parse_args(argv)
     root = Path.cwd().resolve()
     try:
-        result = write_promotion_candidates_report(root)
-    except FileNotFoundError as exc:
+        result = write_promotion_candidates_report(root, args.collection)
+    except (FileNotFoundError, ValueError) as exc:
         print(exc, file=sys.stderr)
         return 1
 

@@ -240,6 +240,7 @@ class TestSelectorTypePairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["type/definition"],
+            note_filter=["kb/notes"],
             user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id) for s in stale] == [
@@ -260,6 +261,7 @@ class TestSelectorTypePairs:
             tmp_path,
             model=TEST_MODEL,
             criterion_ids=["type"],
+            note_filter=["kb/notes"],
             user_verified_only=True,
         )
         assert [(s.note_path, s.criterion_id, s.reasons) for s in stale] == [

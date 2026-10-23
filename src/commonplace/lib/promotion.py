@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -13,7 +14,11 @@ from commonplace.lib.note_parser import (
     find_markdown_links,
     strip_frontmatter,
 )
-from commonplace.lib.project_paths import list_collection_note_paths
+from commonplace.lib.project_paths import (
+    kb_root,
+    list_collection_validation_paths,
+    resolve_collection,
+)
 
 
 @dataclass(frozen=True)
@@ -33,18 +38,27 @@ def resolve_link(source: Path, target: str) -> Path | None:
     return (source.parent / target).resolve()
 
 
-def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
-    """Write the promotion candidates report for kb/notes/."""
-    notes_dir = root / "kb" / "notes"
-    reports_dir = root / "kb" / "reports" / "cache"
-    if not notes_dir.is_dir():
-        raise FileNotFoundError(f"Not a directory: {notes_dir}")
+def write_promotion_candidates_report(
+    root: Path, collection: str,
+) -> PromotionReportResult:
+    """Rank candidates in an explicit collection, with a scope-specific report."""
+    root = root.resolve()
+    notes_dir = resolve_collection(collection, root)
+    output = (
+        kb_root(root) / "reports" / "cache" / "promotion-candidates"
+        / notes_dir.relative_to(kb_root(root)) / "report.md"
+    )
+
+    def report_link(path: Path) -> str:
+        return Path(os.path.relpath(path, output.parent)).as_posix()
 
     text_files: dict[Path, str] = {}
     invalid_frontmatter: dict[Path, tuple[str, ...]] = {}
     all_notes: dict[Path, dict] = {}
 
-    for path in list_collection_note_paths(notes_dir):
+    for path in list_collection_validation_paths(notes_dir):
+        if not path.is_file() or path.suffix != ".md":
+            continue
         if path.name in ("index.md", "dir-index.md", "README.md"):
             continue
 
@@ -89,12 +103,12 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
         lines: list[str] = []
         for rel, title, count, sources in entries:
             source_list = ", ".join(
-                f"[{all_notes[s]['title']}](../../notes/{all_notes[s]['rel'].relative_to(notes_dir)})"
+                f"[{all_notes[s]['title']}]({report_link(s)})"
                 for s in sources[:3]
             )
             if len(sources) > 3:
                 source_list += f" +{len(sources) - 3} more"
-            lines.append(f"- [{title}](../../notes/{rel}) - **{count} links in**")
+            lines.append(f"- [{title}]({report_link(notes_dir / rel)}) - **{count} links in**")
             if source_list:
                 lines.append(f"  Sources: {source_list}")
             lines.append("")
@@ -103,6 +117,8 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     text_with_links = rank(text_files)
     lines = [
         f"# Unstructured Text Candidates - {datetime.now(UTC).astimezone().date()}",
+        "",
+        f"Collection: `{notes_dir.relative_to(root).as_posix()}`",
         "",
         f"Unstructured text files: {len(text_files)}",
         "",
@@ -117,9 +133,8 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     lines.extend(["## Invalid frontmatter", ""])
     if invalid_frontmatter:
         for path, errors in sorted(invalid_frontmatter.items()):
-            rel = all_notes[path]["rel"].relative_to(notes_dir)
             title = all_notes[path]["title"]
-            lines.append(f"- [{title}](../../notes/{rel})")
+            lines.append(f"- [{title}]({report_link(path)})")
             for error in errors:
                 diagnostic = " ".join(error.split())
                 lines.append(f"  - {diagnostic}")
@@ -127,7 +142,6 @@ def write_promotion_candidates_report(root: Path) -> PromotionReportResult:
     else:
         lines.extend(["No invalid frontmatter found.", ""])
 
-    output = reports_dir / "promotion-candidates.md"
-    reports_dir.mkdir(parents=True, exist_ok=True)
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines), encoding="utf-8")
     return PromotionReportResult(output, len(text_files), len(invalid_frontmatter))

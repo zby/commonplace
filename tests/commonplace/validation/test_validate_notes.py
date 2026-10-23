@@ -602,11 +602,13 @@ traits: []
     today_note.touch()
     os.utime(old_note, (old_ts, old_ts))
 
-    recent = validate_notes.resolve_validation_target("recent", repo_root=tmp_path)
+    recent = validate_notes.resolve_validation_target(
+        "recent", repo_root=tmp_path, collection="notes",
+    )
 
     assert today_note.resolve() in recent.paths
     assert old_note.resolve() not in recent.paths
-    assert recent.collection is None
+    assert recent.collection == notes_root.resolve()
 
 
 def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:

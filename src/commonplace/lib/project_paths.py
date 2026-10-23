@@ -213,9 +213,17 @@ def list_type_spec_paths(root: Path) -> list[Path]:
     )
 
 
-def list_notes_collection_paths(root: Path) -> list[Path]:
-    """Return markdown note paths under kb/notes only."""
-    return list_collection_note_paths(kb_root(root) / "notes")
+def resolve_collection(arg: str | Path, root: Path) -> Path:
+    """Resolve an explicit collection name or path inside this project's KB."""
+    boundary = kb_root(root).resolve()
+    raw = Path(arg)
+    candidate = raw if raw.is_absolute() else root / raw
+    if not candidate.exists() and not raw.is_absolute():
+        candidate = boundary / raw
+    candidate = candidate.resolve()
+    if boundary not in candidate.parents or not is_collection_dir(candidate):
+        raise ValueError(f"Not a collection under {boundary}: {arg}")
+    return candidate
 
 
 def find_repo_markdown_files(root: Path) -> list[Path]:

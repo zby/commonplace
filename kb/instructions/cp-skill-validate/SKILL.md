@@ -23,7 +23,13 @@ not job acceptance. Acceptance may add labelled invocation residue. Report
 that distinction with a pass. Use `--json` for findings with explicit repair
 fields, or default/`--full` output for the shared rendered finding text.
 
-For ordinary targets, follow the script below. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope. Run every check even after a failure, and report failure at the end:
+For `today` or `recent`, require a collection name or path; ask for it if
+missing. Run `commonplace-validate today --collection <collection>` (or
+`recent`), quoting the collection path as needed. Do not pass the target and
+options as one quoted argument. The date filter applies to validation targets
+inside that collection; collection structure and ignore-marker checks remain.
+
+For other ordinary targets, follow the script below. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope. Run every check even after a failure, and report failure at the end:
 
 ```bash
 if [ "$ARGUMENTS" = "all" ]; then
@@ -52,8 +58,10 @@ Prefer the narrowest target that covers the user's request. For write/edit workf
 - "all": validate each top-level collection in a separate command
 - "landings": validate that every top-level collection has a non-colliding `README.md`
 - "redirects": validate the live `properdocs.yml` redirect map against its published tree
-- "notes": validate all `.md` files in `kb/notes/`
-- "recent" or "today": validate notes modified today
+- "notes", "theory", or any other existing collection name: resolve that
+  collection through the same generic target lookup
+- "recent" or "today": validate targets modified today in the explicitly
+  supplied `--collection` scope, using the separate invocation above
 - Empty: ask which note to validate
 
 Report the script output directly. Do not interpret, supplement, or override its findings.

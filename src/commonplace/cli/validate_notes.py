@@ -20,8 +20,8 @@ from commonplace.lib.project_paths import (
     kb_root,
     list_collection_validation_paths,
     list_directory_validation_paths,
-    list_notes_collection_paths,
     list_type_spec_paths,
+    resolve_collection,
     resolve_note,
     validation_ignored_dirs,
 )
@@ -76,6 +76,13 @@ class ValidationReport:
     excluded_subtrees: tuple[str, ...] = ()
 
     @property
+    def details_command(self) -> str:
+        args = ["commonplace-validate", "--full", self.target]
+        if self.target in {"today", "recent"}:
+            args.extend(["--collection", self.scope])
+        return shlex.join(args)
+
+    @property
     def warning_count(self) -> int:
         return sum(item.severity == "warning" for item in self.diagnostics)
 
@@ -105,23 +112,27 @@ def _collection_target(collection: Path) -> ResolvedValidationTarget:
 
 
 def resolve_validation_target(
-    arg: str, *, repo_root: Path
+    arg: str, *, repo_root: Path, collection: str | None = None
 ) -> ResolvedValidationTarget:
+    if collection is not None and arg not in {"recent", "today"}:
+        raise ValueError("--collection is only valid with today/recent")
     if arg == "all":
         raise ValueError(_TOO_BROAD_MESSAGE)
-    if arg == "notes":
-        collection = (kb_root(repo_root) / "notes").resolve()
-        return _collection_target(collection)
     if arg == "types":
         return ResolvedValidationTarget(paths=tuple(list_type_spec_paths(repo_root)))
 
     if arg in {"recent", "today"}:
+        if collection is None:
+            raise ValueError("today/recent requires --collection NAME_OR_PATH")
+        scope = _collection_target(resolve_collection(collection, repo_root))
         today = datetime.now(UTC).astimezone().date()
         return ResolvedValidationTarget(
+            collection=scope.collection,
+            ignored_dirs=scope.ignored_dirs,
             paths=tuple(
                 sorted(
                     path
-                    for path in list_notes_collection_paths(repo_root)
+                    for path in scope.paths
                     if datetime.fromtimestamp(path.stat().st_mtime, tz=UTC)
                     .astimezone()
                     .date()
@@ -451,8 +462,7 @@ def format_compact_report(report: ValidationReport) -> str:
             for item in selected
         )
 
-    detail_target = shlex.quote(report.target)
-    lines.extend(("", f"Details: commonplace-validate --full {detail_target}"))
+    lines.extend(("", f"Details: {report.details_command}"))
     return "\n".join(lines)
 
 
@@ -489,7 +499,7 @@ def format_json_report(report: ValidationReport) -> str:
             for item in report.analysed_artifacts
         ],
         "excluded_subtrees": list(report.excluded_subtrees),
-        "details_command": f"commonplace-validate --full {shlex.quote(report.target)}",
+        "details_command": report.details_command,
     }
     return json.dumps(payload, indent=2, sort_keys=True)
 
@@ -658,10 +668,16 @@ def main(argv: list[str] | None = None) -> int:
         "target",
         help=(
             "directory, note path or name, types, landings, redirects, "
-            "lifecycle, or today/recent (kb/notes modified today)"
+            "lifecycle, or today/recent (requires --collection)"
         ),
     )
+    parser.add_argument(
+        "--collection",
+        help="Collection name or path to scope today/recent validation.",
+    )
     args = parser.parse_args(argv)
+    if args.collection is not None and (args.target not in {"today", "recent"} or args.role):
+        parser.error("--collection is only valid with today/recent")
     if (args.artifact_directory is None) != (args.role is None):
         parser.error("--artifact and --role must be supplied together")
     if args.role is not None and args.output is not None:
@@ -724,7 +740,9 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if results.fails else 0
 
     try:
-        target = resolve_validation_target(args.target, repo_root=repo_root)
+        target = resolve_validation_target(
+            args.target, repo_root=repo_root, collection=args.collection,
+        )
     except (FileNotFoundError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
