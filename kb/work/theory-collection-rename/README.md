@@ -49,6 +49,19 @@ the collection is the theory, its members are notes.
   placement test of `kb/notes/COLLECTION.md` applied to evidence. Sort and
   move these before the rename.
 
+## Implementation clarifications (2026-10-23)
+
+- The operator authorized implementation after the plan update. The scaffold
+  keeps its soft project `kb/notes/` collection; this KB and the shipped library
+  become Theory.
+- Inspect what a frozen record actually protects. ADRs are semantically frozen,
+  not byte-frozen: repair navigational links while preserving the decision.
+  Identify exact-capture and hash-pinned obligations separately rather than
+  assuming all historical prose is immutable.
+- Review/freshness continuity is not required. The reviews are already old and
+  the operator expects a new system. Leave historical state intact without
+  migrating keys or baselines; designing the replacement is separate work.
+
 ## Constraint
 
 [ADR 116](../../reference/adr/116-one-word-per-concept-across-prose-and-code.md)

@@ -69,9 +69,10 @@ execution manifest. After the prerequisite moves, reconcile their exact old/new
 paths, backlink effects and redirects before the collection move; do not use
 the 431-file count as a fixed target. The general plan has been synchronized
 with this runtime-independence revision and the final audit categories.
-Review-state continuity remains unresolved: this packet recommends preserving
-historical state without migration as a lower-scope option; neither plan
-authorizes a database rewrite. Refresh both plans' execution counts and
+Review-state continuity is not required (operator, 2026-10-23). Keep existing
+historical state without migrating database keys or freshness baselines. The
+operator considers the reviews old and expects a separately designed replacement
+system; this rename does not commission that design or a database rewrite. Refresh both plans' execution counts and
 worklists after the prerequisite moves.
 
 ## Evidence boundary and inventory map
@@ -133,8 +134,9 @@ migration deliverables.
 
 ## Decisions required before mutation
 
-These recommendations are preparation, **not adopted operator decisions**.
-Record the accepted choices in a new ADR before implementation proceeds.
+The operator authorized implementation after the plan update. The scaffold
+policy below and the subsequent frozen-record and freshness clarifications
+govern execution. Record these choices in the rename ADR before relocation.
 
 1. **Full rename and its meaning.** Approve `kb/notes/` → `kb/theory/`, library
    `notes/` → `theory/` and collection label `Theory`. Replace unnecessary
@@ -164,21 +166,24 @@ Record the accepted choices in a new ADR before implementation proceeds.
    owner and removal condition; do not invent that need. An optional
    add-collection skill offering Theory as a prototype was discussed and
    deferred until a project asks for it.
-4. **Frozen backlink policy.** Decide whether the command's mechanical rewrite
-   is allowed in frozen reviews, ADRs and source-annotation links. Recommend
-   allowing navigational backlink changes in those authored records while
-   preserving quoted source material, captured inputs, manifests, checksums,
-   experimental versions and retained analysis sets byte-for-byte. Site
-   redirects can serve old links in published records, but cannot repair
-   repository-relative filesystem links for agents. Accept that limitation
-   explicitly if preserving bytes wins. The current command has no exclusion
-   option; do not run `--apply` blindly under the recommended policy.
-5. **Local review/freshness state.** Recommend retaining historical state as
-   history and accepting new path identities/new baselines for moved artifacts,
-   rather than adding a database migration without a demonstrated continuity
-   requirement. Back up state and record the expected loss of current-pair
-   continuity. If preserving current reviews is required, stop and scope that
-   work before relocation. Do not delete or silently rewrite the database.
+4. **Frozen backlink policy: inspect the actual obligation.** The operator
+   clarified that ADRs are semantically, not byte-for-byte, frozen: update
+   navigational links without changing the recorded decision. Apply the same
+   distinction by inspecting each record's governing contract and role, not by
+   treating a historical collection as uniformly immutable. Legacy reviews
+   preserve findings and review boundaries; ingests preserve snapshot identity
+   and quotations while retaining an active authored linking surface. Exact
+   captures, hash-pinned analysis members, manifests and experimental versions
+   remain byte-preserved. Identify the exact protected subset before applying
+   relocation; the command has no exclusion option. Site redirects do not
+   provide repository-relative filesystem compatibility for protected old links.
+5. **Local review/freshness state: continuity not required (operator,
+   2026-10-23).** The reviews are already old. Keep historical state without
+   migrating database keys, carrying reviews forward, mass-acknowledging
+   freshness or repairing old report packets. Back up state before relocation;
+   do not delete or rewrite it. Moved artifacts acquire new path identities and
+   may lack current reviews. A replacement review/freshness system is separate
+   future work, not part of this rename.
 
 6. **Operation scope and rule applicability: resolved.** Preserve the explicit
    scopes implemented in `43a98d836`, summarized below. The governing collection

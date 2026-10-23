@@ -68,9 +68,10 @@ These were not in the framing's starting evidence and change the plan.
 1. **Decide** (this workshop, then an ADR). Answer the questions below; write
    the ADR that amends the collection layout and the shipped library.
 2. **Prepare tooling** (code commits, tests first).
-   - State policy: back up the store; decide whether to preserve historical
-     identities and establish new baselines, migrate current keys, or track
-     rename identity. Scope/test any required migration before relocation.
+   - State policy: decided by the operator, 2026-10-23. Review/freshness
+     continuity is not required because the reviews are already old. Back up
+     the store and leave historical keys and packets unchanged; do not migrate
+     keys or carry reviews forward. A replacement system is separate work.
    - Generic runtime: done in `43a98d836`. Status and date validation require
      `--collection`; promotion takes an explicit collection and emits scoped
      reports with path-derived links. Review requires explicit `--note` targets;
@@ -126,9 +127,10 @@ In addition to the six in the [README](./README.md):
 10. **Existing consumers and init refresh: decided 2026-10-23.** The scaffold
     keeps `kb/notes/` (soft template) for projects; only this KB's collection
     and the shipped library become Theory. No Theory twin can arise.
-11. **Review store.** Migrate keys in place, or record rename events that
-    target identity follows? Does a renamed note keep its freshness, or must
-    its reviews be redone?
+11. **Review store: decided 2026-10-23.** No continuity requirement. Preserve
+    historical state without migrating keys or freshness baselines. The old
+    reviews do not need to follow relocated artifacts. A new review/freshness
+    system needs separate design.
 12. **Pinned bytes.** Exclude checksum- and manifest-pinned files (sources,
     snapshots, retained reports and sets) from the link rewrite and rely on
     redirects, or rewrite and re-pin under a recorded migration as ADR 087
