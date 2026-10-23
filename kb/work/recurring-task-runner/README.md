@@ -2,10 +2,12 @@
 
 ## Goal
 
-Run recurring KB tasks unattended: a system cron tick starts a Workjig run
-that launches one headless harness session with a task's runbook, retains the
-run, and delivers the result to something that reads it. Nothing in the
-interactive harness schedules or relays anything.
+Run recurring KB tasks unattended through one heartbeat: a system cron tick
+starts one Workjig run that launches one headless harness session, which
+reads the recurring task directory, runs the tasks that are due, commits each
+task's declared paths separately, and exits. Nothing in the interactive
+harness schedules or relays anything, and the runner holds no per-task
+schedule.
 
 Posed by the operator on 2026-10-23, in the conversation that separated two
 underexplored areas: artifact lifecycles and many-agent collaboration.
@@ -15,16 +17,59 @@ standing constraints on what the runner may automate and how it runs:
 - **Automatic tasks mostly do obvious work.** A recurring task classifies,
   flags, measures or reports. It does not make judgment calls that the
   library would have to defend later.
-- **Every automatic change is easily reversible.** A run ends in one commit
-  that `git revert` undoes whole. No automatic change touches a surface whose
-  reversal would need a relocation, a redirect or a re-extraction.
+- **Every automatic change is easily reversible.** Each task's run ends in
+  one commit that `git revert` undoes whole. No automatic change touches a
+  surface whose reversal would need a relocation, a redirect or a
+  re-extraction.
 - **No worktrees or branches.** Runs happen in the operator's checkout on the
   current branch. The operator judged that merging creates as much chaos as
   it prevents, and that the start should be experiments with easy tasks.
 - **Tasks isolate themselves.** Isolation is a property of the task, not of
   the runner: a task declares the paths it writes, stays inside them, and
-  the runner stages and commits only those paths. Other sessions' uncommitted
+  only those paths are staged for its commit. Other sessions' uncommitted
   work is never swept into a task commit.
+- **One heartbeat, not one cron entry per task.** The operator chose the
+  heartbeat on 2026-10-23 after checking how other systems dispatch
+  recurring work; the evidence is below. Adding a task means adding a
+  runbook, not editing cron.
+
+## Why a heartbeat, and which kind
+
+Analysed systems split on one fact: whether a long-lived session exists that
+keeps its conversation context between triggers (a resident session, in this
+workshop's usage; the term is local). Where one exists, a periodic prompt into
+it lets the model dispatch from a checklist, because the state is already in
+context: OpenClaw's HEARTBEAT.md, Prime Agent's injected heartbeat prompt
+([report verification](../../agentic-system-analyses/retained/primeintellect-ai--prime-agent/report-verification.md)),
+Coral's manager tick that interrupts the live agent
+([heartbeat feedback](../../agentic-system-analyses/retained/human-agent-society--coral/runtime.md#rt-rte-heartbeat-feedback)).
+Where none exists, code dispatches one run per job: Phantom's scheduler
+([runtime](../../agentic-system-analyses/retained/ghostwright--phantom/runtime.md)),
+AgentOS's database-coordinated poller
+([review](../../agentic-systems/reviews/agno-agentos.md)), PAL's startup cron
+jobs ([runtime](../../agentic-system-analyses/retained/agno-agi--pal/runtime.md)).
+OpenClaw and Prime Agent carry both and route by the same rule: batchable
+periodic checks go to the heartbeat; exact times, isolation from the main
+context or a different model go to per-job cron.
+
+Commonplace has no resident session, so its heartbeat is the bounded variant
+the repo-centric stack ingest describes
+([ingest](../../sources/building-a-repo-centric-modular-agent-stack-2085784422339768686.ingest.md)):
+reconcile state from files, select bounded work, act, record, exit.
+Continuity lives in the task logs, not in a model context.
+
+Three costs come with the heartbeat, and the design answers each:
+
+- **Due-ness as a model judgment** would let a drifted run skip or repeat a
+  task. So the runner computes the due set in code, from each log's last run
+  date against the runbook's cadence, and injects that list into the prompt.
+  The model executes; it does not decide what is due.
+- **A shared session** means one task's failure or usage limit ends the rest
+  of the tick, and all tasks share one model and effort. Accepted for easy
+  tasks. Per-task commits keep reversibility per task.
+- **Growth.** Any task that later needs isolation, an exact time or its own
+  model wants a per-task launch. That path is the known successor, not the
+  first design, and it reuses the same runbooks.
 
 ## Starting state
 
@@ -40,47 +85,56 @@ standing constraints on what the runner may automate and how it runs:
   launch records. The runner is glue over these, not a second runtime. The
   analysis workflow's prepared worktrees are not reused here.
 - The theory this rests on: [the practical scheduler is the host language](../../theory/the-practical-scheduler-is-the-host-language.md)
-  (cron plus Python decide; the model does the task),
+  (cron plus Python decide what is due; the model does the task),
   [knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md)
-  (a runbook nobody launches and a log nobody reads are both inert), and
+  (a runbook nobody launches and a log nobody reads are both inert),
+  [periodic KB hygiene should be externally triggered](../../theory/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md)
+  (the heartbeat is that external trigger, kept out of routing), and
   [the boundary of automation is the boundary of verification](../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md)
   (which is why unattended tasks are limited to obvious, reversible work).
 
 ## What the workshop must resolve
 
 1. **The entry point.** One command, in the style of `commonplace-analysis`,
-   that takes a task name and does four things: build the prompt from the
-   runbook and the log tail, launch one Workjig call in the checkout, check
-   that the run wrote only inside the task's declared paths, and stage and
-   commit exactly those paths. Whether this is a new `commonplace-recurring`
-   command or a subcommand of `commonplace-analysis` is open.
-2. **The cron contract.** Cron runs with a minimal environment. The wrapper
+   with no task argument: read every runbook under `kb/tasks/recurring/`,
+   compute the due set from logs and cadences, exit quietly when nothing is
+   due, otherwise build one prompt listing the due tasks with their runbooks
+   and log tails, launch one Workjig call in the checkout, and record the
+   run. Whether this is a new `commonplace-heartbeat` command or a subcommand
+   of `commonplace-analysis` is open.
+2. **The runbook format.** Each runbook declares its cadence, its write
+   scope and its consumer in a form the runner can read. The existing
+   explanatory-reach runbook gains these three fields.
+3. **The cron contract.** Cron runs with a minimal environment. The wrapper
    must set PATH to the user-level uv tool and HOME to where the harness
    login state lives, or every tick fails silently. Each tick starts a fresh
    run; a tick never resumes, because ADR 119 makes an unsettled launch wait
    for operator acknowledgement and cron cannot acknowledge. The run lock
    makes an overlapping tick exit at once. A usage limit ends the tick with a
-   record, not a retry loop.
-3. **Self-isolation and the shared checkout.** The run shares the checkout
+   record, not a retry loop; the due set is recomputed next tick, so missed
+   tasks are not lost.
+4. **Self-isolation and the shared checkout.** The run shares the checkout
    with whatever interactive sessions are open. The task's declared write
-   scope is the whole isolation mechanism, so the runner must enforce it:
-   a run that touched anything outside its scope is discarded, its changes
-   outside scope reverted file by file, and the violation logged. Whether a
-   run should also refuse to start when the checkout has uncommitted changes
-   inside its scope is open; the first runs will show how often that occurs.
-4. **The consumer.** Each recurring task names what reads its output: the
+   scope is the whole isolation mechanism. In the heartbeat the model commits
+   each task by staging its declared paths explicitly; the runner checks
+   after the run that no commit and no leftover change lies outside the
+   union of due scopes, logs any violation, and leaves the operator to
+   revert. Whether a task should be skipped when its scope already has
+   uncommitted changes is open; the first runs will show how often that
+   occurs.
+5. **The consumer.** Each recurring task names what reads its output: the
    operator reviewing the commit, a review bundle, or a mailbox message. A
    task whose only output is its own log is admitted only while the log is
    what the operator reads; the explanatory-reach log shows where an unread
    log ends.
-5. **Admission test for a task.** A task is automatic only if its run is
+6. **Admission test for a task.** A task is automatic only if its run is
    obvious and reversible in the operator's sense above. The operable form is
-   likely a declared write scope in the runbook, checked by the runner after
-   the run, plus the single-commit rule. Shared surfaces such as navigation
-   lists and indexes are outside any first task's scope.
-6. **Retained role state.** The log is the task's memory. The discriminating
+   the declared write scope plus the one-commit-per-task rule. Shared
+   surfaces such as navigation lists and indexes are outside any first task's
+   scope.
+7. **Retained task state.** The log is the task's memory. The discriminating
    question is whether run N+1 behaves differently because of what run N
-   wrote. If it does not, the log is ceremony and a plain cron prompt would do.
+   wrote. If it does not, the log is ceremony and a plain prompt would do.
    The first two runs of the first task answer this.
 
 ## First tasks
@@ -95,24 +149,27 @@ been read a few times and the threshold has settled.
 
 ## Evaluation boundary
 
-In scope: the entry point and cron wrapper; the recurring task runbook
-format, including write scope and consumer declarations; the write-scope
-check and single-commit rule; the first tasks and their first runs as
-evidence; how often unattended runs collide with interactive sessions.
+In scope: the heartbeat command and cron wrapper; the runbook format with
+cadence, write scope and consumer; the due-set computation; the after-run
+scope check and one-commit-per-task rule; the first tasks and their first
+runs as evidence; how often unattended runs collide with interactive
+sessions.
 
 Out of scope: harness-side scheduling (routines, hooks, in-harness cron);
-worktrees, branches and merge handling; agent identity beyond the task name
-and its log; cross-session messaging, which stays with the mailbox; any task
-that edits library content, type specs, instructions, navigation or indexes;
-per-role model routing, which [runner-execution-profiles](../runner-execution-profiles/README.md)
+worktrees, branches and merge handling; per-task launches, recorded as the
+successor path only; agent identity beyond the task name and its log;
+cross-session messaging, which stays with the mailbox; any task that edits
+library content, type specs, instructions, navigation or indexes; per-role
+model routing, which [runner-execution-profiles](../runner-execution-profiles/README.md)
 owns.
 
 ## What closes the workshop
 
-A cron tick has run the first task at least twice without operator
-involvement, each run ended in one commit confined to the task's declared
-paths, the second run demonstrably read the first run's log, and the operator
-has kept or reverted at least one result. Durable outcomes then go to: an ADR
-for the runner's launch and authority rules, an instruction for authoring a
-recurring task under the admission test, and a reference page for the
+A cron tick has run the heartbeat at least twice with the first task due and
+without operator involvement, each task run ended in one commit confined to
+the task's declared paths, a tick with nothing due exited without a launch,
+the second run demonstrably read the first run's log, and the operator has
+kept or reverted at least one result. Durable outcomes then go to: an ADR
+for the heartbeat's launch and authority rules, an instruction for authoring
+a recurring task under the admission test, and a reference page for the
 command. The workshop is deleted after extraction.

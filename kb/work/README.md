@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [recurring-task-runner](./recurring-task-runner/README.md) — a system cron tick starts a Workjig run of one recurring task's runbook in the shared checkout and commits only the task's declared paths; no worktrees or branches, automatic tasks are limited to obvious, reversible, self-isolating work and must name their consumer; first tasks are the explanatory-reach reviewer and a workshop dormancy report
+- [recurring-task-runner](./recurring-task-runner/README.md) — one system cron heartbeat starts one Workjig run that executes the recurring tasks code has computed as due and commits each task's declared paths separately in the shared checkout; no worktrees or branches, automatic tasks are limited to obvious, reversible, self-isolating work and must name their consumer; per-task launches are the recorded successor; first tasks are the explanatory-reach reviewer and a workshop dormancy report
 - [lens-directories](./lens-directories/README.md) — per-lens comparison directories under `kb/agentic-systems/comparisons/` replacing Agent Memory Systems in the menu; all four lenses landed with build-time lists, memory with tables and a landscape synthesis; comparison fields for the other lenses remain open
 
 - [agentic-system-completion](./agentic-system-completion/README.md) — resolve the 16 remaining analysis targets through separately authorized evaluation, source/scope decisions or incident disposition; preserves exact predecessor evidence locators
