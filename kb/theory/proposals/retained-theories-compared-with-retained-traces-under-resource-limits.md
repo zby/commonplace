@@ -1,6 +1,6 @@
 ---
 description: "Proposal: distinguish context limits, reconstruction budgets, and the conjectured value of retained theories; trace strategy, effective context, and derived state remain unadopted terms"
-type: notes/types/theory-proposal.md
+type: theory/types/theory-proposal.md
 traits: [has-comparison]
 ---
 

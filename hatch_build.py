@@ -1,6 +1,6 @@
 """Build hook: prepare the Commonplace library that ships in the package.
 
-The library (kb/instructions, kb/notes, kb/reference, kb/tags, kb/types) is read in place
+The library (kb/instructions, kb/theory, kb/reference, kb/tags, kb/types) is read in place
 from the installed package, where the rest of the repository does not exist. So
 the build stages a copy and rewrites every relative Markdown link that leaves the
 shipped trees:
@@ -27,7 +27,7 @@ from urllib.parse import unquote
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
-SHIPPED = ("instructions", "notes", "reference", "tags", "types")
+SHIPPED = ("instructions", "theory", "reference", "tags", "types")
 GITHUB_BLOB = "https://github.com/zby/commonplace/blob/main/"
 FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n.*?^[ \t]*\1[ \t]*$", re.MULTILINE | re.DOTALL)
 INLINE_CODE = re.compile(r"(`+)(?!`).*?(?<!`)\1(?!`)", re.DOTALL)

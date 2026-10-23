@@ -3,7 +3,7 @@ type: types/collection-contract.md
 unquoted-source-limit: 5
 ---
 
-# Writing conventions for kb/notes/
+# Writing conventions for kb/theory/
 
 ## Text contract and explanatory-reach
 
@@ -99,7 +99,7 @@ Exceptions to claim titles: multi-claim specs, definitions, indexes, and explora
 
 Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers; never add one merely to mirror an existing edge. Relationship symmetry describes semantics, not an authoring obligation: `contradicts` and `contrasts` are self-dual, while the other labels are directional. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits the argument (e.g. `since [title](path)`, `because [title](path)`, `but [title](path)`, `as in [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/instructions/`, and `kb/tags/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). Most links land within `kb/notes/` — the densest path. Outbound edges to `kb/instructions/` are rare — the usual direction is inverse (`instruction → note` via `rests-on`) — except `operationalized-from`, recorded as an `Operationalized into:` footer at this collection's methodology note when a procedure in `kb/instructions/` adds ordering, defaults, or stopping conditions the methodology doesn't itself fix; see the lineage semantics in `kb/reference/link-vocabulary.md`. Edges to `kb/sources/` point to the tracked ingest of the source the claim was abstracted from or that corroborates it, never to its local snapshot.
+Scan `kb/theory/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/instructions/`, and `kb/tags/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). Most links land within `kb/theory/` — the densest path. Outbound edges to `kb/instructions/` are rare — the usual direction is inverse (`instruction → note` via `rests-on`) — except `operationalized-from`, recorded as an `Operationalized into:` footer at this collection's methodology note when a procedure in `kb/instructions/` adds ordering, defaults, or stopping conditions the methodology doesn't itself fix; see the lineage semantics in `kb/reference/link-vocabulary.md`. Edges to `kb/sources/` point to the tracked ingest of the source the claim was abstracted from or that corroborates it, never to its local snapshot.
 
 **Origin is not corroboration.** Evidence corroborates a claim only when it reports an attempt to refute that claim which the claim could have failed ([Popper, *Logic of Scientific Discovery*, §82 and appendix \*ix](../sources/popper-logic-of-scientific-discovery.ingest.md)). The rule is the same for internal evidence (session traces, reports, ADRs) and external sources; what decides is how the evidence was produced, not where it came from. A case or source the claim was built from is linked `abstracted-from`, never as corroboration of that claim. An `evidenced-by` link that claims corroboration says in its context phrase what the claim risked, and whether the evidence was recorded after the claim or independently of how it was built; otherwise the phrase says the evidence qualifies or bounds the claim. A corroboration appraisal is dated: it holds relative to the evidence accepted when it was made (§84).
 
@@ -107,17 +107,17 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 
 | label | kind | destinations | reader-need |
 |---|---|---|---|
-| `extends` | asym | notes | wants the argument developed further |
-| `grounds` | asym | notes | wants to verify the premise |
-| `enables` | asym | notes | wants the operational prerequisite |
-| `exemplifies` | asym (instance→general) | notes | wants the general claim this instance falls under |
-| `mechanism` | asym | notes | wants to understand how the claim operates |
-| `contradicts` | sym | notes | wants to resolve a disagreement |
-| `contrasts` | sym | notes | wants the neighbouring-shape distinction |
-| `defined-in` | asym | notes/definitions, reference/definitions | reader may not know the term |
-| `evidenced-by` | asym | notes, types, reference, reports/retained, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion; corroboration requires a test the claim could have failed (see "Origin is not corroboration") |
+| `extends` | asym | theory | wants the argument developed further |
+| `grounds` | asym | theory | wants to verify the premise |
+| `enables` | asym | theory | wants the operational prerequisite |
+| `exemplifies` | asym (instance→general) | theory | wants the general claim this instance falls under |
+| `mechanism` | asym | theory | wants to understand how the claim operates |
+| `contradicts` | sym | theory | wants to resolve a disagreement |
+| `contrasts` | sym | theory | wants the neighbouring-shape distinction |
+| `defined-in` | asym | theory/definitions, reference/definitions | reader may not know the term |
+| `evidenced-by` | asym | theory, types, reference, reports/retained, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion; corroboration requires a test the claim could have failed (see "Origin is not corroboration") |
 | `derived-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
-| `abstracted-from` | asym | notes/evidence, reference, reports/retained, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
+| `abstracted-from` | asym | theory/evidence, reference, reports/retained, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
 | `see-also` | asym | reference, agent-memory-systems, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
@@ -133,17 +133,17 @@ Two conventions keep the bound honest:
 ## Definition placement
 
 Definitions whose intended contribution supplies vocabulary for transferable
-theory belong under `kb/notes/definitions/`. Definitions constituted by a
+theory belong under `kb/theory/definitions/`. Definitions constituted by a
 Commonplace selection, contract, or implemented classification belong under
 `kb/reference/definitions/`. The `definition` type does not decide placement.
 
 ## Evidence placement
 
-Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. Apply the placement test to the inference: when, after Commonplace's choices are scoped, it concerns only those fixed choices or their measured effects (no free variable), the evidence note belongs in `kb/reports/retained/` beside the raw evidence, keeping the note type; a theory note may still cite it. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
+Use `kb/theory/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. Apply the placement test to the inference: when, after Commonplace's choices are scoped, it concerns only those fixed choices or their measured effects (no free variable), the evidence note belongs in `kb/reports/retained/` beside the raw evidence, keeping the note type; a theory note may still cite it. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
 
 ## Proposal placement
 
-Use `kb/notes/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Every artifact under `proposals/` carries the collection-local [`theory-proposal`](./types/theory-proposal.md) type, which states what a proposal must contain and how it is adopted or deleted ([ADR 084](../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary.
+Use `kb/theory/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Every artifact under `proposals/` carries the collection-local [`theory-proposal`](./types/theory-proposal.md) type, which states what a proposal must contain and how it is adopted or deleted ([ADR 084](../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary.
 
 ## What does NOT belong here
 

@@ -109,7 +109,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/tags/` | Writing or maintaining a tag head: what a tag gathers and its selective picks; the participating-collection declaration. |
 | `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
 | `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
-| `<library>/notes/` | Reading Commonplace theory and examples. |
+| `<library>/theory/` | Reading Commonplace theory and examples. |
 | `<library>/reference/` | Looking up Commonplace architecture, commands, type system, and ADRs. |
 | `<library>/instructions/` | Reading framework procedures and the bodies of the `cp-skill-*` skills. |
 | `<library>/types/` | Looking up the global type specs, named in frontmatter by their path under the library root (`type: types/note.md`). |

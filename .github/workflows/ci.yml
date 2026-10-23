@@ -82,6 +82,7 @@ jobs:
               assert not (project / ".envrc").exists()
               assert not (project / ".venv").exists()
               assert not (project / "kb" / "commonplace").exists()
+              assert not (project / "kb" / "theory").exists()
               subprocess.run([
                   "commonplace-init", "--root", str(project), "--check"
               ], check=True, cwd=project)

@@ -93,7 +93,7 @@ slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
   [review architecture](./kb/reference/review-architecture.md).
 - YAGNI: record unneeded features or gaps instead of implementing them.
   System designs go in `kb/reference/proposals/`, transferable insights in
-  `kb/notes/`, and finished but unadopted theory in `kb/notes/proposals/`.
+  `kb/theory/`, and finished but unadopted theory in `kb/theory/proposals/`.
   Read the destination's proposal type before writing.
 - No backwards compatibility without a consumer need. Mark any required shim
   `# BACKCOMPAT: <reason> - remove after <condition>`.
@@ -157,7 +157,7 @@ For ambiguous content placement, read [content routing](./kb/reference/content-r
 
 | Path | Contribution |
 |---|---|
-| `kb/notes/` | Transferable claims, mechanisms, definitions and theory |
+| `kb/theory/` | Transferable claims, mechanisms, definitions and theory |
 | `kb/tags/` | Tag heads and participating-collection declaration |
 | `kb/reference/` | Shipped system, architecture, types, commands and ADRs |
 | `kb/instructions/` | Procedures, skills, gates and operational rules |

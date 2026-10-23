@@ -1,6 +1,6 @@
 ---
 type: types/collection-contract.md
-participating: [notes, reference, instructions, agent-memory-systems, agentic-systems, reports]
+participating: [theory, reference, instructions, agent-memory-systems, agentic-systems, reports]
 ---
 
 # Tag heads for kb/tags/
@@ -83,6 +83,6 @@ carries the audit workflow.
 
 ## Outbound links
 
-Link members by relative path (`../notes/<file>.md`) with a context phrase.
+Link members by relative path (`../theory/<file>.md`) with a context phrase.
 Link other heads under `## Related Tags` with a phrase saying how the tags
 connect. Do not link into `kb/work/`. Heads carry no `tags:` of their own.

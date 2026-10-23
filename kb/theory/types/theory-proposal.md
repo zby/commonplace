@@ -25,7 +25,7 @@ Everything else follows the `kb/notes/` collection contract and the base [note](
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Begins with `Proposal:`. |
-| `type` | Yes | `notes/types/theory-proposal.md` |
+| `type` | Yes | `theory/types/theory-proposal.md` |
 | `tags` | No | Must be empty or absent. |
 | `traits` | No | Review-routing traits, as for `note`. |
 

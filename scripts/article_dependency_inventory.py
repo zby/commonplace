@@ -29,7 +29,7 @@ DESCRIPTION_RE = re.compile(r'^description:\s*"?(.*?)"?\s*$', re.MULTILINE)
 TITLE_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 EMPHASIS_RE = re.compile(r"(?<![*\w])(\*\*|\*)(?!\s)([^*\n]{2,80}?)(?<!\s)\1(?![*\w])")
 SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+(?=[A-Z\[*\"])")
-DEFINITION_DIRS = (Path("kb/notes/definitions"), Path("kb/reference/definitions"))
+DEFINITION_DIRS = (Path("kb/theory/definitions"), Path("kb/reference/definitions"))
 
 
 def strip_frontmatter(text: str) -> str:
@@ -71,13 +71,13 @@ def target_kind(path: Path | None, raw: str) -> str:
     if path is None or not path.exists():
         return "missing"
     parts = path.as_posix()
-    if parts.startswith(("kb/notes/definitions/", "kb/reference/definitions/")):
+    if parts.startswith(("kb/theory/definitions/", "kb/reference/definitions/")):
         return "definition-note"
     if parts.startswith("kb/sources/"):
         return "source"
     if parts.startswith("kb/articles/"):
         return "article"
-    if parts.startswith("kb/notes/"):
+    if parts.startswith("kb/theory/"):
         return "note"
     if parts.startswith("kb/reference/"):
         return "reference"

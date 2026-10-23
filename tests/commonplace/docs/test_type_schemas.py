@@ -17,7 +17,7 @@ from tests.commonplace.validation_helpers import REPO_ROOT
 NOTE = "kb/types/note.md"
 SNAPSHOT = "kb/types/snapshot.md"
 INGEST = "kb/types/ingest-report.md"
-STRUCTURED_CLAIM = "kb/notes/types/structured-claim.md"
+STRUCTURED_CLAIM = "kb/theory/types/structured-claim.md"
 ADR = "kb/reference/types/adr.md"
 
 

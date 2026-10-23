@@ -99,11 +99,41 @@ virtual index, matching `index_directory.SKIP_DIR_NAMES`.
 
 ## Execution status
 
-- Workshop decisions committed.
-- Post-sort dry run, move/backlink/redirect manifests and state backup complete.
-- Preservation obligations identified; restoration must be verified at apply.
-- ADR recorded before relocation.
-- Directory relocation, namespace follow-up and release verification pending.
+- Workshop decisions committed as `c30ebacfb`; ADR and execution checkpoint
+  committed as `45f5b7061`.
+- Post-sort manifests and state backup complete.
+- Directory relocation committed alone as `9c7563bf7`: 427 files moved and
+  approved command-produced backlinks updated across 1,470 Git paths.
+- All 1,072 protected candidate paths and 516 ingest quote sections verified
+  byte-identical after apply. `CLAUDE.md` remains a symlink.
+- First namespace batch changes the build manifest/CI/library description,
+  repository article tooling, library routing template, actual local type
+  instances and schemas, Theory landing/contract, root routing and tag
+  participation. Project scaffold paths and templates remain Notes.
+- Regression tests explicitly distinguish library Theory from scaffold Notes,
+  including customized Notes contract preservation on refresh.
+- General + installation suites, including slow build coverage: 110 passed.
+  Complete suite including slow workflow tests: 1,426 passed in 290.94 seconds
+  (`/tmp/theory-rename-first-integration.log`). Ruff and diff checks passed.
+- `commonplace-validate theory`: success, 442 files analysed, zero failures and
+  warnings; orphan notices remain. Tags contract and collection landings pass.
+- Editable tool metadata refreshed successfully. The plain reinstall command
+  failed because tool resolution applied the seven-day cutoff to workjig;
+  retrying with `--exclude-newer-package workjig=2026-10-23` honored the
+  repository's declared workjig exception without changing dependencies or the
+  lockfile. Commands still resolve from the user-level tool.
+- Disposable consumer `/tmp/commonplace-theory-consumer-ukTvqz`: fresh init,
+  `--check`, custom Notes contract preservation on refresh, library-Theory
+  routing and absence of a Theory twin all passed. Init was not run here.
+- Redirect-map follow-up is prepared in `properdocs.yml`, not yet accepted:
+  validation reports eight pre-existing missing analysis-method/type targets
+  and six new virtual-index targets that the physical-file-only validator
+  cannot recognize. Resolve the generated-page discrepancy and account for
+  baseline failures before declaring publication verified.
+- Remaining: current cross-collection contracts, instruction/default and prose
+  residuals, consumer upgrade instruction, generated-index redirect validation,
+  wheel/sdist and complete installed scenarios, site build and final rescan.
+  The full rename is not release-ready.
 
 Do not release an intermediate tree. Keep relocation/backlinks in their own
 commit. Do not remove this workshop until the final verification and consumer

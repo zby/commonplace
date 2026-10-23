@@ -73,6 +73,24 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
     ) == ([], [], [], True, [])
 
 
+def test_theory_library_keeps_project_notes_on_init_and_refresh(tmp_path: Path) -> None:
+    init_project(tmp_path)
+    contract = tmp_path / "kb/notes/COLLECTION.md"
+    custom = contract.read_text(encoding="utf-8") + "\nProject-specific scope.\n"
+    contract.write_text(custom, encoding="utf-8")
+
+    init_project(tmp_path)
+
+    assert contract.read_text(encoding="utf-8") == custom
+    assert not (tmp_path / "kb/theory").exists()
+    tags = (tmp_path / "kb/tags/COLLECTION.md").read_text(encoding="utf-8")
+    assert "participating: [notes, reference, instructions]" in tags
+    template = (tmp_path / "AGENTS.md.template").read_text(encoding="utf-8")
+    assert "`<library>/theory/`" in template
+    assert "`<library>/notes/`" not in template
+    assert "`kb/notes/`" in template
+
+
 def test_init_project_does_not_copy_the_library(tmp_path: Path) -> None:
     init_project(tmp_path)
 

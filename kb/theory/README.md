@@ -1,4 +1,4 @@
-# Notes
+# Theory
 
 The theory collection of the Commonplace KB: transferable claims, mechanisms, definitions, and synthesis about how agent-operated knowledge bases — LLM wikis — should be built and operated. This is the theory the rest of the repository runs on; the methodology these notes describe is what agents follow to maintain this wiki.
 

@@ -34,8 +34,8 @@ def _repo(tmp_path: Path, note_body: str) -> Path:
     repo = tmp_path / "repo"
     for name in ("instructions", "reference", "tags", "types"):
         (repo / "kb" / name).mkdir(parents=True)
-    _write(repo / "kb" / "notes" / "other.md", "# Other\n")
-    _write(repo / "kb" / "notes" / "note.md", note_body)
+    _write(repo / "kb" / "theory" / "other.md", "# Other\n")
+    _write(repo / "kb" / "theory" / "note.md", note_body)
     _write(
         repo / "kb" / "sources" / "paper.ingest.md",
         "---\nsource: https://example.org/paper.pdf\ntype: types/ingest-report.md\n---\n\n# Paper\n",
@@ -55,7 +55,7 @@ def test_links_leaving_the_library_are_rewritten(tmp_path: Path) -> None:
 
     hook.prepare_library(repo, out)
 
-    text = (out / "notes" / "note.md").read_text(encoding="utf-8")
+    text = (out / "theory" / "note.md").read_text(encoding="utf-8")
     assert "[paper](https://example.org/paper.pdf)" in text
     assert f"[tool]({hook.GITHUB_BLOB}kb/agentic-systems/tool.md#top)" in text
     assert "[other](./other.md)" in text
@@ -79,6 +79,9 @@ def test_shipped_library_excludes_collection_owned_analysis(tmp_path: Path) -> N
     assert (out / "instructions/cp-skill-write/SKILL.md").is_file()
     assert (out / "types/instruction.md").is_file()
     assert (out / "types/note.schema.yaml").is_file()
+    assert (out / "theory/COLLECTION.md").is_file()
+    assert (out / "theory/README.md").is_file()
+    assert not (out / "notes").exists()
     assert not (out / "agentic-systems").exists()
     assert not (out / "agentic-system-analyses").exists()
     for spec in (REPO_ROOT / "kb/agentic-system-analyses/types").glob("*.md"):

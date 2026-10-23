@@ -1,6 +1,6 @@
 """The installed Commonplace library and the project files that point into it.
 
-The library (instructions with the promoted skills, notes, reference, tags, and the
+The library (instructions with the promoted skills, theory, reference, tags, and the
 global types) ships as wheel shared data under ``<tool environment>/share/commonplace/``,
 laid out like the source repository's ``kb/``. That path does not change with the
 tool's Python version. An editable install reads the source tree's ``kb/`` instead,
