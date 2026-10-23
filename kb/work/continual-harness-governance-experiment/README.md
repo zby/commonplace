@@ -72,7 +72,7 @@ The workshop closes when it produces one of two dispositions:
 
 If the design survives, promote it to the appropriate durable proposal or
 research artifact. Extract any independently durable theoretical correction
-into `kb/notes/`. Then delete this workshop and remove it from the active list;
+into `kb/theory/`. Then delete this workshop and remove it from the active list;
 the workshop itself is not a permanent research record.
 
 ## Bookkeeping

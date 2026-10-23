@@ -94,7 +94,7 @@ Close this workshop when we have a concrete policy proposal that answers:
 
 - [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) — landed artifact-analysis vocabulary that this governance workshop treats as an example vocabulary library.
 - [AGENTS.md](../../../AGENTS.md) — current always-loaded vocabulary surface.
-- [Writing conventions for kb/notes](../../theory/COLLECTION.md) — current collection-level definition/linking policy.
+- [Writing conventions for kb/theory](../../theory/COLLECTION.md) — current collection-level definition/linking policy.
 - [Definition type](../../types/definition.md) — current durable artifact shape for operational vocabulary.
 - [ADR-022: active vocabulary and write-path first mentions](../../reference/adr/022-active-vocabulary-and-write-path-first-mentions.md) — landed decision for KB-global active vocabulary in `AGENTS.md`.
 - [Writing skill](../../instructions/cp-skill-write/SKILL.md) — current generic write path.

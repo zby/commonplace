@@ -50,4 +50,4 @@ A new note naming the goal-tracking pattern (explicit, LLM-reified `K.goal` upda
 
 ## Next Useful Step
 
-Draft written: [goal-negotiated conversation needs a reified update call](./goal-negotiated-conversation-needs-a-reified-update-call.md). Pending: review for accuracy and fit, then promote to `kb/notes/` (via `cp-skill-write`/`cp-skill-validate`/`cp-skill-connect`) and delete this workshop.
+Draft written: [goal-negotiated conversation needs a reified update call](./goal-negotiated-conversation-needs-a-reified-update-call.md). Pending: review for accuracy and fit, then promote to `kb/theory/` (via `cp-skill-write`/`cp-skill-validate`/`cp-skill-connect`) and delete this workshop.

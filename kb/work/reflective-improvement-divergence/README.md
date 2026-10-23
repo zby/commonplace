@@ -63,4 +63,4 @@ The workshop closes when:
 3. the reflection-specific increment has been stated and tested against a non-reflective counterexample;
 4. episode closure has been separated from artifact convergence and from permanent cessation of improvement;
 5. at least one design claim about budgets, yield rules, frozen-within-episode machinery, or governance has been promoted, rejected, or explicitly deferred for lack of evidence; and
-6. any durable result has been extracted into `kb/notes/`, with descriptive or procedural consequences routed to `kb/reference/` or `kb/instructions/` as appropriate.
+6. any durable result has been extracted into `kb/theory/`, with descriptive or procedural consequences routed to `kb/reference/` or `kb/instructions/` as appropriate.

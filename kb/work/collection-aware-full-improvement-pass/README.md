@@ -2,7 +2,7 @@
 
 ## Goal
 
-Determine how Commonplace should improve existing prose outside `kb/notes/` without imposing a theory-note contract on artifacts that serve a different function. Any resulting procedure should respect the target collection, artifact type, local framing, quality goal, unresolved choices, and decision authority before it selects review methods or applies edits.
+Determine how Commonplace should improve existing prose outside `kb/theory/` without imposing a theory-note contract on artifacts that serve a different function. Any resulting procedure should respect the target collection, artifact type, local framing, quality goal, unresolved choices, and decision authority before it selects review methods or applies edits.
 
 The workshop must also decide whether this should be one routed full-improvement procedure, a small family of collection- or artifact-specific procedures, or a narrower note-only procedure with report-only support elsewhere. Starting the workshop does not select among those designs.
 
@@ -20,7 +20,7 @@ What applicability, review-routing, synthesis, mutation, and closing contracts l
 
 ## Starting hypothesis: artifact function is more legible in theory
 
-The `kb/notes/` contract makes the reason for an artifact's existence relatively easy to infer. A theory note normally advances a claim, explains a mechanism, or defines a concept, and its title, type, and local contract further constrain that contribution. The full pass can therefore reconstruct a central commitment with a fairly strong prior about what kind of improvement would still serve the artifact.
+The `kb/theory/` contract makes the reason for an artifact's existence relatively easy to infer. A theory note normally advances a claim, explains a mechanism, or defines a concept, and its title, type, and local contract further constrain that contribution. The full pass can therefore reconstruct a central commitment with a fairly strong prior about what kind of improvement would still serve the artifact.
 
 The workshop layer deliberately removes much of that prior. One file may be evidence, scratch reasoning, a proposal, a decision surface, a handoff, an experiment record, or material awaiting extraction. The collection-wide goal to “move the work forward” does not determine which of those jobs a particular file performs. A local README may narrow the inquiry while still leaving the individual file's role and decision authority implicit.
 

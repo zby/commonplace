@@ -15,7 +15,7 @@ The talk should leave the audience thinking "I can apply these patterns to my ow
 
 ## What would close this workshop
 
-The talk is delivered (or the submission is withdrawn). On closing: extract anything durable — most likely the "write for reuse; load for the task" formulation and any slide-tested framings that turn out stronger than their KB counterparts — into `kb/notes/` or `kb/articles/`, then delete the workshop.
+The talk is delivered (or the submission is withdrawn). On closing: extract anything durable — most likely the "write for reuse; load for the task" formulation and any slide-tested framings that turn out stronger than their KB counterparts — into `kb/theory/` or `kb/articles/`, then delete the workshop.
 
 ## Boundaries
 

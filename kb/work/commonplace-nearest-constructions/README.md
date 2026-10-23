@@ -53,7 +53,7 @@ not currently automated.
    later search can update the landscape without silently changing what
    “nearest” means.
 2. Stable claims about Commonplace's purpose and construction are extracted to
-   `kb/reference/`; transferable mechanisms are extracted to `kb/notes/`.
+   `kb/reference/`; transferable mechanisms are extracted to `kb/theory/`.
 3. Any external system that bears durable load has an appropriate source ingest
    or system analysis, and any dated comparison that must remain citable is
    preserved as a retained report.

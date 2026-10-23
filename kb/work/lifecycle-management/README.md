@@ -71,7 +71,7 @@ We start from workshops because that is where we have the most active practice. 
 - [kb/reference/types/design-proposal.md](../../reference/types/design-proposal.md) — the collection-local type that replaced the `design-proposal` trait; carries the archived-proposal description form.
 - [designing-agent-memory-systems](../../theory/designing-agent-memory-systems.md) — the promoted artifact from the `agent-memory-design` workshop; first instance of the `synthesis` trait.
 - [kb/agent-memory-systems/COLLECTION.md](../../agent-memory-systems/COLLECTION.md) — one precedent for a sibling collection with its own register.
-- [kb/notes/COLLECTION.md](../../theory/COLLECTION.md) — theoretical-register conventions a promoted workshop would have to satisfy.
+- [kb/theory/COLLECTION.md](../../theory/COLLECTION.md) — theoretical-register conventions a promoted workshop would have to satisfy.
 
 ## Working hypotheses
 
@@ -87,4 +87,4 @@ An updated life-cycle map (probably a note) naming each stage, its valid transit
 
 **Done (2026-07-27):** retirement became one polymorphic procedure with a type-declared destination, and the retirement instructions were consolidated under a contract/procedure split — one archiving rule that had been stated in four places now sits in one contract site, one procedure, and one type-spec declaration.
 
-**Blocking the map now:** one thing — an eligibility rule for note retirement. The operation exists, so the map can describe the transition; what it cannot yet say is what triggers it. Beyond that, the claims worth promoting to `kb/notes/` still want a second worked case: the archive-versus-delete test (strongest, but no second candidate kind currently exists, so it waits for a real one rather than a manufactured one) and tiers-as-coordinates. The workshop deletion bet is no longer a separate candidate — it falls out of the archive-versus-delete test (see "Still open" in [lifecycle-model.md](./lifecycle-model.md)).
+**Blocking the map now:** one thing — an eligibility rule for note retirement. The operation exists, so the map can describe the transition; what it cannot yet say is what triggers it. Beyond that, the claims worth promoting to `kb/theory/` still want a second worked case: the archive-versus-delete test (strongest, but no second candidate kind currently exists, so it waits for a real one rather than a manufactured one) and tiers-as-coordinates. The workshop deletion bet is no longer a separate candidate — it falls out of the archive-versus-delete test (see "Still open" in [lifecycle-model.md](./lifecycle-model.md)).
