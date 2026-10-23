@@ -15,7 +15,7 @@ Use the remaining agenda for unresolved collection-local and type-specific vocab
 ## 1. Inventory Current Surfaces
 
 - Always-loaded vocabulary in `AGENTS.md`.
-- Definition notes under `kb/notes/definitions/`.
+- Definition notes under `kb/theory/definitions/` in this KB.
 - Definition type contract in `kb/types/definition.md`.
 - Collection conventions in `kb/*/COLLECTION.md`.
 - Existing collection responsibilities: register and linking policy.
@@ -141,7 +141,7 @@ Open questions:
 Possible durable artifacts after the workshop:
 
 - `kb/reference/vocabulary-policy.md`
-- revised `kb/notes/COLLECTION.md`
+- revised `kb/theory/COLLECTION.md`
 - revised `kb/reference/COLLECTION.md`
 - revised `kb/instructions/COLLECTION.md`
 - revised `kb/types/definition.md`

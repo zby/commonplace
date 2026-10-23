@@ -1,6 +1,6 @@
 # Review lineage storage case
 
-The review subsystem is the strongest local example of lineage leaving git-backed prose while the reviewed artifacts remain markdown. It should be studied separately because it witnesses the boundary named in `kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md`: churning state on an ownerless many-to-many edge. The base witness is the reviewed-note-path x gate-note-path relation; the current implementation also partitions that edge by model.
+The review subsystem is the strongest local example of lineage leaving git-backed prose while the reviewed artifacts remain markdown. It should be studied separately because it witnesses the boundary named in `kb/theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md`: churning state on an ownerless many-to-many edge. The base witness is the reviewed-note-path x gate-note-path relation; the current implementation also partitions that edge by model.
 
 ## Current Shape
 

@@ -17,7 +17,7 @@ The bitter-lesson-compatible posture is: generate broadly, verify cheaply where 
 
 ## Content Files And Lineage State
 
-The extracted note `kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md` gives the storage predicate this draft should use. Files remain the default for content and owner-local lineage. Relational structure is earned when automatic dependency maintenance creates churning state on a many-to-many edge with no natural owner file. That structure may begin as edge files, manifests, or generated indexes; a real database is earned when lookup, churn, and consistency demands outgrow the filesystem version.
+The extracted note `kb/theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md` gives the storage predicate this draft should use. Files remain the default for content and owner-local lineage. Relational structure is earned when automatic dependency maintenance creates churning state on a many-to-many edge with no natural owner file. That structure may begin as edge files, manifests, or generated indexes; a real database is earned when lookup, churn, and consistency demands outgrow the filesystem version.
 
 The review subsystem demonstrates the split:
 

@@ -81,21 +81,20 @@ The conceptual material above is the frontloaded brief. Do not read every refere
 
 Use these broad indexes as navigation before or during source inspection:
 
-- `kb/notes/context-engineering-index.md`, for routing, loading, scoping, scheduling, and maintenance questions under bounded context
-- `kb/notes/computational-model-index.md`, for the select/call model, scoping, sub-agent isolation, session-history tradeoffs, and orchestration dimensions
-- `kb/notes/tool-loop-index.md`, for loop ownership, sub-agent forcing cases, and hidden-scheduler tradeoffs
-- `kb/notes/observability-index.md`, for runtime visibility and degraded-execution signals
+- `kb/tags/context-engineering-README.md`, for routing, loading, scoping, scheduling, and maintenance questions under bounded context
+- `kb/tags/computational-model-README.md`, for the select/call model, scoping, sub-agent isolation, session-history tradeoffs, orchestration dimensions, loop ownership, sub-agent forcing cases, and hidden-scheduler tradeoffs
+- `kb/tags/observability-README.md`, for runtime visibility and degraded-execution signals
 
 Read these targeted notes early only if their topic is central to the emerging comparison:
 
-- `kb/notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`, when mapping runtime components
-- `kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md`, when comparing scheduler placement, persistence horizon, coordination form, coordination guarantees, or boundary-return artifacts
-- `kb/notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md`, when comparing conversation, prompt refinement, forking, or sub-agent handoff
-- `kb/notes/session-history-should-not-be-the-default-next-context.md`, when comparing session resume, transcript inheritance, compaction, or trace loading
-- `kb/notes/llm-context-is-composed-without-scoping.md`, when comparing sub-agent isolation, branch contamination, or context hygiene
-- `kb/notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md`, when comparing delegated work or changing tool surfaces
-- `kb/notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md`, when a tool, extension, loop command, or runtime appears to own scheduling
-- `kb/notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md`, when comparing failure visibility, fallback paths, or degraded-execution reporting
+- `kb/theory/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md`, when mapping runtime components
+- `kb/theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md`, when comparing scheduler placement, persistence horizon, coordination form, coordination guarantees, or boundary-return artifacts
+- `kb/theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md`, when comparing conversation, prompt refinement, forking, or sub-agent handoff
+- `kb/theory/session-history-should-not-be-the-default-next-context.md`, when comparing session resume, transcript inheritance, compaction, or trace loading
+- `kb/theory/llm-context-is-composed-without-scoping.md`, when comparing sub-agent isolation, branch contamination, or context hygiene
+- `kb/theory/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md`, when comparing delegated work or changing tool surfaces
+- `kb/theory/stateful-tools-recover-control-by-becoming-hidden-schedulers.md`, when a tool, extension, loop command, or runtime appears to own scheduling
+- `kb/theory/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md`, when comparing failure visibility, fallback paths, or degraded-execution reporting
 
 Style and vocabulary references:
 

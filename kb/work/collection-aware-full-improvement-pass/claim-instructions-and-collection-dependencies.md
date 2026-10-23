@@ -26,7 +26,7 @@ The current pass couples two assumptions in its editorial core: the target is at
 
 This is a useful default for ordinary LLM-maintained theory notes. Atomic artifacts provide precise citation handles, make connections more discriminating, isolate warrants and revisions, and reduce the amount a consumer imports. Those benefits can also apply to an atomic reference document or decision record. What does not transfer automatically is the theory-note interpretation of the unit as a general claim with a claim title, premise tree, and explanatory-reach objective.
 
-Commonplace already records the counterexample. The [notes contract](../../theory/COLLECTION.md) makes body composability the default, but explicitly exempts notes with the `synthesis` trait: they weave multiple cited claims into one argument and are cited as a unit. The [note type](../../types/note.md) says that this trait waives default body composability. The [article contract](../../articles/COLLECTION.md) likewise permits a self-standing explanation to carry multiple claims, mechanisms, evidence, and limits; it uses reader-facing headlines rather than claim titles and may put a case before an abstraction.
+Commonplace already records the counterexample. The [Theory contract](../../theory/COLLECTION.md) makes body composability the default, but explicitly exempts notes with the `synthesis` trait: they weave multiple cited claims into one argument and are cited as a unit. The [note type](../../types/note.md) says that this trait waives default body composability. The [article contract](../../articles/COLLECTION.md) likewise permits a self-standing explanation to carry multiple claims, mechanisms, evidence, and limits; it uses reader-facing headlines rather than claim titles and may put a case before an abstraction.
 
 The needed generalization is therefore not “stop checking claims outside claim notes.” Local claim checks should remain available across artifact kinds. Nor is it “atomic means theoretical claim.” The needed boundary is: **derive composition shape separately from artifact function; do not impose atomicity from the presence of claims, and do not impose claim semantics merely because an artifact is atomic.**
 
@@ -102,7 +102,7 @@ The gate schema can require a trait or type. It has no corresponding negative ap
 |---|---|---|
 | Source `COLLECTION.md` for connection routing | `cp-skill-connect` | This is an intrinsic dependency because the collection authorizes destination collections and link labels. It should remain. |
 | Source collection and type for fit and disposition | Step 7 synthesis | It arrives after compression, critique, friction, premise decomposition, catalog review, and connect have already imposed their target model. |
-| `kb/notes/COLLECTION.md` claim modality | Premise decomposition | It is hard-coded even for targets outside the notes collection and for procedure mode. |
+| `kb/theory/COLLECTION.md` claim modality | Premise decomposition | It is hard-coded even for targets outside the Theory collection and for procedure mode. |
 | Type and collection conformance assays | Available in the review selector | The full pass requests seven catalog bundles instead of `--all-gates`, so it omits both conformance pairs in the initial and closing cycles. |
 | Collection/type assumptions embedded in catalog criteria | Self-contained gate text | These are baked-in profile couplings, not live dependencies. A collection-contract edit does not stale their accepted results. |
 | Collection, type, traits, and local framing used by synthesis | Packet reasoning | Only source and optional merge target are captured and guarded. A contract or framing change can invalidate the edit rationale while the source hash still matches. |
@@ -123,7 +123,7 @@ The relevant authority is a composition of contracts and local facts:
 
 The collections demonstrate why no one-field routing rule is sufficient:
 
-- `kb/notes/` defaults toward claim titles and body-composable notes, but explicitly admits synthesis notes, multi-claim specs, definitions, indexes, and exploratory drafts as exceptions.
+- `kb/theory/` defaults toward claim titles and body-composable notes, but explicitly admits synthesis notes, multi-claim specs, definitions, indexes, and exploratory drafts as exceptions.
 - `kb/articles/` is claim-bearing and permits composite expository artifacts. Its titles are headlines and its case-first order can be intentional.
 - `kb/reference/` can contain atomic system-scoped accounts and decisions alongside composite architecture documents. Its local contract changes the evaluation objective and title grammar, not the number of contributions an artifact may contain.
 - other descriptive collections can contain an argumentative analysis whose individual claims deserve strong review without converting the whole analysis into a premise-like note.
@@ -223,7 +223,7 @@ The next cases should test both axes independently:
 3. **`synthesis` theory note:** hold the theoretical collection constant while changing composition shape; test whether the pass misreads component claims as branches.
 4. **Composite article:** test local claim review while withholding claim-title, atomic split, and general-before-specific assumptions.
 
-Two paired comparisons now isolate the dimensions. An atomic note and a synthesis-trait note in `kb/notes/` hold the collection contract constant and vary shape. An atomic theory note and atomic reference document hold shape approximately constant while varying function, scope, title grammar, and quality objective.
+Two paired comparisons now isolate the dimensions. An atomic note and a synthesis-trait note in `kb/theory/` hold the collection contract constant and vary shape. An atomic theory note and atomic reference document hold shape approximately constant while varying function, scope, title grammar, and quality objective.
 
 ## Working conclusions
 
@@ -243,9 +243,9 @@ These are analysis results, not yet a choice between one routed workflow, severa
 - [Case 01](./case-01-workshop-experiment-design.md) — observed cross-contract failure and useful mechanical behavior.
 - [Run a full improvement pass on one note](../../instructions/run-full-improvement-pass-on-note.md) — current orchestration, synthesis, disposition, and closing contract.
 - [Split and rehome critique](../agent-note-improvement/case-01-llm-generation-relaxes-goals/instruction-split-rehome-critique.md) — explicit one-main-note decomposition model behind the current split pressure.
-- [Notes collection contract](../../theory/COLLECTION.md) and [note type](../../types/note.md) — body-composability default and the explicit `synthesis` exception.
+- [Theory collection contract](../../theory/COLLECTION.md) and [note type](../../types/note.md) — body-composability default and the explicit `synthesis` exception.
 - [Article collection contract](../../articles/COLLECTION.md) — valid multi-claim, headline-titled, case-first expository shape.
-- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/collections-never-own-frontmatter-semantics.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under the non-notes local contract.
+- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/collections-never-own-frontmatter-semantics.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under the reference-local contract.
 - [Review-gate type](../../types/review-gate.md) — current positive applicability fields and self-contained freshness requirement.
 - [Collection-conformance decision](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — existing factored collection dependency the full pass does not request.
 - [Collections and types](../../reference/collections-and-types.md) — the orthogonal collection/type model.

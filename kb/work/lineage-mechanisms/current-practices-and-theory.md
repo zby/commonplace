@@ -4,9 +4,9 @@ This review captures what Commonplace already does around lineage before decidin
 
 ## What Lineage Is Supposed To Answer
 
-The definition in `kb/notes/definitions/lineage.md` is already precise: lineage records a retained artifact's review-relevant source dependencies and derivation status. It should answer whether an artifact is source material, canonical source, derived view, generated index, compiled artifact, assembled package, learned update, or archival evidence, and what must be invalidated, regenerated, or retired when a source changes.
+The definition in `kb/theory/definitions/lineage.md` is already precise: lineage records a retained artifact's review-relevant source dependencies and derivation status. It should answer whether an artifact is source material, canonical source, derived view, generated index, compiled artifact, assembled package, learned update, or archival evidence, and what must be invalidated, regenerated, or retired when a source changes.
 
-`kb/notes/axes-of-artifact-analysis.md` makes lineage one of four artifact-analysis axes:
+`kb/theory/axes-of-artifact-analysis.md` makes lineage one of four artifact-analysis axes:
 
 - storage substrate: where retained state persists;
 - representational form: how the operative part is encoded and consumed;
@@ -116,7 +116,7 @@ Strictness follows behavioral authority and the chosen protocol. Connect, fricti
 
 ### Churning many-to-many edge state needs relational structure
 
-`kb/notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md` extracts the storage rule from the review case. ADR 010 moved review state to SQLite after review artifacts stopped behaving like authored files and started behaving like operational lineage: keyed by note, gate, and model; updated as current acceptance; queried by selectors for freshness. The extracted theory names the structural condition: churning state on an ownerless many-to-many edge. It also softens the implementation claim: a directory of edge files can represent the relation for a while, but that is already a filesystem-backed relational store, and a real database wins when keyed lookup, churn, and consistency demands exceed that surface.
+`kb/theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md` extracts the storage rule from the review case. ADR 010 moved review state to SQLite after review artifacts stopped behaving like authored files and started behaving like operational lineage: keyed by note, gate, and model; updated as current acceptance; queried by selectors for freshness. The extracted theory names the structural condition: churning state on an ownerless many-to-many edge. It also softens the implementation claim: a directory of edge files can represent the relation for a while, but that is already a filesystem-backed relational store, and a real database wins when keyed lookup, churn, and consistency demands exceed that surface.
 
 This should be the basis for further investigations. The artifact content can stay in git, but any future automatic dependency-maintenance mechanism that maintains freshness, acceptance, or update state over many-to-many artifact edges should be modeled as relational edge-state first, then assigned an implementation weight: links, edge files, generated index, or real DB.
 
