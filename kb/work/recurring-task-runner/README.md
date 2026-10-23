@@ -93,6 +93,38 @@ Three costs come with the heartbeat, and the design answers each:
   [the boundary of automation is the boundary of verification](../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md)
   (which is why unattended tasks are limited to obvious, reversible work).
 
+## Order of work
+
+The operator reordered the workshop on 2026-10-23: first write tasks that
+can run unattended and test them by hand; only then build the heartbeat
+around what the tests show. A runner designed before any task has run would
+fix the runbook format, the scope check and the prompt from guesses.
+
+**Phase 1: tasks and hand launches.** Two runbooks now carry `Cadence`,
+`Write scope` and `Consumer` sections, and one of them a `Batch` section:
+[review-explanatory-reach](../../tasks/recurring/review-explanatory-reach.md)
+(ten notes per run, so run N+1 depends on run N's reviewed list) and
+[workshop-dormancy-report](../../tasks/recurring/workshop-dormancy-report.md)
+(git age per workshop; observes only). Each is launched by hand with
+[launch-prompt.md](./launch-prompt.md) as the prompt of a headless session,
+once per harness that matters, and judged on four points: did the run stay
+inside its write scope; did it produce exactly one commit with the required
+subject; did the second run of the reviewer use the first run's reviewed
+list; is the output something the operator actually reads. Record each
+launch in [launches.md](./launches.md): date, task, harness and model, the
+flags used, commit hash or failure, and the four judgments.
+
+The harness flags are part of the test. A headless Claude Code or Codex
+session needs permission to write and to run `git add` and `git commit`
+without prompts; the narrowest flag set that lets the run complete is the
+one the heartbeat will later use, and is recorded with the launch.
+
+**Phase 2: the heartbeat.** Starts only after both tasks have two clean hand
+launches. Items 1, 3 and 4 below are its design; items 2, 5, 6 and 7 are
+settled or revised by phase 1. The `task-recurring` type template is
+updated with the new sections after the format has survived the launches,
+not before.
+
 ## What the workshop must resolve
 
 1. **The entry point.** One command, in the style of `commonplace-analysis`,
@@ -103,8 +135,9 @@ Three costs come with the heartbeat, and the design answers each:
    run. Whether this is a new `commonplace-heartbeat` command or a subcommand
    of `commonplace-analysis` is open.
 2. **The runbook format.** Each runbook declares its cadence, its write
-   scope and its consumer in a form the runner can read. The existing
-   explanatory-reach runbook gains these three fields.
+   scope and its consumer in a form the runner can read. Both first runbooks
+   now carry these as sections; phase 1 decides whether sections suffice or
+   frontmatter fields are needed for the due-set computation.
 3. **The cron contract.** Cron runs with a minimal environment. The wrapper
    must set PATH to the user-level uv tool and HOME to where the harness
    login state lives, or every tick fails silently. Each tick starts a fresh
@@ -165,7 +198,8 @@ owns.
 
 ## What closes the workshop
 
-A cron tick has run the heartbeat at least twice with the first task due and
+Phase 1 closes when both tasks have two clean hand launches recorded in
+`launches.md`. The workshop closes when a cron tick has run the heartbeat at least twice with the first task due and
 without operator involvement, each task run ended in one commit confined to
 the task's declared paths, a tick with nothing due exited without a launch,
 the second run demonstrably read the first run's log, and the operator has

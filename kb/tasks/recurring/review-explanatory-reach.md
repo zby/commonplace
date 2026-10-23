@@ -9,6 +9,30 @@ This file is a stable runbook. Do not edit it per run; only change it when scope
 - `kb/theory/*.md` — all notes with frontmatter (skip text files and indexes)
 - Focus on notes with tags `learning-theory`, `computational-model` first — these are the areas where explanatory depth matters most
 
+## Cadence
+
+Weekly. Due when the log's latest dated section is older than seven days or
+absent.
+
+## Batch
+
+One run reviews the next ten notes. Order the in-scope notes by filename;
+skip every note already listed under `Reviewed` in any earlier log section;
+take the first ten remaining. When none remain, the next run starts over from
+the beginning and may reclassify.
+
+## Write scope
+
+`kb/tasks/recurring/review-explanatory-reach-log.md` only. The run reads
+anything it needs and writes nothing else. It stages exactly this file and
+commits it with the subject `Run recurring task review-explanatory-reach`.
+
+## Consumer
+
+The operator reads the `Top candidates for deepening` list of the latest
+section when choosing notes to revise. Candidates that are acted on are not
+tracked by this task.
+
 ## Run Procedure
 
 For each note in scope, apply the four-part test:
@@ -34,7 +58,7 @@ For each note, assign one of:
 
 Record findings in `kb/tasks/recurring/review-explanatory-reach-log.md`.
 Append one dated section per run (e.g. `## 2026-03-07`) with:
-- Notes reviewed (count and list)
+- Reviewed: the ten note filenames, one per line, so the next run can skip them
 - Classification breakdown
 - Top candidates for deepening (adaptive notes where adding mechanism would increase explanatory-reach)
 - Any notes reclassified from previous runs
