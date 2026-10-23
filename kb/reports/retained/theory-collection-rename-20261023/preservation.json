@@ -1,0 +1,62 @@
+{
+  "protected_paths": 1072,
+  "protected_mismatches": [],
+  "quote_sections": 516,
+  "quote_mismatches": [],
+  "ingest_frontmatter_mismatches": [],
+  "claude_symlink": true,
+  "claude_target": "AGENTS.md",
+  "current_pinned_analysis_member_changes": [],
+  "store_integrity": "ok",
+  "store_tables": [
+    {
+      "table": "artifact_snapshots",
+      "baseline_rows": 1240,
+      "current_rows": 1240,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "freshness_baselines",
+      "baseline_rows": 9217,
+      "current_rows": 9217,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "freshness_inputs",
+      "baseline_rows": 18434,
+      "current_rows": 18434,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "freshness_target_generations",
+      "baseline_rows": 10043,
+      "current_rows": 10043,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "review_freshness_evidence",
+      "baseline_rows": 9217,
+      "current_rows": 9217,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "review_jobs",
+      "baseline_rows": 6929,
+      "current_rows": 6929,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    },
+    {
+      "table": "review_pairs",
+      "baseline_rows": 17737,
+      "current_rows": 17737,
+      "missing_or_changed_baseline_rows": 0,
+      "extra_or_changed_current_rows": 0
+    }
+  ]
+}

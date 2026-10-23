@@ -1,0 +1,43 @@
+{
+  "full_suite": {
+    "command": "uv run pytest -m ''",
+    "passed": 1437,
+    "seconds": 286.31,
+    "includes_slow": true,
+    "log": "/tmp/theory-closeout-full-pytest.log"
+  },
+  "ruff": {
+    "command": "uv run ruff check .",
+    "result": "all checks passed"
+  },
+  "site": {
+    "command": "uv run --extra docs properdocs build --clean --site-dir /tmp/commonplace-theory-closeout-site",
+    "seconds": 148.79,
+    "log": "/tmp/theory-closeout-site.log",
+    "manifest_redirects_checked": 593,
+    "redirect_errors": [],
+    "acceptance_page_built": true,
+    "captured_rehearsal_not_published": true,
+    "closed_workshop_not_published": true,
+    "warning_free": false
+  },
+  "validation": {
+    "live_workshop_documents": 7,
+    "acceptance_and_landings": true,
+    "redirect_map": true,
+    "collection_landings": true,
+    "failures": 0,
+    "warnings": 0
+  },
+  "residual_dispositions": {
+    "files": 570,
+    "hashes_rechecked": true
+  },
+  "retained_inputs": {
+    "files": 14,
+    "hashes_rechecked": true
+  },
+  "preservation_rechecked_after_integration": true,
+  "live_pointer_commit": "dc1f0e67a9c67d97870a46c07172d29497d3f49c",
+  "concurrent_change_preserved": "08a6c8aaf opened recurring-task-runner and committed the shared Work landing, including removal of the completed rename entry"
+}

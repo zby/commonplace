@@ -1,0 +1,76 @@
+{
+  "role": "Exact baseline and execution inventories; historical evidence, not current mutation instructions",
+  "source_head": "3fd74968d52d023c310539d8b3acc3b976acc4f7",
+  "records": [
+    {
+      "source": "kb/work/theory-collection-rename/execution-moves.tsv",
+      "retained": "execution-moves.tsv",
+      "sha256": "e617ab7173a6669acc2c34c3101fd98a9206c83f91c82b8b6228c60eecada532"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/execution-protected.tsv",
+      "retained": "execution-protected.tsv",
+      "sha256": "03054ea5842056ed2c184fb4fc5f1f296beb4e3659181bda2e2ff1bb18e7ba69"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/execution-redirect-changes.tsv",
+      "retained": "execution-redirect-changes.tsv",
+      "sha256": "759656807b220405e86e713334309f68f22edc298c99977d221c17c7c731a703"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/execution-relocation-updates.tsv",
+      "retained": "execution-relocation-updates.tsv",
+      "sha256": "4f1c44fa206286c32c717bce717f0a183db9c58833727e0d7954aa9cb548e59b"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/execution-summary.json",
+      "retained": "execution-summary.json",
+      "sha256": "f0623ed799e5c0d728a36d04df17e73c600964894cf13988650c2d01e8c508e1"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/inventory-summary.json",
+      "retained": "inventory-summary.json",
+      "sha256": "7453788978671708d8b48eaba690a79c42255566c90e22cc9473c2bcbf92b46c"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/moves.tsv",
+      "retained": "moves.tsv",
+      "sha256": "2f27ea1f9951f60da713cad326d29e9e5ed39aa5469c77c5461afb7ec67adbca"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/redirect-changes.tsv",
+      "retained": "redirect-changes.tsv",
+      "sha256": "5367cb4cbc84dceafe492bdfc67c564120bd4da6b327b3fb73fb8660fb981ec6"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/reference-files.tsv",
+      "retained": "reference-files.tsv",
+      "sha256": "edb55510990769c7cb23222025de5a54275744e92f9a6bfba50125ba8bc0b309"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/relocation-updates.tsv",
+      "retained": "relocation-updates.tsv",
+      "sha256": "2585f4c8a414fdf52705a35b81484c1079a224ce066a661fe051a0fc7622d860"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/residual-live.tsv",
+      "retained": "residual-live.tsv",
+      "sha256": "02667ae456bda031393672a9ff441b51a25527c2b2db7e88008faa991abc8df9"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/residual-records.tsv",
+      "retained": "residual-records.tsv",
+      "sha256": "f34b3a0d630026af513c90168f4f5c645186d5ec60a180ed7ab756035fa68150"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/residual-workshops.tsv",
+      "retained": "residual-workshops.tsv",
+      "sha256": "05d08d9ac01fa54587d20d5d61017f45bc0672d9f3cd0cdc1dde31fbf99f703d"
+    },
+    {
+      "source": "kb/work/theory-collection-rename/installed-rehearsal.md",
+      "retained": "records/installed-rehearsal.md",
+      "sha256": "0d86b13d5bc3b673ac04d750f80a102be26eef020933efee2c17ee3009345b7b"
+    }
+  ]
+}
