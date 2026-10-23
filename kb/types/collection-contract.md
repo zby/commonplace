@@ -56,7 +56,9 @@ belong in that kind's type spec, not here
   one-pass grounding review; `commonplace-validate` then fails every artifact
   over it, whatever its type
   ([ADR 122](../reference/adr/122-collections-set-the-unquoted-source-limit.md)).
-  The contract's prose states the authoring conventions that go with it.
+  The contract's prose states the authoring conventions that go with it; the
+  [validation contract](../reference/validation-contract.md#the-unquoted-source-limit)
+  describes what counts and how a source is discharged.
 
 The type does not yet require the three roles' sections by name, because
 existing contracts title them differently.

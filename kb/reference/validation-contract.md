@@ -168,7 +168,7 @@ Every note **with frontmatter** is checked for the following, whatever its type.
 - **Ingest snapshot pairing** — when an ignored local snapshot is retained, its name-paired path, source URL, and exact-byte checksum must agree with the tracked ingest. A mismatch warns; when the recorded bytes exist under another filename, the warning locates them without treating that path as mutation authority. For a legacy ingest without a checksum, the source URL may locate a related capture but cannot establish exact-byte identity. Complete cache absence is silent.
 - **Source quotes** — every attributed blockquote in a tracked ingest's `## Quotes` section names its exact snapshot path and checksum, and occurs exactly once in that snapshot or within its supplied line range. Absent, ambiguous, or out-of-range extracts **fail**. Missing or mismatched local bytes are reported as unverified, without judging the extract. Analysis sets resolve their quotations with the same mechanism against a different pin (see [directory artifacts](#directory-artifacts)). Notes citing an ingest match only retained blockquote bodies, never attribution text or analytical prose. Both the snapshot check and citations of retained extracts use the ingest's source-kind normalization: repository sources preserve code operators.
 
-**Bare text opts out of structural checks.** A file with no frontmatter is typed `text` and gets no title, slug, link-health, quote, type, or schema requirements — deliberate, because `text` keeps capture friction at zero and may hold imported material whose relative links are broken by construction. The proposal archive boundary is the one repository-level exception: bare library READMEs can otherwise make archived designs load-bearing just as readily as typed notes. Non-library output collections such as `kb/reports/` remain outside that rule.
+**Bare text opts out of structural checks.** A file with no frontmatter is typed `text` and gets no title, slug, link-health, quote, type, or schema requirements — deliberate, because `text` keeps capture friction at zero and may hold imported material whose relative links are broken by construction. Two exceptions apply. The proposal archive boundary is repository-level: bare library READMEs can otherwise make archived designs load-bearing just as readily as typed notes, and non-library output collections such as `kb/reports/` remain outside that rule. The [unquoted-source limit](#the-unquoted-source-limit) is set by a collection and binds every artifact in it, bare text included.
 
 A `kb/sources` collection sweep also audits the retained local snapshot cache.
 It indexes exact ingest `source` URL values independently of checksums so legacy
@@ -188,6 +188,38 @@ Link health **warns**; a false verbatim quote **fails**. That asymmetry is the d
 ### Why the base checks are not type-configurable
 
 Letting a type opt out of link health or verbatim-quote resolution would be a knob that can only ever be set wrong: a broken link is broken in every type, and a false `verbatim` claim is false in every type. The checks are already **self-selecting** — a note that makes no verbatim claim produces no candidates — so a type gate would add configuration without adding reach.
+
+## The unquoted-source limit
+
+A collection whose `COLLECTION.md` sets `unquoted-source-limit: <n>` holds every
+artifact in it, whatever its type, to that many **unquoted tracked sources**
+([ADR 082](./adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md),
+[ADR 122](./adr/122-collections-set-the-unquoted-source-limit.md)). A collection
+without the field is not checked; the nearest contract governs. This repository
+sets five in `kb/notes/` and `kb/articles/`.
+
+The limit exists so that the artifact's grounding review fits one pass: each
+unquoted source is a full read for the reviewer of
+[`semantic/grounding-alignment`](../instructions/review-gates/semantic/grounding-alignment.md).
+Set it on a collection whose artifacts are grounding-reviewed against tracked
+sources, and nowhere else.
+
+What counts:
+
+- A **tracked source** is a link to a `kb/sources/*.ingest.md`. Links to other
+  artifacts, notes included, never count.
+- A source is **discharged**, and stops counting, when the artifact quotes it
+  verbatim: a quoted span marked `verbatim` in the same paragraph as the link,
+  whose words occur in that ingest's `## Quotes` section. Retain the needed
+  quote with [`cp-skill-ground`](../instructions/cp-skill-ground/SKILL.md);
+  never edit the ingest by hand.
+- A source linked with `(snapshot required)` anywhere in the artifact always
+  counts, quoted or not.
+
+Over the limit, validation **fails** and names the unquoted sources. The remedy
+is to quote the supporting passages or split the artifact by claim; a claim
+carried jointly by several sources is quoted together, not split. The
+collection's contract states any authoring conventions that go with the limit.
 
 ## Open
 

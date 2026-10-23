@@ -55,7 +55,10 @@ description: "<what the collection holds, for agents choosing where to read or w
 Add `unquoted-source-limit: <n>` only when the collection's artifacts will
 be held to a one-pass grounding review against tracked sources; validation
 then fails any artifact citing more than `<n>` tracked sources without a
-verified verbatim quotation.
+verified verbatim quotation. If you set it, read
+[the unquoted-source limit](../../reference/validation-contract.md#the-unquoted-source-limit)
+for what counts and how authors discharge a source, and state those
+conventions in the contract body.
 
 The body must cover the contract's three roles. Derive each from the stated
 purpose and the project's goals; do not add requirements nobody asked for.
