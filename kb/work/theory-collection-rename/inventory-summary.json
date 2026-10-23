@@ -1,0 +1,28 @@
+{
+  "head": "073eca55f4dcc703eb65f34f73f3b880b0b4cac2",
+  "tracked_files": 6256,
+  "moved_files": 431,
+  "moved_markdown": 429,
+  "automatic_update_files": 2119,
+  "automatic_tracked": 1122,
+  "automatic_untracked": 997,
+  "automatic_by_area": {
+    "live": 109,
+    "frozen-reviews": 172,
+    "retained-evidence": 59,
+    "decision-history": 76,
+    "local-reports": 997,
+    "sources": 517,
+    "workshops": 189
+  },
+  "broad_reference_files": 3043,
+  "residual_live_lines": 1263,
+  "residual_record_lines": 1633,
+  "residual_live_files": 203,
+  "residual_record_files": 440,
+  "residual_workshop_files": 338,
+  "residual_workshop_lines": 7993,
+  "redirect_retargets": 164,
+  "redirect_moved_pages": 427,
+  "redirect_virtual_indexes": 6
+}

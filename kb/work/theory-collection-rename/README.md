@@ -16,6 +16,38 @@ the collection is the theory, its members are notes.
 
 - Rename the collection to Theory (2026-10-22). Depth (label only or the
   directory too) is decided here, not yet.
+- The operator is inclined toward a full rename and requested a complete
+  implementation inventory before deciding. Preparation does not authorize
+  the rename or settle migration and frozen-record policy.
+- Leaning towards the full rename (2026-10-22); see [plan](./plan.md).
+- **Runtime code must be collection-independent.** The operator approved
+  revising the plan to remove unnecessary Notes-specific runtime assumptions,
+  not replace them with Theory-specific ones. Build/scaffold manifests still
+  declare the shipped layout. Operation scope and eligibility need explicit
+  decisions; discovering a collection does not make it eligible for every
+  operation.
+- The operator confirmed collection-type work was complete and authorized
+  runtime hardwiring removal. Track 1 now uses explicit scopes; the
+  [execution status](./hardwired-collections-plan.md#execution-status) records
+  interfaces, verification and retained policy exceptions. Track 1 is committed
+  as `43a98d836`. This does not authorize the collection rename.
+- The unquoted-source bound is collection-owned, through
+  `unquoted-source-limit` ([ADR 122](../../reference/adr/122-collections-set-the-unquoted-source-limit.md),
+  commit `daed61d59`). It moves with the contract and needs no type-registration
+  update. The [special collection definition](../../reference/definitions/special-collection.md)
+  records intentional fixed-name roles; no root configuration is commissioned.
+  Work/Tasks/proposal lifecycle design stays out of scope. Existing lifecycle
+  checks remain provisional, not a compatibility contract.
+- **Evidence splits by scope of inference, as a prerequisite** (2026-10-22).
+  Evidence whose bounded inference keeps a free variable (a design-space
+  claim, including an existence claim Commonplace witnesses) stays with the
+  theory. Evidence whose inference, once Commonplace's choices are scoped,
+  concerns only those fixed choices or their effects goes to
+  `kb/reports/retained/`, beside the raw evidence it interprets; no new
+  `kb/reference/evidence/` is created. Retained starts flat for these;
+  structure comes later if the population needs it. This is the existing
+  placement test of `kb/notes/COLLECTION.md` applied to evidence. Sort and
+  move these before the rename.
 
 ## Constraint
 
@@ -49,23 +81,74 @@ state.
   name `kb/notes/`; `properdocs.yml` holds 215 redirect entries from
   `notes/` paths.
 
+## Prepared implementation inventory
+
+Read the [implementation plan](./implementation-plan.md) before executing.
+It provides the decision gates, runtime/build/scaffold changes, exact file
+inventories, redirect-map changes, preservation risks, consumer migration
+requirements and verification coverage.
+
+The separate [hardwired-collections removal plan](./hardwired-collections-plan.md)
+owns runtime independence. It extends the Notes findings to source handling,
+workshop/archive policies and tag roots; distinguishes intentional layout and
+state paths; and fixes coordination with the agent typing collection specs.
+Use it for the completed runtime work and its verification status; this
+workshop's other plans retain the rename/migration worklist. The generic scope
+refactor and collection-owned source bound are implemented. No collection has
+been renamed. The inventories remain pinned to their recorded pre-sort HEAD.
+
+The dry run moves 431 files (429 Markdown and two schemas) and would rewrite
+2,119 Markdown paths, including 997 untracked local report files. It does not
+repair code literals, local type pointers, schema constants or the complete
+redirect map. The plan separates these from command-produced backlinks.
+
+These are pre-sort baseline counts. The concurrently recorded evidence-sort
+prerequisite above takes precedence; reconcile the move, backlink and redirect
+inventories after it. The detailed implementation plan distinguishes that
+recorded decision from recommendations still awaiting approval, including
+consumer handling, protected records and review-state migration.
+
 ## Open questions
 
 1. **Depth.** Label only (menu and README heading), or rename the directory to
    `kb/theory/` with code, scaffold and declarations. ADR 116 favours the full
    rename.
-2. **`evidence/`.** Records of episodes are evidence for theory, not theory.
-   Keep them as a declared part of the collection, or move them elsewhere.
+2. **`evidence/`.** Decided as above; open parts:
+   - the per-file sort (which of the 17 move, which split into a local
+     finding plus a general claim);
+   - contracts: `kb/reports/COLLECTION.md` lists "experiment reports,
+     measurements, and exact records cited by later work" under `retained/`
+     but forbids broadening it into "a second notes, reference,
+     instructions, or workshop collection". Local evidence moved there is
+     an experiment report, not a reference description; state that in the
+     reports contract, and change Reference's and the notes contract's
+     routing lines to match. Moved notes need a report form (type, or plain
+     text with the retained-record conventions) and their identity rules;
+   - links: local evidence bears on an ADR or design document
+     (`is-evidence-for` from reports), which cites it back; a later theory
+     note cites it `abstracted-from`, not as corroboration;
+   - existing evidence-shaped files already in `kb/reference/`
+     (`harness-sub-agent-model-selection-regression.md`,
+     `tag-readme-trace-as-self-improving-loop.md`) move there too or stay;
+   - coupling with [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md),
+     whose outcome evidence for decisions would land in the same place.
 3. **`definitions/`.** Vocabulary as theory's terms: state it in the contract,
    or leave as is.
-4. **Installed projects.** New KBs get the new name from the scaffold;
-   existing consuming KBs migrate (a relocation they run), keep `notes/` with
-   the code accepting both (a `# BACKCOMPAT:` shim needs a consumer need), or
-   are left to diverge.
+4. **Installed projects.** New KBs get Theory from the scaffold. Existing
+   consumers may retain their collection names through generic runtime
+   support, without a dual-name shim. Decide the library-reference upgrade
+   procedure and how init refresh avoids an unwanted second collection;
+   consumer-owned directory migration is optional.
 5. **Frozen history.** Rewrite links in frozen collections and retained
    reports through relocation, or leave them and rely on site redirects.
 6. **Decision record.** A full rename changes what ships to consuming KBs and
    needs an ADR.
+7. **Runtime scope: resolved.** Status and `today`/`recent` validation require
+   `--collection`; promotion takes an explicit collection; review requires
+   `--note`, with `--user-verified` only a filter. The generic `notes_validation`
+   status field reports its scope. ADR 122 attaches the source bound to the
+   governing collection contract, not a type path. Verify these behaviors
+   through the rename; do not reopen them as implicit-scope design questions.
 
 ## Boundaries
 
