@@ -95,10 +95,11 @@ A path can exercise force without legitimate admission, carry a legitimate reque
 
 Relevant Notes:
 
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — defined-in: supplies the consumer, channel, and force record whose applicability boundary the audit exposes
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — grounds: locates authority alongside substrate, representational form, and lineage
-- [A consumption channel delivers force without the history that earned it](../../notes/a-consumption-channel-delivers-force-without-the-history-that.md) — grounds: explains why live force does not preserve admission legitimacy
-- [A repeatable operative path keeps a redesign class open to revision](../../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: supplies the continuity test exercised by the validator and lifecycle cases
-- [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](../../notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — contrasts: applies the same path-relative discipline to six external systems whose research teams remain outside the reported loops
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — see-also: supplies the consumer, channel, and force record whose applicability boundary the audit exposes
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — see-also: locates authority alongside substrate, representational form, and lineage
+- [A consumption channel delivers force without the history that earned it](../../notes/a-consumption-channel-delivers-force-without-the-history-that.md) — is-evidence-for: explains why live force does not preserve admission legitimacy
+- [A repeatable operative path keeps a redesign class open to revision](../../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — is-evidence-for: supplies the continuity test exercised by the validator and lifecycle cases
+- [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](../../notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — compares-with: applies the same path-relative discipline to six external systems whose research teams remain outside the reported loops
 - [Commonplace as a reflective self-improving system](../../notes/evidence/commonplace-as-a-reflective-system.md) — see-also: classifies the narrower tag-README episode under the declared human-inclusive frame
+- [Consumer, channel and force can stay fixed while the governed use changes](../../notes/evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md) — is-evidence-for: the general applicability finding extracted from the explanatory-reach and tag-README cases
 - [Revise the behavioral-authority decomposition](../../notes/proposals/revise-behavioral-authority-decomposition.md) — see-also: owns the unresolved choice between applicability as a field or a required qualifier

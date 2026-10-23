@@ -38,6 +38,7 @@ complete: true
 - [Adaptation signals and retained surfaces](../notes/research/adaptation-agentic-ai-analysis.md) — update pressure does not select form or authority
 - [Consumption channels deliver force](../notes/a-consumption-channel-delivers-force-without-the-history-that.md) — channel position can confer authority without earned provenance
 - [Six Commonplace paths](../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md) — broad authority-path coverage leaves completeness open
+- [Fixed triple, changed use](../notes/evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md) — consumer, channel and force do not identify a path without its applicability
 - [Stale self-description](../notes/stale-self-description-conceals-its-own-staleness.md) — the detecting process consults the artifact that drifted
 - [Attempted recovery identifies informational gaps](../notes/documentation-generates-the-system-rather-than-describing-it.md) — recoverability alone establishes neither provenance nor authority
 - [Seven documentation cases](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — dependency and drift checks distinguish copies from useful synthesis

@@ -39,4 +39,4 @@ Relevant Notes:
 - [knowledge artifact](./knowledge-artifact.md) - authority family: evidence, reference, context, explanation, or advice
 - [system-definition artifact](./system-definition-artifact.md) - authority family: instruction, enforcement, routing, validation, configuration, evaluation, or learning input
 - [a consumption channel delivers force without the history that earned it](../a-consumption-channel-delivers-force-without-the-history-that.md) - failure surface: the path confers force on its occupant without reading how it got there
-- [six Commonplace paths establish broad addressability, not completeness](../../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md) - evidence boundary: scoped gates and validators expose applicability as an unresolved addition to the current record
+- [consumer, channel and force can stay fixed while the governed use changes](../evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md) - evidence boundary: scoped gates and validators expose applicability as an unresolved addition to the current record
