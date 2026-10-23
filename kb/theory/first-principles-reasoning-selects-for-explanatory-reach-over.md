@@ -60,5 +60,5 @@ Relevant Notes:
 
 Derived into:
 
-- [review-explanatory-reach](../tasks/recurring/review-explanatory-reach.md) — the four-part negative test restated as a recurring review procedure
+- [review-explanatory-reach](../tasks/review-explanatory-reach.md) — the four-part negative test restated as a recurring review procedure
 - [COLLECTION.md](./COLLECTION.md) — the four-part negative test condensed into the "Tests for explanatory-reach" authoring block

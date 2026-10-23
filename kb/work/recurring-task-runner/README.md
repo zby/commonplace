@@ -74,7 +74,7 @@ Three costs come with the heartbeat, and the design answers each:
 ## Starting state
 
 - A recurring task format already exists: a stable runbook plus an appended
-  log, with [review-explanatory-reach](../../tasks/recurring/review-explanatory-reach.md)
+  log, with [review-explanatory-reach](../../tasks/review-explanatory-reach.md)
   as its only instance. Its log records zero runs. The runbook has never had a
   launcher, which is the evidence that a role record without a launcher is a
   label.
@@ -102,9 +102,9 @@ fix the runbook format, the scope check and the prompt from guesses.
 
 **Phase 1: tasks and hand launches.** Two runbooks now carry `Cadence`,
 `Write scope` and `Consumer` sections, and one of them a `Batch` section:
-[review-explanatory-reach](../../tasks/recurring/review-explanatory-reach.md)
+[review-explanatory-reach](../../tasks/review-explanatory-reach.md)
 (ten notes per run, so run N+1 depends on run N's reviewed list) and
-[workshop-dormancy-report](../../tasks/recurring/workshop-dormancy-report.md)
+[workshop-dormancy-report](../../tasks/workshop-dormancy-report.md)
 (git age per workshop; observes only). Each is launched by hand with
 [launch-prompt.md](./launch-prompt.md) as the prompt of a headless session,
 once per harness that matters, and judged on four points: did the run stay
@@ -121,14 +121,14 @@ one the heartbeat will later use, and is recorded with the launch.
 
 **Phase 2: the heartbeat.** Starts only after both tasks have two clean hand
 launches. Items 1, 3 and 4 below are its design; items 2, 5, 6 and 7 are
-settled or revised by phase 1. The `task-recurring` type template is
+settled or revised by phase 1. The `task` type template is
 updated with the new sections after the format has survived the launches,
 not before.
 
 ## What the workshop must resolve
 
 1. **The entry point.** One command, in the style of `commonplace-analysis`,
-   with no task argument: read every runbook under `kb/tasks/recurring/`,
+   with no task argument: read every runbook under `kb/tasks/`,
    compute the due set from logs and cadences, exit quietly when nothing is
    due, otherwise build one prompt listing the due tasks with their runbooks
    and log tails, launch one Workjig call in the checkout, and record the

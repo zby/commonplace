@@ -31,7 +31,7 @@ absent.
 
 ## Output
 
-Record findings in `kb/tasks/recurring/workshop-dormancy-report-log.md`.
+Record findings in `kb/tasks/workshop-dormancy-report-log.md`.
 Append one dated section per run (for example `## 2026-10-30`) with:
 
 - Counts: active, quiet, dormant, and how many of the dormant are listed
@@ -41,7 +41,7 @@ Append one dated section per run (for example `## 2026-10-30`) with:
 
 ## Write scope
 
-`kb/tasks/recurring/workshop-dormancy-report-log.md` only. The run stages
+`kb/tasks/workshop-dormancy-report-log.md` only. The run stages
 exactly this file and commits it with the subject
 `Run recurring task workshop-dormancy-report`.
 

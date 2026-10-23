@@ -36,7 +36,7 @@ These outputs belong to the project. Init creates each one only when it is missi
 - `kb/reference/`, `kb/reference/types/` — user's reference collection
 - `kb/instructions/` — user's instructions collection
 - `kb/sources/`, `kb/sources/types/` — user's tracked source records, and a place for project-authored source types
-- `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
+- `kb/tasks/` — user's unattended task runbooks and their logs, flat
 - `kb/work/` — user's workshop surface
 - `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
 

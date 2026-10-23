@@ -21,7 +21,7 @@ The KB keeps [authored files canonical while meanings and write rules remain uns
 
 Types assert structural properties of individual documents — what sections are expected, what metadata is required, what's checkable. Directories group documents by topic, lifecycle, provenance, or whatever convention the user finds useful. These are independent axes.
 
-A task in `kb/tasks/active/` can use `type: tasks/types/task-active.md` to define its Goal, Tasks checklist, and Current State structure. Its directory carries a separate lifecycle signal.
+A proposal in `kb/reference/proposals/archive/` keeps the same `design-proposal` type it had in the frontier; its directory carries a separate lifecycle signal.
 
 A collection-local type works throughout its owning collection, not in arbitrary peer collections. For example, `type: theory/types/structured-claim.md` has the same contract at the root of `kb/theory/` and in its subdirectories. The type path carries structural expectations; subdirectories may carry another organization axis.
 

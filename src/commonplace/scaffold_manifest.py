@@ -41,9 +41,7 @@ MANIFEST = ScaffoldManifest(
         # User-space operating directories; collection files are seeded below.
         Path("kb/sources"),
         Path("kb/sources/types"),
-        Path("kb/tasks/backlog"),
-        Path("kb/tasks/active"),
-        Path("kb/tasks/completed"),
+        Path("kb/tasks"),
         Path("kb/work"),
         Path("kb/reports"),
         Path("kb/reports/cache"),

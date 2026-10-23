@@ -10,7 +10,7 @@ set.
 You are running the recurring task `<task>` unattended. Nobody will answer
 questions; if you cannot complete the run, write nothing and stop.
 
-1. Read `kb/tasks/recurring/<task>.md`. It is the runbook. Follow its
+1. Read `kb/tasks/<task>.md`. It is the runbook. Follow its
    `Run Procedure`, `Batch` (if present) and `Output` sections exactly.
 2. Read the log named in its `Output` section before doing anything else.
    Earlier sections tell you what previous runs did; use them as the runbook

@@ -23,7 +23,7 @@ the beginning and may reclassify.
 
 ## Write scope
 
-`kb/tasks/recurring/review-explanatory-reach-log.md` only. The run reads
+`kb/tasks/review-explanatory-reach-log.md` only. The run reads
 anything it needs and writes nothing else. It stages exactly this file and
 commits it with the subject `Run recurring task review-explanatory-reach`.
 
@@ -56,7 +56,7 @@ For each note, assign one of:
 
 ## Output
 
-Record findings in `kb/tasks/recurring/review-explanatory-reach-log.md`.
+Record findings in `kb/tasks/review-explanatory-reach-log.md`.
 Append one dated section per run (e.g. `## 2026-03-07`) with:
 - Reviewed: the ten note filenames, one per line, so the next run can skip them
 - Classification breakdown
