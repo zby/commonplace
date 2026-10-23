@@ -154,6 +154,28 @@ Capture an X/Twitter post, thread, or article under the ignored
 is reported rather than replaced; `--reobserve` captures it again as a new
 observation under a basename ending in the capture date.
 
+## Tasks
+
+### commonplace-task
+
+Run one runbook from `kb/tasks/` unattended in the current checkout and
+check its commit:
+
+```bash
+commonplace-task run <name> [--profile NAME] [--timeout SECONDS]
+```
+
+The worker profile comes from `kb/tasks/profiles.yaml` (its `default` when
+`--profile` is omitted): harness, launch model, effort and the permission
+flags the headless session runs with. The command opens a Workjig run under
+`kb/reports/state/tasks/<name>/<stamp>/`, asks one worker to follow the
+runbook, then reads git: it reports whether exactly one new commit exists,
+whether it carries the subject the runbook's `## Write scope` names, whether
+it touches only that scope, and what the run left uncommitted. The JSON
+report ends with `ok`; the exit status is 1 when any check fails and 2 when
+the runbook or profile cannot be loaded. The worker's own report is shown
+but decides nothing. Design and its limits: `kb/work/recurring-task-runner/`.
+
 ## Agentic-system analyses
 
 ### commonplace-analysis

@@ -96,30 +96,34 @@ Three costs come with the heartbeat, and the design answers each:
 ## Order of work
 
 The operator reordered the workshop on 2026-10-23: first write tasks that
-can run unattended and test them by hand; only then build the heartbeat
+can run unattended and test them one launch at a time; only then build the heartbeat
 around what the tests show. A runner designed before any task has run would
 fix the runbook format, the scope check and the prompt from guesses.
 
-**Phase 1: tasks and hand launches.** Two runbooks now carry `Cadence`,
+**Phase 1: tasks and launches.** Two runbooks now carry `Cadence`,
 `Write scope` and `Consumer` sections, and one of them a `Batch` section:
 [review-explanatory-reach](../../tasks/review-explanatory-reach.md)
 (ten notes per run, so run N+1 depends on run N's reviewed list) and
 [workshop-dormancy-report](../../tasks/workshop-dormancy-report.md)
-(git age per workshop; observes only). Each is launched by hand with
-[launch-prompt.md](./launch-prompt.md) as the prompt of a headless session,
-once per harness that matters, and judged on four points: did the run stay
-inside its write scope; did it produce exactly one commit with the required
-subject; did the second run of the reviewer use the first run's reviewed
-list; is the output something the operator actually reads. Record each
-launch in [launches.md](./launches.md): date, task, harness and model, the
-flags used, commit hash or failure, and the four judgments.
+(git age per workshop; observes only). Each is launched with
+`commonplace-task run <name>`, once per worker profile that matters, and
+judged on four points: did the run stay inside its write scope; did it
+produce exactly one commit with the required subject; did the second run of
+the reviewer use the first run's reviewed list; is the output something the
+operator actually reads. The command checks the first two against git and
+prints them; the other two are the operator's judgment. Record each launch
+in [launches.md](./launches.md): date, task, profile and reported model, the
+run directory, commit hash or failure, and the four judgments.
 
-The harness flags are part of the test. A headless Claude Code or Codex
-session needs permission to write and to run `git add` and `git commit`
-without prompts; the narrowest flag set that lets the run complete is the
-one the heartbeat will later use, and is recorded with the launch.
+The worker profile is part of the test. [`kb/tasks/profiles.yaml`](../../tasks/profiles.yaml)
+holds harness, model, effort and the permission flags that let a headless
+session write and run `git add` and `git commit` without prompts; the
+narrowest profile that lets a run complete is the one the heartbeat will
+later use, and is recorded with the launch. The launch prompt lives in
+`src/commonplace/lib/tasks.py`; the heartbeat will build the same prompt
+for each due task.
 
-**Phase 2: the heartbeat.** Starts only after both tasks have two clean hand
+**Phase 2: the heartbeat.** Starts only after both tasks have two clean
 launches. Items 1, 3 and 4 below are its design; items 2, 5, 6 and 7 are
 settled or revised by phase 1. The `task` type template is
 updated with the new sections after the format has survived the launches,
@@ -198,7 +202,7 @@ owns.
 
 ## What closes the workshop
 
-Phase 1 closes when both tasks have two clean hand launches recorded in
+Phase 1 closes when both tasks have two clean launches recorded in
 `launches.md`. The workshop closes when a cron tick has run the heartbeat at least twice with the first task due and
 without operator involvement, each task run ended in one commit confined to
 the task's declared paths, a tick with nothing due exited without a launch,

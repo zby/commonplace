@@ -1,0 +1,26 @@
+# Worker profiles for `commonplace-task run`. Same entry shape as the
+# analysis method's worker-profiles.yaml: harness, launch-model, effort and
+# optional extra harness flags. The flags are the task's whole permission
+# grant; a run that stalls on a permission has a profile that is too narrow.
+default: sonnet
+profiles:
+  sonnet:
+    harness: claude-code
+    launch-model: sonnet
+    effort: medium
+    flags:
+      permission-mode: acceptEdits
+      allowed-tools: "Read,Grep,Glob,Edit,Write,Bash(git log:*),Bash(git status:*),Bash(git diff:*),Bash(git add:*),Bash(git commit:*)"
+  opus:
+    harness: claude-code
+    launch-model: opus
+    effort: medium
+    flags:
+      permission-mode: acceptEdits
+      allowed-tools: "Read,Grep,Glob,Edit,Write,Bash(git log:*),Bash(git status:*),Bash(git diff:*),Bash(git add:*),Bash(git commit:*)"
+  codex:
+    harness: codex
+    launch-model: gpt-6.1-sol
+    effort: medium
+    flags:
+      sandbox: workspace-write
