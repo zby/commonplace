@@ -133,10 +133,10 @@ S3 is also a useful caution. The current installed path emphasizes task-local re
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: S1/S2 move stored memories into prompt context, while S3 task-local traces alone do not constitute durable read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Agent-S requires separating local JSON memory, embedding access structures, prompts, runtime reflections, and BBON traces.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: S1/S2 summarize trajectories into future advisory context.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: narrative and episodic summaries are advisory evidence/context, not enforced rules.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: procedural prompts, action formatters, and BBON evaluation scripts configure behavior or evaluation.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Agent-S combines small retrieved experience injection with bounded task-local trajectory context.
-- [Lineage](../../notes/definitions/lineage.md) - frames: the key risk is weak trace provenance from raw trajectory to durable summary.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: S1/S2 move stored memories into prompt context, while S3 task-local traces alone do not constitute durable read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Agent-S requires separating local JSON memory, embedding access structures, prompts, runtime reflections, and BBON traces.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: S1/S2 summarize trajectories into future advisory context.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: narrative and episodic summaries are advisory evidence/context, not enforced rules.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: procedural prompts, action formatters, and BBON evaluation scripts configure behavior or evaluation.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Agent-S combines small retrieved experience injection with bounded task-local trajectory context.
+- [Lineage](../../theory/definitions/lineage.md) - frames: the key risk is weak trace provenance from raw trajectory to durable summary.

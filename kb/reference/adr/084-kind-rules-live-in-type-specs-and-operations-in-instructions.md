@@ -149,5 +149,5 @@ Relevant Notes:
 - [ADR 041: collection-conformance reviews use COLLECTION.md as the gate](./041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — see-also: the nearest-contract-only guarantee this decision keeps
 - [Collections and types](../collections-and-types.md) — part-of: the two-surface model this decision completes with a placement rule
 - [Design proposal](../types/design-proposal.md) — implemented-by: the type spec that now carries the proposal contract
-- [Why directories despite their costs](../../notes/why-directories-despite-their-costs.md) — rests-on: local conventions are a directory affordance, and each directory with its own rules taxes routing and skills
-- [Methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md) — rests-on: the gradient from an instruction an agent may not read to a gate that always runs
+- [Why directories despite their costs](../../theory/why-directories-despite-their-costs.md) — rests-on: local conventions are a directory affordance, and each directory with its own rules taxes routing and skills
+- [Methodology enforcement is constraining](../../theory/methodology-enforcement-is-constraining.md) — rests-on: the gradient from an instruction an agent may not read to a gate that always runs

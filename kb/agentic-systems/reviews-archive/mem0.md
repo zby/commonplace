@@ -32,7 +32,7 @@ The README supplies an example answer model consuming requested memories, an aff
 
 Individual payloads can be updated or deleted, with before/after text retained in history. Expiration hides selected public reads but does not cover direct get or internal extraction selection. Writes span multiple stores, and entity cleanup is best effort. The result therefore establishes neither universal forgetting nor atomic rollback.
 
-The comparison profile records automatic trace-fed memory creation, natural-language and symbolic retained forms, and both requested retrieval and automatic context delivery. It keeps actual learning benefit, faithfulness and several provider-dependent classifications unresolved. Parsing, deduplication, storage and relevance ranking are operational checks; none supplies an evidence-consuming factual acceptance decision. No full theory-builder, reflective-system or self-improvement conclusion follows from retained text alone. See the [theory-builder definition](../../notes/definitions/theory-builder.md) and the exact result's route-level findings.
+The comparison profile records automatic trace-fed memory creation, natural-language and symbolic retained forms, and both requested retrieval and automatic context delivery. It keeps actual learning benefit, faithfulness and several provider-dependent classifications unresolved. Parsing, deduplication, storage and relevance ranking are operational checks; none supplies an evidence-consuming factual acceptance decision. No full theory-builder, reflective-system or self-improvement conclusion follows from retained text alone. See the [theory-builder definition](../../theory/definitions/theory-builder.md) and the exact result's route-level findings.
 
 ## Scope
 

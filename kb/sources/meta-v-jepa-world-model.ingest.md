@@ -28,7 +28,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This announcement is a technical basis and limitation for [World models assess explanatory-reach through action-conditioned prediction](../notes/world-models-assess-explanatory-reach-through-action-conditioned.md): it supports the existence of a learned latent video predictor, while Meta's own separation of current perception from future planning keeps V-JEPA outside the note's action-conditioned reach-assessment case. It also compares with [Craik's model-mediated account of thought](./craik-hypothesis-on-the-nature-of-thought-1943.ingest.md): V-JEPA supplies a learned predictive representation, but not the action selection and trial of alternatives central to that account.
+This announcement is a technical basis and limitation for [World models assess explanatory-reach through action-conditioned prediction](../theory/world-models-assess-explanatory-reach-through-action-conditioned.md): it supports the existence of a learned latent video predictor, while Meta's own separation of current perception from future planning keeps V-JEPA outside the note's action-conditioned reach-assessment case. It also compares with [Craik's model-mediated account of thought](./craik-hypothesis-on-the-nature-of-thought-1943.ingest.md): V-JEPA supplies a learned predictive representation, but not the action selection and trial of alternatives central to that account.
 
 ## Extractable Value
 
@@ -40,7 +40,7 @@ This announcement is a technical basis and limitation for [World models assess e
 
 ## Limitations (our opinion)
 
-This is Meta's release account rather than the scientific paper, so its efficiency and downstream-performance claims lack enough experimental detail here to assess baselines, uncertainty, or configuration dependence. The short visual clips and perception tasks do not test long-horizon prediction, action-conditioned planning, control, multimodal input, or robustness under environment shifts. Its masking design and abstract prediction target are fixed parts of the experiment: as [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), improvement by the encoder and predictor within that setup does not establish that the fixed signals, target representation, masking partition, or downstream task interfaces are the right decomposition. The announcement's rationale for spatiotemporal masking cannot be treated as an ablation result without the actual varied comparison and outcomes.
+This is Meta's release account rather than the scientific paper, so its efficiency and downstream-performance claims lack enough experimental detail here to assess baselines, uncertainty, or configuration dependence. The short visual clips and perception tasks do not test long-horizon prediction, action-conditioned planning, control, multimodal input, or robustness under environment shifts. Its masking design and abstract prediction target are fixed parts of the experiment: as [learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), improvement by the encoder and predictor within that setup does not establish that the fixed signals, target representation, masking partition, or downstream task interfaces are the right decomposition. The announcement's rationale for spatiotemporal masking cannot be treated as an ablation result without the actual varied comparison and outcomes.
 
 ## Recommended Next Action
 

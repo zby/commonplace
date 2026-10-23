@@ -130,8 +130,8 @@ At consumption time, the cheatsheet has instruction-like force because the gener
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Dynamic Cheatsheet turns sequential solver traces into natural-language prompt memory and embedding-selected prior-example packets.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dynamic Cheatsheet stores traces and cheatsheets, then wires them into prompt read-back automatically.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: cheatsheets, prompt templates, embeddings, result traces, and evaluators differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: previous solutions and saved result traces are examples, evidence, and audit material.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generator and curator prompts define how retained memory changes and how it influences later solver behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: raw solver trajectories are distilled into a durable behavior-shaping cheatsheet.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dynamic Cheatsheet stores traces and cheatsheets, then wires them into prompt read-back automatically.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: cheatsheets, prompt templates, embeddings, result traces, and evaluators differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: previous solutions and saved result traces are examples, evidence, and audit material.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generator and curator prompts define how retained memory changes and how it influences later solver behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: raw solver trajectories are distilled into a durable behavior-shaping cheatsheet.

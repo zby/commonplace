@@ -27,11 +27,11 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is empirical support for [Session history should not be the default next context](../notes/session-history-should-not-be-the-default-next-context.md): in the tested domains, supplied schemas let current-state prompts outperform several forms of historical replay or compression. The comparison concerns these runtime representations and prompts, not every implementation of a named framework. The paper's LangGraph-style baseline includes the full transcript; it does not characterize LangGraph as a whole.
+The paper is empirical support for [Session history should not be the default next context](../theory/session-history-should-not-be-the-default-next-context.md): in the tested domains, supplied schemas let current-state prompts outperform several forms of historical replay or compression. The comparison concerns these runtime representations and prompts, not every implementation of a named framework. The paper's LangGraph-style baseline includes the full transcript; it does not characterize LangGraph as a whole.
 
-It also supplies a useful boundary case for [Preserve evidence without making history the next context](../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md). Discarding reasoning permanently is a separate decision from excluding it from the acting prompt. The experiments do not compare permanent disposal against retaining an unloaded evidence archive. The paper itself identifies auditing, debugging provenance, and unforeseen later relevance as limits of history disposal.
+It also supplies a useful boundary case for [Preserve evidence without making history the next context](../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md). Discarding reasoning permanently is a separate decision from excluding it from the acting prompt. The experiments do not compare permanent disposal against retaining an unloaded evidence archive. The paper itself identifies auditing, debugging provenance, and unforeseen later relevance as limits of history disposal.
 
-Its mutable schemas compare with [Active work state is not retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md): current facts must change or disappear as execution proceeds. However, its environment-state examples do not establish the note's richer lifecycle of evidence gates, closure, and extraction into durable knowledge.
+Its mutable schemas compare with [Active work state is not retrospective memory or chat history](../theory/active-work-state-is-not-retrospective-memory-or-chat-history.md): current facts must change or disappear as execution proceeds. However, its environment-state examples do not establish the note's richer lifecycle of evidence gates, closure, and extraction into durable knowledge.
 
 ## Extractable Value
 
@@ -53,4 +53,4 @@ Its mutable schemas compare with [Active work state is not retrospective memory 
 
 ## Recommended Next Action
 
-Update [Session history should not be the default next context](../notes/session-history-should-not-be-the-default-next-context.md) with one bounded empirical example from SKILL.state, keeping the supplied-schema condition beside the result and preserving the distinction between excluding history from prompts and deleting evidence.
+Update [Session history should not be the default next context](../theory/session-history-should-not-be-the-default-next-context.md) with one bounded empirical example from SKILL.state, keeping the supplied-schema condition beside the result and preserving the distinction between excluding history from prompts and deleting evidence.

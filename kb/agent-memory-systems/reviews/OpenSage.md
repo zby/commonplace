@@ -139,7 +139,7 @@ The RL adapters are behavior-learning infrastructure, not ordinary memory storag
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places OpenSage's tool-output memory observer, history traces, summaries, message board, and RL adapters on the trace-learning landscape.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: OpenSage stores long-term memory and also has configured push paths through compaction and message-board diffs.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: OpenSage's Skills, sandbox files, Neo4j graphs, plugin outputs, message boards, and RL samples split by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: session traces, history records, graph search results, and file memory mostly advise future work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Skills, plugin callbacks, prompt policies, search strategies, and RL adapters carry stronger behavioral authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: OpenSage stores long-term memory and also has configured push paths through compaction and message-board diffs.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: OpenSage's Skills, sandbox files, Neo4j graphs, plugin outputs, message boards, and RL samples split by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: session traces, history records, graph search results, and file memory mostly advise future work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Skills, plugin callbacks, prompt policies, search strategies, and RL adapters carry stronger behavioral authority.

@@ -37,7 +37,7 @@ Gybels et al. define **inter-language reflection** as traditional reflection in 
 
 ## Connections Found
 
-The paper supplies the mature technical model for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../notes/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
+The paper supplies the mature technical model for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../theory/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
 
 ## Inherited Vocabulary
 
@@ -78,8 +78,8 @@ Any proposed **cross-representational reflection** should distinguish (1) a data
 
 ## Limitations (our opinion)
 
-The model is supported by two language pairs but not by a systematic comparison against alternative interoperability architectures. Its transparency criterion is partly a usability property and does not by itself establish reflective causal connection; the latter still comes from traditional reflection in each language. The examples are programming languages with explicit interpreters and meta-level protocols, so direct transfer to asynchronous, human-mediated natural-language and code artifacts risks turning “mapping” into analogy without an operational account. The paper also says little about authority, verification, persistence, or delayed behavioral effects central to Commonplace's [representational-form](../notes/definitions/representational-form.md) analysis.
+The model is supported by two language pairs but not by a systematic comparison against alternative interoperability architectures. Its transparency criterion is partly a usability property and does not by itself establish reflective causal connection; the latter still comes from traditional reflection in each language. The examples are programming languages with explicit interpreters and meta-level protocols, so direct transfer to asynchronous, human-mediated natural-language and code artifacts risks turning “mapping” into analogy without an operational account. The paper also says little about authority, verification, persistence, or delayed behavioral effects central to Commonplace's [representational-form](../theory/definitions/representational-form.md) analysis.
 
 ## Recommended Next Action
 
-Use the data-mapping/protocol-mapping/base-and-meta-access decomposition to constrain [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), while leaving Commonplace's satisfaction of those conditions explicitly undecided.
+Use the data-mapping/protocol-mapping/base-and-meta-access decomposition to constrain [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md), while leaving Commonplace's satisfaction of those conditions explicitly undecided.

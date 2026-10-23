@@ -129,11 +129,11 @@ Another divergence is parametric absorption. SkillRL's SFT/RL path can turn trac
 
 Relevant Notes:
 
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillRL distills rollout traces into durable skills and training examples.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillRL has an explicit push path from SkillBank storage into prompt context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates raw memories, SkillBank JSON, retrieval state, SFT examples, and model weights.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: skills move from evidence to prompt instruction and learning authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval rules, trainer update gates, and SkillBank entries shape later behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - compares: template retrieval depends on detectable task/category signals, while embedding mode falls back to inferred similarity.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: reward labels, LLM extraction, validation success rates, and policy improvements provide different strengths of evidence.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillRL distills rollout traces into durable skills and training examples.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillRL has an explicit push path from SkillBank storage into prompt context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the review separates raw memories, SkillBank JSON, retrieval state, SFT examples, and model weights.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: skills move from evidence to prompt instruction and learning authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval rules, trainer update gates, and SkillBank entries shape later behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - compares: template retrieval depends on detectable task/category signals, while embedding mode falls back to inferred similarity.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) - applies: reward labels, LLM extraction, validation success rates, and policy improvements provide different strengths of evidence.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SkillRL is a trace-to-skill and trace-to-policy system.

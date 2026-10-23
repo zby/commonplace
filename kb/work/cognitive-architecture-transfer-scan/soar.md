@@ -29,8 +29,8 @@ This ontology distinguishes uncertainty about **what to do** from failure while 
 - **`SOAR-2` — open a scoped work surface at the impasse.** A workshop or investigation should preserve the parent goal and the exact unresolved condition so that its resolution can return as a usable result rather than an unrelated essay.
 - **`SOAR-3` — compile the dependency, not the whole trace.** Promotion should capture the minimal conditions that made the resolution valid. Copying every intermediate step creates brittle and overspecific fast paths.
 - **`SOAR-4` — require a verified result before chunking.** A completed subproblem can still be wrong. The proposed production, skill, or rule should pass the appropriate deterministic or semantic check before becoming operative.
-- **`SOAR-5` — keep fallback and explainability after compilation.** A fast path needs scope conditions and a route back to general reasoning when conditions fail, reinforcing the existing [two-layer execution-system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
-- **`SOAR-6` — separate operator proposal, evaluation, and application.** This maps cleanly onto the [proposal-selection improvement loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and prevents generation from grading itself implicitly.
+- **`SOAR-5` — keep fallback and explainability after compilation.** A fast path needs scope conditions and a route back to general reasoning when conditions fail, reinforcing the existing [two-layer execution-system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md).
+- **`SOAR-6` — separate operator proposal, evaluation, and application.** This maps cleanly onto the [proposal-selection improvement loop](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) and prevents generation from grading itself implicitly.
 
 ## Method worth borrowing
 

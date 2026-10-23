@@ -211,9 +211,9 @@ This is more precise than "avoid jargon," and it preserves the value of a small,
 stable technical vocabulary.
 
 This also reflects a human-agent asymmetry already described by
-[minimum viable vocabulary](../../notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md)
+[minimum viable vocabulary](../../theory/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md)
 and
-[agent statelessness](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md).
+[agent statelessness](../../theory/agent-statelessness-makes-routing-architectural-not-learned.md).
 Humans retain useful project terms across sessions. Agents normally need those
 definitions loaded again. A durable vocabulary can lower the human's repeated
 reading cost while still requiring deliberate routing for each new agent

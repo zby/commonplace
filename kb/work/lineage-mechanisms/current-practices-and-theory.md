@@ -82,7 +82,7 @@ Lineage is one artifact-analysis axis, independent of substrate and form. A repo
 
 ### Use-shaped artifacts suppress provenance
 
-[`Artifacts produced from sources need lineage recorded at the source`](../../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) argues that shaped artifacts often suppress provenance by design. The dependency record should live where it interrupts source edits, usually source-side lineage pointers at current scale.
+[`Artifacts produced from sources need lineage recorded at the source`](../../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) argues that shaped artifacts often suppress provenance by design. The dependency record should live where it interrupts source edits, usually source-side lineage pointers at current scale.
 
 This theory directly applies to skills, instructions, and reference artifacts worked out from notes. It does not yet fully handle external-source chains where the "source" is captured material, the ingest is analysis, and the promoted note may be a synthesis across multiple sources.
 

@@ -141,9 +141,9 @@ The deepest divergence is source authority. MentisDB can preserve what an agent 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MentisDB stores durable chain memory, but MCP/REST read-back is mostly explicit pull.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MentisDB stores durable chain memory, but MCP/REST read-back is mostly explicit pull.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - relates: MentisDB's LLM extraction can turn agent/session text into typed memory candidates before append.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: thoughts, relations, vector sidecars, skill versions, bearer-token records, and dashboard settings carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: remembered thoughts, recent context, and context bundles mainly advise later work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, MCP tool contracts, bearer-token policy, signatures, and dashboard settings instruct or constrain behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: MentisDB has a staged extraction path from free-form traces to typed memory candidates.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: thoughts, relations, vector sidecars, skill versions, bearer-token records, and dashboard settings carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: remembered thoughts, recent context, and context bundles mainly advise later work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skills, MCP tool contracts, bearer-token policy, signatures, and dashboard settings instruct or constrain behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: MentisDB has a staged extraction path from free-form traces to typed memory candidates.

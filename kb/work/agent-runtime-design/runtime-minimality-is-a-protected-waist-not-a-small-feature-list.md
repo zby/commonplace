@@ -14,7 +14,7 @@ The result is not a runtime that contains every useful feature. It is a runtime 
 
 ## Mechanism and policy must be separated inside the runtime decomposition
 
-The existing decomposition into [scheduler, context engine, and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) is still useful, but each component contains both mechanism and policy.
+The existing decomposition into [scheduler, context engine, and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) is still useful, but each component contains both mechanism and policy.
 
 | Component | Protected mechanism | Extensible policy |
 |---|---|---|
@@ -22,7 +22,7 @@ The existing decomposition into [scheduler, context engine, and execution substr
 | Context engine | Bounded call envelope, provenance channels, scope boundaries, context-size enforcement | Retrieval, compaction, source selection, prompt construction, projection into child calls |
 | Execution substrate | Capability enforcement, isolation ceiling, effect interception, durable state primitives, resource accounting | Tool implementations, data transforms, domain integrations, task-local programs |
 
-This split changes what it means to say that the scheduler “owns decomposition.” The runtime owns the machinery that can execute and recover a decomposition. It should not need to own the decomposition policy. [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) already separates scheduler placement from the artifact that carries decomposition policy. A model-authored symbolic program can carry that policy while the runtime supplies the scheduling mechanism beneath it.
+This split changes what it means to say that the scheduler “owns decomposition.” The runtime owns the machinery that can execute and recover a decomposition. It should not need to own the decomposition policy. [Agent orchestration occupies a multi-dimensional design space](../../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) already separates scheduler placement from the artifact that carries decomposition policy. A model-authored symbolic program can carry that policy while the runtime supplies the scheduling mechanism beneath it.
 
 The same distinction applies elsewhere. The runtime must enforce a context boundary, but it need not choose one universal retrieval algorithm. It must intercept effects, but it need not ship every tool. It must recover a suspended call, but it need not decide that every failure deserves three retries.
 
@@ -30,7 +30,7 @@ The same distinction applies elsewhere. The runtime must enforce a context bound
 
 If the model is allowed to choose a decomposition, natural language is not always the right form for the chosen result. A decomposition may contain exact loops, filters, joins, counters, dependency edges, or validation steps. Forcing those parts back into conversation makes the model perform symbolic bookkeeping in bounded stochastic context.
 
-[RLM has the model write ephemeral orchestrators](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) shows the clean move: the model writes the scheduler rather than remaining the scheduler. [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) shows a shipped variant: the model writes an isolated JavaScript program that calls bounded agents, holds intermediate values outside the parent context, and can later be promoted as a reusable command. The recent [recursive-agent architecture ingest](../../sources/jdegoes-recursive-agent-architecture-2081854216264392934.ingest.md) generalizes the same shape into recursive code–inference execution.
+[RLM has the model write ephemeral orchestrators](../../theory/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) shows the clean move: the model writes the scheduler rather than remaining the scheduler. [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) shows a shipped variant: the model writes an isolated JavaScript program that calls bounded agents, holds intermediate values outside the parent context, and can later be promoted as a reusable command. The recent [recursive-agent architecture ingest](../../sources/jdegoes-recursive-agent-architecture-2081854216264392934.ingest.md) generalizes the same shape into recursive code–inference execution.
 
 For the general-purpose runtime we want, dynamic extension therefore means more than registering another prewritten tool. During a run, the model must be able to create a task-local symbolic program that can:
 
@@ -42,7 +42,7 @@ For the general-purpose runtime we want, dynamic extension therefore means more 
 - suspend when an invoked effect needs approval or an external result;
 - return a typed result or artifact to its caller.
 
-The runtime supplies the execution semantics. The model supplies the program. This is the dynamic counterpart of [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md): ordinary code should carry `select` and live state when it can, while the runtime reifies the continuation when process lifetime, human approval, or distribution makes live call-stack state insufficient.
+The runtime supplies the execution semantics. The model supplies the program. This is the dynamic counterpart of [the practical scheduler is the host language](../../theory/the-practical-scheduler-is-the-host-language.md): ordinary code should carry `select` and live state when it can, while the runtime reifies the continuation when process lifetime, human approval, or distribution makes live call-stack state insufficient.
 
 ## Dynamic extension must not mean ambient mutation
 
@@ -73,7 +73,7 @@ This is the same logic as capability-based approval. Generated code may choose *
 
 The first two are dynamic execution. The third is deploy-time learning or capability promotion. The fourth changes the protected substrate itself. A system may support all four, but it should never let a run-local program cross into the later horizons implicitly.
 
-The horizon table alone does not identify self-modification. A human-written plugin can be durable without being self-generated. An RLM program can be self-generated without surviving the run. For this workshop, runtime self-modification needs both properties: a process inside the declared system boundary generates the concrete change, and the accepted change remains operative for later runs or sessions. It must also target the runtime's own [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md) rather than merely produce an external work product.
+The horizon table alone does not identify self-modification. A human-written plugin can be durable without being self-generated. An RLM program can be self-generated without surviving the run. For this workshop, runtime self-modification needs both properties: a process inside the declared system boundary generates the concrete change, and the accepted change remains operative for later runs or sessions. It must also target the runtime's own [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md) rather than merely produce an external work product.
 
 | Case | Self-generated | Durable beyond generating run | Target | Classification |
 |---|---|---|---|---|
@@ -84,7 +84,7 @@ The horizon table alone does not identify self-modification. A human-written plu
 
 Generation and admission remain separate. A user may review or approve a model-generated change without becoming its author, while a runtime may automatically install a generated artifact without showing that the change deserved retention. **Self-modifying** describes the origin, persistence, and target of the change; it does not imply autonomous admission, improvement, or adequate verification.
 
-[RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) already shows why these horizons matter. Ephemeral orchestration avoids maintenance and admission costs. Durable generated capabilities accumulate value but introduce provenance, testing, permission, dependency, and retirement obligations.
+[RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../../theory/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) already shows why these horizons matter. Ephemeral orchestration avoids maintenance and admission costs. Durable generated capabilities accumulate value but introduce provenance, testing, permission, dependency, and retirement obligations.
 
 ## Approval clarifies the asynchronous execution model
 

@@ -148,7 +148,7 @@ migration is selected at opening.
 ## Evidence and conceptual inputs
 
 - [Competing causal theories can guide distinguishing
-  experiments](../../notes/competing-causal-theories-can-guide-distinguishing-experiments.md)
+  experiments](../../theory/competing-causal-theories-can-guide-distinguishing-experiments.md)
   — retained alternatives can guide what evidence to seek before current
   observations favor either explanation. The worked example distinguishes
   statistical discrimination and corroboration from final verification; for
@@ -170,13 +170,13 @@ migration is selected at opening.
 - [ADR 089 premature placement](./adr-089-premature-placement.md) — dated
   incident, repository anchors, operator account, and limits of the diagnosis.
 - [Citing retained theory at the decision point is a mediation
-  trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
+  trace](../../theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
   — the contribution and limits of recording which knowledge informed a choice.
 - [Retaining episode evidence keeps a distilled rule open to
-  re-examination](../../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
+  re-examination](../../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
   — why a decision summary may need linked evidence.
 - [Compounding is tested in later improvement, not by the accepting
-  metric](../../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
+  metric](../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
   — separates acceptance evidence from evidence about later improvement.
 - [Downstream evidence
   protocol](../first-downstream-run/commonplace-evidence-protocol.md) — proposed

@@ -25,10 +25,10 @@ For Commonplace, natural-language knowledge, symbolic enforcement, and distribut
 ## Transfer candidates
 
 - **`CLARION-1` — govern translations between representational forms.** When repeated LLM behavior becomes a written instruction or validator, record what evidence was compressed, what exceptions were lost, and how the artifact will be tested. Rule extraction is a lossy model-building act.
-- **`CLARION-2` — retain parallel paths during incomplete codification.** An explicit fast path and a general model fallback can co-execute while coverage remains incomplete, matching the current [two-layer execution-system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) account.
+- **`CLARION-2` — retain parallel paths during incomplete codification.** An explicit fast path and a general model fallback can co-execute while coverage remains incomplete, matching the current [two-layer execution-system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) account.
 - **`CLARION-3` — test agreement and complementarity separately.** A written rule and model judgment may agree because both are right, because one dominates the other, or because they share the same blind spot. Evaluation should include disagreement cases and unique wins.
 - **`CLARION-4` — separate competence from control.** Knowing how to perform an operation is distinct from deciding when to invoke it, how much effort to spend, and whether to learn from the result. Skills, routing, and improvement policy should remain separately inspectable.
-- **`CLARION-5` — allow relaxation as well as codification.** If an explicit rule becomes brittle, evidence can justify returning some decisions to judgment rather than only accumulating more rules. This fits [codification and relaxing](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
+- **`CLARION-5` — allow relaxation as well as codification.** If an explicit rule becomes brittle, evidence can justify returning some decisions to judgment rather than only accumulating more rules. This fits [codification and relaxing](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
 
 ## Method worth borrowing
 
@@ -38,7 +38,7 @@ A useful evaluation crosses representation and learning direction: implicit-only
 
 - Equating an LLM's weights with CLARION's bottom level is only a rough analogy.
 - Explicit artifacts are not necessarily more correct, and implicit behavior is not necessarily less explainable.
-- A two-level story can hide important differences among prose advice, binding instructions, code, schemas, and tests; [representational form](../../notes/definitions/representational-form.md) remains finer-grained.
+- A two-level story can hide important differences among prose advice, binding instructions, code, schemas, and tests; [representational form](../../theory/definitions/representational-form.md) remains finer-grained.
 - Bidirectional learning can create circular confirmation unless evidence and evaluation remain external to both paths.
 
 ## Grounding questions

@@ -11,7 +11,7 @@ A bounded summary is useful because it targets a specific consumer-task pair; it
 
 ## Evidence
 
-- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) treats a derived fast path as narrower than its source and requires fallback outside its coverage region. This theorem gives a counting reason a bounded summary needs the same kind of declared target and fallback.
+- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) treats a derived fast path as narrower than its source and requires fallback outside its coverage region. This theorem gives a counting reason a bounded summary needs the same kind of declared target and fallback.
 - The right notion of "task-relevant structure" is not every detail of `x`, but the partition of states induced by `Q`. Two states are equivalent if every query in `Q` gives the same answer on both. Any exact summary only needs to preserve the equivalence class, not the raw state.
 - A summary with `b` bits has at most `2^b` possible outputs. So it can distinguish at most `2^b` equivalence classes or answer profiles.
 - Rich query families can induce exponentially many profiles. Canonical example: `X = {0,1}^N`, `Q = {q_i(x) = x_i : i in [N]}` together with arbitrary downstream Boolean functions of the bits, or simply `Q = {q_S(x) = x_S : S subseteq [N]}`. Then distinct states have distinct answer profiles, so exact universal summarization requires `Omega(N)` bits.
@@ -56,8 +56,8 @@ The practical consequence is that "compress once and discard the originals" is s
 
 Relevant Notes:
 
-- [methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — foundation: a narrower derived artifact needs a declared coverage region and access to its source outside that region
-- [a compact refreshable whole-picture narrative can replace infeasible fragment reconciliation](../../notes/evolving-understanding-needs-holistic-rewrite-not-composition.md) — consequence: a maintained summary serves a bounded whole-picture task, not every future query the source could answer
-- [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — context: compaction of symbolic state is a summary map, so the theorem identifies the structural limit of "summarize K and keep going"
-- [LLM-mediated schedulers are a degraded variant of the clean model](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — instance: conversation compaction is precisely the kind of bounded summary this theorem says cannot be universally sufficient
+- [methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) — foundation: a narrower derived artifact needs a declared coverage region and access to its source outside that region
+- [a compact refreshable whole-picture narrative can replace infeasible fragment reconciliation](../../theory/evolving-understanding-needs-holistic-rewrite-not-composition.md) — consequence: a maintained summary serves a bounded whole-picture task, not every future query the source could answer
+- [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md) — context: compaction of symbolic state is a summary map, so the theorem identifies the structural limit of "summarize K and keep going"
+- [LLM-mediated schedulers are a degraded variant of the clean model](../../theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — instance: conversation compaction is precisely the kind of bounded summary this theorem says cannot be universally sufficient
 - [exact retrieval over semantically opaque items requires linear inspection](./exact-retrieval-over-semantically-opaque-items-requires-linear.md) — parallel lower bound: one rules out universal compression, the other rules out universal pruning without semantic inspection

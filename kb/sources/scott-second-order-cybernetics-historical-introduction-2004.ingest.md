@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This paper is historical support for the human-inclusive boundary in [Reflective system](../notes/definitions/reflective-system.md), subordinate to von Foerster's 1979 primary text.
+This paper is historical support for the human-inclusive boundary in [Reflective system](../theory/definitions/reflective-system.md), subordinate to von Foerster's 1979 primary text.
 
 ## Inherited Vocabulary
 

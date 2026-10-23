@@ -1,6 +1,6 @@
 # Four-system baseline: operative oracles and where explanation sits
 
-Working note, 2026-08-19. Opening position for the comparison — the per-system readings produced by running each system through the selection question of [weakly discriminated qualities tend to be underselected](../../notes/weakly-discriminated-qualities-tend-to-be-underselected.md): what is the operative oracle, what does it strongly and weakly discriminate, is explanation entered into selection, and does accepted output feed later iterations.
+Working note, 2026-08-19. Opening position for the comparison — the per-system readings produced by running each system through the selection question of [weakly discriminated qualities tend to be underselected](../../theory/weakly-discriminated-qualities-tend-to-be-underselected.md): what is the operative oracle, what does it strongly and weakly discriminate, is explanation entered into selection, and does accepted output feed later iterations.
 
 ## The spectrum
 
@@ -11,7 +11,7 @@ Working note, 2026-08-19. Opening position for the comparison — the per-system
 | Eigenius | type checking, certificate validation, optional Lean proof check | warrant formally checked; content truth, encoding fidelity, and explanatory quality weakly discriminated, with mechanized faithfulness grade-capped at Derived | committed sentences become citable Verified witnesses for later reasoning |
 | Commonplace | structural validation, verdict-kind gates | declared quality goal with a weak operative oracle — reach critique is report-kind (no acceptance force), the reach audit is a manual recurring task | accepted notes become premises, links, and review baselines |
 
-Four different strong oracles — metric, measurement policy, formal validity, structural validation — and in all four systems explanatory quality sits on the weakly discriminated side. Candidate mechanism for that regularity: hard oracles cluster on form because form is what is codifiable ([the verifiability gradient](../../notes/verifiability-gradient.md), [oracle-strength-spectrum](../../notes/oracle-strength-spectrum.md)); explanation resists codification, so a research system's accepted population enriches for form-fit unless a composite reach oracle is deliberately assembled.
+Four different strong oracles — metric, measurement policy, formal validity, structural validation — and in all four systems explanatory quality sits on the weakly discriminated side. Candidate mechanism for that regularity: hard oracles cluster on form because form is what is codifiable ([the verifiability gradient](../../theory/verifiability-gradient.md), [oracle-strength-spectrum](../../theory/oracle-strength-spectrum.md)); explanation resists codification, so a research system's accepted population enriches for form-fit unless a composite reach oracle is deliberately assembled.
 
 ## Per-system readings
 
@@ -24,7 +24,7 @@ Four different strong oracles — metric, measurement policy, formal validity, s
 1. *Route-level oracle asymmetry.* Persistence does not reveal which checks ran — program outputs skip AutoOnLoad, kernel follow-up layers skip structural validation — so the apparent oracle is stronger than the operative one on several commit routes, and committed sentences feed later reasoning via citation, compounding whatever slips through. This is asymmetry between routes into the accepted population, a variant the weakly-discriminated note does not currently name.
 2. *The grade cap as a response type.* Capping mechanized faithfulness at Derived, never auto-Verified, neither strengthens the weak oracle nor ignores it — it refuses to let the weak oracle masquerade as strong.
 
-**Commonplace** declares reach as the quality goal but its operative acceptance is structural validation plus verdict gates; the reach critique carries no acceptance force and the reach audit is manual. The predicted drift has an observed trace: the narrowing episode ([narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md)) documents repair optimizing defensibility toward analytic claims, and its proposed remedy — a warranted-contribution judgment with the same force as the gates — is the "enter explanation into the operative oracle" move stated as system design.
+**Commonplace** declares reach as the quality goal but its operative acceptance is structural validation plus verdict gates; the reach critique carries no acceptance force and the reach audit is manual. The predicted drift has an observed trace: the narrowing episode ([narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md)) documents repair optimizing defensibility toward analytic claims, and its proposed remedy — a warranted-contribution judgment with the same force as the gates — is the "enter explanation into the operative oracle" move stated as system design.
 
 ## Response taxonomy (candidate)
 
@@ -40,10 +40,10 @@ ScienceFlow takes no response — the asymmetry is unmanaged because explanation
 
 Relevant notes:
 
-- [weakly discriminated qualities tend to be underselected](../../notes/weakly-discriminated-qualities-tend-to-be-underselected.md) — rests-on: the selection conjecture all four readings apply
+- [weakly discriminated qualities tend to be underselected](../../theory/weakly-discriminated-qualities-tend-to-be-underselected.md) — rests-on: the selection conjecture all four readings apply
 - [Eigenius](../../agentic-systems/reviews/eigenius.md) — evidenced-by: pinned code-grounded authority for the Eigenius reading
 - [ScienceFlow ingest](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md) — evidenced-by: pinned code-grounded authority for the ScienceFlow reading
-- [the verifiability gradient](../../notes/verifiability-gradient.md) — mechanism: why hard oracles cluster on form
-- [oracle-strength-spectrum](../../notes/oracle-strength-spectrum.md) — mechanism: oracle hardening as codification applied to the objective itself
-- [narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — is-evidence-for: Commonplace's observed drift under gate-shaped acceptance
+- [the verifiability gradient](../../theory/verifiability-gradient.md) — mechanism: why hard oracles cluster on form
+- [oracle-strength-spectrum](../../theory/oracle-strength-spectrum.md) — mechanism: oracle hardening as codification applied to the objective itself
+- [narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — is-evidence-for: Commonplace's observed drift under gate-shaped acceptance
 - [lineage-mechanisms](../lineage-mechanisms/README.md) — see-also: the same two code-grounded systems read through the lineage angle

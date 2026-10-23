@@ -108,8 +108,8 @@ EchoWiki's context model is also narrower. Commonplace routes by curated indexes
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: EchoWiki's raw files, generated pages, `AGENTS.md`, prompts, indexes, plugin state, and structural guards differ by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: stored wiki pages matter only when humans pull them or the compiler pushes briefs/pages into later prompts.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: generated summaries, concepts, entities, indexes, and logs mostly serve as evidence, reference, context, and advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: compiler prompts, `wiki/AGENTS.md`, plugin settings, path guards, and approval gates directly shape future behavior.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages context with brief catalogs and selected full-page reads rather than loading the whole wiki or maintaining a vector index.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: EchoWiki's raw files, generated pages, `AGENTS.md`, prompts, indexes, plugin state, and structural guards differ by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: stored wiki pages matter only when humans pull them or the compiler pushes briefs/pages into later prompts.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: generated summaries, concepts, entities, indexes, and logs mostly serve as evidence, reference, context, and advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: compiler prompts, `wiki/AGENTS.md`, plugin settings, path guards, and approval gates directly shape future behavior.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages context with brief catalogs and selected full-page reads rather than loading the whole wiki or maintaining a vector index.

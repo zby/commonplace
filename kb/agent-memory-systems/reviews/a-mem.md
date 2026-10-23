@@ -113,9 +113,9 @@ Pull-specific detail matters here because `search_agentic()` expands Chroma hits
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: A-mem stores and retrieves memory but does not automatically activate it before action.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: A-mem requires separating note objects, generated metadata, vector retrieval state, and LLM controllers by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved `MemoryNote` content mostly advises future work as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Chroma ranking, link expansion, and LLM evolution prompts configure how future memory is selected and reshaped.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: A-mem is a bounded retrieval and memory-maintenance component that a host agent would still need to wire into context assembly.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: A-mem improves discoverability through embeddings and generated metadata, but leaves trust, persistence, and contextual activation to the host.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: A-mem stores and retrieves memory but does not automatically activate it before action.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: A-mem requires separating note objects, generated metadata, vector retrieval state, and LLM controllers by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved `MemoryNote` content mostly advises future work as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Chroma ranking, link expansion, and LLM evolution prompts configure how future memory is selected and reshaped.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: A-mem is a bounded retrieval and memory-maintenance component that a host agent would still need to wire into context assembly.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: A-mem improves discoverability through embeddings and generated metadata, but leaves trust, persistence, and contextual activation to the host.

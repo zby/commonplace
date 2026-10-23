@@ -6,7 +6,7 @@ Can an agent revisit a semantically old note, originate a consequential maintena
 
 The pilot treats old notes as inquiry substrates, not as presumed defects. An untouched theoretical claim may be stable. A recently modified note may be stale if a mechanical migration touched its metadata while the system it describes changed underneath it. The useful outcome is therefore not edit count but discrimination among `keep`, `revise`, `split`, `merge`, `retire`, and `open inquiry`.
 
-This is a temporal-reopening experiment inside the broader [curiosity workshop](../README.md). It also tests the existing claim that [link graph plus timestamps enables make-like staleness detection](../../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md): age can commission a review, while changed dependencies may be the stronger cue.
+This is a temporal-reopening experiment inside the broader [curiosity workshop](../README.md). It also tests the existing claim that [link graph plus timestamps enables make-like staleness detection](../../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md): age can commission a review, while changed dependencies may be the stronger cue.
 
 ## Why ordinary Git age is insufficient
 

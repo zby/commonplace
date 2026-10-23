@@ -139,8 +139,8 @@ The main tradeoff is hosted power versus source-visible authority. Supermemory c
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Supermemory has both explicit pull tools and middleware/profile push into model context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: hosted memory entries, documents, graph relations, middleware prompts, and graph UI views carry different substrates, forms, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: profile facts, memory entries, document chunks, and graph views usually advise as context or evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, middleware injection code, zod validation schemas, search parameters, and relation/ranking policies configure future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Supermemory turns conversations, prompts, browser captures, and imported activity into retained profiles and memory graph entries.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Supermemory has both explicit pull tools and middleware/profile push into model context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: hosted memory entries, documents, graph relations, middleware prompts, and graph UI views carry different substrates, forms, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: profile facts, memory entries, document chunks, and graph views usually advise as context or evidence.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, middleware injection code, zod validation schemas, search parameters, and relation/ranking policies configure future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Supermemory turns conversations, prompts, browser captures, and imported activity into retained profiles and memory graph entries.

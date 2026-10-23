@@ -144,9 +144,9 @@ The design tension is authority. Clude quickly turns traces into remembered beha
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Clude stores many memories, but only recall calls, host instructions, and prompt-file loading determine whether they enter context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Clude's memory rows, embeddings, links, dream logs, prompt files, MemoryPacks, and proofs have different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled memories, summaries, dream logs, dashboard views, and MemoryPack records mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP schemas, injected AGENTS/CLAUDE instructions, prompt exports, validation schemas, and ranking policies shape behavior with stronger force.
-- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: generated prompt files and assistant instructions need source alignment because they can outlive the memory state that produced them.
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Clude turns action/session traces into semantic insights, procedural lessons, and self-model memories.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Clude stores many memories, but only recall calls, host instructions, and prompt-file loading determine whether they enter context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Clude's memory rows, embeddings, links, dream logs, prompt files, MemoryPacks, and proofs have different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: recalled memories, summaries, dream logs, dashboard views, and MemoryPack records mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: MCP schemas, injected AGENTS/CLAUDE instructions, prompt exports, validation schemas, and ranking policies shape behavior with stronger force.
+- [Keep Lineage And Compiled Views From Drifting](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: generated prompt files and assistant instructions need source alignment because they can outlive the memory state that produced them.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Clude turns action/session traces into semantic insights, procedural lessons, and self-model memories.

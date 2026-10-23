@@ -43,4 +43,4 @@ This review covers the repository-owned core and its interfaces. External model/
 
 - [Exact result](../reports/retained-archive/AAS-2026-09-25-enoch-01/result.md) — see-also: canonical evidence, limitations and normalized memory fields.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger learning claim distinguished from trace-fed memory writes.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the limited representation/action route assessed here.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: the limited representation/action route assessed here.

@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source is a documented design example for [Serve Multiple Consumers, Not One Retrieval Interface](../notes/agent-memory-requirements/serve-multiple-consumers.md): people, agents, hooks, and exports can inspect concrete outputs without extracting them from summary prose, while work state and compute history remain separately inspectable. This bears on the note's interface-collapse failure mode, but does not establish that every consumer receives an adequate surface.
+The source is a documented design example for [Serve Multiple Consumers, Not One Retrieval Interface](../theory/agent-memory-requirements/serve-multiple-consumers.md): people, agents, hooks, and exports can inspect concrete outputs without extracting them from summary prose, while work state and compute history remain separately inspectable. This bears on the note's interface-collapse failure mode, but does not establish that every consumer receives an adequate surface.
 
-It also provides a bounded comparison with [Preserve Evidence Without Making History The Next Context](../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md). Separating compact summaries from evidence artifacts and execution records makes selective reading possible. The page leaves context assembly unspecified, so it cannot establish the note's stronger requirement that retained history stay outside ordinary agent context.
+It also provides a bounded comparison with [Preserve Evidence Without Making History The Next Context](../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md). Separating compact summaries from evidence artifacts and execution records makes selective reading possible. The page leaves context assembly unspecified, so it cannot establish the note's stronger requirement that retained history stay outside ordinary agent context.
 
 ## Extractable Value
 
@@ -46,4 +46,4 @@ The page explains storage roles rather than an agent's read policy. As the evide
 
 ## Recommended Next Action
 
-Add Flywheel's separation of work state, evidence outputs, and execution history as a documented design example in [Serve Multiple Consumers, Not One Retrieval Interface](../notes/agent-memory-requirements/serve-multiple-consumers.md), explicitly limiting its evidential role to design intent rather than demonstrated consumer effectiveness.
+Add Flywheel's separation of work state, evidence outputs, and execution history as a documented design example in [Serve Multiple Consumers, Not One Retrieval Interface](../theory/agent-memory-requirements/serve-multiple-consumers.md), explicitly limiting its evidential role to design intent rather than demonstrated consumer effectiveness.

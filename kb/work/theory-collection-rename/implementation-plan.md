@@ -146,7 +146,7 @@ govern execution. Record these choices in the rename ADR before relocation.
    [ADR 116](../../reference/adr/116-one-word-per-concept-across-prose-and-code.md).
    The new ADR records this collection change; it need not reopen that rule.
 2. **Finish the recorded evidence prerequisite.** The current
-   [contract](../../notes/COLLECTION.md) already places definitions and
+   [contract](../../theory/COLLECTION.md) already places definitions and
    theory-facing evidence here; it does not make every episode theoretical.
    Follow the framing's scope-of-inference decision and resolve the provisional
    per-file sort in `evidence-sort.md`. Decide retained form, link semantics

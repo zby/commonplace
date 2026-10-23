@@ -36,4 +36,4 @@ The strongest supported contribution is the wired failure-to-diagnosis-to-candid
 The README's reported accuracy, speed and generalization benefits remain attributed claims; this boundary includes no underlying trials. Concrete adapters, candidate-linked traces, controlled recall interventions and held-out evaluation would resolve the main uncertainties. Provider internals and exact model parameter identity are also outside the inspected boundary.
 
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: criticism and attributable capacity improvement.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: causally connected self-representation.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: causally connected self-representation.

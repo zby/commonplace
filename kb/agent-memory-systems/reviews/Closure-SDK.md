@@ -113,7 +113,7 @@ Authority at consumption is mostly advisory or validating. Incident reports, que
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Closure-SDK stores and retrieves retained state, but does not activate it into an LLM agent context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: running products, retention windows, DNA tables, resonance results, and genomes need separate substrate/form/lineage/authority classification.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: incident reports, query rows, Hopf views, histories, and genome reads advise callers as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schemas, SQL parsing, table constraints, audit/repair logic, and runtime read/write policies shape behavior with stronger force.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Closure-SDK stores and retrieves retained state, but does not activate it into an LLM agent context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: running products, retention windows, DNA tables, resonance results, and genomes need separate substrate/form/lineage/authority classification.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: incident reports, query rows, Hopf views, histories, and genome reads advise callers as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: schemas, SQL parsing, table constraints, audit/repair logic, and runtime read/write policies shape behavior with stronger force.

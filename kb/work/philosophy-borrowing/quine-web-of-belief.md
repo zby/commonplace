@@ -28,10 +28,10 @@ For high-reach or high-centrality notes, revision should trigger a downstream re
 
 ## Existing connections
 
-- [Brainstorming: how reach informs KB design](../../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — already states that high-reach revisions can silently break downstream reasoning
-- [Inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — backlinks would surface who depends on a note
-- [Link-graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — pairwise staleness detection catches some dependency changes but may miss high-reach conceptual drift
-- [Linking theory](../../notes/linking-theory.md) — typed links reduce decision cost and expose dependency types
+- [Brainstorming: how reach informs KB design](../../theory/brainstorming-how-explanatory-reach-informs-kb-design.md) — already states that high-reach revisions can silently break downstream reasoning
+- [Inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — backlinks would surface who depends on a note
+- [Link-graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — pairwise staleness detection catches some dependency changes but may miss high-reach conceptual drift
+- [Linking theory](../../theory/linking-theory.md) — typed links reduce decision cost and expose dependency types
 
 ## Failure mode
 

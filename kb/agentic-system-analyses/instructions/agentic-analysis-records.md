@@ -146,7 +146,7 @@ layer labels and controlled values; semantic verification judges the choice.
 | Evidenced absence | `absent` status, searched roots or files, query and revision, evidence, and conclusion supported or prevented |
 | Behavioral-authority path | Consumer, channel, force and horizon |
 
-[Representational form](../../notes/definitions/representational-form.md)
+[Representational form](../../theory/definitions/representational-form.md)
 classifies encoding and consumption, independently of storage. Natural-language
 content receives consequences through model or human interpretation. Symbolic
 content has localized units and fixed consumer rules determining its permitted
@@ -312,7 +312,7 @@ scope conditions and parts, not its storage label. Missing rationale does
 not establish absent formulated criticism. Retained rationale names its
 later reader, if any.
 
-Each [theory-builder](../../notes/definitions/theory-builder.md) condition has
+Each [theory-builder](../../theory/definitions/theory-builder.md) condition has
 its own conclusion status and evidence under the label
 `theory-builder conditions 1–4`:
 
@@ -330,19 +330,19 @@ separately:
 
 | Property | Required finding |
 |---|---|
-| [Addressability](../../notes/definitions/addressable-theory.md) | Degree to which assumptions, scope conditions and parts are individually inspectable and revisable, and the assessment boundary; finer grades exceed condition 1's minimum |
+| [Addressability](../../theory/definitions/addressable-theory.md) | Degree to which assumptions, scope conditions and parts are individually inspectable and revisable, and the assessment boundary; finer grades exceed condition 1's minimum |
 | Persistence | What persists, later consumer and attained horizon: reasoning episode, rounds of one run, runs on one task, or problems/sessions |
 | Learning | Under `learning`: improved capacity for future action, assessment boundary, improvement evidence and attribution evidence. Membership, revision, persistence or connected steps alone do not establish it; capacity need not have been exercised. Later capacity traces persistence to that time; later/recurrent use also traces the retained result and consumer. The memory axis `trace_learning` has its own write-route meaning. |
-| [Reflection](../../notes/definitions/reflective-system.md) | Selected aspects within the boundary, their self-representation and both causal directions: aspect changes can update the representation; representation-mediated operations can affect later behavior. Subject matter alone is insufficient; direct machinery modification is unnecessary. |
+| [Reflection](../../theory/definitions/reflective-system.md) | Selected aspects within the boundary, their self-representation and both causal directions: aspect changes can update the representation; representation-mediated operations can affect later behavior. Subject matter alone is insufficient; direct machinery modification is unnecessary. |
 | Reflective theory builder | Its method texts meet conditions 1–4 and are criticized against records of its own operation |
 | Autonomous theory builder | Role-by-role evidence that computation performs every internal operation; users supplying problems and judging products are outside the boundary. Autonomy does not establish reliability. |
 
 ### Self-improvement attribution
 
-When attributing or qualifying [self-improvement](../../notes/definitions/self-improving-system.md),
+When attributing or qualifying [self-improvement](../../theory/definitions/self-improving-system.md),
 assess the named pathway independently of learning, reflection and autonomy.
 Self-improvement is operative, evidence-responsive change to the bounded system's
-own [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md),
+own [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md),
 not merely improvement of an external work product. An output can enter that
 organization when retained and consumed in later operation; its output label
 alone decides neither inclusion nor exclusion.
@@ -369,7 +369,7 @@ universal assessment obligation for other routes.
 
 Learning, reflection, autonomy and self-improvement remain independent claims. Revision
 selection prefers
-[explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+[explanatory-reach](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence; it does not trade fit away for reach.
 Explanatory-reach means that a criticizable account of why a pattern works
 continues to apply beyond its originating case because the mechanism persists.

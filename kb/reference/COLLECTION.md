@@ -32,7 +32,7 @@ Git holds only what a source-checkout operator needs; anything a reader,
 installed project, or shallow clone must know stays in tracked artifacts.
 
 This Commonplace default rests on [a seven-artifact disposition
-sweep](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md),
+sweep](../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md),
 which bounds the result to a source-readable Python CLI repository.
 
 Tests for economy. The first two ask whether a passage should exist at all,

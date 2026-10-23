@@ -108,9 +108,9 @@ Selection scope is intentionally conservative but coarse. `load_for_context()` l
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Secure LLM-Wiki stores durable claims, but only `query` pushes a coarse admissible set into a downstream model context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: active claims, quarantined claims, trust rules, gate code, embeddings, and read-time context blocks carry different substrates, forms, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: active claim files act as evidence/reference/context for later answers.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, trust rules, sanitizer, write gate, tests, and read-hygiene code shape future behavior with instruction, validation, and enforcement force.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - clarifies: Secure LLM-Wiki separates advisory claim content from enforcing write/read policies.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - relates: a separate git-backed wiki repo changes access, deletion, rollback, and audit properties.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Secure LLM-Wiki stores durable claims, but only `query` pushes a coarse admissible set into a downstream model context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: active claims, quarantined claims, trust rules, gate code, embeddings, and read-time context blocks carry different substrates, forms, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: active claim files act as evidence/reference/context for later answers.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, trust rules, sanitizer, write gate, tests, and read-hygiene code shape future behavior with instruction, validation, and enforcement force.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - clarifies: Secure LLM-Wiki separates advisory claim content from enforcing write/read policies.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - relates: a separate git-backed wiki repo changes access, deletion, rollback, and audit properties.

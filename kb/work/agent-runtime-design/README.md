@@ -6,7 +6,7 @@ What must an agent runtime provide to turn bounded model calls into governable, 
 
 ## Why this workshop exists
 
-The agent-memory work established a useful sequence: start from what future work needs, derive requirements and boundaries, and only then turn the stable comparison lens into a review type and writing workflow. Its durable results now include [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md), the [agent-memory requirements](../../notes/agent-memory-requirements/README.md), the [agent-memory-system review type](../../agent-memory-systems/types/agent-memory-system-review.md), and the [review-writing skill](../../instructions/write-agent-memory-system-review/SKILL.md).
+The agent-memory work established a useful sequence: start from what future work needs, derive requirements and boundaries, and only then turn the stable comparison lens into a review type and writing workflow. Its durable results now include [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md), the [agent-memory requirements](../../theory/agent-memory-requirements/README.md), the [agent-memory-system review type](../../agent-memory-systems/types/agent-memory-system-review.md), and the [review-writing skill](../../instructions/write-agent-memory-system-review/SKILL.md).
 
 Agent-runtime coverage has reached the point where the same move is useful. [`kb/agentic-systems/`](../../agentic-systems/README.md) contains code-grounded analyses of execution loops, orchestration APIs, context assembly, sub-agent coordination, permission boundaries, durable state, recovery, and self-modification. Those analyses do not yet share a requirements-derived review contract. The collection contract already says that a mature methodology should follow the memory collection's path.
 
@@ -14,7 +14,7 @@ This workshop develops that methodology. It does not begin by standardizing the 
 
 ## Working boundary
 
-For this workshop, the **agent runtime** is the operational system that turns model judgments into situated work across time. Its starting decomposition is [scheduler, context engine, and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md), but that is a hypothesis to test rather than a fixed definition. Runtime policy, durable run state, delegation, recovery, and event protocols may require sharper treatment.
+For this workshop, the **agent runtime** is the operational system that turns model judgments into situated work across time. Its starting decomposition is [scheduler, context engine, and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md), but that is a hypothesis to test rather than a fixed definition. Runtime policy, durable run state, delegation, recovery, and event protocols may require sharper treatment.
 
 A **runtime client or interface** lets a person or application operate that system. It can configure and start work, project runtime state, carry steering and authority decisions back into execution, and expose interruption or recovery controls. A TUI, CLI, API callback, organizational policy service, or headless runner can play this role. Runtime and client may share one process without becoming the same architectural responsibility.
 
@@ -37,10 +37,10 @@ Memory-system internals remain covered by [`kb/agent-memory-systems/`](../../age
 - [Code-grounded runtime pilot: Fractal and llm-do](./fractal-llm-do-code-grounded-runtime-pilot.md) — traces two runtime-facing systems with explicit externalized boundaries, tests the common-floor and approval requirements, and separates conversational continuity, process-local state, durable continuation, and later extension activation.
 - [Code-grounded boundary pilot: PydanticAI and DSPy](./pydantic-ai-dspy-code-grounded-boundary-pilot.md) — tests an embedded inner runtime and a host-language computation library, broadens approval to terminal deferral and re-entry, and establishes target classification as a substantive review result.
 - [Agentic systems collection](../../agentic-systems/README.md) — current heterogeneous evidence base.
-- [Agent runtime decomposition](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — starting component model, not a fixed conclusion.
-- [Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) — starting account of symbolic scheduling around semantic calls.
-- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — warning against ranking runtimes on one ladder.
-- [Runtime structure determines governance control surfaces](../../notes/runtime-structure-determines-governance-control-surfaces.md) — starting account of how architecture constrains intervention and audit.
+- [Agent runtime decomposition](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) — starting component model, not a fixed conclusion.
+- [Bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md) — starting account of symbolic scheduling around semantic calls.
+- [Agent orchestration occupies a multi-dimensional design space](../../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — warning against ranking runtimes on one ladder.
+- [Runtime structure determines governance control surfaces](../../theory/runtime-structure-determines-governance-control-surfaces.md) — starting account of how architecture constrains intervention and audit.
 - [Your Old Agent Architecture Is Dead… Meet Its Replacement](../../sources/jdegoes-recursive-agent-architecture-2081854216264392934.ingest.md) — argument that approval and irreversible work require durable suspension and effect guarantees from the execution substrate.
 
 ## Possible graduated artifacts

@@ -131,9 +131,9 @@ Survey position: Phantom is a strong trace-learning example because runtime trac
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Phantom separates searchable notes, automatically injected memory, and always-loaded evolved config.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Phantom's retained behavior is split across files, Qdrant, SQLite, service objects, embeddings, prompts, and invariants.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: episodes, facts, transcripts, memory search results, and dashboard memory advise future work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: evolved config, permission rules, dynamic tools, schedules, invariants, and prompt assembly configure future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Phantom is a context-routing and activation system around a persistent VM-based agent.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Phantom is strong on composition and activation but still needs stronger trust checks for learned memory.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Phantom separates searchable notes, automatically injected memory, and always-loaded evolved config.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Phantom's retained behavior is split across files, Qdrant, SQLite, service objects, embeddings, prompts, and invariants.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: episodes, facts, transcripts, memory search results, and dashboard memory advise future work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: evolved config, permission rules, dynamic tools, schedules, invariants, and prompt assembly configure future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Phantom is a context-routing and activation system around a persistent VM-based agent.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Phantom is strong on composition and activation but still needs stronger trust checks for learned memory.

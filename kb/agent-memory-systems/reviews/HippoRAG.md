@@ -110,8 +110,8 @@ Effective context use is not proven by the structural code alone. The repository
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: HippoRAG stores document memory and graph state, but read-back is explicit pull unless a host wraps it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: HippoRAG's passages, triples, graph, embeddings, prompts, and metrics carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved passages, extracted facts, and evaluation outputs mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, configs, embedding instructions, rerank filters, and retrieval limits configure future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: HippoRAG's central contribution is selecting a bounded set of source passages from a larger retained corpus.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: HippoRAG stores document memory and graph state, but read-back is explicit pull unless a host wraps it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: HippoRAG's passages, triples, graph, embeddings, prompts, and metrics carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved passages, extracted facts, and evaluation outputs mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, configs, embedding instructions, rerank filters, and retrieval limits configure future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: HippoRAG's central contribution is selecting a bounded set of source passages from a larger retained corpus.

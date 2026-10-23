@@ -29,7 +29,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a technical basis for [treating the deployed system rather than the model alone as the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md): value belongs to a program running on an architecture in a task environment, so the evaluated unit includes the machinery that turns computation into timely action. It also provides a formal comparison case for [warranted autonomy being bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) and for [methodological and computational closure tracking different changes](../notes/methodological-and-computational-closure-track-different-changes.md). In each case, the conclusion is only as broad as the declared architecture, environment class, objective, resource model, and horizon. Its role is therefore an anchor for architecture-and-environment-relative program evaluation, with explicit limits on which classes the proofs cover.
+The paper is a technical basis for [treating the deployed system rather than the model alone as the unit of learning](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md): value belongs to a program running on an architecture in a task environment, so the evaluated unit includes the machinery that turns computation into timely action. It also provides a formal comparison case for [warranted autonomy being bounded by oracle domain](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md) and for [methodological and computational closure tracking different changes](../theory/methodological-and-computational-closure-track-different-changes.md). In each case, the conclusion is only as broad as the declared architecture, environment class, objective, resource model, and horizon. Its role is therefore an anchor for architecture-and-environment-relative program evaluation, with explicit limits on which classes the proofs cover.
 
 ## Learning Claims (our opinion)
 
@@ -53,4 +53,4 @@ The mail-sorting results are generated from a modeled setup and selected quality
 
 ## Recommended Next Action
 
-Update [The deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) to use bounded optimality as the formal basis for stating that a program's evaluation claim must name its architecture, task-environment class, objective, and resource model.
+Update [The deployed system, not the model alone, is the unit of learning](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md) to use bounded optimality as the formal basis for stating that a program's evaluation claim must name its architecture, task-environment class, objective, and resource model.

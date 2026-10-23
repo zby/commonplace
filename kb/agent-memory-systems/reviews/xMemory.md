@@ -122,7 +122,7 @@ Other consumers include the evaluation scripts, graph visualization tooling, any
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: xMemory derives episodes, semantic memories, themes, and graph structure from conversation traces.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: xMemory stores memory but exposes pull retrieval rather than automatic agent activation in the inspected code.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: xMemory's JSONL records, Chroma indexes, themes, graph files, and evaluation prompts carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: episodes, semantic statements, and theme summaries advise later answering.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: xMemory converts conversation traces into durable abstractions for later retrieval.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: xMemory stores memory but exposes pull retrieval rather than automatic agent activation in the inspected code.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: xMemory's JSONL records, Chroma indexes, themes, graph files, and evaluation prompts carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: episodes, semantic statements, and theme summaries advise later answering.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: xMemory converts conversation traces into durable abstractions for later retrieval.

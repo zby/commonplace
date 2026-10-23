@@ -45,13 +45,13 @@ the code and the task.
 ## Constraints a solution must respect
 
 **A partial index can lower recall by closing a better route.** [Indexes lower
-recall when they suppress retrieval that would find more](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md):
+recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md):
 an agent that finds three relevant ADRs can stop before a search that would
 find the fourth. Any index either carries a completeness guarantee it can keep,
 or must not read as complete.
 
 **Enforce or omit.** If a routing surface caches anything recomputable from the
-ADR set, [it must be machine-checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+ADR set, [it must be machine-checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 The `complete`/`covered_by` marks on tag-READMEs are the shipped precedent for
 how that can work.
 
@@ -79,7 +79,7 @@ may smear across targets, which would rule out the most obvious design.
 ## Downstream consumer
 
 [The seven-case documentation disposition
-evidence](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
+evidence](../../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
 retained curated routing where live lookup requires a name, but did not measure
 consultation frequency. If a change-target-keyed mapping lands here, future
 reference audits can use it to test whether descriptions are actually served

@@ -27,11 +27,11 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper supplies empirical evidence for the diagnostic use of [systematic prompt variation](../notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md). Its ordering and format variants expose brittle responses and show which items support a ranking; they do not aggregate independent evidence or vary an explanation's premises. The item-level decomposition makes that existing distinction more operational.
+The paper supplies empirical evidence for the diagnostic use of [systematic prompt variation](../theory/systematic-prompt-variation-serves-verification-and-diagnosis-not.md). Its ordering and format variants expose brittle responses and show which items support a ranking; they do not aggregate independent evidence or vary an explanation's premises. The item-level decomposition makes that existing distinction more operational.
 
-It also provides a comparison case for [the limits of an experimental contrast](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md). Exact item-level measurement cannot isolate the components changed together by switching from generated labels to likelihood-scored continuations. Even the letter-versus-digit templates vary answer instructions as well as labels. The reported dominance of the scoring axis is consequently a result for the implemented bundle of differences.
+It also provides a comparison case for [the limits of an experimental contrast](../theory/an-experiment-identifies-only-the-contrast-it-actually-runs.md). Exact item-level measurement cannot isolate the components changed together by switching from generated labels to likelihood-scored continuations. Even the letter-versus-digit templates vary answer instructions as well as labels. The reported dominance of the scoring axis is consequently a result for the implemented bundle of differences.
 
-The [pairwise-comparison test plan](../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) offers a narrower transfer destination: evaluate winner stability across interface variants alongside discrimination and agreement with adjudicated quality. This is a design analogy. The paper evaluates multiple-choice answering, not pairwise judging or Commonplace's review process.
+The [pairwise-comparison test plan](../theory/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md) offers a narrower transfer destination: evaluate winner stability across interface variants alongside discrimination and agreement with adjudicated quality. This is a design analogy. The paper evaluates multiple-choice answering, not pairwise judging or Commonplace's review process.
 
 ## Extractable Value
 
@@ -51,4 +51,4 @@ The compression result evaluates one discrimination statistic estimated from twe
 
 ## Recommended Next Action
 
-Update [Systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](../notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md) with this paper as a bounded example of item-level diagnostic variation, preserving the distinction between observed ranking sensitivity and the unvalidated prescription to compare models only on stable items.
+Update [Systematic prompt variation serves verification and diagnosis, not explanatory-reach testing](../theory/systematic-prompt-variation-serves-verification-and-diagnosis-not.md) with this paper as a bounded example of item-level diagnostic variation, preserving the distinction between observed ranking sensitivity and the unvalidated prescription to compare models only on stable items.

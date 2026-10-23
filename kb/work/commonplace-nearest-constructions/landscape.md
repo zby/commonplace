@@ -153,7 +153,7 @@ all human input or optimizing for fewer operator hours. It means increasing usef
 better-warranted work per consequential human judgment, while moving the
 remaining judgments toward harder questions and longer horizons. [Increasing
 computational autonomy relocates human effort to the
-frontier](../../notes/increasing-computational-autonomy-relocates-human-effort.md)
+frontier](../../theory/increasing-computational-autonomy-relocates-human-effort.md)
 states that objective more precisely.
 
 This operator-stated starting point differs from most constructions in the
@@ -180,9 +180,9 @@ The operator still supplies decisive judgments about research direction,
 global theoretical fit, semantic admission, and system design where no
 adequate check exists. Commonplace is therefore classified, relative to its
 declared boundary, as a bounded human-inclusive [reflective self-improving
-system](../../notes/evidence/commonplace-as-a-reflective-system.md), not as an
+system](../../theory/evidence/commonplace-as-a-reflective-system.md), not as an
 autonomous theory learner. A [2026-08-30 revision
-trace](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+trace](../../theory/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 records retained theory being retrieved during model-mediated search while the
 operator supplied sparse but decisive global-fit corrections. The trace supports
 an inference that the retained artifacts constrained the revision, but has no
@@ -233,7 +233,7 @@ plan](../../reference/commonplace-agent-memory-gap-plan.md) describe the
 present mechanisms and missing prerequisites.
 
 The existing [bootstrap
-account](../../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
+account](../../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 describes the larger direction as learning while constructing the machinery
 that makes further learning selectable. The missing automatic bridge above is
 one concrete part of that direction.
@@ -260,7 +260,7 @@ builder does. If the same person repeatedly diagnoses and implements such
 changes, that person remains an internal production and theory-holding
 component. A computational theory builder that brings the function inside must
 keep developing software in response to the demands of its external users. In
-the [software-house definition](../../notes/definitions/software-house.md), it
+the [software-house definition](../../theory/definitions/software-house.md), it
 has become a software house. This is a working thesis about open-ended
 operation, not an empirically established inevitability.
 

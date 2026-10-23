@@ -140,8 +140,8 @@ The main divergence is granularity of authority. Link's memory pages can strongl
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Link stores a local wiki, but memory affects agents only when CLI/MCP/skill read-back places it in context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Link's wiki pages, memory pages, raw captures, indexes, skills, and operation journals carry different substrates, forms, lineages, and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled memories, source pages, query packets, and graph context mostly advise later agents.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `LINK.md`, validators, MCP tool descriptions, skills, schema markers, and operation journals configure or constrain behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Link turns saved session traces into proposal candidates and accepted durable memory pages.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Link stores a local wiki, but memory affects agents only when CLI/MCP/skill read-back places it in context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Link's wiki pages, memory pages, raw captures, indexes, skills, and operation journals carry different substrates, forms, lineages, and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: recalled memories, source pages, query packets, and graph context mostly advise later agents.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `LINK.md`, validators, MCP tool descriptions, skills, schema markers, and operation journals configure or constrain behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Link turns saved session traces into proposal candidates and accepted durable memory pages.

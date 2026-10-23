@@ -126,8 +126,8 @@ Commonplace is stronger at legibility and source-grounded governance. HyperAgent
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HyperAgents turns session/evaluation traces into executable patch lineages.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HyperAgents activates memory through code-state replay rather than semantic prompt retrieval.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: patches, reports, metadata, histories, and selectors carry different forms and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: HyperAgents uses benchmark feedback and agent traces as an outer-loop learning signal.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated patches and selection code configure future agent behavior.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: replayed patches have stronger authority than advisory reports or chat histories.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HyperAgents activates memory through code-state replay rather than semantic prompt retrieval.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: patches, reports, metadata, histories, and selectors carry different forms and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: HyperAgents uses benchmark feedback and agent traces as an outer-loop learning signal.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated patches and selection code configure future agent behavior.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: replayed patches have stronger authority than advisory reports or chat histories.

@@ -25,7 +25,7 @@ the system only when later operation actually reads what it installed; "a
 commit or research note is not enough when later runs neither read nor obey
 it" (`kb/work/self-revision-design-space`). A retained artifact has
 system-definition force only through a consumption path
-([system-definition artifact](../../notes/definitions/system-definition-artifact.md)).
+([system-definition artifact](../../theory/definitions/system-definition-artifact.md)).
 Applied to documentation, this says: a reference passage is justified by
 naming the change operation that must read it before acting.
 

@@ -111,8 +111,8 @@ Context scope is bounded by command choice rather than semantic ranking. Query r
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Sparks stores and indexes memory, but read-back is pull-only at this commit.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Sparks' files, SQLite manifest, embedded contract, and generated collections differ by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: the embedded runtime contract, frontmatter schema, lint rules, ingest protocol, and MCP tool definitions constrain future agent behavior.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw captures, wiki pages, collection pages, and brief/query outputs mostly advise as evidence or context.
-- [Workshop layer](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - relates: Sparks' two-phase ingest creates a bounded work interval before material is finalized into the wiki.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Sparks stores and indexes memory, but read-back is pull-only at this commit.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Sparks' files, SQLite manifest, embedded contract, and generated collections differ by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: the embedded runtime contract, frontmatter schema, lint rules, ingest protocol, and MCP tool definitions constrain future agent behavior.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw captures, wiki pages, collection pages, and brief/query outputs mostly advise as evidence or context.
+- [Workshop layer](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - relates: Sparks' two-phase ingest creates a bounded work interval before material is finalized into the wiki.

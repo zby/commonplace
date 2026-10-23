@@ -119,9 +119,9 @@ The Slack reply policy is intentionally conservative in mention mode. That matte
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes nao's stored context files, active prompt-injected memories, and story persistence.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating project files, memories, stories, SQL guardrails, and messaging policies by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames nao's conversation-to-memory extraction loop.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies prompts, SQL filters, role checks, Slack policy, story sharing, and memory toggles as behavior-shaping controls.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies project context files, stories, query caches, and personal facts as advisory remembered context.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why nao's file paths, database ids, story ids, folders, and categories are useful routing signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes nao's stored context files, active prompt-injected memories, and story persistence.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating project files, memories, stories, SQL guardrails, and messaging policies by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames nao's conversation-to-memory extraction loop.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies prompts, SQL filters, role checks, Slack policy, story sharing, and memory toggles as behavior-shaping controls.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies project context files, stories, query caches, and personal facts as advisory remembered context.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why nao's file paths, database ids, story ids, folders, and categories are useful routing signals.

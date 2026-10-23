@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-Flywheel supplies a bounded design example for [History has one chance to become checkable](../notes/history-has-one-chance-to-become-checkable.md): its advice to attach evidence and preserve failed experiments alongside decisions describes how production history could become an inspectable record. It does not test the note's stronger claim about when history becomes unrecoverable. The distinction from Commonplace's [lineage](../notes/definitions/lineage.md) is also useful: Flywheel describes ancestry among research work units, while the KB definition concerns source dependencies and the obligations triggered when sources change. The captured page establishes no such invalidation or regeneration obligations.
+Flywheel supplies a bounded design example for [History has one chance to become checkable](../theory/history-has-one-chance-to-become-checkable.md): its advice to attach evidence and preserve failed experiments alongside decisions describes how production history could become an inspectable record. It does not test the note's stronger claim about when history becomes unrecoverable. The distinction from Commonplace's [lineage](../theory/definitions/lineage.md) is also useful: Flywheel describes ancestry among research work units, while the KB definition concerns source dependencies and the obligations triggered when sources change. The captured page establishes no such invalidation or regeneration obligations.
 
 ## Extractable Value
 

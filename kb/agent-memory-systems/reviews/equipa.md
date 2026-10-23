@@ -137,9 +137,9 @@ Authority at consumption is mostly advisory instruction. Injected lessons and ep
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: EQUIPA turns agent run traces into lessons, episodes, prompt variants, and ranking state.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: EQUIPA's distinctive move is prompt-time read-back rather than storage alone.
-- [Activate Behavior-Changing Memory Before The Mistake](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies: lessons and episodes are selected before the next worker action.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: EQUIPA's rows, prompt files, embeddings, graph edges, and sessions differ by substrate, form, lineage, and authority.
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) - exemplifies: EQUIPA adapts deployed agent behavior through retained natural-language content and symbolic artifacts.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: logs, traces, session notes, project context, and queried lessons can serve as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: injected lessons, selected episodes, prompt files, dispatch metadata, and GEPA variants can instruct, select, or configure behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: EQUIPA's distinctive move is prompt-time read-back rather than storage alone.
+- [Activate Behavior-Changing Memory Before The Mistake](../../theory/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies: lessons and episodes are selected before the next worker action.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: EQUIPA's rows, prompt files, embeddings, graph edges, and sessions differ by substrate, form, lineage, and authority.
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) - exemplifies: EQUIPA adapts deployed agent behavior through retained natural-language content and symbolic artifacts.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: logs, traces, session notes, project context, and queried lessons can serve as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: injected lessons, selected episodes, prompt files, dispatch metadata, and GEPA variants can instruct, select, or configure behavior.

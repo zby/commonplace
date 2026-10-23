@@ -37,7 +37,7 @@ The paper asks what distinguishes causal prediction from non-causal prediction u
 
 ## Connections Found
 
-This source directly supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): it gives a specific formal signal for assessing whether a proposed causal commitment reaches beyond the distribution that fitted it. It also grounds the structured-shift premise in [Retained theories may improve sample efficiency under structured shifts](../notes/retained-theories-may-improve-sample-efficiency.md), because it makes "stable mechanism across environments" statistically explicit.
+This source directly supports [reach assessment](../theory/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md): it gives a specific formal signal for assessing whether a proposed causal commitment reaches beyond the distribution that fitted it. It also grounds the structured-shift premise in [Retained theories may improve sample efficiency under structured shifts](../theory/retained-theories-may-improve-sample-efficiency.md), because it makes "stable mechanism across environments" statistically explicit.
 
 ## Extractable Value
 
@@ -52,4 +52,4 @@ The method is assumption-dependent and environment-dependent. It is strongest wh
 
 ## Recommended Next Action
 
-Use this source as the strongest grounding for the invariance example in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md), and consider a later narrow update to [Retained theories may improve sample efficiency under structured shifts](../notes/retained-theories-may-improve-sample-efficiency.md) to cite the local ingest instead of only the external arXiv link.
+Use this source as the strongest grounding for the invariance example in [Formal symbolic systems assess reach only through causal and proof obligations](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md), and consider a later narrow update to [Retained theories may improve sample efficiency under structured shifts](../theory/retained-theories-may-improve-sample-efficiency.md) to cite the local ingest instead of only the external arXiv link.

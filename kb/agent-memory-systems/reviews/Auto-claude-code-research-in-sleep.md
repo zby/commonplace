@@ -142,8 +142,8 @@ The main tradeoff is semantic locality. ARIS's skill packages are portable and i
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames why ARIS's stored wiki only becomes memory read-back when workflows load `query_pack.md` or agents query it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to ARIS's split between skills, wiki pages, traces, helper scripts, and staged patches.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies ARIS's usage-log-to-skill-patch loop.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies SKILL.md packages, helper gates, run-state rules, and meta-apply as behavior-shaping artifacts.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies research-wiki pages, traces, reports, and imported paper metadata before they gain instruction or validation force.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames why ARIS's stored wiki only becomes memory read-back when workflows load `query_pack.md` or agents query it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to ARIS's split between skills, wiki pages, traces, helper scripts, and staged patches.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies ARIS's usage-log-to-skill-patch loop.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies SKILL.md packages, helper gates, run-state rules, and meta-apply as behavior-shaping artifacts.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies research-wiki pages, traces, reports, and imported paper metadata before they gain instruction or validation force.

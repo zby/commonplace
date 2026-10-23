@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-Smith is a historical anchor for [Reflective system](../notes/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf) and [Maes 1988](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
+Smith is a historical anchor for [Reflective system](../theory/definitions/reflective-system.md): self-description and behavioral effect must be compared with Smith's embedded theory, two-way causality, and vantage point. The paper also supplies the primary Lisp lineage for [LLM contexts interpret instructions and content through the same token medium](../theory/llm-context-interprets-instructions-and-content-through-one-medium.md), but blocks the inference from homoiconicity or metacircular self-description to reflection. [Maes 1987](https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf) and [Maes 1988](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf) retain the causal core while generalizing beyond procedural languages and using “reflection” for what Smith presents here as the narrower procedural case.
 
 ## Extractable Value
 
@@ -88,4 +88,4 @@ Smith explicitly limits the architecture's generality claim to serial, single-pr
 
 ## Recommended Next Action
 
-Use Smith's three-part test—embedded self-theory, bidirectional causal connection, and vantage point—as historical context for [Reflective system](../notes/definitions/reflective-system.md), while keeping operator authority and evaluation as separate additions.
+Use Smith's three-part test—embedded self-theory, bidirectional causal connection, and vantage point—as historical context for [Reflective system](../theory/definitions/reflective-system.md), while keeping operator authority and evaluation as separate additions.

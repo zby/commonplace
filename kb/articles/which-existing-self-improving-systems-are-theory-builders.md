@@ -4,12 +4,12 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/operative-change.md
-  - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
-  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
-  - kb/notes/definitions/system-definition-artifact.md
-  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
+  - kb/theory/definitions/theory-builder.md
+  - kb/theory/definitions/operative-change.md
+  - kb/theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+  - kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
+  - kb/theory/definitions/system-definition-artifact.md
+  - kb/theory/evidence/commonplace-revision-used-theory-guided-computational-search.md
 ---
 
 # Which Existing Self-Improving Systems Are Theory Builders
@@ -74,7 +74,7 @@ theory builders on this evidence, as the placements below explain.
 
 ## What the comparison asks
 
-A system is a [theory builder](../notes/definitions/theory-builder.md) when
+A system is a [theory builder](../theory/definitions/theory-builder.md) when
 it meets four conditions:
 
 1. **Localized content.** Its theories are stated in natural or formal
@@ -83,7 +83,7 @@ it meets four conditions:
 2. **Consumption.** The theories guide what the system does through what
    they say. A difference in a theory's content that matters to a decision
    changes the decision; such a change is
-   [operative](../notes/definitions/operative-change.md).
+   [operative](../theory/definitions/operative-change.md).
 3. **Criticism.** A working process of attempted refutation aims at what
    identified units say, and a theory that fails is revised or replaced.
    Generating variants and keeping those with the best outcome score, with no
@@ -104,12 +104,12 @@ The builder is the whole system that performs these operations, so people
 who propose, criticize, or select theories are inside it. A human-staffed
 system can therefore be a theory builder. The knowledge base calls a builder
 in which computation performs every internal operation
-[autonomous](../notes/definitions/theory-builder.md#qualifiers).
+[autonomous](../theory/definitions/theory-builder.md#qualifiers).
 
 Membership is not a claim of success. Whether holding and criticizing a
 builder's theories improves its capacity for future action is a separate
 learning claim, and it needs an outcome comparison:
-[observing the whole theory-to-use path does not establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
+[observing the whole theory-to-use path does not establish improved capacity](../theory/a-complete-theory-path-does-not-establish-improved-capacity.md).
 
 We distinguish how a revision is produced from how it is accepted. A system
 may diagnose a mistaken assumption, revise the theory, and use an outcome
@@ -187,9 +187,9 @@ Their reports also identify internal roles that remain human.
   does not show that accepted edits improve later outcomes.
 - Commonplace retains explanatory notes with scope and evidence and revises
   them under review; its
-  [system-definition artifacts](../notes/definitions/system-definition-artifact.md)
+  [system-definition artifacts](../theory/definitions/system-definition-artifact.md)
   describe the machinery. One
-  [recorded episode](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+  [recorded episode](../theory/evidence/commonplace-revision-used-theory-guided-computational-search.md)
   shows retained theory guiding computational search with the operator
   selecting what fit, without ablation. Models are not reliably pinned.
   Commonplace is a reflective, human-staffed theory builder whose learning is

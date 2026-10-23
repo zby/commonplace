@@ -20,7 +20,7 @@ The key transferable distinction is a causal chain: information can be sensed, r
 - **Action selection/execution:** commitment followed by environmental effect.
 - **Learning:** changes to memories or selection tendencies induced by the cycle.
 
-This offers a finer process vocabulary for the existing [storage/read-back/activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) distinction. "Loaded into the prompt" may correspond only loosely to workspace presence; influence on action still requires uptake and selection.
+This offers a finer process vocabulary for the existing [storage/read-back/activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) distinction. "Loaded into the prompt" may correspond only loosely to workspace presence; influence on action still requires uptake and selection.
 
 ## Transfer candidates
 

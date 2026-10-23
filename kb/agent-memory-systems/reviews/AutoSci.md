@@ -116,10 +116,10 @@ Discovery is a read-back mechanism as much as a recommendation feature. Venue mo
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AutoSci's retained wiki files from the skill/tool paths that actually load them into Claude Code context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to the split between raw inputs, wiki pages, graph JSONL, schemas, skill prompts, validators, and generated context packs.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - frames AutoSci's repo/files substrate and lack of inspected database/vector/model-weight memory.
-- [Representational form](../../notes/definitions/representational-form.md) - supports separating natural-language wiki content from symbolic schemas, graph rows, and command contracts.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies runtime schemas, skill instructions, validators, and tool commands as behavior-shaping artifacts.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies paper/concept/idea/method/wiki output pages as advisory retained research memory.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why AutoSci's slugs, entity kinds, status fields, and graph edges matter for targeted read-back.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AutoSci's retained wiki files from the skill/tool paths that actually load them into Claude Code context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to the split between raw inputs, wiki pages, graph JSONL, schemas, skill prompts, validators, and generated context packs.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - frames AutoSci's repo/files substrate and lack of inspected database/vector/model-weight memory.
+- [Representational form](../../theory/definitions/representational-form.md) - supports separating natural-language wiki content from symbolic schemas, graph rows, and command contracts.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies runtime schemas, skill instructions, validators, and tool commands as behavior-shaping artifacts.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies paper/concept/idea/method/wiki output pages as advisory retained research memory.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why AutoSci's slugs, entity kinds, status fields, and graph edges matter for targeted read-back.

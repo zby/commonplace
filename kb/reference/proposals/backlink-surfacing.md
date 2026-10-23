@@ -6,7 +6,7 @@ tags: [links]
 
 # Backlink surfacing
 
-How Commonplace could deliver the inbound-link view to its readers. Requirements — the reader needs this design must serve and the orientation/maintenance boundary it must respect — rest on [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md); this proposal holds only the option space and the system-specific constraints.
+How Commonplace could deliver the inbound-link view to its readers. Requirements — the reader needs this design must serve and the orientation/maintenance boundary it must respect — rest on [inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md); this proposal holds only the option space and the system-specific constraints.
 
 ## Current state (as of 2026-06-12)
 
@@ -36,5 +36,5 @@ How Commonplace could deliver the inbound-link view to its readers. Requirements
 
 Relevant Notes:
 
-- [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — rests-on: the reader needs and boundaries this design must satisfy
+- [inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — rests-on: the reader needs and boundaries this design must satisfy
 - [ADR 025 — complete generated indexes are build-time only](../adr/025-complete-generated-indexes-are-build-time-only.md) — rests on: the one-source-two-materializations pattern and the no-new-command default this proposal extends to backlinks

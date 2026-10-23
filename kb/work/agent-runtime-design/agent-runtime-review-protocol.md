@@ -194,9 +194,9 @@ Do not infer self-modification from either generatedness or durability alone. Re
 
 1. **Authorship:** Did a process inside the declared system boundary generate the concrete change?
 2. **Persistence:** Are only the bytes retained, or does a later run discover and exercise the accepted change?
-3. **Target:** Does it alter the bounded runtime's own [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md), or only an external work product or project capability?
+3. **Target:** Does it alter the bounded runtime's own [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md), or only an external work product or project capability?
 
-For this workshop, call a pathway **runtime self-modification** only when the change is self-generated, durable across the relevant later-operation horizon, and directed at the runtime's own organization. Human approval of admission does not erase model authorship. Automatic installation does not establish improvement, adequate verification, or reflective coverage. [The RLM, Tendril, and llm-do comparison](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) supplies boundary cases in which generatedness and durability vary independently.
+For this workshop, call a pathway **runtime self-modification** only when the change is self-generated, durable across the relevant later-operation horizon, and directed at the runtime's own organization. Human approval of admission does not erase model authorship. Automatic installation does not establish improvement, adequate verification, or reflective coverage. [The RLM, Tendril, and llm-do comparison](../../theory/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) supplies boundary cases in which generatedness and durability vary independently.
 
 For a durable extension, also record the later activation path. Persistence of source bytes without discovery, loading, or execution is archival retention, not an operative runtime change.
 

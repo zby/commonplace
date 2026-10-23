@@ -47,31 +47,31 @@ No source quotes have been retained yet.
 The essay's compact role is a conceptual vocabulary source and counterpoint for
 quality under sustained inspection. Its account of slop as abundant output
 that evaporates under scrutiny is a qualitative instance of [reverse
-compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
+compression](../theory/reverse-compression-is-when-llm-output-expands-without-adding.md).
 Its “blood sacrifice” factor also supports, while explicitly bounding, the
 claim that [cheap generation breaks text volume as an effort
-signal](../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md):
+signal](../theory/cheap-generation-breaks-text-volume-as-an-effort-signal.md):
 cost can cue judgment, but the essay concedes that cost does not guarantee
 quality. Thickness compares with [warranted reader
-update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md)
+update](../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md)
 because both are reader-relative, but repeated reward is not necessarily a
 warranted change in belief or action.
 
 Our KB-specific interpretation moves the unit from one atomic note to a bounded
 knowledge whole. [Short composable
-notes](../notes/short-composable-notes-maximize-combinatorial-discovery.md)
+notes](../theory/short-composable-notes-maximize-combinatorial-discovery.md)
 provide independently usable parts; an operation-relative
-[area](../notes/areas-exist-because-useful-operations-require-reading-notes-together.md)
+[area](../theory/areas-exist-because-useful-operations-require-reading-notes-together.md)
 becomes thick when [resolution
-switching](../notes/a-knowledge-base-should-support-fluid-resolution-switching.md)
+switching](../theory/a-knowledge-base-should-support-fluid-resolution-switching.md)
 continues to reveal non-redundant, [load-bearing
-relationships](../notes/link-strength-is-encoded-in-position-and-prose.md).
+relationships](../theory/link-strength-is-encoded-in-position-and-prose.md).
 Integration here does not mean agreement: an articulated contradiction or
 scope boundary can constrain the whole more than several decorative links.
 Finally, the claim that a machine cannot perform the hard work of thickening is
 a direct counterpoint to the local claim that [an adversarial human-agent loop
 can reconstruct the writing-is-thinking
-filter](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
+filter](../theory/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
 
 ## Extractable Value
 
@@ -97,7 +97,7 @@ do not test whether attention continues to pay off longitudinally. Nor does the
 essay compare unaided writing with an adversarial human-agent workflow.
 Consequently it does not establish that machine-assisted work is categorically
 thin or overturn the [human-agent-loop
-counterclaim](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
+counterclaim](../theory/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
 
 The graph-level transfer is our interpretation, not Mastroianni's. The essay
 discusses whole artworks; it neither discusses atomic notes nor tests whether

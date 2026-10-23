@@ -152,6 +152,6 @@ The workshop closes when:
 - [Channel-compiled instruction artifacts](../../reference/proposals/channel-compiled-instruction-artifacts.md) — existing option space for compiling skills, the instructions tree, the control plane, or a later-bound form.
 - [Windows portability for promoted skills](../self-improvement-cluster-operationalization/windows-portability-for-promoted-skills.md) — prior audit finding and narrower portability proposal.
 - [Instruction generation](../../reference/instruction-generation.md) — current install-time generation and canonical/generated boundaries.
-- [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — rationale for compilation when install-time-known variation would otherwise remain in runtime instructions.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — timing test for install-time versus session-time resolution.
+- [Generate KB skills at build time, don't parameterise them](../../theory/generate-instructions-at-build-time.md) — rationale for compilation when install-time-known variation would otherwise remain in runtime instructions.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — timing test for install-time versus session-time resolution.
 - [Tool availability is package-owned and Git is never invoked](../../reference/adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md) — adjacent precedent for deciding which dependencies belong behind package code.

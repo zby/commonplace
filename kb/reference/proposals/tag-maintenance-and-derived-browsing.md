@@ -80,10 +80,10 @@ Commonplace agents.
 | Reusable generated tag views inside pages | The documentation build derives a bibliography or related-material section from canonical membership | Useful where the same membership is now maintained twice. Keep editorial role phrases authored, and keep bulk generated output out of committed agent-facing files. |
 
 The distinctions above rest on [index completeness not determining editorial
-orientation](../../notes/index-completeness-does-not-determine-editorial-orientation.md).
+orientation](../../theory/index-completeness-does-not-determine-editorial-orientation.md).
 Generated labels are candidate interpretations, not a semantic oracle. A model
 agreeing with its own grouping supplies no independent warrant for the grouping.
-The consumer split follows [access-path cost](../../notes/design-for-the-first-time-human-except-on-access-cost.md):
+The consumer split follows [access-path cost](../../theory/design-for-the-first-time-human-except-on-access-cost.md):
 a browser preview and an agent’s bounded result can expose the same members
 without requiring the same interface.
 

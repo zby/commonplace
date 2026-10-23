@@ -82,7 +82,7 @@ The [auditable editing experiment](../auditable-llm-editing/README.md) supplies 
 
 ## A required prose counterexample: local redundancy can be correct
 
-[Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md) advances an untested statistical conjecture: for distant or non-obvious uses, a generated local view from one canonical value should outperform declaration-only presentation. It distinguishes generated exact or derived views from human-authored restatement and makes a held-out correct, non-contradictory application rate the primary comparison.
+[Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) advances an untested statistical conjecture: for distant or non-obvious uses, a generated local view from one canonical value should outperform declaration-only presentation. It distinguishes generated exact or derived views from human-authored restatement and makes a held-out correct, non-contradictory application rate the primary comparison.
 
 This blocks a naive transfer from software: duplication, locality, or addition is not itself a prose smell. A valid experiment must show role conflict or a downstream cost, not merely that two sentences overlap. A counterexperiment should compare canonical-only, point-of-use reinforcement, and checked canonical-plus-local reinforcement on both immediate uptake and later revision drift. If deliberate reinforcement wins, the shared theory must concern global-role conflict rather than subtraction or single-source organization in general.
 
@@ -94,7 +94,7 @@ These artifacts may supply later experimental methods, but they are not evidence
 - The [Decapod curiosity experiment](../../reports/retained/curiosity-prompts-20260310/captures/experiment-report.md) suggests that question framing changes what gets investigated, but has only two trials per condition.
 - [Agents Explore but Agents Ignore](../../sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md) separates information surfacing from later interaction in artificial agent tasks.
 - The local [SlopCodeBench practitioner run](../../sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md) is a small lead on iterative code erosion, not its mechanism.
-- The [failure-mode transfer note](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) supplies a cross-domain evaluation rule, not evidence that this particular behavior transfers.
+- The [failure-mode transfer note](../../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) supplies a cross-domain evaluation rule, not evidence that this particular behavior transfers.
 
 ## What the local corpus does not yet contain
 

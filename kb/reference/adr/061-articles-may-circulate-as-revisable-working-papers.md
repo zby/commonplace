@@ -64,4 +64,4 @@ Relevant Notes:
 - [ADR 057 — Articles use an editorial profile and excluded drafts](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) — extends: adds the second public state its lifecycle anticipated but left undesigned
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: executes the transitions this decision defines
 - [Documentation site](../documentation-site.md) — part-of: rendering channel that surfaces the lifecycle status to readers
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — rests-on: why the new lifecycle fields stay contract-enforced until a mechanical failure warrants schema
+- [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — rests-on: why the new lifecycle fields stay contract-enforced until a mechanical failure warrants schema

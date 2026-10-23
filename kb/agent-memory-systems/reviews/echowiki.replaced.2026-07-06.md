@@ -123,9 +123,9 @@ The system can generate synthesis-like concept prose, but I would not classify t
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: EchoWiki stores a wiki, but only compile-time briefs and explicit browsing activate it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw inputs, generated pages, prompts, settings, index/log, and approval state differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: generated summaries, concept pages, entity pages, and indexes mostly serve as evidence, reference, context, and advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompt templates, settings, path guards, and approval rules shape future compiler behavior.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages compiler context with briefs and whitelisted targets rather than full-wiki loading or vector retrieval.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: EchoWiki's recall depends on available slugs, frontmatter descriptions, wikilinks, and directory conventions.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: EchoWiki stores a wiki, but only compile-time briefs and explicit browsing activate it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw inputs, generated pages, prompts, settings, index/log, and approval state differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: generated summaries, concept pages, entity pages, and indexes mostly serve as evidence, reference, context, and advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompt templates, settings, path guards, and approval rules shape future compiler behavior.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages compiler context with briefs and whitelisted targets rather than full-wiki loading or vector retrieval.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: EchoWiki's recall depends on available slugs, frontmatter descriptions, wikilinks, and directory conventions.

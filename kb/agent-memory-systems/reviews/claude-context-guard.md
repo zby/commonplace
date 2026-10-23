@@ -138,8 +138,8 @@ The main design split is authority depth. Context Guard's safeguards are operati
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Context Guard's value comes from making project files enter future Claude sessions, not merely storing them.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: safeguard files, command natural-language, hooks, git state, plans, audits, and sidecar indexes carry different authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, comments, plans, feature records, and audit reports mostly serve as evidence and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `CLAUDE.md`, slash commands, hooks, audit rules, and itemisation rules instruct or validate future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Context Guard turns session and tool traces into durable operational memory files.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Context Guard's value comes from making project files enter future Claude sessions, not merely storing them.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: safeguard files, command natural-language, hooks, git state, plans, audits, and sidecar indexes carry different authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: logs, comments, plans, feature records, and audit reports mostly serve as evidence and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `CLAUDE.md`, slash commands, hooks, audit rules, and itemisation rules instruct or validate future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Context Guard turns session and tool traces into durable operational memory files.

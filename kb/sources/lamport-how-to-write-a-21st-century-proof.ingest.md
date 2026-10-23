@@ -75,44 +75,44 @@ structured proof, and the KB names no artifact where step size is stated as a
 design variable, so the source opens ground rather than restating it.
 
 Its heaviest bearing is as outside evidence for
-[structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md),
+[structured output is easier for humans to review](../theory/structured-output-is-easier-for-humans-to-review.md),
 which argues from readability alone that separating assertion from justification
 converts one holistic judgment into focused per-part checks; Lamport supplies a
 long-run practitioner case in a genre where each check has a truth condition,
 including a referee who reported the structure "might well be the only way to
 present long proofs" both detailed and readable. It is a worked per-convention
 instance for
-[human writing structures transfer to LLMs because failure modes overlap](../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md),
+[human writing structures transfer to LLMs because failure modes overlap](../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md),
 naming the specific failures prose proofs permit and the structural rule
 introduced against each, and it supplies a tradition
-[the soft-bound survey](../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
+[the soft-bound survey](../theory/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
 does not list, in that survey's own terms: the bounded processor is the step's
 checker and the adaptation is hierarchical decomposition plus naming.
 
 It also qualifies several existing claims from the authoring side.
-[Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md)
+[Warranted autonomy is bounded by oracle domain](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md)
 bounds evaluation by what an oracle can assess; Lamport makes step size the free
 variable that bound fixes, explicitly reader-relative.
-[Short composable notes](../notes/short-composable-notes-maximize-combinatorial-discovery.md)
+[Short composable notes](../theory/short-composable-notes-maximize-combinatorial-discovery.md)
 justifies one-claim atomicity by bounded-context co-loading; Lamport reaches a
 rule of the same shape from an independent warrant, that the unit is sized so its
 checker can decide it.
-[The verifiability gradient](../notes/verifiability-gradient.md)
+[The verifiability gradient](../theory/verifiability-gradient.md)
 gains an occupied and defended intermediate point, with the far end priced by
 someone who built it, and
-[causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md)
+[causal and proof obligations](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md)
 gains a cost qualification on the proof route.
-[Process structure and output structure are independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md)
+[Process structure and output structure are independent levers](../theory/process-structure-and-output-structure-are-independent-levers.md)
 gets a documented case where they are coupled rather than independent: constraining
 the output form is reported to change what the writer does — "Writing the
 structured proof of Figure 3 forced us to write a justification for each step."
 The proof-sketch discipline ("Proof sketches are fine, but they are not proofs")
 is the layout
-[an insufficient summary precedes the source rather than replacing it](../notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md)
+[an insufficient summary precedes the source rather than replacing it](../theory/an-insufficient-summary-precedes-the-source-rather-than-replacing.md)
 predicts, and the internalized "curious child" who asks *why?* at every assertion,
 together with the correspondent who found his error only when rewriting the proof
 for another reader, bears on
-[the adversarial writing-is-thinking loop](../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
+[the adversarial writing-is-thinking loop](../theory/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
 
 Among already-captured sources it sits opposite
 [MAKER](./meyerson-maker-million-step-llm-zero-errors.ingest.md) on a shared
@@ -139,7 +139,7 @@ more space.
    may legally cite only steps visible at or above its level, because a step
    proved under an assumption does not hold where that assumption is out of scope.
    The KB's traversal-as-reasoning framing in
-   [title as claim](../notes/title-as-claim-enables-traversal-as-reasoning.md) has
+   [title as claim](../theory/title-as-claim-enables-traversal-as-reasoning.md) has
    no equivalent rule limiting which claims a claim may lean on. [deep-dive]
 
 3. **"Structured proofs make it possible, not inevitable."** A precise statement
@@ -159,7 +159,7 @@ more space.
    in a sea of lemmas." That is a live counter-consideration to the KB's default
    of splitting into separate artifacts, and it supplies the nesting rule the flat
    Toulmin section model in
-   [claim notes](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md)
+   [claim notes](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md)
    lacks. [deep-dive]
 
 6. **Learning the formal form to write the informal one better.** Lamport prices
@@ -167,8 +167,8 @@ more space.
    machine-checked proof itself decades from practical) and still argues the
    formal exercise teaches informal writing. A concrete cost-and-payoff data point
    for movement along the
-   [verifiability gradient](../notes/verifiability-gradient.md) and for
-   [codification](../notes/definitions/codification.md). [just-a-reference]
+   [verifiability gradient](../theory/verifiability-gradient.md) and for
+   [codification](../theory/definitions/codification.md). [just-a-reference]
 
 ## Limitations (our opinion)
 
@@ -182,7 +182,7 @@ successes are visible; proofs he structured that still carried errors, or errors
 found without structuring, are not counted. Nothing here separates the effect of
 the structural form from the effect of the extra care that adopting an unfamiliar
 form occasions, which is the same confound
-[process structure and output structure are independent levers](../notes/process-structure-and-output-structure-are-independent-levers.md)
+[process structure and output structure are independent levers](../theory/process-structure-and-output-structure-are-independent-levers.md)
 warns about; Lamport's own "forced us to write a justification for each step"
 concedes the coupling without measuring it.
 
@@ -215,9 +215,9 @@ for the structural argument, but neither should be cited as current.
 Write a note in `kb/notes/` stating the general claim that the checkable unit is
 sized to its checker, citing this ingest as the outside precedent and the KB's
 four existing instances — note atomicity in
-[short composable notes](../notes/short-composable-notes-maximize-combinatorial-discovery.md),
+[short composable notes](../theory/short-composable-notes-maximize-combinatorial-discovery.md),
 the review budget in ADR 079, oracle domain in
-[warranted autonomy](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md),
+[warranted autonomy](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md),
 and the microagent step in the
 [MAKER ingest](./meyerson-maker-million-step-llm-zero-errors.ingest.md) — as cases
 of it.

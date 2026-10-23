@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source records that residual structure is what lets scale pay, an outcome compatible with [the case-level conjecture that unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md); that note diagnoses particular losses and offers no inverse guarantee that assessed structure survives scaling. Its benchmark critique directly supports [a proximate target is checked for achievement, not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) and [exact implementation does not validate a requirement against its objective](../notes/exact-implementation-does-not-validate-a-requirement.md). It also qualifies [scaffolding absorption](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md): depth obstacles shrink on fixed tasks while robustness gaps remain at the frontier.
+The source records that residual structure is what lets scale pay, an outcome compatible with [the case-level conjecture that unsupported proxy scope may explain a structured method's loss under scaling](../theory/bitter-lesson-selects-against-unearned-reach-not-against-structure.md); that note diagnoses particular losses and offers no inverse guarantee that assessed structure survives scaling. Its benchmark critique directly supports [a proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) and [exact implementation does not validate a requirement against its objective](../theory/exact-implementation-does-not-validate-a-requirement.md). It also qualifies [scaffolding absorption](../theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md): depth obstacles shrink on fixed tasks while robustness gaps remain at the frontier.
 
 ## Extractable Value
 
@@ -43,5 +43,5 @@ The chapter usefully criticizes “human-level” rhetoric, but its architecture
 
 ## Recommended Next Action
 
-Add the ImageNet “human-level” case to a future evidence revision of [A proximate target is checked for achievement, not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md), grounded in the primary benchmark and annotator studies rather than this chapter alone.
+Add the ImageNet “human-level” case to a future evidence revision of [A proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md), grounded in the primary benchmark and annotator studies rather than this chapter alone.
 

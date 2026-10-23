@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The strongest role is bounded evidence for [active work state being distinct from retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md). The cross-host task retains an intermediate artifact, its hash, a next-stage descriptor, and the task ID. A fresh runtime consumes that state to continue unfinished work. Because the model calls are tool-free and an external driver manages the stages, this supports explicit continuation state without validating the note's broader workshop, closure, or evidence-gate recommendations.
+The strongest role is bounded evidence for [active work state being distinct from retrospective memory or chat history](../theory/active-work-state-is-not-retrospective-memory-or-chat-history.md). The cross-host task retains an intermediate artifact, its hash, a next-stage descriptor, and the task ID. A fresh runtime consumes that state to continue unfinished work. Because the model calls are tool-free and an external driver manages the stages, this supports explicit continuation state without validating the note's broader workshop, closure, or evidence-gate recommendations.
 
-The paper also gives a concrete comparison for [separating scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md): drivers advance work, fresh sessions receive reconstructed inputs, and durable records preserve progress. This is a mapping between analytical responsibilities, not evidence that either decomposition is uniquely correct. Relative to the [portable context-layer account](./from-harness-lock-in-to-portable-context-layer.ingest.md), RIPA adds an explicit question about who may continue after copying state. Its governed promotion point makes continuation authority a separate portability obligation alongside movable artifacts, access contracts, and execution policy.
+The paper also gives a concrete comparison for [separating scheduling, context assembly, and external state](../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md): drivers advance work, fresh sessions receive reconstructed inputs, and durable records preserve progress. This is a mapping between analytical responsibilities, not evidence that either decomposition is uniquely correct. Relative to the [portable context-layer account](./from-harness-lock-in-to-portable-context-layer.ingest.md), RIPA adds an explicit question about who may continue after copying state. Its governed promotion point makes continuation authority a separate portability obligation alongside movable artifacts, access contracts, and execution policy.
 
 ## Extractable Value
 
@@ -49,4 +49,4 @@ This ingest assesses the paper only. No implementation code or released verifier
 
 ## Recommended Next Action
 
-Update [Active work state is not retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) with the paper's verified-artifact and next-stage checkpoint example, retaining its explicit-driver, tool-free-task, and bounded-migration qualifications.
+Update [Active work state is not retrospective memory or chat history](../theory/active-work-state-is-not-retrospective-memory-or-chat-history.md) with the paper's verified-artifact and next-stage checkpoint example, retaining its explicit-driver, tool-free-task, and bounded-migration qualifications.

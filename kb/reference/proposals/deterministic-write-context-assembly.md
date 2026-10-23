@@ -129,9 +129,9 @@ This is the most general design and the easiest to accrete. It needs admission, 
 
 Relevant Notes:
 
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: deterministic assembly can replace repeated discovery and interpretation with already-resolved authoring inputs
-- [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md) — rests-on: target-specific inputs should load only for the write that needs them
-- [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: the assembler may resolve known bindings but must not freeze situation-dependent writing judgments
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: deterministic assembly can replace repeated discovery and interpretation with already-resolved authoring inputs
+- [Instruction specificity should match loading frequency](../../theory/instruction-specificity-should-match-loading-frequency.md) — rests-on: target-specific inputs should load only for the write that needs them
+- [An author should fix what the executor cannot determine, not what it will](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: the assembler may resolve known bindings but must not freeze situation-dependent writing judgments
 - [ADR 018: Types are path references to instruction docs](../adr/018-types-are-path-references-to-instruction-docs.md) — compares-with: the accepted direct-file design and its earlier rejection of a synthesized write-context packet
 - [Collections and types](../collections-and-types.md) — evidenced-by: the current three-input read-time authoring model and absence of a resolver
 - [ADR 092: Write briefs are optional sidecars named by a validated pointer](../adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) — see-also: the adopted artifact-specific input this assembler could later deliver as a named role, though a validated pointer already delivers it

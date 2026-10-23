@@ -32,7 +32,7 @@ The paper describes MARA as a modular hardware and software architecture for rea
 
 ## Connections Found
 
-This report is a historical terminology counterpoint. Its *universal factory* is portable across target-processor families, whereas [Greenfield and Short's software factory](greenfield-short-software-factories-oopsla-2003.ingest.md) is production machinery specialized to one product family and their separate factory-building example recursively constructs more factories. [Program synthesis](program-synthesis-gulwani-polozov-singh-2017.ingest.md) supplies the complementary boundary: construction proceeds within supplied specifications, program spaces, and domain knowledge. The MARA configurator likewise generates a target system inside a human-designed language, architecture, component set, and toolchain, which compares with [the effective-update-space limit of a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
+This report is a historical terminology counterpoint. Its *universal factory* is portable across target-processor families, whereas [Greenfield and Short's software factory](greenfield-short-software-factories-oopsla-2003.ingest.md) is production machinery specialized to one product family and their separate factory-building example recursively constructs more factories. [Program synthesis](program-synthesis-gulwani-polozov-singh-2017.ingest.md) supplies the complementary boundary: construction proceeds within supplied specifications, program spaces, and domain knowledge. The MARA configurator likewise generates a target system inside a human-designed language, architecture, component set, and toolchain, which compares with [the effective-update-space limit of a fixed decomposition](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
 ## Extractable Value
 
@@ -48,9 +48,9 @@ The authors report on their own industrial system and assert that its practical 
 
 ## Recommended Next Action
 
-Keep unqualified *universal software factory* unregistered. Use [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) to distinguish target-platform portability, factory-valued output, constructional expressivity, and production-knowledge acquisition reach.
+Keep unqualified *universal software factory* unregistered. Use [Universal software factory needs a declared universality axis](../theory/universal-software-factory-needs-a-declared-universality-axis.md) to distinguish target-platform portability, factory-valued output, constructional expressivity, and production-knowledge acquisition reach.
 
 Abstracted into:
 
-- [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) — uses the report's processor-portability sense to expose the historical collision in unqualified universal-software-factory terminology
-- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts recursive construction with the production knowledge supplied to the constructor
+- [Universal software factory needs a declared universality axis](../theory/universal-software-factory-needs-a-declared-universality-axis.md) — uses the report's processor-portability sense to expose the historical collision in unqualified universal-software-factory terminology
+- [Factory construction is not evidence of production-knowledge acquisition](../theory/factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts recursive construction with the production knowledge supplied to the constructor

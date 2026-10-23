@@ -127,8 +127,8 @@ LLM Wiki's context model is closer to Commonplace than database-backed memory sy
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki's file store is only activated when commands, ambient skill rules, indexes, or explicit reads bring it into context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LLM Wiki's raw files, compiled articles, indexes, command prompts, lint rules, and reports differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, compiled articles, outputs, inventories, and reports mainly serve as evidence, reference, and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, command prompts, lint rules, plugin manifests, and validation checks shape future agent behavior directly.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: `/wiki:ll` converts current-session errors, fixes, corrections, and discoveries into durable lessons.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki's file store is only activated when commands, ambient skill rules, indexes, or explicit reads bring it into context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: LLM Wiki's raw files, compiled articles, indexes, command prompts, lint rules, and reports differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw sources, compiled articles, outputs, inventories, and reports mainly serve as evidence, reference, and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skills, command prompts, lint rules, plugin manifests, and validation checks shape future agent behavior directly.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: `/wiki:ll` converts current-session errors, fixes, corrections, and discoveries into durable lessons.

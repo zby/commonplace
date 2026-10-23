@@ -11,7 +11,7 @@ last-checked: "2026-06-02"
 
 AgeMem is an agent memory system whose distinctive contribution is a **memory-management policy learned by reinforcement learning** rather than hand-written or model-prompted. Coverage here is **doc-grounded** — drawn from the paper, local snapshot, and ingest, with no implementation repository inspected — so the mechanisms below are *reported*, not observed in code.
 
-**Source documents:** captured edition [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](https://arxiv.org/html/2601.01885v1); local ingest [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md); analysis note [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
+**Source documents:** captured edition [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](https://arxiv.org/html/2601.01885v1); local ingest [Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management for LLM Agents](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md); analysis note [memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md).
 
 **Reviewed document version:** arXiv 2601.01885v1, captured locally 2026-03-08 and reconciled 2026-06-02.
 
@@ -51,7 +51,7 @@ AgeMem and Commonplace sit at opposite ends of the curation-agency axis. AgeMem 
 AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
 - **Trace source** — staged task trajectories / rollouts covering LTM construction, STM control under distractors, and integrated task execution.
-- **Extraction** — RL training with step-wise GRPO; the **oracle is task completion**, augmented by context-management and memory-management rewards. That oracle dependence [bounds where the approach transfers](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): open-ended domains without a clear completion signal lack the training reward.
+- **Extraction** — RL training with step-wise GRPO; the **oracle is task completion**, augmented by context-management and memory-management rewards. That oracle dependence [bounds where the approach transfers](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md): open-ended domains without a clear completion signal lack the training reward.
 - **Distilled form** — distributed-parametric (the policy in weights); the stored facts remain a separate natural-language/key-value store.
 - **Scope and timing** — cross-task policy; learned **offline** in training, then deployed (staged, not online).
 - **Survey placement** — a clean trajectory-to-weights case in the [trace-learning survey](../trace-learning-techniques-in-related-systems.md), flagged lower-confidence because the runtime is not code-inspected.
@@ -72,8 +72,8 @@ AgeMem qualifies: it learns a durable artifact (the policy) from agent traces.
 
 ## Relevant Notes
 
-- [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
+- [memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) — primary analysis note: interprets AgeMem as learnable policy under a task-completion oracle
 - [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses AgeMem as a lower-confidence source-ingested trajectory-to-weights case
-- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) — is-evidence-for: AgeMem learns a controller over a fixed set of six reported memory and context operations
+- [A context-operation interface bounds the projections its policy can realize](../../theory/context-operation-interface-bounds-context-policy.md) — is-evidence-for: AgeMem learns a controller over a fixed set of six reported memory and context operations
 - [AgeMem paper](https://arxiv.org/html/2601.01885v1) — primary arXiv source
 - [AgeMem ingest](../../sources/agentic-memory-learning-unified-long-term-and-short-term.ingest.md) — source coverage: paper snapshot analysis and limitations

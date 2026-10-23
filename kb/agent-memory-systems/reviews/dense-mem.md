@@ -131,7 +131,7 @@ The read path is still substantial: active facts and validated claims are matche
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - positions Dense-Mem as trace-to-symbolic-memory rather than trace-to-weight learning.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Dense-Mem separates graph memory, provider outputs, control-plane state, tool contracts, and import artifacts by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dense-Mem stores governed memory, but retained content enters context through explicit recall/tool calls.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: fragments, claims, facts, and community summaries mostly advise or evidence future work when recalled.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: promotion gates, verifier schemas, tool schemas, profile-scoped query guards, and import policies directly constrain behavior.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Dense-Mem separates graph memory, provider outputs, control-plane state, tool contracts, and import artifacts by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Dense-Mem stores governed memory, but retained content enters context through explicit recall/tool calls.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: fragments, claims, facts, and community summaries mostly advise or evidence future work when recalled.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: promotion gates, verifier schemas, tool schemas, profile-scoped query guards, and import policies directly constrain behavior.

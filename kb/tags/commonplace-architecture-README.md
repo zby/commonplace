@@ -22,10 +22,10 @@ This is a child of [architecture](./architecture-README.md); members keep both t
 
 ## Worked cases
 
-- [Canonical files and database authority](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — Commonplace's review subsystem illustrates an explicit authority transfer for one state class
-- [Edge ownership and storage choice](../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — the freshness store supplies a bounded example of workload requirements and a separate database authority decision
-- [Runtime structure and governance](../notes/runtime-structure-determines-governance-control-surfaces.md) — the Commonplace matrix identifies the governance surfaces it owns and the harness scheduler it does not
-- [Always-loaded context mechanisms](../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — configuration injection uses Commonplace's installation mechanism as a worked case
+- [Canonical files and database authority](../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — Commonplace's review subsystem illustrates an explicit authority transfer for one state class
+- [Edge ownership and storage choice](../theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — the freshness store supplies a bounded example of workload requirements and a separate database authority decision
+- [Runtime structure and governance](../theory/runtime-structure-determines-governance-control-surfaces.md) — the Commonplace matrix identifies the governance surfaces it owns and the harness scheduler it does not
+- [Always-loaded context mechanisms](../theory/always-loaded-context-mechanisms-in-agent-harnesses.md) — configuration injection uses Commonplace's installation mechanism as a worked case
 
 ## Proposed changes
 

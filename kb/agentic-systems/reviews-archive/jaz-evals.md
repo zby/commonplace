@@ -44,7 +44,7 @@ The package also discloses that original runs used development commits, mostly w
 
 ## Scope
 
-The code wires a substantive path from task evidence to retained future solver guidance. Actual uptake, formulated criticism and improved future capacity require candidate-linked traces and controlled evidence. The analysis separately records all four [theory-builder conditions](../../notes/definitions/theory-builder.md), persistence, [reflection](../../notes/definitions/reflective-system.md) and [self-improvement](../../notes/definitions/self-improving-system.md); it does not infer them from a higher score or a stored playbook. External runtime, oracle and task-data correctness remain uninspected.
+The code wires a substantive path from task evidence to retained future solver guidance. Actual uptake, formulated criticism and improved future capacity require candidate-linked traces and controlled evidence. The analysis separately records all four [theory-builder conditions](../../theory/definitions/theory-builder.md), persistence, [reflection](../../theory/definitions/reflective-system.md) and [self-improvement](../../theory/definitions/self-improving-system.md); it does not infer them from a higher score or a stored playbook. External runtime, oracle and task-data correctness remain uninspected.
 
 ---
 

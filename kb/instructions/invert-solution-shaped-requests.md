@@ -197,5 +197,5 @@ If any check fails, do not implement yet.
 
 Relevant Notes:
 
-- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../notes/productive-deferral-requires-option-evidence-and-convergence.md) — rests-on: supplies the conditional commit, wait, and bounded-probe test
-- [Current-task fit alone does not warrant costly structural entrenchment](../notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — rests-on: identifies costly structural dependency as the commitment boundary this instruction must test
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../theory/productive-deferral-requires-option-evidence-and-convergence.md) — rests-on: supplies the conditional commit, wait, and bounded-probe test
+- [Current-task fit alone does not warrant costly structural entrenchment](../theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — rests-on: identifies costly structural dependency as the commitment boundary this instruction must test

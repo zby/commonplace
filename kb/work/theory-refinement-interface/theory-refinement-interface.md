@@ -28,7 +28,7 @@ and then say which results carry over and under what conditions.
 
 ## The same contract from the theory's side
 
-The [addressable-theory](../../notes/definitions/addressable-theory.md)
+The [addressable-theory](../../theory/definitions/addressable-theory.md)
 definition supplies the structural properties this investigation compares
 with the classical repair interface: parts are available as candidate repair
 locations and can be revised separately, while assigned consequences determine
@@ -38,7 +38,7 @@ editable representation and machinery that can test the result. The working
 hypothesis is that these are two views of one classical repair contract. A note
 that eventually leaves this workshop should test and state that relation. These
 properties do not define membership in a
-[theory builder](../../notes/definitions/theory-builder.md).
+[theory builder](../../theory/definitions/theory-builder.md).
 
 ## Who implements what
 
@@ -58,7 +58,7 @@ Three placements follow.
 
 - **The universal theory manipulator is derive-only.** (The earlier formal
   limit case, retired from this workshop; the
-  [Gödel-machine comparison](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) now carries the
+  [Gödel-machine comparison](../../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) now carries the
   proof-governed contrast.) It answers what follows from the theory. Compare is available
   only when observations enter as theorems, and even then a disagreement with
   an axiom is an inconsistency, not a located fault. Locate, revise against

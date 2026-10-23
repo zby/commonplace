@@ -39,7 +39,7 @@ Introduce each lesson as the conclusion of a case segment. Do not present the fo
 
 ### Case 1: vibe-noting
 
-Use four pieces of slide-ready evidence from the [vibe-noting revision trace](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md), not the whole theory note:
+Use four pieces of slide-ready evidence from the [vibe-noting revision trace](../../theory/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md), not the whole theory note:
 
 - The raw human observation about code as a persistent artifact and a KB extending that property to knowledge work.
 - The first candidate's genuine additions: the inspectability claim, the distinction between augmentation and automation, and the relationship to weak verification.
@@ -130,16 +130,16 @@ The audience takeaway: "I can apply these patterns to my own LLM knowledge syste
 
 ---
 
-- [A vibe-noting trace shows persistence enables revision, not certification](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) — evidenced-by: the central worked example preserves the seed, candidate, review corrections, and retained result
-- [Vibe-noting](../../notes/vibe-noting.md) — rests-on: the theoretical artifact distilled from the worked case supplies the inspectability-versus-verifiability explanation
-- [Reverse compression is when LLM output expands without adding](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — rests-on: the fluency trap in the 8–12 min section
-- [The tag-README change as an observed causal-connection trace](../../notes/evidence/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the second worked example and its verified implementation timeline
+- [A vibe-noting trace shows persistence enables revision, not certification](../../theory/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) — evidenced-by: the central worked example preserves the seed, candidate, review corrections, and retained result
+- [Vibe-noting](../../theory/vibe-noting.md) — rests-on: the theoretical artifact distilled from the worked case supplies the inspectability-versus-verifiability explanation
+- [Reverse compression is when LLM output expands without adding](../../theory/reverse-compression-is-when-llm-output-expands-without-adding.md) — rests-on: the fluency trap in the 8–12 min section
+- [The tag-README change as an observed causal-connection trace](../../theory/evidence/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the second worked example and its verified implementation timeline
 - [The tag-README trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — rests-on: the calibrated self-hosting close
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the context-budget section
-- [Agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — see-also: deeper context model retained for Q&A rather than taught on stage
-- [Constraining](../../notes/definitions/constraining.md) — defined-in: the convention → schema → validator progression shown through examples
-- [Progressive constraining commits only after patterns stabilize](../../notes/progressive-constraining-commits-only-after-patterns-stabilize.md) — grounds: why validators arrive late, not first
-- [Scheduler–LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — see-also: underlying rationale retained for Q&A
-- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — draws-on: candidate-versus-promoted distinction used without the taxonomy
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — see-also: cut from the talk, kept for Q&A
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — see-also: deeper interpretation not named on stage
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the context-budget section
+- [Agent context is constrained by soft degradation, not hard token limits](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — see-also: deeper context model retained for Q&A rather than taught on stage
+- [Constraining](../../theory/definitions/constraining.md) — defined-in: the convention → schema → validator progression shown through examples
+- [Progressive constraining commits only after patterns stabilize](../../theory/progressive-constraining-commits-only-after-patterns-stabilize.md) — grounds: why validators arrive late, not first
+- [Scheduler–LLM separation exploits an error-correction asymmetry](../../theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — see-also: underlying rationale retained for Q&A
+- [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — draws-on: candidate-versus-promoted distinction used without the taxonomy
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — see-also: cut from the talk, kept for Q&A
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — see-also: deeper interpretation not named on stage

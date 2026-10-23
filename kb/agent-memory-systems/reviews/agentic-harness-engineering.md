@@ -119,9 +119,9 @@ For the code agent being evaluated, read-back is simpler. The baseline `code_age
 
 Relevant Notes:
 
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: AHE turns rollout traces into debugger reports, manifests, and harness changes.
-- [Evaluate memory by effects](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md) - applies: the learned harness is judged by later benchmark behavior rather than storage alone.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AHE's stored experiment artifacts from the evolution query that actually pushes selected memory into context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating traces, reports, manifests, harness files, scores, and snapshots by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies AHE's prompts, tool descriptions, tools, middleware, skills, sub-agents, configs, and validation/evaluation harness.
-- [Diagnostic richness constrains outer-loop learning quality](../../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) - explains why AHE's verifier-grounded debugger reports are more valuable than raw pass/fail traces alone.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: AHE turns rollout traces into debugger reports, manifests, and harness changes.
+- [Evaluate memory by effects](../../theory/agent-memory-requirements/evaluate-memory-by-effects.md) - applies: the learned harness is judged by later benchmark behavior rather than storage alone.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AHE's stored experiment artifacts from the evolution query that actually pushes selected memory into context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating traces, reports, manifests, harness files, scores, and snapshots by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies AHE's prompts, tool descriptions, tools, middleware, skills, sub-agents, configs, and validation/evaluation harness.
+- [Diagnostic richness constrains outer-loop learning quality](../../theory/diagnostic-richness-constrains-outer-loop-learning-quality.md) - explains why AHE's verifier-grounded debugger reports are more valuable than raw pass/fail traces alone.

@@ -137,8 +137,8 @@ Consumption authority depends on integration. API/SDK/MCP recall results are adv
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Hindsight converts session transcripts and retained interaction content into facts, observations, mental models, and prompt-time recall.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Hindsight's store can be pull-only through the API, but specific integrations add push read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Hindsight bundles database rows, prompts, embeddings, links, directives, integrations, and traces under different authority paths.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: coding-agent transcripts and application events become learned observations for later tasks.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: facts, chunks, observations, and mental models mostly advise future action.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: directives, validators, schemas, hooks, tool definitions, and integration configs route or instruct future behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Hindsight's store can be pull-only through the API, but specific integrations add push read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Hindsight bundles database rows, prompts, embeddings, links, directives, integrations, and traces under different authority paths.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: coding-agent transcripts and application events become learned observations for later tasks.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: facts, chunks, observations, and mental models mostly advise future action.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: directives, validators, schemas, hooks, tool definitions, and integration configs route or instruct future behavior.

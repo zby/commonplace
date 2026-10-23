@@ -29,7 +29,7 @@ The important distinction is between an item's content and the reason it wins at
 - **`ASMO-3` — add persistence and interruption rules.** Agent loops need a principled balance between staying with the current inquiry and reacting to newly salient evidence. This could become a control-policy vocabulary: interrupt, queue, decay, or ignore.
 - **`ASMO-4` — evaluate attention by opportunity cost.** A selector is not good merely because chosen items are relevant; evaluation should include important candidates that lost and the work displaced by the winners.
 
-These are candidate refinements to [designing agent memory from consumer effects](../../notes/designing-agent-memory-systems.md): memory activation needs an arbitration story when more useful material is available than can be loaded.
+These are candidate refinements to [designing agent memory from consumer effects](../../theory/designing-agent-memory-systems.md): memory activation needs an arbitration story when more useful material is available than can be loaded.
 
 ## Method worth borrowing
 

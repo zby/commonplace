@@ -8,7 +8,7 @@ The direction does not add a new problem to the lineage model. It supplies candi
 
 Normalized shape: `(doc, depends-on, code-file-or-region@revision)`.
 
-- **Hypothesized topology and churn.** If retained documents each make exact claims about several code regions, the relation is many-to-many and code changes faster than KB text. That topology made this the strongest candidate for a second churning mesh under the storage predicate in [many-to-many-edge-state-is-where-files-yield-to-a-database](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md). The disposition result below shows that topology cannot be assumed from the product direction alone.
+- **Hypothesized topology and churn.** If retained documents each make exact claims about several code regions, the relation is many-to-many and code changes faster than KB text. That topology made this the strongest candidate for a second churning mesh under the storage predicate in [many-to-many-edge-state-is-where-files-yield-to-a-database](../../theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md). The disposition result below shows that topology cannot be assumed from the product direction alone.
 - **Nearest existing profile row if exact docs survive.** External Git-backed review: L1 stable verification handle plus L2 on-demand upstream query. Documentation escalates past that row only if its consumer repeatedly asks a swept-selector question — "which retained exact docs are stale against the current code?" — rather than reading the implementation live or checking one artifact on demand.
 - **Ladder assignment is per-edge, not per-class.** A reference doc whose warrant *is* accuracy-to-code carries L3-watched edges. An explanation doc whose claims survive most code churn stays at L1/L2. The graduated ladder in [verification-locus-and-provenance-theory](./verification-locus-and-provenance-theory.md) already supports this; the case confirms the assignment must be made where the edge is authored, not uniformly by collection.
 - **Mechanism available but not earned.** The verification-locus gaps section sketches a factored `(note, cited-target)` pair for radius-1 assay results with unhashed inputs. A doc-vs-code pair could reuse the two-input review relation the way ADR 038 put the type spec on the criterion side: the referent supplies one hashed input, and the criterion text ("still accurate to this referent") supplies the other. No current consumer requires that escalation.
@@ -16,7 +16,7 @@ Normalized shape: `(doc, depends-on, code-file-or-region@revision)`.
 
 ### Observed disposition result (2026-08-24)
 
-[Seven Commonplace documentation cases](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
+[Seven Commonplace documentation cases](../../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md)
 tested the hypothesized mesh after agents gained a guaranteed route to the
 executing source. Two reference artifacts were retired and five were reduced.
 Exact fields, arguments, schemas, module inventories, and local behavior moved
@@ -80,7 +80,7 @@ Relevant Notes:
 - [lineage-profile-matrix](./lineage-profile-matrix.md) — tests: these cases are decision inputs for its decisions 1–3 and its deferral activation conditions
 - [current-contradictions](./current-contradictions.md) — is-evidence-for: contradiction 2 gains two consumer cases; contradiction 1's resolution shape is sketched above
 - [verification-locus-and-provenance-theory](./verification-locus-and-provenance-theory.md) — rests-on: the ladder and the factored-pair escalation these cases instantiate
-- [many-to-many-edge-state-is-where-files-yield-to-a-database](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — rests-on: the storage predicate case A is measured against
+- [many-to-many-edge-state-is-where-files-yield-to-a-database](../../theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — rests-on: the storage predicate case A is measured against
 - [README-REVIEW-SYSTEM](../../reference/README-REVIEW-SYSTEM.md) — draws-on: the two-input review relation the external-referent pair would generalize
 - [articles COLLECTION](../../articles/COLLECTION.md) — is-evidence-for: the existing derivative-side lineage carrier the draft rule generalizes
-- [Seven documentation cases left routing and synthesis](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — tests: disconfirms docs-on-code as a current churning-mesh witness while preserving the conditional external-carrier case
+- [Seven documentation cases left routing and synthesis](../../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — tests: disconfirms docs-on-code as a current churning-mesh witness while preserving the conditional external-carrier case

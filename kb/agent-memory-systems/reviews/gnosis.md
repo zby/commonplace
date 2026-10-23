@@ -106,8 +106,8 @@ The doctrine path matters but does not change the read-back verdict. Static AGEN
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Gnosis stores memory locally but relies on explicit pull for read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Gnosis separates file-backed entries, doctrine, and symbolic search/index structures.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Gnosis entries advise future agents as evidence and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: AGENTS/doctrine instructions shape when agents search, write, review, and tidy memory.
-- [Retained artifact](../../notes/definitions/retained-artifact.md) - grounds: entries, doctrine, and derived indexes persist across sessions; raw session context does not.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Gnosis stores memory locally but relies on explicit pull for read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Gnosis separates file-backed entries, doctrine, and symbolic search/index structures.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Gnosis entries advise future agents as evidence and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: AGENTS/doctrine instructions shape when agents search, write, review, and tidy memory.
+- [Retained artifact](../../theory/definitions/retained-artifact.md) - grounds: entries, doctrine, and derived indexes persist across sessions; raw session context does not.

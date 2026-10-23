@@ -24,7 +24,7 @@ Heuristics for recognizing a model's capability limit motivated the
 discussion. The broader question is how operational observations that lack
 experimental controls can guide decisions.
 
-[Tentative theory](../../notes/definitions/tentative-theory.md) means a
+[Tentative theory](../../theory/definitions/tentative-theory.md) means a
 theory that remains open to criticism and revision, however well it has
 survived. The design question here concerns what particular observations
 and criticisms permit a particular consumer to infer or do. It does not
@@ -65,7 +65,7 @@ reliability or causal result.
 
 The five-aspect assessment table discussed earlier is not an adopted
 contract. Likewise, retained theories improving sample efficiency remains
-a [conjecture](../../notes/retained-theories-may-improve-sample-efficiency.md),
+a [conjecture](../../theory/retained-theories-may-improve-sample-efficiency.md),
 not a demonstrated advantage of the proposed record.
 
 ## Storage direction to examine
@@ -158,15 +158,15 @@ does not require establishing a general learning advantage.
 
 ## Relevant inputs
 
-- [Preserve evidence without making history the next context](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md)
+- [Preserve evidence without making history the next context](../../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md)
   — separates evidence capture from routine loading.
-- [Retaining episode evidence keeps a distilled rule open to re-examination](../../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
+- [Retaining episode evidence keeps a distilled rule open to re-examination](../../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
   — frames the tradeoff between compressed conclusions and retained cases.
-- [Citing retained theory at the decision point is a mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
+- [Citing retained theory at the decision point is a mediation trace](../../theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
   — distinguishes recorded consumption from correct or consequential use.
-- [Raw accumulation does not create usable memory](../../notes/raw-accumulation-does-not-create-usable-memory.md)
+- [Raw accumulation does not create usable memory](../../theory/raw-accumulation-does-not-create-usable-memory.md)
   — names the access and interpretation work that storage alone leaves open.
-- [The bitter lesson selects production methods, not representational forms](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md)
+- [The bitter lesson selects production methods, not representational forms](../../theory/the-bitter-lesson-selects-production-methods-not-representational.md)
   — related design argument; it does not decide whether a particular record
   schema is worth its cost.
 - [Popper, Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md)

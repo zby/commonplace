@@ -10,7 +10,7 @@ Explanation's position is the opposite corner from ScienceFlow: it is the *mediu
 
 The conjecture's second condition barely applies, though, because there is no reject-capable acceptance step anywhere: every written page is retained, and later ingests rewrite pages in place. Two consequences worth keeping:
 
-1. **Selection moves to read-time.** With universal retention, whatever discrimination the loop has lives in attention routing — index ordering from fixed origin scores, the query read ladder, word budgets, read caps. These discriminate origin, recency, and length, not quality. The [weakly-discriminated conjecture](../../notes/weakly-discriminated-qualities-tend-to-be-underselected.md) is stated over acceptance and retention; this case suggests the same mechanism operates over read probability when retention is universal — a candidate scope extension rather than a counterexample.
+1. **Selection moves to read-time.** With universal retention, whatever discrimination the loop has lives in attention routing — index ordering from fixed origin scores, the query read ladder, word budgets, read caps. These discriminate origin, recency, and length, not quality. The [weakly-discriminated conjecture](../../theory/weakly-discriminated-qualities-tend-to-be-underselected.md) is stated over acceptance and retention; this case suggests the same mechanism operates over read probability when retention is universal — a candidate scope extension rather than a counterexample.
 2. **The dominant failure channel is compounding, not drift.** Downstream writers consume source pages and are forbidden from reading raw material, so an unfaithful source page propagates into hubs and syntheses unchecked — the review's "cumulative abstraction error." Where the other four systems risk a population slowly enriched for form-fit, this one risks unfiltered error amplification through a mandatory derivative path: a no-oracle corner rather than an unequal-oracle case.
 
 ## Taxonomy test
@@ -36,4 +36,4 @@ Relevant notes:
 
 - [four-system-baseline.md](./four-system-baseline.md) — extends: the opening position this reading tests
 - [AI Research OS Workshop review](../../agent-memory-systems/reviews/ai-research-os-workshop.md) — evidenced-by: pinned code-grounded authority for this reading
-- [weakly discriminated qualities tend to be underselected](../../notes/weakly-discriminated-qualities-tend-to-be-underselected.md) — tests: the read-time variant is a candidate scope extension of the conjecture
+- [weakly discriminated qualities tend to be underselected](../../theory/weakly-discriminated-qualities-tend-to-be-underselected.md) — tests: the read-time variant is a candidate scope extension of the conjecture

@@ -35,7 +35,7 @@ The likely unifying object is not artifact similarity or mathematical convergenc
 6. If the scheduler treats “another useful change exists” as “continue this episode,” the loop has no reason to yield while any addressable defect remains.
 7. Object-level work is displaced even when each accepted local change is defensible.
 
-This suggests a possible pathology of [compounding](../../notes/improvements-can-accumulate-without-compounding.md): when retained improvements to defect-finding help produce later improvements, they can raise the arrival rate of candidates faster than evaluation and repair discharge them. The pathway becomes locally more capable and operationally less terminating.
+This suggests a possible pathology of [compounding](../../theory/improvements-can-accumulate-without-compounding.md): when retained improvements to defect-finding help produce later improvements, they can raise the arrival rate of candidates faster than evaluation and repair discharge them. The pathway becomes locally more capable and operationally less terminating.
 
 ## Initial cases
 
@@ -70,11 +70,11 @@ This is a bounded operational response to the possibility that every repair reop
 
 ### Gödel machine
 
-The [Gödel-machine account](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes “switch now versus continue searching” part of the proof obligation. This treats continued improvement search as an alternative action with opportunity cost, not as free background computation. It is a formal limiting case rather than an implemented empirical instance, but it suggests that the halt/continue allocation is intrinsic to self-modification architecture.
+The [Gödel-machine account](../../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) makes “switch now versus continue searching” part of the proof obligation. This treats continued improvement search as an alternative action with opportunity cost, not as free background computation. It is a formal limiting case rather than an implemented empirical instance, but it suggests that the halt/continue allocation is intrinsic to self-modification architecture.
 
 ### Deferred traversal improvements
 
-[Traversal improvements should be deferred via logging](../../notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) handles a small recurring form of control capture: ordinary work continually exposes nearby KB improvements. Recording the signal and processing it in a separate pass preserves the opportunity without letting it recursively interrupt the current task.
+[Traversal improvements should be deferred via logging](../../theory/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) handles a small recurring form of control capture: ordinary work continually exposes nearby KB improvements. Recording the signal and processing it in a separate pass preserves the opportunity without letting it recursively interrupt the current task.
 
 The mechanism is weaker than reflective self-improvement—the traversing agent need not modify its own improvement machinery—but the pattern supplies a non-reflective or weakly reflective comparison for whether episode separation alone repairs the problem.
 

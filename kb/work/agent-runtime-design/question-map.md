@@ -155,13 +155,13 @@ The current corpus is useful because it is heterogeneous rather than standardize
 
 The theory base supplies candidate explanations rather than a ready schema:
 
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) gives the binding resource pressure.
-- [LLM frameworks should keep the tool loop optional](../../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) exposes the host-ownership boundary.
-- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) identifies independent orchestration choices.
-- [Agent orchestration needs coordination guarantees](../../notes/agent-orchestration-needs-coordination-guarantees-not-just.md) asks what prevents composed-agent failure modes.
-- [Runtime structure determines governance control surfaces](../../notes/runtime-structure-determines-governance-control-surfaces.md) connects architecture to intervention and audit.
-- [Diagnostic richness constrains outer-loop learning quality](../../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md) separates outcome selection from evidence for the next improvement.
-- [Scenario decomposition drives architecture](../../notes/scenario-decomposition-drives-architecture.md) supplies the requirement-derivation method used here.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) gives the binding resource pressure.
+- [LLM frameworks should keep the tool loop optional](../../theory/llm-frameworks-should-keep-the-tool-loop-optional.md) exposes the host-ownership boundary.
+- [Agent orchestration occupies a multi-dimensional design space](../../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) identifies independent orchestration choices.
+- [Agent orchestration needs coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md) asks what prevents composed-agent failure modes.
+- [Runtime structure determines governance control surfaces](../../theory/runtime-structure-determines-governance-control-surfaces.md) connects architecture to intervention and audit.
+- [Diagnostic richness constrains outer-loop learning quality](../../theory/diagnostic-richness-constrains-outer-loop-learning-quality.md) separates outcome selection from evidence for the next improvement.
+- [Scenario decomposition drives architecture](../../theory/scenario-decomposition-drives-architecture.md) supplies the requirement-derivation method used here.
 
 The source base also contains a direct forcing case for runtime durability:
 

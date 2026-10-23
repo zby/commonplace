@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is evidence for [evaluating memory by effects](../notes/agent-memory-requirements/evaluate-memory-by-effects.md): it measures following a stale value separately from accuracy loss against a paired no-memory baseline. The Benefit/Safety split makes the baseline's information access part of the claim. This is a concrete method for testing harmful uptake after evidence has already reached the consumer, not an evaluation of the whole memory pipeline.
+The paper is evidence for [evaluating memory by effects](../theory/agent-memory-requirements/evaluate-memory-by-effects.md): it measures following a stale value separately from accuracy loss against a paired no-memory baseline. The Benefit/Safety split makes the baseline's information access part of the claim. This is a concrete method for testing harmful uptake after evidence has already reached the consumer, not an evaluation of the whole memory pipeline.
 
-It also supplies a failure case for [calibrated trust in remembered knowledge](../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). Models can parse dates correctly while using misleading recency to choose the wrong action. Provenance and timestamps therefore need behavioral testing with the intended consumer. Its connection to [operative supersession](../notes/agent-memory-requirements/retire-redact-supersede-relax.md) is narrower: oracle removal outperforms merely exposing conflicting items and metadata, but establishes the value of correctly resolved input, not the reliability of a supersession process.
+It also supplies a failure case for [calibrated trust in remembered knowledge](../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). Models can parse dates correctly while using misleading recency to choose the wrong action. Provenance and timestamps therefore need behavioral testing with the intended consumer. Its connection to [operative supersession](../theory/agent-memory-requirements/retire-redact-supersede-relax.md) is narrower: oracle removal outperforms merely exposing conflicting items and metadata, but establishes the value of correctly resolved input, not the reliability of a supersession process.
 
 ## Extractable Value
 
@@ -47,4 +47,4 @@ External datasets and the RGB free-text arm broaden the evidence, but do not est
 
 ## Recommended Next Action
 
-Update [Evaluate Memory By Effects, Not By Existence](../notes/agent-memory-requirements/evaluate-memory-by-effects.md) with a stale-memory perturbation method that records both stale-value reliance and paired accuracy loss, explicitly holding current authoritative evidence available in the harm comparison.
+Update [Evaluate Memory By Effects, Not By Existence](../theory/agent-memory-requirements/evaluate-memory-by-effects.md) with a stale-memory perturbation method that records both stale-value reliance and paired accuracy loss, explicitly holding current authoritative evidence available in the harm comparison.

@@ -40,4 +40,4 @@ The strongest supported contribution is a wired evidence-to-proposal-to-code-to-
 The README reports accuracy and transfer gains. The bounded retained-run inspection does not reproduce those comparisons or link every released module to its evolutionary history. Candidate-linked gate records, exact module/provider/dataset identity and controlled held-out comparisons would strengthen those conclusions.
 
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: theory, criticism and attributable improvement.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: causally connected self-representation.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: causally connected self-representation.

@@ -65,7 +65,7 @@ The write workflow reads the target collection's `COLLECTION.md` first, then res
 Relevant Notes:
 
 - [ADR 042: Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) - superseded-by: retires register as current vocabulary while retaining the nearest-`COLLECTION.md` convention boundary
-- [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) - see-also: current classification account separating content kind, lineage, and behavioral authority from the local writing contract
+- [Artifact classification separates content kind, lineage, and authority](../../theory/artifact-classification-separates-content-kind-lineage-and-authority.md) - see-also: current classification account separating content kind, lineage, and behavioral authority from the local writing contract
 - [Collections and types](../collections-and-types.md) - describes how authoring and validation resolve structural type contracts after the collection convention boundary is selected
 - [ADR-012: types for structure, traits for review](./012-types-for-structure-traits-for-review.md) - foundation: keeps structural type identity separate from semantic review and placement conventions
 - [ADR-016: custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md) - preserved for specialized type packaging, but its `WRITING.md` loading assumption is superseded here

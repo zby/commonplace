@@ -148,10 +148,10 @@ The main divergence is the canonical substrate. Commonplace makes the reviewable
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Origin turns chat/session/work traces into atomic memories and sourced wiki pages.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Origin extracts future work context from prior sessions and imports.
-- [Preserve evidence without loading history](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: Origin distills traces into memories/pages while keeping source ids and session artifacts.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Origin couples storage with `/brief` and `context` activation paths.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: Origin's space, project, page, source id, and memory type filters need a signal before they can target context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Origin requires separating DB memories, graph records, pages, skills, session files, and review queues by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled memories, pages, graph observations, and session logs mostly advise as evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: plugin skills, MCP schemas, quality gates, page source rules, review queues, and read-back workflows configure future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Origin extracts future work context from prior sessions and imports.
+- [Preserve evidence without loading history](../../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: Origin distills traces into memories/pages while keeping source ids and session artifacts.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Origin couples storage with `/brief` and `context` activation paths.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: Origin's space, project, page, source id, and memory type filters need a signal before they can target context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Origin requires separating DB memories, graph records, pages, skills, session files, and review queues by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: recalled memories, pages, graph observations, and session logs mostly advise as evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: plugin skills, MCP schemas, quality gates, page source rules, review queues, and read-back workflows configure future behavior.

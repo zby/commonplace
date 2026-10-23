@@ -137,8 +137,8 @@ Other consumers are experiment scripts and humans reading logs, visualizations, 
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places ExpeL's task trajectories, extracted rules, and retrieved examples in the trace-learning landscape.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes ExpeL's stored logs from prompt-time rule and example read-back.
-- [Activate Behavior-Changing Memory Before The Mistake](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies pre-action insertion of behavior-shaping memory.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to ExpeL's logs, checkpoints, trajectories, rules, vector ranking state, and prompt templates.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes raw trajectories, logs, and retrieved examples as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes rules, prompt templates, configs, parsers, and retrieval policy as behavior-shaping artifacts.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes ExpeL's stored logs from prompt-time rule and example read-back.
+- [Activate Behavior-Changing Memory Before The Mistake](../../theory/agent-memory-requirements/activate-behavior-changing-memory.md) - exemplifies pre-action insertion of behavior-shaping memory.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to ExpeL's logs, checkpoints, trajectories, rules, vector ranking state, and prompt templates.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes raw trajectories, logs, and retrieved examples as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes rules, prompt templates, configs, parsers, and retrieval policy as behavior-shaping artifacts.

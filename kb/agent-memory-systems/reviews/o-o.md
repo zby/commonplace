@@ -96,8 +96,8 @@ This makes o-o a strong example of pointer-mediated context efficiency. It avoid
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: o-o stores rich document memory but relies on explicit file reads rather than automatic memory injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the `.o-o.html` file bundles knowledge, instruction, routing, validation, UI, and shell authorities in one substrate.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: article content, source caches, citations, and changelogs primarily serve as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: the update contract, shell router, freshness checks, sync markers, and dispatch prompt shape later agent behavior.
-- [A functioning KB needs a workshop layer not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares-with: o-o is closest to a self-updating workshop artifact whose value is consumed and refreshed over time.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: o-o stores rich document memory but relies on explicit file reads rather than automatic memory injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the `.o-o.html` file bundles knowledge, instruction, routing, validation, UI, and shell authorities in one substrate.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: article content, source caches, citations, and changelogs primarily serve as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: the update contract, shell router, freshness checks, sync markers, and dispatch prompt shape later agent behavior.
+- [A functioning KB needs a workshop layer not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares-with: o-o is closest to a self-updating workshop artifact whose value is consumed and refreshed over time.

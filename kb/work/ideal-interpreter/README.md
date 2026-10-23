@@ -22,9 +22,9 @@ separated on 2026-09-17 with the operator's direction that it is too
 experimental for anything existing to depend on it. No library
 definition, instruction, or reference artifact rests on this device, and
 none may until this workshop closes with an adopted definition. The
-[theory builder](../../notes/definitions/theory-builder.md) records a
+[theory builder](../../theory/definitions/theory-builder.md) records a
 failure without attributing it; the
-[fence note](../../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+[fence note](../../theory/a-claim-without-external-assessment-carries-three-obligations.md)
 says attribution needs its own evidence and names no standard.
 
 ## What closes the workshop

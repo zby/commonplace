@@ -152,10 +152,10 @@ For the requested lens, the implementation does provide project-scoped active-wo
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Workstream Kit matters because active state is read back at session start, not merely stored in files.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: state files, skills, hooks, agents, tests, and git tags carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: workstream purpose, decisions, learnings, handoffs, and archive entries mostly serve as retained context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: installed Claude instructions, skills, hook settings, verifier role, and lifecycle rules define behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: the kit turns session/tool outcomes into durable active-work state and extracts learnings at closure.
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - exemplifies: the kit implements a small workshop layer with active state, closure, archive, and extraction.
-- [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) - exemplifies: the kit stores work history in files while pushing only a compact active pointer at session start.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Workstream Kit matters because active state is read back at session start, not merely stored in files.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: state files, skills, hooks, agents, tests, and git tags carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: workstream purpose, decisions, learnings, handoffs, and archive entries mostly serve as retained context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: installed Claude instructions, skills, hook settings, verifier role, and lifecycle rules define behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: the kit turns session/tool outcomes into durable active-work state and extracts learnings at closure.
+- [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - exemplifies: the kit implements a small workshop layer with active state, closure, archive, and extraction.
+- [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md) - exemplifies: the kit stores work history in files while pushing only a compact active pointer at session start.

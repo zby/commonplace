@@ -91,7 +91,7 @@ affected relation next, which is the correction job, or to whole-artifact
 validation at publication.
 
 The split between what is pinned and what is read live follows
-[criteria edits invalidate verdicts; process edits invalidate artifacts](../../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
+[criteria edits invalidate verdicts; process edits invalidate artifacts](../../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
 Type contracts and validator code are criteria: they stay live, and a change
 to them changes the verdict and reopens the job, as it does now. Sibling
 members are context: they are pinned, because a later sibling is not a change
@@ -236,7 +236,7 @@ unresolved.
 
 Relevant Notes:
 
-- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rests-on: the split between live criteria and pinned context
+- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — rests-on: the split between live criteria and pinned context
 - [Build Systems à la Carte: theory and practice](../../../sources/build-systems-a-la-carte-theory-and-practice.ingest.md) — evidenced-by: classification of the engine, untracked dependencies and their three responses, the non-determinism boundary
 - [Dagster asset versioning and caching](../../../sources/dagster-asset-versioning-and-caching.ingest.md) — evidenced-by: the consumed-version record and one-hop staleness, and the verdict that this workflow is a departure from Dagster's main path
 - [Apache Airflow best practices](../../../sources/apache-airflow-best-practices.ingest.md) — evidenced-by: the rule against reading latest data between reruns

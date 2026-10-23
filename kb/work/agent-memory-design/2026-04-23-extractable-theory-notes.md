@@ -1,6 +1,6 @@
 # Extractable theory notes from agent memory design
 
-Target: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+Target: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 Purpose: identify claims embedded in the synthesis note that could become standalone theoretical notes in `kb/notes/`, using the notes collection's quality bar: claim title, reach beyond the design study, composability as an imported premise, clear boundary conditions, and no dependence on the whole four-layer architecture.
 
@@ -16,7 +16,7 @@ The architecture can remain a synthesis note. The extractable material is the se
 The stronger grounding found in [the grounding report](./2026-04-23-grounding-report.md) is that these candidates sit at the intersection of three theory clusters:
 
 - **Context engineering:** memory is useful only when a context engine selects, frames, and injects it into a bounded call. This grounds claims about capture posture, cue activation, progressive disclosure, and trace loading.
-- **Readable-artifact learning:** session traces become durable capacity through [distillation](../../notes/definitions/distillation.md), [constraining](../../notes/definitions/constraining.md), and [codification](../../notes/definitions/codification.md). This grounds claims about promotion, compiled cues, negative results, and procedure extraction.
+- **Readable-artifact learning:** session traces become durable capacity through [distillation](../../notes/definitions/distillation.md), [constraining](../../theory/definitions/constraining.md), and [codification](../../theory/definitions/codification.md). This grounds claims about promotion, compiled cues, negative results, and procedure extraction.
 - **Oracle theory:** extraction and promotion differ by signal strength. Corrections have strong interactive oracles; discoveries and broad syntheses have weak or delayed oracles. This grounds claims about build order, behavioral faithfulness, and promotion authority.
 
 This suggests a useful filter: extract theory notes when the claim names a reusable mechanism in one of those clusters. Keep material inside the synthesis note when it only justifies the proposed four-layer architecture.
@@ -35,7 +35,7 @@ Retaining raw traces broadly preserves optionality for later redistillation, but
 
 Stronger grounding:
 
-This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
+This should be grounded first in context engineering, not storage economics. [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why storage and context have different cost models: the hard problem is bounded context assembly, not persistence. [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) locates broad trace retention on the execution substrate, while extraction/loading belong to the context engine and learning loop. [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) gives the most direct frame: "memory" decomposes into storage, activation, and learning.
 
 Why it deserves a separate note:
 
@@ -51,20 +51,20 @@ The claim should not argue against broad trace retention. It should argue agains
 
 Existing overlaps:
 
-- [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) already separates storage from loading.
+- [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md) already separates storage from loading.
 - [Distillation is transformation, not selection](../../notes/distillation-is-transformation-not-selection.md) already supports retaining source material for future transformations.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) supplies the scarce-resource argument that makes selective loading the design problem.
-- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) supplies the storage/retrieval/learning decomposition.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) supplies the scarce-resource argument that makes selective loading the design problem.
+- [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) supplies the storage/retrieval/learning decomposition.
 - This proposed note would add the missing distinction between **capture policy** and **memory design objective**.
 
 Suggested links:
 
-- `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-- `grounds`: [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md)
-- `grounds`: [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md)
+- `grounds`: [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
+- `grounds`: [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md)
+- `grounds`: [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md)
 - `grounds`: [Distillation is transformation, not selection](../../notes/distillation-is-transformation-not-selection.md)
-- `contrasts`: [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md)
+- `contrasts`: [The chat-history model trades context efficiency for implementation simplicity](../../theory/the-chat-history-model-trades-context-efficiency-for-implementation.md)
 
 ### System-definition cues need behavioral faithfulness tests
 
@@ -78,7 +78,7 @@ A memory cue that fires and enters context has not closed the activation gap unl
 
 Stronger grounding:
 
-The cue is a system-definition artifact, so this belongs in the behavior-change half of continual learning. [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) grounds why a retrieved fact and a fired policy cue have different success criteria. [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) explains why prompt snippets, rules, tests, and tools are the practical substrate for this kind of behavior change. [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) explains why the evaluation should move from "cue was present" to an oracle that discriminates changed behavior from unchanged behavior.
+The cue is a system-definition artifact, so this belongs in the behavior-change half of continual learning. [Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md) grounds why a retrieved fact and a fired policy cue have different success criteria. [The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) explains why prompt snippets, rules, tests, and tools are the practical substrate for this kind of behavior change. [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) explains why the evaluation should move from "cue was present" to an oracle that discriminates changed behavior from unchanged behavior.
 
 Why it deserves a separate note:
 
@@ -94,22 +94,22 @@ This is strongest for high-priority or always-loaded behavior-changing cues. Low
 
 Existing overlaps:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) names the activation gap.
-- [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) grounds the behavior-change criterion.
-- [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) grounds readable cues as a practical learning substrate.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) grounds why cue evaluation needs a stronger behavioral oracle.
-- [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md) gives a method for testing framing.
-- [Unit testing LLM instructions requires mocking the tool boundary](../../notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) gives a testing route for instructions.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) names the activation gap.
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md) grounds the behavior-change criterion.
+- [The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) grounds readable cues as a practical learning substrate.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) grounds why cue evaluation needs a stronger behavioral oracle.
+- [Prompt ablation converts human insight into deployable agent framing](../../theory/prompt-ablation-converts-human-insight-to-deployable-framing.md) gives a method for testing framing.
+- [Unit testing LLM instructions requires mocking the tool boundary](../../theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) gives a testing route for instructions.
 - The proposed note would connect those into a memory-specific criterion: fired cues must be behaviorally faithful.
 
 Suggested links:
 
-- `extends`: [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)
-- `grounds`: [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
-- `grounds`: [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)
-- `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
-- `mechanism`: [Prompt ablation converts human insight into deployable agent framing](../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md)
-- `mechanism`: [Unit testing LLM instructions requires mocking the tool boundary](../../notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md)
+- `extends`: [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md)
+- `grounds`: [Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md)
+- `grounds`: [The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md)
+- `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
+- `mechanism`: [Prompt ablation converts human insight into deployable agent framing](../../theory/prompt-ablation-converts-human-insight-to-deployable-framing.md)
+- `mechanism`: [Unit testing LLM instructions requires mocking the tool boundary](../../theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md)
 - `evidence`: [Large Language Model Agents are not Always Faithful Self-Evolvers](../../sources/large-language-model-agents-are-not-always-faithful-self.ingest.md)
 
 ### Library-derived cues should be compiled views
@@ -124,7 +124,7 @@ When a cue index entry is generated from a library artifact, the library artifac
 
 Stronger grounding:
 
-The important addition from the grounding pass is role: a library-derived cue is not just a derived summary, it is a derived **system-definition** surface. That makes drift more dangerous than ordinary documentation drift because the cue can change behavior even when the explanatory source has changed. [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) grounds this role distinction; [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) explains why those artifacts exist; [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) shows the broader family of behavior-shaping context surfaces that can drift from their sources.
+The important addition from the grounding pass is role: a library-derived cue is not just a derived summary, it is a derived **system-definition** surface. That makes drift more dangerous than ordinary documentation drift because the cue can change behavior even when the explanatory source has changed. [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) grounds this role distinction; [System-definition artifacts are crystallized reasoning under context scarcity](../../theory/system-definition-artifacts-are-crystallized-reasoning-under-context.md) explains why those artifacts exist; [Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md) shows the broader family of behavior-shaping context surfaces that can drift from their sources.
 
 Why it deserves a separate note:
 
@@ -141,17 +141,17 @@ Directly authored candidate cues are different. The compiled-view rule applies o
 Existing overlaps:
 
 - [Distilled artifacts need source tracking at the source](../../notes/distilled-artifacts-need-source-tracking-at-the-source.md) covers source tracking for distilled artifacts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) grounds why the risk is specifically role drift: the derived cue is consumed as policy.
-- [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) supplies the broader surface taxonomy for behavior-shaping context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) grounds why the risk is specifically role drift: the derived cue is consumed as policy.
+- [Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md) supplies the broader surface taxonomy for behavior-shaping context.
 - [Archie](../../agent-memory-systems/reviews/archie.md) provides a concrete "canonical guide -> derived fast path" pattern.
 - This proposed note would specialize the idea for behavior-changing compiled policy surfaces.
 
 Suggested links:
 
 - `extends`: [Distilled artifacts need source tracking at the source](../../notes/distilled-artifacts-need-source-tracking-at-the-source.md)
-- `grounds`: [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md)
-- `grounds`: [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md)
-- `grounds`: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
+- `grounds`: [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md)
+- `grounds`: [System-definition artifacts are crystallized reasoning under context scarcity](../../theory/system-definition-artifacts-are-crystallized-reasoning-under-context.md)
+- `grounds`: [Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md)
 - `evidence`: [Archie](../../agent-memory-systems/reviews/archie.md)
 
 ### Episodes are retrospective memory; workshops are active memory
@@ -182,19 +182,19 @@ The note should not propose adding a fifth memory layer by default. It should cl
 
 Existing overlaps:
 
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) is the main premise.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the execution-substrate distinction between active work state and retrieved memory.
-- [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) helps distinguish execution trace from compressed handoff.
-- [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) helps distinguish stored trace, handoff artifact, and next-call context.
+- [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) is the main premise.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the execution-substrate distinction between active work state and retrieved memory.
+- [Conversation vs prompt refinement in agent-to-agent coordination](../../theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) helps distinguish execution trace from compressed handoff.
+- [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md) helps distinguish stored trace, handoff artifact, and next-call context.
 - This proposed note would bridge workshop theory to agent memory architecture.
 
 Suggested links:
 
-- `extends`: [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md)
-- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md)
-- `grounds`: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-- `contrasts`: [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md)
-- `grounds`: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+- `extends`: [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md)
+- `grounds`: [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md)
+- `grounds`: [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
+- `contrasts`: [Conversation vs prompt refinement in agent-to-agent coordination](../../theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md)
+- `grounds`: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 ### Negative results are memory artifacts because final artifacts hide discarded paths
 
@@ -225,18 +225,18 @@ Not every failed attempt deserves promotion. The note needs a promotion standard
 Existing overlaps:
 
 - Decision-record practices sometimes include "alternatives considered," but many durable artifacts do not.
-- [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md) gives the broader anti-ephemerality premise.
-- [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md) supplies the promotion difficulty.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) grounds the split between knowledge record and system-definition companion cue.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) grounds why failed attempts need a promotion standard rather than automatic graduation.
+- [Ephemeral computation prevents accumulation](../../theory/ephemeral-computation-prevents-accumulation.md) gives the broader anti-ephemerality premise.
+- [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md) supplies the promotion difficulty.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) grounds the split between knowledge record and system-definition companion cue.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) grounds why failed attempts need a promotion standard rather than automatic graduation.
 
 Suggested links:
 
-- `grounds`: [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md)
-- `extends`: [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md)
-- `grounds`: [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md)
-- `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
-- `see-also`: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+- `grounds`: [Ephemeral computation prevents accumulation](../../theory/ephemeral-computation-prevents-accumulation.md)
+- `extends`: [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md)
+- `grounds`: [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md)
+- `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
+- `see-also`: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 ## Good candidates that may be revisions instead of new notes
 
@@ -256,7 +256,7 @@ This is currently the strongest internal argument for the four-layer architectur
 
 Added grounding:
 
-The stronger extraction may be broader than this title: **memory layers are progressive distillation interfaces**. [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) grounds the general mechanism: descriptions, observation summaries, episode goals, and full artifacts are different-resolution pointers used to decide what to load. [Distillation](../../notes/definitions/distillation.md) grounds the transformation between resolutions. This makes the note less about "atomic versus narrative" and more about matching artifact shape to consumer task and context budget.
+The stronger extraction may be broader than this title: **memory layers are progressive distillation interfaces**. [Pointer design tradeoffs in progressive disclosure](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md) grounds the general mechanism: descriptions, observation summaries, episode goals, and full artifacts are different-resolution pointers used to decide what to load. [Distillation](../../notes/definitions/distillation.md) grounds the transformation between resolutions. This makes the note less about "atomic versus narrative" and more about matching artifact shape to consumer task and context budget.
 
 Quality risk:
 
@@ -264,10 +264,10 @@ The claim is solid but may be too close to architecture justification unless gen
 
 Suggested links:
 
-- `grounds`: [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md)
+- `grounds`: [Pointer design tradeoffs in progressive disclosure](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md)
 - `grounds`: [Distillation](../../notes/definitions/distillation.md)
-- `grounds`: [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
-- `contrasts`: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+- `grounds`: [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
+- `contrasts`: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 ### Typed cue indexes are on-situation context injection
 
@@ -285,7 +285,7 @@ The exact "typed cue index" mechanism may be too implementation-shaped for a the
 
 Added grounding:
 
-[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) already proposes "on reference" injection. [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) distinguishes always-loaded, on-demand, and capability-description surfaces. This proposed note would add a missing row to the loading hierarchy: always, on reference, on situation, on invoke, on demand.
+[Agent statelessness means the context engine should inject context automatically](../../theory/agent-statelessness-means-the-context-engine-should-inject-context.md) already proposes "on reference" injection. [Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md) distinguishes always-loaded, on-demand, and capability-description surfaces. This proposed note would add a missing row to the loading hierarchy: always, on reference, on situation, on invoke, on demand.
 
 Quality risk:
 
@@ -293,9 +293,9 @@ The note should not overclaim that typed cues solve activation. It should stay a
 
 Suggested links:
 
-- `extends`: [Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md)
-- `grounds`: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
-- `grounds`: [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md)
+- `extends`: [Agent statelessness means the context engine should inject context automatically](../../theory/agent-statelessness-means-the-context-engine-should-inject-context.md)
+- `grounds`: [Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md)
+- `grounds`: [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md)
 - `pairs-with`: `System-definition cues need behavioral faithfulness tests`
 
 ### Extraction taxonomy should follow oracle strength
@@ -314,7 +314,7 @@ This may be a revision to the source note's extraction taxonomy rather than a st
 
 Added grounding:
 
-[Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) provides the primary vocabulary. [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) supplies evidence that trace-mining systems converge on similar stages but stall at evaluation, trust, persistence, and retirement. [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) explains why learned extraction/promotion policies only close cleanly when the task supplies a strong oracle.
+[Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) provides the primary vocabulary. [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) supplies evidence that trace-mining systems converge on similar stages but stall at evaluation, trust, persistence, and retirement. [Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) explains why learned extraction/promotion policies only close cleanly when the task supplies a strong oracle.
 
 Quality risk:
 
@@ -322,10 +322,10 @@ The note could become a catalogue. It needs a sharp claim: extraction schemas an
 
 Suggested links:
 
-- `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
+- `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
 - `evidence`: [Trace-learning techniques in related systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md)
-- `grounds`: [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md)
-- `extends`: [Automating KB learning is an open problem](../../notes/automating-kb-learning-is-an-open-problem.md)
+- `grounds`: [Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md)
+- `extends`: [Automating KB learning is an open problem](../../theory/automating-kb-learning-is-an-open-problem.md)
 
 ### Graduation should wait until retrieval cost exceeds maintenance cost
 
@@ -341,15 +341,15 @@ Reason to hesitate:
 
 This is valuable, but it may overlap with existing maintenance and entropy notes:
 
-- [Maintenance capacity must match harmful-artifact inflow](../../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md)
-- [Notes need quality scores to scale curation](../../notes/notes-need-quality-scores-to-scale-curation.md)
-- [Ephemeral computation prevents accumulation](../../notes/ephemeral-computation-prevents-accumulation.md)
+- [Maintenance capacity must match harmful-artifact inflow](../../theory/maintenance-capacity-must-match-harmful-artifact-inflow.md)
+- [Notes need quality scores to scale curation](../../theory/notes-need-quality-scores-to-scale-curation.md)
+- [Ephemeral computation prevents accumulation](../../theory/ephemeral-computation-prevents-accumulation.md)
 
 It may be better as a revision to one of those notes or as a short companion only if the "retrieval cost versus maintenance cost" formulation becomes reusable.
 
 Added grounding:
 
-The grounding pass adds a role-sensitive version of the claim. Knowledge-role graduation creates curation and retrieval obligations; system-definition graduation also creates behavior-change risk. That means the threshold should be higher for always-loaded instructions, guardrails, compiled cues, and tests than for ordinary knowledge records. [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), [Methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md), and [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) are the useful grounding links if this becomes standalone.
+The grounding pass adds a role-sensitive version of the claim. Knowledge-role graduation creates curation and retrieval obligations; system-definition graduation also creates behavior-change risk. That means the threshold should be higher for always-loaded instructions, guardrails, compiled cues, and tests than for ordinary knowledge records. [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md), [Methodology enforcement is constraining](../../theory/methodology-enforcement-is-constraining.md), and [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) are the useful grounding links if this becomes standalone.
 
 ### Reach reveals itself through accumulation
 
@@ -371,7 +371,7 @@ Do not extract first. Fold it into the store-everything/capture-posture note as 
 
 Added grounding:
 
-This is where [first-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) should enter if the claim is extracted later. The memory-design version is: low-reach observations are often only distinguishable from high-reach patterns after accumulation. [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md) can provide possible weak signals for when reach has become visible through links, recurrence, and neighborhood coherence.
+This is where [first-principles reasoning selects for explanatory reach over adaptive fit](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) should enter if the claim is extracted later. The memory-design version is: low-reach observations are often only distinguishable from high-reach patterns after accumulation. [Quality signals for KB evaluation](../../theory/quality-signals-for-kb-evaluation.md) can provide possible weak signals for when reach has become visible through links, recurrence, and neighborhood coherence.
 
 ### Silent failures should be extracted before final success normalizes them
 
@@ -387,22 +387,22 @@ Reason to hesitate:
 
 There are already strong observability notes:
 
-- [Final task success does not establish intended-path health](../../notes/final-task-success-does-not-establish-intended-path-health.md)
-- [Silent disambiguation is the semantic analogue of tool fallback](../../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md)
-- [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)
+- [Final task success does not establish intended-path health](../../theory/final-task-success-does-not-establish-intended-path-health.md)
+- [Silent disambiguation is the semantic analogue of tool fallback](../../theory/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md)
+- [Enforcement without structured recovery is incomplete](../../theory/enforcement-without-structured-recovery-is-incomplete.md)
 
 This may be better as a revision to the first note or a prescriptive extraction rule in instructions, unless we want a memory-specific note about "silent-failure extraction."
 
 Added grounding:
 
-The oracle-strength grounding makes this a stronger candidate than before. Silent failures have visible operational signals, errors, retries, fallback paths, degraded guarantees, but their significance still requires judgment. That puts them between hard-oracle corrections and weak-oracle discoveries. [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md) also explains the graduation path: repeated silent failures can become checks, recovery rules, or deterministic guards.
+The oracle-strength grounding makes this a stronger candidate than before. Silent failures have visible operational signals, errors, retries, fallback paths, degraded guarantees, but their significance still requires judgment. That puts them between hard-oracle corrections and weak-oracle discoveries. [Spec mining is codification's operational mechanism](../../theory/spec-mining-as-codification.md) also explains the graduation path: repeated silent failures can become checks, recovery rules, or deterministic guards.
 
 Suggested links if extracted:
 
-- `grounds`: [Final task success does not establish intended-path health](../../notes/final-task-success-does-not-establish-intended-path-health.md)
-- `grounds`: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md)
-- `mechanism`: [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md)
-- `extends`: [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md)
+- `grounds`: [Final task success does not establish intended-path health](../../theory/final-task-success-does-not-establish-intended-path-health.md)
+- `grounds`: [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md)
+- `mechanism`: [Spec mining is codification's operational mechanism](../../theory/spec-mining-as-codification.md)
+- `extends`: [Enforcement without structured recovery is incomplete](../../theory/enforcement-without-structured-recovery-is-incomplete.md)
 
 ## Lower-priority or keep-inside candidates
 
@@ -412,17 +412,17 @@ The source note's "session logs as composite oracle" section is useful, but ther
 
 Grounding to reuse:
 
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) gives the main vocabulary.
-- [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md) is the KB analogue of manufacturing a composite soft oracle from weak signals.
-- [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) is the contrast case: when a hard task-completion oracle exists, the loop can be learned directly; session-log learning in open-ended settings lacks that advantage.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) gives the main vocabulary.
+- [Quality signals for KB evaluation](../../theory/quality-signals-for-kb-evaluation.md) is the KB analogue of manufacturing a composite soft oracle from weak signals.
+- [Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) is the contrast case: when a hard task-completion oracle exists, the loop can be learned directly; session-log learning in open-ended settings lacks that advantage.
 
 ### Retrieval splits by role, not content
 
-This is a strong design move, but it may already be covered by [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md), and the source note itself. Extract only if future work repeatedly needs the exact retrieval/activation consequence of the role axis.
+This is a strong design move, but it may already be covered by [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md), [Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md), and the source note itself. Extract only if future work repeatedly needs the exact retrieval/activation consequence of the role axis.
 
 Grounding to reuse:
 
-This should cite [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) if extracted. The retrieval split is one instance of the larger decomposition: knowledge-role access is context-engine retrieval and navigation; system-definition access is activation and behavior change.
+This should cite [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) if extracted. The retrieval split is one instance of the larger decomposition: knowledge-role access is context-engine retrieval and navigation; system-definition access is activation and behavior change.
 
 ### Typed cue indexes bridge the activation gap
 

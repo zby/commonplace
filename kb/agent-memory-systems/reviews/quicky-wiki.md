@@ -111,10 +111,10 @@ Quicky Wiki is not trace-learning under the survey rule. Its durable artifacts d
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Quicky Wiki stores and searches memory, but its agent-facing effect is explicit pull through query/search/MCP/dashboard surfaces.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw sources, SQLite graph rows, events, FTS, generated files, config, dashboard, and MCP tools carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: sources, claims, generated pages, health reports, critiques, and query answers mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: config, quality weights, extraction prompts, FTS ranking, confidence formulas, decay, cascade propagation, and tool schemas shape future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Quicky Wiki's central agent-facing mechanism is selecting bounded claim context for explicit queries.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - compares: ordinary questions use bounded FTS retrieval, while consensus mode loads the whole graph.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts: Quicky Wiki uses extraction, but from documents and saved answers rather than operational traces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Quicky Wiki stores and searches memory, but its agent-facing effect is explicit pull through query/search/MCP/dashboard surfaces.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw sources, SQLite graph rows, events, FTS, generated files, config, dashboard, and MCP tools carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: sources, claims, generated pages, health reports, critiques, and query answers mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: config, quality weights, extraction prompts, FTS ranking, confidence formulas, decay, cascade propagation, and tool schemas shape future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Quicky Wiki's central agent-facing mechanism is selecting bounded claim context for explicit queries.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - compares: ordinary questions use bounded FTS retrieval, while consensus mode loads the whole graph.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts: Quicky Wiki uses extraction, but from documents and saved answers rather than operational traces.

@@ -44,7 +44,7 @@ This causal test establishes membership. It does not yet establish that `U` is a
 
 ### Verdict
 
-The direct path needs no evaluator component, adoption veto, or candidate object. Its missing profile field was the **update law**: mapping, stochasticity, constraints, scope, and assumptions. The [proposal-selection loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) remains the right vocabulary only when a verdict can block, discard, roll back, or deny continued retention by an operation distinct from producing the next update.
+The direct path needs no evaluator component, adoption veto, or candidate object. Its missing profile field was the **update law**: mapping, stochasticity, constraints, scope, and assumptions. The [proposal-selection loop](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) remains the right vocabulary only when a verdict can block, discard, roll back, or deny continued retention by an operation distinct from producing the next update.
 
 The important moving boundary is horizon. Online gradient descent and the Homeostat can have process- or trajectory-level warrant without a claim that each step improves the objective. Continual Harness can have standing permission to edit and direct installation while lacking broad evidence that the rule improves every target class. A revision profile must therefore attach warrant and exposure authorization to their own change class and horizon.
 

@@ -125,9 +125,9 @@ AriGraph is also a useful reminder that graph memory can have real routing autho
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: AriGraph's graph matters because the pipeline reads it back into prompts, not merely because it stores facts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating in-memory graph state, natural-language observations, embeddings, prompts, and evaluation logs.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AriGraph's observation-to-graph loop as trace-learning.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies retrieved graph facts and episodic observations as advisory evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes authored prompts and pathfinding/routing code from ordinary graph facts.
-- [Lineage](../../notes/definitions/lineage.md) - highlights the review risk around extracted facts that lack source-span provenance or invalidation history.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: AriGraph's graph matters because the pipeline reads it back into prompts, not merely because it stores facts.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating in-memory graph state, natural-language observations, embeddings, prompts, and evaluation logs.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AriGraph's observation-to-graph loop as trace-learning.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies retrieved graph facts and episodic observations as advisory evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes authored prompts and pathfinding/routing code from ordinary graph facts.
+- [Lineage](../../theory/definitions/lineage.md) - highlights the review risk around extracted facts that lack source-span provenance or invalidation history.

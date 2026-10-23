@@ -35,7 +35,7 @@ The 2024 Version 4.0 lexicon defines project-management vocabulary across predic
 
 ## Connections Found
 
-The lexicon is a terminology anchor for the information-timing rule in [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md): plan detail increases as better information becomes available, with near-term work specified more closely than future work. It also provides scoped evidence for the planning consequence in [Preferential codification concentrates less predictable work at the agent boundary](../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md), but not for that note's negative-selection claim. Compared with [Manage Innovation Programs With a Rolling Wave](githens-manage-innovation-programs-rolling-wave.ingest.md), PMI supplies the minimal term and its relation to progressive elaboration; Githens adds a larger prescriptive package of relearning points, gates, baselines, and approvals.
+The lexicon is a terminology anchor for the information-timing rule in [An author should fix what the executor can't determine, not what it will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md): plan detail increases as better information becomes available, with near-term work specified more closely than future work. It also provides scoped evidence for the planning consequence in [Preferential codification concentrates less predictable work at the agent boundary](../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md), but not for that note's negative-selection claim. Compared with [Manage Innovation Programs With a Rolling Wave](githens-manage-innovation-programs-rolling-wave.ingest.md), PMI supplies the minimal term and its relation to progressive elaboration; Githens adds a larger prescriptive package of relearning points, gates, baselines, and approvals.
 
 ## Extractable Value
 
@@ -50,10 +50,10 @@ This lexicon standardizes PMI's vocabulary; it does not argue for the definition
 
 ## Recommended Next Action
 
-Update [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) to cite this ingest for its project-planning example and state the bounded distinction between progressive elaboration and rolling wave planning.
+Update [An author should fix what the executor can't determine, not what it will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) to cite this ingest for its project-planning example and state the bounded distinction between progressive elaboration and rolling wave planning.
 
 ---
 
 Relevant Notes:
 
-- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../notes/productive-deferral-requires-option-evidence-and-convergence.md) — abstracted-from: progressive elaboration and rolling-wave planning supply the intentionally coarse future-detail case
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../theory/productive-deferral-requires-option-evidence-and-convergence.md) — abstracted-from: progressive elaboration and rolling-wave planning supply the intentionally coarse future-detail case

@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source supplies a bounded product example for [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md): its agent checklist describes the intended action, while the documented runtime boundary rejects an invalid finalization before downstream hooks run. This instantiates both a fixed activation point and an encoded acceptance condition. It also illustrates the attachment-point claim in [Verification needs a typed target before it needs an oracle](../notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md): `metadata.campaign_role = "submission"` identifies the artifacts subject to campaign checks, while ordinary drafts remain outside that class. Neither connection establishes substantive scoring quality.
+The source supplies a bounded product example for [Methodology enforcement is constraining](../theory/methodology-enforcement-is-constraining.md): its agent checklist describes the intended action, while the documented runtime boundary rejects an invalid finalization before downstream hooks run. This instantiates both a fixed activation point and an encoded acceptance condition. It also illustrates the attachment-point claim in [Verification needs a typed target before it needs an oracle](../theory/verification-needs-a-typed-target-before-it-needs-an-oracle.md): `metadata.campaign_role = "submission"` identifies the artifacts subject to campaign checks, while ordinary drafts remain outside that class. Neither connection establishes substantive scoring quality.
 
 The lifecycle account is an adjacent operational example for [ADR 043's separation of completion, outcomes, and freshness](../reference/adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md). Both distinguish progress through a protocol from a substantive judgment. Flywheel's particular states do not map one-to-one to Commonplace's review model, and the page supplies no counterpart to freshness baselines.
 
@@ -47,4 +47,4 @@ The public visibility requirement, including the default when policy is absent, 
 
 ## Recommended Next Action
 
-Add a short, explicitly documentation-based example to [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md), using the submission marker, finalization boundary, and visibility rejection to illustrate the separate activation and response rules.
+Add a short, explicitly documentation-based example to [Methodology enforcement is constraining](../theory/methodology-enforcement-is-constraining.md), using the submission marker, finalization boundary, and visibility rejection to illustrate the separate activation and response rules.

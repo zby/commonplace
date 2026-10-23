@@ -139,8 +139,8 @@ The largest design difference is the authority boundary. REM can put remembered 
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: REM derives parsed episodes and intended semantic facts from agent interaction traces.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: REM stores episodes in several substrates, but behavior changes only through retrieval and host injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: REM requires separating episodes, semantic facts, prompts, embeddings, graph links, SDK wrappers, and benchmarks by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: REM episodes, semantic facts, graph neighbors, and benchmark outputs mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: REM parsing prompts, consolidation prompts, route handlers, retrieval scoring, SDK integrations, and validation code constrain future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: REM turns task and conversation traces into retrievable episode records and intended semantic memories.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: REM stores episodes in several substrates, but behavior changes only through retrieval and host injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: REM requires separating episodes, semantic facts, prompts, embeddings, graph links, SDK wrappers, and benchmarks by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: REM episodes, semantic facts, graph neighbors, and benchmark outputs mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: REM parsing prompts, consolidation prompts, route handlers, retrieval scoring, SDK integrations, and validation code constrain future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: REM turns task and conversation traces into retrievable episode records and intended semantic memories.

@@ -142,9 +142,9 @@ Session working memory is both useful and risky. It frontloads session compressi
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes OpenViking's stored memories from its hook and middleware paths that actively insert memory into context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to OpenViking's split between files, sidecars, vectors, session archives, hooks, and policies.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies retrieved resources, memories, summaries, and profile facts when they act as evidence or advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies hooks, middleware, skills, templates, namespace policy, and generated session skills when they shape behavior with stronger force.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - connects to OpenViking's session archive and memory extraction pipeline.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - explains OpenViking's sidecar summaries, session working memory, and pre-action recall budgets.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes OpenViking's stored memories from its hook and middleware paths that actively insert memory into context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to OpenViking's split between files, sidecars, vectors, session archives, hooks, and policies.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies retrieved resources, memories, summaries, and profile facts when they act as evidence or advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies hooks, middleware, skills, templates, namespace policy, and generated session skills when they shape behavior with stronger force.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - connects to OpenViking's session archive and memory extraction pipeline.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - explains OpenViking's sidecar summaries, session working memory, and pre-action recall budgets.

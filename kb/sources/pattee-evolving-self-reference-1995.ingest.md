@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a structural analogue and boundary warning for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md) and [Representational form](../notes/definitions/representational-form.md). It is not a direct theory of Markdown, code, or LLM systems.
+The paper is a structural analogue and boundary warning for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md) and [Representational form](../theory/definitions/representational-form.md). It is not a direct theory of Markdown, code, or LLM systems.
 
 ## Inherited Vocabulary
 
@@ -67,4 +67,4 @@ This is a theoretical synthesis rather than a test of software or knowledge syst
 
 ## Recommended Next Action
 
-Use this ingest only as a limitation-bearing structural analogy in [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), retaining its explicit non-equivalence with natural-language/code relations.
+Use this ingest only as a limitation-bearing structural analogy in [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md), retaining its explicit non-equivalence with natural-language/code relations.

@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source is a concrete design example for [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md): rejection preserves earlier pending work, failure reports identify the offending operation, and an explicit discard operation handles an already-invalid saved batch. This supports distinguishing enforcement from a subsequent recovery choice. It does not establish automatic repair or the ability to reconstruct the intended graph.
+The source is a concrete design example for [Enforcement without structured recovery is incomplete](../theory/enforcement-without-structured-recovery-is-incomplete.md): rejection preserves earlier pending work, failure reports identify the offending operation, and an explicit discard operation handles an already-invalid saved batch. This supports distinguishing enforcement from a subsequent recovery choice. It does not establish automatic repair or the ability to reconstruct the intended graph.
 
-It also illustrates [Error messages that teach are a constraining technique](../notes/error-messages-that-teach-are-a-constraining-technique.md). Superseded commands fail without mutation and print their exact replacements. That is a specified remediation interface, with no measurement here of whether agents successfully follow it.
+It also illustrates [Error messages that teach are a constraining technique](../theory/error-messages-that-teach-are-a-constraining-technique.md). Superseded commands fail without mutation and print their exact replacements. That is a specified remediation interface, with no measurement here of whether agents successfully follow it.
 
 ## Extractable Value
 
@@ -44,8 +44,8 @@ The capture is explicitly partial: several passages introduce command examples t
 
 The strongest mechanisms concern transactional state management. They do not show that graph contents are correct, useful, or scientifically justified. In particular, a digest identifies pending state; it does not establish its semantic quality. Review is also not a reservation of the later commit.
 
-Discard permanently removes all pending work in the selected repository, makes no automatic backup, and preserves committed history. Calling it recovery must retain that cost and scope. As the [recovery note](../notes/enforcement-without-structured-recovery-is-incomplete.md) distinguishes, detecting a violation does not by itself supply the correct replacement: this source documents an abandonment route, not an oracle for repair. It offers no evidence comparing this design with alternative recovery interfaces or showing improved agent outcomes.
+Discard permanently removes all pending work in the selected repository, makes no automatic backup, and preserves committed history. Calling it recovery must retain that cost and scope. As the [recovery note](../theory/enforcement-without-structured-recovery-is-incomplete.md) distinguishes, detecting a violation does not by itself supply the correct replacement: this source documents an abandonment route, not an oracle for repair. It offers no evidence comparing this design with alternative recovery interfaces or showing improved agent outcomes.
 
 ## Recommended Next Action
 
-Review [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md) for a bounded example distinguishing preservation after rejection, explicit abandonment of invalid pending work, and repair of the intended result, using Flywheel's documented discard behavior.
+Review [Enforcement without structured recovery is incomplete](../theory/enforcement-without-structured-recovery-is-incomplete.md) for a bounded example distinguishing preservation after rejection, explicit abandonment of invalid pending work, and repair of the intended result, using Flywheel's documented discard behavior.

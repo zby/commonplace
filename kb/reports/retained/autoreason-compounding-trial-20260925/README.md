@@ -6,7 +6,7 @@ This dated report closes the workshop. Its consumer is a future operator review 
 
 ## Trial and measured result
 
-The input was [Compounding is tested in later improvement, not by the accepting metric](../../../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), preserved as [original.md](./captures/original.md). The user authorized one pass instead of the protocol's default allowance of up to five, with the live note untouched for review.
+The input was [Compounding is tested in later improvement, not by the accepting metric](../../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), preserved as [original.md](./captures/original.md). The user authorized one pass instead of the protocol's default allowance of up to five, with the live note untouched for review.
 
 Seven fresh agents filled the critic, revision author, synthesizer, auditor, and three blind-judge roles. The [frozen protocol](./captures/protocol.md) retains their role prompts and constraints; [run-state.json](./captures/run-state.json) records the task-specific overrides, input files, actor identities, timestamps, and hashes. Model provenance was Codex, GPT-6 family; the exact runtime model ID, token usage, and financial cost were not supplied.
 

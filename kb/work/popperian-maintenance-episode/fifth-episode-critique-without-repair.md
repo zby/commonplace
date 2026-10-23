@@ -21,7 +21,7 @@ Two cycles in one day, each with the same three moves:
 | Closing self-assessment | contribution *preserved* | contribution *strengthened* |
 | What actually fixed it | operator: "argue about the full article"; full snapshot read; four grounding runs → the bridge is a premise (machine execution = formulated criteria) | operator: "at the time, execution by machine meant formal interpretation"; the bridge was *accurate for its day*, and trained recognizers *separated* execution from formulated criteria rather than falling outside anything |
 
-Both repairs are of the kind the [cohort result](./genre-drift-cohort-result.md) found in 15 of 16 title changes: survival bought with a negation and a condition ("do not establish", "does not by itself") while the claim's kind is kept. Neither is analytic — the [narrowing note](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md)'s refuter test passes for both — so the existing guards did not fire, and should not have. The failure is elsewhere.
+Both repairs are of the kind the [cohort result](./genre-drift-cohort-result.md) found in 15 of 16 title changes: survival bought with a negation and a condition ("do not establish", "does not by itself") while the claim's kind is kept. Neither is analytic — the [narrowing note](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md)'s refuter test passes for both — so the existing guards did not fire, and should not have. The failure is elsewhere.
 
 ## Why the repair side fails
 

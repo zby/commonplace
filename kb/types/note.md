@@ -84,4 +84,4 @@ Relevant Notes:
 Relevant Notes:
 
 - [text](./text.md) - implicit no-frontmatter capture state that can be promoted to a note
-- [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) - design rationale for verifiable types
+- [document-types-should-be-verifiable](../theory/document-types-should-be-verifiable.md) - design rationale for verifiable types

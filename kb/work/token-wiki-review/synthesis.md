@@ -18,7 +18,7 @@ Per-chapter analyses live in `chapter-analyses.md`.
 ## 1. The central convergence: context is the binding constraint
 
 Token Wiki is the strongest independent empirical confirmation this KB has seen of
-[context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+[context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 Four production systems, built by different teams on different stacks, converge on:
 
 - Context is the scarce resource. Every optimization is motivated by preserving it.
@@ -40,7 +40,7 @@ sharpened.
 
 ### 2.1. The architectural response taxonomy already predicts most of it
 
-[context-efficiency-is-the-central-design-concern-in-agent-systems.md](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
+[context-efficiency-is-the-central-design-concern-in-agent-systems.md](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
 lists six architectural responses: frontloading, progressive disclosure, context management,
 sub-agent isolation, navigation design, and instruction notes over data dumps. Token-wiki's
 12 patterns map onto those six categories with one genuinely-missing bucket (observability):
@@ -61,7 +61,7 @@ but not named in the KB, and observability is genuinely absent.
 
 ### 2.2. Subagent isolation — the mechanically cleanest match
 
-The KB's [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md)
+The KB's [LLM context is composed without scoping](../../theory/llm-context-is-composed-without-scoping.md)
 argues sub-agents are the one real scoping mechanism: they provide lexically scoped frames,
 parent sees only return value, not internal reasoning. Token-wiki Chapter 8 describes the
 same pattern mechanically:
@@ -80,7 +80,7 @@ production systems independently land on the frame discipline.
 
 ### 2.3. Effective-window calculation mechanically instantiates the soft bound — but only the output-reservation piece
 
-The KB argues in [agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)
+The KB argues in [agent context is constrained by soft degradation, not hard token limits](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)
 that the binding constraint is a soft degradation surface, not the advertised token limit.
 Token-wiki Chapter 7 shows every production system computes an "effective window" < advertised:
 
@@ -104,7 +104,7 @@ first-order volume corrections.
 
 ### 2.4. Stable-first prompt ordering extends progressive disclosure
 
-The KB's [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md)
+The KB's [instruction specificity should match loading frequency](../../theory/instruction-specificity-should-match-loading-frequency.md)
 argues always-loaded content should be slim and on-demand content should be detailed. Token-wiki
 Chapter 3 (Prompt Caching) adds a second reason for the same ordering: **caching economics**.
 Cache hits are 10x cheaper than fresh input, and any prefix mutation invalidates everything
@@ -119,8 +119,8 @@ second, independent reason for the ordering.
 
 All four systems in token-wiki share one rule: **system instructions are never part of the
 summarizable content; they are always re-injected fresh from source** after compaction. This
-is implicit in [always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
-and [AGENTS.md should be organized as a control plane](../../notes/agents-md-should-be-organized-as-a-control-plane.md),
+is implicit in [always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md)
+and [AGENTS.md should be organized as a control plane](../../theory/agents-md-should-be-organized-as-a-control-plane.md),
 but not stated as a sharp invariant. Token-wiki states it explicitly as a design principle:
 "never summarize instructions, always re-inject from source to prevent instruction drift across
 compaction cycles."
@@ -170,7 +170,7 @@ cache.
 
 ### 3.2. Observability as a prerequisite, not a finishing step
 
-**The gap.** [Context engineering](../../notes/definitions/context-engineering.md) lists
+**The gap.** [Context engineering](../../theory/definitions/context-engineering.md) lists
 routing, loading, scoping, and maintenance as the operational components. Observability is
 missing. Token-wiki argues, with citations to production practice, that **observability is a
 prerequisite for the other four being tunable**: you can't optimize what you can't attribute.
@@ -185,7 +185,7 @@ Chapter 9 lists:
 - Ablation testing as a measurement primitive.
 
 **Candidate addition.** Observability could be a fifth operational component in the
-[context-engineering definition note](../../notes/definitions/context-engineering.md):
+[context-engineering definition note](../../theory/definitions/context-engineering.md):
 *"attribution — knowing where tokens went and why, as a prerequisite for the other four."*
 The strong empirical claim from token-wiki is "developers assume model output is the biggest
 cost; in agentic systems, tool *results* dominate (~45%). Without measurement, you optimize
@@ -194,7 +194,7 @@ the wrong thing."
 Duplicate read detection is a particularly interesting signal: it's an observability mechanism
 that directly measures the cost of the flat-context anti-pattern. Every duplicate read is a
 symptom of the model losing track of what it already read, which is what
-[session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
+[session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
 argues against at a higher level. The empirical waste numbers are citable evidence for that
 claim.
 
@@ -209,7 +209,7 @@ from the context window is a hidden input-context tax.** Claude Code's empirical
 - Reserving the advertised limit wastes ~123k of usable input context per request.
 - Solution: cap output reservation at 8k, retry with 64k on overflow.
 
-This is a concrete instance of [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md)
+This is a concrete instance of [frontloading spares execution context](../../theory/frontloading-spares-execution-context.md)
 inverted: committing less output budget *frees* input budget. The static knowledge (empirical
 response distribution: 99% of responses ≤ 5k) moves commitment cost out of the bounded call.
 
@@ -230,8 +230,8 @@ addition to the context-efficiency note rather than a new note.
 
 This is the most important tension and the one worth thinking through carefully.
 
-The KB's [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-and [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md)
+The KB's [session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
+and [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md)
 argue that the core problem in chat-loop agents is **the conflation of two decisions**: what
 to persist and what to load into the next call. Chat interfaces and framework-owned tool loops
 default to "load everything," which forces compaction as remediation. The KB argues the right
@@ -259,7 +259,7 @@ Two concrete observations follow:
    Subagent coordinator pattern. Each of these moves state *out* of the bounded call and into
    a symbolic store whose view into the call is explicit. The convergent architecture is
    already bending toward `K` + `select(K)`, even if the studied systems don't formalize it
-   that way. The [LLM-mediated schedulers are a degraded variant](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)
+   that way. The [LLM-mediated schedulers are a degraded variant](../../theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md)
    note is validated here: these systems are hybrid degraded variants improving themselves by
    recovering the clean model piece by piece.
 
@@ -285,7 +285,7 @@ points.
 Token-wiki's universal heuristic (`length / 4`) is a soft but interesting data point against
 attempting precise token measurement in the symbolic layer of a scheduler. All four systems
 deliberately avoid shipping a tokenizer; exact counts come from API responses after the fact.
-This validates the [bounded-context orchestration](../../notes/bounded-context-orchestration-model.md)
+This validates the [bounded-context orchestration](../../theory/bounded-context-orchestration-model.md)
 principle that the scheduler should do cheap, approximate, deterministic bookkeeping while
 reserving costly judgment for the bounded call. The tokenizer is judgment; the heuristic is
 bookkeeping.
@@ -302,9 +302,9 @@ human review.
    Chapter 3 directly and add a new constraint-type to the context-engineering vocabulary.
 
 2. **Observability is a prerequisite component of context engineering** (§3.2). Could live
-   as an extension to the [context-engineering definition](../../notes/definitions/context-engineering.md)
+   as an extension to the [context-engineering definition](../../theory/definitions/context-engineering.md)
    or as a standalone. The duplicate-read waste pattern is the best single piece of evidence
-   for [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
+   for [session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
    that the KB currently has access to.
 
 3. **Token-wiki as a related-system review** (`kb/agent-memory-systems/reviews/token-wiki.md`). Follows
@@ -315,7 +315,7 @@ human review.
 
 ### 5.2. Additions to existing notes
 
-1. **[context-efficiency-is-the-central-design-concern-in-agent-systems.md](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)**
+1. **[context-efficiency-is-the-central-design-concern-in-agent-systems.md](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)**
    - Add token-wiki to the practitioner-convergence section alongside Lopopolo, Raschka, etc.:
      "Four production LLM harnesses (Claude Code, Cline, Codex, OpenCode) independently converge
      on a 5-layer token-management architecture, empirical support for context-as-scarce-resource
@@ -323,40 +323,40 @@ human review.
    - Add defense-in-depth as the layering discipline across the existing architectural responses
      (§3.4).
 
-2. **[agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)**
+2. **[agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)**
    - Add practitioner "effective window" conventions as first-order volume corrections.
      Token-wiki's Chapter 7 is the citation. Note that practitioner deltas are from
      output-reservation and fixed overhead, while theoretical soft-degradation is
      task-dependent — these are complementary corrections at different layers.
 
-3. **[llm-context-is-composed-without-scoping.md](../../notes/llm-context-is-composed-without-scoping.md)**
+3. **[llm-context-is-composed-without-scoping.md](../../theory/llm-context-is-composed-without-scoping.md)**
    - Add token-wiki Chapter 8 as the strongest available production-level confirmation of the
      frame discipline. Codex fork-based seeding (keep system/user/final-answer, drop tool
      results/reasoning) is almost an operational definition of lexically-scoped frames.
 
-4. **[instruction-specificity-should-match-loading-frequency.md](../../notes/instruction-specificity-should-match-loading-frequency.md)**
+4. **[instruction-specificity-should-match-loading-frequency.md](../../theory/instruction-specificity-should-match-loading-frequency.md)**
    - Add the cache-cost argument for stable-first ordering. This gives the note a second
      independent motivation beyond attention economics.
 
-5. **[always-loaded-context-mechanisms-in-agent-harnesses.md](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)**
+5. **[always-loaded-context-mechanisms-in-agent-harnesses.md](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md)**
    - Promote "always-loaded content must be re-injected from source, never passed through
      lossy transformation" to an explicit design principle. Cite token-wiki's unanimous
      convergence on "instructions never summarized."
    - Add Codex's 32 KiB cap on AGENTS.md as a data point — unbounded always-loaded files are
      a production risk, not a theoretical concern.
 
-6. **[frontloading-spares-execution-context.md](../../notes/frontloading-spares-execution-context.md)**
+6. **[frontloading-spares-execution-context.md](../../theory/frontloading-spares-execution-context.md)**
    - Add output-token reservation as an inverted frontloading instance: empirical response
      distribution (static knowledge) moves commitment cost out of the bounded call. Cite
      Claude Code's 8k/64k retry strategy and the 99%-at-5k finding.
 
-7. **[session-history-should-not-be-the-default-next-context.md](../../notes/session-history-should-not-be-the-default-next-context.md)**
+7. **[session-history-should-not-be-the-default-next-context.md](../../theory/session-history-should-not-be-the-default-next-context.md)**
    - Use duplicate-read-detection (~10-20% of context wasted on re-reads) as empirical
      evidence for the cost of transcript inheritance.
    - Note that token-wiki's strongest mechanisms (save-to-disk + reference handle, fork with
      filtering, coordinator pattern) are partial recoveries of the clean model.
 
-8. **[bounded-context-orchestration-model.md](../../notes/bounded-context-orchestration-model.md)**
+8. **[bounded-context-orchestration-model.md](../../theory/bounded-context-orchestration-model.md)**
    - Cite token-wiki as convergent practitioner evidence. The convergent 5-layer stack is a
      remediation for the cost of not using the clean model; the highest-effort mechanisms
      (cache-aware compaction, variants) are partial recoveries.
@@ -378,7 +378,7 @@ human review.
 
 - **Codex's ghost snapshot pattern (background git commit, filtered out of API calls) is a
   clever use of the execution substrate to provide undo at zero token cost.** This maps
-  perfectly onto [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
+  perfectly onto [files defer schema commitment until invariants stabilize](../../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
   applied to runtime: git itself is the substrate, and it already provides the invariants
   needed for rollback. Worth citing when we discuss execution substrate patterns.
 

@@ -121,9 +121,9 @@ The current memory implementation is benchmark-shaped. User personal memory, mem
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AgentFly's JSONL case bank from the host-client injection path that actually puts cases into planner context.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames the top-k case-selection and compact-plan strategy as the central memory design tradeoff.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating case rows, training rows, result traces, prompt templates, and learned retriever weights.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames judged task runs becoming compact cases and selector-training rows.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies the prompts, labels, retrieval policy, and trained selector when they steer future planning.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies prior task cases and result traces as evidence or advice before stronger authority is assigned.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AgentFly's JSONL case bank from the host-client injection path that actually puts cases into planner context.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames the top-k case-selection and compact-plan strategy as the central memory design tradeoff.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating case rows, training rows, result traces, prompt templates, and learned retriever weights.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames judged task runs becoming compact cases and selector-training rows.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies the prompts, labels, retrieval policy, and trained selector when they steer future planning.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies prior task cases and result traces as evidence or advice before stronger authority is assigned.

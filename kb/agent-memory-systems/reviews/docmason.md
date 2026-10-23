@@ -146,8 +146,8 @@ The main divergence is that DocMason gives the answer runtime more power. Canoni
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - extends: DocMason promotes host interaction traces into lower-trust published interaction memories.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: DocMason combines storage with canonical ask read-back, retrieval, trace, and answer-state gates.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: source corpus, published KB, runtime logs, interaction memories, skills, adapters, validation, and trace artifacts differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: source documents, extracted evidence, summaries, logs, traces, and interaction memories mostly serve as evidence, context, or audit material.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: canonical skills, CLI contracts, validation rules, control-plane records, ranking policy, and finalization checks instruct, route, enforce, or evaluate behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: interaction memories are derived from agent/session/tool traces and later consumed by retrieval and trace.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: DocMason combines storage with canonical ask read-back, retrieval, trace, and answer-state gates.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: source corpus, published KB, runtime logs, interaction memories, skills, adapters, validation, and trace artifacts differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: source documents, extracted evidence, summaries, logs, traces, and interaction memories mostly serve as evidence, context, or audit material.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: canonical skills, CLI contracts, validation rules, control-plane records, ranking policy, and finalization checks instruct, route, enforce, or evaluate behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: interaction memories are derived from agent/session/tool traces and later consumed by retrieval and trace.

@@ -32,7 +32,7 @@ Commonplace has two write-time contract surfaces, and both are enforced: a type 
 
 ## The design space
 
-Options 2 through 5 change [behavior-determining organization](../../../notes/definitions/behavior-determining-organization.md); each states what would consume the change, through which channel, with what force.
+Options 2 through 5 change [behavior-determining organization](../../../theory/definitions/behavior-determining-organization.md); each states what would consume the change, through which channel, with what force.
 
 **1. Retain the area README, unenforced (status quo).** The clauses stay documentation that a careful author finds by following the link in `COLLECTION.md` or by opening the directory. Operativity path: partial and already known — the three restated clauses and the `note` traits-table row reach authors through documents the write skill and both conformance gates do read; the remaining four reach only a reader who follows a link, with advisory force. Cost: those four are precisely the clauses that carry the most judgment (first version stays conceptual, requirements live in theory, dated anchor, operativity and warrant), and an author who skips the link is not detectably non-conformant. Benefit: zero machinery, and the area README stays cheap to revise — which is why the contract could be sharpened three times in a month.
 
@@ -64,7 +64,7 @@ The live instance has since been absorbed exactly this way: option 3 shipped for
 
 ## Risks
 
-- **Decorative contract.** The status quo's failure mode is already live: four clauses persist with no consumer, which is inert persistence rather than [operative change](../../../notes/definitions/operative-change.md). Time makes this worse, not stable — each revision of an unread contract is effort spent on a document with no channel.
+- **Decorative contract.** The status quo's failure mode is already live: four clauses persist with no consumer, which is inert persistence rather than [operative change](../../../theory/definitions/operative-change.md). Time makes this worse, not stable — each revision of an unread contract is effort spent on a document with no channel.
 - **Clause migration to where the machinery is.** ADR 041's named distortion has a specific form here: the tempting shortcut is to expand the `design-proposal` row in `kb/types/note.md`, since that text is already enforced — which would bind every `note`-typed artifact in the KB with rules for one subtree.
 - **Context cost creep.** Option 2 is free today and gets more expensive per area added; adopting it for `proposals/` sets the precedent that `adr/` and `definitions/` follow.
 - **Silent divergence.** As long as two documents state the same contract, the summary can fall behind the full text with nothing checking, and a reader who trusts the enforced surface gets a partial contract believing it complete.
@@ -79,6 +79,6 @@ Relevant Notes:
 - [ADR 041: collection-conformance reviews use COLLECTION.md as the gate](../../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — part-of: the decision that made the collection surface enforceable and named clause migration toward machinery as the distortion to avoid
 - [Collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md) — see-also: the same two surfaces under a different pressure, resolved by sanctioned moves rather than a new surface
 - [Tag scope is declared where membership claims are made](./tag-scope-is-declared-where-membership-claims-are-made.md) — see-also: the sibling open question about which artifact a scoped declaration attaches to
-- [Why directories despite their costs](../../../notes/why-directories-despite-their-costs.md) — rests-on: local conventions per subsystem are a directory affordance, and each new directory taxes routing and skills
-- [Methodology enforcement is constraining](../../../notes/methodology-enforcement-is-constraining.md) — rests-on: the gradient the options move along, from natural-language instruction an agent may not follow to a gate that always runs
+- [Why directories despite their costs](../../../theory/why-directories-despite-their-costs.md) — rests-on: local conventions per subsystem are a directory affordance, and each new directory taxes routing and skills
+- [Methodology enforcement is constraining](../../../theory/methodology-enforcement-is-constraining.md) — rests-on: the gradient the options move along, from natural-language instruction an agent may not follow to a gate that always runs
 - [cp-skill-write](../../../instructions/cp-skill-write/SKILL.md) — procedure: the write path whose two contract reads decide which surfaces reach an author

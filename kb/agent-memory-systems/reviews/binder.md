@@ -117,8 +117,8 @@ Authority at consumption depends on the host. A retrieved record is advisory kno
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Binder stores durable agent-readable state but leaves recall to explicit CLI/MCP/HTTP/editor reads.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Binder's records, config entities, projections, transactions, hooks, and tools have different authority despite sharing one database.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Binder records and rendered files mostly serve as evidence, reference, and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Binder schemas, navigation, views, validators, hooks, and tool definitions constrain future behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Binder's context efficiency depends on fields, identifiers, relation keys, filters, and navigation rules being present and maintained.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Binder stores durable agent-readable state but leaves recall to explicit CLI/MCP/HTTP/editor reads.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Binder's records, config entities, projections, transactions, hooks, and tools have different authority despite sharing one database.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Binder records and rendered files mostly serve as evidence, reference, and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Binder schemas, navigation, views, validators, hooks, and tool definitions constrain future behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Binder's context efficiency depends on fields, identifiers, relation keys, filters, and navigation rules being present and maintained.

@@ -116,9 +116,9 @@ Authority at consumption is advisory-to-instructional. The hook and protocol fil
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memwiki stores a wiki, but only hook loading and explicit page reads activate it for an agent.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: protocol files, hot cache, wiki pages, raw sources, and slash-command instructions carry different authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: Memwiki turns session experience into durable natural-language memory through agent-mediated extraction.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages and raw-source syntheses are advisory remembered context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: root hooks and `AGENTS.md` are behavior-shaping instruction and routing artifacts.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Memwiki depends on stable paths, filenames, page names, and slash-command strings as its routing signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memwiki stores a wiki, but only hook loading and explicit page reads activate it for an agent.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: protocol files, hot cache, wiki pages, raw sources, and slash-command instructions carry different authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames: Memwiki turns session experience into durable natural-language memory through agent-mediated extraction.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages and raw-source syntheses are advisory remembered context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: root hooks and `AGENTS.md` are behavior-shaping instruction and routing artifacts.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Memwiki depends on stable paths, filenames, page names, and slash-command strings as its routing signals.

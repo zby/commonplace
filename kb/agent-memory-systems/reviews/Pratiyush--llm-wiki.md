@@ -123,8 +123,8 @@ Authority at consumption is advisory. Query results, source pages, exports, and 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-wiki stores extensive transcript/wiki memory, but serves it mainly through explicit query/search/read/export actions.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw sessions, wiki pages, skills, state files, indexes, and exports differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sessions, wiki pages, and exports mostly act as evidence/reference/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: packaged skills, slash commands, lint rules, schemas, guards, and MCP tool definitions shape future behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-wiki stores extensive transcript/wiki memory, but serves it mainly through explicit query/search/read/export actions.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw sessions, wiki pages, skills, state files, indexes, and exports differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw sessions, wiki pages, and exports mostly act as evidence/reference/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: packaged skills, slash commands, lint rules, schemas, guards, and MCP tool definitions shape future behavior.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: llm-wiki derives durable raw and synthesized wiki artifacts from agent session traces.

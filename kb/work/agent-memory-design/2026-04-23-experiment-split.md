@@ -1,6 +1,6 @@
 # Experiment Split: Designing Agent Memory Systems
 
-Target: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+Target: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 The current note is valuable as a synthesis, but it is too monolithic for validation. It combines at least seven separable claims: broad trace retention, typed observation extraction, role-split retrieval, typed cue activation, episode construction, promotion into durable artifacts, and memory/work-surface boundary management. These should become separate experiments with independent evidence, failure modes, and stop conditions.
 

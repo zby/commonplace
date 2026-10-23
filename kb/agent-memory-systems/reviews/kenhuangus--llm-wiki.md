@@ -129,9 +129,9 @@ Read-back differs too. LLM Wiki has ordinary pull search and UI reads, but its s
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki stores a large compiled wiki, but only search, synthesis, lint, newsletter, and paper paths actually read it back into action.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LLM Wiki has wiki pages, raw sources, prompts, databases, logs, generated papers, and indexes with different substrates, forms, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: source snapshots, wiki pages, newsletters, search results, and generated papers mostly serve as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: AGENTS.md, prompts, daemon schedules, schemas, status fields, validation logic, queue priorities, and API routes shape future behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - qualifies narrowly: metrics and operation traces feed the prompt/research experiment loops, though prompt edits are not yet persisted.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki stores a large compiled wiki, but only search, synthesis, lint, newsletter, and paper paths actually read it back into action.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: LLM Wiki has wiki pages, raw sources, prompts, databases, logs, generated papers, and indexes with different substrates, forms, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: source snapshots, wiki pages, newsletters, search results, and generated papers mostly serve as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: AGENTS.md, prompts, daemon schedules, schemas, status fields, validation logic, queue priorities, and API routes shape future behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - qualifies narrowly: metrics and operation traces feed the prompt/research experiment loops, though prompt edits are not yet persisted.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: LLM Wiki is a weak trace-learning case and a stronger imported-source distillation system.

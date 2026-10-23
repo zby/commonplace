@@ -31,9 +31,9 @@ Read this source when deciding whether *Auftragstaktik* or mission command can s
 
 ## Connections Found
 
-The paper is a historical counterpoint to the coherent modern doctrines recorded in [ADRP 6-0](us-army-adrp-6-0-mission-command-2012.ingest.md) and [MCDP 1](marine-corps-mcdp-1-warfighting-1997.ingest.md): it separates what those doctrines prescribe from claims of an unbroken German precedent. It is also concrete evidence that [a borrowed pattern transfers only over shared mechanisms](../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md), because a shared label did not preserve the command culture, institutional conditions, or meaning that made the source practice work.
+The paper is a historical counterpoint to the coherent modern doctrines recorded in [ADRP 6-0](us-army-adrp-6-0-mission-command-2012.ingest.md) and [MCDP 1](marine-corps-mcdp-1-warfighting-1997.ingest.md): it separates what those doctrines prescribe from claims of an unbroken German precedent. It is also concrete evidence that [a borrowed pattern transfers only over shared mechanisms](../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md), because a shared label did not preserve the command culture, institutional conditions, or meaning that made the source practice work.
 
-Within the methodology notes, the source supplies a limitation rather than a general warrant for [leaving situation-dependent choices to an executor](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md): discretion varied with competence, information, communications, command level, and enforceable intent. Most directly, it is a corrective to [using *Auftragstaktik* as a compact methodology-selection cue](../notes/capable-agents-need-methodology-selection.md), because the cue may activate incompatible historical and modern interpretations instead of one coherent operating method.
+Within the methodology notes, the source supplies a limitation rather than a general warrant for [leaving situation-dependent choices to an executor](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md): discretion varied with competence, information, communications, command level, and enforceable intent. Most directly, it is a corrective to [using *Auftragstaktik* as a compact methodology-selection cue](../theory/capable-agents-need-methodology-selection.md), because the cue may activate incompatible historical and modern interpretations instead of one coherent operating method.
 
 ## Extractable Value
 
@@ -51,10 +51,10 @@ The primary observation is an archived copy of the official Australian Army Rese
 
 ## Recommended Next Action
 
-Update [A capable agent needs methodology selection, not just relevant knowledge](../notes/capable-agents-need-methodology-selection.md) to qualify its bare “Use *Auftragstaktik*” example with a fidelity condition: a compact cue is reliable only when it selects a coherent, shared methodology rather than collapsing contested historical practice into modern mission command.
+Update [A capable agent needs methodology selection, not just relevant knowledge](../theory/capable-agents-need-methodology-selection.md) to qualify its bare “Use *Auftragstaktik*” example with a fidelity condition: a compact cue is reliable only when it selects a coherent, shared methodology rather than collapsing contested historical practice into modern mission command.
 
 ---
 
 Relevant Notes:
 
-- [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — abstracted-from: historical variation and non-identity with later principles prevent the bare *Auftragstaktik* label from serving as an exact delegation specification
+- [Intent-framed delegation is a control regime; prompt length does not establish it](../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — abstracted-from: historical variation and non-identity with later principles prevent the bare *Auftragstaktik* label from serving as an exact delegation specification

@@ -140,8 +140,8 @@ The tradeoff is speed versus review. Synapptic's local file substrate and benchm
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Synapptic derives observations, profile entries, prompt-policy archetypes, and guard verdicts from session traces.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synapptic's profile state only changes behavior after synthesis and assistant memory/config read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: observations, weighted profiles, archetypes, output files, benchmarks, and relay indexes have different substrates, forms, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: session failures and corrections become durable behavior guidance for later agents.
-- [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md) - frames: Synapptic turns repeated interaction evidence into compact prompt-policy rules.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - explains: Synapptic precomputes user-model context before future sessions instead of replaying transcripts.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synapptic's profile state only changes behavior after synthesis and assistant memory/config read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: observations, weighted profiles, archetypes, output files, benchmarks, and relay indexes have different substrates, forms, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: session failures and corrections become durable behavior guidance for later agents.
+- [System-definition artifacts are crystallized reasoning under context scarcity](../../theory/system-definition-artifacts-are-crystallized-reasoning-under-context.md) - frames: Synapptic turns repeated interaction evidence into compact prompt-policy rules.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - explains: Synapptic precomputes user-model context before future sessions instead of replaying transcripts.

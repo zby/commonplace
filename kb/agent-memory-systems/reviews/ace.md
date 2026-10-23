@@ -129,11 +129,11 @@ ACE's read-back is also simpler. The generator gets the entire current playbook,
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: ACE activates retained playbook memory by pushing it into every generator prompt.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: ACE turns task trajectories and feedback into future playbook behavior.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: ACE requires separating playbook text, logs, prompt contracts, curator operations, and best snapshots.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: playbook bullets advise future reasoning as retained knowledge.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, task processors, and curator machinery configure future behavior.
-- [Lineage](../../notes/definitions/lineage.md) - frames: ACE's learned bullets need trace lineage to support audit, invalidation, and regeneration.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: the same playbook line can be advice, prompt instruction, or learning input depending on the consumer path.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: ACE's core design question is how retained task context is assembled, bounded, and fed back into model calls.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: ACE activates retained playbook memory by pushing it into every generator prompt.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: ACE turns task trajectories and feedback into future playbook behavior.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: ACE requires separating playbook text, logs, prompt contracts, curator operations, and best snapshots.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: playbook bullets advise future reasoning as retained knowledge.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompt templates, task processors, and curator machinery configure future behavior.
+- [Lineage](../../theory/definitions/lineage.md) - frames: ACE's learned bullets need trace lineage to support audit, invalidation, and regeneration.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: the same playbook line can be advice, prompt instruction, or learning input depending on the consumer path.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: ACE's core design question is how retained task context is assembled, bounded, and fed back into model calls.

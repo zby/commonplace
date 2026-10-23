@@ -34,8 +34,8 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 
 ## Open discriminating tests carried in from the two promoted conjectures
 
-- [descriptive-link-labels may supply claim self-sufficiency](../../notes/descriptive-link-labels-may-supply-claim-self-sufficiency.md) — a **label-ablation test (2026-08-10)** was run: 6/6 cold-reader PASS, gate never fired even de-labeled; it reassigned the mechanism from the label convention to the body-premise convention and left the **thin pre-connect-draft** case open. That thin-draft test is the cheapest remaining experiment.
-- [claim-routed reading may beat reading-first for synthesis notes](../../notes/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md) — its head-to-head test (build one synthesis note both ways, compare warranted update vs context cost) is **deferred** by maintainer to control scope.
+- [descriptive-link-labels may supply claim self-sufficiency](../../theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md) — a **label-ablation test (2026-08-10)** was run: 6/6 cold-reader PASS, gate never fired even de-labeled; it reassigned the mechanism from the label convention to the body-premise convention and left the **thin pre-connect-draft** case open. That thin-draft test is the cheapest remaining experiment.
+- [claim-routed reading may beat reading-first for synthesis notes](../../theory/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md) — its head-to-head test (build one synthesis note both ways, compare warranted update vs context cost) is **deferred** by maintainer to control scope.
 
 ## Sources
 

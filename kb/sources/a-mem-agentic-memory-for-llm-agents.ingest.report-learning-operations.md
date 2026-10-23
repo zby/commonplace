@@ -66,7 +66,7 @@ Every operation is automatic, but the *decisions within* operations are agentic 
 
 The interesting tension: the ablation study shows this works for QA benchmarks. Memory evolution (the most "learning-like" operation) provides the largest marginal gain on multi-hop reasoning. But the evolution vocabulary is strikingly thin — just "strengthen connection" and "update neighbor context/tags." There's no operation for "this contradicts what I knew" or "these three memories are really one concept" or "this memory is wrong."
 
-This connects to [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md) — A-MEM automates the *accretion* side of learning (add, link, adjust neighbors) but not the *curation* side (prune, refactor, correct, restructure). The system gets smarter by accumulation, never by simplification.
+This connects to [automating-kb-learning-is-an-open-problem](../theory/automating-kb-learning-is-an-open-problem.md) — A-MEM automates the *accretion* side of learning (add, link, adjust neighbors) but not the *curation* side (prune, refactor, correct, restructure). The system gets smarter by accumulation, never by simplification.
 
 ## Next Action
 

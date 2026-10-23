@@ -34,13 +34,13 @@ a spectrum from free (prune stale tool results) to expensive (LLM summarization)
 - Compaction decision tree layers cheap-before-expensive.
 
 **KB alignment.**
-- Maintenance component of [context engineering](../../notes/definitions/context-engineering.md).
+- Maintenance component of [context engineering](../../theory/definitions/context-engineering.md).
 - "Never summarize instructions" = always-loaded content belongs to a stable layer that should
-  not drift; [always-loaded context mechanisms](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md),
-  [AGENTS.md as control plane](../../notes/agents-md-should-be-organized-as-a-control-plane.md).
+  not drift; [always-loaded context mechanisms](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md),
+  [AGENTS.md as control plane](../../theory/agents-md-should-be-organized-as-a-control-plane.md).
 - The circuit breaker is a hard oracle on a tool loop — connects to our theme of oracle-gated
   iteration in workshop systems.
-- Tension with [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md):
+- Tension with [session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md):
   compaction exists because history *is* being loaded into the next call; it is the remediation
   for a problem our theory says to avoid upstream.
 
@@ -67,10 +67,10 @@ combine it with API-reported actuals for precision when needed. Don't ship a tok
 - Claude Code falls back to Haiku for exact counts when heuristics aren't enough.
 
 **KB alignment.**
-- The heuristic/actual split instantiates the [symbolic scheduling over bounded LLM calls](../../notes/bounded-context-orchestration-model.md)
+- The heuristic/actual split instantiates the [symbolic scheduling over bounded LLM calls](../../theory/bounded-context-orchestration-model.md)
   separation: exact bookkeeping in code (cheap, deterministic), expensive judgment reserved for
   the bounded call.
-- Output budget cap is a concrete instance of [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md)
+- Output budget cap is a concrete instance of [frontloading spares execution context](../../theory/frontloading-spares-execution-context.md)
   inverted: committing less output budget *frees* input budget. Same principle — static knowledge
   (empirical response distribution) moves cost out of the bounded call.
 
@@ -103,9 +103,9 @@ stable-first to maximize the cacheable prefix.
   KB treats context as the scarce resource; token-wiki surfaces a *second* scarce resource,
   the **cache prefix**, whose fragility constrains what mechanisms are legal. Compaction that
   rewrites history and caching are in direct tension. This is a candidate for a new note.
-- Stable-first ordering mechanically reinforces [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md):
+- Stable-first ordering mechanically reinforces [instruction specificity should match loading frequency](../../theory/instruction-specificity-should-match-loading-frequency.md):
   the content that loads every turn goes first (longest cache hit).
-- Per-tool schema hashing is a diagnostic response to [LLM context is a homoiconic medium](../../notes/llm-context-interprets-instructions-and-content-through-one-medium.md) —
+- Per-tool schema hashing is a diagnostic response to [LLM context is a homoiconic medium](../../theory/llm-context-interprets-instructions-and-content-through-one-medium.md) —
   because everything is concatenated text, you can't tell which contribution broke the cache
   without hashing each component separately.
 
@@ -137,10 +137,10 @@ and defer detail to on-demand surfaces.
 - XS variant vs. Generic: ~50% reduction.
 
 **KB alignment.**
-- Strong convergence with [always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md)
-  and [AGENTS.md should be organized as a control plane](../../notes/agents-md-should-be-organized-as-a-control-plane.md).
-- Hierarchical discovery with shared byte budget maps to [directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md).
-- Tool schema deferral is a striking instance of [instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md)
+- Strong convergence with [always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md)
+  and [AGENTS.md should be organized as a control plane](../../theory/agents-md-should-be-organized-as-a-control-plane.md).
+- Hierarchical discovery with shared byte budget maps to [directory-scoped types are cheaper than global types](../../theory/directory-scoped-types-are-cheaper-than-global-types.md).
+- Tool schema deferral is a striking instance of [instruction specificity should match loading frequency](../../theory/instruction-specificity-should-match-loading-frequency.md)
   extended to *tool* surfaces — most systems treat the tool list as always-loaded. Codex
   demonstrates that tool descriptions can be on-demand routed by a meta-tool. This strengthens
   the note: the routing hierarchy applies to tools too.
@@ -176,16 +176,16 @@ disk; strip media early.
 
 **KB alignment.**
 - The four-layer defense mechanically instantiates the maintenance component of
-  [context engineering](../../notes/definitions/context-engineering.md).
+  [context engineering](../../theory/definitions/context-engineering.md).
 - Persistent storage with reference handle = externalization pattern: the scheduler's symbolic
   state retains the full output while the bounded call sees a pointer. Maps cleanly to the
-  [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) —
+  [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md) —
   `K` can retain more than one prompt loads; `select(K)` injects a summary plus a recall handle.
 - Duplicate read detection is empirical evidence for the "amnesia" problem that
-  [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
+  [session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
   argues against upstream: the model re-reads files because its effective working set *is* the
   flat chat history, which doesn't stably retain what was already read.
-- Pagination > truncation is the same pattern as [agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md):
+- Pagination > truncation is the same pattern as [agents navigate by deciding what to read next](../../theory/agents-navigate-by-deciding-what-to-read-next.md):
   give the agent a decision surface, don't collapse upstream.
 
 ---
@@ -214,12 +214,12 @@ and post-processing order are load-bearing. Separate API history (strict) from U
 **KB alignment.**
 - "Dual history" formalizes the split our theory hints at but doesn't name: the substrate state
   (UI history, rich trace) vs. the bounded-call input (API history, minimal). This is
-  [execution-boundary compression](../../notes/session-history-should-not-be-the-default-next-context.md)
+  [execution-boundary compression](../../theory/session-history-should-not-be-the-default-next-context.md)
   materialized as a data structure. Token-wiki's framing is that they maintain both because the
   API and UI have different requirements; our framing would say the bounded call should always
   receive a compressed/selected view of a richer substrate. Same structure, different motivation.
-- Non-destructive truncation is a clean implementation detail compatible with the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md): its explicit `transition(K, B, R)` can preserve a retained record while the selector loads a derived view. This implementation is sequential, so `B = (C)` and `R = (r)`; monotonic `K += r` is its choice, not an invariant of the normal form. Deletion as metadata then lets the selector be re-run or rolled back.
-- Typed parts with state machines are an expression of [instructions are typed callables](../../notes/instructions-are-typed-callables.md)
+- Non-destructive truncation is a clean implementation detail compatible with the [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md): its explicit `transition(K, B, R)` can preserve a retained record while the selector loads a derived view. This implementation is sequential, so `B = (C)` and `R = (r)`; monotonic `K += r` is its choice, not an invariant of the normal form. Deletion as metadata then lets the selector be re-run or rolled back.
+- Typed parts with state machines are an expression of [instructions are typed callables](../../theory/instructions-are-typed-callables.md)
   applied to message fragments — type discipline at the data-structure level.
 
 ---
@@ -249,7 +249,7 @@ define multiple threshold levels for graceful degradation, and cap output reserv
   header → experiment → registry → default 200k.
 
 **KB alignment.**
-- Empirically operationalizes [agent context is constrained by soft degradation, not hard token limits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md):
+- Empirically operationalizes [agent context is constrained by soft degradation, not hard token limits](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md):
   the "effective window" calculation is exactly the hard/effective distinction that note makes
   theoretical. Token-wiki shows practitioners universally compute the effective window as a
   different number from the advertised one — but their deltas are from *output reservations and
@@ -257,7 +257,7 @@ define multiple threshold levels for graceful degradation, and cap output reserv
   bound using fixed buffers; our theory argues the bound is task-dependent. These are
   complementary: practitioners need a number, theory explains why it's wrong by a task-dependent
   margin.
-- The graceful-degradation ladder is a [soft-bound traditions](../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)-adjacent
+- The graceful-degradation ladder is a [soft-bound traditions](../../theory/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)-adjacent
   pattern: provide multiple responses at escalating severity so the system never hits the hard
   limit.
 - Model-switch compaction is a small but interesting detail — the scheduler knows when the
@@ -290,17 +290,17 @@ depth, roll up costs to the parent.
 - With isolation, parent sees ~2k per subagent instead of 140k.
 
 **KB alignment.**
-- This chapter is the most direct mechanical validation of [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md):
+- This chapter is the most direct mechanical validation of [LLM context is composed without scoping](../../theory/llm-context-is-composed-without-scoping.md):
   "fork with filtering, drop tool results and reasoning, keep only instructions and decisions"
   is almost a direct transcription of lexically-scoped frames. The Codex guardian subagent
   budget (separate message vs. tool transcripts) is a concrete instance of a frame that declares
   what bindings it inherits.
 - Ghost snapshots (zero-token state capture via git) are a beautiful instance of
-  [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
+  [files defer schema commitment until invariants stabilize](../../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md)
   applied to runtime: the execution substrate holds state outside the bounded call, providing
   undo for free.
 - The sub-agent filtering rule ("drop tool results, keep decisions") is [execution-boundary
-  compression](../../notes/session-history-should-not-be-the-default-next-context.md) specialized
+  compression](../../theory/session-history-should-not-be-the-default-next-context.md) specialized
   to the parent→child direction. Our theory discusses it mostly child→parent; token-wiki shows
   the parent→child version is where the bigger savings live.
 
@@ -328,16 +328,16 @@ waste (especially duplicate reads), track cache hit ratio, instrument from day o
 - Healthy cache hit ratio 80-95% after first few turns.
 
 **KB alignment.**
-- Observability is underdeveloped in our theory. [Context engineering](../../notes/definitions/context-engineering.md)
+- Observability is underdeveloped in our theory. [Context engineering](../../theory/definitions/context-engineering.md)
   lists routing/loading/scoping/maintenance as components but has no dedicated observability
   component. Token-wiki makes the argument that *attribution* (where tokens go) is a prerequisite
   for the other four being tunable.
 - The 45% figure for tool results is citable empirical support for several notes — confirms the
   intuition that tool outputs dominate agentic context, which underpins [session history should
-  not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-  and [frontloading spares execution context](../../notes/frontloading-spares-execution-context.md).
+  not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
+  and [frontloading spares execution context](../../theory/frontloading-spares-execution-context.md).
 - Ablation testing as infrastructure is a pattern worth surfacing: it is the measurement
-  analogue of the [decomposition heuristics](../../notes/decomposition-heuristics-for-bounded-context-scheduling.md),
+  analogue of the [decomposition heuristics](../../theory/decomposition-heuristics-for-bounded-context-scheduling.md),
   making local comparative results possible.
 
 ---
@@ -375,7 +375,7 @@ non-destructive truncation, error normalization.
   paragraph in the convergence-signals section of the related-systems index: "Four production
   LLM harnesses independently arrive at the same component layering when optimizing the token
   economy of chat-loop agents."
-- The top-20 table is an implicit priority ordering over [context engineering](../../notes/definitions/context-engineering.md)
+- The top-20 table is an implicit priority ordering over [context engineering](../../theory/definitions/context-engineering.md)
   levers. Several patterns lack KB coverage and deserve notes of their own — see the synthesis
   for which.
 
@@ -386,7 +386,7 @@ non-destructive truncation, error normalization.
 See `synthesis.md` for:
 - The main theoretical alignment (where token-wiki instantiates existing KB theory)
 - The gaps token-wiki reveals in KB theory (cache economics, observability, output budget)
-- The tension with [session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md)
-  and the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md):
+- The tension with [session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md)
+  and the [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md):
   token-wiki optimizes the path our theory argues should be avoided upstream
 - Candidate follow-ups (new notes, additions to existing notes, curiosity flags)

@@ -169,5 +169,5 @@ durable report.
 
 Relevant Notes:
 
-- [Weight-resident methodologies provide context-efficient behavioral compression](../notes/weight-resident-methodologies-compress-behavior-in-context.md) — rests-on: the NeurIPS cue selects a learned methodology without restating its detailed rules
-- [Theory builder](../notes/definitions/theory-builder.md) — rests-on: the Popperian interpretation connects problems, conjectures, criticism, and revision
+- [Weight-resident methodologies provide context-efficient behavioral compression](../theory/weight-resident-methodologies-compress-behavior-in-context.md) — rests-on: the NeurIPS cue selects a learned methodology without restating its detailed rules
+- [Theory builder](../theory/definitions/theory-builder.md) — rests-on: the Popperian interpretation connects problems, conjectures, criticism, and revision

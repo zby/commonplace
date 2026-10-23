@@ -134,10 +134,10 @@ Authority at consumption depends on the file read. A wiki concept page is adviso
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: stored wiki files affect behavior only when the skill's orientation/search path brings them into context.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: `wiki_wrapup` distills session traces into durable wiki candidates.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: stored wiki files affect behavior only when the skill's orientation/search path brings them into context.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: `wiki_wrapup` distills session traces into durable wiki candidates.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: `ai-modules` is an approval-gated session-to-wiki trace extraction system.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: wiki pages and changelog entries precompute source understanding so future sessions do not re-derive it from raw material.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skills, manifests, wiki pages, raw sources, lints, logs, and deployment outputs carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, tasks, raw sources, summaries, and changelogs can advise future work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `SKILL.md`, agent definitions, plugin manifests, schemas, deployment scripts, and lints shape or validate agent behavior.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - aligns: wiki pages and changelog entries precompute source understanding so future sessions do not re-derive it from raw material.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: skills, manifests, wiki pages, raw sources, lints, logs, and deployment outputs carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, tasks, raw sources, summaries, and changelogs can advise future work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `SKILL.md`, agent definitions, plugin manifests, schemas, deployment scripts, and lints shape or validate agent behavior.

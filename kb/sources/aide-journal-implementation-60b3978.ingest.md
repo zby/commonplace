@@ -29,13 +29,13 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-For the Weco/AIDE² comparison, this source supplies bounded implementation evidence for retaining experiment state, while leaving the complete learning loop open. It makes the distinction in [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) concrete: storing plans and feedback, constructing a summary, and using that summary to change a proposal are separate operations, and only the first two appear here. Parent-child links associate candidate ancestry, but do not identify which criticism caused a child; this illustrates the evidential boundary in [Disconnected witnesses do not establish a full causal path through theory](../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md). Neither connection establishes theory-builder membership or identifies this revision as the implementation evaluated in an AIDE² paper.
+For the Weco/AIDE² comparison, this source supplies bounded implementation evidence for retaining experiment state, while leaving the complete learning loop open. It makes the distinction in [Knowledge storage does not imply contextual activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md) concrete: storing plans and feedback, constructing a summary, and using that summary to change a proposal are separate operations, and only the first two appear here. Parent-child links associate candidate ancestry, but do not identify which criticism caused a child; this illustrates the evidential boundary in [Disconnected witnesses do not establish a full causal path through theory](../theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md). Neither connection establishes theory-builder membership or identifies this revision as the implementation evaluated in an AIDE² paper.
 
 ## Learning Claims (our opinion)
 
 On its own terms, the file implements the state of a solution tree. The mutable content includes candidate code and plans, execution outcomes, analyses, and evaluation values. A node's stage is inferred from its ancestry: no parent means draft; a buggy parent means debug; otherwise the stage is improve. These labels classify nodes; they do not implement the proposal operations they name.
 
-Against the [theory-builder conditions](../notes/definitions/theory-builder.md), the evidence divides as follows:
+Against the [theory-builder conditions](../theory/definitions/theory-builder.md), the evidence divides as follows:
 
 - **Localized content:** code, plans, and analyses have explicit fields attached to identifiable nodes. This supplies places for stated conjectures and criticisms, but the capture contains no populated example establishing what a plan or analysis actually says.
 - **Consumption:** best-node selection reads bug flags and metric values, and summary construction reads plans and analyses. Those implementations establish data dependence inside the journal. They do not establish that a later decision uses what a plan or analysis says; the consumer is outside the file.
@@ -44,7 +44,7 @@ Against the [theory-builder conditions](../notes/definitions/theory-builder.md),
 
 The file therefore sharpens what remains to inspect without settling membership. It contains no model-weight update mechanism, but cannot establish a fixed-model configuration for the enclosing system. Nor does it show an outer loop revising the journal, prompts, search policy, or evaluation rules. Reflective improvement and compounding remain unestablished, as does improved capacity for future action.
 
-The summary's selection of non-buggy nodes and optional omission of code are consequential representation choices. The complete journal retains more fields than that projection exposes. Under the [fixed-decomposition distinction](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), any benefit from downstream search would need to be separated from evidence favoring this summary design. Other consumers could access omitted information; this file does not establish the whole learner's effective information boundary.
+The summary's selection of non-buggy nodes and optional omission of code are consequential representation choices. The complete journal retains more fields than that projection exposes. Under the [fixed-decomposition distinction](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), any benefit from downstream search would need to be separated from evidence favoring this summary design. Other consumers could access omitted information; this file does not establish the whole learner's effective information boundary.
 
 ## Extractable Value
 

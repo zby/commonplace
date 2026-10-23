@@ -92,9 +92,9 @@ The practical read-back path is still agent-shaped: skill descriptions route ini
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - explains why installed static skill instructions are not counted as accumulated memory read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - provides the storage, form, lineage, and authority vocabulary used to classify skills, subagents, manifests, and validators.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - applies to `SPEC.md`, `SOURCES.md`, examples, references, and maintenance notes when they advise later agents or maintainers.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - applies to skill instructions, plugin metadata, permission settings, validators, and hard-rule workflow skills.
-- [Lineage](../../notes/definitions/lineage.md) - frames authored, vendored, source-backed, and validation-derived skill artifacts.
-- [Context engineering](../../notes/definitions/context-engineering.md) - names the routing and progressive-disclosure problem solved by skill selection and conditional references.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - explains why installed static skill instructions are not counted as accumulated memory read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - provides the storage, form, lineage, and authority vocabulary used to classify skills, subagents, manifests, and validators.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - applies to `SPEC.md`, `SOURCES.md`, examples, references, and maintenance notes when they advise later agents or maintainers.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - applies to skill instructions, plugin metadata, permission settings, validators, and hard-rule workflow skills.
+- [Lineage](../../theory/definitions/lineage.md) - frames authored, vendored, source-backed, and validation-derived skill artifacts.
+- [Context engineering](../../theory/definitions/context-engineering.md) - names the routing and progressive-disclosure problem solved by skill selection and conditional references.

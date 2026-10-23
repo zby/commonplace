@@ -119,9 +119,9 @@ The most fragile layer is natural-language lineage. Scores can show that a run i
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Autocontext's retained run/knowledge artifacts from the prompt, MCP, API, and export paths that serve them.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating playbooks, run traces, generated tools, validators, mutations, datasets, and model artifacts by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Autocontext's score-conditioned coach/curator/dataset/training loops.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Autocontext's component budgets, compaction, and selection telemetry.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies generated validators, prompt mutations, context policies, exported skills, and trained-model surfaces.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies playbooks, analyses, traces, reports, hints, and exported packages when they serve as evidence or advice.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Autocontext's retained run/knowledge artifacts from the prompt, MCP, API, and export paths that serve them.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating playbooks, run traces, generated tools, validators, mutations, datasets, and model artifacts by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Autocontext's score-conditioned coach/curator/dataset/training loops.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Autocontext's component budgets, compaction, and selection telemetry.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies generated validators, prompt mutations, context policies, exported skills, and trained-model surfaces.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies playbooks, analyses, traces, reports, hints, and exported packages when they serve as evidence or advice.

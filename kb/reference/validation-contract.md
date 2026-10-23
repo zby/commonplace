@@ -153,7 +153,7 @@ The schema is **not** limited to frontmatter. `ParsedDocument.to_validation_obje
 
 What a schema cannot do is **dereference** — it has no way to say *follow this path and look inside the artifact it names*. JSON Schema validates one instance document; the referent is another file. This is an inherited limit of the substrate, not a gap worth closing, and it is the whole reason a second, imperative check mechanism exists at all.
 
-So the dividing line is not frontmatter/body. It is **inside the supplied schema instance** (declarable) versus **outside that instance** (must be loaded and checked). Directory schemas can compare the member data their loader supplies; they cannot perform filesystem reads themselves. A referential check's ground truth lives in a second artifact, which is precondition 3 of [a derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — the rule that makes these checks obligatory rather than optional.
+So the dividing line is not frontmatter/body. It is **inside the supplied schema instance** (declarable) versus **outside that instance** (must be loaded and checked). Directory schemas can compare the member data their loader supplies; they cannot perform filesystem reads themselves. A referential check's ground truth lives in a second artifact, which is precondition 3 of [a derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — the rule that makes these checks obligatory rather than optional.
 
 ## The base contract
 
@@ -229,7 +229,7 @@ collection's contract states any authoring conventions that go with the limit.
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why a referential check is obligatory rather than optional, and why a false copy fails where an absent one warns
+- [A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why a referential check is obligatory rather than optional, and why a false copy fails where an absent one warns
 - [ADR 046 — Verbatim quotes are validated against their cited source](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) — decided-by: the decision that added the second referential check and surfaced the class
 - [ADR 024 — Schema severity is per-constraint, fail by default](./adr/024-schema-severity-is-per-constraint-fail-by-default.md) — decided-by: how the `schema` source assigns its own severities
 - [Commands](./commands.md) — see-also: the `commonplace-validate` command surface

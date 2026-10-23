@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper provides a historical comparison for [preserving mixed epistemic status below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md): its synchronization definition, physical postulates, derived transformations and proposed electron measurements cannot share one evidential label. Section 4 makes a further assumption when extending clock transport from polygonal to continuously curved paths. This matters to a reader deciding which consequences were derived under which conditions.
+The paper provides a historical comparison for [preserving mixed epistemic status below the document level](../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md): its synchronization definition, physical postulates, derived transformations and proposed electron measurements cannot share one evidential label. Section 4 makes a further assumption when extending clock transport from polygonal to continuously curved paths. This matters to a reader deciding which consequences were derived under which conditions.
 
-It also compares with [tracking theory warrant at the finest granularity evidence licenses](../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md). Compatibility of the two postulates within the transformation scheme differs from empirical support for electron dynamics, which introduces additional assumptions. These are methodological comparisons, not evidence that a particular KB writing or review procedure improves agent performance.
+It also compares with [tracking theory warrant at the finest granularity evidence licenses](../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md). Compatibility of the two postulates within the transformation scheme differs from empirical support for electron dynamics, which introduces additional assumptions. These are methodological comparisons, not evidence that a particular KB writing or review procedure improves agent performance.
 
 ## Extractable Value
 
@@ -46,4 +46,4 @@ This full-source capture preserves the translation and edition notice, but extra
 
 ## Recommended Next Action
 
-Add one bounded historical example from sections 1–4 and 10 to [Mixed epistemic status must be preserved below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md), separating definitions, assumptions, deductions and proposed tests.
+Add one bounded historical example from sections 1–4 and 10 to [Mixed epistemic status must be preserved below the document level](../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md), separating definitions, assumptions, deductions and proposed tests.

@@ -40,6 +40,6 @@ Which repairs review may take on a defeated claim is epistemic policy, not revie
 
 Relevant Notes:
 
-- [Domain pricing routes an exception to idealization assessment but does not decide it](../../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the two-stage requirement any policy bundle's ideal-type option must encode, and the source of the re-testing question option 2 answers
-- [Narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the analytic limit that makes repair policy consequential — a policy is what stands between defeat and degenerate repair
-- [Generality bought to avoid counterexamples is paid for in precision](../../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — rests-on: each escape from counterexamples needs a discriminator for honest versus degenerate use; a policy bundle is a chosen set of such discriminators
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the two-stage requirement any policy bundle's ideal-type option must encode, and the source of the re-testing question option 2 answers
+- [Narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the analytic limit that makes repair policy consequential — a policy is what stands between defeat and degenerate repair
+- [Generality bought to avoid counterexamples is paid for in precision](../../theory/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — rests-on: each escape from counterexamples needs a discriminator for honest versus degenerate use; a policy bundle is a chosen set of such discriminators

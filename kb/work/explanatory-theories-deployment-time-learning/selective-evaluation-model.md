@@ -53,7 +53,7 @@ This distinction also keeps “check” and “obligation” from collapsing int
 
 An impact projection may draw on enforced dependency and authority paths, formal causal models, invariants or proofs, semantic explanations, and learned action-conditioned predictions. Causal theory is one possible basis, not the umbrella category.
 
-A hard exclusion requires sound entailment within a boundary whose relevant structure is complete. An absent edge in an incomplete dependency map supports only an assumption-relative omission, not a hard exclusion. Semantic or probabilistic projections can support risk-aware prioritization, but fluency or confidence does not prove non-influence. The theory's claimed scope therefore remains subject to [reach-assessment](../../notes/definitions/reach-assessment.md). Diff similarity can provide a useful baseline or prior. It becomes theory-like only when it explains why the resemblance should preserve consequences.
+A hard exclusion requires sound entailment within a boundary whose relevant structure is complete. An absent edge in an incomplete dependency map supports only an assumption-relative omission, not a hard exclusion. Semantic or probabilistic projections can support risk-aware prioritization, but fluency or confidence does not prove non-influence. The theory's claimed scope therefore remains subject to [reach-assessment](../../theory/definitions/reach-assessment.md). Diff similarity can provide a useful baseline or prior. It becomes theory-like only when it explains why the resemblance should preserve consequences.
 
 ## Acceptance and blind spots
 

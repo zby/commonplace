@@ -40,7 +40,7 @@ The paper models an agent pipeline as a network whose editable “weights” are
 
 ## Connections Found
 
-This is an early technical basis for [representational-form coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md) and especially [the readable-artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): it jointly edits natural-language prompts plus symbolic tool/pipeline structure while keeping model weights fixed. The paper's vocabulary needs translation into the KB's terms—prompts are natural-language rather than symbolic merely because an optimizer edits them. It also forms a useful comparison with [Co-Harness](https://arxiv.org/pdf/2607.22688): this paper performs backward language-mediated credit assignment across a fixed-weight harness, while Co-Harness later alternates validated harness edits with parametric fine-tuning.
+This is an early technical basis for [representational-form coevolution](../theory/treat-continual-learning-as-representational-form-coevolution.md) and especially [the readable-artifact loop](../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md): it jointly edits natural-language prompts plus symbolic tool/pipeline structure while keeping model weights fixed. The paper's vocabulary needs translation into the KB's terms—prompts are natural-language rather than symbolic merely because an optimizer edits them. It also forms a useful comparison with [Co-Harness](https://arxiv.org/pdf/2607.22688): this paper performs backward language-mediated credit assignment across a fixed-weight harness, while Co-Harness later alternates validated harness edits with parametric fine-tuning.
 
 ## Extractable Value
 
@@ -57,4 +57,4 @@ The connectionist vocabulary is analogy, not mechanism: textual “gradients” 
 
 ## Recommended Next Action
 
-Update [the readable-artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) to cite this paper as the early fixed-weight whole-harness optimizer and contrast its same-oracle rollback with later held-out validation designs.
+Update [the readable-artifact loop is the tractable unit for continual learning](../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) to cite this paper as the early fixed-weight whole-harness optimizer and contrast its same-oracle rollback with later held-out validation designs.

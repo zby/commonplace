@@ -38,8 +38,8 @@ Established in the conversation that opened this workshop. Treat as starting mat
 The paper's three causes of unfaithfulness map onto our two-axis model (distillation × constraining) plus activation — and the *enforcement arm* (the `kb/instructions/` gate suite) already targets cause #1:
 
 - **Cause #1 — semantic vagueness of condensate.** Our review-gates are an anti-vagueness filter: `explanatory-reach`, `claim-strength`, `explication-quality`, `framework-decoration`, `could-be-a-paragraph`, `pseudo-formalism`, plus the overclaim guards (`grounding-alignment`, `load-bearing-qualifiers`, `source-residue`). The prescriptive register's quality goal ("executability + precision") is an operational definition of the paper's own unmet phrase, "cognitively actionable."
-- **Cause #2 — internal bias / static-prepend underweighting.** Our answer is activation: on-situation typed cues, [frontloading](../../notes/frontloading-spares-execution-context.md), and moving lessons toward enforcement (a validator isn't underweighted by later layers). "Instruction-duality" = activation by construction.
-- **Cause #3 — pretrained priors suffice.** Our answer is routing/budget: [evaluate by effects](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md), don't inject memory where priors already win.
+- **Cause #2 — internal bias / static-prepend underweighting.** Our answer is activation: on-situation typed cues, [frontloading](../../theory/frontloading-spares-execution-context.md), and moving lessons toward enforcement (a validator isn't underweighted by later layers). "Instruction-duality" = activation by construction.
+- **Cause #3 — pretrained priors suffice.** Our answer is routing/budget: [evaluate by effects](../../theory/agent-memory-requirements/evaluate-memory-by-effects.md), don't inject memory where priors already win.
 
 Candidate experiment shape (open):
 - **Treatment** = condensate that passed the Commonplace pipeline (write conventions + gate suite). **Control** = a naive auto-summary of the same source. The gate suite is the independent variable.
@@ -54,8 +54,8 @@ Honest caveats to preserve (from the ingest report's "Limitations"):
 ## Related
 
 - [Faithful Self-Evolvers — snapshot](../../sources/llm-agents-are-not-always-faithful-self-evolvers.md) and [ingest report](../../sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md) — the source and our scoped reading.
-- [distillation](../../notes/definitions/distillation.md), [constraining](../../notes/definitions/constraining.md) — the two-axis model.
-- [evaluate memory by effects](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md), [activate behavior-changing memory](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md), [knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — the faithfulness/activation cluster.
+- [distillation](../../notes/definitions/distillation.md), [constraining](../../theory/definitions/constraining.md) — the two-axis model.
+- [evaluate memory by effects](../../theory/agent-memory-requirements/evaluate-memory-by-effects.md), [activate behavior-changing memory](../../theory/agent-memory-requirements/activate-behavior-changing-memory.md), [knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — the faithfulness/activation cluster.
 - Sibling llm-wiki (inquiringlines.com) ingested this paper's thesis unscoped — a live example of recall without a scoping gate; relevant if the design wants a contrast baseline for "condensate quality."
 
 ## Bookkeeping

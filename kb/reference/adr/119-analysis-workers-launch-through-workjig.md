@@ -27,7 +27,7 @@ Two forces decide what the base is, and would recur if this were
 reverted. The workflow stays ordinary Python that calls workers and makes
 control-flow decisions from their results, so the runtime must journal
 results, not control position
-([the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md)).
+([the practical scheduler is the host language](../../theory/the-practical-scheduler-is-the-host-language.md)).
 And a durable result must not promise more than it can: a key over the
 prompt, the inputs and the profile cannot show that ambient files, tools
 or configuration stayed unchanged, so results are scoped to one run in one

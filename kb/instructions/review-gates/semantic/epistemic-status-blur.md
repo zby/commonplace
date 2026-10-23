@@ -36,5 +36,5 @@ The same note, with the mechanism marked: "The measurements are consistent with 
 
 Relevant Notes:
 
-- [Mixed epistemic status must be preserved below the document level](../../../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — rests-on: the preservation requirement this gate enforces
-- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: warrant is tracked below the document level, so a document-level confidence register misreports the claims it covers
+- [Mixed epistemic status must be preserved below the document level](../../../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — rests-on: the preservation requirement this gate enforces
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: warrant is tracked below the document level, so a document-level confidence register misreports the claims it covers

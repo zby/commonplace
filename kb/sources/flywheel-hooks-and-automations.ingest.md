@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source is a concrete documentation example for [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md): event selection, node scope, and filters govern activation, while workflow steps determine the response. The asynchronous boundary makes the distinction consequential. A reliably triggered hook does not itself block or reverse the artifact write that triggered it. This supports separating activation from response semantics without implying that every hook is an enforcement mechanism.
+The source is a concrete documentation example for [Methodology enforcement is constraining](../theory/methodology-enforcement-is-constraining.md): event selection, node scope, and filters govern activation, while workflow steps determine the response. The asynchronous boundary makes the distinction consequential. A reliably triggered hook does not itself block or reverse the artifact write that triggered it. This supports separating activation from response semantics without implying that every hook is an enforcement mechanism.
 
-It also provides a bounded comparison with [Enforcement without structured recovery is incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md). Flywheel names terminal configuration failures and potentially retryable transport failures, making recovery policy distinct from event matching. The capture does not describe corrective, fallback, and escalation strategies as a complete recovery sequence, so it illustrates a narrower runtime distinction rather than validating the note's broader account.
+It also provides a bounded comparison with [Enforcement without structured recovery is incomplete](../theory/enforcement-without-structured-recovery-is-incomplete.md). Flywheel names terminal configuration failures and potentially retryable transport failures, making recovery policy distinct from event matching. The capture does not describe corrective, fallback, and escalation strategies as a complete recovery sequence, so it illustrates a narrower runtime distinction rather than validating the note's broader account.
 
 ## Extractable Value
 
@@ -45,4 +45,4 @@ This is provider documentation, with no incident history, workload measurements,
 
 ## Recommended Next Action
 
-Add Flywheel's post-finalization hook as a bounded example in [Methodology enforcement is constraining](../notes/methodology-enforcement-is-constraining.md), showing why fixed activation alone does not make artifact acceptance conditional on automation success.
+Add Flywheel's post-finalization hook as a bounded example in [Methodology enforcement is constraining](../theory/methodology-enforcement-is-constraining.md), showing why fixed activation alone does not make artifact acceptance conditional on automation success.

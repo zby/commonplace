@@ -139,9 +139,9 @@ The main tradeoff is authority visibility. Memori can insert extracted facts int
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memori has both explicit recall tools and registered-client pre-call injection.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memori has both explicit recall tools and registered-client pre-call injection.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Memori turns conversation and agent traces into facts, triples, attributes, summaries, and embeddings.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Memori's conversations, facts, triples, summaries, embeddings, hooks, and tools differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled facts, summaries, and conversation history mostly advise later action.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: SDK hooks, storage schemas, source/signal validators, and integration tool definitions route or constrain memory behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: completed turns and tool traces are distilled into retained memory for later tasks.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Memori's conversations, facts, triples, summaries, embeddings, hooks, and tools differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: recalled facts, summaries, and conversation history mostly advise later action.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: SDK hooks, storage schemas, source/signal validators, and integration tool definitions route or constrain memory behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: completed turns and tool traces are distilled into retained memory for later tasks.

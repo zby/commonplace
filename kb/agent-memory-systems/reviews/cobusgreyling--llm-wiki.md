@@ -109,8 +109,8 @@ The read path is context-efficient at the page/section level, not at the claim l
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki stores and retrieves wiki memory, but the reviewed implementation remains pull-only.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw files, wiki pages, AGENTS instructions, lint rules, search scores, and MCP tools carry different forms and authorities.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: LLM Wiki's index/search/section-expand path is mainly a context-efficiency design.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, source summaries, synthesis, answers, and operation logs mostly advise rather than enforce.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, templates, lint rules, and MCP/CLI command schemas shape future agent behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki stores and retrieves wiki memory, but the reviewed implementation remains pull-only.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw files, wiki pages, AGENTS instructions, lint rules, search scores, and MCP tools carry different forms and authorities.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: LLM Wiki's index/search/section-expand path is mainly a context-efficiency design.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, source summaries, synthesis, answers, and operation logs mostly advise rather than enforce.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, templates, lint rules, and MCP/CLI command schemas shape future agent behavior.

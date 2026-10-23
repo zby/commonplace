@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This is constrained cybernetic background for [Reflective system](../notes/definitions/reflective-system.md). It does not define actionable theory or reflection.
+This is constrained cybernetic background for [Reflective system](../theory/definitions/reflective-system.md). It does not define actionable theory or reflection.
 
 ## Inherited Vocabulary
 

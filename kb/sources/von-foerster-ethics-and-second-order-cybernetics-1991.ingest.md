@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This reinforces the human-inclusive boundary in [Reflective system](../notes/definitions/reflective-system.md), but the 1979 paper remains the shorter primary vocabulary source.
+This reinforces the human-inclusive boundary in [Reflective system](../theory/definitions/reflective-system.md), but the 1979 paper remains the shorter primary vocabulary source.
 
 ## Inherited Vocabulary
 

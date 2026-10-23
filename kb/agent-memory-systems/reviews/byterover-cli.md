@@ -146,8 +146,8 @@ The biggest design split is authority. ByteRover deliberately makes the calling 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: ByteRover stores a rich context tree, but topic memory usually affects agents only after explicit query.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: ByteRover requires separating topics, sidecar ranking signals, logs, hook instructions, and archive stubs by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: returned topics, query logs, curate logs, and archive stubs mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hook templates, MCP tool contracts, HTML validators, path guards, and ranking policies configure future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ByteRover turns task/file/query traces into curated topics, sidecar signals, and maintenance candidates.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: ByteRover stores a rich context tree, but topic memory usually affects agents only after explicit query.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: ByteRover requires separating topics, sidecar ranking signals, logs, hook instructions, and archive stubs by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: returned topics, query logs, curate logs, and archive stubs mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: hook templates, MCP tool contracts, HTML validators, path guards, and ranking policies configure future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ByteRover turns task/file/query traces into curated topics, sidecar signals, and maintenance candidates.

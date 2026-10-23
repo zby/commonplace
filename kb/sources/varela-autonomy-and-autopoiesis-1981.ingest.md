@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This is a terminological constraint on [Reflective system](../notes/definitions/reflective-system.md). Its “closure” is not the same mechanism as reflection or a methodology being closed under its recommendations.
+This is a terminological constraint on [Reflective system](../theory/definitions/reflective-system.md). Its “closure” is not the same mechanism as reflection or a methodology being closed under its recommendations.
 
 ## Inherited Vocabulary
 

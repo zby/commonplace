@@ -1,7 +1,7 @@
 # From operator interventions to one unattended-work test
 
 Commissioned by the operator on 2026-10-18: develop the consequences of
-[the interaction-function inventory](../../notes/unattended-work-needs-the-functions-that-interaction-supplied.md)
+[the interaction-function inventory](../../theory/unattended-work-needs-the-functions-that-interaction-supplied.md)
 for making Commonplace more automatic, retaining only gaps in existing work.
 This investigation belongs to the existing workshop; it does not add a new
 failure catalogue or authorize changes to processing procedures.
@@ -10,10 +10,10 @@ failure catalogue or authorize changes to processing procedures.
 
 | Consequence | Existing home and remaining work |
 |---|---|
-| Learn from interventions; measure the work they support | [Human-effort note](../../notes/increasing-computational-autonomy-relocates-human-effort.md): now distinguishes missing information, activation failures, and reserved decisions before choosing a repair. |
-| Detect when support is needed | [Activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) and [trigger dependency](../../notes/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md) already carry this argument. Identify the actual trigger in the selected workflow. |
-| Handle consequential conditions discovered during execution | [Delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) and [productive deferral](../../notes/productive-deferral-requires-option-evidence-and-convergence.md) already govern choices and return conditions. Inspect unresolved branches rather than write another general claim. |
-| Continue after a human decision | The [workshop-layer note](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) supplies the place for working state. Test what a fresh executor needs to resume; durable storage alone does not establish successful continuation. |
+| Learn from interventions; measure the work they support | [Human-effort note](../../theory/increasing-computational-autonomy-relocates-human-effort.md): now distinguishes missing information, activation failures, and reserved decisions before choosing a repair. |
+| Detect when support is needed | [Activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) and [trigger dependency](../../theory/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md) already carry this argument. Identify the actual trigger in the selected workflow. |
+| Handle consequential conditions discovered during execution | [Delegation](../../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) and [productive deferral](../../theory/productive-deferral-requires-option-evidence-and-convergence.md) already govern choices and return conditions. Inspect unresolved branches rather than write another general claim. |
+| Continue after a human decision | The [workshop-layer note](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) supplies the place for working state. Test what a fresh executor needs to resume; durable storage alone does not establish successful continuation. |
 | Evaluate the process as well as the artifact | Reuse the [operator-work experiment template](../first-downstream-run/experiment-template.md), adding missed conditions and recovery effort for this local comparison. Its separate outside-use commission remains unchanged. |
 
 ## Bounded investigation

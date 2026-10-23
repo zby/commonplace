@@ -36,7 +36,7 @@ No architecture necessarily uses all these stages or these names. The provisiona
 
 This is potentially significant because the stages imply different interventions and evaluations. More storage helps none of them by itself. Better retrieval addresses only the early transitions. Stronger authority can help or harm later transitions depending on whether the selected artifact is warranted.
 
-**Local standing:** [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) already owns the important high-level distinction, while [memory design adds operational axes to artifact analysis](../../notes/memory-design-adds-operational-axes-to-artifact-analysis.md) owns activation policy. Do not create a new note unless a worked failure set proves that subdividing activation changes diagnosis or design.
+**Local standing:** [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) already owns the important high-level distinction, while [memory design adds operational axes to artifact analysis](../../theory/memory-design-adds-operational-axes-to-artifact-analysis.md) owns activation policy. Do not create a new note unless a worked failure set proves that subdividing activation changes diagnosis or design.
 
 **Best grounding comparison:** ACT-R retrieval/buffers versus LIDA workspace/broadcast. The question is not whether either describes LLMs. It is whether their process decompositions reveal empirically distinguishable failure stages in an agent trace.
 
@@ -51,7 +51,7 @@ This is potentially significant because the stages imply different interventions
 - commitment: which plan is currently being pursued?
 - behavioral authority: who consumes the artifact, through what channel, with what force?
 
-The most important local protection is already explicit: [behavioral authority](../../notes/definitions/behavioral-authority.md) is not confidence, relevance, or representational form. The new candidate is narrower: context selectors and review queues may need **typed priority contributions** rather than one opaque rank. A safety rule can be low-frequency and low-similarity yet mandatory; a novel observation can deserve attention without high confidence; a highly credible background fact can be irrelevant to the current decision.
+The most important local protection is already explicit: [behavioral authority](../../theory/definitions/behavioral-authority.md) is not confidence, relevance, or representational form. The new candidate is narrower: context selectors and review queues may need **typed priority contributions** rather than one opaque rank. A safety rule can be low-frequency and low-similarity yet mandatory; a novel observation can deserve attention without high confidence; a highly credible background fact can be irrelevant to the current decision.
 
 **Significance test:** find one shipped or planned selector where collapsing these quantities causes a wrong inclusion, exclusion, or order. Without a worked case, this remains attractive ontology rather than a design need.
 
@@ -71,13 +71,13 @@ The most important local protection is already explicit: [behavioral authority](
 
 This sharpens "learn from traces." Different trace events call for different products. A generic summarizer tends to turn all of them into prose memories, even when the missing capacity is a selector, an exception, a process model, or executable procedure.
 
-The existing KB already rejects retention alone as learning: [constraining during deployment is continuous learning](../../notes/constraining-during-deployment-is-continuous-learning.md) and [trace-extracted memory earns authority per operation, not at capture](../../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) require operative, governed change. The plausible addition is a **trigger → missing-capacity → artifact-form** diagnostic, if real trace cases populate more than one row.
+The existing KB already rejects retention alone as learning: [constraining during deployment is continuous learning](../../theory/constraining-during-deployment-is-continuous-learning.md) and [trace-extracted memory earns authority per operation, not at capture](../../theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) require operative, governed change. The plausible addition is a **trigger → missing-capacity → artifact-form** diagnostic, if real trace cases populate more than one row.
 
 **Best grounding comparison:** Soar for impasse and chunking; EPAM or CHREST for discrimination; HTM only if sequence-conditioned memory becomes an active design question.
 
 ## Pattern 4: compilation is a scoped dependency claim
 
-ACT-R production compilation and Soar chunking are already used in [the two-layer execution-system note](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md). The scans add one warning worth retaining: a learned fast path is not merely a shorter trace. It asserts that a result depends on some conditions and not on discarded intermediate context.
+ACT-R production compilation and Soar chunking are already used in [the two-layer execution-system note](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md). The scans add one warning worth retaining: a learned fast path is not merely a shorter trace. It asserts that a result depends on some conditions and not on discarded intermediate context.
 
 That makes compilation a lineage and generalization problem:
 
@@ -103,7 +103,7 @@ For Commonplace, this suggests that connection discovery should not be evaluated
 - preserve competing mappings until one explains more of the structure;
 - state the conceptual "slippage" required for any analogy.
 
-This could explain why short, composable notes matter beyond retrieval: they can participate in several transient coalitions without requiring one fixed place in a taxonomy. It also gives a process interpretation to [fluid resolution switching](../../notes/a-knowledge-base-should-support-fluid-resolution-switching.md).
+This could explain why short, composable notes matter beyond retrieval: they can participate in several transient coalitions without requiring one fixed place in a taxonomy. It also gives a process interpretation to [fluid resolution switching](../../theory/a-knowledge-base-should-support-fluid-resolution-switching.md).
 
 **Significance test:** compare single-pass connection retrieval with an iterative mapping-and-retrieval process on cases where the decisive relation has low lexical similarity. Require external or internal evidence to judge the final relation; coherence alone is insufficient.
 

@@ -6,7 +6,7 @@ tags: [constraining, learning-theory]
 
 # Bidirectional codification as a comparative test
 
-[Codification and relaxing navigate the bitter lesson boundary](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) currently reads as design guidance: codify what stabilizes, relax what proves brittle. The guidance embeds a comparative claim nobody has tested — that the *bidirectionality* is load-bearing, not just prudent. The conjecture, stated so it can lose:
+[Codification and relaxing navigate the bitter lesson boundary](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) currently reads as design guidance: codify what stabilizes, relax what proves brittle. The guidance embeds a comparative claim nobody has tested — that the *bidirectionality* is load-bearing, not just prudent. The conjecture, stated so it can lose:
 
 > For task families containing both underspecified judgment and recurring exact regularities, a system that can move behavior from natural-language into symbolic form as it stabilizes — and relax it back when the codification proves brittle — achieves a better reliability–generality–cost frontier than a system with a fixed boundary between learned and codified behavior, and than a system that promotes one way only.
 
@@ -14,8 +14,8 @@ This explains why the two readable forms are needed *together*: natural language
 
 ## Current state (as of 2026-07-28)
 
-- The codification/relaxing note supplies the operators and [operational relaxing signals](../../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md) the detection side. The deploy-time-learning note used to assert the reversibility claim in passing ("a system that can only tighten ratchets itself into brittleness"); its 2026-08-18 reframe into [retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) removed that passage, so the reversibility claim now rests on the codification/relaxing note alone, still without comparative evidence.
-- The [scheduler note](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) now names codification as the write path into a learnable symbolic layer, and [oracle accumulation](../../notes/oracle-accumulation-improves-the-selection-environment.md) gives retained checks their compounding role — both presuppose the promotion direction works; neither tests relaxation.
+- The codification/relaxing note supplies the operators and [operational relaxing signals](../../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md) the detection side. The deploy-time-learning note used to assert the reversibility claim in passing ("a system that can only tighten ratchets itself into brittleness"); its 2026-08-18 reframe into [retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) removed that passage, so the reversibility claim now rests on the codification/relaxing note alone, still without comparative evidence.
+- The [scheduler note](../../theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) now names codification as the write path into a learnable symbolic layer, and [oracle accumulation](../../theory/oracle-accumulation-improves-the-selection-environment.md) gives retained checks their compounding role — both presuppose the promotion direction works; neither tests relaxation.
 - No system in the KB's coverage demonstrates automated relaxation; one-way promotion is the observed norm in surveyed loops.
 - Originates from the mixed-form-learning workshop's disposition of an external-review conjecture (2026-07-28).
 

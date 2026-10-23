@@ -14,9 +14,9 @@ authoring and maintenance cost, unreliable consumption.
 The consequence is stated in the vocabulary the KB already uses for itself. An
 ADR asserts what was decided and why; it binds nothing on its own, because
 nothing consults it. Retention without a consumer is storage, not
-[operative change](../../notes/definitions/operative-change.md) — and a
+[operative change](../../theory/definitions/operative-change.md) — and a
 decision whose record no operation reads is not a
-[system-definition artifact](../../notes/definitions/system-definition-artifact.md)
+[system-definition artifact](../../theory/definitions/system-definition-artifact.md)
 however carefully it was written. The ADR type spec has required a named
 operativity path since 2026-07-24, but that path is prose inside the ADR: it
 names a consumer without giving the consumer anything to read.
@@ -292,11 +292,11 @@ certified currency reproduces the stale-index failure one level up.
 
 Relevant Notes:
 
-- [Operative change](../../notes/definitions/operative-change.md) — rests-on: a retained decision reaches later behavior only through a consumer, a channel, and a force, which is the property the ADR set currently lacks
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) — rests-on: binding force comes from a consumption path, so an ADR nothing consults is data rather than a system definition
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why the candidate's back-pointer must be validator-checked and why the hand-maintained index option is rejected outright
-- [Indexes lower recall when they suppress retrieval that would find more](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a partial routing surface must not suppress retrieval with greater task-relevant coverage, the constraint that eliminates option A
-- [Agent statelessness makes routing architectural, not learned](../../notes/agent-statelessness-makes-routing-architectural-not-learned.md) — rests-on: why consultation cannot be left to accumulated habit and must be built into what the operation loads
+- [Operative change](../../theory/definitions/operative-change.md) — rests-on: a retained decision reaches later behavior only through a consumer, a channel, and a force, which is the property the ADR set currently lacks
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) — rests-on: binding force comes from a consumption path, so an ADR nothing consults is data rather than a system definition
+- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why the candidate's back-pointer must be validator-checked and why the hand-maintained index option is rejected outright
+- [Indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a partial routing surface must not suppress retrieval with greater task-relevant coverage, the constraint that eliminates option A
+- [Agent statelessness makes routing architectural, not learned](../../theory/agent-statelessness-makes-routing-architectural-not-learned.md) — rests-on: why consultation cannot be left to accumulated habit and must be built into what the operation loads
 - [ADR 074 — Git is the change-history layer](../adr/074-git-is-the-change-history-layer.md) — compares-with: the precedent for an instruction-declared read path, which option B generalizes
 - [ADR 077 — Content routing by regeneration source and consumer](../adr/077-content-routing-by-regeneration-source-and-consumer.md) — compares-with: the routing table whose row 4 records this gap and hands it here
 - [ADR type spec](../types/adr.md) — see-also: the operativity-path requirement this proposal would make checkable

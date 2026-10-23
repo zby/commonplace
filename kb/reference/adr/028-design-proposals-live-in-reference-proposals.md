@@ -41,4 +41,4 @@ Harder / accepted costs:
 
 Relevant Notes:
 
-- [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) — rests-on: the region-level belief/selection distinction, adoption boundary, and existential-witness rule to which this routing decision applies
+- [Artifact classification separates content kind, lineage, and authority](../../theory/artifact-classification-separates-content-kind-lineage-and-authority.md) — rests-on: the region-level belief/selection distinction, adoption boundary, and existential-witness rule to which this routing decision applies

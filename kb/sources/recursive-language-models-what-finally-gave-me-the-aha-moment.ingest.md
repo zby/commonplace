@@ -50,15 +50,15 @@ The thread walks through a progressively more capable set of agent architectures
 The /connect discovery found 7 connections to KB notes and 1 to another source. The source is remarkably well-connected — it provides primary evidence for several core KB notes about agent architecture.
 
 **Strongest connections:**
-- **[rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md)** (grounds): This source is the detailed walkthrough that the note formalizes. The REPL mechanism, symbolic variable return, and scaffold truncation described here are exactly what the note abstracts into "the model writes the orchestrator rather than being it." Critically, the note does not currently cite this source.
-- **[ephemeral-computation-prevents-accumulation](../notes/ephemeral-computation-prevents-accumulation.md)** (exemplifies): The source demonstrates ephemerality in action — code is generated, executed in the REPL, and discarded. The note already uses RLM as its lead example.
-- **[llm-context-is-composed-without-scoping](../notes/llm-context-is-composed-without-scoping.md)** (exemplifies): Subagent results as REPL variables demonstrate lexically scoped frames in practice — the parent never sees the subagent's internal reasoning.
-- **[bounded-context-orchestration-model](../notes/bounded-context-orchestration-model.md)** (exemplifies): The REPL namespace maps to state K, `recursive_llm()` to bounded calls, and LLM-written code to the `select` function.
+- **[rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents](../theory/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md)** (grounds): This source is the detailed walkthrough that the note formalizes. The REPL mechanism, symbolic variable return, and scaffold truncation described here are exactly what the note abstracts into "the model writes the orchestrator rather than being it." Critically, the note does not currently cite this source.
+- **[ephemeral-computation-prevents-accumulation](../theory/ephemeral-computation-prevents-accumulation.md)** (exemplifies): The source demonstrates ephemerality in action — code is generated, executed in the REPL, and discarded. The note already uses RLM as its lead example.
+- **[llm-context-is-composed-without-scoping](../theory/llm-context-is-composed-without-scoping.md)** (exemplifies): Subagent results as REPL variables demonstrate lexically scoped frames in practice — the parent never sees the subagent's internal reasoning.
+- **[bounded-context-orchestration-model](../theory/bounded-context-orchestration-model.md)** (exemplifies): The REPL namespace maps to state K, `recursive_llm()` to bounded calls, and LLM-written code to the `select` function.
 
 **Supporting connections:**
-- [context-efficiency-is-the-central-design-concern](../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (exemplifies): The entire architecture is driven by context scarcity.
-- [agent-orchestration-occupies-a-multi-dimensional-design-space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) (exemplifies): The five-architecture comparison is a concrete worked example of the multi-dimensional design space.
-- [llm-mediated-schedulers-are-a-degraded-variant](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) (contrasts): ReAct and CodeAct suffer the degraded-scheduler problem; RLM avoids it by moving bookkeeping into the REPL namespace.
+- [context-efficiency-is-the-central-design-concern](../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) (exemplifies): The entire architecture is driven by context scarcity.
+- [agent-orchestration-occupies-a-multi-dimensional-design-space](../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) (exemplifies): The five-architecture comparison is a concrete worked example of the multi-dimensional design space.
+- [llm-mediated-schedulers-are-a-degraded-variant](../theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) (contrasts): ReAct and CodeAct suffer the degraded-scheduler problem; RLM avoids it by moving bookkeeping into the REPL namespace.
 - [slate-moving-beyond-react-and-rlm.ingest.md](slate-moving-beyond-react-and-rlm.ingest.md) (extends): Slate explicitly critiques and extends the RLM architecture this source describes.
 
 ## Extractable Value
@@ -73,7 +73,7 @@ The /connect discovery found 7 connections to KB notes and 1 to another source. 
 
 5. **Context rot named explicitly** — the source uses the term "context rot" to describe performance degradation from irrelevant data accumulating in context. The KB uses related concepts but this exact term and the U-shaped retrieval curve observation add concreteness. [just-a-reference] (Low reach: the U-shaped retrieval curve is an empirical observation about specific models, not a general principle.)
 
-6. **Subagent isolation as REPL namespace scoping** — subagent responses become Python variables, not context injections. The internal trace (message history, tool calls) is hidden from the parent. This is the cleanest concrete example of the [scoping](../notes/llm-context-is-composed-without-scoping.md) problem being solved in practice. [quick-win] (High reach: namespace-based isolation is a general scoping mechanism.)
+6. **Subagent isolation as REPL namespace scoping** — subagent responses become Python variables, not context injections. The internal trace (message history, tool calls) is hidden from the parent. This is the cleanest concrete example of the [scoping](../theory/llm-context-is-composed-without-scoping.md) problem being solved in practice. [quick-win] (High reach: namespace-based isolation is a general scoping mechanism.)
 
 ## Limitations (our opinion)
 
@@ -83,18 +83,18 @@ The /connect discovery found 7 connections to KB notes and 1 to another source. 
 
 - **Implementation costs are invisible.** The author mentions using Pyodide inside Deno.js for the REPL sandbox, and DSPy's approach, but does not discuss latency overhead, cost per query (each `recursive_llm()` call is a full LLM invocation), failure modes (what happens when REPL code errors?), or debugging difficulty. The [Slate ingest](slate-moving-beyond-react-and-rlm.ingest.md) explicitly identifies over-decomposition as an RLM failure mode — this source does not acknowledge it.
 
-- **Sample size of one architecture comparison.** The five-architecture comparison uses a single problem class. The progression feels definitive but is actually a demonstration on one axis of the design space. The KB note on [agent orchestration as a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) warns against treating architectures as points on a single ladder, which is exactly what this source's progression does.
+- **Sample size of one architecture comparison.** The five-architecture comparison uses a single problem class. The progression feels definitive but is actually a demonstration on one axis of the design space. The KB note on [agent orchestration as a multi-dimensional design space](../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) warns against treating architectures as points on a single ladder, which is exactly what this source's progression does.
 
-- **"Distilling" is underspecified.** The source says the exploration stage "distills the complete prompt into smaller useful variables." Here the word appears to mean runtime data transformation. It does not say whether the transformation preserves claims, reshapes them for a consumer, or generalizes beyond them, so it does not identify a maintenance regime—exactly the ambiguity that [common-word vocabulary collisions create](../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md).
+- **"Distilling" is underspecified.** The source says the exploration stage "distills the complete prompt into smaller useful variables." Here the word appears to mean runtime data transformation. It does not say whether the transformation preserves claims, reshapes them for a consumer, or generalizes beyond them, so it does not identify a maintenance regime—exactly the ambiguity that [common-word vocabulary collisions create](../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md).
 
 - **No discussion of what the model cannot do in the REPL.** The source presents the REPL as a capability amplifier but does not discuss limits: what happens when the model writes buggy code? How does error recovery work? What percentage of tasks can actually be expressed as REPL operations? The framing is uniformly positive.
 
 ## Recommended Next Action
 
-Update [rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md): add this source as a citation under Relevant Notes — it is primary evidence for the note's claims and currently uncited. The citation should note that it grounds the note's analysis with a concrete walkthrough of the REPL mechanism, symbolic variable return, and scaffold-level truncation.
+Update [rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md](../theory/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md): add this source as a citation under Relevant Notes — it is primary evidence for the note's claims and currently uncited. The citation should note that it grounds the note's analysis with a concrete walkthrough of the REPL mechanism, symbolic variable return, and scaffold-level truncation.
 
 ---
 
 Relevant Notes:
 
-- [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — abstracted-from: model-written prompt exploration and transformation with printed or returned exposure witnesses an open programmable context-operation interface
+- [A context-operation interface bounds the projections its policy can realize](../theory/context-operation-interface-bounds-context-policy.md) — abstracted-from: model-written prompt exploration and transformation with printed or returned exposure witnesses an open programmable context-operation interface

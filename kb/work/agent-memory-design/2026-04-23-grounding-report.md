@@ -1,6 +1,6 @@
 # Grounding Report: Designing Agent Memory Systems
 
-Target: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+Target: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 This report looks for stronger theoretical grounding inside the KB for the design study. It is complementary to [the critique](./2026-04-23-critique.md): the critique identifies tensions and overclaims; this report identifies the best local foundations the note can lean on, plus the places where grounding should change the framing.
 
@@ -18,7 +18,7 @@ The main improvement is to reframe the note around the KB's stronger decompositi
 
 ### 1. Context Scarcity Grounds the Whole Design
 
-The note's opening premise, "storage is cheap, context is scarce," should be explicitly grounded in [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
+The note's opening premise, "storage is cheap, context is scarce," should be explicitly grounded in [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md).
 
 That note gives the stronger argument:
 
@@ -30,7 +30,7 @@ This supports the memory design's core inversion: do not optimize primarily for 
 
 > Memory architecture is a context-efficiency problem: stored material has value only through the context-engine decisions that select, compress, and frame it for a bounded consumer.
 
-[Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) sharpens the same point. It distinguishes persistence from loading: store more than you load. This is the cleanest grounding for the trace layer. Raw traces should persist as external state, but next-call context should be assembled deliberately.
+[Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md) sharpens the same point. It distinguishes persistence from loading: store more than you load. This is the cleanest grounding for the trace layer. Raw traces should persist as external state, but next-call context should be assembled deliberately.
 
 Recommended revision anchor:
 
@@ -39,7 +39,7 @@ Recommended revision anchor:
 
 ### 2. Runtime Decomposition Locates Memory's Subproblems
 
-[Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) gives a better architectural home for the design than "memory system."
+[Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) gives a better architectural home for the design than "memory system."
 
 Mapping:
 
@@ -49,7 +49,7 @@ Mapping:
 | Search, activation, cue injection, progressive disclosure | Context engine | What each bounded call sees |
 | Promotion jobs, periodic consolidation, authority decisions | Scheduler plus learning loop | When extraction, review, and mutation run |
 
-[Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) makes this explicit: memory decomposes into storage, retrieval/activation, and learning. This note should probably become one of the primary foundations for the design study.
+[Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) makes this explicit: memory decomposes into storage, retrieval/activation, and learning. This note should probably become one of the primary foundations for the design study.
 
 Recommended revision anchor:
 
@@ -58,7 +58,7 @@ Recommended revision anchor:
 
 ### 3. Role Split Is Strongly Grounded
 
-The note's knowledge-role versus system-definition-role split is one of its strongest moves. It is grounded by [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md), which separates:
+The note's knowledge-role versus system-definition-role split is one of its strongest moves. It is grounded by [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md), which separates:
 
 - artifact class: opaque, prose, symbolic;
 - backend: files, database, graph store, service memory;
@@ -66,9 +66,9 @@ The note's knowledge-role versus system-definition-role split is one of its stro
 
 The note uses the role axis correctly: the same bytes can answer a question in one context and steer behavior in another. That distinction is stronger than the usual "RAG vs memory" framing because it explains why ordinary retrieval solves only the knowledge half.
 
-[Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md) is the most important companion. It says persistence alone is insufficient: continual learning must govern behaviour-changing writes, not just store content. The design study's typed cue index is exactly a readable system-definition mechanism: a durable prose or symbolic artifact that changes future action.
+[Continual learning requires governing behaviour-changing writes, not just storing content](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md) is the most important companion. It says persistence alone is insufficient: continual learning must govern behaviour-changing writes, not just store content. The design study's typed cue index is exactly a readable system-definition mechanism: a durable prose or symbolic artifact that changes future action.
 
-[The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) strengthens this further. It frames prose and symbolic artifacts as the practical near-term learning substrate, because both are inspectable, versionable, and compete for the same context budget.
+[The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) strengthens this further. It frames prose and symbolic artifacts as the practical near-term learning substrate, because both are inspectable, versionable, and compete for the same context budget.
 
 Recommended revision anchor:
 
@@ -88,7 +88,7 @@ Layer mapping:
 | Observation/episode to library | Distillation plus review into durable knowledge or policy |
 | Procedure/cue to script/test | Distillation plus constraining/codification |
 
-[Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) also grounds the layer design. Observations, descriptions, episode summaries, indexes, and link phrases are all pointers at different resolution/cost/reliability tradeoffs. The memory architecture should be described as a progressive-disclosure system, not merely as a hierarchy of storage buckets.
+[Pointer design tradeoffs in progressive disclosure](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md) also grounds the layer design. Observations, descriptions, episode summaries, indexes, and link phrases are all pointers at different resolution/cost/reliability tradeoffs. The memory architecture should be described as a progressive-disclosure system, not merely as a hierarchy of storage buckets.
 
 The weaker point is necessity. The KB grounds "progressive distillation" and "separate retrieval interfaces for atomic and narrative memory." It does not prove that every implementation needs exactly four layers. The existing comparative review supports staged distillation and progressive disclosure, not a universal layer count.
 
@@ -99,7 +99,7 @@ Recommended revision anchor:
 
 ### 5. Activation Gap Grounds Typed Cues
 
-[Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) is the direct theoretical foundation for the cue-index design. It decomposes activation failure into:
+[Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) is the direct theoretical foundation for the cue-index design. It decomposes activation failure into:
 
 - cue match;
 - priority arbitration;
@@ -107,9 +107,9 @@ Recommended revision anchor:
 
 The design study reuses this decomposition well. Typed cue indexes are a concrete mechanism for cue match. Budgeted cue loading handles priority arbitration. Imperative framing, checkpoint insertion, and contradiction surfacing are commitment interventions.
 
-[Agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) gives a broader context-engine version of the same mechanism: the agent should not have to know what to load; the runtime should inject referenced or triggered context. Typed cues are one special case of automatic injection, keyed on action or situation rather than document reference.
+[Agent statelessness means the context engine should inject context automatically](../../theory/agent-statelessness-means-the-context-engine-should-inject-context.md) gives a broader context-engine version of the same mechanism: the agent should not have to know what to load; the runtime should inject referenced or triggered context. Typed cues are one special case of automatic injection, keyed on action or situation rather than document reference.
 
-[Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) adds a useful surface distinction. Some policy belongs in always-loaded files, some in capability descriptions, some in memory, and some in configuration injection. Cues should be placed according to read/write cadence and context cost, not all promoted to the same surface.
+[Always-loaded context mechanisms in agent harnesses](../../theory/always-loaded-context-mechanisms-in-agent-harnesses.md) adds a useful surface distinction. Some policy belongs in always-loaded files, some in capability descriptions, some in memory, and some in configuration injection. Cues should be placed according to read/write cadence and context cost, not all promoted to the same surface.
 
 Recommended revision anchor:
 
@@ -118,7 +118,7 @@ Recommended revision anchor:
 
 ### 6. Extraction Taxonomy Is an Oracle-Strength Taxonomy
 
-The current extraction taxonomy is useful but can be grounded more sharply in [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md).
+The current extraction taxonomy is useful but can be grounded more sharply in [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md).
 
 Signal mapping:
 
@@ -143,7 +143,7 @@ Recommended revision anchor:
 
 ### 7. Promotion and Graduation Are Constraining Decisions
 
-[Constraining](../../notes/definitions/constraining.md) and [Codification](../../notes/definitions/codification.md) are the best grounding for graduation paths.
+[Constraining](../../theory/definitions/constraining.md) and [Codification](../../theory/definitions/codification.md) are the best grounding for graduation paths.
 
 The design already gestures at a codification gradient. The stronger local theory says:
 
@@ -152,7 +152,7 @@ The design already gestures at a codification gradient. The stronger local theor
 - oracle strength determines what can safely codify;
 - premature constraining locks in brittle assumptions, so relaxing must remain possible.
 
-[Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md) is especially relevant for silent failures, repeated corrections, and procedure extraction. It gives the operational loop:
+[Spec mining is codification's operational mechanism](../../theory/spec-mining-as-codification.md) is especially relevant for silent failures, repeated corrections, and procedure extraction. It gives the operational loop:
 
 1. observe repeated behavior or failures;
 2. identify a deterministic rule or verifier;
@@ -179,7 +179,7 @@ The review's strongest finding is that agency model determines the architecture:
 
 The design study implicitly chooses external/post-session extraction plus human or agent review for high-risk promotion. That should be stated as an authority model.
 
-[Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) gives the caution: learned memory policy works when task-completion oracles exist. Open-ended KB/memory work usually lacks that oracle, so inspectable heuristics and review gates are not just conservative; they are a response to oracle weakness.
+[Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) gives the caution: learned memory policy works when task-completion oracles exist. Open-ended KB/memory work usually lacks that oracle, so inspectable heuristics and review gates are not just conservative; they are a response to oracle weakness.
 
 Recommended revision anchor:
 
@@ -193,7 +193,7 @@ Recommended revision anchor:
 
 ### 9. Navigability Grounds Search + Navigation
 
-The note's retrieval section distinguishes search, navigation, and activation. The strongest local grounding is the comparative review's "navigability versus retrieval" section plus [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md).
+The note's retrieval section distinguishes search, navigation, and activation. The strongest local grounding is the comparative review's "navigability versus retrieval" section plus [Quality signals for KB evaluation](../../theory/quality-signals-for-kb-evaluation.md).
 
 The key distinction:
 
@@ -214,11 +214,11 @@ Quality-signals also contributes useful evaluation ideas for the memory design:
 Recommended revision anchor:
 
 - Add "evaluation dimensions" after the retrieval section: direct retrieval, navigability, activation/behavioral uptake, and lifecycle health.
-- Treat noisy observations as a link/search pollution risk, grounded by [Flat memory predicts specific cross-contamination failures](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md).
+- Treat noisy observations as a link/search pollution risk, grounded by [Flat memory predicts specific cross-contamination failures](../../theory/flat-memory-predicts-specific-cross-contamination-failures-that-are.md).
 
 ### 10. Workshop Theory Grounds the Missing Active Layer
 
-The four memory layers are retrospective: they organize what happened and what should persist. [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) shows what is missing: active work-in-motion artifacts with state machines, dependencies, and expiration.
+The four memory layers are retrospective: they organize what happened and what should persist. [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) shows what is missing: active work-in-motion artifacts with state machines, dependencies, and expiration.
 
 This matters because memory extraction often runs through active work surfaces:
 
@@ -292,16 +292,16 @@ If a durable note or policy generates a cue, the cue is a compiled view. It shou
 
 High-value "Relevant Notes" additions:
 
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — primary foundation for context scarcity.
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — locates storage, activation, and scheduling responsibilities.
-- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — strongest local summary of memory as storage + context engineering + learning.
-- [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — grounds summaries, descriptions, cue triggers, and episode pointers as progressive-disclosure artifacts.
-- [The readable-artifact loop is the tractable unit for continual learning](../../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — grounds prose and symbolic memory artifacts as the practical learning substrate.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) — grounds the extraction taxonomy and build order.
-- [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md) — grounds silent failures, repeated corrections, and procedure-to-check graduation.
-- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the active work-surface gap.
-- [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md) — grounds navigability and soft-oracle evaluation.
-- [Memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — grounds why learned memory policy is attractive but not generally available without task oracles.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — primary foundation for context scarcity.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) — locates storage, activation, and scheduling responsibilities.
+- [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — strongest local summary of memory as storage + context engineering + learning.
+- [Pointer design tradeoffs in progressive disclosure](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md) — grounds summaries, descriptions, cue triggers, and episode pointers as progressive-disclosure artifacts.
+- [The readable-artifact loop is the tractable unit for continual learning](../../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — grounds prose and symbolic memory artifacts as the practical learning substrate.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) — grounds the extraction taxonomy and build order.
+- [Spec mining is codification's operational mechanism](../../theory/spec-mining-as-codification.md) — grounds silent failures, repeated corrections, and procedure-to-check graduation.
+- [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the active work-surface gap.
+- [Quality signals for KB evaluation](../../theory/quality-signals-for-kb-evaluation.md) — grounds navigability and soft-oracle evaluation.
+- [Memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) — grounds why learned memory policy is attractive but not generally available without task oracles.
 
 ## Candidate Extracted Claims
 

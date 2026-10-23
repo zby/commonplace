@@ -160,7 +160,7 @@ rejected evidence living in the target artifact and kept the ingest `## Quotes`
 pool as the evidence owner. An inline quotation is not a second evidence store:
 it is a checked copy of a quote the ingest already retains, admissible exactly
 because a validator re-derives it and fails on mismatch — the general rule that
-[a derived copy of recomputable truth must be checked or absent](../../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+[a derived copy of recomputable truth must be checked or absent](../../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
 The ingest remains the owner, and the required `## Quotes` tightening above is
 what keeps that true.
 
@@ -197,7 +197,7 @@ without touching any production criterion.
 
 Relevant Notes:
 
-- [A note is an atomic step relative to the check that reads it](../../../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
-- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption without which the bound would put over half the corpus in violation
+- [A note is an atomic step relative to the check that reads it](../../../theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
+- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../../theory/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption without which the bound would put over half the corpus in violation
 - [079-Grounding reviews budget sixteen distinct linked artifacts](../../adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md) — evidenced-by: the interim ceiling and the corpus measurement this option would leave in place as a non-binding ceiling
 - [Grounding alignment gate](../../../instructions/review-gates/semantic/grounding-alignment.md) — procedure: the criterion that carries the review-side budget today and would be unchanged

@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](https://scg.unibe.ch/archive/papers/Wuyt01a.pdf). It should not add a second evidence vote to [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../notes/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.
+The durable relationship is a `compares-with` lineage edge to [the 2001 snapshot](https://scg.unibe.ch/archive/papers/Wuyt01a.pdf). It should not add a second evidence vote to [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md). [Representational form](../theory/definitions/representational-form.md) still supplies the local constraint on generalizing from programming paradigms to natural-language/symbolic forms.
 
 ## Inherited Vocabulary
 

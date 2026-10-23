@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This source is the direct technical basis for the field-const runtime-charge example in [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md): it shows an optimized assumption being invalidated and dependent code being deoptimized, but does not establish that the triggering behavior is rare or bounded. It also supplies implementation evidence for [Instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md)'s old-shape specialization analogy by making the Map identity and invalidation dependency concrete. The broader [Fast properties in V8 ingest](./fast-properties-in-v8.ingest.md) is a companion account of HiddenClasses, inline caches, dictionary properties, and type pollution; this ingest owns the narrower Maps URL and trace rather than duplicating that broader role.
+This source is the direct technical basis for the field-const runtime-charge example in [Domain pricing routes an exception to idealization assessment but does not decide it](../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md): it shows an optimized assumption being invalidated and dependent code being deoptimized, but does not establish that the triggering behavior is rare or bounded. It also supplies implementation evidence for [Instantiation alone cannot model agent learning across sessions](../theory/instantiation-alone-cannot-model-agent-learning-across-sessions.md)'s old-shape specialization analogy by making the Map identity and invalidation dependency concrete. The broader [Fast properties in V8 ingest](./fast-properties-in-v8.ingest.md) is a companion account of HiddenClasses, inline caches, dictionary properties, and type pollution; this ingest owns the narrower Maps URL and trace rather than duplicating that broader role.
 
 ## Extractable Value
 
@@ -45,4 +45,4 @@ The sharpest trace concerns mutation of an existing field that TurboFan had trea
 
 ## Recommended Next Action
 
-Update [Instantiation alone cannot model agent learning across sessions](../notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md) to cite this ingest directly for its old-shape specialization analogy, while retaining the broader Fast Properties ingest for the surrounding runtime-cost account.
+Update [Instantiation alone cannot model agent learning across sessions](../theory/instantiation-alone-cannot-model-agent-learning-across-sessions.md) to cite this ingest directly for its old-shape specialization analogy, while retaining the broader Fast Properties ingest for the surrounding runtime-cost account.

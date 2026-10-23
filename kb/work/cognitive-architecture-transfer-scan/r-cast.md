@@ -27,7 +27,7 @@ The acronym expansion, exact relation to CAST, and internal module boundaries ne
 - **`RCAST-4` — verify common ground at coordination boundaries.** A shared file does not prove shared interpretation. Handoffs should include compact checks of goal, terminology, authority, and completion criteria.
 - **`RCAST-5` — retrieve a first workable pattern, then simulate it.** Experience-based recognition can reduce option search, but an unfamiliar or high-consequence situation should trigger critique or alternative generation before commitment.
 
-These ideas refine [frontloading](../../notes/frontloading-spares-execution-context.md): caller-resolved information is worth packaging when it is known and decision-relevant to the recipient.
+These ideas refine [frontloading](../../theory/frontloading-spares-execution-context.md): caller-resolved information is worth packaging when it is known and decision-relevant to the recipient.
 
 ## Method worth borrowing
 

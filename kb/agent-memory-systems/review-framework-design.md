@@ -45,7 +45,7 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Decision.** Model the review as **write side** (everything that changes the store) and **read side** (read-back, which only serves it). The write side carries two axes — **agency** (`manual`/`automatic`) and **curation operations** — with **trace-learning** demoted to a sub-section (the automatic-from-traces case). Manual curation is recorded as `agency: manual` only; it has no separate mechanism (it is authoring on existing content), its provenance is Lineage `authored`, and its quality is an affordances question in Core Ideas. Read-back loses its pre/post "timing" axis: there is one injection point, pre-invocation; the read's *trigger* may be noted, but not a timing.
 
-**Consequences.** Maintenance finally has a home (the curation-operations axis, D4). The `**Read-back timing:**` token and its `rb_pre_action`/`rb_post_action` columns are removed. The trace-learning material becomes a `### Trace-learning` sub-section under the required `## Write side` section. Rather than spawn a thin "no post-action read-back" note, read-back keeps its operational definition in this review spec and is *situated relative to activation* in [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) (the storage→context step — necessary for activation but not the same as it); the no-post-action point is a corollary of that single pre-invocation injection point.
+**Consequences.** Maintenance finally has a home (the curation-operations axis, D4). The `**Read-back timing:**` token and its `rb_pre_action`/`rb_post_action` columns are removed. The trace-learning material becomes a `### Trace-learning` sub-section under the required `## Write side` section. Rather than spawn a thin "no post-action read-back" note, read-back keeps its operational definition in this review spec and is *situated relative to activation* in [knowledge storage does not imply contextual activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md) (the storage→context step — necessary for activation but not the same as it); the no-post-action point is a corollary of that single pre-invocation injection point.
 
 ### D4 — Curation-operations vocabulary
 
@@ -128,4 +128,4 @@ its matching old method.
 Relevant Notes:
 
 - [agentic-memory-systems-comparative-review](./agentic-memory-systems-comparative-review.md) — see-also: the synthesis this framework feeds
-- [Rule-based context selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) — rests-on: grounds the read-back signal taxonomy and the single-injection-point argument
+- [Rule-based context selection needs a pre-existing signal](../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) — rests-on: grounds the read-back signal taxonomy and the single-injection-point argument

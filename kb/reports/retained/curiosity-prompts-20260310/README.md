@@ -4,7 +4,7 @@ This set preserves the completed Decapod prompt comparison used by the
 [agent-curiosity and structural-coherence investigation](../../../work/agent-curiosity-and-structural-coherence/README.md)
 to select and interpret later prompt experiments. Its report also records
 the episode discussed in [prompt ablation converts human insight to deployable
-framing](../../../notes/prompt-ablation-converts-human-insight-to-deployable-framing.md).
+framing](../../../theory/prompt-ablation-converts-human-insight-to-deployable-framing.md).
 
 ## Evidence
 

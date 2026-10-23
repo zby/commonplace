@@ -15,7 +15,7 @@ stable decision rule and its boundary. Repetition alone does not make an
 accidental sequence binding, and a single untested convenience does not earn
 codification.
 
-Instructions must be [**frontloaded**](../notes/frontloading-spares-execution-context.md)
+Instructions must be [**frontloaded**](../theory/frontloading-spares-execution-context.md)
 into the context their declared consumer actually receives. They may omit a
 rule supplied with binding force by verified Commonplace doctrine, an
 applicable contract, or the invoked skill. They may not assume the author's

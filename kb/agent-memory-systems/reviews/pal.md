@@ -130,9 +130,9 @@ Pal is not tagged trace-learning in this review because the local repository con
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Pal combines explicit pull retrieval with Agno-configured pushed learnings/history.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Pal's retained behavior is split across vector stores, SQL tables, files, sessions, schedules, instructions, and git history.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw files, wiki articles, SQL rows, session records, and retrieved sources mostly advise as evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: routing metadata, instructions, schedules, tools, evals, and learning settings configure future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Pal is primarily a context-routing system over heterogeneous personal data.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Pal is strong on discoverability and composition, weaker on review and trust gates for generated or learned artifacts.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Pal combines explicit pull retrieval with Agno-configured pushed learnings/history.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Pal's retained behavior is split across vector stores, SQL tables, files, sessions, schedules, instructions, and git history.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw files, wiki articles, SQL rows, session records, and retrieved sources mostly advise as evidence.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: routing metadata, instructions, schedules, tools, evals, and learning settings configure future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Pal is primarily a context-routing system over heterogeneous personal data.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Pal is strong on discoverability and composition, weaker on review and trust gates for generated or learned artifacts.

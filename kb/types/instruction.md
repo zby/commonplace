@@ -96,8 +96,8 @@ shape that fits the work.}
 
 Relevant Notes:
 
-- [An author should fix what the executor can't determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) - rationale for the detail-level rule: which details to fix and which to leave to the executor
-- [Operative change](../notes/definitions/operative-change.md) - rationale for the operativity rule: a change operates only through a consumer, channel, and force over a declared horizon
-- [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
-- [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) - rationale for the consequential-worker handoff and retained-parent-control rule
-- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../notes/productive-deferral-requires-option-evidence-and-convergence.md) - rationale for the return and convergence rule on intentionally coarse consequential choices
+- [An author should fix what the executor can't determine, not what it will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) - rationale for the detail-level rule: which details to fix and which to leave to the executor
+- [Operative change](../theory/definitions/operative-change.md) - rationale for the operativity rule: a change operates only through a consumer, channel, and force over a declared horizon
+- [A retrieval miss is a local reflective-path failure](../theory/a-retrieval-miss-is-a-local-reflective-path-failure.md) - rationale for the description and routing rules: retrieval is the wire a retained instruction acts along, and it is best-effort unless a loaded surface enumerates the route
+- [Intent-framed delegation is a control regime; prompt length does not establish it](../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) - rationale for the consequential-worker handoff and retained-parent-control rule
+- [Productive deferral requires a preserved option, discriminating evidence, and a convergence rule](../theory/productive-deferral-requires-option-evidence-and-convergence.md) - rationale for the return and convergence rule on intentionally coarse consequential choices

@@ -12,7 +12,7 @@ Work covers institution theory and adjacent treatments of specification, semanti
 
 Current write scope is this directory and its entry in the active workshop index. Library revisions and durable source ingests are candidate outputs for a later promotion pass. Reading notes distinguish inspected text from abstract-only leads and our proposed transfers from source claims. Web access dates and source locators are retained; these notes are not pinned source ingests.
 
-The [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the experimental interpreter definition. Its operator-imposed boundary remains: nothing in the library may depend on that device until an adopted definition exists. This workshop may inform that investigation, but neither adopts its device nor resolves its correctness relation by naming satisfaction. The proposal [Retained theories compared with retained traces under resource limits](../../notes/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md) holds the unadopted resource-bounded compression argument; sharing mathematical vocabulary does not establish its empirical or explanatory claims.
+The [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the experimental interpreter definition. Its operator-imposed boundary remains: nothing in the library may depend on that device until an adopted definition exists. This workshop may inform that investigation, but neither adopts its device nor resolves its correctness relation by naming satisfaction. The proposal [Retained theories compared with retained traces under resource limits](../../theory/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md) holds the unadopted resource-bounded compression argument; sharing mathematical vocabulary does not establish its empirical or explanatory claims.
 
 ## What closes this workshop
 
@@ -28,10 +28,10 @@ The [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the experi
 
 ## Local starting points
 
-- [Agentic systems interpret underspecified instructions](../../notes/agentic-systems-interpret-underspecified-instructions.md): audit the distinction between multiple realizations and imprecise denotation, and the scope of its impossibility argument.
-- [Three-way diagnosis](../../notes/llm-output-deviation-requires-three-way-diagnosis.md): separates intended outputs, valid outputs, and the interpreter's distribution.
-- [Interpreter failure](../../notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md): supplies the conformance question without making actual model behavior its own standard.
-- [Constraining](../../notes/definitions/constraining.md): tests whether a change preserves meaning, narrows admitted candidates, or changes the interpretation convention.
+- [Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md): audit the distinction between multiple realizations and imprecise denotation, and the scope of its impossibility argument.
+- [Three-way diagnosis](../../theory/llm-output-deviation-requires-three-way-diagnosis.md): separates intended outputs, valid outputs, and the interpreter's distribution.
+- [Interpreter failure](../../theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md): supplies the conformance question without making actual model behavior its own standard.
+- [Constraining](../../theory/definitions/constraining.md): tests whether a change preserves meaning, narrows admitted candidates, or changes the interpretation convention.
 
 ## Continuation rule
 

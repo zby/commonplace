@@ -6,7 +6,7 @@ tags: [computational-model, self-improving-systems, learning-theory]
 
 # The declared Commonplace frame
 
-Self-improvement, reflectivity, and autonomy attributions are frame-indexed: the bearer is a bounded system, not a substrate, so an attribution is elliptical until its boundary is named — the semantics is stated in the [self-improving system definition's Provenance](../notes/definitions/self-improving-system.md). This note is the single citable declaration of Commonplace's own frame. Applications cite it instead of re-deriving the boundary; an analysis that needs a different boundary declares its own frame explicitly and names the departure, rather than silently drifting from this one.
+Self-improvement, reflectivity, and autonomy attributions are frame-indexed: the bearer is a bounded system, not a substrate, so an attribution is elliptical until its boundary is named — the semantics is stated in the [self-improving system definition's Provenance](../theory/definitions/self-improving-system.md). This note is the single citable declaration of Commonplace's own frame. Applications cite it instead of re-deriving the boundary; an analysis that needs a different boundary declares its own frame explicitly and names the departure, rather than silently drifting from this one.
 
 ## The boundary
 
@@ -22,13 +22,13 @@ Within the frame, the repository, commands, validators, review store, and agents
 
 - Any membership, reflectivity, closure, or allocation claim about Commonplace is read against this frame unless the claim declares a different one. The assessment horizon is declared per attribution; the frame fixes who and what, not when.
 - Provider models and weights sit outside, so Commonplace has no reflective coverage of their distributed-parametric form under this frame. Requested model bindings are localized configuration inside the boundary: the repository makes the request explicit and revisable, providing a possible selection-control surface over an external dependency when the harness honors it. The [six-path audit](../reports/retained/six-commonplace-paths-establish-broad-addressability-not-completeness.md#requested-model-bindings-are-not-realized-bindings) shows that requested-to-realized binding is not currently trustworthy.
-- Computational-closure readings under this frame count human dependencies only. How a hosted model's dependence on outside inference infrastructure should read is addressed separately in [the closure note](../notes/methodological-and-computational-closure-track-different-changes.md).
+- Computational-closure readings under this frame count human dependencies only. How a hosted model's dependence on outside inference infrastructure should read is addressed separately in [the closure note](../theory/methodological-and-computational-closure-track-different-changes.md).
 
 ---
 
 Relevant Notes:
 
-- [Self-improving system](../notes/definitions/self-improving-system.md) — defined-in: the frame-indexed predicate whose ellipsis this declaration discharges for Commonplace
-- [Reflective system](../notes/definitions/reflective-system.md) — defined-in: the boundary-parametric criterion assessed against this frame
-- [Commonplace as a reflective self-improving system](../notes/evidence/commonplace-as-a-reflective-system.md) — see-also: the classification and worked trace assessed under this frame
-- [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — rests-on: the allocation and closure readings that require a declared frame to be well-formed
+- [Self-improving system](../theory/definitions/self-improving-system.md) — defined-in: the frame-indexed predicate whose ellipsis this declaration discharges for Commonplace
+- [Reflective system](../theory/definitions/reflective-system.md) — defined-in: the boundary-parametric criterion assessed against this frame
+- [Commonplace as a reflective self-improving system](../theory/evidence/commonplace-as-a-reflective-system.md) — see-also: the classification and worked trace assessed under this frame
+- [Methodological and computational closure track different changes](../theory/methodological-and-computational-closure-track-different-changes.md) — rests-on: the allocation and closure readings that require a declared frame to be well-formed

@@ -24,10 +24,10 @@ ACT-R therefore offers a more articulated vocabulary than "the agent knows the n
 
 ## Transfer candidates
 
-- **`ACTR-1` — model retrieval as a state transition with failure.** Record the cue, candidate set, selected artifact, latency/cost, and whether the result changed the next decision. This would connect retrieval evaluation to [contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) rather than stopping at relevance.
+- **`ACTR-1` — model retrieval as a state transition with failure.** Record the cue, candidate set, selected artifact, latency/cost, and whether the result changed the next decision. This would connect retrieval evaluation to [contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) rather than stopping at relevance.
 - **`ACTR-2` — distinguish content activation from action utility.** A note can be highly relevant yet lose to a habitual workflow. Retrieval rank and procedure-selection rank should not be conflated.
 - **`ACTR-3` — treat frequency, recency, and situational cues as different retrieval evidence.** A single similarity score hides whether an artifact is generally practiced, recently useful, or specifically cued by the current situation.
-- **`ACTR-4` — use repeated deliberation as a proceduralization signal.** When the same multi-step interpretation repeatedly resolves the same condition, propose a skill, validator, route, or other fast path. This is already adjacent to the [two-layer execution-system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) account; ACT-R may contribute sharper eligibility and miscompilation questions.
+- **`ACTR-4` — use repeated deliberation as a proceduralization signal.** When the same multi-step interpretation repeatedly resolves the same condition, propose a skill, validator, route, or other fast path. This is already adjacent to the [two-layer execution-system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) account; ACT-R may contribute sharper eligibility and miscompilation questions.
 - **`ACTR-5` — expose narrow interfaces between subsystems.** A module may hold rich state while only a small result crosses into the active decision context. This is a useful restraint on "load everything" memory designs.
 
 ## Method worth borrowing

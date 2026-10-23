@@ -144,8 +144,8 @@ The major divergence is authority. ClawVault can push memory into OpenClaw promp
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: ClawVault stores many memories, but only plugin hooks and explicit commands decide whether they enter context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: vault notes, facts, graph indexes, checkpoints, and hook instructions carry different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Markdown notes, observations, facts, and retrieved snippets mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: OpenClaw hook instructions, config schemas, message filters, and search/profile policies shape behavior with stronger force.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ClawVault extracts observations, facts, and distilled notes from sessions and hook events.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: ClawVault stores many memories, but only plugin hooks and explicit commands decide whether they enter context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: vault notes, facts, graph indexes, checkpoints, and hook instructions carry different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Markdown notes, observations, facts, and retrieved snippets mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: OpenClaw hook instructions, config schemas, message filters, and search/profile policies shape behavior with stronger force.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ClawVault extracts observations, facts, and distilled notes from sessions and hook events.

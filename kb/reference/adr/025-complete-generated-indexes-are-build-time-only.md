@@ -14,7 +14,7 @@ status: accepted
 
 - Generated navigation is committed and read whole by agents: the per-collection `dir-index.md` and the per-tag `## Other tagged notes` tail. `cp-skill-connect` (per [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md)) reads `kb/notes/dir-index.md` first. A full index read costs tens of KB before any candidate body is selected; under sub-agent decomposition, per-fork load then grows with total collection size rather than with the task.
 - These complete listings are pure denormalization: every title and description already lives in the note's own frontmatter.
-- The root cause is an access-mode asymmetry: an agent reads an index whole (linear cost into bounded context, every byte counted), while a human skims, scrolls, and Ctrl-Fs (sublinear). The same complete listing is context debt for the agent and a convenience for the human — which is why we design for the first-time human except where [access cost dominates](../../notes/design-for-the-first-time-human-except-on-access-cost.md).
+- The root cause is an access-mode asymmetry: an agent reads an index whole (linear cost into bounded context, every byte counted), while a human skims, scrolls, and Ctrl-Fs (sublinear). The same complete listing is context debt for the agent and a convenience for the human — which is why we design for the first-time human except where [access cost dominates](../../theory/design-for-the-first-time-human-except-on-access-cost.md).
 - ADR 003 bet that index-first discovery would stay viable by keeping the collection curated and loading the index in portions. Collection growth has made the complete-index read the dominant per-fork cost, so that bet no longer holds.
 
 ## Decision
@@ -61,8 +61,8 @@ Deferred (mechanism, not direction):
 ## Links
 
 - [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md) — supersedes: this replaces 003's index-first primary discovery while retaining its curated-focused-index surface
-- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the per-fork cost of a whole-index read is what makes retiring it worthwhile
-- [two-context-boundaries-govern-collection-operations](../../notes/two-context-boundaries-govern-collection-operations.md) — rests-on: per-fork load is the boundary this decision optimizes
-- [feasibility-is-the-heaviest-forks-net-load](../../notes/feasibility-is-the-heaviest-forks-net-load.md) — rests-on: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
-- [index completeness does not determine editorial orientation](../../notes/index-completeness-does-not-determine-editorial-orientation.md) — rests-on: why curated heads stay committed while generated listings move to build time
+- [context-efficiency-is-the-central-design-concern-in-agent-systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the per-fork cost of a whole-index read is what makes retiring it worthwhile
+- [two-context-boundaries-govern-collection-operations](../../theory/two-context-boundaries-govern-collection-operations.md) — rests-on: per-fork load is the boundary this decision optimizes
+- [feasibility-is-the-heaviest-forks-net-load](../../theory/feasibility-is-the-heaviest-forks-net-load.md) — rests-on: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
+- [index completeness does not determine editorial orientation](../../theory/index-completeness-does-not-determine-editorial-orientation.md) — rests-on: why curated heads stay committed while generated listings move to build time
 - [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) — procedure: the discovery skill whose standard read path this decision rewrites

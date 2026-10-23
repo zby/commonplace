@@ -144,8 +144,8 @@ The important design contrast is authority granularity. SAGE can inject recent o
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SAGE turns turn summaries, reflections, and lifecycle events into governed memory records.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE stores many committed records, but behavior changes through recall tools, hooks, and turn-cycle returns.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE mixes natural-language memories, symbolic consensus state, hooks, validation logic, and embedding-based selectors.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: committed memories are primarily evidence/context until read back through MCP or hooks.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, skill instructions, validators, access rules, and fork gates shape future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: SAGE retains agent-authored summaries and reflections derived from session traces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE stores many committed records, but behavior changes through recall tools, hooks, and turn-cycle returns.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: SAGE mixes natural-language memories, symbolic consensus state, hooks, validation logic, and embedding-based selectors.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: committed memories are primarily evidence/context until read back through MCP or hooks.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, skill instructions, validators, access rules, and fork gates shape future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: SAGE retains agent-authored summaries and reflections derived from session traces.

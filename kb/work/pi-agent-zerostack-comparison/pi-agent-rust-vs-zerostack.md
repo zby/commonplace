@@ -151,10 +151,10 @@ Zerostack's worktree commands are a good terminal workflow affordance, but they 
 
 Relevant Notes:
 
-- [Agent runtimes decompose into scheduler context engine and execution substrate](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the scheduler/context/execution split used above.
-- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) explains why `pi_agent_rust`'s tree, replay, and governance surfaces should not be collapsed into a single "more agentic" ladder.
-- [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) clarifies the difference between `pi_agent_rust` branch summaries, zerostack prompt loops, and raw transcript inheritance.
-- [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md) frames the distinction between stored traces and what gets loaded into the next model call.
-- [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md) explains why first-class branches or child-agent frames matter when context contamination becomes a design problem.
-- [Stateful tools recover control by becoming hidden schedulers](../../notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md) helps interpret zerostack's loop feature as scheduler relocation rather than true sub-agent delegation.
-- [Final task success does not establish intended-path health](../../notes/final-task-success-does-not-establish-intended-path-health.md) motivates the emphasis on observability, replay, and separate path-deviation and degraded-execution signals.
+- [Agent runtimes decompose into scheduler context engine and execution substrate](../../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) grounds the scheduler/context/execution split used above.
+- [Agent orchestration occupies a multi-dimensional design space](../../theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md) explains why `pi_agent_rust`'s tree, replay, and governance surfaces should not be collapsed into a single "more agentic" ladder.
+- [Conversation vs prompt refinement in agent-to-agent coordination](../../theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) clarifies the difference between `pi_agent_rust` branch summaries, zerostack prompt loops, and raw transcript inheritance.
+- [Session history should not be the default next context](../../theory/session-history-should-not-be-the-default-next-context.md) frames the distinction between stored traces and what gets loaded into the next model call.
+- [LLM context is composed without scoping](../../theory/llm-context-is-composed-without-scoping.md) explains why first-class branches or child-agent frames matter when context contamination becomes a design problem.
+- [Stateful tools recover control by becoming hidden schedulers](../../theory/stateful-tools-recover-control-by-becoming-hidden-schedulers.md) helps interpret zerostack's loop feature as scheduler relocation rather than true sub-agent delegation.
+- [Final task success does not establish intended-path health](../../theory/final-task-success-does-not-establish-intended-path-health.md) motivates the emphasis on observability, replay, and separate path-deviation and degraded-execution signals.

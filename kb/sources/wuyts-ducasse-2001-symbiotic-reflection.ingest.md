@@ -34,7 +34,7 @@ Wuyts and Ducasse define **symbiotic reflection** as an extension of reflective 
 
 ## Connections Found
 
-This source is the early technical anchor for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../notes/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's natural-language, symbolic, and distributed-parametric forms.
+This source is the early technical anchor for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md): causal connection and mutual access/action are stronger conditions than co-location or co-evolution. [Representational form](../theory/definitions/representational-form.md) remains the local vocabulary for any later generalization, because the paper's distinction is between programming languages and paradigms rather than Commonplace's natural-language, symbolic, and distributed-parametric forms.
 
 ## Inherited Vocabulary
 
@@ -75,8 +75,8 @@ Later notes should reserve **reflection** for manipulation of a causally connect
 
 ## Limitations (our opinion)
 
-The paper is a conceptual and implementation report centered on one SOUL/Smalltalk system, without a comparative evaluation showing that its proposed necessary machinery is sufficient across architectures. Its examples demonstrate usefulness but do not test alternative entity-transfer designs or failures of causal connection. The relation is also intentionally simple—primarily objects reified as terms—and does not establish that the model transfers to natural-language artifacts, asynchronous repositories, human-mediated changes, or Commonplace's [readable artifact loop](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). The terminology is valuable as a constraint, not proof that a broader system instantiates it.
+The paper is a conceptual and implementation report centered on one SOUL/Smalltalk system, without a comparative evaluation showing that its proposed necessary machinery is sufficient across architectures. Its examples demonstrate usefulness but do not test alternative entity-transfer designs or failures of causal connection. The relation is also intentionally simple—primarily objects reified as terms—and does not establish that the model transfers to natural-language artifacts, asynchronous repositories, human-mediated changes, or Commonplace's [readable artifact loop](../theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). The terminology is valuable as a constraint, not proof that a broader system instantiates it.
 
 ## Recommended Next Action
 
-Use this snapshot as the primary early-source anchor for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), explicitly testing each retained claim against causal connection, mutual access and action, entity transfer, and the stated system boundary.
+Use this snapshot as the primary early-source anchor for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md), explicitly testing each retained claim against causal connection, mutual access and action, entity transfer, and the stated system boundary.

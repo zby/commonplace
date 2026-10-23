@@ -1,6 +1,6 @@
 # Meta-Harness as Rework Input
 
-Target: [Designing a Memory System for LLM-Based Agents](../../notes/designing-agent-memory-systems.md)
+Target: [Designing a Memory System for LLM-Based Agents](../../theory/designing-agent-memory-systems.md)
 
 This is a rework note, not a fresh critique. [Meta-Harness](../../agent-memory-systems/reviews/meta-harness.md) does not overturn the current design argument. It hardens a few parts of it and suggests where the next revision should get more operational.
 

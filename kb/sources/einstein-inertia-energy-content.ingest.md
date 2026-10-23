@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper provides a historical comparison for [Mixed epistemic status must be preserved below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md). Its inherited transformation law, symmetric-emission calculation, extension beyond radiation, and suggested test have distinct roles in the argument. This illustrates the distinction the note asks KB writers to retain; it supplies no evidence that a particular writing or review procedure improves agents' treatment of those distinctions.
+The paper provides a historical comparison for [Mixed epistemic status must be preserved below the document level](../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md). Its inherited transformation law, symmetric-emission calculation, extension beyond radiation, and suggested test have distinct roles in the argument. This illustrates the distinction the note asks KB writers to retain; it supplies no evidence that a particular writing or review procedure improves agents' treatment of those distinctions.
 
 ## Extractable Value
 

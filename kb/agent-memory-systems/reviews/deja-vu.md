@@ -134,9 +134,9 @@ The privacy story is local by default, but sync is deliberately an escape hatch.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes deja-vu's stored index from pull recall and the optional Claude startup push.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with deja-vu's trace-extracted recall, which does not promote traces into durable instructions.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes deja-vu's stored index from pull recall and the optional Claude startup push.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with deja-vu's trace-extracted recall, which does not promote traces into durable instructions.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places deja-vu in trace-to-search and trace-to-startup-context rather than trace-to-policy.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies recalled snippets, context digests, shares, and imported sessions as advisory evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies installed MCP and hook configuration as behavior-shaping routing/instruction surfaces.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why auto-recall's targeted push depends on project-name identifiers being available and reliable.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies recalled snippets, context digests, shares, and imported sessions as advisory evidence.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies installed MCP and hook configuration as behavior-shaping routing/instruction surfaces.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why auto-recall's targeted push depends on project-name identifiers being available and reliable.

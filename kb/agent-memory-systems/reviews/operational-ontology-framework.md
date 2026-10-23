@@ -105,8 +105,8 @@ The templates can support a push-capable downstream system if a host always load
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the repository defines durable artifact destinations but no implemented activation path.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: docs, templates, schema examples, and policy files have different forms and authority levels.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Facts, Handoff material, and framework docs mostly advise unless a host gives them stronger authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: Pin, Spec, Skills, decision routes, and schemas can instruct, route, or validate when adopted by a host system.
-- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - relates: the framework treats memory as operational state across rules, actions, escalation, and write-back.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the repository defines durable artifact destinations but no implemented activation path.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: docs, templates, schema examples, and policy files have different forms and authority levels.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Facts, Handoff material, and framework docs mostly advise unless a host gives them stronger authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: Pin, Spec, Skills, decision routes, and schemas can instruct, route, or validate when adopted by a host system.
+- [Agent memory is a crosscutting concern, not a separable niche](../../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - relates: the framework treats memory as operational state across rules, actions, escalation, and write-back.

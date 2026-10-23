@@ -131,9 +131,9 @@ Humans consume the same inspectable files, pending diffs, session views, curator
 
 Relevant Notes:
 
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - Frames Hermes' bounded profile memory, skill disclosure, search windows, and compression tradeoffs.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - Defines the pull/push distinction used to classify Hermes' several read-back paths.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - Provides the rationale for treating background review as a learning loop while keeping raw trace recall distinct.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - Supplies the storage, form, lineage, and authority vocabulary applied to Hermes' retained surfaces.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - Explains why learned skills have stronger authority and trust requirements than recalled session evidence.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - Relates to Hermes' prompt catalogue and frozen memory snapshot as precomputed context surfaces.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - Frames Hermes' bounded profile memory, skill disclosure, search windows, and compression tradeoffs.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - Defines the pull/push distinction used to classify Hermes' several read-back paths.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - Provides the rationale for treating background review as a learning loop while keeping raw trace recall distinct.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - Supplies the storage, form, lineage, and authority vocabulary applied to Hermes' retained surfaces.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - Explains why learned skills have stronger authority and trust requirements than recalled session evidence.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - Relates to Hermes' prompt catalogue and frozen memory snapshot as precomputed context surfaces.

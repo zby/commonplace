@@ -115,9 +115,9 @@ At consumption, recalled content is advisory knowledge. The MCP server's own ins
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Smriti's durable Markdown store from its explicit pull-only MCP read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating notes, frontmatter, trace logs, indexes, MCP schemas, and recall bundles by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memories, raw traces, snippets, indexes, and recall bundles as advisory retained knowledge.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts Smriti's MCP schemas, repair routines, and ranking policy with stronger instruction, validation, or enforcement artifacts.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Smriti's durable Markdown store from its explicit pull-only MCP read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating notes, frontmatter, trace logs, indexes, MCP schemas, and recall bundles by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Smriti's trace log plus reviewed consolidation path as a conservative trace-learning loop.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies ordinary memories, raw traces, snippets, indexes, and recall bundles as advisory retained knowledge.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - contrasts Smriti's MCP schemas, repair routines, and ranking policy with stronger instruction, validation, or enforcement artifacts.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to Smriti's reliance on titles, aliases, tags, categories, scopes, wikilinks, and lexical terms as recall signals.

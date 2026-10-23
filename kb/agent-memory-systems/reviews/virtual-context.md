@@ -131,10 +131,10 @@ Authority at consumption varies. Retrieved summaries, facts, quotes, and restore
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Virtual Context implements both durable storage and proxy-mediated read-back, including prompt-time push.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Virtual Context derives summaries, facts, tags, embeddings, and restore handles from conversation and tool traces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Virtual Context implements both durable storage and proxy-mediated read-back, including prompt-time push.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Virtual Context derives summaries, facts, tags, embeddings, and restore handles from conversation and tool traces.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Virtual Context belongs in the trace-to-working-memory family with engineered read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw traces, summaries, facts, embeddings, tools, and proxy rules carry different storage, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: stored turns, summaries, facts, quotes, and restored tool outputs advise later reasoning when consumed.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: proxy mutation, provider adapters, tool schemas, compaction fences, retrieval scoring, and command handlers shape behavior with stronger force.
-- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Virtual Context exposes proxy-owned push assembly, model paging, and manual retrieval as distinct legal projection paths over retained conversation state.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw traces, summaries, facts, embeddings, tools, and proxy rules carry different storage, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: stored turns, summaries, facts, quotes, and restored tool outputs advise later reasoning when consumed.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: proxy mutation, provider adapters, tool schemas, compaction fences, retrieval scoring, and command handlers shape behavior with stronger force.
+- [A context-operation interface bounds the projections its policy can realize](../../theory/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Virtual Context exposes proxy-owned push assembly, model paging, and manual retrieval as distinct legal projection paths over retained conversation state.

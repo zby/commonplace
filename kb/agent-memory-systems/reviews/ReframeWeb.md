@@ -111,12 +111,12 @@ ReframeWeb's most novel idea relative to us is treating recency — including "r
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds the read-back direction and the observation that ReframeWeb pushes memory every turn but never tests activation.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why the targeted push depends on LLM-emitted tag hints and substring terms, and why empty hints yield silence.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating standing memories, transcripts, the task catalog, and few-shot pools by substrate, form, lineage, and authority.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - classifies the embedded SurrealDB graph as the retained-state substrate.
-- [Representational form](../../notes/definitions/representational-form.md) - frames the natural-language payload vs symbolic relation/timestamp scaffolding.
-- [Lineage](../../notes/definitions/lineage.md) - distinguishes agent-authored preference memories from the retained (trace-extracted) transcript.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - classifies memories/transcripts as knowledge, the task catalog as routing, and the few-shot pools as ranking/routing steer.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - covers the advisory memories, transcripts, and few-shot examples.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts ReframeWeb's advisory-only memory with stronger instruction/enforcement/validation authority it lacks.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - grounds the read-back direction and the observation that ReframeWeb pushes memory every turn but never tests activation.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why the targeted push depends on LLM-emitted tag hints and substring terms, and why empty hints yield silence.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating standing memories, transcripts, the task catalog, and few-shot pools by substrate, form, lineage, and authority.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - classifies the embedded SurrealDB graph as the retained-state substrate.
+- [Representational form](../../theory/definitions/representational-form.md) - frames the natural-language payload vs symbolic relation/timestamp scaffolding.
+- [Lineage](../../theory/definitions/lineage.md) - distinguishes agent-authored preference memories from the retained (trace-extracted) transcript.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - classifies memories/transcripts as knowledge, the task catalog as routing, and the few-shot pools as ranking/routing steer.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - covers the advisory memories, transcripts, and few-shot examples.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - contrasts ReframeWeb's advisory-only memory with stronger instruction/enforcement/validation authority it lacks.

@@ -131,7 +131,7 @@ Selection is bounded by result counts rather than token budget. `Retriever` keep
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - compares: MemoryOS turns conversational traces into session summaries, profile records, knowledge entries, embeddings, and prompt-visible context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: MemoryOS's raw turns, summaries, profile, knowledge entries, vectors, and prompt packages require separate substrate, form, lineage, and authority labels.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: MemoryOS couples storage with a generation path that retrieves memory and assembles context before the model call.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw dialogue pages, summaries, profiles, and facts usually serve as evidence or advisory context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval policy, heat thresholds, and injected assistant knowledge can shape behavior with instruction, ranking, and learning force.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: MemoryOS's raw turns, summaries, profile, knowledge entries, vectors, and prompt packages require separate substrate, form, lineage, and authority labels.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: MemoryOS couples storage with a generation path that retrieves memory and assembles context before the model call.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw dialogue pages, summaries, profiles, and facts usually serve as evidence or advisory context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompt templates, retrieval policy, heat thresholds, and injected assistant knowledge can shape behavior with instruction, ranking, and learning force.

@@ -36,11 +36,11 @@ Cook and Kent reject a universal modeling language in favor of a tool factory th
 
 ## Connections Found
 
-The source's strongest role is technical evidence for [the distinction between factory construction and acquisition of family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md). It makes recursive construction concrete as a dependency chain from a supplied language-family definition to a generated designer and then to a designer capable of regenerating its own kind. Producing another producer does not establish computational acquisition or revision of the family knowledge embodied in that producer.
+The source's strongest role is technical evidence for [the distinction between factory construction and acquisition of family-specific production knowledge](../theory/factory-construction-does-not-establish-knowledge-acquisition.md). It makes recursive construction concrete as a dependency chain from a supplied language-family definition to a generated designer and then to a designer capable of regenerating its own kind. Producing another producer does not establish computational acquisition or revision of the family knowledge embodied in that producer.
 
 It complements [Greenfield and Short's broader software-factory account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with the internal language-tool architecture, and it precedes [MDSoFa's implemented metamodel-and-expertise pipeline](./langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md). [DreamCoder](./dreamcoder-wake-sleep-bayesian-program-learning.ingest.md) is a useful counterpoint on the acquisition boundary: Cook and Kent generate tools from a human-authored language definition, whereas DreamCoder revises a domain-specific language from task solutions under an explicit selection objective.
 
-The wider [versioned software-factory reconstruction](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) supplies the family, template, configured-environment, and development-role context in which this tool-level bootstrap sits.
+The wider [versioned software-factory reconstruction](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) supplies the family, template, configured-environment, and development-role context in which this tool-level bootstrap sits.
 
 ## Extractable Value
 
@@ -48,7 +48,7 @@ The wider [versioned software-factory reconstruction](../notes/a-software-factor
 2. **The bootstrap changes the output type without changing who chooses the operative definition.** Treating the language designer as an instance of the same designer architecture permits one version to generate the next. Bootstrapping the generator is likewise conditional on people supplying a rich enough language for designing languages and mappings into the implementation languages and frameworks. [deep-dive]
 3. **A language definition acts as a dependency specification for a suite of production tools.** Concrete syntax, abstract syntax, serialization, and trace semantics jointly determine generated and interpreted facilities such as editing, checking, serialization, animation, and translation. This mechanism adds language-tool granularity to the broader account of family-scoped production machinery. [just-a-reference]
 4. **Generation is explicitly divided among generated code, hand-crafted code, and a shared framework.** The proposal expects partial generation in practice and presents complete generation as a long-term goal. This prevents the self-bootstrap diagram from being read as evidence of an autonomous or fully generated tool chain. [quick-win]
-5. **Interpretation can preserve a design-time change surface before static generation.** The proposed rule checker interprets well-formedness rules while the language designer experiments, with static code generation available after the rules are fixed. This offers a historical comparison for [progressive constraining](../notes/progressive-constraining-commits-only-after-patterns-stabilize.md), but it does not establish that note's repeated-run or LLM-specific criterion. [experiment]
+5. **Interpretation can preserve a design-time change surface before static generation.** The proposed rule checker interprets well-formedness rules while the language designer experiments, with static code generation available after the rules are fixed. This offers a historical comparison for [progressive constraining](../theory/progressive-constraining-commits-only-after-patterns-stabilize.md), but it does not establish that note's repeated-run or LLM-specific criterion. [experiment]
 
 ## Limitations (our opinion)
 
@@ -62,5 +62,5 @@ Use this source as the mechanism-level case for construction from supplied famil
 
 Abstracted into:
 
-- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
-- [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — places the tool bootstrap inside the broader family/template/configured-environment ontology
+- [Factory construction is not evidence of production-knowledge acquisition](../theory/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
+- [A software factory is family-scoped lifecycle production machinery](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — places the tool bootstrap inside the broader family/template/configured-environment ontology

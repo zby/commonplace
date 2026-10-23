@@ -48,4 +48,4 @@ The relationship appears in the prose surrounding the link. In body text: `since
 
 Relevant Notes:
 
-- [notes COLLECTION.md](../../notes/COLLECTION.md) — the authoring guide that carries this relationship-label requirement into day-to-day note writing
+- [notes COLLECTION.md](../../theory/COLLECTION.md) — the authoring guide that carries this relationship-label requirement into day-to-day note writing

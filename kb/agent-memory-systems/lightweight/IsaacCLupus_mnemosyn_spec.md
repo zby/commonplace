@@ -93,9 +93,9 @@ Authority at consumption is intended to vary by surface. Search and ask results 
 
 ## Relevant Notes
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Mnemosyne's stored pages and memory rows only become active through pull tools or generated packs.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Mnemosyne's vault files, SQLite rows, API schemas, packs, and audit records have different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: published pages, committed memories, synthesis pages, packs, and search results primarily advise future work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schema, tool contracts, write guards, lifecycle stages, pack entrypoints, and audit gates shape or constrain behavior.
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - compares: Mnemosyne's proposed conversation/profile loop extracts durable behavior-shaping artifacts from traces while retaining a human gate.
-- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: generated wiki pages, synthesis answers, and packs need source alignment if they become agent-facing context.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Mnemosyne's stored pages and memory rows only become active through pull tools or generated packs.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Mnemosyne's vault files, SQLite rows, API schemas, packs, and audit records have different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: published pages, committed memories, synthesis pages, packs, and search results primarily advise future work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: schema, tool contracts, write guards, lifecycle stages, pack entrypoints, and audit gates shape or constrain behavior.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - compares: Mnemosyne's proposed conversation/profile loop extracts durable behavior-shaping artifacts from traces while retaining a human gate.
+- [Keep Lineage And Compiled Views From Drifting](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: generated wiki pages, synthesis answers, and packs need source alignment if they become agent-facing context.

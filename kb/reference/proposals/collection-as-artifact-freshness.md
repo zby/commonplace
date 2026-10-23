@@ -100,5 +100,5 @@ Set-level dependencies are uncommon. When they matter enough to automate, invest
 
 ## Rationale
 
-- [Link graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — the general pattern this proposal extends to collection granularity.
-- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — collection maintenance spans library and workshop boundaries.
+- [Link graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — the general pattern this proposal extends to collection granularity.
+- [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — collection maintenance spans library and workshop boundaries.

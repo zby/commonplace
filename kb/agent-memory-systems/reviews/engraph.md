@@ -116,9 +116,9 @@ Selection, scope, and complexity are mostly controlled by top-k, explicit tool c
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: Engraph stores and indexes a vault, but memory read-back is explicit tool-mediated pull.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: vault notes, SQLite rows, embeddings, graph edges, model cache, tool contracts, identity facts, diagnostics, and folder feedback carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: retrieved notes, snippets, context bundles, identity text, and health reports mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: CLI commands, MCP tools, HTTP schemas, read-only mode, API permissions, migration apply/undo, and search ranking policy instruct or constrain behavior.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - relates: Engraph separates source-of-truth vault files from derived local database and model state.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Engraph's main design work is routing selected vault material into bounded agent-facing context surfaces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: Engraph stores and indexes a vault, but memory read-back is explicit tool-mediated pull.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: vault notes, SQLite rows, embeddings, graph edges, model cache, tool contracts, identity facts, diagnostics, and folder feedback carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: retrieved notes, snippets, context bundles, identity text, and health reports mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: CLI commands, MCP tools, HTTP schemas, read-only mode, API permissions, migration apply/undo, and search ranking policy instruct or constrain behavior.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - relates: Engraph separates source-of-truth vault files from derived local database and model state.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Engraph's main design work is routing selected vault material into bounded agent-facing context surfaces.

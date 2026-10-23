@@ -26,9 +26,9 @@ Add an abduction prompt to note-promotion workflows:
 
 ## Existing connections
 
-- [Conjecture is seeing the particular as an instance of the general](../../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — abduction is one route from particular observations to a general mechanism
-- [First-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — abduction should produce explanations with reach, not merely narratives that fit the observations
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop is where candidate explanations can compete before library promotion
+- [Conjecture is seeing the particular as an instance of the general](../../theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — abduction is one route from particular observations to a general mechanism
+- [First-principles reasoning selects for explanatory reach over adaptive fit](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) — abduction should produce explanations with reach, not merely narratives that fit the observations
+- [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the workshop is where candidate explanations can compete before library promotion
 
 ## Failure mode
 

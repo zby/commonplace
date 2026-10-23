@@ -54,4 +54,4 @@ Limits: decided for `kb/notes/` passes on this installation's review machinery. 
 - [Run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) — procedure: the decision table and state machine
 - [Resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) — procedure: executes hand-backs
 - [Full-pass report type](../../types/full-pass-report.md) — implemented-by: packet fields
-- [Narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the drift mechanism this decision removes from the pass
+- [Narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the drift mechanism this decision removes from the pass

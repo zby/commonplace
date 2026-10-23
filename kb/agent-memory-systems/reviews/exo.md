@@ -119,9 +119,9 @@ Other consumers include the human through CLI/ExoChat history and diagnostics, t
 Relevant Notes:
 
 - [Exo as an agentic system](../../agentic-systems/reviews/exo.md) - part-of: the whole-system analysis this memory subsystem sits inside, covering the self-modification loop, host control surfaces, and where the acceptance gate stops.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supplies the storage, form, lineage, and authority record used to separate Exo's traces, facts, skills, and executable policy.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - defines why Exo's always-replayed history and memory are push while event/skill tools are pull.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Exo's bounded entries and progressive skills against its unbounded full-history replay.
-- [Preserve evidence without loading history](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - contrasts Exo's useful canonical evidence retention with the canonical executor's decision to load the trace by default.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - explains why Exo's promotion from memory fact to skill, tool, prompt, or harness code changes behavioral authority.
-- [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md) - describes the tradeoff instantiated by Exo's direct event-to-prompt materialization.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supplies the storage, form, lineage, and authority record used to separate Exo's traces, facts, skills, and executable policy.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - defines why Exo's always-replayed history and memory are push while event/skill tools are pull.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Exo's bounded entries and progressive skills against its unbounded full-history replay.
+- [Preserve evidence without loading history](../../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md) - contrasts Exo's useful canonical evidence retention with the canonical executor's decision to load the trace by default.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - explains why Exo's promotion from memory fact to skill, tool, prompt, or harness code changes behavioral authority.
+- [The chat-history model trades context efficiency for implementation simplicity](../../theory/the-chat-history-model-trades-context-efficiency-for-implementation.md) - describes the tradeoff instantiated by Exo's direct event-to-prompt materialization.

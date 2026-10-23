@@ -134,10 +134,10 @@ Context complexity is actively managed but still high. The system combines retri
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WeKnora stores several knowledge surfaces, and only some are automatically pushed into model context.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WeKnora stores several knowledge surfaces, and only some are automatically pushed into model context.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: WeKnora extracts conversation episodes into a durable graph memory and separately compacts agent history.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: WeKnora's DB rows, vector indexes, graph memory, wiki pages, tools, and task queues differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: chunks, wiki pages, graph episodes, and retrieved search results mostly advise later action as knowledge.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: pipelines, schemas, RBAC, tool registries, approval gates, prompts, and ranking configs route, validate, or enforce behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: WeKnora's main value is routing, ranking, compressing, and injecting retained knowledge into bounded model contexts.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: WeKnora has strong discovery and context-serving machinery, with trust mediated mostly by service governance rather than file-native review.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: WeKnora's DB rows, vector indexes, graph memory, wiki pages, tools, and task queues differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: chunks, wiki pages, graph episodes, and retrieved search results mostly advise later action as knowledge.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: pipelines, schemas, RBAC, tool registries, approval gates, prompts, and ranking configs route, validate, or enforce behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: WeKnora's main value is routing, ranking, compressing, and injecting retained knowledge into bounded model contexts.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: WeKnora has strong discovery and context-serving machinery, with trust mediated mostly by service governance rather than file-native review.

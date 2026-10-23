@@ -3,7 +3,7 @@
 This historical scan treats task-framed reading as reading selected material
 through an explicit lens to produce a lens-shaped result. The standalone
 `directed reading` technical label was retired on 2026-08-23 because ordinary
-language plus [context engineering](../../notes/definitions/context-engineering.md)
+language plus [context engineering](../../theory/definitions/context-engineering.md)
 carries the distinction. The inventory remains an input to the broader
 bulk-operations pattern.
 

@@ -118,8 +118,8 @@ Memory writing is still behaviorally significant: a model or operator can create
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: playground's memory matters when chunks are served into the model context, not merely because they live in the pile.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: pile facts, natural-language summaries, branch schemas, context snapshots, and prompt instructions carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory summaries, imported archives, and cognition traces advise as evidence and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schemas, prompt invariants, branch routing, context assembly, and guards configure future behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: playground's temporal chunk selection can only target by time and hierarchy unless richer signals are emitted into the memory layer.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: playground's memory matters when chunks are served into the model context, not merely because they live in the pile.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: pile facts, natural-language summaries, branch schemas, context snapshots, and prompt instructions carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: memory summaries, imported archives, and cognition traces advise as evidence and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: schemas, prompt invariants, branch routing, context assembly, and guards configure future behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: playground's temporal chunk selection can only target by time and hierarchy unless richer signals are emitted into the memory layer.

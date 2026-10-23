@@ -105,7 +105,7 @@ This principle is worth extracting as a library note in its own right (citation 
 
 **Rejected alternatives:**
 - **Option D (`cp-` prefix).** Rejected because sibling-relative links (`../notes/...`) would all require rewriting to `../cp-notes/...`, whereas E leaves them invariant. Translation cost under D is strictly higher than E.
-- **Flatten collection-local types to shared `kb/types/`.** Contradicts the existing principle that directory-scoped types are cheaper than global types ([kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../notes/directory-scoped-types-are-cheaper-than-global-types.md)).
+- **Flatten collection-local types to shared `kb/types/`.** Contradicts the existing principle that directory-scoped types are cheaper than global types ([kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../theory/directory-scoped-types-are-cheaper-than-global-types.md)).
 - **Ship-time frontmatter translation (B2a).** Dropped because file-relative frontmatter (B2b) is a small type-resolver change and avoids source-vs-ship divergence in frontmatter.
 
 ## Open questions (non-blocking)
@@ -117,4 +117,4 @@ This principle is worth extracting as a library note in its own right (citation 
 
 Relevant Notes:
 
-- [kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) — grounds the B2d rejection
+- [kb/notes/directory-scoped-types-are-cheaper-than-global-types.md](../../theory/directory-scoped-types-are-cheaper-than-global-types.md) — grounds the B2d rejection

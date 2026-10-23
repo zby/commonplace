@@ -6,7 +6,7 @@ What life-cycle does a KB artifact travel — from workshop intake through promo
 
 ## Why this workshop exists
 
-The KB has strong conventions for the two poles: workshops (temporal, value-consumed) and the library (durable, value-accumulated). The transitions between and within them are only sketched. [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) names the bridges but leaves the mechanics open.
+The KB has strong conventions for the two poles: workshops (temporal, value-consumed) and the library (durable, value-accumulated). The transitions between and within them are only sketched. [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) names the bridges but leaves the mechanics open.
 
 Concrete trigger: some workshops — `agent-memory-design` was the clearest case — feel like coherent wholes rather than a pile of extractable claims. The current closure protocol in [kb/work/COLLECTION.md](../COLLECTION.md) ("extract durable conclusions, delete the workshop") assumes atomization works. When a workshop reads as a monograph, atomization would destroy the structure that makes it useful. Where does such a workshop land?
 
@@ -64,14 +64,14 @@ We start from workshops because that is where we have the most active practice. 
 
 ## Current grounding
 
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — library/workshop distinction, extraction and composition bridges, open questions this workshop inherits.
+- [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — library/workshop distinction, extraction and composition bridges, open questions this workshop inherits.
 - [Workshop COLLECTION.md](../COLLECTION.md) — current closure protocol (extract-and-delete), and the sinks-not-sources rule ADR 056 extended to a second, retained sink layer.
 - [ADR 056](../../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) with [proposals/README.md](../../reference/proposals/README.md) and [archive/README.md](../../reference/proposals/archive/README.md) — the one disposal operation this workshop has shipped, and the model the remaining kinds are decided against.
 - [kb/reference/types/adr.md](../../reference/types/adr.md) — the `## Considered alternatives` requirement that pays for tag-not-pointer provenance.
 - [kb/reference/types/design-proposal.md](../../reference/types/design-proposal.md) — the collection-local type that replaced the `design-proposal` trait; carries the archived-proposal description form.
-- [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) — the promoted artifact from the `agent-memory-design` workshop; first instance of the `synthesis` trait.
+- [designing-agent-memory-systems](../../theory/designing-agent-memory-systems.md) — the promoted artifact from the `agent-memory-design` workshop; first instance of the `synthesis` trait.
 - [kb/agent-memory-systems/COLLECTION.md](../../agent-memory-systems/COLLECTION.md) — one precedent for a sibling collection with its own register.
-- [kb/notes/COLLECTION.md](../../notes/COLLECTION.md) — theoretical-register conventions a promoted workshop would have to satisfy.
+- [kb/notes/COLLECTION.md](../../theory/COLLECTION.md) — theoretical-register conventions a promoted workshop would have to satisfy.
 
 ## Working hypotheses
 

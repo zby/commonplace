@@ -110,10 +110,10 @@ OpenWiki's update loop is the piece most directly relevant to Commonplace. It us
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: OpenWiki's wiki pages, root instruction sections, update metadata, prompts, and checkpointer differ by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: generated wiki pages help only when future agents pull them or receive the coarse root pointer.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: generated wiki pages mostly serve as evidence, reference, context, and advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: OpenWiki's prompt, CLI parser, update metadata, and root agent-file block shape future behavior.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: OpenWiki manages context by creating a small map and scoping update runs rather than loading all source into future agents.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - relates: OpenWiki frontloads repository discovery into a quickstart/wiki so later agents can start from a precomputed map.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: OpenWiki's later recall depends on signals such as `AGENTS.md`, `CLAUDE.md`, `openwiki/quickstart.md`, linked paths, and Git metadata.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: OpenWiki's wiki pages, root instruction sections, update metadata, prompts, and checkpointer differ by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: generated wiki pages help only when future agents pull them or receive the coarse root pointer.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: generated wiki pages mostly serve as evidence, reference, context, and advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: OpenWiki's prompt, CLI parser, update metadata, and root agent-file block shape future behavior.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: OpenWiki manages context by creating a small map and scoping update runs rather than loading all source into future agents.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - relates: OpenWiki frontloads repository discovery into a quickstart/wiki so later agents can start from a precomputed map.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: OpenWiki's later recall depends on signals such as `AGENTS.md`, `CLAUDE.md`, `openwiki/quickstart.md`, linked paths, and Git metadata.

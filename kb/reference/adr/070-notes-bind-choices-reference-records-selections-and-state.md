@@ -171,7 +171,7 @@ decision does not define a universal mixed-artifact threshold.
 
 Relevant Notes:
 
-- [Superseded choices are retained; superseded beliefs are not](../../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md) — rests-on: explains the different maintenance consequences of beliefs and choices
-- [An artifact must preserve the scope of each named system choice](../../notes/artifacts-must-preserve-named-choice-scope.md) — rests-on: supplies the proposition-relative scoping and disposition rule applied by the two collection contracts
-- [Artifact classification separates content kind, lineage, and authority](../../notes/artifact-classification-separates-content-kind-lineage-and-authority.md) — rests-on: supplies the belief/residual-choice distinction without making region-level content kind a whole-file classifier
+- [Superseded choices are retained; superseded beliefs are not](../../theory/superseded-choices-are-retained-superseded-beliefs-are-not.md) — rests-on: explains the different maintenance consequences of beliefs and choices
+- [An artifact must preserve the scope of each named system choice](../../theory/artifacts-must-preserve-named-choice-scope.md) — rests-on: supplies the proposition-relative scoping and disposition rule applied by the two collection contracts
+- [Artifact classification separates content kind, lineage, and authority](../../theory/artifact-classification-separates-content-kind-lineage-and-authority.md) — rests-on: supplies the belief/residual-choice distinction without making region-level content kind a whole-file classifier
 - [ADR 069: Collection contract bundles become one-time prototypes](./069-collection-contract-bundles-become-one-time-prototypes.md) — see-also: removed the profile labels whose absence exposed the missing criterion

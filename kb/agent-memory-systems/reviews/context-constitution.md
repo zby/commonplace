@@ -109,8 +109,8 @@ Authority at consumption depends on host injection path. Loaded as a system prom
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Context Constitution describes stored messages, external memory, and MemFS, but this checkout does not implement the read-back machinery that activates them.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the Constitution, affordances document, README, and whitespace workflow have different storage, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: the README and affordance descriptions are evidence about Letta's intended memory architecture when read by reviewers.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: the Constitution becomes behavior-shaping instruction when loaded into agent prompts or guidance.
-- [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) - relates: the Constitution emphasizes compact metadata, references, and on-demand full-context loading.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Context Constitution describes stored messages, external memory, and MemFS, but this checkout does not implement the read-back machinery that activates them.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the Constitution, affordances document, README, and whitespace workflow have different storage, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: the README and affordance descriptions are evidence about Letta's intended memory architecture when read by reviewers.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: the Constitution becomes behavior-shaping instruction when loaded into agent prompts or guidance.
+- [Pointer design tradeoffs in progressive disclosure](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md) - relates: the Constitution emphasizes compact metadata, references, and on-demand full-context loading.

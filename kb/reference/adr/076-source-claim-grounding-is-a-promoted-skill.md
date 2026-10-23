@@ -37,10 +37,10 @@ That happened on 2026-08-25 and forced the choice: one request had two
 advertised surfaces, and the one it reached did not own the decision.
 
 Two standing claims decide where the procedure belongs.
-[Capability placement should follow autonomy readiness](../../notes/capability-placement-should-follow-autonomy-readiness.md):
+[Capability placement should follow autonomy readiness](../../theory/capability-placement-should-follow-autonomy-readiness.md):
 a bounded procedure that has already run repeatedly and autonomously — the
 rollout cohorts — is promotion-ready.
-[Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md):
+[Skills are instructions plus routing and execution policy](../../theory/skills-are-instructions-plus-routing-and-execution-policy.md):
 promotion changes discovery and invocation, not the procedure itself.
 
 ## Decision
@@ -121,8 +121,8 @@ context must name the launch mode that actually provides it.
 
 Relevant Notes:
 
-- [Capability placement should follow autonomy readiness](../../notes/capability-placement-should-follow-autonomy-readiness.md) — rests-on: the readiness criterion under which a repeatedly-run bounded procedure belongs on the skill surface
-- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: why promotion changes discovery and invocation while leaving the procedure intact
+- [Capability placement should follow autonomy readiness](../../theory/capability-placement-should-follow-autonomy-readiness.md) — rests-on: the readiness criterion under which a repeatedly-run bounded procedure belongs on the skill surface
+- [Skills are instructions plus routing and execution policy](../../theory/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: why promotion changes discovery and invocation while leaving the procedure intact
 - [ADR 073 — Untracked source snapshots require ingest grounding](./073-untracked-source-snapshots-require-ingest-grounding.md) — extends: gives the grounding procedure it defined a routable entry point without altering its result protocol
-- [Deterministic validation should be a script](../../notes/deterministic-validation-should-be-a-script.md) — rests-on: why the hard-oracle quote check belongs in `commonplace-validate` rather than in a second reviewing agent
+- [Deterministic validation should be a script](../../theory/deterministic-validation-should-be-a-script.md) — rests-on: why the hard-oracle quote check belongs in `commonplace-validate` rather than in a second reviewing agent
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — implemented-by: the promoted skill this decision installs

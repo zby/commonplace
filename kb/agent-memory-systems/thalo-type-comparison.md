@@ -8,7 +8,7 @@ traits: [has-comparison]
 
 **Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
 
-Both systems define types with structural expectations. Thalo commits to types upfront via a grammar; we [discover ours through practice](../notes/document-types-should-be-verifiable.md). This comparison is a reference for borrowing — when we encounter a recurring note shape, we can check whether Thalo already has a useful structure for it.
+Both systems define types with structural expectations. Thalo commits to types upfront via a grammar; we [discover ours through practice](../theory/document-types-should-be-verifiable.md). This comparison is a reference for borrowing — when we encounter a recurring note shape, we can check whether Thalo already has a useful structure for it.
 
 ## Type system mechanisms
 
@@ -31,7 +31,7 @@ Thalo's `opinion` has:
 - `related?`: link[]
 - Sections: **Claim** (required), **Reasoning** (required), **Caveats** (optional)
 
-Our equivalent: [`structured-claim`](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) with Evidence/Reasoning/Caveats sections. This was adopted after the original comparison flagged the gap — three independent threads (Thalo's opinion entity, claim titles, the affordance table) converged on the same Toulmin-derived shape. The `confidence` field and `supersedes` link remain interesting features we haven't adopted — confidence as metadata would let us query for low-confidence claims that need evidence, and `supersedes` explicitly tracks opinion evolution.
+Our equivalent: [`structured-claim`](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) with Evidence/Reasoning/Caveats sections. This was adopted after the original comparison flagged the gap — three independent threads (Thalo's opinion entity, claim titles, the affordance table) converged on the same Toulmin-derived shape. The `confidence` field and `supersedes` link remain interesting features we haven't adopted — confidence as metadata would let us query for low-confidence claims that need evidence, and `supersedes` explicitly tracks opinion evolution.
 
 **Already borrowed:** Claim / Reasoning / Caveats sections — now the `structured-claim` base type. **Still borrowable:** `supersedes` link for tracking when one note replaces another. `confidence` field.
 
@@ -78,7 +78,7 @@ Self-reference entity. Not applicable to our project-focused KB.
 
 ## What this comparison reveals
 
-1. **Structured argument sections converged.** Thalo's opinion entity (Claim/Reasoning/Caveats) flagged a gap we've since filled with the [`structured-claim` type](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md). The convergence — both systems arriving at Toulmin-derived sections independently — validates the choice. Our `structured-claim` adds an `## Evidence` section that Thalo's opinion lacks, separating checkable facts from reasoning.
+1. **Structured argument sections converged.** Thalo's opinion entity (Claim/Reasoning/Caveats) flagged a gap we've since filled with the [`structured-claim` type](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md). The convergence — both systems arriving at Toulmin-derived sections independently — validates the choice. Our `structured-claim` adds an `## Evidence` section that Thalo's opinion lacks, separating checkable facts from reasoning.
 
 2. **We're missing status tracking for sources.** Their `unread | read | processed` pipeline status is useful. Our `/ingest` pipeline does this operationally but doesn't persist the status as queryable metadata.
 
@@ -125,7 +125,7 @@ Schema evolution rules (alter-entity, define ordering), type expression matching
 
 Every one of Thalo's rules is **deterministic** — a script checks them without LLM involvement. All of our checks run through an LLM (the `/validate` skill uses Sonnet), including the deterministic ones like enum validation and link resolution.
 
-This is the [codification trajectory](../notes/definitions/codification.md) applied to validation itself: our deterministic checks (frontmatter valid, enum values, link health, areas-topics sync) could move to a Python script that runs in milliseconds — potentially as a pre-commit hook. The LLM-judged checks (description quality, composability, title-as-prose) stay at skill level because their [oracle strength](../notes/oracle-strength-spectrum.md) is too low for deterministic verification.
+This is the [codification trajectory](../theory/definitions/codification.md) applied to validation itself: our deterministic checks (frontmatter valid, enum values, link health, areas-topics sync) could move to a Python script that runs in milliseconds — potentially as a pre-commit hook. The LLM-judged checks (description quality, composability, title-as-prose) stay at skill level because their [oracle strength](../theory/oracle-strength-spectrum.md) is too low for deterministic verification.
 
 The split would be:
 
@@ -149,7 +149,7 @@ This would make `/validate` cheaper (skip deterministic checks already passed by
 When we encounter:
 - Need to track source processing status as queryable metadata
 - Notes that supersede other notes (need explicit replacement links)
-- Decision to split validation into script (deterministic) + skill (judgment) — see [deterministic-validation-should-be-a-script](../notes/deterministic-validation-should-be-a-script.md)
+- Decision to split validation into script (deterministic) + skill (judgment) — see [deterministic-validation-should-be-a-script](../theory/deterministic-validation-should-be-a-script.md)
 - Any other recurring note shape — check here first whether Thalo has a useful structure for it
 
 ---
@@ -157,10 +157,10 @@ When we encounter:
 Relevant Notes:
 
 - [collections and types](../reference/collections-and-types.md) — Commonplace's current type system being compared
-- [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) — the design principle both systems share
-- [claim-notes-should-use-toulmin-derived-sections](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
-- [codification](../notes/definitions/codification.md) — the validation split (script vs skill) is codification applied to the validation process itself
-- [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — determines which checks can be deterministic (hard oracle) vs must stay LLM-judged (soft oracle)
-- [quality-signals-for-kb-evaluation](../notes/quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into
+- [document-types-should-be-verifiable](../theory/document-types-should-be-verifiable.md) — the design principle both systems share
+- [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — resolves the gap this comparison originally flagged: `structured-claim` with Evidence/Reasoning/Caveats sections
+- [codification](../theory/definitions/codification.md) — the validation split (script vs skill) is codification applied to the validation process itself
+- [oracle-strength-spectrum](../theory/oracle-strength-spectrum.md) — determines which checks can be deterministic (hard oracle) vs must stay LLM-judged (soft oracle)
+- [quality-signals-for-kb-evaluation](../theory/quality-signals-for-kb-evaluation.md) — the broader quality framework these validation rules feed into
 - [thalo](./reviews/thalo.md) — the main system review note
 - [Toulmin argument](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — evidenced-by: Toulmin's formal argumentation model provides the canonical decomposition (claim/grounds/warrant/qualifier/rebuttal/backing) that Thalo's opinion entity approximates with Claim/Reasoning/Caveats sections

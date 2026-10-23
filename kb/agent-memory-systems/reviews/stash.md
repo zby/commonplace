@@ -108,9 +108,9 @@ Other consumers include human users reading MCP/CLI JSON, the background consoli
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Stash stores durable memory, but the inspected read-back path is explicit MCP-tool pull.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Stash's episodes, facts, vectors, checkpoints, prompts, and inferred records carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved memories, facts, contexts, failures, goals, hypotheses, and graph-like records mostly advise host agents as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, prompt templates, namespaces, status rules, and validation checks instruct or constrain behavior.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - relates: Stash uses a relational/vector database rather than files or a repo-native library as the durable substrate.
-- [Lineage](../../notes/definitions/lineage.md) - frames: Stash's fact-source rows and consolidation checkpoints preserve transformation lineage from stored episodes, but not from external transcripts unless the host wrote them into Stash.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Stash stores durable memory, but the inspected read-back path is explicit MCP-tool pull.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Stash's episodes, facts, vectors, checkpoints, prompts, and inferred records carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved memories, facts, contexts, failures, goals, hypotheses, and graph-like records mostly advise host agents as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: MCP tool schemas, prompt templates, namespaces, status rules, and validation checks instruct or constrain behavior.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - relates: Stash uses a relational/vector database rather than files or a repo-native library as the durable substrate.
+- [Lineage](../../theory/definitions/lineage.md) - frames: Stash's fact-source rows and consolidation checkpoints preserve transformation lineage from stored episodes, but not from external transcripts unless the host wrote them into Stash.

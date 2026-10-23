@@ -11,7 +11,7 @@ tags: [kb-maintenance, observability, curation, evaluation]
 
 Brainstorming: what signals — structural, semantic, or hybrid — could serve as soft oracles for KB quality? No single signal is reliable, but many weak signals combined might provide enough guidance to drive a learning loop without waiting for usage data.
 
-The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](../notes/oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./automating-kb-learning-is-an-open-problem.md) without requiring the usage data it currently lacks.
+The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. But we don't need a perfect verifier to learn — we need a signal that's better than random. Can we manufacture one from a basket of imperfect signals? Framed on the [oracle-strength spectrum](./oracle-strength-spectrum.md), the question is whether combining many no-oracle or weak-oracle signals can manufacture a usable soft oracle — hardening the guidance available to the [learning loop](./automating-kb-learning-is-an-open-problem.md) without requiring the usage data it currently lacks.
 
 ## Static signals (measurable at any point)
 
@@ -37,7 +37,7 @@ The analogy: AlphaGo works because the game has a perfect verifier. KBs don't. B
 
 ## Metamorphic relations (testable over mutations)
 
-Instead of testing "is this KB good?", test "did this change make it better or worse?" This is [spec mining](../notes/spec-mining-as-codification.md) applied to KB structure: observe the invariants that hold across mutations, then extract them as testable properties.
+Instead of testing "is this KB good?", test "did this change make it better or worse?" This is [spec mining](./spec-mining-as-codification.md) applied to KB structure: observe the invariants that hold across mutations, then extract them as testable properties.
 
 - **Split invariant:** splitting a note into two should preserve or increase total inbound links. If links decrease, the split broke something.
 - **Synthesis test:** a synthesis note should link to at least 2 source notes. If it doesn't, it's not actually synthesising.
@@ -135,7 +135,7 @@ This suggests the quality signals above need a *negative* signal specifically fo
 - Which signals are most correlated? Drop redundant ones.
 - Can we validate any of this on the current KB? Run the signals, see what they flag, check if the flagged notes are genuinely low-quality.
 - How do we weight the signals? Start with equal weights and learn?
-- Is there a risk of Goodhart's law — optimising structural signals at the expense of actual quality? (A note linking to everything would score well on connectivity but poorly on precision.) This is the fundamental limitation of [soft oracles](../notes/oracle-strength-spectrum.md): the proxy correlates with the real objective but doesn't guarantee it, so you can satisfy the signal without satisfying quality. The composite signal is an oracle-hardening strategy, but it remains soft — Goodhart applies wherever oracle strength is insufficient.
+- Is there a risk of Goodhart's law — optimising structural signals at the expense of actual quality? (A note linking to everything would score well on connectivity but poorly on precision.) This is the fundamental limitation of [soft oracles](./oracle-strength-spectrum.md): the proxy correlates with the real objective but doesn't guarantee it, so you can satisfy the signal without satisfying quality. The composite signal is an oracle-hardening strategy, but it remains soft — Goodhart applies wherever oracle strength is insufficient.
 - The Goodhart risk suggests we need both positive signals (connectivity, coverage) and negative signals (vagueness detectors, redundancy checks) — the negative signals constrain the positive ones.
 
 ---
@@ -143,10 +143,10 @@ This suggests the quality signals above need a *negative* signal specifically fo
 Relevant Notes:
 
 - [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the problem this note addresses: the learning loop needs quality gates, and this note proposes the composite signal that could serve as one
-- [oracle-strength-spectrum](../notes/oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
+- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — grounds the framing: each quality signal is a weak oracle, and the composite is an oracle-hardening strategy (manufacturing a soft oracle from many no-oracle signals)
 - [text-testing-framework](./text-testing-framework.md) — the test pyramid (deterministic / LLM rubric / corpus) maps onto the signal categories here; the framework provides the concrete testing infrastructure these signals would feed
 - [automated-tests-for-text](./automated-tests-for-text.md) — the condensed observation that text can be tested like software; this note extends that by asking which tests, combined, could drive automated improvement
-- [spec-mining-as-codification](../notes/spec-mining-as-codification.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
+- [spec-mining-as-codification](./spec-mining-as-codification.md) — the metamorphic relations section is spec mining applied to KB structure: extracting testable invariants from observed mutation behavior
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — prerequisite: content quality proxies (frontmatter completeness, title-as-claim ratio) depend on the type system being trustworthy
 - [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — exemplifies why index coverage is valuable when apparent completeness would otherwise close a broader discovery route
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — extends: the composite quality signal could gate which generated KB artifact is retained, while generator-level evaluation remains a separate target

@@ -101,9 +101,9 @@ The nearest edge case is `AGENTS.md`: harnesses may load it automatically when w
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Archie bundles natural-language docs, symbolic configs, scripts, generated local files, and deployed OS state under different authorities.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: Archie stores extensive guidance, but future agents still need to pull the relevant file.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies: Archie's retained artifacts range from advisory docs to system-enforced configuration.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Stow packages, scripts, AGENTS.md, task briefs, and VM templates shape future behavior through instruction, routing, validation, and enforcement.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Archie manages context by repo organization and task-local briefs rather than by automatic retrieval.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Archie is discoverable and inspectable, but it leaves activation to manual repo navigation.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Archie bundles natural-language docs, symbolic configs, scripts, generated local files, and deployed OS state under different authorities.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames: Archie stores extensive guidance, but future agents still need to pull the relevant file.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - applies: Archie's retained artifacts range from advisory docs to system-enforced configuration.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Stow packages, scripts, AGENTS.md, task briefs, and VM templates shape future behavior through instruction, routing, validation, and enforcement.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Archie manages context by repo organization and task-local briefs rather than by automatic retrieval.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: Archie is discoverable and inspectable, but it leaves activation to manual repo navigation.

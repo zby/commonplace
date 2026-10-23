@@ -131,11 +131,11 @@ Another divergence is governance of executable memory. SkillWeaver overwrites fu
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: SkillWeaver explicitly wires retained APIs into pre-action prompt/controller context.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: successful browser trajectories become reusable procedures for later tasks.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SkillWeaver requires separating raw traces, generated code, metadata, semantic sidecars, and retrieval decisions.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: generated APIs shift from evidence to instruction/execution authority when selected.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Playwright APIs, validators, retrieval decisions, and controller actions configure future behavior.
-- [Codification](../../notes/definitions/codification.md) - exemplifies: SkillWeaver crosses from natural-language/task traces into executable Python procedures.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: LLM success checks and exception-free tests are useful but weaker than deterministic replay proofs.
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) - exemplifies: the system mutates deployable, readable APIs rather than fine-tuning model weights.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: SkillWeaver explicitly wires retained APIs into pre-action prompt/controller context.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: successful browser trajectories become reusable procedures for later tasks.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: SkillWeaver requires separating raw traces, generated code, metadata, semantic sidecars, and retrieval decisions.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: generated APIs shift from evidence to instruction/execution authority when selected.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Playwright APIs, validators, retrieval decisions, and controller actions configure future behavior.
+- [Codification](../../theory/definitions/codification.md) - exemplifies: SkillWeaver crosses from natural-language/task traces into executable Python procedures.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) - applies: LLM success checks and exception-free tests are useful but weaker than deterministic replay proofs.
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](../../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) - exemplifies: the system mutates deployable, readable APIs rather than fine-tuning model weights.

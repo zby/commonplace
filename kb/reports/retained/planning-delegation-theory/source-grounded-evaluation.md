@@ -15,7 +15,7 @@ locally chosen means.
 
 Agent work can expose the same narrow problem for an independent reason. Under
 the conditions in
-[Preferential codification concentrates less predictable work at the agent boundary](../../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
+[Preferential codification concentrates less predictable work at the agent boundary](../../../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md),
 symbolic enforcement removes more operationally predictable cases from agent
 judgment. The residual cases are then selected toward choices whose relevant
 state can arrive during execution or whose branches are cheaper to resolve
@@ -111,7 +111,7 @@ execution-time information advantage.
 ### Search heuristic, transfer warrant, and inference
 
 The governing transfer rule is that
-[borrowed patterns transfer only over a shared mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md).
+[borrowed patterns transfer only over a shared mechanism](../../../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md).
 Analogy, shared terminology, conceptual resemblance, maturity, longevity,
 severity, and institutional prestige can motivate a search. None warrants an
 import. The target must independently instantiate the particular mechanism and
@@ -133,10 +133,10 @@ fixed intent and bounds. The executor's advantage is specific to the decision;
 the executor need not know more overall.
 
 This search discipline has precedents in Commonplace. One survey searches
-[soft-bound traditions organized around a matching problem](../../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
+[soft-bound traditions organized around a matching problem](../../../theory/soft-bound-traditions-as-sources-for-context-engineering-strategies.md)
 and then tests optimization target, feedback, and failure-mode conditions.
 Another evaluates
-[human writing structures by the failure modes they share with LLM work](../../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md).
+[human writing structures by the failure modes they share with LLM work](../../../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md).
 Those precedents support per-mechanism testing. They add no military warrant.
 
 Military command is therefore a promising source domain because intelligent
@@ -157,7 +157,7 @@ license a bounded import.
 ## Comparative evaluation
 
 The retained Commonplace synthesis of
-[productive deferral](../../../notes/productive-deferral-requires-option-evidence-and-convergence.md)
+[productive deferral](../../../theory/productive-deferral-requires-option-evidence-and-convergence.md)
 keeps the neighboring methods distinct. This table is a map; the substantive
 evaluations follow it. The source links preserve navigation, but the target-side
 composition is a Commonplace construction rather than a method claimed by any
@@ -275,7 +275,7 @@ resources and accessible context, ownership and integration, feedback or
 verification, and recovery or escalation are operative for the consequential
 surfaces involved. Timing, liveness, and concurrency also matter when their
 failure is consequential. This is why
-[intent-framed delegation is a control regime, not a short prompt](../../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
+[intent-framed delegation is a control regime, not a short prompt](../../../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md).
 
 Mission tactics contributes the one mechanism in this comparison that
 allocates bounded execution-time judgment over means. It does not decide
@@ -481,16 +481,16 @@ omission-class synthesis rather than adding a parallel layer ontology.
 
 | Durable note | Current role in this report | Supported gap or boundary |
 |---|---|---|
-| [Preferential codification concentrates less predictable work at the agent boundary](../../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
-| [Borrowed patterns transfer only over a shared mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
-| [Intent-framed delegation is a control regime, not a short prompt](../../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
-| [An author should fix what the executor cannot determine, not what it will](../../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) | Owns the decision-specific allocation rule, including inherited, delegated, irrelevant, and unresolved choices. | A rule may be inherited only through a verified binding consumption path. |
-| [Weight-resident methodologies provide context-efficient behavioral compression](../../../notes/weight-resident-methodologies-compress-behavior-in-context.md) | Separates model repertoire and compact activation from explicit, authority-bearing Commonplace doctrine. | A familiar cue supplies neither project authority nor reliable activation by itself. |
-| [Productive deferral requires option, evidence, and convergence](../../../notes/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
-| [Soft-bound traditions as sources for context-engineering strategies](../../../notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
-| [Human writing structures transfer to LLMs because failure modes overlap](../../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
+| [Preferential codification concentrates less predictable work at the agent boundary](../../../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) | Supplies the conditional target-side selection effect and the boundary between natural-language constraint and symbolic codification. | Does not establish prevalence, aggregate difficulty, or agent effectiveness. |
+| [Borrowed patterns transfer only over a shared mechanism](../../../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md) | Supplies the transfer gate and separates search priority from import warrant. | Does not itself prove that a source and target share a mechanism. |
+| [Intent-framed delegation is a control regime, not a short prompt](../../../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) | Owns the bounded military-to-agent reconstruction, target-side truth conditions, and non-exhaustive control surfaces used here. | The conditions are not an experimentally proven minimum or a sufficient implementation packet. |
+| [An author should fix what the executor cannot determine, not what it will](../../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) | Owns the decision-specific allocation rule, including inherited, delegated, irrelevant, and unresolved choices. | A rule may be inherited only through a verified binding consumption path. |
+| [Weight-resident methodologies provide context-efficient behavioral compression](../../../theory/weight-resident-methodologies-compress-behavior-in-context.md) | Separates model repertoire and compact activation from explicit, authority-bearing Commonplace doctrine. | A familiar cue supplies neither project authority nor reliable activation by itself. |
+| [Productive deferral requires option, evidence, and convergence](../../../theory/productive-deferral-requires-option-evidence-and-convergence.md) | Owns the cross-source necessary conditions and the bounded distinctions among rolling-wave planning, real options, DAPP, set-based practice, and mission tactics. | The three conditions do not prove that waiting is worthwhile or effective for agents. |
+| [Soft-bound traditions as sources for context-engineering strategies](../../../theory/soft-bound-traditions-as-sources-for-context-engineering-strategies.md) | Supplies an advisory precedent for searching a tradition by a matching problem and then testing optimization target, feedback, and failure mode. | Adds no direct military evidence or warrant for this composite. |
+| [Human writing structures transfer to LLMs because failure modes overlap](../../../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) | Supplies an advisory precedent for evaluating a borrowed convention by the failure it prevents and whether that failure exists in the target. | Adds no warrant for a different pattern without a fresh match. |
 
-[Problem matches guide method search; mechanism matches bound transfer](../../../notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
+[Problem matches guide method search; mechanism matches bound transfer](../../../theory/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md)
 now owns the additional durable synthesis exposed by this comparison. It uses
 problem match to select candidate source responses, distinguishes causal-origin
 from downstream problem matches, uses mechanism match to bound transferred

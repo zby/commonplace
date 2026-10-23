@@ -28,24 +28,24 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
+The `/connect` report identified that this source is already well-integrated into the KB — 5 existing inbound links from the most important notes and indexes. The primary synthesis has already been done by [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md), which synthesized three independent threads of convergence on Toulmin and established the `structured-claim` type.
 
 **Existing connections (already linked):**
 
-- [claim-notes-should-use-toulmin-derived-sections](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — **source**: the canonical framework this note adapts
-- [title-as-claim-enables-traversal-as-reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
+- [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — **source**: the canonical framework this note adapts
+- [title-as-claim-enables-traversal-as-reasoning](../theory/title-as-claim-enables-traversal-as-reasoning.md) — **grounds**: Toulmin's model is the theory behind claim titles and "since"/"because" link semantics
 - [links](../tags/links-README.md) — **reference material**: formal argumentation theory behind link semantics
 - [tags](../tags/README.md) — **reference material**: formal argumentation model grounding claim-title conventions
 - [thalo-type-comparison](../agent-memory-systems/thalo-type-comparison.md) — **grounds**: Toulmin provides the canonical decomposition that Thalo's opinion entity approximates
 
 **New "last mile" connections found** — 7 notes reference Toulmin concepts (warrants, evidence/reasoning sections, structured templates) without linking back to the formal source:
 
-1. [human-writing-structures-transfer-to-llms](../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) — **exemplifies**: uses Toulmin as its primary running example but doesn't link the source
-2. [structured-output-is-easier-for-humans-to-review](../notes/structured-output-is-easier-for-humans-to-review.md) — **grounds**: argues for Evidence/Reasoning separation without citing Toulmin as the theoretical basis
-3. [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: uses "warrant" terminology from Toulmin without linking
-4. [skills-derive-from-methodology-through-distillation](../notes/skills-derive-from-methodology.md) — **exemplifies**: references Toulmin as methodology source
-5. [text-testing-framework](../notes/text-testing-framework.md) — **grounds**: operationalizes Toulmin's grounds/warrant separation in truthfulness contracts
-7. [wikiwiki-principle](../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — **enables**: references structured-claim/Toulmin sections as the top of the refinement ladder
+1. [human-writing-structures-transfer-to-llms](../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) — **exemplifies**: uses Toulmin as its primary running example but doesn't link the source
+2. [structured-output-is-easier-for-humans-to-review](../theory/structured-output-is-easier-for-humans-to-review.md) — **grounds**: argues for Evidence/Reasoning separation without citing Toulmin as the theoretical basis
+3. [writing-styles-are-strategies-for-managing-underspecification](../theory/writing-styles-are-strategies-for-managing-underspecification.md) — **grounds**: uses "warrant" terminology from Toulmin without linking
+4. [skills-derive-from-methodology-through-distillation](../theory/skills-derive-from-methodology.md) — **exemplifies**: references Toulmin as methodology source
+5. [text-testing-framework](../theory/text-testing-framework.md) — **grounds**: operationalizes Toulmin's grounds/warrant separation in truthfulness contracts
+7. [wikiwiki-principle](../theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — **enables**: references structured-claim/Toulmin sections as the top of the refinement ladder
 
 The overall pattern: the synthesis note (claim-notes-should-use-toulmin) captured the main insight, but Toulmin vocabulary has diffused into many notes that reference the concepts without linking the formal source.
 
@@ -65,14 +65,14 @@ The overall pattern: the synthesis note (claim-notes-should-use-toulmin) capture
 
 This is a pedagogical summary, not an original contribution, which limits what can be extracted:
 
-- **No critique of the framework's applicability.** The Purdue OWL treatment presents Toulmin as universally applicable to argumentation. It does not discuss where the framework breaks down — arguments from analogy, aesthetic judgments, empirical predictions with probabilistic structure, or exploratory reasoning where the claim isn't yet formed. The KB's own [writing-styles-are-strategies-for-managing-underspecification](../notes/writing-styles-are-strategies-for-managing-underspecification.md) implicitly acknowledges this: not all writing is argumentative, and forcing argument structure onto exploratory writing can be counterproductive.
+- **No critique of the framework's applicability.** The Purdue OWL treatment presents Toulmin as universally applicable to argumentation. It does not discuss where the framework breaks down — arguments from analogy, aesthetic judgments, empirical predictions with probabilistic structure, or exploratory reasoning where the claim isn't yet formed. The KB's own [writing-styles-are-strategies-for-managing-underspecification](../theory/writing-styles-are-strategies-for-managing-underspecification.md) implicitly acknowledges this: not all writing is argumentative, and forcing argument structure onto exploratory writing can be counterproductive.
 
 - **No discussion of warrant failure modes.** The warrant is the most interesting and fragile component for KB use — it's the assumption that makes evidence relevant to a claim. The source defines it but says nothing about *how warrants fail*: false warrants, overly broad warrants, warrants that hold in one domain but not another. The KB's use of Toulmin (separating Evidence from Reasoning in structured-claim) depends on warrants being identifiable and assessable, but this source provides no guidance on that assessment.
 
 - **Simplified examples obscure complexity.** "Dogs bark and howl" as a warrant is trivially verifiable. KB warrants are things like "systems that separate evidence from reasoning produce more trustworthy outputs" — these require empirical support, domain expertise, and are themselves claims. The source doesn't address recursive warrant structures (warrants that are themselves claims needing grounds).
 
-- **No treatment of argument chaining.** The framework describes a single argument. KB notes form chains — one note's claim is another note's ground. How Toulmin composition works (when a warrant in one argument becomes a claim requiring its own Toulmin analysis) is not addressed. This is the question the KB actually faces in [title-as-claim-enables-traversal-as-reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md) where traversal-as-reasoning implies argument chains, not isolated arguments.
+- **No treatment of argument chaining.** The framework describes a single argument. KB notes form chains — one note's claim is another note's ground. How Toulmin composition works (when a warrant in one argument becomes a claim requiring its own Toulmin analysis) is not addressed. This is the question the KB actually faces in [title-as-claim-enables-traversal-as-reasoning](../theory/title-as-claim-enables-traversal-as-reasoning.md) where traversal-as-reasoning implies argument chains, not isolated arguments.
 
 ## Recommended Next Action
 
-File as reference — the primary synthesis work is already done. The [claim-notes-should-use-toulmin-derived-sections](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) note already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.
+File as reference — the primary synthesis work is already done. The [claim-notes-should-use-toulmin-derived-sections](../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) note already captured the key insight and established the `structured-claim` type. The 7 "last mile" connections identified by `/connect` could be added (linking notes that use Toulmin vocabulary back to this source), but these are navigational improvements, not new knowledge. If pursued, this is a maintenance sweep — add source links from the 7 notes to this snapshot — estimated effort: 15 minutes.

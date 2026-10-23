@@ -6,7 +6,7 @@
 > [workshop README](./README.md) states what a functional definition would
 > need and what closes the work. Nothing below is adopted.
 
-A [theory builder](../../notes/definitions/theory-builder.md) interprets
+A [theory builder](../../theory/definitions/theory-builder.md) interprets
 theories, cases, and consequences to derive predictions, identify candidate
 faults, and assess revisions. When a product fails, the failure may lie in
 the theory or in how it was read, and no outcome absorbs both. This proposal
@@ -15,7 +15,7 @@ interpreter idealized for faithful reading on a declared class of tasks,
 under a resource model, whose attempts at conceptual development stay
 conjectural. It was worked out in the theory-builder workshop between
 2026-09-14 and 2026-09-17 and deferred from the main outcome comparison,
-because [a claim without external assessment carries three obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+because [a claim without external assessment carries three obligations](../../theory/a-claim-without-external-assessment-carries-three-obligations.md)
 and attribution is the third: an externally tested builder can score a
 failure without attributing it, and needs this device only for a claim that
 asserts a cause. Nothing here is shipped or adopted.
@@ -32,7 +32,7 @@ asserts a cause. Nothing here is shipped or adopted.
   only failure the idealization admits. No guarantee for completed
   interpretations has been established on any specified class.
 - The KB's use of *semantic work* is the judgment of meaning and relevance
-  in [semantic work can be relocated but not eliminated](../../notes/semantic-work-can-be-relocated-but-not-eliminated.md);
+  in [semantic work can be relocated but not eliminated](../../theory/semantic-work-can-be-relocated-but-not-eliminated.md);
   this proposal extends it with conceptual revision.
 - No implementation has been compared to the standard, and no probe suite
   exists for estimating a model's knowledge and procedures.
@@ -131,7 +131,7 @@ semantic call invokes; a semantic call cannot hide arbitrary computation as
 a free primitive. An interpreter that decided every satisfiability instance
 in one uncharged call would be assuming an efficient oracle, not describing
 one. For a language-model realization the binding resource is often
-context, since [soft degradation often binds before the hard cap](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md).
+context, since [soft degradation often binds before the hard cap](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md).
 A run can also fail through a wrong reading, inadequate knowledge, or an
 unsuccessful conceptual proposal without exhausting its budget; those
 outcomes are recorded as such.
@@ -148,7 +148,7 @@ unresolved.
 **Realization.** An implementation is compared to the standard on the
 declared class. Its knowledge and procedures are declared where they are
 retained artifacts and estimated by probe where they are model weights,
-following the [representational form](../../notes/definitions/representational-form.md)
+following the [representational form](../../theory/definitions/representational-form.md)
 rule.
 
 ## Forces
@@ -246,9 +246,9 @@ current operativity answer.
 
 Relevant Notes:
 
-- [Theory builder](../../notes/definitions/theory-builder.md) — rests-on: interpretation as a role inside the builder, and retention as the builder's rather than the interpreter's
-- [A claim without external assessment carries three obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) — rests-on: attribution as the obligation this device serves, and the condition under which it binds
-- [Semantic work can be relocated but not eliminated](../../notes/semantic-work-can-be-relocated-but-not-eliminated.md) — rests-on: the KB's existing sense of semantic work, which this proposal extends with conceptual revision
-- [Soft degradation often binds before the hard cap when evidence fits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — rests-on: why context capacity is a charged resource for a language-model realization
-- [Representational form](../../notes/definitions/representational-form.md) — rests-on: declare retained artifacts, probe weights
+- [Theory builder](../../theory/definitions/theory-builder.md) — rests-on: interpretation as a role inside the builder, and retention as the builder's rather than the interpreter's
+- [A claim without external assessment carries three obligations](../../theory/a-claim-without-external-assessment-carries-three-obligations.md) — rests-on: attribution as the obligation this device serves, and the condition under which it binds
+- [Semantic work can be relocated but not eliminated](../../theory/semantic-work-can-be-relocated-but-not-eliminated.md) — rests-on: the KB's existing sense of semantic work, which this proposal extends with conceptual revision
+- [Soft degradation often binds before the hard cap when evidence fits](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — rests-on: why context capacity is a charged resource for a language-model realization
+- [Representational form](../../theory/definitions/representational-form.md) — rests-on: declare retained artifacts, probe weights
 - [Provably bounded-optimal agents](../../sources/provably-bounded-optimal-agents.ingest.md) — rests-on: evaluation relative to a declared architecture and environment class instead of an ideal reasoner

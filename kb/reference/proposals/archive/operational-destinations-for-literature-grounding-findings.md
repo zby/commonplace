@@ -58,7 +58,7 @@ numeric rate, so git remains the audit path and no propagation evidence note is
 needed.
 
 The source-grounding workshop is now consumed. Its independent Pirolli pass is
-retained as [bounded evidence](../../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md):
+retained as [bounded evidence](../../../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md):
 three of four support verdicts tightened after source reconstruction,
 target-claim inventory, and comparison were separated. The case motivates a
 bilateral-isolation control but cannot attribute the change to isolation alone,
@@ -107,7 +107,7 @@ chosen by the force each finding should have.
 | Backlinks identify the impact-search population, not the inherited claim | Semantic inbound classification in the adopted instruction | Resolved by ADR 081: raw count prices inspection and rewiring; imported claims determine semantic impact |
 | The one-of-twenty propagation result bounds that step | Git history unless an operative decision depends on the rate | Explicit no-change in ADR 081: the instruction uses semantic classification without relying on the measurement's numeric value |
 | Write-time grounding does not discover missing prior art | Ordinary writing remains bounded; explicit retrospective questions load the adopted assessment | Resolved for the current system by ADR 081. A future candidacy assay still needs its own trigger, search boundary, budget, and consumption path |
-| Model recall can nominate prior art but cannot settle overlap or disposition | A binding boundary in the adopted instruction | Resolved by ADR 081: suggestions create reading assignments that must reach tracked direct evidence, since [candidacy evidence licenses escalation rather than acceptance](../../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) |
+| Model recall can nominate prior art but cannot settle overlap or disposition | A binding boundary in the adopted instruction | Resolved by ADR 081: suggestions create reading assignments that must reach tracked direct evidence, since [candidacy evidence licenses escalation rather than acceptance](../../../theory/candidacy-evidence-licenses-escalation-not-acceptance.md) |
 | A decomposed pass tightened three of four Pirolli support verdicts after a source-blind target inventory and target-blind source reconstruction were given to a separate comparator | The bounded evidence record plus a bilateral-isolation option in an adopted literature-assessment procedure | A prospective test must form the target inventory without source exposure, form the source reconstruction without target exposure, and give only the frozen outputs to a comparator; the existing case motivates this control but does not establish its causal effect |
 | Thirteen consecutive keeps may reflect either the cohort or an incumbent-preserving test | The adopted outcome-neutral replacement test | Resolved by ADR 081: keep is not a default, and the cohort-removal case is the negative control that shows the procedure can reject the assessment premise |
 | Exact Quotes or snapshot grounding, target-owned interpretation, and no V1 claim identifiers | Existing ADRs, skills, gate, and evidence note | Explicit no-change: do not duplicate these settled results in the new procedure beyond its preconditions |
@@ -200,7 +200,7 @@ current evidence justifies that test, not the implementation.
 
 Relevant Notes:
 
-- [An independent pass tightened three of four Pirolli grounding verdicts](../../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
-- [A borrowed pattern transfers only as far as source and target share a mechanism](../../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
-- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps grounding and propagation judgments at claim rather than document grain
-- [Narrowing bought to survive review is paid for in content](../../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: supplies the adversarial warning against accepting a defensible but empty local remainder
+- [An independent pass tightened three of four Pirolli grounding verdicts](../../../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
+- [A borrowed pattern transfers only as far as source and target share a mechanism](../../../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../../../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps grounding and propagation judgments at claim rather than document grain
+- [Narrowing bought to survive review is paid for in content](../../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: supplies the adversarial warning against accepting a defensible but empty local remainder

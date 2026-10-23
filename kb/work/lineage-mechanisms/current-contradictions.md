@@ -26,7 +26,7 @@ The working workaround is downstream links from notes and descriptive reviews to
 
 The vocabulary names semantic relations from downstream to upstream (`derived-from`, `abstracted-from`, `adapted-from`, `operationalized-from`) while prescribing source-side `Derived into:`, `Abstracted into:`, `Adapted into:`, and `Operationalized into:` footers. These can be two renderings of one normalized relation, but the system does not currently declare that normalized direction independently of its storage surface.
 
-The ambiguity appears in collection rules. [Notes](../../notes/COLLECTION.md#outbound-links) authorize `abstracted-from` from a generalizing note to a source, while [sources](../../sources/COLLECTION.md#outbound-links) authorize the same asymmetric label from an ingest/source review to a note and explain it as “this claim was abstracted from this source.” The label is therefore authorized on both orientations of the same relationship.
+The ambiguity appears in collection rules. [Notes](../../theory/COLLECTION.md#outbound-links) authorize `abstracted-from` from a generalizing note to a source, while [sources](../../sources/COLLECTION.md#outbound-links) authorize the same asymmetric label from an ingest/source review to a note and explain it as “this claim was abstracted from this source.” The label is therefore authorized on both orientations of the same relationship.
 
 **Operational consequence:** inversion cannot reliably recover whether an edge means “source was abstracted into target” or “source artifact was abstracted from target”; authors can create semantically opposite edges under one asymmetric identifier.
 

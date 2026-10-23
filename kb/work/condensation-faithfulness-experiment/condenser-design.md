@@ -15,7 +15,7 @@ Its condenser prompt **already** asks for the things naive intuition says produc
 - *"## Description … when or when NOT to use"* — ≈ a weak activation trigger
 - fixed schema: Title / Description / Content, ≤3 items.
 
-And the paper still finds its output behaviorally inert. **Therefore prompt-level exhortation is not the lever.** This is exactly what [constraining](../../notes/definitions/constraining.md) predicts: constraining narrows an artifact's interpretation space and *verifies* it; it is not achieved by asking nicely in prose. The native condenser sits in the "distilled but **not** constrained" quadrant despite good intentions.
+And the paper still finds its output behaviorally inert. **Therefore prompt-level exhortation is not the lever.** This is exactly what [constraining](../../theory/definitions/constraining.md) predicts: constraining narrows an artifact's interpretation space and *verifies* it; it is not achieved by asking nicely in prose. The native condenser sits in the "distilled but **not** constrained" quadrant despite good intentions.
 
 Design consequence: our gain (if any) must come from **structure + enforcement**, not better wording. If our condenser were just a reworded prompt, the paper predicts it would also be inert.
 
@@ -24,12 +24,12 @@ Design consequence: our gain (if any) must come from **structure + enforcement**
 | Principle | Grounding note | Paper failure attacked |
 |---|---|---|
 | Shape output for the **acting** consumer (a future agent mid-task, bounded context, selecting an action), not for a reader | [distillation](../../notes/definitions/distillation.md) | framing of the whole artifact |
-| Each item is a **claim** — "In state S, do/avoid A, because R" — not a topic label | [constraining](../../notes/definitions/constraining.md); `title-as-claim` gate | §5.1 vagueness |
-| Carry an explicit, **matchable Trigger** (task type / observed state / proposed action) so the memory can activate on-situation instead of being blindly prepended | [activate-behavior-changing-memory](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md); [knowledge-storage-does-not-imply-contextual-activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) | **§5.2 internal bias** (static prepend underweighted) |
+| Each item is a **claim** — "In state S, do/avoid A, because R" — not a topic label | [constraining](../../theory/definitions/constraining.md); `title-as-claim` gate | §5.1 vagueness |
+| Carry an explicit, **matchable Trigger** (task type / observed state / proposed action) so the memory can activate on-situation instead of being blindly prepended | [activate-behavior-changing-memory](../../theory/agent-memory-requirements/activate-behavior-changing-memory.md); [knowledge-storage-does-not-imply-contextual-activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) | **§5.2 internal bias** (static prepend underweighted) |
 | State **mechanism/why**, scoped to where it generalizes | `explanatory-reach` gate | §5.1 vagueness |
 | **No overclaim** beyond the trace; mark scope and where NOT to apply | `grounding-alignment`, `load-bearing-qualifiers`, `source-residue` gates | §5.1 Table-1 failures (distraction / overreliance / premature) |
-| **Codify the checkable**: if the lesson is a rule, emit a check/precondition, not prose (a check is not "underweighted by later layers") | [codification](../../notes/definitions/codification.md); representational-form | §5.2 internal bias |
-| Pre-compute the lesson fully so the consuming call carries the answer, not the work | [frontloading](../../notes/frontloading-spares-execution-context.md) | context economy |
+| **Codify the checkable**: if the lesson is a rule, emit a check/precondition, not prose (a check is not "underweighted by later layers") | [codification](../../theory/definitions/codification.md); representational-form | §5.2 internal bias |
+| Pre-compute the lesson fully so the consuming call carries the answer, not the work | [frontloading](../../theory/frontloading-spares-execution-context.md) | context economy |
 | **Self-check against gate criteria, then revise** before storing — enforcement, not exhortation | the `kb/instructions/` gate suite | the exhortation-fails fact above |
 
 ## Output schema (treatment)
@@ -59,7 +59,7 @@ Because the native condenser already exhorts concreteness and still fails, any g
 
 ## Theory-transfer watch
 
-Our condensation theory was built for authored artifacts. Forcing it onto raw traces in an automatic loop may strain it — e.g. the [system-definition vs knowledge-artifact](../../notes/definitions/system-definition-artifact.md) distinction, or register, may not map cleanly. Where it strains is a candidate durable note when the workshop closes, independent of the experiment's numeric result.
+Our condensation theory was built for authored artifacts. Forcing it onto raw traces in an automatic loop may strain it — e.g. the [system-definition vs knowledge-artifact](../../theory/definitions/system-definition-artifact.md) distinction, or register, may not map cleanly. Where it strains is a candidate durable note when the workshop closes, independent of the experiment's numeric result.
 
 ## Open forks (do not resolve here)
 

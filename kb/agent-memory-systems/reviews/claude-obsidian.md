@@ -138,8 +138,8 @@ The strongest claude-obsidian idea for Commonplace is not "use Obsidian" in gene
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: claude-obsidian stores a rich wiki, but most page memory affects agents only after explicit query or page reads.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: wiki pages, skills, hot cache, logs, locks, indexes, hooks, and embeddings have different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, source summaries, questions, and hot-cache content mostly serve as evidence, reference, context, or advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, commands, hooks, routing scripts, lock scripts, and retrieval policies configure future agent behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: saved conversations, operation logs, hot-cache summaries, autoresearch outputs, and retrieval indexes are derived from use traces and source-processing loops.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: claude-obsidian stores a rich wiki, but most page memory affects agents only after explicit query or page reads.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: wiki pages, skills, hot cache, logs, locks, indexes, hooks, and embeddings have different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, source summaries, questions, and hot-cache content mostly serve as evidence, reference, context, or advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skills, commands, hooks, routing scripts, lock scripts, and retrieval policies configure future agent behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: saved conversations, operation logs, hot-cache summaries, autoresearch outputs, and retrieval indexes are derived from use traces and source-processing loops.

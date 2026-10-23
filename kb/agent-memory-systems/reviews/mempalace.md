@@ -119,8 +119,8 @@ The stop and precompact hooks should be read as write-side maintenance, not read
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: MemPalace has substantial storage, but most read-back remains explicit pull unless wake-up context is injected.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: drawers, closets, KG facts, hooks, and embeddings have different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: drawers, diary entries, transcript chunks, and retrieved facts primarily advise as evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hooks, plugin manifests, MCP tool schemas, protocol text, and validation/repair checks configure future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: MemPalace is mainly a local capture and selective read-back system for bounded agent context.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: MemPalace has substantial storage, but most read-back remains explicit pull unless wake-up context is injected.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: drawers, closets, KG facts, hooks, and embeddings have different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: drawers, diary entries, transcript chunks, and retrieved facts primarily advise as evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: hooks, plugin manifests, MCP tool schemas, protocol text, and validation/repair checks configure future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: MemPalace is mainly a local capture and selective read-back system for bounded agent context.

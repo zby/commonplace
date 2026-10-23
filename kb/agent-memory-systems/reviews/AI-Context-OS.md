@@ -115,8 +115,8 @@ Trace-extracted optimization is promising but conservative. The system notices u
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AI-Context-OS's file store from the MCP/chat/generated-adapter paths that actually serve memory into context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown memories, generated adapters, scoring records, observability rows, and proposals by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority carried by generated routers, rules, MCP tools, scoring policy, and validation checks.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the evidence/context role of ordinary Markdown memories, sources, journal entries, and observability records.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-learning loop rather than transcript-to-rule learning.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes AI-Context-OS's file store from the MCP/chat/generated-adapter paths that actually serve memory into context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating Markdown memories, generated adapters, scoring records, observability rows, and proposals by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - describes the authority carried by generated routers, rules, MCP tools, scoring policy, and validation checks.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - describes the evidence/context role of ordinary Markdown memories, sources, journal entries, and observability records.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames AI-Context-OS's usage-derived optimization suggestions as a modest trace-learning loop rather than transcript-to-rule learning.

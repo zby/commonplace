@@ -33,7 +33,7 @@ The `agent-memory-systems/` reviews rely on `contrasts` to map the landscape of 
 
 Register usage reinforces the split. `grounds` is a cross-register upward move: ~71% of its occurrences terminate in a theoretical note, with sources in every register. `mechanism` stays within the theoretical and workshop layers, with zero uses whose source is descriptive, source, or managed.
 
-Decision-cost argument from [`linking-theory.md`](../../notes/linking-theory.md): a reader following `grounds` wants to verify the claim's justification; a reader following `mechanism` wants to understand how the claim operates. Different reader needs, different follow/skip choices.
+Decision-cost argument from [`linking-theory.md`](../../theory/linking-theory.md): a reader following `grounds` wants to verify the claim's justification; a reader following `mechanism` wants to understand how the claim operates. Different reader needs, different follow/skip choices.
 
 ### ADR 009 has an implicit directional rule worth stating
 
@@ -54,7 +54,7 @@ The vocabulary splits into two classes by directional shape. New label proposals
 
 **Asymmetric labels (forward-authored, backward-derived; 1:many fan-out):** `extends`, `grounds`, `enables`, `exemplifies`, `mechanism`. Per-label semantics are in the [catalogue](../link-vocabulary.md).
 
-Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links, so it should not be required to maintain forward links back to all of them. The authored edge from the downstream side is sufficient to derive the upstream note's inbound view ([inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)). An upstream note may still author a reciprocal link when that direction independently helps its readers.
+Each label points *upstream* (toward more fundamental, more general, or more foundational content). Each upstream note typically accumulates many incoming links, so it should not be required to maintain forward links back to all of them. The authored edge from the downstream side is sufficient to derive the upstream note's inbound view ([inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md)). An upstream note may still author a reciprocal link when that direction independently helps its readers.
 
 **Symmetric labels (self-dual; either end may author):** `contradicts`, `contrasts`.
 
@@ -105,6 +105,6 @@ Relevant Notes:
 
 - [ADR 009 — link relationship semantics](./009-link-relationship-semantics.md) — extended by this ADR; its five-label core stays canonical
 - [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — depends-on: this ADR's additions land inside the architecture ADR 019 specifies
-- [linking theory](../../notes/linking-theory.md) — rests-on: the decision-cost model this vocabulary instantiates
+- [linking theory](../../theory/linking-theory.md) — rests-on: the decision-cost model this vocabulary instantiates
 - [link-vocabulary report](../../reports/retained/link-vocabulary.md) — frozen audit snapshot the analysis behind this decision was derived from
-- [inbound and outbound links serve asymmetric reader needs](../../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — the inverse-view rationale that makes directional asymmetry workable
+- [inbound and outbound links serve asymmetric reader needs](../../theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — the inverse-view rationale that makes directional asymmetry workable

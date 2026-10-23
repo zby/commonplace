@@ -69,5 +69,5 @@ Relevant Notes:
 - [Documentation site](../documentation-site.md) — part-of: rendering and publication channel used by articles
 - [Publish an article](../../instructions/publish-an-article.md) — implemented-by: executable transition from approved draft to dated public artifact
 - [ADR 042 — Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — extends: worked-case-first rule under which the editorial profile is promoted
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — rests-on: why article schema constraints are added from observed mechanical failure rather than speculative completeness
+- [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — rests-on: why article schema constraints are added from observed mechanical failure rather than speculative completeness
 - [ADR 063 — All article drafts circulate behind a banner](./063-all-article-drafts-circulate-behind-a-banner.md) — superseded-by: removes this decision's excluded-draft placement while retaining its local article contract and published lifecycle

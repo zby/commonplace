@@ -56,4 +56,4 @@ Relevant Notes:
 
 - [Review system](../README-REVIEW-SYSTEM.md) — implemented-by: selector semantics and criterion-specific freshness boundary
 - [Note type](../../types/note.md) — implemented-by: authoring and revocation contract
-- [Representational form](../../notes/definitions/representational-form.md) — rests-on: committed metadata is the portable representation consumed by file-only renderers
+- [Representational form](../../theory/definitions/representational-form.md) — rests-on: committed metadata is the portable representation consumed by file-only renderers

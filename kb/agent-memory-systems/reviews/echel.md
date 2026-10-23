@@ -123,8 +123,8 @@ Echel's weaker point is semantic fragility. Its graph extractor keys on fixed he
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Echel's stored wiki from bootstrap and packet surfaces that actually re-enter agent context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to Echel's wiki pages, graph, packets, reports, gates, evidence registry, memory records, and cockpit state.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies product pages, logs, memory records, graph reports, cockpit views, and proof evidence before they gain stronger action force.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies rules, schemas, work packets, closure gates, validation, readiness blockers, and allowlisted cockpit commands.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames Echel's main mechanism: routing bounded product memory into the next agent session or task.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Echel's stored wiki from bootstrap and packet surfaces that actually re-enter agent context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to Echel's wiki pages, graph, packets, reports, gates, evidence registry, memory records, and cockpit state.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies product pages, logs, memory records, graph reports, cockpit views, and proof evidence before they gain stronger action force.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies rules, schemas, work packets, closure gates, validation, readiness blockers, and allowlisted cockpit commands.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames Echel's main mechanism: routing bounded product memory into the next agent session or task.

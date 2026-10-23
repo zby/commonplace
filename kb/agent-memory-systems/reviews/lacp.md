@@ -127,9 +127,9 @@ LACP is a genuine trace-learning agent memory system embedded in a broader local
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: LACP stores many memory surfaces, but only session-start injection is retained-memory push.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LACP separates file substrates, natural-language/symbolic/parametric forms, trace/import/authored lineage, and multiple behavioral authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Obsidian notes, graph nodes, synthesis notes, and RAG results mostly act as knowledge artifacts.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: context modes, gates, routing policies, validation hooks, and ranking indexes can carry stronger authority.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: LACP's central memory problem is selecting, budgeting, and injecting local context for agent sessions.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: LACP has strong discoverability and bounded-context mechanisms, with trust depending on staging, provenance, and gates.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: LACP stores many memory surfaces, but only session-start injection is retained-memory push.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: LACP separates file substrates, natural-language/symbolic/parametric forms, trace/import/authored lineage, and multiple behavioral authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Obsidian notes, graph nodes, synthesis notes, and RAG results mostly act as knowledge artifacts.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: context modes, gates, routing policies, validation hooks, and ranking indexes can carry stronger authority.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: LACP's central memory problem is selecting, budgeting, and injecting local context for agent sessions.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: LACP has strong discoverability and bounded-context mechanisms, with trust depending on staging, provenance, and gates.

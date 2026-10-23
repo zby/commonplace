@@ -137,10 +137,10 @@ separates authored truth from derived and operational state.
 The [navigation design](../../reference/navigation.md) starts with cheap
 lexical and curated surfaces and allows an agent to decide what to open next.
 The notes on
-[agent-directed navigation](../../notes/agents-navigate-by-deciding-what-to-read-next.md),
-[fluid resolution](../../notes/a-knowledge-base-should-support-fluid-resolution-switching.md),
+[agent-directed navigation](../../theory/agents-navigate-by-deciding-what-to-read-next.md),
+[fluid resolution](../../theory/a-knowledge-base-should-support-fluid-resolution-switching.md),
 and
-[local materialization](../../notes/local-materialization-should-outperform-distant-declarations.md)
+[local materialization](../../theory/local-materialization-should-outperform-distant-declarations.md)
 give the right theoretical basis. The missing piece is an execution-oriented
 projection of those surfaces, not a different theory of navigation.
 
@@ -231,7 +231,7 @@ whether silence means health, an unqueried subsystem, or a stale registry.
 An operation commonly reloads broad doctrine, a long skill, a collection
 contract, a type, target content, and corpus discovery output. Much of that
 material is stable or reducible to the clauses relevant to one operation. The
-[frontloading principle](../../notes/frontloading-spares-execution-context.md)
+[frontloading principle](../../theory/frontloading-spares-execution-context.md)
 applies directly: resolve known scope, authority, paths, and checks before the
 model call rather than asking every agent to derive them again.
 

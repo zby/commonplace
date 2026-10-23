@@ -171,7 +171,7 @@ This maximizes queryability and makes routing deterministic from artifact bytes.
 
 Relevant Notes:
 
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — rests-on: whole-artifact function should not become a family of types unless each distinction entails a checkable artifact contract
+- [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — rests-on: whole-artifact function should not become a family of types unless each distinction entails a checkable artifact contract
 - [The collection–type split is asymmetric: collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — evidenced-by: any persisted function field must keep one type-owned meaning across collections
 - [ADR 012: types for structure, traits for review](../adr/012-types-for-structure-traits-for-review.md) — compares-with: the existing type and trait routing surfaces that a dedicated function axis would supplement or reuse
 - [ADR 092: Write briefs are optional sidecars named by a validated pointer](../adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) — compares-with: the adopted optional brief is one possible carrier for retained function intent but cannot be assumed for every artifact

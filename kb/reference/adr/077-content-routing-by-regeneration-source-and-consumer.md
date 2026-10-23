@@ -30,7 +30,7 @@ own general knowledge. Decision premises it cannot faithfully recover from
 those three must be held by tracked artifacts — relevance decisions, intents,
 project-particular forces, rejected alternatives, and applicability scope are
 the common instances
-([design rationale must preserve decision premises its interpreter cannot regenerate](../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md)).
+([design rationale must preserve decision premises its interpreter cannot regenerate](../../theory/design-rationale-must-preserve-unregenerable-decision-premises.md)).
 The rule runs one way. Recoverable explanation is a cache, judged by cache
 economics rather than by truth, only when the passage carries no independent
 authority, cross-check, provenance, activation, or exact-record role.
@@ -202,9 +202,9 @@ artifacts. The table does not re-derive that boundary and does not weaken it.
 
 Relevant Notes:
 
-- [Design rationale must preserve decision premises its interpreter cannot regenerate](../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md) — rests-on: supplies the one-way retention rule that decides whether content must be written down, and when recoverable explanation is only a cache
-- [A specific intent may out-yield local rationales, but contingent facts stay separate](../../notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md) — rests-on: the untested conjecture behind keeping the instruction goal and the commit intent line, and why the table still keeps the rows an intent cannot supply
+- [Design rationale must preserve decision premises its interpreter cannot regenerate](../../theory/design-rationale-must-preserve-unregenerable-decision-premises.md) — rests-on: supplies the one-way retention rule that decides whether content must be written down, and when recoverable explanation is only a cache
+- [A specific intent may out-yield local rationales, but contingent facts stay separate](../../theory/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md) — rests-on: the untested conjecture behind keeping the instruction goal and the commit intent line, and why the table still keeps the rows an intent cannot supply
 - [Content routing](../content-routing.md) — implemented-by: the routing table this decision adopts and points the write operations at
 - [ADR 074 — Git is the change-history layer](./074-git-is-the-change-history-layer.md) — extends: generalizes its one-kind criterion into a routing rule for every content kind
-- [An author should fix what the executor can't determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: why the goal survives in an instruction body while situational rationale is cut
-- [Bottom-up structure inference needs capture at the decision surface](../../notes/structure-inference-needs-capture-at-the-decision-surface.md) — rests-on: why change-grain intent is recorded in the commit rather than reconstructed later
+- [An author should fix what the executor can't determine, not what it will](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: why the goal survives in an instruction body while situational rationale is cut
+- [Bottom-up structure inference needs capture at the decision surface](../../theory/structure-inference-needs-capture-at-the-decision-surface.md) — rests-on: why change-grain intent is recorded in the commit rather than reconstructed later

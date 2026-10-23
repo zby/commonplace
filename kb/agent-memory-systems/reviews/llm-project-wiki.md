@@ -111,8 +111,8 @@ Selection and scope are bounded by the authored routing structures: Semantic Loo
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the generated wiki is pulled through explicit lookup, even though wiki-first rules push the obligation to look.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: setup prompts, generated wiki pages, source snapshots, rules, logs, and commands differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled wiki pages advise future agents as reference context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: setup prompt, `CLAUDE.md` / `GEMINI.md` rules, slash commands, schemas, and health checks shape future behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: the generated wiki is pulled through explicit lookup, even though wiki-first rules push the obligation to look.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: setup prompts, generated wiki pages, source snapshots, rules, logs, and commands differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: compiled wiki pages advise future agents as reference context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: setup prompt, `CLAUDE.md` / `GEMINI.md` rules, slash commands, schemas, and health checks shape future behavior.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - qualifies narrowly: task-discovered wiki gaps become durable log entries and later page updates.

@@ -131,10 +131,10 @@ The generated rules-file push is powerful and risky. It solves the "memory exist
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Eidetic's stored cards, hook-pushed rules context, and pull search tools.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to cards, generated context, indexes, drift rows, hooks, and vault projections as different operative parts.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Eidetic's stored cards, hook-pushed rules context, and pull search tools.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to cards, generated context, indexes, drift rows, hooks, and vault projections as different operative parts.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Eidetic's transcript-to-signal loop in the trace-learning landscape.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session-end signal extraction as learning from agent traces.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary memory cards, search results, and signal cards as advisory retained knowledge.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies hooks, generated rules context, MCP schemas, validators, and ranking policy as behavior-shaping control surfaces.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session-end signal extraction as learning from agent traces.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why project slugs, card kinds, statuses, and detail ids make selection targetable.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies ordinary memory cards, search results, and signal cards as advisory retained knowledge.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies hooks, generated rules context, MCP schemas, validators, and ranking policy as behavior-shaping control surfaces.

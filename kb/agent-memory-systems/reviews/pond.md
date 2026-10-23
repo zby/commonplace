@@ -222,9 +222,9 @@ as advice.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - rests-on: Pond retains and serves sessions, while the external host owns actual model activation.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - rests-on: Pond retains and serves sessions, while the external host owns actual model activation.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Pond converts session and tool traces into durable canonical records without a semantic distillation or promotion loop.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - grounds: separates Pond's canonical corpus, search structures, routing instructions, wrapper policy, and restored files by substrate, form, lineage, and authority.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - grounds: distinguishes advisory transcripts, routing instructions, relevance ranking, validation, and OpenClaw wrapper enforcement.
-- [Representational form](../../notes/definitions/representational-form.md) - grounds: separates natural-language trace content, symbolic schemas and indexes, and optional parametric embeddings.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - grounds: separates Pond's canonical corpus, search structures, routing instructions, wrapper policy, and restored files by substrate, form, lineage, and authority.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - grounds: distinguishes advisory transcripts, routing instructions, relevance ranking, validation, and OpenClaw wrapper enforcement.
+- [Representational form](../../theory/definitions/representational-form.md) - grounds: separates natural-language trace content, symbolic schemas and indexes, and optional parametric embeddings.
 - [Pond whole-system analysis](../../agentic-systems/reviews-archive/pond.md) - part-of: traces the same frozen source through core runtime, host-integration, security-boundary, and epistemic routes.

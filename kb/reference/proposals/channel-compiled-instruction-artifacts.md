@@ -8,7 +8,7 @@ tags: [architecture, commonplace-architecture]
 
 Commonplace already decided that skills are generated at build time rather than parameterised at runtime, and `commonplace-init` already resolves project-specific values that way. Shell language escaped that decision. Bash-shaped snippets inside promoted skills still require a PowerShell agent to translate before it can act.
 
-ADR 064 removed one former reason to compile by making the user-level uv tool directory the cross-platform authority for `commonplace-*` commands. Generated instructions no longer branch over project-venv activation, `.venv/bin` versus `.venv\Scripts`, or explicit `.exe` fallback paths. The remaining shell-language problem is still runtime parameterisation wearing natural-language clothing. The [adopted claim](../../notes/generate-instructions-at-build-time.md) rejects it in placeholder form for exactly the reasons that apply here — interpretation overhead on every use across every substitution site, with occasional silent misreads — and states the canonical form of a skill as standalone, with the templating step producing that form rather than leaking into the runtime artifact. A natural-language branch is a substitution site whose resolver is the LLM.
+ADR 064 removed one former reason to compile by making the user-level uv tool directory the cross-platform authority for `commonplace-*` commands. Generated instructions no longer branch over project-venv activation, `.venv/bin` versus `.venv\Scripts`, or explicit `.exe` fallback paths. The remaining shell-language problem is still runtime parameterisation wearing natural-language clothing. The [adopted claim](../../theory/generate-instructions-at-build-time.md) rejects it in placeholder form for exactly the reasons that apply here — interpretation overhead on every use across every substitution site, with occasional silent misreads — and states the canonical form of a skill as standalone, with the templating step producing that form rather than leaking into the runtime artifact. A natural-language branch is a substitution site whose resolver is the LLM.
 
 ## Current state (as of 2026-08-08)
 
@@ -87,10 +87,10 @@ Command installation and discovery, settled by ADR 064; historical command examp
 
 Relevant Notes:
 
-- [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — rests-on: the adopted claim this extends from paths to execution channel, including the standalone-canonical-form rule
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
-- [Model-resolved indirection adds interpretation work to LLM execution](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: why leaving branch resolution to the model adds interpretation work during execution
-- [Operative change](../../notes/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: the constraint a compiled artifact must satisfy
+- [Generate KB skills at build time, don't parameterise them](../../theory/generate-instructions-at-build-time.md) — rests-on: the adopted claim this extends from paths to execution channel, including the standalone-canonical-form rule
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
+- [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: why leaving branch resolution to the model adds interpretation work during execution
+- [Operative change](../../theory/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
+- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: the constraint a compiled artifact must satisfy
 - [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends
 - [ADR 064: Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — compares-with: removes command location and environment activation from the channel variables this proposal must resolve

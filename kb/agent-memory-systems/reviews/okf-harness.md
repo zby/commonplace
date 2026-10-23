@@ -108,8 +108,8 @@ The generated graph report is also a pull orientation surface. It writes `.okfh/
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: OKF Harness stores wiki and source artifacts, but activation depends on generated guidance, search/read calls, and agent behavior.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: OKF Harness bundles natural-language wiki content, symbolic manifests, generated instructions, validators, and derived graph/search views with different authorities.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: OKF Harness read-back is strongest when a query string, concept id, path, section id, source id, or workflow signal is already available.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki concepts, reference documents, raw source records, search cards, and graph reports advise future agents and humans.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated skills, root guidance, config, manifest validation, command routing, and check/lint rules carry instruction, routing, enforcement, and validation force.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: OKF Harness stores wiki and source artifacts, but activation depends on generated guidance, search/read calls, and agent behavior.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: OKF Harness bundles natural-language wiki content, symbolic manifests, generated instructions, validators, and derived graph/search views with different authorities.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: OKF Harness read-back is strongest when a query string, concept id, path, section id, source id, or workflow signal is already available.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki concepts, reference documents, raw source records, search cards, and graph reports advise future agents and humans.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated skills, root guidance, config, manifest validation, command routing, and check/lint rules carry instruction, routing, enforcement, and validation force.

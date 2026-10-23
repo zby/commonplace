@@ -117,8 +117,8 @@ The nearest Commonplace analogue is source snapshot -> extraction -> reviewed ar
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Kompl has explicit MCP/API pull surfaces plus chat-time page injection into synthesis.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Kompl's pages, plans, provenance, aliases, FTS rows, vector records, and progress queues carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled pages and provenance primarily serve as evidence and reference.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: compile steps, page plans, settings, gates, indexes, and MCP schemas shape future behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Kompl has explicit MCP/API pull surfaces plus chat-time page injection into synthesis.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Kompl's pages, plans, provenance, aliases, FTS rows, vector records, and progress queues carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: compiled pages and provenance primarily serve as evidence and reference.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: compile steps, page plans, settings, gates, indexes, and MCP schemas shape future behavior.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - qualifies narrowly: Kompl derives pending query-generated drafts from chat session turns, while its main wiki compiler is imported-source based.

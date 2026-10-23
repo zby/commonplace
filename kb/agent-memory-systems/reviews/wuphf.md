@@ -121,9 +121,9 @@ The main risk is authority drift. WUPHF has many paths that can turn notes into 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WUPHF stores rich memory, but only tool calls, prompt blocks, `/lookup`, and generated skills make it affect a future action.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: WUPHF's wiki pages, notebooks, fact logs, learning rows, skills, indexes, prompts, and review state carry different substrates, forms, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: WUPHF stores rich memory, but only tool calls, prompt blocks, `/lookup`, and generated skills make it affect a future action.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: WUPHF's wiki pages, notebooks, fact logs, learning rows, skills, indexes, prompts, and review state carry different substrates, forms, lineage, and authority.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: WUPHF extracts facts and skill candidates from retained artifacts, notebooks, and self-heal traces.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki articles, notebook entries, raw artifacts, citations, facts, and learnings mostly advise until read or promoted.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompt blocks, MCP tool schemas, compiled skills, lint rules, validators, and review workflows instruct, route, validate, rank, or enforce behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: WUPHF's targeted read-back relies on paths, slugs, task ids, scopes, query classes, and typed predicates being available as signals or inferred from query text.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki articles, notebook entries, raw artifacts, citations, facts, and learnings mostly advise until read or promoted.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompt blocks, MCP tool schemas, compiled skills, lint rules, validators, and review workflows instruct, route, validate, rank, or enforce behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: WUPHF's targeted read-back relies on paths, slugs, task ids, scopes, query classes, and typed predicates being available as signals or inferred from query text.

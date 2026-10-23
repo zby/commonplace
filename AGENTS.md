@@ -60,23 +60,23 @@ First-mention glossing and linking in authored artifacts is governed by
 
 | Term | Definition |
 |---|---|
-| Actionable | [Operator-relative methodology](./kb/notes/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
-| Addressable theory | [Addressable theory](./kb/notes/definitions/addressable-theory.md) |
-| Codification | [Codification](./kb/notes/definitions/codification.md) |
+| Actionable | [Operator-relative methodology](./kb/theory/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
+| Addressable theory | [Addressable theory](./kb/theory/definitions/addressable-theory.md) |
+| Codification | [Codification](./kb/theory/definitions/codification.md) |
 | Collection, text contract | [Collection](./kb/reference/definitions/collection.md) |
 | Commonplace | This KB and framework. |
 | Commonplace doctrine | [Commonplace doctrine](./kb/reference/definitions/commonplace-doctrine.md) |
-| Constraining | [Constraining](./kb/notes/definitions/constraining.md) |
-| Context engineering | [Context engineering](./kb/notes/definitions/context-engineering.md) |
-| Discovery lifecycle | [Discovery lifecycle](./kb/notes/definitions/discovery-lifecycle.md) |
-| Explanatory-reach | [Explanatory-reach](./kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
-| Frontloading | [Frontloading](./kb/notes/frontloading-spares-execution-context.md) |
+| Constraining | [Constraining](./kb/theory/definitions/constraining.md) |
+| Context engineering | [Context engineering](./kb/theory/definitions/context-engineering.md) |
+| Discovery lifecycle | [Discovery lifecycle](./kb/theory/definitions/discovery-lifecycle.md) |
+| Explanatory-reach | [Explanatory-reach](./kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
+| Frontloading | [Frontloading](./kb/theory/frontloading-spares-execution-context.md) |
 | Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
-| Representational form | [Representational form](./kb/notes/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
-| System-definition artifact | [System-definition artifact](./kb/notes/definitions/system-definition-artifact.md) |
-| Tentative theory | [Tentative theory](./kb/notes/definitions/tentative-theory.md) |
-| Theory builder | [Theory builder](./kb/notes/definitions/theory-builder.md) |
-| Workshop | [Workshop layer](./kb/notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) |
+| Representational form | [Representational form](./kb/theory/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
+| System-definition artifact | [System-definition artifact](./kb/theory/definitions/system-definition-artifact.md) |
+| Tentative theory | [Tentative theory](./kb/theory/definitions/tentative-theory.md) |
+| Theory builder | [Theory builder](./kb/theory/definitions/theory-builder.md) |
+| Workshop | [Workshop layer](./kb/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) |
 
 Compound technical terms keep their registered meaning; bare words such as
 discovery, reach and doctrine may be ordinary language where unambiguous.

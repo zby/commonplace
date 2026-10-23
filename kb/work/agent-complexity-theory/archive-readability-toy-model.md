@@ -2,7 +2,7 @@
 
 Goal: make "how big an archive can a bounded-context system read?" precise enough to reason about.
 
-This is a workshop note, so the model is deliberately narrow. The point is not realism; the point is to isolate first-order constraints from the [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md). It adds a local scalar budget `M` for the toy analysis; the linked model instead treats feasibility as task- and model-relative.
+This is a workshop note, so the model is deliberately narrow. The point is not realism; the point is to isolate first-order constraints from the [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md). It adds a local scalar budget `M` for the toy analysis; the linked model instead treats feasibility as task- and model-relative.
 
 ## The task class
 
@@ -222,5 +222,5 @@ Those are the first two costs to model.
 Related notes:
 
 - [prompt-limited systems should assemble context rather than inherit transcripts](../../notes/prompt-limited-systems-should-assemble-context-rather-than-inherit-transcripts.md)
-- [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md)
-- [context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md)
+- [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md)
+- [context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)

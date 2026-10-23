@@ -1,6 +1,6 @@
 # Prose has no scope (promoted)
 
-**Status (2026-07-17): promoted.** The theory now lives in [vocabulary collisions are prevented at write time, not resolved at read time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — the corpus-scale no-scope argument, the silent-composition failure, the prevention-over-scoping remedy, the position-in-a-schema analysis, the multi-word-coinage naming rule, and the load-bearing-polysemy caveat all live there. This file keeps only what is workshop-specific: evidence pointers the note cannot link, decisions the thread produced, and the open policy work this workshop still owns.
+**Status (2026-07-17): promoted.** The theory now lives in [vocabulary collisions are prevented at write time, not resolved at read time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — the corpus-scale no-scope argument, the silent-composition failure, the prevention-over-scoping remedy, the position-in-a-schema analysis, the multi-word-coinage naming rule, and the load-bearing-polysemy caveat all live there. This file keeps only what is workshop-specific: evidence pointers the note cannot link, decisions the thread produced, and the open policy work this workshop still owns.
 
 ## Evidence (kb/work links the note cannot carry)
 

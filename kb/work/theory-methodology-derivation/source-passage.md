@@ -1,6 +1,6 @@
 # Source passage (terminology check trigger)
 
-External conversational passage that triggered this workshop. It uses "crystallization" / "progressive crystallization", which is not Commonplace vocabulary — there is no `crystallization` definition and there never was one; the concept space is covered by [distillation](../../notes/definitions/distillation.md), [constraining](../../notes/definitions/constraining.md), [codification](../../notes/definitions/codification.md), and the operational notes on [spec mining](../../notes/spec-mining-as-codification.md) and relaxing.
+External conversational passage that triggered this workshop. It uses "crystallization" / "progressive crystallization", which is not Commonplace vocabulary — there is no `crystallization` definition and there never was one; the concept space is covered by [distillation](../../notes/definitions/distillation.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and the operational notes on [spec mining](../../theory/spec-mining-as-codification.md) and relaxing.
 
 Mapping to current terms:
 

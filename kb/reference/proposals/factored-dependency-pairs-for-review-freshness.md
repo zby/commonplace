@@ -6,7 +6,7 @@ tags: [kb-maintenance, observability, review-system]
 
 # Factored dependency pairs for review freshness
 
-An accepted review is a build product and its inputs are prerequisites — [make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md). Review freshness realizes this for exactly two inputs per pair: note text and criterion text. Type-conformance pairs ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) showed the cheap way to admit a new dependency: do not widen one pair's input set to N — factor each dependency into its own two-input pair where the dependency document is the gate side. This proposal holds the not-yet-adopted remainder of that direction: whether a review target may ever take more than two inputs.
+An accepted review is a build product and its inputs are prerequisites — [make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md). Review freshness realizes this for exactly two inputs per pair: note text and criterion text. Type-conformance pairs ([ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)) showed the cheap way to admit a new dependency: do not widen one pair's input set to N — factor each dependency into its own two-input pair where the dependency document is the gate side. This proposal holds the not-yet-adopted remainder of that direction: whether a review target may ever take more than two inputs.
 
 ## Current state (as of 2026-09-22)
 
@@ -51,8 +51,8 @@ A review target with three or more inputs remains the fallback for a judgment th
 
 Relevant Notes:
 
-- [link graph plus timestamps enables make-like staleness detection](../../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rests-on: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
+- [link graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rests-on: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
 - [038-type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the shipped first instance of the factoring pattern this proposal generalizes
-- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why each dependency document must be the gate rather than be restated in one
+- [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why each dependency document must be the gate rather than be restated in one
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the freshness, freshness baseline, and ack concepts every factored pair reuses unchanged
 - [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: the role-neutral snapshot substrate that lets any repo document sit on the criterion side

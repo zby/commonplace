@@ -27,9 +27,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a historical comparison for [explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md): a molecular account yields a quantitative observable and a proposed way to estimate an otherwise inaccessible quantity. Failure to observe the predicted motion and its laws would count against the account. This illustrates a discriminating consequence under stated physical assumptions; it does not test Commonplace's method for selecting explanations.
+The paper is a historical comparison for [explanatory-reach](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md): a molecular account yields a quantitative observable and a proposed way to estimate an otherwise inaccessible quantity. Failure to observe the predicted motion and its laws would count against the account. This illustrates a discriminating consequence under stated physical assumptions; it does not test Commonplace's method for selecting explanations.
 
-It also compares with [preserving mixed epistemic status below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md). The source distinguishes a derived prediction, uncertainty about identification with a known phenomenon, conditional numerical calculations, and a future measurement. Keeping those distinctions prevents the paper's scientific genre from turning every statement into an observation. The neighboring later article's report of correspondence has a separate evidential status.
+It also compares with [preserving mixed epistemic status below the document level](../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md). The source distinguishes a derived prediction, uncertainty about identification with a known phenomenon, conditional numerical calculations, and a future measurement. Keeping those distinctions prevents the paper's scientific genre from turning every statement into an observation. The neighboring later article's report of correspondence has a separate evidential status.
 
 ## Extractable Value
 

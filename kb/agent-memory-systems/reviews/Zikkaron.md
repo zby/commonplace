@@ -125,9 +125,9 @@ The README's benchmark claims are reported, not independently reproduced here. T
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Zikkaron's SQLite memory store from its MCP and hook paths that actually serve memory into Claude's context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating database rows, hook files, synced instructions, embeddings, action logs, and generated summaries by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Zikkaron's action-log, episode, consolidation, and reconsolidation loops as trace-learning.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority carried by hook settings, synced CLAUDE.md instructions, rules, validators, and retrieval policy.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the advisory role of ordinary stored memories, project context, checkpoints, and raw traces.
-- [Lineage](../../notes/definitions/lineage.md) - highlights the provenance risk around automatic compression, derivation, reconsolidation, and dream replay.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Zikkaron's SQLite memory store from its MCP and hook paths that actually serve memory into Claude's context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating database rows, hook files, synced instructions, embeddings, action logs, and generated summaries by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames Zikkaron's action-log, episode, consolidation, and reconsolidation loops as trace-learning.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - describes the authority carried by hook settings, synced CLAUDE.md instructions, rules, validators, and retrieval policy.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - describes the advisory role of ordinary stored memories, project context, checkpoints, and raw traces.
+- [Lineage](../../theory/definitions/lineage.md) - highlights the provenance risk around automatic compression, derivation, reconsolidation, and dream replay.

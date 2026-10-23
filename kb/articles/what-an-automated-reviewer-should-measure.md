@@ -4,14 +4,14 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/information-value-is-observer-relative.md
-  - kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md
-  - kb/notes/warranted-reader-update-is-the-objective-of-substantive-writing.md
-  - kb/notes/definitions/addressable-theory.md
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/reach-assessment.md
-  - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
-  - kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
+  - kb/theory/information-value-is-observer-relative.md
+  - kb/theory/reverse-compression-is-when-llm-output-expands-without-adding.md
+  - kb/theory/warranted-reader-update-is-the-objective-of-substantive-writing.md
+  - kb/theory/definitions/addressable-theory.md
+  - kb/theory/definitions/theory-builder.md
+  - kb/theory/definitions/reach-assessment.md
+  - kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md
+  - kb/theory/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
 ---
 
 # What an Automated Reviewer Should Measure
@@ -58,7 +58,7 @@ The observations are what must be encoded; the reader's account supplies
 structure that can make their encoding shorter. The article provides that
 account.
 
-[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+[Explanatory reach](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 means that an explanation keeps working beyond the cases that produced it
 because it captures why the pattern works. Its connection to compression
 is reuse: the same structure explains different cases without needing a
@@ -84,7 +84,7 @@ proposal, not a result established by Schmidhuber's theory.
 
 A principle with wide reach may teach an expert nothing while changing how
 a newcomer understands a domain. [Information value is
-observer-relative](../notes/information-value-is-observer-relative.md).
+observer-relative](../theory/information-value-is-observer-relative.md).
 
 The review therefore needs a baseline: what the intended reader already
 knows and can use. An explanation's reach and economy are not the same as
@@ -110,7 +110,7 @@ the proposed change inspectable:
 | Claimed reach | Which further cases it claims to cover |
 
 This reading treats the prior account as an [addressable
-theory](../notes/definitions/addressable-theory.md): its commitments can be
+theory](../theory/definitions/addressable-theory.md): its commitments can be
 inspected and revised separately against cases while useful prior knowledge
 is preserved. The reviewer should cite supporting passages and flag gaps.
 These are not required headings; finding all five parts makes a revision
@@ -134,7 +134,7 @@ with substantial drift. The explanation should constrain the expected
 failures in both. Finding more long experiments that failed would not
 distinguish the proposed mechanism from a correlation.
 
-This is [reach-assessment](../notes/definitions/reach-assessment.md).
+This is [reach-assessment](../theory/definitions/reach-assessment.md).
 The model can propose contrasting cases, but inventing their outcomes would
 not test the claim. Without evidence, a consequence remains untested.
 
@@ -213,7 +213,7 @@ failures or choose when to recalibrate?
 Keep the model, background, instructions, resource budget, and scoring method
 fixed between the two conditions. Repeat runs to assess variation. If a
 model grades the answers, [check its ability to distinguish better
-answers](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
+answers](../theory/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
 
 Article-informed cases can test the applications the explanation suggests.
 An independent task set tests usefulness within a separately chosen scope.
@@ -237,7 +237,7 @@ of both compression progress and its use.
 Report reading and computation costs alongside gain. A longer article may
 make a compact explanation easier to use, or it may add text without useful
 structure—the failure called [reverse
-compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
+compression](../theory/reverse-compression-is-when-llm-output-expands-without-adding.md).
 Gain per token alone would hide the trade-off between total benefit and cost.
 
 This experiment connects to [building a theory builder from today's
@@ -256,7 +256,7 @@ what would have happened without it.
 ## What the assessment can establish
 
 The broader objective is a [warranted reader
-update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md).
+update](../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md).
 Checking consequences contributes to warrant, but a favorable reach
 assessment does not certify all of an article's evidence, reasoning, or
 reporting.
@@ -271,10 +271,10 @@ whether that measurement matters.
 ## Where to go next
 
 [Information value is
-observer-relative](../notes/information-value-is-observer-relative.md)
+observer-relative](../theory/information-value-is-observer-relative.md)
 develops the reader-relative baseline.
-[Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
-and [reach-assessment](../notes/definitions/reach-assessment.md) develop the
+[Explanatory reach](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+and [reach-assessment](../theory/definitions/reach-assessment.md) develop the
 property and its assessment.
 [Can a Theory Builder Running on
 Fixed-Weight LLMs Learn?](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) develops the

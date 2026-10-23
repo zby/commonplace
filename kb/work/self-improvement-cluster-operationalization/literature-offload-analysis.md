@@ -6,31 +6,31 @@ The five sources named in [external-delegation-assessment](./external-delegation
 
 ## 1. Note-by-note disposition
 
-### 1.1 [Increasing computational autonomy relocates human effort](../../notes/increasing-computational-autonomy-relocates-human-effort.md) — repoint, do not cut
+### 1.1 [Increasing computational autonomy relocates human effort](../../theory/increasing-computational-autonomy-relocates-human-effort.md) — repoint, do not cut
 
 The one place the cluster cited an external theory without the adapter discipline (delegation assessment, cleanup item 5) is now fixed at the source side: Bainbridge is snapshotted and ingested. The remaining edit is mechanical — repoint the bare DOI link to the local snapshot.
 
 No text reduction beyond that. The note's Bainbridge content is already a single sentence ("automation transforms rather than removes the operator's role, leaving the residue that could not be automated"); the local kernel — the elastic-backlog mechanism, the constant-hours observation, the measure-per-human-judgment program — is not in Bainbridge and cannot be delegated to him. The note is already the "short hypothesis grounded in Bainbridge" the delegation proposal asked for.
 
-### 1.2 [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — add one source; the real reduction candidate is different
+### 1.2 [The boundary of automation is the boundary of verification](../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md) — add one source; the real reduction candidate is different
 
 Bainbridge's monitoring irony ("the human monitor has been given an impossible task" — checking in real time a system installed because it outperforms the human) is historically prior, independent support for the note's convergence claim. Worth roughly two added lines as a fifth source.
 
 This note is, however, the cluster's one genuine *structural* reduction candidate — just not via these five sources. Its bulk is in-body exposition of external sources (Tam, Amodei, Rabanser, MAKER, in-toto) that are cited by external URL rather than held as snapshot+ingest pairs. Applying the same discipline there — snapshot, ingest, compress each in-note exposition to claim-plus-citation — would shed a substantial fraction of the note's length and is the pattern this offload exercise validates. Flagged as a candidate follow-up, out of scope for this pass.
 
-### 1.3 [A proposal-selection loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — origin citation only
+### 1.3 [A proposal-selection loop requires search, evaluation, and operative retention](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — origin citation only
 
 The delegation assessment's fact-check ("little to trim; the note contains no engineering decomposition to delegate") is confirmed by the Kephart & Chess ingest: the paper supplies no membership test, argues by analogy, and is valuable precisely as the *origin* of the reference-model tradition the note already cites through Weyns and Petrovska. The edit is one added line — cite the origin beside the derivatives in the "What the decomposition claims" section. The boundary-case analysis (Homeostat, Zinkevich, Gödel machine) is the distinctive kernel and stays.
 
 Optional, cheap: the PDCA "act = standardize if satisfactory, back to plan if unsatisfactory" fork is a fourth independent tradition converging on the reject-capable-evaluation requirement. If added at all, it should be one clause with a citation, not a paragraph — the convergence detail lives in the ingest reports.
 
-### 1.4 [Discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) — `evidenced-by` links; the definition stays stipulative
+### 1.4 [Discovery lifecycle](../../theory/definitions/discovery-lifecycle.md) — `evidenced-by` links; the definition stays stipulative
 
 All three PDSA ingests converge on the same recommendation: the definition's conjecture–consequence–test core currently rests on the Peirce SEP entry alone, and the Deming lineage is a second, applied, non-philosophical tradition landing on the same loop (Shewhart's own specification–production–inspection ↔ hypothesis–experiment–test mapping; the 1991 Moen/Nolan/Provost prediction-in-Plan, observation-vs-prediction-in-Study revision). Add one `evidenced-by` link — [Foundation and History](../../sources/foundation-and-history-of-the-pdsa-cycle.md) is the strongest single anchor — and cite the siblings from there rather than adding three links.
 
 No reduction: the definition is stipulative and already minimal. The gain is that its core is now corroborated by independent convergence rather than one source, which is exactly what conservative extension predicts corroboration should look like.
 
-### 1.5 [An accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md) and [first-principles reasoning selects for explanatory reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — optional one-line corroborations
+### 1.5 [An accepted edit verifies the change, not the rule](../../theory/an-accepted-edit-verifies-the-change-not-the-rule.md) and [first-principles reasoning selects for explanatory reach](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) — optional one-line corroborations
 
 Moen/Nolan/Provost's "not enough to determine that a change resulted in improvement during a particular test... predict whether a change will result in improvement under the different conditions you will face in the future" is near-verbatim, decades-old, unrelated-field corroboration of both notes' central claims. Each is a one-line evidence addition, best made when the notes are next revised for other reasons. Neither note has text to cut — both are already tight.
 

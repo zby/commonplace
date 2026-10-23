@@ -64,4 +64,4 @@ See [ADR 010](./010-review-state-should-move-to-sqlite-once-reviews-leave-git-an
 
 Relevant Notes:
 
-- [notes COLLECTION.md](../../notes/COLLECTION.md) — one of the lowest-friction quality-check surfaces this ADR routes checks toward
+- [notes COLLECTION.md](../../theory/COLLECTION.md) — one of the lowest-friction quality-check surfaces this ADR routes checks toward

@@ -113,7 +113,7 @@ Other consumers include the desktop user, the Bun run queue, live WebSocket subs
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: HALO derives diagnostic reports from session/tool/event traces and feeds them into a harness-improvement loop.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HALO stores traces and reports, but memory read-back is pull-only in the inspected code.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: HALO's SQLite rows, JSONL spans, sidecar indexes, prompts, and reports carry different forms and authorities.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: HALO uses execution traces to improve an agent harness through a mediated learning loop.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: HALO prompts, tool schemas, app schema, queues, and config records route and constrain later analysis.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: HALO stores traces and reports, but memory read-back is pull-only in the inspected code.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: HALO's SQLite rows, JSONL spans, sidecar indexes, prompts, and reports carry different forms and authorities.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: HALO uses execution traces to improve an agent harness through a mediated learning loop.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: HALO prompts, tool schemas, app schema, queues, and config records route and constrain later analysis.

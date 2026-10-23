@@ -87,9 +87,9 @@ At closure this directory should be deleted, as normal for the workshop layer.
 
 ## Existing Commonplace anchors
 
-- [Designing a memory system for LLM-based agents](../../notes/designing-agent-memory-systems.md) — working target for memory distinctions and requirements
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — existing stored/read-back/activated distinction
-- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md) — existing ACT-R/Soar proceduralization analogy
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — resource boundary against which capacity ideas should be tested
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — target for learning-loop decompositions
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — current retained-artifact ontology that cognitive-architecture distinctions may refine
+- [Designing a memory system for LLM-based agents](../../theory/designing-agent-memory-systems.md) — working target for memory distinctions and requirements
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — existing stored/read-back/activated distinction
+- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) — existing ACT-R/Soar proceduralization analogy
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — resource boundary against which capacity ideas should be tested
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — target for learning-loop decompositions
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) — current retained-artifact ontology that cognitive-architecture distinctions may refine

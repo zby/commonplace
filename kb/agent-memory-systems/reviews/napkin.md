@@ -110,8 +110,8 @@ At consumption, retrieved notes are advisory knowledge unless the host agent or 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Napkin stores a vault, but core read-back is explicit tool use.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: notes, config, templates, search cache, Base queries, and overview output have different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: vault notes and retrieved snippets mostly serve as evidence, reference, context, or advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts: Napkin config, templates, and CLI behavior shape access, but vault content is not automatically enforced as a system definition.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Napkin relies on filenames, folders, tags, links, headings, mtimes, and lexical terms as available retrieval signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Napkin stores a vault, but core read-back is explicit tool use.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: notes, config, templates, search cache, Base queries, and overview output have different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: vault notes and retrieved snippets mostly serve as evidence, reference, context, or advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - contrasts: Napkin config, templates, and CLI behavior shape access, but vault content is not automatically enforced as a system definition.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Napkin relies on filenames, folders, tags, links, headings, mtimes, and lexical terms as available retrieval signals.

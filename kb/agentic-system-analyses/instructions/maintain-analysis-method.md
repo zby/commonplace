@@ -78,7 +78,7 @@ never rewrite the opening method commit of an existing run.
 When a registered definition changes, recheck that the supplied record contract
 still gives workers what they need without following background links:
 
-- [Theory builder](../../notes/definitions/theory-builder.md): localized content, consumption, criticism and iteration remain independently evidenced.
-- [Addressable theory](../../notes/definitions/addressable-theory.md): individual inspection and revision are graded and boundary-relative.
-- [Representational form](../../notes/definitions/representational-form.md): encoding and consumer rules remain separate from substrate and prompt supply.
-- [Explanatory-reach](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md): explained transfer remains accountable to fit and premise variation.
+- [Theory builder](../../theory/definitions/theory-builder.md): localized content, consumption, criticism and iteration remain independently evidenced.
+- [Addressable theory](../../theory/definitions/addressable-theory.md): individual inspection and revision are graded and boundary-relative.
+- [Representational form](../../theory/definitions/representational-form.md): encoding and consumer rules remain separate from substrate and prompt supply.
+- [Explanatory-reach](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md): explained transfer remains accountable to fit and premise variation.

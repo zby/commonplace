@@ -136,9 +136,9 @@ Quality and faithfulness are not established by code inspection. The code can sh
 
 Relevant Notes:
 
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Atlas turns communication traces into facts, graph structures, topic summaries, and wiki pages.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: Atlas stores rich memory but still relies on explicit ask/search/wiki/MCP calls for read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Atlas needs separate treatment for vector facts, graph relationships, wiki pages, service queues, and tool contracts.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: Atlas precomputes facts, clusters, summaries, and wiki pages before later QA calls.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved facts, wiki sections, graph rows, and citations mostly advise later reasoning as evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schemas, tool contracts, policies, write intents, queues, validators, and ranking paths carry stronger operational authority.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Atlas turns communication traces into facts, graph structures, topic summaries, and wiki pages.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames: Atlas stores rich memory but still relies on explicit ask/search/wiki/MCP calls for read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Atlas needs separate treatment for vector facts, graph relationships, wiki pages, service queues, and tool contracts.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - aligns: Atlas precomputes facts, clusters, summaries, and wiki pages before later QA calls.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved facts, wiki sections, graph rows, and citations mostly advise later reasoning as evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: schemas, tool contracts, policies, write intents, queues, validators, and ranking paths carry stronger operational authority.

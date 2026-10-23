@@ -179,8 +179,8 @@ selected it measured eight notes on one date.
 
 Relevant Notes:
 
-- [A note is an atomic step relative to the check that reads it](../../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
-- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption and the preconditions the uncapped representation criteria make true
+- [A note is an atomic step relative to the check that reads it](../../theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: supplies the artifact-side placement, the unquoted source as the grounding check's unit, and what kind of number N is
+- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../theory/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — rests-on: supplies the note-link exemption and the preconditions the uncapped representation criteria make true
 - [A five-link cap missed four grounding findings in twelve reviews](../../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: the paired outcomes, the uncapped arm's twenty-two-artifact reading, and the misattribution FAIL no count catches
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — procedure: carries the three reading routes and the removal of the artifact budget
 - [Misleading link text gate](../../instructions/review-gates/sentence/misleading-link-text.md) — procedure: carries the every-link head check

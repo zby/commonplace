@@ -23,7 +23,7 @@ In Commonplace terms, an instruction's prose, the tool or command that realizes 
 
 ## Transfer candidates
 
-- **`GLAIR-1` — require an execution grounding path for binding instructions.** For every operational verb in a high-authority artifact, identify the consumer, callable interface, preconditions, observable effect, and failure signal. This makes [behavioral authority](../../notes/definitions/behavioral-authority.md) concrete.
+- **`GLAIR-1` — require an execution grounding path for binding instructions.** For every operational verb in a high-authority artifact, identify the consumer, callable interface, preconditions, observable effect, and failure signal. This makes [behavioral authority](../../theory/definitions/behavioral-authority.md) concrete.
 - **`GLAIR-2` — test grounding, not documentation correspondence.** Validate that the named command exists and produces the claimed state transition in the target environment; prose and implementation can agree lexically while the path is broken.
 - **`GLAIR-3` — keep environment adapters below stable knowledge terms.** Cross-platform command differences should be handled at the implementation boundary where possible, leaving the conceptual operation stable.
 - **`GLAIR-4` — include perception grounding.** An agent must not only execute actions but detect their real outcomes. "Validation passed" should map to checked output and exit state, not to the intention to run validation.

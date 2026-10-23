@@ -136,8 +136,8 @@ Survey placement: SAGE belongs in both trace-to-tool and trace-to-policy territo
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: SAGE turns AppWorld trajectories into skill functions, SFT data, reward signal, and policy weights.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE's skill library matters because the runner inserts selected functions into prompts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and checkpoints.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, datasets, and retained skill records are evidence until consumed by selectors, prompts, or training.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill functions, retrieval indexes, reward code, prompts, and checkpoints shape later behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: SAGE extracts reusable helper functions and learned policy state from agent trajectories.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SAGE's skill library matters because the runner inserts selected functions into prompts.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: SAGE spans JSONL skills, embeddings, datasets, prompts, reward code, and checkpoints.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: logs, datasets, and retained skill records are evidence until consumed by selectors, prompts, or training.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skill functions, retrieval indexes, reward code, prompts, and checkpoints shape later behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: SAGE extracts reusable helper functions and learned policy state from agent trajectories.

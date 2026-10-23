@@ -70,17 +70,17 @@ Within the current KB, MCDP 1 is a primary doctrinal anchor and a transfer
 boundary for intent-framed delegation. Its division between assigned result,
 purpose, authority, coordination essentials, and locally selected means is
 evidence for [An author should fix what the executor can't determine, not what
-it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md),
+it will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md),
 while its placement of live choices with the subordinate who sees changing
 conditions supports [Specification strategy should follow where understanding
-lives](../notes/specification-strategy-should-follow-where-understanding-lives.md).
+lives](../theory/specification-strategy-should-follow-where-understanding-lives.md).
 Its distinction between repeatable drills and judgment-bearing, opposed
 exercises supplies a mature-domain instance for [Preferential codification
 concentrates less predictable work at the agent
-boundary](../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
+boundary](../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
 The source also gives [A specific intent may out-yield local rationales, but
 contingent facts stay
-separate](../notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md)
+separate](../theory/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md)
 a normative precedent for one durable purpose guiding many decisions after an
 original task becomes obsolete. It does not test agent orchestration, prompt
 compression, methodology activation, or the general superiority of
@@ -128,7 +128,7 @@ justify adopting mission tactics in an agentic system.
 ## Recommended Next Action
 
 Update [An author should fix what the executor can't determine, not what it
-will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) with a
+will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) with a
 short `evidenced-by` use of this ingest that states the task, purpose, authority,
 and coordination-essential versus execution-means split and preserves
 competence, trust, shared doctrine, and local-information advantage as transfer
@@ -138,4 +138,4 @@ conditions.
 
 Relevant Notes:
 
-- [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — abstracted-from: intent and bounded authority frame situated choice of means while coordination-essential prescription and reporting keep adaptation governed
+- [Intent-framed delegation is a control regime; prompt length does not establish it](../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — abstracted-from: intent and bounded authority frame situated choice of means while coordination-essential prescription and reporting keep adaptation governed

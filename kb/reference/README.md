@@ -7,7 +7,7 @@ This collection answers two kinds of question:
 - **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
 - **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
 
-Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../notes/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
+Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/notes/](../theory/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
 
 ## Mental model
 
@@ -217,11 +217,11 @@ Commonplace runs on its own methodology, so this collection also documents *this
 
 - [epistemic-stance.md](./epistemic-stance.md) — the Popperian commitments the KB's assertions assume: fallibilism, rules as conventions, anti-essentialism, intersubjective testability; a stub that grows from connections
 - [commonplace-declared-frame.md](./commonplace-declared-frame.md) — the declared boundary all the assessments below are made under: what is inside, what is outside, and how to cite or depart from it
-- [commonplace-as-a-reflective-system.md](../notes/evidence/commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
+- [commonplace-as-a-reflective-system.md](../theory/evidence/commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
 - [commonplace-as-an-instrument.md](./commonplace-as-an-instrument.md) — what the KB application is *for* in the design program: the composition test, two worked provenance instances, and the transfer evidence the repository does not have
 - [design-rationale-management.md](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute design rationale, and the end-to-end continuity the shipped contracts do not enforce
 - [content-routing.md](./content-routing.md) — routing table from content kind (intent, force, decision, alternatives, scope, mechanism, procedure, implementation fact, change narrative, observation, evidence, source claim) to destination, with the regeneration source and consumer that justify each row
-- [tag-readme-trace-observed-causal-connection.md](../notes/evidence/tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
+- [tag-readme-trace-observed-causal-connection.md](../theory/evidence/tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
 - [tag-readme-trace-as-self-improving-loop.md](./tag-readme-trace-as-self-improving-loop.md) — the same trace mapped onto search, evaluation, and retention, showing which half of each step runs in code
 - [where-change-candidates-come-from-in-commonplace.md](./where-change-candidates-come-from-in-commonplace.md) — how problem-noticing and candidate-drafting happen beyond a maintainer's own judgment
 - [agent-memory-coverage.md](./agent-memory-coverage.md) — how the shipped surfaces realize agent-memory requirements, and where they currently fall short

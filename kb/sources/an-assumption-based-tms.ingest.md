@@ -31,7 +31,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a technical basis for comparing explicit assumption dependencies with Commonplace's checker-relative source dependencies in [A note is an atomic step relative to the check that reads it](../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md): both make a conclusion's usable support conditions inspectable, although they operate over different objects and checks. It also supplies a formal counterpoint to [A claim's warrant does not determine its fit in a working theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md): an ATMS can establish derivability and consistency relative to an assumption environment without establishing the independent warrant or theory fit of any member.
+The paper is a technical basis for comparing explicit assumption dependencies with Commonplace's checker-relative source dependencies in [A note is an atomic step relative to the check that reads it](../theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md): both make a conclusion's usable support conditions inspectable, although they operate over different objects and checks. It also supplies a formal counterpoint to [A claim's warrant does not determine its fit in a working theory](../theory/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md): an ATMS can establish derivability and consistency relative to an assumption environment without establishing the independent warrant or theory fit of any member.
 
 ## Learning Claims (our opinion)
 

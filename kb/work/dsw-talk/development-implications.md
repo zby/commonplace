@@ -13,7 +13,7 @@ raw observation
   → measured effect and new observations
 ```
 
-The talk makes this gap visible because both of its worked cases had to be reconstructed manually. The [vibe-noting revision trace](../../notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) preserves its initiating observation, candidate prose, later corrections, and compressed retained artifact as a bounded evidence case. The tag-README case required a separate commit-by-commit trace to show how an operational strain became changed methodology and machinery. Neither path is yet an ordinary, observable Commonplace operation.
+The talk makes this gap visible because both of its worked cases had to be reconstructed manually. The [vibe-noting revision trace](../../theory/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md) preserves its initiating observation, candidate prose, later corrections, and compressed retained artifact as a bounded evidence case. The tag-README case required a separate commit-by-commit trace to show how an operational strain became changed methodology and machinery. Neither path is yet an ordinary, observable Commonplace operation.
 
 ## Why this is the next gap
 
@@ -68,7 +68,7 @@ Candidate disposition should include a path from a semantic finding to a propose
 - tests for the deterministic behavior;
 - a retained reason for choosing code rather than continued model or human judgment.
 
-This operationalizes the tag-README lesson without attempting automatic spec mining. The [codify-versus-LLM heuristics](../../notes/codify-versus-llm-decision-heuristics.md) already supply the decision lenses. The missing part is a repeatable transition that applies them to a live candidate and records an accept, reject, or defer decision. The same record should support later relaxation if the codified rule becomes brittle.
+This operationalizes the tag-README lesson without attempting automatic spec mining. The [codify-versus-LLM heuristics](../../theory/codify-versus-llm-decision-heuristics.md) already supply the decision lenses. The missing part is a repeatable transition that applies them to a live candidate and records an accept, reject, or defer decision. The same record should support later relaxation if the codified rule becomes brittle.
 
 ## First experiment
 

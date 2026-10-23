@@ -87,8 +87,8 @@ The list includes current news, products, papers, benchmarks, and cognitive-scie
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: the README stores useful knowledge, but there is no implemented memory push into agent context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates the Markdown list, symbolic navigation cues, imported links, and weak ranking authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies the README as reference context and discovery evidence.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames why the list has routing/ranking influence but no enforcement or instruction authority over a runtime agent.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames the README's editorial compression as a lightweight discovery aid rather than a bounded read-back mechanism.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: the README stores useful knowledge, but there is no implemented memory push into agent context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the review separates the Markdown list, symbolic navigation cues, imported links, and weak ranking authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies the README as reference context and discovery evidence.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames why the list has routing/ranking influence but no enforcement or instruction authority over a runtime agent.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames the README's editorial compression as a lightweight discovery aid rather than a bounded read-back mechanism.

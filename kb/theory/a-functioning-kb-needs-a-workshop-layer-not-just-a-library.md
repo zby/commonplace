@@ -43,7 +43,7 @@ Tasks aren't the only workshop documents. A knowledge base that supports real wo
 
 The relationship between library and workshop is **bidirectional**, and a useful decomposition distinguishes two bridge directions:
 
-**Extraction bridges** (workshop → library) move durable insights out of temporal documents. An ADR is what's left after a decision thread concludes; a note might be what's extracted when a task completes; a source review is what a queue item becomes after processing. At the deterministic end, this is [spec mining](../notes/spec-mining-as-codification.md): extracting rules and verifiers from observed workshop behavior. But extraction is broader — it also produces non-deterministic library artifacts like notes, ADR drafts, and judgment precedents. Concrete mechanisms might include:
+**Extraction bridges** (workshop → library) move durable insights out of temporal documents. An ADR is what's left after a decision thread concludes; a note might be what's extracted when a task completes; a source review is what a queue item becomes after processing. At the deterministic end, this is [spec mining](./spec-mining-as-codification.md): extracting rules and verifiers from observed workshop behavior. But extraction is broader — it also produces non-deterministic library artifacts like notes, ADR drafts, and judgment precedents. Concrete mechanisms might include:
 - A `/codify` operation that extracts learnings from a completed task into a note
 - Decision threads that automatically produce ADR drafts when they reach the "decided" state
 - Experiment conclusions that prompt for note creation
@@ -74,7 +74,7 @@ This is fine for now — the system is primarily a knowledge base and the task s
 - Is the three-space model ([knowledge / self / operational](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md)) the right framing? Workshop documents map roughly to the "operational space" — high churn, consolidation, graduation to knowledge. But the Tulving mapping may be decorative rather than load-bearing.
 - What's the minimum viable bridge? Probably `/codify` on task completion — extract learnings into a note, link back to the archived task for provenance.
 - [Claw learning is broader than retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) argues the KB needs action-oriented knowledge types (preferences, procedures, precedents, voice). Workshop documents are precisely the kind of action-oriented artifacts that produce those knowledge types — should the workshop layer be designed with action-capacity as the success metric rather than retrieval?
-- Skills already have implicit [type signatures](../notes/instructions-are-typed-callables.md) (`/ingest: source → source-review`). Could extraction bridges be formalised as skills with workshop-input, library-output signatures?
+- Skills already have implicit [type signatures](./instructions-are-typed-callables.md) (`/ingest: source → source-review`). Could extraction bridges be formalised as skills with workshop-input, library-output signatures?
 
 ---
 
@@ -86,7 +86,7 @@ Relevant Notes:
 - [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — the extraction bridge (workshop → library) is a specific instance of the broader automation challenge
 - [the wikiwiki principle](./wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the refinement-in-place ladder (text → note → structured-claim) is specifically a library pattern; workshop documents don't refine toward permanence, they consume themselves
 - [claw learning loops must improve action capacity not just retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — the action-oriented knowledge types this note identifies (preferences, procedures, precedents) are what workshop processes produce and consume; the workshop layer is where action-capacity learning happens
-- [spec mining is codification's operational mechanism](../notes/spec-mining-as-codification.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
-- [instructions are typed callables](../notes/instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
+- [spec mining is codification's operational mechanism](./spec-mining-as-codification.md) — extraction bridges are spec mining applied to workshop artifacts: observe repeated behavior in work processes, extract deterministic library knowledge
+- [instructions are typed callables](./instructions-are-typed-callables.md) — skill type signatures (source → source-review) already model extraction bridges; workshop → library bridges could be formalised as skills with temporal-input, permanent-output signatures
 - [constraining is learning](./definitions/constraining.md) — extraction bridges are constraining: collapsing workshop process outcomes into permanent library artifacts, moving knowledge from high-churn to steady-growth
 - [evolving understanding needs holistic rewrite, not composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — exemplifies the workshop layer; holistic-rewrite narratives are workshop artifacts with consumed-value lifecycle

@@ -97,7 +97,7 @@ The static skill text itself may be loaded by a host as baseline instruction, bu
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: `interview-doc-agent` stores experience memory, but read-back happens only when the agent navigates the files.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skill instructions, experience records, raw materials, templates, and indexes differ by form and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: experience records, templates, JDs, and raw materials mostly act as evidence and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `SKILL.md` and folder/index conventions instruct and route the host agent.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: `interview-doc-agent` stores experience memory, but read-back happens only when the agent navigates the files.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: skill instructions, experience records, raw materials, templates, and indexes differ by form and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: experience records, templates, JDs, and raw materials mostly act as evidence and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `SKILL.md` and folder/index conventions instruct and route the host agent.

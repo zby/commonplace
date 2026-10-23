@@ -36,5 +36,5 @@ Candidate-linked code, rationale and criticism records, matched sampling budgets
 - [Agentic solver](https://github.com/minnesotanlp/meta-n/blob/b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8/meta_n/core/agentic_solver.py) — evidenced-by: execution feedback and continuation summaries.
 - [Exact analysis result](../reports/retained-archive/AAS-2026-09-24-meta-n-01/result.md) — see-also: canonical records and evidence limitations.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: criticism and improved capacity are separate from retained output.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: self-representation must mediate later behavior.
-- [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have separate evidential requirements.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: self-representation must mediate later behavior.
+- [Self-improving system](../../theory/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have separate evidential requirements.

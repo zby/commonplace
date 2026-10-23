@@ -9,7 +9,7 @@ This is an initial map, not an adopted vocabulary. Its purpose is to keep severa
 Toulmin separates claim, data, warrant, backing, qualifier, and rebuttal. The operational lesson is that a premise, an observation offered as evidence, and the rule licensing the move from observation to claim are not interchangeable forms of support. Commonplace already uses a Toulmin-derived structured-claim type, but the old `grounds` label blurred these roles in the link vocabulary.
 
 - Local source: [Toulmin argument model ingest](../../sources/purdue-owl-toulmin-argument.ingest.md)
-- Existing application: [Claim notes should use Toulmin-derived sections](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md)
+- Existing application: [Claim notes should use Toulmin-derived sections](../../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md)
 
 ### Inferentialism
 

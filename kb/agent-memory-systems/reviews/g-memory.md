@@ -124,9 +124,9 @@ The injection point is pre-invocation prompt assembly inside each MAS schedule. 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: G-Memory does activate retained memory, but through an orchestrator push rather than agent-initiated lookup.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: G-Memory separates task traces, task graph, Chroma ranking state, and insight rules across substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved successful trajectories and insight rules primarily advise later actions as prompt context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: retrieval ranking, graph routing, prompt templates, and insight update code shape which memories affect future agents.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: G-Memory is primarily a task-context selection and injection mechanism for bounded MAS prompts.
-- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: G-Memory is strong on trace-extracted discovery and prompt delivery, weaker on reviewable trust and durable governance.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: G-Memory does activate retained memory, but through an orchestrator push rather than agent-initiated lookup.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: G-Memory separates task traces, task graph, Chroma ranking state, and insight rules across substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved successful trajectories and insight rules primarily advise later actions as prompt context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: retrieval ranking, graph routing, prompt templates, and insight update code shape which memories affect future agents.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: G-Memory is primarily a task-context selection and injection mechanism for bounded MAS prompts.
+- [Agent memory needs discoverable, composable, trusted knowledge under bounded context](../../theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) - compares: G-Memory is strong on trace-extracted discovery and prompt delivery, weaker on reviewable trust and durable governance.

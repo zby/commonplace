@@ -66,23 +66,23 @@ paper's terms Dagster is a verifying-traces rebuilder, and output
 fingerprinting gives it early cutoff. The source partly relaxes two limits
 that ingest records: its user data versions address nondeterministic outputs,
 and it states the computational cost that justifies caching. It bears on
-[Criteria edits invalidate verdicts; process edits invalidate artifacts](../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md):
+[Criteria edits invalidate verdicts; process edits invalidate artifacts](../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md):
 if a verification is modelled as a downstream asset, a change to the
 verifier's own code version marks the verdict Unsynced, while a change to the
 producer's code version marks the producer Unsynced and reaches the verdict
 only when the producer's output fingerprint changes. That is the note's key
 boundary realized as a cache design, though Dagster does not frame it as
 criteria versus process. It qualifies
-[A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md):
+[A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md):
 the hand-declared `code_version` is a trusted, unchecked copy whose forgotten
 bump leaves a stale memoized value, and the guide names source hashing as the
 checked alternative. It is a deployed instance of the forward query in
-[Source changes should surface downstream review targets](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md),
+[Source changes should surface downstream review targets](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md),
 limited to one hop at a time. Against
-[Link graph plus timestamps enables make-like staleness detection](../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md),
+[Link graph plus timestamps enables make-like staleness detection](../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md),
 it substitutes recorded version keys for timestamps and adds non-transitive
 flagging, a design choice no KB note discusses. It is the code-side baseline
-that [LLM recompute cost shifts the store-vs-recompute balance](../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md)
+that [LLM recompute cost shifts the store-vs-recompute balance](../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md)
 argues LLM costs shift. [CocoIndex](../agent-memory-systems/reviews/cocoindex.md)
 is the nearest system comparison: both key recomputation on fingerprints of
 code and inputs, but CocoIndex applies minimal updates to declared target
@@ -129,9 +129,9 @@ Relevant Notes:
 
 - [Dagster asset versioning and caching](https://docs.dagster.io/guides/build/assets/asset-versioning-and-caching) — derived-from: the external guide this analysis is worked out from
 - [Build Systems à la Carte](./build-systems-a-la-carte.ingest.md) — compares-with: on the rebuilder axis; Dagster is a deployed verifying-traces rebuilder with optional early cutoff through output fingerprints
-- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: a deployed cache key in which the consumer's code version invalidates its own result while upstream process changes propagate only through changed output fingerprints
-- [A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — is-evidence-for: qualifies the claim; a production system ships the trusted, hand-declared version string as its default, with source hashing as the checked option
-- [Source changes should surface downstream review targets](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — is-evidence-for: a deployed forward query that records consumed input versions and surfaces affected downstream assets, one hop at a time
-- [Link graph plus timestamps enables make-like staleness detection](../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — compares-with: on the staleness-signal axis; recorded version keys and non-transitive flagging instead of timestamps
-- [LLM recompute cost shifts the store-vs-recompute balance](../notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — compares-with: on the store-vs-recompute axis; Dagster is the deterministic, cost-justified caching baseline
+- [Criteria edits invalidate verdicts; process edits invalidate artifacts](../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: a deployed cache key in which the consumer's code version invalidates its own result while upstream process changes propagate only through changed output fingerprints
+- [A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — is-evidence-for: qualifies the claim; a production system ships the trusted, hand-declared version string as its default, with source hashing as the checked option
+- [Source changes should surface downstream review targets](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — is-evidence-for: a deployed forward query that records consumed input versions and surfaces affected downstream assets, one hop at a time
+- [Link graph plus timestamps enables make-like staleness detection](../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — compares-with: on the staleness-signal axis; recorded version keys and non-transitive flagging instead of timestamps
+- [LLM recompute cost shifts the store-vs-recompute balance](../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — compares-with: on the store-vs-recompute axis; Dagster is the deterministic, cost-justified caching baseline
 - [CocoIndex](../agent-memory-systems/reviews/cocoindex.md) — compares-with: on incremental materialization of derived stores keyed on code and input fingerprints

@@ -148,8 +148,8 @@ Auto Harness also exposes a useful anti-cheating pattern. It does not merely tel
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Auto Harness derives learnings, code changes, and regression obligations from benchmark traces and outcomes.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workspace files affect later action only when the coding agent or gate reads them.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Auto Harness bundles traces, code, instructions, suite state, and gates with different forms and authorities.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: repeated task failures become future agent behavior through iterative edits and suite promotion.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: traces, results, and learnings advise later diagnosis and editing.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `PROGRAM.md`, `agent/agent.py`, `gating.py`, and `workspace/suite.json` carry instruction, execution, and validation force.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workspace files affect later action only when the coding agent or gate reads them.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Auto Harness bundles traces, code, instructions, suite state, and gates with different forms and authorities.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: repeated task failures become future agent behavior through iterative edits and suite promotion.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: traces, results, and learnings advise later diagnosis and editing.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `PROGRAM.md`, `agent/agent.py`, `gating.py`, and `workspace/suite.json` carry instruction, execution, and validation force.

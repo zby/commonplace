@@ -41,7 +41,7 @@ The useful divergence is governance. Commonplace emphasizes reviewable accumulat
 ### Borrowable Ideas
 
 - **Copy-on-write skill shadowing.** Ready to borrow conceptually. A private > shared > public resolution chain would let Commonplace installations override skills without forking the shared methodology, provided validation can show which version won.
-- **Adversarial grounding tests.** Ready as an evaluation pattern. Plant false material beside real source material, then require the model to cite the real source; this maps cleanly to the [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md).
+- **Adversarial grounding tests.** Ready as an evaluation pattern. Plant false material beside real source material, then require the model to cite the real source; this maps cleanly to the [oracle-strength spectrum](../../theory/oracle-strength-spectrum.md).
 - **User-editable memory file.** Needs a concrete user-preference layer first. A single markdown file injected into every session is a simple constraining surface, but Commonplace would need ownership, privacy, and scope rules before adopting it.
 - **S3 source of truth plus derived query index.** Useful as production evidence rather than an immediate migration target. Commonplace's repo substrate already supplies versioning and inspection; the Fintool pattern matters when a consuming product needs multi-user storage, access control, and fast metadata queries.
 
@@ -69,8 +69,8 @@ The useful divergence is governance. Commonplace emphasizes reviewable accumulat
 
 ## Relevant Notes
 
-- [Canonical files may defer a shared schema while database authority remains a separate commitment](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — is-evidence-for: Fintool reports canonical S3 objects with PostgreSQL as a derived index for fast queries, demonstrating that serving dependence does not alone transfer authority
-- [oracle-strength spectrum](../../notes/oracle-strength-spectrum.md) — is-evidence-for: the reported eval suite and adversarial grounding tests are a production example of oracle hardening
-- [fixed artifacts split into exact specs and proxy theories](../../notes/exact-implementation-does-not-validate-a-requirement.md) — rests-on: "model eats scaffolding" applies unevenly across proxy-theory skills and exact-spec modules
+- [Canonical files may defer a shared schema while database authority remains a separate commitment](../../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — is-evidence-for: Fintool reports canonical S3 objects with PostgreSQL as a derived index for fast queries, demonstrating that serving dependence does not alone transfer authority
+- [oracle-strength spectrum](../../theory/oracle-strength-spectrum.md) — is-evidence-for: the reported eval suite and adversarial grounding tests are a production example of oracle hardening
+- [fixed artifacts split into exact specs and proxy theories](../../theory/exact-implementation-does-not-validate-a-requirement.md) — rests-on: "model eats scaffolding" applies unevenly across proxy-theory skills and exact-spec modules
 - [Agent Skills for Context Engineering](../reviews/agent-skills-for-context-engineering.md) — compares-with: both use markdown skill packages, frontmatter discovery, and progressive disclosure, but Fintool is doc-grounded product coverage
 - [Sig](./sig.md) — compares-with: both are lightweight product reports for file-backed agent memory, with Fintool at commercial finance scale and Sig at personal/workplace capture scale

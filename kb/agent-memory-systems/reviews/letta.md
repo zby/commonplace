@@ -140,8 +140,8 @@ The key design difference is read-back. Letta's core memory is designed to act w
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Letta derives summaries and sleeptime memory edits from conversation/session traces.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Letta's core blocks are pushed into context, while archival and recall stores require explicit search tools.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Letta's blocks, messages, passages, tools, embeddings, and git files differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: archival passages, recall search results, source passages, and summaries mostly advise as context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: system prompts, core-memory rendering, tool rules, schemas, read-only flags, and background memory policies.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Letta's compaction and sleeptime loops turn traces into durable behavior-shaping memory.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Letta's core blocks are pushed into context, while archival and recall stores require explicit search tools.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Letta's blocks, messages, passages, tools, embeddings, and git files differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: archival passages, recall search results, source passages, and summaries mostly advise as context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: system prompts, core-memory rendering, tool rules, schemas, read-only flags, and background memory policies.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Letta's compaction and sleeptime loops turn traces into durable behavior-shaping memory.

@@ -160,6 +160,6 @@ design/implementation mismatch.
 Relevant Notes:
 
 - [Pond memory-system review](../../agent-memory-systems/reviews/pond.md) — contains: applies the shared memory-system ontology to the same frozen source boundary
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: distinguishes Pond's durable corpus and host tool delivery from actual model use
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: separates ranking, wrapper enforcement, routing instructions, and advisory transcript context by consumer and force
-- [Representational form](../../notes/definitions/representational-form.md) — rests-on: distinguishes natural-language sessions, symbolic schemas and indexes, and optional parametric embeddings
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: distinguishes Pond's durable corpus and host tool delivery from actual model use
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) — rests-on: separates ranking, wrapper enforcement, routing instructions, and advisory transcript context by consumer and force
+- [Representational form](../../theory/definitions/representational-form.md) — rests-on: distinguishes natural-language sessions, symbolic schemas and indexes, and optional parametric embeddings

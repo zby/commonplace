@@ -6,7 +6,7 @@ Ledger item from the [workshop framing](./README.md), analyzed 2026-07-21 and **
 
 ## The collision
 
-The [proposal-selection loop note](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) sets a strict criterion for evaluation: the verdict must control an operation *distinct from producing the next candidate* — select, discard, block, roll back — and it explicitly excludes the near-miss: "a conditional trigger whose only effect is to launch the next variation is not [an evaluator] either." Rejection and merely-changing-again must be different events in the mechanism. (This clause is what keeps the Homeostat outside the subtype.)
+The [proposal-selection loop note](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) sets a strict criterion for evaluation: the verdict must control an operation *distinct from producing the next candidate* — select, discard, block, roll back — and it explicitly excludes the near-miss: "a conditional trigger whose only effect is to launch the next variation is not [an evaluator] either." Rejection and merely-changing-again must be different events in the mechanism. (This clause is what keeps the Homeostat outside the subtype.)
 
 The [review system](../../reference/README-REVIEW-SYSTEM.md) produces `pass`/`warn`/`fail` verdict outcomes, but:
 
@@ -20,7 +20,7 @@ So by the loop note's own test, the review gates *as currently consumed* are not
 
 The phase-1 audit asks, per artifact: which loop function does this implement, and does its oracle warrant it? For the review system the answer flips the guidance:
 
-- If gates are **evaluation**, automating them (model workers — which is what the system does) is the dangerous move: [evaluation must be bought with a warranted oracle](../../notes/false-positive-generation-is-filtered-before-retention.md), and a weak one degrades the KB silently.
+- If gates are **evaluation**, automating them (model workers — which is what the system does) is the dangerous move: [evaluation must be bought with a warranted oracle](../../theory/false-positive-generation-is-filtered-before-retention.md), and a weak one degrades the KB silently.
 - If gates are **search** — mechanized problem-noticing that generates correction candidates — automating them is the cheap, safe move the same note says to make first, because their false positives get filtered downstream.
 
 Same artifact, opposite verdicts from the methodology. Until `warn` is placed, the cluster cannot guide the review system's own evolution.
@@ -51,7 +51,7 @@ Decision rule for that future calibration: a nontrivial rejected-as-spurious rat
 
 Links:
 
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — tests: the evaluation criterion the `warn` consumer appears to violate
-- [False-positive generation is filtered; false-positive acceptance becomes operative](../../notes/false-positive-generation-is-filtered-before-retention.md) — grounds: why the search-vs-evaluation classification flips the automation guidance
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — tests: the evaluation criterion the `warn` consumer appears to violate
+- [False-positive generation is filtered; false-positive acceptance becomes operative](../../theory/false-positive-generation-is-filtered-before-retention.md) — grounds: why the search-vs-evaluation classification flips the automation guidance
 - [README-REVIEW-SYSTEM](../../reference/README-REVIEW-SYSTEM.md) — depends-on: outcome and baseline semantics under analysis
 - [FIX-SYSTEM](../../instructions/FIX-SYSTEM.md) — depends-on: the warn consumer, and the diff-review sentence reading A leans on

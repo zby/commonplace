@@ -96,8 +96,8 @@ Pull read-back is still useful: an agent can read the latest entry, compute Role
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-wiki-coordination stores protocols and dialogue memory, but activation is pull-only unless a host agent reads or runs it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: protocol natural-language, symbolic frontmatter, audit code, and dialogue entries have different authority and review methods.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: dialogue entries, crystallization summaries, and audit reports mostly serve as evidence and reference.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: protocol files, consensus rules, RoleSpace fields, and audit checks shape later behavior with instruction, validation, routing, and enforcement force.
-- [A functioning KB needs a workshop layer not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares: dialogue thread directories are a workshop-style holding area for contested or in-flight reasoning before promotion.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-wiki-coordination stores protocols and dialogue memory, but activation is pull-only unless a host agent reads or runs it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: protocol natural-language, symbolic frontmatter, audit code, and dialogue entries have different authority and review methods.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: dialogue entries, crystallization summaries, and audit reports mostly serve as evidence and reference.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: protocol files, consensus rules, RoleSpace fields, and audit checks shape later behavior with instruction, validation, routing, and enforcement force.
+- [A functioning KB needs a workshop layer not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) - compares: dialogue thread directories are a workshop-style holding area for contested or in-flight reasoning before promotion.

@@ -114,8 +114,8 @@ Other consumers matter. The same retained memory is also read directly by the hu
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: llmwiki-marimo stores durable wiki memory, but the chat agent activates it by pull tool calls.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the system separates Markdown knowledge, SQLite indexes, citation edges, prompts, repair actions, traces, and git snapshots by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: generated pages, source rows, raw chunks, trace reports, and eval packets serve as evidence/reference unless a tool consumes them with stronger force.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, path guards, lint/repair routines, DB constraints, source deletion rules, and tests carry instruction, enforcement, routing, validation, or ranking force.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: retrieval works best when page paths, source names, concept titles, index entries, citations, and lexical query terms are available as selection signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: llmwiki-marimo stores durable wiki memory, but the chat agent activates it by pull tool calls.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the system separates Markdown knowledge, SQLite indexes, citation edges, prompts, repair actions, traces, and git snapshots by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: generated pages, source rows, raw chunks, trace reports, and eval packets serve as evidence/reference unless a tool consumes them with stronger force.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, path guards, lint/repair routines, DB constraints, source deletion rules, and tests carry instruction, enforcement, routing, validation, or ranking force.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: retrieval works best when page paths, source names, concept titles, index entries, citations, and lexical query terms are available as selection signals.

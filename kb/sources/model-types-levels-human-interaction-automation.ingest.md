@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source supplies a concrete external precedent for [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. That inheritance has since been taken up: the closure note above records the four-stage form with three declared departures, so the matrix is a cited precedent rather than an open transfer-of-vocabulary candidate — a design heuristic still, not a settled Commonplace definition.
+The source supplies a concrete external precedent for [methodological and computational closure track different changes](../theory/methodological-and-computational-closure-track-different-changes.md): autonomy is reported per function and level, while evaluation criteria and human authority remain separate. It also grounds [warranted autonomy is bounded by oracle domain](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md): moving a function toward automation is conditional on evidence about its failure costs and recovery, not on capability alone. That inheritance has since been taken up: the closure note above records the four-stage form with three declared departures, so the matrix is a cited precedent rather than an open transfer-of-vocabulary candidate — a design heuristic still, not a settled Commonplace definition.
 
 ## Extractable Value
 
@@ -46,4 +46,4 @@ The source snapshot was refreshed from the user's full converted Markdown captur
 
 ## Recommended Next Action
 
-Add the four-stage allocation vocabulary as an optional, explicitly human-inclusive sub-profile in [methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md), preserving partial/unknown levels and keeping warranted autonomy as a separate evidence question.
+Add the four-stage allocation vocabulary as an optional, explicitly human-inclusive sub-profile in [methodological and computational closure track different changes](../theory/methodological-and-computational-closure-track-different-changes.md), preserving partial/unknown levels and keeping warranted autonomy as a separate evidence question.

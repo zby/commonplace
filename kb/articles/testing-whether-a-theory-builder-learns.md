@@ -4,19 +4,19 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/operative-change.md
-  - kb/notes/definitions/actionable-methodology.md
-  - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
-  - kb/notes/an-action-model-matters-only-through-its-consumption-path.md
-  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/retained-theories-may-improve-sample-efficiency.md
-  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
-  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
-  - kb/notes/improvements-can-accumulate-without-compounding.md
-  - kb/notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
-  - kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
-  - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
+  - kb/theory/definitions/theory-builder.md
+  - kb/theory/definitions/operative-change.md
+  - kb/theory/definitions/actionable-methodology.md
+  - kb/theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+  - kb/theory/an-action-model-matters-only-through-its-consumption-path.md
+  - kb/theory/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/theory/retained-theories-may-improve-sample-efficiency.md
+  - kb/theory/a-claim-without-external-assessment-carries-three-obligations.md
+  - kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
+  - kb/theory/improvements-can-accumulate-without-compounding.md
+  - kb/theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
+  - kb/theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
+  - kb/theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
 ---
 
 # Testing Whether a Theory Builder Learns
@@ -27,7 +27,7 @@ source_notes:
 
 We are only starting to
 [build theory builders from today's language models](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md).
-A [theory builder](../notes/definitions/theory-builder.md) states its
+A [theory builder](../theory/definitions/theory-builder.md) states its
 theories in text, acts on them, criticizes what they say, and lets the
 result of criticism shape its next conjecture. Whether a system that meets
 the definition learns, in the sense of improving its capacity for later
@@ -52,7 +52,7 @@ Different later behaviour still has to be shown to be better. A system can
 solve a task without learning anything, or learn something useful while the
 current task still fails. It can also retain and faithfully apply a bad
 rule: showing that a theory was formulated, criticized, revised, and used
-[does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
+[does not by itself establish improved capacity](../theory/a-complete-theory-path-does-not-establish-improved-capacity.md).
 The quantity to measure is the change in future capacity caused by retained
 state.
 
@@ -67,7 +67,7 @@ the cause.
 Attributing a change in capacity to a revision requires fixing everything
 else. Model weights are held fixed, which rules out weight updates as the
 source of improvement. The other fixed state must be named too, because
-[an intervention isolates the contribution of the state it varies](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
+[an intervention isolates the contribution of the state it varies](../theory/retained-theory-intervention-isolates-one-explicit-surface.md);
 other records, code, or people may still carry the lesson.
 
 ## First tests
@@ -75,31 +75,31 @@ other records, code, or people may still carry the lesson.
 The first experiments should make the causal role of a revision easy to
 observe. Each test answers a separate question. Installation, use, and
 causal effect each need their own evidence: a retained revision
-[matters only through its consumption path](../notes/an-action-model-matters-only-through-its-consumption-path.md).
+[matters only through its consumption path](../theory/an-action-model-matters-only-through-its-consumption-path.md).
 
 - **retention** — does the revision survive into later work?
 - **use** — does the record of later work show the revision was read and
   applied? A decision record that cites the revision is
-  [cheap evidence that it was read](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
+  [cheap evidence that it was read](../theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
   but not that it determined the decision.
 - **withholding** — does behaviour change when the retained revision is
   hidden? A change that passes this test is shown to be
-  [operative](../notes/definitions/operative-change.md).
+  [operative](../theory/definitions/operative-change.md).
 - **perturbation** — does replacing it with a wrong alternative change
   behaviour in the predicted direction?
 - **reconstruction** — does retaining the revision reduce total cost at
   comparable decision quality relative to re-deriving it from the episode
   records each time? This is the
-  [persistence conjecture](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures)
+  [persistence conjecture](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures)
   in testable form.
 - **transfer** — does the revision help on new cases? This is the
-  [sample-efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
+  [sample-efficiency conjecture](../theory/retained-theories-may-improve-sample-efficiency.md)
   in testable form.
 - **revision** — can later evidence change the revision when it turns out
   to be wrong?
 
 Run the tests on the same revision, so that together they show whether it
-[changed later work through one causal path](../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
+[changed later work through one causal path](../theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
 ## Start with controlled task families
 
@@ -119,7 +119,7 @@ The baseline in step 4 is the seed on the same later demand. Comparing
 against the seed's earlier performance on earlier tasks would confound the
 revision with task drift, model variance, and scoring noise. The outcome is
 the externally fixed answer. A claim tested without such an answer
-[carries obligations it must meet on its own](../notes/a-claim-without-external-assessment-carries-three-obligations.md).
+[carries obligations it must meet on its own](../theory/a-claim-without-external-assessment-carries-three-obligations.md).
 
 Once the revised builder beats the seed, the first tests isolate a single
 revision's contribution. For each comparison, name the state being varied.
@@ -167,7 +167,7 @@ base currently maintained by people and agents together. There the operator,
 the person who maintains the knowledge base, reviews and accepts notes. That
 review is evaluation inside the builder: its verdicts assess the note's
 text; its performance in use needs a separate test. The arrangement
-[this research program](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path)
+[this research program](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path)
 tests sits between them: Commonplace producing a
 knowledge base for a consuming project, whose failing tests, rejected
 releases, and bug reports reach the builder from outside it.
@@ -189,7 +189,7 @@ and a changing task mix can move a score.
 ## Record what people contribute
 
 People will be inside the early experiments. The builder's
-[boundary](../notes/definitions/theory-builder.md#boundary) is set by the
+[boundary](../theory/definitions/theory-builder.md#boundary) is set by the
 act a person performs. Someone who notices a problem in the builder's
 theories or work, proposes a theory, criticizes it, chooses what to blame, produces a revision, selects what to keep, or changes
 the machinery is inside the builder for that act. Someone who supplies
@@ -197,14 +197,14 @@ problems or judges products against the task contract is outside. The same
 person can do both, so record the acts separately. An operator-written
 revision can contribute to learning by the combined human–computational
 builder. Showing that computation could have produced it would take an
-[autonomous](../notes/definitions/theory-builder.md#qualifiers) builder, in
+[autonomous](../theory/definitions/theory-builder.md#qualifiers) builder, in
 which computation performs every operation inside the boundary.
 
 The operations above decide who is inside the builder. A second
 classification measures how much human judgment each improvement still
 needs: for each completed improvement, record the decisions a person
 supplied as noticing, diagnosis, choice, or acceptance, the classes the
-[compounding test](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
+[compounding test](../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
 counts per episode. Supplying the task family and its fixed answers is
 outside the builder.
 Record the seed, including how it was constructed, separately from
@@ -225,13 +225,13 @@ They also reach a question beyond the first tests. The first tests ask
 whether a revision changes later task work. The bootstrap supplement's
 loop, from learning to better learning machinery, needs revisions that
 change later improvement work. Improvements
-[accumulate](../notes/improvements-can-accumulate-without-compounding.md)
+[accumulate](../theory/improvements-can-accumulate-without-compounding.md)
 when a later improvement builds on an earlier retained revision. They
 compound when the earlier revision makes the later improvement cheaper, more
 reliable, or dependent on fewer human decisions. The loop requires
 compounding.
 
-[Compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
+[Compounding is measured in the later improvement episode](../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
 A passing validator shows only that the revision met its target; whether
 the next diagnosis became easier shows in the later episode.
 Replay the later episode with the retained state frozen at the earlier
@@ -246,7 +246,7 @@ three hypotheses the research program adopted on 2026-09-17, quoted here as
 adopted. The hypotheses were written against an earlier definition,
 in which a builder was the persistent system responsible for developing and
 revising theories. Read against the current
-[definition](../notes/definitions/theory-builder.md), "builder" means a
+[definition](../theory/definitions/theory-builder.md), "builder" means a
 theory builder, and "capability" is what this article calls capacity.
 
 In the sufficiency hypothesis, "internal theory-building roles" are the
@@ -258,7 +258,7 @@ weights.
 
 > **Sufficiency hypothesis.** A training methodology expressed in
 > natural-language and symbolic form is
-> [actionable](../notes/definitions/actionable-methodology.md) for a
+> [actionable](../theory/definitions/actionable-methodology.md) for a
 > computational operator using fixed weights from currently public models.
 > Without people performing its internal theory-building roles or designing
 > a new learning method for each area, the builder develops, retains, and
@@ -294,7 +294,7 @@ relevant knowledge. Missed notes could prompt it to revise that assumption,
 make retrieval search descriptions too, and test whether the change
 improves later work. A builder "whose machinery changes pass through a
 causally connected self-theory" is a
-[reflective](../notes/definitions/theory-builder.md#qualifiers) one.
+[reflective](../theory/definitions/theory-builder.md#qualifiers) one.
 
 An **extension** is a retained machinery change that shows a capacity gain
 over the seed on a stated demand under a stated budget, through later work

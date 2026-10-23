@@ -129,11 +129,11 @@ The second divergence is read-back authority. SkillX pushes retrieved plans and 
 
 Relevant Notes:
 
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillX extracts durable plans and skills from successful agent trajectories.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillX has an explicit prompt-time read-back path rather than passive storage.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the review separates JSON libraries, natural-language plans, symbolic tool records, transient embeddings, and raw trajectories.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: selected skills move from evidence to prompt instruction/routing authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: retrieved plans, skill records, filters, and prompt formatters shape future behavior through instruction, routing, validation, and ranking.
-- [Codification](../../notes/definitions/codification.md) - applies: successful natural-language/tool traces are compressed into reusable symbolic/natural-language procedures.
-- [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md) - applies: reward filters, LLM filters, schema checks, and benchmark outcomes have different verification strength.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - contrasts: SkillX uses semantic embedding/judgment signals when task-specific rule-based routing is not enough.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: SkillX extracts durable plans and skills from successful agent trajectories.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames: SkillX has an explicit prompt-time read-back path rather than passive storage.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the review separates JSON libraries, natural-language plans, symbolic tool records, transient embeddings, and raw trajectories.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: selected skills move from evidence to prompt instruction/routing authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: retrieved plans, skill records, filters, and prompt formatters shape future behavior through instruction, routing, validation, and ranking.
+- [Codification](../../theory/definitions/codification.md) - applies: successful natural-language/tool traces are compressed into reusable symbolic/natural-language procedures.
+- [Oracle strength spectrum](../../theory/oracle-strength-spectrum.md) - applies: reward filters, LLM filters, schema checks, and benchmark outcomes have different verification strength.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - contrasts: SkillX uses semantic embedding/judgment signals when task-specific rule-based routing is not enough.

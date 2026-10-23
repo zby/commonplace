@@ -42,4 +42,4 @@ Findings describe implementation at the pinned source boundary. They do not vali
 
 - [Exact analysis result](../reports/retained-archive/AAS-2026-09-25-swarmworld-01/result.md) — see-also: canonical records, quotations, both lenses and comparison fields.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger theory-and-criticism claim kept separate from retained feedback.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the two-way self-representation route used here.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: the two-way self-representation route used here.

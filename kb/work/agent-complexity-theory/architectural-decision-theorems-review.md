@@ -254,7 +254,7 @@ Develop:
 
 ### Transfer to agent programs
 
-Prove each result first in the smallest source/query/oracle model. Use [select/call universality](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) only afterward as a transfer corollary. This keeps the theorem model visible and separates the new architectural reduction from standard operational-semantics machinery.
+Prove each result first in the smallest source/query/oracle model. Use [select/call universality](../../theory/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) only afterward as a transfer corollary. This keeps the theorem model visible and separates the new architectural reduction from standard operational-semantics machinery.
 
 ## Priority and status
 

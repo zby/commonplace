@@ -130,10 +130,10 @@ The trace-source fields below classify only the trace-bearing part of the input.
 
 ## Relevant Notes
 
-- [Trace-extracted memory earns authority per operation, not at capture](../../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — rests-on: explains why recorded traces, generated candidates, validated candidates, and published instructions should not inherit one authority level
-- [Retaining the episode keeps a distilled rule re-derivable](../../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — rests-on: grounds the value of retaining source episodes beside a distilled procedure
-- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) — compares-with: NAMS's claimed source edges, drift state, repair, and supersession form one compiled-view maintenance design
-- [Localized retention pays when sparse changes have bounded impact in a matching decomposition](../../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md) — rests-on: states the condition under which one-step repair is actually local
-- [Evaluate Memory By Effects, Not By Existence](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md) — rests-on: identifies the behavioral-effect check absent from the product-side account
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — defined-in: distinguishes a fetched skill from evidence that the receiving agent used it
+- [Trace-extracted memory earns authority per operation, not at capture](../../theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — rests-on: explains why recorded traces, generated candidates, validated candidates, and published instructions should not inherit one authority level
+- [Retaining the episode keeps a distilled rule re-derivable](../../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — rests-on: grounds the value of retaining source episodes beside a distilled procedure
+- [Keep Lineage And Compiled Views From Drifting](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) — compares-with: NAMS's claimed source edges, drift state, repair, and supersession form one compiled-view maintenance design
+- [Localized retention pays when sparse changes have bounded impact in a matching decomposition](../../theory/localized-retention-pays-where-change-is-sparse-in-a-matching.md) — rests-on: states the condition under which one-step repair is actually local
+- [Evaluate Memory By Effects, Not By Existence](../../theory/agent-memory-requirements/evaluate-memory-by-effects.md) — rests-on: identifies the behavioral-effect check absent from the product-side account
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) — defined-in: distinguishes a fetched skill from evidence that the receiving agent used it
 - [Ingest: From Agent Memory to Portable Skills](../../sources/from-agent-memory-to-portable-skills.ingest.md) — derived-from: durable Commonplace source record; not primary evidence for this review

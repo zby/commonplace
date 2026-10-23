@@ -30,7 +30,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a technical basis for [the claim that a methodology governs extension only where it settles the decisions raised](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): its three-stage construction process exposes a boundary between a retained refinement framework and choices still made by the designer. It also compares with the [two-layer execution account](../notes/theory-and-methodology-form-a-two-layer-execution-system.md) by giving a more granular source-side decomposition of the move from abstract theory to executable method. Relative to [actionable methodology](../notes/definitions/actionable-methodology.md), it shows that actionability depends on commitments about the task, domain theory, inference operations, and control regime rather than following from a formal goal statement alone.
+The paper is a technical basis for [the claim that a methodology governs extension only where it settles the decisions raised](../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): its three-stage construction process exposes a boundary between a retained refinement framework and choices still made by the designer. It also compares with the [two-layer execution account](../theory/theory-and-methodology-form-a-two-layer-execution-system.md) by giving a more granular source-side decomposition of the move from abstract theory to executable method. Relative to [actionable methodology](../theory/definitions/actionable-methodology.md), it shows that actionability depends on commitments about the task, domain theory, inference operations, and control regime rather than following from a formal goal statement alone.
 
 ## Extractable Value
 
@@ -46,4 +46,4 @@ The paper demonstrates the framework through formalized classification examples 
 
 ## Recommended Next Action
 
-Update [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) with a compact three-stage commitment audit—required competence, conceptual decomposition, and operational strategy—and use the paper as evidence that each stage can expose consequential choices the framework leaves to the designer.
+Update [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) with a compact three-stage commitment audit—required competence, conceptual decomposition, and operational strategy—and use the paper as evidence that each stage can expose consequential choices the framework leaves to the designer.

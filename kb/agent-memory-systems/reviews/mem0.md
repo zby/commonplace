@@ -135,8 +135,8 @@ The important design divergence is authority. Mem0 optimizes for continuous pers
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Mem0 has storage plus both explicit pull and hook/proxy/OpenClaw push read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Mem0's memory records, embeddings, entity links, hooks, skills, and local files carry different substrates, forms, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved memory records and project-profile imports mostly serve as evidence or advisory context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hooks, skill protocols, metadata enforcement, write blockers, and recall policies shape future behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Mem0 has storage plus both explicit pull and hook/proxy/OpenClaw push read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Mem0's memory records, embeddings, entity links, hooks, skills, and local files carry different substrates, forms, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved memory records and project-profile imports mostly serve as evidence or advisory context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: hooks, skill protocols, metadata enforcement, write blockers, and recall policies shape future behavior.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Mem0 derives durable memories and summaries from session traces, tool traces, compaction events, and agent-end messages.

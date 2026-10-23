@@ -106,8 +106,8 @@ The strongest Commonplace-relevant idea is not vectors; it is the unresolved-ref
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - supports classifying Semiont's store as pull read-back despite strong browse/gather/match access surfaces.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating events, annotations, graph projections, vector indexes, and MCP/SDK surfaces by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - frames source resources, annotations, gathered context, and candidate lists as evidence/reference for later work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes Semiont's flow contracts, validators, projections, and ranking paths from ordinary remembered content.
-- [Lineage](../../notes/definitions/lineage.md) - applies to Semiont's event replay, generated resources, W3C generator metadata, and projection invalidation boundaries.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - supports classifying Semiont's store as pull read-back despite strong browse/gather/match access surfaces.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating events, annotations, graph projections, vector indexes, and MCP/SDK surfaces by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - frames source resources, annotations, gathered context, and candidate lists as evidence/reference for later work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes Semiont's flow contracts, validators, projections, and ranking paths from ordinary remembered content.
+- [Lineage](../../theory/definitions/lineage.md) - applies to Semiont's event replay, generated resources, W3C generator metadata, and projection invalidation boundaries.

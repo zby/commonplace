@@ -110,8 +110,8 @@ Context selection is partly host-controlled and partly model-internal. The host 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames: KBLaM stores and trains memory artifacts, but activation depends on host-supplied `kb_kvs` at model invocation.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: KBLaM's records, configs, checkpoints, embeddings, and attention tensors have different forms and authorities.
-- [Representational form](../../notes/definitions/representational-form.md) - classifies: KBLaM moves readable records into parametric tensors and trained weights.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - classifies: KBLaM's KB tensors advise generation through attention, while encoder/query-head weights carry learning authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: model wrappers, KB config, training scripts, and checkpointed adapters define how future generation uses memory.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames: KBLaM stores and trains memory artifacts, but activation depends on host-supplied `kb_kvs` at model invocation.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: KBLaM's records, configs, checkpoints, embeddings, and attention tensors have different forms and authorities.
+- [Representational form](../../theory/definitions/representational-form.md) - classifies: KBLaM moves readable records into parametric tensors and trained weights.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - classifies: KBLaM's KB tensors advise generation through attention, while encoder/query-head weights carry learning authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: model wrappers, KB config, training scripts, and checkpointed adapters define how future generation uses memory.

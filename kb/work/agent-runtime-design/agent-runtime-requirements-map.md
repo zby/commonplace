@@ -15,7 +15,7 @@ The classifications are provisional. A later review can downgrade a common-floor
 
 ## Derivation method
 
-The map follows [scenario decomposition drives architecture](../../notes/scenario-decomposition-drives-architecture.md): start from complete work stories, identify the state and control needed at each step, and derive requirements from recurring steps and recognizable failures.
+The map follows [scenario decomposition drives architecture](../../theory/scenario-decomposition-drives-architecture.md): start from complete work stories, identify the state and control needed at each step, and derive requirements from recurring steps and recognizable failures.
 
 The work-story keys are:
 
@@ -159,7 +159,7 @@ The memory subsystem's internal retrieval and maintenance design remains outside
 | BI2 | **Protected update boundary and recoverable installation** | W8. An update rewrites the machinery meant to enforce admission/recovery, or a failed build destroys the last working version and diagnostic trace. | Protected runtime/guardian and deployment plane; invariant | Attempt to cross the protected boundary; interrupt build/restart; verify atomic installation, last-known-good recovery, rollback, and retained failure evidence. |
 | BI3 | **Outcome-appropriate improvement oracle** | A system claims self-improvement rather than mere self-change. Mechanical validity is mistaken for evidence that later judgment or task performance improved. | Builder/evaluation plane; best effort or stronger only within oracle domain | Compare the admitted version against the declared objective with held-out or causal evidence. Distinguish build success, task success, and behavioral improvement. |
 
-For this workshop, **runtime self-modification** is an end-to-end W8 pathway: an in-boundary process generates the concrete change; admission makes it part of the runtime's own [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md); and later operation discovers and exercises it beyond the generating run. A saved workflow or capability may be durable self-extension without changing protected runtime machinery. Human admission does not erase model authorship, and automatic admission does not establish improvement.
+For this workshop, **runtime self-modification** is an end-to-end W8 pathway: an in-boundary process generates the concrete change; admission makes it part of the runtime's own [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md); and later operation discovers and exercises it beyond the generating run. A saved workflow or capability may be durable self-extension without changing protected runtime machinery. Human admission does not erase model authorship, and automatic admission does not establish improvement.
 
 ## Externalization matrix
 

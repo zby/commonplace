@@ -138,8 +138,8 @@ Generated wiki articles are the most knowledge-like derived artifacts. They coul
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Local Brain's stored Markdown/SQLite/vector state from the specific RAG and conversation-history paths that activate it.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with Local Brain's trace use: traces affect session context and ranking, not durable instructions.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Local Brain's stored Markdown/SQLite/vector state from the specific RAG and conversation-history paths that activate it.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrasts with Local Brain's trace use: traces affect session context and ranking, not durable instructions.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Local Brain in trace-to-ranking/session-context rather than trace-to-policy.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - helps separate Local Brain's knowledge artifacts from ranking, routing, and learning surfaces.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies to the difference between advisory RAG context, retrieval ranking, and generated derived views.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - helps separate Local Brain's knowledge artifacts from ranking, routing, and learning surfaces.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - applies to the difference between advisory RAG context, retrieval ranking, and generated derived views.

@@ -110,8 +110,8 @@ Other consumers include the desktop user, the Electron renderer, request pipelin
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Voiden's `.void` files, linked blocks, history JSON, extension manifests, and installed skills differ by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Voiden stores request knowledge and traces, but project memory read-back is pull/composition rather than automatic push.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `.void` request blocks, scripts, assertions, extension manifests, pipeline hooks, and installed skills can define or constrain future behavior.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Markdown docs, examples, responses, and request history serve as evidence or reference until promoted into executable blocks or instructions.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - parallels: Voiden composes installable agent skills so agents do not rediscover the `.void` format from scratch.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Voiden's `.void` files, linked blocks, history JSON, extension manifests, and installed skills differ by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Voiden stores request knowledge and traces, but project memory read-back is pull/composition rather than automatic push.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `.void` request blocks, scripts, assertions, extension manifests, pipeline hooks, and installed skills can define or constrain future behavior.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Markdown docs, examples, responses, and request history serve as evidence or reference until promoted into executable blocks or instructions.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - parallels: Voiden composes installable agent skills so agents do not rediscover the `.void` format from scratch.

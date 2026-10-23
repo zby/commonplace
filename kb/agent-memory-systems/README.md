@@ -27,16 +27,16 @@ shared vocabulary**, so independent systems can be set side by side on the same
 terms. The vocabulary, and the activation distinction the reviews turn on, come
 from these theory notes:
 
-- [designing-agent-memory-systems](../notes/designing-agent-memory-systems.md) — the design-pressure inventory the review contract distills into review-time sections.
+- [designing-agent-memory-systems](../theory/designing-agent-memory-systems.md) — the design-pressure inventory the review contract distills into review-time sections.
 - The **four-field artifact record** every review applies to each system's central artifacts:
-  - [storage substrate](../notes/definitions/storage-substrate.md) — where retained state physically lives (files, repo, sqlite, rdbms, vector/graph, kv, in-memory, model-weights, service-object); locates access, versioning, deletion.
-  - [representational form](../notes/definitions/representational-form.md) — natural-language / symbolic / parametric; sets the default inspection method (read / test / probe).
-  - [lineage](../notes/definitions/lineage.md) — authored, imported, or trace-extracted, and what source change invalidates it.
-  - [behavioral authority](../notes/definitions/behavioral-authority.md) — who consumes it, through which channel, with what force ([knowledge](../notes/definitions/knowledge-artifact.md) advice vs [system-definition](../notes/definitions/system-definition-artifact.md) instruction / enforcement / routing / validation / ranking / learning).
-  - (the record applies at the [operative-part](../notes/definitions/operative-part.md) level of a [retained artifact](../notes/definitions/retained-artifact.md) — a bundled object is split when its parts carry different forms or authorities.)
-- [knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — separates stored memory, memory loaded into context (**read-back**: pull / push / both), and memory that actually changes behavior; the reason a review states a read-back direction and asks whether faithfulness is tested.
-- [Rule-based context selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) — why a targeted push needs an identifier already on the table or a content inference; grounds the read-back **signal** (coarse vs identifier vs inferred).
-- [agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — why these axes span storage, retrieval, and learning at once rather than being one "memory" box.
+  - [storage substrate](../theory/definitions/storage-substrate.md) — where retained state physically lives (files, repo, sqlite, rdbms, vector/graph, kv, in-memory, model-weights, service-object); locates access, versioning, deletion.
+  - [representational form](../theory/definitions/representational-form.md) — natural-language / symbolic / parametric; sets the default inspection method (read / test / probe).
+  - [lineage](../theory/definitions/lineage.md) — authored, imported, or trace-extracted, and what source change invalidates it.
+  - [behavioral authority](../theory/definitions/behavioral-authority.md) — who consumes it, through which channel, with what force ([knowledge](../theory/definitions/knowledge-artifact.md) advice vs [system-definition](../theory/definitions/system-definition-artifact.md) instruction / enforcement / routing / validation / ranking / learning).
+  - (the record applies at the [operative-part](../theory/definitions/operative-part.md) level of a [retained artifact](../theory/definitions/retained-artifact.md) — a bundled object is split when its parts carry different forms or authorities.)
+- [knowledge storage does not imply contextual activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md) — separates stored memory, memory loaded into context (**read-back**: pull / push / both), and memory that actually changes behavior; the reason a review states a read-back direction and asks whether faithfulness is tested.
+- [Rule-based context selection needs a pre-existing signal](../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) — why a targeted push needs an identifier already on the table or a content inference; grounds the read-back **signal** (coarse vs identifier vs inferred).
+- [agent memory is a crosscutting concern, not a separable niche](../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — why these axes span storage, retrieval, and learning at once rather than being one "memory" box.
 
 The [review type spec](./types/agent-memory-system-review.md) records the
 contract that turned these notes into the fixed review sections and the
@@ -110,7 +110,7 @@ The divergences are more revealing:
   
 - **Agent-facing UX** — Napkin is the clearest example of treating CLI output itself as part of the memory architecture: hidden scores, match-only snippets, and next-step hints are all tuned for model behavior rather than human browsing. Most other systems focus on storage and retrieval internals but leave the interaction layer human-shaped
 
-- **Context-operation interface** — Scroll combines a coarse pushed map with structured recall and model-authored Python over a retention-bounded event store, while Virtual Context uses proxy-owned selection plus paging tools. The comparison supports [context-operation interface bounds context policy](../notes/context-operation-interface-bounds-context-policy.md): retained volume alone does not determine what a controller can project into the next bounded call
+- **Context-operation interface** — Scroll combines a coarse pushed map with structured recall and model-authored Python over a retention-bounded event store, while Virtual Context uses proxy-owned selection plus paging tools. The comparison supports [context-operation interface bounds context policy](../theory/context-operation-interface-bounds-context-policy.md): retained volume alone does not determine what a controller can project into the next bounded call
   
 - **Packaging unit** — most systems distribute concerns across multiple files (notes, configs, scripts, indexes), but o-o pushes the opposite extreme: each document is a self-contained polyglot file carrying rendering, update contract, shell dispatch, source cache, and changelog. That maximizes portability and local inspectability at the cost of modularity and inter-document structure
   

@@ -8,7 +8,7 @@ tags: []
 
 Commonplace realizes agent memory as a file-backed knowledge base with a small command and skill surface. Its durable memory is not a single store. It is the combined system of authored artifacts, generated views, validation commands, review state, and always-loaded routing context that future agents can use inside bounded context.
 
-The requirements come from [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md). This page maps those requirements to the shipped Commonplace system and names the main remaining limits.
+The requirements come from [Designing a Memory System for LLM-Based Agents](../theory/designing-agent-memory-systems.md). This page maps those requirements to the shipped Commonplace system and names the main remaining limits.
 
 ## Coverage map
 
@@ -52,4 +52,4 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 
 Relevant Notes:
 
-- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rests-on: the requirements this shipped-system coverage map implements and partially leaves open
+- [Designing a Memory System for LLM-Based Agents](../theory/designing-agent-memory-systems.md) — rests-on: the requirements this shipped-system coverage map implements and partially leaves open

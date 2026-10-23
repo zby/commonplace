@@ -110,8 +110,8 @@ The automatic side is agent-executed rather than service-executed: I found instr
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki's L1 memory is pushed into sessions, while L2 wiki pages require explicit query/read work.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: L1 memory files, L2 wiki pages, schema pages, command instructions, and lint rules differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: L2 wiki pages mainly serve as evidence and reference during query.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki.md`, schemas, routing rules, lint rules, and setup templates shape future agent behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: LLM Wiki's retrieval depends on namespaces, page names, properties, links, and keywords being available as selection signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM Wiki's L1 memory is pushed into sessions, while L2 wiki pages require explicit query/read work.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: L1 memory files, L2 wiki pages, schema pages, command instructions, and lint rules differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: L2 wiki pages mainly serve as evidence and reference during query.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `wiki.md`, schemas, routing rules, lint rules, and setup templates shape future agent behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: LLM Wiki's retrieval depends on namespaces, page names, properties, links, and keywords being available as selection signals.

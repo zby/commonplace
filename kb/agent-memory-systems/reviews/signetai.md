@@ -141,10 +141,10 @@ The deepest design difference is authority. Signet lets runtime state become pro
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Signet combines pull recall with hook-time pushed retained context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Signet's memory rows, files, graph attributes, embeddings, jobs, hooks, and connectors differ by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Signet derives summaries, graph structure, and candidate facts from session and memory traces.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: Signet's prompt-submit push works when known entities or aliases are present.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory rows, documents, transcripts, summaries, and recall results mostly advise as evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hooks, MCP schemas, auth/scoping policies, write gates, connector configs, and generated harness instructions shape behavior with stronger authority.
-- [Lineage](../../notes/definitions/lineage.md) - frames: Signet's source-backed recall, transcript artifacts, memory history, and compaction lineage.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Signet combines pull recall with hook-time pushed retained context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Signet's memory rows, files, graph attributes, embeddings, jobs, hooks, and connectors differ by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Signet derives summaries, graph structure, and candidate facts from session and memory traces.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: Signet's prompt-submit push works when known entities or aliases are present.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: memory rows, documents, transcripts, summaries, and recall results mostly advise as evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: hooks, MCP schemas, auth/scoping policies, write gates, connector configs, and generated harness instructions shape behavior with stronger authority.
+- [Lineage](../../theory/definitions/lineage.md) - frames: Signet's source-backed recall, transcript artifacts, memory history, and compaction lineage.

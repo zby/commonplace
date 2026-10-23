@@ -71,7 +71,7 @@ The sharpest divergence is governance. Commonplace is explicit about document co
 
 ## Relevant Notes
 
-- [agent statelessness means the context engine should inject context automatically](../../notes/agent-statelessness-means-the-context-engine-should-inject-context.md) - motivates: Sig addresses the "new chat starts from nothing" problem by making work context reusable.
+- [agent statelessness means the context engine should inject context automatically](../../theory/agent-statelessness-means-the-context-engine-should-inject-context.md) - motivates: Sig addresses the "new chat starts from nothing" problem by making work context reusable.
 - [Napkin](../reviews/napkin.md) - compares: both adapt a local file substrate into an agent-facing memory interface; Napkin is code-inspected and vault-oriented, while Sig remains doc-grounded and workplace-capture oriented.
 - [engraph](../reviews/engraph.md) - compares: both treat local human-authored notes as agent-accessible memory; engraph exposes indexing and MCP/HTTP mechanisms, while Sig's implementation is not visible.
 - [Fintool](./fintool.md) - compares: both are lightweight product coverage betting on files-first agent memory; Fintool is commercial finance/report evidence, Sig is desktop workplace-memory release-doc evidence.

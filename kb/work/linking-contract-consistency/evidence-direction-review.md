@@ -51,10 +51,10 @@ That journey is native to the artifact contracts. An ingest report exists to rec
 
 Examples span several evidential roles:
 
-- **Direct corroboration:** Fintool's S3 source-of-truth and derived PostgreSQL index bear on [files defer schema commitment until invariants stabilize](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md).
-- **Formal limit case:** the Gödel machine bears on [the boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) by making the verification boundary constructive.
-- **Negative or floor case:** Ashby's Homeostat bears on [reflective system](../../notes/definitions/reflective-system.md) precisely because it adapts without self-representation.
-- **Qualification:** DomainBed bears on the formalization-boundary warning in [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
+- **Direct corroboration:** Fintool's S3 source-of-truth and derived PostgreSQL index bear on [files defer schema commitment until invariants stabilize](../../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md).
+- **Formal limit case:** the Gödel machine bears on [the boundary of automation is the boundary of verification](../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md) by making the verification boundary constructive.
+- **Negative or floor case:** Ashby's Homeostat bears on [reflective system](../../theory/definitions/reflective-system.md) precisely because it adapts without self-representation.
+- **Qualification:** DomainBed bears on the formalization-boundary warning in [formal symbolic systems assess explanatory-reach only through causal and proof obligations](../../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
 - **Pending target integration:** the FALSIFYBENCH ingest records five evidence-bearing connections while explicitly saying some target-side evidence edges should follow only after the full paper is read.
 
 The final case is important: a source-side edge can assert that evidence bears on a claim without asserting that the target note has already incorporated, cited, or accepted it.

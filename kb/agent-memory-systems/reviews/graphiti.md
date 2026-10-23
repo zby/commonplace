@@ -135,8 +135,8 @@ The consumption authority is advisory unless the host application upgrades it. S
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Graphiti extracts durable temporal graph facts from message/event episodes.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Graphiti stores rich memory, but activation is explicit SDK/API/MCP pull unless a host adds its own hook.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: episodes, graph facts, embeddings, summaries, search configs, and MCP tools differ by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: message traces can be distilled into durable graph nodes and facts for later recall.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: retrieved facts, entity summaries, episodes, and community summaries advise later actions.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: search configs, filters, schemas, queues, and MCP tool definitions route and constrain memory behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Graphiti stores rich memory, but activation is explicit SDK/API/MCP pull unless a host adds its own hook.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: episodes, graph facts, embeddings, summaries, search configs, and MCP tools differ by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: message traces can be distilled into durable graph nodes and facts for later recall.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: retrieved facts, entity summaries, episodes, and community summaries advise later actions.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: search configs, filters, schemas, queues, and MCP tool definitions route and constrain memory behavior.

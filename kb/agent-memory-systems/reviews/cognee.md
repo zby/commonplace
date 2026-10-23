@@ -140,8 +140,8 @@ The sharpest tradeoff is authority. Cognee can make memory operational quickly b
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cognee stores graph and session memory, but only explicit calls and decorator/LLMGateway hooks decide when it reaches model context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: graph nodes, vector indexes, cache entries, feedback weights, skill bodies, and tool schemas carry different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph triplets, summaries, Q&A entries, trace feedback, and recall results mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill procedures, tool schemas, query routing, ACLs, and decorator/LLMGateway injection shape later behavior more strongly.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Cognee turns session Q&A, feedback, and tool traces into durable graph memory and ranking signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cognee stores graph and session memory, but only explicit calls and decorator/LLMGateway hooks decide when it reaches model context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: graph nodes, vector indexes, cache entries, feedback weights, skill bodies, and tool schemas carry different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: graph triplets, summaries, Q&A entries, trace feedback, and recall results mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skill procedures, tool schemas, query routing, ACLs, and decorator/LLMGateway injection shape later behavior more strongly.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Cognee turns session Q&A, feedback, and tool traces into durable graph memory and ranking signals.

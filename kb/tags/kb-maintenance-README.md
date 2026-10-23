@@ -16,11 +16,11 @@ How an agent-operated knowledge base stays healthy as it grows: the checks that 
 
 ## Across the children
 
-- [Attempted recovery identifies informational gaps, not provenance or authority](../notes/documentation-generates-the-system-rather-than-describing-it.md) — what regenerating a system from its documentation does and does not show
-- [Seven documentation cases left routing and synthesis](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — a bounded sweep: direct source access removed exact-fact prose, checked discovery kept routing and synthesis
-- [Final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes can hide a broken prescribed path; maintenance needs path evidence
-- [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — truth verdicts separated from repair dispositions
-- [Brainstorming: how explanatory-reach informs KB design](../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes on what the quality goal implies for maintenance choices
+- [Attempted recovery identifies informational gaps, not provenance or authority](../theory/documentation-generates-the-system-rather-than-describing-it.md) — what regenerating a system from its documentation does and does not show
+- [Seven documentation cases left routing and synthesis](../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — a bounded sweep: direct source access removed exact-fact prose, checked discovery kept routing and synthesis
+- [Final task success does not establish intended-path health](../theory/final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes can hide a broken prescribed path; maintenance needs path evidence
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — truth verdicts separated from repair dispositions
+- [Brainstorming: how explanatory-reach informs KB design](../theory/brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes on what the quality goal implies for maintenance choices
 - [A reader-facing banner for user verification](../reference/proposals/a-reader-facing-banner-for-user-verification.md) — proposal: show verification status to readers of the published site
 - [Type-selected Python validation checks](../reference/proposals/type-selected-python-validation-checks.md) — proposal: select executable checks without inventing a constraint language; code trust and registration remain open
 - [Generalized validation invalidation](../reference/proposals/generalized-validation-invalidation-and-imperative-extension.md) — proposal: choose affected validation targets through explicit selectors, shared change handling or conservative broader checks

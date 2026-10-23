@@ -129,9 +129,9 @@ The tradeoff is semantic governance. LLM-WIKI-MCP has useful structural guards a
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM-WIKI-MCP stores wiki pages and ask history, but they affect future action only when pulled by tools or pushed into the ask prompt.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: wiki pages, SQLite indexes, sidecar notes, tool definitions, and ask-history files differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: imported source pages, wiki pages, sidecar notes, exports, and history mostly serve as evidence/reference/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: CLI/MCP tool definitions, agent prompts, config, lint/repair rules, and provenance guards shape later behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: LLM-WIKI-MCP's targeted retrieval depends on page titles, terms, source names, links, and tool-selected focus pages being available as selection signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: LLM-WIKI-MCP stores wiki pages and ask history, but they affect future action only when pulled by tools or pushed into the ask prompt.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: wiki pages, SQLite indexes, sidecar notes, tool definitions, and ask-history files differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: imported source pages, wiki pages, sidecar notes, exports, and history mostly serve as evidence/reference/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: CLI/MCP tool definitions, agent prompts, config, lint/repair rules, and provenance guards shape later behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: LLM-WIKI-MCP's targeted retrieval depends on page titles, terms, source names, links, and tool-selected focus pages being available as selection signals.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: LLM-WIKI-MCP derives local continuity memory and diagnostics from ask/session traces, but does not promote those traces into enforced rules.

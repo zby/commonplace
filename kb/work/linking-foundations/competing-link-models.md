@@ -36,7 +36,7 @@ The registered identifier is a first-class assertion about subject matter: `sour
 
 ### Model 2 — Reader-need router (the incumbent)
 
-Labels name recurring reader needs; link quality is navigation uncertainty reduced per token of context ([linking theory](../../notes/linking-theory.md), [conditional possibilities](../../notes/links-encode-conditional-possibilities-not-obligations.md)).
+Labels name recurring reader needs; link quality is navigation uncertainty reduced per token of context ([linking theory](../../theory/linking-theory.md), [conditional possibilities](../../theory/links-encode-conditional-possibilities-not-obligations.md)).
 
 **Explains:** mandatory context phrases and the articulation test; position-encodes-strength; collection-owned vocabularies (different collections serve different readers, which is exactly why the Ars Contexta vocabulary failed to transfer); the catalogue's reader-need column.
 

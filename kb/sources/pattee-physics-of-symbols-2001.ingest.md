@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source constrains analogies used in [Representational form](../notes/definitions/representational-form.md) and [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md). It should not be used to redefine the KB's [Codification](../notes/definitions/codification.md) boundary.
+The source constrains analogies used in [Representational form](../theory/definitions/representational-form.md) and [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md). It should not be used to redefine the KB's [Codification](../theory/definitions/codification.md) boundary.
 
 ## Inherited Vocabulary
 

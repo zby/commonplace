@@ -143,10 +143,10 @@ The system deliberately avoids MCP. That simplifies portability across agents wi
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames why the vault alone is pull memory while `memex context` adds coarse push read-back.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: ai-memex-cli's selection uses explicit scenes, types, paths, tags, keywords, and includes rather than hidden semantic activation.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: session traces become raw Markdown and later wiki knowledge.
-- [Preserve evidence without making history the next context](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: raw/session sources are preserved separately from selected wiki/context read-back.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the system separates raw files, wiki pages, skills, prompts, context blocks, projections, lint reports, and session traces by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies raw sources, wiki pages, search results, and session files when consumed as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies schemas, installed prompts, skills, context blocks, validators, and ranking/projection code.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames why the vault alone is pull memory while `memex context` adds coarse push read-back.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: ai-memex-cli's selection uses explicit scenes, types, paths, tags, keywords, and includes rather than hidden semantic activation.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: session traces become raw Markdown and later wiki knowledge.
+- [Preserve evidence without making history the next context](../../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md) - aligns: raw/session sources are preserved separately from selected wiki/context read-back.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the system separates raw files, wiki pages, skills, prompts, context blocks, projections, lint reports, and session traces by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies raw sources, wiki pages, search results, and session files when consumed as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies schemas, installed prompts, skills, context blocks, validators, and ranking/projection code.

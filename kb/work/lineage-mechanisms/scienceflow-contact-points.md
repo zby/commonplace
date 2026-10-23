@@ -27,7 +27,7 @@ This supplies a direct whole-system witness for a rule the workshop currently im
 
 The distinction matters anywhere rollback is an operational feature. If an agent can restore both the workspace and the only record of expenditure or failure, rollback becomes evidence deletion. A restoration anchor and a history cursor must therefore be separate concepts even when both are represented by timestamps or commit-like identifiers.
 
-This is the dynamic counterpart to [history has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md). The existing note explains why a history fact must be recorded when it occurs. ScienceFlow adds the next condition: once recorded, the fact must live outside any state boundary that later operations are allowed to rewind.
+This is the dynamic counterpart to [history has one chance to become checkable](../../theory/history-has-one-chance-to-become-checkable.md). The existing note explains why a history fact must be recorded when it occurs. ScienceFlow adds the next condition: once recorded, the fact must live outside any state boundary that later operations are allowed to rewind.
 
 ## Folded context is a derivative, not a replacement
 
@@ -41,7 +41,7 @@ This is an operational example of the workshop's source-preservation rule. The c
 - audit or replay needs the uncompressed record;
 - a later Unfold needs the addressable source behind the summary.
 
-The general consequence is stronger than “keep raw logs.” Retention follows future operations. A derivative may be sufficient for reading while its source remains necessary for verification, regeneration, restoration, or alternate-context assembly. This aligns with [preserve evidence without loading history](../../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) and gives the lineage workshop a runtime case rather than only an artifact-publication case.
+The general consequence is stronger than “keep raw logs.” Retention follows future operations. A derivative may be sufficient for reading while its source remains necessary for verification, regeneration, restoration, or alternate-context assembly. This aligns with [preserve evidence without loading history](../../theory/agent-memory-requirements/preserve-evidence-without-loading-history.md) and gives the lineage workshop a runtime case rather than only an artifact-publication case.
 
 ## Lineage sufficiency is consumer-relative
 
@@ -100,5 +100,5 @@ Relevant notes and working files:
 - [verification locus and provenance theory](./verification-locus-and-provenance-theory.md) — extends: adds rollback persistence and consumer-relative closure to the state/history account
 - [automatic derivation rules](./automatic-derivation-rules.md) — is-evidence-for: a useful derivative does not eliminate the source needed by later operations
 - [lineage profile matrix](./lineage-profile-matrix.md) — is-evidence-for: different consumers require different retained lineage surfaces
-- [active work state is not retrospective memory or chat history](../../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) — rests-on: restoration operates over active work state, not chat reconstruction
-- [learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: lineage fidelity cannot correct a fixed evaluator or response space
+- [active work state is not retrospective memory or chat history](../../theory/active-work-state-is-not-retrospective-memory-or-chat-history.md) — rests-on: restoration operates over active work state, not chat reconstruction
+- [learning inside a fixed decomposition inherits its mistakes](../../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — limits: lineage fidelity cannot correct a fixed evaluator or response space

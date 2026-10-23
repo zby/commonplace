@@ -14,7 +14,7 @@ status: accepted
 
 ## Context
 
-[ADR-002](./002-inline-global-types-in-writing-guide.md) optimized the common write path by putting the default `note` template directly in [`kb/notes/COLLECTION.md`](../../notes/COLLECTION.md). That works for the always-loaded path because the agent needs generic writing conventions and the default note scaffold together on almost every write.
+[ADR-002](./002-inline-global-types-in-writing-guide.md) optimized the common write path by putting the default `note` template directly in [`kb/notes/COLLECTION.md`](../../theory/COLLECTION.md). That works for the always-loaded path because the agent needs generic writing conventions and the default note scaffold together on almost every write.
 
 Specialized types have a different loading profile. ADRs, indexes, related-system reviews, source reviews, task types, and practitioner-defined local types are all less common and more collection-specific. They should not bloat `WRITING.md`, but they still need a stable authoring interface.
 

@@ -140,8 +140,8 @@ The main tradeoff is power versus inspectability. GBrain can serve targeted cont
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: GBrain derives facts, atoms, concepts, patterns, eval rows, and skill candidates from conversation/session/tool traces and retained evidence.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: GBrain has both explicit pull retrieval and pushed hot-memory/trajectory context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: GBrain's markdown, DB rows, embeddings, graph links, skills, and operation definitions carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: pages, facts, takes, trajectories, and syntheses usually advise rather than enforce.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: operations, auth scopes, skills, schema packs, validators, queues, and ranking/indexing code govern future behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-learning paths with different promotion thresholds.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: GBrain has both explicit pull retrieval and pushed hot-memory/trajectory context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: GBrain's markdown, DB rows, embeddings, graph links, skills, and operation definitions carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: pages, facts, takes, trajectories, and syntheses usually advise rather than enforce.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: operations, auth scopes, skills, schema packs, validators, queues, and ranking/indexing code govern future behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: GBrain's hot facts, dream cycle, eval capture, and skillopt are trace-learning paths with different promotion thresholds.

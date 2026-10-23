@@ -120,9 +120,9 @@ EchoWiki's automatic update loop is still relevant to Commonplace because it sho
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: EchoWiki splits source notes, generated wiki pages, runtime instructions, settings, and indexes across different artifact roles.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: stored wiki pages matter only when humans pull them or the compiler pushes briefs/pages into an LLM call.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: generated summaries, concepts, entities, index entries, and raw sources mostly serve as evidence, reference, context, or advice.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompts, settings, approval state, and storage constraints shape behavior with instruction, routing, enforcement, or validation authority.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages context with brief-first compilation and whitelisted links rather than retrieval budgets.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: EchoWiki's read-back depends on visible signals such as slugs, wikilinks, frontmatter descriptions, source lists, and raw paths.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: EchoWiki splits source notes, generated wiki pages, runtime instructions, settings, and indexes across different artifact roles.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: stored wiki pages matter only when humans pull them or the compiler pushes briefs/pages into an LLM call.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: generated summaries, concepts, entities, index entries, and raw sources mostly serve as evidence, reference, context, or advice.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompts, settings, approval state, and storage constraints shape behavior with instruction, routing, enforcement, or validation authority.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki manages context with brief-first compilation and whitelisted links rather than retrieval budgets.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: EchoWiki's read-back depends on visible signals such as slugs, wikilinks, frontmatter descriptions, source lists, and raw paths.

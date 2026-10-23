@@ -108,9 +108,9 @@ The decision content is authored by the LLM in-context and passed to `kg ingest`
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: kgai stores a rich decision history, but read-back is instruction-driven pull; nothing activates a decision unless the agent queries for it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: the log, its projection, the skill, and the hook differ across substrate, form, lineage, and authority.
-- [Codification](../../notes/definitions/codification.md) - relates: kgai codifies a natural-language decision into symbolic graph mutations at write time rather than as a later promotion.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: decisions are consumed as advisory context, with no enforcement of compliance.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: the knowledge-graph skill and Stop hook instruct and enforce capture behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: deterministic element ids depend on a canonical name already being reused; diacritic/synonym forks are the signal-availability limit.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: kgai stores a rich decision history, but read-back is instruction-driven pull; nothing activates a decision unless the agent queries for it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: the log, its projection, the skill, and the hook differ across substrate, form, lineage, and authority.
+- [Codification](../../theory/definitions/codification.md) - relates: kgai codifies a natural-language decision into symbolic graph mutations at write time rather than as a later promotion.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: decisions are consumed as advisory context, with no enforcement of compliance.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: the knowledge-graph skill and Stop hook instruct and enforce capture behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: deterministic element ids depend on a canonical name already being reused; diacritic/synonym forks are the signal-availability limit.

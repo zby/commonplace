@@ -4,16 +4,16 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/software-house.md
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/representational-form.md
-  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
-  - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
-  - kb/notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md
-  - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
-  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
-  - kb/notes/new-domains-can-turn-theory-builders-into-software-houses.md
+  - kb/theory/definitions/software-house.md
+  - kb/theory/definitions/theory-builder.md
+  - kb/theory/definitions/representational-form.md
+  - kb/theory/a-claim-without-external-assessment-carries-three-obligations.md
+  - kb/theory/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/theory/naurs-compiler-case-tests-one-documentation-and-consumption-system.md
+  - kb/theory/program-theory-sustains-search-under-delayed-feedback.md
+  - kb/theory/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
+  - kb/theory/new-domains-can-turn-theory-builders-into-software-houses.md
 ---
 
 # An Automated Software House as a Second Test of a Theory Builder
@@ -32,7 +32,7 @@ is kept as a companion to the knowledge-base test, not a replacement for it.
 
 ## The conjecture
 
-A [software house](../notes/definitions/software-house.md) is the complete
+A [software house](../theory/definitions/software-house.md) is the complete
 persistent system responsible for developing and evolving software for
 external users. It is automated when computation performs every internal
 production role: interpreting project knowledge, making implementation
@@ -43,7 +43,7 @@ outside.
 > **The automated software house conjecture.** At least one automated
 > software house capable of open-ended coherent software change can operate
 > practically using only LLMs and other
-> [distributed-parametric](../notes/definitions/representational-form.md)
+> [distributed-parametric](../theory/definitions/representational-form.md)
 > models available by 2026-09-02, the cutoff chosen for this conjecture, and
 > held fixed during the run.
 
@@ -69,9 +69,9 @@ such as "a person's identity is separate from their membership in an
 organization" shows where the data model must change, and "tenants never see
 each other's data" says what every change must keep true. Commitments like
 these [keep the search for a design coherent while the consequences of a
-choice are still unknown](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+choice are still unknown](../theory/program-theory-sustains-search-under-delayed-feedback.md).
 
-The knowledge base [defines a theory builder](../notes/definitions/theory-builder.md)
+The knowledge base [defines a theory builder](../theory/definitions/theory-builder.md)
 by four conditions: its theories are stated, so identifiable units say
 something; they guide what it does; it criticizes what they say and revises
 or replaces those that fail; and the result of criticism shapes the next
@@ -84,13 +84,13 @@ error-elimination step of the lead's cycle.
 Naur's account is in tension with the first condition. He held that program theory cannot
 be expressed as rules or criteria, and that it is bound to the people who
 hold it. The knowledge base
-[reads his human-only conclusion](../notes/naur-equates-machine-execution-with-formulated-criteria.md)
+[reads his human-only conclusion](../theory/naur-equates-machine-execution-with-formulated-criteria.md)
 as needing a further premise: that a computer can make a judgment only by
 executing criteria formulated in advance. A fixed LLM runs by defined operations,
 but nobody supplied it a rule for each judgment; it can apply a stated
 commitment to a case the commitment does not mention. How well is an
 empirical question. His
-[compiler case](../notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md),
+[compiler case](../theory/naurs-compiler-case-tests-one-documentation-and-consumption-system.md),
 in which program text, annotations, design notes, and personal advice did not
 transfer the theory to a successor team, tested one historically bounded way
 of writing and reading documentation, not every possible one.
@@ -100,7 +100,7 @@ house need not write all of it down. It must state what
 it holds, because only stated units can be criticized; the fixed model
 supplies the judgment that applies them. A text of commitments does not apply
 itself, and with the models pinned, any procedure the house learns for using
-its theory [must be retained outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
+its theory [must be retained outside the weights](../theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
 as instructions or code. Naur's human-only thesis predicts that such a house
 will fail to change its product coherently. One that succeeds would show that
 program theory is not bound to people, without settling whether its criteria
@@ -116,7 +116,7 @@ works or does not. A failing test, a broken build, or a rejected release
 arrives quickly and is judged outside the house.
 
 Users who judge the software supply all three items of full
-[external assessment](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
+[external assessment](../theory/a-claim-without-external-assessment-carries-three-obligations.md):
 an external falsifier, an external objective, and an outcome level
 independent of the builder's own evaluators. The knowledge base needs a
 consuming project to supply them. An outside signal still does not locate
@@ -136,7 +136,7 @@ one house meeting four conditions together.
 
 1. **Holding and application.** The house's program theory guides its
    proposals, diagnoses, and recoveries on novel changes. It fails if
-   [altering a retained commitment](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
+   [altering a retained commitment](../theory/retained-theory-intervention-isolates-one-explicit-surface.md)
    changes decisions only where the text states the answer verbatim, which
    is instruction-following, or changes nothing.
 2. **Coherent revision.** A later request or operating consequence exposes a
@@ -177,8 +177,8 @@ evidence would be stronger if it could be obtained.
 
 The [testing supplement](./testing-whether-a-theory-builder-learns.md)
 states the knowledge-base protocol and how evidence reaches a builder. The
-[software-house definition](../notes/definitions/software-house.md) gives the
+[software-house definition](../theory/definitions/software-house.md) gives the
 role boundary in its general form. Whether an automated theory builder
 working across open domains must itself
-[become a software house](../notes/new-domains-can-turn-theory-builders-into-software-houses.md)
+[become a software house](../theory/new-domains-can-turn-theory-builders-into-software-houses.md)
 is a separate, conditional conjecture this article does not rely on.

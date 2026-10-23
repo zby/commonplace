@@ -10,7 +10,7 @@ The generator theory in this workshop was produced by a human–agent process wo
 3. The maintainer identified the missing piece: the inherited Ars Contexta theory justified *having* typed links but was not **generative** — it could not produce the vocabulary appropriate to a given collection, a limitation known since the vocabulary failed for the reference collection (repaired by ADR 019).
 4. The brainstorm produced competing models and the seed-then-harvest generator sketch; six experiments (three retrodiction variants, an A/B, two corpus checks plus a control) tested it in one day, recorded in the [retrodiction run](./generator-retrodiction-run.md).
 
-The episode maps onto the [discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) almost stage for stage: observe (contradictions, migration data) → conjecture (competing models) → derive consequences (retrodiction predictions) → test (variants, A/B, corpus checks, discrimination control) → accept/integrate (still pending: the handoffs in the run file's Next section).
+The episode maps onto the [discovery lifecycle](../../theory/definitions/discovery-lifecycle.md) almost stage for stage: observe (contradictions, migration data) → conjecture (competing models) → derive consequences (retrodiction predictions) → test (variants, A/B, corpus checks, discrimination control) → accept/integrate (still pending: the handoffs in the run file's Next section).
 
 ## Division of labor observed
 

@@ -420,7 +420,7 @@ instruction holds only its mission.
 - **Mission files shrink** to a purpose sentence and what the job must
   establish and challenge. The loader does not police this.
 - **Layout facts as lines** (decided 2026-10-10, under
-  [frontloading](../../../notes/frontloading-spares-execution-context.md)).
+  [frontloading](../../../theory/frontloading-spares-execution-context.md)).
   The frame prints, for a role-filling job, `identity`, the fields it
   repeats and from which roles, and `cites`, the roles it may cite, and
   for a verifying role `verifies`; the prompt section says each in one

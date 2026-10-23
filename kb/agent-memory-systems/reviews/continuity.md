@@ -142,9 +142,9 @@ The main tradeoff is activation versus precision. Continuity makes stored memory
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Continuity stores memory in SQLite, but only prompt assembly, tool calls, UI browsing, and plugin/org-sync paths activate it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: memory rows, versions, links, learnings, narratives, prompts, and sync payloads carry different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory rows, links, narratives, search results, and UI views mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: preloaded memory prompt sections, workspace prompt rules, MCP schemas, plugin prompts, and validation schemas shape later behavior more strongly.
-- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: Continuity narratives are compiled views over memories/learnings and need source alignment if their authority increases.
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Continuity distills learning signals and memories into a future-facing narrative briefing.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Continuity stores memory in SQLite, but only prompt assembly, tool calls, UI browsing, and plugin/org-sync paths activate it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: memory rows, versions, links, learnings, narratives, prompts, and sync payloads carry different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: memory rows, links, narratives, search results, and UI views mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: preloaded memory prompt sections, workspace prompt rules, MCP schemas, plugin prompts, and validation schemas shape later behavior more strongly.
+- [Keep Lineage And Compiled Views From Drifting](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: Continuity narratives are compiled views over memories/learnings and need source alignment if their authority increases.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Continuity distills learning signals and memories into a future-facing narrative briefing.

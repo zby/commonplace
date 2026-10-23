@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The universal measure is a strong case for [a proximate target being checked for achievement rather than warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md): formal score maximization does not prove that the score captures understanding, value, or safety. AIXI's exogenous reward and environment assumptions support [warranted autonomy being bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md). Recursive-improvement rhetoric compares with [self-improvement relative to a declared objective](../notes/self-improvement-is-relative-to-a-declared-objective.md) and [computational direction as fixed-boundary reallocation](../notes/computationally-directed-self-improvement-is-a-reallocation.md): without a boundary, horizon, objective, and allocation trace, “foom” is not an operational improvement account.
+The universal measure is a strong case for [a proximate target being checked for achievement rather than warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md): formal score maximization does not prove that the score captures understanding, value, or safety. AIXI's exogenous reward and environment assumptions support [warranted autonomy being bounded by oracle domain](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md). Recursive-improvement rhetoric compares with [self-improvement relative to a declared objective](../theory/self-improvement-is-relative-to-a-declared-objective.md) and [computational direction as fixed-boundary reallocation](../theory/computationally-directed-self-improvement-is-a-reallocation.md): without a boundary, horizon, objective, and allocation trace, “foom” is not an operational improvement account.
 
 ## Extractable Value
 
@@ -44,5 +44,5 @@ The chapter correctly separates tests from essences but sometimes replaces one b
 
 ## Recommended Next Action
 
-Use Legg's universal intelligence measure as a worked case in the next revision of [A proximate target is checked for achievement, not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md), but ground the example in Legg's dissertation and keep superintelligence probability claims out of that revision.
+Use Legg's universal intelligence measure as a worked case in the next revision of [A proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md), but ground the example in Legg's dissertation and keep superintelligence probability claims out of that revision.
 

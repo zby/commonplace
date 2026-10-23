@@ -153,4 +153,4 @@ Relevant Notes:
 - [ADR 073 — Untracked source snapshots require ingest grounding](./073-untracked-source-snapshots-require-ingest-grounding.md) — extends: keeps its ingest Quotes pool and snapshot marker as the evidence design and removes the grounding-and-retry round trip it accepted
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — implemented-by: the skill whose result protocol the writers now consume in-run
 - [Write a KB note](../../instructions/cp-skill-write/SKILL.md) — implemented-by: the writer that invokes grounding and reports every append
-- [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses the mechanical append while leaving semantic support outside the automated step
+- [The boundary of automation is the boundary of verification](../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses the mechanical append while leaving semantic support outside the automated step

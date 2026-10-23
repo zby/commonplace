@@ -43,7 +43,7 @@ The paper argues that causal-effect estimation depends on assumptions about the 
 
 ## Connections Found
 
-This source supports [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) by grounding the warning that causal discovery and causal inference are not assumption-free. It also fits [Warranted autonomy is bounded by oracle reach](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) as a domain-specific example: automation can run the causal pipeline, but the warrant stops where assumptions cannot be globally validated.
+This source supports [reach assessment](../theory/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) by grounding the warning that causal discovery and causal inference are not assumption-free. It also fits [Warranted autonomy is bounded by oracle reach](../theory/warranted-autonomy-is-bounded-by-oracle-domain.md) as a domain-specific example: automation can run the causal pipeline, but the warrant stops where assumptions cannot be globally validated.
 
 ## Extractable Value
 
@@ -58,4 +58,4 @@ The source is partly a tool-framework argument, so it should not be read as inde
 
 ## Recommended Next Action
 
-Keep this source as the cautionary citation in [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) for the assumption boundary of causal reach assessment; no separate promotion is needed now.
+Keep this source as the cautionary citation in [Formal symbolic systems assess reach only through causal and proof obligations](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) for the assumption boundary of causal reach assessment; no separate promotion is needed now.

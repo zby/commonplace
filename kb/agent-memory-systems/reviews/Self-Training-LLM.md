@@ -106,8 +106,8 @@ The system can run a RAG-style evaluation mode that includes the source document
 
 Relevant Notes:
 
-- [Retained artifact](../../notes/definitions/retained-artifact.md) - classifies trained checkpoints and generated datasets as retained state with future behavioral consequence.
-- [Representational form](../../notes/definitions/representational-form.md) - supports separating natural-language/source records, symbolic scores/configs, and parametric model weights.
-- [Lineage](../../notes/definitions/lineage.md) - frames the imported Wikipedia source, generated rollouts, selected preference records, and trained checkpoint lineage.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - positions sampled answer rollouts and scoring traces as trace-learning inputs.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - explains why this system remains pull-only despite durable checkpoints and datasets.
+- [Retained artifact](../../theory/definitions/retained-artifact.md) - classifies trained checkpoints and generated datasets as retained state with future behavioral consequence.
+- [Representational form](../../theory/definitions/representational-form.md) - supports separating natural-language/source records, symbolic scores/configs, and parametric model weights.
+- [Lineage](../../theory/definitions/lineage.md) - frames the imported Wikipedia source, generated rollouts, selected preference records, and trained checkpoint lineage.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - positions sampled answer rollouts and scoring traces as trace-learning inputs.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - explains why this system remains pull-only despite durable checkpoints and datasets.

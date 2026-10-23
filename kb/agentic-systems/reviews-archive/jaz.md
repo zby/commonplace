@@ -38,9 +38,9 @@ There is no shipped semantic compactor established within the inspected source b
 
 ## What the evidence supports
 
-The strongest result is an inspectable set of mechanisms for recursive execution, correction and later reuse. The framework affords localized theories and feedback-driven revision, but no inspected candidate trace establishes all four [theory-builder conditions](../../notes/definitions/theory-builder.md). Improved future capacity attributable to criticism remains uninspected.
+The strongest result is an inspectable set of mechanisms for recursive execution, correction and later reuse. The framework affords localized theories and feedback-driven revision, but no inspected candidate trace establishes all four [theory-builder conditions](../../theory/definitions/theory-builder.md). Improved future capacity attributable to criticism remains uninspected.
 
-Program-visible history affords [reflection](../../notes/definitions/reflective-system.md) over selected execution aspects; the console also wires a human-mediated configuration representation/change route. Neither establishes a reflective theory builder or autonomous self-improvement. The distinction matters especially for workflow export: converting a trace into runnable code establishes reuse, not evidence that the procedure became better.
+Program-visible history affords [reflection](../../theory/definitions/reflective-system.md) over selected execution aspects; the console also wires a human-mediated configuration representation/change route. Neither establishes a reflective theory builder or autonomous self-improvement. The distinction matters especially for workflow export: converting a trace into runnable code establishes reuse, not evidence that the procedure became better.
 
 ## Scope
 

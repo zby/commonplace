@@ -33,5 +33,5 @@ The repository's reported performance gains remain attributed reports; this anal
 
 - [Exact analysis](../reports/retained-archive/AAS-2026-09-25-skilllift-01/result.md) — see-also: canonical routes, source excerpts, both lenses and the fourteen-axis memory profile
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: distinguishes criticism-linked capacity improvement from a trace-fed write route
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the narrow causally connected self-representation claim
-- [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: the dispositional improvement pathway and its boundary
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: the narrow causally connected self-representation claim
+- [Self-improving system](../../theory/definitions/self-improving-system.md) — defined-in: the dispositional improvement pathway and its boundary

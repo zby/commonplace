@@ -30,7 +30,7 @@ catch a stale question. Do not freeze method, first targets, or interpretation
 merely because they can be chosen at framing time; retain them when privileged
 evidence or coordination requires the choice, and otherwise let live evidence
 discriminate — rationale: [An author should fix what the executor can't
-determine, not what it will](../notes/fix-what-the-executor-cant-determine-not-what-it-will.md).
+determine, not what it will](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md).
 
 A workshop framing is a task commission relative to the Commonplace doctrine
 that its executing runtime verifiably supplies. It must remain complete for its

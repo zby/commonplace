@@ -15,7 +15,7 @@ The KB's vocabulary invariant — no unqualified term carries two load-bearing s
 - **The review system can run semantic gates** over `(note, criterion)` pairs through the assay pipeline — a naming gate would ride existing machinery rather than requiring new infrastructure.
 - **Retirement is recorded only in prose history.** `distillation` was retired without a successor term (ADR 053); nothing flags its reintroduction.
 - **The write path has a cheap duplicate check but no sense-collision check.** `cp-skill-write` screens for duplicate notes, not for captured terms; the `kb/work/vocabulary-governance/` workshop names extending it as open work.
-- The theory — the invariant, the risk model, and the device ranking these controls would enforce — lives in [load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md).
+- The theory — the invariant, the risk model, and the device ranking these controls would enforce — lives in [load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md).
 
 ## The design space
 
@@ -48,5 +48,5 @@ The KB's vocabulary invariant — no unqualified term carries two load-bearing s
 
 Relevant Notes:
 
-- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: the invariant, risk model, and device ranking these controls would mechanically enforce
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: the collision screen frontloads the corpus audit to the moment of naming, when the answer is cheapest to act on
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: the invariant, risk model, and device ranking these controls would mechanically enforce
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: the collision screen frontloads the corpus audit to the moment of naming, when the answer is cheapest to act on

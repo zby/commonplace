@@ -138,9 +138,9 @@ The biggest tradeoff is authority speed. Compound Engineering can quickly move a
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Compound Engineering stores many project artifacts, but workflow loading and instruction-file discoverability decide when they enter context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: skills, agents, plans, solution docs, concepts, review JSON, installer manifests, and instruction-file edits carry different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: strategy, plans, solution docs, concepts, pulse reports, session summaries, and review reports mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skills, agents, plugin manifests, workflow gates, validators, and instruction-file edits shape later behavior with stronger force.
-- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: host-specific installed artifacts and instruction-file discoverability lines are compiled views over the plugin/project memory source.
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Compound Engineering turns session, conversation, diff, review, and telemetry traces into reusable project learnings.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Compound Engineering stores many project artifacts, but workflow loading and instruction-file discoverability decide when they enter context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: skills, agents, plans, solution docs, concepts, review JSON, installer manifests, and instruction-file edits carry different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: strategy, plans, solution docs, concepts, pulse reports, session summaries, and review reports mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skills, agents, plugin manifests, workflow gates, validators, and instruction-file edits shape later behavior with stronger force.
+- [Keep Lineage And Compiled Views From Drifting](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) - warns: host-specific installed artifacts and instruction-file discoverability lines are compiled views over the plugin/project memory source.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Compound Engineering turns session, conversation, diff, review, and telemetry traces into reusable project learnings.

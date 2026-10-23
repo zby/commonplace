@@ -28,7 +28,7 @@ retains the three intermediate artifacts.
 The control is not routine. ADR 081 explicitly rejects that option until a
 prospective matched test measures both charitable over-attribution and false
 narrowing. The retained [Pirolli
-case](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md)
+case](../../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md)
 tightened three of four support verdicts after decomposition, but roles,
 prompts, and intermediate representations changed together. It observed only
 over-attribution and does not identify isolation as the cause of the change.
@@ -156,6 +156,6 @@ evaluation is worth running, the adopted non-routine policy remains explicit.
 
 Relevant Notes:
 
-- [An independent pass tightened three of four Pirolli grounding verdicts](../../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
-- [A borrowed pattern transfers only as far as source and target share a mechanism](../../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
-- [Theory warrant should be tracked at the finest granularity evidence licenses](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps source support and comparison judgments at claim rather than document grain
+- [An independent pass tightened three of four Pirolli grounding verdicts](../../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — rests-on: bounds the observed verdict change and the causal uncertainty that a prospective isolation test must preserve
+- [A borrowed pattern transfers only as far as source and target share a mechanism](../../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: bounds which source-side mechanism can warrant a Commonplace transfer
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — rests-on: keeps source support and comparison judgments at claim rather than document grain

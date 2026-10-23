@@ -9,7 +9,7 @@ tags: [agent-memory, learning-theory]
 
 **Historical snapshot.** Retained from Commonplace commit `3c5590c2a0e8ce65a6da46257469a33c70961287`. System findings, counts and Commonplace comparisons describe the evidence and framework at that revision. Current analysis uses the [main agentic-system method](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md); this snapshot is not updated from new runs.
 
-Across 148 code-grounded reviews, each system is classified on the same axes: [storage substrate](../notes/definitions/storage-substrate.md) (where memory lives), [lineage](../notes/definitions/lineage.md) (how retained state was derived), [behavioral authority](../notes/definitions/behavioral-authority.md) (what force memory has), and how memory [reaches the next action](../notes/knowledge-storage-does-not-imply-contextual-activation.md). The classifications live in [`systems.csv`](./systems.csv) and the [comparison table](./systems-table.md). Read together, they show that what divides the collection is less the storage substrate than how memory is activated and verified. Four findings stand out.
+Across 148 code-grounded reviews, each system is classified on the same axes: [storage substrate](../theory/definitions/storage-substrate.md) (where memory lives), [lineage](../theory/definitions/lineage.md) (how retained state was derived), [behavioral authority](../theory/definitions/behavioral-authority.md) (what force memory has), and how memory [reaches the next action](../theory/knowledge-storage-does-not-imply-contextual-activation.md). The classifications live in [`systems.csv`](./systems.csv) and the [comparison table](./systems-table.md). Read together, they show that what divides the collection is less the storage substrate than how memory is activated and verified. Four findings stand out.
 
 ## Storage predicts little by itself
 
@@ -25,7 +25,7 @@ The instructive exception is not graph storage in general but one visible pull-o
 
 ## Automatic activation is shipped on faith
 
-Pushing is the survey's most common capability and its least verified. Of the **97** systems that push memory, **75 (77%)** use a coarse always-load, session-start, or generic recall path rather than selecting for the current instance, and an LLM relevance judgment appears in only **17 of 97 (18%)**. Scarcer still: just **5 of 97** pushing systems test whether injected memory actually changed behavior — the evaluation-first systems [Reflexion](./reviews/reflexion.md), [Synapptic](./reviews/synapptic.md), [KBLaM](./reviews/KBLaM.md), [auto-harness](./reviews/auto-harness.md), and [Meta-Harness](./reviews/meta-harness.md). Everywhere else, [storage is simply assumed to imply activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md).
+Pushing is the survey's most common capability and its least verified. Of the **97** systems that push memory, **75 (77%)** use a coarse always-load, session-start, or generic recall path rather than selecting for the current instance, and an LLM relevance judgment appears in only **17 of 97 (18%)**. Scarcer still: just **5 of 97** pushing systems test whether injected memory actually changed behavior — the evaluation-first systems [Reflexion](./reviews/reflexion.md), [Synapptic](./reviews/synapptic.md), [KBLaM](./reviews/KBLaM.md), [auto-harness](./reviews/auto-harness.md), and [Meta-Harness](./reviews/meta-harness.md). Everywhere else, [storage is simply assumed to imply activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md).
 
 ## Full lifecycle curation is rare
 
@@ -37,6 +37,6 @@ Commonplace sits in the curated pull-only camp: authored, files-family, review-h
 
 Relevant Notes:
 
-- [knowledge-storage-does-not-imply-contextual-activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: the read-back / activation distinction the second and third findings rest on
-- [agent-memory-is-a-crosscutting-concern-not-a-separable-niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - see-also: why the dividing axes span storage, retrieval, and learning at once
+- [knowledge-storage-does-not-imply-contextual-activation](../theory/knowledge-storage-does-not-imply-contextual-activation.md) - grounds: the read-back / activation distinction the second and third findings rest on
+- [agent-memory-is-a-crosscutting-concern-not-a-separable-niche](../theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) - see-also: why the dividing axes span storage, retrieval, and learning at once
 - [trace-learning-techniques-in-related-systems](./trace-learning-techniques-in-related-systems.md) - see-also: the focused survey of the automatic camp this matrix quantifies

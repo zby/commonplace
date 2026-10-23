@@ -140,8 +140,8 @@ The main divergence is that CORAL treats memory as run-local coordination for ag
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CORAL stores attempts, notes, skills, roles, and logs, but most memory reaches agents only through explicit pull or narrow resume/heartbeat prompts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: attempts, notes, skills, role files, heartbeat prompts, generated instructions, and access rules carry different lineage and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: attempts, logs, notes, and grader feedback mostly advise future agents as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated runtime instructions, heartbeat prompts, task config, workspace permissions, and grader/queue rules shape or enforce later behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: CORAL records eval/session traces and prompts agents to distill them, while keeping semantic extraction mostly manual.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CORAL stores attempts, notes, skills, roles, and logs, but most memory reaches agents only through explicit pull or narrow resume/heartbeat prompts.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: attempts, notes, skills, role files, heartbeat prompts, generated instructions, and access rules carry different lineage and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: attempts, logs, notes, and grader feedback mostly advise future agents as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated runtime instructions, heartbeat prompts, task config, workspace permissions, and grader/queue rules shape or enforce later behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: CORAL records eval/session traces and prompts agents to distill them, while keeping semantic extraction mostly manual.

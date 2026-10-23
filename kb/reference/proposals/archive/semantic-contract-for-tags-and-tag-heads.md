@@ -144,7 +144,7 @@ The remainder of the head may take whatever form best represents the area: a fla
 Uniform routing does not require uniform exposition.
 
 The prefix is a stable pointer, not a relevance oracle. The [proximal-cue
-account](../../../notes/agents-navigate-by-deciding-what-to-read-next.md) explains
+account](../../../theory/agents-navigate-by-deciding-what-to-read-next.md) explains
 why meaning, use conditions, boundaries, and context phrases can help a reader
 judge unseen destinations. Their usefulness remains relative to a task and
 consumer, and structural validation cannot establish their editorial quality.
@@ -243,7 +243,7 @@ agent-facing summarizer.
 Failure or staleness of a curated head must therefore leave exact membership
 recoverable through the resolver. Task discovery may still require search even
 when the head is complete. The [end-to-end access
-account](../../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md)
+account](../../../theory/knowledge-access-architecture-must-be-evaluated-end-to-end.md)
 also prevents successful membership recovery from standing in for useful
 selection, loading, uptake, or task success.
 
@@ -334,6 +334,6 @@ as current guarantees.
 
 - [Tag scope is declared where membership claims are made](./tag-scope-is-declared-where-membership-claims-are-made.md) — part-of: owns the KB-root, projection, resolver, canonical-path, and migration machinery this semantic contract assumes
 - [Write-time vocabulary collision controls](../write-time-vocabulary-collision-controls.md) — see-also: supplies candidate registry and write-time mechanisms for enforcing one-string-one-sense
-- [Link-following and search impose different metadata requirements](../../../notes/link-following-and-search-impose-different-metadata-requirements.md) — rests-on: distinguishes contextual local navigation from long-range selection without treating the tool invoked as the strategy
-- [Pointer design tradeoffs in progressive disclosure](../../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — rests-on: separates fixed, query-time, and authored pointers by specificity, cost, availability, and accuracy
-- [An enforced tag-README combines a MOC pattern with checked membership](../../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: separates editorial mapping from the exact checked relation that authorizes a membership shortcut
+- [Link-following and search impose different metadata requirements](../../../theory/link-following-and-search-impose-different-metadata-requirements.md) — rests-on: distinguishes contextual local navigation from long-range selection without treating the tool invoked as the strategy
+- [Pointer design tradeoffs in progressive disclosure](../../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md) — rests-on: separates fixed, query-time, and authored pointers by specificity, cost, availability, and accuracy
+- [An enforced tag-README combines a MOC pattern with checked membership](../../../theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: separates editorial mapping from the exact checked relation that authorizes a membership shortcut

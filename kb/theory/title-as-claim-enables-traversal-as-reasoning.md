@@ -13,7 +13,7 @@ When you link to a claim-titled note, the link becomes part of your argument:
 
 > "because *approvals guard against LLM mistakes not active attacks*, we can separate the security boundary from the approval UX"
 
-The title IS the reasoning. Traversal IS thinking. The title functions as a typed signature — you know what you're getting before you load the full note. A topic label like "memory notes" is an undocumented function; a claim like "structure enables navigation" tells you the return value. This connects to how [types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — a claim title is an affordance declaration.
+The title IS the reasoning. Traversal IS thinking. The title functions as a typed signature — you know what you're getting before you load the full note. A topic label like "memory notes" is an undocumented function; a claim like "structure enables navigation" tells you the return value. This connects to how [types applied to documents mark affordances](./instructions-are-typed-callables.md) — a claim title is an affordance declaration.
 
 ## Prior work
 
@@ -67,7 +67,7 @@ Not every idea decomposes into a single declarative sentence — some are relati
 
 Relevant Notes:
 
-- [programming-language types applied to documents mark affordances](../notes/instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
+- [programming-language types applied to documents mark affordances](./instructions-are-typed-callables.md) — extends: claim titles are affordance declarations, telling you what reasoning operations a note supports
 - [document types should be verifiable](./document-types-should-be-verifiable.md) — example: a claim extracted from a multi-claim spec, enabling it to serve as a premise
 - [collections and types](../reference/collections-and-types.md) — example: a multi-claim reference page that gets a topical title because no single claim subsumes its content
 - [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — grounds: claim titles make the navigation decision cheap by carrying the argument in the pointer itself

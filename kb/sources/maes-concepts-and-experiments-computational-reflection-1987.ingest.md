@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This is a related earlier version of [Maes's 1988 Computational Reflection](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../notes/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM contexts interpret instructions and content through the same token medium](../notes/llm-context-interprets-instructions-and-content-through-one-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
+This is a related earlier version of [Maes's 1988 Computational Reflection](https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf), not an independent foundation: the causal-connection and procedural/declarative claims should be deduplicated in favor of the later treatment. Its distinct value for [Reflective system](../theory/definitions/reflective-system.md) is the implemented 3-KRS topology—objects, meta-objects, and interpreter-mediated behavioral effect—and its local granularity. Its meta-circular discussion also limits the analogy in [LLM contexts interpret instructions and content through the same token medium](../theory/llm-context-interprets-instructions-and-content-through-one-medium.md): common program/data representation enables one reflective implementation strategy but is not the general definition.
 
 ## Extractable Value
 
@@ -81,4 +81,4 @@ The paper's general definition is compressed and is better supported by Maes's 1
 
 ## Recommended Next Action
 
-Use the 3-KRS object/meta-object/interpreter topology as an implementation precedent for [Cross-representational reflection](../notes/reflective-coverage-is-graded-across-representational-forms.md), while citing Maes 1988—not this related version—for the general definition.
+Use the 3-KRS object/meta-object/interpreter topology as an implementation precedent for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md), while citing Maes 1988—not this related version—for the general definition.

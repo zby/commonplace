@@ -16,7 +16,7 @@ status: accepted
 
 A `verbatim` citation asserts that a quoted span is copied exactly from a source retained in the KB. The dialectical/evidential profile has mandated the three-part convention — file link, prose locator, and a grounding-layer marker of `verbatim` / `paraphrase layer` / `second-hand` — since [ADR 042](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md). Until now nothing checked it: an author wrote a quote, wrote `verbatim`, and the claim was hand-maintained and trusted.
 
-That is exactly the state [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) forbids. All four of its preconditions hold here: the derivation rule is a strict substring test, the quote names its source via the adjacent markdown link, the source snapshot is a checked-in file present at validation time, and the extraction heuristic is a single centralized artifact amortized across every citation it protects. The check is therefore Level A — deterministic, near-zero cost — not a judgment-based review gate.
+That is exactly the state [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) forbids. All four of its preconditions hold here: the derivation rule is a strict substring test, the quote names its source via the adjacent markdown link, the source snapshot is a checked-in file present at validation time, and the extraction heuristic is a single centralized artifact amortized across every citation it protects. The check is therefore Level A — deterministic, near-zero cost — not a judgment-based review gate.
 
 A prototype run over a sibling casebook corpus found **63 match, 18 mismatch, 6 unresolved** across 87 candidates, with no false mismatch on manual audit. The mismatches are real failures of the strict assertion, dominated by editorial omission (`...`), bracketed substitution, case changes, and punctuation moved inside the quotation boundary.
 
@@ -36,7 +36,7 @@ Three outcomes, with deliberately asymmetric severity:
 
 ## Consequences
 
-The `verbatim` marker becomes load-bearing rather than decorative: it is now the cheapest of the three grounding-layer markers to assert and the only one that can be mechanically falsified. `paraphrase layer` and `second-hand` remain unchecked by construction — they never claimed exact text, and no derivation rule exists for them, which is precisely why [a citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
+The `verbatim` marker becomes load-bearing rather than decorative: it is now the cheapest of the three grounding-layer markers to assert and the only one that can be mechanically falsified. `paraphrase layer` and `second-hand` remain unchecked by construction — they never claimed exact text, and no derivation rule exists for them, which is precisely why [a citation cannot assert more fidelity than its capture preserved](../../theory/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
 
 Downstream KBs running the shipped validator receive the generic check with no collection-specific configuration; using the experimental dialectical/evidential prototype is neither required nor a source of inheritance.
 

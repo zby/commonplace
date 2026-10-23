@@ -16,7 +16,7 @@ The unresolved part is collection and type scope: how a KB should declare collec
 
 A second unresolved thread is how to migrate a load-bearing term after its boundary changes. The completed `prose` → `natural-language` workshop produced a [terminology migration method candidate](./terminology-migration-method-candidate.md). It remains provisional: the next vocabulary shift should test the candidate and determine whether a recurring core deserves promotion to an instruction.
 
-A constraint on that design arrived from the distillation migration and is now a library note: [vocabulary collisions are prevented at write time, not resolved at read time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md) (promoted 2026-07-17 from this workshop's [prose-has-no-scope.md](./prose-has-no-scope.md), which retains the evidence pointers and open policy items). Prose offers no read-time scoping and context assembly is concatenation without a linker, so two senses of one term merge silently whenever notes co-load — and the sub-agent isolation remedy cannot apply to library artifacts that exist to be co-loaded. Consequence for the candidate model: imports, qualified names, and shadowing have no prose implementation; collision *handling* must mean collision *prevention* — a one-term-one-sense invariant across all vocabulary sources that can co-load, with multi-word coinages as the collision-free naming path.
+A constraint on that design arrived from the distillation migration and is now a library note: [vocabulary collisions are prevented at write time, not resolved at read time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md) (promoted 2026-07-17 from this workshop's [prose-has-no-scope.md](./prose-has-no-scope.md), which retains the evidence pointers and open policy items). Prose offers no read-time scoping and context assembly is concatenation without a linker, so two senses of one term merge silently whenever notes co-load — and the sub-agent isolation remedy cannot apply to library artifacts that exist to be co-loaded. Consequence for the candidate model: imports, qualified names, and shadowing have no prose implementation; collision *handling* must mean collision *prevention* — a one-term-one-sense invariant across all vocabulary sources that can co-load, with multi-word coinages as the collision-free naming path.
 
 ## Question
 
@@ -92,9 +92,9 @@ Close this workshop when we have a concrete policy proposal that answers:
 
 ## Grounding
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) — landed artifact-analysis vocabulary that this governance workshop treats as an example vocabulary library.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) — landed artifact-analysis vocabulary that this governance workshop treats as an example vocabulary library.
 - [AGENTS.md](../../../AGENTS.md) — current always-loaded vocabulary surface.
-- [Writing conventions for kb/notes](../../notes/COLLECTION.md) — current collection-level definition/linking policy.
+- [Writing conventions for kb/notes](../../theory/COLLECTION.md) — current collection-level definition/linking policy.
 - [Definition type](../../types/definition.md) — current durable artifact shape for operational vocabulary.
 - [ADR-022: active vocabulary and write-path first mentions](../../reference/adr/022-active-vocabulary-and-write-path-first-mentions.md) — landed decision for KB-global active vocabulary in `AGENTS.md`.
 - [Writing skill](../../instructions/cp-skill-write/SKILL.md) — current generic write path.

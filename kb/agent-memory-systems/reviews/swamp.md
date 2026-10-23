@@ -92,8 +92,8 @@ The same retained artifacts also serve non-agent consumers. The workflow executo
 
 Relevant Notes:
 
-- [Artifact analysis records retained behavior-shaping artifacts by four fields](../../notes/axes-of-artifact-analysis.md) - Defines the storage, form, lineage, and authority vocabulary used here.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - Explains why Swamp's durable data and static lookup instructions still form a pull-only read-back path.
-- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) - Frames Swamp's progressively disclosed skill package and routing table.
-- [Scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) - Provides the rationale for compiling recurring workflow bookkeeping into a symbolic DAG executor.
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - Matches Swamp's rebuildable catalog and on-disk verification behavior.
+- [Artifact analysis records retained behavior-shaping artifacts by four fields](../../theory/axes-of-artifact-analysis.md) - Defines the storage, form, lineage, and authority vocabulary used here.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - Explains why Swamp's durable data and static lookup instructions still form a pull-only read-back path.
+- [Skills are instructions plus routing and execution policy](../../theory/skills-are-instructions-plus-routing-and-execution-policy.md) - Frames Swamp's progressively disclosed skill package and routing table.
+- [Scheduler-LLM separation exploits an error-correction asymmetry](../../theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) - Provides the rationale for compiling recurring workflow bookkeeping into a symbolic DAG executor.
+- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - Matches Swamp's rebuildable catalog and on-disk verification behavior.

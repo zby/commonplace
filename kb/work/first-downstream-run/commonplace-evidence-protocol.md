@@ -31,12 +31,12 @@ during training, with the authors' hypothesis that direct use made the
 traces less informative for later improvement. Continuing
 responsibility for that release, with the consuming project's judgments
 arriving from outside, is what makes Commonplace a
-[theory builder](../../notes/definitions/theory-builder.md) under external
+[theory builder](../../theory/definitions/theory-builder.md) under external
 assessment, in the sense of the
-[three externally supplied items](../../notes/a-claim-without-external-assessment-carries-three-obligations.md),
+[three externally supplied items](../../theory/a-claim-without-external-assessment-carries-three-obligations.md),
 once observed. Whether producing software for others also makes it a
-[software house](../../notes/definitions/software-house.md) is the
-[side conjecture's](../../notes/new-domains-can-turn-theory-builders-into-software-houses.md)
+[software house](../../theory/definitions/software-house.md) is the
+[side conjecture's](../../theory/new-domains-can-turn-theory-builders-into-software-houses.md)
 question, not a premise of this experiment; selecting this case neither
 refutes nor proves it.
 

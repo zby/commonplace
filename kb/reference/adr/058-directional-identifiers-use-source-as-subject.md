@@ -58,4 +58,4 @@ Relevant Notes:
 - [ADR 019 — collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — implements: collection contracts remain the authoritative per-source authorization surface
 - [ADR 020 — directional asymmetry](./020-theoretical-default-contrasts-mechanism.md) — amended-by: retains selective asymmetric authoring while this decision fixes identifier grammar
 - [Link vocabulary](../link-vocabulary.md) — implements: catalogue assertion templates and reader needs for the adopted pair
-- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: each authored direction must satisfy an independent reader need
+- [Links encode conditional possibilities, not obligations](../../theory/links-encode-conditional-possibilities-not-obligations.md) — rests-on: each authored direction must satisfy an independent reader need

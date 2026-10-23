@@ -19,7 +19,7 @@ This proposal defines a controlled comparison before Commonplace adds trajectory
 - Commonplace review gates and critique assess note content. They do not evaluate whether the orchestrator followed the workflow that produced the note. This proposal is protocol meta-evaluation, not another note assay and not another review `result_kind`.
 - The review system has no trajectory store, judge runner, trajectory rubric, or freshness baseline semantics for workflow-level judgments.
 
-The system distinction rests on [reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md): reconstructing a plausible successful route from a good output is not checking the route that actually ran. The harness survey independently places trajectory and intermediate-state evaluation inside the harness evaluation interface rather than after final-output generation.
+The system distinction rests on [reasoning production is not reasoning evaluation](../../theory/reasoning-production-is-not-reasoning-evaluation.md): reconstructing a plausible successful route from a good output is not checking the route that actually ran. The harness survey independently places trajectory and intermediate-state evaluation inside the harness evaluation interface rather than after final-output generation.
 
 ## AutoResearchEval evidence and boundary
 
@@ -106,7 +106,7 @@ If the trajectory arm adds no material discrimination, retire the proposal. If i
 
 Relevant Notes:
 
-- [Reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md) — rests-on: a plausible reconstructed route cannot validate the route that actually produced the result
-- [A checked outcome licenses retaining an episode, not abstracting its explanation](../../notes/checked-outcome-licenses-episode-retention-not-abstraction.md) — rests-on: outcome and process checks inspect different evidence and license different conclusions
+- [Reasoning production is not reasoning evaluation](../../theory/reasoning-production-is-not-reasoning-evaluation.md) — rests-on: a plausible reconstructed route cannot validate the route that actually produced the result
+- [A checked outcome licenses retaining an episode, not abstracting its explanation](../../theory/checked-outcome-licenses-episode-retention-not-abstraction.md) — rests-on: outcome and process checks inspect different evidence and license different conclusions
 - [Agent Harness for Large Language Model Agents ingest](../../sources/agent-harness-large-language-model-agents-survey.ingest.md) — evidenced-by: locates trajectory and intermediate-state evaluation in the harness evaluation interface
 - [Run review batches](../../instructions/run-review-batches.md) — see-also: shipped procedure separating harness-owned orchestration from deterministic review endpoints

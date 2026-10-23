@@ -110,8 +110,8 @@ Other consumers are first-class. Funes is deliberately readable from GitHub or a
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Funes stores wiki memory, but accumulated memory acts only when the Librarian reads it.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - aligns: Funes frontloads source interpretation into compiled source notes, concepts, topics, and outputs.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw files, wiki pages, indexes, protocols, outputs, changelogs, and health reports carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, source notes, concepts, topics, outputs, and health reports advise future work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, `protocol.md`, folder contracts, index conventions, templates, and health-check rules shape agent behavior.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Funes stores wiki memory, but accumulated memory acts only when the Librarian reads it.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - aligns: Funes frontloads source interpretation into compiled source notes, concepts, topics, and outputs.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw files, wiki pages, indexes, protocols, outputs, changelogs, and health reports carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw sources, source notes, concepts, topics, outputs, and health reports advise future work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, `protocol.md`, folder contracts, index conventions, templates, and health-check rules shape agent behavior.

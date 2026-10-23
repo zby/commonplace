@@ -142,7 +142,7 @@ Because read-back is pull-only, there is no push read-back signal to classify an
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - extends: cq turns selected session/tool experience into durable, tagged knowledge units through agent-led reflection and propose flows.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: cq stores KUs, but later behavior changes only when an agent queries and uses returned guidance.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - defined-in: cq KUs are primarily advisory knowledge artifacts when consumed through query results.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - defined-in: the cq skill, MCP tool definitions, scoring code, review gate, and plugin manifest instruct, route, rank, or gate behavior.
-- [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: cq's `/cq:reflect` flow extracts candidate reusable lessons from session traces, with user approval before persistence.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - exemplifies: cq stores KUs, but later behavior changes only when an agent queries and uses returned guidance.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - defined-in: cq KUs are primarily advisory knowledge artifacts when consumed through query results.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - defined-in: the cq skill, MCP tool definitions, scoring code, review gate, and plugin manifest instruct, route, rank, or gate behavior.
+- [Use Trace Extraction As Meta-Learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: cq's `/cq:reflect` flow extracts candidate reusable lessons from session traces, with user approval before persistence.

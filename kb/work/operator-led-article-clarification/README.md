@@ -127,7 +127,7 @@ Two consequences for the theory, both open:
   ("verdict without its why") would not let a fresh session recognize a case.
   If that holds up, the theory's carrier needs a slot for worked examples.
   The KB already uses *prototype* for something else (a theory's [revision
-  cost standing](../../notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md)),
+  cost standing](../../theory/prototype-standing-is-revision-cost-binding-plus-lost-investment.md)),
   so call these *exemplars* until a term is settled. Disposition
   (operator, 2026-09-05): do not change the training article. Exemplars sit
   closer to its raw-record treatment than to its theory treatment, so folding
@@ -140,7 +140,7 @@ Two consequences for the theory, both open:
   explanatory reach, with the fifth treatment and its prediction.
 - **The rules have instance-level warrant only.** Each row was abstracted
   from edits the operator accepted, and [an accepted edit verifies the change,
-  not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md).
+  not the rule](../../theory/an-accepted-edit-verifies-the-change-not-the-rule.md).
   The closing condition below (two more article runs) is the re-verification
   that would give a row rule-level standing; a row that fires wrongly on a
   later article is the refutation.

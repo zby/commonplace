@@ -117,9 +117,9 @@ At consumption, memory authority is mixed. Daily logs and pages are advisory kno
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes EchoesVault's stored files from slash-command push and search-tool pull.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating vault files, generated commands, generated skills, and tool schemas by substrate, form, lineage, and authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames `/echoes-end` and scratchpad notes as session-trace distillation into future memory.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies generated OpenCode commands, skills, and tool schemas as behavior-shaping artifacts.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies daily logs, pages, raw materials, and search results as remembered context rather than hard controls.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to EchoesVault's reliance on filenames, index lines, wikilinks, dates, and keywords as retrieval signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes EchoesVault's stored files from slash-command push and search-tool pull.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating vault files, generated commands, generated skills, and tool schemas by substrate, form, lineage, and authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames `/echoes-end` and scratchpad notes as session-trace distillation into future memory.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies generated OpenCode commands, skills, and tool schemas as behavior-shaping artifacts.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies daily logs, pages, raw materials, and search results as remembered context rather than hard controls.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates to EchoesVault's reliance on filenames, index lines, wikilinks, dates, and keywords as retrieval signals.

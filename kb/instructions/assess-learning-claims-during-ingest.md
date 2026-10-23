@@ -20,15 +20,15 @@ placed after `Connections Found` under the ingest-report type contract, with
 its paired `learning_claims: true` frontmatter field, and does not authorize
 further source collection.
 
-Read [Theory builder](../notes/definitions/theory-builder.md) as the
+Read [Theory builder](../theory/definitions/theory-builder.md) as the
 current comparison basis for the source's system. When fine-grained
 localization or selective repair matters, also read
-[Addressable theory](../notes/definitions/addressable-theory.md). Load these
+[Addressable theory](../theory/definitions/addressable-theory.md). Load these
 definitions at execution rather than copying their content into this
 instruction. They govern our use of the terms but remain open to challenge
 by the source.
 
-Read [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
+Read [Learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
 for the boundary between improvement within an effective update space and
 evidence for choices fixed outside it.
 
@@ -79,5 +79,5 @@ Procedure:
 
 Relevant Notes:
 
-- [Theory builder](../notes/definitions/theory-builder.md) — rests-on: the four conditions judged one by one, with learning as a separate claim
-- [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: learning assessments distinguish improvements within an effective update space from evidence for choices fixed outside it
+- [Theory builder](../theory/definitions/theory-builder.md) — rests-on: the four conditions judged one by one, with learning as a separate claim
+- [Learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: learning assessments distinguish improvements within an effective update space from evidence for choices fixed outside it

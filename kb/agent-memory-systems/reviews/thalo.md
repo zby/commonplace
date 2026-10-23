@@ -102,9 +102,9 @@ Other consumers include human authors, editors, CI jobs, GitHub PR reviewers, cu
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Thalo stores structured knowledge, but read-back is pull-only in the inspected implementation.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Thalo separates file substrate, natural-language/symbolic forms, authored/imported lineage, and validation/routing/knowledge authorities.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: entity definitions, checker rules, synthesis prompts, action configuration, and merge rules can shape later behavior with stronger force than ordinary entries.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: Thalo entries and synthesis outputs mainly act as retained evidence, reference, and advice.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Thalo's main context mechanism is symbolic selection plus changed-entry packaging under bounded human or CI workflows.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - compares: Thalo frontloads schema validation, link indexing, and changed-entry selection before a downstream LLM sees synthesis inputs.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Thalo stores structured knowledge, but read-back is pull-only in the inspected implementation.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Thalo separates file substrate, natural-language/symbolic forms, authored/imported lineage, and validation/routing/knowledge authorities.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: entity definitions, checker rules, synthesis prompts, action configuration, and merge rules can shape later behavior with stronger force than ordinary entries.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: Thalo entries and synthesis outputs mainly act as retained evidence, reference, and advice.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Thalo's main context mechanism is symbolic selection plus changed-entry packaging under bounded human or CI workflows.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - compares: Thalo frontloads schema validation, link indexing, and changed-entry selection before a downstream LLM sees synthesis inputs.

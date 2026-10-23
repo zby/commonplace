@@ -119,9 +119,9 @@ The pull path is nevertheless agent-shaped. `AGENTS.md` names durable workspace 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - frames why static skill activation is not counted as memory read-back from accumulated state.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies to the split between skills, manifests, mechanisms, claims, run states, validators, and trace-extracted generated skills.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies source evidence, reports, traces, and benchmark results when they advise later maintainers.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies skills, manifests, validators, activation fixtures, and promoted mechanisms when they route or constrain future agents.
-- [Lineage](../../notes/definitions/lineage.md) - is central to the repository's source-to-skill workflow, claim provenance, ledgers, and trace-extracted example.
-- [Context engineering](../../notes/definitions/context-engineering.md) - names the design problem this skill marketplace and researcher OS both target.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - frames why static skill activation is not counted as memory read-back from accumulated state.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies to the split between skills, manifests, mechanisms, claims, run states, validators, and trace-extracted generated skills.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies source evidence, reports, traces, and benchmark results when they advise later maintainers.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies skills, manifests, validators, activation fixtures, and promoted mechanisms when they route or constrain future agents.
+- [Lineage](../../theory/definitions/lineage.md) - is central to the repository's source-to-skill workflow, claim provenance, ledgers, and trace-extracted example.
+- [Context engineering](../../theory/definitions/context-engineering.md) - names the design problem this skill marketplace and researcher OS both target.

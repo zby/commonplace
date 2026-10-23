@@ -147,10 +147,10 @@ Ars Contexta is an agent-native knowledge-system generator and operating layer. 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Ars Contexta combines stored vault knowledge with coarse startup push and explicit pull commands.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Ars Contexta combines stored vault knowledge with coarse startup push and explicit pull commands.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Ars Contexta turns corrections and session evidence into methodology notes, observations, proposals, and system changes.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - grounds: the review separates generated notes, context files, hooks, skills, methodology graph, qmd indexes, and operational traces by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: ordinary notes, methodology claims, session files, observations, and search results when consumed as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated `CLAUDE.md`, skills, hooks, schemas, queue state, validation scripts, and promoted methodology rules.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Ars Contexta's core contribution is routing, loading, scoping, and maintaining agent context across sessions.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: startup hooks can only push fixed-path and threshold-visible memory unless richer relevance signals are computed.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - grounds: the review separates generated notes, context files, hooks, skills, methodology graph, qmd indexes, and operational traces by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: ordinary notes, methodology claims, session files, observations, and search results when consumed as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated `CLAUDE.md`, skills, hooks, schemas, queue state, validation scripts, and promoted methodology rules.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Ars Contexta's core contribution is routing, loading, scoping, and maintaining agent context across sessions.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - applies: startup hooks can only push fixed-path and threshold-visible memory unless richer relevance signals are computed.

@@ -86,6 +86,6 @@ Trajectory-Informed Memory Generation qualifies as trace-learning coverage becau
 ## Relevant Notes
 
 - [trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) — cross-system placement: uses the system as a lower-confidence trajectory-to-artifact case
-- [memory management policy is learnable but oracle-dependent](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrast: same trajectory/oracle family as AgeMem, different promotion substrate
-- [automated synthesis is missing good oracles](../../notes/automated-synthesis-is-missing-good-oracles.md) — connection: tip consolidation as a narrow case of automated synthesis under a task-completion oracle
+- [memory management policy is learnable but oracle-dependent](../../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrast: same trajectory/oracle family as AgeMem, different promotion substrate
+- [automated synthesis is missing good oracles](../../theory/automated-synthesis-is-missing-good-oracles.md) — connection: tip consolidation as a narrow case of automated synthesis under a task-completion oracle
 - [Trajectory-Informed Memory Generation ingest](../../sources/trajectory-informed-memory-generation-self-improving-agents.ingest.md) — source coverage: paper snapshot analysis and limitations

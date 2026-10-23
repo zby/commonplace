@@ -140,7 +140,7 @@ the read that selects it.
 
 ### Behavioral authority
 
-[Behavioral authority](../../notes/definitions/behavioral-authority.md) names
+[Behavioral authority](../../theory/definitions/behavioral-authority.md) names
 the force a retained part has at its actual consumer. The profile names
 the consumed part, consumer and effect supporting each value:
 

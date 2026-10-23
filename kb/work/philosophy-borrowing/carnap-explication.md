@@ -2,7 +2,7 @@
 
 ## Candidate borrowing
 
-Carnap's explication replaces a vague or everyday concept with a sharper technical concept suited to a purpose. The KB already mentions this in [Constraining](../../notes/definitions/constraining.md): explication is constraining applied to concepts rather than systems.
+Carnap's explication replaces a vague or everyday concept with a sharper technical concept suited to a purpose. The KB already mentions this in [Constraining](../../theory/definitions/constraining.md): explication is constraining applied to concepts rather than systems.
 
 The expansion would make explication an explicit methodology for KB vocabulary work.
 
@@ -31,10 +31,10 @@ This would improve the current "inline gloss and definition pointer" practice by
 
 ## Existing connections
 
-- [Constraining](../../notes/definitions/constraining.md) — current mention of Carnap's explication as prior work
-- [Context engineering](../../notes/definitions/context-engineering.md) — example of a term sharpened for the KB's architectural use
+- [Constraining](../../theory/definitions/constraining.md) — current mention of Carnap's explication as prior work
+- [Context engineering](../../theory/definitions/context-engineering.md) — example of a term sharpened for the KB's architectural use
 - [Distillation](../../notes/definitions/distillation.md) — example of a term disambiguated from ML knowledge distillation
-- [Codification](../../notes/definitions/codification.md) — example of a term pinned to a specific medium-transition meaning
+- [Codification](../../theory/definitions/codification.md) — example of a term pinned to a specific medium-transition meaning
 - [ADR 011: notes must be accessible to external readers](../../reference/adr/011-notes-must-be-accessible-to-external-readers.md) — definition links and glosses keep KB vocabulary usable outside always-loaded context
 
 ## Failure mode

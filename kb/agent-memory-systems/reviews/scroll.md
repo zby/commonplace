@@ -129,11 +129,11 @@ The pushed memory uses a user-role placeholder because some provider formats can
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Scroll's retained log from pull recall and pushed index/summary context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - separates raw rows, FTS, headlines, summaries, scratch tables, and authored contracts by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Scroll's retained log from pull recall and pushed index/summary context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - separates raw rows, FTS, headlines, summaries, scratch tables, and authored contracts by substrate, form, lineage, and authority.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places Scroll in trace-to-recall and readable working-state distillation rather than trace-to-policy or weight learning.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Scroll's bounded live tail, tiered index, summaries, result folding, and programmable recall.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies raw history, retrieved evidence, headlines, summaries, and scratch results when they advise later work.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies Scroll's prompt, tool schemas, validation rules, sandbox policy, and compaction manager.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why Scroll's pushed state is coarse or session-identifier-scoped rather than content-inferred.
-- [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Scroll combines a bounded automatic projection with structured and programmable pull interfaces over the same retained trace.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames Scroll's bounded live tail, tiered index, summaries, result folding, and programmable recall.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies raw history, retrieved evidence, headlines, summaries, and scratch results when they advise later work.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies Scroll's prompt, tool schemas, validation rules, sandbox policy, and compaction manager.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why Scroll's pushed state is coarse or session-identifier-scoped rather than content-inferred.
+- [A context-operation interface bounds the projections its policy can realize](../../theory/context-operation-interface-bounds-context-policy.md) - is-evidence-for: Scroll combines a bounded automatic projection with structured and programmable pull interfaces over the same retained trace.

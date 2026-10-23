@@ -129,11 +129,11 @@ Automatic writes are not primarily agent-trace learning. They are source-ingest 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synthadoc stores a wiki, but only selected query/context/action paths make stored material affect a model call.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Synthadoc's pages, audit rows, citations, route tables, guides, and embeddings differ by substrate, form, lineage, and authority.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - exemplifies: Synthadoc shifts work to ingest-time compilation and bounded query/context-pack assembly.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - boundary case: Synthadoc records operational traces, but this commit does not distill them into durable learned behavior.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, citations, sidecars, query logs, and exported context packs mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: routing, lifecycle, lint rules, generated `AGENTS.md`, action parsing, and scheduler/config surfaces can instruct, route, validate, or constrain behavior.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - applies: the same retained page can be advisory in a query, ranked by retrieval, validated by lint, or suppressed by lifecycle state.
-- [Lineage](../../notes/definitions/lineage.md) - applies: source refs, hashes, line citations, audit rows, and lifecycle events determine invalidation and provenance.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Synthadoc stores a wiki, but only selected query/context/action paths make stored material affect a model call.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Synthadoc's pages, audit rows, citations, route tables, guides, and embeddings differ by substrate, form, lineage, and authority.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - exemplifies: Synthadoc shifts work to ingest-time compilation and bounded query/context-pack assembly.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - boundary case: Synthadoc records operational traces, but this commit does not distill them into durable learned behavior.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, citations, sidecars, query logs, and exported context packs mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: routing, lifecycle, lint rules, generated `AGENTS.md`, action parsing, and scheduler/config surfaces can instruct, route, validate, or constrain behavior.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - applies: the same retained page can be advisory in a query, ranked by retrieval, validated by lint, or suppressed by lifecycle state.
+- [Lineage](../../theory/definitions/lineage.md) - applies: source refs, hashes, line citations, audit rows, and lifecycle events determine invalidation and provenance.

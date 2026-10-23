@@ -29,7 +29,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a historical technical basis for [Actionable methodology](../notes/definitions/actionable-methodology.md): a problem-solving method supplies an intervention mapping only when an operator can connect its competence, knowledge roles, and assumptions to the target task and domain. It is also evidence for [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), because the described reuse machinery leaves consequential selection, mapping, adaptation, and knowledge-acquisition decisions to the knowledge engineer.
+The paper is a historical technical basis for [Actionable methodology](../theory/definitions/actionable-methodology.md): a problem-solving method supplies an intervention mapping only when an operator can connect its competence, knowledge roles, and assumptions to the target task and domain. It is also evidence for [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md), because the described reuse machinery leaves consequential selection, mapping, adaptation, and knowledge-acquisition decisions to the knowledge engineer.
 
 ## Extractable Value
 

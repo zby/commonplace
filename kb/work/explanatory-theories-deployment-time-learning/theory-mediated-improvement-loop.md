@@ -2,7 +2,7 @@
 
 > **Status:** Working model. This note defines the theory-mediated addition used throughout the workshop. Detailed comparisons and controls are in the [experiment design](./experiment-design.md).
 
-A [proposal-selection improvement loop](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) normally turns evidence into candidate changes, evaluates them, and either retains one candidate or keeps the current system. **Theory-mediated learning** inserts a scoped, criticizable theory between the evidence and at least one stage or decision in that loop. The theory can guide diagnosis, search, candidate choice, evidence acquisition, or outcome interpretation.
+A [proposal-selection improvement loop](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) normally turns evidence into candidate changes, evaluates them, and either retains one candidate or keeps the current system. **Theory-mediated learning** inserts a scoped, criticizable theory between the evidence and at least one stage or decision in that loop. The theory can guide diagnosis, search, candidate choice, evidence acquisition, or outcome interpretation.
 
 In this workshop, a working theory explains why the system behaves as it does by proposing a mechanism, invariant, or other explanatory relation. The artifact must state its assumptions, scope, and testable consequences. Researchers must record it before the stage or decision it is meant to guide and before they reveal the relevant held-out outcomes. A recommendation or post hoc rationale does not qualify.
 
@@ -40,13 +40,13 @@ These roles can succeed or fail independently. A theory may locate a useful inte
 
 A candidate can work for a reason the theory gets wrong. Conversely, a failed candidate can expose a useful counterexample to the theory. Accepting a system change therefore does not accept its explanation. Rejecting the change need not discard everything learned from the episode.
 
-A reusable theory needs a separate assessment and retention decision. Evidence should warrant only the claims and scope it actually tests: a [checked outcome licenses the episode, not an abstracted explanation](../../notes/checked-outcome-licenses-episode-retention-not-abstraction.md), and [theory warrant should remain as narrow as the evidence](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md).
+A reusable theory needs a separate assessment and retention decision. Evidence should warrant only the claims and scope it actually tests: a [checked outcome licenses the episode, not an abstracted explanation](../../theory/checked-outcome-licenses-episode-retention-not-abstraction.md), and [theory warrant should remain as narrow as the evidence](../../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md).
 
 ## On-the-spot and retained theories
 
 An **on-the-spot treatment** constructs `tau_n` for the current episode and discards it afterward. This treatment tests whether theory mediation improves the current search or decision. If the theory guides a behavioral change that is accepted and later becomes operative, the episode can still count as theory-mediated learning even though the theory itself does not accumulate.
 
-A **retained-theory treatment** starts from an addressable `T_n`, records whether the episode retrieves and uses it, and permits the system to retain a revision separately as `T_{n+1}`. This treatment tests the stronger claim that theory work in earlier episodes can improve later ones. Any benefit must outweigh the costs of retrieval, applicability checking, maintenance, and correction. It must also outweigh the risk that a false retained theory will misdirect several episodes. The [retained-theory conjecture](../../notes/retained-theories-may-improve-sample-efficiency.md) develops this retained case.
+A **retained-theory treatment** starts from an addressable `T_n`, records whether the episode retrieves and uses it, and permits the system to retain a revision separately as `T_{n+1}`. This treatment tests the stronger claim that theory work in earlier episodes can improve later ones. Any benefit must outweigh the costs of retrieval, applicability checking, maintenance, and correction. It must also outweigh the risk that a false retained theory will misdirect several episodes. The [retained-theory conjecture](../../theory/retained-theories-may-improve-sample-efficiency.md) develops this retained case.
 
 ## What the theory is about
 

@@ -106,8 +106,8 @@ Context scope and complexity are controlled by directory routing and metadata, n
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-context-base pushes accumulated config/context at session start, while ordinary wiki content is pull-only unless the host agent deliberately loads it.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: config, instruction modules, templates, metadata, and content files differ by form and authority even though all live in one repo.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, decisions, references, inbox captures, sources, and query answers mainly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `_config`, `_meta/instructions`, templates, tool shims, and lint protocols instruct, route, validate, or constrain future agents.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: metadata routing and just-in-time instruction loading are context-selection mechanisms rather than ordinary documentation.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: llm-context-base pushes accumulated config/context at session start, while ordinary wiki content is pull-only unless the host agent deliberately loads it.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: config, instruction modules, templates, metadata, and content files differ by form and authority even though all live in one repo.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, decisions, references, inbox captures, sources, and query answers mainly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `_config`, `_meta/instructions`, templates, tool shims, and lint protocols instruct, route, validate, or constrain future agents.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: metadata routing and just-in-time instruction loading are context-selection mechanisms rather than ordinary documentation.

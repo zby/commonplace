@@ -27,7 +27,7 @@ One artifact can span categories, but comparison must say which role is under di
 - **`DL4J-3` — evaluate implementation frameworks operationally.** Portability, observability, reproducibility, serialization, upgrade behavior, and deployment cost are legitimate comparison axes, but they answer engineering questions rather than cognitive-theory questions.
 - **`DL4J-4` — prevent substrate vocabulary from colonizing methodology.** "Layer," "memory," "attention," and "graph" can denote implementation objects or functional roles. Reviews should identify which before drawing methodological conclusions.
 
-This supports the existing separation among [storage substrate, representational form, lineage, and behavioral authority](../../notes/axes-of-artifact-analysis.md): implementation location and cognitive role are independent axes.
+This supports the existing separation among [storage substrate, representational form, lineage, and behavioral authority](../../theory/axes-of-artifact-analysis.md): implementation location and cognitive role are independent axes.
 
 ## Method worth borrowing
 

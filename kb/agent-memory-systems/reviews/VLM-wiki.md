@@ -110,9 +110,9 @@ Selection scope is page-level and symbol-driven by category, title, tags, relate
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: VLM-wiki stores a wiki, but the inspected system relies on explicit index/page reads rather than pushed memory.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw media, generated analyses, compiled articles, index/log files, templates, config, and scripts have different forms and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled wiki pages and raw analyses advise future answers as evidence/context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, templates, config, trigger keywords, and scripts shape future agent behavior.
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) - relates: compiled wiki pages and indexes precompute smaller context from raw multimodal material.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: VLM-wiki's pull path depends on available signals such as categories, titles, tags, links, and index rows.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: VLM-wiki stores a wiki, but the inspected system relies on explicit index/page reads rather than pushed memory.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw media, generated analyses, compiled articles, index/log files, templates, config, and scripts have different forms and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: compiled wiki pages and raw analyses advise future answers as evidence/context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `AGENTS.md`, templates, config, trigger keywords, and scripts shape future agent behavior.
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) - relates: compiled wiki pages and indexes precompute smaller context from raw multimodal material.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains: VLM-wiki's pull path depends on available signals such as categories, titles, tags, links, and index rows.

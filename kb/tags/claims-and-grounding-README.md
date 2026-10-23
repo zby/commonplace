@@ -6,36 +6,36 @@ complete: true
 
 # claims-and-grounding
 
-How KB content commits to claims and how those claims stay tied to what supports them: titles written as claims, the modes a claim can take, what counts as ground truth, grounding a claim in a source, and what happens to a claim once it is superseded. The establishing notes are [title as claim exposes commitments, enabling Popperian maintenance](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) for claim titles and [commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md) for ground truth. The grounding procedure is [cp-skill-ground](../instructions/cp-skill-ground/SKILL.md). Running a grounding check as an LLM gate, and when its verdict goes stale, belongs to [review-system](./review-system-README.md); this tag is about what the check asks. A child of [kb-maintenance](./kb-maintenance-README.md).
+How KB content commits to claims and how those claims stay tied to what supports them: titles written as claims, the modes a claim can take, what counts as ground truth, grounding a claim in a source, and what happens to a claim once it is superseded. The establishing notes are [title as claim exposes commitments, enabling Popperian maintenance](../theory/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) for claim titles and [commitment, not derivation, creates new ground truth](../theory/commitment-not-derivation-creates-new-ground-truth.md) for ground truth. The grounding procedure is [cp-skill-ground](../instructions/cp-skill-ground/SKILL.md). Running a grounding check as an LLM gate, and when its verdict goes stale, belongs to [review-system](./review-system-README.md); this tag is about what the check asks. A child of [kb-maintenance](./kb-maintenance-README.md).
 
 ## Claims as commitments
 
-- [Idealization requires adequacy commitments](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — declared use and bounded exceptions keep a repaired claim refutable
-- [Defensive generality spends precision](../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — ask what revised wording rules out and state counterexamples openly
-- [Claim titles enable reasoning traversal](../notes/title-as-claim-enables-traversal-as-reasoning.md) — titles expose premises; topical and definitional references serve different roles
-- [Theory warrant should be tracked at the finest granularity evidence licenses](../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — support stays with the claim, conjunction, or model and scope identified by the evidence; joint comparative support does not automatically support each component
-- [Mixed epistemic status must be preserved below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — observations, deductions, and plausible explanations need separate warrants inside one document
+- [Idealization requires adequacy commitments](../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — declared use and bounded exceptions keep a repaired claim refutable
+- [Defensive generality spends precision](../theory/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — ask what revised wording rules out and state counterexamples openly
+- [Claim titles enable reasoning traversal](../theory/title-as-claim-enables-traversal-as-reasoning.md) — titles expose premises; topical and definitional references serve different roles
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — support stays with the claim, conjunction, or model and scope identified by the evidence; joint comparative support does not automatically support each component
+- [Mixed epistemic status must be preserved below the document level](../theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — observations, deductions, and plausible explanations need separate warrants inside one document
 
-- [Title as claim exposes commitments, enabling Popperian maintenance](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — a list of claim titles can be scanned with "do I still believe this?" without opening files
-- [Title as claim makes overlap between notes visible](../notes/title-as-claim-makes-overlap-between-notes-visible.md) — similar assertions show at the index level, where topical titles hide them
-- [Claim modality is the inference form of the refuter](../notes/claim-modality-is-the-inference-form-of-the-refuter.md) — the three claim modes follow from how a claim would be refuted, which closes the mode list for empirical claims
-- [Ad hoc explanation can be rational when error is cheap and local](../notes/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — a disposable guess may pick the next probe; a retained explanation needs reach checks
+- [Title as claim exposes commitments, enabling Popperian maintenance](../theory/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — a list of claim titles can be scanned with "do I still believe this?" without opening files
+- [Title as claim makes overlap between notes visible](../theory/title-as-claim-makes-overlap-between-notes-visible.md) — similar assertions show at the index level, where topical titles hide them
+- [Claim modality is the inference form of the refuter](../theory/claim-modality-is-the-inference-form-of-the-refuter.md) — the three claim modes follow from how a claim would be refuted, which closes the mode list for empirical claims
+- [Ad hoc explanation can be rational when error is cheap and local](../theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — a disposable guess may pick the next probe; a retained explanation needs reach checks
 - [Write-time vocabulary collision controls](../reference/proposals/write-time-vocabulary-collision-controls.md) — proposal for mechanical controls that keep one term to one sense, so a claim's words keep their registered meaning
 
 ## Ground truth and supersession
 
-- [Commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md) — derived claims leave the source as ground truth; unentailed resolutions become ground truth at commit
-- [A derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of recomputable information is machine-checked against its source or does not exist
-- [Superseded choices need a historical witness; refuted beliefs lose subject-matter standing](../notes/superseded-choices-are-retained-superseded-beliefs-are-not.md) — what to keep after supersession depends on the claim's remaining truth role
+- [Commitment, not derivation, creates new ground truth](../theory/commitment-not-derivation-creates-new-ground-truth.md) — derived claims leave the source as ground truth; unentailed resolutions become ground truth at commit
+- [A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of recomputable information is machine-checked against its source or does not exist
+- [Superseded choices need a historical witness; refuted beliefs lose subject-matter standing](../theory/superseded-choices-are-retained-superseded-beliefs-are-not.md) — what to keep after supersession depends on the claim's remaining truth role
 
 ## Grounding in sources
 
-- [History must become checkable at production](../notes/history-has-one-chance-to-become-checkable.md) — provenance and quote anchors preserve evidence a later reviewer cannot recreate
-- [A citation cannot assert more fidelity than its capture preserved](../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md) — capture fixes the evidence a citation can claim; stronger notation cannot restore lost fidelity
+- [History must become checkable at production](../theory/history-has-one-chance-to-become-checkable.md) — provenance and quote anchors preserve evidence a later reviewer cannot recreate
+- [A citation cannot assert more fidelity than its capture preserved](../theory/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md) — capture fixes the evidence a citation can claim; stronger notation cannot restore lost fidelity
 
-- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — citing a source imposes a grounding obligation; citing a grounded note imposes only faithful representation
+- [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../theory/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — citing a source imposes a grounding obligation; citing a grounded note imposes only faithful representation
 - [A quotes-route rollout grounded more claim uses without earning claim identifiers](../reports/retained/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — evidence for verbatim quotes over a paraphrased claims ledger: 75% versus 30% grounded uses, descriptive only
-- [An independent pass tightened three of four Pirolli grounding verdicts](../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — evidence that separating source reconstruction from claim judgment changes grounding verdicts; a candidate control, not a proven cause
+- [An independent pass tightened three of four Pirolli grounding verdicts](../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — evidence that separating source reconstruction from claim judgment changes grounding verdicts; a candidate control, not a proven cause
 
 ## Related Tags
 

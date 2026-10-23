@@ -87,4 +87,4 @@ Relevant Notes:
 - [freshness-schema-as-starting-skeleton.md](./freshness-schema-as-starting-skeleton.md) — the seven-gap survey this schema is drafted against
 - [artifact-freshness-and-referential-checks/database-design.md](../artifact-freshness-and-referential-checks/database-design.md) — DDL style and the shipped `target_kind`/`target_key_json` genericity this schema extends past review pairs
 - [review-lineage-storage-case.md](../src-architecture-alternatives/review-lineage-storage-case.md) — the stable-id-vs-path question this schema answers by making path a `content_versions` attribute, not artifact identity
-- [many-to-many-edge-state-is-where-files-yield-to-a-database.md](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — the graded-tracking question `edge-validity`-as-opt-in answers structurally, without deciding which edges qualify
+- [many-to-many-edge-state-is-where-files-yield-to-a-database.md](../../theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — the graded-tracking question `edge-validity`-as-opt-in answers structurally, without deciding which edges qualify

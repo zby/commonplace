@@ -134,8 +134,8 @@ Survey placement: pi-self-learning is a trace-to-natural-language learning syste
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: pi-self-learning extracts durable lessons from agent-session traces and pushes them into future runs.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: pi-self-learning's memory matters because `before_agent_start` activates retained files before the model call.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: daily logs, core index, rendered memory files, runtime notes, and system-prompt policy carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: daily logs, monthly summaries, and memory files advise as evidence and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: hook registrations, ranking, context assembly, and strict memory policy configure future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: pi-self-learning extracts reusable lessons from completed task traces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: pi-self-learning's memory matters because `before_agent_start` activates retained files before the model call.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: daily logs, core index, rendered memory files, runtime notes, and system-prompt policy carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: daily logs, monthly summaries, and memory files advise as evidence and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: hook registrations, ranking, context assembly, and strict memory policy configure future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: pi-self-learning extracts reusable lessons from completed task traces.

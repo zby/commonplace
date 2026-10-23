@@ -36,5 +36,5 @@ The exact result preserves these route distinctions and the normalized memory pr
 - [Training branch coordination](https://github.com/Tencent/ContextPilot/blob/782cbb6611fb610c4cf6fafda6022b7e89cae191/train/verl/experimental/agent_loop/agent_loop.py) — evidenced-by: selection, subtree reward and conditional agent-loop dispatch.
 - [Exact analysis result](../reports/retained-archive/AAS-2026-09-25-contextpilot-01/result.md) — see-also: source records, memory profile and epistemic ledger.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: criticism and improved capacity remain separate claims.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: self-representation mediates later behavior.
-- [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have distinct evidence requirements.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: self-representation mediates later behavior.
+- [Self-improving system](../../theory/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have distinct evidence requirements.

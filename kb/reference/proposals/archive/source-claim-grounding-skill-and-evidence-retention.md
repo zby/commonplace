@@ -187,9 +187,9 @@ often a supposedly grounding run instead changes the target claim.
 
 Relevant Notes:
 
-- [Skills are instructions plus routing and execution policy](../../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: promotion adds a structured invocation channel a caller can compose against
-- [An author should fix what the executor cannot determine, not what it will](../../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: this proposal selects architecture boundaries rather than prewriting the eventual skill
-- [The boundary of automation is the boundary of verification](../../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses mechanical persistence but not semantic support
+- [Skills are instructions plus routing and execution policy](../../../theory/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: promotion adds a structured invocation channel a caller can compose against
+- [An author should fix what the executor cannot determine, not what it will](../../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: this proposal selects architecture boundaries rather than prewriting the eventual skill
+- [The boundary of automation is the boundary of verification](../../../theory/the-boundary-of-automation-is-the-boundary-of-verification.md) — rests-on: exact-byte verification licenses mechanical persistence but not semantic support
 - [ADR 073: Untracked source snapshots require ingest grounding](../../adr/073-untracked-source-snapshots-require-ingest-grounding.md) — compares-with: the current ingest-Quotes and snapshot-marker design whose retention boundary remains open here
 - [ADR 076: Source-claim grounding is a promoted skill](../../adr/076-source-claim-grounding-is-a-promoted-skill.md) — compares-with: the explicit-use promotion already adopted from this proposal, leaving automatic invocation open
 - [`cp-skill-ground`](../../../instructions/cp-skill-ground/SKILL.md) — procedure: the promoted operation whose automatic invocation this proposal argues for

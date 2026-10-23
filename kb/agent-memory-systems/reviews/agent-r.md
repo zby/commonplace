@@ -123,11 +123,11 @@ Agent-R's trace pipeline is also more automated than Commonplace's normal author
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Agent-R has trace-extracted retention, but no runtime retrieval or textual memory activation.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Agent-R turns trajectories into future behavior through self-training.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Agent-R requires separating raw trace files, synthesized training data, authored scripts, and parametric checkpoints.
-- [Lineage](../../notes/definitions/lineage.md) - frames: the useful audit question is how a checkpoint traces back to MCTS trees and revision examples.
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - frames: checkpoint loading gives retained traces strong policy-level authority without textual context.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: MCTS and evaluation logs are evidence artifacts until training turns them into policy.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, thresholds, environment adapters, and checkpoint weights configure future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Agent-R shifts context pressure from runtime prompt selection into offline parametric compression.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - contrasts: Agent-R has trace-extracted retention, but no runtime retrieval or textual memory activation.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Agent-R turns trajectories into future behavior through self-training.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Agent-R requires separating raw trace files, synthesized training data, authored scripts, and parametric checkpoints.
+- [Lineage](../../theory/definitions/lineage.md) - frames: the useful audit question is how a checkpoint traces back to MCTS trees and revision examples.
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) - frames: checkpoint loading gives retained traces strong policy-level authority without textual context.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: MCTS and evaluation logs are evidence artifacts until training turns them into policy.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, thresholds, environment adapters, and checkpoint weights configure future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Agent-R shifts context pressure from runtime prompt selection into offline parametric compression.

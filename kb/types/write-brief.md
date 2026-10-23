@@ -66,5 +66,5 @@ Omit a section that has nothing in it. A brief that ends up with only `## Intent
 
 Relevant Notes:
 
-- [Warranted reader update is the objective of substantive writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) — rests-on: the intent section states the reader update the document is organized around
-- [Full write briefs cut edit drift; one-line briefs did not](../notes/evidence/full-write-briefs-cut-edit-drift-one-line-briefs-did-not.md) — rests-on: why the must-keep and must-exclude sections carry the brief's value, and why a one-line brief is not enough
+- [Warranted reader update is the objective of substantive writing](../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md) — rests-on: the intent section states the reader update the document is organized around
+- [Full write briefs cut edit drift; one-line briefs did not](../theory/evidence/full-write-briefs-cut-edit-drift-one-line-briefs-did-not.md) — rests-on: why the must-keep and must-exclude sections carry the brief's value, and why a one-line brief is not enough

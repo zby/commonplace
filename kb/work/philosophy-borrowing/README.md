@@ -18,12 +18,12 @@ This workshop keeps that adoption bar. It considers only the three most promisin
 ## Current grounding
 
 - [Programming patterns get a fast pass but other borrowed ideas must earn first-principles support](../../reference/source-adoption-policy.md) — adoption filter for borrowing outside programming
-- [Mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — existing Popperian borrowing
-- [First-principles reasoning selects for explanatory reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — existing Deutsch borrowing
-- [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — existing Toulmin borrowing
-- [Constraining](../../notes/definitions/constraining.md) — current home of the Carnap explication reference
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — type semantics the speech-act candidate may sharpen
-- [Brainstorming: how reach informs KB design](../../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — maintenance risk from high-reach revisions, relevant to Quine
+- [Mechanistic constraints make Popperian KB recommendations actionable](../../theory/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — existing Popperian borrowing
+- [First-principles reasoning selects for explanatory reach over adaptive fit](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) — existing Deutsch borrowing
+- [Claim notes should use Toulmin-derived sections for structured argument](../../theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — existing Toulmin borrowing
+- [Constraining](../../theory/definitions/constraining.md) — current home of the Carnap explication reference
+- [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — type semantics the speech-act candidate may sharpen
+- [Brainstorming: how reach informs KB design](../../theory/brainstorming-how-explanatory-reach-informs-kb-design.md) — maintenance risk from high-reach revisions, relevant to Quine
 
 ## Candidate artifacts
 

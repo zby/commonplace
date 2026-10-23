@@ -29,4 +29,4 @@ WARN when the note presents a claim with no mechanism, or the mechanism is easy 
 
 Relevant Notes:
 
-- [Domain pricing routes an exception to idealization assessment but does not decide it](../../../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the discriminator behind the ad-hoc-accommodation check — pricing can open review of an idealized claim, but only an attackable adequacy record justifies retention; an escape hatch has neither
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../../../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the discriminator behind the ad-hoc-accommodation check — pricing can open review of an idealized claim, but only an attackable adequacy record justifies retention; an escape hatch has neither

@@ -26,25 +26,25 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source connects deeply into the KB's learning theory and oracle verification stack. The primary synthesis note -- [reliability-dimensions-map-to-oracle-hardening-stages](../notes/reliability-dimensions-map-to-oracle-hardening-stages.md) -- was written in direct response to this paper and maps the four reliability dimensions onto oracle-hardening moves. That note is the main hub connecting this source into the knowledge graph.
+The source connects deeply into the KB's learning theory and oracle verification stack. The primary synthesis note -- [reliability-dimensions-map-to-oracle-hardening-stages](../theory/reliability-dimensions-map-to-oracle-hardening-stages.md) -- was written in direct response to this paper and maps the four reliability dimensions onto oracle-hardening moves. That note is the main hub connecting this source into the knowledge graph.
 
 Eight connections identified:
 
-1. **[reliability-dimensions-map-to-oracle-hardening-stages](../notes/reliability-dimensions-map-to-oracle-hardening-stages.md)** -- grounds: this source provides the four-dimension framework that the note maps onto oracle hardening; the empirical finding that reliability lags capability is the oracle-strength prediction confirmed at scale.
+1. **[reliability-dimensions-map-to-oracle-hardening-stages](../theory/reliability-dimensions-map-to-oracle-hardening-stages.md)** -- grounds: this source provides the four-dimension framework that the note maps onto oracle hardening; the empirical finding that reliability lags capability is the oracle-strength prediction confirmed at scale.
 
-2. **[oracle-strength-spectrum](../notes/oracle-strength-spectrum.md)** -- grounds: "reliability is independent of capability" is direct empirical support for oracle strength as the bottleneck, not compute or model scale.
+2. **[oracle-strength-spectrum](../theory/oracle-strength-spectrum.md)** -- grounds: "reliability is independent of capability" is direct empirical support for oracle strength as the bottleneck, not compute or model scale.
 
-3. **[relaxing-signals](../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the relaxing signal pattern confirmed across 14 models.
+3. **[relaxing-signals](../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md)** -- grounds: R_prompt operationalises brittleness-under-paraphrase as a quantitative metric at scale. The counterintuitive finding (models handle real faults but break under rephrasings) is the relaxing signal pattern confirmed across 14 models.
 
-4. **[error-correction-works-above-chance-oracles-with-decorrelated-checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md)** -- extends: the discrimination finding (calibration improves but discrimination does not) constrains error correction -- models are getting better at aggregate confidence but not at distinguishing individual correct from incorrect outputs, limiting amplification via voting.
+4. **[error-correction-works-above-chance-oracles-with-decorrelated-checks](../theory/error-correction-works-above-chance-oracles-with-decorrelated-checks.md)** -- extends: the discrimination finding (calibration improves but discrimination does not) constrains error correction -- models are getting better at aggregate confidence but not at distinguishing individual correct from incorrect outputs, limiting amplification via voting.
 
-5. **[spec-mining-as-codification](../notes/spec-mining-as-codification.md)** -- exemplifies: Table 3's mapping of real-world agent failures to reliability metrics is spec mining applied to evaluation itself -- each failure class becomes a testable property.
+5. **[spec-mining-as-codification](../theory/spec-mining-as-codification.md)** -- exemplifies: Table 3's mapping of real-world agent failures to reliability metrics is spec mining applied to evaluation itself -- each failure class becomes a testable property.
 
-6. **[agentic-systems-interpret-underspecified-instructions](../notes/agentic-systems-interpret-underspecified-instructions.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
+6. **[agentic-systems-interpret-underspecified-instructions](../theory/agentic-systems-interpret-underspecified-instructions.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
 
-7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../notes/constraining-and-extraction-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
+7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
 
-8. **[Selecting an LLM output fixes a result, not its interpretation](../notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md)** -- extends: multi-run consistency measures the generator's distribution, while selecting one accepted output creates a separate artifact-testing target; neither establishes that the selected text has one meaning.
+8. **[Selecting an LLM output fixes a result, not its interpretation](../theory/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md)** -- extends: multi-run consistency measures the generator's distribution, while selecting one accepted output creates a separate artifact-testing target; neither establishes that the selected text has one meaning.
 
 ## Extractable Value
 
@@ -66,7 +66,7 @@ Eight connections identified:
 
 The paper measures single-agent reliability only. Its own Future Work section explicitly lists multi-agent extension as planned work. This means:
 
-- **No voting or ensemble experiments** — the paper measures run-to-run variance (consistency) but never tests whether voting across runs improves outcomes. The [error-correction-works-above-chance-oracles](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) note argues that voting with decorrelated checks can amplify weak oracles. The consistency data here (K=5 runs per task) is exactly the raw material for testing this — but the paper doesn't take that step.
+- **No voting or ensemble experiments** — the paper measures run-to-run variance (consistency) but never tests whether voting across runs improves outcomes. The [error-correction-works-above-chance-oracles](../theory/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) note argues that voting with decorrelated checks can amplify weak oracles. The consistency data here (K=5 runs per task) is exactly the raw material for testing this — but the paper doesn't take that step.
 - **No scaffold diversity** — each benchmark uses a single scaffold (ReAct for GAIA, tool-calling for τ-bench). The paper acknowledges this. Different architectures (generate-verify-revise, structured decomposition) could yield different reliability profiles.
 - **Discrimination measured only via post-hoc self-assessment** — confidence scores come from asking the model to rate its own output after completion. This is one specific oracle type. Other discrimination mechanisms (structural checks, cross-validation, metamorphic testing) are not tested.
 - **Two benchmarks, narrow task coverage** — GAIA and τ-bench represent web browsing / customer service. The reliability profile of agents on other task types (coding, data analysis, long-horizon planning) remains unknown.

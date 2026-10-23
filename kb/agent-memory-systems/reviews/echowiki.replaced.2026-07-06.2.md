@@ -111,8 +111,8 @@ Authority at consumption varies. `wiki/AGENTS.md` is instruction authority for t
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: EchoWiki's raw inputs, wiki pages, runtime instructions, indexes, and plugin state differ by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: wiki pages matter only when pulled by a user/agent or pushed into a future compiler call.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: summaries, concept pages, and entity pages are advisory remembered context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompts, approval settings, and storage guards shape later behavior.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki's brief lists and link whitelists are its main context controls.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: EchoWiki's raw inputs, wiki pages, runtime instructions, indexes, and plugin state differ by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: wiki pages matter only when pulled by a user/agent or pushed into a future compiler call.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: summaries, concept pages, and entity pages are advisory remembered context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: `wiki/AGENTS.md`, prompts, approval settings, and storage guards shape later behavior.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: EchoWiki's brief lists and link whitelists are its main context controls.

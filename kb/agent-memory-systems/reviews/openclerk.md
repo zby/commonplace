@@ -112,9 +112,9 @@ The pull surfaces are broad and structured: lexical search returns cited chunks,
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: OpenClerk stores and projects vault memory, but read-back is explicit runner-mediated pull.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: OpenClerk separates Markdown authority, SQLite projections, module manifests, skills, provenance, and optional vector state.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: retrieved documents, citations, graph context, evidence bundles, and synthesis pages mostly advise as evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: skill contracts, runner schemas, module manifests, approval boundaries, and validation gates instruct or constrain behavior.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - relates: canonical files and SQLite-derived state carry different deletion, versioning, and inspection properties.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: OpenClerk's main design work is routing bounded, cited vault evidence into agent-facing JSON surfaces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: OpenClerk stores and projects vault memory, but read-back is explicit runner-mediated pull.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: OpenClerk separates Markdown authority, SQLite projections, module manifests, skills, provenance, and optional vector state.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: retrieved documents, citations, graph context, evidence bundles, and synthesis pages mostly advise as evidence.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: skill contracts, runner schemas, module manifests, approval boundaries, and validation gates instruct or constrain behavior.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - relates: canonical files and SQLite-derived state carry different deletion, versioning, and inspection properties.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: OpenClerk's main design work is routing bounded, cited vault evidence into agent-facing JSON surfaces.

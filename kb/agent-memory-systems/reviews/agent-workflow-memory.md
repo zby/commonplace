@@ -144,8 +144,8 @@ AWM is also much more push-oriented than Commonplace. Once a user or pipeline ch
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: AWM distills web-agent trajectories into reusable natural-language workflows.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workflow files matter because the runners push them into future prompts.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, natural-language workflow descriptions, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: successful task traces are abstracted into future behavior guidance.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: workflow text and concrete examples mostly act as advisory context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - contrasts: AWM's workflow files influence behavior but are not enforced validators or executable tools.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: workflow files matter because the runners push them into future prompts.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: AWM bundles trace logs, natural-language workflow descriptions, retrieval indexes, prompts, and evaluation outputs under different forms and authorities.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: successful task traces are abstracted into future behavior guidance.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: workflow text and concrete examples mostly act as advisory context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - contrasts: AWM's workflow files influence behavior but are not enforced validators or executable tools.

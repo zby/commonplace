@@ -35,9 +35,9 @@ For example, an ADR should not just be "about architecture"; it should record an
 
 ## Existing connections
 
-- [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md) — speech acts may explain why subject-matter types are weak: they do not say what the artifact does
-- [Instructions are typed callables](../../notes/instructions-are-typed-callables.md) — strongest local analogue: artifacts have callable operations and affordances
-- [Types give agents structural hints before opening documents](../../notes/types-give-agents-structural-hints-before-opening-documents.md) — speech-act type semantics should improve those hints
+- [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — speech acts may explain why subject-matter types are weak: they do not say what the artifact does
+- [Instructions are typed callables](../../theory/instructions-are-typed-callables.md) — strongest local analogue: artifacts have callable operations and affordances
+- [Types give agents structural hints before opening documents](../../theory/types-give-agents-structural-hints-before-opening-documents.md) — speech-act type semantics should improve those hints
 - [Type system rationalization](../type-system-rationalization/README.md) — existing workshop that settled the current base-type + trait model
 
 ## Failure mode

@@ -125,8 +125,8 @@ Selection is top-k embedding similarity, with no provenance-aware filter, token 
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: OS-Copilot turns executed and judged task traces into reusable generated tools.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: FRIDAY's Chroma store matters because the agent loop activates it before planning and generation.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: generated code, descriptions, embeddings, planner nodes, and courses carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: course JSON and execution traces are evidence or task sources until promoted.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, generated tools, retrieval indexes, and planner graphs configure future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: FRIDAY extracts reusable behavior from task traces after execution and judging.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: FRIDAY's Chroma store matters because the agent loop activates it before planning and generation.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: generated code, descriptions, embeddings, planner nodes, and courses carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: course JSON and execution traces are evidence or task sources until promoted.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, generated tools, retrieval indexes, and planner graphs configure future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: FRIDAY extracts reusable behavior from task traces after execution and judging.

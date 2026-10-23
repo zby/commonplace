@@ -103,8 +103,8 @@ The pull surface is narrow but practical: query jobs read the index, search file
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memex stores a durable wiki, but retained memory enters jobs through explicit file lookup rather than automatic context injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: wiki natural-language content, prompt instructions, queue rows, owner checks, and namespace wrappers carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: wiki pages, raw source references, query answers, and lint reports mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, schema conventions, CLI/API routes, queue policy, tool restrictions, and namespace boundaries govern future behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Memex's main design problem is routing file-backed wiki memory into bounded Claude jobs through prompts and file tools.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Memex stores a durable wiki, but retained memory enters jobs through explicit file lookup rather than automatic context injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: wiki natural-language content, prompt instructions, queue rows, owner checks, and namespace wrappers carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: wiki pages, raw source references, query answers, and lint reports mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, schema conventions, CLI/API routes, queue policy, tool restrictions, and namespace boundaries govern future behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Memex's main design problem is routing file-backed wiki memory into bounded Claude jobs through prompts and file tools.

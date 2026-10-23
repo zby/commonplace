@@ -122,8 +122,8 @@ Authority at consumption varies. Restored session messages are continuity contex
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Exocomp stores ledgers and recovery state, but most project memory returns only through explicit tool calls.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Exocomp's roles, ledgers, session files, tools, skills, and reports differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - distinguishes: requirements, bugs, changelogs, work reports, summaries, and restored traces advise later action.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: role prompts, tool schemas, allowed-program lists, loaded skills, sandbox rules, and validation checks instruct or constrain behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames Exocomp's main mechanism: routing local project state and role-bounded capabilities into multi-agent coding work.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Exocomp stores ledgers and recovery state, but most project memory returns only through explicit tool calls.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Exocomp's roles, ledgers, session files, tools, skills, and reports differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - distinguishes: requirements, bugs, changelogs, work reports, summaries, and restored traces advise later action.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: role prompts, tool schemas, allowed-program lists, loaded skills, sandbox rules, and validation checks instruct or constrain behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames Exocomp's main mechanism: routing local project state and role-bounded capabilities into multi-agent coding work.

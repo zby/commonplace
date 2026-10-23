@@ -119,8 +119,8 @@ Selection is mostly simple and inspectable in the shipped baselines: recent/all 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Meta-Harness stores extensive run history, but much of it is pulled by the proposer rather than automatically injected.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: generated harness code, logs, skills, frontiers, and prompt templates carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: logs, reports, evaluation summaries, and traces are evidence for later proposer decisions.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated Python harnesses, proposer skills, prompt templates, benchmark configs, and validation scripts shape future behavior directly.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Meta-Harness converts prior run traces into revised harness code.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Meta-Harness stores extensive run history, but much of it is pulled by the proposer rather than automatically injected.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: generated harness code, logs, skills, frontiers, and prompt templates carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: logs, reports, evaluation summaries, and traces are evidence for later proposer decisions.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated Python harnesses, proposer skills, prompt templates, benchmark configs, and validation scripts shape future behavior directly.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Meta-Harness converts prior run traces into revised harness code.

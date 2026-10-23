@@ -130,8 +130,8 @@ Authority at consumption depends on which surface is read. A knowledge row, LCM 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Decapod stores substantial memory, but most retained memory enters agent context by explicit CLI/RPC pull.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Decapod's files, DB rows, JSONL events, capsules, manifests, proofs, and adapters differ by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: workunits, proof gates, validation rules, capability contracts, generated entrypoints, and procedural promotions can bind or enforce future behavior.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: knowledge rows, capsule snippets, LCM originals, summaries, graph nodes, and lessons mostly advise until promoted or consumed by a gate.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: Decapod turns operational traces into lessons, summaries, graph nodes, proof baselines, and promotion records while preserving raw evidence.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Decapod stores substantial memory, but most retained memory enters agent context by explicit CLI/RPC pull.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Decapod's files, DB rows, JSONL events, capsules, manifests, proofs, and adapters differ by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: workunits, proof gates, validation rules, capability contracts, generated entrypoints, and procedural promotions can bind or enforce future behavior.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: knowledge rows, capsule snippets, LCM originals, summaries, graph nodes, and lessons mostly advise until promoted or consumed by a gate.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: Decapod turns operational traces into lessons, summaries, graph nodes, proof baselines, and promotion records while preserving raw evidence.

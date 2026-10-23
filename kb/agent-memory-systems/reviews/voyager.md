@@ -131,10 +131,10 @@ Voyager also shows a useful split between authored base capabilities and learned
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Voyager's skills matter because they are retrieved and injected into later action prompts, not merely stored in checkpoint files.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Voyager requires separating file storage, vector indexes, generated code, natural-language descriptions, and execution authority.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Voyager turns task trajectories into reusable symbolic/natural-language/parametric artifacts.
-- [Codification](../../notes/definitions/codification.md) - applies: successful action attempts cross from natural-language task context into executable JavaScript skills.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, control primitives, validators, and executable skills can carry instruction or execution force.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: QA answers, chest memory, and retrieved descriptions mostly advise rather than enforce.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames: Voyager reduces full trace replay into top-k skill injection, but leaves complexity and token cost mostly unmanaged.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: Voyager's skills matter because they are retrieved and injected into later action prompts, not merely stored in checkpoint files.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Voyager requires separating file storage, vector indexes, generated code, natural-language descriptions, and execution authority.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - applies: Voyager turns task trajectories into reusable symbolic/natural-language/parametric artifacts.
+- [Codification](../../theory/definitions/codification.md) - applies: successful action attempts cross from natural-language task context into executable JavaScript skills.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, control primitives, validators, and executable skills can carry instruction or execution force.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: QA answers, chest memory, and retrieved descriptions mostly advise rather than enforce.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - frames: Voyager reduces full trace replay into top-k skill injection, but leaves complexity and token cost mostly unmanaged.

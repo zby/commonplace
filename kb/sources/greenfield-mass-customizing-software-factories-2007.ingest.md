@@ -44,11 +44,11 @@ Greenfield defines a software factory as a specialized development and runtime e
 
 ## Connections Found
 
-This article is the KB's mature historical ontology anchor for software factories, extending the earlier [Greenfield and Short account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with explicit factory-development and solution-development processes, lifecycle operation, specialization, composition, feedback-supported revision, and supply-chain partitioning. The [versioned ontology reconstruction](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) preserves these additions without projecting them backward into the 2003 terminology.
+This article is the KB's mature historical ontology anchor for software factories, extending the earlier [Greenfield and Short account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with explicit factory-development and solution-development processes, lifecycle operation, specialization, composition, feedback-supported revision, and supply-chain partitioning. The [versioned ontology reconstruction](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) preserves these additions without projecting them backward into the 2003 terminology.
 
-The source also supplies the organizational precursor for [factory-level learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md). Feedback flows from solution developers to factory developers, but human factory developers interpret it and decide how reusable production machinery changes. The account therefore establishes feedback-supported factory development, not a system-determined learning process.
+The source also supplies the organizational precursor for [factory-level learning](../theory/factory-learning-is-experience-responsive-retention-that-improves.md). Feedback flows from solution developers to factory developers, but human factory developers interpret it and decide how reusable production machinery changes. The account therefore establishes feedback-supported factory development, not a system-determined learning process.
 
-It compares with both [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) and [the hand-crafted-bootstrap boundary](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md): ordinary solution development operates inside the supplied family structure, while previously unanticipated variation can require people to revise the reusable machinery.
+It compares with both [learning inside a fixed decomposition](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) and [the hand-crafted-bootstrap boundary](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md): ordinary solution development operates inside the supplied family structure, while previously unanticipated variation can require people to revise the reusable machinery.
 
 ## Extractable Value
 
@@ -72,5 +72,5 @@ Use the source as the mature ontology anchor and as the human-directed precursor
 
 Abstracted into:
 
-- [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — reconstructs the mature lifecycle ontology, two development processes, factory specialization, factory composition, and feedback-supported revision
-- [Factory learning is experience-responsive retention that improves the factory](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) — extends the human-directed feedback path with the system-determined retained-change condition required for experience-responsive retention
+- [A software factory is family-scoped lifecycle production machinery](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — reconstructs the mature lifecycle ontology, two development processes, factory specialization, factory composition, and feedback-supported revision
+- [Factory learning is experience-responsive retention that improves the factory](../theory/factory-learning-is-experience-responsive-retention-that-improves.md) — extends the human-directed feedback path with the system-determined retained-change condition required for experience-responsive retention

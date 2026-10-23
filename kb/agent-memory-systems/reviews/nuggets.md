@@ -142,8 +142,8 @@ The useful comparison is the promotion ladder. Nuggets turns repeated pull use i
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Nuggets both stores facts and pushes them into Pi prompts, while explicit recall remains a pull path.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSON facts, HRR runtime vectors, prompt injection, gateway schedules, and promoted `MEMORY.md` entries have different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: recalled facts and prompt-injected nuggets mostly advise as evidence, context, or preference knowledge.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: promoted `MEMORY.md`, tool guidelines, and gateway prompt instructions can shape future behavior with instruction-like force.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Nuggets turns tool results, user inputs, compaction summaries, and recall events into retained memory and promotion signals.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Nuggets both stores facts and pushes them into Pi prompts, while explicit recall remains a pull path.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: JSON facts, HRR runtime vectors, prompt injection, gateway schedules, and promoted `MEMORY.md` entries have different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: recalled facts and prompt-injected nuggets mostly advise as evidence, context, or preference knowledge.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: promoted `MEMORY.md`, tool guidelines, and gateway prompt instructions can shape future behavior with instruction-like force.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: Nuggets turns tool results, user inputs, compaction summaries, and recall events into retained memory and promotion signals.

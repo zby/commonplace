@@ -100,4 +100,4 @@ Relevant Notes:
 
 - [ADR 056: adopted and retired proposals archive out of the frontier](./056-adopted-and-retired-proposals-archive-out-of-the-frontier.md) — see-also: the two exits and the archive-versus-delete test this decision extends
 - [Design proposal](../types/design-proposal.md) — implemented-by: the type spec that states the withdrawn exit
-- [A functioning KB needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rests-on: the deletion rule for residue that warranted no commitment
+- [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rests-on: the deletion rule for residue that warranted no commitment

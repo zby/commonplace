@@ -78,6 +78,6 @@ Relevant Notes:
 
 - [ADR 044 — User verification replaces global note status](../adr/044-user-verification-replaces-global-note-status.md) — part-of: defines the portable signal and the semantic boundaries this proposal must preserve
 - [Note type](../../types/note.md) — implemented-by: owns `user-verified` authoring and revocation semantics
-- [Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md) — see-also: frames the proposal's required comparison of a generated point-of-reading banner with declaration-only frontmatter as an untested intervention
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: a committed banner is safe only when mechanically checked against frontmatter
-- [Representational form](../../notes/definitions/representational-form.md) — defined-in: distinguishes committed Markdown presentation from the ProperDocs-generated view
+- [Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) — see-also: frames the proposal's required comparison of a generated point-of-reading banner with declaration-only frontmatter as an untested intervention
+- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: a committed banner is safe only when mechanically checked against frontmatter
+- [Representational form](../../theory/definitions/representational-form.md) — defined-in: distinguishes committed Markdown presentation from the ProperDocs-generated view

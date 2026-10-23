@@ -119,8 +119,8 @@ The auto-compaction code summarizes older conversation turns, but the current CL
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes browzy's stored wiki from the query loop that actually injects selected context into a model call.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating raw sources, compiled wiki articles, SQLite indexes, schema prompts, and trace-extracted drafts by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - describes the authority of schema files, prompts, ranking code, lint checks, and retrieval budgets.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - describes the evidence role of raw sources, wiki article content, logs, sessions, and digests.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames browzy's session digests and insight drafts as trace-extracted artifact learning with a staging boundary.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes browzy's stored wiki from the query loop that actually injects selected context into a model call.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating raw sources, compiled wiki articles, SQLite indexes, schema prompts, and trace-extracted drafts by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - describes the authority of schema files, prompts, ranking code, lint checks, and retrieval budgets.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - describes the evidence role of raw sources, wiki article content, logs, sessions, and digests.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames browzy's session digests and insight drafts as trace-extracted artifact learning with a staging boundary.

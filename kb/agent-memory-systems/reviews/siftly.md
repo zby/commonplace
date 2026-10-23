@@ -104,9 +104,9 @@ The read-back surfaces are broad but pull-only: browse/filter uses structured DB
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Siftly stores rich bookmark memory but serves it by explicit browse/search/API/CLI/export pulls.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SQLite rows, FTS rows, category descriptions, prompts, and exports carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: bookmarks, raw tweet JSON, visual summaries, semantic tags, and exported notes mostly provide evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: category descriptions, prompts, parsers, FTS construction, candidate selection, route guards, and CLI/API contracts shape later behavior.
-- [Context efficiency is the central design concern in agent systems](../../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: Siftly's candidate narrowing and compact prompt entries are context-efficiency machinery.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - contrasts: Siftly relies on signals such as ids, slugs, FTS terms, categories, entities, and tags before LLM reranking can help.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Siftly stores rich bookmark memory but serves it by explicit browse/search/API/CLI/export pulls.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: SQLite rows, FTS rows, category descriptions, prompts, and exports carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: bookmarks, raw tweet JSON, visual summaries, semantic tags, and exported notes mostly provide evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: category descriptions, prompts, parsers, FTS construction, candidate selection, route guards, and CLI/API contracts shape later behavior.
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) - grounds: Siftly's candidate narrowing and compact prompt entries are context-efficiency machinery.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - contrasts: Siftly relies on signals such as ids, slugs, FTS terms, categories, entities, and tags before LLM reranking can help.

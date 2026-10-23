@@ -106,8 +106,8 @@ Other consumers include the human user, the React note list/editor/sidebar, exte
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tolaria's vault memory can be pulled by tools, while active-note snapshots are pushed into app-managed agent calls.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Tolaria separates canonical Markdown files from derived caches, prompts, settings, and service processes.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: Tolaria routes bounded vault context into agents through UI selection, MCP tools, and truncation rules.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: Tolaria prompts, MCP schemas, permission modes, cache rules, and path validators constrain later behavior.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: vault notes, search results, transcripts, and context snapshots advise human and agent action without becoming hard gates.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tolaria's vault memory can be pulled by tools, while active-note snapshots are pushed into app-managed agent calls.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Tolaria separates canonical Markdown files from derived caches, prompts, settings, and service processes.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: Tolaria routes bounded vault context into agents through UI selection, MCP tools, and truncation rules.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: Tolaria prompts, MCP schemas, permission modes, cache rules, and path validators constrain later behavior.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: vault notes, search results, transcripts, and context snapshots advise human and agent action without becoming hard gates.

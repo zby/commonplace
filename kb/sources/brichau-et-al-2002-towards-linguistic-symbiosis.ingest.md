@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The strongest landing point is [Unified calling conventions enable bidirectional refactoring](../notes/unified-calling-conventions-enable-bidirectional-refactoring.md): this source shows that a common call surface needs semantic mappings, not only shared names. [Representational form](../notes/definitions/representational-form.md) prevents equating programming-paradigm mismatch with Commonplace's natural-language/symbolic distinction. The paper is secondary to the 2001 and 2006 sources for defining reflection itself.
+The strongest landing point is [Unified calling conventions enable bidirectional refactoring](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md): this source shows that a common call surface needs semantic mappings, not only shared names. [Representational form](../theory/definitions/representational-form.md) prevents equating programming-paradigm mismatch with Commonplace's natural-language/symbolic distinction. The paper is secondary to the 2001 and 2006 sources for defining reflection itself.
 
 ## Inherited Vocabulary
 

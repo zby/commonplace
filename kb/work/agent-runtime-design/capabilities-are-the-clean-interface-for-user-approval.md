@@ -17,7 +17,7 @@ Approval is the forcing case that prevents a runtime client from being a passive
 
 The word “capability” is used too loosely unless two sets are separated. Some libraries also use it for composable hooks or behavior wrappers; that source label does not imply authority unless construction and enforcement establish grant semantics.
 
-The **capability surface** is the action alphabet exposed to an agent call. It is part of the minimal technical agent convention: prompt, capability surface, and stop condition. Giving one child `{search, summarize}` and another `{read_file, patch_file, run_test}` constructs different agents because the calls can attempt different actions. [Subtasks that need different tools force loop exposure](../../notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) for exactly this reason.
+The **capability surface** is the action alphabet exposed to an agent call. It is part of the minimal technical agent convention: prompt, capability surface, and stop condition. Giving one child `{search, summarize}` and another `{read_file, patch_file, run_test}` constructs different agents because the calls can attempt different actions. [Subtasks that need different tools force loop exposure](../../theory/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) for exactly this reason.
 
 The **grant set** is the subset of effects this principal may execute under the current policy and environment. A tool can remain visible while a particular call requires approval; alternatively, a headless runner can hide capabilities it knows it will deny so the model does not waste calls on impossible actions. Exposure and authorization are related but not identical.
 
@@ -145,9 +145,9 @@ The clean default is attenuation:
 - a child that needs more authority produces a new request attributable to that child and its parent task;
 - composite work can receive an approved capability budget, but exceeding it requires another decision.
 
-This is also where primitive and aggregate authority diverge. A loop that permits one file edit may permit a thousand edits when compiled into unattended coordination. [Compiling coordination preserves primitive authority but expands aggregate authority](../../notes/compiling-coordination-preserves-primitive-not-aggregate-authority.md), so useful grants sometimes need volume, cost, or duration bounds in addition to effect scope.
+This is also where primitive and aggregate authority diverge. A loop that permits one file edit may permit a thousand edits when compiled into unattended coordination. [Compiling coordination preserves primitive authority but expands aggregate authority](../../theory/compiling-coordination-preserves-primitive-not-aggregate-authority.md), so useful grants sometimes need volume, cost, or duration bounds in addition to effect scope.
 
-Untrusted-content roles need a stronger boundary. If a worker reads attacker-controlled input, per-call approval does not establish whether that input manipulated its judgment. [Privilege quarantine](../../notes/orchestration-needs-privilege-quarantine-not-permission-scope.md) removes high-authority capabilities from that role entirely and gives a separate actor only vetted structured output. Capability policy expresses that split cleanly, but a live prompt cannot replace it.
+Untrusted-content roles need a stronger boundary. If a worker reads attacker-controlled input, per-call approval does not establish whether that input manipulated its judgment. [Privilege quarantine](../../theory/orchestration-needs-privilege-quarantine-not-permission-scope.md) removes high-authority capabilities from that role entirely and gives a separate actor only vetted structured output. Capability policy expresses that split cleanly, but a live prompt cannot replace it.
 
 ## Approval is not the security boundary
 

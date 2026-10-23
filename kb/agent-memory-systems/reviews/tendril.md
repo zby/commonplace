@@ -100,7 +100,7 @@ Authority at consumption is strong once execution is chosen: the selected capabi
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tendril stores reusable capabilities, but they reach the agent through mandatory pull rather than unsolicited memory injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Tendril's prompt, registry metadata, generated code, config, and sandbox permissions differ by substrate, form, lineage, and authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated tools, the system prompt, registry schema, and sandbox rules configure and constrain future behavior.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Tendril routes execution by declared capability names and trigger natural-language content after the agent pulls the registry.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tendril stores reusable capabilities, but they reach the agent through mandatory pull rather than unsolicited memory injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Tendril's prompt, registry metadata, generated code, config, and sandbox permissions differ by substrate, form, lineage, and authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated tools, the system prompt, registry schema, and sandbox rules configure and constrain future behavior.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Tendril routes execution by declared capability names and trigger natural-language content after the agent pulls the registry.

@@ -114,8 +114,8 @@ The static agent skill is an edge case: it pushes instructions about when to que
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SiftKG persists graph memory, but memory read-back is explicit CLI/library pull unless a host adds injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: SiftKG separates imported documents, extraction JSON, graph files, review decisions, narratives, exports, and skill instructions across different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph nodes, relations, topology, neighborhoods, narratives, and exports mainly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: domain schemas, review statuses, CLI commands, cost/config settings, graph algorithms, and the bundled skill define or constrain behavior.
-- [Context engineering](../../notes/definitions/context-engineering.md) - frames: SiftKG's agent-facing contribution is routing graph-shaped source knowledge into bounded lookup and topology surfaces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SiftKG persists graph memory, but memory read-back is explicit CLI/library pull unless a host adds injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: SiftKG separates imported documents, extraction JSON, graph files, review decisions, narratives, exports, and skill instructions across different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: graph nodes, relations, topology, neighborhoods, narratives, and exports mainly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: domain schemas, review statuses, CLI commands, cost/config settings, graph algorithms, and the bundled skill define or constrain behavior.
+- [Context engineering](../../theory/definitions/context-engineering.md) - frames: SiftKG's agent-facing contribution is routing graph-shaped source knowledge into bounded lookup and topology surfaces.

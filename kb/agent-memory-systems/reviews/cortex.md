@@ -128,9 +128,9 @@ Authority at consumption depends on the tool result and host prompt. A retrieved
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cortex stores and ranks memory, but accumulated memory is still pulled through tools rather than pushed before every action.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - compares: Cortex derives symbolic tier and audit state from tool traces, not natural-language lessons from conversations.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Cortex stores and ranks memory, but accumulated memory is still pulled through tools rather than pushed before every action.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - compares: Cortex derives symbolic tier and audit state from tool traces, not natural-language lessons from conversations.
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Cortex belongs in the trace-to-ranking/lifecycle branch.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: database rows, graph triples, ontology rules, embeddings, logs, counters, and tool surfaces carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: captured objects, query logs, dossiers, syntheses, and alerts advise future work when read.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: ontology, SPARQL rules, retrieval indexes, tiers, MCP schemas, and service boundaries shape or validate behavior.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: database rows, graph triples, ontology rules, embeddings, logs, counters, and tool surfaces carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: captured objects, query logs, dossiers, syntheses, and alerts advise future work when read.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: ontology, SPARQL rules, retrieval indexes, tiers, MCP schemas, and service boundaries shape or validate behavior.

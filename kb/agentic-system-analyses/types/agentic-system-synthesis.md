@@ -34,7 +34,7 @@ runtime report supports it, the synthesis states separately whether the
 system meets theory-builder conditions 1–4, whether criticism of a consumed
 theory improved the system's capacity for future action, whether the system
 is reflective or autonomous, and whether it is
-[self-improving](../../notes/definitions/self-improving-system.md) at the
+[self-improving](../../theory/definitions/self-improving-system.md) at the
 declared boundary, each at its own evidence status; these are independent
 properties, not a grade or a ladder. It is organized around the system's
 operational progression, not as concatenated analyst reports, and cites

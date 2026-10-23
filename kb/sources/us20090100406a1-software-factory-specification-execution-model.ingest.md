@@ -68,4 +68,4 @@ Write `kb/notes/a-software-factory-separates-family-knowledge-from-product-state
 
 Abstracted into:
 
-- [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — uses the later execution model to distinguish viewpoint, work-product, task, and workstream types or templates from their product-specific instances
+- [A software factory is family-scoped lifecycle production machinery](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — uses the later execution model to distinguish viewpoint, work-product, task, and workstream types or templates from their product-specific instances

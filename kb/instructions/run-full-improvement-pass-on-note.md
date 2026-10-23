@@ -297,9 +297,9 @@ Never omit "Warranted contribution", "Routed attention", or "Disposition". Quote
 
 Relevant Notes:
 
-- [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — why running compression, critique-note, the adversarial gates, the catalog bundles, and connect side by side catches more than repeating one check.
-- [Synthesis is not error correction](../notes/synthesis-is-not-error-correction.md) — why step 7 reconciles complementary findings instead of voting one down.
-- [Warranted reader update is the objective of substantive writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) — rests-on: why the packet compares a specific reader update and its warrant with generic and existing-KB alternatives.
-- [Narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: why a claim change is handed back rather than applied — repair that optimizes defensibility drifts toward the untouchable claim.
-- [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the ideal-type mode guard a revision brief must carry.
+- [Error correction works with above-chance oracles and decorrelated checks](../theory/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — why running compression, critique-note, the adversarial gates, the catalog bundles, and connect side by side catches more than repeating one check.
+- [Synthesis is not error correction](../theory/synthesis-is-not-error-correction.md) — why step 7 reconciles complementary findings instead of voting one down.
+- [Warranted reader update is the objective of substantive writing](../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md) — rests-on: why the packet compares a specific reader update and its warrant with generic and existing-KB alternatives.
+- [Narrowing bought to survive review is paid for in content](../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: why a claim change is handed back rather than applied — repair that optimizes defensibility drifts toward the untouchable claim.
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — rests-on: the ideal-type mode guard a revision brief must carry.
 - [Resolve a full-pass disposition](./resolve-full-pass-disposition.md) — applies-when: a pending revise, delete, merge, or rehome packet needs inspection or resolution.

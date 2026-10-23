@@ -24,9 +24,9 @@ There is currently no `.obsidian/` directory, no `.canvas` files, and no `.base`
 
 - [Napkin](../../agent-memory-systems/reviews/napkin.md) — strongest source for Obsidian-compatible agent memory affordances
 - [LACP](../../agent-memory-systems/reviews/lacp.md) — strongest source for Obsidian-centered local ops and memory automation
-- [A functioning knowledge base needs a workshop layer, not just a library](../../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop framing for temporary design work and promotion boundaries
-- [Short composable notes maximize combinatorial discovery](../../notes/short-composable-notes-maximize-combinatorial-discovery.md) — reminder that longer synthesized views belong in workshops, not in the library
-- [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — useful contrast because Obsidian inherits stronger refinement-in-place assumptions than commonplace does
+- [A functioning knowledge base needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — workshop framing for temporary design work and promotion boundaries
+- [Short composable notes maximize combinatorial discovery](../../theory/short-composable-notes-maximize-combinatorial-discovery.md) — reminder that longer synthesized views belong in workshops, not in the library
+- [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — useful contrast because Obsidian inherits stronger refinement-in-place assumptions than commonplace does
 
 ## What this workshop needs to resolve
 

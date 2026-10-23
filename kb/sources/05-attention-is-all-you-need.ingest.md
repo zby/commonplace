@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The chapter is strong evidence for [learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): thought vectors, recurrence, and arbitrary orderings bound accessible information and expressible mappings. It also supports [first-principles design-space mapping](../notes/first-principles-analysis-maps-design-space-before-selection.md) by unpacking “sequence model” into independent choices. The reversal trick materially supports [scaling absorbs scaffolding at fixed difficulty](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md), and the Transformer supplies a historical case compatible with [the case-level conjecture that unsupported proxy scope may explain a structured method's loss under scaling](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md), without attributing the displaced recurrent designs' loss to a proxy used beyond its assessed scope.
+The chapter is strong evidence for [learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): thought vectors, recurrence, and arbitrary orderings bound accessible information and expressible mappings. It also supports [first-principles design-space mapping](../theory/first-principles-analysis-maps-design-space-before-selection.md) by unpacking “sequence model” into independent choices. The reversal trick materially supports [scaling absorbs scaffolding at fixed difficulty](../theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md), and the Transformer supplies a historical case compatible with [the case-level conjecture that unsupported proxy scope may explain a structured method's loss under scaling](../theory/bitter-lesson-selects-against-unearned-reach-not-against-structure.md), without attributing the displaced recurrent designs' loss to a proxy used beyond its assessed scope.
 
 ## Extractable Value
 
@@ -43,5 +43,5 @@ The chapter's lineage is persuasive but retrospective: attention, pointer networ
 
 ## Recommended Next Action
 
-Use the source-reversal lifecycle as a primary-paper-grounded worked example the next time [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) is revised.
+Use the source-reversal lifecycle as a primary-paper-grounded worked example the next time [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](../theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) is revised.
 

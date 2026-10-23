@@ -27,7 +27,7 @@ For an agentic workflow, analogous resources might include model judgment, files
 - **`EPIC-2` — treat orchestration policy as an independent design lever.** The same components can perform differently under a different ordering, prefetch, batching, or overlap strategy. Compare strategies before replacing components.
 - **`EPIC-3` — derive concurrency from dependencies.** Parallelize operations whose inputs are already fixed; keep adaptive dependencies sequential. This turns parallelism from a slogan into a task graph.
 - **`EPIC-4` — predict an execution trace before benchmarking.** State which operations should overlap, where the bottleneck should appear, and how a perturbation should shift it. Wall-clock measurements then test an architectural claim.
-- **`EPIC-5` — distinguish process structure from result structure.** A well-formatted output does not reveal whether work was scheduled effectively, matching the existing [process/output separation](../../notes/process-structure-and-output-structure-are-independent-levers.md).
+- **`EPIC-5` — distinguish process structure from result structure.** A well-formatted output does not reveal whether work was scheduled effectively, matching the existing [process/output separation](../../theory/process-structure-and-output-structure-are-independent-levers.md).
 
 ## Method worth borrowing
 

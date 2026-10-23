@@ -25,7 +25,7 @@ The cleanest transfer is the separation among **what is believed, what is attend
 
 ## Transfer candidates
 
-- **`OPENCOG-1` — maintain orthogonal artifact signals.** Epistemic confidence, retrieval priority, task utility, freshness, and [behavioral authority](../../notes/definitions/behavioral-authority.md) should be separately inspectable even if a selector later combines them.
+- **`OPENCOG-1` — maintain orthogonal artifact signals.** Epistemic confidence, retrieval priority, task utility, freshness, and [behavioral authority](../../theory/definitions/behavioral-authority.md) should be separately inspectable even if a selector later combines them.
 - **`OPENCOG-2` — define operations over the graph, not only graph storage.** A knowledge graph earns architectural value through queries, transformations, validation, activation, and maintenance workflows. Nodes and edges alone are inert inventory.
 - **`OPENCOG-3` — evaluate cognitive synergy as reduced translation cost.** Search, review, inference, and planning sharing a substrate is valuable only if one process's output becomes another's usable input with less loss or duplication.
 - **`OPENCOG-4` — allow several reasoning regimes over one artifact corpus.** Deterministic validators, lexical search, semantic judgment, and probabilistic ranking can contribute without pretending to have identical semantics.

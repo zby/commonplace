@@ -14,7 +14,7 @@ Separate five questions that our existing prose sometimes compresses:
 | Does the interpreter conform? | It returns nine despite an explicit lower bound | Actual behavior cannot define its own correctness standard |
 | Does added context preserve or revise meaning? | A later sentence changes what “short” means | Context updates need not be vocabulary extensions |
 
-The first four distinctions refine the [three-way diagnosis](../../notes/llm-output-deviation-requires-three-way-diagnosis.md) without replacing its intended-set/valid-set/distribution account. Institutions become particularly relevant when representations or vocabularies change. A fixed set of acceptable outputs alone cannot specify the corresponding changes to observations and sentences.
+The first four distinctions refine the [three-way diagnosis](../../theory/llm-output-deviation-requires-three-way-diagnosis.md) without replacing its intended-set/valid-set/distribution account. Institutions become particularly relevant when representations or vocabularies change. A fixed set of acceptable outputs alone cannot specify the corresponding changes to observations and sentences.
 
 The literature supplies several different tools. Sources 1–4 concern satisfaction and structure-preserving changes; source 6 gives a scoped natural-language precedent; source 7 retains unresolved semantic alternatives; source 8 varies interpretation conventions; source 9 permits selective preservation. These are candidates for different jobs, not competing complete theories of LLM operation.
 
@@ -49,10 +49,10 @@ Let the initial requirement be `sourced`.
 
 ## Candidate library corrections
 
-1. In [Agentic systems interpret underspecified instructions](../../notes/agentic-systems-interpret-underspecified-instructions.md), qualify the opening claim that natural-language specifications lack precise denotations. Distinguish multiple satisfying candidates from uncertainty about the satisfaction relation. The example above is enough to show why the distinction matters; a broad theory of natural language is unnecessary.
+1. In [Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md), qualify the opening claim that natural-language specifications lack precise denotations. Distinguish multiple satisfying candidates from uncertainty about the satisfaction relation. The example above is enough to show why the distinction matters; a broad theory of natural language is unnecessary.
 2. In that note's impossibility paragraph, separate semantic definition from a total executable interpretation/decision procedure. Any Tarski, Gödel, or halting claim must identify the formal assumptions and prohibited procedure. The existing blanket appeal does not itself establish the claimed limit for ordinary language. A dedicated primary-source audit is still needed before rewriting that argument.
-3. In [Constraining](../../notes/definitions/constraining.md), distinguish narrowing within fixed conventions from choosing or revising the conventions. Both can change behavior, but set inclusion only follows when the candidates and interpretation basis are comparable.
-4. Preserve the [interpreter-failure note's](../../notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) separation of conformity from actual behavior. Add a qualification only where unresolved public readings make the boundary contestable; do not collapse all violations into ambiguity.
+3. In [Constraining](../../theory/definitions/constraining.md), distinguish narrowing within fixed conventions from choosing or revising the conventions. Both can change behavior, but set inclusion only follows when the candidates and interpretation basis are comparable.
+4. Preserve the [interpreter-failure note's](../../theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) separation of conformity from actual behavior. Add a qualification only where unresolved public readings make the boundary contestable; do not collapse all violations into ambiguity.
 
 These are proposed edits for later grounded promotion, not completed changes.
 

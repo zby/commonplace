@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The essay is a policy comparison for [the separation between candidate retention and reliance](../notes/a-claim-without-external-assessment-carries-three-obligations.md): making an idea available for criticism does not establish what uses its support licenses. Wasserman argues for removing a publication barrier; Commonplace must also decide when retained material may guide an agent. This distinction limits the apparent conflict with [false-positive acceptance becoming operative](../notes/false-positive-generation-is-filtered-before-retention.md). Open publication moves assessment to readers and later critics, while operative acceptance concerns a claim actually shaping behavior. The essay does not establish that these later assessments are reliable enough for agent consumption.
+The essay is a policy comparison for [the separation between candidate retention and reliance](../theory/a-claim-without-external-assessment-carries-three-obligations.md): making an idea available for criticism does not establish what uses its support licenses. Wasserman argues for removing a publication barrier; Commonplace must also decide when retained material may guide an agent. This distinction limits the apparent conflict with [false-positive acceptance becoming operative](../theory/false-positive-generation-is-filtered-before-retention.md). Open publication moves assessment to readers and later critics, while operative acceptance concerns a claim actually shaping behavior. The essay does not establish that these later assessments are reliable enough for agent consumption.
 
 ## Extractable Value
 
@@ -40,7 +40,7 @@ Accounts of unfair rejection and reviewer disagreement motivate concern but do n
 
 The proposed replacement assumes that good ideas attract attention, bad ideas are ignored or corrected, and voluntary discovery services cover readers' needs. No comparison measures these outcomes, the distribution of attention, or correction delays. The appeal to arXiv use in mathematics and physics does not isolate a world without journal refereeing from a world where preprints and journals coexist. The wine-market analogy establishes neither the costs of erroneous scientific reliance nor the reader effort needed to assess papers.
 
-The author acknowledges medical risk but offers no developed account of it and narrows his main focus to fields he knows. Transfer to an agent-operated KB is likewise limited: source availability is not equivalent to automatic adoption. As the [false-positive acceptance note](../notes/false-positive-generation-is-filtered-before-retention.md) explains, correction after use still consumes evaluation capacity, and the accepted claim may have affected behavior before correction. The essay's historical account of refereeing is not independently established here.
+The author acknowledges medical risk but offers no developed account of it and narrows his main focus to fields he knows. Transfer to an agent-operated KB is likewise limited: source availability is not equivalent to automatic adoption. As the [false-positive acceptance note](../theory/false-positive-generation-is-filtered-before-retention.md) explains, correction after use still consumes evaluation capacity, and the accepted claim may have affected behavior before correction. The essay's historical account of refereeing is not independently established here.
 
 ## Recommended Next Action
 

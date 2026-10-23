@@ -137,8 +137,8 @@ The strongest divergence is read-back. Commonplace expects agents to search and 
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: TheKnowledge stores evidence carefully, while most activation is still explicit pull plus coarse hooks.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: TheKnowledge's files, policies, examples, validators, hooks, source maps, and service notebooks carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw sources, wiki pages, filter examples, logs, and source maps usually advise or provide evidence.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: gateway ops, validators, policies, skills, hooks, and scheduler definitions constrain later behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: filter decisions and operational events can be distilled into candidate policies and digest pages.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: TheKnowledge stores evidence carefully, while most activation is still explicit pull plus coarse hooks.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: TheKnowledge's files, policies, examples, validators, hooks, source maps, and service notebooks carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw sources, wiki pages, filter examples, logs, and source maps usually advise or provide evidence.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: gateway ops, validators, policies, skills, hooks, and scheduler definitions constrain later behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: filter decisions and operational events can be distilled into candidate policies and digest pages.

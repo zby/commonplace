@@ -137,8 +137,8 @@ Survey placement: ReasoningBank belongs in the trace-to-reasoning-memory family.
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: ReasoningBank distills successful and failed benchmark trajectories into natural-language reasoning memory.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - applies: ReasoningBank separates stored JSONL memory from embedding-selected prompt injection.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: JSONL memories, embedding caches, prompts, judges, trajectories, and handoff files carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: raw trajectories, evaluator outputs, stored memory items, and caches are evidence until activated.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: prompts, judges, embedding rankers, and injected memory text configure learning or action.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ReasoningBank extracts reusable lessons from traces after outcome labeling.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - applies: ReasoningBank separates stored JSONL memory from embedding-selected prompt injection.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: JSONL memories, embedding caches, prompts, judges, trajectories, and handoff files carry different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: raw trajectories, evaluator outputs, stored memory items, and caches are evidence until activated.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: prompts, judges, embedding rankers, and injected memory text configure learning or action.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: ReasoningBank extracts reusable lessons from traces after outcome labeling.

@@ -27,7 +27,7 @@ We organize each system around five recurring stages:
 
 Some systems add a step between extraction and promotion — deduplication or conflict resolution against existing artifacts (cass-memory's Jaccard similarity, ExpeL's EDIT/REMOVE/MERGE, ClawVault's observation deduplication). This is common enough to note but varies too much in placement to warrant a sixth stage.
 
-What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) sharpens the distinction: "service memory" is usually a storage-substrate choice, not a representational form alongside readable artifacts and weights.
+What varies is not whether the loop exists, but how structured the input is, whether the system assumes one active session or many repeated runs, and whether the promotion target is a readable artifact, service-managed memory, or model weights. [Axes of artifact analysis](../theory/axes-of-artifact-analysis.md) sharpens the distinction: "service memory" is usually a storage-substrate choice, not a representational form alongside readable artifacts and weights.
 
 ## Napkin
 
@@ -643,7 +643,7 @@ These systems are included on weaker evidence — no implementation code inspect
 
 ### AgeMem
 
-From the [AgeMem lightweight note](./lightweight/agemem.md), [AgeMem ingest](https://arxiv.org/html/2601.01885v1), and [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
+From the [AgeMem lightweight note](./lightweight/agemem.md), [AgeMem ingest](https://arxiv.org/html/2601.01885v1), and [memory management policy is learnable but oracle-dependent](../theory/memory-management-policy-is-learnable-but-oracle-dependent.md): AgeMem learns a memory-management policy from interaction trajectories through RL. Trajectories with multiple stages, fixed memory operations (`Add`, `Update`, `Delete`, `Retrieve`, `Summary`, `Filter`), task-completion and context-management rewards. Promotion target is model weights. A clear trajectory-to-weights system, though the concrete storage/runtime implementation is unknown locally.
 
 ### Trajectory-Informed Memory Generation
 
@@ -790,17 +790,17 @@ None of the reviewed systems closes the harder learning-loop mutations — the o
 
 The additional trajectory-run systems reinforce this from the artifact side. ExpeL's explicit rule operations and Voyager's critic-gated code promotion show increasingly structured maintenance, but both depend on strong local oracles (benchmark outcomes, environment success). Self-Training-LLM shows the same oracle dependence from the weight-learning side: its "unknown" examples are only as good as the NLI/SelfCheck and judge signals that select them. cass-memory's score-based deprecation and `invertToAntiPattern()` mechanism are the closest to principled retirement, but they are mechanical (threshold-driven) rather than explanatory — they retire artifacts that stop working without reasoning about why. None of these systems demonstrates retirement grounded in explanatory-reach, cross-domain abstraction, or open-ended judgment.
 
-The concrete update to [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed readable artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
+The concrete update to [automating KB learning is an open problem](../theory/automating-kb-learning-is-an-open-problem.md): **session- or trajectory-derived candidate generation is concrete enough in source code to adapt; oracle-backed evaluation is not.** Once you have a strong enough oracle, the same mined traces can feed readable artifacts or weight updates. The open problem is not extraction — it is deciding what deserves trust and persistence in open-ended domains.
 
 ---
 
 Relevant Notes:
 
-- [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via readable system-definition artifacts; the distributed-parametric cases take the slower, harder-to-validate form
-- [Axes of artifact analysis](../notes/axes-of-artifact-analysis.md) — sharpens: separates storage substrate, representational form, lineage, and behavioral authority, clarifying that service memory is usually a substrate choice rather than a form or authority family
-- [automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
-- [a functioning knowledge base needs a workshop layer, not just a library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
-- [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — rests-on: turns the survey's repeated techniques into a needs map for direct-authored and trace-extracted memory, including capture, activation, promotion, lifecycle, and evaluation
+- [Continual learning requires governing behaviour-changing writes, not just storing content](../theory/continual-learning-requires-governing-behaviour-changing-writes.md) — sharpens: the survey's artifact-promotion systems count as behaviour-change learning via readable system-definition artifacts; the distributed-parametric cases take the slower, harder-to-validate form
+- [Axes of artifact analysis](../theory/axes-of-artifact-analysis.md) — sharpens: separates storage substrate, representational form, lineage, and behavioral authority, clarifying that service memory is usually a substrate choice rather than a form or authority family
+- [automating KB learning is an open problem](../theory/automating-kb-learning-is-an-open-problem.md) — sharpens: source-inspected systems now give concrete extraction and promotion loops for workshop artifacts and policy learning; the remaining bottleneck is still evaluation of higher-order mutations
+- [a functioning knowledge base needs a workshop layer, not just a library](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — grounds the artifact-promotion side of this survey: several systems operationalize workshop-to-library bridges from session traces or run trajectories, even though the weight-learning cases extend beyond that note's domain
+- [Designing a Memory System for LLM-Based Agents](../theory/designing-agent-memory-systems.md) — rests-on: turns the survey's repeated techniques into a needs map for direct-authored and trace-extracted memory, including capture, activation, promotion, lifecycle, and evaluation
 - [Napkin](./reviews/napkin.md) — source-inspected instance: forked-session distill via a subprocess agent and vault templates
 - [Pi Self-Learning](./reviews/pi-self-learning.md) — source-inspected instance: branch-event mining into strict `mistakes`/`fixes` JSON plus scored promotion
 - [OpenViking](./reviews/openviking.md) — source-inspected instance: typed session messages, commit-triggered extraction, and multi-tenant user/agent memory spaces
@@ -839,4 +839,4 @@ Relevant Notes:
 - [Agent-S](./reviews/Agent-S.md) — source-inspected instance: computer-use trajectories summarized into S1/S2 JSON experience memory and S3/BBoN benchmark fact/judge artifacts
 - [Self-Training-LLM](./reviews/Self-Training-LLM.md) — source-inspected instance: generated Wikipedia QA traces, NLI/SelfCheck filtering, and SFT/DPO promotion into model checkpoints
 - [the fundamental split in agent memory is not storage format but who decides what to remember](./agentic-memory-systems-comparative-review.md) — extends: the wider survey places AgeMem and other lightweight systems in the broader agency and substrate design space
-- [memory management policy is learnable but oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: these systems learn or curate policy only as far as their available promotion oracle allows
+- [memory management policy is learnable but oracle-dependent](../theory/memory-management-policy-is-learnable-but-oracle-dependent.md) — sharpens: these systems learn or curate policy only as far as their available promotion oracle allows

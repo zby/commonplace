@@ -17,7 +17,7 @@ Three independent threads arrived at the same shape:
 
 2. **Thalo's opinion entity.** The [Thalo type comparison](../agent-memory-systems/thalo-type-comparison.md) already flagged that their opinion entity (Claim / Reasoning / Caveats sections) maps to Toulmin's claim / grounds+warrant / qualifier+rebuttal — and that we lack structured sections for argument-shaped notes.
 
-3. **The affordance table.** [Types mark affordances](../notes/instructions-are-typed-callables.md) lists `claim` affordances as: verify, gather evidence, challenge, use as assumption. These are Toulmin operations: verifying grounds, strengthening backing, raising rebuttals.
+3. **The affordance table.** [Types mark affordances](./instructions-are-typed-callables.md) lists `claim` affordances as: verify, gather evidence, challenge, use as assumption. These are Toulmin operations: verifying grounds, strengthening backing, raising rebuttals.
 
 4. **Distribution.** 30 of 62 notes (48%) currently carry `has-claim`. That's not a trait — it's the dominant document shape, which argues for a base type.
 
@@ -128,9 +128,9 @@ Relevant Notes:
 
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — foundation: claim titles are Toulmin claims; `structured-claim` extends the convention with required argument sections while leaving the title convention available to all notes
 - [Thalo type comparison](../agent-memory-systems/thalo-type-comparison.md) — converges: Thalo's opinion entity (Claim/Reasoning/Caveats) is the same Toulmin shape; this note resolves the gap they flagged
-- [programming-language types mark affordances](../notes/instructions-are-typed-callables.md) — foundation: the `claim` affordance table lists Toulmin operations without naming them
+- [programming-language types mark affordances](./instructions-are-typed-callables.md) — foundation: the `claim` affordance table lists Toulmin operations without naming them
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — enables: `structured-claim` has concrete structural requirements (sections), making it verifiable in the way `has-claim` as a trait was not
 - [collections and types](../reference/collections-and-types.md) — implemented-by: the path-valued model under which `structured-claim` is a collection-local contract
-- [deterministic validation should be a script](../notes/deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
+- [deterministic validation should be a script](./deterministic-validation-should-be-a-script.md) — enables: the section-presence checks are hard-oracle, movable to a script
 - [constraining](./definitions/constraining.md) — foundation: the note → structured-claim promotion path is the constraining pattern applied to the type system
 - [Toulmin Argument (Purdue OWL)](https://owl.purdue.edu/owl/general_writing/academic_writing/historical_perspectives_on_argumentation/toulmin_argument.html) — source: the canonical framework this note adapts

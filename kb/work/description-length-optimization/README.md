@@ -56,7 +56,7 @@ Out of scope:
 - The active navigation path uses descriptions both for five-hit triage and scoped path-plus-description slices: [navigation](../../reference/navigation.md).
 - Complete generated listings moved off the agent read path in [ADR 025](../../reference/adr/025-complete-generated-indexes-are-build-time-only.md).
 - Tag READMEs are selective by default and have their own document-weight contract: [tag-readme type](../../types/tag-readme.md).
-- Fixed descriptions trade query-specificity for low read cost and reliable availability: [pointer design tradeoffs](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md).
+- Fixed descriptions trade query-specificity for low read cost and reliable availability: [pointer design tradeoffs](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md).
 
 ## Starting evidence, not a decision
 

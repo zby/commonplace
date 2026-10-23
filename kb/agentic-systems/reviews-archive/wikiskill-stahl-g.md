@@ -49,4 +49,4 @@ The [exact analysis](../reports/retained-archive/AAS-2026-09-17-wikiskill-stahl-
 ---
 
 - [Theory refinement](../../notes/definitions/theory-refinement.md) — defined-in: the distinction between revising retained rules and establishing their evidence-responsive correction
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — defined-in: consumer, channel, force and horizon used to distinguish instruction delivery from activation
+- [Behavioral authority](../../theory/definitions/behavioral-authority.md) — defined-in: consumer, channel, force and horizon used to distinguish instruction delivery from activation

@@ -69,6 +69,6 @@ Relevant notes:
 - [Eigenius](../../agentic-systems/reviews/eigenius.md) — see-also: pinned code-grounded authority for the system behavior this workshop maps into lineage theory
 - [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) — grounds: the theoretical spine these contact points map onto
 - [model-provenance.md](./model-provenance.md) — is-evidence-for: event-side model recording
-- [history has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md) — is-evidence-for: their authoring-time chain discipline is the claim practiced as method
-- [criteria edits invalidate verdicts; process edits invalidate artifacts](../../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: their content-addressed proposition/witness edges show the watched-edge mechanism, while incomplete execution identities expose its boundary
-- [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: their drift detectors (D35) enforce the same rule at load time
+- [history has one chance to become checkable](../../theory/history-has-one-chance-to-become-checkable.md) — is-evidence-for: their authoring-time chain discipline is the claim practiced as method
+- [criteria edits invalidate verdicts; process edits invalidate artifacts](../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: their content-addressed proposition/witness edges show the watched-edge mechanism, while incomplete execution identities expose its boundary
+- [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: their drift detectors (D35) enforce the same rule at load time

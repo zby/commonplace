@@ -115,8 +115,8 @@ The shipped skill is also pull or host-loaded instruction, not learned read-back
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CocoIndex maintains stores, but a downstream app still has to query or load them.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: pipeline code, LMDB state, target stores, source feeds, and skill files have different forms and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: target rows, vectors, graph records, and generated files advise downstream agents as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: pipeline declarations, connector handlers, target schemas, and the shipped skill shape behavior with instruction, routing, validation, and ranking force.
-- [Keep compiled views aligned](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - relates: CocoIndex is mostly a freshness and incremental-update mechanism for derived context stores.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: CocoIndex maintains stores, but a downstream app still has to query or load them.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: pipeline code, LMDB state, target stores, source feeds, and skill files have different forms and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: target rows, vectors, graph records, and generated files advise downstream agents as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: pipeline declarations, connector handlers, target schemas, and the shipped skill shape behavior with instruction, routing, validation, and ranking force.
+- [Keep compiled views aligned](../../theory/agent-memory-requirements/keep-compiled-views-aligned.md) - relates: CocoIndex is mostly a freshness and incremental-update mechanism for derived context stores.

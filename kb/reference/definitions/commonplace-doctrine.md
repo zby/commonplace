@@ -33,9 +33,9 @@ The compound is the technical term. Bare *doctrine* is ordinary English — a st
 
 Relevant Notes:
 
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) — defined-in: the authority-path family Commonplace doctrine belongs to, as its natural-language standing member
-- [Intent-framed delegation is a control regime, not a short prompt](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — rests-on: why shared meaning lets a handoff be short without supplying the regime's authority
-- [A capable agent needs methodology selection, not just relevant knowledge](../../notes/capable-agents-need-methodology-selection.md) — rests-on: knowing several methods selects none; the doctrine is the selection
-- [Borrowing can operate through retained artifacts or weight activation](../../notes/borrowing-can-operate-through-retained-artifacts-or-weight-activation.md) — rests-on: the retained delta over the weight-resident repertoire
-- [Commitment, not derivation, creates new ground truth](../../notes/commitment-not-derivation-creates-new-ground-truth.md) — rests-on: evidence becomes doctrine only by adoption
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) — see-also: the contrasting family, consumed as evidence or advice without binding
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) — defined-in: the authority-path family Commonplace doctrine belongs to, as its natural-language standing member
+- [Intent-framed delegation is a control regime, not a short prompt](../../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — rests-on: why shared meaning lets a handoff be short without supplying the regime's authority
+- [A capable agent needs methodology selection, not just relevant knowledge](../../theory/capable-agents-need-methodology-selection.md) — rests-on: knowing several methods selects none; the doctrine is the selection
+- [Borrowing can operate through retained artifacts or weight activation](../../theory/borrowing-can-operate-through-retained-artifacts-or-weight-activation.md) — rests-on: the retained delta over the weight-resident repertoire
+- [Commitment, not derivation, creates new ground truth](../../theory/commitment-not-derivation-creates-new-ground-truth.md) — rests-on: evidence becomes doctrine only by adoption
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) — see-also: the contrasting family, consumed as evidence or advice without binding

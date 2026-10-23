@@ -29,7 +29,7 @@ Microsoft's product page states that the Smart Client Software Factory is retire
 
 ## Connections Found
 
-This official page is a narrow institutional-outcome anchor for [the KB's family-scoped software-factory ontology](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md): it confirms that one concrete factory packaged guidance, examples, patterns, and Visual Studio extensions, and that Microsoft retired that product. It complements [Greenfield's broad 2007 program account](./greenfield-mass-customizing-software-factories-2007.ingest.md) with a product-level disposition. It also independently corroborates only the retirement boundary in [Santos's retrospective](./jezz-santos-i-once-worked-in-buenos-aires.ingest.md); Santos remains the source for the claimed organizational pivot, successor-tool history, and contrasting Aspen outcome.
+This official page is a narrow institutional-outcome anchor for [the KB's family-scoped software-factory ontology](../theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md): it confirms that one concrete factory packaged guidance, examples, patterns, and Visual Studio extensions, and that Microsoft retired that product. It complements [Greenfield's broad 2007 program account](./greenfield-mass-customizing-software-factories-2007.ingest.md) with a product-level disposition. It also independently corroborates only the retirement boundary in [Santos's retrospective](./jezz-santos-i-once-worked-in-buenos-aires.ingest.md); Santos remains the source for the claimed organizational pivot, successor-tool history, and contrasting Aspen outcome.
 
 ## Extractable Value
 

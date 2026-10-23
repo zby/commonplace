@@ -45,5 +45,5 @@ This review covers the shared runtime, learning/memory controls and principal OS
 
 ---
 
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the two-way relation between represented Actor limitations and later practice selection.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: the two-way relation between represented Actor limitations and later practice selection.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger claim requiring operative theory criticism and attributable improved capacity.

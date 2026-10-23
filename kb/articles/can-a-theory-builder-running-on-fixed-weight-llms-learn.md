@@ -4,25 +4,25 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/tentative-theory.md
-  - kb/notes/definitions/addressable-theory.md
-  - kb/notes/definitions/operative-change.md
-  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
-  - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
-  - kb/notes/retained-theories-may-improve-sample-efficiency.md
-  - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
-  - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
-  - kb/notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
-  - kb/notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
-  - kb/notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
-  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
-  - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
-  - kb/notes/definitions/constraining.md
-  - kb/notes/definitions/codification.md
-  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
-  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
-  - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
+  - kb/theory/definitions/theory-builder.md
+  - kb/theory/definitions/tentative-theory.md
+  - kb/theory/definitions/addressable-theory.md
+  - kb/theory/definitions/operative-change.md
+  - kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
+  - kb/theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+  - kb/theory/retained-theories-may-improve-sample-efficiency.md
+  - kb/theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md
+  - kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+  - kb/theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
+  - kb/theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
+  - kb/theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
+  - kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md
+  - kb/theory/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/theory/definitions/constraining.md
+  - kb/theory/definitions/codification.md
+  - kb/theory/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+  - kb/theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
 ---
 
 # Can a Theory Builder Running on Fixed-Weight LLMs Learn?
@@ -59,9 +59,9 @@ We propose a learning paradigm based on
 
 A system that runs this cycle over explicit theories is a **theory
 builder**. Faced with a problem, it proposes a
-[tentative theory](../notes/definitions/tentative-theory.md) as a solution.
+[tentative theory](../theory/definitions/tentative-theory.md) as a solution.
 The knowledge base behind this article
-[defines the theory builder](../notes/definitions/theory-builder.md) by four
+[defines the theory builder](../theory/definitions/theory-builder.md) by four
 conditions on how it treats such theories:
 
 1. it states them in natural or formal language, so that identifiable units
@@ -85,13 +85,13 @@ Fully automated means that computation performs the roles the cycle needs:
 noticing problems in the builder's own theories and work, and formulating,
 criticizing, revising, and selecting its theories. Users still set the tasks
 and judge the results. The knowledge base
-[calls a builder autonomous](../notes/definitions/theory-builder.md#qualifiers)
+[calls a builder autonomous](../theory/definitions/theory-builder.md#qualifiers)
 when computation also changes the method that does this work; the approach
 described below covers that.
 
 The builder is a whole system: an LLM together with retained knowledge,
 tools, tests, evaluators, and control code.
-[The deployed system, not the model, is the unit that learns](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
+[The deployed system, not the model, is the unit that learns](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
 prompts, retrieval, tools, and runtime policy jointly determine what it does,
 so the learning claim is made about that whole.
 
@@ -122,7 +122,7 @@ and the Gödel machine's optimality result is a formal theorem.
 In these machines the environment, the machine, and the utility function
 enter as axioms, and a change is admitted by a proof under them. The paper states the consequence: the machine "must ignore those
 self-improvements whose effectiveness it cannot prove." This makes it
-[a proof-governed case of self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+[a proof-governed case of self-modification](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 It is rigorous relative to its formalization and silent about whether that
 formalization is adequate, since a valid proof under the wrong premises can
 certify a change nobody wanted. The machine's starting program is costly
@@ -138,7 +138,7 @@ We know of no formalization of that operation, and the computer scientist Peter 
 there cannot be one: the judgments that relate a program to the world cannot
 be reduced to formulated criteria, so the theory of a program is bound to the
 people who hold it. As the knowledge base
-[reconstructs that inference](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
+[reconstructs that inference](../theory/naur-equates-machine-execution-with-formulated-criteria.md),
 it needs one further premise: that a computer can make a judgment only by
 executing criteria formulated in advance. Grant the premise and the work
 divides in two. What can be formalized goes to machines, and what cannot
@@ -146,12 +146,12 @@ stays with people. Schmidhuber's constructions develop the first half as far
 as it goes, and Naur's conclusion is what the second half implies.
 
 This division leaves out a middle, because narrowing what an artifact can be
-taken to mean is a [gradient](../notes/definitions/constraining.md). Defining
+taken to mean is a [gradient](../theory/definitions/constraining.md). Defining
 a term rules out some readings. A convention rules out more. A structured
 document assigns meaning to positions in it. A schema or a validator rejects
 the readings it does not admit. Only the last steps cross into a symbolic
 medium, where a formal consumer assigns the consequences. That crossing is
-[codification](../notes/definitions/codification.md). Every earlier step leaves natural language that an interpreter still has to read.
+[codification](../theory/definitions/codification.md). Every earlier step leaves natural language that an interpreter still has to read.
 The choice between formalizing and leaving it to people treats the far end
 of that gradient as the whole of it.
 
@@ -190,12 +190,12 @@ where its learning happens: in explicit, criticizable theories, and not only
 in changes to model weights. Three payoffs follow from that difference.
 
 **Learning without retraining.** New knowledge
-[becomes usable as soon as it is retained](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
+[becomes usable as soon as it is retained](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
 so the builder adapts at deployment time instead of waiting for the next
 training run.
 
 **Fewer observations after a shift.** A retained theory may
-[reduce the observations needed after a shift](../notes/retained-theories-may-improve-sample-efficiency.md)
+[reduce the observations needed after a shift](../theory/retained-theories-may-improve-sample-efficiency.md)
 that preserves the structure it describes. This is the sample-efficiency
 advantage most often claimed for explicit knowledge, and the linked note
 states the conditions it depends on.
@@ -205,20 +205,20 @@ as stated text: prose, and code where a part has been codified. It
 can be read, diffed, tested, and reverted.
 
 The reader can be an agent:
-[inspectability is a property of the artifact's form](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
+[inspectability is a property of the artifact's form](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
 so agents can do the reading at a volume people could not. What the system
 has learned is available for oversight now, whatever the pace of weight
 interpretability research.
 
 Readability has a limit.
-[A legible artifact need not be the one actually driving behaviour](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
+[A legible artifact need not be the one actually driving behaviour](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
 That is why the learning test below alters the retained state instead of
 inspecting it: the medium makes the question testable, and the test settles it.
 
 Three further advantages are conjectural. The payoffs above follow from the
 form of the knowledge; these concern how well the loop learns. The knowledge
 base develops each in its
-[research companion](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures).
+[research companion](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures).
 
 *Criticism carries content.* When a theory fails, the builder formulates
 why. A stated diagnosis directs the next attempt differently from a bare
@@ -233,7 +233,7 @@ its scorer saw in a quarter of runs and its proposer was never told about.
 *Theories can be revised in parts.* A theory whose assumptions and parts
 can be inspected and revised individually lets criticism name a part, and
 lets a revision keep the rest. The knowledge base
-[defines this property](../notes/definitions/addressable-theory.md). It comes
+[defines this property](../theory/definitions/addressable-theory.md). It comes
 in degrees, and the comparison is with a builder that criticizes and replaces
 each theory whole. Naming a part can focus investigation and preserve useful
 knowledge through a revision. It can also locate a fault in the wrong part.
@@ -248,14 +248,14 @@ Explicit knowledge also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false
 abstraction can misdirect many decisions, and a correct one that retrieval
 misses is never used. Keeping episode records alongside distilled rules
-[preserves a route for re-examining a rule](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
+[preserves a route for re-examining a rule](../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
 that turns out to be wrong. Construction, retrieval, maintenance, and
 mistakes have to be counted on both sides of any comparison with a
 weights-only learner.
 
 The advantages and the costs are both empirical questions. The claim that
 matters here is that the paradigm is possible. The companion states
-[what the research program claims and what it does not](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path).
+[what the research program claims and what it does not](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path).
 
 ## Compatible with the Bitter Lesson
 
@@ -265,7 +265,7 @@ search and learning. That is a claim about how the content that determines a
 system's behaviour gets made. It says nothing about the form the content is
 kept in. Its folk version, *structure loses to weights*, turns it into a
 claim about form. The lesson
-[selects production methods, not representational forms](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+[selects production methods, not representational forms](../theory/the-bitter-lesson-selects-production-methods-not-representational.md).
 
 Sutton himself leans toward the folk version. In a 2026
 [interview](https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again),
@@ -295,7 +295,7 @@ scalable learning. It is between **human-supplied knowledge** and
 
 One condition attaches. A builder that starts from hand-written theories and
 method, as the one described here does, fits the lesson
-[only if its learning outgrows that starting point](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
+[only if its learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation must come to supply the task-specific knowledge each new demand
 needs.
 
@@ -313,11 +313,11 @@ instructions derived from them, which later runs read before acting.
 This gives a direct empirical test in two parts. First, withholding or
 altering the retained state should change later behaviour. A change that
 passes this test is shown to be
-[operative](../notes/definitions/operative-change.md): later behaviour
+[operative](../theory/definitions/operative-change.md): later behaviour
 depends on it. Second, the changed behaviour should be better. Showing that
 a theory was formulated, criticized, and revised, and that the revision was
 used,
-[does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md),
+[does not by itself establish improved capacity](../theory/a-complete-theory-path-does-not-establish-improved-capacity.md),
 because a builder can retain and faithfully apply a bad rule. The
 [testing supplement](./testing-whether-a-theory-builder-learns.md) gives
 tests that separate an operative change from an improvement, and states the
@@ -347,7 +347,7 @@ A builder that learns could also keep a fixed method. Reflection is chosen
 because an improvement to the method is paid for once and reused by every
 later learning episode. Over a long horizon its return can exceed that of
 immediate learning, and where it does,
-[an optimal learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
+[an optimal learning strategy invests in its own machinery](../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 That return requires method improvements to compound: each one makes later
 improvement cheaper, more reliable, or possible where it was not. Such
 compounding is where recursive self-improvement begins. It takes more than
@@ -368,5 +368,5 @@ proposes a second arrangement whose failures are more visible. The
 [survey](./which-existing-self-improving-systems-are-theory-builders.md) places
 eighteen existing self-improving systems against the four conditions and
 judges their reported gains separately. The
-[definition](../notes/definitions/theory-builder.md) states exactly
+[definition](../theory/definitions/theory-builder.md) states exactly
 what a theory builder requires and what it leaves open.

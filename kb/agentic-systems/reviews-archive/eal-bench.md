@@ -40,4 +40,4 @@ The workflow can criticize memory content. Whether that criticism improves futur
 Provider and LangMem internals, excluded studies, other domains' detailed semantics and deployment effects remain outside the evidence boundary. Current-pin paired memory/control runs, audited free-text interpretations and repeated interventions would change the empirical assessment. The full routes, quotations, limitations and specialist reconciliation are in the [retained exact analysis](../reports/retained-archive/AAS-2026-09-25-eal-bench-01/result.md) — see-also.
 
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the separate requirement for criticism to improve future capacity.
-- [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: a connected self-representation, not memory persistence alone.
+- [Reflective system](../../theory/definitions/reflective-system.md) — defined-in: a connected self-representation, not memory persistence alone.

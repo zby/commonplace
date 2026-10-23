@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source serves as a mathematical comparator for [A borrowed pattern transfers only as far as source and target share a mechanism](../notes/borrowed-patterns-transfer-only-over-shared-mechanism.md). Its account identifies how geometric overlap becomes wave-packet concentration or, after discretization, concentration on arithmetic progressions. Those correspondences explain why results bear on another problem. The same account also bounds transfer: wave-packet decomposition leaves interference to be controlled, so a geometric result does not settle every analytic conjecture. This comparison clarifies the note's distinction between a justified transfer and an analogy; it does not establish shared mechanisms between Kakeya geometry and agent-operated KBs.
+The source serves as a mathematical comparator for [A borrowed pattern transfers only as far as source and target share a mechanism](../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md). Its account identifies how geometric overlap becomes wave-packet concentration or, after discretization, concentration on arithmetic progressions. Those correspondences explain why results bear on another problem. The same account also bounds transfer: wave-packet decomposition leaves interference to be controlled, so a geometric result does not settle every analytic conjecture. This comparison clarifies the note's distinction between a justified transfer and an analogy; it does not establish shared mechanisms between Kakeya geometry and agent-operated KBs.
 
 ## Extractable Value
 

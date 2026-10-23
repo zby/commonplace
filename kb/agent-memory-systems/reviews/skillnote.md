@@ -148,9 +148,9 @@ The trace-extracted draft path is also more opportunistic than Commonplace's cur
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SkillNote storage becomes behavior-shaping only when adapters sync, expose, or read back active skills.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: registry rows, synced files, import metadata, ratings, comments, prompts, and MCP tools have different forms and authorities.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: prompt-watch turns interaction traces into skill candidates while preserving manual promotion.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: drafts, comments, ratings, and usage records provide evidence or advice before they become instructions.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: published and synced `SKILL.md` files can instruct agents through native skill systems.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: SkillNote's targeting relies on slugs, collections, paths, tool names, and descriptions.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: SkillNote storage becomes behavior-shaping only when adapters sync, expose, or read back active skills.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: registry rows, synced files, import metadata, ratings, comments, prompts, and MCP tools have different forms and authorities.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - relates: prompt-watch turns interaction traces into skill candidates while preserving manual promotion.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: drafts, comments, ratings, and usage records provide evidence or advice before they become instructions.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: published and synced `SKILL.md` files can instruct agents through native skill systems.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: SkillNote's targeting relies on slugs, collections, paths, tool names, and descriptions.

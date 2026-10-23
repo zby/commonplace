@@ -127,9 +127,9 @@ Session checkpoints are intentionally weakly governed. They preserve continuity,
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Basic Memory's stored Markdown graph from MCP pull tools and host hook push.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - supports separating Markdown notes, database mirrors, search/vector indexes, schemas, and plugin hooks.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session checkpoints and reflection/capture skills as trace-learning material.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why Basic Memory's typed frontmatter and project identifiers make pushed briefs more targetable.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies schemas, MCP tool annotations, output styles, and hooks as behavior-shaping control surfaces.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies ordinary notes, observations, relations, and session checkpoints as advisory remembered context.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes Basic Memory's stored Markdown graph from MCP pull tools and host hook push.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - supports separating Markdown notes, database mirrors, search/vector indexes, schemas, and plugin hooks.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - frames session checkpoints and reflection/capture skills as trace-learning material.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - explains why Basic Memory's typed frontmatter and project identifiers make pushed briefs more targetable.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies schemas, MCP tool annotations, output styles, and hooks as behavior-shaping control surfaces.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies ordinary notes, observations, relations, and session checkpoints as advisory remembered context.

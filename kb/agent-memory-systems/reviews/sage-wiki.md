@@ -141,8 +141,8 @@ Authority at consumption is advisory context. Articles, captured learnings, onto
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: sage-wiki turns conversation captures and session logs into durable source files, learnings, and ontology rows.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: sage-wiki stores and indexes memory, but agents receive it only through explicit search/query/read paths or by following generated instructions.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: sage-wiki requires separating Markdown articles, SQLite tables, embeddings, ontology edges, trust records, generated skills, and MCP tools by substrate/form/lineage/authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: compiled articles, captures, learnings, ontology entities, and confirmed outputs mostly advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: skill templates, MCP tool schemas, compile tiers, trust policy, lint checks, and query ranking code constrain future behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: capture and scribe extract reusable project memory from agent conversation traces.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: sage-wiki stores and indexes memory, but agents receive it only through explicit search/query/read paths or by following generated instructions.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: sage-wiki requires separating Markdown articles, SQLite tables, embeddings, ontology edges, trust records, generated skills, and MCP tools by substrate/form/lineage/authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: compiled articles, captures, learnings, ontology entities, and confirmed outputs mostly advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: skill templates, MCP tool schemas, compile tiers, trust policy, lint checks, and query ranking code constrain future behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: capture and scribe extract reusable project memory from agent conversation traces.

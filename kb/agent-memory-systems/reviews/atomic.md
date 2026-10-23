@@ -128,8 +128,8 @@ The automatic write path is corpus-derived rather than trace-extracted. It consu
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Atomic stores a large memory substrate, but most agent read-back is still tool-pull, with scheduled reports as a push exception.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: Atomic bundles atoms, vectors, indexes, wiki/report outputs, prompts, tools, and ledgers under different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: atoms, wiki articles, report findings, and chat citations mostly advise rather than enforce behavior.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - distinguishes: MCP tool schemas, report scopes, scheduler rules, edit guards, and routing filters define behavior rather than merely inform it.
-- [Storage substrate](../../notes/definitions/storage-substrate.md) - relates: Atomic's default durable memory is SQLite plus derived vector/FTS state, not files as source of truth.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Atomic stores a large memory substrate, but most agent read-back is still tool-pull, with scheduled reports as a push exception.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: Atomic bundles atoms, vectors, indexes, wiki/report outputs, prompts, tools, and ledgers under different forms and authorities.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: atoms, wiki articles, report findings, and chat citations mostly advise rather than enforce behavior.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - distinguishes: MCP tool schemas, report scopes, scheduler rules, edit guards, and routing filters define behavior rather than merely inform it.
+- [Storage substrate](../../theory/definitions/storage-substrate.md) - relates: Atomic's default durable memory is SQLite plus derived vector/FTS state, not files as source of truth.

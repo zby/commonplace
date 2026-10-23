@@ -28,7 +28,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-This source supplies a historical anchor for distinguishing the refinement family from its individual implementations. The KB's [representational form](../notes/definitions/representational-form.md) vocabulary helps describe its logical, probabilistic, and neural objects without making one form constitutive of the whole family. Its emphasis on predictive performance provides a useful counterpoint to [explanatory-reach assessment](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md): revising knowledge to fit evidence does not by itself assess whether a criticizable explanation predicts what changes when its premises change. Adding that assessment would be a Commonplace extension to candidate evaluation, not a historical definition established by this paper.
+This source supplies a historical anchor for distinguishing the refinement family from its individual implementations. The KB's [representational form](../theory/definitions/representational-form.md) vocabulary helps describe its logical, probabilistic, and neural objects without making one form constitutive of the whole family. Its emphasis on predictive performance provides a useful counterpoint to [explanatory-reach assessment](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md): revising knowledge to fit evidence does not by itself assess whether a criticizable explanation predicts what changes when its premises change. Adding that assessment would be a Commonplace extension to candidate evaluation, not a historical definition established by this paper.
 
 ## Extractable Value
 
@@ -42,7 +42,7 @@ This source supplies a historical anchor for distinguishing the refinement famil
 
 This is a short historical review, not a systematic comparison. Its learning curves are explicitly notional; they should not be treated as measured results. The reported application successes omit enough protocol, uncertainty, and baseline detail that the cited primary studies are needed for quantitative design claims. The authors' involvement gives a valuable account of the research program but does not establish comprehensive coverage or identify the conditions under which engineered knowledge harms learning.
 
-Structural revision enlarges what some methods can learn, yet the review does not isolate the effects of all fixed representations and task choices. As [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) explains, improvement within an update space cannot alone validate choices outside it. Nor does this paper establish that predictive improvement preserves an explanatory mechanism, yields causal understanding, or transfers to contemporary LLM-operated knowledge bases.
+Structural revision enlarges what some methods can learn, yet the review does not isolate the effects of all fixed representations and task choices. As [learning inside a fixed decomposition](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) explains, improvement within an update space cannot alone validate choices outside it. Nor does this paper establish that predictive improvement preserves an explanatory mechanism, yields causal understanding, or transfers to contemporary LLM-operated knowledge bases.
 
 ## Recommended Next Action
 

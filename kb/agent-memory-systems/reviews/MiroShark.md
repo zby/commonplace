@@ -152,8 +152,8 @@ MiroShark is a graph-centered simulation memory system with unusually broad publ
 Relevant Notes:
 
 - [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: MiroShark converts simulation actions and report-agent traces into durable graph/report artifacts.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MiroShark has both stored graph memory and concrete read-back paths through preparation, reports, MCP, and APIs.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: graph edges, embeddings, generated configs, reports, reasoning traces, and export surfaces differ by substrate, form, lineage, and authority.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: graph facts, transcripts, reports, public exports, and stats are mostly evidence/context unless a downstream workflow gives them stronger force.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: generated simulation configs, profile prompts, route handlers, graph retrieval tools, and report-agent tool definitions shape behavior.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: runtime traces can become retained artifacts, but their promotion boundary must be explicit.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: MiroShark has both stored graph memory and concrete read-back paths through preparation, reports, MCP, and APIs.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: graph edges, embeddings, generated configs, reports, reasoning traces, and export surfaces differ by substrate, form, lineage, and authority.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: graph facts, transcripts, reports, public exports, and stats are mostly evidence/context unless a downstream workflow gives them stronger force.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: generated simulation configs, profile prompts, route handlers, graph retrieval tools, and report-agent tool definitions shape behavior.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: runtime traces can become retained artifacts, but their promotion boundary must be explicit.

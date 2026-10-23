@@ -38,7 +38,7 @@ identified by the agent. It extended an outside-paper discussion through
 methodology already available in Commonplace; it was not solely a response
 to an observed ingest failure.
 
-The agent applied the [intent-framed delegation methodology](../../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
+The agent applied the [intent-framed delegation methodology](../../../theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)
 to the existing instructions. It proposed clearer purpose and stopping
 conditions, consolidation of repeated report requirements, removal of a
 numeric value-item quota, and separation of general empirical analysis from

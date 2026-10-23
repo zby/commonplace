@@ -110,8 +110,8 @@ Selection is bounded by `k`, component top-k values, graph depth, and the existe
 
 Relevant Notes:
 
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: LLM-Wiki-v3 separates Markdown knowledge, schemas, source spans, indexes, audit logs, and eval artifacts by substrate, form, lineage, and authority.
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: the implemented system stores and retrieves memory, but does not push it into agent context.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: accepted wiki pages and raw sources serve as evidence, reference, and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: schemas, extractor instructions, validation, span checks, review promotion, and retrieval policy carry binding force.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: graph and lexical retrieval depend on ids, aliases, typed edges, wikilinks, tags, and query terms being available as selection signals.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: LLM-Wiki-v3 separates Markdown knowledge, schemas, source spans, indexes, audit logs, and eval artifacts by substrate, form, lineage, and authority.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - classifies: the implemented system stores and retrieves memory, but does not push it into agent context.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: accepted wiki pages and raw sources serve as evidence, reference, and context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: schemas, extractor instructions, validation, span checks, review promotion, and retrieval policy carry binding force.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: graph and lexical retrieval depend on ids, aliases, typed edges, wikilinks, tags, and query terms being available as selection signals.

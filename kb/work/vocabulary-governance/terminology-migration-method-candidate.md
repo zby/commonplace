@@ -27,7 +27,7 @@ The natural-language terminology workshop classified and independently verified 
 - independent verification found semantic and executable-surface leftovers, and a later whole-table pass found four further wording defects;
 - the final broad search remained nonzero, but its survivors were classified and explainable.
 
-The durable semantic claims have already moved into [representational form](../../notes/definitions/representational-form.md) and [load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md). This candidate retains only the procedural hypothesis that has not yet earned a prescriptive home.
+The durable semantic claims have already moved into [representational form](../../theory/definitions/representational-form.md) and [load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md). This candidate retains only the procedural hypothesis that has not yet earned a prescriptive home.
 
 ## Test on the next vocabulary shift
 

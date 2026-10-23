@@ -140,8 +140,8 @@ The sharpest design difference is the treatment of trace-extracted state. cass-m
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: cass-memory stores playbooks and diaries, but task memory usually affects an agent only after explicit retrieval or installed prompt/hook wiring.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: raw sessions, diary JSON, playbook bullets, embedding caches, logs, MCP schemas, and trauma guards have different authority despite sharing one product.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: diaries, history snippets, query results, and many playbook returns advise as evidence or context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: exported prompt rules, MCP tool contracts, validators, scoring policies, and trauma guards shape or enforce later behavior.
-- [Use trace extraction](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: cass-memory turns session logs and feedback traces into durable procedural rules, anti-patterns, and safety gates.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: cass-memory stores playbooks and diaries, but task memory usually affects an agent only after explicit retrieval or installed prompt/hook wiring.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: raw sessions, diary JSON, playbook bullets, embedding caches, logs, MCP schemas, and trauma guards have different authority despite sharing one product.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: diaries, history snippets, query results, and many playbook returns advise as evidence or context.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: exported prompt rules, MCP tool contracts, validators, scoring policies, and trauma guards shape or enforce later behavior.
+- [Use trace extraction](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - exemplifies: cass-memory turns session logs and feedback traces into durable procedural rules, anti-patterns, and safety gates.

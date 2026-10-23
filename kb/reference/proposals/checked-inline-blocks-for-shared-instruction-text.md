@@ -33,7 +33,7 @@ This is the natural-language equivalent of a missing function boundary, except t
 - one authoritative definition for maintainers; and
 - literal, sufficient instructions in the bounded context that performs the work.
 
-The existing rule that [a derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) rules out a trusted, hand-maintained middle state. The question is which checked or absent form fits instruction text.
+The existing rule that [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) rules out a trusted, hand-maintained middle state. The question is which checked or absent form fits instruction text.
 
 ## Option space
 
@@ -59,7 +59,7 @@ This is closer to macro expansion than ordinary function calling: execution sees
 
 ### Generate consuming instructions from a shared fragment
 
-Store the common block once and materialize complete skills or worker briefs through a build or generation step. Consumers still receive literal text with prescriptive force, while the generator owns agreement. This generalizes beyond the immediate pair and aligns with [generating instructions at build time](../../notes/generate-instructions-at-build-time.md), but it introduces a source/artifact lifecycle and does not currently cover the uninitialized Commonplace source checkout. It is adjacent to, but narrower than, the open proposal for [channel-compiled instruction artifacts](./channel-compiled-instruction-artifacts.md): the variable here is shared instruction content, not execution environment.
+Store the common block once and materialize complete skills or worker briefs through a build or generation step. Consumers still receive literal text with prescriptive force, while the generator owns agreement. This generalizes beyond the immediate pair and aligns with [generating instructions at build time](../../theory/generate-instructions-at-build-time.md), but it introduces a source/artifact lifecycle and does not currently cover the uninitialized Commonplace source checkout. It is adjacent to, but narrower than, the open proposal for [channel-compiled instruction artifacts](./channel-compiled-instruction-artifacts.md): the variable here is shared instruction content, not execution environment.
 
 ## Forces
 
@@ -111,9 +111,9 @@ Choosing the exact marker syntax, defining a general natural-language module sys
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
-- [Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md) — see-also: supplies the untested behavioral comparison between a runtime reference and a generated local view; this proposal adds the deterministic-equality and adoption constraints
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
-- [Model-resolved indirection adds interpretation work to LLM execution](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: accounts for the execution cost of making a delegated writer resolve an additional instruction reference
-- [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md) — alternative: grounds the generated-artifact option and its standalone-consumer property
+- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
+- [Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) — see-also: supplies the untested behavioral comparison between a runtime reference and a generated local view; this proposal adds the deterministic-equality and adoption constraints
+- [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
+- [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: accounts for the execution cost of making a delegated writer resolve an additional instruction reference
+- [Generate KB skills at build time, don't parameterise them](../../theory/generate-instructions-at-build-time.md) — alternative: grounds the generated-artifact option and its standalone-consumer property
 - [ADR 022 — Active vocabulary and write-path first mentions](../adr/022-active-vocabulary-and-write-path-first-mentions.md) — current-state: establishes `cp-skill-write` as the operational home for universal first-mention authoring behavior

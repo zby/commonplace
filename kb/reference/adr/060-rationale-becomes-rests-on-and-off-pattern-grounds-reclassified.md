@@ -62,5 +62,5 @@ The global type layer now participates in collection routing and collection-conf
 Relevant Notes:
 
 - [Directional identifiers use the source as subject](./058-directional-identifiers-use-source-as-subject.md) — implements: the grammar invariant this migration applies
-- [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the independent reader-need test separating rationale, premise, and evidence journeys
+- [Links encode conditional possibilities, not obligations](../../theory/links-encode-conditional-possibilities-not-obligations.md) — rests-on: the independent reader-need test separating rationale, premise, and evidence journeys
 - [Collection](../definitions/collection.md) — defined-in: the authoring-contract boundary now applied to the global type surface

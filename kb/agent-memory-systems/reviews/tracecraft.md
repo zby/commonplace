@@ -113,9 +113,9 @@ Authority at consumption is mostly advisory context, except for coordination com
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tracecraft stores shared state and traces, but agents must explicitly read them for context.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: coordination JSON, artifacts, session traces, and local config have different substrates, forms, lineage, and authority.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Tracecraft selection depends on explicit keys, step ids, agent ids, artifact names, and session ids.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrast: Tracecraft captures traces but does not yet extract behavior-shaping artifacts from them.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: memory values, messages, handoffs, artifacts, and session parts are evidence/reference unless a host agent gives them stronger authority.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: claims, waits, config, and mirror cursor state affect routing and enforcement rather than serving as ordinary knowledge.
+- [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Tracecraft stores shared state and traces, but agents must explicitly read them for context.
+- [Axes of artifact analysis](../../theory/axes-of-artifact-analysis.md) - applies: coordination JSON, artifacts, session traces, and local config have different substrates, forms, lineage, and authority.
+- [Rule-based context selection needs a pre-existing signal](../../theory/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: Tracecraft selection depends on explicit keys, step ids, agent ids, artifact names, and session ids.
+- [Use trace extraction as meta-learning](../../theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - contrast: Tracecraft captures traces but does not yet extract behavior-shaping artifacts from them.
+- [Knowledge artifact](../../theory/definitions/knowledge-artifact.md) - classifies: memory values, messages, handoffs, artifacts, and session parts are evidence/reference unless a host agent gives them stronger authority.
+- [System-definition artifact](../../theory/definitions/system-definition-artifact.md) - classifies: claims, waits, config, and mirror cursor state affect routing and enforcement rather than serving as ordinary knowledge.
