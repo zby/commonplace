@@ -28,7 +28,7 @@ dependency and the standard grounding gate. The writer invokes
 [`cp-skill-ground`](../../../instructions/cp-skill-ground/SKILL.md), while the
 target owns its interpretation and transfer argument. The rollout's decision
 not to add normalized claim identifiers is bounded by
-[the retained evidence](../../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
+[the retained evidence](../../../reports/retained/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
 Those results need no second implementation.
 
 All fourteen candidates in the literature-disposition cohort are resolved:

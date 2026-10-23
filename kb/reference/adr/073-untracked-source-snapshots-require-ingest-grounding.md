@@ -184,4 +184,4 @@ Relevant Notes:
 - [Grounding alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) — implemented-by: the sole semantic check for quote-backed and snapshot-required source uses
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — procedure: retain bounded exact quotes or declare the snapshot-required route
 - [Ingest-report type](../../types/ingest-report.md) — see-also: tracked Quotes shape and source-record boundary consumed by the decision
-- [A quotes-route rollout grounded more claim uses without earning claim identifiers](../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — see-also: the bounded cohort record behind the V1 decision to omit claim identifiers, deduplication, and reconciliation
+- [A quotes-route rollout grounded more claim uses without earning claim identifiers](../../reports/retained/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — see-also: the bounded cohort record behind the V1 decision to omit claim identifiers, deduplication, and reconciliation

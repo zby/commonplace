@@ -34,7 +34,7 @@ How KB content commits to claims and how those claims stay tied to what supports
 - [A citation cannot assert more fidelity than its capture preserved](../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md) — capture fixes the evidence a citation can claim; stronger notation cannot restore lost fidelity
 
 - [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — citing a source imposes a grounding obligation; citing a grounded note imposes only faithful representation
-- [A quotes-route rollout grounded more claim uses without earning claim identifiers](../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — evidence for verbatim quotes over a paraphrased claims ledger: 75% versus 30% grounded uses, descriptive only
+- [A quotes-route rollout grounded more claim uses without earning claim identifiers](../reports/retained/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — evidence for verbatim quotes over a paraphrased claims ledger: 75% versus 30% grounded uses, descriptive only
 - [An independent pass tightened three of four Pirolli grounding verdicts](../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — evidence that separating source reconstruction from claim judgment changes grounding verdicts; a candidate control, not a proven cause
 
 ## Related Tags
