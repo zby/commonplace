@@ -1,5 +1,5 @@
 ---
-description: "How Commonplace composes collection and type contracts, names every type by its spec's path under a KB root, and finds the spec on the library-and-KB search path"
+description: "How collection and type contracts compose, which special collections commands rely on by name, and how path-valued types resolve on the library-and-KB search path"
 type: types/note.md
 tags: []
 ---
@@ -12,6 +12,33 @@ Every authored artifact in Commonplace is governed by two independent contracts:
 - Its `type:` frontmatter points to a **type spec**. The type spec supplies the artifact's structural and semantic contract: frontmatter fields, required sections, schema, authoring guidance, and any template.
 
 The collection answers what role the artifact serves in this part of the KB. The type answers what shape the artifact takes. A `note` in `kb/notes/` is theoretical, while a `note` in `kb/reference/` describes the shipped system; both use the same structural type contract. A collection does not redefine the meaning of a type's fields.
+
+## Special collections
+
+A [special collection](./definitions/special-collection.md) is one whose fixed
+name under `kb/` Commonplace commands rely on for a system role: `tags`,
+`sources`, `reports`, `work`, `types` and `agentic-system-analyses`. The
+definition lists each role and what the term excludes. There is no location
+configuration, alias mechanism or automatic role discovery, so moving one of
+them needs a code change as well as a relocation.
+
+Being special names one role, not a default input to generic operations.
+Validation, promotion and review use their explicit target scopes, and
+discovering a collection does not make its artifacts tag members, source
+evidence or publication candidates. The shared `collection-contract` type
+declares no roles.
+
+The tag collection is required in every KB, even with no heads or members.
+Init seeds its contract and landing; an empty one needs no starter
+vocabulary. Each KB has one tag namespace, and member collections do not
+select their own. Validation reports a missing tag-space declaration when a
+tag consumer needs it; it does not run a global required-collection check.
+
+Some path rules belong to ordinary collections and are not special roles: the
+proposal archive boundary, installed framework addresses and this site's
+publication choices. Exact type paths are type identities: moving a type
+requires updating any built-in check registered to that identity, not
+matching other types by name.
 
 ## How an artifact uses a type
 
