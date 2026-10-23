@@ -107,6 +107,7 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-revise-autoreason",
         "cp-skill-write-multistage",
         "cp-skill-ground",
+        "cp-skill-add-collection",
     ),
     # Indexes the library's instructions by name; receives a stub like the others.
     router_skill="cp-skill-library",

@@ -120,6 +120,7 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | `cp-skill-ingest` | Turn one URL or local snapshot into a tracked source analysis |
 | `cp-skill-snapshot-web` | Capture a URL into ignored local snapshots |
 | `cp-skill-ground` | Retain the minimum quotations needed to ground a source claim |
+| `cp-skill-add-collection` | Add a new collection with its contract, landing, tag participation and routing |
 | `cp-skill-health-check` | Diagnose a broken Commonplace installation |
 | `cp-skill-revise-autoreason` | Experimentally revise a note with critic, author, synthesizer, and blind-judge agents, keeping the original as fallback |
 | `cp-skill-write-multistage` | Write or rebuild an unsettled artifact through staged authorship and independent review |
