@@ -29,7 +29,7 @@ exceedance would not have recovered them; raising the reading ceiling did.
 
 Resolved for the current grounding criterion. Advisory disclosure is selected;
 enforced failure, per-run selection, and a second hard ceiling are rejected for
-now. [The bounded evidence](../../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+now. [The bounded evidence](../../../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
 records the outcome and the trigger for revisiting it. This proposal is ready
 for archival after its inbound references are retired.
 

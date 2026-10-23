@@ -39,7 +39,7 @@ Rejected for now by ADR 079. Raising the ceiling covers every divergent case in
 the assay without adding partial-coverage, combination, or freshness semantics.
 The assay supplies no divergent tail fixture above sixteen. It also cannot
 validate or refute the severed-support hazard below because every capped
-baseline was PASS. [The bounded evidence](../../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
+baseline was PASS. [The bounded evidence](../../../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md)
 records the result. This proposal is ready for archival after its inbound
 references are retired.
 

@@ -110,6 +110,6 @@ passage.
 Relevant Notes:
 
 - [A note is an atomic step relative to the check that reads it](./a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — extends: the artifact-side bound whose source-counting unit this exemption makes affordable
-- [A five-link cap missed four grounding findings in twelve reviews](./evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: supplies the misattribution FAIL that shows a representation failure no link count catches
+- [A five-link cap missed four grounding findings in twelve reviews](../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: supplies the misattribution FAIL that shows a representation failure no link count catches
 - [Descriptive link labels may supply the self-sufficiency a reconstruction gate would check](./descriptive-link-labels-may-supply-claim-self-sufficiency.md) — evidenced-by: its label-ablation test attributes claim self-sufficiency to premises carried in the citing note's body, which is the text a representation check reads
 - [079-Grounding reviews budget sixteen distinct linked artifacts](../reference/adr/079-grounding-reviews-budget-sixteen-distinct-linked-artifacts.md) — evidenced-by: records the corpus measurement — median seven distinct artifacts over 337 targets — that makes the source-versus-artifact counting difference load-bearing

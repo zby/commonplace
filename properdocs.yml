@@ -359,6 +359,7 @@ plugins:
         'notes/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
         'notes/evaluation-index.md': 'tags/evaluation-README.md'
         'notes/evaluation-README.md': 'tags/evaluation-README.md'
+        'notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md': 'reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md'
         'notes/evidence/five-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md': 'notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md'
         'notes/evidence/missing-rationale-does-not-exclude-a-theory-builder-but-weights-do.md': 'notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md'
         'notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md': 'reports/retained/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md'
