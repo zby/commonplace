@@ -20,7 +20,7 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 - [A note is an atomic step relative to the check that reads it](../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — sizes a note to one inference a reviewer can check in a single pass
 - [Criteria edits invalidate verdicts; process edits invalidate artifacts](../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — which edits make a verdict stale: the note and the criterion count, the production process does not
 - [Full improvement pass closure](../reference/full-improvement-pass-closure.md) — how the shipped full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence
-- [Single-artifact review bundles still cut Claude costs substantially](../notes/evidence/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) — cost evidence: the single-artifact bundle refactor held its savings after cache-aware price weighting
+- [Single-artifact review bundles still cut Claude costs substantially](../reports/retained/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) — cost evidence: the single-artifact bundle refactor held its savings after cache-aware price weighting
 
 ## Proposals: freshness and invalidation
 
