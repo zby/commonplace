@@ -1,0 +1,594 @@
+action	source	old_target	target
+retarget	articles/atomic-steps-size-the-note-to-its-check.md	notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md	theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md
+retarget	articles/what-bound-naurs-theory-to-programmers.md	notes/naur-equates-machine-execution-with-formulated-criteria.md	theory/naur-equates-machine-execution-with-formulated-criteria.md
+retarget	notes/a-capable-agent-needs-methodology-selection-not-just-relevant-knowledge.md	notes/capable-agents-need-methodology-selection.md	theory/capable-agents-need-methodology-selection.md
+retarget	notes/a-closed-factory-learning-transition-produces-a-successor-factory.md	notes/factory-learning-is-experience-responsive-retention-that-improves.md	theory/factory-learning-is-experience-responsive-retention-that-improves.md
+retarget	notes/a-decomposition-earns-reach-by-derivation-or-by-a-tested-ontology.md	notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md	theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md
+retarget	notes/a-decomposition-earns-reach-by-derivation-or-by-inheriting-a-tested.md	notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md	theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md
+retarget	notes/a-domain-priced-exception-does-not-refute-an-idealization.md	notes/domain-pricing-routes-an-exception-to-idealization-assessment.md	theory/domain-pricing-routes-an-exception-to-idealization-assessment.md
+retarget	notes/a-failure-explanation-becomes-search-control-only-when-it-changes-a-later-branch-decision.md	notes/failure-explanation-changes-later-branch-decisions.md	theory/failure-explanation-changes-later-branch-decisions.md
+retarget	notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md	notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md	theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
+retarget	notes/a-good-agentic-kb-maximizes-contextual-competence-through-discoverable-composable-trustworthy-knowledge.md	notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md	theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md
+retarget	notes/a-hand-crafted-bootstrap-fits-the-bitter-lesson-only-if-learning-can-outgrow-it.md	notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md	theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+retarget	notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md	notes/artifact-classification-separates-content-kind-lineage-and-authority.md	theory/artifact-classification-separates-content-kind-lineage-and-authority.md
+retarget	notes/a-natural-language-theory-is-a-prototype-codified-or-rejected.md	notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md	theory/prototype-standing-is-revision-cost-binding-plus-lost-investment.md
+retarget	notes/a-retained-design-theory-is-what-the-interpreter-cannot-regenerate.md	notes/design-rationale-must-preserve-unregenerable-decision-premises.md	theory/design-rationale-must-preserve-unregenerable-decision-premises.md
+retarget	notes/a-retained-operative-path-keeps-improvement-machinery-open-to-revision.md	notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md	theory/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md
+retarget	notes/a-retained-theory-intervention-isolates-one-explicit-theory-surface.md	notes/retained-theory-intervention-isolates-one-explicit-surface.md	theory/retained-theory-intervention-isolates-one-explicit-surface.md
+retarget	notes/a-software-factory-can-produce-another-factory-without-acquiring-its-family-specific-production-knowledge.md	notes/factory-construction-does-not-establish-knowledge-acquisition.md	theory/factory-construction-does-not-establish-knowledge-acquisition.md
+retarget	notes/a-software-factory-can-produce-another-factory-without-learning-its-specialization.md	notes/factory-construction-does-not-establish-knowledge-acquisition.md	theory/factory-construction-does-not-establish-knowledge-acquisition.md
+retarget	notes/a-software-factory-learns-when-production-experience-changes-reusable-machinery-used-later.md	notes/factory-learning-is-experience-responsive-retention-that-improves.md	theory/factory-learning-is-experience-responsive-retention-that-improves.md
+retarget	notes/a-summary-claims-less-than-its-episodes-a-theory-claims-more.md	notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md	theory/an-experiment-identifies-only-the-contrast-it-actually-runs.md
+retarget	notes/a-theory-may-name-a-choice-only-as-a-bound-variable.md	notes/artifacts-must-preserve-named-choice-scope.md	theory/artifacts-must-preserve-named-choice-scope.md
+retarget	notes/access-burden-and-transformation-burden-are-independent-query.md	notes/access-burden-and-transformation-burden-are-distinct-query-dimensions.md	theory/access-burden-and-transformation-burden-are-distinct-query-dimensions.md
+retarget	notes/ad-hoc-explanation-is-rational-under-fast-feedback-and-no-reuse.md	notes/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md	theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md
+retarget	notes/addressability-grain-not-compression-ratio-decides-whether-a.md	notes/addressability-grain-sets-a-matched-selective-read-floor.md	theory/addressability-grain-sets-a-matched-selective-read-floor.md
+retarget	notes/addressable-hypotheses-may-reduce-target-data-under-structured-shifts.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md	notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md	theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md
+retarget	notes/agent-definitions-and-sessions-break-the-class-instance-analogy.md	notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md	theory/instantiation-alone-cannot-model-agent-learning-across-sessions.md
+retarget	notes/agent-memory-serves-contextual-competence-through-discoverable-composable-trusted-knowledge.md	notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md	theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md
+retarget	notes/agent-runtimes-decompose-into-scheduler-context-engine-and-execution.md	notes/agent-runtime-analysis-should-separate-scheduling-context-state.md	theory/agent-runtime-analysis-should-separate-scheduling-context-state.md
+retarget	notes/agent-work-is-selected-for-unpredictability-because-predictable-decisions-can-be-codified.md	notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md	theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md
+retarget	notes/an-adaptation-loop-requires-search-evaluation-and-retention.md	notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md	theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+retarget	notes/an-agentic-kb-maximizes-contextual-competence-through-discoverable.md	notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md	theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md
+retarget	notes/an-agentic-substrate-becomes-a-software-factory-through-family-specific-production-machinery.md	notes/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md	theory/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md
+retarget	notes/an-improvement-loop-requires-search-evaluation-and-operative-retention.md	notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md	theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+retarget	notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md	notes/new-domains-can-turn-theory-builders-into-software-houses.md	theory/new-domains-can-turn-theory-builders-into-software-houses.md
+retarget	notes/an-outcome-check-licenses-replay-a-rule-needs-the-process-verified.md	notes/checked-outcome-licenses-episode-retention-not-abstraction.md	theory/checked-outcome-licenses-episode-retention-not-abstraction.md
+retarget	notes/apparent-success-is-an-unreliable-health-signal-in-framework-owned.md	notes/final-task-success-does-not-establish-intended-path-health.md	theory/final-task-success-does-not-establish-intended-path-health.md
+retarget	notes/audience-segmentation-cannot-be-decided-from-one-reader-property.md	notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md	theory/opposed-recompute-factors-do-not-decide-documentation-segmentation.md
+retarget	notes/brainstorming-how-reach-informs-kb-design.md	notes/brainstorming-how-explanatory-reach-informs-kb-design.md	theory/brainstorming-how-explanatory-reach-informs-kb-design.md
+retarget	notes/charting-the-knowledge-access-problem-beyond-rag.md	notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md	theory/knowledge-access-architecture-must-be-evaluated-end-to-end.md
+retarget	notes/closure-under-recommendations-bounds-governed-self-extension.md	notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md	theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
+retarget	notes/code-complements-the-weight-prompt-pair-with-independently-executed-symbolic-operations.md	notes/code-complements-weight-prompt-with-symbolic-operations.md	theory/code-complements-weight-prompt-with-symbolic-operations.md
+retarget	notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md	notes/cross-task-transition-policy-remains-scheduling-behind-tools.md	theory/cross-task-transition-policy-remains-scheduling-behind-tools.md
+retarget	notes/commonplace-studies-conjectural-learning-through-retained-theories.md	notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md	theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
+retarget	notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md	notes/improvements-can-accumulate-without-compounding.md	theory/improvements-can-accumulate-without-compounding.md
+retarget	notes/conjectural-learning-has-distinct-precedents.md	notes/theory-building-has-distinct-precedents.md	theory/theory-building-has-distinct-precedents.md
+retarget	notes/conjecture-is-seeing-the-particular-as-an-instance-of-the-general.md	notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md	theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md
+retarget	notes/constraining-and-distillation-both-trade-generality-for-reliability.md	notes/constraining-and-extraction-both-trade-generality-for-reliability.md	theory/constraining-and-extraction-both-trade-generality-for-reliability.md
+retarget	notes/continual-learning-open-problem-is-behaviour-not-knowledge.md	notes/continual-learning-requires-governing-behaviour-changing-writes.md	theory/continual-learning-requires-governing-behaviour-changing-writes.md
+retarget	notes/cost-sensitive-formalisms-for-fallible-theory-search.md	notes/cost-sensitive-formalisms-for-tentative-theory-search.md	theory/cost-sensitive-formalisms-for-tentative-theory-search.md
+retarget	notes/cross-representational-reflection.md	notes/reflective-coverage-is-graded-across-representational-forms.md	theory/reflective-coverage-is-graded-across-representational-forms.md
+retarget	notes/definitions/actionable-theory.md	notes/definitions/actionable-methodology.md	theory/definitions/actionable-methodology.md
+retarget	notes/definitions/autonomous-theory-builder.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/definitions/computationally-closed-software-factory-learning-loop.md	notes/methodological-and-computational-closure-track-different-changes.md	theory/methodological-and-computational-closure-track-different-changes.md
+retarget	notes/definitions/conjectural-learning-checks.md	notes/definitions/theory-builder-checks.md	theory/definitions/theory-builder-checks.md
+retarget	notes/definitions/conjectural-learning.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/definitions/directed-reading.md	notes/definitions/context-engineering.md	theory/definitions/context-engineering.md
+retarget	notes/definitions/domain-extensible-software-factory.md	notes/broad-software-demands-create-pressure-for-agentic-factory-development.md	theory/broad-software-demands-create-pressure-for-agentic-factory-development.md
+retarget	notes/definitions/externally-tested-theory-builder.md	notes/a-claim-without-external-assessment-carries-three-obligations.md	theory/a-claim-without-external-assessment-carries-three-obligations.md
+retarget	notes/definitions/learning-by-theory-refinement.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/definitions/reflective-theory-builder.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/definitions/software-production-task-and-process.md	notes/task-families-and-product-families-classify-different-things.md	theory/task-families-and-product-families-classify-different-things.md
+retarget	notes/definitions/successor-factory.md	notes/definitions/operative-change.md	theory/definitions/operative-change.md
+retarget	notes/definitions/theory-mediated-learning.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/definitions/theory-refinement.md	notes/definitions/theory-builder.md	theory/definitions/theory-builder.md
+retarget	notes/deploy-time-learning-is-the-missing-middle.md	notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md	theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+retarget	notes/deploy-time-learning-the-missing-middle.md	notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md	theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+retarget	notes/disconnected-witnesses-do-not-establish-a-full-causal-path-through-theory.md	notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md	theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
+retarget	notes/disconnected-witnesses-do-not-establish-a-theory-mediated-path.md	notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md	theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
+retarget	notes/discovery-is-seeing-the-particular-as-an-instance-of-the-general.md	notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md	theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md
+retarget	notes/distillation-status-determines-directory-placement.md	notes/execution-shaping-determines-directory-placement.md	theory/execution-shaping-determines-directory-placement.md
+retarget	notes/distilled-artifacts-need-source-tracking-at-the-source.md	notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md	theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md
+retarget	notes/distilled-artifacts-need-source-tracking.md	notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md	theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md
+retarget	notes/domain-extensibility-not-closure-determines-factory-reach.md	notes/universal-software-factory-needs-a-declared-universality-axis.md	theory/universal-software-factory-needs-a-declared-universality-axis.md
+retarget	notes/entropy-management-must-scale-with-generation-throughput.md	notes/maintenance-capacity-must-match-harmful-artifact-inflow.md	theory/maintenance-capacity-must-match-harmful-artifact-inflow.md
+retarget	notes/epiplexity-eli5.md	notes/epiplexity-by-example-what-entropy-and-complexity-miss.md	theory/epiplexity-by-example-what-entropy-and-complexity-miss.md
+retarget	notes/evidence/five-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md	notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md	theory/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md
+retarget	notes/evidence/missing-rationale-does-not-exclude-a-theory-builder-but-weights-do.md	notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md	theory/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md
+retarget	notes/evidence/rules-weights-and-missing-rationale-do-not-settle-conjectural-learning.md	notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md	theory/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md
+retarget	notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md	notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md	theory/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md
+retarget	notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md	notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md	theory/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md
+retarget	notes/evolving-understanding-needs-re-distillation-not-composition.md	notes/evolving-understanding-needs-holistic-rewrite-not-composition.md	theory/evolving-understanding-needs-holistic-rewrite-not-composition.md
+retarget	notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md	notes/session-history-should-not-be-the-default-next-context.md	theory/session-history-should-not-be-the-default-next-context.md
+retarget	notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md	notes/session-history-should-not-be-the-default-next-context.md	theory/session-history-should-not-be-the-default-next-context.md
+retarget	notes/factory-learning-retains-experience-in-reusable-machinery.md	notes/factory-learning-is-experience-responsive-retention-that-improves.md	theory/factory-learning-is-experience-responsive-retention-that-improves.md
+retarget	notes/files-not-database.md	notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md	theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md
+retarget	notes/first-principles-are-inherited-constraints-not-design-choices.md	notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md	theory/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md
+retarget	notes/fixed-artifacts-split-into-exact-specs-and-proxy-theories.md	notes/exact-implementation-does-not-validate-a-requirement.md	theory/exact-implementation-does-not-validate-a-requirement.md
+retarget	notes/formal-systems-can-assess-reach-through-causal-and-proof-obligations.md	notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md	theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md
+retarget	notes/framework-rule-is-a-first-principle-without-boundary-preserving-rival.md	notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md	theory/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md
+retarget	notes/holding-a-program-theory-means-sustaining-coherent-search-under-delayed-feedback.md	notes/program-theory-sustains-search-under-delayed-feedback.md	theory/program-theory-sustains-search-under-delayed-feedback.md
+retarget	notes/human-recompute-is-dear-and-rare-agent-recompute-is-cheap-and-constant.md	notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md	theory/opposed-recompute-factors-do-not-decide-documentation-segmentation.md
+retarget	notes/improving-an-agentic-system-crosses-the-prose-symbolic-boundary.md	notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md	theory/moving-the-interpretation-enforcement-boundary-requires-coverage.md
+retarget	notes/index-curation-adds-orientation-that-generation-cannot-produce.md	notes/index-completeness-does-not-determine-editorial-orientation.md	theory/index-completeness-does-not-determine-editorial-orientation.md
+retarget	notes/indirection-is-costly-in-llm-instructions.md	notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md	theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md
+retarget	notes/inductive-bias-splits-into-generic-and-specific-levels.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/intent-controls-a-local-choice-only-when-it-distinguishes-its-live-alternatives.md	notes/intent-controls-choices-by-distinguishing-live-alternatives.md	theory/intent-controls-choices-by-distinguishing-live-alternatives.md
+retarget	notes/intents-are-the-highest-yield-seed-contingent-fact-their-limit.md	notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md	theory/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md
+retarget	notes/interpretation-errors-are-failures-of-the-interpreter.md	notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md	theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md
+retarget	notes/irreducibility-to-rules-bounds-text-alone-not-text-plus-interpreter.md	notes/naur-equates-machine-execution-with-formulated-criteria.md	theory/naur-equates-machine-execution-with-formulated-criteria.md
+retarget	notes/learning-by-theory-refinement-may-improve-sample-efficiency.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/lightweight-search-control-allocates-further-search-without-licensing-adoption.md	notes/lightweight-search-control-does-not-license-adoption.md	theory/lightweight-search-control-does-not-license-adoption.md
+retarget	notes/llm-context-is-a-homoiconic-medium.md	notes/llm-context-interprets-instructions-and-content-through-one-medium.md	theory/llm-context-interprets-instructions-and-content-through-one-medium.md
+retarget	notes/llm-generation-confidence-tracks-typicality-not-soundness.md	notes/generation-confidence-does-not-by-itself-certify-soundness.md	theory/generation-confidence-does-not-by-itself-certify-soundness.md
+retarget	notes/llm-output-deviation-has-three-sources-with-non-substitutable.md	notes/llm-output-deviation-requires-three-way-diagnosis.md	theory/llm-output-deviation-requires-three-way-diagnosis.md
+retarget	notes/maintenance-operations-catalogue-should-stage-distillation-into.md	notes/maintenance-operations-catalogue-should-stage-stable-procedures.md	theory/maintenance-operations-catalogue-should-stage-stable-procedures.md
+retarget	notes/methodology-agent-extensible-only-with-closure-under-recommendations.md	notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md	theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
+retarget	notes/minimum-viable-vocabulary-is-the-set-of-names-that-maximally-reduces-extraction-cost-for-a-bounded-observer.md	notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md	theory/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md
+retarget	notes/natural-language-project-state-may-specialize-weight-resident-search-heuristics.md	notes/natural-language-project-state-specializes-search-heuristics.md	theory/natural-language-project-state-specializes-search-heuristics.md
+retarget	notes/natural-language-theories-carry-warrant-claim-by-claim.md	notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md	theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md
+retarget	notes/naur-binds-theory-to-humans-via-premise-that-machines-follow-rules.md	notes/naur-equates-machine-execution-with-formulated-criteria.md	theory/naur-equates-machine-execution-with-formulated-criteria.md
+retarget	notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md	notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md	theory/naurs-compiler-case-tests-one-documentation-and-consumption-system.md
+retarget	notes/only-derivation-and-inheritance-warrant-a-scope-claim-use-earns-it.md	notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md	theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md
+retarget	notes/open-ended-improvement-must-allocate-search-before-decisive-evaluation-is-available.md	notes/open-ended-improvement-allocates-search-before-evaluation.md	theory/open-ended-improvement-allocates-search-before-evaluation.md
+retarget	notes/operative-succession-turns-meta-factory-construction-into-learning.md	notes/factory-construction-does-not-establish-knowledge-acquisition.md	theory/factory-construction-does-not-establish-knowledge-acquisition.md
+retarget	notes/per-window-context-inefficiency-makes-tasks-infeasible.md	notes/feasibility-is-the-heaviest-forks-net-load.md	theory/feasibility-is-the-heaviest-forks-net-load.md
+retarget	notes/project-theory-possession-requires-comparing-new-demands-with-existing-organization.md	notes/project-theory-relates-new-demands-to-existing-organization.md	theory/project-theory-relates-new-demands-to-existing-organization.md
+retarget	notes/prose-has-no-dereference-reinforce-facts-at-point-of-use.md	notes/local-materialization-should-outperform-distant-declarations.md	theory/local-materialization-should-outperform-distant-declarations.md
+retarget	notes/provenance-warrants-a-decompositions-scope-claim-use-earns-it.md	notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md	theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md
+retarget	notes/reach-makes-addressable-retention-sample-efficient-off-distribution.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/real-self-improving-systems-occupy-combinations-no-rung-captures.md	notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md	theory/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md
+retarget	notes/reflection-buys-addressability-not-compounding.md	notes/reflection-buys-addressability.md	theory/reflection-buys-addressability.md
+retarget	notes/reflection-may-improve-sample-efficiency-under-structured-shifts.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/reflection-may-reduce-target-data-under-structured-shifts.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/reflective-leverage-is-tested-in-the-next-episode.md	notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md	theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
+retarget	notes/reflective-theory-refinement-has-three-separate-lineages.md	notes/theory-building-has-distinct-precedents.md	theory/theory-building-has-distinct-precedents.md
+retarget	notes/reflective-theory-refinement-needs-interpretation-and-retention.md	notes/a-complete-theory-path-does-not-establish-improved-capacity.md	theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+retarget	notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md	notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md	theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
+retarget	notes/retrieval-failure-is-reflection-failure.md	notes/a-retrieval-miss-is-a-local-reflective-path-failure.md	theory/a-retrieval-miss-is-a-local-reflective-path-failure.md
+retarget	notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md	notes/reverse-compression-is-when-llm-output-expands-without-adding.md	theory/reverse-compression-is-when-llm-output-expands-without-adding.md
+retarget	notes/reviewers-share-the-fields-prior-so-declare-which-claims-to-defend.md	notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md	theory/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md
+retarget	notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md	notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md	theory/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md
+retarget	notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md	notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md	theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
+retarget	notes/self-modification-requires-search-evaluation-and-retention.md	notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md	theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+retarget	notes/skills-derive-from-methodology-through-distillation.md	notes/skills-derive-from-methodology.md	theory/skills-derive-from-methodology.md
+retarget	notes/stale-indexes-are-worse-than-no-indexes.md	notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md	theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md
+retarget	notes/stale-indexes-reduce-discovery-when-they-suppress-fallback-search.md	notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md	theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md
+retarget	notes/storing-llm-outputs-is-constraining.md	notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md	theory/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md
+retarget	notes/structure-activates-higher-quality-training-distributions.md	notes/structured-prompt-gains-do-not-establish-distribution-selection.md	theory/structured-prompt-gains-do-not-establish-distribution-selection.md
+retarget	notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md	notes/rule-based-context-selection-needs-a-pre-existing-signal.md	theory/rule-based-context-selection-needs-a-pre-existing-signal.md
+retarget	notes/targeted-context-selection-is-bounded-by-discriminator-availability.md	notes/rule-based-context-selection-needs-a-pre-existing-signal.md	theory/rule-based-context-selection-needs-a-pre-existing-signal.md
+retarget	notes/task-fitted-structure-costs-cross-task-reuse.md	notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md	theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md
+retarget	notes/the-builder-loop-becomes-internal-through-an-operative-redesign-path.md	notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md	theory/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md
+retarget	notes/the-framework-is-often-larger-than-the-durable-contribution.md	notes/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md	theory/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md
+retarget	notes/the-meta-harness-ablation-bounds-summarization-not-theory-formation.md	notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md	theory/an-experiment-identifies-only-the-contrast-it-actually-runs.md
+retarget	notes/theory-mediated-learning-joins-self-modeling-and-theory-refinement.md	notes/theory-building-has-distinct-precedents.md	theory/theory-building-has-distinct-precedents.md
+retarget	notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md	notes/a-complete-theory-path-does-not-establish-improved-capacity.md	theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+retarget	notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md	notes/theory-building-has-distinct-precedents.md	theory/theory-building-has-distinct-precedents.md
+retarget	notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md	notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md	theory/addressable-theory-can-coordinate-heterogeneous-factory-development.md
+retarget	notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md	notes/retained-theories-may-improve-sample-efficiency.md	theory/retained-theories-may-improve-sample-efficiency.md
+retarget	notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover.md	notes/final-task-success-does-not-establish-intended-path-health.md	theory/final-task-success-does-not-establish-intended-path-health.md
+retarget	notes/traversal-improves-the-graph.md	notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md	theory/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md
+retarget	notes/treat-continual-learning-as-substrate-coevolution.md	notes/treat-continual-learning-as-representational-form-coevolution.md	theory/treat-continual-learning-as-representational-form-coevolution.md
+retarget	notes/underspecification-and-indeterminism-make-programming-practices-harder-in-distinct-ways-when-applied-to-prompting.md	notes/underspecification-and-indeterminism-complicate-programming-for.md	theory/underspecification-and-indeterminism-complicate-programming-for.md
+retarget	notes/vocabulary-collisions-are-prevented-at-write-time-not-resolved-at-read-time.md	notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md	theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md
+retarget	notes/weight-resident-methodologies-provide-context-efficient-behavioral-compression.md	notes/weight-resident-methodologies-compress-behavior-in-context.md	theory/weight-resident-methodologies-compress-behavior-in-context.md
+retarget	notes/when-global-theory-fit-lacks-a-fixed-oracle-use-in-building-the-system-is-an-initial-selection-environment.md	notes/system-use-selects-theory-fit-without-a-fixed-oracle.md	theory/system-use-selects-theory-fit-without-a-fixed-oracle.md
+retarget	notes/world-models-assess-reach-through-action-conditioned-prediction.md	notes/world-models-assess-explanatory-reach-through-action-conditioned.md	theory/world-models-assess-explanatory-reach-through-action-conditioned.md
+retarget	reference/commonplace-as-a-reflective-system.md	notes/evidence/commonplace-as-a-reflective-system.md	theory/evidence/commonplace-as-a-reflective-system.md
+retarget	reference/proposals/revise-behavioral-authority-decomposition.md	notes/proposals/revise-behavioral-authority-decomposition.md	theory/proposals/revise-behavioral-authority-decomposition.md
+retarget	reference/tag-readme-trace-observed-causal-connection.md	notes/evidence/tag-readme-trace-observed-causal-connection.md	theory/evidence/tag-readme-trace-observed-causal-connection.md
+retarget	work/information-measures/epiplexity-eli5.md	notes/epiplexity-by-example-what-entropy-and-complexity-miss.md	theory/epiplexity-by-example-what-entropy-and-complexity-miss.md
+retarget	work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md	notes/evidence/commonplace-revision-used-theory-guided-computational-search.md	theory/evidence/commonplace-revision-used-theory-guided-computational-search.md
+moved-page	notes/COLLECTION.md		theory/COLLECTION.md
+moved-page	notes/README.md		theory/README.md
+moved-page	notes/a-bare-writing-prompt-does-not-determine-its-intended-contribution.md		theory/a-bare-writing-prompt-does-not-determine-its-intended-contribution.md
+moved-page	notes/a-better-factory-claim-compares-operative-states.md		theory/a-better-factory-claim-compares-operative-states.md
+moved-page	notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md		theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+moved-page	notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md		theory/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md
+moved-page	notes/a-claim-without-external-assessment-carries-three-obligations.md		theory/a-claim-without-external-assessment-carries-three-obligations.md
+moved-page	notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md		theory/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md
+moved-page	notes/a-complete-theory-path-does-not-establish-improved-capacity.md		theory/a-complete-theory-path-does-not-establish-improved-capacity.md
+moved-page	notes/a-consumption-channel-delivers-force-without-the-history-that.md		theory/a-consumption-channel-delivers-force-without-the-history-that.md
+moved-page	notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md		theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md
+moved-page	notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md		theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
+moved-page	notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md		theory/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md
+moved-page	notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md		theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md
+moved-page	notes/a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md		theory/a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md
+moved-page	notes/a-guard-against-a-conjectured-requirement-removes-the-experiment-that.md		theory/a-guard-against-a-conjectured-requirement-removes-the-experiment-that.md
+moved-page	notes/a-knowledge-base-should-support-fluid-resolution-switching.md		theory/a-knowledge-base-should-support-fluid-resolution-switching.md
+moved-page	notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md		theory/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md
+moved-page	notes/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md		theory/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md
+moved-page	notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md		theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
+moved-page	notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md		theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md
+moved-page	notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md		theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
+moved-page	notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md		theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md
+moved-page	notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md		theory/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md
+moved-page	notes/a-retained-instruction-preserves-what-testing-selected.md		theory/a-retained-instruction-preserves-what-testing-selected.md
+moved-page	notes/a-retrieval-miss-is-a-local-reflective-path-failure.md		theory/a-retrieval-miss-is-a-local-reflective-path-failure.md
+moved-page	notes/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md		theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md
+moved-page	notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md		theory/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
+moved-page	notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md		theory/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md
+moved-page	notes/abstract-an-experience-only-when-you-can-state-the-boundary.md		theory/abstract-an-experience-only-when-you-can-state-the-boundary.md
+moved-page	notes/acceptance-authority-does-not-require-a-separate-repair-session.md		theory/acceptance-authority-does-not-require-a-separate-repair-session.md
+moved-page	notes/access-burden-and-transformation-burden-are-distinct-query-dimensions.md		theory/access-burden-and-transformation-burden-are-distinct-query-dimensions.md
+moved-page	notes/accumulation-counts-dependence-through-the-retained-result.md		theory/accumulation-counts-dependence-through-the-retained-result.md
+moved-page	notes/active-work-state-is-not-retrospective-memory-or-chat-history.md		theory/active-work-state-is-not-retrospective-memory-or-chat-history.md
+moved-page	notes/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md		theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md
+moved-page	notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md		theory/ad-hoc-prompts-extend-the-system-without-schema-changes.md
+moved-page	notes/addressability-grain-sets-a-matched-selective-read-floor.md		theory/addressability-grain-sets-a-matched-selective-read-floor.md
+moved-page	notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md		theory/addressable-theory-can-coordinate-heterogeneous-factory-development.md
+moved-page	notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md		theory/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md
+moved-page	notes/agent-is-a-tool-loop.md		theory/agent-is-a-tool-loop.md
+moved-page	notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md		theory/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md
+moved-page	notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md		theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md
+moved-page	notes/agent-memory-requirements/README.md		theory/agent-memory-requirements/README.md
+moved-page	notes/agent-memory-requirements/activate-behavior-changing-memory.md		theory/agent-memory-requirements/activate-behavior-changing-memory.md
+moved-page	notes/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md		theory/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md
+moved-page	notes/agent-memory-requirements/create-memory-directly.md		theory/agent-memory-requirements/create-memory-directly.md
+moved-page	notes/agent-memory-requirements/evaluate-memory-by-effects.md		theory/agent-memory-requirements/evaluate-memory-by-effects.md
+moved-page	notes/agent-memory-requirements/import-external-knowledge.md		theory/agent-memory-requirements/import-external-knowledge.md
+moved-page	notes/agent-memory-requirements/keep-compiled-views-aligned.md		theory/agent-memory-requirements/keep-compiled-views-aligned.md
+moved-page	notes/agent-memory-requirements/make-authority-explicit.md		theory/agent-memory-requirements/make-authority-explicit.md
+moved-page	notes/agent-memory-requirements/preserve-evidence-without-loading-history.md		theory/agent-memory-requirements/preserve-evidence-without-loading-history.md
+moved-page	notes/agent-memory-requirements/promote-only-when-value-exceeds-cost.md		theory/agent-memory-requirements/promote-only-when-value-exceeds-cost.md
+moved-page	notes/agent-memory-requirements/retire-redact-supersede-relax.md		theory/agent-memory-requirements/retire-redact-supersede-relax.md
+moved-page	notes/agent-memory-requirements/serve-multiple-consumers.md		theory/agent-memory-requirements/serve-multiple-consumers.md
+moved-page	notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md		theory/agent-memory-requirements/use-trace-extraction-as-meta-learning.md
+moved-page	notes/agent-orchestration-needs-coordination-guarantees-not-just.md		theory/agent-orchestration-needs-coordination-guarantees-not-just.md
+moved-page	notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md		theory/agent-orchestration-occupies-a-multi-dimensional-design-space.md
+moved-page	notes/agent-runtime-analysis-should-separate-scheduling-context-state.md		theory/agent-runtime-analysis-should-separate-scheduling-context-state.md
+moved-page	notes/agent-statelessness-makes-routing-architectural-not-learned.md		theory/agent-statelessness-makes-routing-architectural-not-learned.md
+moved-page	notes/agent-statelessness-means-the-context-engine-should-inject-context.md		theory/agent-statelessness-means-the-context-engine-should-inject-context.md
+moved-page	notes/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md		theory/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md
+moved-page	notes/agentic-systems-interpret-underspecified-instructions.md		theory/agentic-systems-interpret-underspecified-instructions.md
+moved-page	notes/agents-md-should-be-organized-as-a-control-plane.md		theory/agents-md-should-be-organized-as-a-control-plane.md
+moved-page	notes/agents-navigate-by-deciding-what-to-read-next.md		theory/agents-navigate-by-deciding-what-to-read-next.md
+moved-page	notes/alexander-patterns-and-knowledge-system-design.md		theory/alexander-patterns-and-knowledge-system-design.md
+moved-page	notes/always-loaded-context-mechanisms-in-agent-harnesses.md		theory/always-loaded-context-mechanisms-in-agent-harnesses.md
+moved-page	notes/an-accepted-edit-verifies-the-change-not-the-rule.md		theory/an-accepted-edit-verifies-the-change-not-the-rule.md
+moved-page	notes/an-action-model-matters-only-through-its-consumption-path.md		theory/an-action-model-matters-only-through-its-consumption-path.md
+moved-page	notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md		theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md
+moved-page	notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md		theory/an-experiment-identifies-only-the-contrast-it-actually-runs.md
+moved-page	notes/an-insufficient-summary-precedes-the-source-rather-than-replacing.md		theory/an-insufficient-summary-precedes-the-source-rather-than-replacing.md
+moved-page	notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md		theory/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md
+moved-page	notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md		theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
+moved-page	notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md		theory/any-symbolic-program-with-llm-calls-is-a-select-call-program.md
+moved-page	notes/areas-exist-because-useful-operations-require-reading-notes-together.md		theory/areas-exist-because-useful-operations-require-reading-notes-together.md
+moved-page	notes/artifact-classification-separates-content-kind-lineage-and-authority.md		theory/artifact-classification-separates-content-kind-lineage-and-authority.md
+moved-page	notes/artifacts-must-preserve-named-choice-scope.md		theory/artifacts-must-preserve-named-choice-scope.md
+moved-page	notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md		theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md
+moved-page	notes/attention-can-be-reused-as-a-kind-of-soft-reference-count.md		theory/attention-can-be-reused-as-a-kind-of-soft-reference-count.md
+moved-page	notes/automated-synthesis-is-missing-good-oracles.md		theory/automated-synthesis-is-missing-good-oracles.md
+moved-page	notes/automated-tests-for-text.md		theory/automated-tests-for-text.md
+moved-page	notes/automating-kb-learning-is-an-open-problem.md		theory/automating-kb-learning-is-an-open-problem.md
+moved-page	notes/axes-of-artifact-analysis.md		theory/axes-of-artifact-analysis.md
+moved-page	notes/backtracking-keeps-lightweight-search-control-provisional.md		theory/backtracking-keeps-lightweight-search-control-provisional.md
+moved-page	notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md		theory/bitter-lesson-selects-against-unearned-reach-not-against-structure.md
+moved-page	notes/borrowed-patterns-transfer-only-over-shared-mechanism.md		theory/borrowed-patterns-transfer-only-over-shared-mechanism.md
+moved-page	notes/borrowing-can-operate-through-retained-artifacts-or-weight-activation.md		theory/borrowing-can-operate-through-retained-artifacts-or-weight-activation.md
+moved-page	notes/bounded-context-orchestration-model.md		theory/bounded-context-orchestration-model.md
+moved-page	notes/brainstorming-how-explanatory-reach-informs-kb-design.md		theory/brainstorming-how-explanatory-reach-informs-kb-design.md
+moved-page	notes/brainstorming-how-to-enrich-web-search.md		theory/brainstorming-how-to-enrich-web-search.md
+moved-page	notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md		theory/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md
+moved-page	notes/brainstorming-maintainability-oracles-for-agentic-development.md		theory/brainstorming-maintainability-oracles-for-agentic-development.md
+moved-page	notes/broad-software-demands-create-pressure-for-agentic-factory-development.md		theory/broad-software-demands-create-pressure-for-agentic-factory-development.md
+moved-page	notes/candidacy-evidence-licenses-escalation-not-acceptance.md		theory/candidacy-evidence-licenses-escalation-not-acceptance.md
+moved-page	notes/capability-placement-should-follow-autonomy-readiness.md		theory/capability-placement-should-follow-autonomy-readiness.md
+moved-page	notes/capable-agents-need-methodology-selection.md		theory/capable-agents-need-methodology-selection.md
+moved-page	notes/changing-requirements-conflate-genuine-change-with-disambiguation.md		theory/changing-requirements-conflate-genuine-change-with-disambiguation.md
+moved-page	notes/cheap-adoption-and-weak-retirement-accumulate-cost.md		theory/cheap-adoption-and-weak-retirement-accumulate-cost.md
+moved-page	notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md		theory/cheap-generation-breaks-text-volume-as-an-effort-signal.md
+moved-page	notes/checked-outcome-licenses-episode-retention-not-abstraction.md		theory/checked-outcome-licenses-episode-retention-not-abstraction.md
+moved-page	notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md		theory/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md
+moved-page	notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md		theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
+moved-page	notes/claim-modality-is-the-inference-form-of-the-refuter.md		theory/claim-modality-is-the-inference-form-of-the-refuter.md
+moved-page	notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md		theory/claim-notes-should-use-toulmin-derived-sections-for-structured.md
+moved-page	notes/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md		theory/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md
+moved-page	notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md		theory/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md
+moved-page	notes/code-complements-weight-prompt-with-symbolic-operations.md		theory/code-complements-weight-prompt-with-symbolic-operations.md
+moved-page	notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md		theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md
+moved-page	notes/codify-versus-llm-decision-heuristics.md		theory/codify-versus-llm-decision-heuristics.md
+moved-page	notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md		theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md
+moved-page	notes/commitment-not-derivation-creates-new-ground-truth.md		theory/commitment-not-derivation-creates-new-ground-truth.md
+moved-page	notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md		theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
+moved-page	notes/competing-causal-theories-can-guide-distinguishing-experiments.md		theory/competing-causal-theories-can-guide-distinguishing-experiments.md
+moved-page	notes/compiling-coordination-preserves-primitive-not-aggregate-authority.md		theory/compiling-coordination-preserves-primitive-not-aggregate-authority.md
+moved-page	notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md		theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
+moved-page	notes/computationally-directed-self-improvement-is-a-reallocation.md		theory/computationally-directed-self-improvement-is-a-reallocation.md
+moved-page	notes/constraining-and-extraction-both-trade-generality-for-reliability.md		theory/constraining-and-extraction-both-trade-generality-for-reliability.md
+moved-page	notes/constraining-during-deployment-is-continuous-learning.md		theory/constraining-during-deployment-is-continuous-learning.md
+moved-page	notes/context-contamination-operates-below-an-agents-compliance-reasoning.md		theory/context-contamination-operates-below-an-agents-compliance-reasoning.md
+moved-page	notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md		theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md
+moved-page	notes/context-operation-interface-bounds-context-policy.md		theory/context-operation-interface-bounds-context-policy.md
+moved-page	notes/continual-learning-requires-governing-behaviour-changing-writes.md		theory/continual-learning-requires-governing-behaviour-changing-writes.md
+moved-page	notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md		theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md
+moved-page	notes/convert-still-requires-semantic-description.md		theory/convert-still-requires-semantic-description.md
+moved-page	notes/cost-sensitive-formalisms-for-tentative-theory-search.md		theory/cost-sensitive-formalisms-for-tentative-theory-search.md
+moved-page	notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md		theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md
+moved-page	notes/cross-task-transition-policy-remains-scheduling-behind-tools.md		theory/cross-task-transition-policy-remains-scheduling-behind-tools.md
+moved-page	notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md		theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md
+moved-page	notes/decomposition-heuristics-for-bounded-context-scheduling.md		theory/decomposition-heuristics-for-bounded-context-scheduling.md
+moved-page	notes/definitions/actionable-methodology.md		theory/definitions/actionable-methodology.md
+moved-page	notes/definitions/addressable-theory.md		theory/definitions/addressable-theory.md
+moved-page	notes/definitions/behavior-determining-organization.md		theory/definitions/behavior-determining-organization.md
+moved-page	notes/definitions/behavioral-authority.md		theory/definitions/behavioral-authority.md
+moved-page	notes/definitions/codification.md		theory/definitions/codification.md
+moved-page	notes/definitions/constraining.md		theory/definitions/constraining.md
+moved-page	notes/definitions/context-engineering.md		theory/definitions/context-engineering.md
+moved-page	notes/definitions/coordination-value.md		theory/definitions/coordination-value.md
+moved-page	notes/definitions/discovery-lifecycle.md		theory/definitions/discovery-lifecycle.md
+moved-page	notes/definitions/evidence-bearing-on-an-improvement-objective.md		theory/definitions/evidence-bearing-on-an-improvement-objective.md
+moved-page	notes/definitions/factory-development.md		theory/definitions/factory-development.md
+moved-page	notes/definitions/knowledge-artifact.md		theory/definitions/knowledge-artifact.md
+moved-page	notes/definitions/lineage.md		theory/definitions/lineage.md
+moved-page	notes/definitions/operative-change.md		theory/definitions/operative-change.md
+moved-page	notes/definitions/operative-part.md		theory/definitions/operative-part.md
+moved-page	notes/definitions/reach-assessment.md		theory/definitions/reach-assessment.md
+moved-page	notes/definitions/reflective-system.md		theory/definitions/reflective-system.md
+moved-page	notes/definitions/representational-form.md		theory/definitions/representational-form.md
+moved-page	notes/definitions/retained-artifact.md		theory/definitions/retained-artifact.md
+moved-page	notes/definitions/self-improving-system.md		theory/definitions/self-improving-system.md
+moved-page	notes/definitions/software-factory.md		theory/definitions/software-factory.md
+moved-page	notes/definitions/software-house.md		theory/definitions/software-house.md
+moved-page	notes/definitions/storage-substrate.md		theory/definitions/storage-substrate.md
+moved-page	notes/definitions/system-definition-artifact.md		theory/definitions/system-definition-artifact.md
+moved-page	notes/definitions/tentative-theory.md		theory/definitions/tentative-theory.md
+moved-page	notes/definitions/theory-builder-checks.md		theory/definitions/theory-builder-checks.md
+moved-page	notes/definitions/theory-builder.md		theory/definitions/theory-builder.md
+moved-page	notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md		theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md
+moved-page	notes/descriptive-link-labels-may-supply-claim-self-sufficiency.md		theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md
+moved-page	notes/design-for-the-first-time-human-except-on-access-cost.md		theory/design-for-the-first-time-human-except-on-access-cost.md
+moved-page	notes/design-rationale-must-preserve-unregenerable-decision-premises.md		theory/design-rationale-must-preserve-unregenerable-decision-premises.md
+moved-page	notes/designing-agent-memory-systems.md		theory/designing-agent-memory-systems.md
+moved-page	notes/deterministic-validation-should-be-a-script.md		theory/deterministic-validation-should-be-a-script.md
+moved-page	notes/diagnostic-richness-constrains-outer-loop-learning-quality.md		theory/diagnostic-richness-constrains-outer-loop-learning-quality.md
+moved-page	notes/directory-placement-is-total-frontmatter-classification-is-partial.md		theory/directory-placement-is-total-frontmatter-classification-is-partial.md
+moved-page	notes/directory-scoped-types-are-cheaper-than-global-types.md		theory/directory-scoped-types-are-cheaper-than-global-types.md
+moved-page	notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md		theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
+moved-page	notes/document-types-should-be-verifiable.md		theory/document-types-should-be-verifiable.md
+moved-page	notes/documentation-generates-the-system-rather-than-describing-it.md		theory/documentation-generates-the-system-rather-than-describing-it.md
+moved-page	notes/domain-pricing-routes-an-exception-to-idealization-assessment.md		theory/domain-pricing-routes-an-exception-to-idealization-assessment.md
+moved-page	notes/elicitation-requires-maintained-question-generation-systems.md		theory/elicitation-requires-maintained-question-generation-systems.md
+moved-page	notes/enforcement-without-structured-recovery-is-incomplete.md		theory/enforcement-without-structured-recovery-is-incomplete.md
+moved-page	notes/ephemeral-computation-prevents-accumulation.md		theory/ephemeral-computation-prevents-accumulation.md
+moved-page	notes/ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md		theory/ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md
+moved-page	notes/epiplexity-by-example-what-entropy-and-complexity-miss.md		theory/epiplexity-by-example-what-entropy-and-complexity-miss.md
+moved-page	notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md		theory/error-correction-works-above-chance-oracles-with-decorrelated-checks.md
+moved-page	notes/error-messages-that-teach-are-a-constraining-technique.md		theory/error-messages-that-teach-are-a-constraining-technique.md
+moved-page	notes/evaluation-automation-is-phase-gated-by-comprehension.md		theory/evaluation-automation-is-phase-gated-by-comprehension.md
+moved-page	notes/evidence/commonplace-as-a-reflective-system.md		theory/evidence/commonplace-as-a-reflective-system.md
+moved-page	notes/evidence/commonplace-revision-used-theory-guided-computational-search.md		theory/evidence/commonplace-revision-used-theory-guided-computational-search.md
+moved-page	notes/evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md		theory/evidence/consumer-channel-and-force-can-stay-fixed-while-the-governed-use.md
+moved-page	notes/evidence/full-write-briefs-cut-edit-drift-one-line-briefs-did-not.md		theory/evidence/full-write-briefs-cut-edit-drift-one-line-briefs-did-not.md
+moved-page	notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md		theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md
+moved-page	notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md		theory/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md
+moved-page	notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md		theory/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md
+moved-page	notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md		theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md
+moved-page	notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md		theory/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md
+moved-page	notes/evidence/tag-readme-trace-observed-causal-connection.md		theory/evidence/tag-readme-trace-observed-causal-connection.md
+moved-page	notes/evidence/three-simplification-passes-exposed-different-tradeoffs.md		theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md
+moved-page	notes/evidence/two-rewrites-exposed-a-syntax-or-repetition-tradeoff.md		theory/evidence/two-rewrites-exposed-a-syntax-or-repetition-tradeoff.md
+moved-page	notes/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md		theory/evidence/vibe-noting-trace-shows-persistence-enables-revision-not-certification.md
+moved-page	notes/evolving-understanding-needs-holistic-rewrite-not-composition.md		theory/evolving-understanding-needs-holistic-rewrite-not-composition.md
+moved-page	notes/exact-implementation-does-not-validate-a-requirement.md		theory/exact-implementation-does-not-validate-a-requirement.md
+moved-page	notes/execution-indeterminism-is-a-property-of-the-sampling-process.md		theory/execution-indeterminism-is-a-property-of-the-sampling-process.md
+moved-page	notes/execution-shaping-determines-directory-placement.md		theory/execution-shaping-determines-directory-placement.md
+moved-page	notes/factory-construction-does-not-establish-knowledge-acquisition.md		theory/factory-construction-does-not-establish-knowledge-acquisition.md
+moved-page	notes/factory-learning-is-experience-responsive-retention-that-improves.md		theory/factory-learning-is-experience-responsive-retention-that-improves.md
+moved-page	notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md		theory/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md
+moved-page	notes/failure-explanation-changes-later-branch-decisions.md		theory/failure-explanation-changes-later-branch-decisions.md
+moved-page	notes/false-positive-generation-is-filtered-before-retention.md		theory/false-positive-generation-is-filtered-before-retention.md
+moved-page	notes/feasibility-is-the-heaviest-forks-net-load.md		theory/feasibility-is-the-heaviest-forks-net-load.md
+moved-page	notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md		theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md
+moved-page	notes/final-task-success-does-not-establish-intended-path-health.md		theory/final-task-success-does-not-establish-intended-path-health.md
+moved-page	notes/first-principles-analysis-maps-design-space-before-selection.md		theory/first-principles-analysis-maps-design-space-before-selection.md
+moved-page	notes/first-principles-reasoning-selects-for-explanatory-reach-over.md		theory/first-principles-reasoning-selects-for-explanatory-reach-over.md
+moved-page	notes/fix-what-the-executor-cant-determine-not-what-it-will.md		theory/fix-what-the-executor-cant-determine-not-what-it-will.md
+moved-page	notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md		theory/flat-memory-predicts-specific-cross-contamination-failures-that-are.md
+moved-page	notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md		theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md
+moved-page	notes/frontloading-is-partial-evaluation-not-divide-and-conquer.md		theory/frontloading-is-partial-evaluation-not-divide-and-conquer.md
+moved-page	notes/frontloading-spares-execution-context.md		theory/frontloading-spares-execution-context.md
+moved-page	notes/full-identity-keys-decouple-a-batch-protocol-from-its-packing-axis.md		theory/full-identity-keys-decouple-a-batch-protocol-from-its-packing-axis.md
+moved-page	notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md		theory/generality-bought-to-avoid-counterexamples-is-paid-for-in.md
+moved-page	notes/generate-instructions-at-build-time.md		theory/generate-instructions-at-build-time.md
+moved-page	notes/generation-confidence-does-not-by-itself-certify-soundness.md		theory/generation-confidence-does-not-by-itself-certify-soundness.md
+moved-page	notes/git-provenance-requires-contribution-and-dependency-semantics.md		theory/git-provenance-requires-contribution-and-dependency-semantics.md
+moved-page	notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md		theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md
+moved-page	notes/history-has-one-chance-to-become-checkable.md		theory/history-has-one-chance-to-become-checkable.md
+moved-page	notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md		theory/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
+moved-page	notes/human-analogies-suggest-functions-not-component-boundaries.md		theory/human-analogies-suggest-functions-not-component-boundaries.md
+moved-page	notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md		theory/human-llm-differences-are-load-bearing-for-knowledge-system-design.md
+moved-page	notes/human-writing-structures-transfer-to-llms-because-failure-modes.md		theory/human-writing-structures-transfer-to-llms-because-failure-modes.md
+moved-page	notes/improvements-can-accumulate-without-compounding.md		theory/improvements-can-accumulate-without-compounding.md
+moved-page	notes/in-context-learning-presupposes-context-engineering.md		theory/in-context-learning-presupposes-context-engineering.md
+moved-page	notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md		theory/inbound-and-outbound-links-serve-asymmetric-reader-needs.md
+moved-page	notes/increasing-computational-autonomy-relocates-human-effort.md		theory/increasing-computational-autonomy-relocates-human-effort.md
+moved-page	notes/index-completeness-does-not-determine-editorial-orientation.md		theory/index-completeness-does-not-determine-editorial-orientation.md
+moved-page	notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md		theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md
+moved-page	notes/information-value-is-observer-relative.md		theory/information-value-is-observer-relative.md
+moved-page	notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md		theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
+moved-page	notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md		theory/instantiation-alone-cannot-model-agent-learning-across-sessions.md
+moved-page	notes/instruction-specificity-should-match-loading-frequency.md		theory/instruction-specificity-should-match-loading-frequency.md
+moved-page	notes/instructions-are-typed-callables.md		theory/instructions-are-typed-callables.md
+moved-page	notes/intent-controls-choices-by-distinguishing-live-alternatives.md		theory/intent-controls-choices-by-distinguishing-live-alternatives.md
+moved-page	notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md		theory/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md
+moved-page	notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md		theory/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md
+moved-page	notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md		theory/knowledge-access-architecture-must-be-evaluated-end-to-end.md
+moved-page	notes/knowledge-storage-does-not-imply-contextual-activation.md		theory/knowledge-storage-does-not-imply-contextual-activation.md
+moved-page	notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md		theory/known-target-discovery-benchmarks-show-reachability-not-discovery.md
+moved-page	notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md		theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
+moved-page	notes/learning-is-not-only-about-generality.md		theory/learning-is-not-only-about-generality.md
+moved-page	notes/legal-drafting-solves-the-same-problem-as-context-engineering.md		theory/legal-drafting-solves-the-same-problem-as-context-engineering.md
+moved-page	notes/lightweight-search-control-does-not-license-adoption.md		theory/lightweight-search-control-does-not-license-adoption.md
+moved-page	notes/link-following-and-search-impose-different-metadata-requirements.md		theory/link-following-and-search-impose-different-metadata-requirements.md
+moved-page	notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md		theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md
+moved-page	notes/link-strength-is-encoded-in-position-and-prose.md		theory/link-strength-is-encoded-in-position-and-prose.md
+moved-page	notes/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md		theory/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md
+moved-page	notes/linking-theory.md		theory/linking-theory.md
+moved-page	notes/links-encode-conditional-possibilities-not-obligations.md		theory/links-encode-conditional-possibilities-not-obligations.md
+moved-page	notes/literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md		theory/literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md
+moved-page	notes/llm-code-boundaries-are-natural-checkpoints.md		theory/llm-code-boundaries-are-natural-checkpoints.md
+moved-page	notes/llm-context-interprets-instructions-and-content-through-one-medium.md		theory/llm-context-interprets-instructions-and-content-through-one-medium.md
+moved-page	notes/llm-context-is-composed-without-scoping.md		theory/llm-context-is-composed-without-scoping.md
+moved-page	notes/llm-debugging-starts-with-retry-versus-rewrite-triage.md		theory/llm-debugging-starts-with-retry-versus-rewrite-triage.md
+moved-page	notes/llm-executed-methodologies-are-metacircular-interpreters.md		theory/llm-executed-methodologies-are-metacircular-interpreters.md
+moved-page	notes/llm-frameworks-should-keep-the-tool-loop-optional.md		theory/llm-frameworks-should-keep-the-tool-loop-optional.md
+moved-page	notes/llm-generation-relaxes-goals-where-human-writing-stalls.md		theory/llm-generation-relaxes-goals-where-human-writing-stalls.md
+moved-page	notes/llm-learning-phases-fall-between-human-learning-modes.md		theory/llm-learning-phases-fall-between-human-learning-modes.md
+moved-page	notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md		theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md
+moved-page	notes/llm-output-deviation-requires-three-way-diagnosis.md		theory/llm-output-deviation-requires-three-way-diagnosis.md
+moved-page	notes/llm-recompute-cost-inverts-the-store-vs-recompute-default.md		theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md
+moved-page	notes/local-materialization-should-outperform-distant-declarations.md		theory/local-materialization-should-outperform-distant-declarations.md
+moved-page	notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md		theory/localized-retention-pays-where-change-is-sparse-in-a-matching.md
+moved-page	notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md		theory/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
+moved-page	notes/maintenance-capacity-must-match-harmful-artifact-inflow.md		theory/maintenance-capacity-must-match-harmful-artifact-inflow.md
+moved-page	notes/maintenance-operations-catalogue-should-stage-stable-procedures.md		theory/maintenance-operations-catalogue-should-stage-stable-procedures.md
+moved-page	notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md		theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md
+moved-page	notes/mcp-bundles-stateless-tools-with-stateful-runtime.md		theory/mcp-bundles-stateless-tools-with-stateful-runtime.md
+moved-page	notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md		theory/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md
+moved-page	notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md		theory/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md
+moved-page	notes/memory-backed-personalization-can-look-like-model-improvement.md		theory/memory-backed-personalization-can-look-like-model-improvement.md
+moved-page	notes/memory-design-adds-operational-axes-to-artifact-analysis.md		theory/memory-design-adds-operational-axes-to-artifact-analysis.md
+moved-page	notes/memory-management-policy-is-learnable-but-oracle-dependent.md		theory/memory-management-policy-is-learnable-but-oracle-dependent.md
+moved-page	notes/methodological-and-computational-closure-track-different-changes.md		theory/methodological-and-computational-closure-track-different-changes.md
+moved-page	notes/methodology-enforcement-is-constraining.md		theory/methodology-enforcement-is-constraining.md
+moved-page	notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md		theory/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md
+moved-page	notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md		theory/mixed-epistemic-status-must-be-preserved-below-the-document-level.md
+moved-page	notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md		theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md
+moved-page	notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md		theory/moving-the-interpretation-enforcement-boundary-requires-coverage.md
+moved-page	notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md		theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md
+moved-page	notes/natural-language-meaning-is-coordination-among-learned-approximations.md		theory/natural-language-meaning-is-coordination-among-learned-approximations.md
+moved-page	notes/natural-language-project-state-specializes-search-heuristics.md		theory/natural-language-project-state-specializes-search-heuristics.md
+moved-page	notes/naur-equates-machine-execution-with-formulated-criteria.md		theory/naur-equates-machine-execution-with-formulated-criteria.md
+moved-page	notes/naurs-compiler-case-tests-one-documentation-and-consumption-system.md		theory/naurs-compiler-case-tests-one-documentation-and-consumption-system.md
+moved-page	notes/new-domains-can-turn-theory-builders-into-software-houses.md		theory/new-domains-can-turn-theory-builders-into-software-houses.md
+moved-page	notes/notes-need-quality-scores-to-scale-curation.md		theory/notes-need-quality-scores-to-scale-curation.md
+moved-page	notes/only-explicit-retention-is-durable-writable-and-addressable.md		theory/only-explicit-retention-is-durable-writable-and-addressable.md
+moved-page	notes/opacity-is-a-scale-threshold.md		theory/opacity-is-a-scale-threshold.md
+moved-page	notes/open-domain-memory-retention-needs-a-declared-output-spec.md		theory/open-domain-memory-retention-needs-a-declared-output-spec.md
+moved-page	notes/open-ended-construction-builds-an-object-and-a-theory-of-it.md		theory/open-ended-construction-builds-an-object-and-a-theory-of-it.md
+moved-page	notes/open-ended-improvement-allocates-search-before-evaluation.md		theory/open-ended-improvement-allocates-search-before-evaluation.md
+moved-page	notes/open-ended-theory-learning-and-factory-learning-close-the-same.md		theory/open-ended-theory-learning-and-factory-learning-close-the-same.md
+moved-page	notes/operational-signals-that-a-component-is-a-relaxing-candidate.md		theory/operational-signals-that-a-component-is-a-relaxing-candidate.md
+moved-page	notes/opposed-recompute-factors-do-not-decide-documentation-segmentation.md		theory/opposed-recompute-factors-do-not-decide-documentation-segmentation.md
+moved-page	notes/oracle-accumulation-improves-the-selection-environment.md		theory/oracle-accumulation-improves-the-selection-environment.md
+moved-page	notes/oracle-strength-spectrum.md		theory/oracle-strength-spectrum.md
+moved-page	notes/orchestration-needs-privilege-quarantine-not-permission-scope.md		theory/orchestration-needs-privilege-quarantine-not-permission-scope.md
+moved-page	notes/orchestration-strategies-and-run-state-have-opposite-persistence.md		theory/orchestration-strategies-and-run-state-have-opposite-persistence.md
+moved-page	notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md		theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md
+moved-page	notes/parametric-reproduction-cannot-replace-an-authoritative-record.md		theory/parametric-reproduction-cannot-replace-an-authoritative-record.md
+moved-page	notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md		theory/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md
+moved-page	notes/pointer-design-tradeoffs-in-progressive-disclosure.md		theory/pointer-design-tradeoffs-in-progressive-disclosure.md
+moved-page	notes/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md		theory/problem-matches-guide-method-search-mechanism-matches-bound-transfer.md
+moved-page	notes/process-structure-and-output-structure-are-independent-levers.md		theory/process-structure-and-output-structure-are-independent-levers.md
+moved-page	notes/productive-deferral-requires-option-evidence-and-convergence.md		theory/productive-deferral-requires-option-evidence-and-convergence.md
+moved-page	notes/program-theory-sustains-search-under-delayed-feedback.md		theory/program-theory-sustains-search-under-delayed-feedback.md
+moved-page	notes/progressive-constraining-commits-only-after-patterns-stabilize.md		theory/progressive-constraining-commits-only-after-patterns-stabilize.md
+moved-page	notes/project-theory-relates-new-demands-to-existing-organization.md		theory/project-theory-relates-new-demands-to-existing-organization.md
+moved-page	notes/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md		theory/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md
+moved-page	notes/prompt-ablation-converts-human-insight-to-deployable-framing.md		theory/prompt-ablation-converts-human-insight-to-deployable-framing.md
+moved-page	notes/proposals/README.md		theory/proposals/README.md
+moved-page	notes/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md		theory/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md
+moved-page	notes/proposals/revise-behavioral-authority-decomposition.md		theory/proposals/revise-behavioral-authority-decomposition.md
+moved-page	notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md		theory/prototype-standing-is-revision-cost-binding-plus-lost-investment.md
+moved-page	notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md		theory/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md
+moved-page	notes/quality-signals-for-kb-evaluation.md		theory/quality-signals-for-kb-evaluation.md
+moved-page	notes/raw-accumulation-does-not-create-usable-memory.md		theory/raw-accumulation-does-not-create-usable-memory.md
+moved-page	notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md		theory/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md
+moved-page	notes/reasoning-production-is-not-reasoning-evaluation.md		theory/reasoning-production-is-not-reasoning-evaluation.md
+moved-page	notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md		theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md
+moved-page	notes/reflection-buys-addressability.md		theory/reflection-buys-addressability.md
+moved-page	notes/reflection-makes-retained-lessons-second-order.md		theory/reflection-makes-retained-lessons-second-order.md
+moved-page	notes/reflective-coverage-is-graded-across-representational-forms.md		theory/reflective-coverage-is-graded-across-representational-forms.md
+moved-page	notes/reliability-dimensions-map-to-oracle-hardening-stages.md		theory/reliability-dimensions-map-to-oracle-hardening-stages.md
+moved-page	notes/research/adaptation-agentic-ai-analysis.md		theory/research/adaptation-agentic-ai-analysis.md
+moved-page	notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md		theory/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
+moved-page	notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md		theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+moved-page	notes/retained-theories-may-improve-sample-efficiency.md		theory/retained-theories-may-improve-sample-efficiency.md
+moved-page	notes/retained-theory-intervention-isolates-one-explicit-surface.md		theory/retained-theory-intervention-isolates-one-explicit-surface.md
+moved-page	notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md		theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
+moved-page	notes/reverse-compression-is-when-llm-output-expands-without-adding.md		theory/reverse-compression-is-when-llm-output-expands-without-adding.md
+moved-page	notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md		theory/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md
+moved-page	notes/revising-an-improvement-objective-is-licensed-from-outside-it.md		theory/revising-an-improvement-objective-is-licensed-from-outside-it.md
+moved-page	notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md		theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
+moved-page	notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md		theory/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md
+moved-page	notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md		theory/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md
+moved-page	notes/rule-based-context-selection-needs-a-pre-existing-signal.md		theory/rule-based-context-selection-needs-a-pre-existing-signal.md
+moved-page	notes/runtime-structure-determines-governance-control-surfaces.md		theory/runtime-structure-determines-governance-control-surfaces.md
+moved-page	notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md		theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md
+moved-page	notes/scenario-decomposition-drives-architecture.md		theory/scenario-decomposition-drives-architecture.md
+moved-page	notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md		theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
+moved-page	notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md		theory/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md
+moved-page	notes/self-improvement-is-relative-to-a-declared-objective.md		theory/self-improvement-is-relative-to-a-declared-objective.md
+moved-page	notes/semantic-review-catches-content-errors-that-structural-validation.md		theory/semantic-review-catches-content-errors-that-structural-validation.md
+moved-page	notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md		theory/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md
+moved-page	notes/semantic-work-can-be-relocated-but-not-eliminated.md		theory/semantic-work-can-be-relocated-but-not-eliminated.md
+moved-page	notes/session-history-should-not-be-the-default-next-context.md		theory/session-history-should-not-be-the-default-next-context.md
+moved-page	notes/short-composable-notes-maximize-combinatorial-discovery.md		theory/short-composable-notes-maximize-combinatorial-discovery.md
+moved-page	notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md		theory/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md
+moved-page	notes/skill-discovery-re-fires-in-every-sub-agent-context.md		theory/skill-discovery-re-fires-in-every-sub-agent-context.md
+moved-page	notes/skills-are-instructions-plus-routing-and-execution-policy.md		theory/skills-are-instructions-plus-routing-and-execution-policy.md
+moved-page	notes/skills-derive-from-methodology.md		theory/skills-derive-from-methodology.md
+moved-page	notes/soft-bound-traditions-as-sources-for-context-engineering-strategies.md		theory/soft-bound-traditions-as-sources-for-context-engineering-strategies.md
+moved-page	notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md		theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md
+moved-page	notes/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md		theory/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md
+moved-page	notes/spec-mining-as-codification.md		theory/spec-mining-as-codification.md
+moved-page	notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md		theory/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md
+moved-page	notes/specification-level-separation-recovers-scoping-before-it-recovers.md		theory/specification-level-separation-recovers-scoping-before-it-recovers.md
+moved-page	notes/specification-strategy-should-follow-where-understanding-lives.md		theory/specification-strategy-should-follow-where-understanding-lives.md
+moved-page	notes/stale-self-description-conceals-its-own-staleness.md		theory/stale-self-description-conceals-its-own-staleness.md
+moved-page	notes/statecharts-and-programs-differ-in-what-they-show-not-compute.md		theory/statecharts-and-programs-differ-in-what-they-show-not-compute.md
+moved-page	notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md		theory/stateful-tools-recover-control-by-becoming-hidden-schedulers.md
+moved-page	notes/structure-inference-needs-capture-at-the-decision-surface.md		theory/structure-inference-needs-capture-at-the-decision-surface.md
+moved-page	notes/structured-output-is-easier-for-humans-to-review.md		theory/structured-output-is-easier-for-humans-to-review.md
+moved-page	notes/structured-prompt-gains-do-not-establish-distribution-selection.md		theory/structured-prompt-gains-do-not-establish-distribution-selection.md
+moved-page	notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md		theory/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md
+moved-page	notes/superseded-choices-are-retained-superseded-beliefs-are-not.md		theory/superseded-choices-are-retained-superseded-beliefs-are-not.md
+moved-page	notes/synthesis-is-not-error-correction.md		theory/synthesis-is-not-error-correction.md
+moved-page	notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md		theory/system-definition-artifacts-are-crystallized-reasoning-under-context.md
+moved-page	notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md		theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md
+moved-page	notes/system-use-selects-theory-fit-without-a-fixed-oracle.md		theory/system-use-selects-theory-fit-without-a-fixed-oracle.md
+moved-page	notes/systematic-prompt-variation-serves-verification-and-diagnosis-not.md		theory/systematic-prompt-variation-serves-verification-and-diagnosis-not.md
+moved-page	notes/task-families-and-product-families-classify-different-things.md		theory/task-families-and-product-families-classify-different-things.md
+moved-page	notes/technical-constraints-make-kb-objective-choice-engineering.md		theory/technical-constraints-make-kb-objective-choice-engineering.md
+moved-page	notes/text-testing-framework.md		theory/text-testing-framework.md
+moved-page	notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md		theory/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
+moved-page	notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md		theory/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md
+moved-page	notes/the-bitter-lesson-selects-production-methods-not-representational.md		theory/the-bitter-lesson-selects-production-methods-not-representational.md
+moved-page	notes/the-boundary-of-automation-is-the-boundary-of-verification.md		theory/the-boundary-of-automation-is-the-boundary-of-verification.md
+moved-page	notes/the-chat-history-model-trades-context-efficiency-for-implementation.md		theory/the-chat-history-model-trades-context-efficiency-for-implementation.md
+moved-page	notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md		theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md
+moved-page	notes/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md		theory/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md
+moved-page	notes/the-practical-scheduler-is-the-host-language.md		theory/the-practical-scheduler-is-the-host-language.md
+moved-page	notes/the-self-improving-system-definition-classifies-its-boundary-cases.md		theory/the-self-improving-system-definition-classifies-its-boundary-cases.md
+moved-page	notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md		theory/theory-and-capacity-building-make-the-same-kind-of-commitment.md
+moved-page	notes/theory-and-methodology-form-a-two-layer-execution-system.md		theory/theory-and-methodology-form-a-two-layer-execution-system.md
+moved-page	notes/theory-building-has-distinct-precedents.md		theory/theory-building-has-distinct-precedents.md
+moved-page	notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md		theory/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md
+moved-page	notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md		theory/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md
+moved-page	notes/title-as-claim-enables-traversal-as-reasoning.md		theory/title-as-claim-enables-traversal-as-reasoning.md
+moved-page	notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md		theory/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md
+moved-page	notes/title-as-claim-makes-overlap-between-notes-visible.md		theory/title-as-claim-makes-overlap-between-notes-visible.md
+moved-page	notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md		theory/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md
+moved-page	notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md		theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md
+moved-page	notes/traditional-software-can-bracket-executor-conformance-llm-systems.md		theory/traditional-software-can-bracket-executor-conformance-llm-systems.md
+moved-page	notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md		theory/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md
+moved-page	notes/treat-continual-learning-as-representational-form-coevolution.md		theory/treat-continual-learning-as-representational-form-coevolution.md
+moved-page	notes/two-context-boundaries-govern-collection-operations.md		theory/two-context-boundaries-govern-collection-operations.md
+moved-page	notes/type-system-enforces-metadata-that-navigation-depends-on.md		theory/type-system-enforces-metadata-that-navigation-depends-on.md
+moved-page	notes/types/structured-claim.md		theory/types/structured-claim.md
+moved-page	notes/types/theory-proposal.md		theory/types/theory-proposal.md
+moved-page	notes/types-give-agents-structural-hints-before-opening-documents.md		theory/types-give-agents-structural-hints-before-opening-documents.md
+moved-page	notes/unattended-work-needs-the-functions-that-interaction-supplied.md		theory/unattended-work-needs-the-functions-that-interaction-supplied.md
+moved-page	notes/underspecification-and-indeterminism-complicate-programming-for.md		theory/underspecification-and-indeterminism-complicate-programming-for.md
+moved-page	notes/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md		theory/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md
+moved-page	notes/unified-calling-conventions-enable-bidirectional-refactoring.md		theory/unified-calling-conventions-enable-bidirectional-refactoring.md
+moved-page	notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md		theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md
+moved-page	notes/universal-software-factory-needs-a-declared-universality-axis.md		theory/universal-software-factory-needs-a-declared-universality-axis.md
+moved-page	notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md		theory/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md
+moved-page	notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md		theory/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
+moved-page	notes/verifiability-gradient.md		theory/verifiability-gradient.md
+moved-page	notes/verifiable-subroles-before-reviewer-identity.md		theory/verifiable-subroles-before-reviewer-identity.md
+moved-page	notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md		theory/verification-needs-a-typed-target-before-it-needs-an-oracle.md
+moved-page	notes/vibe-noting.md		theory/vibe-noting.md
+moved-page	notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md		theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md
+moved-page	notes/warranted-autonomy-is-bounded-by-oracle-domain.md		theory/warranted-autonomy-is-bounded-by-oracle-domain.md
+moved-page	notes/warranted-reader-update-is-the-objective-of-substantive-writing.md		theory/warranted-reader-update-is-the-objective-of-substantive-writing.md
+moved-page	notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md		theory/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
+moved-page	notes/weakly-discriminated-qualities-tend-to-be-underselected.md		theory/weakly-discriminated-qualities-tend-to-be-underselected.md
+moved-page	notes/weight-resident-methodologies-compress-behavior-in-context.md		theory/weight-resident-methodologies-compress-behavior-in-context.md
+moved-page	notes/why-directories-despite-their-costs.md		theory/why-directories-despite-their-costs.md
+moved-page	notes/why-notes-have-types.md		theory/why-notes-have-types.md
+moved-page	notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md		theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md
+moved-page	notes/world-models-assess-explanatory-reach-through-action-conditioned.md		theory/world-models-assess-explanatory-reach-through-action-conditioned.md
+moved-page	notes/writing-styles-are-strategies-for-managing-underspecification.md		theory/writing-styles-are-strategies-for-managing-underspecification.md
+virtual-index	notes/dir-index.md		theory/dir-index.md
+virtual-index	notes/agent-memory-requirements/dir-index.md		theory/agent-memory-requirements/dir-index.md
+virtual-index	notes/definitions/dir-index.md		theory/definitions/dir-index.md
+virtual-index	notes/evidence/dir-index.md		theory/evidence/dir-index.md
+virtual-index	notes/proposals/dir-index.md		theory/proposals/dir-index.md
+virtual-index	notes/research/dir-index.md		theory/research/dir-index.md

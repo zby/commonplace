@@ -1,0 +1,26 @@
+{
+  "head": "c30ebacfb311add06597b96e755ab249a969ce25",
+  "backup": "/tmp/commonplace-theory-rename-66xwi2cr",
+  "moves": 427,
+  "markdown_moves": 425,
+  "updates": 2122,
+  "tracked_update_paths": 1123,
+  "protected_update_paths": 1072,
+  "protected_obligations": {
+    "ignored operational data or exact capture subtree: preserve during this rename": 21,
+    "local untracked state/cache: leave unchanged": 999,
+    "experiment baseline/treatments: exact retained comparison inputs": 4,
+    "retained frozen trial protocol": 1,
+    "declared exact retained assessment at its original terminology boundary": 1,
+    "experimental cohort inputs": 40,
+    "retained experimental version": 6
+  },
+  "redirect_changes": {
+    "retarget": 164,
+    "moved-page": 423,
+    "virtual-index": 6
+  },
+  "existing_notes_redirect_keys": 220,
+  "ingest_quote_sections": 516,
+  "state_backup_integrity": "ok"
+}
