@@ -101,6 +101,7 @@ from commonplace.lib.agentic_analysis.worktree import STATE_ROOT
 from commonplace.lib.directory_artifact import MANIFEST_NAME, type_manifest
 from commonplace.lib.directory_layout import Layout, type_layout
 from commonplace.lib.note_parser import parse_document
+from commonplace.lib.project_paths import collection_for_path
 
 RUNTIME = "runtime"
 PARALLEL_ANALYSTS = ("memory", "epistemic", "workflow")
@@ -226,13 +227,28 @@ class Method:
         return files
 
     def criteria(self) -> dict[str, bytes]:
-        """Every pinned criterion the run validates against: all groups plus the types' closure."""
+        """Pin groups, their type/schema closure and governing collection policies."""
         paths = {path for group in self.groups.values() for path in group.values()}
-        types = [self.type_spec, *(r.type for r in self.layout.roles.values())]
-        # A contract file is validated by its own type too.
-        types += [t for t in (frontmatter((self.library / p).read_bytes()).get("type") for p in paths
-                              if p.endswith(".md")) if isinstance(t, str)]
-        paths |= set(type_closure(self.library, types))
+        while True:
+            previous = set(paths)
+            types = [self.type_spec, *(r.type for r in self.layout.roles.values())]
+            for path in tuple(paths):
+                if not path.endswith(".md"):
+                    continue
+                type_path = frontmatter((self.library / path).read_bytes()).get("type")
+                if isinstance(type_path, str):
+                    types.append(type_path)
+                # ADR 122 makes collection policy a validation input, including
+                # when validating type specifications. Capture it; never fall
+                # back to ambient policy during pinned validation.
+                try:
+                    collection = collection_for_path(self.library / path, self.library.parent)
+                except ValueError:
+                    continue
+                paths.add((collection / "COLLECTION.md").relative_to(self.library).as_posix())
+            paths |= set(type_closure(self.library, types))
+            if paths == previous:
+                break
         return {path: (self.library / path).read_bytes() for path in sorted(paths)}
 
 
