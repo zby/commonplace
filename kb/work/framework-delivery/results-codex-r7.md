@@ -240,3 +240,9 @@ left intact. Only this results file and a reply line in
 explicit Codex run prompt authorizes committing those two files despite the
 generic probe request's no-commit rule. Validation uses diff and local-link
 checks, not a `commonplace-*` command, to preserve the probe boundary.
+
+The initial stage-and-commit command was denied because `.git/index.lock`
+could not be created on the sandbox's read-only filesystem. The same operation
+was retried with an escalation request and succeeded after approval. Recording
+this post-run permission event also requires an escalated Git write. These
+repository-write permissions are separate from the probe's library-read results.
