@@ -20,9 +20,9 @@ extension only for work you were commissioned to delegate.
   non-interactive mode. Use only destinations within the commission's scope;
   tool availability does not expand mutation authority.
 - Single mode uses `agent` and `task`. Parallel mode uses `tasks`, an array of
-  objects containing `agent`, `task`, and optionally `cwd`, `model`, and
-  `thinkingLevel`. Optional top-level `model` and `thinkingLevel` apply to
-  every task; per-task values override them. Chain mode is not supported; use
+  objects containing `agent`, `task`, and optionally `cwd`, `model`,
+  `thinkingLevel`, and `sessionFile`. Optional top-level `model` and
+  `thinkingLevel` apply to every task; per-task values override them. Chain mode is not supported; use
   explicit isolated handoffs. Blocking and asynchronous calls share four active
   slots in this session. Blocking calls wait for capacity, while asynchronous
   starts reject when full.
@@ -38,9 +38,18 @@ extension only for work you were commissioned to delegate.
   See `.pi/README.md` for lifecycle and platform limits. An old schema requires
   reload before launching work, not a fallback to wait-for-all dispatch.
 - A child inherits the dispatching session's model and thinking level unless
-  the call overrides them with `model` or `thinkingLevel`. Each call starts a
-  fresh non-persisted session without the parent's conversation. Repository
-  context still loads; this is not a filesystem sandbox.
+  the call overrides them with `model` or `thinkingLevel`. A new call starts a
+  fresh persistent session without the parent's conversation, using Pi's normal
+  storage rules. Results return `sessionId`, `sessionFile` and `executionDir`.
+  Supply that worker's `sessionFile` with the same agent and `cwd` to continue
+  its conversation; omitted overrides then retain its recorded launch selection.
+  Only resume a worker when the workflow permits its accumulated context.
+  Reconstructors and independent reviewers remain fresh where required.
+  `forget`, shutdown and reload do not delete sessions or audit files. Missing
+  files, changed worker definitions and active/stale session locks reject
+  continuation. Reconcile ownership before removing a stale lock; see
+  `.pi/README.md`. Repository context still loads; this is not a filesystem
+  sandbox.
 - `fork_turns: "none"` expresses no parent conversation; this extension supplies
   that isolation by construction. It is not a supported tool argument. If any
   other launch requirement cannot be applied, report the launch failure rather

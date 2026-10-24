@@ -7,6 +7,7 @@ import path from "node:path";
 import { PassThrough } from "node:stream";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { sessionFixture } from "./session-fixture.mjs";
 
 const packageDir = process.env.PI_PACKAGE_DIR;
 assert.ok(packageDir, "Set PI_PACKAGE_DIR");
@@ -29,7 +30,17 @@ const mockSpawn = (command, args, options) => {
   proc.stdout = new PassThrough();
   proc.stderr = new PassThrough();
   proc.signals = [];
+  let announced = false;
+  const announce = () => {
+    if (announced) return;
+    announced = true;
+    const info = sessionFixture(args, options.cwd, path.join(root, "sessions"));
+    proc.sessionFile = JSON.parse(info.slice(info.indexOf("{"))).sessionFile;
+    proc.stderr.write(info);
+  };
+  process.nextTick(announce);
   proc.kill = signal => {
+    announce();
     proc.signals.push(signal);
     // Deliberately use killed=true on TERM: escalation must not rely on it.
     proc.killed = true;
@@ -37,6 +48,7 @@ const mockSpawn = (command, args, options) => {
     return true;
   };
   proc.respond = (text, stopReason, errorMessage) => {
+    announce();
     proc.stdout.write(JSON.stringify({ type: "message_end", message: {
       role: "assistant", content: [{ type: "text", text }], stopReason,
       ...(errorMessage === undefined ? {} : { errorMessage }),
@@ -77,7 +89,7 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
       await spawned(4);
       await assert.rejects(start(), /Four jobs/);
       for (const launch of launches) {
-        assert.ok(launch.args.includes("--no-session"));
+        assert.ok(!launch.args.includes("--no-session"));
         assert.equal(launch.args[launch.args.indexOf("--model") + 1], "chosen");
         assert.equal(launch.args[launch.args.indexOf("--thinking") + 1], "off");
         assert.equal(launch.options.cwd, root);
@@ -182,6 +194,68 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
         assert.match(result.content[0].text, /Recovered final result/);
         await reset();
       }
+    });
+    await t.test("audit evidence survives recovered failures, forget and reload; sessions cannot run concurrently", async () => {
+      const h = handle(await start()); await spawned(1);
+      const proc = launches[0].proc;
+      proc.stdout.write(JSON.stringify({ type: "auto_retry_start", attempt: 1 }) + "\n");
+      proc.respond("", "error", "Hidden transient failure");
+      proc.stderr.write("Diagnostic before recovery\n");
+      proc.finish("Recovered result");
+      const first = (await wait([h])).details.jobs[0].result;
+      const eventsFile = path.join(first.executionDir, "events.jsonl");
+      assert.match(fs.readFileSync(eventsFile, "utf8"), /Hidden transient failure/);
+      assert.match(fs.readFileSync(eventsFile, "utf8"), /auto_retry_start/);
+      assert.match(fs.readFileSync(path.join(first.executionDir, "stderr.log"), "utf8"), /Diagnostic before recovery/);
+      await call({ action: "forget", handles: [h] });
+      await reset();
+      assert.ok(fs.existsSync(first.sessionFile));
+      assert.ok(fs.existsSync(eventsFile));
+      const resumedHandle = handle(await start({ sessionFile: first.sessionFile }));
+      await spawned(1);
+      const duplicate = await call({ agentScope: "project", agent: "worker", task: "competing", sessionFile: first.sessionFile });
+      assert.equal(duplicate.isError, true);
+      assert.match(duplicate.content[0].text, /active or has a stale lock/);
+      assert.equal(launches.length, 1);
+      await call({ action: "cancel", handles: [resumedHandle] });
+      const cancelled = (await wait([resumedHandle])).details.jobs[0].result;
+      assert.equal(cancelled.sessionId, first.sessionId);
+      assert.notEqual(cancelled.executionDir, first.executionDir);
+      assert.equal(JSON.parse(fs.readFileSync(path.join(cancelled.executionDir, "execution.json"), "utf8")).stopReason, "aborted");
+      assert.ok(!fs.existsSync(first.sessionFile + ".subagent/active"));
+      await reset();
+      assert.ok(fs.existsSync(cancelled.executionDir));
+    });
+    await t.test("a recording failure aborts the worker and cannot report success", async () => {
+      const h = handle(await start()); await spawned(1);
+      const proc = launches[0].proc;
+      // Force announcement before damaging the active execution's event file.
+      proc.respond("interim", "toolUse");
+      const dir = proc.sessionFile + ".subagent";
+      const execution = fs.readdirSync(dir, { withFileTypes: true }).find(entry => entry.isDirectory() && entry.name !== "active").name;
+      const eventsFile = path.join(dir, execution, "events.jsonl");
+      fs.unlinkSync(eventsFile); fs.mkdirSync(eventsFile);
+      proc.respond("would otherwise look successful", "stop");
+      const response = await wait([h]);
+      assert.equal(response.isError, true);
+      assert.match(response.details.jobs[0].result.errorMessage, /Session recording failed/);
+      assert.ok(proc.signals.includes("SIGTERM"));
+      assert.ok(!fs.existsSync(path.join(dir, "active")));
+      await reset();
+    });
+    await t.test("finalization failures keep the session reference and are recorded as failures", async () => {
+      const h = handle(await start()); await spawned(1);
+      const proc = launches[0].proc;
+      proc.respond("interim", "toolUse");
+      fs.rmSync(proc.sessionFile + ".subagent/active", { recursive: true });
+      proc.finish("Otherwise successful");
+      const response = await wait([h]);
+      const result = response.details.jobs[0].result;
+      assert.equal(response.isError, true);
+      assert.equal(result.sessionFile, proc.sessionFile);
+      assert.match(result.errorMessage, /Session finalization failed/);
+      assert.match(JSON.parse(fs.readFileSync(path.join(result.executionDir, "execution.json"), "utf8")).errorMessage, /Session finalization failed/);
+      await reset();
     });
     await t.test("terminal errors replace earlier error text and remain failures", async () => {
       for (const finalError of ["Final provider failure", undefined]) {

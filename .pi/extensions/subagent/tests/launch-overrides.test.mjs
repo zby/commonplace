@@ -7,6 +7,7 @@ import path from "node:path";
 import { PassThrough } from "node:stream";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { sessionFixture } from "./session-fixture.mjs";
 
 // Use the same dependencies as the installed Pi; no child agents or model calls.
 const packageDir = process.env.PI_PACKAGE_DIR;
@@ -33,6 +34,7 @@ childProcess.spawn = (command, args, options) => {
   proc.stderr = new PassThrough();
   proc.kill = () => true;
   process.nextTick(() => {
+    proc.stderr.write(sessionFixture(args, options.cwd, path.join(root, "sessions")));
     proc.stdout.write(JSON.stringify({ type: "message_end", message: {
       role: "assistant", content: [{ type: "text", text: "OK" }], stopReason: "stop",
     } }) + "\n");
@@ -101,7 +103,65 @@ test("launch overrides and inheritance", async t => {
       assert.equal(flag(0, "--model"), "test/parent");
       assert.equal(flag(0, "--thinking"), "medium");
       assert.equal(result.details.results[0].thinkingLevel, "medium");
-      assert.ok(launches[0].args.includes("--no-session"));
+      assert.ok(!launches[0].args.includes("--no-session"));
+      assert.equal(flag(0, "--session"), undefined);
+      assert.ok(fs.existsSync(result.details.results[0].sessionFile));
+    });
+    await t.test("fresh sessions retain separate audit records; explicit continuation reuses only the chosen session", async () => {
+      const first = (await launch({ agent: "inherited", task: "source-first" })).details.results[0];
+      const second = (await launch({ agent: "inherited", task: "independent" })).details.results[0];
+      assert.notEqual(first.sessionId, second.sessionId);
+      assert.notEqual(first.sessionFile, second.sessionFile);
+      for (const result of [first, second]) {
+        assert.ok(fs.existsSync(result.sessionFile));
+        assert.match(fs.readFileSync(path.join(result.executionDir, "events.jsonl"), "utf8"), /"text":"OK"/);
+        assert.match(fs.readFileSync(path.join(result.executionDir, "stderr.log"), "utf8"), /PI_SUBAGENT_SESSION/);
+        assert.ok(!result.stderr.includes("PI_SUBAGENT_SESSION"));
+        const execution = JSON.parse(fs.readFileSync(path.join(result.executionDir, "execution.json"), "utf8"));
+        assert.equal(execution.exitCode, 0);
+        assert.ok(execution.endedAt);
+      }
+      const { SessionManager } = await jiti.import(aliases["@earendil-works/pi-coding-agent"]);
+      const saved = SessionManager.open(first.sessionFile);
+      saved.appendMessage({ role: "user", content: "Source-first commitment", timestamp: Date.now() });
+      launches.length = 0;
+      const response = await tool.execute("resume", { agentScope: "project", agent: "inherited", task: "reconcile",
+        sessionFile: first.sessionFile }, undefined, undefined,
+        { ...ctx, model: { provider: "different", id: "parent" }, thinkingLevel: "off" });
+      assert.equal(response.isError, undefined);
+      const resumed = response.details.results[0];
+      assert.equal(resumed.sessionId, first.sessionId);
+      assert.equal(resumed.sessionFile, first.sessionFile);
+      assert.notEqual(resumed.executionDir, first.executionDir);
+      assert.equal(flag(0, "--session"), first.sessionFile);
+      assert.equal(flag(0, "--model"), "test/parent");
+      assert.equal(flag(0, "--thinking"), "medium");
+      assert.equal(SessionManager.open(first.sessionFile).buildSessionContext().messages[0].content, "Source-first commitment");
+      assert.equal(JSON.parse(fs.readFileSync(path.join(first.executionDir, "execution.json"), "utf8")).task, "source-first");
+      assert.match(response.content[0].text, /Session file:/);
+    });
+    await t.test("missing, empty, mismatched and changed worker sessions never silently start fresh", async () => {
+      const first = (await launch({ agent: "inherited", task: "initial" })).details.results[0];
+      const original = fs.readFileSync(first.sessionFile);
+      const definition = path.join(root, ".pi/agents/inherited.md");
+      const originalDefinition = fs.readFileSync(definition);
+      const attempt = async (file, agent = "inherited") => {
+        launches.length = 0;
+        const response = await tool.execute("invalid", { agentScope: "project", agent, task: "resume", sessionFile: file },
+          undefined, undefined, ctx);
+        assert.equal(response.isError, true);
+        assert.equal(launches.length, 0);
+      };
+      await attempt(path.join(root, "missing.jsonl"));
+      await attempt(first.sessionFile, "worker");
+      fs.writeFileSync(first.sessionFile, "");
+      await attempt(first.sessionFile);
+      fs.writeFileSync(first.sessionFile, original);
+      fs.appendFileSync(definition, "Changed instructions\n");
+      await attempt(first.sessionFile);
+      fs.writeFileSync(definition, originalDefinition);
+      await assert.rejects(tool.execute("bad", { tasks: [{ agent: "inherited", task: "test" }], sessionFile: first.sessionFile },
+        undefined, undefined, ctx), /on each task/);
     });
     await t.test("a definition can select delegation without exposing it to ordinary workers", async () => {
       for (const [agent, tools] of [
@@ -113,7 +173,7 @@ test("launch overrides and inheritance", async t => {
         assert.equal(flag(0, "--model"), "openai/gpt-6.1-sol");
         assert.equal(flag(0, "--thinking"), "medium");
         assert.equal(launches[0].options.cwd, root);
-        assert.ok(launches[0].args.includes("--no-session"));
+        assert.ok(!launches[0].args.includes("--no-session"));
       }
     });
     await t.test("launch transports the definition body without commission help", async () => {

@@ -24,17 +24,19 @@ the worker profile's headless harness (`pi -p` for a Pi profile); it needs no
 example shipped with `@earendil-works/pi-coding-agent` 1.0.0. The adapter now uses
 one session-local job owner for blocking and asynchronous launches, with compact
 rendering. `index.ts` owns tool dispatch, `agents.ts` discovery, `jobs.ts` job
-ownership, `launcher.ts` Pi arguments and JSON collection, and `process.ts`
-process cancellation. The original
-files came from:
+ownership, `launcher.ts` Pi arguments and JSON collection, `process.ts`
+process cancellation, and `sessions.ts` continuation and audit ownership.
+`session-info.ts` is a child extension that reports the session Pi selected.
+The original files came from:
 
 ```text
 /home/zby/.pi/agent/install/releases/1.0.0/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/
 ```
 
-The extension launches separate Pi processes with fresh, non-persisted
-sessions. It does not copy the parent's conversation. Children still load
-applicable repository context and resources. This is not a filesystem sandbox.
+The extension launches separate Pi processes with fresh, persistent sessions
+unless a recorded worker's `sessionFile` is supplied explicitly. It never copies
+the parent's conversation. Children still load applicable repository context and
+resources. This is not a filesystem sandbox.
 
 Worker results use the latest assistant response and process outcome to classify
 failure. An earlier assistant error recovered by Pi's built-in retries remains
@@ -87,7 +89,8 @@ Example single launch:
 After editing the extension, use `/reload` before calling the new parameters.
 This does not change the schema already exposed to an in-flight invocation.
 
-Run the extension tests against an installed Pi package:
+Persistent worker sessions require the session APIs and CLI behavior verified
+against Pi 1.3.0. Run the extension tests against the installed Pi package:
 
 ```bash
 PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
@@ -96,8 +99,11 @@ PI_PACKAGE_DIR=<absolute path to node_modules/@earendil-works/pi-coding-agent> \
 
 Mocked tests cover discovery, approval-free destination launches, argument
 construction, shared capacity and lifecycle. Real-process tests launch harmless Node children to check output,
-shutdown, escalation and (on Linux) descendant termination. No test launches Pi
-agents or makes model calls. Real model/resource inheritance remains untested.
+shutdown, escalation and (on Linux) descendant termination. Native Pi startup
+tests use isolated directories and no prompts to check session references,
+working-directory grouping, settings and environment storage overrides. SDK
+reopening checks retained history. No test makes model calls; model-backed
+continuation and real model/resource inheritance remain untested.
 
 `agentScope: "project"` selects definitions from the child's `.pi/agents/`;
 the default remains user agents. Project definitions are discovered afresh from
@@ -114,6 +120,69 @@ Malformed explicit `tools` values (including empty lists) reject the selected
 agent, never fall back to Pi's defaults. Omitting `tools` still selects defaults.
 Names are syntax-checked, not checked against the destination's loaded tool
 registry; extension-defined tools can differ between worktrees.
+
+## Persistent sessions and continuation
+
+Workers use Pi's normal session storage rules. The default is
+`~/.pi/agent/sessions/`, grouped by the child's working directory. Pi's
+`PI_CODING_AGENT_SESSION_DIR` and `sessionDir` setting retain their normal
+precedence. No project-local store or custom worktree routing is introduced.
+The child reports its actual session ID and file through a private stderr
+control record; the adapter does not reconstruct Pi's directory or file names.
+
+Completed results expose `sessionId`, `sessionFile` and `executionDir` in both
+structured details and the model-facing summary. A new call always starts a new
+conversation. To continue a particular worker, supply its exact saved file:
+
+```json
+{
+  "agent": "commonplace-worker",
+  "agentScope": "project",
+  "cwd": "<same absolute worktree root>",
+  "sessionFile": "<sessionFile returned by the earlier execution>",
+  "task": "<next staged handoff>"
+}
+```
+
+`sessionFile` works for single calls, asynchronous `start`, and individual
+parallel tasks. It cannot be supplied once for an entire parallel batch.
+Omitted model/thinking overrides retain the worker's recorded launch selection
+on continuation, rather than inheriting a different parent's selection.
+Explicit overrides still apply. Changed agent instructions, tools, definition
+identity or working directory reject continuation. Ambient project resources
+still reload normally; a saved conversation is not a frozen environment.
+
+The file must be nonempty and belong to a worker recorded by this adapter.
+Missing files never silently create replacement conversations. An exclusive
+filesystem lock serializes this adapter's continuations across parent processes.
+Other Pi clients must not write that session concurrently. After an abrupt
+crash, a retained `active/` lock blocks continuation: inspect its owner record,
+processes and evidence before manually removing the stale lock. Do not infer
+that a dead parent means every descendant stopped.
+
+Each native `<session>.jsonl` has a sibling `<session>.jsonl.subagent/` directory.
+It holds worker identity, an active lock while running, and a separate directory
+per execution containing:
+
+- `events.jsonl`: raw JSON stdout, including recovered errors and retry events;
+- `stderr.log`: raw stderr, including the session-reference control record;
+- `execution.json`: task, agent prompt/tools, launch arguments, requested model
+  and thinking, start/end timestamps, final outcome and usage.
+
+These records are retained after success, failure, cancellation, `forget`,
+shutdown and reload. Temporary prompt transport files are still removed; their
+contents are retained in execution metadata. An audit-write failure aborts the
+worker and fails the execution rather than certifying an unrecorded success.
+Failures before the child reports its session may have no child audit files;
+the parent result still reports startup diagnostics. No automatic retention
+cleanup is implemented. Sessions and logs can contain sensitive source content;
+keep a custom session-directory override out of Git if it points into a checkout.
+
+For multistage writing, record the author's `sessionFile` in the run's handoff
+bookkeeping and use it for the incumbent reveal and any permitted repair.
+Reconstructors and independent reviewers still start fresh conversations. This
+does not recover earlier ephemeral workers or release an already-blocked run.
+Reload before using the new tool schema, and do not reload with active jobs.
 
 ## Scry research
 
@@ -215,8 +284,9 @@ cancels its children, unlike interrupting async `wait`. Shutdown prevents queued
 blocking tasks from spawning. A child that has `subagent` has its own pool.
 
 There is no chain mode or automatic answer forwarding. Use explicit workflow
-handoffs. There is no explicit nesting limit or continuing-worker interface:
-each launch creates a fresh child.
+handoffs. There is no explicit nesting limit. Each launch creates a new process;
+it starts a fresh conversation unless `sessionFile` explicitly continues a
+recorded worker.
 A child has `subagent` only when its definition selects it. No selection is a
 filesystem sandbox: no-launch and write-scope rules are instructions, not OS
 enforcement. Nested results remain embedded in the parent's tool details.

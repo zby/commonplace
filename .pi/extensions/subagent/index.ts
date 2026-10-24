@@ -15,22 +15,26 @@ const overrides = {
 const taskFields = {
 	...overrides,
 	agent: Type.String({ description: "Agent definition name" }),
-	task: Type.String({ description: "Isolated worker handoff" }),
+	task: Type.String({ description: "Worker handoff" }),
 	cwd: Type.Optional(Type.String({ description: "Child working directory and project agent discovery root" })),
+	sessionFile: Type.Optional(Type.String({ minLength: 1, description: "Resume this recorded worker session; omission starts a new persistent conversation" })),
 };
 const parameters = Type.Object({
 	...overrides,
 	action: Type.Optional(StringEnum(["start", "status", "wait", "cancel", "forget"] as const)),
 	handles: Type.Optional(Type.Array(Type.String(), { minItems: 1 })),
-	agent: Type.Optional(taskFields.agent), task: Type.Optional(taskFields.task), cwd: taskFields.cwd,
+	agent: Type.Optional(taskFields.agent), task: Type.Optional(taskFields.task), cwd: taskFields.cwd, sessionFile: taskFields.sessionFile,
 	tasks: Type.Optional(Type.Array(Type.Object(taskFields), { minItems: 1, maxItems: 8 })),
 	agentScope: Type.Optional(StringEnum(["user", "project", "both"] as const, { default: "user" })),
 });
 
+function sessionInfo(result: SingleResult): string {
+	return result.sessionFile ? `\nSession: ${result.sessionId}\nSession file: ${result.sessionFile}\nExecution records: ${result.executionDir ?? "unavailable (startup did not reach recording)"}` : "\nSession reference unavailable (worker startup did not complete).";
+}
 function jobReply(selected: Job<SingleResult>[], includeOutput = false) {
 	return {
 		content: [{ type: "text" as const, text: selected.map(job =>
-			`${job.handle}: ${job.state} — ${job.label}${includeOutput ? `\n${summary(job.error ?? (job.result ? output(job.result) : "(still running)"))}` : ""}`,
+			`${job.handle}: ${job.state} — ${job.label}${includeOutput ? `${job.result ? sessionInfo(job.result) : ""}\n${summary(job.error ?? (job.result ? output(job.result) : "(still running)"))}` : ""}`,
 		).join("\n\n") || "No active or retained jobs." }],
 		details: { jobs: selected.map(({ handle, label, state, result, error }) =>
 			({ handle, label, state, ...(includeOutput ? { result, error } : {}) })) },
@@ -44,7 +48,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async () => { await jobs.shutdown(); jobs = new Jobs<SingleResult>(); });
 	pi.registerTool({
 		name: "subagent", label: "Subagent", parameters,
-		description: "Delegate isolated tasks to fresh agents. Omit action for blocking single (agent/task) or parallel (tasks, max 8) calls. " +
+		description: "Delegate tasks to agents. New calls start fresh persistent sessions using Pi's normal storage. Supply sessionFile to continue a recorded worker with the same agent and cwd. Results expose session and audit paths; forget does not delete evidence. Omit action for blocking single (agent/task) or parallel (tasks, max 8) calls. " +
 			"action=start launches one job immediately and returns a handle. All modes share four active slots per session; a nested parent owns a separate pool. " +
 			"action=wait with handles returns the first finished selected result; remove its handle before waiting again. Interrupted waits leave jobs running. " +
 			"status lists jobs; cancel requests termination; forget releases terminal results. Handle operations accept only action and handles; status may omit handles. " +
@@ -70,11 +74,12 @@ export default function (pi: ExtensionAPI) {
 			if (params.action === "start" && (!params.agent || !params.task || params.tasks))
 				throw new Error("Async start requires agent and task only, not tasks");
 			const parallel = params.tasks !== undefined;
+			if (parallel && params.sessionFile) throw new Error("Parallel continuations require sessionFile on each task, not at the top level");
 			if (parallel ? Boolean(params.agent || params.task) || !params.tasks!.length || params.tasks!.length > 8 : !params.agent || !params.task)
 				throw new Error("Provide exactly one single job or one to eight parallel tasks");
 			const scope: AgentScope = params.agentScope ?? "user";
 			const requested = params.tasks ?? [{ agent: params.agent!, task: params.task!, cwd: params.cwd,
-				model: params.model, thinkingLevel: params.thinkingLevel }];
+				model: params.model, thinkingLevel: params.thinkingLevel, sessionFile: params.sessionFile }];
 			const prepared = requested.map(item => {
 				const cwd = path.resolve(ctx.cwd, item.cwd ?? params.cwd ?? ctx.cwd);
 				const discovery = discoverAgents(cwd, scope);
@@ -91,7 +96,7 @@ export default function (pi: ExtensionAPI) {
 				if (!p.agent) throw new Error(`Unknown agent: "${p.item.agent}". Available agents: ${p.discovery.agents.map(a => a.name).join(", ") || "none"}.`);
 				return launch(p.agent, p.item.task, p.cwd, defaults, {
 					model: p.item.model ?? params.model, thinkingLevel: p.item.thinkingLevel ?? params.thinkingLevel,
-				}, jobSignal, update);
+				}, jobSignal, update, p.item.sessionFile);
 			};
 			const label = (p: typeof prepared[number]) => `${p.item.agent} @ ${p.cwd}`;
 			if (params.action === "start") {
@@ -118,7 +123,7 @@ export default function (pi: ExtensionAPI) {
 				emit();
 			}));
 			return {
-				content: [{ type: "text", text: results.map(r => `${r.agent} @ ${r.cwd}: ${failed(r) ? "failed" : "completed"}\n${summary(output(r))}`).join("\n\n") }],
+				content: [{ type: "text", text: results.map(r => `${r.agent} @ ${r.cwd}: ${failed(r) ? "failed" : "completed"}${sessionInfo(r)}\n${summary(output(r))}`).join("\n\n") }],
 				details: details(results), ...(results.some(failed) ? { isError: true } : {}),
 			};
 		},
