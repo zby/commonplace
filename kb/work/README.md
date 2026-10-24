@@ -6,9 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [jev-basal-investigation](./jev-basal-investigation/README.md) — emerging bounded-judgment language-model category: one organizing synthesis note agreed, five source ingests grounded, broader model discovery and subsidiary confidence note retained
-- [decision-models](./multistage/multistage-write-decision-models-20261024/README.md) — earlier single-note run, stopped before reconstruction; historical brief and blocker preserved, superseded by the exploratory Jev/Basal commission
-
 - [review-on-workjig](./review-on-workjig/README.md) — rebuilding the review and freshness system as Python workflows over Workjig: result files with note and criterion hashes replace the SQLite store, a gate sweep, the full improvement pass and a simplification revision become three workflows under one command, and the interactive parts of the simplification passes become stop-and-rerun points or stay interactive; the stored reviews are not migrated, and phase 0 measures before any code
 - [community-scene](./community-scene/README.md) — finding a first concrete step toward an intellectual community around deep questions about the new computing model; Borretti's failure model and Fabryka AI as the first two cases, an Application-Book analogue built on agentic-system analyses as the untested candidate
 - [conjecture-store](./conjecture-store/README.md) — staged migration from a library of corroborated theory to a primary store of cheap refutable conjectures with the theory collection as a projection at a stated threshold; stage 0 adds the store and its type beside theory, skills check its triggers, and nothing consumer-facing changes before onboarding
