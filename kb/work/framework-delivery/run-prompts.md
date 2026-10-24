@@ -6,11 +6,14 @@ the files it names. Added 2026-10-24.
 
 ## Before starting
 
-All runs install the same user-level uv tool, `cp-delivery-probe`. Run one
-harness at a time: a session's cleanup uninstalls the tool, and the full
-protocol (pi) bumps the version, reinstalls and switches to an editable
-install in cases 5 and 6. Any of those breaks a run in progress elsewhere.
-Order used: Claude Code, then Codex, then pi.
+Each run installs the probe as a uv tool. Give every run its own uv tool
+directory so runs never share an installation: the Codex run of 2026-10-24
+did this by setting `UV_TOOL_DIR=<scratch>/tools` and
+`UV_TOOL_BIN_DIR=<scratch>/bin` and putting `<scratch>/bin` first on `PATH`
+for every session it started. The prompts below require it. Without it, runs
+must be sequential: a session's cleanup uninstalls the user-level tool, and
+the full protocol (pi) bumps the version, reinstalls and switches to an
+editable install in cases 5 and 6, which breaks a run in progress elsewhere.
 
 ## Claude Code — delta since revision 4
 
@@ -28,10 +31,15 @@ times (case 9 three times) and each in a fresh context that did not do the
 setup: use a sub-agent per case, giving it only the prompt the protocol
 states and the scratch project path.
 
-Setup: copy probe-package/ to a scratch directory outside this repository,
-install the copy with `uv tool install --python 3.12 <copy>`, copy
-test-project/ to a second scratch directory and run cp-delivery-probe-init
-there. Record the init report and `--check` output for case 0.
+Setup: make one scratch root outside this repository. Export
+UV_TOOL_DIR=<root>/tools and UV_TOOL_BIN_DIR=<root>/bin before every uv
+tool command, and put <root>/bin first on PATH for every session you start,
+so this run shares nothing with the user-level uv tools or with other probe
+runs. Copy probe-package/ to <root>/package and install it with
+`uv tool install --python 3.12 <root>/package`, copy test-project/ to
+<root>/project and run cp-delivery-probe-init there. Record the init report
+and `--check` output for case 0, and record the isolation as an environment
+note in the results.
 
 Rules from the request: no hooks, no MCP servers, no copies of library
 files into the project, do not touch the llm-commonplace tool or any
@@ -45,8 +53,8 @@ using probe-package/RESULTS-TEMPLATE.md, then add a line under "Replies" in
 probe-request.md. Do not edit anything else in the workshop.
 
 Cleanup: run cp-delivery-probe-init --remove in the scratch project, run
-`uv tool uninstall cp-delivery-probe`, delete the scratch directories, and
-confirm in the results file that this was done.
+`uv tool uninstall cp-delivery-probe` with the same UV_TOOL_DIR, delete the
+scratch root, and confirm in the results file that this was done.
 
 Commit only the results file and the probe-request.md line, with trailers
 `Workshop: kb/work/framework-delivery` and `Model: <your model id>`.
@@ -77,10 +85,15 @@ setup: use a sub-agent per case if this harness has them, giving it only the
 prompt the protocol states and the scratch project path. If it has none,
 record that, run each case in your own context, and say so per case.
 
-Setup: copy probe-package/ to a scratch directory outside this repository,
-install the copy with `uv tool install --python 3.12 <copy>`, copy
-test-project/ to a second scratch directory and run cp-delivery-probe-init
-there. Record the init report and `--check` output for case 0. The stubs
+Setup: make one scratch root outside this repository. Export
+UV_TOOL_DIR=<root>/tools and UV_TOOL_BIN_DIR=<root>/bin before every uv
+tool command, and put <root>/bin first on PATH for every session you start,
+so this run shares nothing with the user-level uv tools or with other probe
+runs. Copy probe-package/ to <root>/package and install it with
+`uv tool install --python 3.12 <root>/package`, copy test-project/ to
+<root>/project and run cp-delivery-probe-init there. Record the init report
+and `--check` output for case 0, and record the isolation as an environment
+note in the results. The stubs
 Codex reads are under .agents/skills/.
 
 Rules from the request: no hooks, no MCP servers, no copies of library
@@ -95,8 +108,8 @@ probe-package/RESULTS-TEMPLATE.md, then add a line under "Replies" in
 probe-request.md. Do not edit anything else in the workshop.
 
 Cleanup: run cp-delivery-probe-init --remove in the scratch project, run
-`uv tool uninstall cp-delivery-probe`, delete the scratch directories, and
-confirm in the results file that this was done.
+`uv tool uninstall cp-delivery-probe` with the same UV_TOOL_DIR, delete the
+scratch root, and confirm in the results file that this was done.
 
 Commit only the results file and the probe-request.md line, with trailers
 `Workshop: kb/work/framework-delivery` and `Model: <your model id>`.
@@ -128,10 +141,15 @@ the pointer line in the probe request. Run each case in a fresh context
 that did not do the setup; if this harness cannot start one, run it in your
 own context and say so per case.
 
-Setup: copy probe-package/ to a scratch directory outside this repository,
-install the copy with `uv tool install --python 3.12 <copy>`, copy
-test-project/ to a second scratch directory and run cp-delivery-probe-init
-there. Record the init report and `--check` output for case 0.
+Setup: make one scratch root outside this repository. Export
+UV_TOOL_DIR=<root>/tools and UV_TOOL_BIN_DIR=<root>/bin before every uv
+tool command, and put <root>/bin first on PATH for every session you start,
+so this run shares nothing with the user-level uv tools or with other probe
+runs. Copy probe-package/ to <root>/package and install it with
+`uv tool install --python 3.12 <root>/package`, copy test-project/ to
+<root>/project and run cp-delivery-probe-init there. Record the init report
+and `--check` output for case 0, and record the isolation as an environment
+note in the results.
 
 Rules from the request: no hooks, no MCP servers, no copies of library
 files into the project, do not touch the llm-commonplace tool or any
@@ -145,8 +163,8 @@ probe-package/RESULTS-TEMPLATE.md, then add a line under "Replies" in
 probe-request.md. Do not edit anything else in the workshop.
 
 Cleanup: run cp-delivery-probe-init --remove in each scratch project, run
-`uv tool uninstall cp-delivery-probe`, delete the scratch directories, and
-confirm in the results file that this was done.
+`uv tool uninstall cp-delivery-probe` with the same UV_TOOL_DIR, delete the
+scratch root, and confirm in the results file that this was done.
 
 Commit only the results file and the probe-request.md line, with trailers
 `Workshop: kb/work/framework-delivery` and `Model: <your model id>`.
