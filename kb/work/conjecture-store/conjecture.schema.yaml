@@ -1,0 +1,106 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "commonplace:types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - traits
+          - problem
+          - refuters
+          - missing
+          - trigger
+          - choices
+        properties:
+          type:
+            const: conjectures/types/conjecture.md
+          description:
+            pattern: '^Conjecture\b'
+          traits:
+            type: array
+            contains:
+              const: title-as-claim
+          problem:
+            type: string
+            minLength: 10
+          refuters:
+            type: array
+            minItems: 1
+            items:
+              type: string
+              minLength: 10
+          missing:
+            type: string
+            minLength: 10
+          trigger:
+            type: array
+            minItems: 1
+            items:
+              type: string
+              minLength: 3
+          witnesses:
+            type: array
+            items:
+              type: object
+              required: [date, source, note]
+              properties:
+                date:
+                  type: string
+                  format: date
+                source:
+                  type: string
+                  minLength: 1
+                note:
+                  type: string
+                  minLength: 1
+              additionalProperties: false
+          criticism:
+            type: array
+            items:
+              type: object
+              required: [date, by, verdict, note]
+              properties:
+                date:
+                  type: string
+                  format: date
+                by:
+                  type: string
+                  minLength: 1
+                verdict:
+                  enum: [survived, refuter-met]
+                note:
+                  type: string
+                  minLength: 1
+              additionalProperties: false
+          rivals:
+            type: array
+            items:
+              type: string
+              minLength: 1
+          choices:
+            type: array
+            items:
+              type: object
+              required: [choice]
+              properties:
+                choice:
+                  type: string
+                  minLength: 1
+                because:
+                  type: string
+                  minLength: 1
+              additionalProperties: false
+          tags:
+            type: array
+            maxItems: 0
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Problem"
+          - contains:
+              const: "## Reach"
