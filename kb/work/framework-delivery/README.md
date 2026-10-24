@@ -62,11 +62,10 @@ rewrites. A recheck against the repository on 2026-10-24 found:
   ran; a sub-agent started from a runner session inherits the runner's
   project, so probe cases must run as headless sessions rooted in the scratch
   project.
-- **Sub-agent emulation has a candidate answer from elsewhere.** ADR 118 and
-  ADR 119 made headless `claude`, `codex` and `pi` launches through Workjig the
-  sanctioned worker route for the analysis workflow. `cp-skill-ingest` still
-  forbids launching the harness CLI as a worker. Next step 3 is therefore a
-  reconciliation between those two rules, not a fresh design.
+- **Sub-agent emulation: decided.** On 2026-10-24 the operator kept the
+  harness-provided sub-agent as the only worker route and ruled that the
+  ADR 118/119 headless launches are not an emulation of it (see next step 3
+  and the ADR 086 worker amendment).
 - **Health check.** `cp-skill-health-check` pairs PowerShell forms only in its
   uv-tool and legacy-residue steps; layout, pointer and validator steps are
   Bash-only. Owned by E1 in
@@ -84,7 +83,7 @@ Status as of the 2026-10-24 runs in brackets.
 - **Windows and macOS.** [open] No run. The byte-order-mark crash (fixed in revision 5) is the only Windows observation. The read rule's form on Windows, `Read(//C:/…/**)`, is what init writes and is untested; the protocol's case 2 asks Windows runners to record whether Claude Code honours it.
 - **Running sessions.** [open] A running Claude Code session picked up skills added after it started. An upgrade inside a running session was not tested; the pi run showed that a file-only session reads stale paths after an install-mode switch with no warning until init runs.
 - **Centrally managed settings.** [open] Untested.
-- **Sub-agents in pi.** [new 2026-10-24] Stock pi has no sub-agent tool; the delegate skill stopped with "no sub-agent available" and did not attempt an emulation. The checkout's pi extension was not inherited by scratch projects. Which worker facility pi users get is part of next step 3.
+- **Sub-agents in pi.** [resolved in principle 2026-10-24] Stock pi has no sub-agent tool; the delegate skill stopped with "no sub-agent available". The route is a pi extension supplying one (this checkout's `.pi/extensions/subagent`), per the ADR 086 worker amendment; delivering it to pi users of installed projects is next step 3's remaining follow-up.
 
 ## Next steps
 
@@ -117,17 +116,18 @@ package and the release must match before any new run is evidence.
    GitHub Copilot, and enterprise harnesses; enterprise results may come back
    through the operator, anonymised. Findings that change the decision amend
    ADR 086.
-3. **Sub-agent emulation.** [open; operator decision pending] Claude Code
-   and Codex supplied a fresh-context sub-agent (case 10); stock pi did not,
-   and the probe session stopped rather than emulate. Decide whether the
-   headless-harness worker route of ADR 118 and ADR 119 is the emulation the
-   skills should accept where the harness has no sub-agents, or whether skills
-   keep the stricter rule and such harnesses get reduced skills. Then update
-   `cp-skill-ingest`, whose rule allows only a harness-provided sub-agent and
-   forbids launching the harness CLI as a worker. The other skills that need
-   workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`,
-   `analyse-agentic-system`) are checked for the same assumption in the same
-   change; `analyse-agentic-system` already launches through Workjig.
+3. **Sub-agent emulation.** [decided 2026-10-24; ADR 086 worker amendment]
+   The operator chose the sub-agent route and rejected headless launches as an
+   emulation: a sub-agent is a two-way, inspectable relationship, a headless
+   launch a one-way action. Skill rules stand unchanged; `cp-skill-ingest`
+   keeps forbidding CLI launches. A harness without a native sub-agent gets
+   one as a harness extension, as this checkout's `.pi/extensions/subagent`
+   does for pi, and until then its users lack the worker-dependent skills.
+   Remaining follow-up: how pi users of an installed project receive that
+   extension, since it lives in this checkout's `.pi/`, not in the package or
+   in anything init writes; decide and record when a pi user outside this
+   checkout needs it. The analysis workflow's Workjig launches are a workflow
+   engine's workers under ADR 118/119 and are unaffected.
 4. **Coupled workshops.** [done 2026-09-25] Both coupled workshops closed that
    day; no replies are outstanding.
 
