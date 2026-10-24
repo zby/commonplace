@@ -55,7 +55,7 @@ Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude C
 ## Replies
 
 - 2026-10-24 — pi 1.3.0, Linux, revision 7, isolated uv tools: full protocol; file delivery, native and index-only skills, upgrades, missing-init handling and arguments passed; case 10 stopped safely without a sub-agent or emulation; automatic library imports not applicable; [results-pi-r7.md](./results-pi-r7.md).
-
+- 2026-10-24 — Codex collaboration agents (local CLI 0.163.0), Linux, revision 7: cases 0, 8, three runs of 9, and 10 passed; case 11 failed via the index, native stub forwarding untested; [results-codex-r7.md](./results-codex-r7.md).
 - 2026-09-24 — Codex CLI 0.156.1, Linux, revision 4: outcomes 1–5 reached as supplied, no workarounds; full protocol, [results-codex-r4.md](./results-codex-r4.md). (Restored: this line was lost in a later rewrite of this request.)
 - 2026-09-24 — Claude Code 2.1.281, Linux, revision 4: outcomes 1–5 reached as supplied, no workarounds; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)
 - 2026-10-24 — Claude Code 2.1.310, Linux, revision 7: cases 0 and 8–11 (outcomes 1, 6, 7, 8 and the stop-on-missing-init rule) reached as supplied, no workarounds; finding: the harness substitutes `$ARGUMENTS` at both places in the stub, so its second sentence should not name the placeholder literally; [results-claude-code-r7.md](./results-claude-code-r7.md)
