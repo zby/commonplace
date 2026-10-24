@@ -28,8 +28,9 @@ was recorded.
 Scope: cases 0, 8, 9, 10 and 11 of the protocol. Cases 1 to 7 passed with
 revision 4 and do not need repeating. Run each case the required number of
 times (case 9 three times) and each in a fresh context that did not do the
-setup: use a sub-agent per case, giving it only the prompt the protocol
-states and the scratch project path.
+setup: start each case as a fresh headless session rooted in the scratch
+project (see the note after this prompt), giving it only the prompt the
+protocol states.
 
 Setup: make one scratch root outside this repository. Export
 UV_TOOL_DIR=<root>/tools and UV_TOOL_BIN_DIR=<root>/bin before every uv
@@ -60,9 +61,16 @@ Commit only the results file and the probe-request.md line, with trailers
 `Workshop: kb/work/framework-delivery` and `Model: <your model id>`.
 ```
 
-Case 10 asks the probe session to start a sub-agent, so when the case runs
-inside a sub-agent it needs nested delegation. If the harness refuses, the
-runner records that as the case result and does not read the file itself.
+Fresh contexts, learned 2026-10-24: a sub-agent started from the runner's
+session inherits the runner's working directory, so it loads this repository's
+`CLAUDE.md` and skills, not the scratch project's import of `library.md` and
+its stubs (Claude Code run). Codex collaboration agents likewise kept the
+repository's standing instructions and had to read the scratch `AGENTS.md` by
+hand, so native stub discovery went untested there. Start each case as a fresh
+headless CLI session rooted in the scratch project instead (Claude Code:
+`claude -p` in the project; pi: `pi --mode json --no-session --approve` in the
+project; Codex: `codex exec` in the project), and say in the results which
+route was used. Case 10 then tests the harness's own sub-agent facility.
 
 ## Codex — delta since revision 4
 

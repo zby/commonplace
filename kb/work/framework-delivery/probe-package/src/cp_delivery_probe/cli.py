@@ -114,7 +114,7 @@ def _render_stub(skill: Path) -> str:
     real = skill / "SKILL.md"
     arguments = (
         "\nThe arguments for this invocation are: $ARGUMENTS\n"
-        "Where the real skill refers to `$ARGUMENTS`, use these.\n"
+        "Where the real skill names its argument placeholder, use these.\n"
         if "$ARGUMENTS" in read_text(real)
         else ""
     )
@@ -154,7 +154,9 @@ def _render_routing() -> str:
         "## Skills\n\n"
         "When a task matches a skill's description, read that skill's SKILL.md at the path "
         "given and follow it, resolving its links relative to that file. Where the harness "
-        "also lists these skills itself, both routes lead to the same file.\n\n"
+        "also lists these skills itself, both routes lead to the same file. If the request "
+        "carries arguments, use them wherever the skill names its argument placeholder; "
+        "reading the file does not substitute them.\n\n"
         f"{index}"
     )
 
