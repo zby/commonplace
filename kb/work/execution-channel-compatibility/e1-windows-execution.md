@@ -6,7 +6,11 @@ when it closed on 2026-09-25; rebaselined at commit `6660bd2a` on 2026-08-27. Th
 classifies all ten skills selected in that snapshot without making the count a
 future inventory. The implementation dispositions and native-Windows evidence
 remain open. Rechecked 2026-09-25: health check, connect, and validate still
-carry the unpaired POSIX commands the audit names.
+carry the unpaired POSIX commands the audit names. Rechecked 2026-10-24: unchanged.
+`commonplace-validate` still lacks an `all` target (item 3); the health check pairs
+PowerShell only in Steps 4 and 5 (item 5); 13 promoted skills declare
+`allowed-tools: Bash` without a disposition (item 6); no Windows CI (item 7);
+still no native-Windows runtime result (item 2).
 
 ## Resolution selected
 

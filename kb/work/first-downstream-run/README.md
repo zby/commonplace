@@ -9,10 +9,20 @@ publish. Running the experiment is not this workshop's task.
 The first intended user is a colleague in an enterprise that uses Commonplace
 and wants to publish from that work.
 
+## Status (2026-10-24)
+
+The template has not been handed over. Nothing here changed after
+2026-09-29 except mechanical path rewrites.
+
 ## Prerequisite for any run
 
 Release A is the framework commit the early enterprise trials used. It is
-needed before any run and cannot be reconstructed later.
+needed before any run and cannot be reconstructed later. As of 2026-10-24 it
+is recorded nowhere in this repository: the template's Release A cell is
+empty, and no tag or note names it. Only the enterprise colleague can supply
+it, from the version their trials installed. Record it here as soon as it is
+known, before the framework moves further; the only release since the trials
+began is v0.2.0 (2026-09-25), and 1603 unreleased commits followed.
 
 ## Context
 

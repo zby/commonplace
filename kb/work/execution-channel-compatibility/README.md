@@ -21,6 +21,13 @@ The rebaseline brought the working documents in line: the [solution catalogue](.
 
 **Blocking gap.** No native-Windows evidence exists yet. The next useful step is a v7 probe run in the Codex Windows desktop app after a full restart.
 
+**Recheck 2026-10-24.** Nothing here changed after 2026-09-30 except mechanical path rewrites. Against the repository on 2026-10-24:
+
+- The [evidence directory](./evidence/README.md) still holds only the three July reports from the retired project-venv model. No run of probe v7 exists on any surface, Windows or otherwise.
+- E1 items remain open: `commonplace-validate` has no `all` target; `cp-skill-health-check` pairs PowerShell forms only in Step 4 (uv tool) and Step 5 (legacy residue), while Steps 1, 2 and 6 are Bash-only; 13 promoted skills still declare `allowed-tools: Bash` with no recorded disposition; no Windows CI exists.
+- The library's theory collection moved from `kb/notes/` to `kb/theory/` (ADR 123) while project scaffolds keep `kb/notes/`. The [inventory](./inventory.md) still names `kb/notes/` for library files; its counts predate the move and the 2026-10 command changes (`commonplace-analysis`, `commonplace-task` added; `commonplace-agentic-analysis-*` removed) and need a re-count before the dependency map is trusted.
+- Everything released is still v0.2.0 (2026-09-25); the probe must run against a release that carries the current init, which [framework-delivery](../framework-delivery/README.md) step 0 and step 1 now own.
+
 ## First consideration: implementable evidence gathering
 
 The first stage is a landscape survey of every environment in which Commonplace can be read or operated, not a test limited to supported source checkouts. Its procedure must be executable from source checkouts, initialized projects, reader/vendor installs, package-only environments, worktrees, and restricted or remote agent surfaces. It may not require a path, executable, shell feature, repository, writable destination, or second environment until the agent has established that prerequisite.

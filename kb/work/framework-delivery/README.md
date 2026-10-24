@@ -23,7 +23,46 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (commit `e6103225`). ADR 086, `INSTALL.md`, and the code are now authoritative. [design.md](./design.md) and [alternatives.md](./alternatives.md) are the pre-adoption records; do not update them. This workshop stays open for the follow-ups below.
 
+## Status (rebaselined 2026-10-24)
+
+Nothing in this workshop changed after 2026-09-25 except mechanical path
+rewrites. A recheck against the repository on 2026-10-24 found:
+
+- **Shipped state.** v0.2.0 (tagged 2026-09-25, commit `5c99505a3`) is the
+  only release carrying ADR 086. Since then 1603 commits landed and
+  `pyproject.toml` still says `0.2.0`, so none of them is installable from PyPI.
+- **Delivery-surface drift since v0.2.0** that an installed project would see:
+  a new runtime dependency on `workjig` from PyPI (commit `005a3f2dd`); two new
+  commands, `commonplace-analysis` (`83c641f00`) and `commonplace-task`
+  (`ef57a1175`), and the two `commonplace-agentic-analysis-*` commands removed;
+  report and source types moved from the project scaffold into the global
+  library types (`704c42c09`); `kb/tags/` and `kb/work/` added to the scaffold
+  (`02ffd8329`, ADR 089); automatic legacy migrations removed from init
+  (`8b8a9c742`); the library's theory collection renamed from `kb/notes/` to
+  `kb/theory/` (ADR 123, `e4c1bfcf1`) while project scaffolds deliberately keep
+  `kb/notes/`. `src/commonplace/cli/init_project.py` shrank by about 260 lines.
+- **Probe package.** [probe-package/](./probe-package/PROTOCOL.md) was still
+  revision 6, modelled on the revision 4 init, until 2026-10-24; revision 7 now
+  mirrors the current `commonplace-init` (see its revision log). Results from
+  revisions 4–6 stay valid for cases 1–7.
+- **Evidence.** The [probe request](./probe-request.md) reply log still holds
+  only the two Linux revision 4 runs of 2026-09-24. No clean-machine install
+  from PyPI is recorded anywhere in the repository, on any platform.
+- **Sub-agent emulation has a candidate answer from elsewhere.** ADR 118 and
+  ADR 119 made headless `claude`, `codex` and `pi` launches through Workjig the
+  sanctioned worker route for the analysis workflow. `cp-skill-ingest` still
+  forbids launching the harness CLI as a worker. Next step 3 is therefore a
+  reconciliation between those two rules, not a fresh design.
+- **Health check.** `cp-skill-health-check` pairs PowerShell forms only in its
+  uv-tool and legacy-residue steps; layout, pointer and validator steps are
+  Bash-only. Owned by E1 in
+  [execution-channel-compatibility](../execution-channel-compatibility/README.md).
+
 ## Open questions
+
+None of the questions below was answered between 2026-09-25 and 2026-10-24.
+The byte-order-mark crash remains the only Windows observation.
+
 
 - **Missing initialization.** In Codex's revision 4 run, an agent in a clone without init found a nearby source checkout and answered from it instead of reporting the missing `library.md`. The design now has the `AGENTS.md` template say to stop and ask for init; does that work in both harnesses?
 - **Emulated skills.** Does the skill index in `library.md` trigger the right skill reliably when no native skill exists (probe case 9)? In Codex, the agent sees the index only after reading `library.md`.
@@ -36,10 +75,41 @@ Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-
 
 ## Next steps
 
-1. **Release.** Bump the version and publish to PyPI, the only channel; then install from PyPI on a clean machine, including macOS and Windows where possible, and run `commonplace-init` and `commonplace-init --check` in a new project.
-2. **Probe follow-ups.** Claude Code and Codex run the cases added since revision 4: 8 (the stop-on-missing-init rule), 9 (a skill reached through the index alone), and 10 (a sub-agent). Agents in other harnesses answer the same [probe request](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses; enterprise results may come back through the operator, anonymised. Findings that change the decision amend ADR 086.
-3. **Sub-agent emulation.** When an emulation is chosen from the probe results, update `cp-skill-ingest` to accept it. Its rule allows only a harness-provided sub-agent and forbids launching the harness CLI as a worker. The other skills that need workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`, `analyse-agentic-system`) are checked for the same assumption in the same change.
-4. **Coupled workshops.** Done 2026-09-25: mailbox messages in `kb/messages/` ask both workshops under Coupling to reassess the items that assumed a library copy and to reply. Close this item when both replies arrive or their workshops close.
+Status as of 2026-10-24 in brackets. Order reflects dependency: the probe
+package and the release must match before any new run is evidence.
+
+0. **Refresh the probe package.** [done 2026-10-24] Revision 7 mirrors the
+   current `commonplace-init`: `--root` and `--check` with relative paths and
+   `collision`, symlink-as-foreign, POSIX stub paths with `$ARGUMENTS`
+   pass-through, the four-entry-point `library.md`, the `Read(//…/**)` rule,
+   a fixed skill list, the two control-plane templates, and nearest-project
+   staleness warnings. It adds case 11 (a stub invoked with arguments). The
+   protocol states which cases a revision 4 or 6 runner must repeat. Verified
+   in a scratch venv: normal install, idempotent rerun, upgrade without init
+   (all `ok`), description change (`stale` and warning), collision, foreign
+   symlink, extra stub removal, editable install (`stale`), and `--remove`.
+1. **Release.** [half done] Bump the version and publish to PyPI, the only
+   channel; v0.2.0 shipped 2026-09-25 but 1603 later commits are unreleased.
+   Then install from PyPI on a clean machine, including macOS and Windows where
+   possible, and run `commonplace-init` and `commonplace-init --check` in a new
+   project. [the clean-machine install has no recorded run on any platform]
+2. **Probe follow-ups.** [open; nothing beyond revision 4] Claude Code and
+   Codex run the cases added since revision 4: 8 (the stop-on-missing-init
+   rule), 9 (a skill reached through the index alone), and 10 (a sub-agent).
+   Agents in other harnesses answer the same [probe request](./probe-request.md):
+   Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses;
+   enterprise results may come back through the operator, anonymised. Findings
+   that change the decision amend ADR 086.
+3. **Sub-agent emulation.** [open; reframed 2026-10-24] Decide whether the
+   headless-harness worker route of ADR 118 and ADR 119 is the emulation the
+   skills should accept, or whether skills keep the stricter rule. Then update
+   `cp-skill-ingest`, whose rule allows only a harness-provided sub-agent and
+   forbids launching the harness CLI as a worker. The other skills that need
+   workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`,
+   `analyse-agentic-system`) are checked for the same assumption in the same
+   change; `analyse-agentic-system` already launches through Workjig.
+4. **Coupled workshops.** [done 2026-09-25] Both coupled workshops closed that
+   day; no replies are outstanding.
 
 ## Evaluation boundary
 
@@ -62,7 +132,7 @@ Current:
 
 - [design.md](./design.md) — the design as it stood at adoption (pre-adoption record; ADR 086 is authoritative)
 - [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision (pre-adoption record)
-- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 6): a throwaway uv package, a test project, the protocol every harness runs, and a results template
+- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 7, 2026-10-24, mirrors the current `commonplace-init`): a throwaway uv package, a test project, the protocol every harness runs, and a results template
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 - [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
