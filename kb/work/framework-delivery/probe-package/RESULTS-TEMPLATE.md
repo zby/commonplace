@@ -38,6 +38,7 @@
 | 9 Emulated skill, run 2 | | | |
 | 9 Emulated skill, run 3 | | | |
 | 10 Sub-agent | | | |
+| 11 Stub with arguments | | | |
 
 ## Modifications to the package
 
