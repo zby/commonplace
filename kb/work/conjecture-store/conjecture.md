@@ -34,7 +34,9 @@ are never stored
   claim and says that it is a conjecture; it may say how it arose.
 - **Names its problem.** `problem` is one sentence stating the problem the
   conjecture tries to solve, repeated verbatim on every rival conjecture to
-  the same problem. `## Problem` says why the problem is open.
+  the same problem. `## Problem` says why the problem is open. Restating a
+  problem edits `problem` on every rival in one commit; Git keeps the old
+  sentence.
 - **States its reach.** `## Reach` states what the conjecture would unify,
   constrain or newly distinguish if true, the scope it claims, and, for a
   causal claim, the rung it is made at (association, intervention,
@@ -103,6 +105,7 @@ do not run on this type.
 | **Refuted** | `kb/conjectures/refuted/` | A `criticism` entry with verdict `refuter-met` names the refuter. Retained because rivals guide discriminating experiments. | Relocation in its own commit. |
 | **Moot** | `kb/conjectures/moot/` | A choice in `choices` was revised or superseded, so the bindings no longer match the live system. Not a refutation: the theory content, if any, may be restated with empty `choices`. | Relocation in its own commit. |
 | **Promoted** | `kb/theory/` when `choices` is empty | The computed level is `corroborated`. The file moves with its record and is then edited to meet the theory contract; the projection selects, it does not rewrite. A design conjecture is not moved: an ADR that adopts it cites it and it stays in the store. Its theory content promotes separately, as its own unbound conjecture, once the bound choices are quantified out and the generalization is argued. | Relocation in its own commit. |
+| **Merged** | deleted | Two records answered the same problem with one claim. The survivor's text names the absorbed claim; the absorbed `witnesses` and `criticism` entries are appended to the survivor with their original dates. Nothing is rewritten. | Edit of the survivor and deletion of the absorbed file in one commit. |
 | **Expired** | deleted | No witness and no criticism after a stated number of trigger sweeps. Git keeps the text. | [Retire an artifact](../../instructions/retire-artifact.md). |
 
 **Retirement destination: delete.** Refutation and mootness are not retirement.

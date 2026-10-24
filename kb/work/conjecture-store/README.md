@@ -258,6 +258,58 @@ Runs after stage 1 closes. Closes when consumers can opt in.
 4. **Revisit the theory quality bar** in `AGENTS.md`: it becomes a promotion
    bar, with retention governed by the conjecture type.
 
+## Acceptance example: the workflow engine investigation
+
+The five workflow-engine rivals in [candidates](./candidates.md) are kept as
+the store's test case, not only as seed content. The investigation ran from
+2026-10-03 to 2026-10-21. It mapped the design space, reversed a bare choice
+(whether the harness or the workflow process drives), moved into a sibling
+repository and back, extracted a library, and adopted a rival on one witness
+source. Commonplace will keep investigating this way, so the store must serve
+investigations with this shape and these changes of direction.
+
+The store passes when the next such investigation is recorded live: a record
+written when each rival is stated, updated when each ADR lands, with the
+design projection correct through every reversal. Reconstructing the record
+afterwards from the ADRs, as `candidates.md` did, is the failure the store
+exists to prevent. The cost of passing is one record edit per ADR, so an ADR
+that decides between rivals cites their records in the same commit.
+
+What the example already fits:
+
+- A refuted rival stays, in `refuted/`, because it guides the next test
+  (rival 2).
+- A rival goes moot when a binding drops, without being refuted (rival 4).
+- A design conjecture is adopted below `corroborated`, by ADR citation and
+  not by level (rival 5). This is the uncontested-bulk case the design
+  projection exists for.
+- ADR return points are refuters with triggers, and the reversed bare choice
+  appears on both sides of the rivalry, so `## Rivals` can say what decides.
+
+What the example exposes, decided here for stage 0:
+
+1. **Problems get restated.** The problem drifted from "replaceable
+   orchestrators" (the 2026-10-03 proposal) to "survives interruption,
+   headless launch" (ADR 118). The verbatim rule needs a move for that: a
+   restatement edits `problem` on every rival in one commit, Git keeps the
+   old sentence, and the type-conformance check catches a partial
+   restatement because the rivals no longer agree.
+2. **Records get merged.** Twice, two records turned out to be one
+   (Treadle's two runners; ADR 118 and the Workjig extraction). A merge
+   appends the absorbed record's witnesses and criticism to the survivor,
+   dated as they were, names the absorbed claim in the survivor's text, and
+   deletes the absorbed file in the same commit. Nothing is rewritten, so
+   the append-only record holds. The lifecycle table gains a `Merged` row.
+3. **Supersession is a trigger.** When an ADR that adopted a design
+   conjecture is superseded, the stage 1 reconciler proposes a relocation:
+   to `refuted/` if the superseding ADR met a refuter, to `moot/` if it
+   revised a binding. Stage 0 does this by hand at the ADR's commit.
+4. **Witnesses live outside the repository.** Treadle's ADRs are witnesses
+   and criticism for rival 3. A free-text `source` records them, but trigger
+   sweeps see only this repository, so outside witnesses are entered by hand.
+   Accepted; the sibling-repository case is also the second project the
+   first candidate conjecture asks for.
+
 ## What this workshop does not decide
 
 - Whether problems become first-class artifacts. Stage 0 records the problem
@@ -284,7 +336,8 @@ contract. The research notes are mined for theory notes or deleted.
 - [research-notes.md](./research-notes.md) — synthesis of the research
   handoff that motivated the store: evaluators, samplers, experiments
 - [candidates.md](./candidates.md) — conjectures raised while planning,
-  written in the draft type's shape; seeded into the store at stage 0
+  written in the draft type's shape; seeded into the store at stage 0. Its
+  workflow-engine rivals are the store's acceptance example
 - [prior-work-epistack.md](./prior-work-epistack.md) — decisions extracted
   from the deleted 2026-07 epistack framework-additions menu that the store
   reaches again: map versus verdict, no stored credence, independence of
