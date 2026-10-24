@@ -134,6 +134,7 @@ Current:
 - [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision (pre-adoption record)
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 7, 2026-10-24, mirrors the current `commonplace-init`): a throwaway uv package, a test project, the protocol every harness runs, and a results template
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
+- [run-prompts.md](./run-prompts.md) — the prompts to paste into a fresh Claude Code, Codex or pi session to run revision 7, and the one-harness-at-a-time rule
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 - [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
 
