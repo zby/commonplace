@@ -115,6 +115,42 @@ agent, never fall back to Pi's defaults. Omitting `tools` still selects defaults
 Names are syntax-checked, not checked against the destination's loaded tool
 registry; extension-defined tools can differ between worktrees.
 
+## Scry research
+
+[`scry-research`](agents/scry-research.md) is a separate research agent with
+`read` and `codemode`. Launch it with `"agent": "scry-research", "agentScope":
+"project"` and a bounded research question. Scry provides analytical SQL over
+indexed corpora, not generic web search. The agent checks account capabilities,
+reads the live schema before writing SQL, and returns findings with queries,
+provenance and coverage limitations. It does not write KB artifacts. Its default
+budget is five research calls beyond account/schema discovery unless the
+handoff supplies another limit. Paid inference and state-changing capabilities
+need explicit authorization.
+
+Profile guidance follows [Scry agent setup](https://scry.io/docs/agent-setup)
+and its [public session contract](https://api.scry.io/v1/scry/context?mode=agent).
+Use live discovery for available relations and tools rather than freezing a
+corpus inventory here. Personal-key use is licensed for individual,
+non-commercial research; other use requires checking Scry's terms. Public work
+built on Scry must credit it visibly with a link to https://scry.io.
+
+Configure the `scry` MCP server in the user's `~/.pi/agent/mcp.json` with the
+endpoint `https://mcp.scry.io` and `codemode` exposure. Keep credentials and OAuth
+state outside the repository. The parent owns interactive authentication:
+run `pi mcp list` to check the connection, then `pi mcp login scry` when sign-in
+is required and the operator authorizes it. The login command starts browser
+approval; the headless research worker has no shell tool and returns this
+recovery instruction instead. A missing tool namespace alone does not diagnose
+the cause. After login, launch a fresh worker and verify `whoami`; an existing
+parent session may need `/mcp reconnect scry`. A new session loads the user
+configuration; use `/reload` for an existing session when no worker jobs are
+active. Do not treat missing authentication as missing funds.
+
+The agent definition is a task/tool profile, not exclusive account access:
+user-level MCP configuration applies to other Pi sessions too. Codemode can
+reach other registered tools; the profile's Scry-only boundary is instructional,
+not an OS sandbox.
+
 ## Rolling dispatch
 
 After updating the extension, use `/reload` **before** launching work. Check that
