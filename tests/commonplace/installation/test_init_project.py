@@ -140,6 +140,9 @@ def test_init_project_writes_stubs_that_point_into_the_library(tmp_path: Path) -
             assert f"name: {name}\n" in stub
             assert real.as_posix() in stub
             assert ("$ARGUMENTS" in stub) == ("$ARGUMENTS" in real.read_text(encoding="utf-8"))
+            # Claude Code substitutes the placeholder at every occurrence in a stub it
+            # loads (probe revision 7), so the stub may name it only once, as the value.
+            assert stub.count("$ARGUMENTS") <= 1
 
 
 def test_init_project_writes_routing_file_with_skill_index(tmp_path: Path) -> None:
@@ -148,6 +151,7 @@ def test_init_project_writes_routing_file_with_skill_index(tmp_path: Path) -> No
 
     routing = (tmp_path / library.ROUTING).read_text(encoding="utf-8")
     assert f"Library root: {root.as_posix()}" in routing
+    assert "argument placeholder" in routing  # the index route gets no harness substitution
     for name in (*MANIFEST.promoted_skills, MANIFEST.router_skill):
         assert f"- `{name}` — " in routing
         assert (root / "instructions" / name / "SKILL.md").as_posix() in routing
