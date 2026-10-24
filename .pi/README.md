@@ -45,8 +45,14 @@ checks it through its normal completion and acceptance path.
 
 ## Launch configuration
 
-The repository ships no agent definitions. A definition supplies the child's
-system instructions and tools; one that omits `model` inherits the dispatching
+The repository ships [`commonplace-worker`](agents/commonplace-worker.md), a general-purpose agent
+with `read`, `bash`, `edit`, and `write`. Assign its specific role and authorized
+inputs/outputs in each handoff; it has no nested delegation tool. Select it with
+`"agent": "commonplace-worker", "agentScope": "project"` from this worktree. User-level
+lookup remains the tool's default, so the scope must be explicit.
+
+A definition supplies the child's system instructions and tools; one that
+omits `model` inherits the dispatching
 session's model and thinking level unless the call overrides them. The
 extension passes the definition body through a temporary file via
 `--append-system-prompt`. Definitions are discovered afresh on each invocation.

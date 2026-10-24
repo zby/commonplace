@@ -10,7 +10,9 @@ extension only for work you were commissioned to delegate.
 ## Dispatch format
 
 - `agent` is an agent definition's name, not `single`, a workflow job name,
-  or a model name. This repository ships no project agent definitions.
+  or a model name. This repository ships the general-purpose `commonplace-worker`
+  definition; select it with `agentScope: "project"` and assign its role,
+  authorized inputs and owned outputs in the handoff.
 - `agentScope` selects where definitions are searched: `user` (the default)
   searches your Pi agent directory, `project` the `.pi/agents/` of the child's
   effective `cwd`, `both` both. The extension loads destination agent
