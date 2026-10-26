@@ -29,7 +29,11 @@ The problem is important: scores can appear comparable while changes in scaffold
 
 ## Quotes
 
-No source quotes have been retained yet.
+> • Validate autograders and scanners against human-coded holdouts representative of the intended use case
+> with subject matter expert participation.
+> • Incorporate targeted manual analysis into automated analysis. In particular, review a subset of the cases a
+> judge passed/stopped to quantify how many cases might slip by undetected.
+> --- `kb/sources/.snapshots/emerging-trends-ai-agent-evaluation.md:1206-1209` @ `sha256:fcfe9f4c19d83454456e81a510e683851d6802f17d21e9ee10202f2e8aa6ca96` — Section 1h, best practices
 
 ## Connections Found
 

@@ -49,7 +49,14 @@ Judges emit structured findings with `requirement`, `status`, `evidence`, `sever
 
 ## Gold standard and blinding
 
-A human adjudicator reviews the union of findings after both arms finish, without seeing which arm produced each finding. The adjudicator labels each finding confirmed, unsupported, or indeterminate and records the minimum evidence needed to decide it. Cases with incomplete traces remain eligible for the output-only arm but cannot support claims about trajectory-judge recall; they are reported separately rather than treated as clean negatives.
+The reference labels must test both reported findings and failures neither judge reports. Adjudicating only the union of findings can establish confirmed incremental detection and unsupported findings, but cannot establish recall: failures missed by both arms never enter that union. Section 1h of [Emerging Trends in AI Agent Evaluation](../../sources/emerging-trends-ai-agent-evaluation.ingest.md) recommends representative human-coded holdouts and manual review of cases a judge passed. For this comparison, that recommendation motivates a separate audit of apparent passes; it is not evidence that trajectory judging improves Commonplace workflows.
+
+Use two complementary checks after both arms finish:
+
+- **Finding adjudication.** A human adjudicator reviews the union of findings without seeing which arm produced each finding. The adjudicator labels each finding confirmed, unsupported, or indeterminate and records the minimum evidence needed to decide it.
+- **Independent case audit.** Before seeing either arm's findings, a workflow-competent human reviews the request, operative contract, final artifacts, and complete frozen trace for a preregistered probability sample of cases. The human checks every rubric requirement and records confirmed failures, supported compliance, or indeterminate status with evidence. The sample must include cases both judges passed and retain coverage of other outcomes. Lock these labels before reconciling them with the judges' findings; otherwise the reference remains guided by what the judges noticed. If double-pass cases are oversampled, retain selection probabilities and weight population estimates accordingly.
+
+Keep judge calibration cases separate from a frozen evaluation holdout. Do not tune the rubric or judge prompts against that holdout and then report the same cases as independent evaluation. Human labels remain fallible; retain disagreements and indeterminate requirements rather than forcing a clean reference label. Cases with incomplete traces remain eligible for the output-only arm but cannot support claims about trajectory-judge recall; they are reported separately rather than treated as clean negatives.
 
 Natural traces alone may contain too few known failures. The comparison may therefore add paired, semantics-preserving trace mutations—such as replacing a fresh worker with a reused one, hiding a failed tool result behind a successful-looking report, or reordering two required stages—while leaving the final artifact unchanged. Mutation authorship and condition remain hidden from judges and adjudicators until labels are locked. Natural and mutated cases are reported separately so injected detectability is not mistaken for production prevalence.
 
@@ -60,7 +67,9 @@ Repeat each arm on the same cases enough times to measure within-judge consisten
 The primary measurement is **confirmed incremental detection**: process failures found by the trajectory-aware arm and missed by the output-only arm. Report it beside:
 
 - confirmed findings shared by both arms;
-- false-positive and indeterminate rates by arm;
+- unsupported findings as a share of adjudicated findings, and indeterminate findings separately, by arm; do not call this a false-positive rate over compliant requirements;
+- failures found by the independent audit that neither arm reported, including the share of audited double-pass cases containing a confirmed failure;
+- requirement-level recall by arm within the independently audited sample, using confirmed violations as the denominator and matching findings to avoid duplicate counts; report sample counts, selection weights where needed, and uncertainty, with indeterminate requirements separate; if too few violations are observed, report recall as inconclusive;
 - evidence-localization quality;
 - review-to-revision closure: the share of material self-review findings followed by correction, withdrawal, or explicit disposition, plus judge accuracy in locating that transition;
 - repeat-run agreement on the same case;
@@ -94,7 +103,7 @@ Final-artifact quality is not the gold label for process compliance. A good outp
 Do not add trajectory judging to the full-improvement-pass instruction or review store merely because the trajectory arm finds more issues. Adopt a workflow-level audit only if the preregistered comparison shows:
 
 1. confirmed process failures that the output-only arm systematically misses;
-2. an acceptable false-positive and indeterminate rate under blinded adjudication;
+2. an acceptable unsupported-finding share and indeterminate rate under blinded adjudication, plus an independent audit of apparent passes sufficient to assess missed failures; union-only adjudication cannot satisfy this criterion;
 3. repeatability sufficient to make the same run receive materially consistent judgments;
 4. evidence localization precise enough for an operator to verify and fix the failure;
 5. measured cost and latency compatible with a stated sampling policy; and
