@@ -14,6 +14,61 @@ whether ADRs could be views over a richer record, with proposals as an early
 stage. This workshop investigates that direction; it does not adopt a new
 storage model or change the current ADR contract.
 
+## Architecture exploration: parallel development
+
+On 2026-10-26 the operator extended the commission: explore the current
+architecture as a projection from a larger retained space of design claims,
+options, criticism and choices, parallel to the theory-layer investigation in
+[conjecture-store](../conjecture-store/README.md). The compressed architectural
+account remains useful, but should not determine how much reasoning survives.
+This is a direction to investigate, not adoption of a projection mechanism.
+
+The operator's preferred eventual outcome is a unified treatment of theory and
+architecture. First let the two investigations develop independently so their
+differences can emerge from use. This workshop may borrow ideas from the theory
+workshop, but does not inherit its record type, thresholds, location-based
+selection, or select-without-transforming rule as architectural requirements.
+Nor does it revise that workshop's current shared-store design. Its design
+projection is a comparison candidate here, not a settled integration contract.
+A later reconciliation must resolve any disagreement before shared machinery
+is adopted.
+
+The governing question is now: **what must remain available behind a concise
+account of the adopted architecture so that later work can criticize its
+grounds, reconsider alternatives and revise the choice without reconstructing
+the design space from scratch?** The existing lifecycle and session-loss cases
+remain acceptance constraints on any answer.
+
+Keep three distinctions visible while exploring; they do not prescribe file
+boundaries or a schema:
+
+- Claims about a design's expected effects can be criticized and contradicted
+  by evidence.
+- Adoption is an authorized commitment, not a consequence of a claim clearing
+  an evidential threshold. Implementation and observed benefit remain separate.
+- A concise current view selects what its reader needs; omission from that view
+  must not silently delete retained alternatives, objections or original
+  expectations.
+
+Do not resolve the question by retaining every conversation or by copying the
+current ADR into a larger wrapper. Compare what later revision can recover,
+what routine work must load, and the cost of capture and maintenance. Whether
+an architectural projection selects existing records or synthesizes a compact
+account remains open. If it synthesizes, its provenance, refresh and editing
+rules must prevent the view becoming a competing source of truth.
+
+Revisit unification after a candidate handles the lifecycle cases below and a
+reconsideration case: a deciding assumption changes, a previously rejected
+option becomes viable, and the current view is updated without erasing the
+original grounds. Compare the two workshops then: which distinctions and
+operations are genuinely shared, which need domain-specific treatment, and
+whether a common model helps more than separate models. A reasoned decision
+not to unify is admissible; premature common machinery is not the goal.
+
+Exploration writes stay within this workshop and its active-list entry.
+Changes to library contracts, the conjecture-store workshop, runtime code or
+repository-wide records require a separately authorized adoption or follow-up.
+
 ## Retention direction fixed by the operator
 
 On 2026-09-25 the operator clarified the retention policy for this design:
@@ -96,6 +151,10 @@ easy to create without falsely describing implementation as complete.
 - Which reader needs each view: deliberation, implementation, understanding
   the shipped architecture, revision, or evaluation? What may each view claim
   about the system, and what evidence permits that claim?
+- What is the retained design space behind those views? How are rival claims,
+  options, objections, constraints and adoption related without treating a
+  commitment as a corroborated belief? What remains retrievable when a view
+  omits it, and how does editing or refreshing the view affect its source?
 - What prevents the ADR 089 placement error? Compare a clearer drafting and
   promotion procedure with richer records or derived views before selecting
   machinery. Distinguish mechanically checkable evidence links from judgments
@@ -189,7 +248,12 @@ Close when the design question has a recorded disposition: either a finished
 design proposal naming the retained evidence, lifecycle distinctions, views,
 consumers, adoption criteria, and changes to existing contracts, or a reasoned
 decision that a smaller procedural repair suffices. Record how the candidate
-handles the evaluation cases and what remains untested.
+handles the evaluation cases, including reconsideration after a deciding
+assumption changes, and what remains untested. Record a comparison with the
+theory workshop's model: propose a justified common treatment, explain which
+parts should remain distinct, or defer unification with the missing evidence
+named. Closure does not require implementing a shared store or projection
+engine.
 
 Before deleting the workshop, extract any durable finding and the incident
 evidence its future consumers require. Promotion of a design proposal closes
