@@ -126,7 +126,9 @@ package and the release must match before any new run is evidence.
    Remaining follow-up: how pi users of an installed project receive that
    extension, since it lives in this checkout's `.pi/`, not in the package or
    in anything init writes; decide and record when a pi user outside this
-   checkout needs it. The analysis workflow's Workjig launches are a workflow
+   checkout needs it. What the facility must do is fixed in
+   [sub-agent-requirements.md](./sub-agent-requirements.md) (2026-10-26),
+   with the pi extension's claimed coverage and the delivery pieces listed. The analysis workflow's Workjig launches are a workflow
    engine's workers under ADR 118/119 and are unaffected.
 4. **Coupled workshops.** [done 2026-09-25] Both coupled workshops closed that
    day; no replies are outstanding.
@@ -154,6 +156,7 @@ Current:
 - [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision (pre-adoption record)
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 7, 2026-10-24, mirrors the current `commonplace-init`): a throwaway uv package, a test project, the protocol every harness runs, and a results template
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
+- [sub-agent-requirements.md](./sub-agent-requirements.md) — what a skill needs from a harness sub-agent (S1–S13), who demands each, and what the pi extension claims to cover
 - [run-prompts.md](./run-prompts.md) — the prompts to paste into a fresh Claude Code, Codex or pi session to run revision 7, and the one-harness-at-a-time rule
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 - [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
