@@ -380,31 +380,36 @@ Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-CodeIntegrity/Operati
 The executables in `uv tool dir --bin` are launchers that uv generates during install. They are unsigned and unique to each install, so Smart App Control has no reputation for them. The tool environment's own `python.exe` is identical across installs, and Smart App Control lets it run. The workaround starts every command through that interpreter, using shims placed ahead of uv's directory on `PATH`. Each shim is a `.cmd` file for PowerShell and cmd, plus an extensionless `sh` script for Git Bash. Run this once in PowerShell:
 
 ```powershell
-$tool = Join-Path (uv tool dir) 'llm-commonplace'
-$py = Join-Path $tool 'Scripts\python.exe'
-$pyPosix = '/' + $py.Substring(0,1).ToLower() + $py.Substring(2).Replace('\','/')
-$shims = Join-Path $HOME '.local\commonplace-shims'
-New-Item -ItemType Directory -Force $shims | Out-Null
-$ep = Get-Content (Get-ChildItem "$tool\Lib\site-packages\llm_commonplace-*.dist-info\entry_points.txt").FullName
-foreach ($line in $ep) {
-  if ($line -match '^(commonplace-\S+) = ([\w.]+):(\w+)$') {
-    $name, $mod, $fn = $Matches[1], $Matches[2], $Matches[3]
-    $code = "import sys; sys.argv[0] = '$name'; from $mod import $fn; sys.exit($fn())"
-    [IO.File]::WriteAllText("$shims\$name.cmd", "@`"$py`" -c `"$code`" %*`r`n")
-    [IO.File]::WriteAllText("$shims\$name", "#!/bin/sh`nexec `"$pyPosix`" -c `"$code`" `"`$@`"`n")
+& {
+  $tool = Join-Path (uv tool dir) 'llm-commonplace'
+  $py = Join-Path $tool 'Scripts\python.exe'
+  if (-not (Test-Path $py)) { throw "No llm-commonplace tool environment at $tool. Check UV_TOOL_DIR in this shell." }
+  $pyPosix = '/' + $py.Substring(0,1).ToLower() + $py.Substring(2).Replace('\','/')
+  $shims = Join-Path $HOME '.local\commonplace-shims'
+  New-Item -ItemType Directory -Force $shims | Out-Null
+  $ep = Get-Content (Get-ChildItem "$tool\Lib\site-packages\llm_commonplace-*.dist-info\entry_points.txt").FullName
+  foreach ($line in $ep) {
+    if ($line -match '^(commonplace-\S+) = ([\w.]+):(\w+)$') {
+      $name, $mod, $fn = $Matches[1], $Matches[2], $Matches[3]
+      $code = "import sys; sys.argv[0] = '$name'; from $mod import $fn; sys.exit($fn())"
+      [IO.File]::WriteAllText("$shims\$name.cmd", "@`"$py`" -c `"$code`" %*`r`n")
+      [IO.File]::WriteAllText("$shims\$name", "#!/bin/sh`nexec `"$pyPosix`" -c `"$code`" `"`$@`"`n")
+    }
   }
-}
-$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
-if (($userPath -split ';') -notcontains $shims) {
-  [Environment]::SetEnvironmentVariable('Path', "$shims;$userPath", 'User')
+  $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+  if (($userPath -split ';') -notcontains $shims) {
+    [Environment]::SetEnvironmentVariable('Path', "$shims;$userPath", 'User')
+  }
+  "Wrote $((Get-ChildItem "$shims\*.cmd").Count) shims to $shims"
 }
 ```
 
-Paste the snippet into a PowerShell session rather than saving it as a `.ps1` file: Smart App Control can restrict unsigned scripts. Then fully restart every shell, IDE, and desktop agent, as in step 2. In a new process, `(Get-Command commonplace-validate).Source` (PowerShell) or `command -v commonplace-validate` (Git Bash) should now resolve to `.local\commonplace-shims`, not to `uv tool dir --bin`. The shims shadow uv's launchers on purpose, so the shadowing advice above does not apply to them.
+Paste the snippet into a PowerShell session rather than saving it as a `.ps1` file: Smart App Control can restrict unsigned scripts. If `uv tool dir` does not lead to the installed tool, the snippet stops before it changes anything. That happens, for example, when the shell has not inherited `UV_TOOL_DIR`. Then fully restart every shell, IDE, and desktop agent, as in step 2. In a new process, `(Get-Command commonplace-validate).Source` (PowerShell) or `command -v commonplace-validate` (Git Bash) should now resolve to `.local\commonplace-shims`, not to `uv tool dir --bin`. The shims shadow uv's launchers on purpose, so the shadowing advice above does not apply to them. `commonplace-init` reports each command as resolving outside uv's tool executable directory, and `cp-skill-health-check` may classify them as shadowed. With these shims, that is expected; `commonplace-init --check` stays clean.
 
 - **After an upgrade or reinstall:** rerun the snippet. The shims name modules, not versions, but a release can add or rename commands, and a reinstall into another tool directory moves `python.exe`. Rerunning the snippet is safe.
 - **Argument limits:** the `.cmd` shims pass arguments through cmd.exe, so arguments containing `%`, `^`, or `"` may be altered in PowerShell and cmd. Git Bash's shims pass arguments unchanged.
 - **Undo:** remove `.local\commonplace-shims` from the user `Path` and delete the directory.
+- **Third-party antivirus:** products such as Avast can sandbox the launchers or delete files from the tool environment. If every command fails with `uv trampoline failed to canonicalize script path`, check the antivirus's quarantine or detection history, then repair the environment by rerunning the step 2 install command with `--reinstall`, using the same `--python` you installed with.
 - **Do not turn Smart App Control off just for this.** Windows cannot turn it back on without a reinstall.
 - **Do not test the install by launching every executable in a loop.** When launches stall, the loop can hang the machine. Check one command at a time.
 
