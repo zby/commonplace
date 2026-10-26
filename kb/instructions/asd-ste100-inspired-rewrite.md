@@ -27,3 +27,10 @@ Experimental. Use this instruction only with an explicit note path. It is inspir
 - Compare every split with the original. Check definitional force, modifier attachment, shared qualifiers, appositive identity, logical connections, and list parallelism.
 - Read the complete diff for lost qualifiers, changed causal direction, or broadened or narrowed scope.
 - Confirm that validation passes.
+
+---
+
+Relevant Notes:
+
+- [Two rewrites exposed a syntax-or-repetition tradeoff](../theory/evidence/two-rewrites-exposed-a-syntax-or-repetition-tradeoff.md) — rests-on: evidence from two runs: unguarded splitting lost relations and guarded splitting kept them at a word cost, which is why step 2 restates relations
+- [Three simplification passes exposed different clarity–precision tradeoffs](../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: the broader comparison of simplification instruments that this experiment sits beside

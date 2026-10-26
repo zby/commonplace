@@ -48,3 +48,9 @@ For each `revise`, `split`, `merge`, or `delete`, give the nearest heading, orig
 ## Provenance
 
 The sentence-level heuristics draw on Gopen and Swan's reader-expectation approach, Joseph Williams's character-and-action analysis, and Richard Lanham's Paramedic Method. Commonplace adds exhaustive sentence and fragment coverage, block-local editing, explicit semantic-invariant checks, and artifact validation for agent execution.
+
+---
+
+Relevant Notes:
+
+- [Three simplification passes exposed different clarity–precision tradeoffs](../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: evidence from one run: exhaustive local coverage preserved the text closely and made only seven revisions

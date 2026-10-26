@@ -28,3 +28,10 @@ holds that the passage does not.
 
 Preserve: the artifact's link grammar and the collection rule against footer
 link tables; weave the treatment's links into prose.
+
+---
+
+Relevant Notes:
+
+- [Short composable notes maximize combinatorial discovery](../../theory/short-composable-notes-maximize-combinatorial-discovery.md) — rests-on: the artifact keeps the shortest correct passage because short single-claim notes are what the library composes
+- [A note is an atomic step relative to the check that reads it](../../theory/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — rests-on: the retained treatment is sized for a reader's check, not for the artifact's reader

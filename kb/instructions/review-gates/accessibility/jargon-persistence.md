@@ -25,3 +25,9 @@ Opening defines "external symbolic state" then body uses it 6 more times: "The s
 ## Example (pass)
 
 "The scheduler can afford to keep many artifact kinds in its stored state" — plain language in the body, full technical term reserved for the opening and Relevant Notes.
+
+---
+
+Relevant Notes:
+
+- [Design for the first-time human, except on access cost](../../../theory/design-for-the-first-time-human-except-on-access-cost.md) — rests-on: ongoing context for a KB-internal term serves the newcomer reader this note makes the default

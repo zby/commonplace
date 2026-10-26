@@ -45,3 +45,10 @@ Preserve: quoted text; a term inside a link title, a filename, or a
 frontmatter field; the claim of every sentence. A replacement that would
 widen or narrow a claim is a sign the term is needed, not a reason to
 reword the claim.
+
+---
+
+Relevant Notes:
+
+- [Minimum viable vocabulary is the naming set that most reduces extraction cost for a bounded observer](../../theory/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — rests-on: an abstraction earns its place only where it reduces what the reader must extract; otherwise the ordinary word costs less
+- [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md) — rests-on: mixing an abstraction and the ordinary word for one thing reads as two referents

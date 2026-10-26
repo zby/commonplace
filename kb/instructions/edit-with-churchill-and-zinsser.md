@@ -17,4 +17,5 @@ Keep the claims, evidence, causal relations, scope, uncertainty, technical disti
 
 Relevant Notes:
 
+- [Three simplification passes exposed different clarity–precision tradeoffs](../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: evidence from one run: this cue gave the shortest, most readable text and lost several technical relations
 - [Opening position can signal a human reader's theme; proportion remains conjectural](../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: supplies a qualified rationale for bringing the claim forward and separating support, not a general rule that shorter prose is better

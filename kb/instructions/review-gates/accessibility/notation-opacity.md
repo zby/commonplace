@@ -25,3 +25,9 @@ Prefer recommending replacement with plain language over glossing. "The schedule
 ## Example (pass)
 
 "The scheduler's state can store everything — but the prompt for the next call should be assembled by a deliberate selection step."
+
+---
+
+Relevant Notes:
+
+- [Model-resolved indirection adds interpretation work to LLM execution](../../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: notation defined in another note is a reference the reader must resolve, which is interpretation work the local definition removes

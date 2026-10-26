@@ -27,3 +27,10 @@ judgment passes stay on the session model.
 - [abstractions](./abstractions.md) (judgment) — per term, either keep a coined or registered abstraction everywhere because one sentence needs its distinction, or replace it with the ordinary word everywhere.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.
+
+---
+
+Relevant Notes:
+
+- [Two rewrites exposed a syntax-or-repetition tradeoff](../../theory/evidence/two-rewrites-exposed-a-syntax-or-repetition-tradeoff.md) — rests-on: why every pass states what it must preserve: unguarded splitting lost relations
+- [Three simplification passes exposed different clarity–precision tradeoffs](../../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: why passes are separate instruments rather than stronger and weaker versions of one edit

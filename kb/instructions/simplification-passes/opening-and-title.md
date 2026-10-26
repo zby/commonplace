@@ -40,3 +40,10 @@ Title:
 
 Report: old and new TL;DR, proposed titles with one line each on what each
 emphasizes, and the slug length.
+
+---
+
+Relevant Notes:
+
+- [Design for the first-time human, except on access cost](../../theory/design-for-the-first-time-human-except-on-access-cost.md) — rests-on: the TL;DR is written for the reader who reads nothing else and has no KB context
+- [Title as claim enables traversal as reasoning](../../theory/title-as-claim-enables-traversal-as-reasoning.md) — rests-on: a literal claim title lets traversal read as reasoning; a metaphorical title breaks that

@@ -16,3 +16,9 @@ Choose your own editing process. Read the result as a whole, undo changes that a
 - [Conceptual-role conflation review gate](./review-gates/semantic/conceptual-role-conflation.md) — applies-when: clearer prose requires deciding whether a phrase denotes a term, concept, source account, current explication, or object of application
 - [Underspecified assertions review gate](./review-gates/semantic/underspecified-assertions.md) — applies-when: clearer prose requires choosing among materially different readings of a load-bearing assertion
 - [Run the compression bundle on one note](./run-compression-bundle-on-note.md) — applies-when: clearer prose requires surfacing a buried claim, removing substantial duplication, or reconsidering the larger argument's shape
+
+---
+
+Relevant Notes:
+
+- [Three simplification passes exposed different clarity–precision tradeoffs](../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: evidence from one run: this instruction ranked best overall while adding words, so economy is not its measure

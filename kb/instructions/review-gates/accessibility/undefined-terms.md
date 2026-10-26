@@ -37,3 +37,10 @@ Active vocabulary terms declared in `AGENTS.md` are NOT exempt. Authors may know
 ## Example (pass — active vocabulary with gloss and link)
 
 `"The skill body needs [constraining](./definitions/constraining.md) (narrowing the space of valid interpretations it admits) before it ships."`
+
+---
+
+Relevant Notes:
+
+- [Design for the first-time human, except on access cost](../../../theory/design-for-the-first-time-human-except-on-access-cost.md) — rests-on: the gate writes for the reader who has not loaded KB context, which this note argues is the default audience
+- [Model-resolved indirection adds interpretation work to LLM execution](../../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: a term the reader must resolve by following a link moves interpretation work onto the reader

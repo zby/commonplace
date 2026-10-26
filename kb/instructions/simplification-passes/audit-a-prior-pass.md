@@ -29,3 +29,9 @@ Inputs: the artifact, the pass's diff, and its packet directory of findings.
 
 Preserve: every claim the pass correctly narrowed. Do not re-widen a claim to
 its pre-pass strength because the wording was better.
+
+---
+
+Relevant Notes:
+
+- [Two rewrites exposed a syntax-or-repetition tradeoff](../../theory/evidence/two-rewrites-exposed-a-syntax-or-repetition-tradeoff.md) — rests-on: evidence that an unguarded pass cuts relations the finding did not ask it to cut, which is what this audit restores

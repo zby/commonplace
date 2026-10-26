@@ -27,3 +27,9 @@ Only recommend identification if the information is stated in the note itself or
 ## Example (pass)
 
 "Random Labs' Slate, an agent orchestration system, is the main tension case."
+
+---
+
+Relevant Notes:
+
+- [Design for the first-time human, except on access cost](../../../theory/design-for-the-first-time-human-except-on-access-cost.md) — rests-on: a named system without context assumes KB background the first-time reader lacks

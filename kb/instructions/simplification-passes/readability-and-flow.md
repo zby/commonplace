@@ -47,4 +47,5 @@ require choosing between two readings of a sentence, leave it and flag it.
 
 Relevant Notes:
 
+- [Three simplification passes exposed different clarity–precision tradeoffs](../../theory/evidence/three-simplification-passes-exposed-different-tradeoffs.md) — rests-on: evidence that readability gains and claim preservation are separate properties of a pass, so this pass checks both
 - [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: grounds moving an obscured claim in the human thematic-cue rationale, without assuming the same effect for LLM readers
