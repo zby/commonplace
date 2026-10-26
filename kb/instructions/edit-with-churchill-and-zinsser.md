@@ -12,3 +12,9 @@ First, recall Churchill's 1940 memo on brevity: bring the essential points forwa
 Then let William Zinsser of *On Writing Well* red-pencil the result. Cut clutter, inflated phrasing, and words that do no new work. Prefer direct English while preserving the writer's useful voice.
 
 Keep the claims, evidence, causal relations, scope, uncertainty, technical distinctions, and necessary qualifications intact. Leave a passage unchanged when simplifying it would require choosing its meaning or weakening its support. Read the revision as a whole and keep only changes that make it clearly easier to understand.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: supplies a qualified rationale for bringing the claim forward and separating support, not a general rule that shorter prose is better

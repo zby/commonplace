@@ -35,3 +35,9 @@ A note argues that LLM generation can hide a dropped reasoning constraint. It th
 ## Example (pass)
 
 A note argues that LLM generation can hide a dropped reasoning constraint, then adds one compact contrast with code tests to bound where the mechanism weakens. The contrast directly limits the main claim and prevents overuse, so it stays.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: states the testable conjecture that elaborated supporting topics can compete with the intended theme

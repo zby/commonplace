@@ -42,3 +42,9 @@ edits. Do not list tightening or parsing edits individually.
 
 Preserve: every claim, example, link, and qualification. If a move would
 require choosing between two readings of a sentence, leave it and flag it.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: grounds moving an obscured claim in the human thematic-cue rationale, without assuming the same effect for LLM readers

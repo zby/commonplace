@@ -1,0 +1,86 @@
+---
+description: "Four-experiment follow-up finding no metaphorical framing effect on policy reasoning with proper controls; original Thibodeau & Boroditsky (2013) claim appears to be an exposure effect."
+source: https://doi.org/10.1371/journal.pone.0113536
+captured: "2026-10-26"
+capture: trafilatura
+capture_scope: full-source
+doi: "10.1371/journal.pone.0113536"
+genre: scientific-paper
+snapshot_sha256: c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f
+ingested: "2026-02-15"
+occasion: "What human-reader evidence can inform the planned Commonplace note about figurative wording and reasoning?"
+type: types/ingest-report.md
+domains: [metaphor-framing, experimental-methodology, cognitive-science, figurative-language]
+---
+
+# Ingest: When Do Natural Language Metaphors Influence Reasoning?
+
+## Classification
+
+Scientific paper published in PLoS ONE (peer-reviewed, open access). Authors affiliated with VU University Amsterdam, Department of Communication Science. Full-source capture with complete methods, four experiments, and discussion. The paper is a direct methodological critique and follow-up replication attempt of a high-profile cognitive science finding.
+
+## Summary
+
+Steen, Reijnierse, and Burgers (2014) report four experiments testing whether metaphorical framing affects readers' policy preferences. The original Thibodeau and Boroditsky (2013) studies reported that framing crime as a "beast" versus a "virus" shifted participants toward enforcement-oriented versus reform-oriented solutions. Steen et al. add three critical controls absent from the original: (1) a non-metaphorical control condition ("Crime is a problem"), (2) text versions without the supporting metaphors that filled the original stimulus (words like "defense systems," "in good shape," "succumbed to"), and (3) pre-exposure measurement of policy preferences. Across all four experiments—two in Dutch, two in English, with sample sizes ranging from 252 to 1,026 after exclusions—they find no metaphorical framing effect. The only significant effect is exposure: reading about crime increases enforcement preference regardless of frame. The authors conclude that the question should be reframed as "under which conditions metaphors do or do not influence reasoning" rather than assuming a general effect.
+
+## Contribution assessment (our opinion)
+
+This paper provides a concrete worked example of how a high-profile cognitive science claim can fail to survive improved experimental controls. From a Popperian perspective, the original conjecture—that natural language metaphors covertly influence reasoning—faced criticism through a better-designed experimental program that ruled out alternative explanations (supporting metaphors in the text, absence of a non-metaphorical baseline, no pre-exposure measurement). The negative result does not disprove that metaphors ever influence reasoning; it establishes boundary conditions and raises the question of what conditions enable or disable such effects. The contribution is methodological: it demonstrates why attributing reasoning changes to specific linguistic mechanisms requires ruling out confounds, and it suggests the original effect may have been an artifact of experimental design rather than a genuine metaphor-specific phenomenon. The demonstrated exposure effect (reading about crime increases enforcement preference) is itself a useful finding about how information exposure shapes policy attitudes, independent of metaphor.
+
+## Quotes
+
+> Our experiments include three additions to the original studies: (1) a non-metaphorical control condition, which is contrasted to the two metaphorical framing conditions used by Thibodeau and Boroditsky, (2) text versions that do not have the other, potentially supporting metaphors of the original stimulus texts, (3) a pre-exposure measure of political preference (Experiments 1–2).
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Abstract — added controls
+
+> Across our four experiments, we tried to rule out alternative explanations for the differences between our findings and the original Thibodeau and Boroditsky [\[1\]](https://journals.plos.org#pone.0113536-Thibodeau1) studies. In Experiment 1, we collected Dutch-language data in the Netherlands. To rule out cultural or linguistic differences, we translated our materials and questionnaire back into English and collected data in the US in Experiment 2, using the same online panel as used in the original Thibodeau and Boroditsky [\[1\]](https://journals.plos.org#pone.0113536-Thibodeau1) studies (MTurk). In Experiment 3, we again collected US data from MTurk and removed our pre-test questions to rule out priming effects. We also re-analyzed our data using the same statistical procedure as employed by Thibodeau and Boroditsky ([\[1\]](https://journals.plos.org#pone.0113536-Thibodeau1), Experiments 2-4). In order to check the possibility that the effect reported by Thibodeau and Boroditsky does not have a large or medium size but is a small effect, we collected a larger sample of>1,000 participants in Experiment 4 to have sufficient power to search for small effects. All of these analyses reveal similar results, in that we find no effects of metaphorical framing on reasoning. Instead, our only effect is a main effect of exposure that is irrespective of framing and irrespective of the presence or absence of metaphorical support for metaphorical framing.
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — differences across experiments and null framing results
+
+> Experiments 1 and 2 included a pre-test and demonstrated an effect of exposure, indicating that reading a text about crime makes people more likely to prefer an enforcement-oriented policy response (regardless of metaphorical frame).
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — exposure measured in Experiments 1–2
+
+> An alternative explanation for the general preference for enforcement, for which we thank one of our reviewers, could lie in the construction of the particular stimulus text used as well as in the dependent variable. The current text presents the crime issue in terms of a crime outburst, in which cases enforcement may be preferable to reform. A text considering long-term crime prevention, in contrast, may lead to a general preference for reform. Similarly, our experiments mirror those of Thibodeau and Boroditsky ([\[1\]](https://journals.plos.org#pone.0113536-Thibodeau1), Experiments 3–4) in presenting participants with five policy alternatives, three of which are valenced towards enforcement. It would perhaps be better to use a balanced set of alternatives (i.e., using an equal amount of enforcement and reform-oriented policy solutions). Future research using stimulus texts without such an implicit content bias (or, in contrast, an implicit content bias pointed towards reform) and a balanced set of policy options could help in unravelling these issues.
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — stimulus and response-option limitations
+
+> More interestingly, we found an interaction of metaphorical frame and metaphorical support on memory in two out of four experiments. In Experiment 1, memory for metaphorical concept “virus” was improved in the metaphorical support condition in comparison with the text without metaphorical support; in Experiment 2, memory for both “beast” and “virus” as framing words was improved in the texts with metaphorical support, and this also held for the “beast” framing concept. This is in accordance with our prediction, which held that metaphorical support increases activation of the metaphorical frame which in turn raises the chance of its being retrospectively remembered.
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — memory effects
+
+> At the same time, however, none of these effects of metaphorical support on memory for metaphorical frame appeared to influence policy preference; nor did any differences between memory for metaphorical frame themselves influence policy preference.
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — memory effects did not affect policy preference
+
+> Thus, to firmly establish if and to generalize on how metaphors do or do not influence reasoning, similar results of metaphorical framing should be found using different texts and different policy metaphors [\[33\]](https://journals.plos.org#pone.0113536-Jackson1).
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — generalization requires different texts and policy metaphors
+
+> In all, we question Thibodeau and Boroditsky's [\[1\]](https://journals.plos.org#pone.0113536-Thibodeau1) conclusion that natural language metaphors influence our reasoning. Our research has led to the conclusion that this issue should be rephrased as a question about the conditions under which metaphors do or do not influence our reasoning. These conditions do not only concern variation between metaphors and participants, but also the structure and function of the overall reading process in relation to prior beliefs, attitudes and intentions. By focusing on such boundary conditions, we will hopefully get a clearer picture of which metaphorical frames influence which types of people under which conditions.
+> --- `kb/sources/.snapshots/when-do-natural-language-metaphors-influence-reasoning.md` @ `sha256:c28d4bc9081438ff1d4fc0a055f0fd90bc20e18d83cc7825c8b170dad8b5b42f` — Discussion — bounded conclusion
+
+## Connections Found
+
+This source connects to existing KB content primarily as methodological evidence and comparative context:
+
+- [language-models-like-humans-show-content-effects-on-reasoning.ingest.md](language-models-like-humans-show-content-effects-on-reasoning.ingest.md) — **compares-with**: Both studies investigate how linguistic framing/content affects reasoning outcomes. Steen et al. shows that the originally-reported metaphor framing effect was actually an exposure effect when proper controls were added. Lampinen et al. shows LLMs exhibit human-like content effects on reasoning tasks. Together they illustrate the complexity of evaluating framing effects and the importance of controlled experimental design when attributing reasoning changes to specific linguistic mechanisms.
+
+- [human-writing-structures-transfer-to-llms-because-failure-modes.md](../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) — **is-evidence-for**: The Steen et al. study provides a concrete worked example for this note's methodology. The original Thibodeau & Boroditsky finding appeared to show metaphor framing affects policy reasoning; Steen et al.'s controlled replication showed the effect was actually exposure to crime information, not metaphor-specific. This demonstrates per-convention failure-mode testing: when evaluating whether a cognitive phenomenon transfers or informs system design, test whether alternative explanations account for the observed effect before accepting the original claim.
+
+- [human-llm-differences-are-load-bearing-for-knowledge-system-design.md](../theory/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — **is-evidence-for**: The Steen et al. findings illustrate the per-convention evaluation methodology this note advocates. The original metaphor framing claim was evaluated against alternative explanations (supporting metaphors in the text, absence of non-metaphorical control, no pre-exposure baseline), revealing it was an exposure effect rather than a metaphor-specific effect. A case where a cognitive science claim required careful controls before its implications could be assessed.
+
+- [first-principles-reasoning-selects-for-explanatory-reach-over.md](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) — **see-also**: The Steen et al. study is a concrete illustration of the adaptive-fit vs explanatory-reach distinction. Thibodeau & Boroditsky found an effect that worked in their experimental setup (adaptive fit); Steen et al. showed this was an experimental confound (supporting metaphors, no control condition) rather than a generalizable mechanism (explanatory-reach).
+
+## Extractable Value
+
+1. **Methodological lesson on controls for framing studies** — The paper demonstrates three controls that can change whether a framing effect is detected: non-metaphorical baseline condition, removal of supporting metaphors in stimulus text, and pre-exposure measurement. This is directly useful for the planned note on figurative wording and reasoning, as it provides concrete evidence that reported metaphor framing effects require careful controls to interpret. `[deep-dive]`
+
+2. **Negative evidence on metaphor framing's influence on reasoning** — The paper provides evidence that a high-profile claim (metaphors covertly influence human reasoning) did not survive improved experimental design. This qualifies any assertion that natural-language metaphors reliably shape human policy preferences or problem-solving approaches, which is relevant to claims about how figurative wording affects reader reasoning. `[deep-dive]`
+
+3. **Exposure effect as alternative mechanism** — The consistent finding across all four experiments is that exposure to crime information increases enforcement preference regardless of metaphorical frame. This suggests an alternative mechanism (information exposure, not metaphor processing) that may explain apparent framing effects. Useful for distinguishing metaphor-specific effects from general information effects in the planned note. `[quick-win]`
+
+4. **Boundary conditions question** — The authors reframe the research question from "do metaphors influence reasoning?" to "under what conditions do metaphors influence reasoning?" and suggest potential moderators: metaphor novelty, deliberateness, self-relevance, psychological distance, topic familiarity, and political knowledge. These candidate boundary conditions are useful inputs for theorizing about when figurative wording matters. `[experiment]`
+
+5. **Cultural and linguistic replication attempt** — The study tested the effect in both Dutch (Netherlands) and English (US) populations, finding consistent null results. This provides some evidence that the null finding is not artifact of a single language or culture, though the authors note that metaphor use and evaluation can vary across cultures. `[just-a-reference]`
+
+## Limitations (our opinion)
+
+The study tests only one domain (crime policy) and two specific metaphors ("crime is a beast" vs "crime is a virus"). The authors explicitly acknowledge that establishing boundary conditions requires testing different texts, different policy domains, and different metaphor pairs. The exposure effect found may be specific to the stimulus text's construction (framed as a crime "outbreak" with enforcement-valenced policy options), and the authors note that a text about long-term crime prevention might produce different results. The study does not test whether metaphors influence reasoning in domains where the topic is less familiar to readers, which the authors identify as a potential boundary condition (the "metaphor processing termination hypothesis"). The findings are about conscious policy preferences measured after reading, not about unconscious or online processing effects during reading. As a scientific paper without released code reproducing the analysis, static inspection cannot confirm the exact analysis procedures, though all data are available on OSF.
+
+## Recommended Next Action
+
+Write or update the planned Commonplace note on figurative wording and reasoning to incorporate this source as evidence that the claimed metaphor framing effect on human reasoning did not survive proper experimental controls, and use it to frame the boundary-conditions question the authors raise. Specifically, include it as a counterpoint to any assertion that metaphors reliably influence reader reasoning, and cite the three controls (non-metaphorical baseline, removal of supporting metaphors, pre-exposure measurement) as methodological requirements for evaluating such claims. Link from the note to this ingest as `is-evidence-for` or `compares-with` as appropriate once the note exists.

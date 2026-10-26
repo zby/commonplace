@@ -44,3 +44,9 @@ A note needs one example to show that a status label has operational consequence
 A note introduces an unfamiliar mechanism and gives a worked example because the mechanism cannot be understood from a name alone. The detail earns its space if deleting it would leave the claim abstract or unactionable.
 
 A note answers a polemic. It spends a short opening paragraph conceding the polemic's strongest point before making its own distinction. The concession does not add a new mechanism, but it prevents straw-manning and makes the answer credible. Do not flag it merely because the central claim could be stated without it.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: explains why proportion is relative to explanatory role, with necessary support preserved and displacement still conjectural

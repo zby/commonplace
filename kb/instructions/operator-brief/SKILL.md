@@ -37,3 +37,9 @@ Before returning, compare the brief with the technical finding:
 - Every task-local or definitionless term needed by the brief is expanded or defined, and every retained identifier has a stated role.
 - The technical basis points to the evidence-bearing finding when one exists; the brief does not present a pointer or unsupported summary as evidence.
 - The explanation requests only a decision the finding actually requires.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: explains the human thematic-cue rationale for leading with practical meaning while preserving the conditions needed to understand it

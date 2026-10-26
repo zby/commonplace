@@ -83,3 +83,9 @@ the function described. It does not add an unsupported mechanism or judgment.
 
 The passage states the mapping and uses it to explain the staged filtering
 mechanism.
+
+---
+
+Relevant Notes:
+
+- [Figurative wording can suggest relations that the target claim does not justify](../../../theory/figurative-wording-imports-source-domain-entailments-unless-mapped.md) — rests-on: explains the conditional inference risk of unused figurative implications while preserving conventional and explanatory figures

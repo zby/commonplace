@@ -35,3 +35,9 @@ A note's strongest claim is that a checked redundant copy is sometimes better th
 ## Example (pass)
 
 A note opens with its central claim, then uses definitions, examples, and caveats in the order needed to support that claim. The apparatus does not hide what the note is for.
+
+---
+
+Relevant Notes:
+
+- [Opening position can signal a human reader's theme; proportion remains conjectural](../../theory/position-and-proportion-set-what-a-reader-retains.md) — rests-on: separates evidence for human thematic cues from the conjecture that supporting material competes with the claim
