@@ -357,8 +357,56 @@ Use `uv tool list` to confirm installation and `uv tool dir --bin` to identify t
 - **Import fails after an editable metadata change:** rerun the editable install with `--reinstall` so uv refreshes the existing tool environment.
 - **A command warns that the project's Commonplace files are out of date:** a stub, `.commonplace/library.md`, or the read rule no longer matches the installed library. Rerun `commonplace-init` in the project.
 - **A command reports that the Commonplace library is not available:** the installation has no library under its shared data. Reinstall the tool with the step 2 command.
+- **Windows refuses to start a command, or a command hangs:** see [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands).
 
 `cp-skill-health-check` performs the same classification, runs `commonplace-init --check`, and flags a library copy left by an older release.
+
+### Windows: Smart App Control blocks the commands
+
+On Windows 11 with Smart App Control on, a `commonplace-*` command can fail to start:
+
+- PowerShell: `Program 'commonplace-source.exe' failed to run: An Application Control policy has blocked this file`
+- Git Bash: `Permission denied`
+- Occasionally a launch hangs and cannot be killed, even by a timeout; only a restart clears it.
+
+The verdict varies: a command blocked in one session can run in the next. To confirm the cause, look for Code Integrity events 3077 that name the executable. A `VerifiedAndReputablePolicyState` of 1 means Smart App Control is on:
+
+```powershell
+Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-CodeIntegrity/Operational'; Id=3077} -MaxEvents 20 |
+  Where-Object Message -match 'commonplace-' | Select-Object TimeCreated, Message
+(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy').VerifiedAndReputablePolicyState
+```
+
+The executables in `uv tool dir --bin` are launchers that uv generates during install. They are unsigned and unique to each install, so Smart App Control has no reputation for them. The tool environment's own `python.exe` is identical across installs, and Smart App Control lets it run. The workaround starts every command through that interpreter, using shims placed ahead of uv's directory on `PATH`. Each shim is a `.cmd` file for PowerShell and cmd, plus an extensionless `sh` script for Git Bash. Run this once in PowerShell:
+
+```powershell
+$tool = Join-Path (uv tool dir) 'llm-commonplace'
+$py = Join-Path $tool 'Scripts\python.exe'
+$pyPosix = '/' + $py.Substring(0,1).ToLower() + $py.Substring(2).Replace('\','/')
+$shims = Join-Path $HOME '.local\commonplace-shims'
+New-Item -ItemType Directory -Force $shims | Out-Null
+$ep = Get-Content (Get-ChildItem "$tool\Lib\site-packages\llm_commonplace-*.dist-info\entry_points.txt").FullName
+foreach ($line in $ep) {
+  if ($line -match '^(commonplace-\S+) = ([\w.]+):(\w+)$') {
+    $name, $mod, $fn = $Matches[1], $Matches[2], $Matches[3]
+    $code = "import sys; sys.argv[0] = '$name'; from $mod import $fn; sys.exit($fn())"
+    [IO.File]::WriteAllText("$shims\$name.cmd", "@`"$py`" -c `"$code`" %*`r`n")
+    [IO.File]::WriteAllText("$shims\$name", "#!/bin/sh`nexec `"$pyPosix`" -c `"$code`" `"`$@`"`n")
+  }
+}
+$userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+if (($userPath -split ';') -notcontains $shims) {
+  [Environment]::SetEnvironmentVariable('Path', "$shims;$userPath", 'User')
+}
+```
+
+Paste the snippet into a PowerShell session rather than saving it as a `.ps1` file: Smart App Control can restrict unsigned scripts. Then fully restart every shell, IDE, and desktop agent, as in step 2. In a new process, `(Get-Command commonplace-validate).Source` (PowerShell) or `command -v commonplace-validate` (Git Bash) should now resolve to `.local\commonplace-shims`, not to `uv tool dir --bin`. The shims shadow uv's launchers on purpose, so the shadowing advice above does not apply to them.
+
+- **After an upgrade or reinstall:** rerun the snippet. The shims name modules, not versions, but a release can add or rename commands, and a reinstall into another tool directory moves `python.exe`. Rerunning the snippet is safe.
+- **Argument limits:** the `.cmd` shims pass arguments through cmd.exe, so arguments containing `%`, `^`, or `"` may be altered in PowerShell and cmd. Git Bash's shims pass arguments unchanged.
+- **Undo:** remove `.local\commonplace-shims` from the user `Path` and delete the directory.
+- **Do not turn Smart App Control off just for this.** Windows cannot turn it back on without a reinstall.
+- **Do not test the install by launching every executable in a loop.** When launches stall, the loop can hang the machine. Check one command at a time.
 
 ### Migrating an older project-local installation
 
