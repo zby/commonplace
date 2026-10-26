@@ -2,7 +2,7 @@
 description: "Evidence from two ASD-STE100-inspired passes over one note: unguarded sentence splitting lost semantic relations, while guarded splitting preserved them by adding 4.9% more words"
 type: types/note.md
 traits: [title-as-claim]
-tags: [document-system, evaluation]
+tags: [document-system, evaluation, prose-readability]
 ---
 
 # Two rewrites exposed a syntax-or-repetition tradeoff

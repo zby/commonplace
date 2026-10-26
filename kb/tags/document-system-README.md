@@ -46,6 +46,7 @@ For how the live Commonplace system uses global and collection-local type contra
 ## Related Tags
 
 - [type-system](./type-system-README.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
+- [prose-readability](./prose-readability-README.md) — child: how prose is made easy to follow and edited without changing its claims; members keep this tag
 - [architecture](./architecture-README.md) — storage substrate and layout decisions that depend on document structure
 - [links](./links-README.md) — [title-as-claim](../theory/title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory-README.md) — the type ladder instantiates the constraining gradient for documents

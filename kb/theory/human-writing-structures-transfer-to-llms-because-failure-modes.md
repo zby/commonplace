@@ -2,7 +2,7 @@
 description: Writing genres evolved to prevent reasoning failures; the same structures help LLMs because they share those failure modes (content effects on reasoning) — evaluated per convention, not by analogy
 type: types/note.md
 traits: [has-external-sources]
-tags: [type-system]
+tags: [type-system, prose-readability]
 ---
 
 # Human writing structures transfer to LLMs because failure modes overlap

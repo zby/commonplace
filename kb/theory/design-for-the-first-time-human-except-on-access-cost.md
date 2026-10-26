@@ -2,7 +2,7 @@
 description: "Uses competent-newcomer ergonomics as a property-by-property default, then isolates access paths that charge a consumer for a selected slice or a whole artifact"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [document-system, context-engineering]
+tags: [document-system, context-engineering, prose-readability]
 ---
 
 # Design for the first-time human, except on access cost

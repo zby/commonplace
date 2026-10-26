@@ -3,7 +3,7 @@ description: "A decision-specific rule for fixing what verified doctrine, task i
 type: types/note.md
 traits:
   - title-as-claim
-tags: []
+tags: [method-guided-action]
 ---
 
 # An author should fix what the executor can't determine, not what it will

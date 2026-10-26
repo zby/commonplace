@@ -2,7 +2,7 @@
 description: "Why dependency-locality psycholinguistics licenses a few relation-preserving word-order heuristics for human-read English prose, but not a minimize-dependency-length rule justified by reading cost; LLM-reader benefit untested"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [document-system]
+tags: [document-system, prose-readability]
 ---
 
 # Dependency locality supports ordering heuristics, not a reading-cost rule

@@ -2,7 +2,7 @@
 description: "Evidence from three independent rewrites of one mature article: broad style guidance ranked best overall, a compact style cue improved rhythm but drifted, and exhaustive local review barely changed the text"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [document-system, evaluation]
+tags: [document-system, evaluation, prose-readability]
 ---
 
 # Three simplification passes exposed different clarity–precision tradeoffs
