@@ -74,7 +74,36 @@ Maintenance observations: none (no .envrc, no .venv, no kb/commonplace).
 
 Evidence: bare `uv` and `commonplace-*` were "not recognized" in the app's process. The saved user `PATH` contained `.local\bin` and the process `PATH` did not. With the saved `PATH` loaded, `commonplace-validate` resolved to `.local\bin` and exited 0. All 25 declared executables were present.
 
-Re-run after the app restart: pending.
+## Health check re-run (new session, same day)
+
+`cp-skill-health-check` ran again in a new Code-tab session at 14:51, using the Bash tool (Git Bash) for steps 1, 2, 5 and 6 and PowerShell for step 4. It is not established that the app was fully restarted: the oldest running `claude` process started at 14:19:27, before the install. Its report:
+
+```text
+- Project root: OK (C:\Users\zzbby\commonplace-kb)
+- Layout: installed project
+- Library pointers: OK (commonplace-init --check: 26 ok, exit 0)
+- Control-plane file: OK
+- Runtime skills: OK (.claude and .agents, 12 stubs each)
+- Diagnostic context: user-facing agent, general check
+- Worker launch: available (Agent tool exposed)
+- Agent depth / remaining nesting / concurrent capacity: unknown
+- Workflow nesting required: not applicable
+- Fresh-context isolation: supported
+- Launch probe: not run (no delegation symptom)
+- uv tool installation: problem in this process (see below)
+- Runtime PATH: OK (C:\Users\zzbby\.local\bin on the process PATH)
+- Command ownership: uv tool (single candidate per name)
+- Validator: OK (landings: 0 failures, 0 warnings)
+Likely cause: the process inherited the updated PATH but none of the
+persisted uv variables, so uv falls back to %APPDATA% and sees no tools.
+Recommended fix: fully restart the Claude app; until then pass UV_TOOL_DIR
+explicitly to uv tool commands.
+Maintenance observations: none (no .envrc, no .venv, no kb/commonplace).
+```
+
+Evidence: bare `uv`, `commonplace-init` and `commonplace-validate` resolved, the last two only to `C:\Users\zzbby\.local\bin`. `uv tool list` printed `No tools installed`. `uv tool dir` printed `C:\Users\zzbby\AppData\Roaming\uv\tools` and `uv python dir` printed `C:\Users\zzbby\AppData\Roaming\uv\python`. `UV_TOOL_DIR`, `UV_PYTHON_INSTALL_DIR` and `UV_SYSTEM_CERTS` were set at user scope and empty in the process, in both Git Bash and PowerShell. With `UV_TOOL_DIR` set by hand, `uv tool list` showed `llm-commonplace v0.3.0` (25 commands) and `trafilatura v2.3.1`. The receipt's entry points all target `C:/Users/zzbby/.local/bin`.
+
+Re-run after a confirmed full app restart: pending.
 
 ## Findings
 
@@ -84,3 +113,4 @@ Re-run after the app restart: pending.
 4. **Smart App Control can block a specific uv-managed CPython build** (`0xc0e90002` for 3.13.17, while 3.14.9 and 3.15.1 ran). The health check's Windows troubleshooting has nothing for this.
 5. **Health check portability.** Steps 1, 2 and 6 are Bash-only and had to be translated, which confirms the gap already filed to E1 in [execution-channel-compatibility](../execution-channel-compatibility/README.md).
 6. **Desktop agent `PATH`.** The install-time process keeps its old `PATH` until a full app restart, as `INSTALL.md` already warns. The health check classified it correctly as runtime `PATH`, not a missing package.
+7. **Persisted uv variables did not reach a later session.** In the re-run, a new session's process had the updated `PATH` but not `UV_TOOL_DIR`, `UV_PYTHON_INSTALL_DIR` or `UV_SYSTEM_CERTS`, so `uv tool list` and any `uv tool upgrade` run by the agent miss the installed tool. Without `UV_PYTHON_INSTALL_DIR` and `UV_SYSTEM_CERTS`, a reinstall from that process would also hit hazards 2 and 3 again. The `commonplace-*` commands are unaffected, because the executables and every path init writes are absolute. The health check has no classification for this: its step 4 reads `llm-commonplace` missing from `uv tool list` as "not installed", which would point to a reinstall into the wrong directory. A check that `uv tool dir` contains the library root named in `.commonplace/library.md` would tell the two apart. The workaround in finding 3 is less robust inside the desktop app than the fresh-process check suggested.
