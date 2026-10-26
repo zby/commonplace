@@ -1,9 +1,13 @@
 # Delivery probe results: Codex, revision 7
 
 Installation, stopping on missing init, all three index-only reads, and nested
-delegation passed. Argument forwarding failed: the case agent reported literal
+delegation passed. In the initial run, argument forwarding failed: the case agent reported literal
 `$ARGUMENTS` instead of `kumquat`. It reached the real skill through the index
 without reading a stub, so native stub argument delivery remains untested.
+
+The [2026-10-26 rerun](#case-11-rerun-after-the-argument-routing-amendment)
+passed through the amended index route in a fresh CLI session. The original
+results below are retained; native stub forwarding remains untested.
 
 - Harness and version: Codex collaboration sub-agents in the current session;
   local executable reports `codex-cli 0.163.0`. Cases were not separate CLI launches.
@@ -246,3 +250,100 @@ could not be created on the sandbox's read-only filesystem. The same operation
 was retried with an escalation request and succeeded after approval. Recording
 this post-run permission event also requires an escalated Git write. These
 repository-write permissions are separate from the probe's library-read results.
+
+## Case 11 rerun after the argument-routing amendment
+
+**Pass through the index, 2026-10-26.** A fresh session returned
+`SHARED-STEP-V1` and `ECHO-V1 kumquat`. The real skill still contained literal
+`$ARGUMENTS`; the agent applied the request's argument itself.
+
+The user requested this rerun after code revisions. The tested package was
+revision 7 as amended on 2026-10-24, copied unchanged from checkout
+`58ff93d6ea93e25b0827e28d8bf6593b7b9ea695`. The protocol amendment specifically
+requires an index-route case 11 with no stubs to test the new routing instruction.
+The fresh-context note in `run-prompts.md` recommends a CLI session rooted in
+the project, addressing the initial collaboration run's directory limitation.
+
+### Setup and session
+
+Scratch root `E` was `/tmp/cp-probe-r7-echo-ibly2ph3`. Source and test-project
+copies were `E/package` and `E/project`. uv used isolated `UV_TOOL_DIR=E/tools`,
+`UV_TOOL_BIN_DIR=E/bin`, and `UV_CACHE_DIR=E/cache`. Installation used
+`uv tool install --python 3.12 E/package`; init created eight stubs, both
+templates, the routing file, ignore block, and Claude read rule. `--check`
+returned ten `ok` lines. Both `.agents/skills/` and `.claude/skills/` were then
+removed, leaving the routing file. No package files were modified; a recursive
+comparison with the workshop package after the test found no differences.
+
+The generated routing file contained this new instruction:
+
+> If the request carries arguments, use them wherever the skill names its
+> argument placeholder; reading the file does not substitute them.
+
+Harness: `codex-cli 0.163.0`; uv: `0.13.4`. The fresh CLI used `gpt-6-astra`
+with medium reasoning, explicitly preserving the user's configured model and
+effort. It ignored user configuration to avoid loading configured MCP servers,
+disabled hooks, retained authentication in its existing location, and used its
+own read-only sandbox. No credentials were copied. Its working directory was
+`E/project`, with `E/bin` prepended to PATH. The invocation was:
+
+```text
+codex exec --ephemeral --ignore-user-config
+  -c 'model="gpt-6-astra"' -c 'model_reasoning_effort="medium"'
+  -c 'features.hooks=false' --sandbox read-only --skip-git-repo-check
+  --json -o E/final.txt
+  'Run the delivery-probe-echo check with the argument kumquat.'
+```
+
+These lines describe one shell invocation. JSON events and stderr were captured
+under `E`; the session received only the protocol prompt, with no setup history.
+
+### Observed trace and result
+
+The successful session made exactly three shell calls, all exiting zero:
+
+1. `cat .cp-delivery-probe/library.md`
+2. `cat E/tools/cp-delivery-probe/share/cp-delivery-probe/instructions/delivery-probe-echo/SKILL.md`
+3. `cat E/tools/cp-delivery-probe/share/cp-delivery-probe/instructions/shared-step.md`
+
+The second read returned literal `$ARGUMENTS`, establishing that reading the
+file did not substitute the argument. The final response was:
+
+```text
+SHARED-STEP-V1
+
+ECHO-V1 kumquat
+
+/tmp/cp-probe-r7-echo-ibly2ph3/tools/cp-delivery-probe/share/cp-delivery-probe/instructions/delivery-probe-echo/SKILL.md
+```
+
+No failed reads, shell-command guessing, tool approval requests, or MCP calls
+appeared in the successful session's event trace. No stub was available to read.
+Unlike the initial run, it started directly with the project-relative routing
+file instead of discovering and manually reading scratch `AGENTS.md`.
+
+**Inference:** the amended routing instruction supports argument forwarding
+through the index in this run. The package and execution context both changed
+from the initial run, so this is not a controlled estimate of the instruction's
+effect alone. It does not establish native stub behavior or repeated reliability.
+
+### Permissions, cleanup, and recording
+
+The initial installation failed on sandbox DNS resolution of PyPI's hatchling
+index; an approved escalation of the same command succeeded. uv warned that
+the isolated executable directory was not on PATH; it was prepended for the
+probe session. The initial sandboxed CLI launch failed before a model turn:
+`failed to initialize in-process app-server client: Read-only file system`.
+An approved outer escalation allowed startup; the child still used
+`--sandbox read-only`. The CLI version preflight also warned that PATH aliases
+could not be created on the read-only filesystem. No persistent setting changed.
+
+After the test, ran init `--remove` in `E/project`, then uninstalled the tool
+using the same isolated uv directories. Verified the routing directory, tool
+environment, and executables were absent, deleted `E` including raw traces,
+and verified its absence. No Commonplace command or installation was touched.
+
+Only this report and a new reply line were edited. Local links and whitespace
+were checked without invoking a `commonplace-*` command. Committing the report
+requires a separate Git-write escalation because this session's sandbox makes
+`.git` read-only; that publication permission is separate from the case result.
