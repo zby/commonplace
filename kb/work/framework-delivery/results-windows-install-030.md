@@ -117,6 +117,25 @@ At the operator's request, both session transcripts were read for errors that th
 - **CRLF checkouts are fine.** `core.autocrlf=true` comes from the same system config, so the checkout is CRLF. A CRLF copy of the project gave 26 `ok`, every collection validated, and a typed CRLF note from `kb/theory/` validated.
 - **Leftovers from the failed attempts.** 68 MB of CPython 3.15.1 remain in the app's virtualised `LocalCache\Roaming\uv\python`, and a `python` directory remains in the real `AppData\Roaming\uv`. Both are unused. Under `.local\share\uv\python`, the Smart-App-Control-blocked 3.13.17 is unused, and 3.15.1 serves only Trafilatura.
 
+## Smart App Control hang (same day)
+
+The follow-up run in session `6a140887-…` stalled, and so did a recovery session (`26d22254-…`) after the operator restarted the computer. Both stalled on the same step: a loop that ran `--help` on every `commonplace-*.exe`, first in `.local\bin`, then in an isolated install under `%TEMP%\cp-030\bin`.
+
+- **Session `6a140887-…`.** At 14:10 UTC, `commonplace-source` failed in Git Bash (`Permission denied`) and in PowerShell (`Zasady kontroli aplikacji zablokowały ten plik`, "an App Control policy blocked this file"). The 14:10:34 loop invoked each exe with `&`, and it never returned. The tool's default 2-minute timeout did not end it either. The operator restarted the computer.
+- **Session `26d22254-…`.** At 14:24 the probe ran again, this time with `Start-Process`, stdin redirected from an empty file, and a 15 s `WaitForExit` per exe. The `.local\bin` pass finished in 70 s: 24 exes ran and `commonplace-source` was blocked. The `cp-030\bin` pass started at 14:25:22 and was still stalled at 14:30, even though the 15 s timeout should have ended each launch.
+
+Evidence: `Microsoft-Windows-CodeIntegrity/Operational` events 3033/3077 (local time, UTC+1) name policy `{0283ac0f-fff1-49ae-ada1-8a933130cad6}`, and `HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy` has `VerifiedAndReputablePolicyState` = 1 (Smart App Control on). Blocked loads:
+
+| File | Blocks | Local time |
+|---|---|---|
+| `.local\bin\commonplace-source.exe` | 10 | 15:10–15:24 |
+| `.local\bin\commonplace-review-job-list.exe` | 3 | 15:11 |
+| `cp-030\bin\commonplace-ack-review.exe` | 1 | 15:25:26 |
+| `cp-030\bin\commonplace-finalize-review-job.exe` | 1 | 15:25:53 |
+| `cp-030\bin\commonplace-github-snapshot.exe` | 1 | 15:26:06 |
+
+Smart App Control's verdicts were not stable. `commonplace-review-job-list` was blocked in the first session and ran in the second. In `cp-030\bin`, each blocked launch took 13–27 s. After 15:26:06, no further block events appeared, yet the loop never resumed. Every `commonplace-*.exe` is a uv trampoline: an unsigned launcher with a unique hash, so Smart App Control has no reputation for it. Inference, not confirmed: process creation for the next exe stalled inside the reputation check, where neither `WaitForExit` nor the harness timeout can reach it, which would explain why a restart was needed. The operator also saw Windows notifications about blocked PowerShell features at the same time.
+
 Noise that is not a product finding: the agent's guessed WinGet `Links\uv.exe` path (uv is linked from its package directory), a PowerShell parse error in the agent's own diagnostic, CLIXML progress records from nested `powershell`, and a `git commit -F -` here-string that Windows PowerShell 5.1 passed as a pathspec.
 
 ## Findings
@@ -130,3 +149,4 @@ Noise that is not a product finding: the agent's guessed WinGet `Links\uv.exe` p
 7. **Persisted uv variables did not reach a later session.** In the re-run, a new session's process had the updated `PATH` but not `UV_TOOL_DIR`, `UV_PYTHON_INSTALL_DIR` or `UV_SYSTEM_CERTS`, so `uv tool list` and any `uv tool upgrade` run by the agent miss the installed tool. Without `UV_PYTHON_INSTALL_DIR` and `UV_SYSTEM_CERTS`, a reinstall from that process would also hit hazards 2 and 3 again. The `commonplace-*` commands are unaffected, because the executables and every path init writes are absolute. The health check has no classification for this: its step 4 reads `llm-commonplace` missing from `uv tool list` as "not installed", which would point to a reinstall into the wrong directory. A check that `uv tool dir` contains the library root named in `.commonplace/library.md` would tell the two apart. The workaround in finding 3 is less robust inside the desktop app than the fresh-process check suggested.
 8. **`--check` passes without a control plane.** With no `AGENTS.md` or `CLAUDE.md` in the project, `commonplace-init --check` reports 26 `ok` and validation passes, so skipping `INSTALL.md` step 4 goes unnoticed. Candidate: `--check` reports when no root instruction file references `.commonplace/library.md`.
 9. **Windows long paths are off by default.** About 60 characters of headroom remain at this clone location. Candidates: a note in `INSTALL.md`'s Windows section, or a CI check on the longest tracked path.
+10. **Smart App Control blocks and stalls the uv launcher executables.** With Smart App Control on, any `commonplace-*` command can be refused at launch. The verdict varies between runs, and in one case a launch apparently hung until the computer was restarted (see "Smart App Control hang"). This goes beyond finding 4: it affects the installed commands themselves, not just one CPython build. In Git Bash the block shows up only as `Permission denied`, which the health check would misread as a file-permission problem. Candidates: a Windows troubleshooting entry that names Code Integrity events 3033/3077 and `VerifiedAndReputablePolicyState`; a health-check step that reads that log instead of launching every executable; and a rule in the run prompts against batch-launching executables on Windows while Smart App Control is on. Turning Smart App Control off cannot be undone without reinstalling Windows, so that cannot be the default advice. Still open: whether the stall reproduces, and whether a signed launcher would avoid it. `%TEMP%\cp-030` is a leftover from this run.
