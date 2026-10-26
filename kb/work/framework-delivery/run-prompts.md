@@ -177,3 +177,63 @@ scratch root, and confirm in the results file that this was done.
 Commit only the results file and the probe-request.md line, with trailers
 `Workshop: kb/work/framework-delivery` and `Model: <your model id>`.
 ```
+
+## Windows — install check for the published 0.3.0 (any harness)
+
+Not a probe run: this checks the published package on a Windows machine,
+the open half of next step 1, and settles the protocol's case 2 question
+about the `Read(//C:/…/**)` rule when the session is Claude Code. Added
+2026-10-26. Paste into a session on the Windows machine; the session
+needs uv, git and Python 3.12 available and PowerShell as its shell.
+
+```
+Verify that the published Commonplace 0.3.0 installs and initialises on
+this Windows machine. Use PowerShell for every command and record exact
+outputs, not summaries. Change nothing outside the scratch root below.
+
+Setup: $root = "$env:TEMP\cp-030"; create it. Isolate the run from any
+user-level uv tools: $env:UV_TOOL_DIR = "$root\tools";
+$env:UV_TOOL_BIN_DIR = "$root\bin"; $env:PATH = "$root\bin;$env:PATH".
+Record: Windows version, PowerShell version ($PSVersionTable), uv --version,
+and the Python uv selects.
+
+1. uv tool install --python 3.12 llm-commonplace==0.3.0
+   Record how many executables uv reports. If uv refuses the package as
+   newer than an exclude-newer cutoff, record that and retry with
+   --exclude-newer-package llm-commonplace=2026-11-01T00:00:00Z
+   --exclude-newer-package workjig=2026-11-01T00:00:00Z.
+2. (Get-Command commonplace-init).Source and uv tool dir --bin: the first
+   must be inside the second, and both under $root. Also record
+   (Get-Command commonplace-init -All).Source to show nothing else shadows it.
+3. New-Item -ItemType Directory "$root\project"; cd there; git init;
+   commonplace-init --name win-check. Record the full report.
+4. commonplace-init --check. Record every line and $LASTEXITCODE; 26 "ok"
+   lines and exit 0 is the pass.
+5. Record these file facts verbatim: the "allow" entry in
+   .claude\settings.local.json; the absolute path line in
+   .claude\skills\cp-skill-write\SKILL.md; one path from
+   .commonplace\library.md. Note whether each path uses forward slashes and
+   carries the drive letter. Check the first three bytes of
+   settings.local.json and library.md for a byte-order mark
+   ([System.IO.File]::ReadAllBytes(...)[0..2]); none is expected.
+6. commonplace-validate kb/notes, then kb/reference, kb/instructions and
+   kb/tags. Record each summary line.
+7. Run commonplace-init again. Every file should be reported as preserved.
+8. Only if this machine has Claude Code: from the project directory start
+   one fresh headless session, claude -p "Read the file that
+   .claude/skills/cp-skill-write/SKILL.md tells you to read and report its
+   first heading and the absolute path you read" --permission-mode default,
+   and record whether the read succeeded without a permission prompt or
+   denial. This settles whether Claude Code on Windows honours the rule
+   form init writes. If Claude Code is absent, say so.
+9. Cleanup: uv tool uninstall llm-commonplace with the same environment
+   variables, then remove $root. Confirm (Get-Command commonplace-init
+   -ErrorAction SilentlyContinue) returns nothing.
+
+Report: if this session runs inside a clone of the Commonplace repository,
+write kb/work/framework-delivery/results-windows-install-030.md with the
+sections Environment, Steps 1–9 (each with its recorded output), Findings,
+Cleanup, and commit only that file with trailers
+"Workshop: kb/work/framework-delivery" and "Model: <your model id>".
+Otherwise return the same report as text for the operator to file.
+```

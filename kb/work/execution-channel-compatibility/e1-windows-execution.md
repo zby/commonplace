@@ -62,7 +62,9 @@ package's contract-based discovery.
    snapshot-web; runtime-native orchestration for AutoReason; and an explicit
    disposition for promoted skills' `allowed-tools: Bash` declarations.
 7. Add Windows CI for package install, pristine init, validation, and focused
-   health checks. Add a narrow static inventory/check for known incompatible
+   health checks. [partly done 2026-10-26: `ci.yml` runs its wheel-tool job on
+   `windows-latest` too, with the pytest step Linux-only; health checks and
+   the idiom inventory remain; first Windows run pending push] Add a narrow static inventory/check for known incompatible
    idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
    becomes visible at review time.
 8. Exercise a freshly initialized project on Windows, including stub and
