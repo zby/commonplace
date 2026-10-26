@@ -10,8 +10,12 @@ env:
 
 jobs:
   test-wheel-tool:
-    name: Ubuntu wheel tool
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} wheel tool
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout
@@ -24,15 +28,20 @@ jobs:
           tool-bin-dir: ${{ runner.temp }}/uv-tool-bin
 
       - name: Add uv tool commands to PATH
+        shell: bash
         run: echo "${{ runner.temp }}/uv-tool-bin" >> "$GITHUB_PATH"
 
+      # The test suite has no Windows run yet (kb/work/execution-channel-compatibility, E1);
+      # Windows checks only the built wheel, its entry points, init and validation.
       - name: Run software tests
+        if: runner.os == 'Linux'
         run: uv run pytest -m ""
 
       - name: Build wheel
         run: uv build --wheel
 
       - name: Install wheel as uv tool
+        shell: bash
         run: uv tool install --python 3.11 dist/llm_commonplace-*.whl
 
       - name: Verify every declared entry point resolves from the tool bin
