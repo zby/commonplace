@@ -206,6 +206,11 @@ migration is selected at opening.
 
 ## Evidence and conceptual inputs
 
+- [ADRs4AI comparison](./adrs4ai-comparison.md) — direct inspection of the
+  [ADRs4AI GitHub account](https://github.com/ADRs4AI), comparing its
+  deliberation records and question tooling with Commonplace ADRs; includes
+  pinned sources, evidence limits and the operator's correction that concise
+  architectural accounts should be projections of richer retained reasoning.
 - [Competing causal theories can guide distinguishing
   experiments](../../theory/competing-causal-theories-can-guide-distinguishing-experiments.md)
   — retained alternatives can guide what evidence to seek before current
