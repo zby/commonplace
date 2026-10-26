@@ -18,7 +18,7 @@ Do not edit the finding, its subject, or supporting artifacts unless the user se
 
 ## Write the brief
 
-Start with what happens, why it matters, or what the operator needs to decide. Keep conditions that control reachability, scope, impact, or confidence next to the claims they qualify. Do not turn a narrow but serious problem into a general one, or make a qualified conclusion sound certain.
+Start with what happens, why it matters, or what the operator needs to decide. Keep conditions that control reachability, scope, impact, or confidence next to the claims they qualify. Keep each subject next to its verb: move a long qualifying phrase before the subject or after the object rather than between them, and put the shorter phrase first after a verb (rationale: [dependency locality supports ordering heuristics, not a reading-cost rule](../../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md)). Do not turn a narrow but serious problem into a general one, or make a qualified conclusion sound certain.
 
 Use ordinary domain language and project terms with canonical definitions normally. Expand or define terms coined for this task and terms inherited from artifacts that have no canonical definition. A literal code or schema identifier may remain, but state what it represents before relying on the identifier. Do not promote vocabulary during this operation.
 

@@ -21,6 +21,7 @@ The reference point is [ASD-STE100 Simplified Technical English, Issue 9](https:
 - Measure token count as well as correctness; shorter sentences can make a note longer.
 - Compare results in isolated-note and crowded multi-note contexts.
 - Track recurring departures before adding or removing any rule from the instruction.
+- Test reordering as a third lever beside splitting and restating: move interrupting phrases out of the span between subject and verb or verb and object and put the shorter phrase first, without rewording, then check meaning survival and word count against the two earlier rewrites ([dependency locality supports ordering heuristics, not a reading-cost rule](../../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md)).
 
 ## Per-use log
 

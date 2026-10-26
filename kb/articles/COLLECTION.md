@@ -46,6 +46,7 @@ Treat these as the operative tests for collection conformance:
 - Does each paragraph explain, support, qualify, or advance the argument?
 - Is each qualification doing new work? If it does not change the claim or what the reader may conclude, delete it.
 - Can an elevated phrase, metaphor, dramatic sentence, or flourish be replaced with plainer language without losing explanatory content? If so, require the replacement.
+- Where a sentence is hard to follow, does a long phrase or clause separate its subject from its verb, or its verb from its object? Prefer moving the interruption or putting the shorter phrase first over splitting the sentence, since [dependency locality supports ordering heuristics, not a reading-cost rule](../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md).
 - Do not request hooks, emotional framing, stories, or quotable phrasing until the explanatory tests above pass. In a later circulation or memorability pass, require every added technique to preserve or improve understanding. Repeated ornamental or sales-like phrasing warrants a warning; rhetoric that substitutes for mechanism, evidence, or qualification fails the contract.
 - For a working paper: does the body say what it invites, and do `version` and `revised` match its last substantive change?
 - For a draft: does it open with the draft banner, and does the banner avoid stability promises while saying where to send comments?

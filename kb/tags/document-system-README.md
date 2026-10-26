@@ -24,6 +24,7 @@ For how the live Commonplace system uses global and collection-local type contra
 ## Writing Conventions
 
 - [title-as-claim-enables-traversal-as-reasoning](../theory/title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link traversal read as reasoning chains; topical titles break this, and multi-claim documents get different title conventions
+- [dependency locality supports ordering heuristics, not a reading-cost rule](../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md) — psycholinguistic evidence licenses a few relation-preserving word-order heuristics for human-read English prose, not a minimize-dependency-length rule; LLM-reader benefit untested
 
 ## Testing
 

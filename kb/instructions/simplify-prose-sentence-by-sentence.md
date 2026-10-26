@@ -29,6 +29,7 @@ Skip frontmatter, code, formulas, link destinations, and generated blocks unless
 5. After an example, state what it establishes when the inferential step is not already clear. Connect the relevant concrete detail to the general claim instead of leaving the reader to infer why the example matters.
 6. Prefer direct verbs, but do not replace a plain, precise phrase with stiffer wording merely to match a pattern. Compare every revision with the original for causal direction, uncertainty, conditions, scope, evidence strength, technical roles, and unit of analysis.
 7. Preserve formal relational wording — such as `is a function of`, quantifiers, invariants, equivalence claims, and `by construction` — unless the replacement states the same relation at least as explicitly. Do not trade a formal relation for looser causal prose merely to foreground an actor.
+8. When a sentence is hard to follow because a long phrase or clause separates its subject from its verb, or its verb from its object, prefer reordering to splitting: move the interrupting material before the subject or after the object, and put the shorter phrase first after a verb or noun. Reordering keeps every word and relation; splitting can lose them. Do not reorder material placed before the main clause for length alone. Treat these as tendencies for human readers, because [dependency locality supports ordering heuristics, not a reading-cost rule](../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md).
 
 ## Report
 
