@@ -28,9 +28,9 @@ Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-
 Nothing in this workshop changed after 2026-09-25 except mechanical path
 rewrites. A recheck against the repository on 2026-10-24 found:
 
-- **Shipped state.** v0.2.0 (tagged 2026-09-25, commit `5c99505a3`) is the
-  only release carrying ADR 086. Since then 1603 commits landed and
-  `pyproject.toml` still says `0.2.0`, so none of them is installable from PyPI.
+- **Shipped state.** v0.2.0 (tagged 2026-09-25, commit `5c99505a3`) was the
+  only release carrying ADR 086 until v0.3.0 shipped on 2026-10-26 with the
+  1633 commits since, including the probe's two init fixes (next step 1).
 - **Delivery-surface drift since v0.2.0** that an installed project would see:
   a new runtime dependency on `workjig` from PyPI (commit `005a3f2dd`); two new
   commands, `commonplace-analysis` (`83c641f00`) and `commonplace-task`
@@ -100,11 +100,21 @@ package and the release must match before any new run is evidence.
    in a scratch venv: normal install, idempotent rerun, upgrade without init
    (all `ok`), description change (`stale` and warning), collision, foreign
    symlink, extra stub removal, editable install (`stale`), and `--remove`.
-1. **Release.** [half done] Bump the version and publish to PyPI, the only
-   channel; v0.2.0 shipped 2026-09-25 but 1603 later commits are unreleased.
-   Then install from PyPI on a clean machine, including macOS and Windows where
-   possible, and run `commonplace-init` and `commonplace-init --check` in a new
-   project. [the clean-machine install has no recorded run on any platform]
+1. **Release.** [done on Linux 2026-10-26; macOS and Windows open] v0.3.0
+   (tag `v0.3.0`, commit `5438390d8`, 1633 commits after v0.2.0) was published
+   to PyPI on 2026-10-26 at 10:10 UTC. Same day, on Linux: `uv tool install
+   --python 3.12 llm-commonplace==0.3.0` from PyPI into an isolated tool
+   directory (`UV_TOOL_DIR`, `UV_TOOL_BIN_DIR`; uv 0.13.4, Python 3.12.8)
+   installed 25 executables; in a fresh `git init` project, `commonplace-init`
+   created the scaffold, 24 stubs, `.commonplace/library.md`, the read rule
+   and the `.gitignore` block; `--check` reported 26 `ok`; the four scaffold
+   collections validated with no failures; a second and third init reported
+   every file as preserved. The stub and routing file carry the 2026-10-24
+   wording. Not a clean machine: the host has the editable install, which the
+   isolated directories kept out of the way. One local snag, not a product
+   defect: a user-level uv `exclude-newer = "7 days"` setting rejected both
+   `llm-commonplace` 0.3.0 and `workjig` 0.1.0 as too new until overridden
+   with `--exclude-newer`. Still open: the same check on macOS and Windows.
 2. **Probe follow-ups.** [Linux done 2026-10-24; other harnesses open]
    Claude Code and Codex ran cases 0 and 8–11 and pi ran the full protocol,
    all on Linux. Still open: the index route with arguments after the
