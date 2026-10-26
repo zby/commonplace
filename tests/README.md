@@ -1,8 +1,9 @@
 # Test selection
 
-Use a small selected suite during development. Run the complete default suite
-before pushing. Subsystem directories describe responsibility; the `slow` marker
-describes cost independently of responsibility.
+Use a small selected suite during development. GitHub CI runs the complete
+default suite on pushes and pull requests; no additional local full-suite run
+is required before pushing. Subsystem directories describe responsibility; the
+`slow` marker describes cost independently of responsibility.
 
 ## Commands
 
@@ -13,7 +14,7 @@ uv run pytest tests/commonplace/general tests/commonplace/review
 # Slow coverage for a subsystem. An explicit -m replaces the default filter.
 uv run pytest tests/commonplace/agentic_analysis -m slow
 
-# Full verification before pushing: all default tests, including slow tests.
+# Full verification when needed locally (also run by CI), including slow tests.
 uv run pytest -m ''
 
 # Development lint.
@@ -55,7 +56,7 @@ All suite paths below are relative to `tests/commonplace/`.
 | Foundational parsing, naming, library/type/path resolution, directory contracts | Full fast suite, plus relevant slow tests for affected consumers |
 | `cli/init_project.py`, `scaffold_manifest.py`, `build_hooks.py`, packaging/dependency metadata | Full suite; follow editable-installation checks in `INSTALL.md` |
 | Site configuration, `src/commonplace/docs/`, published collection/type/command contracts | `docs/`; also `validation/` for schema or validator contract changes |
-| Test-state capture, isolated Codex runner, `.githooks/pre-push` | `tooling/` |
+| Test-state capture, isolated Codex runner | `tooling/` |
 | Test helpers or fixtures | Every suite importing them; full fast suite if uncertain |
 
 `general/` contains shared parsing, path/library/type resolution, directory-layout,
@@ -81,35 +82,9 @@ Measure changes with the same selected suite before and after. Keep production
 expansion tests uncached, and retain tests for baseline isolation and invalidation.
 Do not trade assertions or isolation for a shorter run.
 
-## Pre-push hook
+## CI verification
 
-The tracked hook at [`.githooks/pre-push`](../.githooks/pre-push) runs
-`uv run pytest -m ''` from the repository root and blocks a push on failure or
-interruption. Budget about five minutes; timings vary by machine and checkout.
-
-Enable it once per checkout, after checking for an existing hooks configuration:
-
-```bash
-git config --show-origin --get core.hooksPath
-# If no existing hooks configuration needs preserving:
-git config --local core.hooksPath .githooks
-```
-
-If another hooks path is configured, integrate this hook there or deliberately
-replace that configuration; do not overwrite it silently. Setting `core.hooksPath`
-also changes where Git looks for other hooks.
-
-Commit or stash changes before pushing. The hook rejects tracked modifications,
-staged changes, and untracked files (ignored files do not count). It checks again
-after tests and rejects a changed HEAD. Do not edit the checkout while tests run.
-These checks do not lock the checkout or detect edits that are made and reverted
-during verification.
-
-The hook verifies the current checked-out commit and working tree, not every
-historical commit or arbitrary ref in a multi-ref push. Push the verified current
-branch. Hook configuration is local and is not enforced on other checkouts;
-CI remains an independent full-suite check.
-
-`git push --no-verify` bypasses the gate. Use it only as an explicit operator-approved
-exception and disclose the skipped verification. The hook intentionally has no
-result cache: every ordinary push gets a fresh full-suite run.
+[GitHub CI](../.github/workflows/ci.yml) runs `uv run pytest -m ''` on pushes and
+pull requests. There is no repository-managed pre-push test hook. Local test
+selection remains governed by the rules above; do not duplicate the CI run
+solely to push.

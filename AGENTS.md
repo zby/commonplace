@@ -108,8 +108,9 @@ slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
   before committing, run general tests plus affected subsystem suites, including
   relevant slow tests. Shared changes require consumer suites; uncertain impact
   requires the full fast suite. Report selected coverage accurately. Before
-  pushing, run the complete suite with `uv run pytest -m ''`; the repository's
-  pre-push hook enforces this when installed. All required tests must pass.
+  pushing, no additional full-suite run is required: GitHub CI runs the complete
+  suite with `uv run pytest -m ''` on pushes and pull requests. All required
+  local tests and CI checks must pass.
   Test directories select subsystem responsibility; `slow` selects cost. When
   optimizing fixtures, reuse only immutable baselines: each test gets independent
   mutable files, Git state, plan data and monkeypatches. Invalidate cached derived

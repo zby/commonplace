@@ -298,15 +298,9 @@ tests marked `slow`. Use `uv run pytest -m slow` for those tests, or
 `uv run pytest -m ""` for the complete suite, as CI does. During source-checkout
 work, run general tests plus affected subsystem suites according to
 [test selection](./tests/README.md); include relevant slow tests when changing
-the behavior they cover. Run the complete suite before pushing.
-
-Source-checkout developers should enable the tracked pre-push hook once per
-checkout. First run `git config --show-origin --get core.hooksPath`. If no existing
-hooks configuration needs preserving, run
-`git config --local core.hooksPath .githooks`. Do not overwrite an existing hooks
-configuration silently. The hook requires a clean working tree and runs the full
-suite from the repository root. See [hook behavior and limitations](./tests/README.md#pre-push-hook).
-This setup is for this source checkout, not consuming KBs.
+the behavior they cover. GitHub CI runs the complete suite on pushes and pull
+requests; no additional local full-suite run is required before pushing.
+There is no repository-managed pre-push test hook.
 If a sandboxed Windows session cannot write
 `.pytest_cache`, use `uv run pytest -p no:cacheprovider`; a cache-only warning
 is not a test failure. The editable tool installation commands above work
