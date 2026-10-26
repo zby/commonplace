@@ -61,14 +61,22 @@ for (const [name, tools, body] of [
 let tool;
 try {
   const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
-  extension({ registerTool: registered => { tool = registered; }, on() {} });
+  const oldDepth = process.env.PI_SUBAGENT_DEPTH, oldWorkers = process.env.PI_SUBAGENT_WORKERS;
+  try {
+    delete process.env.PI_SUBAGENT_DEPTH; delete process.env.PI_SUBAGENT_WORKERS;
+    extension({ registerTool: registered => { tool = registered; }, on() {} });
+  } finally {
+    if (oldDepth === undefined) delete process.env.PI_SUBAGENT_DEPTH; else process.env.PI_SUBAGENT_DEPTH = oldDepth;
+    if (oldWorkers === undefined) delete process.env.PI_SUBAGENT_WORKERS; else process.env.PI_SUBAGENT_WORKERS = oldWorkers;
+  }
 } catch (error) {
   childProcess.spawn = originalSpawn;
   syncBuiltinESMExports();
   fs.rmSync(root, { recursive: true, force: true });
   throw error;
 }
-const ctx = { cwd: root, model: { provider: "test", id: "parent" }, thinkingLevel: "medium", hasUI: false };
+const ctx = { cwd: root, model: { provider: "test", id: "parent" }, thinkingLevel: "medium", hasUI: false,
+  sessionManager: { getSessionId: () => "parent-session", getSessionFile: () => path.join(root, "parent.jsonl") } };
 const launch = async params => {
   launches.length = 0;
   const result = await tool.execute("test", { agentScope: "project", ...params }, undefined, undefined, ctx);
@@ -90,6 +98,59 @@ test("launch overrides and inheritance", async t => {
         assert.deepEqual(schema.properties.thinkingLevel.enum, ["off", "minimal", "low", "medium", "high", "xhigh", "max"]);
       }
     });
+    await t.test("budget fields, environment grants and parent lineage are explicit", async () => {
+      for (const schema of [tool.parameters, tool.parameters.properties.tasks.items]) {
+        for (const name of ["maxDepth", "maxWorkers"]) {
+          assert.equal(schema.properties[name].type, "integer");
+          assert.equal(schema.properties[name].minimum, 0);
+        }
+      }
+      const result = (await launch({ agent: "inherited", task: "budgeted", maxDepth: 3, maxWorkers: 99 })).details.results[0];
+      assert.equal(launches[0].options.env.PI_SUBAGENT_DEPTH, "3");
+      assert.equal(launches[0].options.env.PI_SUBAGENT_WORKERS, "3", "root reserves at most its other three slots");
+      assert.equal(result.maxDepth, 3); assert.equal(result.maxWorkers, 3);
+      assert.equal(result.parentSessionId, "parent-session");
+      assert.equal(result.parentSessionFile, ctx.sessionManager.getSessionFile());
+      const record = JSON.parse(fs.readFileSync(path.join(result.executionDir, "execution.json"), "utf8"));
+      for (const name of ["maxDepth", "maxWorkers", "parentSessionId", "parentSessionFile"]) assert.equal(record[name], result[name]);
+      await launch({ maxDepth: 2, maxWorkers: 1, tasks: [
+        { agent: "inherited", task: "item grant", maxDepth: 0, maxWorkers: 0 },
+        { agent: "inherited", task: "call grant" },
+      ] });
+      assert.equal(launches[0].options.env.PI_SUBAGENT_DEPTH, "0");
+      assert.equal(launches[0].options.env.PI_SUBAGENT_WORKERS, "0");
+      assert.equal(launches[1].options.env.PI_SUBAGENT_DEPTH, "2");
+      assert.equal(launches[1].options.env.PI_SUBAGENT_WORKERS, "1");
+    });
+    await t.test("an ephemeral parent is recorded with its identity and an explicit null file", async () => {
+      launches.length = 0;
+      const response = await tool.execute("ephemeral", { agentScope: "project", agent: "inherited", task: "child persists" },
+        undefined, undefined, { ...ctx, sessionManager: { getSessionId: () => "ephemeral-parent", getSessionFile: () => undefined } });
+      const result = response.details.results[0];
+      assert.equal(result.parentSessionId, "ephemeral-parent"); assert.equal(result.parentSessionFile, null);
+      const record = JSON.parse(fs.readFileSync(path.join(result.executionDir, "execution.json"), "utf8"));
+      assert.equal(record.parentSessionId, "ephemeral-parent"); assert.equal(record.parentSessionFile, null);
+    });
+    await t.test("a bounded caller cannot widen depth or its worker partition", async () => {
+      const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
+      const oldDepth = process.env.PI_SUBAGENT_DEPTH, oldWorkers = process.env.PI_SUBAGENT_WORKERS;
+      let limited;
+      try {
+        process.env.PI_SUBAGENT_DEPTH = "2"; process.env.PI_SUBAGENT_WORKERS = "2";
+        extension({ registerTool(value) { limited = value; }, on() {} });
+      } finally {
+        if (oldDepth === undefined) delete process.env.PI_SUBAGENT_DEPTH; else process.env.PI_SUBAGENT_DEPTH = oldDepth;
+        if (oldWorkers === undefined) delete process.env.PI_SUBAGENT_WORKERS; else process.env.PI_SUBAGENT_WORKERS = oldWorkers;
+      }
+      launches.length = 0;
+      const response = await limited.execute("bounded", { agentScope: "project", agent: "inherited", task: "nested",
+        maxDepth: 99, maxWorkers: 99 }, undefined, undefined, ctx);
+      assert.equal(response.isError, undefined);
+      assert.equal(launches[0].options.env.PI_SUBAGENT_DEPTH, "1");
+      assert.equal(launches[0].options.env.PI_SUBAGENT_WORKERS, "1");
+      assert.equal(response.details.results[0].maxDepth, 1);
+      assert.equal(response.details.results[0].maxWorkers, 1);
+    });
     await t.test("destination approval parameter is absent", () => {
       assert.equal(tool.parameters.properties.confirmProjectAgents, undefined);
     });
@@ -108,7 +169,7 @@ test("launch overrides and inheritance", async t => {
       assert.ok(fs.existsSync(result.details.results[0].sessionFile));
     });
     await t.test("fresh sessions retain separate audit records; explicit continuation reuses only the chosen session", async () => {
-      const first = (await launch({ agent: "inherited", task: "source-first" })).details.results[0];
+      const first = (await launch({ agent: "inherited", task: "source-first", maxDepth: 2, maxWorkers: 1 })).details.results[0];
       const second = (await launch({ agent: "inherited", task: "independent" })).details.results[0];
       assert.notEqual(first.sessionId, second.sessionId);
       assert.notEqual(first.sessionFile, second.sessionFile);
@@ -136,6 +197,10 @@ test("launch overrides and inheritance", async t => {
       assert.equal(flag(0, "--session"), first.sessionFile);
       assert.equal(flag(0, "--model"), "test/parent");
       assert.equal(flag(0, "--thinking"), "medium");
+      assert.equal(launches[0].options.env.PI_SUBAGENT_DEPTH, "0", "resume uses this call's depth, not the earlier grant");
+      assert.equal(launches[0].options.env.PI_SUBAGENT_WORKERS, "0");
+      assert.equal(resumed.maxDepth, 0);
+      assert.equal(resumed.maxWorkers, 0);
       assert.equal(SessionManager.open(first.sessionFile).buildSessionContext().messages[0].content, "Source-first commitment");
       assert.equal(JSON.parse(fs.readFileSync(path.join(first.executionDir, "execution.json"), "utf8")).task, "source-first");
       assert.match(response.content[0].text, /Session file:/);

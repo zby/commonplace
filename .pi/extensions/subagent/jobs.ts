@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 export interface Job<T> {
 	handle: string;
 	label: string;
+	slots: number;
 	state: "running" | "cancelling" | "completed" | "failed" | "cancelled";
 	result?: T;
 	error?: string;
@@ -18,11 +19,20 @@ export class Jobs<T> {
 	private sequence = 0;
 	private closed = false;
 
-	start(run: (signal: AbortSignal) => Promise<T>, failed: (result: T) => boolean, label = "subagent"): Job<T> {
+	constructor(readonly capacity = 4) {
+		if (!Number.isSafeInteger(capacity) || capacity < 0 || capacity > 4) throw new Error("Worker capacity must be an integer from zero to four");
+	}
+	private activeSlots() { return this.select().filter(job => !job.order).reduce((sum, job) => sum + job.slots, 0); }
+	private validateSlots(slots: number) {
+		if (!Number.isSafeInteger(slots) || slots < 1 || slots > this.capacity)
+			throw new Error(`Job requires ${slots} slots but worker capacity is ${this.capacity}`);
+	}
+	start(run: (signal: AbortSignal) => Promise<T>, failed: (result: T) => boolean, label = "subagent", slots = 1): Job<T> {
 		if (this.closed) throw new Error("Subagent session is shutting down");
 		if (this.jobs.size >= 128) throw new Error("128 retained handles; forget completed jobs before starting more");
-		if ([...this.jobs.values()].filter(j => !j.order).length >= 4) throw new Error("Four jobs are already active");
-		const job: Job<T> = { handle: randomUUID(), label, state: "running", controller: new AbortController(), done: Promise.resolve() };
+		this.validateSlots(slots);
+		if (this.activeSlots() + slots > this.capacity) throw new Error(`Worker capacity exhausted: ${this.activeSlots()}/${this.capacity} slots in use; job needs ${slots}`);
+		const job: Job<T> = { handle: randomUUID(), label, slots, state: "running", controller: new AbortController(), done: Promise.resolve() };
 		this.jobs.set(job.handle, job);
 		job.done = Promise.resolve().then(() => run(job.controller.signal)).then(result => {
 			job.result = result;
@@ -39,15 +49,16 @@ export class Jobs<T> {
 
 	/** Blocking calls share ownership/capacity; interruption cancels their child. */
 	async execute(run: (signal: AbortSignal) => Promise<T>, failed: (result: T) => boolean,
-		label: string, signal?: AbortSignal): Promise<T> {
+		label: string, signal?: AbortSignal, slots = 1): Promise<T> {
+		this.validateSlots(slots);
 		while (true) {
 			if (this.closed) throw new Error("Subagent session is shutting down");
 			if (signal?.aborted) throw new Error("Subagent call aborted");
 			const active = this.select().filter(job => !job.order);
-			if (active.length < 4) break;
+			if (this.activeSlots() + slots <= this.capacity) break;
 			await this.wait(active, signal);
 		}
-		const job = this.start(run, failed, label);
+		const job = this.start(run, failed, label, slots);
 		const abort = () => this.cancel([job]);
 		signal?.addEventListener("abort", abort, { once: true });
 		if (signal?.aborted) abort();

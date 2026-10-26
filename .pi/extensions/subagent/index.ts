@@ -4,6 +4,7 @@ import { StringEnum } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
+import { readLimits, assertCanLaunch, grant } from "./budgets.ts";
 import { discoverAgents, type AgentScope } from "./agents.ts";
 import { Jobs, type Job } from "./jobs.ts";
 import { launch, failed, output, summary, type SingleResult } from "./launcher.ts";
@@ -12,15 +13,19 @@ const overrides = {
 	model: Type.Optional(Type.String({ minLength: 1, description: "Model override; otherwise inherit agent or parent model" })),
 	thinkingLevel: Type.Optional(StringEnum(["off", "minimal", "low", "medium", "high", "xhigh", "max"] as const)),
 };
+const budgets = {
+	maxDepth: Type.Optional(Type.Integer({ minimum: 0, maximum: Number.MAX_SAFE_INTEGER, description: "Further delegation levels granted to the child; default 0, capped by caller depth minus one" })),
+	maxWorkers: Type.Optional(Type.Integer({ minimum: 0, maximum: Number.MAX_SAFE_INTEGER, description: "Child worker slots reserved from the caller's pool, in addition to the child itself; default 0" })),
+};
 const taskFields = {
-	...overrides,
+	...overrides, ...budgets,
 	agent: Type.String({ description: "Agent definition name" }),
 	task: Type.String({ description: "Worker handoff" }),
 	cwd: Type.Optional(Type.String({ description: "Child working directory and project agent discovery root" })),
 	sessionFile: Type.Optional(Type.String({ minLength: 1, description: "Resume this recorded worker session; omission starts a new persistent conversation" })),
 };
 const parameters = Type.Object({
-	...overrides,
+	...overrides, ...budgets,
 	action: Type.Optional(StringEnum(["start", "status", "wait", "cancel", "forget"] as const)),
 	handles: Type.Optional(Type.Array(Type.String(), { minItems: 1 })),
 	agent: Type.Optional(taskFields.agent), task: Type.Optional(taskFields.task), cwd: taskFields.cwd, sessionFile: taskFields.sessionFile,
@@ -34,22 +39,24 @@ function sessionInfo(result: SingleResult): string {
 function jobReply(selected: Job<SingleResult>[], includeOutput = false) {
 	return {
 		content: [{ type: "text" as const, text: selected.map(job =>
-			`${job.handle}: ${job.state} — ${job.label}${includeOutput ? `${job.result ? sessionInfo(job.result) : ""}\n${summary(job.error ?? (job.result ? output(job.result) : "(still running)"))}` : ""}`,
+			`${job.handle}: ${job.state} — ${job.label} [${job.slots} slots]${includeOutput ? `${job.result ? sessionInfo(job.result) : ""}\n${summary(job.error ?? (job.result ? output(job.result) : "(still running)"))}` : ""}`,
 		).join("\n\n") || "No active or retained jobs." }],
-		details: { jobs: selected.map(({ handle, label, state, result, error }) =>
-			({ handle, label, state, ...(includeOutput ? { result, error } : {}) })) },
+		details: { jobs: selected.map(({ handle, label, slots, state, result, error }) =>
+			({ handle, label, slots, state, ...(includeOutput ? { result, error } : {}) })) },
 		isError: includeOutput && selected.some(job => job.state === "failed" || job.state === "cancelled"),
 	};
 }
 
 export default function (pi: ExtensionAPI) {
-	let jobs = new Jobs<SingleResult>();
+	const limits = readLimits();
+	let jobs = new Jobs<SingleResult>(limits.workers);
 	pi.on("session_shutdown", async () => { await jobs.shutdown(); });
-	pi.on("session_start", async () => { await jobs.shutdown(); jobs = new Jobs<SingleResult>(); });
+	pi.on("session_start", async () => { await jobs.shutdown(); jobs = new Jobs<SingleResult>(limits.workers); });
 	pi.registerTool({
 		name: "subagent", label: "Subagent", parameters,
-		description: "Delegate tasks to agents. New calls start fresh persistent sessions using Pi's normal storage. Supply sessionFile to continue a recorded worker with the same agent and cwd. Results expose session and audit paths; forget does not delete evidence. Omit action for blocking single (agent/task) or parallel (tasks, max 8) calls. " +
-			"action=start launches one job immediately and returns a handle. All modes share four active slots per session; a nested parent owns a separate pool. " +
+		description: `Remaining depth: ${limits.depth === null ? "unlimited (root)" : limits.depth}; worker capacity: ${limits.workers} slots.${limits.error ? ` Invalid budget: ${limits.error}.` : ""} ` +
+			"Each child defaults to maxDepth=0 and maxWorkers=0. Grant both to permit nesting. The child's job plus its reserved worker slots count against this pool. Delegate tasks to agents. New calls start fresh persistent sessions using Pi's normal storage. Supply sessionFile to continue a recorded worker with the same agent and cwd. Results expose session and audit paths; forget does not delete evidence. Omit action for blocking single (agent/task) or parallel (tasks, max 8) calls. " +
+			"action=start launches one job immediately and returns a handle. All modes share this session's worker capacity; nested pools are carved from their parent's reserved slots. " +
 			"action=wait with handles returns the first finished selected result; remove its handle before waiting again. Interrupted waits leave jobs running. " +
 			"status lists jobs; cancel requests termination; forget releases terminal results. Handle operations accept only action and handles; status may omit handles. " +
 			"Shutdown/reload cancels jobs and loses handles. Project definitions, when agentScope=project, are discovered from each child's cwd. " +
@@ -70,6 +77,7 @@ export default function (pi: ExtensionAPI) {
 				}
 				return jobReply(selected);
 			}
+			assertCanLaunch(limits);
 			if (params.handles) throw new Error("Launches do not accept handles");
 			if (params.action === "start" && (!params.agent || !params.task || params.tasks))
 				throw new Error("Async start requires agent and task only, not tasks");
@@ -79,13 +87,17 @@ export default function (pi: ExtensionAPI) {
 				throw new Error("Provide exactly one single job or one to eight parallel tasks");
 			const scope: AgentScope = params.agentScope ?? "user";
 			const requested = params.tasks ?? [{ agent: params.agent!, task: params.task!, cwd: params.cwd,
-				model: params.model, thinkingLevel: params.thinkingLevel, sessionFile: params.sessionFile }];
+				model: params.model, thinkingLevel: params.thinkingLevel, sessionFile: params.sessionFile,
+				maxDepth: params.maxDepth, maxWorkers: params.maxWorkers }];
 			const prepared = requested.map(item => {
+				const delegation = { ...grant(limits, { maxDepth: item.maxDepth ?? params.maxDepth,
+					maxWorkers: item.maxWorkers ?? params.maxWorkers }),
+					parentSessionId: ctx.sessionManager.getSessionId(), parentSessionFile: ctx.sessionManager.getSessionFile() ?? null };
 				const cwd = path.resolve(ctx.cwd, item.cwd ?? params.cwd ?? ctx.cwd);
 				const discovery = discoverAgents(cwd, scope);
 				const agent = discovery.agents.find(a => a.name === item.agent);
 				if (agent?.configurationError) throw new Error(agent.configurationError);
-				return { item, cwd, discovery, agent };
+				return { item, cwd, discovery, agent, delegation };
 			});
 			if (signal?.aborted) throw new Error("Subagent start aborted");
 			const defaults = { model: ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined, thinkingLevel: ctx.thinkingLevel };
@@ -96,19 +108,19 @@ export default function (pi: ExtensionAPI) {
 				if (!p.agent) throw new Error(`Unknown agent: "${p.item.agent}". Available agents: ${p.discovery.agents.map(a => a.name).join(", ") || "none"}.`);
 				return launch(p.agent, p.item.task, p.cwd, defaults, {
 					model: p.item.model ?? params.model, thinkingLevel: p.item.thinkingLevel ?? params.thinkingLevel,
-				}, jobSignal, update, p.item.sessionFile);
+				}, p.delegation, jobSignal, update, p.item.sessionFile);
 			};
 			const label = (p: typeof prepared[number]) => `${p.item.agent} @ ${p.cwd}`;
 			if (params.action === "start") {
 				const p = prepared[0];
-				const job = registry.start(s => run(p, s), failed, label(p));
+				const job = registry.start(s => run(p, s), failed, label(p), 1 + p.delegation.maxWorkers);
 				if (ctx.hasUI) void job.done.then(() => ctx.ui.notify(
 					`Subagent ${job.label}: ${job.state} (${job.handle})`, job.state === "completed" ? "info" : "warning",
 				)).catch(() => { /* Disposed UI cannot reject background work. */ });
 				return jobReply([job]);
 			}
 			const results = prepared.map(p => ({ agent: p.item.agent, agentSource: p.agent?.source ?? "unknown",
-				task: p.item.task, cwd: p.cwd, exitCode: -1, messages: [], stderr: "",
+				task: p.item.task, cwd: p.cwd, ...p.delegation, exitCode: -1, messages: [], stderr: "",
 				usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
 			} as SingleResult));
 			const emit = () => onUpdate?.({ content: [{ type: "text", text: parallel
@@ -116,7 +128,7 @@ export default function (pi: ExtensionAPI) {
 				: `${label(prepared[0])}: running` }], details: details([...results]) });
 			await Promise.all(prepared.map(async (p, i) => {
 				try {
-					results[i] = await registry.execute(s => run(p, s, r => { results[i] = { ...r, exitCode: -1 }; emit(); }), failed, label(p), signal);
+					results[i] = await registry.execute(s => run(p, s, r => { results[i] = { ...r, exitCode: -1 }; emit(); }), failed, label(p), signal, 1 + p.delegation.maxWorkers);
 				} catch (error) {
 					results[i] = { ...results[i], exitCode: 1, errorMessage: String(error) };
 				}

@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { randomUUID } from "node:crypto";
 import type { AgentConfig } from "./agents.ts";
-import type { LaunchConfig } from "./launcher.ts";
+import type { Delegation, LaunchConfig } from "./launcher.ts";
 
 export interface SessionReference { sessionId: string; sessionFile: string; executionDir?: string }
 interface WorkerRecord extends LaunchConfig { sessionId: string; profile: string }
@@ -57,13 +57,13 @@ export class SessionAudit {
 	private metadata: Record<string, unknown> = {};
 	constructor(
 		readonly reference: SessionReference, agent: AgentConfig, cwd: string, config: LaunchConfig,
-		task: string, args: string[],
+		task: string, args: string[], delegation: Delegation,
 	) {
 		this.executionDir = path.join(directory(reference.sessionFile), randomUUID());
 		fs.mkdirSync(this.executionDir, { mode: 0o700 });
 		this.metadata = { startedAt: new Date().toISOString(), pid: process.pid, agent: agent.name,
 			agentSource: agent.source, agentFile: agent.filePath, systemPrompt: agent.systemPrompt,
-			tools: agent.tools, cwd, task, args, ...config, ...reference };
+			tools: agent.tools, cwd, task, args, ...config, ...delegation, ...reference };
 		for (const name of ["events.jsonl", "stderr.log"]) fs.writeFileSync(path.join(this.executionDir, name), "", { mode: 0o600 });
 		this.save();
 		this.saveWorker(agent, cwd, config);

@@ -25,7 +25,8 @@ example shipped with `@earendil-works/pi-coding-agent` 1.0.0. The adapter now us
 one session-local job owner for blocking and asynchronous launches, with compact
 rendering. `index.ts` owns tool dispatch, `agents.ts` discovery, `jobs.ts` job
 ownership, `launcher.ts` Pi arguments and JSON collection, `process.ts`
-process cancellation, and `sessions.ts` continuation and audit ownership.
+process cancellation, `budgets.ts` depth and worker grants, and `sessions.ts`
+continuation and audit ownership.
 `session-info.ts` is a child extension that reports the session Pi selected.
 The original files came from:
 
@@ -48,8 +49,9 @@ checks it through its normal completion and acceptance path.
 ## Launch configuration
 
 The repository ships [`commonplace-worker`](agents/commonplace-worker.md), a general-purpose agent
-with `read`, `bash`, `edit`, and `write`. Assign its specific role and authorized
-inputs/outputs in each handoff; it has no nested delegation tool. Select it with
+with `read`, `bash`, `edit`, `write`, and `subagent`. Assign its specific role and
+authorized inputs/outputs in each handoff. It can delegate only within the
+runtime's depth and worker budgets, both zero by default. Select it with
 `"agent": "commonplace-worker", "agentScope": "project"` from this worktree. User-level
 lookup remains the tool's default, so the scope must be explicit.
 
@@ -73,6 +75,20 @@ unless the call supplies `thinkingLevel`.
 process. Pi may clamp the requested thinking level to the model's capabilities;
 result details record the requested level, not verified effective effort.
 
+`maxDepth` and `maxWorkers` are nonnegative integer budgets, defaulting to 0 on
+**every launch**, including continuation. They are accepted at the top level and
+on each parallel task; item values override call-wide values. `maxDepth` grants
+further delegation levels to the child. `maxWorkers` reserves a worker pool for
+that child from the caller's capacity. Depth alone does not grant worker slots.
+For example, `maxDepth: 1, maxWorkers: 1` lets a worker launch one leaf worker.
+
+The child's depth is capped at the caller's remaining depth minus one. Its
+worker pool is capped at the caller's capacity minus one. The caller reserves
+`1 + maxWorkers` slots for the granted child subtree until the child's execution
+settles, including cancellation and cleanup. Reservations are not shrunk just
+because other jobs are busy: async calls reject if the reservation will not fit;
+blocking calls wait. Idle reserved slots are unavailable to siblings.
+
 Example single launch:
 
 ```json
@@ -81,6 +97,8 @@ Example single launch:
   "agentScope": "project",
   "model": "openai/gpt-6.1-sol",
   "thinkingLevel": "medium",
+  "maxDepth": 1,
+  "maxWorkers": 1,
   "task": "<handoff>",
   "cwd": "<absolute worktree root>"
 }
@@ -131,7 +149,11 @@ The child reports its actual session ID and file through a private stderr
 control record; the adapter does not reconstruct Pi's directory or file names.
 
 Completed results expose `sessionId`, `sessionFile` and `executionDir` in both
-structured details and the model-facing summary. A new call always starts a new
+structured details and the model-facing summary. Result details and each
+`execution.json` also record `parentSessionId`, `parentSessionFile`, `maxDepth`
+and `maxWorkers`. Parent files are null for an ephemeral parent. This permits
+walking from a child execution upward to its parent, including after a resume
+from a different parent. A new call always starts a new
 conversation. To continue a particular worker, supply its exact saved file:
 
 ```json
@@ -167,7 +189,8 @@ per execution containing:
 - `events.jsonl`: raw JSON stdout, including recovered errors and retry events;
 - `stderr.log`: raw stderr, including the session-reference control record;
 - `execution.json`: task, agent prompt/tools, launch arguments, requested model
-  and thinking, start/end timestamps, final outcome and usage.
+  and thinking, parent session identity, granted budgets, start/end timestamps,
+  final outcome and usage.
 
 These records are retained after success, failure, cancellation, `forget`,
 shutdown and reload. Temporary prompt transport files are still removed; their
@@ -239,7 +262,7 @@ Start each independent job separately:
 ```
 
 `start` returns a handle without awaiting the child. Keep a handle-to-assignment
-map in the workflow's bookkeeping. Start up to four jobs, then call:
+map in the workflow's bookkeeping. Start while unreserved slots remain, then call:
 
 ```json
 {"action": "wait", "handles": ["<handle-1>", "<handle-2>", "<handle-3>", "<handle-4>"]}
@@ -277,14 +300,31 @@ process exit. Do not end a print-mode parent with jobs still pending.
 
 ## Limits
 
-Parallel calls permit at most eight tasks. All modes share one four-active-job
-limit per session. Blocking calls wait for capacity and release their handles
-when they return; async `start` rejects when full. Interrupting a blocking call
-cancels its children, unlike interrupting async `wait`. Shutdown prevents queued
-blocking tasks from spawning. A child that has `subagent` has its own pool.
+Parallel calls permit at most eight tasks. A root session has four worker
+slots. Each child receives a statically partitioned pool, rather than a new pool
+of four: its job plus its reserved descendant slots count against its caller.
+The extension-controlled tree therefore fits within the root's four slots;
+the root coordinator itself is not counted. Job details expose reserved `slots`.
+Blocking calls queue on the weighted capacity and release their handles when
+they return; async `start` rejects when its reservation cannot fit. Interrupting
+a blocking call cancels its children, unlike interrupting async `wait`. Slots
+remain reserved while cancelling, until process closure and cleanup. Shutdown
+prevents queued blocking tasks from spawning.
+
+The extension reads `PI_SUBAGENT_DEPTH` and `PI_SUBAGENT_WORKERS` at load. Both
+absent means a root with unlimited inherited depth and four slots. Otherwise
+both must contain nonnegative integers, with at most four worker slots. Invalid
+or partial environment budgets fail closed. At zero depth or zero capacity the
+tool stays registered and control operations remain available, but all launches
+are refused. Its description states the remaining depth and capacity. Resuming
+a saved session never restores its old grant: this launch's budgets apply.
+
+These are runtime bounds on this extension, not an OS sandbox or a prohibition
+on arbitrary processes. Different root sessions have independent budgets; no
+cross-process shared counter or automatic redistribution is implemented.
 
 There is no chain mode or automatic answer forwarding. Use explicit workflow
-handoffs. There is no explicit nesting limit. Each launch creates a new process;
+handoffs. Each launch creates a new process;
 it starts a fresh conversation unless `sessionFile` explicitly continues a
 recorded worker.
 A child has `subagent` only when its definition selects it. No selection is a

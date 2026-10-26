@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 export async function runProcess(
 	command: string, args: string[], cwd: string, signal: AbortSignal | undefined,
 	onStdout: (text: string) => void, onStderr: (text: string) => void,
+	environment: NodeJS.ProcessEnv = {},
 ): Promise<{ exitCode: number; aborted: boolean; error?: string }> {
 	if (signal?.aborted) throw new Error("Subagent was aborted before spawn");
 	return new Promise((resolve) => {
@@ -11,7 +12,7 @@ export async function runProcess(
 		const ownsGroup = process.platform !== "win32" && !process.env.PI_SUBAGENT_PROCESS_GROUP;
 		const proc = spawn(command, args, {
 			cwd, shell: false, stdio: ["ignore", "pipe", "pipe"], detached: ownsGroup,
-			env: { ...process.env, ...(ownsGroup ? { PI_SUBAGENT_PROCESS_GROUP: "1" } : {}) },
+			env: { ...process.env, ...environment, ...(ownsGroup ? { PI_SUBAGENT_PROCESS_GROUP: "1" } : {}) },
 		});
 		let closed = false;
 		let aborted = false;

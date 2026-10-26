@@ -6,11 +6,13 @@ import type { ThinkingLevel } from "@earendil-works/pi-agent-core";
 import type { Message } from "@earendil-works/pi-ai";
 import { withFileMutationQueue } from "@earendil-works/pi-coding-agent";
 import type { AgentConfig } from "./agents.ts";
+import { DEPTH_ENV, WORKERS_ENV, type Budgets } from "./budgets.ts";
 import { runProcess } from "./process.ts";
 import { acquireSessionLock, resumeSession, SessionAudit, type SessionReference } from "./sessions.ts";
 
 export interface LaunchConfig { model?: string; thinkingLevel?: ThinkingLevel }
-export interface SingleResult {
+export interface Delegation extends Budgets { parentSessionId: string | null; parentSessionFile: string | null }
+export interface SingleResult extends Delegation {
 	agent: string;
 	agentSource: "user" | "project" | "unknown";
 	task: string;
@@ -61,7 +63,7 @@ function invocation(args: string[]) {
 /** Fresh persistent conversation by default; explicit continuation never guesses a session. */
 export async function launch(
 	agent: AgentConfig, task: string, cwd: string, defaults: LaunchConfig, overrides: LaunchConfig,
-	signal: AbortSignal, onUpdate?: (result: SingleResult) => void, sessionFile?: string,
+	delegation: Delegation, signal: AbortSignal, onUpdate?: (result: SingleResult) => void, sessionFile?: string,
 ): Promise<SingleResult> {
 	if (agent.configurationError) throw new Error(agent.configurationError);
 	const resumed = sessionFile ? resumeSession(sessionFile, agent, cwd) : undefined;
@@ -77,7 +79,7 @@ export async function launch(
 	const result: SingleResult = {
 		agent: agent.name, agentSource: agent.source, task, cwd, exitCode: -1, messages: [], stderr: "",
 		usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
-		model, thinkingLevel,
+		model, thinkingLevel, ...delegation,
 		...(resumed ? { sessionId: resumed.sessionId, sessionFile: resumed.sessionFile } : {}),
 	};
 	let temp: string | undefined;
@@ -103,7 +105,7 @@ export async function launch(
 					throw new Error("Pi opened a different session than requested");
 				Object.assign(result, reference);
 				releaseSession ??= acquireSessionLock(reference.sessionFile);
-				audit = new SessionAudit(reference, agent, cwd, config, task, args);
+				audit = new SessionAudit(reference, agent, cwd, config, task, args, delegation);
 				result.executionDir = audit.executionDir;
 				append("events.jsonl", prelude); prelude = "";
 				append("stderr.log", stderrPrelude); stderrPrelude = "";
@@ -158,7 +160,7 @@ export async function launch(
 			const lines = stderrBuffer.split("\n");
 			stderrBuffer = lines.pop() || "";
 			for (const text of lines) stderrLine(text + "\n");
-		});
+		}, { [DEPTH_ENV]: String(delegation.maxDepth), [WORKERS_ENV]: String(delegation.maxWorkers) });
 		if (buffer.trim()) line(buffer);
 		if (stderrBuffer) stderrLine(stderrBuffer);
 		result.exitCode = closed.exitCode;

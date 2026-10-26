@@ -28,6 +28,17 @@ test("real child cancellation and session ownership", { timeout: 20000 }, async 
   const inherited = process.env.PI_SUBAGENT_PROCESS_GROUP;
   delete process.env.PI_SUBAGENT_PROCESS_GROUP;
   try {
+    await t.test("a real child receives explicit budgets without mutating the parent's environment", async () => {
+      const before = [process.env.PI_SUBAGENT_DEPTH, process.env.PI_SUBAGENT_WORKERS];
+      let stdout = "";
+      const result = await runProcess(process.execPath, ["-e",
+        "console.log(JSON.stringify({depth:process.env.PI_SUBAGENT_DEPTH,workers:process.env.PI_SUBAGENT_WORKERS}))"],
+        process.cwd(), undefined, text => { stdout += text; }, () => {},
+        { PI_SUBAGENT_DEPTH: "1", PI_SUBAGENT_WORKERS: "2" });
+      assert.equal(result.exitCode, 0);
+      assert.deepEqual(JSON.parse(stdout), { depth: "1", workers: "2" });
+      assert.deepEqual([process.env.PI_SUBAGENT_DEPTH, process.env.PI_SUBAGENT_WORKERS], before);
+    });
     await t.test("normal exit drains output and preserves exit status", async () => {
       const c = child("console.log('READY'); console.error('diagnostic'); process.exitCode = 7;");
       const result = await c.done;

@@ -21,14 +21,13 @@ extension only for work you were commissioned to delegate.
   tool availability does not expand mutation authority.
 - Single mode uses `agent` and `task`. Parallel mode uses `tasks`, an array of
   objects containing `agent`, `task`, and optionally `cwd`, `model`,
-  `thinkingLevel`, and `sessionFile`. Optional top-level `model` and
-  `thinkingLevel` apply to every task; per-task values override them. Chain mode is not supported; use
-  explicit isolated handoffs. Blocking and asynchronous calls share four active
-  slots in this session. Blocking calls wait for capacity, while asynchronous
-  starts reject when full.
+  `thinkingLevel`, `sessionFile`, `maxDepth`, and `maxWorkers`. Top-level model,
+  thinking and budget values apply to every task; per-task values override them.
+  Chain mode is not supported; use explicit isolated handoffs. Blocking calls
+  wait for capacity, while asynchronous starts reject when full.
 - For rolling dispatch, when the loaded schema exposes `action` and `handles`,
   use `action: "start"` with the single-job launch fields. Keep its returned
-  handle. Start at most four jobs, then use `action: "wait"` with their handles
+  handle. Start only while unreserved worker slots remain, then use `action: "wait"` with their handles
   to receive the first finished result; remove that handle before waiting again.
   Handle operations take only `action` and `handles`. `status` may omit handles
   to list all jobs; `cancel` requests termination; `forget` releases terminal
@@ -37,10 +36,20 @@ extension only for work you were commissioned to delegate.
   reconcile ownership after interruption rather than blindly relaunching.
   See `.pi/README.md` for lifecycle and platform limits. An old schema requires
   reload before launching work, not a fallback to wait-for-all dispatch.
+- `maxDepth` and `maxWorkers` default to 0 on every launch, including a resumed
+  worker. Root sessions have four worker slots and no inherited depth cap.
+  A child receives at most the caller's remaining depth minus one and at most
+  its worker capacity minus one. The child's job plus its reserved worker slots
+  count against the caller until it settles. Supply both budgets to allow
+  nesting; depth alone grants no worker slots. `PI_SUBAGENT_DEPTH` and
+  `PI_SUBAGENT_WORKERS` carry the granted limits. The tool remains registered at
+  depth 0 but refuses launches and states its limits in its description. Budgets
+  constrain execution; they do not expand the commission's authority.
 - A child inherits the dispatching session's model and thinking level unless
   the call overrides them with `model` or `thinkingLevel`. A new call starts a
   fresh persistent session without the parent's conversation, using Pi's normal
-  storage rules. Results return `sessionId`, `sessionFile` and `executionDir`.
+  storage rules. Results return `sessionId`, `sessionFile`, `executionDir`,
+  `parentSessionId`, `parentSessionFile` and the granted budgets.
   Supply that worker's `sessionFile` with the same agent and `cwd` to continue
   its conversation; omitted overrides then retain its recorded launch selection.
   Only resume a worker when the workflow permits its accumulated context.

@@ -69,8 +69,20 @@ const events = {};
 const extension = await jiti.import(fileURLToPath(new URL("../index.ts", import.meta.url)), { default: true });
 childProcess.spawn = mockSpawn;
 syncBuiltinESMExports();
-extension({ registerTool(value) { tool = value; }, on(name, fn) { events[name] = fn; } });
-const ctx = { cwd: root, model: { provider: "test", id: "parent" }, thinkingLevel: "medium", hasUI: false };
+function install(depth, workers) {
+  const oldDepth = process.env.PI_SUBAGENT_DEPTH, oldWorkers = process.env.PI_SUBAGENT_WORKERS;
+  try {
+    if (depth === undefined) delete process.env.PI_SUBAGENT_DEPTH; else process.env.PI_SUBAGENT_DEPTH = depth;
+    if (workers === undefined) delete process.env.PI_SUBAGENT_WORKERS; else process.env.PI_SUBAGENT_WORKERS = workers;
+    extension({ registerTool(value) { tool = value; }, on(name, fn) { events[name] = fn; } });
+  } finally {
+    if (oldDepth === undefined) delete process.env.PI_SUBAGENT_DEPTH; else process.env.PI_SUBAGENT_DEPTH = oldDepth;
+    if (oldWorkers === undefined) delete process.env.PI_SUBAGENT_WORKERS; else process.env.PI_SUBAGENT_WORKERS = oldWorkers;
+  }
+}
+install();
+const ctx = { cwd: root, model: { provider: "test", id: "parent" }, thinkingLevel: "medium", hasUI: false,
+  sessionManager: { getSessionId: () => "parent-session", getSessionFile: () => path.join(root, "parent.jsonl") } };
 const call = (params, signal, context = ctx) => tool.execute("test", params, signal, undefined, context);
 const start = (params = {}, signal, context) => call({ action: "start", agent: "worker", task: "test", agentScope: "project", ...params }, signal, context);
 const handle = result => result.details.jobs[0].handle;
@@ -83,11 +95,58 @@ const reset = async () => { await events.session_shutdown(); await events.sessio
 
 test("asynchronous subagent lifecycle (mock processes only)", async t => {
   try {
+    await t.test("depth zero and invalid inherited budgets refuse launches but retain control operations", async () => {
+      for (const [depth, workers, message] of [["0", "2", /remaining depth is 0/], ["2", "0", /worker capacity is 0/],
+        ["bad", "2", /invalid inherited budget/], [undefined, "2", /invalid inherited budget/]]) {
+        await events.session_shutdown(); install(depth, workers);
+        await assert.rejects(start({ maxDepth: 999, maxWorkers: 999 }), message);
+        await assert.rejects(call({ agent: "worker", task: "blocking", agentScope: "project" }), message);
+        assert.equal(launches.length, 0);
+        assert.deepEqual((await call({ action: "status" })).details.jobs, []);
+        assert.match(tool.description, /Remaining depth: 0|worker capacity: 0/);
+      }
+      await events.session_shutdown(); install();
+    });
+    await t.test("child grants decrement depth and cap its reserved worker slots", async () => {
+      await events.session_shutdown(); install("2", "2");
+      try {
+        assert.match(tool.description, /Remaining depth: 2; worker capacity: 2/);
+        const h = handle(await start({ maxDepth: 99, maxWorkers: 99 })); await spawned(1);
+        assert.equal(launches[0].options.env.PI_SUBAGENT_DEPTH, "1");
+        assert.equal(launches[0].options.env.PI_SUBAGENT_WORKERS, "1");
+        assert.equal((await call({ action: "status" })).details.jobs[0].slots, 2);
+        await assert.rejects(start(), /Worker capacity exhausted/);
+        launches[0].proc.finish();
+        const result = (await wait([h])).details.jobs[0].result;
+        assert.equal(result.maxDepth, 1); assert.equal(result.maxWorkers, 1);
+      } finally { await events.session_shutdown(); install(); launches.length = 0; }
+    });
+    await t.test("reserved slots block siblings and queued calls until success, failure or cancellation settles", async () => {
+      for (const outcome of ["success", "failure", "cancel"]) {
+        const h = handle(await start({ maxDepth: 2, maxWorkers: 3 })); await spawned(1);
+        assert.equal((await call({ action: "status" })).details.jobs[0].slots, 4);
+        await assert.rejects(start(), /Worker capacity exhausted/);
+        const pending = call({ agent: "worker", task: "queued", agentScope: "project" });
+        await new Promise(resolve => setTimeout(resolve, 20));
+        assert.equal(launches.length, 1);
+        if (outcome === "cancel") {
+          launches[0].proc.kill = signal => { launches[0].proc.signals.push(signal); return true; };
+          await call({ action: "cancel", handles: [h] });
+          assert.equal((await call({ action: "status" })).details.jobs[0].state, "cancelling");
+          await assert.rejects(start(), /Worker capacity exhausted/);
+        }
+        launches[0].proc.finish(outcome, outcome === "failure" ? 1 : 0);
+        await spawned(2);
+        launches[1].proc.finish();
+        assert.equal((await pending).isError, undefined);
+        await wait([h]); await reset();
+      }
+    });
     await t.test("four-job rolling window returns first finish and refills without a barrier", async () => {
       const handles = [];
       for (let i = 0; i < 4; i++) handles.push(handle(await start({ model: "chosen", thinkingLevel: "off", cwd: root })));
       await spawned(4);
-      await assert.rejects(start(), /Four jobs/);
+      await assert.rejects(start(), /Worker capacity exhausted/);
       for (const launch of launches) {
         assert.ok(!launch.args.includes("--no-session"));
         assert.equal(launch.args[launch.args.indexOf("--model") + 1], "chosen");
@@ -387,7 +446,7 @@ test("asynchronous subagent lifecycle (mock processes only)", async t => {
       assert.equal(launches.length, 4);
       launches[0].proc.finish();
       await spawned(5);
-      await assert.rejects(start(), /Four jobs/);
+      await assert.rejects(start(), /Worker capacity exhausted/);
       launches[4].proc.finish();
       assert.equal((await blocking).isError, undefined);
       assert.equal((await call({ action: "status" })).details.jobs.length, 4, "blocking handle auto-released");
