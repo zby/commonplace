@@ -46,7 +46,7 @@ of pi 1.3.0; none of it is yet tested outside this checkout.
 | S6 | **Attributable result and distinct failure.** The worker's final answer comes back as text; a crash, abort or error is reported as failure, not as an answer. Files the worker wrote are visible to the parent on the shared filesystem, or the worker returns full content for the parent to write. Matches B6. | all; revise-autoreason's writeback rule | runtime | yes: latest response plus process outcome; `sessionId`, `sessionFile`, `executionDir` |
 | S7 | **Lifecycle.** Single-use workers the parent can wait on, check, cancel and release; the skills close each actor after its handoff is verified. | revise-autoreason, review batches, improvement pass | runtime | `start`, `status`, `wait`, `cancel`, `forget`; blocking call by default |
 | S8 | **Parallel workers under a known limit.** Several workers at once where the skill allows (three judges; one per review job), and a capacity limit the parent can hit deterministically and queue against rather than nest. | revise-autoreason, review batches | runtime | up to 8 per call; active-job limit |
-| S9 | **No nesting by the worker.** The worker launches no further agents. Preferably the worker lacks the delegation tool; otherwise the handoff forbids it (ingest's dispatch does). Health-check reports remaining depth when the runtime exposes it. | ingest, improvement pass, review batches | runtime preferred, instruction fallback | `commonplace-worker` definition has no delegation tool |
+| S9 | **No nesting unless the handoff requires it.** The skills' workers are leaf tasks: a worker that auto-loads the project's skills could re-fire the orchestrating skill inside itself (ingest calls its no-spawn line load-bearing), it would spend the concurrency the parent is queueing against, and harness depth caps make a second-level launch fail where the parent cannot see. CLAUDE.md allows nested delegation within the worker's authority, so this is the skills' default, not a ban. Preferably the worker lacks the delegation tool; otherwise the handoff forbids it. | ingest, improvement pass, review batches | runtime preferred, instruction fallback | `commonplace-worker` has no delegation tool; the definition allows nesting only when the invocation requires it |
 | S10 | **Information hiding.** The worker sees only the handoff plus standing rules. Fresh context gives this for the conversation; the filesystem is shared, so blind judges rely on the handoff not naming the hidden files. Matches B8: conversation isolation is not a sandbox. | revise-autoreason (judges), write-multistage (bilateral isolation) | instruction, unless the harness restricts reads | not a filesystem sandbox (stated) |
 | S11 | **Inspectable record.** The child's session persists as a legible record the parent or operator can locate afterwards, so a result can be audited and further tooling built on it. This is the operator's stated reason for the sub-agent route. | the amendment | runtime | `sessionFile` plus a per-execution audit directory |
 | S12 | **Model and effort selection.** Wanted, not required: no skill depends on it. `revise-autoreason` says "Codex sub-agents", which names a harness, not a model; ADR 118 workers select models for the workflow, not for a skill. | none | runtime | `model`, `thinkingLevel` overrides |
@@ -77,10 +77,10 @@ init writes:
    user-level `~/.pi/agents/`);
 3. the operator granting project trust to the installed project at pi startup.
 
-So a pi user of an installed project needs either both `.pi/` directories in
-their project, or a user-level installation of the same two pieces. Which of
-these pi 1.3.0 supports cleanly, and whether init should write `.pi/` pointers
-the way it writes `.claude/` and `.agents/` ones, is the open question recorded
-in the workshop README as step 3's follow-up. The probe's case 10 run in a
-scratch project with the chosen delivery in place is the acceptance test, and
-S7, S8 and S11 need their own small checks beyond it.
+Decision (2026-10-26): the user-level route. pi 1.3.0 reads user extensions
+from `~/.pi/agent/extensions/` and the extension reads user agent definitions
+from `~/.pi/agent/agents/` by default, so a pi user copies the two pieces there
+once from a checkout, as `INSTALL.md` step 5 now says. Nothing is added to the
+package or to init. The probe's case 10 run in a scratch project with that copy
+in place is the acceptance test, and S7, S8 and S11 need their own small checks
+beyond it.

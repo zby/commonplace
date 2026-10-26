@@ -263,6 +263,28 @@ A stub is a small `SKILL.md`, the same on every platform; no link support is nee
 
 An agent whose runtime reads neither of those two skill directories, or has no skills mechanism at all, uses the skill index in `.commonplace/library.md`: when a task matches a skill's description there, the agent reads that `SKILL.md` and follows it. It loses what only a native skill gets from the harness — a forked context, model choice, tool limits, and invocation by name.
 
+### pi: add a sub-agent for the delegating skills
+
+`cp-skill-ingest`, `cp-skill-write-multistage` and `cp-skill-revise-autoreason`
+hand work to a fresh sub-agent that the harness provides. Claude Code and Codex
+have one built in; stock pi does not, so in pi those three skills stop and report
+that no sub-agent is available. Everything else works without this step.
+
+To add one, copy the extension and its worker definition from a Commonplace
+checkout into your user-level pi directory once; it then serves every project:
+
+```bash
+git clone https://github.com/zby/commonplace /tmp/commonplace-checkout
+mkdir -p ~/.pi/agent/extensions ~/.pi/agent/agents
+cp -R /tmp/commonplace-checkout/.pi/extensions/subagent ~/.pi/agent/extensions/subagent
+cp /tmp/commonplace-checkout/.pi/agents/commonplace-worker.md ~/.pi/agent/agents/
+```
+
+Restart pi (or `/reload`). The `subagent` tool should appear and
+`commonplace-worker` should be listed as an agent. The extension's notes are in
+the checkout's `.pi/README.md`; it has so far been exercised only from that
+checkout, so report anything that differs in an installed project.
+
 The Commonplace source checkout does not run `commonplace-init`. It is where the library is authored, and its committed `.claude/skills/` and `.agents/skills/` symlinks cover all its skills.
 
 On a Windows checkout without symlink support, Git may materialize these

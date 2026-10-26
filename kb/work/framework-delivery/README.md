@@ -127,8 +127,12 @@ package and the release must match before any new run is evidence.
    extension, since it lives in this checkout's `.pi/`, not in the package or
    in anything init writes; decide and record when a pi user outside this
    checkout needs it. What the facility must do is fixed in
-   [sub-agent-requirements.md](./sub-agent-requirements.md) (2026-10-26),
-   with the pi extension's claimed coverage and the delivery pieces listed. The analysis workflow's Workjig launches are a workflow
+   [sub-agent-requirements.md](./sub-agent-requirements.md) (2026-10-26).
+   Delivery decided the same day, kept simple: `INSTALL.md` step 5 tells pi
+   users to copy the extension and the worker definition from a checkout into
+   their user-level `~/.pi/agent/` once; nothing is added to the package or to
+   init. Untested outside this checkout; the probe's case 10 in a scratch
+   project with that copy in place is the acceptance test. The analysis workflow's Workjig launches are a workflow
    engine's workers under ADR 118/119 and are unaffected.
 4. **Coupled workshops.** [done 2026-09-25] Both coupled workshops closed that
    day; no replies are outstanding.
