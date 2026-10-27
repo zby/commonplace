@@ -114,7 +114,7 @@ commonplace-validate landings
 commonplace-validate redirects
 ```
 
-Take collection names from the `COLLECTION.md` directories under `kb/` of the checkout under test and record the list used.
+Take collection names from the `COLLECTION.md` directories under `kb/` of the checkout under test and record the list used, **excluding `agentic-system-analyses`**. Agentic analysis runs on Linux only by operator decision (2026-10-27, [windows-test-suite](../windows-test-suite/README.md), item 1); validating that collection on Windows crashes on the `fcntl` import and tells us nothing about the shims. Record the exclusion in the report's target list instead of running it.
 
 ### R7 — fresh process
 
