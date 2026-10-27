@@ -47,7 +47,9 @@ VERBATIM_RE = re.compile(r"\bverbatim\b", re.IGNORECASE)
 NEGATED_VERBATIM_RE = re.compile(
     r"(?:does\s+not|do\s+not|not|no)\s+(?:\w+\s+){0,3}verbatim"
     r"|verbatim\s+(?:passage|text|detail|quotation|quote)\s+"
-    r"(?:was|is|were|are)\s+not",
+    r"(?:was|is|were|are)\s+not"
+    # Hedged forms such as "near-verbatim" claim resemblance, not copying.
+    r"|(?:near(?:ly)?|almost|quasi|roughly|close\s+to)[\s-]*verbatim",
     re.IGNORECASE,
 )
 # A quotation may wrap across source lines inside one paragraph; paragraphs

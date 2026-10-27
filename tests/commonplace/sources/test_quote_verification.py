@@ -127,6 +127,17 @@ def test_single_verbatim_quote_matches(
             "A direct verbatim statement follows later.",
             id="distant-verbatim-discussion",
         ),
+        pytest.param(
+            'The authors say it is "not enough to test once"; you must predict '
+            '"under future conditions." This is near-verbatim corroboration of '
+            "[Source](../sources/source.md) from another field.",
+            id="hedged-near-verbatim-is-not-a-claim",
+        ),
+        pytest.param(
+            'The text is "almost the same" (nearly verbatim, '
+            "[Source](../sources/source.md)).",
+            id="hedged-nearly-verbatim-is-not-a-claim",
+        ),
     ],
 )
 def test_no_verbatim_candidate(tmp_path: Path, body: str):
