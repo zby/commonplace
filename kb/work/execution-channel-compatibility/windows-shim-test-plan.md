@@ -19,6 +19,10 @@ Use a project-local cache when the runner cannot access the default user cache:
 $env:UV_CACHE_DIR = Join-Path $TestRoot '.uv-cache'
 ```
 
+## Shim registration
+
+After completing INSTALL.md, register the deterministic test shims with [REGISTRATION.md](./test-shims/REGISTRATION.md). The registrar writes only a disposable bin directory and invokes the selected uv-managed Python directly. Prepend that bin directory to the test process PATH; do not add .venv\\Scripts and do not invoke generated commonplace-*.exe files.
+
 ## Test W1 — isolated installation
 
 ```powershell
@@ -73,4 +77,5 @@ Each report records:
 - checks not run and their prerequisites.
 
 A test is **blocked** when installation cannot acquire dependencies, the shim is unavailable, or the antivirus result cannot be observed. Do not classify a blocked run as a pass or failure of the shim design.
+
 
