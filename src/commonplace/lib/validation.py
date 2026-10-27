@@ -236,7 +236,8 @@ class ValidationRun:
         key = path.resolve()
         if key in self._documents:
             return self._documents[key]
-        content = self.read_bytes(key).decode("utf-8")
+        # Windows editors and checkouts write CRLF; checks match LF text. Hashing reads exact bytes.
+        content = self.read_bytes(key).decode("utf-8").replace("\r\n", "\n")
         document, error = parse_document(content)
         loaded = LoadedDocument(content=content, document=document, error=error)
         self._documents[key] = loaded

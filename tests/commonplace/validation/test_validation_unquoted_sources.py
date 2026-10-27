@@ -140,6 +140,18 @@ def test_one_verified_quote_brings_the_note_under_the_bound(tmp_path: Path) -> N
     )
 
 
+def test_quotes_in_a_crlf_ingest_are_verified(tmp_path: Path) -> None:
+    setup_repo(tmp_path)
+    for slug in SLUGS:
+        path = tmp_path / "kb" / "sources" / f"{slug}.ingest.md"
+        path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+    path = note(tmp_path, first_quoted_body())
+
+    results = validate_note(path, repo_root=tmp_path)
+
+    assert not [fail for fail in results.fails if "unquoted sources" in fail]
+
+
 def test_snapshot_required_source_counts_even_when_quoted(tmp_path: Path) -> None:
     setup_repo(tmp_path)
     path = note(tmp_path, first_quoted_body(snapshot_required=True))
