@@ -7,11 +7,12 @@ from __future__ import annotations
 
 import argparse
 import base64
-import fcntl
 import json
 import os
 import re
 import tempfile
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from urllib.error import HTTPError
@@ -21,6 +22,29 @@ from urllib.request import Request, urlopen
 from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@contextmanager
+def sync_lock(path: Path) -> Iterator[None]:
+    """Hold the sync lock, or raise BlockingIOError if another sync holds it."""
+    with path.open('a') as lock:
+        if os.name != 'nt':
+            import fcntl
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            yield
+            return
+        import msvcrt
+        # Windows locks byte ranges; every sync locks the first byte.
+        lock.seek(0)
+        try:
+            msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+        except OSError as exc:
+            raise BlockingIOError('likes sync lock is held') from exc
+        try:
+            yield
+        finally:
+            lock.seek(0)
+            msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
 
 
 def atomic_write(path: Path, text: str) -> None:
@@ -196,8 +220,7 @@ def main():
     lock_path = root / 'kb/reports/state/x-likes/.sync.lock'
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        with lock_path.open('a') as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with sync_lock(lock_path):
             client = XClient(root / '.env', args.confidential_client)
             result = sync(root, client, args.handle.lower(), args.max_pages, datetime.now(UTC))
         print(json.dumps(result))

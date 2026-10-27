@@ -1,6 +1,7 @@
 """Behavioral tests for the local X likes inbox."""
 import importlib.util
 import json
+import os
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from urllib.error import HTTPError
@@ -135,7 +136,8 @@ def test_refresh_rotates_tokens_preserves_other_entries_and_retries(tmp_path, mo
     assert saved['X_REFRESH_TOKEN'] == 'rotated'
     assert saved['X_BEARER_TOKEN'] == 'keep'
     assert '# keep comment' in env.read_text()
-    assert env.stat().st_mode & 0o777 == 0o600
+    if os.name != 'nt':  # Windows has no permission bits; the profile's ACL protects .env
+        assert env.stat().st_mode & 0o777 == 0o600
 
 
 def test_partial_api_response_is_not_accepted(tmp_path, monkeypatch):
@@ -145,3 +147,11 @@ def test_partial_api_response_is_not_accepted(tmp_path, monkeypatch):
     monkeypatch.setattr(client, 'request', lambda path: {'data': [post(1)], 'errors': [{}]})
     with pytest.raises(ValueError, match='partial'):
         client.get('users/6059512/liked_tweets')
+
+
+def test_sync_lock_refuses_a_second_sync_until_released(tmp_path):
+    path = tmp_path / '.sync.lock'
+    with mod.sync_lock(path), pytest.raises(BlockingIOError), mod.sync_lock(path):
+        pass
+    with mod.sync_lock(path):
+        pass
