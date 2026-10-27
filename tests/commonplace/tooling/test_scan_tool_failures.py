@@ -14,7 +14,9 @@ SCRIPT = Path(__file__).resolve().parents[3] / "scripts/scan_tool_failures.py"
 
 def trace(tmp_path, records):
     path = tmp_path / "trace.jsonl"
-    path.write_text("\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n")
+    path.write_text(
+        "\n".join(json.dumps(record, ensure_ascii=False) for record in records) + "\n", encoding="utf-8"
+    )
     return path
 
 
@@ -102,7 +104,7 @@ def test_session_correlates_ancestors_not_latest_branch_and_survives_compaction(
 
 def test_malformed_line_preserves_later_findings(tmp_path):
     path = tmp_path / "trace.jsonl"
-    path.write_text(json.dumps(start()) + "\nnot-json\n" + json.dumps(end()) + "\n")
+    path.write_text(json.dumps(start()) + "\nnot-json\n" + json.dumps(end()) + "\n", encoding="utf-8")
     report = scan(path, "pi-json")
     assert report["scan_issues"][0]["line"] == 2
     assert report["failures"][0]["line"] == 3
@@ -155,7 +157,7 @@ def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
     output = json.loads(run.stdout)
     assert output["failure_count"] == 1
     assert len(output["traces"]) == 1
-    path.write_text("{truncated")
+    path.write_text("{truncated", encoding="utf-8")
     run = subprocess.run([sys.executable, str(SCRIPT), "--format", "pi-json", str(path)],
                          capture_output=True, text=True, check=False)
     assert run.returncode == 2

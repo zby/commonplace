@@ -47,7 +47,8 @@ def test_normalization_preserves_code_operators():
 def test_notes_only_match_retained_bodies(tmp_path, quote):
     source = tmp_path / "source.ingest.md"
     source.write_text(
-        "## Quotes\n\n> one\n> two\n> --- `doc.md` @ `abc` — Section title\n\n> three\n> --- `doc.md` @ `abc`\n"
+        "## Quotes\n\n> one\n> two\n> --- `doc.md` @ `abc` — Section title\n\n> three\n> --- `doc.md` @ `abc`\n",
+        encoding="utf-8",
     )
     result = verify_content(
         f'"{quote}" ([source](source.ingest.md), verbatim).', tmp_path / "note.md"
