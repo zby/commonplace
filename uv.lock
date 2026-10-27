@@ -253,7 +253,7 @@ requires-dist = [
     { name = "python-dotenv" },
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "referencing", specifier = ">=0.31.0" },
-    { name = "workjig", specifier = ">=0.1.0" },
+    { name = "workjig", specifier = ">=0.2.0" },
     { name = "xdk", specifier = ">=0.10.4" },
 ]
 provides-extras = ["docs", "all"]
@@ -977,11 +977,11 @@ wheels = [
 
 [[package]]
 name = "workjig"
-version = "0.1.0"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c1/41/9aa713be554c99ace12b2e3b523ccc696cb071c71e0f5f92e75f44f36fb0/workjig-0.1.0.tar.gz", hash = "sha256:9d6bcac2b5fa573406f71394c6946e2d73fa1472e8c6703c5714a0256208bd5e", size = 104344, upload-time = "2026-10-20T20:56:57.681Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c9/ba/597b2ef6c31b9d5b19a9dd8673b2d3fc4cbfb2da77e4eaf128d802730759/workjig-0.2.0.tar.gz", hash = "sha256:b949b2e2a8b36b2eaa8b38aa40a69cc7dd34b0c18b67d66f792383cfb6fd59e2", size = 110504, upload-time = "2026-10-27T14:55:38.381Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/38/eb/823c2376f420fed6ddabcd519f9158b5153e631d92a3109d1119041ecdaa/workjig-0.1.0-py3-none-any.whl", hash = "sha256:5828ce274bab33d33910a80e838e6487c3a182237d1ea86a1b33093bea5d46be", size = 22928, upload-time = "2026-10-20T20:56:56.124Z" },
+    { url = "https://files.pythonhosted.org/packages/19/13/0ddf402d6b8c798ba068420195f031210393fa9164879e9e5c38ca43ca93/workjig-0.2.0-py3-none-any.whl", hash = "sha256:ed2875452b192ef35352cbd7242fa7f6a1ed4774d0697accd8800ce5e5262a83", size = 29201, upload-time = "2026-10-27T14:55:37.029Z" },
 ]
 
 [[package]]
