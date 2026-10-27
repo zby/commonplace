@@ -21,12 +21,40 @@ On a python.org base, a venv's `Scripts\python.exe` is a copy of `venvlauncher.e
 
 No file exists at that path (`dir /a`). Avast's quarantine (`chest\index.xml`) has no new entry, and Windows Defender has no matching detection. The path is exactly where Avast deleted `python.exe` on 2026-10-26 (open problem 3), so the likely cause is Avast blocking that path after its earlier detection. Nothing in Avast's logs names the rule, so this is an inference.
 
+## Without a virtual environment
+
+The shims start the signed `python.exe` directly, so the tool needs no `Scripts\python.exe` of its own. `uv tool install` always builds a virtual environment, and so always writes that file. The package went into a plain folder instead:
+
+```text
+uv pip install --python "C:\Program Files\Python314\python.exe" --target C:\Users\zzbby\.local\share\commonplace\site-packages -e C:\Users\zzbby\commonplace
+```
+
+It installed 22 packages, including the editable `llm-commonplace` 0.3.0. The folder holds `_editable_impl_llm_commonplace.pth`, which points at the checkout, and a `bin\` of 25 uv launcher `.exe` files that nothing uses.
+
+The `INSTALL.md` shim snippet was adapted and run once. It wrote 25 shims to `~\.local\commonplace-shims`, each a `.cmd` and an `sh` script running:
+
+```text
+"C:\Program Files\Python314\python.exe" -c "import site, sys; site.addsitedir(r'<target>'); sys.argv[0] = '<name>'; from <module> import <fn>; sys.exit(<fn>())"
+```
+
+`site.addsitedir` is required: it reads the `.pth` file that makes the editable install importable. The library is found through the checkout, so `sys.prefix` being the system Python's does not matter. The user `Path` was not changed; the shims were called by full path, one at a time:
+
+- PowerShell: `commonplace-init --help` (exit 0); `commonplace-validate kb/work/windows-install/README.md` in the checkout (exit 0, no failures).
+- Git Bash: `commonplace-source --help` (exit 0); `commonplace-validate` on this file (exit 0, no failures).
+- `commonplace-init --check` in `C:\Users\zzbby\commonplace-kb`: exit 1, every stub, `library.md` and the read rule `stale`. Expected: that project was initialised against the PyPI 0.3.0 install, and the editable install moves the library root to the checkout's `kb/`. Not rerun; it is a separate project.
+
+Afterwards, Code Integrity had no event naming Python or Commonplace. Avast's quarantine index and Auto-Sandbox log were unchanged since 2026-10-26.
+
 ## State left
 
 - `C:\Program Files\Python314` installed; not on `PATH`.
-- `~\.local\share\uv\tools\llm-commonplace\` holds only an empty `Scripts\` plus uv's `.gitignore` and `CACHEDIR.TAG`. No launchers, no shims.
+- Package in `~\.local\share\commonplace\site-packages`; shims in `~\.local\commonplace-shims`; neither on `PATH`.
+- `~\.local\share\uv\tools\llm-commonplace\` holds only an empty `Scripts\` plus uv's `.gitignore` and `CACHEDIR.TAG`. The blocked path is unresolved, but this layout does not need it.
 
 ## Open
 
-- Does the block survive a restart, or an Avast exception for the tool directory (set by the operator in Avast)?
-- Then the remaining checks from the README: shims through the signed `python.exe`, and Avast's treatment of it in normal use.
+- Put the shims on the user `Path`, restart the app, and check bare names in a fresh process.
+- Rerun `commonplace-init` in `commonplace-kb`, then `--check`.
+- This layout is not a uv tool, so `uv tool list`, `cp-skill-health-check` and `commonplace-init`'s shadowing warning do not recognise it (open problem 4 widens). Decide whether the install model changes (ADR 064) or the layout returns to a uv tool once the blocked path is cleared.
+- Watch Avast in normal use over several days.
+- Moving the checkout: rerun the `uv pip install … -e <new path>` command; the shims do not name the checkout.

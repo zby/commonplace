@@ -45,7 +45,7 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 ## Attempts
 
 - **Shims through the tool environment's `python.exe`** (2026-10-26). The `INSTALL.md` snippet worked: commands resolved to the shims and ran without Code Integrity blocks. Avast then deleted that `python.exe`, probably triggered by the WMI test harness, not by the shims. Not retested on a repaired install.
-- **Signed python.org 3.14.7 as the tool's base** (2026-10-27, [results](./results-2026-10-27-signed-python.md)). Installed and ran with a valid PSF signature and no Code Integrity block. The editable tool install then failed: the exact path `llm-commonplace\Scripts\python.exe` refuses any file, probably an Avast block left from the 2026-10-26 deletion. Shims not yet written.
+- **Signed python.org 3.14.7 as the tool's base** (2026-10-27, [results](./results-2026-10-27-signed-python.md)). Installed and ran with a valid PSF signature and no Code Integrity block. The editable tool install then failed: the exact path `llm-commonplace\Scripts\python.exe` refuses any file, probably an Avast block left from the 2026-10-26 deletion. Without a virtual environment it worked: `uv pip install --target` into a plain folder, shims that start the signed `python.exe` and add that folder with `site.addsitedir`. Commands ran from PowerShell and Git Bash by full path with no Code Integrity or Avast reaction. Not yet on `PATH`, and not a uv tool, so the health check and init do not recognise it.
 
 ## Machine state (2026-10-27)
 
