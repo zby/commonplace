@@ -164,7 +164,7 @@ def snapshot_github_url(url: str, out_dir: str, *, reobserve: bool = False) -> s
     if md_path.exists():
         raise FileExistsError(f"capture already exists: {md_path}")
 
-    source_path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
+    source_path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8", newline="")
 
     md_body = _render_markdown(data)
     md = (
@@ -177,7 +177,7 @@ def snapshot_github_url(url: str, out_dir: str, *, reobserve: bool = False) -> s
         f"---\n\n"
         f"{md_body}"
     )
-    md_path.write_text(md, encoding="utf-8")
+    md_path.write_text(md, encoding="utf-8", newline="")
 
     preview = md_body.replace("\n", " ").strip()[:200]
     return (

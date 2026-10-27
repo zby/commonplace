@@ -420,7 +420,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int, *, reobserve: bool = 
         "thread_fetch_error": thread_error,
     }
     json_path.write_text(
-        json.dumps(payload, ensure_ascii=True, indent=2), encoding="utf-8"
+        json.dumps(payload, ensure_ascii=True, indent=2), encoding="utf-8", newline=""
     )
 
     md = _render_markdown(
@@ -432,7 +432,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int, *, reobserve: bool = 
         users=users,
         thread_error=thread_error,
     )
-    md_path.write_text(md, encoding="utf-8")
+    md_path.write_text(md, encoding="utf-8", newline="")
 
     preview = _post_text(target_post).replace("\n", " ").strip()[:200]
     return (
