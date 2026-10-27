@@ -274,12 +274,15 @@ def _is_link(path: Path) -> bool:
     """A symlink, or a Windows directory junction: either points at someone else's directory."""
     if path.is_symlink():
         return True
+    mount_point = getattr(stat, "IO_REPARSE_TAG_MOUNT_POINT", None)
+    if mount_point is None:
+        return False
     try:
         # Path.is_junction() needs Python 3.12; the reparse tag works from 3.8.
         tag = getattr(os.lstat(path), "st_reparse_tag", 0)
     except OSError:
         return False
-    return tag == stat.IO_REPARSE_TAG_MOUNT_POINT
+    return tag == mount_point
 
 
 def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
