@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 from pathlib import Path
@@ -17,7 +18,7 @@ from commonplace.lib import library
 from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
 from commonplace.scaffold_manifest import MANIFEST
-from tests.commonplace.link_helpers import symlink_or_skip
+from tests.commonplace.link_helpers import junction, symlink_or_skip
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
@@ -269,6 +270,27 @@ def test_init_project_preserves_symlinked_skill_directories(tmp_path: Path) -> N
     assert (outside / "SKILL.md").read_bytes() == (root / "instructions" / "cp-skill-validate" / "SKILL.md").read_bytes()
     assert link.is_symlink()
     assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+
+
+@pytest.mark.skipif(os.name != "nt", reason="directory junctions exist only on Windows")
+def test_init_project_preserves_junctioned_skill_directories(tmp_path: Path) -> None:
+    """A junction, like a symlink, points at someone else's stub; init must not write or delete through it."""
+    elsewhere = tmp_path / "other-project" / ".claude" / "skills"
+    for name in ("cp-skill-validate", "cp-skill-retired"):
+        (elsewhere / name).mkdir(parents=True)
+        (elsewhere / name / library.STUB_MARKER).write_text("other project's stub\n", encoding="utf-8")
+        (elsewhere / name / "SKILL.md").write_text("other project's text\n", encoding="utf-8")
+    project = tmp_path / "project"
+    (project / ".claude" / "skills").mkdir(parents=True)
+    for name in ("cp-skill-validate", "cp-skill-retired"):
+        junction(project / ".claude" / "skills" / name, elsewhere / name)
+
+    report = init_project(project)
+
+    for name in ("cp-skill-validate", "cp-skill-retired"):
+        assert (elsewhere / name / "SKILL.md").read_text(encoding="utf-8") == "other project's text\n"
+    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+    assert report.removed == []
 
 
 def test_init_project_preserves_existing_kb_content_and_snapshot_pins(tmp_path: Path) -> None:

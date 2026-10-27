@@ -24,6 +24,7 @@ from __future__ import annotations
 import functools
 import json
 import os
+import stat
 import sys
 import tomllib
 from collections.abc import Callable
@@ -269,6 +270,18 @@ class OutputStatus:
     path: Path
 
 
+def _is_link(path: Path) -> bool:
+    """A symlink, or a Windows directory junction: either points at someone else's directory."""
+    if path.is_symlink():
+        return True
+    try:
+        # Path.is_junction() needs Python 3.12; the reparse tag works from 3.8.
+        tag = getattr(os.lstat(path), "st_reparse_tag", 0)
+    except OSError:
+        return False
+    return tag == stat.IO_REPARSE_TAG_MOUNT_POINT
+
+
 def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
     """Compare init's outputs in a project with what init would write now."""
     root = root or library_root(project)
@@ -280,8 +293,8 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
             dest = directory / name
             if not dest.exists():
                 found.append(OutputStatus("missing", dest))
-            elif dest.is_symlink() or not (dest / STUB_MARKER).is_file():
-                # A symlinked skill directory is someone else's; never write through it.
+            elif _is_link(dest) or not (dest / STUB_MARKER).is_file():
+                # A linked skill directory is someone else's; never write through it.
                 found.append(OutputStatus("foreign", dest))
             else:
                 stub = dest / "SKILL.md"
@@ -289,7 +302,7 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
                 found.append(OutputStatus("ok" if current else "stale", dest))
         if directory.is_dir():
             for dest in sorted(directory.iterdir()):
-                if dest.name not in wanted and not dest.is_symlink() and (dest / STUB_MARKER).is_file():
+                if dest.name not in wanted and not _is_link(dest) and (dest / STUB_MARKER).is_file():
                     found.append(OutputStatus("extra", dest))
     routing = project / ROUTING
     if not routing.is_file():
