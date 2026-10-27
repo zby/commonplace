@@ -74,7 +74,7 @@ def on_config(config):
                 grouped = True
             continue
         label = child.name.replace("-", " ").title()
-        collection_entries.append({label: str(readme.relative_to(docs_dir))})
+        collection_entries.append({label: readme.relative_to(docs_dir).as_posix()})
 
     # TODO: read external links (GitHub, etc.) from properdocs.yml
     # so consuming projects don't have to fork this hook to change them.
@@ -102,6 +102,11 @@ def _cell(value) -> str:
     return str(value).replace("|", "\\|").replace("\n", " ")
 
 
+def _relative_link(target: Path, start: Path) -> str:
+    """A Markdown link target, with "/" on every platform."""
+    return Path(os.path.relpath(target, start)).as_posix()
+
+
 def _lens_listing(lens: str, analyses, lens_dir: Path) -> str:
     companions = LENS_COMPANIONS.get(lens, {})
     header = ["System", f"{LENSES[lens]} account", *companions.values()]
@@ -109,10 +114,10 @@ def _lens_listing(lens: str, analyses, lens_dir: Path) -> str:
              "| " + " | ".join(header) + " |", "|" + "---|" * len(header)]
     for analysis in analyses:
         member = analysis.roles[lens]
-        href = os.path.relpath(member.path, lens_dir)
+        href = _relative_link(member.path, lens_dir)
         cells = [_cell(analysis.overview.frontmatter["system"]),
                  f"[{_cell(member.frontmatter.get('description', lens))}]({href})"]
-        cells += [f"[{label.lower()}]({os.path.relpath(analysis.roles[role].path, lens_dir)})"
+        cells += [f"[{label.lower()}]({_relative_link(analysis.roles[role].path, lens_dir)})"
                   for role, label in companions.items()]
         lines.append("| " + " | ".join(cells) + " |")
     if not analyses:
@@ -266,7 +271,7 @@ def _tag_link(tag: str, note_dir: Path, root: Path | None) -> str:
     if root is not None:
         head = _tag_space(root).heads.get(tag)
         if head is not None:
-            return f"[{tag}]({os.path.relpath(head, note_dir.resolve())})"
+            return f"[{tag}]({_relative_link(head, note_dir.resolve())})"
     return tag
 
 
@@ -308,10 +313,10 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
 
     badge_line = " · ".join(parts)
 
-    # Insert after the first heading
+    # Insert after the first heading. A function replacement keeps "\" in page values literal.
     return re.sub(
         r"(^# .+\n)",
-        rf"\1\n{badge_line}\n",
+        lambda match: f"{match.group(1)}\n{badge_line}\n",
         markdown,
         count=1,
         flags=re.MULTILINE,

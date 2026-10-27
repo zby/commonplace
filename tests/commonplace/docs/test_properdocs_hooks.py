@@ -264,6 +264,15 @@ def test_on_page_markdown_keeps_headless_tags_as_text(tmp_path: Path) -> None:
     assert "**Tags:** context-engineering, [learning-theory](../tags/learning-theory-README.md)" in result
 
 
+def test_on_page_markdown_keeps_backslashes_in_badge_values(tmp_path: Path) -> None:
+    note = write(tmp_path / "kb" / "notes" / "example.md", "# Example\n")
+    page = SimpleNamespace(meta={"status": r"draft \1 C:\local"}, file=SimpleNamespace(abs_src_path=str(note)))
+
+    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+
+    assert "# Example\n\n**Status:** draft \\1 C:\\local\n" in result
+
+
 def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_library) -> None:
     from commonplace.lib.systems_matrix import load_results
     retained_fixture(tmp_path)
