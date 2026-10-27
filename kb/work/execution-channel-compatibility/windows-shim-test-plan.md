@@ -33,7 +33,7 @@ Record dependency acquisition, build result, antivirus events, and whether any `
 Invoke the CLI through uv-managed Python, bypassing generated entry points:
 
 ```powershell
-uv run --directory $TestRoot --no-sync python -c "import sys; sys.argv=['commonplace-validate','--help']; from commonplace.cli.validate_notes import main; raise SystemExit(main())"
+& $TestRoot\\.venv\\Scripts\\python.exe -c "import sys; sys.argv=['commonplace-validate','--help']; from commonplace.cli.validate_notes import main; raise SystemExit(main())"
 ```
 
 Record exit status and bounded help output.
@@ -73,3 +73,4 @@ Each report records:
 - checks not run and their prerequisites.
 
 A test is **blocked** when installation cannot acquire dependencies, the shim is unavailable, or the antivirus result cannot be observed. Do not classify a blocked run as a pass or failure of the shim design.
+
