@@ -48,7 +48,7 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
     - Symlink creation needs a privilege (`WinError 1314`): 4 failures, all in test setup.
     - Probably line endings: this checkout has `core.autocrlf=true`, so files are CRLF on disk. A content-hash mismatch and the 6 full-pass "does not match canonical frontmatter rendering" failures fit this; not confirmed.
     - One each: printing ` ` to a cp1250 console (`UnicodeEncodeError`), and a Windows path used inside a regular expression (`bad escape \l`).
-    - A few, in the tag-readme and unquoted-source checks, not yet diagnosed. Since commit `f4ea589dd` (2026-10-26) the full suite runs in GitHub CI rather than before each push, so this no longer blocks pushing. It still blocks running the affected-subsystem tests locally on Windows. Test portability is E1 work in [execution-channel-compatibility](../execution-channel-compatibility/e1-windows-execution.md).
+    - A few, in the tag-readme and unquoted-source checks, not yet diagnosed. Since commit `f4ea589dd` (2026-10-26) the full suite runs in GitHub CI rather than before each push, so this no longer blocks pushing. Fixing the failures moved to [windows-test-suite](../windows-test-suite/README.md) on 2026-10-27; the `fcntl` imports in problem 10 are its item 1.
 
 ## Attempts
 
