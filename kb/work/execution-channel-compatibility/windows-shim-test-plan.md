@@ -193,9 +193,12 @@ These are two claims. The harness can establish only the first.
 Run the larger scripted validation operation that previously triggered antivirus detection: the full collection sweep from `commands.md`, through the shim:
 
 ```powershell
-foreach ($c in 'types','notes','reference','instructions','agent-memory-systems','sources') { commonplace-validate $c; $LASTEXITCODE }
+foreach ($c in 'theory','reference','instructions','agent-memory-systems','sources') { commonplace-validate $c; $LASTEXITCODE }
+commonplace-validate landings
 commonplace-validate redirects
 ```
+
+Collection names follow the checkout under test; take them from the `COLLECTION.md` directories under `kb/` and from `commonplace-validate --help` as observed in W2, and record the list used.
 
 Record the exact top-level shim command, child process behavior, duration, exit status, the antivirus observation per **Antivirus observation**, and the W0 verdict that makes the antivirus observation meaningful or uninformative.
 
