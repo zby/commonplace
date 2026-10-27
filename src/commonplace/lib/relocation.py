@@ -453,7 +453,7 @@ def relocate_directory(
         print(f"Destination must live under {kb_root}: {destination}", file=sys.stderr)
         return 1
     if destination.exists():
-        print(f"Destination already exists: {destination.relative_to(repo_root)}", file=sys.stderr)
+        print(f"Destination already exists: {destination.relative_to(repo_root).as_posix()}", file=sys.stderr)
         return 1
 
     # Collect moved file map (old_path -> new_path) for all files under source.
@@ -507,14 +507,14 @@ def relocate_directory(
     # Report
     mode = "APPLYING" if apply else "DRY RUN"
     print(f"=== {mode} ===\n")
-    print(f"Relocate directory: {source.relative_to(repo_root)} -> {destination.relative_to(repo_root)}")
+    print(f"Relocate directory: {source.relative_to(repo_root).as_posix()} -> {destination.relative_to(repo_root).as_posix()}")
     print(f"Files to move: {len(moves)} ({len(md_moves)} markdown)")
 
     if markdown_updates:
         print(f"Markdown files to update: {len(markdown_updates)}")
         for path in sorted(markdown_updates):
             _, _, changes = markdown_updates[path]
-            print(f"- {path.relative_to(repo_root)} ({len(changes)} link(s))")
+            print(f"- {path.relative_to(repo_root).as_posix()} ({len(changes)} link(s))")
     else:
         print("Markdown files to update: 0")
 
@@ -559,7 +559,7 @@ def relocate_note(
     if is_write_brief_path(source):
         print(
             f"Refusing to relocate a write brief on its own: "
-            f"{source.relative_to(repo_root)}. Relocate the document that "
+            f"{source.relative_to(repo_root).as_posix()}. Relocate the document that "
             "declares it; its brief moves with it.",
             file=sys.stderr,
         )
@@ -574,16 +574,16 @@ def relocate_note(
     if is_write_brief_path(destination):
         print(
             f"Destination uses the write-brief suffix: "
-            f"{destination.relative_to(repo_root)}",
+            f"{destination.relative_to(repo_root).as_posix()}",
             file=sys.stderr,
         )
         return 1
 
     if destination == source:
-        print(f"Destination matches source: {source.relative_to(repo_root)}", file=sys.stderr)
+        print(f"Destination matches source: {source.relative_to(repo_root).as_posix()}", file=sys.stderr)
         return 1
     if destination.exists():
-        print(f"Destination already exists: {destination.relative_to(repo_root)}", file=sys.stderr)
+        print(f"Destination already exists: {destination.relative_to(repo_root).as_posix()}", file=sys.stderr)
         return 1
 
     old_docs_path = source.relative_to(kb_root).as_posix()
@@ -600,7 +600,7 @@ def relocate_note(
         brief_source = source.parent / expected
         if brief_value != expected or not brief_source.is_file():
             print(
-                f"Refusing to relocate: {source.relative_to(repo_root)} declares "
+                f"Refusing to relocate: {source.relative_to(repo_root).as_posix()} declares "
                 f"`brief: {brief_value}`, which is not an existing {expected}. "
                 "Fix the pairing first (commonplace-validate reports it).",
                 file=sys.stderr,
@@ -611,7 +611,7 @@ def relocate_note(
         if brief_destination.exists():
             print(
                 f"Brief destination already exists: "
-                f"{brief_destination.relative_to(repo_root)}",
+                f"{brief_destination.relative_to(repo_root).as_posix()}",
                 file=sys.stderr,
             )
             return 1
@@ -620,7 +620,7 @@ def relocate_note(
         stray = source.parent / write_brief_name_for(source)
         if stray.is_file():
             print(
-                f"Warning: {stray.relative_to(repo_root)} is not declared by "
+                f"Warning: {stray.relative_to(repo_root).as_posix()} is not declared by "
                 f"{source.name} and stays in place.",
                 file=sys.stderr,
             )
@@ -662,19 +662,19 @@ def relocate_note(
 
     mode = "APPLYING" if apply else "DRY RUN"
     print(f"=== {mode} ===\n")
-    print(f"Relocate: {source.relative_to(repo_root)} -> {destination.relative_to(repo_root)}")
+    print(f"Relocate: {source.relative_to(repo_root).as_posix()} -> {destination.relative_to(repo_root).as_posix()}")
     for moved_from, moved_to in md_moves.items():
         if moved_from != source:
             print(
-                f"Move write brief: {moved_from.relative_to(repo_root)} -> "
-                f"{moved_to.relative_to(repo_root)}"
+                f"Move write brief: {moved_from.relative_to(repo_root).as_posix()} -> "
+                f"{moved_to.relative_to(repo_root).as_posix()}"
             )
 
     if markdown_updates:
         print(f"Markdown files to update: {len(markdown_updates)}")
         for path in sorted(markdown_updates):
             _, changes = markdown_updates[path]
-            print(f"- {path.relative_to(repo_root)} ({len(changes)} link(s))")
+            print(f"- {path.relative_to(repo_root).as_posix()} ({len(changes)} link(s))")
             for change in changes:
                 print(f"  {change}")
     else:

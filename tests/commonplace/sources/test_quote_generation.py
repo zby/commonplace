@@ -36,7 +36,7 @@ def capture(tmp_path, text):
 
 
 def block(source, text, suffix=""):
-    return "\n".join("> " + line for line in text.splitlines()) + f"\n> --- `{source.file}{suffix}`\n"
+    return "\n".join("> " + line for line in text.splitlines()) + f"\n> --- `{source.file.as_posix()}{suffix}`\n"
 
 
 def test_unique_path_only_quote_and_whitespace_pass(tmp_path):
@@ -67,7 +67,7 @@ def test_several_ambiguous_quotes_offer_ranges_that_pass(tmp_path):
     assert len(results) == 2
     assert all(result.status == "mismatch" for result in results)
     assert all("candidate 1" in result.detail and "candidate 2" in result.detail for result in results)
-    assert f"> --- `{source.file}:2-2`" in results[0].detail
+    assert f"> --- `{source.file.as_posix()}:2-2`" in results[0].detail
     result, = resolve_citations(parse_blockquotes(block(source, "repeated", ":2-2")), source, kind="code")
     assert result.status == "match"
     result, = resolve_citations(parse_blockquotes(block(source, "repeated", ":1-1")), source, kind="code")
@@ -158,7 +158,7 @@ def test_registered_capture_url_candidates_propose_its_path(tmp_path):
     source = capture(tmp_path, "repeated\nrepeated\n")
     result, = resolve_citations(parse_blockquotes(f"> repeated\n> --- {source.identity}\n"), source, kind="code")
     assert result.status == "mismatch"
-    assert f"> --- `{source.file}:1-1`" in result.detail
+    assert f"> --- `{source.file.as_posix()}:1-1`" in result.detail
     result, = resolve_citations(parse_blockquotes(block(source, "repeated", ":1-1")), source, kind="code")
     assert result.status == "match"
 

@@ -581,7 +581,7 @@ class ValidationRun:
                 and result.note_type not in {"text", "type-spec"}
             ):
                 try:
-                    scope = str(self.collection.relative_to(self.repo_root))
+                    scope = self.collection.relative_to(self.repo_root).as_posix()
                 except ValueError:
                     scope = str(self.collection)
                 result.infos.append(f"orphan check: no inbound links found in {scope}")
@@ -1150,7 +1150,7 @@ def validate_type_spec_definition(
     else:
         results.passes.append(
             f"type definition: declared schema resolves to "
-            f"{profile.schema_path.relative_to(run.repo_root)}"
+            f"{profile.schema_path.relative_to(run.repo_root).as_posix()}"
         )
 
 
@@ -1185,7 +1185,7 @@ def validate_tag_readme(
     if tag is None or parsed.path.resolve().parent != expected_dir:
         results.fails.append(
             "tag head: a head is kb/tags/<tag>-README.md and nothing else — "
-            f"{parsed.path.relative_to(run.repo_root)} is not; move it with "
+            f"{parsed.path.relative_to(run.repo_root).as_posix()} is not; move it with "
             f"commonplace-relocate-note; {_TAG_README_FIX_HINT}"
         )
         return
@@ -1220,7 +1220,7 @@ def validate_tag_readme(
         if missing:
             for path in missing:
                 results.fails.append(
-                    f"complete mark: missing entry for {path.relative_to(run.repo_root)} — "
+                    f"complete mark: missing entry for {path.relative_to(run.repo_root).as_posix()} — "
                     "link it with a context phrase, link its tag's head, or drop the mark; "
                     f"{_TAG_README_FIX_HINT}"
                 )
@@ -1453,7 +1453,7 @@ def validate_tag_heads(
     for tag in headless:
         results.fails.append(
             f"tag `{tag}`: no head at "
-            f"{head_path(run.repo_root, tag).relative_to(run.repo_root)} — "
+            f"{head_path(run.repo_root, tag).relative_to(run.repo_root).as_posix()} — "
             "write one or drop the tag (ADR 089)"
         )
     if not headless:
@@ -1740,7 +1740,7 @@ def validate_pinned_artifact_snapshot(
             metadata = snapshot.frontmatter(type_document).data
             if metadata.get("tags") or "brief" in metadata:
                 raise ValueError("pinned type specifications cannot add tag/brief dependencies")
-            _merge_labelled(result, run.validate(type_document), f"criterion {type_document.relative_to(snapshot.root)}")
+            _merge_labelled(result, run.validate(type_document), f"criterion {type_document.relative_to(snapshot.root).as_posix()}")
         result.infos.append("local link existence and type eligibility use stable-method environment guards")
     except (OSError, UnicodeError, ValueError, TypeError, KeyError, yaml.YAMLError) as exc:
         result.fails.append(f"[pinned contracts] {exc}")
@@ -1766,7 +1766,7 @@ def validate_collection_structure(
     declared = frontmatter.parse(contract.read_text(encoding="utf-8")).data.get("type")
     if declared != COLLECTION_CONTRACT_TYPE:
         failures.append((contract, (
-            f"collection contract: {contract.relative_to(repo_root)} must declare "
+            f"collection contract: {contract.relative_to(repo_root).as_posix()} must declare "
             f"`type: {COLLECTION_CONTRACT_TYPE}`"
         )))
     for path in iter_validation_markdown_files(collection):
@@ -1779,8 +1779,8 @@ def validate_collection_structure(
                 path,
                 (
                     "nested COLLECTION.md: "
-                    f"{path.relative_to(repo_root)} is inside collection "
-                    f"{collection.relative_to(repo_root)}"
+                    f"{path.relative_to(repo_root).as_posix()} is inside collection "
+                    f"{collection.relative_to(repo_root).as_posix()}"
                 ),
             )
         )
@@ -1837,7 +1837,7 @@ def validate_source_snapshot_cache(
             valid_pairs.add(ingest)
 
     def names(owners: list[Path]) -> str:
-        return ", ".join(str(owner.relative_to(repo_root)) for owner in owners)
+        return ", ".join(owner.relative_to(repo_root).as_posix() for owner in owners)
 
     warnings: list[tuple[Path, str]] = []
     for snapshot, facts in sorted(snapshots.all().items()):
@@ -1913,7 +1913,7 @@ def validate_collection_landings(*, repo_root: Path) -> CheckResults:
     if missing:
         results.fails.extend(
             "[repository] collection landing does not exist: "
-            f"{path.relative_to(repo_root)}"
+            f"{path.relative_to(repo_root).as_posix()}"
             for path in missing
         )
     else:
@@ -1931,7 +1931,7 @@ def validate_collection_landings(*, repo_root: Path) -> CheckResults:
     if collisions:
         results.fails.extend(
             "[repository] collection landing collision: "
-            f"{collection.relative_to(repo_root)} contains both README.md and index.md"
+            f"{collection.relative_to(repo_root).as_posix()} contains both README.md and index.md"
             for collection in collisions
         )
     else:
