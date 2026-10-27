@@ -32,11 +32,17 @@ UV_CACHE_DIR='C:\Users\<user>\.cache\uv' uv run --python 'C:\Program Files\Pytho
 - `UV_CACHE_DIR`: inside the Claude desktop app uv's default cache is in the app's virtualised `AppData`. That path exceeds the Windows path limit and uv fails with `Trivial strip failed` ([windows-install](../windows-install/README.md), problem 9).
 - `--continue-on-collection-errors`: until item 1 is done, six modules fail to import.
 
-Baseline on 2026-10-27, Windows 11 Home, Python 3.14.7, checkout with `core.autocrlf=true`: 795 passed, 47 failed, 11 skipped, 6 collection errors. After the first five fixes the same day (`24b06867a` to `ef15112e6`): 819 passed, 26 failed, 11 skipped, 6 collection errors; no new failures. After the path and line-ending fixes (`030cfddcb`, `6d95f8f58` to `a5002969c`): 833 passed, 12 failed, 11 skipped, 6 collection errors; no new failures. The 12 left are items 1, 4 and 6. After the symlink fixes (`0cfb897f3`, `9d703300d`): 836 passed, 8 failed, 13 skipped, 6 collection errors; the 8 left are items 1 and 6.
+Baseline on 2026-10-27, Windows 11 Home, Python 3.14.7, checkout with `core.autocrlf=true`: 795 passed, 47 failed, 11 skipped, 6 collection errors. After the first five fixes the same day (`24b06867a` to `ef15112e6`): 819 passed, 26 failed, 11 skipped, 6 collection errors; no new failures. After the path and line-ending fixes (`030cfddcb`, `6d95f8f58` to `a5002969c`): 833 passed, 12 failed, 11 skipped, 6 collection errors; no new failures. The 12 left are items 1, 4 and 6. After the symlink fixes (`0cfb897f3`, `9d703300d`): 836 passed, 8 failed, 13 skipped, 6 collection errors; the 8 left are items 1 and 6. After skipping the analysis tests (`1cf410262`): 836 passed, 3 failed, 18 skipped, 3 collection errors; the 3 and 3 left are `commonplace-task` and the X-likes sync (item 1) and item 6.
 
 ## Backlog
 
 ### 1. Unix-only `fcntl` locking
+
+**Decision (operator, 2026-10-27): agentic analysis runs on Linux only.** The `agentic-system-analyses` collection is this repository's own; `commonplace-init` never scaffolds it. On Windows the tests that build or read it are ignored (modules that import the analysis code at load time, in `tests/commonplace/conftest.py`) or skipped with `analysis_linux_only` from `tests/commonplace/platforms.py` (`1cf410262`). Linux CI runs all of them. Consequences:
+
+- The publication-lock helper planned below is no longer needed; the publication lock stays `fcntl`.
+- `commonplace-validate` on `kb/agentic-system-analyses`, and this repository's site build, crash on Windows with `No module named 'fcntl'`. The chain: the analysis artifact rule calls `publication_slug`, which imports `sources.github_checkout_path` (a pure string function); `sources` imports `effects`, which imports `fcntl` at the top for `publication_lock` alone. Moving that import into `publication_lock` was tried and reverted: validation of the collection then succeeds on Windows (222 files, 0 failures, 0 warnings). Not done; the operator decides.
+- Open: whether `commonplace-task` (`headless/`, driven by the analysis workflow) must run on Windows. If not, the Workjig run-lock request matters less to Commonplace.
 
 `fcntl` does not exist on Windows. Importing it fails, so whole modules fail to load, including `commonplace-task` and `commonplace-analysis` themselves.
 
