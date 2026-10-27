@@ -62,7 +62,7 @@ def test_three_verifiers_agree_on_same_quote_and_region(tmp_path: Path, body, ex
     digest = content_sha256_for_text(body)
     snapshot = tmp_path / "kb/sources/.snapshots/source.md"
     snapshot.parent.mkdir(parents=True)
-    snapshot.write_text(body)
+    snapshot.write_text(body, encoding="utf-8", newline="")
     attributed = f"> one\n> --- `kb/sources/.snapshots/source.md` @ `sha256:{digest}`\n"
     content = f"---\nsnapshot_sha256: {digest}\n---\n## Quotes\n\n{attributed}"
     checks = CheckResults(note_type="ingest-report")
@@ -73,7 +73,7 @@ def test_three_verifiers_agree_on_same_quote_and_region(tmp_path: Path, body, ex
     )
     assert (resolutions[0].status == "match") is expected
     kb_source = tmp_path / "source.md"
-    kb_source.write_text(body)
+    kb_source.write_text(body, encoding="utf-8", newline="")
     result = verify_content(
         '"one" ([source](source.md), verbatim).', tmp_path / "note.md"
     )[0]

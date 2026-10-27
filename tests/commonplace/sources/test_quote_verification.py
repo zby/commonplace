@@ -386,7 +386,7 @@ class TestIngestQuoteValidation:
         digest = sha if sha is not None else content_sha256_for_text(body)
         if snapshot is not None:
             (sources / ".snapshots" / snapshot_name).write_text(
-                body, encoding="utf-8"
+                body, encoding="utf-8", newline=""
             )
         quotes = (
             "No source quotes have been retained yet.\n"
