@@ -8,7 +8,7 @@ genre: scientific-paper
 snapshot_sha256: 0d47ffb1cbe7f2ecb65077b63f5f0719e6e95edfc67b8552bf1ae872abc06040
 ingested: "2026-10-26"
 type: types/ingest-report.md
-domains: [document-system, psycholinguistics, llm-post-training]
+domains: [document-system, psycholinguistics, llm-post-training, prose-readability]
 learning_claims: true
 ---
 
