@@ -66,6 +66,8 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 
 **Proposed procedure:** [proposed-install-procedure.md](./proposed-install-procedure.md) (2026-10-27) gives the full Windows procedure, the code and documentation changes it needs, and a verification protocol for other agents. Verifiers record their runs as new results files in this directory.
 
+**Round 2 tests (2026-10-27):** [shim-delivery-test-plan.md](./shim-delivery-test-plan.md) tests the two deliveries side by side, shims over the signed python.org interpreter (S) and over the uv-managed interpreter (U), with a harness in [test-shims/](./test-shims/register-test-shims.ps1) that registers a shim for every entry point. It runs first on the reference machine (Smart App Control off, so antivirus results there are uninformative), then on this machine, and ends with the decision rule for `INSTALL.md`. Round 1, variant U only, is in [execution-channel-compatibility](../execution-channel-compatibility/windows-shim-test-plan.md).
+
 Proposed by the operator on 2026-10-27. Start the commands with a Python outside the uv tool environment instead of uv's launchers or the environment's `Scripts\python.exe`.
 
 **Operator direction (2026-10-27): Windows installs may require a system Python.** A python.org build is signed by the Python Software Foundation, so Smart App Control can trust it by signature, and antivirus should treat it better than unsigned, per-install files. The uv-managed builds are unsigned and stay a fallback only. This adds a Windows-only prerequisite, which touches the one-install-path constraint: record whether it becomes Windows troubleshooting, a Windows prerequisite with a stated reason, or a change every platform takes.
