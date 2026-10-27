@@ -155,3 +155,9 @@ def test_sync_lock_refuses_a_second_sync_until_released(tmp_path):
         pass
     with mod.sync_lock(path):
         pass
+
+
+def test_inbox_files_are_utf8_with_lf(tmp_path):
+    path = tmp_path / 'post.md'
+    mod.atomic_write(path, 'Za\u017c\u00f3\u0142\u0107 \U0001f642\nnext\n')
+    assert path.read_bytes() == 'Za\u017c\u00f3\u0142\u0107 \U0001f642\nnext\n'.encode()

@@ -51,7 +51,7 @@ def atomic_write(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, name = tempfile.mkstemp(dir=path.parent, prefix='.sync-')
     try:
-        with os.fdopen(fd, 'w') as stream:
+        with os.fdopen(fd, 'w', encoding='utf-8', newline='') as stream:
             stream.write(text)
         os.replace(name, path)
     finally:
@@ -93,7 +93,7 @@ class XClient:
         updates = {'X_ACCESS_TOKEN': tokens['access_token']}
         if tokens.get('refresh_token'):
             updates['X_REFRESH_TOKEN'] = tokens['refresh_token']
-        text = self.env_path.read_text()
+        text = self.env_path.read_text(encoding='utf-8')
         for key, value in updates.items():
             line = key + '=' + json.dumps(value)
             pattern = r'^' + key + r'=.*$'
@@ -173,7 +173,7 @@ def render(record: dict) -> str:
 def sync(root: Path, client, handle: str, max_pages: int, now: datetime):
     state_path = root / 'kb/reports/state/x-likes' / handle / 'sync.json'
     cache = root / 'kb/reports/cache/x-likes' / handle
-    state = json.loads(state_path.read_text()) if state_path.exists() else {
+    state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {
         'version': 1, 'seen': {}, 'active': {}}
     if state.get('version') != 1:
         raise ValueError('Unknown sync state version')
