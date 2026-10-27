@@ -8,6 +8,7 @@ import pytest
 
 from commonplace.lib import systems_matrix as sm
 from tests.commonplace.agentic_analysis.fixtures import comparison_schema
+from tests.commonplace.platforms import analysis_linux_only
 
 KNOWN = {"RT-OBJ-store", "RT-RTE-model-call", "RT-ABS-missing-route"}
 KNOWN2 = dict.fromkeys(KNOWN, "runtime.md")
@@ -153,6 +154,7 @@ def test_removed_axes_are_rejected():
         sm.validate_comparison(data, known_ids=KNOWN2)
 
 
+@analysis_linux_only
 def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives():
     from scripts.render_systems_table import assessment
 

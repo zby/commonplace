@@ -9,6 +9,7 @@ from commonplace.docs import properdocs_hooks
 
 # Imported at collection: the fixture module reads the real library's layout when first imported.
 from tests.commonplace.agentic_analysis.fixtures import retained_fixture
+from tests.commonplace.platforms import analysis_linux_only
 
 
 def write(path: Path, content: str) -> Path:
@@ -273,6 +274,7 @@ def test_on_page_markdown_keeps_backslashes_in_badge_values(tmp_path: Path) -> N
     assert "# Example\n\n**Status:** draft \\1 C:\\local\n" in result
 
 
+@analysis_linux_only
 def test_site_current_list_matches_comparison_population(tmp_path: Path, tmp_library) -> None:
     from commonplace.lib.systems_matrix import load_results
     retained_fixture(tmp_path)
@@ -317,6 +319,7 @@ def test_on_config_groups_agentic_systems_and_hides_unlisted_collections(tmp_pat
     assert labels.index("Agentic Systems") < labels.index("Notes")
 
 
+@analysis_linux_only
 def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> None:
     retained_fixture(tmp_path)
     docs_dir = tmp_path / "kb"

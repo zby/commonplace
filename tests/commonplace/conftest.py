@@ -5,6 +5,14 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib import library
+from tests.commonplace.platforms import ANALYSIS_TESTS_SKIPPED
+
+# These modules import the analysis code at load time, so they are ignored, not skipped.
+collect_ignore = [
+    "agentic_analysis",
+    "comparison/test_build_systems_matrix.py",
+    "comparison/test_comparison_consumers.py",
+] if ANALYSIS_TESTS_SKIPPED else []
 
 
 @pytest.fixture

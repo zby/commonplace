@@ -17,6 +17,7 @@ from tests.commonplace.agentic_analysis.fixtures import (
     replace_frontmatter,
     uninspected_profile,
 )
+from tests.commonplace.platforms import analysis_linux_only
 
 ABSENCE = "runtime.md#rt-abs-static-branch"
 STORE = "runtime.md#rt-obj-store"
@@ -168,7 +169,7 @@ def test_matrix_reader_passes_retained_bytes_without_reclassifying(tmp_path, mon
 
 
 @pytest.mark.usefixtures("tmp_library")
-@pytest.mark.parametrize("retained", [False, True])
+@pytest.mark.parametrize("retained", [False, pytest.param(True, marks=analysis_linux_only)])
 def test_working_or_draft_artifact_cannot_borrow_retained_byte_permission(tmp_path, monkeypatch, retained):
     directory = member_fixture(tmp_path) / "artifact"
     if retained:
