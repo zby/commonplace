@@ -76,7 +76,8 @@ def resolve_destination_path(
 
 
 def format_relative_link(from_file: Path, to_file: Path) -> str:
-    rel = os.path.relpath(to_file, from_file.parent)
+    # Markdown links use "/" on every platform.
+    rel = Path(os.path.relpath(to_file, from_file.parent)).as_posix()
     return rel if rel.startswith("..") else f"./{rel}"
 
 
