@@ -8,6 +8,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.commonplace.link_helpers import symlink_or_skip
+
 SCRIPT = Path(__file__).resolve().parents[3] / "scripts/agentic_system_rerun_stats.py"
 spec = importlib.util.spec_from_file_location("rerun_stats", SCRIPT)
 stats = importlib.util.module_from_spec(spec)
@@ -143,7 +145,7 @@ def test_report_symlink_is_not_followed(tmp_path):
     (path / "workflow.md").unlink()
     outside = tmp_path / "source.txt"
     outside.write_text("source snapshot must not be read")
-    (path / "workflow.md").symlink_to(outside)
+    symlink_or_skip(path / "workflow.md", outside)
     assert stats.collect([path], [], None)["incomplete_sets"] == 1
 
 

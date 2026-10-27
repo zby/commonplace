@@ -10,6 +10,7 @@ import pytest
 
 from commonplace.headless.harness import Harness, Profile
 from commonplace.lib.agentic_analysis import audit as module
+from tests.commonplace.link_helpers import symlink_or_skip
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -92,7 +93,7 @@ def test_collect_does_not_follow_redirected_traces(analysis):
     stdout = analysis.run_dir / "calls/launches/runtime-0/stdout.log"
     outside = analysis.worktree / "personal-session.jsonl"
     stdout.rename(outside)
-    stdout.symlink_to(outside)
+    symlink_or_skip(stdout, outside)
     inventory, scanner = module.collect(analysis.run_dir)
     assert inventory[0]["scan_status"] == "unscanned"
     assert inventory[0]["reason"] == "trace outside run launch tree"

@@ -1,8 +1,10 @@
+import os
 from pathlib import Path
 
 import pytest
 
 from commonplace.lib.project_paths import resolve_collection
+from tests.commonplace.link_helpers import junction
 
 
 @pytest.mark.parametrize("name", ["notes", "theory", "claims", "teams/claims"])
@@ -21,7 +23,12 @@ def test_resolve_collection_rejects_missing_noncollection_and_external_targets(t
     outside = tmp_path / "outside"
     outside.mkdir()
     (outside / "COLLECTION.md").write_text("# Contract\n")
-    (tmp_path / "kb/alias").symlink_to(outside, target_is_directory=True)
+    alias = tmp_path / "kb/alias"
+    # Any Windows user can make a junction; symlinks need a privilege there.
+    if os.name == "nt":
+        junction(alias, outside)
+    else:
+        alias.symlink_to(outside, target_is_directory=True)
     for arg in ("missing", "inbox", "kb", "../outside", outside, "alias"):
         with pytest.raises(ValueError, match="Not a collection under"):
             resolve_collection(arg, tmp_path)

@@ -5,6 +5,7 @@ import yaml
 
 from commonplace.lib.project_paths import list_directory_validation_paths
 from commonplace.lib.validation import ValidationRun
+from tests.commonplace.link_helpers import symlink_or_skip
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
 
@@ -107,7 +108,7 @@ def test_symlink_member_fails(tmp_path):
     directory = make_artifact(tmp_path)
     outside = tmp_path / "outside.md"
     outside.write_text("# Outside\n")
-    (directory / "optional.md").symlink_to(outside)
+    symlink_or_skip(directory / "optional.md", outside)
     assert any("symlink" in error for error in run(tmp_path, directory).fails)
 
 

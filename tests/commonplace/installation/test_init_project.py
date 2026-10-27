@@ -17,6 +17,7 @@ from commonplace.lib import library
 from commonplace.lib.project_paths import is_collection_dir
 from commonplace.lib.validation import validate_collection_landings
 from commonplace.scaffold_manifest import MANIFEST
+from tests.commonplace.link_helpers import symlink_or_skip
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
@@ -212,18 +213,18 @@ def test_init_and_check_resolve_the_library_from_the_project_root(
     """
     monkeypatch.delenv(library.LIBRARY_ENV, raising=False)
     library_kb = library.library_root(Path.cwd())
-    # Another checkout: the same library under a different path.
+    # Another checkout with its own library, where init is run from.
     other = tmp_path / "other-checkout"
     (other / "src" / "commonplace").mkdir(parents=True)
-    (other / "kb").symlink_to(library_kb)
+    (other / "kb" / "instructions").mkdir(parents=True)
     (other / "pyproject.toml").write_text('[project]\nname = "llm-commonplace"\n', encoding="utf-8")
     project = tmp_path / "project"
 
     monkeypatch.chdir(other)
     init_project(project, name="project")
     routing = (project / library.ROUTING).read_text(encoding="utf-8")
-    assert str(library_kb) in routing
-    assert str(other / "kb") not in routing
+    assert library_kb.as_posix() in routing
+    assert (other / "kb").as_posix() not in routing
 
     monkeypatch.chdir(project)
     assert [item.status for item in init_project_module.check_project(project)] == ["ok"] * len(
@@ -261,7 +262,7 @@ def test_init_project_preserves_symlinked_skill_directories(tmp_path: Path) -> N
     project = tmp_path / "project"
     (project / ".claude" / "skills").mkdir(parents=True)
     link = project / ".claude" / "skills" / "cp-skill-validate"
-    link.symlink_to(outside, target_is_directory=True)
+    symlink_or_skip(link, outside, directory=True)
 
     report = init_project(project)
 

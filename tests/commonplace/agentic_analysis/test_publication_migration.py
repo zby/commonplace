@@ -8,6 +8,7 @@ import pytest
 import yaml
 
 from scripts import migrate_analysis_publications as migration
+from tests.commonplace.link_helpers import symlink_or_skip
 
 
 def artifact(root, name, identity):
@@ -39,7 +40,7 @@ def test_migration_refuses_uncertain_inputs_before_any_move(tmp_path, mutation):
     elif mutation == "duplicate":
         artifact(tmp_path, "another", "https://github.com/nvk/llm-wiki")
     else:
-        (directory / "extra").symlink_to(directory / "memory.md")
+        symlink_or_skip(directory / "extra", directory / "memory.md")
     with pytest.raises(ValueError):
         migration.migration_plan(tmp_path)
     assert directory.is_dir()

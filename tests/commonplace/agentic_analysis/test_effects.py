@@ -8,6 +8,7 @@ import pytest
 
 from commonplace.lib.agentic_analysis import effects
 from commonplace.lib.agentic_analysis.effects import UncertainEffectError
+from tests.commonplace.link_helpers import symlink_or_skip
 
 ARCHIVED = "previous-run"
 
@@ -137,7 +138,7 @@ def test_effect_rejects_symlinked_destination_without_mutation(tmp_path):
     external = tmp_path / "external"
     external.mkdir()
     args["destination"].parent.mkdir()
-    args["destination"].symlink_to(external, target_is_directory=True)
+    symlink_or_skip(args["destination"], external, directory=True)
     with pytest.raises(UncertainEffectError, match="symlinks"):
         effects.install_tree(**args)
     assert list(external.iterdir()) == []

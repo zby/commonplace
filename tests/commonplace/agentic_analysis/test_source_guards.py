@@ -14,6 +14,7 @@ from commonplace.lib.validation import (
     validate_draft_in_role,
     validate_pinned_artifact_snapshot,
 )
+from tests.commonplace.link_helpers import symlink_or_skip
 
 IDENTITY = "https://example.invalid/source"
 REVISION = "a" * 40
@@ -97,9 +98,9 @@ def test_canonical_guard_prevents_reads_and_git(tmp_path, monkeypatch, guard):
     (outside / "capture.md").write_bytes(b"frozen bytes")
     if guard == "file-symlink":
         path = captures / "capture.md"
-        path.symlink_to(outside / "capture.md")
+        symlink_or_skip(path, outside / "capture.md")
     elif guard == "parent-symlink":
-        (captures / "alias").symlink_to(outside, target_is_directory=True)
+        symlink_or_skip(captures / "alias", outside, directory=True)
         path = captures / "alias/capture.md"
     else:
         path = captures / "../outside/capture.md"

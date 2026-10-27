@@ -9,6 +9,7 @@ from commonplace.lib.full_pass import (
     load_full_pass_report,
 )
 from commonplace.lib.hashing import content_sha256_for_text
+from tests.commonplace.link_helpers import symlink_or_skip
 from tests.commonplace.validation_helpers import write_packet
 
 
@@ -51,10 +52,7 @@ def test_capture_symlink_is_corrupt_even_when_it_points_inside_packet(
     capture = report_path.parent / "source.txt"
     real_capture = report_path.parent / "real-source.txt"
     capture.rename(real_capture)
-    try:
-        capture.symlink_to(real_capture.name)
-    except OSError:
-        pytest.skip("symlinks unavailable")
+    symlink_or_skip(capture, real_capture.name)
 
     result = guard_full_pass_report(
         load_full_pass_report(report_path, repo_root=tmp_path)

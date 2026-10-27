@@ -6,6 +6,7 @@ import tarfile
 import pytest
 
 from scripts.capture_test_state import capture, compare
+from tests.commonplace.link_helpers import symlink_or_skip
 
 
 def test_capture_preserves_before_state_and_reports_actual_changes(tmp_path):
@@ -36,10 +37,7 @@ def test_capture_does_not_follow_external_symlink(tmp_path):
     root.mkdir()
     secret = tmp_path / "key.txt"
     secret.write_text("evaluator-only answer")
-    try:
-        (root / "escape").symlink_to(secret)
-    except OSError:
-        pytest.skip("Symlinks unavailable")
+    symlink_or_skip(root / "escape", secret)
     state = capture(root, tmp_path / "record", archive=True)
     assert state == {"escape": {"symlink": str(secret)}}
     with tarfile.open(tmp_path / "record/files.tar.gz") as bundle:

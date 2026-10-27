@@ -14,6 +14,7 @@ import pytest
 from commonplace.cli.analysis import main
 from commonplace.lib.agentic_analysis import preparation as iso
 from commonplace.lib.agentic_analysis import worktree as aw
+from tests.commonplace.link_helpers import symlink_or_skip
 
 
 def git(root: Path, *args: str) -> str:
@@ -46,7 +47,7 @@ def origin(tmp_path: Path, monkeypatch) -> Path:
         path.write_text(content)
     skills = root / ".agents/skills"
     skills.mkdir(parents=True)
-    (skills / "worker").symlink_to("../../kb/instructions/worker", target_is_directory=True)
+    symlink_or_skip(skills / "worker", "../../kb/instructions/worker", directory=True)
     git(root, "add", ".")
     git(root, "commit", "--quiet", "-m", "Seed")
     monkeypatch.setattr(iso, "_install", lambda tree: {

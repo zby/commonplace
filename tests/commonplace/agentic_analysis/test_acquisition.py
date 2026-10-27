@@ -30,6 +30,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared_template as prepared_template,  # noqa: PLC0414 - session baseline registration
 )
+from tests.commonplace.link_helpers import symlink_or_skip
 
 DIGEST = "d" * 64
 
@@ -149,7 +150,7 @@ def test_preflight_failure_changes_no_source_and_records_no_effect(acquiring, co
         a.checkout.mkdir(parents=True)
     elif condition == "symlink":
         a.checkout.parent.mkdir(parents=True)
-        a.checkout.symlink_to(a.upstream, target_is_directory=True)
+        symlink_or_skip(a.checkout, a.upstream, directory=True)
     else:
         a.clone()
         if condition == "dirty":
@@ -318,7 +319,7 @@ def test_recovery_preserves_unverifiable_completed_effects(acquiring, damage):
     elif damage == "symlink":
         moved = a.checkout.with_name("moved-checkout")
         a.checkout.rename(moved)
-        a.checkout.symlink_to(moved, target_is_directory=True)
+        symlink_or_skip(a.checkout, moved, directory=True)
     elif damage == "malformed-journal":
         a.journal.write_bytes(b"not JSON; preserve me\n")
     else:

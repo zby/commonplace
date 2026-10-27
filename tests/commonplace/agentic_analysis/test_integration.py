@@ -16,6 +16,7 @@ import pytest
 from commonplace.lib.agentic_analysis import effects
 from commonplace.lib.agentic_analysis import worktree as aw
 from commonplace.lib.agentic_analysis.plan import PLAN
+from tests.commonplace.link_helpers import symlink_or_skip
 
 
 def git(root: Path, *args: str) -> str:
@@ -91,7 +92,7 @@ def test_exact_retained_tree_required(proof, change):
         (proof.destination / "extra.md").write_text("unowned")
     elif change == "symlink":
         path.unlink()
-        path.symlink_to(proof.destination / "overview.md")
+        symlink_or_skip(path, proof.destination / "overview.md")
     else:
         path.write_text("changed")
     with pytest.raises((ValueError, effects.UncertainEffectError)):
