@@ -383,6 +383,18 @@ def test_init_project_treats_raw_template_source_as_matching(tmp_path: Path) -> 
     assert Path("AGENTS.md.template") not in report.preserved_different
 
 
+def test_init_project_treats_crlf_copies_as_matching(tmp_path: Path) -> None:
+    init_project(tmp_path)
+    for rel in ("AGENTS.md.template", "kb/notes/COLLECTION.md"):
+        path = tmp_path / rel
+        path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+
+    rerun = init_project(tmp_path)
+
+    assert {Path("AGENTS.md.template"), Path("kb/notes/COLLECTION.md")} <= set(rerun.preserved_identical)
+    assert rerun.preserved_different == []
+
+
 def test_main_reports_preserved_file_statuses(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

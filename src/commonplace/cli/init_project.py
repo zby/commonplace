@@ -41,11 +41,16 @@ def _record_existing(
     acceptable_existing_bytes: tuple[bytes, ...] = (),
 ) -> None:
     if target.is_file():
-        current_bytes = target.read_bytes()
-        if current_bytes == expected_bytes or current_bytes in acceptable_existing_bytes:
+        # A CRLF copy (Windows editor or checkout) still matches the scaffold.
+        current_bytes = _lf(target.read_bytes())
+        if current_bytes == _lf(expected_bytes) or current_bytes in map(_lf, acceptable_existing_bytes):
             report.preserved_identical.append(rel_path)
             return
     report.preserved_different.append(rel_path)
+
+
+def _lf(content: bytes) -> bytes:
+    return content.replace(b"\r\n", b"\n")
 
 
 def _copy_scaffold_file(
@@ -90,7 +95,7 @@ def _write_template(
         )
         return
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(text, encoding="utf-8")
+    target.write_bytes(expected_bytes)  # text mode would write CRLF on Windows
     report.created.append(rel_path)
 
 
