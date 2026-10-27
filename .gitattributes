@@ -1,0 +1,6 @@
+# Check out text with LF on every platform: snapshot and report hashes pin
+# exact bytes, and the code compares files written with "\n".
+* text=auto eol=lf
+
+# Captured data with CRLF bytes inside; keep it byte-exact.
+kb/reports/retained/codex-ingest-session-tool-result-volume-20260831/*.csv -text
