@@ -8,7 +8,9 @@ This plan validates a candidate design. It is not a test of the installation pro
 
 ## The claim under test
 
-The design exists because the uv-generated `commonplace-*.exe` launchers were blocked on a Windows 11 Home machine on 2026-10-26. The record is on `origin/main`, which this branch's base (`2430377f8`, 2026-08-08) predates: `kb/work/framework-delivery/results-windows-install-030.md` (the run, findings 4, 10 and 11) and `kb/work/windows-install/README.md` (open problems 1 to 3, testing rules). What blocked:
+This is the round 1 plan, written on 2026-10-27 in the execution-channel-compatibility workshop and moved here the same day. It tested variant U only, on the reference machine: [results-2026-10-27-acer-variant-u.md](./results-2026-10-27-acer-variant-u.md). New runs follow [shim-delivery-test-plan.md](./shim-delivery-test-plan.md), which keeps this plan's result classes, provenance rule, conflicting-installation rule and antivirus observation method unchanged. The registrar this plan names was retired with the move; [test-shims/register-test-shims.ps1](./test-shims/register-test-shims.ps1) replaces it.
+
+The design exists because the uv-generated `commonplace-*.exe` launchers were blocked on a Windows 11 Home machine on 2026-10-26. The record: [results-windows-install-030.md](../framework-delivery/results-windows-install-030.md) (the run, findings 4, 10 and 11) and [README.md](./README.md) (open problems 1 to 3, testing rules). What blocked:
 
 - **Smart App Control** (`VerifiedAndReputablePolicyState` 1; Code Integrity events 3033 and 3077, policy `{0283ac0f-fff1-49ae-ada1-8a933130cad6}`) refused the unsigned, per-install uv launchers in `.local\bin`. Verdicts varied between runs, and one launch hung until the computer was restarted. It also blocked one uv-managed CPython build (3.13.17, `0xc0e90002`) while 3.14.9 ran.
 - **Avast** Behavior Shield deleted the tool environment's `Scripts\python.exe` (detection `IDP.HELU.PSE95%s_cmd`, recorded against `powershell.exe` started through WMI with `-EncodedCommand`), and Avast Auto-Sandbox repeatedly sandboxed the launchers. McAfee was also registered. Windows Defender logged nothing.
@@ -86,7 +88,7 @@ Exclusion lists cannot be read without administrator rights on the reference mac
 
 ## Shim registration
 
-After completing INSTALL.md, register the deterministic test shims with [REGISTRATION.md](./test-shims/REGISTRATION.md). The registrar writes only a disposable bin directory and invokes the selected uv-managed Python directly. Prepend that bin directory to the test process PATH; do not add .venv\\Scripts and do not invoke generated commonplace-*.exe files.
+After completing INSTALL.md, register the test shims with [test-shims/register-test-shims.ps1](./test-shims/register-test-shims.ps1) (round 1 used an earlier two-command registrar, since retired). The registrar writes only a disposable bin directory and invokes the selected uv-managed Python directly. Prepend that bin directory to the test process PATH; do not add .venv\\Scripts and do not invoke generated commonplace-*.exe files.
 
 Harness boundary: the registered shims are `.cmd` files that call one hardcoded interpreter and a dispatcher covering only `commonplace-init` and `commonplace-validate`. The production concept is `uv run --no-sync python -m <module>`, which also puts `uv.exe` in the executed path. Results from the harness therefore say nothing about uv's own antivirus acceptance, about the other package entry points, or about project-aware interpreter selection.
 

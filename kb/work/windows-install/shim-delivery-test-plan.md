@@ -1,6 +1,6 @@
 # Shim delivery test plan (round 2)
 
-Status: written 2026-10-27 for the next runs: first on the reference machine (Smart App Control off, Defender only), then on the afflicted machine (Smart App Control on; Avast, McAfee and Defender registered) where the uv launchers were blocked. Round 1 is the [Windows shim validation test plan](../execution-channel-compatibility/windows-shim-test-plan.md) and its evidence; it tested variant U only, on the reference machine.
+Status: written 2026-10-27 for the next runs: first on the reference machine (Smart App Control off, Defender only), then on the afflicted machine (Smart App Control on; Avast, McAfee and Defender registered) where the uv launchers were blocked. Round 1 is [shim-test-plan-round-1.md](./shim-test-plan-round-1.md) with its run [results-2026-10-27-acer-variant-u.md](./results-2026-10-27-acer-variant-u.md); it tested variant U only, on the reference machine.
 
 ## What is being decided
 
