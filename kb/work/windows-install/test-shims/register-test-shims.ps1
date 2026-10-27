@@ -54,7 +54,8 @@ $names = @($lines | Where-Object { $_ -notlike 'DIST *' })
 if ($LASTEXITCODE -ne 0 -or $names.Count -eq 0) {
     throw "No commonplace-* entry points visible to $python (site-packages: '$site')."
 }
-if ($site -and $dist -and -not $dist.StartsWith($site, [StringComparison]::OrdinalIgnoreCase)) {
+$distLocation = ($dist -split ' ', 2)[1]
+if ($site -and $distLocation -and -not $distLocation.TrimEnd('\').StartsWith($site.TrimEnd('\'), [StringComparison]::OrdinalIgnoreCase)) {
     Write-Warning "The shims will reach llm-commonplace $dist, not the copy under $site. Remove the package from the interpreter's own site-packages or use a clean interpreter."
 }
 

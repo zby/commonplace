@@ -61,7 +61,7 @@ Run the full series once per variant, in separate PowerShell tool calls, with a 
 ### R0 — instrument check (afflicted machine; recorded as uninformative elsewhere)
 
 1. Record Smart App Control state, the `root\SecurityCenter2` products, and the baseline counts of Code Integrity events 3033/3077 naming Commonplace, Python or uv, Defender detections, and Avast's quarantine index and Auto-Sandbox log.
-2. Run **one** uv-generated launcher once, from the variant's own install (`<testroot>\site-packages\bin\commonplace-validate.exe --help` for S after R1, `<testroot>\.venv\Scripts\commonplace-validate.exe --help` for U). Do not loop. Expect a Code Integrity 3077 block or an Avast reaction on the afflicted machine; record whichever occurred. If nothing occurred, the machine cannot discriminate and every antivirus result below is uninformative.
+2. Run **one** uv-generated launcher once, from the variant's own install (`<testroot>\site-packages\bin\commonplace-validate.exe --help` for S after R1, `<testroot>\.venv\Scripts\commonplace-validate.exe --help` for U). Do not loop. Expect a Code Integrity 3077 block or an Avast reaction on the afflicted machine; record whichever occurred. If nothing occurred, the machine cannot discriminate and every antivirus result below is uninformative. Judge this step by the Code Integrity and antivirus records, not by the exit status: the S launcher exits 1 with `ModuleNotFoundError` even when nothing blocks it, because a `--target` folder is not on the signed interpreter's import path (observed on the reference machine, 2026-10-27). Smart App Control acts at process creation, before Python runs, so a block still shows as a 3077 event.
 
 ### R1 — install
 
