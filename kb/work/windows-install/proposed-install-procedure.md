@@ -1,30 +1,41 @@
 # Proposed Windows install procedure
 
-Status: proposal, 2026-10-27. Written from one machine ([results](./results-2026-10-27-signed-python.md)) for other agents to verify before anything changes in `INSTALL.md` or the code. Each step names the evidence it rests on and what is still unverified.
+Status: proposed as the primary Windows procedure, 2026-10-27. It was tested on one machine ([results](./results-2026-10-27-signed-python.md)). It must be verified by other agents before anything changes in `INSTALL.md` or the code.
 
-## Idea
+## Summary
 
-The `commonplace-*` commands fail on Windows for one reason: they start through files that are unsigned and new to the machine. Smart App Control blocks them, and antivirus sandboxes or deletes them. These are uv's launcher `.exe` files and the tool environment's own `Scripts\python.exe`.
+- **uv still installs the package and its dependencies**, with `uv pip install --target` into a plain folder instead of `uv tool install`.
+- **The commands run through the signed system Python**: python.org 3.14, installed with winget. A shim per command starts it and loads the package folder.
+- **The shim folder must be added to the user `PATH`.**
+- **A fresh shell, or a full app restart, is required afterwards.** A running process keeps its old `PATH`.
+- **The released-package (non-editable) layout still needs a code fix and a test.** Only the editable development install works today.
+- **Fallback:** users who keep the original `uv tool` layout add an antivirus exception for the uv tool folder and use the existing `INSTALL.md` Smart App Control shims.
 
-The proposal starts every command through a signed python.org `python.exe` instead. The package goes into a plain folder rather than a uv tool environment, so no per-install `python.exe` is written. A shim per command (`.cmd` for PowerShell and cmd, `sh` for Git Bash) runs:
+## Why
 
-```text
-"<signed python.exe>" -c "import site, sys; site.addsitedir(r'<package folder>'); sys.argv[0] = '<command>'; from <module> import <function>; sys.exit(<function>())"
-```
+The commands fail on Windows because they start through files that are unsigned and new to each machine. These are uv's launcher `.exe` files and the tool environment's own `Scripts\python.exe`. Smart App Control blocks them, and antivirus sandboxes or deletes them. A python.org `python.exe` is signed by the Python Software Foundation and identical on every machine, so Smart App Control can trust it. No per-install executable is written or run.
 
-## Differences from the current `INSTALL.md`
+## What is verified
 
-| | Current | Proposed (Windows) |
-|---|---|---|
-| Python | uv-managed, chosen by `--python ">=3.11"` | python.org 3.14 installed with winget; a prerequisite |
-| Package location | uv tool environment, `uv tool dir` | plain folder, `%USERPROFILE%\.local\share\commonplace\site-packages` |
-| Install command | `uv tool install` | `uv pip install --target` |
-| Commands | uv launchers in `uv tool dir --bin` | shims in `%USERPROFILE%\.local\commonplace-shims`, on the user `Path` |
-| Smart App Control workaround | optional troubleshooting | the normal path |
+On the test machine: Windows 11 Home, Smart App Control on, Avast, McAfee and Defender registered.
+
+| Item | State |
+|---|---|
+| python.org 3.14.7 via winget, `--scope machine`; valid PSF signature; runs | verified |
+| No Code Integrity or Avast reaction to the signed Python or the shims | verified, one session |
+| Editable install with `uv pip install --target` | verified |
+| Shims in PowerShell and Git Bash, called by full path | verified |
+| Shim folder on the user `PATH`; bare names in a fresh process | not tested |
+| Released-package install | fails until code change 1 below |
+| Per-user Python install (`%LOCALAPPDATA%\Programs\Python`) | not tested |
+| Upgrading in place with `--target` | not tested |
+| Deleting uv's unused `bin\` launchers in the snippet | not tested |
+| Avast in normal use over several days | not tested |
+| Fallback: antivirus exception with the `uv tool` layout | not tested |
 
 ## Procedure
 
-Run in PowerShell, outside any packaged app if possible (see open problem 5 in the [README](./README.md)). Paste the snippets; do not save them as `.ps1` files, which Smart App Control may restrict.
+Run in PowerShell, outside any packaged app if possible ([README](./README.md), open problem 5). Paste the snippets; do not save them as `.ps1` files, which Smart App Control may restrict.
 
 ### 1. Prerequisites
 
@@ -34,32 +45,30 @@ winget install --id Python.Python.3.14 -e --source winget --scope machine
 ```
 
 - `--source winget` avoids the `msstore` source, which failed certificate checks on the test machine. Do not use the Microsoft Store Python: it is itself a packaged app.
-- `--scope machine` puts Python in `C:\Program Files\Python314`, outside `%APPDATA%`, which packaged apps virtualise. It needs one UAC prompt. Unverified: whether a user-scope install (`%LOCALAPPDATA%\Programs\Python`) works as well from a terminal outside the app.
-- Python 3.14, not 3.15: pyyaml had no cp315 wheel on 2026-10-26 (open problem 6).
+- `--scope machine` installs into `C:\Program Files\Python314`, outside `%APPDATA%`, which packaged apps virtualise. It needs one UAC prompt.
+- Use 3.14, not 3.15: pyyaml had no cp315 wheel on 2026-10-26 (open problem 6).
 - Python does not need to be on `PATH`; the shims use its full path.
 - If uv fails with `UnknownIssuer`, set `UV_SYSTEM_CERTS=1` as a user variable (open problem 7).
 
 Check: `(Get-AuthenticodeSignature 'C:\Program Files\Python314\python.exe').Status` is `Valid`, signed by the Python Software Foundation.
 
-### 2. Install the package
+### 2. Install the package with uv
 
-Users:
-
-```powershell
-uv pip install --python "C:\Program Files\Python314\python.exe" --target "$HOME\.local\share\commonplace\site-packages" llm-commonplace
-```
-
-Development, from the checkout's root:
+Development, from the checkout's root (verified):
 
 ```powershell
 uv pip install --python "C:\Program Files\Python314\python.exe" --target "$HOME\.local\share\commonplace\site-packages" -e .
 ```
 
-- **The user install needs a code change first.** With `--target`, the library lands in `<package folder>\share\commonplace`. `_library_root()` in `src/commonplace/lib/library.py` looks in `sys.prefix\share\commonplace`, which under the system Python is `C:\Program Files\Python314\share\commonplace`. Proposed change: when that is missing, also try the `share\commonplace` folder next to the installed `commonplace` package (`Path(commonplace.__file__).parents[1] / "share" / "commonplace"`). The editable install is unaffected because it reads the checkout's `kb/`. Verified: the editable install only.
-- uv also writes 25 unused launcher `.exe` files to `<package folder>\bin`. Delete that folder after each install, so antivirus has nothing to flag. Unverified: whether an option stops uv writing them.
-- Unverified: how `--target` handles an upgrade over an existing install (`--upgrade`, or a clean folder each time).
+Users (blocked until code change 1):
 
-### 3. Write the shims and put them on `PATH`
+```powershell
+uv pip install --python "C:\Program Files\Python314\python.exe" --target "$HOME\.local\share\commonplace\site-packages" llm-commonplace
+```
+
+uv also writes 25 launcher `.exe` files to `<package folder>\bin`. Nothing uses them; the snippet in step 3 deletes them so antivirus has nothing to flag.
+
+### 3. Write the shims and add them to the user `PATH`
 
 ```powershell
 & {
@@ -88,15 +97,16 @@ uv pip install --python "C:\Program Files\Python314\python.exe" --target "$HOME\
 }
 ```
 
+- Each shim runs `"<python.exe>" -c "import site, sys; site.addsitedir(r'<package folder>'); sys.argv[0] = '<command>'; from <module> import <function>; sys.exit(<function>())"`. There is a `.cmd` for PowerShell and cmd, and an `sh` script for Git Bash.
 - `site.addsitedir`, not `sys.path.insert`: it reads the `.pth` file that makes an editable install importable.
-- `$pyPosix` turns `C:\Program Files\…` into `/c/Program Files/…`; the `sh` shims quote it, so the space is safe. Verified in Git Bash.
-- The `.cmd` shims pass arguments through cmd.exe, so `%`, `^` and `"` in arguments may be altered (unchanged from the current snippet).
-- Rerun after every install or upgrade: a release can add or rename commands.
-- Then fully restart every shell, IDE and desktop agent.
+- The `.cmd` shims pass arguments through cmd.exe, so `%`, `^` and `"` in arguments may be altered. Git Bash passes them unchanged.
+- Rerun the snippet after every install or upgrade: a release can add or rename commands.
 
-Verified on the test machine: the snippet's shim-writing part, with the shims called by full path. Not yet verified: the `PATH` step and bare names in a fresh process.
+### 4. Restart
 
-### 4. Check
+Fully restart every shell, IDE and desktop agent that will use the commands. A process started before step 3 keeps its old `PATH`.
+
+### 5. Check
 
 In a new process, one command at a time:
 
@@ -110,36 +120,46 @@ command -v commonplace-validate             # ~/.local/commonplace-shims/commonp
 commonplace-source --help
 ```
 
-Then continue with `INSTALL.md` step 3 (`commonplace-init`).
+Then continue with `INSTALL.md` step 3 (`commonplace-init`). A project initialised against another install reports `stale` from `commonplace-init --check` until init is rerun.
 
-## Code and documentation changes this needs
+## Fallback: keep the `uv tool` layout
 
-1. **Library location** for the user install (step 2). Required before the user install can work.
-2. **`commonplace-init`'s installation warning.** `installation_warnings()` in `src/commonplace/cli/init_project.py` warns when commands resolve outside `uv tool dir --bin`. With this layout that is every command (open problem 4). It needs another way to recognise a correct install, for example: the command resolves to a shim whose package folder holds the installed `llm-commonplace`.
-3. **`cp-skill-health-check`.** It looks for `llm-commonplace` in `uv tool list`, which this layout never appears in. It needs the same recognition, and the Windows symptoms from the README (Code Integrity events, `uv trampoline failed to canonicalize script path`, the blocked path).
-4. **`INSTALL.md`.** Step 1 gains the Windows Python prerequisite; step 2 gains the Windows procedure; the Smart App Control section becomes background, and `Updating` gains the Windows upgrade steps.
-5. **A decision on the one-install-path constraint and ADR 064** (user-level uv tool). This proposal is Windows-only. Record either that Windows gets its own path, with Smart App Control and antivirus as the reason, or that every platform moves to the same layout.
+For users who keep `uv tool install` as in the current `INSTALL.md`:
+
+1. Add an antivirus exception for the uv tool folder (`uv tool dir`; on the test machine `C:\Users\zzbby\.local\share\uv\tools\`). Without it, Avast sandboxed the launchers, deleted `Scripts\python.exe`, and then blocked that path from being written again.
+2. Use the existing Smart App Control shims in `INSTALL.md`, which start the tool environment's `Scripts\python.exe`. With a python.org base, that file is a copy of python.org's signed `venvlauncher.exe`; with a uv-managed base, its signature was not checked. Building the tool with `--python "C:\Program Files\Python314\python.exe"` is therefore likely the better fallback.
+
+Not tested. It is the user's decision to change antivirus settings; the procedure should say how, not do it.
+
+## Code and documentation changes needed
+
+1. **Library location for the released package.** With `--target`, the library lands in `<package folder>\share\commonplace`. `_library_root()` in `src/commonplace/lib/library.py` looks in `sys.prefix\share\commonplace`, which under the system Python is `C:\Program Files\Python314\share\commonplace`. Proposed: when that is missing, also try the `share\commonplace` folder next to the installed package (`Path(commonplace.__file__).parents[1] / "share" / "commonplace"`). The editable install is unaffected because it reads the checkout's `kb/`.
+2. **`commonplace-init`'s installation warning.** `installation_warnings()` in `src/commonplace/cli/init_project.py` warns when commands resolve outside `uv tool dir --bin`, which with this layout is every command (open problem 4). It needs to recognise a shim whose package folder holds the installed `llm-commonplace`.
+3. **`cp-skill-health-check`.** It looks for `llm-commonplace` in `uv tool list`, where this layout never appears. It needs the same recognition, plus the Windows symptoms in the README: Code Integrity events, `uv trampoline failed to canonicalize script path`, and the blocked path.
+4. **Workjig on Windows** (open problem 10). `commonplace-task`, `commonplace-analysis` and the headless runners crash on the `fcntl` import whatever the install layout.
+5. **`INSTALL.md`.** Step 1 gains the Windows Python prerequisite. Step 2 gains this procedure as the Windows path, with the `uv tool` layout and its antivirus exception as the fallback. The Smart App Control section shrinks to background. `Updating` gains the Windows upgrade steps.
+6. **A decision on the one-install-path constraint and ADR 064** (user-level uv tool). This procedure is Windows-only. Record either that Windows gets its own path, with Smart App Control and antivirus as the reason, or that every platform moves to the same layout.
 
 ## Verification protocol for other agents
 
-Goal: confirm or refute each "unverified" item above, on machines other than the test machine.
+Goal: turn each "not tested" row in [What is verified](#what-is-verified) into verified or refuted, on machines other than the test machine.
 
 Before starting:
 
-- Record Windows edition and build, whether Smart App Control is on (`(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy').VerifiedAndReputablePolicyState`), the antivirus products (`Get-CimInstance -Namespace root\SecurityCenter2 -ClassName AntiVirusProduct`), and the harness (terminal, or which agent app).
+- Record Windows edition and build, whether Smart App Control is on (`(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy').VerifiedAndReputablePolicyState`, 1 means on), the antivirus products (`Get-CimInstance -Namespace root\SecurityCenter2 -ClassName AntiVirusProduct`), and the harness (terminal, or which agent app).
 - Back up the user `Path`.
 
 While running:
 
 - Start one command at a time. Never launch every executable in a loop: a stalled launch can hang the machine until restart.
 - Never start processes through WMI or `powershell -EncodedCommand`. Avast treated that pattern as malware and deleted files.
-- A process keeps the environment it started with. A check after a `PATH` change needs a fully restarted shell or app; say which.
+- After a `PATH` change, check in a fully restarted shell or app, and say which.
 
 Report, as a new `results-<date>-<machine>.md` in this workshop:
 
 - Each step's command, exit code and any error, verbatim.
-- For each "unverified" item: confirmed, refuted (with the evidence), or not tested.
+- For each row tested: verified or refuted, with the evidence.
 - Code Integrity events 3033/3077 naming Python or `commonplace` during the run, and any antivirus quarantine, sandbox or block.
 - What was left installed, and how to undo it.
 
-Undo: remove `.local\commonplace-shims` from the user `Path`, then delete `.local\commonplace-shims` and `.local\share\commonplace`. Uninstall Python with `winget uninstall --id Python.Python.3.14` if it was installed for the test.
+Undo: remove `.local\commonplace-shims` from the user `Path`, then delete `.local\commonplace-shims` and `.local\share\commonplace`. Uninstall Python with `winget uninstall --id Python.Python.3.14` if it was installed only for the test.
