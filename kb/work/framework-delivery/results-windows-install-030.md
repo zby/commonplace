@@ -1,5 +1,7 @@
 # Windows install check: published 0.3.0, real user install
 
+Follow-up work on these findings moved to [windows-install](../windows-install/README.md) on 2026-10-27. This file stays as the record of the first run.
+
 - Tester and date: Claude Code agent (claude-opus-5-5) in the Claude desktop app's Code tab, 2026-10-26, at the operator's request
 - Scope: **not** the isolated run in [run-prompts.md](./run-prompts.md#windows--install-check-for-the-published-030-any-harness). The operator asked for a normal install on a machine with no developer tools. Commonplace went into the user-level uv tool directory with no `$root` isolation, and the project was kept (`C:\Users\zzbby\commonplace-kb`). The steps below map onto the prompt's steps where they apply. `cp-skill-health-check` ran afterwards in the same session.
 

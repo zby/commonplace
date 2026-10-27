@@ -114,8 +114,9 @@ package and the release must match before any new run is evidence.
    isolated directories kept out of the way. One local snag, not a product
    defect: a user-level uv `exclude-newer = "7 days"` setting rejected both
    `llm-commonplace` 0.3.0 and `workjig` 0.1.0 as too new until overridden
-   with `--exclude-newer`. Still open: the same check on macOS and Windows;
-   [run-prompts.md](./run-prompts.md#windows--install-check-for-the-published-030-any-harness)
+   with `--exclude-newer`. Still open: the same check on macOS and Windows.
+   Windows install problems moved to [windows-install](../windows-install/README.md)
+   on 2026-10-27; [run-prompts.md](./run-prompts.md#windows--install-check-for-the-published-030-any-harness)
    has the Windows prompt (written 2026-10-26), and CI gained a
    `windows-latest` job the same day that installs the built wheel and runs
    init, `--check` and validation (first run pending push).
