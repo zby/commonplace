@@ -900,7 +900,7 @@ def _content_outside_ingest_quotes(content: str) -> str:
 
 def _display_snapshot_path(path: Path, sources_dir: Path) -> str:
     try:
-        return str(path.resolve().relative_to(sources_dir.resolve()))
+        return path.resolve().relative_to(sources_dir.resolve()).as_posix()
     except ValueError:
         return str(path)
 
