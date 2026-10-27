@@ -8,10 +8,15 @@ This plan validates a candidate design. It is not a test of the installation pro
 
 ## The claim under test
 
-The design exists because an antivirus product blocked execution of a uv-generated `commonplace-*.exe` during a larger scripted validation. The claim is therefore: *the shim path executes under the antivirus policy that blocked the generated executable*. Two consequences:
+The design exists because the uv-generated `commonplace-*.exe` launchers were blocked on a Windows 11 Home machine on 2026-10-26. The record is on `origin/main`, which this branch's base (`2430377f8`, 2026-08-08) predates: `kb/work/framework-delivery/results-windows-install-030.md` (the run, findings 4, 10 and 11) and `kb/work/windows-install/README.md` (open problems 1 to 3, testing rules). What blocked:
 
-1. A machine or policy on which the generated executable is **not** blocked cannot validate the claim. Dispatch tests on such a machine show that the shim works mechanically; they say nothing about antivirus acceptance. The antivirus result of every test on that machine is **uninformative**, not pass.
-2. The shim path has its own executable components: the uv-managed `python.exe` (observed `NotSigned` on the reference machine), the `.cmd` launcher, and in the production concept `uv.exe`. A policy that blocks unsigned, low-prevalence, or recently created executables can block these too. The claim is validated only when the complete shim path runs under the policy that blocked the generated executable.
+- **Smart App Control** (`VerifiedAndReputablePolicyState` 1; Code Integrity events 3033 and 3077, policy `{0283ac0f-fff1-49ae-ada1-8a933130cad6}`) refused the unsigned, per-install uv launchers in `.local\bin`. Verdicts varied between runs, and one launch hung until the computer was restarted. It also blocked one uv-managed CPython build (3.13.17, `0xc0e90002`) while 3.14.9 ran.
+- **Avast** Behavior Shield deleted the tool environment's `Scripts\python.exe` (detection `IDP.HELU.PSE95%s_cmd`, recorded against `powershell.exe` started through WMI with `-EncodedCommand`), and Avast Auto-Sandbox repeatedly sandboxed the launchers. McAfee was also registered. Windows Defender logged nothing.
+
+The claim is therefore: *the shim path executes under Smart App Control with Avast present, where the generated launchers were blocked*. Two consequences:
+
+1. A machine without Smart App Control on, or without that antivirus, cannot validate the claim. Dispatch tests on such a machine show that the shim works mechanically; they say nothing about acceptance. The antivirus result of every test on that machine is **uninformative**, not pass. The reference machine for this plan has Smart App Control off, Defender only, and no Code Integrity event naming Commonplace, Python or uv.
+2. The shim path has its own executable components. The harness here starts the uv-managed `python.exe`, which is `NotSigned` and of the same build family that Smart App Control blocked once. The `origin/main` proposal (`kb/work/windows-install/proposed-install-procedure.md`, operator direction of 2026-10-27) instead starts a python.org interpreter signed by the Python Software Foundation and installs the package with `uv pip install --target`, so no per-install executable is written or run. A harness built on the uv-managed interpreter tests the fallback, not that proposal.
 
 ## Result classes
 
@@ -91,15 +96,15 @@ Run W0 before any shim test on a machine. It has three parts.
 
 ### W0a — the original detection record
 
-Record, from the original incident:
+The record exists; cite it rather than reconstructing it. From `origin/main`:
 
-- date, machine role, antivirus product and version, and whether a managed policy (Intune, Group Policy, third-party console) applies;
-- threat or detection name, or the attack surface reduction rule name;
-- the file that was flagged (which `commonplace-*.exe`, from which directory: project `.venv\Scripts` or the uv tool bin);
-- the exact top-level command and the operation in progress;
-- the action taken (blocked, quarantined, allowed with warning).
+- `kb/work/framework-delivery/results-windows-install-030.md`, sections "Smart App Control hang" and "Shim workaround test and Avast detection", findings 4, 10, 11 and 12;
+- `kb/work/windows-install/README.md`, open problems 1 to 5 and the testing rules;
+- `kb/work/windows-install/results-2026-10-27-signed-python.md`, the signed python.org attempt and the path Avast left blocked.
 
-If no record exists, state so and reconstruct what can be reconstructed from the Defender history and event log on the originating machine, using the queries above without a start-time filter.
+Summary: 2026-10-26, Windows 11 Home 10.0.26300, Claude desktop app Code tab; Smart App Control on; Avast, McAfee and Defender registered in `root\SecurityCenter2`. Blocked files were uv launchers in `.local\bin` (`commonplace-source.exe` ten times, `commonplace-review-job-list.exe` three times) and in an isolated `%TEMP%\cp-030\bin` install, all by Code Integrity (Smart App Control), during a loop that ran `--help` on every executable; the loop hung until restart. Avast then deleted the tool environment's `Scripts\python.exe` after a WMI-launched encoded PowerShell command, and sandboxed `commonplace-validate.exe` and `commonplace-promotion-candidates.exe`.
+
+Record in this run's report whether the current machine matches that configuration: Smart App Control state, the `root\SecurityCenter2` products, and the count of Code Integrity events 3033 and 3077 naming Commonplace, Python or uv (filter by name; McAfee driver loads flood that log).
 
 ### W0b — on-demand scan of the executables
 
@@ -132,11 +137,12 @@ This is the only test in the plan that deliberately invokes a generated entry po
 
 When the reference machine is uninformative, the claim is tested where the failure reproduces. In order of evidential value:
 
-1. **The originating machine and policy** from W0a. This is the only environment that tests the actual claim. Run W0c, then W3, W6, and W7 there, with observation armed, and record the policy identifiers.
-2. **A hardened Defender configuration** reproducing the likely cause. Unsigned, newly built, low-prevalence executables such as uv's entry-point trampolines are the typical target of the attack surface reduction rule "Block executable files from running unless they meet a prevalence, age, or trusted list criterion" (rule id `01443614-cd74-433a-b99e-2ecdc07bfc25`) and of cloud block level `High` or above. On a disposable Windows virtual machine with administrator rights, enable that rule in block mode and raise the cloud block level, confirm with W0c that the generated executable is now blocked, then run W3, W6, and W7. Because the uv-managed `python.exe` is also unsigned, this configuration tests whether the shim path survives the same rule, which is the design's real risk.
-3. **Reputation lookup** for the executables, if the operator agrees to submit public files to an external scanner. Submit only the uv trampoline and the uv-managed `python.exe`, never project content. This records whether other engines flag the files; it is supporting evidence only.
+1. **The originating machine** from W0a: Smart App Control on, Avast and McAfee present. This is the only environment that tests the actual claim. Run W0c, then W3, W6, and W7 there, with observation armed. Follow the testing rules recorded in `kb/work/windows-install/README.md` on `origin/main`: start one command at a time and never loop over every executable, since a stalled launch hung that machine until restart; never start processes through WMI or `powershell -EncodedCommand`, since Avast treated that as malware and deleted files; record the `root\SecurityCenter2` products and back up the user `Path` before the run; and do not turn Smart App Control off, since Windows cannot turn it back on without a reinstall. On that machine, read Code Integrity events 3033 and 3077 filtered by file name, Avast's quarantine index and Auto-Sandbox log, in addition to the Defender queries above.
+2. **A Smart App Control machine** without Avast. Smart App Control is an evaluation-mode setting on fresh Windows 11 installs and cannot be turned on after it has been off, so this means a fresh Windows 11 install or virtual machine that has never had it turned off. Confirm with W0c that the generated launcher is blocked (Code Integrity 3077), then run W3, W6, and W7. Because the harness's uv-managed `python.exe` is unsigned, this environment tests whether the shim path survives the same reputation check, which is the design's real risk; a run with the signed python.org interpreter from the `origin/main` proposal tests the proposal instead.
+3. **A hardened Defender configuration** as a weaker analogue. On a disposable virtual machine with administrator rights, enable the attack surface reduction rule "Block executable files from running unless they meet a prevalence, age, or trusted list criterion" (rule id `01443614-cd74-433a-b99e-2ecdc07bfc25`) in block mode and raise the cloud block level, confirm with W0c that the launcher is blocked (event 1121), then run W3, W6, and W7. This approximates Smart App Control's reputation check but is not the same policy.
+4. **Reputation lookup** for the executables, if the operator agrees to submit public files to an external scanner. Submit only the uv trampoline and the uv-managed `python.exe`, never project content. This records whether other engines flag the files; it is supporting evidence only.
 
-A run on environment 2 or 3 is recorded as a separate report naming the configuration. It does not replace environment 1 when the original policy is known and reachable.
+A run on environment 2, 3 or 4 is recorded as a separate report naming the configuration. It does not replace environment 1 while that machine is reachable.
 
 Until an informative environment has produced a W6 pass with a W0c detection, the design's antivirus claim is **unverified**, and `INSTALL.md` should not present the shim path as the supported Windows command path on antivirus grounds.
 
