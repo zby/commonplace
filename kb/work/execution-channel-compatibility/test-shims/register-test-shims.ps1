@@ -15,7 +15,7 @@ import sys
 from commonplace.cli.init_project import main as init_main
 from commonplace.cli.validate_notes import main as validate_main
 
-command = os.path.basename(sys.argv[0]).lower()
+command = os.environ.get("COMMONPLACE_TEST_SHIM", "").lower()
 if command.startswith("commonplace-init"):
     target = init_main
 elif command.startswith("commonplace-validate"):
@@ -29,7 +29,7 @@ raise SystemExit(target())
 
 foreach ($name in @('commonplace-init','commonplace-validate')) {
     $cmd = Join-Path $bin ($name + '.cmd')
-    $body = "@echo off`r`n`"$python`" `"$dispatcher`" %*`r`n"
+    $body = "@echo off`r`nset `"COMMONPLACE_TEST_SHIM=$name`"`r`n`"$python`" `"$dispatcher`" %*`r`n"
     Set-Content -LiteralPath $cmd -Value $body -Encoding ASCII
 }
 
