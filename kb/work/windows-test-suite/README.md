@@ -32,7 +32,7 @@ UV_CACHE_DIR='C:\Users\<user>\.cache\uv' uv run --python 'C:\Program Files\Pytho
 - `UV_CACHE_DIR`: inside the Claude desktop app uv's default cache is in the app's virtualised `AppData`. That path exceeds the Windows path limit and uv fails with `Trivial strip failed` ([windows-install](../windows-install/README.md), problem 9).
 - `--continue-on-collection-errors`: until item 1 is done, six modules fail to import.
 
-Baseline on 2026-10-27, Windows 11 Home, Python 3.14.7, checkout with `core.autocrlf=true`: 795 passed, 47 failed, 11 skipped, 6 collection errors.
+Baseline on 2026-10-27, Windows 11 Home, Python 3.14.7, checkout with `core.autocrlf=true`: 795 passed, 47 failed, 11 skipped, 6 collection errors. After the first five fixes the same day (`24b06867a` to `ef15112e6`): 819 passed, 26 failed, 11 skipped, 6 collection errors; no new failures.
 
 ## Backlog
 
@@ -61,21 +61,21 @@ The four locks and the plan (2026-10-27):
 
 Diagnosed 2026-10-27. Markdown links must use `/` on every platform.
 
-- **Relocation:** `format_relative_link` in `src/commonplace/lib/relocation.py:77` returns `os.path.relpath(...)` unconverted. Fix: `Path(os.path.relpath(...)).as_posix()`. Confirmed by patch to fix 5 tests:
+- ~~**Relocation:**~~ Done in `24b06867a`. `format_relative_link` in `src/commonplace/lib/relocation.py:77` returns `os.path.relpath(...)` unconverted. Fix: `Path(os.path.relpath(...)).as_posix()`. Confirmed by patch to fix 5 tests:
   - `relocation/test_relocate_directory.py`: `test_relocate_directory_apply_moves_and_rewrites`, `test_relocate_directory_moves_hidden_payload_without_inspecting_it`.
   - `relocation/test_relocate_note.py`: `test_rewrite_links_to_moved_files_updates_real_links_only`, `test_relocate_note_apply_moves_file_with_to_directory`, `test_relocate_note_apply_moves_note_across_kb_collections`.
-- **Site hooks, same pattern:** `src/commonplace/docs/properdocs_hooks.py` builds links with `os.path.relpath` at about lines 112 and 115 (lens listing; its tests are hidden behind item 1) and in `_tag_link` at about 269. The `_tag_link` one also causes item 6's `bad escape \l`.
+- ~~**Site hooks, same pattern:**~~ Done in `ef15112e6`, through a `_relative_link` helper. `src/commonplace/docs/properdocs_hooks.py` builds links with `os.path.relpath` at about lines 112 and 115 (lens listing; its tests are hidden behind item 1) and in `_tag_link` at about 269. The `_tag_link` one also causes item 6's `bad escape \l`.
 - Already correct: `index_generated.py` and `promotion.py` use `.as_posix()`.
 
 ### 3. Backslashes in repository paths in messages, JSON and navigation
 
 Diagnosed 2026-10-27. Repository-relative paths are identifiers that also appear in links and on Linux, so output uses `/` on every platform; fix the code, not the tests. There is no shared helper today; modules use local `str(x.relative_to(root))` or f-strings.
 
-- **`_display_path` in `src/commonplace/cli/validate_notes.py:172`:** `str(path.relative_to(repo_root))`. `.as_posix()` is confirmed by patch to fix:
+- ~~**`_display_path` in `src/commonplace/cli/validate_notes.py:172`:**~~ Done in `49e2ef1b9`. `str(path.relative_to(repo_root))`. `.as_posix()` is confirmed by patch to fix:
   - `validation/test_directory_artifact.py::test_cli_json_counts_artifact_once_and_locates_member_failure`
   - `validation/test_validation_scope.py::test_recent_drilldown_keeps_collection_scope`
   - `validation/test_validate_notes.py`: `test_source_collection_validation_prints_local_snapshot_warning`, `test_validation_json_is_compact_and_structured`
-- **`_display_snapshot_path` in `src/commonplace/lib/validation.py:900`:** same; fixes 2 of the 3 `sources/test_quote_verification.py` failures (`test_checksum_locates_differently_named_snapshot_with_empty_quotes`, `test_missing_expected_snapshot_reports_same_url_as_different_bytes`).
+- ~~**`_display_snapshot_path` in `src/commonplace/lib/validation.py:900`:**~~ Done in `49e2ef1b9`. same; fixes 2 of the 3 `sources/test_quote_verification.py` failures (`test_checksum_locates_differently_named_snapshot_with_empty_quotes`, `test_missing_expected_snapshot_reports_same_url_as_different_bytes`).
 - **Inline sites in `src/commonplace/lib/validation.py`** (line numbers approximate):
   - 1915 and 1933: `docs/test_collection_landing_integrity.py` (2 tests).
   - 1781-1782: `test_validate_notes.py::test_validate_collection_structure_flags_nested_collection`.
@@ -84,7 +84,7 @@ Diagnosed 2026-10-27. Repository-relative paths are identifiers that also appear
   - 1839 (`names()`): `test_validate_notes.py`: `test_source_snapshot_cache_warns_about_redundant_alternate_copy`, `test_source_snapshot_cache_reports_same_url_as_related_observation`.
   - Same pattern, no failing test: 583, 1152, 1187, 1742, 1768.
 - **Relocation messages** in `src/commonplace/lib/relocation.py` (about 455-676, including `Relocate:` and `Move write brief:`): `relocation/test_relocate_note.py::test_relocate_note_dry_run_reports_brief_without_moving`.
-- **Site navigation:** `src/commonplace/docs/properdocs_hooks.py:77`, `str(readme.relative_to(docs_dir))`: `docs/test_properdocs_hooks.py::test_on_config_omits_unpublished_report_collection`.
+- ~~**Site navigation:**~~ Done in `ef15112e6`. `src/commonplace/docs/properdocs_hooks.py:77`, `str(readme.relative_to(docs_dir))`: `docs/test_properdocs_hooks.py::test_on_config_omits_unpublished_report_collection`.
 - **Test-only:** `sources/test_quote_generation.py` (2 tests). The product already prints `.as_posix()` (`src/commonplace/lib/quote_grounding.py`); the tests build the expected text from a Windows path. Use `source.file.as_posix()` in the tests and in their `block()` helper.
 - **Other `str()` paths, no test:** `lib/quote_verification.py` `display_path`, `lib/project_paths.py`, `lib/tasks.py` (`run_dir=` is serialised), and `lib/agentic_analysis/audit.py`, whose `accepted_sha256` keys would differ between operating systems.
 - **Proposed shape:** fix `_display_path` and `_display_snapshot_path`; add one `repo_relative(path, root) -> str` helper in `lib/` (for example beside `artifact_identity` in `library.py`); replace the inline sites with it. Grepping for `str(.*relative_to`, `os.path.relpath` and f-strings over `relative_to` finds them.
@@ -104,10 +104,10 @@ Diagnosed 2026-10-27. Creating a symlink fails with `WinError 1314` unless Devel
 Diagnosed 2026-10-27, by running the tests in a clone with `core.autocrlf=false`. The checkout's CRLF explains only one failure. Most come from writing in Python text mode, which on Windows writes CRLF, then reading raw bytes without normalising. That is a product bug users' Windows KBs will hit.
 
 - **CRLF checkout:** `comparison/test_historical_coverage.py::test_real_allowlist_pins_exact_unchanged_publications`. The test hashes tracked `kb/reports/retained/.../memory-profile.md`, whose bytes are pinned in `src/commonplace/lib/systems_matrix.py` (about 170-173, checked about 309). In a CRLF checkout the systems matrix itself stops recognising the two historical profiles. Passes in the LF clone. Fix: add a `.gitattributes` (there is none) with `* text=auto eol=lf`, or at least `kb/** text eol=lf`.
-- **Validator keeps `\r` (product):** `ValidationRun.load_document` in `src/commonplace/lib/validation.py:239` decodes raw bytes and keeps CRLF. Fix: `.replace("\r\n", "\n")` after decoding; hashing keeps using exact bytes. Confirmed in the clone to fix:
+- ~~**Validator keeps `\r` (product):**~~ Done in `aee32bd98`, with a CRLF-ingest regression test. `ValidationRun.load_document` in `src/commonplace/lib/validation.py:239` decodes raw bytes and keeps CRLF. Fix: `.replace("\r\n", "\n")` after decoding; hashing keeps using exact bytes. Confirmed in the clone to fix:
   - `validation/test_full_pass_validation.py` (6 tests): `resolution_section` (`src/commonplace/lib/full_pass.py`) returns CRLF text that never equals the LF rendering.
   - `validation/test_validation_unquoted_sources.py::test_one_verified_quote_brings_the_note_under_the_bound`: `INGEST_QUOTES_HEADING_RE` (`src/commonplace/lib/quote_verification.py:56`) cannot match `## Quotes\r`, so quotes go unverified.
-- **Init rewrites its own template (product):** `_write_template` in `src/commonplace/cli/init_project.py` builds `expected_bytes` with LF but writes with `write_text` (line 93), so the file lands CRLF and every rerun reports `AGENTS.md.template` as differing. Fix: `target.write_bytes(expected_bytes)`; confirmed by `installation/test_init_project.py::test_init_project_creates_core_layout_and_is_idempotent`. Also make `_record_existing` ignore CR-versus-LF differences, so a user's CRLF copy counts as unchanged; `test_init_project_treats_raw_template_source_as_matching` passes in the CRLF checkout only by coincidence.
+- ~~**Init rewrites its own template (product):**~~ Done in `20b3c0543`, including the CRLF-tolerant `_record_existing` and a regression test. `_write_template` in `src/commonplace/cli/init_project.py` builds `expected_bytes` with LF but writes with `write_text` (line 93), so the file lands CRLF and every rerun reports `AGENTS.md.template` as differing. Fix: `target.write_bytes(expected_bytes)`; confirmed by `installation/test_init_project.py::test_init_project_creates_core_layout_and_is_idempotent`. Also make `_record_existing` ignore CR-versus-LF differences, so a user's CRLF copy counts as unchanged; `test_init_project_treats_raw_template_source_as_matching` passes in the CRLF checkout only by coincidence.
 - **Test writers:** `sources/test_quote_matching.py::test_three_verifiers_agree_on_same_quote_and_region[one\none-False]` writes `"one\none"` in text mode and hashes the LF text; snapshot pins are byte-exact by design, so write with `write_bytes` or `newline=""`. Same for `sources/test_quote_verification.py::test_matching_checksum_with_different_source_url_warns` (its `_ingest` helper), which then also needs item 3's `_display_snapshot_path` fix.
 - **Not tested, inferred:** `x_snapshot.py` (about 435) and `github_snapshot.py` (about 180) write snapshots in text mode and print the SHA-256 of the CRLF bytes. If such a snapshot is committed with `autocrlf=true`, Git stores LF and the pin breaks elsewhere. Write snapshots with `newline=""`.
 
@@ -117,7 +117,7 @@ Diagnosed 2026-10-27.
 
 - `tooling/test_scan_tool_failures.py::test_unicode_separators_are_not_record_boundaries`: not console output. The test helper `trace()` (line 17) calls `write_text()` without `encoding`, so Windows writes cp1250 and fails on ` `. Fix: `encoding="utf-8"` there and at lines 105 and 158. Confirmed: all 16 tests pass with `PYTHONUTF8=1`.
 - `sources/test_quote_matching.py::test_notes_only_match_retained_bodies[one two]`: same kind. Line 48 writes without `encoding`, so an em dash becomes cp1250 byte `0x97`. Fix: `encoding="utf-8"`.
-- `docs/test_properdocs_hooks.py::test_on_page_markdown_keeps_headless_tags_as_text`: two bugs in `src/commonplace/docs/properdocs_hooks.py`. The badge `re.sub` (about 312) uses page text in a replacement template, which breaks on any `\`, on Linux too; use a function replacement. And `_tag_link` writes a backslash link (item 2). Needs both fixes; inferred, not run.
+- ~~`docs/test_properdocs_hooks.py::test_on_page_markdown_keeps_headless_tags_as_text`~~ Done in `ef15112e6`, with a backslash-in-status regression test: two bugs in `src/commonplace/docs/properdocs_hooks.py`. The badge `re.sub` (about 312) uses page text in a replacement template, which breaks on any `\`, on Linux too; use a function replacement. And `_tag_link` writes a backslash link (item 2). Needs both fixes; inferred, not run.
 - Grep the tests for `write_text(` and `open(` without `encoding=`; more may fail on non-UTF-8 Windows locales.
 
 ### 7. Not yet diagnosed
