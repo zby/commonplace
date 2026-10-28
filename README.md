@@ -139,8 +139,8 @@ Reader mode needs only an agent runtime with project-file access and `rg`. The f
 | [git](https://git-scm.com/) | yes | Versioning and history-preserving relocation |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) | yes | Search, frontmatter queries, and link scanning |
 | [curl](https://curl.se/) | yes | PDF downloads in `snapshot-web` |
-| [Trafilatura](https://trafilatura.readthedocs.io/) | yes | Main-content HTML extraction and Markdown conversion |
 | [Poppler](https://poppler.freedesktop.org/) | yes | PDF metadata and text extraction |
+| [Trafilatura](https://trafilatura.readthedocs.io/) | no | Web-page capture in `snapshot-web`; without it, paste the page text |
 | [gh](https://cli.github.com/) | no | GitHub issue and PR snapshots |
 
 ## License

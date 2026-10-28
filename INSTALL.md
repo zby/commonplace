@@ -78,8 +78,6 @@ git -C commonplace sparse-checkout set kb
 - **git**
 - **ripgrep** (`rg`) — agent runtimes use it for fast KB search
 - **curl** — downloads PDFs for `cp-skill-snapshot-web`
-- **Trafilatura 2.2+** — extracts ordinary web pages as clean Markdown; install
-  its CLI with `uv tool install "trafilatura>=2.2"`
 - **Poppler** — supplies `pdfinfo` and `pdftotext` for PDF snapshots (the
   package is commonly named `poppler-utils` on Debian/Ubuntu and `poppler` on
   Homebrew; WinGet identifies it as `oschwartz10612.Poppler`)
@@ -87,6 +85,10 @@ git -C commonplace sparse-checkout set kb
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and read files outside the project, where the installed library lives. A runtime that discovers skills in a project directory gets the `cp-skill-*` skills natively; any other runtime uses the skill index that `commonplace-init` writes.
 
 Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
+
+### Optional
+
+- **Trafilatura 2.2+** — lets `cp-skill-snapshot-web` save ordinary web pages as clean Markdown; no `commonplace-*` command uses it. Without it, the skill reports the missing tool and asks the user to paste the page text. Install its CLI with `uv tool install "trafilatura>=2.2"`. On Windows it is untested: over a uv-managed interpreter, Smart App Control refused one of its stdlib extensions and its first launch hung. If you install it there, add the same `--python` as in step 2.
 
 ### Check prerequisites
 
@@ -99,25 +101,23 @@ uv --version
 git --version
 rg --version
 curl --version
-trafilatura --version
 pdfinfo -v
 pdftotext -v
 ```
 
-Windows PowerShell:
+Windows PowerShell, one line at a time rather than pasted as a block: on Windows a first launch can hang under Smart App Control or antivirus, and a hang means the tool is blocked, not missing:
 
 ```powershell
 uv --version
 git --version
 rg --version
-curl --version
-trafilatura --version
+curl.exe --version
 pdfinfo -v
 pdftotext -v
 (Get-AuthenticodeSignature 'C:\Program Files\Python314\python.exe') | Select-Object Status, @{n='Signer';e={$_.SignerCertificate.Subject}}
 ```
 
-On Windows, `Status` must be `Valid` and the signer the Python Software Foundation.
+On Windows, `Status` must be `Valid` and the signer the Python Software Foundation. Use `curl.exe`, because Windows PowerShell 5.1 aliases `curl` to `Invoke-WebRequest`.
 
 ## 2. Install Commonplace as a user-level tool
 
@@ -180,9 +180,11 @@ uv tool dir --bin
 commonplace-init --help
 ```
 
-The resolved command should be inside the directory printed by `uv tool dir --bin`. Repeat the check inside each IDE or agent runtime you intend to support; an integrated terminal result does not prove that a separately launched desktop agent inherited the same environment.
+The resolved command should be inside the directory printed by `uv tool dir --bin`. On Windows, with the shims from step 2, it resolves to `.local\commonplace-shims` instead; that is expected. Repeat the check inside each IDE or agent runtime you intend to support; an integrated terminal result does not prove that a separately launched desktop agent inherited the same environment.
 
 ## 3. Set up the project with commonplace-init
+
+The KB is expected to be under version control (step 1). For a new project, create the project directory and its repository first, for example with `git init`, and run the commands below from that directory. `commonplace-init` creates `kb/` inside it.
 
 Run `commonplace-init` from the project root by bare name:
 
@@ -195,6 +197,8 @@ commonplace-init --name my-project
 ```
 
 The `--name` flag sets the project name used in templates; if omitted it defaults to the directory name.
+
+On Windows with the shims, init reports that the commands resolve outside uv's tool executable directory and suggests removing or reordering the shadowing `PATH` entry. With the shims that report is expected: keep them (see [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands)).
 
 The Commonplace library — framework notes, reference, instructions, review gates, global types, and skills — stays in the installed package. `commonplace-init` does not copy it into the project. It writes the project's own KB and a few machine-specific files that point into the library.
 
@@ -358,6 +362,7 @@ Init keeps your entries when it updates its read rule in the same file. Prefer `
 Use `uv tool list` to confirm installation and `uv tool dir --bin` to identify the expected executable directory. On Linux/macOS, `command -v` or `which -a` shows what wins on `PATH`; on PowerShell use `Get-Command -All`.
 
 - **Tool missing:** install it with the step 2 command.
+- **`uv tool list` warns of a malformed `llm-commonplace`, or the install fails with `Invalid environment … missing Python executable`:** files of the tool environment are gone, for example deleted by antivirus. `--reinstall` does not repair this. Run `uv tool uninstall llm-commonplace`, then the step 2 install command; on Windows, rerun the shim snippet afterwards.
 - **Executable exists in uv's tool directory but bare name is missing:** run `uv tool update-shell`, then fully restart the consuming process. In CI, append the configured tool bin directory to `$GITHUB_PATH` instead of editing a profile.
 - **Bare name resolves elsewhere:** an older project venv or another install is shadowing the uv tool. Remove or reorder that `PATH` entry. Do not make `uv tool install --force` the default repair; uv's conflict is evidence that command ownership needs to be resolved.
 - **Only one IDE or agent fails:** that launch class did not inherit the updated user environment. Fix its supported environment configuration or exclude it from the support claim.
