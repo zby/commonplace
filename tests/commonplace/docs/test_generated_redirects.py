@@ -15,6 +15,8 @@ def site(tmp_path: Path):
     for name in ("COLLECTION.md", "README.md", "claim.md"):
         (docs / "theory").mkdir(exist_ok=True)
         (docs / "theory" / name).write_text("# Claim\n", encoding="utf-8")
+    (docs / "theory" / "adr").mkdir()
+    (docs / "theory" / "adr" / "claim.md").write_text("# Claim\n", encoding="utf-8")
 
     class Config(dict):
         site_dir = str(tmp_path / "site")
@@ -25,6 +27,8 @@ def site(tmp_path: Path):
     files = Files([
         File(f"theory/{name}", str(docs), config.site_dir, False, inclusion=InclusionLevel.INCLUDED)
         for name in ("COLLECTION.md", "README.md", "claim.md")
+    ] + [
+        File("theory/adr/claim.md", str(docs), config.site_dir, False, inclusion=InclusionLevel.INCLUDED)
     ])
     return config, files
 
@@ -45,6 +49,8 @@ def test_directory_generator_precedes_default_priority_consumers(tmp_path: Path)
     assert len(observed) == 1
     assert observed[0] is not None
     assert observed[0].url == "theory/dir-index.html"
+    assert files.get_file_from_path("theory/adr/index.md") is not None
+    assert files.get_file_from_path("theory/adr/index.md").url == "theory/adr/index.html"
 
 
 def test_redirect_plugin_writes_old_virtual_index_address(tmp_path: Path) -> None:

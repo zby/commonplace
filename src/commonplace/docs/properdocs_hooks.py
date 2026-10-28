@@ -172,6 +172,25 @@ def on_files(files, config):
         )
         _generated_index_dirs.add(output_path.parent)
 
+        # A directory URL resolves through index.html.  Authored README.md
+        # already occupies that slot when present; otherwise expose the same
+        # generated listing there as a build-time alias.  Keep dir-index.md as
+        # the named generated artifact so existing links and redirect targets
+        # remain stable.
+        if output_path.name == "dir-index.md":
+            directory = output_path.parent
+            if not (directory / "README.md").is_file() and not (directory / "index.md").is_file():
+                alias_uri = output_path.relative_to(docs_dir).with_name("index.md").as_posix()
+                if files.get_file_from_path(alias_uri) is None:
+                    files.append(
+                        File.generated(
+                            config,
+                            alias_uri,
+                            content=content,
+                            inclusion=InclusionLevel.INCLUDED,
+                        )
+                    )
+
     collection = docs_dir / "agentic-system-analyses"
     if collection.is_dir():
         from commonplace.lib.agentic_analysis.analyses import current_analyses
