@@ -195,10 +195,14 @@ The resolved command should be inside the directory printed by `uv tool dir --bi
 The KB is kept under Git (step 1), and Git history is the record of how the KB changed. `commonplace-init` does not create the repository; do it first. From the project root:
 
 ```bash
-git rev-parse --show-toplevel
+git rev-parse --show-toplevel 2>/dev/null || git init
 ```
 
-If this fails, the directory is not inside a repository: run `git init`. If it prints a path, the project is already inside that repository; use it, and do not run `git init`, which would nest a second repository. Then run the commands below from the project root. `commonplace-init` creates `kb/` inside it.
+```powershell
+git rev-parse --show-toplevel 2>$null; if ($LASTEXITCODE -ne 0) { git init }
+```
+
+If it prints a path, the project is already inside that repository and no new one is created; a nested second repository would split the history. Otherwise it creates one in the current directory. Then run the commands below from the project root. `commonplace-init` creates `kb/` inside it.
 
 Run `commonplace-init` from the project root by bare name:
 
