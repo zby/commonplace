@@ -61,7 +61,7 @@ Use ordinary spaced phrases in prose. If this KB registers a hyphenated identifi
 
 ## Version control
 
-Maintain this KB under the project's version-control system. Inspect diffs before accepting changes, and use history for rollback, attribution, and reconstruction when needed. Follow the project's own conventions for commits, branches, and review; Commonplace assigns those objects no portable semantics, and `commonplace-*` command correctness does not depend on Git history.
+Maintain this KB in a Git repository; its history is the KB's provenance. Inspect diffs before accepting changes, and use history for rollback, attribution, and reconstruction when needed. Follow the project's own conventions for commits, branches, and review; Commonplace assigns those objects no portable semantics, and `commonplace-*` command correctness does not depend on Git history.
 
 ## Delegation
 

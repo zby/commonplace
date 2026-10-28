@@ -84,7 +84,7 @@ git -C commonplace sparse-checkout set kb
 - **On Windows: Python 3.14 from python.org** — the uv tool is built over this interpreter, because it is signed by the Python Software Foundation and the uv-managed builds are not. With Smart App Control on, Windows can refuse parts of an unsigned interpreter while letting it start, and then commands fail later in confusing ways ([ADR 064](./kb/reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md), Windows amendment). Install it once per machine from an elevated prompt with `winget install --id Python.Python.3.14 -e --source winget --scope machine`. It does not need to be on `PATH`. `--source winget` avoids the Microsoft Store source, which fails behind HTTPS-inspecting antivirus. 3.14 rather than a newer release, because a newer release may not yet have wheels for every dependency. Without administrator rights, see the no-administrator fallback in [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands).
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and read files outside the project, where the installed library lives. A runtime that discovers skills in a project directory gets the `cp-skill-*` skills natively; any other runtime uses the skill index that `commonplace-init` writes.
 
-Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
+Git is required, not interchangeable with another version-control system. A Commonplace KB is kept in a Git repository, and its history is the KB's provenance: the record of what changed, when and why, which Commonplace increasingly builds on. The `commonplace-*` commands do not yet read Git history, so their correctness does not depend on it today.
 
 ### Optional
 
@@ -276,7 +276,7 @@ Then review the merged file and fill in the per-project parts. The template's HT
 - **`The Commonplace library`** — keep it as shipped. It tells agents to read `.commonplace/library.md`, and to stop and ask for `commonplace-init` when that file is missing instead of looking for the library elsewhere.
 - **Command invocation (in `### Commands`)** — keep the unconditional bare-name rule. Commonplace commands come from the user-level uv tool, not the project's dependency environment.
 - **Navigation entry points** — add tag heads (`kb/tags/<tag>-README.md`) to the list as they emerge; the template comment explains when a tag needs one.
-- **Version-control conventions** — keep the framework expectation that the KB is versioned, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
+- **Version-control conventions** — keep the framework expectation that the KB is kept in Git, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
 
 A runtime that loads neither `AGENTS.md` nor `CLAUDE.md` needs the same pointer in whatever it does load: "read `.commonplace/library.md` in the current project; if it is missing, stop and ask for `commonplace-init`". The pointer names no machine path and no particular project, so it can be set once per user.
 
