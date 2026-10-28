@@ -83,6 +83,7 @@ git -C commonplace sparse-checkout set kb
 - **Poppler** — supplies `pdfinfo` and `pdftotext` for PDF snapshots (the
   package is commonly named `poppler-utils` on Debian/Ubuntu and `poppler` on
   Homebrew; WinGet identifies it as `oschwartz10612.Poppler`)
+- **On Windows: Python 3.14 from python.org** — the uv tool is built over this interpreter, because it is signed by the Python Software Foundation and the uv-managed builds are not. With Smart App Control on, Windows can refuse parts of an unsigned interpreter while letting it start, and then commands fail later in confusing ways ([ADR 064](./kb/reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md), Windows amendment). Install it once per machine from an elevated prompt with `winget install --id Python.Python.3.14 -e --source winget --scope machine`. It does not need to be on `PATH`. `--source winget` avoids the Microsoft Store source, which fails behind HTTPS-inspecting antivirus. 3.14 rather than a newer release, because a newer release may not yet have wheels for every dependency.
 - **An agent runtime** — Codex, Claude Code, or another LLM/IDE that can load a project control-plane file (`AGENTS.md`/`CLAUDE.md`) and read files outside the project, where the installed library lives. A runtime that discovers skills in a project directory gets the `cp-skill-*` skills natively; any other runtime uses the skill index that `commonplace-init` writes.
 
 Normal KB maintenance is expected to happen under version control. The shipped procedures and examples use Git, so it is included in the out-of-the-box prerequisites above. A project may substitute another VCS if it adapts Git-specific procedures; the `commonplace-*` commands do not use Git history as correctness state.
@@ -113,7 +114,10 @@ curl --version
 trafilatura --version
 pdfinfo -v
 pdftotext -v
+(Get-AuthenticodeSignature 'C:\Program Files\Python314\python.exe') | Select-Object Status, @{n='Signer';e={$_.SignerCertificate.Subject}}
 ```
+
+On Windows, `Status` must be `Valid` and the signer the Python Software Foundation.
 
 ## 2. Install Commonplace as a user-level tool
 
@@ -123,6 +127,15 @@ Install Commonplace as a user-level uv tool. uv creates an isolated environment 
 uv tool install --python ">=3.11" llm-commonplace
 uv tool update-shell
 ```
+
+On Windows, pass the python.org interpreter from step 1 instead of a version range, then write the command shims described in [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands):
+
+```powershell
+uv tool install --python 'C:\Program Files\Python314\python.exe' llm-commonplace
+uv tool update-shell
+```
+
+Use the same `--python` value in every later Windows install, `--editable` or `--reinstall` command below.
 
 The second command durably adds uv's tool executable directory to the user environment; it is not reissued on every shell restart. Close the installer shell and fully restart every shell, IDE, desktop agent, or service process that must use the commands. A process that was already running keeps its old environment.
 
@@ -371,7 +384,7 @@ Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-CodeIntegrity/Operati
 (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy').VerifiedAndReputablePolicyState
 ```
 
-The executables in `uv tool dir --bin` are launchers that uv generates during install. They are unsigned and unique to each install, so Smart App Control has no reputation for them. The tool environment's own `python.exe` is identical across installs, and Smart App Control lets it run. The workaround starts every command through that interpreter, using shims placed ahead of uv's directory on `PATH`. Each shim is a `.cmd` file for PowerShell and cmd, plus an extensionless `sh` script for Git Bash. Run this once in PowerShell:
+The executables in `uv tool dir --bin` are launchers that uv generates during install. They are unsigned and unique to each install, so Smart App Control has no reputation for them. When the tool is built over the python.org interpreter (step 2), the tool environment's own `python.exe` is a copy of python.org's signed launcher, and Smart App Control lets it run. Every Windows install therefore starts the commands through that interpreter, using shims placed ahead of uv's directory on `PATH`. Each shim is a `.cmd` file for PowerShell and cmd, plus an extensionless `sh` script for Git Bash. Run this once in PowerShell:
 
 ```powershell
 & {
@@ -403,6 +416,8 @@ Paste the snippet into a PowerShell session rather than saving it as a `.ps1` fi
 - **After an upgrade or reinstall:** rerun the snippet. The shims name modules, not versions, but a release can add or rename commands, and a reinstall into another tool directory moves `python.exe`. Rerunning the snippet is safe.
 - **Argument limits:** the `.cmd` shims pass arguments through cmd.exe, so arguments containing `%`, `^`, or `"` may be altered in PowerShell and cmd. Git Bash's shims pass arguments unchanged.
 - **Undo:** remove `.local\commonplace-shims` from the user `Path` and delete the directory.
+- **`DLL load failed while importing <module>: An Application Control policy has blocked this file`:** the tool was built over a uv-managed interpreter, and Smart App Control refused one of its stdlib extensions (`_decimal`, `_asyncio` and `pyexpat` have been seen). The command may start and then fail, or silently fall back to slower code. Check with `& (Join-Path (uv tool dir) 'llm-commonplace\Scripts\python.exe') -c "import sys; print(sys._base_executable)"`; it should print the python.org path. If it does not, reinstall with the step 2 Windows command plus `--reinstall`, then rerun the snippet.
+- **Antivirus blocks the tool environment's path:** if the install fails with `Access denied` while copying `venvlauncher.exe` to `…\llm-commonplace\Scripts\python.exe`, antivirus is blocking that exact path, typically after an earlier detection there. Install into another tool directory: set the user variable `UV_TOOL_DIR` to a new folder, restart the shell, rerun the step 2 Windows command, then rerun the snippet. The snippet finds the tool through `uv tool dir`.
 - **Third-party antivirus:** products such as Avast can sandbox the launchers or delete files from the tool environment. If every command fails with `uv trampoline failed to canonicalize script path`, check the antivirus's quarantine or detection history, then repair the environment by rerunning the step 2 install command with `--reinstall`, using the same `--python` you installed with.
 - **Do not turn Smart App Control off just for this.** Windows cannot turn it back on without a reinstall.
 - **Do not test the install by launching every executable in a loop.** When launches stall, the loop can hang the machine. Check one command at a time.
