@@ -33,7 +33,7 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 ## Open problems
 
 1. **Smart App Control blocks and stalls the uv launchers** [10]. The `.exe` files in `uv tool dir --bin` are unsigned and unique to each install, so they have no reputation. The verdict varies between runs; one launch hung until restart.
-2. **Smart App Control can block a uv-managed CPython build** [4]. 3.13.17 was blocked; 3.14.9 and 3.15.1 ran. The builds are unsigned.
+2. **Smart App Control can block a uv-managed CPython build** [4]. 3.13.17 was blocked; 3.14.9 and 3.15.1 ran. The builds are unsigned. On 2026-10-28 a build that starts was still blocked in part: 3.14.9 ran, but four of its stdlib extensions (`_decimal`, `_asyncio`, `_overlapped`, `pyexpat`) were refused at load time ([variant U run](./results-2026-10-28-afflicted-variant-u.md)).
 3. **Avast deletes or sandboxes tool files** [11]. It deleted the tool environment's `Scripts\python.exe` and repeatedly sandboxes the launchers. The symptom is `uv trampoline failed to canonicalize script path`. Windows' own logs show nothing.
 4. **`commonplace-init` treats shims as an installation error** [12]. It warns that every command resolves outside uv's tool directory.
 5. **The desktop app virtualises `%APPDATA%`** [3, 7]. uv's default directories there break the Python junction and hide tools from other processes. The user-level `UV_TOOL_DIR`, `UV_PYTHON_INSTALL_DIR` and `UV_SYSTEM_CERTS` work around it, but a later app session did not inherit them.
@@ -86,3 +86,12 @@ Constraints found in the code:
 - **Matching versions.** Compiled dependencies such as pyyaml match one Python minor version. Build the tool environment with the interpreter the shims run: `uv tool install --python <python.exe> --editable .`.
 - **Editable `.pth`.** The shim must add the tool's `Lib\site-packages` with `site.addsitedir()`, not `sys.path.insert()`, or the editable install's `.pth` file is not read.
 - Open problem 4 still applies to these shims.
+
+### Round 2 outcome (2026-10-28)
+
+From the [variant S](./results-2026-10-28-afflicted-variant-s.md) and [variant U](./results-2026-10-28-afflicted-variant-u.md) runs on this machine. Provisional until S's R9 shows nothing.
+
+- **Scope.** Signed Python is needed when Smart App Control is on. On the reference machine, where it is off, U worked. Smart App Control is on only on clean Windows 11 installs that never turned it off, so the affected machines are mostly new ones, and their share grows.
+- **Reputation, not signature alone.** Unsigned third-party extensions in the package folder (`pydantic_core` and others) loaded under both variants. The PSF signature is a reliable way through the reputation check, not the only one. Verdicts vary between runs, so one clean day does not prove that S is accepted.
+- **U fails silently.** Under U every command starts, and the failure appears only when code imports `asyncio` or XML parsing. A user will not read that as an install problem. This argues against offering signed Python only as troubleshooting.
+- **Open decision (operator; ADR 064).** Choose how the one-install-path constraint records signed Python: as a Windows prerequisite with a stated reason ("required when Smart App Control is on, recommended otherwise"), or as troubleshooting. The agent recommends the prerequisite, because of the silent failure above. `INSTALL.md` does not change until this is decided and R9 is done.
