@@ -94,7 +94,7 @@ Git is required, not interchangeable with another version-control system. A Comm
   uv tool install --python 'C:\Program Files\Python314\python.exe' "trafilatura>=2.2"
   ```
 
-  If it is already installed over another interpreter, add `--reinstall`. This gives Trafilatura its own tool environment whose `python.exe` is the signed launcher; its `trafilatura.exe` in `uv tool dir --bin` is still an unsigned uv launcher that Smart App Control may block, and the shim snippet below covers only the `commonplace-*` commands. Trafilatura on Windows is untested beyond that refusal.
+  If it is already installed over another interpreter, add `--reinstall`. This gives Trafilatura its own tool environment whose `python.exe` is the signed launcher. Its `trafilatura.exe` in `uv tool dir --bin` is still an unsigned uv launcher that Smart App Control may block; the shim snippet below covers only the `commonplace-*` commands. Check it with `trafilatura --version`, on its own line on Windows. Over the signed interpreter, that check passed once on one machine with Smart App Control on (2026-10-28). Avast already had the launcher on its exception list there, so this is not yet evidence of acceptance in ordinary use.
 
 ### Check prerequisites
 
@@ -142,6 +142,8 @@ uv tool update-shell
 ```
 
 Use the same `--python` value in every later Windows install, `--editable` or `--reinstall` command below.
+
+If `llm-commonplace` is already installed, `uv tool install` reports that and changes nothing, with exit status 0. To replace an existing installation, for example one built over another interpreter, add `--reinstall` to the install command above. On Windows, rerun the shim snippet afterwards. If `uv tool list` reports the existing tool as malformed, `--reinstall` fails; see [Troubleshooting command discovery](#troubleshooting-command-discovery).
 
 The second command durably adds uv's tool executable directory to the user environment; it is not reissued on every shell restart. Close the installer shell and fully restart every shell, IDE, desktop agent, or service process that must use the commands. A process that was already running keeps its old environment.
 
@@ -270,7 +272,7 @@ Then make sure `CLAUDE.md`, if Claude Code will work on the project, imports bot
 @.commonplace/library.md
 ```
 
-Then review the merged file and fill in the per-project parts. The template's HTML comments mark every spot; the load-bearing ones are:
+For a new or an existing project, then fill in the per-project parts of `AGENTS.md` (or the merged file) before the first commit below, so the KB's first recorded state already states what the KB is for. If the user has not yet said what the KB is for, ask before committing. The template's HTML comments mark every spot; the load-bearing ones are:
 
 - **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
 - **`The Commonplace library`** — keep it as shipped. It tells agents to read `.commonplace/library.md`, and to stop and ask for `commonplace-init` when that file is missing instead of looking for the library elsewhere.
@@ -280,7 +282,7 @@ Then review the merged file and fill in the per-project parts. The template's HT
 
 A runtime that loads neither `AGENTS.md` nor `CLAUDE.md` needs the same pointer in whatever it does load: "read `.commonplace/library.md` in the current project; if it is missing, stop and ask for `commonplace-init`". The pointer names no machine path and no particular project, so it can be set once per user.
 
-Commit the setup as the KB's first recorded state: the `kb/` scaffold, `AGENTS.md`, `CLAUDE.md` and the `.gitignore` that init wrote. The machine-specific outputs (stubs, `.commonplace/`, `.claude/settings.local.json`) are ignored and stay out of the commit. For example, `git add kb AGENTS.md CLAUDE.md .gitignore` and then `git commit -m "Set up Commonplace KB"`.
+Commit the setup as the KB's first recorded state: the `kb/` scaffold, `AGENTS.md`, `CLAUDE.md` and the `.gitignore` that init wrote. The machine-specific outputs (stubs, `.commonplace/`, `.claude/settings.local.json`) are ignored and stay out of the commit. For example, `git add kb AGENTS.md CLAUDE.md .gitignore` and then `git commit -m "Set up Commonplace KB"`. Git does not record empty directories, so the commit leaves out the still-empty ones, such as `kb/tasks/` and the collections' `types/` directories. A fresh clone needs `commonplace-init` anyway for its machine-specific files, and that run recreates them.
 
 ## 5. Check the skills for every agent that will work on the project
 
