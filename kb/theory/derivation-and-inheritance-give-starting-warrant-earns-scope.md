@@ -70,4 +70,5 @@ Relevant Notes:
 
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: derives the correction cost of entrenching boundaries whose rivals remain outside the effective update space
 - [Current-task fit alone does not warrant costly structural entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — extends: applies provisional adoption, replaceability, and earned transfer to durable KB structure
+- [Ingest: Studying software architecture through design spaces and rules (Lane 1990)](../sources/lane-1990-design-spaces-and-rules.ingest.md) — evidenced-by: bounds the claim with an external case, a held-out comparison the rules could have failed, which without a rival space or base-rate baseline earns scope only inside the one space tested
 - [Commonplace as an instrument](../reference/commonplace-as-an-instrument.md) — evidenced-by: records the two instances and the absence of demonstrated transfer

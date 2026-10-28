@@ -49,3 +49,4 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 Relevant Notes:
 
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — sharpens: the downstream cascade starts with a runtime event whose degraded status should have been surfaced when the first ambiguity was locally repaired
+- [Ingest: ATAM: Method for Architecture Evaluation](../sources/kazman-2000-atam-architecture-evaluation.ingest.md) — evidenced-by: bounds the two-way split, since the case study's late findings were requirements absent from a specification frozen for two years, a kind of late discovery that is neither genuine change nor a competing interpretation

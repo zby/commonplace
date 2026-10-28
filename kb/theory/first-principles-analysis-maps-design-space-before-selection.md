@@ -64,6 +64,12 @@ Agreement across rival maps is corroboration, not proof, because the derivations
 
 ---
 
+Relevant Notes:
+
+- [Ingest: General Morphological Analysis (Ritchey)](../sources/ritchey-general-morphological-analysis.ingest.md) — evidenced-by: qualifies the generate-and-prune stage with Zwicky's named method, whose pairwise cross-consistency assessment marks cells impossible for a logical, empirical or normative reason and keeps checks quadratic while configurations grow exponentially; it fixes its parameters by group judgment and supplies no rival-map step
+- [Ingest: Studying software architecture through design spaces and rules (Lane 1990)](../sources/lane-1990-design-spaces-and-rules.ingest.md) — evidenced-by: bounds the catalogue-versus-generated contrast with a space surveyed from existing systems that shows the predicted costs, a missing dimension surfacing only when held-out validation failed, while still exposing untried combinations
+- [Ingest: ATAM: Method for Architecture Evaluation](../sources/kazman-2000-atam-architecture-evaluation.ingest.md) — evidenced-by: bounds the method by contrast, as scenario-based evaluation of one chosen position that records tradeoff points and their assumptions but never maps rival positions; an illustration, not a refutation test
+
 Operationalized into:
 
 - [Invert solution-shaped requests](../instructions/invert-solution-shaped-requests.md) — recovers the problem, tests inherited assumptions, generates rival framings, and delays implementation commitment
