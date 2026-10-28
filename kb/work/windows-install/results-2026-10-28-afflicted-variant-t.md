@@ -21,7 +21,7 @@
 
 1. **T works on this machine wherever its tool path is not blocked.** It keeps the `uv tool` layout that ADR 064, `commonplace-init` and the health check recognise. The interpreter the shims start is PSF-signed, and its base is the signed python.org install, so the stdlib extensions load from signed files.
 2. **Avast's block of the default tool path is left over from 2026-10-26.** It affects this machine only, and only that one path. A user without that history would use the default `UV_TOOL_DIR`; this run did not test that, because it is not possible here.
-3. **By decision rule 3, T is preferred over S.** It changes `INSTALL.md` only by adding the prerequisite and the `--python` value; the shim step stays as it is. S remains the documented fallback for a machine whose tool path is blocked.
+3. **By decision rule 3, T is preferred over S.** It changes `INSTALL.md` only by adding the prerequisite and the `--python` value; the shim step stays as it is. For a machine whose tool path is blocked, the fallback is another `UV_TOOL_DIR`, as in this run; it keeps the `uv tool` layout, so S is not needed there.
 
 ## State left behind
 
