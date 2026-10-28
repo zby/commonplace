@@ -88,7 +88,13 @@ Normal KB maintenance is expected to happen under version control. The shipped p
 
 ### Optional
 
-- **Trafilatura 2.2+** — lets `cp-skill-snapshot-web` save ordinary web pages as clean Markdown; no `commonplace-*` command uses it. Without it, the skill reports the missing tool and asks the user to paste the page text. Install its CLI with `uv tool install "trafilatura>=2.2"`. On Windows it is untested: over a uv-managed interpreter, Smart App Control refused one of its stdlib extensions and its first launch hung. If you install it there, add the same `--python` as in step 2.
+- **Trafilatura 2.2+** — lets `cp-skill-snapshot-web` save ordinary web pages as clean Markdown; no `commonplace-*` command uses it. Without it, the skill reports the missing tool and asks the user to paste the page text. Install its CLI with `uv tool install "trafilatura>=2.2"`. On Windows, build it over the signed python.org interpreter, as Commonplace is in step 2, because over a uv-managed interpreter Smart App Control refused one of its stdlib extensions and its first launch hung:
+
+  ```powershell
+  uv tool install --python 'C:\Program Files\Python314\python.exe' "trafilatura>=2.2"
+  ```
+
+  If it is already installed over another interpreter, add `--reinstall`. This gives Trafilatura its own tool environment whose `python.exe` is the signed launcher; its `trafilatura.exe` in `uv tool dir --bin` is still an unsigned uv launcher that Smart App Control may block, and the shim snippet below covers only the `commonplace-*` commands. Trafilatura on Windows is untested beyond that refusal.
 
 ### Check prerequisites
 
@@ -184,7 +190,13 @@ The resolved command should be inside the directory printed by `uv tool dir --bi
 
 ## 3. Set up the project with commonplace-init
 
-The KB is expected to be under version control (step 1). For a new project, create the project directory and its repository first, for example with `git init`, and run the commands below from that directory. `commonplace-init` creates `kb/` inside it.
+The KB is kept under Git (step 1), and Git history is the record of how the KB changed. `commonplace-init` does not create the repository; do it first. From the project root:
+
+```bash
+git rev-parse --show-toplevel
+```
+
+If this fails, the directory is not inside a repository: run `git init`. If it prints a path, the project is already inside that repository; use it, and do not run `git init`, which would nest a second repository. Then run the commands below from the project root. `commonplace-init` creates `kb/` inside it.
 
 Run `commonplace-init` from the project root by bare name:
 
@@ -267,6 +279,8 @@ Then review the merged file and fill in the per-project parts. The template's HT
 - **Version-control conventions** — keep the framework expectation that the KB is versioned, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
 
 A runtime that loads neither `AGENTS.md` nor `CLAUDE.md` needs the same pointer in whatever it does load: "read `.commonplace/library.md` in the current project; if it is missing, stop and ask for `commonplace-init`". The pointer names no machine path and no particular project, so it can be set once per user.
+
+Commit the setup as the KB's first recorded state: the `kb/` scaffold, `AGENTS.md`, `CLAUDE.md` and the `.gitignore` that init wrote. The machine-specific outputs (stubs, `.commonplace/`, `.claude/settings.local.json`) are ignored and stay out of the commit. For example, `git add kb AGENTS.md CLAUDE.md .gitignore` and then `git commit -m "Set up Commonplace KB"`.
 
 ## 5. Check the skills for every agent that will work on the project
 
