@@ -29,6 +29,7 @@ type: types/tag-readme.md
 - [unified calling conventions enable bidirectional refactoring](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md) — how to commit reversibly: neural and symbolic components behind the same callable interface
 - [codification and relaxing navigate the bitter lesson boundary](../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — why reversibility matters: codification is a bet that may need relaxing
 - [operational signals that a component is a relaxing candidate](../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md) — five testable signals for detecting when to reverse codification
+- [open-ended knowledge work shares one epistemic layer across roles](../theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md) — why conversion needs the derivable/decided split recorded: only a decided resolution is a bet, and only a recorded bet can name its relaxing trigger in advance
 
 ## Related Tags
 
