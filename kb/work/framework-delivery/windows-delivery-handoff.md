@@ -93,22 +93,22 @@ Owner and evidence: [windows-install](../windows-install/README.md).
 
 ### 2. Rebaseline and finish the Windows suite
 
-- [ ] Run the current full suite on native Windows using the signed interpreter
+- [x] Run the current full suite on native Windows using the signed interpreter
   and a short, non-virtualized uv cache path. Record the commit, Python version,
   shell, exact invocation, failures, skips and collection errors. Follow the
   [suite workshop](../windows-test-suite/README.md), including the PowerShell 5.1
   empty-argument hazard. Do not assume the old failure count still applies.
-- [ ] Reconcile Workjig's currently installed API with Commonplace's run locks.
+- [x] Reconcile Workjig's currently installed API with Commonplace's run locks.
   `src/commonplace/headless/jobs.py` still imports `fcntl`; raising the dependency
   minimum to Workjig 0.2.0 did not itself remove that import.
-- [ ] **Decision gate:** ask whether `commonplace-task` / headless operations
+- [x] **Decision gate:** ask whether `commonplace-task` / headless operations
   must work on Windows before implementing a portable run-lock migration or
   excluding those operations. Analysis itself remains Linux-only.
-- [ ] **Decision gate:** Windows validation/site generation can import Linux-only
+- [x] **Decision gate:** Windows validation/site generation can import Linux-only
   analysis locking indirectly. Ask whether those read-only consumers must work
   on Windows; do not infer that Linux-only execution forbids portable reading,
   or silently overturn the previous reverted import change.
-- [ ] Fix remaining supported behavior and test defects. Skip only genuinely
+- [x] Fix remaining supported behavior and test defects. Skip only genuinely
   unsupported features, with explicit reasons; preserve assertions and isolation.
 - [ ] Once the supported suite passes locally, enable pytest on `windows-latest`
   in `.github/workflows/ci.yml`. Keep Linux passing and record actual CI results,
@@ -233,3 +233,19 @@ or resume step.
   (`headless/test_jobs.py`, `test_tasks.py`); all three are the `fcntl` import
   in item 2. Not run: the editable reinstall of the user tool. Running it would
   switch the user's active 0.3.1 install. Next: item 2.
+- **2026-10-30, item 2 (Windows suite).** Baseline at `c54939d60`, Python
+  3.14.7, Git Bash, `UV_CACHE_DIR='C:\Users\zzbby\.cache\uv' uv run --python
+  'C:\Program Files\Python314\python.exe' pytest -m '' -q -p no:cacheprovider
+  --continue-on-collection-errors`: 855 passed, 1 failed, 18 skipped, 2 collection
+  errors, all from `fcntl` in `headless/jobs.py`. Operator decisions: headless
+  operations must work on Windows; read-only consumers may import analysis code
+  there. Workjig 0.2.0 already ships `hold`, `busy` and the held-directory fix.
+  Changes: the run lock and its status probe use Workjig's lock on
+  `<run>/calls/.lock`; `effects.py` imports `fcntl` inside `publication_lock`;
+  `lib/tasks.py` compared git's `/` paths with a `\` state prefix, so every
+  Windows task run reported its own state files as leftovers; on Windows only
+  `agentic_analysis/` tests stay ignored (31 failed, 12 errors with the
+  exclusion lifted); the CI pytest step runs on both runners under bash. After
+  the change, same invocation: 890 passed, 13 skipped, 0 failed, 0 errors.
+  Not run: Linux (no WSL here). Remaining: commit, push and record the first
+  `windows-latest` and Linux CI results, which close item 2's last box.

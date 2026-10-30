@@ -133,11 +133,11 @@ def launch(root: Path, runbook: Runbook, profile: Profile, *, timeout: float | N
     files = _git(root, "diff-tree", "--no-commit-id", "--name-only", "-r", commit).split() if commit else []
     subject = _git(root, "log", "-1", "--format=%s", commit).strip() if commit else ""
     return Report(
-        run_dir=str(run_dir.relative_to(root)), model=answer.record.get("model"), problem=answer.problem,
+        run_dir=run_dir.relative_to(root).as_posix(), model=answer.record.get("model"), problem=answer.problem,
         result=result, commit=commit, commit_files=files, scope=list(runbook.scope), new_commits=len(new),
         scope_ok=bool(files) and all(_in_scope(path, runbook.scope) for path in files),
         subject_ok=subject == runbook.subject,
-        leftover=sorted(line for line in _status(root) - before if not line[3:].startswith(f"{STATE}/")),
+        leftover=sorted(line for line in _status(root) - before if not line[3:].startswith(f"{STATE.as_posix()}/")),
     )
 
 

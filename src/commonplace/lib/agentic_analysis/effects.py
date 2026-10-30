@@ -6,7 +6,6 @@ establish raises ``UncertainEffectError``.
 """
 from __future__ import annotations
 
-import fcntl
 import json
 import os
 import re
@@ -190,7 +189,11 @@ def publication_lock(path: Path) -> Iterator[None]:
     first, then this lock; do not acquire a run lock while holding this one.
     This advisory lock is not exclusive ownership of publication files.
     Non-cooperating writes still require authority-level exclusivity.
+    Publishing is Linux-only; importing `fcntl` here, not at module load, lets
+    Windows read analysis artifacts through this module's importers.
     """
+    import fcntl
+
     if path.resolve() != path:
         raise ValueError("publication lock must not traverse symlinks")
     path.parent.mkdir(parents=True, exist_ok=True)

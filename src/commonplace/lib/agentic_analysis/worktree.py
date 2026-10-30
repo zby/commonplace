@@ -10,7 +10,6 @@ publication ran.
 from __future__ import annotations
 
 import datetime
-import fcntl
 import json
 import os
 from hashlib import sha256
@@ -114,17 +113,11 @@ def _events(run_dir: Path) -> list[dict]:
 
 def _locked(run_dir: Path) -> bool:
     """Whether another process holds the run lock now."""
-    path = run_dir / "lock"
-    if not path.exists():
-        return False
-    fd = os.open(path, os.O_RDWR)
-    try:
-        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except BlockingIOError:
-        return True
-    finally:
-        os.close(fd)
-    return False
+    import workjig
+
+    from commonplace.headless.jobs import CALLS
+
+    return workjig.busy(run_dir / CALLS)
 
 
 def inspect_analysis(run_dir: Path) -> dict:

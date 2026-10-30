@@ -31,10 +31,10 @@ jobs:
         shell: bash
         run: echo "${{ runner.temp }}/uv-tool-bin" >> "$GITHUB_PATH"
 
-      # The test suite has no Windows run yet (kb/work/execution-channel-compatibility, E1);
-      # Windows checks only the built wheel, its entry points, init and validation.
+      # Bash, so Windows PowerShell cannot drop the empty marker expression.
+      # On Windows the agentic-analysis tests are skipped (tests/commonplace/platforms.py).
       - name: Run software tests
-        if: runner.os == 'Linux'
+        shell: bash
         run: uv run pytest -m ""
 
       - name: Build wheel

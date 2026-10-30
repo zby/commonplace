@@ -49,11 +49,9 @@ decisions only from these results.
 
 from __future__ import annotations
 
-import fcntl
 import hashlib
 import itertools
 import json
-import os
 import threading
 import time
 import uuid
@@ -145,7 +143,7 @@ class UsageLimited(LaunchFailed):
 
 class RunLocked(Exception):
     def __init__(self, root: Path):
-        super().__init__(f"another run holds {root / 'lock'}")
+        super().__init__(f"another run holds {root / CALLS / '.lock'}")
         self.root = root
 
 
@@ -163,32 +161,34 @@ def describe(result: CallResult) -> str:
     return f"{result.status} after {len(result.launches)} launch(es): {detail}" + (f"; {tail}" if tail else "")
 
 
-def _acquire(root: Path) -> int:
-    """Take the exclusive flock on `<root>/lock`; the descriptor holds it until closed."""
-    fd = os.open(root / "lock", os.O_RDWR | os.O_CREAT, 0o644)
+def _open_records(root: Path, cwd: Path, sleep=time.sleep) -> workjig.Run:
+    """Open Workjig's records under `<root>/calls`, which holds the run lock until they close."""
     try:
-        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except BlockingIOError:
-        os.close(fd)
+        return workjig.Run(root / CALLS, cwd, sleep=sleep).__enter__()
+    except workjig.RunBusyError:
         raise RunLocked(root) from None
-    return fd
 
 
 @contextmanager
 def run_lock(root: Path) -> Iterator[None]:
     """Hold the lock a `Run` on `root` would take, so no run changes its records meanwhile."""
-    fd = _acquire(Path(root))
+    root = Path(root)
+    lock = workjig.hold(root / CALLS)
+    try:
+        lock.__enter__()
+    except workjig.RunBusyError:
+        raise RunLocked(root) from None
     try:
         yield
     finally:
-        os.close(fd)
+        lock.__exit__(None, None, None)
 
 
 class Run:
     """One workflow run: a working directory for workers and a directory for its records.
 
-    The run holds an exclusive flock on `<root>/lock` and Workjig's records
-    under `<root>/calls` until `close()`; use it as a context manager.
+    The run holds Workjig's records under `<root>/calls`, and with them the
+    exclusive run lock, until `close()`; use it as a context manager.
     `max_workers`, when set, bounds the launches running at once across all
     threads; replayed calls are not bounded.
     """
@@ -201,12 +201,7 @@ class Run:
         self.worker = harnesses[profile.harness].worker(profile)
         self.artifact = self.root / "artifact"
         self.root.mkdir(parents=True, exist_ok=True)
-        self._lock_fd: int | None = _acquire(self.root)
-        try:
-            self.records = workjig.Run(self.root / CALLS, self.cwd, sleep=sleep).__enter__()
-        except BaseException:
-            self.close()
-            raise
+        self.records = _open_records(self.root, self.cwd, sleep=sleep)
         self._workers = threading.BoundedSemaphore(max_workers) if max_workers else None
         self._guard = threading.Lock()
         self._dismissed = _dismissed(self.root)
@@ -216,9 +211,6 @@ class Run:
         records, self.records = getattr(self, "records", None), None
         if records is not None:
             records.__exit__(None, None, None)
-        if self._lock_fd is not None:
-            os.close(self._lock_fd)           # closing the descriptor releases the flock
-            self._lock_fd = None
 
     def __enter__(self) -> Self:
         return self
@@ -426,8 +418,11 @@ def acknowledge_stopped(root: Path, cwd: Path, launch_id: str) -> None:
     Inspects and kills nothing: confirm first that the process and its children are gone.
     """
     root = Path(root)
-    with run_lock(root), workjig.Run(root / CALLS, cwd) as records:
+    records = _open_records(root, cwd)
+    try:
         records.acknowledge_stopped(launch_id)
+    finally:
+        records.__exit__(None, None, None)
 
 
 def gather(*calls, max_workers: int | None = None) -> list:

@@ -11,8 +11,6 @@ from pathlib import Path
 
 import pytest
 
-from tests.commonplace.platforms import analysis_linux_only
-
 REPO_ROOT = Path(__file__).resolve().parents[3]
 COMMAND_HEADING_RE = re.compile(r"^### (commonplace-[a-z0-9-]+)\s*$", re.MULTILINE)
 
@@ -51,10 +49,7 @@ def test_every_published_command_has_one_reference_section() -> None:
 
 @pytest.mark.parametrize(
     ("command", "entry_point"),
-    [
-        pytest.param(*item, marks=analysis_linux_only) if item[0] == "commonplace-analysis" else item
-        for item in sorted(PUBLISHED_COMMANDS.items())
-    ],
+    sorted(PUBLISHED_COMMANDS.items()),
 )
 def test_every_published_command_has_side_effect_free_help(
     tmp_path: Path,
