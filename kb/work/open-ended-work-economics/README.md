@@ -209,6 +209,26 @@ Notes found while framing (not exhaustive; each file's description says what it 
   by narrowing, with the shared-layer claim dropped from the proposal and
   the rivalry recorded in `kb/log.md` as deferred; 5 met except the final
   deletion, which the operator holds.
+- 2026-10-30: two further extractions, after the operator's review of what
+  the workshop left unextracted. The `goal-prioritization` tag
+  (`kb/tags/goal-prioritization-README.md`, twenty members) is the
+  reconciliation map's "held" allocation results made navigable; it is the
+  right form for a verdict of "composition of held results". The theory
+  note
+  `kb/theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md`
+  defines the epistemic layer (derivable, decided, guessed, each criticized)
+  and names six roles that consume it, with the record-level prediction for
+  the constraining role that the withdrawn relaxing-trigger test lacked. It
+  is the definition note vocabulary.md said "epistemic work" would need if
+  the layer exceeded theory building; it does, so default 2 there is
+  reversed: "theory building" names roles 1, 5 and 6, "epistemic layer" the
+  whole. Closing condition 3 is therefore stated, not only narrowed. Still
+  unextracted from the candidate list: the effort-allocation classification
+  paragraph, the question to theory-refinement-interface, and the three log
+  entries (episode handoff, third-order lessons, value decay); the case
+  records, controller inventory and worker inventory under `search/` have
+  no library home yet. Next: the step-8 note is now this note's role 2; the
+  program statement in `kb/reference/` beside the instrument note remains.
 
 ## Evaluation boundary and coupling
 
