@@ -175,9 +175,10 @@ Notes found while framing (not exhaustive; each file's description says what it 
   limit of their rule; no recorded preference flips. The operator's
   reading: that limit is the regime Commonplace is leaving as it adds
   unattended pipelines, so the net-value form becomes the required
-  comparison as automation grows. Extraction: a forward-looking
-  qualification of the controller note, and a proposal candidate for
-  cost-per-yield records on routine controllers. Next: the architecture-level
+  comparison as automation grows. Extraction: a qualification of the
+  controller note adding unequal-cost comparison as an option beside
+  matched-budget comparison, and a proposal candidate for cost-per-yield
+  records on routine controllers. Next: the architecture-level
   proposal (closing condition 4).
 - 2026-10-30: architecture-level proposal drafted in
   [architecture-proposal.md](./architecture-proposal.md) under the

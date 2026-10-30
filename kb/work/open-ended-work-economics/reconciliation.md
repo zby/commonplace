@@ -428,10 +428,12 @@ the library currently holds both without choosing.
    a person, and that is the regime Commonplace is leaving as it adds
    unattended pipelines. So the net-value form is not a separate layer now
    and becomes the required comparison as automation grows. Two items
-   follow. The controller note's matched-resources condition should be
-   qualified as holding while a person drives the controller, with the
-   net-value form and the exchange-rate sweep as what replaces it in
-   unattended runs. And the instrumentation gap is the actionable one:
+   follow. The controller note's matched-resources comparison stays
+   valid in every regime, unattended included: yield under equal budgets
+   needs no exchange rate. What unattended runs add is the frequent case
+   where controllers' costs differ materially; there, the net-value form
+   with the exchange rate swept is an option alongside it, not a
+   replacement (Astra's correction, 2026-10-30). And the instrumentation gap is the actionable one:
    cost-per-yield records for routine controllers are cheap to add before
    the pipelines multiply and costly after, which is the
    [machinery-investment](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md)
@@ -473,7 +475,9 @@ the library currently holds both without choosing.
    need before net-value comparison is possible (test 1).
 7. Qualification of
    [a search controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md):
-   the scoring rule and the unequal-cost comparison form, linking the
+   the scoring rule (credit only for a changed later decision), and the
+   unequal-cost comparison form added as an option when costs differ
+   materially, keeping matched-budget comparison; linking the
    Russell–Wefald ingest (test 1). Closing condition 2's source check is met
    for metareasoning by that ingest and for bounded optimality by the
    existing one; resource-rational analysis is deferred with the rivalry.
