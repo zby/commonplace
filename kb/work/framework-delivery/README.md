@@ -71,6 +71,15 @@ rewrites. A recheck against the repository on 2026-10-24 found:
   Bash-only. Owned by E1 in
   [execution-channel-compatibility](../execution-channel-compatibility/README.md).
 
+## Consolidated implementation queue
+
+Start with the [Windows delivery handoff](./windows-delivery-handoff.md) when
+resuming on the Windows machine. Requested by the operator on 2026-10-30, it
+collects the remaining implementation, acceptance checks, safety boundaries and
+deferred work across this workshop, windows-install, windows-test-suite and E1.
+Its baseline includes v0.3.2 and the later Windows install-guide runs; older
+status paragraphs below are dated evidence, not the current execution queue.
+
 ## Open questions
 
 Status as of the 2026-10-24 runs in brackets.
