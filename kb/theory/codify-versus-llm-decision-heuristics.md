@@ -107,18 +107,23 @@ compares are all conditional on the routine holding.
 
 **Exposure is a term the designer controls.** Exposure is what a wrong
 routine costs before its failure is noticed, beyond the cost of removing it.
-It is zero when no consumer's correctness depends on the routine, and it can
-be made zero independently of stability. That is how a low-stability
-conversion can still pay: the `complete` mark of
+It is bounded by what depends on the routine, and that bound can be set
+independently of stability. That is how a low-stability conversion can
+still pay: the `complete` mark of
 [ADR 026](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
 was expected to drift and was made "an accelerator, never a load-bearing
-wall", so its drift cost only the mark. The same ADR's `covered_by` mark had
-no consumer and was built with "adoption deferred to the first real case";
-it was dropped twice by its one adopter and retired. Both decisions were
-assessable from the ADR's own text: a conversion built before its recurrence
-is observed pays only if its exposure is zero, which is the rule
+wall", so no consumer's correctness depended on it. Its exposure was
+bounded rather than zero: a stale mark suppresses the by-tag search in
+consumers that skip it until someone drops the mark. The same ADR's
+`covered_by` mark had no consumer and was built with "adoption deferred to
+the first real case"; it was dropped twice by its one adopter and retired.
+Both decisions were assessable from the ADR's own text. Before recurrence is
+observed, bound construction cost and downstream loss against the
+anticipated benefit; this is the rule
 [ADR 040](../reference/adr/040-scripts-directory-is-the-accumulation-substrate-for-ad-hoc-tooling.md)
-already applies to scripts and this section extends to types and engines.
+applies to scripts, stated so that it covers types and engines. The cases
+do not show that zero exposure is necessary; an anticipated benefit can
+justify a bounded, nonzero exposure.
 
 Every term here is a forecast. Stability is the one about the pattern
 itself rather than a quantity, and the one that
@@ -172,5 +177,5 @@ Relevant Notes:
 - [A fixed-model house must retain missing procedures for theory use](./a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md) — extends: connects the allocation decision to learning new theory-use capacity
 - [Current-task fit alone does not warrant costly entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — grounds: supplies the carrying-cost side of the stake, where adoption raises later removal cost
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: observation across runs as the way the stability forecast is improved before construction
-- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidenced-by: a zero-exposure conversion that held under expected drift, and a built-ahead-of-need mark that was retired
+- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidenced-by: a bounded-exposure conversion that held under expected drift, and a built-ahead-of-need mark that was retired
 - [ADR 118: analyses run as a workflow over headless harnesses](../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) — evidenced-by: a conversion whose construction exceeded its stated odds and was retired on the condition its proposal named
