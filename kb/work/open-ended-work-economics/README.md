@@ -179,6 +179,14 @@ Notes found while framing (not exhaustive; each file's description says what it 
   qualification of the controller note, and a proposal candidate for
   cost-per-yield records on routine controllers. Next: the architecture-level
   proposal (closing condition 4).
+- 2026-10-30: architecture-level proposal drafted in
+  [architecture-proposal.md](./architecture-proposal.md) under the
+  design-proposal type: the conjecture in `configure(G, K_P)` form with its
+  universality axis declared, three options (interface first; second kind
+  first then extract; no shared layer), forces, and adoption and defeat
+  criteria reusing the bootstrap failure conditions and the ablation
+  measures. Not adopted. Next: operator review, then extraction to
+  `kb/reference/proposals/` and closing condition 3.
 
 ## Evaluation boundary and coupling
 
