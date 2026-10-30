@@ -157,8 +157,15 @@ Notes found while framing (not exhaustive; each file's description says what it 
   is in direction 6 (routine-conversion economics, the architecture-level
   conjecture with defeaters) and one tension in direction 1 (whether value
   conjectures or only controllers are evaluated). Four discriminating tests
-  and an extraction order are listed there. Next: test 3 (draft the
-  routine-conversion account and apply it to recorded conversions).
+  and an extraction order are listed there.
+- 2026-10-30: test 3 run in
+  [routine-conversion-account.md](./routine-conversion-account.md) over four
+  recorded cases ([search/conversion-cases.md](./search/conversion-cases.md)).
+  The account predicted all four decisions; in two it disagreed with the
+  decision taken and the outcome sided with it. One correction: exposure
+  (the cost of a wrong routine before it is noticed) promoted to a named
+  term. Next: test 2 (classify recorded relaxings by trigger) before
+  extracting the account as a theory note.
 
 ## Evaluation boundary and coupling
 
