@@ -1,5 +1,5 @@
 ---
-description: "Specification, checking, permitted interpretations, and repeated-use cost inform which operations to codify; none alone makes code or model interpretation universally preferable"
+description: "Specification, checking, permitted interpretations, repeated-use cost, and the stake set against a pattern's stated odds and exposure inform which operations to codify; none alone makes code or model interpretation universally preferable"
 type: types/note.md
 traits: [synthesis]
 tags: [learning-theory, constraining, computational-model]
@@ -80,6 +80,52 @@ natural-language procedure can retain learning despite repeated model
 interpretation. Leaving an operation model-mediated does not mean the system
 cannot learn across runs.
 
+## Stake and odds: how much to build on an uncertain pattern
+
+The repetition comparison above prices a conversion that is assumed to
+hold. A conversion is also a bet that the extracted pattern is part of the
+task rather than an accident of the observed cases
+([codification is a bet](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)).
+Two further terms follow from treating it as one, and the KB's own record
+shows decisions that went wrong for lack of them.
+
+**Size the stake to the stated odds.** Recurrence and saving per use decide
+what is won if the pattern holds; construction cost, carrying cost (the
+maintenance and later removal that [entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md)
+adds) and exposure decide what is lost if it does not. When a record states
+at decision time that the pattern's stability is low, the construction
+should be small. The artifact-run engine was adopted as a bridge under an
+expectation its own proposal called "not an observed fact", with the intent
+to keep it "as small as possible, because it is the part expected to be
+discarded"; it was built at about 3,000 lines serving its state model
+against 1,000 of domain logic and retired ten days later on the condition
+the proposal had named
+([ADR 113](../reference/adr/113-artifact-runs-execute-declared-plans-with-pinned-judgments.md),
+[ADR 118](../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)).
+The repetition comparison alone does not catch this, because the costs it
+compares are all conditional on the routine holding.
+
+**Exposure is a term the designer controls.** Exposure is what a wrong
+routine costs before its failure is noticed, beyond the cost of removing it.
+It is zero when no consumer's correctness depends on the routine, and it can
+be made zero independently of stability. That is how a low-stability
+conversion can still pay: the `complete` mark of
+[ADR 026](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
+was expected to drift and was made "an accelerator, never a load-bearing
+wall", so its drift cost only the mark. The same ADR's `covered_by` mark had
+no consumer and was built with "adoption deferred to the first real case";
+it was dropped twice by its one adopter and retired. Both decisions were
+assessable from the ADR's own text: a conversion built before its recurrence
+is observed pays only if its exposure is zero, which is the rule
+[ADR 040](../reference/adr/040-scripts-directory-is-the-accumulation-substrate-for-ad-hoc-tooling.md)
+already applies to scripts and this section extends to types and engines.
+
+Every term here is a forecast. Stability is the one about the pattern
+itself rather than a quantity, and the one that
+[observing across runs](./progressive-constraining-commits-only-after-patterns-stabilize.md)
+or an explanation of why the pattern holds improves; which of those two does
+more is not settled here.
+
 ## Mixed implementations and revision
 
 A check selector can combine symbolic dependency traversal with model judgment
@@ -124,3 +170,7 @@ Relevant Notes:
 - [Codification](./definitions/codification.md) — defined-in: names the crossing to symbolic consumption
 - [Discarding all experience-dependent state prevents cross-run accumulation](./ephemeral-computation-prevents-accumulation.md) — contrasts: execution form does not decide whether learning persists
 - [A fixed-model house must retain missing procedures for theory use](./a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md) — extends: connects the allocation decision to learning new theory-use capacity
+- [Current-task fit alone does not warrant costly entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — grounds: supplies the carrying-cost side of the stake, where adoption raises later removal cost
+- [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: observation across runs as the way the stability forecast is improved before construction
+- [ADR 026: tag-readme type with completeness and coverage marks](../reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) — evidenced-by: a zero-exposure conversion that held under expected drift, and a built-ahead-of-need mark that was retired
+- [ADR 118: analyses run as a workflow over headless harnesses](../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) — evidenced-by: a conversion whose construction exceeded its stated odds and was retired on the condition its proposal named
