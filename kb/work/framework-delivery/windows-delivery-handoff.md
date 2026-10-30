@@ -110,6 +110,14 @@ Owner and evidence: [windows-install](../windows-install/README.md).
   or silently overturn the previous reverted import change.
 - [x] Fix remaining supported behavior and test defects. Skip only genuinely
   unsupported features, with explicit reasons; preserve assertions and isolation.
+- [ ] Deliver the Workjig recovery-marker fix before considering the lock
+  migration complete. The local fix in `../workjig` preserves existing lock
+  bytes and establishes new-lock provenance through exclusive creation. It is
+  not in Commonplace's pinned Workjig 0.2.0. After independent review and a
+  separately authorized Workjig release, update Commonplace's minimum and lock
+  to the fixed release, follow the dependency-change installation checks, and
+  run the focused recovery tests on Windows. Do not treat local source-overlay
+  tests as evidence that installed users have the fix.
 - [ ] Once the supported suite passes locally, enable pytest on `windows-latest`
   in `.github/workflows/ci.yml`. Keep Linux passing and record actual CI results,
   not just configuration changes. Fix PowerShell argument passing if needed.
@@ -248,4 +256,24 @@ or resume step.
   exclusion lifted); the CI pytest step runs on both runners under bash. After
   the change, same invocation: 890 passed, 13 skipped, 0 failed, 0 errors.
   Not run: Linux (no WSL here). Remaining: commit, push and record the first
-  `windows-latest` and Linux CI results, which close item 2's last box.
+  `windows-latest` and Linux CI results. The later review below adds a required
+  dependency-delivery follow-up before item 2 is complete.
+- **2026-10-30, review fixes after `e65270621` (Linux, Python 3.13.1).**
+  Init now compares the full interpreter path with the tool environment's
+  `Scripts/python.exe`; two new negative tests reject another executable or
+  subdirectory inside that environment. Existing Windows installation evidence
+  remains valid: those runs used the documented interpreter. In `../workjig`,
+  `hold()` no longer overwrites existing lock bytes, and exclusive file creation
+  distinguishes our new lock from a competing controller's interrupted first
+  open. Tests first reproduced both failures, then passed after the fixes.
+  Workjig: `uv run pytest -q` 287 passed; lint, formatting and build passed.
+  A fresh environment installed the built wheel and passed interrupted-record
+  rejection and fresh-hold acceptance probes. Commonplace against its normal
+  pinned dependency: `uv run pytest -m '' -q` 1448 passed, 1 skipped; lint passed.
+  Against the patched Workjig source via a temporary `PYTHONPATH` override:
+  `python -m pytest tests/commonplace/headless tests/commonplace/agentic_analysis
+  -m '' -q` 565 passed. No Windows rerun, release, dependency update or user-tool
+  reinstall was performed. Next: independently review Workjig's fix, deliver it
+  through a release, update Commonplace's dependency and run focused Windows
+  recovery checks. Do not repeat the entire Windows installation experiment
+  solely for the shim-path correction.

@@ -345,7 +345,7 @@ def _is_supported_shim(
     interpreter = Path(match["python"])
     return (
         match["code"] == expected
-        and _same_directory(interpreter.parent.parent, tool_environment)
+        and _same_directory(interpreter, tool_environment / "Scripts" / "python.exe")
         and interpreter.is_file()
     )
 

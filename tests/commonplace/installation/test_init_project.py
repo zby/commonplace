@@ -511,7 +511,10 @@ def test_installation_warnings_accept_the_install_guide_shim(
 
 @pytest.mark.parametrize(
     "case",
-    ["unrelated executable", "other interpreter", "other command", "missing interpreter"],
+    [
+        "unrelated executable", "other interpreter", "other command", "missing interpreter",
+        "wrong executable in tool", "wrong directory in tool",
+    ],
 )
 def test_installation_warnings_report_shims_that_do_not_launch_the_tool(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, case: str
@@ -525,6 +528,12 @@ def test_installation_warnings_report_shims_that_do_not_launch_the_tool(
     elif case == "other interpreter":
         other = tmp_path / "other-env" / "Scripts" / "python.exe"
         other.parent.mkdir(parents=True)
+        other.write_bytes(b"")
+        shim = _write_shim(shims, other)
+    elif case in ("wrong executable in tool", "wrong directory in tool"):
+        other = (tool_python.with_name("unrelated.exe") if case == "wrong executable in tool"
+                 else tool_python.parent.parent / "other" / "python.exe")
+        other.parent.mkdir(parents=True, exist_ok=True)
         other.write_bytes(b"")
         shim = _write_shim(shims, other)
     elif case == "other command":
