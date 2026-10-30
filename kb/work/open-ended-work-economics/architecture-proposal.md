@@ -206,38 +206,47 @@ measures are reused, and their warrant stops where that proposal says.
 
 ## Adoption criteria
 
-Evidence that would support the conjecture, all comparative:
+The proposal reduces to one question: does shared support deliver
+comparable outcomes at lower total cost in a second kind of work? The
+comparison is made *within* the second kind, against a competent baseline
+on the same work, so that architecture is not confounded with task
+difficulty.
+
+Evidence that would support the conjecture:
 
 - A second kind of knowledge work runs on the machinery with only **K_P**
   added, and the record counts how much of **G** was reused unmodified,
   how much **K_P** was needed, what maintenance of **G** the second kind
   caused, and what share of the kind's work **G** kept inside one context.
-- Per the ablation measures, human decisions per verified improvement in
-  the second kind do not exceed those in theory building after **K_P**
-  stabilizes.
-- At least one of **G**'s operations moves from interpreted to mechanical
-  for the second kind using the same codification path as for the first,
-  so reuse is economical and not only expressive.
+- On the same work, over a fixed horizon, Commonplace support reaches
+  outcomes comparable to a competent domain-specific tool or to generic
+  harness features alone (option 3), at lower total cost counted as setup,
+  operation and maintenance. The ablation proposal's measures supply the
+  outcome side; the cost side is the counts above.
 
-Evidence that would defeat it, each already named as a failure condition
-in the
+Conversion of **G**'s operations from interpreted to mechanical is one
+possible source of the savings, not a requirement: shared interpreted
+procedures can save authoring, discovery and review effort while staying
+interpreted, and making one operation mechanical does not by itself show
+net savings.
+
+Evidence that would defeat it, drawn from the failure conditions in the
 [bootstrap note](../../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
-or the instrument note:
+and the instrument note, restated as cost comparisons:
 
 - The second kind requires a bespoke ontology and evaluator that share
-  nothing operative with **G**.
-- Maintenance of **G** grows with the number of kinds rather than
-  amortizing across them.
-- Human judgment per verified improvement grows as kinds are added.
-- A per-kind tool, or generic harness features alone (option 3), reaches
-  the same adequacy at lower total cost over the same horizon.
-- **G**'s operations stay interpreted for every second kind: expressive,
-  never economical.
+  nothing operative with **G**, so nothing is reused.
+- Maintenance of **G** grows with the number of kinds by more than the
+  savings the added kinds yield. Growth alone is not failure; growth that
+  outweighs savings is.
+- The competent baseline reaches comparable outcomes at lower total cost
+  over the same horizon.
 
 The trigger for an adoption decision is the first completed second-kind
-run with those counts recorded. Until then the proposal holds the
-conjecture and its defeaters, and the program's successes inside the KB
-remain evidence about theory building only.
+run with the comparison recorded. One run supports a bounded next step; it
+does not establish the claim for every kind. Until then the proposal holds
+the conjecture and its defeaters, and the program's successes inside the
+KB remain evidence about theory building only.
 
 ---
 
