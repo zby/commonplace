@@ -9,6 +9,30 @@ model: sonnet
 argument-hint: "[url] [reobserve] — URL to snapshot (web page, PDF, GitHub issue/PR, or X/Twitter post); add reobserve to capture a changed source again"
 ---
 
+## Intent and execution authority
+
+Preserve a faithful local reading copy of the requested source so later ingest
+can analyse it against an exact-file checksum.
+
+The tools and commands below are supported routes, not an exhaustive list of
+permitted methods. Choose another available tool or write local extraction code
+when needed to capture the requested content faithfully. A failed tool is not
+by itself a reason to abandon the capture. Requirements imposed by a caller,
+such as a version-pinned PDF capture, still bind.
+
+**Done means:** the requested content, not merely its page shell, is saved with
+accurate source identity, capture method and scope, and its exact Markdown-file
+SHA-256 is reported. Preserve relevant links and footnotes. If only part of the
+requested content is available, disclose the missing part and label the scope;
+do not silently substitute an abstract, surrounding page, or commentary.
+
+**Binding boundaries:** keep captures local and ignored, never overwrite an
+existing observation, do not fabricate or analyse source content, and copy the
+captured body locally rather than re-emitting it through model output. Do not
+install software, bypass access controls, or execute code supplied by the page.
+Return to the user when completion needs new permission or when available
+evidence cannot establish source identity or capture fidelity.
+
 ## EXECUTE NOW
 
 **Target: $ARGUMENTS**
@@ -68,7 +92,7 @@ and names the new capture with the capture date.
 
 Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
 output to get the file path. Tell the user and stop — the script handles
-metadata, formatting, and saving.
+metadata, formatting, and saving. If it fails, use **Step 3**.
 
 ### Step 2b: X/Twitter Post
 
@@ -83,7 +107,7 @@ and names the new capture with the capture date.
 
 Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
 output to get the file path. Tell the user and stop — the script handles
-metadata, formatting, and saving.
+metadata, formatting, and saving. If it fails, use **Step 3**.
 
 ### Step 2c: Resolve and Fetch PDF
 
@@ -95,23 +119,32 @@ command -v pdfinfo
 command -v pdftotext
 ```
 
-If any command is missing, go to **Step 3**. Do not probe for an alternative
-converter.
+If a command is missing, use another available tool that preserves the paper's
+content, or go to **Step 3**. Do not install prerequisites.
 
 Set `pdf_url`:
 
 - For an arXiv abstract URL, replace `/abs/` with `/pdf/` and discard any query string or fragment. Preserve an explicit terminal version such as `v1`. If the abstract URL has no terminal version, leave the PDF URL unversioned so arXiv serves the latest paper version. For example, `https://arxiv.org/abs/2606.03979` becomes `https://arxiv.org/pdf/2606.03979`. Do not route the abstract page through ordinary HTML capture.
 - For an existing PDF URL, use `source_url` unchanged.
 
-Run this as one Bash invocation. Retain the printed directory path as
-`{snapshot_tmp}`:
+Create the temporary directory and retain the printed path as `{snapshot_tmp}`:
 
 ```bash
 set -e
 mkdir -p kb/reports/cache/snapshot-web
 snapshot_tmp=$(mktemp -d kb/reports/cache/snapshot-web/capture.XXXXXX)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
-curl -fsSL -o "$snapshot_tmp/source.pdf" "{pdf_url}"
+```
+
+Download in a separate invocation with the literal temporary path and URL:
+
+```bash
+curl -fsSL -o '{snapshot_tmp}/source.pdf' '{pdf_url}'
+```
+
+Then extract locally:
+
+```bash
 pdfinfo -isodates "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfinfo.txt"
 pdfinfo -meta "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfmeta.xml" || true
 pdftotext -enc UTF-8 -eol unix -nopgbrk \
@@ -141,8 +174,8 @@ command -v curl
 command -v trafilatura
 ```
 
-If either command is missing, go to **Step 3**. Do not probe for another HTML
-converter.
+If either command is missing, use another available fetch or extraction tool,
+or go to **Step 3**. Do not install prerequisites.
 
 Create a temporary directory and retain the printed path as `{snapshot_tmp}`:
 
@@ -196,22 +229,37 @@ an access-denied page or browser challenge instead of the article, go to
 Set `capture_method` to `trafilatura`, set `body_file` to
 `{snapshot_tmp}/body.md`, and go to **Step 4**.
 
-## Step 3: Handle Failures
+## Step 3: Adapt to Capture Failures
 
-If any fetch or extraction method fails (missing prerequisite, curl error,
-empty Trafilatura result, or PDF with no embedded text):
+Before declaring capture blocked, inspect the failure and the material already
+retrieved. Choose a bounded alternative supported by that evidence. Do not
+repeat an unchanged failing method or search indefinitely for more tools.
 
-- Tell the user exactly what happened.
-- For a missing prerequisite, name the canonical installation:
-  - `trafilatura`: `uv tool install "trafilatura>=2.2"`
-  - `pdfinfo` or `pdftotext`: install Poppler (`poppler-utils` on
-    Debian/Ubuntu, `poppler` through Homebrew, or
-    `oschwartz10612.Poppler` through WinGet)
-  - `curl`: install curl
-- For an image-only PDF, say that this workflow has no OCR fallback.
-- Suggest they paste the content manually: "You can paste the text and I'll save it as a snapshot"
-- Remove `{snapshot_tmp}` if one was created.
-- Stop.
+- If an extractor returns boilerplate, an empty body, or the wrong page section,
+  inspect bounded portions of the saved HTML. The requested content may be in
+  the DOM or embedded JSON even when the default extractor misses it.
+- For a linked comment or other subdocument, verify its identifier and author
+  against the URL and page records. Extract that record's content, not the
+  surrounding page or replies. Include its footnotes and relevant links.
+- You may parse embedded data locally without executing page scripts. Write the
+  recovered body directly to a local file. Raw HTML embedded in Markdown is
+  acceptable when it preserves content that conversion would lose.
+- If fetching fails or a tool is unavailable, use another available route to
+  the same source when permitted. For an image-only PDF, use available OCR only
+  if you can check its fidelity; otherwise report that text capture is blocked.
+
+After recovery, set `body_file` to the local extraction and `capture_method` to
+an accurate name for the method actually used, then continue at **Step 4**.
+Keep the raw response until the snapshot has been assembled and verified.
+
+Stop and report the blocker when no evidence-backed route remains, fidelity or
+source identity cannot be established, or another route requires installation,
+new access, or material cost outside the request. State what was tried and what
+is missing. If a missing standard tool would resolve it, name its installation:
+`uv tool install "trafilatura>=2.2"`, Poppler (`poppler-utils` on Debian/Ubuntu,
+`poppler` through Homebrew, or `oschwartz10612.Poppler` through WinGet), or curl.
+Offer pasted text as a fallback rather than the first response to tool failure.
+Remove the unique temporary directory before returning.
 
 ## Step 4: Determine Metadata
 
@@ -279,7 +327,11 @@ Date: {publication date if known}
 
 ```
 
-Trafilatura has already produced the web body as Markdown. A PDF body remains
+For a recovered capture, use the locally extracted body and record the capture
+boundary in the snapshot body when it needs clarification. Do not copy embedded
+transport wrappers, unrelated records, or site boilerplate as source content.
+
+Trafilatura has already produced the default web body as Markdown. A PDF body remains
 the complete plain text emitted by `pdftotext`; plain text is valid Markdown.
 Do not make model-mediated PDF cleanup a condition of capture. If the user
 explicitly requested cleanup, transform bounded chunks into a candidate body,
@@ -302,9 +354,12 @@ test "$snapshot_bytes" -eq "$((header_bytes + body_bytes))"
 
 Compute SHA-256 after the file is complete. Hash the exact `.md` bytes,
 including frontmatter, line endings, and the presence or absence of a final
-newline. Do not include a PDF, JSON, image, or other capture companion. Tell
-the user where the snapshot was saved, its lowercase checksum, and a one- or
-two-line preview.
+newline. Do not include a PDF, JSON, image, or other capture companion. Verify
+that the saved body matches `body_file` and that the retained content matches
+the requested source and declared scope. Report the path using the exact line
+`Snapshot saved: kb/sources/.snapshots/{slug}.md`, followed by its lowercase
+checksum and a one- or two-line preview. Disclose any missing content and any
+alternative capture method used.
 
 ## Critical Constraints
 
@@ -315,10 +370,10 @@ two-line preview.
 - Make model-mediated cleanup a prerequisite for saving a snapshot
 - Save final snapshots outside `kb/sources/.snapshots/` or temporary
   download/extraction files outside `kb/reports/cache/snapshot-web/`
-- Install software — if a required tool is missing, bail with an error telling the user what to install
+- Install software or bypass access controls — use available permitted means or report the blocker
 
 **Always:**
-- Copy every `body_file` byte in order on the default capture path
+- Copy every `body_file` byte in order, including on alternative capture paths
 - Include the source URL in frontmatter
 - Use today's date for `captured`
 - Check for duplicates before fetching
