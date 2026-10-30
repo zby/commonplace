@@ -45,6 +45,17 @@ The `xargs -r` guard matters: a tag matching zero files would otherwise make `rg
 
 One known blind spot: the by-tag pattern only matches the corpus-standard inline form (`tags: [a, b]`); a note using block-style YAML tags is invisible to it (the validator's checks parse YAML and are not affected). Keep tags inline when authoring.
 
+Source lookup by topic is a separate, explicit search. Tracked ingests may carry the same topic tags without participating in tag membership:
+
+```bash
+rg -l '^tags:.*\bTAG\b' kb/sources/ --glob '*.ingest.md' \
+  | xargs -r rg -N --no-heading '^description:\s*' -r ''
+```
+
+Use the membership scope above for library-topic browsing; search `kb/theory/` and relevant reference paths when asking what Commonplace argues or ships. Use the source scope when looking for external evidence or previously ingested material. For a question needing both, run both searches and keep their results distinguishable. Do not broaden a theory lookup to sources by default.
+
+A `complete: true` head covers participating members only; it never licenses skipping source lookup. Source tags are optional and have not been backfilled, so no tag matches does not establish that no relevant source exists. Follow with source descriptions, `domains`, or body search when recall matters. The recipe selects ingests; include other tracked source-review paths explicitly when needed, never local snapshots.
+
 By keyword or whole collection — descriptions under any scope:
 
 ```bash

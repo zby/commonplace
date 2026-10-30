@@ -8,7 +8,11 @@ tags: [kb-maintenance, curation]
 
 A tag today is a membership claim: the artifact belongs to a topic that has a head, a page on the published site, and possibly marks that a validator checks. Some tagging wants less than that. A workshop file may carry a provisional label before anyone knows whether the topic is worth a head; a survey collection may want a facet that is only ever used in scoped search. This proposal records the option of a second kind of tag for those uses, and why it was set aside.
 
-## Current state (as of 2026-09-25)
+## Current state (as of 2026-10-30)
+
+ADR 089's source-search amendment permits optional tags on tracked source analyses using existing topic heads, without adding sources to membership. Explicit source-scoped searches may read those tags; generated member listings and completeness checks do not. That bounded use does not adopt this proposal's headless keywords. The historical state below predates the amendment.
+
+**Historical state (2026-09-25).**
 
 [ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, that membership ranges over one fixed set of participating collections, and that no consumer reads tags outside that set. It records this proposal's idea under its considered alternatives and rejects it for now on YAGNI grounds: the headless tags that prompted it were mistakes under the existing rules, and were given heads or retagged in the same change rather than legalized by a new mechanism. `kb/work/` and `kb/sources/` artifacts may carry `tags:` lines; nothing reads them, so they are neither keywords nor memberships but inert text.
 

@@ -25,7 +25,7 @@ Assignment fit is judged during authoring and semantic review. The deterministic
 
 ## Scope
 
-Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The mark, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; no tag consumer reads them.
+Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The mark, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; membership consumers do not read them. Explicit source-scoped searches may read tags on tracked source analyses under the source collection contract. These search results are outside the head's completeness claim, even when they reuse its topic vocabulary.
 
 ## Frontmatter
 

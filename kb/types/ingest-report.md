@@ -46,7 +46,12 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   source in, stated before it was read — record it verbatim in `occasion`.
   Omit the field otherwise. The occasion governs only the selection sections
   named below; it is not evidence about the source.
-- Use `domains` for two to four topic tags that make the report searchable.
+- Use `domains` for two to four source-specific search terms.
+- The installed source collection contract may allow optional inline `tags`
+  using existing KB topic heads. Read each head and apply its substantive
+  inclusion condition; do not infer endorsement from topical relevance.
+  Source search tags do not confer membership when the collection is outside
+  `kb/tags/COLLECTION.md`'s participating set. They do not replace `domains`.
 - Copy capture-adapter metadata such as `status_id`, `conversation_id`,
   `post_count`, and `api_url` under its existing flat field name. Do not copy a
   snapshot's `type`, `description`, `genre`, or `tags`; set ingest `genre` from

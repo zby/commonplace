@@ -54,7 +54,10 @@ whole artifact rather than assuming the listed failures are exhaustive.
 The snapshot and connect report are the complete source and discovery inputs.
 Do not browse the web, rerun connection discovery, or run broad KB searches.
 Read a conditional instruction linked below when its trigger applies, and any
-note that instruction requires. You may also open a durable local
+note that instruction requires. When the installed source collection contract
+allows topic search tags, you may read candidate tag heads under `kb/tags/`
+to assign optional tags; do not run broader discovery for this purpose.
+You may also open a durable local
 artifact explicitly named in the connect report only when needed to verify a
 connection you may keep. Never follow or cite a local snapshot link in the
 durable report.

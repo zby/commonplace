@@ -33,6 +33,12 @@ slug for the source title or central claim.
 
 **Description** (in ingest reports and source reviews) — name what the source says and where it lands, not just the source title.
 
+## Topic search tags
+
+Tracked ingests and source reviews may carry optional inline `tags: [topic]` for explicit source-scoped search. Reuse existing KB tag names, read their heads, and apply their substantive inclusion conditions. Tag the source's contribution as analyzed in the report, not incidental mentions. A tag asserts topical relevance, not endorsement or incorporation into Commonplace theory.
+
+Sources remain outside the participating collections declared in `kb/tags/COLLECTION.md`. Source tags do not affect generated member listings or completeness checks; a complete head does not replace source discovery. Membership validation does not enforce source tag heads or assignment fit. Keep `domains` for source-specific search terms, and do not copy tags from or add them to immutable snapshots.
+
 ## How to add a source
 
 ```bash

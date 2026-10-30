@@ -32,7 +32,7 @@ whose `tags:` lines are membership claims. Every `complete`
 mark, the generated listing on the site, and the head requirement range over
 exactly those collections, through one collector. Tags on artifacts elsewhere
 (`work`, `sources`, `types`, and the proposal archive under
-`reference/proposals/archive/`) are not read, nor are tags inside a
+`reference/proposals/archive/`) are not read by membership consumers, nor are tags inside a
 validation-ignored subtree, such as `reports/state/`, `reports/cache/` and
 exact captures under `reports/retained/`. Nothing is inferred from the
 directory tree: a collection joins the tag space by being listed here.
@@ -42,6 +42,8 @@ system analyses in `agent-memory-systems` and `agentic-systems`, by
 reference proposals, and by evidence notes in `reports/retained/`. Instructions, ADRs, and the other reference pages route
 through their own indexes and carry no tags; that is a rule, not a gap
 (operator decision, 2026-09-26).
+
+Tracked source analyses may reuse existing tags for explicit source-scoped search without joining the participating set. Their assignments follow the heads' inclusion conditions but do not affect generated member listings or `complete` checks. A complete head is not an exhaustive source index. Membership validation does not check source tag heads or assignment fit; authors must check them.
 
 ## Tag assignment
 
