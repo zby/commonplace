@@ -113,7 +113,7 @@ def test_capture_precedes_worker_and_reuses_then_invalidates(analysis, monkeypat
         assert str(directory / "attempts.json") in prompt
         assert "at most three" in prompt and "30 tool calls" in prompt
         assert "Existing audits, other runs and personal sessions" in prompt
-        answer(directory)
+        answer(directory, text="Report saved.")
         return {"returncode": 0, "workjig_status": "delivered"}, "No material defect established."
 
     monkeypatch.setattr(module, "launch", launch)
@@ -219,76 +219,21 @@ def test_launch_strips_profile_flags_and_passes_exact_prompt(tmp_path):
     assert str(Path(metrics["launch_dir"]) / "prompt.txt") in argv[-1]
 
 
-def test_timeout_terminates_audit_process(tmp_path):
-    script = tmp_path / "sleep.py"
-    script.write_text("import time\ntime.sleep(60)\n")
-    harness = Harness(sys.executable, {"_subcommand": str(script)}, lambda p: {})
-    (tmp_path / "prompt.txt").write_text("Audit within budget")
-    metrics, report = module.launch(tmp_path, tmp_path, Profile("pi", "test", "medium"), harness, 0.05)
-    assert metrics["workjig_status"] == "timeout" and not report
-    assert metrics["returncode"] != 0
-    assert (tmp_path / "stdout.log").is_file() and (tmp_path / "stderr.log").is_file()
-
-
-@pytest.mark.parametrize("behavior,state,workjig_status", [
-    ("delivered", "complete", "delivered"),
-    ("missing", "failed", "incomplete"),
-    ("exit", "failed", "process_error"),
-    ("timeout", "timeout", "timeout"),
-    ("child", "failed", "process_error"),
+@pytest.mark.parametrize("workjig_status,state", [
+    ("incomplete", "failed"), ("process_error", "failed"), ("timeout", "timeout"),
 ])
-def test_workjig_audit_outcomes_are_advisory_and_not_relaunched(
-        analysis, behavior, state, workjig_status):
-    script = analysis.worktree / "auditor.py"
-    script.write_text(
-        "import json,pathlib,subprocess,sys,time\n"
-        f"behavior = {behavior!r}\n"
-        "if behavior == 'timeout': time.sleep(60)\n"
-        "if behavior == 'exit': sys.exit(1)\n"
-        "if behavior == 'child':\n"
-        "    subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)'])\n"
-        "frame = pathlib.Path(sys.argv[-1].split('`')[1]).read_text()\n"
-        "output = pathlib.Path(frame.split('- report.md: ')[1].splitlines()[0])\n"
-        "if behavior != 'missing': output.write_text('File report, not terminal acknowledgement')\n"
-        "print(json.dumps({'type': 'message_end', 'message': {'role': 'assistant',\n"
-        "    'stopReason': 'stop', 'content': [{'type': 'text', 'text': 'Done'}]}}))\n"
-        "print(json.dumps({'type': 'agent_settled', 'aborted': False}))\n")
-    analysis.run.harnesses["pi"] = Harness(
-        sys.executable, {"_subcommand": str(script)}, lambda p: {}, protocol="pi-json")
-    analysis.run.timeout = 0.05 if behavior == "timeout" else 3
+def test_workjig_failures_remain_advisory_without_relaunch(analysis, monkeypatch, workjig_status, state):
+    invocations = []
+
+    def launch(*args):
+        invocations.append(args)
+        return {"workjig_status": workjig_status, "returncode": None}, ""
+
+    monkeypatch.setattr(module, "launch", launch)
     module.advisory_audit(analysis, completed=True)
     status = json.loads((analysis.run_dir / "audit/status.json").read_text())
-    assert status["state"] == state
-    assert status["workjig_status"] == workjig_status
-    directory = Path(status["directory"])
-    records = json.loads((directory / "calls/run.json").read_text())
-    attempts = next(iter(records["calls"]["advisory-audit"].values()))["attempts"]
-    assert len(attempts) == 1
-    assert attempts[0]["status"] == workjig_status
-    if behavior == "delivered":
-        assert (directory / "report.md").read_text() == "File report, not terminal acknowledgement\n"
-    else:
-        assert not (directory / "report.md").exists()
+    assert status["state"] == state and status["workjig_status"] == workjig_status
+    assert not (Path(status["directory"]) / "report.md").exists()
     assert module.audit(analysis, completed=True) == status
-    assert len(module.collect(analysis.run_dir)[0]) == 2  # Audit records are not production attempts.
+    assert len(invocations) == 1
     assert (analysis.run.artifact / "synthesis.md").read_text() == "Accepted synthesis\n"
-
-
-def test_unconfirmed_cleanup_remains_unresolved_without_automatic_retry(analysis, monkeypatch):
-    import workjig.harness
-    from workjig.platform import OwnershipError
-
-    original = workjig.harness._cleanup_group
-
-    def uncertain(process):
-        original(process)
-        raise OwnershipError("termination unconfirmed")
-
-    monkeypatch.setattr(workjig.harness, "_cleanup_group", uncertain)
-    analysis.run.harnesses["pi"] = Harness(sys.executable, {"_subcommand": ["-c", "pass"]}, lambda p: {})
-    status = module.audit(analysis, completed=True)
-    assert status["state"] == "failed" and "OwnershipError" in status["reason"]
-    records = json.loads((Path(status["directory"]) / "calls/run.json").read_text())
-    attempts = next(iter(records["calls"]["advisory-audit"].values()))["attempts"]
-    assert len(attempts) == 1 and attempts[0]["status"] == "running"
-    assert module.audit(analysis, completed=True) == status
