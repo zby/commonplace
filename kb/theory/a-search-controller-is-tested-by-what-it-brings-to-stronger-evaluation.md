@@ -22,6 +22,18 @@ resources, and downstream evaluation. This does not require knowing the best
 branch in the full counterfactual search space, which is normally unavailable
 in the open-ended setting.
 
+Two refinements follow from the decision-theoretic account of the value of
+computation ([Russell and Wefald](../sources/russell-wefald-principles-of-metareasoning.ingest.md)).
+A routed branch or probe earns credit only when it changes a later
+decision; one that raises confidence without changing a choice brings
+nothing forward and still costs what it cost. And where two controllers'
+costs differ materially, as they often do when controllers run unattended,
+the matched-resources comparison can be joined by one on net value, benefit
+minus cost on one scale, reported across a range of exchange rates rather
+than at one assumed rate. Matched-resources comparison stays valid in every
+regime; the net-value form is an added option, not a replacement, and it
+needs cost per controller run to be recorded.
+
 ## Scope
 
 - Stronger evaluation may be immediate, delayed, empirical, or formal. The
@@ -39,3 +51,4 @@ Relevant Notes:
 - [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — mechanism: identifies when an informative failure actually changes subsequent routing
 - [Diagnostic richness constrains outer-loop learning quality](./diagnostic-richness-constrains-outer-loop-learning-quality.md) — grounds: explains why inspectable evidence and failures are valuable downstream consequences apart from acceptance
 - [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: limits controller attribution to comparisons that vary the controller rather than a larger treatment bundle
+- [Principles of Metareasoning (Russell and Wefald, 1991)](../sources/russell-wefald-principles-of-metareasoning.ingest.md) — evidenced-by: the net-value rule (credit only for a changed decision, every computation pays its cost) and the exchange-rate sweep for controllers of unequal cost
