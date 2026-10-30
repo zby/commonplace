@@ -230,13 +230,12 @@ revised prediction 2 fits.
 
 ### What changes in the workshop
 
-Test 3 passes with a correction (exposure) and a narrowed claim. Two
-considerations are consequential and missing from the existing guidance;
-the rest of the account restates it. Extraction path: a section added to
-[codify versus LLM decision heuristics](../../theory/codify-versus-llm-decision-heuristics.md)
-(stake, odds, exposure, and the build-before-recurrence rule), not a new
-theory note. The seven-term table goes with it only if the section needs
-it to be readable.
+Extracted 2026-10-30 as the section "Stake and odds" in
+[codify versus LLM decision heuristics](../../theory/codify-versus-llm-decision-heuristics.md),
+with ADR 026 and ADR 118 as evidence links. The seven-term table and the
+four case applications stay here as the working record; the note carries
+only the two considerations and the build-before-recurrence rule. This
+file is consumed and can be deleted at workshop close.
 
 ### Deferred
 

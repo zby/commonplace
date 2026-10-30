@@ -167,8 +167,9 @@ Notes found while framing (not exhaustive; each file's description says what it 
   term. On Astra's objection the epistemic-versus-economic rivalry is
   deferred (relaxing triggers do not discriminate), and the extraction is
   narrowed to a section in the codify-versus-LLM note carrying the two
-  considerations that guidance lacks. Next: test 1 (controller cost) or the
-  architecture-level proposal; then extraction.
+  considerations that guidance lacks. Extracted the same day as the "Stake and
+  odds" section of the codify-versus-LLM note. Next: test 1 (controller
+  cost) or the architecture-level proposal.
 
 ## Evaluation boundary and coupling
 
