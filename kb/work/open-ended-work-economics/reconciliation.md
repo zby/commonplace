@@ -472,7 +472,23 @@ the library currently holds both without choosing.
    lessons (direction 3), value decay (direction 5).
 6. Proposal candidate in `kb/reference/proposals/`: cost-per-yield
    records for routine controllers, as the instrumentation unattended runs
-   need before net-value comparison is possible (test 1).
+   need before net-value comparison is possible (test 1). The cost measure
+   is step-shaped, not a token count (operator, 2026-10-30): work that fits
+   one session is cheap and roughly uniform; work that must cross the
+   context boundary, through sub-agents, code-managed workflows or any
+   multi-step process, pays for coordination machinery and handoff loss.
+   The library holds the mechanism
+   ([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md);
+   [two boundaries, three regimes](../../theory/two-context-boundaries-govern-collection-operations.md);
+   [a scheduler inside a conversation degrades](../../theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md);
+   [crossing contexts needs coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md))
+   and ADR 113/118 priced one crossing. A record should therefore state
+   which regime a controller ran in and what crossing machinery it
+   invoked, before any exchange rate is considered. The same step enters
+   the routine-conversion terms: a routine's use cost and construction
+   cost jump when the routine cannot stay inside one context, which is
+   why [frontloading](../../theory/frontloading-spares-execution-context.md)
+   is a conversion that pays by keeping work below the boundary.
 7. Qualification of
    [a search controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md):
    the scoring rule (credit only for a changed later decision), and the

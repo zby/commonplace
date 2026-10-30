@@ -171,12 +171,24 @@ reason to expect it to be chosen, not a decision.
   ([preferential codification](../../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md)).
   Success of **G** therefore does not show the kind's work got easier
   overall; the measure must be per unit of human judgment, not per task.
-- **Cost regime shift.** As pipelines become unattended, controller
-  comparison moves from yield-with-cost-as-tiebreaker to net value with the
-  exchange rate swept (the
-  [Russell–Wefald ingest](../../sources/russell-wefald-principles-of-metareasoning.ingest.md));
-  **G**'s controllers need cost-per-yield records before that comparison
-  is possible.
+- **Cost is step-shaped at the context boundary.** Work that fits one
+  session is cheap and roughly uniform; work that must cross the boundary,
+  through sub-agents, code-managed workflows or multi-step processes, pays
+  for coordination machinery and handoff loss
+  ([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md),
+  [coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md);
+  ADR 113/118 priced one crossing). So the operations of **G** that stay
+  inside one context are cheap for every kind, and the ones that must
+  cross are where **G**'s carrying cost and the per-kind cost both
+  concentrate. The conjecture's economy therefore depends on how much of
+  each kind's work **G** keeps below the boundary, which is a measurable
+  property of a second-kind run.
+- **Unattended runs make unequal-cost comparison common.** Matched-budget
+  comparison of controllers stays valid; where costs differ materially,
+  net value with the exchange rate swept is the added option (the
+  [Russell–Wefald ingest](../../sources/russell-wefald-principles-of-metareasoning.ingest.md)).
+  **G**'s controllers need cost-per-yield records that state the regime
+  they ran in before either comparison is possible.
 - **The brief's wider claim is not carried.** That economic reasoning is a
   more general organizing principle than epistemology, and the rivalry
   with resource-rational accounts of routinization, are deferred in the
@@ -198,8 +210,8 @@ Evidence that would support the conjecture, all comparative:
 
 - A second kind of knowledge work runs on the machinery with only **K_P**
   added, and the record counts how much of **G** was reused unmodified,
-  how much **K_P** was needed, and what maintenance of **G** the second
-  kind caused.
+  how much **K_P** was needed, what maintenance of **G** the second kind
+  caused, and what share of the kind's work **G** kept inside one context.
 - Per the ablation measures, human decisions per verified improvement in
   the second kind do not exceed those in theory building after **K_P**
   stabilizes.
