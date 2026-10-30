@@ -436,21 +436,54 @@ def test_main_reports_preserved_file_statuses(
     assert "- kb/instructions/COLLECTION.md" in captured.out
 
 
+VALIDATE_TARGET = ("commonplace.cli.validate_notes", "main")
+
+
+def _fake_tool_install(
+    monkeypatch: pytest.MonkeyPatch, resolved: Path, tool_root: Path
+) -> None:
+    """Report one installed command resolving to `resolved` under a uv tool root."""
+
+    monkeypatch.setattr(
+        init_project_module,
+        "_installed_commands",
+        lambda: {"commonplace-validate": VALIDATE_TARGET},
+    )
+    monkeypatch.setattr(init_project_module.shutil, "which", lambda _: str(resolved))
+    monkeypatch.setattr(init_project_module, "_uv_tool_bin", lambda: tool_root / "bin")
+    monkeypatch.setattr(
+        init_project_module,
+        "_uv_tool_environment",
+        lambda: tool_root / "tools" / "llm-commonplace",
+    )
+
+
+def _write_shim(shims: Path, python: Path, name: str = "commonplace-validate") -> Path:
+    """Write the `.cmd` shim INSTALL.md's Windows snippet writes for `name`."""
+
+    module, attr = VALIDATE_TARGET
+    code = (
+        f"import sys; sys.argv[0] = '{name}'; from {module} import {attr}; "
+        f"sys.exit({attr}())"
+    )
+    shims.mkdir(parents=True, exist_ok=True)
+    shim = shims / "commonplace-validate.cmd"
+    shim.write_bytes(f'@"{python}" -c "{code}" %*\r\n'.encode())
+    return shim
+
+
+def _tool_python(tool_root: Path) -> Path:
+    python = tool_root / "tools" / "llm-commonplace" / "Scripts" / "python.exe"
+    python.parent.mkdir(parents=True)
+    python.write_bytes(b"")
+    return python
+
+
 def test_installation_warnings_report_shadowing_commands(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(
-        init_project_module,
-        "_installed_command_names",
-        lambda: ("commonplace-validate",),
-    )
-    monkeypatch.setattr(
-        init_project_module.shutil,
-        "which",
-        lambda _: "/project/.venv/bin/commonplace-validate",
-    )
-    monkeypatch.setattr(
-        init_project_module, "_uv_tool_bin", lambda: Path("/user/uv-tool-bin")
+    _fake_tool_install(
+        monkeypatch, tmp_path / "project" / ".venv" / "bin" / "commonplace-validate", tmp_path
     )
 
     lines = installation_warnings()
@@ -462,21 +495,51 @@ def test_installation_warnings_report_shadowing_commands(
 def test_installation_warnings_empty_for_healthy_tool_install(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(
-        init_project_module,
-        "_installed_command_names",
-        lambda: ("commonplace-validate",),
-    )
-    monkeypatch.setattr(
-        init_project_module.shutil,
-        "which",
-        lambda _: "/user/uv-tool-bin/commonplace-validate",
-    )
-    monkeypatch.setattr(
-        init_project_module, "_uv_tool_bin", lambda: Path("/user/uv-tool-bin")
-    )
+    _fake_tool_install(monkeypatch, tmp_path / "bin" / "commonplace-validate", tmp_path)
 
     assert installation_warnings() == []
+
+
+def test_installation_warnings_accept_the_install_guide_shim(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    shim = _write_shim(tmp_path / "commonplace-shims", _tool_python(tmp_path))
+    _fake_tool_install(monkeypatch, shim, tmp_path)
+
+    assert installation_warnings() == []
+
+
+@pytest.mark.parametrize(
+    "case",
+    ["unrelated executable", "other interpreter", "other command", "missing interpreter"],
+)
+def test_installation_warnings_report_shims_that_do_not_launch_the_tool(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, case: str
+) -> None:
+    shims = tmp_path / "commonplace-shims"
+    tool_python = _tool_python(tmp_path)
+    if case == "unrelated executable":
+        shims.mkdir()
+        shim = shims / "commonplace-validate.cmd"
+        shim.write_text("@echo off\r\nother-tool %*\r\n", encoding="utf-8")
+    elif case == "other interpreter":
+        other = tmp_path / "other-env" / "Scripts" / "python.exe"
+        other.parent.mkdir(parents=True)
+        other.write_bytes(b"")
+        shim = _write_shim(shims, other)
+    elif case == "other command":
+        shim = _write_shim(shims, tool_python, name="commonplace-status")
+    else:
+        tool_python.unlink()
+        shim = _write_shim(shims, tool_python)
+    _fake_tool_install(monkeypatch, shim, tmp_path)
+
+    lines = installation_warnings()
+
+    assert any(
+        "resolve outside uv's tool executable directory" in line and str(shim) in line
+        for line in lines
+    )
 
 
 def test_a_bare_output_directory_is_not_an_initialized_project(

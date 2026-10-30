@@ -74,16 +74,16 @@ ownership; otherwise work serially. This file does not itself launch workers.
 
 ### 1. Recognize supported command shims
 
-- [ ] Reproduce the diagnostic from `installation_warnings()` in
+- [x] Reproduce the diagnostic from `installation_warnings()` in
   `src/commonplace/cli/init_project.py`. It currently recommends removing the
   shim PATH entry that INSTALL.md requires.
-- [ ] Make init and `kb/instructions/cp-skill-health-check/SKILL.md` distinguish
+- [x] Make init and `kb/instructions/cp-skill-health-check/SKILL.md` distinguish
   supported shims from genuine command shadowing. Choose the recognition method
   from current code and layout; do not simply trust every `.cmd` or suppress
   every outside-bin warning.
-- [ ] Add regression coverage for supported shims and an unrelated shadowing
+- [x] Add regression coverage for supported shims and an unrelated shadowing
   executable. Preserve ordinary uv-bin and POSIX behavior.
-- [ ] Update INSTALL.md's temporary ignore-the-warning advice after the fix.
+- [x] Update INSTALL.md's temporary ignore-the-warning advice after the fix.
 
 **Done:** the supported install gets no contradictory repair advice, while an
 unrelated shadowing install remains visible. Verify in a disposable project on
@@ -211,4 +211,25 @@ that probe collects evidence without repairing the environment during the run.
 
 Append one short entry per batch: commit tested, task IDs, changes, exact test
 selection/results, runtime/restart state, evidence path, and remaining blocker
-or resume step. No new execution results have been collected for this handoff.
+or resume step.
+
+- **2026-10-30, item 1 (shim diagnostics).** Tested on `91a4361ee` plus the
+  uncommitted fix, Python 3.14 from python.org, installed tool published 0.3.1
+  with the INSTALL.md shims on the user `PATH`; no app restart, no install
+  change. Reproduced: init flagged all 25 shims as shadowing. Change: init
+  accepts a `.cmd` only when it is the snippet's launcher line for that
+  command's entry point and runs the existing `python.exe` of
+  `<uv tool dir>\llm-commonplace`; the health-check skill applies the same rule
+  by reading the resolved file; INSTALL.md no longer says to ignore the warning,
+  except for 0.3.2 and earlier. After the fix, `installation_warnings()` with the
+  real `PATH` returned no warnings. Under `uv run`, the project venv's
+  executables were still reported. The patched init in a scratch project
+  exited 0 without warnings, and `--check` was clean. Tests:
+  `test_init_project.py -k installation_warnings` 7 passed, covering a
+  supported shim, an unrelated `.cmd`, another interpreter, another command's
+  shim, a missing interpreter, a venv executable and a uv-bin install. Full fast
+  suite (`uv run pytest --continue-on-collection-errors`, Git Bash): 854 passed,
+  18 skipped, 1 failed (`commonplace-task --help`), 2 collection errors
+  (`headless/test_jobs.py`, `test_tasks.py`); all three are the `fcntl` import
+  in item 2. Not run: the editable reinstall of the user tool. Running it would
+  switch the user's active 0.3.1 install. Next: item 2.

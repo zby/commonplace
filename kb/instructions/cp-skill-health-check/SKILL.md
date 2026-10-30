@@ -147,14 +147,18 @@ uv tool list
 uv tool dir --bin
 Get-Command commonplace-init -All -ErrorAction SilentlyContinue
 Get-Command commonplace-validate -All -ErrorAction SilentlyContinue
+uv tool dir
 ```
+
+If the bare name resolves to a `.cmd` file, or in Git Bash to an extensionless script, read that one file: `Get-Content (Get-Command commonplace-validate).Source` in PowerShell, or `cat "$(command -v commonplace-validate)"` in Git Bash.
 
 Classify the result:
 
 - **uv missing:** the installation prerequisite is absent.
 - **`llm-commonplace` absent from `uv tool list`:** the user-level tool is not installed.
 - **Command exists inside `uv tool dir --bin` but bare-name lookup fails:** the tool executable directory is missing from this process's `PATH`.
-- **Bare name resolves outside `uv tool dir --bin`:** another install or a project venv shadows the user-level tool. Report every candidate from `which -a` or `Get-Command -All`.
+- **Bare name resolves to a supported Windows shim:** the file is a single line that runs `<uv tool dir>\llm-commonplace\Scripts\python.exe -c` on the same command's entry point, as written by the shim snippet in `INSTALL.md` (`/c/...` path form in the Git Bash script). Count it as the uv tool, not a conflict: Windows installs require these shims ahead of `uv tool dir --bin`. If that `python.exe` is missing, the tool environment is damaged; reinstall it and rerun the snippet. `commonplace-init` makes the same distinction.
+- **Bare name resolves outside `uv tool dir --bin` otherwise:** another install, a project venv, or a shim for another interpreter or command shadows the user-level tool. Report every candidate from `which -a` or `Get-Command -All`.
 - **Only some declared `commonplace-*` commands exist:** the tool installation is incomplete or stale after an entry-point metadata change; reinstall it.
 - **A fresh terminal resolves the command but the IDE or agent does not:** the launch class did not inherit the updated user environment. Treat this as runtime environment propagation, not package absence.
 

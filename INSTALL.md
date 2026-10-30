@@ -216,8 +216,6 @@ commonplace-init --name my-project
 
 The `--name` flag sets the project name used in templates; if omitted it defaults to the directory name.
 
-On Windows with the shims, init reports that the commands resolve outside uv's tool executable directory and suggests removing or reordering the shadowing `PATH` entry. With the shims that report is expected: keep them (see [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands)).
-
 The Commonplace library — framework notes, reference, instructions, review gates, global types, and skills — stays in the installed package. `commonplace-init` does not copy it into the project. It writes the project's own KB and a few machine-specific files that point into the library.
 
 On a new project it creates the project's own files once:
@@ -436,7 +434,7 @@ The executables in `uv tool dir --bin` are launchers that uv generates during in
 }
 ```
 
-Paste the snippet into a PowerShell session rather than saving it as a `.ps1` file: Smart App Control can restrict unsigned scripts. If `uv tool dir` does not lead to the installed tool, the snippet stops before it changes anything. That happens, for example, when the shell has not inherited `UV_TOOL_DIR`. Then fully restart every shell, IDE, and desktop agent, as in step 2. In a new process, `(Get-Command commonplace-validate).Source` (PowerShell) or `command -v commonplace-validate` (Git Bash) should now resolve to `.local\commonplace-shims`, not to `uv tool dir --bin`. The shims shadow uv's launchers on purpose, so the shadowing advice above does not apply to them. `commonplace-init` reports each command as resolving outside uv's tool executable directory, and `cp-skill-health-check` may classify them as shadowed. With these shims, that is expected; `commonplace-init --check` stays clean.
+Paste the snippet into a PowerShell session rather than saving it as a `.ps1` file: Smart App Control can restrict unsigned scripts. If `uv tool dir` does not lead to the installed tool, the snippet stops before it changes anything. That happens, for example, when the shell has not inherited `UV_TOOL_DIR`. Then fully restart every shell, IDE, and desktop agent, as in step 2. In a new process, `(Get-Command commonplace-validate).Source` (PowerShell) or `command -v commonplace-validate` (Git Bash) should now resolve to `.local\commonplace-shims`, not to `uv tool dir --bin`. The shims shadow uv's launchers on purpose, so the shadowing advice above does not apply to them. `commonplace-init` and `cp-skill-health-check` recognize a shim this snippet wrote for the installed tool environment and do not report it. They still report any other file that shadows a command, including a shim left over from another tool directory: rerun the snippet to replace it. Releases up to 0.3.2 do not recognize the shims and report every command as shadowed; with those releases, keep the shims and ignore that report.
 
 - **After an upgrade or reinstall:** rerun the snippet. The shims name modules, not versions, but a release can add or rename commands, and a reinstall into another tool directory moves `python.exe`. Rerunning the snippet is safe.
 - **Argument limits:** the `.cmd` shims pass arguments through cmd.exe, so arguments containing `%`, `^`, or `"` may be altered in PowerShell and cmd. Git Bash's shims pass arguments unchanged.

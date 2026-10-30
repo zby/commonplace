@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
@@ -260,30 +261,31 @@ def check_project(root: Path) -> list[library.OutputStatus]:
 # --- installation diagnostics ---------------------------------------------------------
 
 
-def _installed_command_names() -> tuple[str, ...]:
-    """Return the Commonplace console scripts declared by this installation."""
+def _installed_commands() -> dict[str, tuple[str, str]]:
+    """Return the Commonplace console scripts declared by this installation.
+
+    Each command name maps to the module and attribute its entry point calls.
+    """
 
     try:
         entry_points = distribution("llm-commonplace").entry_points
     except PackageNotFoundError:
-        return ()
-    return tuple(
-        sorted(
-            entry_point.name
-            for entry_point in entry_points
-            if entry_point.group == "console_scripts"
-            and entry_point.name.startswith("commonplace-")
-        )
-    )
+        return {}
+    return {
+        entry_point.name: (entry_point.module, entry_point.attr)
+        for entry_point in sorted(entry_points, key=lambda entry_point: entry_point.name)
+        if entry_point.group == "console_scripts"
+        and entry_point.name.startswith("commonplace-")
+    }
 
 
-def _uv_tool_bin() -> Path | None:
-    """Return uv's configured executable directory when uv can report it."""
+def _uv_tool_dir(*args: str) -> Path | None:
+    """Return a directory reported by `uv tool dir` when uv can report it."""
 
     if shutil.which("uv") is None:
         return None
     result = subprocess.run(
-        ["uv", "tool", "dir", "--bin"],
+        ["uv", "tool", "dir", *args],
         check=False,
         capture_output=True,
         text=True,
@@ -293,9 +295,58 @@ def _uv_tool_bin() -> Path | None:
     return Path(result.stdout.strip())
 
 
+def _uv_tool_bin() -> Path | None:
+    """Return uv's configured executable directory when uv can report it."""
+
+    return _uv_tool_dir("--bin")
+
+
+def _uv_tool_environment() -> Path | None:
+    """Return the llm-commonplace tool environment uv manages, if uv reports one."""
+
+    tool_dir = _uv_tool_dir()
+    return None if tool_dir is None else tool_dir / "llm-commonplace"
+
+
 def _same_directory(left: Path, right: Path) -> bool:
     return os.path.normcase(os.path.abspath(left)) == os.path.normcase(
         os.path.abspath(right)
+    )
+
+
+# The `.cmd` launcher that INSTALL.md's Windows shim snippet writes per command.
+_CMD_SHIM = re.compile(r'@"(?P<python>[^"]+)" -c "(?P<code>[^"]+)" %\*')
+
+
+def _is_supported_shim(
+    path: Path, name: str, target: tuple[str, str], tool_environment: Path
+) -> bool:
+    """Whether `path` is the INSTALL.md shim for this command.
+
+    The shim must be the snippet's exact launcher line, call this command's own
+    entry point, and run the existing `python.exe` of the uv tool environment.
+    Any other file outside uv's executable directory still shadows the tool.
+    """
+
+    if path.suffix.lower() != ".cmd":
+        return False
+    try:
+        text = path.read_bytes()[:4096].decode("utf-8")
+    except (OSError, UnicodeDecodeError):
+        return False
+    match = _CMD_SHIM.fullmatch(text.strip())
+    if match is None:
+        return False
+    module, attr = target
+    expected = (
+        f"import sys; sys.argv[0] = '{name}'; from {module} import {attr}; "
+        f"sys.exit({attr}())"
+    )
+    interpreter = Path(match["python"])
+    return (
+        match["code"] == expected
+        and _same_directory(interpreter.parent.parent, tool_environment)
+        and interpreter.is_file()
     )
 
 
@@ -310,8 +361,8 @@ def installation_warnings() -> list[str]:
             "then install llm-commonplace with 'uv tool install'."
         )
 
-    command_names = _installed_command_names()
-    resolved = {name: shutil.which(name) for name in command_names}
+    commands = _installed_commands()
+    resolved = {name: shutil.which(name) for name in commands}
     missing = [name for name, path in resolved.items() if path is None]
     if missing:
         lines.append(
@@ -326,10 +377,17 @@ def installation_warnings() -> list[str]:
 
     tool_bin = _uv_tool_bin()
     if tool_bin is not None:
-        conflicting = [
-            f"{name} ({path})"
+        outside = {
+            name: Path(path)
             for name, path in resolved.items()
             if path is not None and not _same_directory(Path(path).parent, tool_bin)
+        }
+        tool_environment = _uv_tool_environment() if outside else None
+        conflicting = [
+            f"{name} ({path})"
+            for name, path in outside.items()
+            if tool_environment is None
+            or not _is_supported_shim(path, name, commands[name], tool_environment)
         ]
         if conflicting:
             lines.append(
