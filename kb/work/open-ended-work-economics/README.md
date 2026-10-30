@@ -188,6 +188,23 @@ Notes found while framing (not exhaustive; each file's description says what it 
   criteria reusing the bootstrap failure conditions and the ablation
   measures. Not adopted. Next: operator review, then extraction to
   `kb/reference/proposals/` and closing condition 3.
+- 2026-10-30: proposed artifacts written; the workshop stays open. After
+  Astra's third review the adoption criteria were reduced to one
+  comparison within the second kind against a competent baseline, with
+  mechanical conversion a possible source rather than a gate. Extracted:
+  `kb/reference/proposals/reusable-commitment-support-across-kinds-of-knowledge-work.md`
+  (the architecture proposal, carrying the closing-condition-3 premise
+  that **G** is theory-building machinery, with the deferred rival noted);
+  `kb/reference/proposals/cost-per-yield-records-for-routine-controllers.md`
+  (the test 1 instrumentation candidate, with the context-boundary regime
+  as the cost measure); the controller note qualified with the net-value
+  scoring rule and the unequal-cost option beside matched-budget
+  comparison, evidenced by the Russell–Wefald ingest; a local mailbox
+  message to the unattended-workflow workshops; log entries for the
+  deferred rivalry and the missing PostScript snapshot route. Open:
+  closing conditions 2 (the rivalry test is deferred, not designed) and 5
+  (the vocabulary decisions are applied but the collision ledger covers
+  only three terms); whether the architecture proposal is adopted.
 
 ## Evaluation boundary and coupling
 
