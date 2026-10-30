@@ -3,8 +3,11 @@
 ## Goal
 
 Test the conjecture that open-ended knowledge work is a recursive process of
-allocating bounded resources to provisional commitments, and decide what the
-library should retain from it. The conjecture has two parts that must be
+allocating limited time, context and budget to provisional commitments —
+revisable decisions about what to believe, investigate, build or pursue — and
+decide what the library should retain from it. The operator's reason for
+posing it, set out below, is that it would make epistemic work the layer all
+open-ended knowledge work shares. The conjecture has two parts that must be
 judged separately:
 
 - **Work-level conjecture.** Managing provisional commitments recursively —
@@ -31,28 +34,29 @@ work. Commonplace's goal is a framework that converts more and more knowledge
 work into routine work. Open-ended work is the frontier where no routine
 exists yet.
 
-On that frontier, a worker chooses where to spend effort by conjecturing
-what each investment will yield, and these conjectures are fallible.
-Allocation can be no better than the conjectures that guide it, and
-improving them is epistemic work. Epistemic work also produces the routines:
-it finds which choices are stable enough to commit, in prompts and skills for
-semantic routines or in code for symbolic ones. Routinization is then the
-return on epistemic investment.
+On that frontier, a worker allocates effort by guessing what each investment
+will yield, and these guesses are fallible. Allocation is only as reliable as
+the guesses that guide it, and improving them is epistemic work. Epistemic
+work also produces the routines: it finds which choices are stable enough to
+commit, in prompts and skills for semantic routines or in code for symbolic
+ones. Converting work into routine is then the return on epistemic
+investment.
 
-This answers a question the project has struggled with. Most of this KB
-develops machinery for epistemic work, and its main application field has
-been unclear. If the reading holds, epistemic work is the layer that every
+The reading would answer a question the project has struggled with. Most of
+this KB develops machinery for epistemic work, and its main application field
+has been unclear. If the reading holds, epistemic work is the layer that every
 open-ended kind of knowledge work shares, and Commonplace's epistemic
 machinery is the base for more general knowledge tools.
 
-The library already names the conversion step:
+The library already names the conversion into routine:
 [constraining](../../theory/definitions/constraining.md) and its symbolic
 region, [codification](../../theory/definitions/codification.md);
 [progressive constraining commits only after patterns stabilize](../../theory/progressive-constraining-commits-only-after-patterns-stabilize.md);
 [codification and relaxing navigate the bitter-lesson boundary](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
-What it lacks is an account of when conversion is worth paying for: how often
-the work recurs, what the routine saves, what conversion and maintenance
-cost, and how likely the pattern is to stay stable.
+No note found while framing gives one account of when conversion is worth
+paying for: how often the work recurs, what the routine saves, what
+conversion and maintenance cost, and how likely the pattern is to stay
+stable.
 
 The claim that epistemic work is the shared layer is the one this workshop
 most needs to test. Known weak points:
@@ -86,9 +90,8 @@ developed here first and reach the library only by extraction.
 
 ## Starting position
 
-The conjecture is less new to this KB than the brief assumes. The library
-already holds results about allocation, so the first job is to map them and
-find what the economic framing adds, not to write a parallel account.
+The library already holds results about allocation, so the first job is to
+map them and find what the economic framing adds.
 Notes found while framing (not exhaustive; each file's description says what it holds):
 
 - Allocation before evidence:
@@ -129,10 +132,11 @@ Notes found while framing (not exhaustive; each file's description says what it 
    knowledge-dependent work from purposeful activity in general — or
    rejected with the reason recorded. Its relation to bounded rationality,
    metareasoning, value of information and resource-rational analysis is
-   checked against sources, not asserted.
+   checked against sources.
 3. The claim that epistemic work is the shared layer of open-ended knowledge
    work is stated with a prediction a rival account would not make, tested
-   against the weak points listed under "Why the operator wants this", and kept, narrowed, or dropped.
+   against the weak points listed under "Why the operator wants this", and
+   kept, narrowed, or dropped.
 4. The architecture-level conjecture is stated with the evidence that would
    support or defeat it: reuse across domains, implementation complexity,
    human judgment still required, reliability, and the cost of maintaining
@@ -150,15 +154,16 @@ Notes found while framing (not exhaustive; each file's description says what it 
 - [theory-refinement-interface](../theory-refinement-interface/README.md)
   owns the derive, compare, locate, revise, evaluate, and apply interface.
   Direction 4 (general operations) reads it as the starting interface and
-  sends proposed changes there; it does not define a competing set.
+  sends proposed changes there.
 - [conjecture-store](../conjecture-store/README.md) and
   [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
   own storage and lifecycle of conjectures and decisions. Nothing here
-  designs a generalized commitment store; the brief forbids it.
+  designs a generalized commitment store; the brief rules that out as
+  premature.
 - [reflective-improvement-divergence](../reflective-improvement-divergence/README.md)
   and [self-revision-design-space](../self-revision-design-space/README.md)
   own non-termination and redesign reach of the recursive levels; direction 3
-  (recursion) cites them rather than re-deriving them.
+  (recursion) cites them.
 - [use-and-outcome-records](../use-and-outcome-records/README.md) owns
   operational observation records; direction 5 (retention)
   may use it as evidence of retention costs.
