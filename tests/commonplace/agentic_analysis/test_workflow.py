@@ -62,9 +62,11 @@ prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
 if "--no-context-files" in sys.argv:
     assert "scanner_report" in prompt and "attempt_inventory" in prompt
+    output = Path(prompt.split('- report.md: ')[1].splitlines()[0])
+    output.write_text("Fixture audit only.\n")
     print(json.dumps({"type": "message_end", "message": {"role": "assistant", "model": "fake-auditor",
                       "stopReason": "stop", "content": [{"type": "text", "text": "Fixture audit only."}]}}))
-    print(json.dumps({"type": "agent_end"}))
+    print(json.dumps({"type": "agent_settled", "aborted": False}))
     sys.exit(0)
 sections, current = {}, None
 for line in prompt.splitlines():

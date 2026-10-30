@@ -25,7 +25,7 @@ dependencies = [
     "PyYAML>=6.0.0",
     "python-dotenv",
     "referencing>=0.31.0",
-    "workjig>=0.2.0",
+    "workjig>=0.3.0",
     "xdk>=0.10.4",
 ]
 
