@@ -1,6 +1,7 @@
 ---
 description: A qualitative test that separates controlled postponement of a consequential choice from hidden commitment, mere delay, and unmanaged indecision.
 type: types/note.md
+tags: [goal-prioritization]
 traits: [title-as-claim, has-external-sources]
 ---
 

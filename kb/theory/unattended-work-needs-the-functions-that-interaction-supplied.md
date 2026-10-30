@@ -2,7 +2,7 @@
 description: "Identifies operator functions concealed by successful interactive work, so unattended workflows can replace those dependencies or narrow their scope."
 type: types/note.md
 traits: [title-as-claim]
-tags: [warranted-autonomy]
+tags: [warranted-autonomy, goal-prioritization]
 ---
 
 # Unattended work needs the functions that interaction supplied

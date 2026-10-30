@@ -2,7 +2,7 @@
 description: "Specification, checking, permitted interpretations, repeated-use cost, and the stake set against a pattern's stated odds and exposure inform which operations to codify; none alone makes code or model interpretation universally preferable"
 type: types/note.md
 traits: [synthesis]
-tags: [learning-theory, constraining, computational-model]
+tags: [learning-theory, constraining, computational-model, goal-prioritization]
 ---
 
 # Codify-versus-LLM decision heuristics

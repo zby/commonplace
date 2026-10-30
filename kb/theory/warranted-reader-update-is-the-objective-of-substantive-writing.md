@@ -2,7 +2,7 @@
 description: "Defines epistemic interestingness as a relevant, warranted change relative to an intended reader's prior, making contribution selection—not accumulated inputs—the purpose of multistage writing."
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, discovery, document-system]
+tags: [learning-theory, discovery, document-system, goal-prioritization]
 ---
 
 # Warranted reader update is the objective of substantive writing
