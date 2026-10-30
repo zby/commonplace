@@ -2,7 +2,7 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**.
+The premise is simple. LLM-written text can be useful even when no person reads it directly, because it can improve how an LLM answers your questions. Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**.
 
 It has two goals. The practical one is an **LLM wiki**, in the sense [Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer in which agents, directed by people, turn a person's or project's work into retained, connected notes. The theoretical one is a new learning paradigm, the **theory builder**: a system that states theories, acts on them, criticizes them, and keeps what criticism shows for the next round, following Karl Popper's method of conjecture and criticism. We bet that a fully automated theory builder that learns can be built with today's LLMs, their weights held fixed. No test of the bet has been run yet.
 
