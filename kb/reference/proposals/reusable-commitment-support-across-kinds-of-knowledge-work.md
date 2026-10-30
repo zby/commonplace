@@ -95,14 +95,9 @@ What **G** is, in the library's terms, is theory-building machinery: the
 operations a [theory builder](../../theory/definitions/theory-builder.md)
 performs (propose, derive, criticize, locate blame, revise, select, change
 the machinery) together with the search control that decides which of
-them runs next. The conjecture therefore carries a narrower claim the
-workshop posed separately: that theory building is the layer every
-open-ended kind of knowledge work shares, because effort allocation in
-such work is only as reliable as the guesses behind it and improving those
-guesses is theory building. The claim is held here as a premise of the
-conjecture, not established; a rival account (routines adopted and
-dropped on cost alone, after resource-rational analysis) is recorded as
-an open question and would reduce **G** to a cost-accounting layer.
+them runs next. Whether theory building is the layer every open-ended
+kind of knowledge work shares is a separate question, open in `kb/log.md`;
+the comparison below does not depend on it.
 
 **Universality axis, declared** (per the
 [universality-axis note](../../theory/universal-software-factory-needs-a-declared-universality-axis.md)):
@@ -176,18 +171,19 @@ reason to expect it to be chosen, not a decision.
   ([preferential codification](../../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md)).
   Success of **G** therefore does not show the kind's work got easier
   overall; the measure must be per unit of human judgment, not per task.
-- **Cost is step-shaped at the context boundary.** Work that fits one
-  session is cheap and roughly uniform; work that must cross the boundary,
-  through sub-agents, code-managed workflows or multi-step processes, pays
-  for coordination machinery and handoff loss
-  ([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md),
-  [coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md);
-  ADR 113/118 priced one crossing). So the operations of **G** that stay
-  inside one context are cheap for every kind, and the ones that must
-  cross are where **G**'s carrying cost and the per-kind cost both
-  concentrate. The conjecture's economy therefore depends on how much of
-  each kind's work **G** keeps below the boundary, which is a measurable
-  property of a second-kind run.
+- **Crossing the context boundary is a cost the run carries; the
+  boundary itself is not a price.** The context boundary is a feasibility
+  limit
+  ([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)),
+  so which operations of **G** stay inside one context is metadata of a
+  second-kind run, recorded so that comparisons are like for like. Work
+  that must cross, through sub-agents, code-managed workflows or
+  multi-step processes, pays for coordination machinery and handoff loss
+  ([coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md);
+  ADR 113/118 priced one crossing), and that machinery is counted in the
+  total cost the comparison sums. Whether **G** is cheaper than the
+  baseline is decided by those figures, not by how much work stays below
+  the boundary.
 - **Unattended runs make unequal-cost comparison common.** Matched-budget
   comparison of controllers stays valid; where costs differ materially,
   net value with the exchange rate swept is the added option (the

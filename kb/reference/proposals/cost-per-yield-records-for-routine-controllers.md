@@ -44,26 +44,32 @@ record cannot be reconstructed afterwards. This is the
 [machinery-investment](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md)
 argument applied to measurement.
 
-The cost that matters is not a token count. Cost is step-shaped at the
-context boundary: work that fits one session is cheap and roughly uniform,
-while work that must cross the boundary, through sub-agents, code-managed
-workflows or any multi-step process, pays for coordination machinery and
-handoff loss
-([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md),
-[coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md)).
+A cost record needs two things the resource figures of one call do not
+give. The context boundary is a feasibility limit, not a price
+([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md)):
+work that fits one session and work that must cross through sub-agents,
+code-managed workflows or any multi-step process are not two points on
+one cost scale, and a run's regime is context metadata that says which
+comparisons are like for like. Crossing also adds a cost component that
+per-call figures miss: coordination machinery and handoff loss
+([coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md));
 ADR 113 and ADR 118 priced one crossing at about 3,000 lines of
-consistency machinery against 1,000 of domain logic.
+consistency machinery against 1,000 of domain logic. Neither fact makes
+the regime a cost figure. Which of two controllers is cheaper is decided
+by resource figures summed over the run, including the crossing
+machinery, or left unknown.
 
 ## Design space
 
 What a record holds, from least to most:
 
-1. **Regime and machinery only.** Per controller run: whether it stayed
+1. **Context metadata only.** Per controller run: whether it stayed
    inside one context or crossed, and if it crossed, by what (sub-agent,
    headless worker, workflow step), plus the yield measure the controller
    note already asks for (what reached stronger evaluation and whether it
-   changed a later decision). No token or time figures. Cheap, and enough
-   to separate the two regimes, which is where the step in cost lies.
+   changed a later decision). Cost is recorded as unknown. Cheap, and
+   enough to say which later comparisons are like for like; it cannot say
+   which controller is cheaper.
 2. **Regime plus coarse resource figures.** The above plus calls, elapsed
    time and, where a harness reports it, tokens. Enough for a matched-budget
    comparison and for an exchange-rate sweep when costs differ.
@@ -80,8 +86,9 @@ yield.
 - The yield side must credit only a changed later decision; a controller
   step that raises confidence without changing a choice earns nothing and
   pays its cost (Russell and Wefald, Section 5.1.1).
-- A regime flag is near-free to record and never wrong; resource figures
-  vary by harness and may not be comparable across runs.
+- A regime flag is near-free to record and never wrong, but it is not a
+  cost figure; resource figures are, and they vary by harness and may not
+  be comparable across runs.
 - Recording cost for human-driven controllers measures the person's
   attention, which the declared objective already counts as human
   judgment; the record is for unattended runs first.
@@ -103,8 +110,7 @@ instruction makes.
   would be useful to compare with an alternative; the record then costs one
   field per run.
 - Move to option 2 when a comparison between controllers of materially
-  different cost is actually wanted and the regime flag alone cannot
-  decide it.
+  different cost is actually wanted; option 1 records cannot decide it.
 - Withdraw if, after two unattended workflows have run for a period, no
   comparison has used the records.
 
@@ -113,5 +119,5 @@ instruction makes.
 Relevant Notes:
 
 - [A search controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — rests-on: the yield side of the record and the matched-resources comparison it keeps available
-- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: why the regime boundary, not the token count, is the cost measure
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: separates the feasibility face (context metadata) from the aggregate cost face (resource figures); the record keeps both apart
 - [An optimal long-run learning strategy invests in its own machinery](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — rests-on: why the record is worth adding before the runs multiply
