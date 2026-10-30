@@ -172,9 +172,12 @@ Notes found while framing (not exhaustive; each file's description says what it 
   cost) or the architecture-level proposal.
 - 2026-10-30: test 1 concluded against the Russell–Wefald ingest (see the
   reconciliation map). Commonplace's practice is the zero-exchange-rate
-  limit of their rule; no recorded preference flips; the layer matters only
-  where compute binds (unattended pipelines). Extraction: a qualification
-  of the controller note, not a new note. Next: the architecture-level
+  limit of their rule; no recorded preference flips. The operator's
+  reading: that limit is the regime Commonplace is leaving as it adds
+  unattended pipelines, so the net-value form becomes the required
+  comparison as automation grows. Extraction: a forward-looking
+  qualification of the controller note, and a proposal candidate for
+  cost-per-yield records on routine controllers. Next: the architecture-level
   proposal (closing condition 4).
 
 ## Evaluation boundary and coupling

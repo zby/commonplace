@@ -423,10 +423,23 @@ the library currently holds both without choosing.
    form an unequal-cost comparison should take, qualifying the controller
    note's matched-resources condition; (iii) the meta-greedy prediction
    that a myopic controller undervalues setup steps such as reading before
-   routing, an experiment not run. Verdict: test 1 does not support a
-   separate economic layer; it supports a two-sentence qualification of the
-   controller note and an instrumentation gap (no routine controller has
-   a cost-per-yield record).
+   routing, an experiment not run. Verdict, revised on the operator's reading (2026-10-30): the record
+   shows the zero-rate regime because most controllers are still driven by
+   a person, and that is the regime Commonplace is leaving as it adds
+   unattended pipelines. So the net-value form is not a separate layer now
+   and becomes the required comparison as automation grows. Two items
+   follow. The controller note's matched-resources condition should be
+   qualified as holding while a person drives the controller, with the
+   net-value form and the exchange-rate sweep as what replaces it in
+   unattended runs. And the instrumentation gap is the actionable one:
+   cost-per-yield records for routine controllers are cheap to add before
+   the pipelines multiply and costly after, which is the
+   [machinery-investment](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md)
+   argument applied to measurement. It belongs with
+   [review-on-workjig](../review-on-workjig/README.md) and
+   [recurring-task-runner](../recurring-task-runner/README.md), the
+   workshops building those runs; this workshop records it as a proposal
+   candidate and does not build it.
 2. **Relaxing trigger** — withdrawn 2026-10-30. The classification does
    not discriminate: discovering a mistake changes costs, and discovering a
    cheaper alternative requires evidence (Astra's objection). The epistemic
@@ -455,7 +468,10 @@ the library currently holds both without choosing.
 4. One question sent to theory-refinement-interface (direction 4).
 5. Log entries: episode-handoff retention (direction 5), third-order
    lessons (direction 3), value decay (direction 5).
-6. Qualification of
+6. Proposal candidate in `kb/reference/proposals/`: cost-per-yield
+   records for routine controllers, as the instrumentation unattended runs
+   need before net-value comparison is possible (test 1).
+7. Qualification of
    [a search controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md):
    the scoring rule and the unequal-cost comparison form, linking the
    Russell–Wefald ingest (test 1). Closing condition 2's source check is met
