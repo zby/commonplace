@@ -188,23 +188,27 @@ Notes found while framing (not exhaustive; each file's description says what it 
   criteria reusing the bootstrap failure conditions and the ablation
   measures. Not adopted. Next: operator review, then extraction to
   `kb/reference/proposals/` and closing condition 3.
-- 2026-10-30: proposed artifacts written; the workshop stays open. After
-  Astra's third review the adoption criteria were reduced to one
-  comparison within the second kind against a competent baseline, with
-  mechanical conversion a possible source rather than a gate. Extracted:
+- 2026-10-30: proposed artifacts written. After Astra's third review the
+  adoption criteria were reduced to one comparison within the second kind
+  against a competent baseline, with mechanical conversion a possible
+  source rather than a gate. Extracted:
   `kb/reference/proposals/reusable-commitment-support-across-kinds-of-knowledge-work.md`
-  (the architecture proposal, carrying the closing-condition-3 premise
-  that **G** is theory-building machinery, with the deferred rival noted);
+  (the architecture proposal; **G** defined as theory-building machinery,
+  with the shared-layer claim left out of the comparison);
   `kb/reference/proposals/cost-per-yield-records-for-routine-controllers.md`
-  (the test 1 instrumentation candidate, with the context-boundary regime
-  as the cost measure); the controller note qualified with the net-value
-  scoring rule and the unequal-cost option beside matched-budget
-  comparison, evidenced by the Russell–Wefald ingest; a local mailbox
-  message to the unattended-workflow workshops; log entries for the
-  deferred rivalry and the missing PostScript snapshot route. Open:
-  closing conditions 2 (the rivalry test is deferred, not designed) and 5
-  (the vocabulary decisions are applied but the collision ledger covers
-  only three terms); whether the architecture proposal is adopted.
+  (the test 1 instrumentation candidate); the controller note qualified
+  with the net-value scoring rule and the unequal-cost option beside
+  matched-budget comparison, evidenced by the Russell–Wefald ingest; a
+  local mailbox message to the unattended-workflow workshops; log entries
+  for the deferred rivalry and the missing PostScript snapshot route.
+  Astra's fourth review corrected both proposals, and the operator agreed:
+  the context regime is feasibility metadata, not a cost figure; cost
+  comparisons use resource figures or mark cost unknown. Closing
+  conditions: 1 and 4 met; 2 met by the reconciliation verdict
+  (composition of held results) and the metareasoning ingests; 3 resolved
+  by narrowing, with the shared-layer claim dropped from the proposal and
+  the rivalry recorded in `kb/log.md` as deferred; 5 met except the final
+  deletion, which the operator holds.
 
 ## Evaluation boundary and coupling
 
