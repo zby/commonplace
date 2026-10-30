@@ -170,6 +170,12 @@ Notes found while framing (not exhaustive; each file's description says what it 
   considerations that guidance lacks. Extracted the same day as the "Stake and
   odds" section of the codify-versus-LLM note. Next: test 1 (controller
   cost) or the architecture-level proposal.
+- 2026-10-30: test 1 concluded against the Russell–Wefald ingest (see the
+  reconciliation map). Commonplace's practice is the zero-exchange-rate
+  limit of their rule; no recorded preference flips; the layer matters only
+  where compute binds (unattended pipelines). Extraction: a qualification
+  of the controller note, not a new note. Next: the architecture-level
+  proposal (closing condition 4).
 
 ## Evaluation boundary and coupling
 

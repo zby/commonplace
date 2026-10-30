@@ -392,6 +392,41 @@ the library currently holds both without choosing.
    recorded Commonplace episodes (connect-report routing, review bundle
    ordering). If the ranking does not change, the economic layer adds
    nothing over "tested by what it brings to stronger evaluation".
+   Facts gathered 2026-10-30 in
+   [search/controller-comparisons.md](./search/controller-comparisons.md):
+   seven comparisons fit the controller definition; cost entered the basis
+   in three and reversed none (it agreed with yield or broke a tie). The
+   three are all in the automated review pipeline; the routine controllers
+   a person still drives have no cost-per-yield record at all. Scope
+   condition from the operator (2026-10-30): computational cost is the
+   binding consideration only where a controller runs unattended, as the
+   review and revision system does; elsewhere the scarce resource is human
+   judgment, which the declared objective already counts.
+   **Concluded 2026-10-30** against the
+   [Russell–Wefald ingest](../../sources/russell-wefald-principles-of-metareasoning.ingest.md).
+   Their rule: a computation's net value is its benefit to the decision
+   (zero unless it changes the choice) minus its cost, and controllers of
+   unequal cost are compared on one scale with the exchange rate swept,
+   reporting whether the preference flips within the range. Commonplace's
+   recorded practice (yield first, cost as tiebreaker) is that rule's limit
+   as the exchange rate goes to zero, which the paper itself notes for A\*.
+   So the economic layer changes nothing on the record, and it would matter
+   exactly where the rate is not negligible: unattended pipelines, where
+   the record already uses cost. What transfers is structural, not a
+   computation; the paper needs numerical utilities, a standing default
+   action and priors on how a step revises estimates, none of which
+   connect routing or bundle ordering has. Three items worth keeping:
+   (i) the scoring rule, credit only for a changed later decision and
+   every step pays, which sharpens "what it brings to stronger evaluation"
+   (the [failure-explanation note](../../theory/failure-explanation-changes-later-branch-decisions.md)
+   already says this for failures); (ii) the exchange-rate sweep as the
+   form an unequal-cost comparison should take, qualifying the controller
+   note's matched-resources condition; (iii) the meta-greedy prediction
+   that a myopic controller undervalues setup steps such as reading before
+   routing, an experiment not run. Verdict: test 1 does not support a
+   separate economic layer; it supports a two-sentence qualification of the
+   controller note and an instrumentation gap (no routine controller has
+   a cost-per-yield record).
 2. **Relaxing trigger** — withdrawn 2026-10-30. The classification does
    not discriminate: discovering a mistake changes costs, and discovering a
    cheaper alternative requires evidence (Astra's objection). The epistemic
@@ -420,7 +455,12 @@ the library currently holds both without choosing.
 4. One question sent to theory-refinement-interface (direction 4).
 5. Log entries: episode-handoff retention (direction 5), third-order
    lessons (direction 3), value decay (direction 5).
-6. One ingest before closing condition 2: resource-rational analysis.
+6. Qualification of
+   [a search controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md):
+   the scoring rule and the unequal-cost comparison form, linking the
+   Russell–Wefald ingest (test 1). Closing condition 2's source check is met
+   for metareasoning by that ingest and for bounded optimality by the
+   existing one; resource-rational analysis is deferred with the rivalry.
 
 ### Not worth doing
 
