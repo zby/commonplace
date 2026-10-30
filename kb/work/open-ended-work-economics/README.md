@@ -3,23 +3,25 @@
 ## Goal
 
 Test the conjecture that open-ended knowledge work is a recursive process of
-allocating limited time, context and budget to provisional commitments —
-revisable decisions about what to believe, investigate, build or pursue — and
-decide what the library should retain from it. The operator's reason for
+allocating limited time, context and budget across search judgments (where
+effort goes next) and commitments (retained resolutions about what to believe
+or build), and decide what the library should retain from it. Term choices
+are in [vocabulary.md](./vocabulary.md). The operator's reason for
 posing it, set out below, is that it would make epistemic work the layer all
 open-ended knowledge work shares. The conjecture has two parts that must be
 judged separately:
 
-- **Work-level conjecture.** Managing provisional commitments recursively —
-  including commitments about how to investigate and how to improve the
-  method — is an economical way to do open-ended work under bounded resources.
+- **Work-level conjecture.** Managing search judgments and commitments
+  recursively — including those about how to investigate and how to improve
+  the method — is an economical way to do open-ended work under bounded
+  resources.
 - **Architecture-level conjecture.** Reusable computational support for that
   process is an economical route from Commonplace toward a general
   computational environment. This does not follow from the work-level
   conjecture.
 
 The question kept in view: can reusable machinery make open-ended
-intellectual work cheaper for bounded workers while the machinery improves
+intellectual work cheaper for bounded actors while the machinery improves
 through the same process?
 
 The economic framing must extend the [epistemic stance](../../reference/epistemic-stance.md),
@@ -34,7 +36,7 @@ work. Commonplace's goal is a framework that converts more and more knowledge
 work into routine work. Open-ended work is the frontier where no routine
 exists yet.
 
-On that frontier, a worker allocates effort by guessing what each investment
+On that frontier, an actor allocates effort by guessing what each investment
 will yield, and these guesses are fallible. Allocation is only as reliable as
 the guesses that guide it, and improving them is epistemic work. Epistemic
 work also produces the routines: it finds which choices are stable enough to
@@ -146,6 +148,17 @@ Notes found while framing (not exhaustive; each file's description says what it 
    but unadopted theory to `kb/theory/proposals/`, revisions to existing
    notes as separate commits, open questions to `kb/log.md` or a successor
    workshop. Then the directory is deleted.
+
+## State
+
+- 2026-10-30: closing condition 1 done in [reconciliation.md](./reconciliation.md)
+  over the search files under [`search/`](./search/). Verdict: the
+  work-level conjecture is a composition of held results; the new content
+  is in direction 6 (routine-conversion economics, the architecture-level
+  conjecture with defeaters) and one tension in direction 1 (whether value
+  conjectures or only controllers are evaluated). Four discriminating tests
+  and an extraction order are listed there. Next: test 3 (draft the
+  routine-conversion account and apply it to recorded conversions).
 
 ## Evaluation boundary and coupling
 
