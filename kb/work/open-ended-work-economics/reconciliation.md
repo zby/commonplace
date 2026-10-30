@@ -392,11 +392,11 @@ the library currently holds both without choosing.
    recorded Commonplace episodes (connect-report routing, review bundle
    ordering). If the ranking does not change, the economic layer adds
    nothing over "tested by what it brings to stronger evaluation".
-2. **Relaxing trigger.** Over recorded relaxings (ADR 118, retired
-   validators, loosened skills), classify each as evidence-triggered (the
-   reading was wrong) or cost-triggered (a cheaper general method arrived).
-   If most are cost-triggered, the resource-rational rival explains
-   Commonplace's own history better than the epistemic reading.
+2. **Relaxing trigger** — withdrawn 2026-10-30. The classification does
+   not discriminate: discovering a mistake changes costs, and discovering a
+   cheaper alternative requires evidence (Astra's objection). The epistemic
+   versus resource-rational rivalry is deferred as an open question; no
+   extraction depends on it.
 3. **Routine-conversion account.** Draft the account with its five terms
    and apply it retrospectively to three conversions and one refusal to
    convert. If the account would have predicted each decision, it has
@@ -404,7 +404,9 @@ the library currently holds both without choosing.
 4. **Not worthwhile.** The generalization is not worth adopting if tests 1
    and 3 both fail: then the economic vocabulary names nothing the
    structural vocabulary misses, and the vocabulary collisions above are
-   pure cost.
+   pure cost. Test 3 ran on 2026-10-30 and passed narrowly: two
+   considerations missing from existing guidance, extracted as a section of
+   the codify-versus-LLM note rather than a new note.
 
 ### Candidate extractions, in order
 

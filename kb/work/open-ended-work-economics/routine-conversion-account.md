@@ -14,9 +14,10 @@ how well the extracted pattern's stability is understood. The library's
 existing rules for conversion (observe before committing, promote on stable
 repetition, relax on failure signals, constrain in natural language before
 codifying) are each a way of either lowering the stake or improving the odds.
-Stated as one account, they predict one thing the rules separately do not:
-a conversion justified by an explanation of why the pattern holds should need
-relaxing less often than one justified by observed frequency alone.
+Stated as one account, they expose two considerations the existing
+[codify versus LLM](../../theory/codify-versus-llm-decision-heuristics.md)
+guidance does not name: the stake must be sized to the stated odds, and
+exposure can be engineered to zero independently of stability.
 
 ## Terms
 
@@ -32,7 +33,7 @@ measure them.
 | **Construction cost** | What it costs to build the routine, including the observation time spent before committing when the pattern is mined from behaviour. | [progressive constraining](../../theory/progressive-constraining-commits-only-after-patterns-stabilize.md) ("you pay for this with observation time"); [spec mining](../../theory/spec-mining-as-codification.md) |
 | **Use cost** | What each use of the routine costs: invoking it, checking its output, retrieving it so it is applied at all. A routine nobody retrieves saves nothing. | [codify versus LLM](../../theory/codify-versus-llm-decision-heuristics.md) repetition section; [skill discovery re-fires in every sub-agent context](../../theory/skill-discovery-re-fires-in-every-sub-agent-context.md) |
 | **Carrying cost** | What keeping the routine costs while it exists: maintenance as its premises drift, and the migration cost of removing it once other things depend on it. Codified routines carry more of the second than constrained ones. | [current-task fit does not warrant costly entrenchment](../../theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md); [cheap adoption and weak retirement accumulate cost](../../theory/cheap-adoption-and-weak-retirement-accumulate-cost.md) |
-| **Stability** | The conjecture that the extracted pattern is part of the task (an exact spec) rather than an accident of the observed cases (a proxy theory), over the horizon. This is the one term that is a claim about the world and can be wrong. | [codification is a bet](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md); [relaxing signals](../../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md); [exact specs versus proxy theories](../../theory/exact-implementation-does-not-validate-a-requirement.md) |
+| **Stability** | The conjecture that the extracted pattern is part of the task (an exact spec) rather than an accident of the observed cases (a proxy theory), over the horizon. Every term in this table is a forecast and can be wrong; stability is the one about the pattern itself rather than about a quantity, and the one an explanation improves more than a count does. | [codification is a bet](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md); [relaxing signals](../../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md); [exact specs versus proxy theories](../../theory/exact-implementation-does-not-validate-a-requirement.md) |
 | **Exposure** | What a wrong routine costs before its failure is noticed, beyond the carrying cost of removing it. Zero when no consumer's correctness depends on the routine; large when downstream work builds on its output. Added after the retrospective (below): the first draft kept it in prose and two of four cases turned on it. | ADR 026's "accelerator, never a load-bearing wall"; [false-positive acceptance becomes operative](../../theory/false-positive-generation-is-filtered-before-retention.md) |
 
 ## How they combine
@@ -63,10 +64,9 @@ interface across unrelated sessions) is the cheap form of that observation.
 Explanation buys it differently: an account of *why* the pattern holds says
 which changes would break it, so the conversion's scope can be stated and its
 relaxing trigger named in advance. A frequency-backed routine knows only that
-the pattern held so far. This is the point where the account depends on
-theory building: the quality of the stability conjecture bounds the quality
-of the conversion decision, and improving that conjecture is theory work,
-not more observation.
+the pattern held so far. Which of the two
+is doing the work in a given conversion, and whether an explanation-backed
+conjecture outperforms a count, is deferred (see "Deferred" below).
 
 **Carrying cost orders the forms.** A constrained routine (prompt, skill,
 convention) has low construction cost, low removal cost and an interpreter
@@ -75,14 +75,15 @@ failure rate within its scope. So the account predicts the staging the
 library already practises: constrain in natural language while stability is
 uncertain, codify when stability is understood and a checker exists. It also
 predicts that relaxing a codified routine will be recorded as a decision
-(an ADR, a migration) while relaxing a constrained one often leaves no record,
-which matters for test 2 in the reconciliation map.
+(an ADR, a migration) while relaxing a constrained one often leaves no
+record.
 
 ## What the account predicts
 
-1. **Mechanism-backed conversions relax less often than frequency-backed
-   ones**, and when they do relax, the trigger is one their scope statement
-   named. Frequency-backed conversions relax on surprises.
+1. **A conversion whose stability is stated low at decision time is built
+   small or with zero exposure.** A record that states low stability and
+   then builds a large, depended-on routine is a mispriced bet the account
+   would have caught from decision-time evidence.
 2. **Refusals to convert cite a small stake or unknown stability, and
    name the observation that would change the answer.** (Revised after the
    retrospective; the first draft predicted refusals would not cite
@@ -104,10 +105,10 @@ six terms predict a case's decision only after the decision is known (every
 term can be read either way), the account adds nothing to the repetition
 section of codify-versus-LLM and should be folded into it as a paragraph.
 
-If prediction 1 fails on Commonplace's own record (mechanism-backed routines
-relaxed as often as frequency-backed ones), the dependence on theory building
-is not shown, and the resource-rational rival (adopt for cost, relax for
-cost) explains the history as well.
+The test is reconstruction from decision-time evidence: does the account,
+given only what the record shows was known when the decision was made,
+expose a consequential consideration the existing guidance misses?
+Matching the historical decision is not success.
 
 ## Retrospective application
 
@@ -207,15 +208,14 @@ revised prediction 2 fits.
   which is what distinguishes a mechanism from a post-hoc reading. The
   account therefore does not fold into the codify-versus-LLM note; it
   extends it.
-- **Prediction 1** (mechanism-backed conversions relax on named triggers):
-  both recorded relaxings (`complete` revised on its named drift; the
-  engine retired on its named obsoleting condition) fit; `covered_by`,
-  which had no mechanism, relaxed on a surprise. Three instances, no
-  counterexample; too few to separate from the resource-rational rival,
-  which also fits the engine case (a cheaper method arrived). What the
-  rival does not explain is why ADR 118 names declined requirements
-  bindingly: that is pricing future carrying cost from a theory of what
-  the machinery was for.
+- **Decision-time reconstruction.** The two divergences rest on
+  decision-time evidence, not hindsight: `covered_by` was "deferred to the
+  first real case" in ADR 026 itself, and the engine's low stability and
+  "as small as possible" intent are in the 2026-09-29 proposal and ADR 113.
+  The retirement-time figures (3,000 against 1,000 lines) confirm but are
+  not needed. What the account exposes that the repetition section of
+  codify-versus-LLM does not: size the stake to the stated odds (the engine),
+  and exposure as a term the designer controls (`complete`).
 - **Prediction 2** was wrong as drafted and is revised.
 - **Prediction 3** (routines without a checker leak error cost) is untested:
   case 1 contained exposure instead of adding a checker, case 3 added one.
@@ -230,7 +230,20 @@ revised prediction 2 fits.
 
 ### What changes in the workshop
 
-Test 3 passes with a correction (exposure). The account is a candidate for
-extraction as a theory note once test 2 (classify relaxings by trigger
-across more cases) has run, since prediction 1 is what makes it more than
-the repetition section of codify-versus-LLM.
+Test 3 passes with a correction (exposure) and a narrowed claim. Two
+considerations are consequential and missing from the existing guidance;
+the rest of the account restates it. Extraction path: a section added to
+[codify versus LLM decision heuristics](../../theory/codify-versus-llm-decision-heuristics.md)
+(stake, odds, exposure, and the build-before-recurrence rule), not a new
+theory note. The seven-term table goes with it only if the section needs
+it to be readable.
+
+### Deferred
+
+Whether an explanation-backed stability conjecture outperforms a count,
+and the rivalry between the epistemic reading and resource-rational
+analysis, are deferred. Astra's objection (2026-10-30) holds: the proposed
+relaxing triggers do not discriminate, since discovering a mistake changes
+costs and discovering a cheaper alternative requires evidence. The rivalry
+is recorded as an open question in the reconciliation map and is not
+needed for the extraction above.

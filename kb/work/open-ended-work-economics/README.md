@@ -164,8 +164,11 @@ Notes found while framing (not exhaustive; each file's description says what it 
   The account predicted all four decisions; in two it disagreed with the
   decision taken and the outcome sided with it. One correction: exposure
   (the cost of a wrong routine before it is noticed) promoted to a named
-  term. Next: test 2 (classify recorded relaxings by trigger) before
-  extracting the account as a theory note.
+  term. On Astra's objection the epistemic-versus-economic rivalry is
+  deferred (relaxing triggers do not discriminate), and the extraction is
+  narrowed to a section in the codify-versus-LLM note carrying the two
+  considerations that guidance lacks. Next: test 1 (controller cost) or the
+  architecture-level proposal; then extraction.
 
 ## Evaluation boundary and coupling
 
