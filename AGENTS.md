@@ -83,6 +83,8 @@ discovery, reach and doctrine may be ordinary language where unambiguous.
 Use spaced relation phrases in prose (`adapted from`). Hyphenated identifiers
 (`adapted-from`, `derived-from`, etc.) assert formal relations only in declared
 slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
+Double senses judged weak enough to tolerate, with the decision for new text,
+are in the [vocabulary collision ledger](./kb/reference/vocabulary-collision-ledger.md).
 
 ## Development
 

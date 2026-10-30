@@ -194,6 +194,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [Global type specs](../types/README.md) — the shared type specs and schemas every collection can use
 - [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how type values resolve as spec paths on the library and KB roots, common examples, and where both kinds of type spec live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
+- [vocabulary-collision-ledger.md](./vocabulary-collision-ledger.md) — near collisions judged weak enough to tolerate: the senses, the decision for new text, and the observation that would escalate each to a rename or definition
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
 - [Answerability](./definitions/answerability.md) — Commonplace's stipulated admission boundary: what an artifact answers to, the property it asserts, and the discrepancy that triggers correction
