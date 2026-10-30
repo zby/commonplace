@@ -17,6 +17,10 @@ The stages of a multistage writing workflow earn their cost by improving the exp
 
 The process therefore does not create value merely by accumulating inputs. Co-occurrence expands the space of possible contributions, but an angle selects what the ingredients mean together. Often the durable contribution is this selected relation rather than knowledge copied from any one input, as when [the contribution is the edge rather than either reconstructable endpoint](./linked-note-durable-payload-is-what-consumption-path-cannot-supply.md).
 
+A document can contain many substantive facts while obscuring the update it exists to support. Facts that answer neighboring questions impose selection work on the reader when the document does not explain their role in its governing question. Selection therefore tests contribution, not just factual support or information per word. Evidence, qualifications, examples, and background earn their place when they make the intended update understandable or warranted; cutting them merely to raise density can weaken the result.
+
+An optional [write brief](../types/write-brief.md) preserves commission boundaries for later writers, including what must be kept or excluded. It does not make that material relevant by decree: the document still has to make its role in the intended update clear. The brief preserves the selection boundaries outside the reader-facing text; the document realizes them without reproducing the whole commission.
+
 Nor must every intermediate step make the current draft more interesting. Exploration may produce weak candidates, and validation may only prevent an interesting claim from outrunning its support. The progressive claim applies to selection: accepted transitions should improve the expected update, strengthen its warrant, or protect one without sacrificing the other.
 
 ## Interestingness must exert selection pressure
