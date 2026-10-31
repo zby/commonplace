@@ -46,7 +46,7 @@ Numerical content does not by itself require codification. An exact numerical cl
 
 ## Codified parts of a theory
 
-The same crossing gives a part of a retained theory a computed consequence relation. A natural-language part's consequences depend on what its interpreter derives; a codified part's consequences are fixed by its operational semantics. Codification alone does not supply diagnosis or successful repair. A failed check must be connected to the theory commitments it tests before it can guide candidate edits. [Addressability](./addressable-theory.md) makes parts available for inspection and separate revision; it does not guarantee that the identified part caused the failure or that the revision repairs it.
+The same crossing gives a part of a retained theory consequences fixed by computation. A natural-language part's consequences depend on what its interpreter derives; a codified part's consequences are fixed by its operational semantics. Codification alone does not supply diagnosis or successful repair. A failed check must be connected to the theory commitments it tests before it can guide candidate edits. [Addressability](./addressable-theory.md) makes parts available for inspection and separate revision; it does not guarantee that the identified part caused the failure or that the revision repairs it.
 
 ## Codification and relaxing
 
