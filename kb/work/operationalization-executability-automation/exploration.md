@@ -1,6 +1,6 @@
 # Operationalization, executability, automation, and autonomy — revised exploration
 
-**Status:** a workshop investigation, not adopted technical vocabulary, empirical proof, or a system change. **Revision:** 2026-10-31, responding to the operator's objections that the first account confused generalization with operationalization, treated automation and autonomy too similarly, and did not check source ingestability. Repository starting point: main at d19065b3aef33ffca92fa2f72f5203251fcae3b0. Literature access was checked on 2026-10-31.
+**Status:** a workshop investigation, not adopted technical vocabulary, empirical proof, or a system change. **Revision:** 2026-10-31, responding to the operator's objections that the first account confused generalization with operationalization, treated automation and autonomy too similarly, and did not check source ingestability. Repository starting point: main at d19065b3aef33ffca92fa2f72f5203251fcae3b0. Literature access was checked on 2026-10-31. **Second revision:** 2026-10-31, after the merge of the draft, a review of it, and the ingestion of five candidate sources. The review found that the draft restated the operator's directives as findings, misdescribed the existing actionable-methodology relation, and introduced five workshop-local coordinates without saying which are new concepts. Section 6 and the amended disposition answer those points with the ingested sources.
 
 ## Central result
 
@@ -12,11 +12,11 @@ There are more than two possible transformations of a methodology; moreover, pro
 
 **Constraining:** which readings, choices, or responses the method permits or prefers for a named consumer.
 
-**Methodological coverage (or operational completeness):** which consequential tasks and decisions *in applying* the method have some usable guidance, including how to recognize its applicability, obtain information, choose the next operation, deal with exceptions, and stop. Guidance can specify a decision interface or an approach for obtaining evidence without settling its answer. It is not necessary for every choice to have a fixed answer. Methodological closure, already defined in Commonplace, is stronger: it concerns whether the retained method settles consequential decisions, not merely whether it supplies useful guidance for them.
+**Methodological coverage (or operational completeness):** which consequential tasks and decisions *in applying* the method have some usable guidance, including how to recognize its applicability, obtain information, choose the next operation, deal with exceptions, and stop. Guidance can specify a decision interface or an approach for obtaining evidence without settling its answer. It is not necessary for every choice to have a fixed answer. Methodological closure, already defined in Commonplace, is stronger: it concerns whether the retained method settles consequential decisions, not merely whether it supplies useful guidance for them. Coverage is therefore closure without the settling condition. Treat it as a diagnostic reading of the existing term, not as a candidate term of its own.
 
 **Operational integration:** whether guidance reaches the relevant executor at the relevant time, with the requisite tools, state, permissions, feedback, invocation and binding authority. Integration changes *the configured system*; it need not alter the methodology's content or range of validity.
 
-**Situated executability:** whether the specified executor and environment can actually perform the required work to an identified standard. This is a relation, not a textual genre and not a single successful trace.
+**Situated executability:** whether the specified executor and environment can actually perform the required work to an identified standard. This is a relation, not a textual genre and not a single successful trace. It is not a new predicate. It is the existing [actionable](../../theory/definitions/actionable-methodology.md) relation with one addition: the task's success standard over the cases T admits. Section 2 states the correction.
 
 These are diagnostic coordinates rather than scalar scores or a complete axiomatization. **They do not all belong inside operationalization.** Generality belongs to the knowledge's scope (or to changing task definition); automation, autonomy and warranted reliability characterize the configured executor and outcome. Operationalizing for a *fixed* task may constrain local choices, fill in guidance and integrate resources without claiming that the method now applies in more domains. An accidentally discovered wider application is a possible research result, not part of operationalization by definition. Distinguish the task's intended domain, what the source knowledge justifies, and what E actually handles successfully.
 
@@ -37,6 +37,14 @@ A working relation, **not a formal Commonplace definition**, is:
 `operationalize(K, T, E, S) → task-facing method or operating arrangement A`
 
 where T fixes the evaluated application, E and S supply actual competence and action possibilities, and A is judged by whether it makes K usable to guide T. Neither the output type nor the number of steps is fixed.
+
+The [operationalism ingest](../../sources/operationalism-sep.ingest.md) adds three conditions to this relation. They come from the discipline that owns the word, so they are transfers by analogy, not established results.
+
+1. **A is partial.** Operationalizing K for T and E selects which operations and indicators count as applying K for this purpose. Part of K stays outside A. That residue is what A can be checked against. An account in which A exhausts K cannot say when operationalization went wrong (Gillies' validity argument).
+2. **"Executable by E" names a typed range of operations.** If the range includes open-ended judgment, the relation rules nothing out. If it includes only codified steps, it collapses into [codification](../../theory/definitions/codification.md). This is Margenau's dilemma carried over to executors. The workshop has not yet typed that range; the cases in section 6 are the material for doing so.
+3. **A is an indicator hypothesis.** Following Bunge, treat "these operations serve K for T by E" as a fallible claim open to test, not a definition. The [Church–Turing ingest](../../sources/church-turing-thesis-sep.ingest.md) records the same status for the thesis itself: Turing placed it between a theorem and a definition, and Post objected that calling it a definition hides the need for continual verification.
+
+Condition 3 also settles how to read the "central result" above: it is a tentative identification, to be tested against cases, not a stipulation.
 
 **Two examples with the same operation:**
 
@@ -84,8 +92,8 @@ For a task definition T (including its application area, objective, success cond
 
 Three levels of evidence differ:
 
-1. **Can be attempted:** the actor can interpret the method and has a way to act. Commonplace's existing [actionable methodology](../../theory/definitions/actionable-methodology.md) principally captures whether its prescription can affect intervention selection.
-2. **Can complete a specified task:** the actor has the necessary operations, state, competence, permission and control to reach an outcome in a declared setting.
+1. **Can be attempted:** the actor can interpret the method and has a way to act.
+2. **Can complete a specified task:** the actor has the necessary operations, state, competence, permission and control to reach an outcome in a declared setting. Commonplace's existing [actionable methodology](../../theory/definitions/actionable-methodology.md) already covers most of this level, not only level 1: its four elements require an operator that can follow the mapping, available operations with the needed access, resources and authority, and a target those operations reach. The first draft of this workshop understated that. What the existing relation does not carry is an explicit task with an objective and a success criterion over admitted cases. That is the only addition this workshop makes at level 2.
 3. **Works adequately across a domain/horizon:** observed results satisfy an acceptance standard under representative variation, including exceptions, not just one successful demonstration.
 
 A trace proves an execution occurred. It does not show fidelity to the method (the actor may import its own method), goal success (the method may be wrong), repeatability (inputs and environment may differ), or generally reliable execution. These are separate claims.
@@ -174,19 +182,87 @@ The [bounded-context orchestration model](../../theory/bounded-context-orchestra
 | Wielinga, Akkermans & Schreiber (1998), [competence theory](https://www.cs.vu.nl/~guus/papers/Wielinga98a.pdf) | Method competence → conceptual refinement → operational choices; possible competence loss | [Yes](../../sources/competence-theory-problem-solving-method-construction.ingest.md) | Full author/institutional PDF surfaced | Reuse existing ingest; do not duplicate |
 | Parasuraman, Sheridan & Wickens (2000), [automation levels](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) | Function allocation distinct from full-task automation and human performance | [Yes](../../sources/model-types-levels-human-interaction-automation.ingest.md) | Full PDF accessible | Reuse existing ingest |
 | Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8) | Human exception burden, automation failure and deskilling | [Yes](../../sources/ironies-of-automation.ingest.md) | Existing ingest has full user-supplied PDF capture; publisher paywall | Reuse existing ingest |
-| Norman (1989/1990), [NASA-hosted original version](https://ntrs.nasa.gov/api/citations/19900004678/downloads/19900004678.pdf) | Automation feedback/exception boundary | No matching ingest in targeted searches | Full NASA report PDF available; journal reprint record has no downloadable PDF | Priority new ingest candidate; identify the NASA version, not silently the journal's different publication |
-| Suchman (1987), [Plans and Situated Actions](https://course.khoury.northeastern.edu/cs5100f12/resources/reading/suchman-situatedactions.pdf) | Plan ≠ full determination of situated activity | No matching ingest in targeted searches | Full 1987 book PDF surfaced at university course URL; Cambridge revised edition is access-controlled | Candidate, but check the version and usage rights; avoid equating original and revised editions |
-| Church–Turing history, [SEP entry](https://plato.stanford.edu/entries/church-turing/) | Pencil-and-paper effective methods vs broad judgment-laden execution | No matching ingest in targeted searches | Public full HTML article | Ingest only if needed; remember SEP is secondary scholarship rather than Turing's original text |
-| Operationalism, [SEP entry](https://plato.stanford.edu/entries/operationalism/) | Operational definitions/measurements differ from making a methodology usable | No matching ingest in targeted searches | Public full HTML article | Optional disambiguation source, not direct authority for Commonplace vocabulary |
-| Plotkin (2004), [origins of SOS](https://citeseerx.ist.psu.edu/document?doi=061229419ca3f09567d6bf6c8cd5c6ff3b94a3e6&repid=rep1&type=pdf) | Operational semantics is formal rule-based execution, not general operationalization | No matching ingest in targeted searches | Full paper PDF surfaced from CiteSeerX; publisher page only reliably exposes abstract | Candidate if conceptual distinction proves load-bearing |
-| OMG, [CMMN 1.1 specification](https://www.omg.org/spec/CMMN/1.1/) | Model unpredictable knowledge-worker activity with retained discretion | No matching ingest in targeted searches | Official specification page exposes normative PDF | Candidate, but avoid assuming a graphical case model executes itself or automates the work |
-| Haynes et al. (2009), [surgical checklist](https://www.nejm.org/doi/full/10.1056/NEJMsa0810119) | Human operationalization without task automation | No matching ingest in targeted searches | Publisher marks free article and exposes full-text HTML | Optional empirical example; before-after outcomes do not isolate checklist wording from implementation |
+| Norman (1989), [NASA-hosted original report](https://ntrs.nasa.gov/api/citations/19900004678/downloads/19900004678.pdf) | Automation feedback/exception boundary; delegated function versus full role | [Yes, this run](../../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md) | Full 14-page ICS Report 8904 captured; scanned two-column layout, so extracted text is noisy | Ingested; the journal reprint is a different publication and was not captured |
+| Suchman (1987), [Plans and Situated Actions](https://course.khoury.northeastern.edu/cs5100f12/resources/reading/suchman-situatedactions.pdf) | Plan ≠ full determination of situated activity | No | Course URL now returns 404. A Wayback capture from 2024-04-22 exists but is a 14-page image-only scan with no text layer, and no OCR tool is installed | Blocked. Needs OCR tooling, a text-layer copy, or a user-supplied edition; do not substitute the 2007 revised edition silently |
+| Church–Turing thesis, [SEP entry](https://plato.stanford.edu/entries/church-turing/) | Effective methods as the no-insight limiting case; level-relativity of "the method" | [Yes, this run](../../sources/church-turing-thesis-sep.ingest.md) | Public full HTML article | Ingested; secondary scholarship with Copeland's interpretive position, not Turing's text |
+| Operationalism, [SEP entry](https://plato.stanford.edu/entries/operationalism/) | The discipline's own sense of operationalization and its known failure modes | [Yes, this run](../../sources/operationalism-sep.ingest.md) | Public full HTML article | Ingested; supplies the three conditions in section 0 and the Margenau dilemma |
+| Plotkin (2004), [origins of SOS](https://homepages.inf.ed.ac.uk/gdp/publications/Origins_SOS.pdf) | Operational semantics is a rule-specified transition relation, distinct from execution by an implementation | [Yes, this run](../../sources/plotkin-origins-of-sos.ingest.md) | The CiteSeerX copy is no longer served; captured from the author's homepage | Ingested; contrast case that keeps "operational" from collapsing into "executed" |
+| OMG, [CMMN 1.1 specification](https://www.omg.org/spec/CMMN/1.1/) | A deployed standard that keeps model execution, performer type, activation and discretionary planning as separate controls | [Yes, this run](../../sources/cmmn-1-1-specification.ingest.md) | Normative 144-page PDF captured; figures and lifecycle diagrams lost in text conversion | Ingested; a design standard, not evidence that the design works |
+| Haynes et al. (2009), [surgical checklist](https://www.nejm.org/doi/full/10.1056/NEJMsa0810119) | Human operationalization without task automation | No | Publisher returns HTTP 403 to automated capture despite marking the article free | Blocked. Needs a user-supplied copy or another open full-text URL; an abstract would be a weaker, different source |
 
 The sources' meanings do not transfer unchanged: *operational semantics* fixes rules in programming-language theory; *operationalism* addresses measurement and scientific concept meaning; *operational method construction* in knowledge engineering moves toward a task-specific executable control strategy; *automation levels* in human factors classify allocations and interaction. None licenses a universal equation 'operationalize = formalize = automate'.
 
-**Highest-value next ingests**, if separately commissioned: Norman (directly bears on the transition from automatic normal-path work to recovery), Suchman (situated autonomy versus fixed plans), and possibly the OMG specification (formal representation without fixed activity order). Plotkin, the SEP entries, and Haynes are lower-priority contrasts. Existing three reports should be reused. Public retrieval does **not** establish a copyright license for committing a full source; the normal Commonplace ignored-snapshot/checksum discipline still applies.
+**Ingest status after the second revision:** five of the seven candidates are ingested and committed (Norman, both SEP entries, Plotkin, CMMN). Suchman and Haynes are blocked for the reasons in the table. Suchman remains the highest-value missing source, because none of the ingested sources addresses situated action against a fixed plan directly. The three earlier reports are reused. Public retrieval does **not** establish a copyright license for committing a full source; the snapshots stay ignored and checksummed.
 
-## 6. Architectural predictions and proposed discriminating experiments
+## 6. Worked cases from the ingested sources
+
+Each case below is read from one ingest. The ingests record their own limits; every transfer to LLM executors is by analogy unless the mechanism is shared.
+
+### 6.1 The effective method: the limiting case where operationalization and automatability coincide
+
+Copeland's four conditions define an effective method: finitely many exact instructions, a result in finitely many steps, performable by an unaided human with paper and pencil, and demanding no insight, intuition or ingenuity ([Church–Turing ingest](../../sources/church-turing-thesis-sep.ingest.md)). The thesis and its easy converse say that a method operationalized to this level is exactly one a Turing machine can carry out. Human computers executing such methods were later replaced by machines doing the same work. That is function-level automation following operationalization with decision autonomy held at zero on both sides: neither executor decided anything.
+
+Two consequences for the workshop:
+
+- **Operationalization entails automatability only for no-insight executors.** Beyond condition 4 it does not. This is the baseline against which the LLM case differs, and it explains why the first draft's "neither sufficient nor necessary" claim in section 3 holds: the claim is about executors that are permitted insight.
+- **"The method" is level-relative.** At the level of weights and inference code, an LLM run is mechanical in the technical sense. At the level of the retained task instructions, the same run supplies decisions no method settled. So any claim that K is operationalized for E must name which artifact counts as the method. Without that, "computationally closed but methodologically open" in the [closure note](../../theory/methodological-and-computational-closure-track-different-changes.md) looks like a contradiction with classical computability. It is not; the two readings name different artifacts.
+
+The ingest warns against the equivalence fallacy: the thesis bounds what a human following an effective method can do, not what machines can generate. Do not argue from it to a ceiling on machine judgment, and do not read "mechanical" as "without judgment-like output".
+
+### 6.2 Norman's handover: automating a function versus automating a role
+
+Norman holds the captain's delegation fixed and swaps the delegate: the autopilot or the first officer ([Norman ingest](../../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md)). Both "automate" control from the captain's view. Only the human delegate would say "I seem to be correcting this thing more and more." In two incidents the autopilot compensated silently for a growing fault, and the crew learned of it only when the compensator reached its limit and the least recovery time remained.
+
+The mechanism Norman names is the one this workshop needs. The designer's task "is completed when the device functions as requested", and reporting is secondary because "the automation itself doesn't need it." Read in this workshop's terms: **a task definition T written for executor E drops the functions E does not consume.** Anomaly reporting served the surrounding crew, not the control loop, so it fell outside T. This is a mechanism for section 0's claim that T owns the application area and success criteria. It adds a requirement: T must name the functions the previous executor supplied to its surroundings, or operationalizing for the new executor silently removes them.
+
+The case also separates two things the first draft ran together under "automation coverage":
+
+- **automating a delegated function:** the autopilot holds heading and altitude;
+- **automating the full role of the previous executor:** everything the first officer did in that seat, including status and anomaly talk.
+
+Norman adds that specific monitors are easy to operationalize (any competent programmer could write one for yoke compensation) while the general case, the next slightly different anomaly, needs "a monitoring of its own monitoring" and a system model nobody knows how to build. That is the escalation boundary in section 3.5 again: escalation is warrantable within a defined anomaly class and unsolved beyond it.
+
+Limits: three incident narratives and one informal simulator run. The "first officer would have said something" premise is untested, and Norman's own fuel-leak replication shows crews missing exactly that cue. The analogy to agents rests on compensation with a saturation limit, which an agent's hidden repairs may not share.
+
+### 6.3 CMMN: four separate controls in a deployed standard
+
+The OMG case-management standard models work that "cannot be orchestrated by a predefined sequence of Tasks" ([CMMN ingest](../../sources/cmmn-1-1-specification.ingest.md)). It keeps four controls apart that the workshop's dimensions also keep apart:
+
+| CMMN control | What it decides | Workshop dimension |
+|---|---|---|
+| Engine executes the case model's state semantics (sentries, lifecycles) | Whether the model is executed at all | Execution of an operationalized arrangement |
+| Task performer type: HumanTask, ProcessTask, DecisionTask | Who or what does each unit of work | Function-level automation |
+| ManualActivationRule | Whether enabled work starts by itself or waits for a person | Unattended continuity |
+| Discretionary items in PlanningTables, gated by Roles and ApplicabilityRules | Who may select and order work at run time, within a declared catalogue | Decision autonomy |
+
+The mapping gives a non-LLM instance of an operationalized, engine-executed case model with no function-level automation and no decision autonomy for the engine. Executable, automated and autonomous are three predicates here, and the standard sets each independently.
+
+The same knowledge also appears in different forms for different consumers: engine-evaluated rules over the case file, planning tables and filters for the human planner, and tacit knowledge that stays with participants. That is executor-relative operationalization in the standard's own structure.
+
+Where the mapping fails: the standard's executors are human case workers, and its discretion is a declared catalogue, not open judgment. It records no outcome data, so it shows that a two-phase discretion boundary was institutionalized, not that it works. The engine's "execution" is of a state model, not of the knowledge work; the work itself stays with the performers. Transfer to LLM executors holds only for the engine-enforced-state versus judgment split.
+
+### 6.4 Three senses of "operational"
+
+The ingests fix three senses that the KB now uses or touches:
+
+1. **Operationalism** (Bridgman, then Feest and Chang): a concept's meaning given by operations that apply it; in its surviving form, a partial and provisional specification of indicators for a purpose ([operationalism ingest](../../sources/operationalism-sep.ingest.md)).
+2. **Operational semantics** (Plotkin): a rule-specified transition relation that gives a language its meaning. It is distinct from an implementation that executes it, and executable rules such as TYPOL's Prolog reading are a further step with their own efficiency problem ([Plotkin ingest](../../sources/plotkin-origins-of-sos.ingest.md)).
+3. **`operationalized-from`** (ADR 054): a methodology-to-procedure lineage edge.
+
+None of these is "executed" or "automated". Plotkin keeps specification and execution apart even when the rules run; the operationalism sense names indicators, not steps. The workshop's provisional sense, making K usable for T by E, is a fourth use. If it is ever adopted, the [vocabulary collision ledger](../../reference/vocabulary-collision-ledger.md) must record which sense governs new text. Two further questions fall out and are left open here: which sense the [codification](../../theory/definitions/codification.md) criterion's "unique operational semantics" uses, and whether four surfaces that describe codification as requiring formal semantics overstate a definition that calls formal semantics sufficient but not necessary. A third: the [constraining](../../theory/definitions/constraining.md) definition counts operational definitions as constraining without qualification, while the operationalism source holds that they are partial and cannot show their own validity. All three belong to a separate consistency pass, not to this workshop.
+
+### 6.5 What the cases say about the executor's range of operations
+
+Condition 2 in section 0 asks for a typed range of operations between open judgment and codified steps. The cases bracket it:
+
+- The effective method sits at one end: operations are rule applications with no insight.
+- CMMN's engine sits near it: evaluating sentries and rules over a case file.
+- CMMN's human planner and Norman's first officer sit at the other end: selecting work from a catalogue, noticing trends and reporting them.
+- The LLM executor in the second example table of section 0 sits between: it follows a retained method where one exists and supplies decisions where it does not.
+
+No test here types that middle range. Doing so is the next concrete step for the definition, and it is what the candidate experiment in section 7 would have to log per decision.
+
+## 7. Architectural predictions and proposed discriminating experiments
 
 **P1 — task-relative operationalization does not entail generalization.** With T and its application area fixed, giving E better activation, source access and state can improve successful execution without altering K's domain of applicability. Separately test extending K or redefining the task as T' while preserving E/S. Better T performance is not by itself evidence that K works on T'.
 
@@ -200,11 +276,13 @@ The sources' meanings do not transfer unchanged: *operational semantics* fixes r
 
 **Candidate Commonplace experiment:** define T explicitly, including the application area, acceptance criteria and authority boundaries; select one existing research method and keep the model pinned. Run (a) bare task, (b) relevant methodology cue, (c) cue plus the same method with improved access/state/recovery, and (d) the same support with stronger step constraints. In a **separate generalization experiment**, propose T' with a wider application area and independently check whether K still applies. A second contrast transfers one approval or method-choice function from human to LLM while holding T and evaluation fixed. Log source activation, intervention responsibility, revision fidelity, final correctness, fallback cases, cost and horizon. None of these comparisons has been run here.
 
-## 7. Disposition
+## 8. Disposition
 
 1. **Define the application area in task T, not inside operationalization.** Operationalization is the task- and executor-relative transformation that makes K usable for T by E in setting S. Theory → methodology and methodology → skill are possible realizations of this same *task-relative* operation, not two mandatory meanings. Generalizing K or extending T is separate, and any newly discovered T' needs a separately warranted scope claim.
-2. **Preserve current Commonplace definitions** of [actionable methodology](../../theory/definitions/actionable-methodology.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and [methodological/computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md); do not create competing 'executability' or 'operationalization' definitions on purely conceptual grounds.
+2. **Preserve current Commonplace definitions** of [actionable methodology](../../theory/definitions/actionable-methodology.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and [methodological/computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md); do not create competing 'executability' or 'operationalization' definitions on purely conceptual grounds. Of the five coordinates in the central result, only generality and operational integration name something the existing definitions do not. Situated executability is the actionable relation plus a task success standard; methodological coverage is closure without the settling condition; constraining is already defined.
 3. **Treat automation and autonomy separately in future comparisons**: allocate actual task functions to human/computation; separately record discretionary and authorization boundaries, plus which human interventions remain required over the declared horizon. Computational closure is useful for absence of required human decisions, but not a complete proxy for discretionary authority.
 4. **Retain the narrower lineage meaning of 'operationalized-from'** as the methodology-to-procedure artifact relation. It is compatible with, but not equivalent to, the proposed task-relative sense. When provenance matters specify the source artifact and kind of transformation; when efficacy matters specify T, E and setting. No ADR change without separate evidence.
 5. **Do not infer fully automated LLM work from operationalization alone.** Demonstrate executor capability and function closure under explicit constraints, then separately demonstrate warrant and adequate outcome quality. Lack of a deterministic procedure is not by itself a blocker.
 6. **No new machinery or extracted theory definition yet.** This workshop's distinctions are useful for architectural decisions, but causal superiority and the need for additional vocabulary await the scoped tests above.
+7. **One extraction is ready without a test.** The claim that a task definition fixes the application area and success criterion, and that operationalization is relative to task, executor and setting, is conceptual and now has a mechanism from Norman (a task written for one executor drops the functions that executor does not consume) and a limiting case from the Church–Turing material. It can go into the library as a short note or as an amendment to the actionable-methodology definition. The rest of this workshop stays here until a test discriminates.
+8. **Source status.** Five of seven candidates are ingested. Suchman needs OCR tooling or a text-layer copy. Haynes needs a user-supplied copy. Neither blocks item 7.

@@ -1,6 +1,6 @@
 # Operationalization, executability, automation, and autonomy
 
-**Commissioned:** 2026-10-31 by the operator. **Revised:** 2026-10-31 following operator feedback on dimensionality, automation/autonomy, source ingestion, and locating application-area generalization in task definition rather than operationalization.  
+**Commissioned:** 2026-10-31 by the operator. **Revised:** 2026-10-31 following operator feedback on dimensionality, automation/autonomy, source ingestion, and locating application-area generalization in task definition rather than operationalization. **Revised again:** 2026-10-31 after merge, review, and the ingestion of five candidate sources.  
 **Status:** scoped conceptual investigation, not adopted vocabulary or an empirical test.  
 **Repository baseline:** `d19065b3aef33ffca92fa2f72f5203251fcae3b0` (main when opened).
 
@@ -30,12 +30,16 @@ The operator's revision questions are binding on this workshop:
 
 The revised [exploration](./exploration.md) treats **task T as supplying the application area and success boundary**, while *operationalization* concerns making existing knowledge K usable by executor E to perform T in setting S. Generalizing the knowledge or broadening its task area requires a separate scope claim and, where appropriate, a revised task T'. A task-specific operationalization can entail constraining, method elaboration, method selection, tools or integration, but does not require a particular output format or a fixed sequence of steps. This is not an intrinsic rank of an artifact. Theory → methodology and methodology → skill are two possible source-to-task paths; neither is a necessary intermediate stage. The accepted `operationalized-from` label remains the narrower methodology-to-procedure **lineage** claim. The exploration also separates actual task execution, automation, discretionary autonomy, unattended completion, and warranted outcome quality. No new technical definition has been adopted.
 
-It also distinguishes full bounded task automation by computation from decision autonomy. An LLM can supply decisions not settled by the retained method; a fully written procedure alone cannot confer required capabilities, authority or reliability. The literature table identifies three already-ingested sources and full-text paths for further candidates; **no new primary sources were ingested as part of this availability check**.
+It also distinguishes full bounded task automation by computation from decision autonomy. An LLM can supply decisions not settled by the retained method; a fully written procedure alone cannot confer required capabilities, authority or reliability.
+
+The second revision rests on five new ingests: [Norman](../../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md), the Stanford Encyclopedia entries on the [Church–Turing thesis](../../sources/church-turing-thesis-sep.ingest.md) and [operationalism](../../sources/operationalism-sep.ingest.md), [Plotkin](../../sources/plotkin-origins-of-sos.ingest.md) and [CMMN 1.1](../../sources/cmmn-1-1-specification.ingest.md), beside the three reports already in the KB. Section 6 of the exploration turns them into worked cases. Section 0 adds three conditions to the provisional relation from the operationalism literature. Suchman and Haynes could not be captured; the source table records why.
+
+The review of the merged draft found three faults, now corrected in the exploration: the findings restated the commission, the actionable-methodology relation was described as narrower than it is, and five workshop-local coordinates were introduced without saying which are new. Only generality and operational integration are new; the others reduce to existing definitions.
 
 ## Closure rule
 
-Close only after either (a) making an evidence-backed, nonduplicative theory extraction or (b) documenting why existing definitions suffice and the additional distinction stays in workshop analysis. Strong causal claims about the benefit of operationalization require comparisons for the **same T, E and objective**, with documented changes to K, instructions or environment. Claims about generality require separate comparison on T' with its application area declared. The proposed tests are in the exploration; none were run.
+Close only after either (a) making an evidence-backed, nonduplicative theory extraction or (b) documenting why existing definitions suffice and the additional distinction stays in workshop analysis. Current position: one extraction is ready on path (a), the task-relative claim with Norman's mechanism (disposition item 7); the remaining distinctions sit on path (b) pending the proposed tests. Strong causal claims about the benefit of operationalization require comparisons for the **same T, E and objective**, with documented changes to K, instructions or environment. Claims about generality require separate comparison on T' with its application area declared. The proposed tests are in the exploration; none were run.
 
 ## Deliverable
 
-- [Revised conceptual account, tests, and source-availability audit](./exploration.md).
+- [Revised conceptual account, worked cases from the ingested sources, tests, and source status](./exploration.md).
