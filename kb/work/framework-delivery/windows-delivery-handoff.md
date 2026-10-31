@@ -277,3 +277,15 @@ or resume step.
   through a release, update Commonplace's dependency and run focused Windows
   recovery checks. Do not repeat the entire Windows installation experiment
   solely for the shim-path correction.
+- **2026-10-31, windows-install run 4 (installed `main`).** Non-editable
+  `uv tool install --reinstall` of `git+https://github.com/zby/commonplace@main`
+  (`55700da28`, Workjig 0.3.0) over python.org 3.14.7, which replaced the user's
+  0.3.1. Shim snippet rerun (bytes unchanged). All 25 commands' `--help` exit 0,
+  one at a time; init in a new scratch project printed no shadowing warning;
+  `--check` and `validate landings` clean, inside the app (inherited environment,
+  app fully restarted) and from a process started by Explorer. No Commonplace
+  Code Integrity, Defender or Avast record. New gaps: rerunning init recreates
+  the templates; INSTALL.md lacks the certificate, `%APPDATA%` and cache-path
+  workarounds (added to INSTALL.md the same day). Evidence:
+  [run 4](../windows-install/results-2026-10-31-afflicted-main-run4.md). No agent
+  skill-discovery check (item 4) was run.

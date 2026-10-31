@@ -388,6 +388,7 @@ Use `uv tool list` to confirm installation and `uv tool dir --bin` to identify t
 - **A command warns that the project's Commonplace files are out of date:** a stub, `.commonplace/library.md`, or the read rule no longer matches the installed library. Rerun `commonplace-init` in the project.
 - **A command reports that the Commonplace library is not available:** the installation has no library under its shared data. Reinstall the tool with the step 2 command.
 - **Windows refuses to start a command, or a command hangs:** see [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands).
+- **On Windows, uv fails with `UnknownIssuer`, or the tool is missing outside the Claude desktop app:** see [Windows: uv behind antivirus or inside the Claude desktop app](#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app).
 
 `cp-skill-health-check` performs the same classification, runs `commonplace-init --check`, and flags a library copy left by an older release.
 
@@ -445,6 +446,33 @@ Paste the snippet into a PowerShell session rather than saving it as a `.ps1` fi
 - **Third-party antivirus:** products such as Avast can sandbox the launchers or delete files from the tool environment. If every command fails with `uv trampoline failed to canonicalize script path`, check the antivirus's quarantine or detection history, then repair the environment by rerunning the step 2 install command with `--reinstall`, using the same `--python` you installed with.
 - **Do not turn Smart App Control off just for this.** Windows cannot turn it back on without a reinstall.
 - **Do not test the install by launching every executable in a loop.** When launches stall, the loop can hang the machine. Check one command at a time.
+
+### Windows: uv behind antivirus or inside the Claude desktop app
+
+Each fix below is a user environment variable. Set it in PowerShell, then fully restart every shell, IDE and desktop agent, as in step 2. A process that was already running keeps its old environment. In the Claude desktop app, quit it completely, not just its window.
+
+- **`uv tool install` fails with an `UnknownIssuer` certificate error:** antivirus that inspects HTTPS, such as Avast, replaces the server certificates with its own, and uv does not trust it by default. Tell uv to use the Windows certificate store, where the antivirus installs its root certificate:
+
+  ```powershell
+  [Environment]::SetEnvironmentVariable('UV_SYSTEM_CERTS', '1', 'User')
+  ```
+
+  `winget`'s Microsoft Store source fails the same way; step 1's `--source winget` avoids it.
+- **A tool installed from the Claude desktop app is missing in other shells, or its Python link is broken:** the desktop app is a packaged Windows app, and Windows redirects its writes under `%APPDATA%` to a private copy. uv's default tool and Python directories are under `%APPDATA%`, so an install made from the app lands where other processes cannot see it. Move both directories out of `%APPDATA%` before installing, then rerun the step 2 Windows command and the shim snippet:
+
+  ```powershell
+  [Environment]::SetEnvironmentVariable('UV_TOOL_DIR', "$HOME\.local\share\uv\tools", 'User')
+  [Environment]::SetEnvironmentVariable('UV_PYTHON_INSTALL_DIR', "$HOME\.local\share\uv\python", 'User')
+  ```
+
+  The snippet finds the tool through `uv tool dir`, so it follows `UV_TOOL_DIR`.
+- **In a Commonplace checkout, `uv run` fails with `Trivial strip failed`:** the same redirection puts uv's cache under a long `…\Packages\AnthropicPBC.Claude_…\LocalCache\Local\uv\cache` path, and the package's file paths then exceed Windows' 260-character path limit, which applies unless long paths are enabled. Use a short cache path:
+
+  ```powershell
+  [Environment]::SetEnvironmentVariable('UV_CACHE_DIR', "$HOME\.cache\uv", 'User')
+  ```
+
+These settings change only where uv keeps its files and which certificates it trusts. They are harmless outside the desktop app and without antivirus, so on such a machine setting all of them before step 2 is simplest.
 
 ### Migrating an older project-local installation
 
