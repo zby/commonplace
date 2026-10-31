@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [operationalization-executability-automation](./operationalization-executability-automation/README.md) — conceptual investigation of method operationalization, situated executability and function-level automation against Commonplace's existing actionability, closure and codification terms; research findings and counterexamples recorded, no new machinery or vocabulary adopted
+
 - [adr-testing](./adr-testing/README.md) — preliminary size measurements and tests of whether agents recover consequential decisions for code and LLM-instruction changes; bounded trace pilot distinguishes late consultation from merely reading after an edit, without assuming ADRs can cover the whole design
 
 - [windows-test-suite](./windows-test-suite/README.md) — making the full test suite pass on native Windows and in `windows-latest` CI; backlog of 47 failures and 6 import errors by cause: Unix-only `fcntl` locking, backslashes in Markdown links (a real relocation bug) and in printed paths, symlink privileges, probable CRLF line endings, and two one-offs; Workjig itself is fixed elsewhere
