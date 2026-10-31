@@ -9,7 +9,10 @@ The motivating correction is the operator's construction: a compiler's complete 
 ## Working artifacts
 
 - [An implementation supplies a formal model, not proof of shared semantics](./implementation-and-shared-semantics.md) retains the initial reductions, their assumptions, and the remaining boundary question.
-- [Candidate definitions using formal semantics](./candidate-definitions.md) records the later proposed definitions of shared or unique formal semantics, symbolic form, and codification. It preserves the progress made by removing the special sense of “operational,” the limit of constructive access, and the operator's question about an indefinitely continuing sequence of semantic extensions.
+- [Candidate definitions using formal semantics](./candidate-definitions.md) records the latest proposed definitions of fixed formal semantics, an adequate reference interpreter, symbolic form, and codification. It distinguishes construction from language fidelity and proposes ways to assess command of a language.
+- [Could an LLM with perfect command of English define its semantics?](./perfect-english-reference-question.md) is a self-contained question to copy to other agents. It asks for a definition of perfect command, a semantic interface, counterexamples, and a bounded assessment design.
+
+The operator requires an objective criterion, not our belief that semantics exists. Implementation-to-semantics construction applies to compilers and LLMs alike. Designation alone cannot establish a reasonable reference for independently understood C or English. The latest hypothesis adds actual language competence: better command of English could make reference-by-implementation reasonable over broader scopes. The candidates separate perfect command, evidence for it, and acceptance of documented limitations in practical use. Whether this yields a representational distinction or a graded suitability for reference use remains open.
 
 These are conceptual drafts from the discussion, not a literature review or adopted vocabulary changes. The candidate-definitions file holds the latest proposed wording; the earlier reductions remain its supporting argument.
 

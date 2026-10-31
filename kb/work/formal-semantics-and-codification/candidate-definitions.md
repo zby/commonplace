@@ -1,102 +1,149 @@
 # Candidate definitions using formal semantics
 
-Workshop draft, 2026-10-31. The operator requested these definitions after the discussion retained in [the reductions note](./implementation-and-shared-semantics.md). These are candidates for review, not adopted vocabulary. The current library definitions remain authoritative and unchanged.
+Workshop draft, 2026-10-31. These candidates develop the [reductions note](./implementation-and-shared-semantics.md) and the subsequent operator discussion. They are for review; the current library definitions remain authoritative and unchanged.
 
-## What has been gained
+## The proposed distinction
 
-Returning to a shared or unique semantics is not returning to the starting point. The reductions remove the need for Commonplace's special sense of “operational semantics” and isolate the remaining role of uniqueness:
+An implementation together with a sufficiently specified execution machine supplies a construction of a formal account of its behavior. This applies to compilers and LLMs alike. The construction includes implementation bugs and can represent explicitly modeled variation. Its cost does not prevent its availability in principle.
 
-1. A formal semantics need not have been explicitly written down.
-2. An implementation plus a sufficiently specified machine model supplies a formal account of its behavior. This construction includes bugs.
-3. Independent executors agreeing under tests that could expose disagreement corroborate a claim of shared semantics or conformance; agreement does not prove it.
-4. Incompatible implementations can each have a formal account and pass the same tests. Their disagreement does not disprove the existence of formal semantics.
-5. Permitted variation and ambiguity can be formally represented. Multiple permitted results are not disagreement about what is permitted.
-6. “Unique” concerns the account of permitted behavior, not a unique mathematical presentation or a single output.
+We can designate that account as defining an operation. Alternatively, we can assess it as an attempted interpretation of meaning specified independently. The same account can play the first role for an implemented operation and the second for the requirement that operation is supposed to satisfy.
 
-The remaining problem is narrower: when does an implementation's formal account describe the artifact's meaning, rather than merely that implementation's response to the artifact? This unresolved question does not erase the reductions above.
+Designation alone is insufficient for the distinction we need. Any frozen LLM could define an interface, but this would not make it an adequate reference for English. A reasonable reference must also preserve the linguistic distinctions relevant to the stated language and scope. The proposed property is its actual adequacy, not our belief in that adequacy; evidence for the property remains fallible.
 
-## Candidate 1: Shared or unique formal semantics
+The working hypothesis is that a computational interpreter can serve as a semantic reference when its command of the language is adequate within the stated scope. Better command could make reference-by-implementation reasonable for broader English uses. This is a hypothesis to test, not a claim that C implementations are uniformly correct or that English is inherently unformalizable.
 
-**Candidate definition:** An artifact has a unique formal semantics within a specified scope when one fixed account determines what behavior it permits, including explicitly allowed variation, and conforming interpreters preserve that account. The account need not have been explicitly specified, and equivalent mathematical presentations count as the same semantics.
+## Candidate 1: Fixed formal semantics
 
-“Shared formal semantics” emphasizes preservation across interpreters. “Unique formal semantics” emphasizes that their identities do not change what is permitted. These are explanatory phrasings here, not proposals to register two new terms. Prefer direct wording such as “the same rules for permitted behavior” where that carries the sentence.
+> An artifact has a fixed formal semantics within a specified system when a designated account determines what behavior it permits, including explicitly allowed variation. Conforming interpreters must preserve that account. It can be specified mathematically or determined by a designated implementation and execution model.
 
-The scope must fix the language version, relevant execution parameters, and observations being compared. Two interpreters may choose different permitted results while agreeing on the semantics. An interpreter that violates the rules has an implementation failure; its actual behavior can still have a formal description.
+The account need not have been separately written down as mathematical rules. An implementation and machine model can supply its construction. Equivalent mathematical presentations count as the same semantics; “fixed” does not require a single permitted output.
 
-Whether actual implementations preserve the same account is conjectural unless established by stronger means. Passing conformance tests corroborates that claim, not the bare existence of some formal description of each implementation.
+The scope fixes the language version, relevant execution conditions, and observations being compared. The designation establishes which rules define the operation. Whether a particular executor conforms to them is a separate question. Independent implementations agreeing under tests that could reveal violations corroborate conformance; passing tests does not prove it.
 
-## Candidate 2: Symbolic representational form
+“Shared semantics” describes what conforming interpreters preserve. It need not be introduced as another registered term. A fixed account remains fixed even when an implementation fails to preserve it or nobody has yet established conformance.
+
+## Candidate 2: Adequate reference interpreter
+
+> A computational interpreter is an adequate semantic reference for a language within a stated scope when it preserves the language's relevant distinctions of meaning, permitted variation, and contextual interpretation. Its designation as a reference does not establish this adequacy. Its implementation and execution model provide a construction of the semantics it realizes.
+
+Adequacy includes distinguishing legitimate readings from misunderstandings, preserving consequences under meaning-preserving reformulations, and changing interpretation when relevant context changes. Merely producing plausible responses or agreeing with a majority is insufficient.
+
+A perfect reference would preserve all relevant distinctions throughout its scope. A practically acceptable reference may have documented limitations within an explicitly bounded use. The decision to accept those limitations is separate from the claim of perfect command. Tests corroborate competence; they do not convert approximate competence into perfection.
+
+This candidate introduces a substantive correctness condition whose assessment is still open. Independent speaker judgments, controlled examples, and adversarial tests are possible evidence, not definitions of correctness. Linguistic competence must also be distinguished from factual knowledge, general reasoning ability, and willingness to follow instructions.
+
+## Candidate 3: Symbolic representational form
 
 Proposed replacement for the symbolic part of [representational form](../../theory/definitions/representational-form.md):
 
-> Symbolic content is retained in identifiable units whose rules determine what behavior is permitted. Those rules are taken to admit a formal semantics that conforming consumers preserve, whether or not that semantics has been explicitly specified. The rules may permit variation; a consumer's identity does not change what is permitted.
+> Symbolic content is retained in identifiable units with fixed rules for permitted behavior. A formal account of those rules is either supplied explicitly or constructible from an adequate reference interpreter and its execution model. Where the interpreter is proposed as a reference for an independently understood language, it must preserve that language's relevant semantic distinctions within the stated scope; designation alone does not suffice.
 
-“Taken to admit” records a conjectural commitment rather than requiring a completed formalization. Explicit formal specifications remain included. Code, schemas, grammars, and resolver-consumed tables remain candidate instances; structured formatting alone is insufficient.
+The criterion concerns actual rules and fidelity to them, not our confidence in a semantic theory. Our knowledge of the rules, the construction, or the interpreter's fidelity can be incomplete. A reference can instead define a new language by stipulation, but its resulting semantics must not silently be presented as an adequate account of an existing language.
 
-## Candidate 3: Codification
+This candidate makes the classification depend on the specified language, scope, and operative part. It does not establish an intrinsic division between all C text and all English text. Whether this is the right refinement of representational form remains a review question.
+
+Code, schemas, grammars, and resolver-consumed tables are typical cases when their interpretation mechanisms define the relevant operations. Markdown, YAML, and JSON formatting alone does not establish that role. The criterion concerns the operative part and its consumption path, not the notation or the whole file indiscriminately.
+
+## Candidate 4: Codification
 
 Proposed replacement for the opening of [codification](../../theory/definitions/codification.md):
 
-> Codification commits a rule or operation stated in natural language to a symbolic artifact whose fixed rules determine what behavior is permitted. Those rules are taken to admit a formal semantics that conforming consumers preserve, whether or not anyone has explicitly specified it. Codification is the symbolic region of constraining: making prose more precise alone does not establish that this change has occurred.
+> Codification commits a rule or operation stated in natural language to a symbolic artifact with fixed rules for permitted behavior. The rules have an explicit formal account or one constructible from an adequate reference interpreter and execution model. The commitment fixes an interpretation for the operation; whether that interpretation satisfies the original requirement remains a separate question.
 
-[Constraining](../../theory/definitions/constraining.md) retains its current meaning: committing choices that narrow or rank permitted readings or behaviors. No replacement definition of constraining as a whole is proposed here.
+Codification remains the symbolic region of [constraining](../../theory/definitions/constraining.md): committing choices that narrow or rank permitted readings or behaviors. No revision of constraining as a whole is proposed here. Making prose more precise, extracting a skill from methodology, or adding frontmatter does not alone establish fixed formal semantics for its instructions.
 
-The full definition should retain these limits:
+Keep these limits:
 
-- Codification need not select a single result. It can commit to a rule permitting many results.
-- Formalizing actual behavior does not show that it implements the intended rule correctly.
+- Codification can permit many results. It need not make execution deterministic.
+- Defining an operation does not establish that it is the right operation for the task.
+- Formalizing actual implementation behavior does not prove conformance to an independent specification.
 - A codified check does not establish that it captures its intended requirement.
-- A skill's extraction from methodology or addition of frontmatter does not alone change how its operative instructions are interpreted.
 
-## Unresolved boundary across the candidates
+## The two-compilers test
 
-The shared or unique formal-semantics candidate defines the property under discussion; it does not establish which languages have it. Natural language might also have a complete formal semantics that we have not specified, so existence of one fixed account does not yet distinguish natural language from symbolic content.
+Two C compilers can pass the same tests and disagree elsewhere. Each compiler, together with the relevant machine models, still supplies a formal account of its behavior. Their incompatibility does not defeat either construction.
 
-The symbolic-form candidate retains the intended criterion while replacing the awkward terminology, but does not prove the distinction. Codification inherits this boundary question through “symbolic.” The complementary natural-language category must not be defined as “content for which formal semantics is impossible” on the strength of this draft.
+There are two different questions:
 
-## Constructive access: useful reduction, not a replacement definition
+1. **Choose one compiler to define the dialect.** Its implemented behavior fixes that dialect's interpretation. Another compiler is assessed against it. The choice does not prove that the selected dialect is useful or faithful to an independent C standard.
+2. **Treat both compilers as implementations of independently specified C.** Their behavior is assessed against that specification. A disagreement outside permitted variation may expose an implementation bug or an unsettled part of the specification.
 
-The operator proposed a possible practical basis for the distinction. For a programming-language implementation, we can construct a formal account by following its computational machinery. For unrestricted natural language, we lack an established general construction of its complete meaning.
+Selecting a reference answers which operation is defined. It does not answer whether that operation adequately captures a meaning or requirement that was specified independently.
 
-A compiler genealogy need not be followed back to lambda calculus. An executable together with its machine model suffices to describe implemented behavior; compilation history matters separately to claims of faithful compilation. Complexity alone is not the obstacle: an enormous construction is still a construction.
+This is why conformance tests are not evidence needed to establish bare formalizability. One specified implementation already provides a construction. Tests instead put claims of conformance or shared behavior at risk.
 
-But the construction also applies to a fixed LLM implementation. Distinguishing the resulting account of its responses from the prompt's meaning brings us back to the requirement for semantics that conforming interpreters preserve. Constructive access therefore clarifies what is available for an implementation without independently settling the language-level distinction.
+## Apply the same test to an LLM
 
-The later assistant suggestion to define codification simply as replacing interpretation at use time with an implemented rule is not adopted here. The operator's correction was to retain the progress toward formal-semantics vocabulary, not to abandon the shared-semantics question.
+Fix an LLM's weights, inference code, runtime, decoding procedure, and relevant execution conditions. Include context as an input and model sampling explicitly if it is part of the operation. Its response behavior then has a formal account under that machinery.
 
-## Semantic expansion: the operator's question
+We can stipulate that this account defines an English-language interface: inputs mean what this designated system makes them mean. The stipulation supplies a formal interpretation. Whether calling it a semantics of English is reasonable depends on what the definition is for.
 
-The operator distinguished two kinds of plurality:
+- **Defining an interface:** the stipulation establishes the implemented operation.
+- **Describing ordinary English:** the claim that this operation captures English meaning remains independently assessable. A model can misunderstand; declaring its behavior definitive for the interface does not establish adequacy to ordinary English.
 
-- A rule already allows several answers. “Return an integer greater than 10” gives no disagreement about which integers qualify.
-- Interpreters disagree about what the rule permits. A revised semantics might admit both readings, reject one, or require further words to disambiguate.
+A frozen prompt–model package can define a computational operation by stipulation. That alone does not qualify it as an adequate semantic reference for the English in its prompt. For that stronger role, it must preserve independently assessable distinctions of English meaning in the stated scope.
 
-The further question is an indefinitely continuing sequence of revisions:
+Better linguistic competence could make such a reference reasonable. The conjecture is not that English becomes formalizable only when models improve: the computation is already formalizable. What improves is the fidelity of the resulting account to English. A compiler chosen as a reference faces the same adequacy question if the claim is that it captures independently specified C, rather than merely defines its own dialect.
+
+The prompt can still express a requirement whose satisfaction is distinct from faithful interpretation. A model can understand an instruction and fail to execute it. Linguistic misunderstanding, execution failure, and a bad requirement must not be counted as the same defect.
+
+## Assessing command of a language
+
+Candidate evidence should test the interpreter's judgments of meaning, not just the appeal of its generated responses:
+
+- Recover roles, reference, negation, and quantifier scope in controlled examples.
+- Preserve meaning under paraphrase and detect small changes that alter commitments.
+- Distinguish entailment, contradiction, permission, and what remains unsettled.
+- Respond to relevant context while resisting irrelevant wording and leading questions.
+- Identify legitimate ambiguity and use clarification to eliminate the appropriate readings.
+- Generalize to independently constructed cases outside familiar examples.
+
+For instructions, judge candidate actions as satisfying the instruction, violating it, or depending on an unresolved legitimate reading. This separates disagreement about meaning from different permitted outputs.
+
+Use independent competent-speaker judgments as fallible evidence. Retain clear agreement, accepted alternative readings, and unresolved disputes separately. Majority voting must not erase dialect differences or genuine ambiguity. Supply relevant facts where possible to distinguish linguistic misunderstanding from ignorance or failed reasoning.
+
+Report separate error patterns, consistency across related cases, and recognition of uncertainty. A high average score can conceal systematic failures that make an interpreter unsuitable as a reference. Tests cannot establish perfect command over an unrestricted domain; they can reveal counterexamples and support bounded use. The standalone [question for other agents](./perfect-english-reference-question.md) asks how to define the stronger ideal and assess its coherence.
+
+## What the reductions establish
+
+1. **Explicit specification is optional.** A formal account can be constructed from specified computational machinery even when nobody has written a separate mathematical semantics.
+2. **Belief is not the criterion.** Our judgment that an artifact satisfies the candidate definition can be mistaken without making the property belief-dependent.
+3. **Bare procedure existence is insufficient.** For any finitely expressible semantics, a program can simply print it. That does not explain how it was obtained or why it should define the artifact.
+4. **Implementation construction applies on both sides.** It works for a designated compiler and a designated LLM. Complexity and computational formalizability therefore do not by themselves separate code from natural-language meaning.
+5. **Bugs do not defeat formal description.** They can defeat conformance to independently specified rules.
+6. **Agreement is corroboration, not proof.** Different implementations can agree on tests while differing elsewhere.
+7. **Variation is compatible with formal semantics.** Different permitted answers need not indicate different interpretations.
+8. **Adequacy remains assessable.** Stipulating a semantics establishes an interpretation; it does not establish that the interpretation captures an independently intended meaning.
+
+An executable and its machine model suffice for the implementation construction. Tracing its compilation history back to lambda calculus is unnecessary for describing its behavior; compilation history matters separately to claims of faithful compilation.
+
+The progress is retained: Commonplace's special sense of “operational semantics” is unnecessary for these distinctions. Fixed formal rules, their implementation, and their adequacy to a requirement can be discussed separately.
+
+## Semantic expansion remains a separate question
+
+“Return an integer greater than 10” permits several answers without leaving interpreters in disagreement about which integers qualify. A different case arises when interpreters disagree about what is permitted. We might revise the semantics to admit both readings, reject one, or require additional words to disambiguate.
+
+The operator's further question concerns an indefinitely continuing sequence:
 
 1. Start with a proposed semantics.
-2. Encounter a disagreement that it does not settle.
+2. Encounter a disagreement it does not settle.
 3. Expand or revise the semantics to settle that case.
 4. Encounter a further disagreement under the expanded semantics.
 5. Repeat without reaching a final account.
 
-This is not merely infinitely many disagreements covered by one fixed rule. It asks whether each attempted completion still leaves a case requiring semantic extension.
+This is different from infinitely many cases covered by one fixed rule. It also leaves two claims separate: no stage in the sequence is final; no fixed formal account can describe the sequence itself. The first does not establish the second. A sequence of unsuccessful accounts does not establish that every possible account must fail.
 
-Two claims remain separate:
-
-- No stage in such a sequence is final.
-- No fixed formal account can describe the sequence of extensions itself.
-
-The first does not establish the second. Nor does a sequence of unsuccessful accounts establish that every possible account must fail.
-
-The discussion identified open texture and semantic-paradox literature as relevant. The literature search has not yet been retained as a source-grounded argument in this workshop. These paragraphs record the operator's question, not a claimed impossibility result.
+The discussion identified open texture and semantic-paradox literature as relevant. The search has not yet been retained as a source-grounded argument here. No impossibility result about natural-language semantics is assumed by the candidates above.
 
 ## Review before adoption
 
-Review should determine:
+The revised candidates add adequacy of the reference interpreter to the construction of its semantics. Review must test this condition rather than treating it as an established classification:
 
-1. Whether “shared formal semantics” preserves the useful content of the current criterion without its special use of “operational semantics.”
-2. What independently distinguishes a symbolic artifact from natural language if both admit complete formal semantics.
-3. Whether the frozen prompt–model package is symbolic as an operation while its prompt remains natural-language content, or whether that answer merely assumes the classification under investigation.
-4. Whether explicit permission rules, a complete account of meaning, and an executable decision procedure have been kept separate.
+1. Can adequate command of a language be defined without making the chosen interpreter or current speaker agreement correct by definition?
+2. Does the criterion distinguish the cases we need, or describe a graded suitability for reference use rather than a binary representational form?
+3. Can an LLM with perfect command of a scoped variety of English provide its semantics through a specified interface? What must that interface expose beyond a distribution of plausible replies?
+4. Are language fidelity, conformance to adopted rules, successful execution, and adequacy to a task kept separate?
+5. Are constructing a semantics, executing a program, and deciding every semantic question kept separate? The first need not decide every consequence of the semantics.
+6. Which scope restrictions and residual errors permit practical adoption, and which claims must remain conjectural after testing?
 
-Promotion would require coordinated revisions of codification, representational form, the codification passages in constraining, and the vocabulary collision ledger. This file authorizes none of those edits.
+Promotion would require coordinated revisions of codification, representational form, the codification passages in constraining, and the vocabulary collision ledger. This workshop authorizes none of those library edits.
