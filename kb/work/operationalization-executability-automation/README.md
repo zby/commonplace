@@ -38,7 +38,7 @@ The review of the merged draft found three faults, now corrected in the explorat
 
 ## Closure rule
 
-Close only after either (a) making an evidence-backed, nonduplicative theory extraction or (b) documenting why existing definitions suffice and the additional distinction stays in workshop analysis. Current position: one extraction is ready on path (a), the task-relative claim with Norman's mechanism (disposition item 7); the remaining distinctions sit on path (b) pending the proposed tests. Strong causal claims about the benefit of operationalization require comparisons for the **same T, E and objective**, with documented changes to K, instructions or environment. Claims about generality require separate comparison on T' with its application area declared. The proposed tests are in the exploration; none were run.
+Close only after either (a) making an evidence-backed, nonduplicative theory extraction or (b) documenting why existing definitions suffice and the additional distinction stays in workshop analysis. Current position: the task-relative claim is extracted on path (a) as an amendment to the [actionable-methodology definition](../../theory/definitions/actionable-methodology.md) (disposition item 7); the remaining distinctions sit on path (b) pending the proposed tests. Strong causal claims about the benefit of operationalization require comparisons for the **same T, E and objective**, with documented changes to K, instructions or environment. Claims about generality require separate comparison on T' with its application area declared. The proposed tests are in the exploration; none were run.
 
 ## Deliverable
 

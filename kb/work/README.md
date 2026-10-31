@@ -8,7 +8,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [epistemic-relevance-and-conceptual-blending](./epistemic-relevance-and-conceptual-blending/README.md) — observational watch and correction checklist for useful threads being given unsupported conceptual relationships; record the next few cases and counterexamples before refining the hypothesis; research retained as background, experiments deferred
 
-- [operationalization-executability-automation](./operationalization-executability-automation/README.md) — conceptual investigation of task-relative operationalization, executability, function-level automation and decision autonomy against Commonplace's existing actionability, closure and codification terms; nine sources ingested and turned into worked cases, one extraction ready, no new machinery or vocabulary adopted
+- [operationalization-executability-automation](./operationalization-executability-automation/README.md) — conceptual investigation of task-relative operationalization, executability, function-level automation and decision autonomy against Commonplace's existing actionability, closure and codification terms; nine sources ingested and turned into worked cases; the task-relative claim extracted into the actionable-methodology definition; remaining distinctions await tests
 
 - [adr-testing](./adr-testing/README.md) — preliminary size measurements and tests of whether agents recover consequential decisions for code and LLM-instruction changes; bounded trace pilot distinguishes late consultation from merely reading after an edit, without assuming ADRs can cover the whole design
 
