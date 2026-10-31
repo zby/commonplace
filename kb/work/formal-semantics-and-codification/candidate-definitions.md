@@ -15,7 +15,7 @@ Returning to a shared or unique semantics is not returning to the starting point
 
 The remaining problem is narrower: when does an implementation's formal account describe the artifact's meaning, rather than merely that implementation's response to the artifact? This unresolved question does not erase the reductions above.
 
-## Shared or unique formal semantics
+## Candidate 1: Shared or unique formal semantics
 
 **Candidate definition:** An artifact has a unique formal semantics within a specified scope when one fixed account determines what behavior it permits, including explicitly allowed variation, and conforming interpreters preserve that account. The account need not have been explicitly specified, and equivalent mathematical presentations count as the same semantics.
 
@@ -25,9 +25,7 @@ The scope must fix the language version, relevant execution parameters, and obse
 
 Whether actual implementations preserve the same account is conjectural unless established by stronger means. Passing conformance tests corroborates that claim, not the bare existence of some formal description of each implementation.
 
-**Unresolved:** existence of one fixed account does not yet distinguish natural language from symbolic content. Natural language might also have a complete formal semantics that we have not specified. This candidate defines the property under discussion; it does not establish which languages have it.
-
-## Symbolic representational form
+## Candidate 2: Symbolic representational form
 
 Proposed replacement for the symbolic part of [representational form](../../theory/definitions/representational-form.md):
 
@@ -35,9 +33,7 @@ Proposed replacement for the symbolic part of [representational form](../../theo
 
 “Taken to admit” records a conjectural commitment rather than requiring a completed formalization. Explicit formal specifications remain included. Code, schemas, grammars, and resolver-consumed tables remain candidate instances; structured formatting alone is insufficient.
 
-**Unresolved:** this retains the intended criterion while replacing the awkward terminology. It has not established that natural-language content lacks the same property. The complementary natural-language category must not be defined as “content for which formal semantics is impossible” on the strength of this draft.
-
-## Codification
+## Candidate 3: Codification
 
 Proposed replacement for the opening of [codification](../../theory/definitions/codification.md):
 
@@ -52,11 +48,15 @@ The full definition should retain these limits:
 - A codified check does not establish that it captures its intended requirement.
 - A skill's extraction from methodology or addition of frontmatter does not alone change how its operative instructions are interpreted.
 
-**Unresolved:** the word “symbolic” inherits the boundary question above. This is candidate wording preserving the intended distinction, not a completed proof of that distinction.
+## Unresolved boundary across the candidates
+
+The shared or unique formal-semantics candidate defines the property under discussion; it does not establish which languages have it. Natural language might also have a complete formal semantics that we have not specified, so existence of one fixed account does not yet distinguish natural language from symbolic content.
+
+The symbolic-form candidate retains the intended criterion while replacing the awkward terminology, but does not prove the distinction. Codification inherits this boundary question through “symbolic.” The complementary natural-language category must not be defined as “content for which formal semantics is impossible” on the strength of this draft.
 
 ## Constructive access: useful reduction, not a replacement definition
 
-The operator proposed a possible practical basis for the distinction: for a programming-language implementation we can construct a formal account by following its computational machinery, whereas we lack an established general construction of the complete meaning of unrestricted natural language.
+The operator proposed a possible practical basis for the distinction. For a programming-language implementation, we can construct a formal account by following its computational machinery. For unrestricted natural language, we lack an established general construction of its complete meaning.
 
 A compiler genealogy need not be followed back to lambda calculus. An executable together with its machine model suffices to describe implemented behavior; compilation history matters separately to claims of faithful compilation. Complexity alone is not the obstacle: an enormous construction is still a construction.
 
@@ -81,13 +81,18 @@ The further question is an indefinitely continuing sequence of revisions:
 
 This is not merely infinitely many disagreements covered by one fixed rule. It asks whether each attempted completion still leaves a case requiring semantic extension.
 
-Two claims remain separate: no stage in such a sequence is final; no fixed formal account can describe the sequence of extensions itself. The first does not establish the second. Nor does a sequence of unsuccessful accounts establish that every possible account must fail.
+Two claims remain separate:
+
+- No stage in such a sequence is final.
+- No fixed formal account can describe the sequence of extensions itself.
+
+The first does not establish the second. Nor does a sequence of unsuccessful accounts establish that every possible account must fail.
 
 The discussion identified open texture and semantic-paradox literature as relevant. The literature search has not yet been retained as a source-grounded argument in this workshop. These paragraphs record the operator's question, not a claimed impossibility result.
 
 ## Review before adoption
 
-The wording is ready to criticize, not to propagate. Review should determine:
+Review should determine:
 
 1. Whether “shared formal semantics” preserves the useful content of the current criterion without its special use of “operational semantics.”
 2. What independently distinguishes a symbolic artifact from natural language if both admit complete formal semantics.
