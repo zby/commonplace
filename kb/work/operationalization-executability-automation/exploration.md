@@ -1,149 +1,175 @@
-# Operationalization, executability, and automation — exploration
+# Operationalization, executability, automation, and autonomy — revised exploration
 
-**Status:** conceptual account, not adopted vocabulary or tested empirical result. Baseline: Commonplace `main` at `d19065b3aef33ffca92fa2f72f5203251fcae3b0`, read on 2026-10-31.
+**Status:** a workshop investigation, not adopted technical vocabulary, empirical proof, or a system change. **Revision:** 2026-10-31, responding to the operator's objections that the first account confused generalization with operationalization, treated automation and autonomy too similarly, and did not check source ingestability. Repository starting point: main at d19065b3aef33ffca92fa2f72f5203251fcae3b0. Literature access was checked on 2026-10-31.
 
-## Answer in brief
+## Central result
 
-Operationalizing guidance, executing it, and automating its application are not stages that must follow in order.
+There are more than two possible transformations of a methodology; moreover, properties of the methodology must not be confused with properties of an executor, its runtime, or a particular execution.
 
-1. **Methodology** supplies intervention-relevant guidance: conditions related to prescriptions, exclusions, rankings, or evaluation criteria. A narrative *about* work may explain why something happened without yet telling an operator which intervention it favors.
-2. **Operationalization**, used here descriptively rather than as a new Commonplace technical definition, means arranging representations, access, skills, triggering, control and feedback so a methodology can guide situated activity. It is a process of changing a method's application arrangements, not necessarily its semantics.
-3. **Situated executability** is a relation among method or task, executor, operations and tools, target, environment, authority, resources, objective and required performance. Its minimal sense is stronger than merely understanding the instructions: the arrangement can carry out the relevant actions. An observed successful run is evidence only for the observed conditions.
-4. **Execution** is an event or trace: an actor actually carries out work. Executing the *task* successfully does not prove fidelity to a *specified methodology*, and following a methodology faithfully does not prove an adequate outcome.
-5. **Automation** assigns one or more formerly manually performed functions to computation in the configured process. It may rely on deterministic code, LLM judgment, or both, and may leave judgments and authorizations to people. State its functional boundary, not just a claim of 'automated'.
-6. **Autonomy** concerns required human intervention and delegated decision authority over the assessed boundary and horizon. Commonplace already has the precise narrower measure **computational closure** for absence of run-time human production decisions. Neither it nor autonomy establishes capability or warrant.
+**Generality:** which cases the method can guide adequately.
 
-The central independence claim: a system can improve its ability to *apply* guidance without making that guidance more formal, more deterministic, or more restrictive. Conversely, it can codify a small step without automating the enclosing work.
+**Constraining:** which readings, choices, or responses the method permits or prefers for a named consumer.
 
-## Existing Commonplace concepts that already do the work
+**Methodological coverage (or operational completeness):** which consequential tasks and decisions *in applying* the method have some usable guidance, including how to recognize its applicability, obtain information, choose the next operation, deal with exceptions, and stop. Guidance can specify a decision interface or an approach for obtaining evidence without settling its answer. It is not necessary for every choice to have a fixed answer. Methodological closure, already defined in Commonplace, is stronger: it concerns whether the retained method settles consequential decisions, not merely whether it supplies useful guidance for them.
 
-- [Actionable methodology](../../theory/definitions/actionable-methodology.md) explicitly defines a relation between methodology, operator, available operations, target, and setting. Actionability concerns intervention selection; completing the work may require additional execution capabilities and feedback.
-- [Methodological and computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md) separates decisions settled by retained methodology from decisions supplied computationally. It gives all four combinations, including human execution of a settled checklist and an unsupervised model using judgment unarticulated in the method.
-- [Methodology governs its own extension only where it settles decisions](../../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) prevents attributing a capable actor's extra judgments to a complete methodology.
-- [Constraining](../../theory/definitions/constraining.md) narrows or ranks a named consumer's permissible readings, including activation and response. [Codification](../../theory/definitions/codification.md) is its symbolic, fixed-operational-semantics region. Neither defines all ways of making a method usable.
-- [Methodology enforcement](../../theory/methodology-enforcement-is-constraining.md) separates activation from response; a skill, hook or script has no inherent rank without examining both.
-- [Skills derive from methodology](../../theory/skills-derive-from-methodology.md) captures same-medium reworking into an execution-oriented form without claiming symbolic codification.
-- [Methodology selection](../../theory/capable-agents-need-methodology-selection.md), [weight-resident activation](../../theory/weight-resident-methodologies-compress-behavior-in-context.md), [behavioral authority](../../theory/definitions/behavioral-authority.md), and [contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) show why knowledge availability, discovery, binding force and actual use are separate.
-- [Fix what the executor cannot determine](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) already explains why more step detail can make action worse: the executor often has evidence the author lacked.
-- [Bounded-context orchestration](../../theory/bounded-context-orchestration-model.md) separates state/scheduling from individual model calls only under explicit closed-world and barrier conditions. It does not supply a universal execution model for open environments.
-- [Warranted autonomy](../../theory/warranted-autonomy-is-bounded-by-oracle-domain.md) and [tool usefulness, autonomy, warrant and power](../../theory/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md) prevent mistaking unattended activity for a trustworthy or capable system.
+**Operational integration:** whether guidance reaches the relevant executor at the relevant time, with the requisite tools, state, permissions, feedback, invocation and binding authority. Integration changes *the configured system*; it need not alter the methodology's content or range of validity.
 
-**Vocabulary collision:** [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) adopts `operationalized-from` as a particular source-to-procedure lineage relation: a judgment-shaped procedure adds ordering, defaults, or stopping conditions to methodology, without novel substantive claims. This is useful and narrower than 'making a method operative' by, for example, granting access, routing an existing instruction, improving feedback, or training an operator. A broad definition must not overwrite the lineage test.
+**Situated executability:** whether the specified executor and environment can actually perform the required work to an identified standard. This is a relation, not a textual genre and not a single successful trace.
 
-## 1. Description, methodology, and operational support
+These are diagnostic coordinates rather than scalar scores or a complete axiomatization. Their separation does not assert statistical independence: improving one may alter another. In particular, adding a correct applicability constraint may increase reliable coverage; a bad constraint may destroy generality; and operational integration may extend the system's *practical reach* without extending the method's *principled domain*. Distinguish intended domain, valid applicability, and empirically successful coverage.
 
-A description of past work says what happened. An explanatory theory may say why. A methodology, even an incomplete one, must discriminate between candidate interventions in some represented conditions. 'Consider alternatives whose rejection would change the decision' can guide activity without describing a fixed list of actions. Conversely, 'write a great report' is primarily a goal, not enough by itself to identify an intervention rule, although a capable actor can invent or import one.
+**Operationalization** is therefore best kept provisionally as an *activity*: working explanatory or methodological knowledge into arrangements by which actors can apply it. That can involve enlarging coverage, resolving decisions, connecting tools, activating an existing method, or formalizing a component. It does not denote one axis or require all these moves. Conversely, merely generalizing a theory without making it easier for an executor to act on it may improve the method but not its operational arrangement.
 
-A method does not become a method only when it is exhaustively specified. A skilled operator's tacit capabilities can supply operations, diagnosis, ordering and local judgment. To move it into an unfamiliar setting or to a weaker executor, one may need to supply some or all of:
+This proposal leaves open a narrower, defensible reading of operationalization as *producing a procedure from broader methodology*. Commonplace already makes that specific lineage commitment in [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md): 'operationalized-from' is a method-to-procedure relation adding ordering, defaults or stopping conditions not fixed by its source. Do not redefine that identifier to mean any improvement in usability or integration.
 
-- **Applicability and activation:** which kinds of problems call for this method and how the executor encounters it.
-- **Authority and purpose:** the intended objective, binding constraints, who may decide what, and what may not be delegated.
-- **State and resources:** inputs, tools, access, permissions, environmental observations and stable work records.
-- **Control and adaptation:** selection of next moves, ordering when dependencies matter, exceptions, retries, fallback, stopping, and escalation.
-- **Evidence and evaluation:** what would distinguish promising progress, failure, a wrong assumption, or completion.
-- **Provenance and revision:** why an instruction exists, when to return to source theory, and how discoveries change later application.
+## 1. From descriptions to situated action
 
-This is a *diagnostic catalogue*, not a necessary checklist for every method. A single cue can be sufficient when the executor already knows the convention. Adding a step may improve one actor's performance and degrade another's. That is why actionability and executability must be actor- and setting-relative.
+A *description* reports how work occurred; an explanatory theory proposes why. A *methodology* supplies an intervention-relevant mapping: which kind of action, comparison, rejection, or evaluation is favored in represented conditions. An instruction like 'critically assess the causal claim' can be a thin method when a proficient actor reconstructs appropriate tests; it is not an exhaustive plan.
 
-A rough relational question is: given guidance M, executor E, supported operations O, state/environment S, authority A, objective G and threshold Q, can the configured arrangement carry out relevant actions, with adequate results in the intended domain? Q matters: one feasible instance, reliable performance on a distribution, and indefinite autonomous operation are three different claims. The relation cannot in general be calculated from text alone.
+To make guidance usable, inspect the specific gap instead of assuming that more detailed steps are the missing ingredient:
 
-## 2. Formalization, codification, and execution are different
-
-**Pencil-and-paper long division.** A schoolchild follows a mechanical positional algorithm with pencil and paper. Its instructions can be precise and algorithmic without a computer. It is executable by a suitable human and can later be automated by a machine, without changing the underlying algorithm. Turing's classical 'effective procedure' was modeled on human symbol-manipulation; it requires exact finite instructions that do not demand ingenuity, not a digital computer. This is a special mathematical sense of effective procedure, not a definition of all executable knowledge work.
-
-**A human-run checklist.** A clinical team can operationalize a safety practice by timing prompts and assigning roles while people continue doing and deciding. The WHO surgical checklist study reported improved outcomes after its introduction, but the intervention included communication and workflow changes; the result does not isolate prose detail, and it is no example of complete task automation.
-
-**A model following a research skill.** An LLM may choose sources, criticize a hypothesis, and revise a note under natural-language instructions, choosing unanticipated actions. This can be computational execution of a method whose response semantics are not codified. Whether it actually followed that method and produced good research must be assessed separately.
-
-**A script that calculates a statistic.** A program can codify and automate arithmetic while leaving source selection, study design, interpretation and publication to a human. The local success cannot be credited as automation of research.
-
-**A multi-step agent workflow.** A symbolic scheduler may reliably advance checkpoints and invoke LLM calls. Its control logic can be codified while substantive judgments remain interpreted and possibly unwarranted; conversely, a capable model can determine the next research move without a predeclared workflow.
-
-**A human-approved agent.** Drafting and checking are automated functions; approval remains human. The bounded production path is mixed, not computationally closed end-to-end. This does not make 'partially automated' false. A human requirement supplied before the run is a seed, not automatically a run-time human production decision; a human repair decision required after every failure is.
-
-The terms differ by field. In computer science, **operational semantics** gives a programming language meaning by rules describing computation, not the broader process of making any methodology actionable. In philosophy of science, **operationalism** concerns how concepts relate to measurement or operations, not how a workflow is deployed. In business-process modeling, descriptive maps and executable models serve distinct purposes; adaptive case management explicitly accommodates unpredictable ordering and judgment.
-
-## 3. Counterexamples to tempting implications
-
-| Proposed implication | Counterexample | What failed |
+| Potential gap | Candidate intervention | Property principally affected |
 |---|---|---|
-| 'More detailed guidance → more executable' | A fixed web-research plan forbids an agent from following new evidence; extra instructions use scarce context and exclude the better route. | Detail can freeze bad assumptions, obscure purpose, or exhaust the executor. |
-| 'Executability is intrinsic to a document' | An exact validator procedure is usable with repo access, impossible for the same actor without read permissions. | Executor, tools, authority and setting are missing. |
-| 'Operationalizing means constraining' | Give the executor access to sources, a checkpoint, and a feedback path, leaving the permitted intellectual approaches unchanged. | Practical capability changes without necessarily narrowing interpretation space. |
-| 'Operationalizing means adding a procedure' | A model already knows a standard method; a short cue activates the method when relevant. | Triggering can dominate restating procedural content. |
-| 'Codification automates the task' | A deterministic Markdown linter checks headings while a person still judges whether the argument works. | The unit of automation is too narrow. |
-| 'Automation requires codification' | An agent produces a research synthesis without human decisions, guided by interpreted natural language. | Computational production is possible without fixed symbolic response semantics. |
-| 'Unattended execution implies methodological closure' | A model selects an unanticipated criticism strategy not settled by the retained method. | The model's repertoire supplies consequential decisions. |
-| 'An executed method is reliable' | One successful run fails on new source types, or only succeeds with hidden human correction. | No distributional or independence evidence. |
-| 'Method fidelity implies success' | The agent follows a bad checklist perfectly and reaches the wrong conclusion. | Spec compliance and objective satisfaction differ. |
-| 'Automation implies autonomy of the whole system' | Software generates a patch; a human decides which repair to apply and whether it may merge. | Internal decisions and authorizations remain human. |
-| 'More autonomy implies useful capability' | Removing the reviewer makes a bad model run continuously. | Closure is an allocation property, not a quality guarantee. |
+| The method applies to too few classes of situation | Extend or revise its intervention principles | Generality |
+| Multiple plausible interpretations cause wrong choices | Add purpose, disambiguation, exclusions or examples | Constraining |
+| The methodology does not address how to handle missing evidence or exceptions | Add decision criteria, evidence-gathering, fallback or stop rules | Methodological coverage |
+| The model knows the method but does not select it | Select/routinely activate a coherent method, perhaps via a short cue | Activation, not necessarily more content |
+| The operator cannot access the target or tools | Provide resources, permissions or a different execution channel | Situated executability, not theory generality |
+| Work loses its position across context windows | Retain state, recover checkpoints, arrange subsequent calls | Operational integration and horizon |
+| A deterministic check is cheap and stable | Commit the local predicate to code | Codification, local reliability |
+| The evaluator cannot tell when the work is wrong | Improve evidence, testing, oracle discrimination and recovery | Warrant of outcomes |
+| A person still performs an internal function | Transfer the specific function to computation | Automation coverage |
+| The agent has no authority to choose a method or initiate a branch | Deliberately delegate authority and specify bounds | Decision autonomy; perhaps greater unattended scope |
 
-There are also converse counterexamples: highly capable human craftsmanship with little retained procedure, and completely specified formal methods lacking the resources to be executed. These indicate that neither a strict progression nor a single scale will classify the space.
+A methodology with excellent generality might be unavailable at the point of need. An extensively integrated procedure might be narrowly applicable. A capable executor may perform judgments never prescribed by the method. These cases falsify a one-directional scale of 'more operational'.
 
-## 4. What 'progress' can mean without progressively narrowing the method
+**No necessary monotonicity:** additional operational guidance may lower performance by prescribing a method before relevant evidence appears, forcing premature stopping, overloading context, or requiring a model to resolve contradictory constraints. Commonplace's [author–executor determinability rule](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) addresses this precise risk. A stronger artifact may fix governing intent and leave more means open; this combines stronger *appropriate* constraints with more contingent freedom.
 
-The important design variables are not all locations on a constraining ladder. They include:
+## 2. Executability and the actor-relative boundary
 
-| Architectural change | Primary effect | Does **not** imply |
+For a method M, task T, executor E, available operations O, target/environment S, delegated authority A, objective G, time/resource horizon H, and performance criterion Q, the useful question is: can that arrangement execute the task using M adequately over a specified class of cases? There is no reason the answer must be invariant between a trained human, weaker LLM, stronger LLM or code engine.
+
+Three levels of evidence differ:
+
+1. **Can be attempted:** the actor can interpret the method and has a way to act. Commonplace's existing [actionable methodology](../../theory/definitions/actionable-methodology.md) principally captures whether its prescription can affect intervention selection.
+2. **Can complete a specified task:** the actor has the necessary operations, state, competence, permission and control to reach an outcome in a declared setting.
+3. **Works adequately across a domain/horizon:** observed results satisfy an acceptance standard under representative variation, including exceptions, not just one successful demonstration.
+
+A trace proves an execution occurred. It does not show fidelity to the method (the actor may import its own method), goal success (the method may be wrong), repeatability (inputs and environment may differ), or generally reliable execution. These are separate claims.
+
+**Human algorithm counterexample:** pencil-and-paper long division is an exact effective procedure for a properly trained human. It does not become executable only when translated into a computer program. The classical effective-procedure sense from computability theory is restricted to mechanical steps requiring no ingenuity; it is not the broad sense of a judgment-heavy method *being executable* by a capable LLM.
+
+**Human checklist counterexample:** a checklist can be made operational for a team through prompts, roles and timing while remaining manually performed. Making such a method actionable neither supplies an LLM with sensorimotor competence nor gives it clinical or legal authority.
+
+**Agent research counterexample:** a research skill can be executed by an LLM even while it requires unanticipated judgments, choice of sources and criticism. Computational action can use natural language; there is no necessary crossing to symbolic code.
+
+## 3. Automation is not autonomy
+
+The prior account conflated 'who does the work' with 'who is free to direct it'. Their distinction must be made explicit.
+
+**Automation is an allocation of task functions to machinery/computation.** It asks which operations otherwise performed manually are executed by the system. Its unit can be information acquisition, analysis, decision proposal or execution. An automated function may be highly prescribed and lack discretion. A partially automated end-to-end process can still include manual approval, diagnosis, data entry or recovery.
+
+**Decision autonomy is discretion and authority over consequential choices within delegated limits.** It asks who selects goals/subgoals, methods, alternatives, exceptions, and authorized external actions, and whether the actor can revise its course on newly encountered evidence. Autonomy need not mean permission to do anything; meaningful bounded delegation is still autonomy. Decision autonomy can coexist with a mandatory human authorization gate outside the agent's scope.
+
+**Unattended continuity is another property**, often associated with autonomy in ordinary speech: can the workflow run through the declared functions and horizon without requiring a fresh human production decision? Commonplace's existing [computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md) addresses this property cleanly. A script can be computationally closed for invoice calculation but have almost no discretion to reconsider its procedure. Neither computational closure nor discretion establishes warranted outcome quality.
+
+| Example | Automation of scoped functions | Decision autonomy | Unattended continuity |
+|---|---|---|---|
+| Fixed batch script calculates payroll | Full for specified arithmetic | Very low; policy and means fixed | Yes, for the bounded batch when inputs are supplied |
+| Agent independently proposes and revises a research strategy; human gathers sources and approves publication | Partial (planning/analysis) | Substantial in planning, limited in external action | No, for the whole task |
+| Agent drafts code and runs tests; human must decide merge | High for production steps | Substantial within assigned design scope, no merge authority | No, if merge is required for completion |
+| Agent chooses methods, fetches sources, evaluates, commits within standing authorization, including recovery | Potentially full for its declared task | High but bounded | Potentially yes if all required functions are computationally supplied |
+
+These examples do not define a universal numeric measure. A function allocation is not commensurable across arbitrary systems, as [autonomy measurement](../../theory/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) explains. External user requirements at task commissioning are different from a human supplying run-time design or repair decisions. Decide which are outside the evaluated production boundary *before* measuring its closure. A human approval step essential to an in-scope completed artifact cannot be hidden as external 'feedback'.
+
+### Can operationalization make a methodology fully automatable with LLMs?
+
+**Operationalization is neither logically sufficient nor always necessary for fully automated LLM task performance.** It can increase the possibility and feasibility of that performance.
+
+1. The model may already know the method and automatically do the relevant work from a broad objective without any newly retained operationalization. This is automation without explicit method extraction; it remains vulnerable to wrong method selection and opaque model competence.
+2. A written methodology could fully guide a competent human but still be impossible or untrustworthy for an LLM in the same setting because it lacks tools, perception, context, substantive skill, or authority. Completeness for the human is not completeness for the model.
+3. A model can autonomously supply consequential decisions *not settled by the method* from learned competence and situated evidence. Thus **methodological closure is not necessary for computational closure**. But computationally completing the task once does not imply reliable or warranted completion.
+4. A narrow fully automated task can be accomplished with little decision autonomy (a deterministic calculator). A highly autonomous agent can still depend on a person for in-scope execution or admission. These are the opposite counterexamples to treating the two as one dimension.
+5. An LLM system may be able to execute a whole task only for an explicitly bounded input domain, authority envelope and horizon. A policy of refusing or escalating exceptions is an appropriate safety behavior but **does not count as independently completing** the escalated cases. The full automation claim must either exclude those cases in advance, or admit that coverage is partial.
+
+A task is 'fully automated' only relative to a fixed task boundary and completion criterion, when every production function necessary to complete its admitted cases is computational, including selection and evaluation if they are internal to the task. Its goals, authorization envelope and model may be human supplied initially. If autonomous *task choice* or revision of the operating rules is in scope, that is a larger task and demands a larger test.
+
+This separates three propositions: **the method is operable by this system; the system can complete the whole task unattended; the results are adequately trustworthy**. They require different evidence.
+
+## 4. Revised architectural account: several independent changes, not one progression
+
+The earlier chain 'knowledge → selection → execution → evaluation → retention' confused logical functions with a developmental trajectory. All those functions may exist even for a human paper-and-pencil system; the architecture can change any one of them, in different directions.
+
+A better analytical map is:
+
+| Layer of question | Variable | Example of progress without codifying more |
 |---|---|---|
-| Route the right method to a task, possibly via a compact cue | More reliable activation and method selection | More exhaustive method text |
-| Supply tools, source access, permissions and an explicit target | Greater situated actionability/executability | Narrower permitted interpretations |
-| Externalize checkpoints and relevant state | Longer-horizon continuity and inspectability | A complete symbolic workflow |
-| Give a worker intent, authority bounds and situational feedback | Better-founded local adaptation | A fixed choice of means |
-| Add examples and exception/fallback paths | Broader recognized coverage, more recoverable failures | Fewer admissible intellectual methods |
-| Split mechanical work into deterministic checks | Cheaper, more repeatable local operations | Automation of the encompassing epistemic judgment |
-| Transfer a previously human decision to a model | Greater computational closure within the chosen boundary | Competence, reliability or warrant |
-| Improve the discriminating oracle and escalation criterion | Potentially wider **warranted** unattended domain | Better generation by itself |
+| Method itself | Generality/coverage across situations | Extend criticism method to handle adversarial evidence |
+| Method itself | Semantic commitments/constraints | Preserve binding provenance but leave evidence-gathering tactics open |
+| Method itself | How much application logic is addressed/settled | Add a way to seek discriminating evidence, without preselecting its outcome |
+| Method use | Selection, activation and authority | Route an existing method and verify that it governs the relevant decision |
+| Operational environment | Tools, state, checkpoints, feedback | Enable an unchanged method to be used over longer tasks |
+| Actor capability | What E can infer and decide when the method falls silent | A stronger model handles new cases through its learned knowledge |
+| Labor allocation | What work computation performs | Transfer source synthesis or experiment design from human to LLM |
+| Delegated control | How much discretion/initiative/authority computation has | Let the model select next probes inside an approved envelope |
+| Continuity | Which required functions can run without new human intervention | Replace recurring human troubleshooting with bounded recovery |
+| Evaluation | Scope of justified trust | Better independent checks, not merely stronger confidence claims |
 
-Some of these changes *also* constrain. Routing may settle which method governs; a permission boundary rules out actions; a schema fixes local acceptance. The claim is not 'zero constraints are ever added'. It is that **increasing operational reach does not require monotonically reducing discretion over substantive methods**. Indeed broader competence may make more approaches viable. Constrain where a stable invariant, safety/authority boundary or necessary shared convention justifies it; retain discretion where execution can gather evidence that the author lacked.
+Important pairwise counterexamples:
 
-A failure-oriented way to decide what to change first:
+- **Generality without operational integration:** a principled method applies in theory to more domains but is never retrieved or routed.
+- **Integration without generality:** the exact same research method can act on an existing case after the agent receives source access.
+- **Constraining plus generality:** adding a clear applicability test excludes wrong uses while improving successful use across new classes of cases.
+- **Operational completeness without methodological closure:** a method says to choose tests by their expected discriminatory value; it prescribes a *procedure for choosing* without predetermining every test.
+- **High automation, low discretion:** fixed rule calculates and files a result under preapproved conditions.
+- **High discretion, low task automation:** an agent chooses a research plan while people collect samples and approve final action.
+- **Full continuity, poor warrant:** unattended agent incorrectly accepts unsupported claims.
+- **More detail, less success:** fixed source order blocks following an unexpected disconfirming lead.
 
-- Right method unknown or not activated → search, route or cue.
-- Method available but cannot be acted on → supply tools, inputs, access and permissions.
-- Work drifts across time → retained state, checkpoints, context budgeting and recovery.
-- Same local mechanical error recurs → consider symbolic codification.
-- Choices made prematurely → expose objective and constraints, defer to live evidence.
-- Outputs untrustworthy → independent outcome tests, evaluators and escalation.
-- Human still selects or authorizes consequential internal decisions → name that function and test a bounded computational transfer; do not relabel all prior work 'unautomated'.
+The [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md) provides a computational account only for closed-world workflows with explicit transition-relevant state and suitable barriers. Other environments need richer execution models; none of the conceptual dimensions above implies every workflow should use a deterministic scheduler.
 
-This diagnosis predicts that Commonplace can grow in capability and reliability through better *activation, support, control and feedback*, even if the volume of step-by-step instructions remains stable or decreases. It also predicts that transferring a human gate without improving its oracle can raise autonomy while reducing usefulness.
+**Architectural diagnosis:** first identify the failure mechanism—lack of applicability, wrong interpretation, missing method decision, failed activation, unavailable operation, context drift, weak competence, inadequate feedback, inappropriate human handoff, or poor warrant—then select a targeted intervention. Codification is one intervention in that space, not the destination of a universal pipeline. A method's supported domain and a system's *actually completed* task domain must be measured separately. Improving activation or tools may move the latter without modifying the former.
 
-## 5. Literature and its limited transfer
+## 5. Literature, status of ingestion, and limits of transfer
 
-1. **Wielinga, Akkermans & Schreiber (1998),** [A competence theory approach to problem solving method construction](https://doi.org/10.1006/ijhc.1998.0209). Their framework distinguishes required competence, conceptual refinement and operational control choices. It demonstrates that making a problem-solving method operational introduces decisions about inference and control; operationalization can sacrifice coverage. Commonplace already [ingested and qualified this source](../../sources/competence-theory-problem-solving-method-construction.ingest.md). Its formal knowledge-engineering setting does not establish a universal scheme for open-ended natural-language agents.
-2. **Turing/effective procedures,** [SEP on the Church–Turing thesis](https://plato.stanford.edu/entries/church-turing/) and [Turing](https://plato.stanford.edu/entries/turing/). Classical algorithms are defined through idealized human symbol work. This is the clean control case against identifying execution with electronic automation, but their no-ingenuity premise cannot classify judgment-rich methodologies.
-3. **Plotkin (1981) and later historical account,** [Origins of structural operational semantics](https://doi.org/10.1016/j.jlap.2004.03.009). Programming-language operational semantics fixes transition behavior. This gives a sound analogy for Commonplace's *codification* but not a general definition of operationalizing any human procedure.
-4. **Bridgman and critics,** [SEP: Operationalism](https://plato.stanford.edu/entries/operationalism/). Measurement-operational definitions must not be equated with a method's operational deployment. The strong thesis that a concept means only its measurement operations is widely contested.
-5. **Lucy Suchman,** [Plans and Situated Actions](https://www.cambridge.org/core/books/abs/humanmachine-reconfigurations/situated-actions/F4AA82303887FF0875BD656977661875) and [Plans](https://www.cambridge.org/core/books/abs/humanmachine-reconfigurations/plans/486980BE0B03AE3DF9C2181D74F26E64). Plans support situated action, rather than fully determining it. This explains the importance of executor competence and feedback; it does not prove that procedures never improve reliability.
-6. **Parasuraman, Sheridan & Wickens (2000),** [Types and levels of human interaction with automation](https://pubmed.ncbi.nlm.nih.gov/11760769/). They separate acquisition, analysis, decision/action selection and implementation, each automatable to different degrees. Use function-level allocation, not a universal automation score.
-7. **Bainbridge (1983),** [Ironies of automation](https://doi.org/10.1016/0005-1098(83)90046-8), and **Norman (1990),** [The problem with automation is inappropriate feedback and interaction](https://pubmed.ncbi.nlm.nih.gov/1970904/). Partial automation can transfer the most difficult exceptions to humans who have less situational awareness. Recovery design, not just normal-path automation, is consequential.
-8. **OMG,** [Case Management Model and Notation](https://www.omg.org/cmmn/index.htm). Adaptive case management models knowledge work whose activity order cannot be fully prescribed. It illustrates that representing work and supporting its execution can preserve discretion rather than force a fixed sequence.
-9. **Haynes et al. (2009),** [Surgical safety checklist](https://pubmed.ncbi.nlm.nih.gov/19144931/). A checklist can change human-executed practice and correlate with better outcomes without converting the encompassing operation to software. Before/after evidence does not identify which component of implementation caused improvement.
+'Available for ingestion' below means a publicly accessible primary text or full, usable scholarly/web source was found, not that a snapshot was downloaded, a license permits republishing, or the mandatory source-ingest workflow was run. Commonplace keeps reading snapshots local/ignored and tracks analyses separately; see [source collection contract](../../sources/COLLECTION.md) and the cp-skill-ingest workflow. Under copyright restrictions do not distribute primary texts through the tracked repository.
 
-These sources motivate the distinctions by mechanisms and counterexamples, rather than directly validating Commonplace's proposed vocabulary or comparative performance.
+| Source | What it can test | Existing ingest? | Source access checked 2026-10-31 | Disposition |
+|---|---|---|---|---|
+| Wielinga, Akkermans & Schreiber (1998), [competence theory](https://www.cs.vu.nl/~guus/papers/Wielinga98a.pdf) | Method competence → conceptual refinement → operational choices; possible competence loss | [Yes](../../sources/competence-theory-problem-solving-method-construction.ingest.md) | Full author/institutional PDF surfaced | Reuse existing ingest; do not duplicate |
+| Parasuraman, Sheridan & Wickens (2000), [automation levels](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) | Function allocation distinct from full-task automation and human performance | [Yes](../../sources/model-types-levels-human-interaction-automation.ingest.md) | Full PDF accessible | Reuse existing ingest |
+| Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8) | Human exception burden, automation failure and deskilling | [Yes](../../sources/ironies-of-automation.ingest.md) | Existing ingest has full user-supplied PDF capture; publisher paywall | Reuse existing ingest |
+| Norman (1989/1990), [NASA-hosted original version](https://ntrs.nasa.gov/api/citations/19900004678/downloads/19900004678.pdf) | Automation feedback/exception boundary | No matching ingest in targeted searches | Full NASA report PDF available; journal reprint record has no downloadable PDF | Priority new ingest candidate; identify the NASA version, not silently the journal's different publication |
+| Suchman (1987), [Plans and Situated Actions](https://course.khoury.northeastern.edu/cs5100f12/resources/reading/suchman-situatedactions.pdf) | Plan ≠ full determination of situated activity | No matching ingest in targeted searches | Full 1987 book PDF surfaced at university course URL; Cambridge revised edition is access-controlled | Candidate, but check the version and usage rights; avoid equating original and revised editions |
+| Church–Turing history, [SEP entry](https://plato.stanford.edu/entries/church-turing/) | Pencil-and-paper effective methods vs broad judgment-laden execution | No matching ingest in targeted searches | Public full HTML article | Ingest only if needed; remember SEP is secondary scholarship rather than Turing's original text |
+| Operationalism, [SEP entry](https://plato.stanford.edu/entries/operationalism/) | Operational definitions/measurements differ from making a methodology usable | No matching ingest in targeted searches | Public full HTML article | Optional disambiguation source, not direct authority for Commonplace vocabulary |
+| Plotkin (2004), [origins of SOS](https://citeseerx.ist.psu.edu/document?doi=061229419ca3f09567d6bf6c8cd5c6ff3b94a3e6&repid=rep1&type=pdf) | Operational semantics is formal rule-based execution, not general operationalization | No matching ingest in targeted searches | Full paper PDF surfaced from CiteSeerX; publisher page only reliably exposes abstract | Candidate if conceptual distinction proves load-bearing |
+| OMG, [CMMN 1.1 specification](https://www.omg.org/spec/CMMN/1.1/) | Model unpredictable knowledge-worker activity with retained discretion | No matching ingest in targeted searches | Official specification page exposes normative PDF | Candidate, but avoid assuming a graphical case model executes itself or automates the work |
+| Haynes et al. (2009), [surgical checklist](https://www.nejm.org/doi/full/10.1056/NEJMsa0810119) | Human operationalization without task automation | No matching ingest in targeted searches | Publisher marks free article and exposes full-text HTML | Optional empirical example; before-after outcomes do not isolate checklist wording from implementation |
 
-## 6. Architectural disposition
+The sources' meanings do not transfer unchanged: *operational semantics* fixes rules in programming-language theory; *operationalism* addresses measurement and scientific concept meaning; *operational method construction* in knowledge engineering moves toward a task-specific executable control strategy; *automation levels* in human factors classify allocations and interaction. None licenses a universal equation 'operationalize = formalize = automate'.
 
-**Keep the current technical definitions.** 'Actionable methodology' already covers the operator-relative relation. 'Methodological closure', 'computational closure', 'constraining', 'codification', and 'behavioral authority' resolve different ambiguities without another overlapping term. The adopted `operationalized-from` relation has a valid narrower lineage test and should remain untouched.
+**Highest-value next ingests**, if separately commissioned: Norman (directly bears on the transition from automatic normal-path work to recovery), Suchman (situated autonomy versus fixed plans), and possibly the OMG specification (formal representation without fixed activity order). Plotkin, the SEP entries, and Haynes are lower-priority contrasts. Existing three reports should be reused. Public retrieval does **not** establish a copyright license for committing a full source; the normal Commonplace ignored-snapshot/checksum discipline still applies.
 
-**Use 'operationalization' only as an explicitly scoped umbrella in this exploration:** work that makes method-guided action possible or practical for a named executor and situation. Do not list it in the active vocabulary, and do not infer an `operationalized-from` link merely because tools, routing, access or workflow state improved. Ordinary-language 'making a method operative' is less likely to be mistaken for a formal lineage relation.
+## 6. Architectural predictions and proposed discriminating experiments
 
-**Do not add a new definition of 'executability' yet.** It can be discussed as a situated capability relation, partly overlapping actionability but extending from choice to actual performance. A definition earns its place when an architectural or evaluation decision needs to distinguish it from actionability and from computational closure. We have conceptual examples, not such a recurring unresolved decision.
+**P1 — generality and integration separate.** For an unchanged methodology, enabling source access, activation and persistent state can increase *situated task success* without expanding the principled set of cases to which the method applies. Test by fixing source-method content while varying the environment; then separately test a revised method on unchanged resources. Failure to separate would be evidence of interaction, not semantic identity.
 
-**Preserve and tighten one already-supported rule for future comparisons:** declare the *task and objective, executor, environment and permissions, behavioral consumption path, functional boundary, horizon, human interventions, and outcome evidence*. State method fidelity and task success separately. For a progress claim, name the changed failure mechanism, not 'more operational' as a catch-all metric. This is a synthesis of existing Commonplace doctrine, not a proposed new mandatory schema.
+**P2 — method detail can help or harm.** In tasks with late-arriving information, a step-fixed script may do worse than purpose- and bound-guided execution using the same evidence and executor, especially if the pre-fixed path excludes discovery. Compare outcomes and actual evidence encountered, not prompt length alone.
 
-## 7. Predictions and potential falsifiers
+**P3 — methodological incompleteness can coexist with complete computational execution.** An LLM may provide unarticulated method decisions and complete a full bounded task unattended. Log which decisions came from retained method, which from model judgment, and which from symbolic tools; judge quality independently. The test must not quietly exclude human recovery, authorization or approval that was required for completion.
 
-- **Routing hypothesis:** for methods a model already knows, explicit task-to-method cues can improve appropriate method application without detailed procedural additions. Falsifier: controlled target-model trials show cue-only routing does not alter relevant decisions, or imports the wrong method more often.
-- **Support hypothesis:** adding source access, persistent state or recovery paths can raise completion probability with the same substantive natural-language instruction. Falsifier: ablation trials show no effect after holding difficulty and resource budgets fixed.
-- **Over-specification hypothesis:** forcing premature means can reduce performance on tasks whose decisive evidence arrives later. Falsifier: fixed detailed plans outperform flexible intent-framed execution on representative shifted cases under equivalent budgets.
-- **Automation attribution hypothesis:** a system that automates source processing but needs human methodological selection will show an unreduced human decision burden on the enclosing research task. Falsifier: allocation traces show method selection was in fact computationally supplied, without concealed intervention.
-- **Warrant hypothesis:** moving an acceptance gate to a model can increase unattended throughput without improving warranted acceptance on hard cases. Falsifier: a stronger external or independent oracle discriminates failures in that tested domain.
+**P4 — automation and decision autonomy diverge.** Replace a human operator with a fixed code path to increase task automation while leaving choice latitude unchanged, and separately delegate method selection to an LLM without automating physical implementation. A metric claiming both interventions are the same progress is defective.
 
-These are proposed tests, **not outcomes of experiments**. The current investigation supports the conceptual separation and the decision not to multiply definitions. It does not establish that one architecture will outperform another.
+**P5 — autonomy and warrant diverge.** Removing an approval gate can raise computational closure but leave discrimination worse; improving an independent oracle can expand the domain of *warranted* unattended execution. Measure false acceptances and missed exceptions as well as throughput.
 
-## Immediate next research decision
+**Candidate Commonplace experiment:** select one existing research skill and keep the task family, acceptance criteria and model pinned. Run (a) bare goal, (b) relevant methodology cue, (c) cue plus identical method with improved access/state/recovery, (d) same support with stronger step constraints, and (e) a modified broader-coverage methodology under fixed support. A second contrast transfers one approval or method-choice function from human to LLM while holding task boundaries and evaluation fixed. Log source activation, intervention responsibility, revision fidelity, final correctness, fallback cases, cost and horizon. None of these comparisons has been run here.
 
-Select one existing Commonplace method (for example source ingestion, claim criticism, or a multi-artifact review) and evaluate four configurations against an independently assessed task set: bare objective; explicit methodology cue; same cue plus access/state/recovery; same support with much more prescribed step detail. Record intervention counts, fidelity, task outcomes, cost, and exception handling separately. A second test should transfer just one human judgment to an LLM while keeping the rest of the boundary fixed. Only repeatable evidence would warrant promoting an architectural claim beyond this workshop.
+## 7. Disposition
+
+1. **Revise the conceptual account in the workshop** (this note). The earlier two-pole generality-versus-constraint reading was incomplete. Operationalization is not a third number on a diagram; it names a family of transformations with distinct causal mechanisms.
+2. **Preserve current Commonplace definitions** of [actionable methodology](../../theory/definitions/actionable-methodology.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and [methodological/computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md); do not create competing 'executability' or 'operationalization' definitions on purely conceptual grounds.
+3. **Treat automation and autonomy separately in future comparisons**: allocate actual task functions to human/computation; separately record discretionary and authorization boundaries, plus which human interventions remain required over the declared horizon. Computational closure is useful for absence of required human decisions, but not a complete proxy for discretionary authority.
+4. **Retain the narrower lineage meaning of 'operationalized-from'**, while explicitly marking the broader, ordinary-language sense when discussing making methodology operative. Any proposed change to ADR 054 would require its own evidence and decision.
+5. **Do not infer fully automated LLM work from operationalization alone.** Demonstrate executor capability and function closure under explicit constraints, then separately demonstrate warrant and adequate outcome quality. Lack of a deterministic procedure is not by itself a blocker.
+6. **No new machinery or extracted theory definition yet.** This workshop's distinctions are useful for architectural decisions, but causal superiority and the need for additional vocabulary await the scoped tests above.
