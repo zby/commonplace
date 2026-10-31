@@ -26,6 +26,14 @@ def cell(text: str) -> str:
     return text.replace("|", "\\|").replace("\n", " ")
 
 
+def link_target(target: Path, output: Path) -> str:
+    try:
+        return Path(os.path.relpath(target, output.parent)).as_posix()
+    except ValueError:
+        # Windows cannot express a relative path between different drives.
+        return target.as_uri()
+
+
 def assessment(row: dict, axis: str) -> str:
     disposition = row[axis + "_assessment"]
     note = row[axis + "_note"]
@@ -78,8 +86,8 @@ def render(rows: list[dict], output: Path) -> str:
             ]
         )
         for row in selected:
-            public = os.path.relpath(REPO_ROOT / row["review_file"], output.parent)
-            evidence = os.path.relpath((REPO_ROOT / row["artifact_file"]).with_name("overview.md"), output.parent)
+            public = link_target(REPO_ROOT / row["review_file"], output)
+            evidence = link_target((REPO_ROOT / row["artifact_file"]).with_name("overview.md"), output)
             cells = [
                 f"[{cell(row['system_name'])}]({public})",
                 str(row["comparison_version"]),

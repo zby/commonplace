@@ -1,6 +1,7 @@
 """Check retained bytes, symlink boundaries, and deterministic change detection."""
 
 import json
+import os
 import tarfile
 
 import pytest
@@ -39,7 +40,7 @@ def test_capture_does_not_follow_external_symlink(tmp_path):
     secret.write_text("evaluator-only answer")
     symlink_or_skip(root / "escape", secret)
     state = capture(root, tmp_path / "record", archive=True)
-    assert state == {"escape": {"symlink": str(secret)}}
+    assert state == {"escape": {"symlink": os.readlink(root / "escape")}}
     with tarfile.open(tmp_path / "record/files.tar.gz") as bundle:
         assert bundle.getmember("project/escape").issym()
         assert len(bundle.getmembers()) == 2

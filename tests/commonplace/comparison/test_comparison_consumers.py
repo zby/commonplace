@@ -2,8 +2,11 @@
 
 import csv
 import json
+import ntpath
 from copy import deepcopy
 from io import StringIO
+from pathlib import PureWindowsPath
+from types import SimpleNamespace
 
 from commonplace.lib import systems_matrix as sm
 from scripts import analyze_matrix as stats
@@ -77,6 +80,21 @@ def test_table_keeps_local_weakness_and_uncertainty(tmp_path):
     assert "Caller identity unknown; manual control not established." in text
     assert "Store not inspected." in text
     assert "Initial control unresolved." in text
+
+
+def test_table_links_are_relative_within_a_drive(tmp_path, monkeypatch):
+    monkeypatch.setattr(renderer, "REPO_ROOT", tmp_path)
+    text = renderer.render([row()], tmp_path / "tables/table.md")
+    assert "[Synthetic](../kb/example/overview.md)" in text
+    assert "[synthetic](../kb/example/overview.md)" in text
+
+
+def test_table_links_use_file_uris_across_windows_drives(monkeypatch):
+    monkeypatch.setattr(renderer, "os", SimpleNamespace(path=ntpath))
+    monkeypatch.setattr(renderer, "REPO_ROOT", PureWindowsPath("D:/my repo"))
+    text = renderer.render([row()], PureWindowsPath("C:/temp/table.md"))
+    assert "[Synthetic](file:///D:/my%20repo/kb/example/overview.md)" in text
+    assert "[synthetic](file:///D:/my%20repo/kb/example/overview.md)" in text
 
 
 def test_empty_unresolved_inventory_keeps_axis_limitation_in_table_and_csv(tmp_path):

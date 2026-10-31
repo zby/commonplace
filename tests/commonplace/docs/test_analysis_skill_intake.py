@@ -12,7 +12,7 @@ SKILL = Path(__file__).resolve().parents[3] / (
 
 
 def intake() -> str:
-    text = SKILL.read_text()
+    text = SKILL.read_text(encoding="utf-8")
     return text.split("## Confirm the target\n", 1)[1].split("## Isolated run setup\n", 1)[0]
 
 
@@ -34,7 +34,7 @@ def test_profile_defaults_to_pi_sol_but_resumes_keep_their_profile():
 
 
 def test_preparation_label_correction_is_not_general_setup_recovery():
-    text = " ".join(SKILL.read_text().split("## Isolated run setup\n", 1)[1].split("## 1. Run the analysis", 1)[0].split())
+    text = " ".join(SKILL.read_text(encoding="utf-8").split("## Isolated run setup\n", 1)[1].split("## 1. Run the analysis", 1)[0].split())
     assert "only lowercase letters, digits and hyphens" in text
     assert "starting with a letter or digit (`[a-z0-9][a-z0-9-]*`)" in text
     assert 'use `--name ace` here and `--system "ACE"`' in text
