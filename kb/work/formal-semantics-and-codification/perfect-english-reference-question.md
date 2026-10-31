@@ -6,7 +6,7 @@ This passage is self-contained and can be copied to another agent for independen
 
 Could an LLM with perfect command of English serve as a reference implementation from which a formal semantics of English could be constructed? What would “perfect command” have to mean, what would the model have to expose, and how could the claim be assessed without making the model correct by definition?
 
-The motivation is a comparison with programming languages. Two C compilers can pass the same tests and disagree elsewhere. Given sufficiently specified source and target machine models, each compiler still supplies a way to construct a formal account of its behavior, including its bugs. We can select one compiler to define a dialect. Whether that dialect faithfully captures an independently intended C remains a separate question.
+The motivation is a comparison with programming languages. Two C compilers can pass the same tests and disagree elsewhere. Given sufficiently specified source and target machine models, each compiler can still be used to construct a formal account of its behavior, including its bugs. We can select one compiler to define a dialect. Whether that dialect faithfully captures an independently intended C remains a separate question.
 
 The same construction applies to an LLM when its weights, inference code, runtime, decoding procedure, and relevant execution conditions are specified. Context can be an input; stochastic behavior can be represented explicitly. The computation is formalizable regardless of whether the model understands English well.
 
@@ -18,7 +18,7 @@ Treat perfect command as a proposed objective property, distinct from our fallib
 
 First specify the target: a variety or community of English, a time or development rule, the kinds of discourse included, and the contextual information available. Distinguish perfect command within a declared scope from a system that handles every future use, every dialect, and every possible context. If unrestricted perfection is incoherent or impossible under stated assumptions, explain that result rather than silently narrowing it.
 
-The following are proposed requirements to criticize, not an established definition. Some may demand more than linguistic competence. Separate linguistic competence from unlimited theorem-proving ability. For example, understanding a sentence does not imply knowing whether it is true, deriving every remote consequence, complying with an instruction, or successfully carrying it out.
+The following requirements are proposals for criticism. Some may demand more than linguistic competence. Separate linguistic competence from unlimited theorem-proving ability. For example, understanding a sentence does not imply knowing whether it is true, deriving every remote consequence, complying with an instruction, or successfully carrying it out.
 
 Candidate requirements include:
 
@@ -29,7 +29,7 @@ Candidate requirements include:
 - Use clarification to resolve the appropriate ambiguity without changing unrelated commitments.
 - Change interpretation with relevant context while resisting irrelevant framing or leading questions.
 - Distinguish missing contextual information, legitimate semantic indeterminacy, and limitations of its own knowledge.
-- Handle novel combinations and unfamiliar situations, not merely reproduce familiar examples.
+- Generalize beyond familiar examples to handle novel combinations and unfamiliar situations.
 
 ## What would the semantic interface return?
 
