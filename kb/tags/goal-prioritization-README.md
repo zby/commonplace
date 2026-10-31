@@ -29,6 +29,7 @@ control carries both this tag and improvement-loop.
 
 ## Allocating effort under uncertainty
 
+- [Open-ended knowledge work shares one epistemic layer across roles](../theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md) — why prioritisation needs the epistemic layer: return guesses are search judgments to mark and criticize, or allocation runs on habit or cost alone
 - [Open-ended improvement must allocate search before decisive evaluation is available](../theory/open-ended-improvement-allocates-search-before-evaluation.md) — choosing which questions, candidates or proof paths to develop before decisive evidence exists
 - [Candidacy evidence licenses escalation, not acceptance](../theory/candidacy-evidence-licenses-escalation-not-acceptance.md) — the evidence that routes a hypothesis to costly assessment differs from the evidence that decides it
 - [Lightweight search control does not license adoption](../theory/lightweight-search-control-does-not-license-adoption.md) — a search judgment's authority stops at allocating investigation, continuation or abandonment

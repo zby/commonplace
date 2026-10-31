@@ -2,7 +2,7 @@
 description: "Defines the epistemic layer (keeping derivable, decided and guessed apart and criticizing each) and names six roles that consume it, from prioritisation to retention, each with the failure a tool without it shows"
 type: types/note.md
 traits: [title-as-claim, definition, has-comparison]
-tags: [constraining, learning-theory]
+tags: [constraining, goal-prioritization, learning-theory]
 ---
 
 # Open-ended knowledge work shares one epistemic layer across roles
