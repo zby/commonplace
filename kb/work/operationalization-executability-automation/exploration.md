@@ -4,6 +4,8 @@
 
 ## Central result
 
+**Operationalization is relative to an executor, task and operating setting.** It is not an intrinsic property of an artifact: what a trained researcher can use immediately may need adaptation for a novice, an LLM agent, or a deterministic interpreter. Every claim that something is operational must say **operational for whom, to do what, with which capabilities, resources and authority, and to what standard**.
+
 There are more than two possible transformations of a methodology; moreover, properties of the methodology must not be confused with properties of an executor, its runtime, or a particular execution.
 
 **Generality:** which cases the method can guide adequately.
@@ -18,9 +20,30 @@ There are more than two possible transformations of a methodology; moreover, pro
 
 These are diagnostic coordinates rather than scalar scores or a complete axiomatization. Their separation does not assert statistical independence: improving one may alter another. In particular, adding a correct applicability constraint may increase reliable coverage; a bad constraint may destroy generality; and operational integration may extend the system's *practical reach* without extending the method's *principled domain*. Distinguish intended domain, valid applicability, and empirically successful coverage.
 
-**Operationalization** is therefore best kept provisionally as an *activity*: working explanatory or methodological knowledge into arrangements by which actors can apply it. That can involve enlarging coverage, resolving decisions, connecting tools, activating an existing method, or formalizing a component. It does not denote one axis or require all these moves. Conversely, merely generalizing a theory without making it easier for an executor to act on it may improve the method but not its operational arrangement.
+**Operationalization** is best kept provisional as a *source-to-use transformation, assessed relative to a target executor*. There is a real double use: a methodology can make a theory prescriptive for a class of practitioners, while an executor-specific procedure may make that methodology usable for a different actor. These are not the same relation or mandatory successive steps. Simply granting tools, delivering instructions, or preserving runtime state improves *operative integration* without necessarily deriving a new methodological artifact. Merely generalizing a theory is likewise not automatically operationalization.
 
 This proposal leaves open a narrower, defensible reading of operationalization as *producing a procedure from broader methodology*. Commonplace already makes that specific lineage commitment in [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md): 'operationalized-from' is a method-to-procedure relation adding ordering, defaults or stopping conditions not fixed by its source. Do not redefine that identifier to mean any improvement in usability or integration.
+
+## 0. What is being operationalized, and for which executor?
+
+The statements **'a methodology operationalizes a theory'** and **'a skill operationalizes a methodology'** can both be meaningful, but conflating them hides their different sources and target consumers.
+
+| Transformation | Source | Result | What is claimed |
+|---|---|---|---|
+| **Theory → methodology** | Explanatory/general theory | Prescriptive principles, intervention criteria or strategy for an intended class of actors | Theory is worked into guidance for action, without proving usability for every actor |
+| **Methodology → procedure for E** | Existing intervention-guiding methodology | A checklist, skill, decision interface or other E-facing procedure | Guidance has been adapted for a particular executor, task and assumed background competence |
+| **Method/procedure → integrated runtime use** | Existing guidance | Routing, permissions, tools, context, state and feedback in an operating arrangement | The guidance is actually available for use by E; no source-to-procedure derivation is necessarily involved |
+| **Method plus E → execution** | Guidance and configured executor | Observable actions and outcomes | The work happened, not that the method is complete, correct, or reliably followed |
+
+When provenance matters, call the first **prescriptive derivation from theory**, the second **executor-specific procedure adaptation**, and the third **operational integration**. Reserve the broad word 'operationalization' for uses that identify their source, target, executor and application.
+
+**Methodology is not definitionally 'operationalized theory'.** The existing [actionable-methodology definition](../../theory/definitions/actionable-methodology.md) identifies methodology by its intervention-guiding function. A methodology may indeed be worked out from an explanatory theory, but it may also contain practical conventions or organizing principles that are not derived from a single theory. The [two-layer execution account](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) explicitly distinguishes the theory-derived part of a methodology from methodology-native content. The phrase is a possible provenance claim, not an identity.
+
+The operation is **executor-relative** in both stages, although the first stage may assume a broad practitioner class rather than one named model. A skilled researcher may use a Popperian criticism methodology without a derived checklist. An LLM may need a short method-selection cue and source access; another may need detailed instructions and a persistent context; a weak model may still be unable to perform reliable criticism no matter how explicit the instructions become. An artifact can satisfy a source-to-procedure lineage description but fail to be operational **for its intended E**. Conversely, an unchanged methodology may already be operational for E, so there is no compulsory infinite regress of ever-finer operationalizations.
+
+The adopted [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) uses `operationalized-from` only for a narrow **methodology-to-procedure artifact-lineage relation**, involving added ordering, defaults or stopping conditions. That relation does not by itself demonstrate executor-relative executability. Do not broaden this registered identifier merely because its ordinary-English root also describes theory-to-method derivation or runtime integration.
+
+**Test for any proposed operationalization:** identify the source guidance, resulting representation or operating arrangement, E's already available competence, target task, environment, action possibilities and adequacy criterion. Then ask which decisions E can now make or actions E can carry out that were not feasible before. If the only change is an improved theory, the result may be generalization rather than operationalization. If the only change is tool access, it may be operational integration rather than a new methodology. If E still cannot apply the procedure, calling it operationalized should remain a hypothesis, not a finding.
 
 ## 1. From descriptions to situated action
 
@@ -84,7 +107,7 @@ These examples do not define a universal numeric measure. A function allocation 
 
 ### Can operationalization make a methodology fully automatable with LLMs?
 
-**Operationalization is neither logically sufficient nor always necessary for fully automated LLM task performance.** It can increase the possibility and feasibility of that performance.
+**Executor-relative operationalization is neither logically sufficient nor always necessary for fully automated LLM task performance.** It can increase the possibility and feasibility of that performance. A methodology may already be directly usable by one LLM but not another; matching its instructions to E does not create missing competence, permissions or outcome verification.
 
 1. The model may already know the method and automatically do the relevant work from a broad objective without any newly retained operationalization. This is automation without explicit method extraction; it remains vulnerable to wrong method selection and opaque model competence.
 2. A written methodology could fully guide a competent human but still be impossible or untrustworthy for an LLM in the same setting because it lacks tools, perception, context, substantive skill, or authority. Completeness for the human is not completeness for the model.
@@ -107,6 +130,8 @@ A better analytical map is:
 | Method itself | Generality/coverage across situations | Extend criticism method to handle adversarial evidence |
 | Method itself | Semantic commitments/constraints | Preserve binding provenance but leave evidence-gathering tactics open |
 | Method itself | How much application logic is addressed/settled | Add a way to seek discriminating evidence, without preselecting its outcome |
+| Source-to-method transformation | Deriving prescriptions from a theory for an intended practitioner class | Turn an epistemic principle into a strategy for criticizing claims |
+| Executor-facing adaptation | Working the method into a form E can use for a declared task | Derive an LLM skill, or avoid it where the method is already usable |
 | Method use | Selection, activation and authority | Route an existing method and verify that it governs the relevant decision |
 | Operational environment | Tools, state, checkpoints, feedback | Enable an unchanged method to be used over longer tasks |
 | Actor capability | What E can infer and decide when the method falls silent | A stronger model handles new cases through its learned knowledge |
@@ -167,9 +192,9 @@ The sources' meanings do not transfer unchanged: *operational semantics* fixes r
 
 ## 7. Disposition
 
-1. **Revise the conceptual account in the workshop** (this note). The earlier two-pole generality-versus-constraint reading was incomplete. Operationalization is not a third number on a diagram; it names a family of transformations with distinct causal mechanisms.
+1. **Revise the conceptual account in the workshop** (this note). The earlier two-pole generality-versus-constraint reading was incomplete. Operationalization is **executor- and task-relative**, and its two source transformations (theory → methodology; methodology → executor-specific procedure) are not interchangeable. It is not a third scalar dimension.
 2. **Preserve current Commonplace definitions** of [actionable methodology](../../theory/definitions/actionable-methodology.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and [methodological/computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md); do not create competing 'executability' or 'operationalization' definitions on purely conceptual grounds.
 3. **Treat automation and autonomy separately in future comparisons**: allocate actual task functions to human/computation; separately record discretionary and authorization boundaries, plus which human interventions remain required over the declared horizon. Computational closure is useful for absence of required human decisions, but not a complete proxy for discretionary authority.
-4. **Retain the narrower lineage meaning of 'operationalized-from'**, while explicitly marking the broader, ordinary-language sense when discussing making methodology operative. Any proposed change to ADR 054 would require its own evidence and decision.
+4. **Retain the narrower lineage meaning of 'operationalized-from'**. Do not treat it as proof of operator-relative actionability or as the name for theory-to-method derivation. When ambiguity matters, say 'prescriptive derivation', 'executor-specific procedure adaptation' or 'runtime integration'. Revising ADR 054 needs its own justification.
 5. **Do not infer fully automated LLM work from operationalization alone.** Demonstrate executor capability and function closure under explicit constraints, then separately demonstrate warrant and adequate outcome quality. Lack of a deterministic procedure is not by itself a blocker.
 6. **No new machinery or extracted theory definition yet.** This workshop's distinctions are useful for architectural decisions, but causal superiority and the need for additional vocabulary await the scoped tests above.
