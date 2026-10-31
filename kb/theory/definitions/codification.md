@@ -6,9 +6,9 @@ tags: [learning-theory, constraining]
 
 # Codification
 
-Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact with a **unique operational semantics**. Fixed rules, implemented by a runtime, parser, validator, type checker, query engine, or resolver, determine what behavior is permitted, including any variation they explicitly allow. The consumer changes from a model or human who reinterprets the text on each use to one bound by those rules, so what the artifact permits no longer depends on who reads it.
+Codification commits a rule or operation stated in natural language to a symbolic artifact, such as code or a schema, with a **unique operational semantics**. Fixed rules, implemented by a runtime, parser, validator, type checker, query engine, or resolver, determine what behavior is permitted, including any variation they explicitly allow. The consumer changes from a model or human who reinterprets the text on each use to one bound by those rules, so what the artifact permits no longer depends on who reads it.
 
-In this KB, making natural language more precise is constraining, but not codification unless the result is a symbolic artifact with a unique operational semantics.
+Codification is the symbolic region of [constraining](./constraining.md)—committing choices that narrow or rank permitted readings or behaviors. Making natural language more precise also constrains interpretation, but remains outside codification until the result has fixed rules for permitted behavior.
 
 ## Criterion and testing
 
@@ -36,7 +36,7 @@ Examples: replacing an LLM slug generator with `python-slugify`; moving CSV stat
 
 ## Exclusions
 
-Writing a convention that stays in natural language constrains interpretation while keeping the model or human as the interpreter. A skill extracted from methodology notes is not codification while its instructions remain natural language, [since skills derive from methodology](../skills-derive-from-methodology.md) without changing representational form.
+Writing a convention that stays in natural language constrains interpretation while keeping the model or human as the interpreter. A skill extracted from methodology notes is not codification while its instructions remain natural language, [since skills derive from methodology](../skills-derive-from-methodology.md) without changing [representational form](./representational-form.md)—how the content is encoded and consumed.
 
 Turning a rule into legalese, a standards document, or a formal prose policy may be strong constraining while still depending on natural-language interpretation.
 
