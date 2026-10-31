@@ -38,6 +38,7 @@ Close when the watch has produced a justified disposition: a supported extractio
 
 - [Watch checklist](./watch-checklist.md) — noticing, local correction, evidence capture, and reassessment.
 - [Observation log](./observations.md) — reported seed episode, a separately marked candidate for review, and a reusable case template.
+- [O001 source excerpts and correction chronology](./o001-operationalization-exchange.md) — original question and responses, pinned historical Git revisions, two partial repairs, final task-relative correction, and explicit evidence gaps; one episode, not a new recurrence.
 - [Findings and competing explanations](./findings.md) — exploratory account from the initial investigation; its experiments are deferred.
 - [Evidence register](./evidence-register.md) — primary-source references, evidence classes, limitations, and source-management status.
 - [Preliminary experimental framing](./initial-experimental-framing.md) — initial search-focusing design sketch, not a current execution plan.
