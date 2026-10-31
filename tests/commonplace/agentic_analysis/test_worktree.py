@@ -340,6 +340,30 @@ def test_inspect_cli_distinguishes_local_completion(tmp_path: Path, capsys, disp
     assert result["parameters"] == {"system": "Example"}
 
 
+def test_a_start_without_an_end_is_interrupted(tmp_path):
+    run = fake_checkout(tmp_path / "worktree")
+    log = run / "log.jsonl"
+    log.write_text(json.dumps({"event": "start"}) + "\n"
+                   + json.dumps({"event": "stopped", "reason": "synthesis reported a problem"}) + "\n")
+    assert aw.inspect_analysis(run)["state"] == "stopped"
+    with log.open("a") as stream:
+        stream.write(json.dumps({"event": "start"}) + "\n")
+    status = aw.inspect_analysis(run)
+    assert status["state"] == "interrupted" and status["stopped"] is None, status["state"]
+
+
+def test_a_published_receipt_stands_through_a_later_start_without_an_end(tmp_path):
+    run = fake_checkout(tmp_path / "worktree")
+    (run / aw.RECEIPT).write_text(json.dumps({"published": True}))
+    log = run / "log.jsonl"
+    log.write_text(json.dumps({"event": "start"}) + "\n"
+                   + json.dumps({"event": "published"}) + "\n")
+    assert aw.inspect_analysis(run)["state"] == "published"
+    with log.open("a") as stream:
+        stream.write(json.dumps({"event": "start"}) + "\n")
+    assert aw.inspect_analysis(run)["state"] == "published"
+
+
 @pytest.mark.parametrize("locked", [True, False])
 def test_inspect_audit_separates_interrupted_controller_from_publication(tmp_path, monkeypatch, locked):
     run = fake_checkout(tmp_path / "worktree")

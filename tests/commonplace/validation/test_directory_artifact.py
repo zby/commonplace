@@ -1,3 +1,4 @@
+import subprocess
 from hashlib import sha256
 
 import pytest
@@ -86,6 +87,42 @@ def test_traversal_groups_members_and_keeps_descendants(tmp_path):
     assert set(outcome.results) == {directory, child}
     assert not outcome.results[directory].fails
     assert outcome.results[child].fails
+
+
+def test_member_ignore_checks_are_batched_without_changing_length_limits(tmp_path, monkeypatch):
+    directory = make_artifact(tmp_path)
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    (tmp_path / ".gitignore").write_text("ignored.md\n")
+    (tmp_path / "kb/reports/types/member.md").write_text(
+        "---\ntype: types/type-spec.md\nname: member\ndescription: Example member\n"
+        "schema: ./member.schema.yaml\n---\n# Member\n"
+    )
+    (tmp_path / "kb/reports/types/member.schema.yaml").write_text("type: object\n")
+    for name in ("main.md", "ignored.md"):
+        (directory / name).write_text(
+            "---\ntype: reports/types/member.md\n---\n\n# "
+            + "A" * 101 + "\n"
+        )
+    check_ignore_calls = []
+    real_run = subprocess.run
+
+    def recording(args, **kwargs):
+        if args[:2] == ["git", "check-ignore"]:
+            check_ignore_calls.append(kwargs["input"].split("\0")[:-1])
+        return real_run(args, **kwargs)
+
+    monkeypatch.setattr(subprocess, "run", recording)
+    context = ValidationRun(tmp_path, (directory,))
+    result = context.validate(directory)
+    assert check_ignore_calls == [[
+        (directory / name).relative_to(tmp_path).as_posix() for name in ("ignored.md", "main.md")
+    ]]
+    assert any("member main.md" in failure and "title: 101 chars exceeds" in failure
+               for failure in result.fails), result.fails
+    assert not any("member ignored.md" in failure for failure in result.fails)
+    for name in ("main.md", "ignored.md"):
+        member = directory / name
+        assert context.validate(member) == ValidationRun(tmp_path, (member,)).validate(member)
 
 
 def test_file_validation_does_not_load_siblings(tmp_path):

@@ -528,9 +528,13 @@ class ValidationRun:
     def _validate_artifact(self, directory: Path) -> CheckResults:
         results = CheckResults("unknown")
         # A bad manifest must not suppress the ordinary member checks.
-        for path in member_paths(
+        paths = member_paths(
             directory, self.content_overrides, names=self.member_snapshots.get(directory.resolve()),
-        ):
+        )
+        if self.criteria is None:
+            # Resolve all members' ignore status with one Git process, not one per note.
+            self.prime_git_ignored(tuple(path for path in paths if not path.is_symlink()))
+        for path in paths:
             if path.is_symlink():
                 results.fails.append(f"[base] member {path.name}: symlinks are not supported")
                 continue

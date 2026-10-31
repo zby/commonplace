@@ -68,6 +68,29 @@ checks; `installation/` holds scaffolding and package-build checks.
 For Markdown KB data changes, use the relevant Commonplace validation commands
 rather than pytest unless the change affects code contracts or test inputs.
 
+## Test value review
+
+Judge tests by the distinct regressions they detect, not by test count or lines
+covered. For each new test or proposed removal, name the plausible failure,
+its consequence, and the coverage that would otherwise miss it.
+
+- Keep end-to-end cases for behavior that depends on components working
+  together. Test local state transitions with narrow fixtures when another
+  case already covers the path that produces that state.
+- Merge overlapping scenarios only when the retained test preserves their
+  distinct assertions. Do not share mutable run state between tests.
+- Prefer observable behavior over internal call sequences, unless the sequence
+  is itself a requirement such as correction ordering or bounded subprocess cost.
+- Instruction-text checks protect the shipped text, not agent compliance. Keep
+  exact-string assertions when literal wording is required; otherwise avoid
+  pinning incidental line breaks, phrasing or changeable defaults.
+- Separate runtime cost from maintenance cost. A cheap test can still be brittle;
+  an expensive safety or recovery test can still earn its cost.
+
+Use pytest's `--durations` output to find expensive cases. Compare the same
+selected suite before and after a change; moving cases between suites or
+excluding them with markers is not a runtime optimization.
+
 ## Fixture isolation and performance
 
 Reuse static inputs, not mutable execution state. The agentic-analysis execution

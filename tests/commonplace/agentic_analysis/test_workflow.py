@@ -25,8 +25,8 @@ import yaml
 
 from commonplace.cli.analysis import main
 from commonplace.headless.harness import HARNESSES, Harness
-from commonplace.headless.jobs import OutOfAttempts, dismiss, run_lock
-from commonplace.lib.agentic_analysis.workflow import Analysis, Problem, Stopped
+from commonplace.headless.jobs import OutOfAttempts, run_lock
+from commonplace.lib.agentic_analysis.workflow import Analysis, Stopped
 from commonplace.lib.agentic_analysis.worktree import (
     inspect_analysis,
     start_analysis,
@@ -245,6 +245,10 @@ def test_complete_run_with_one_correction_round(workflow):
     assert "overview.md" in complete_members(analysis)
     manifest = yaml.safe_load((artifact / "ARTIFACT.yaml").read_text())
     assert manifest["worker"]["model"] == "fake-model-1", manifest
+    assert manifest["type"] == "agentic-system-analyses/types/agentic-system-analysis-set.md"
+    assert set(manifest["members"]) == complete_members(analysis), manifest
+    for name, entry in manifest["members"].items():
+        assert entry["sha256"] == sha256((artifact / name).read_bytes()).hexdigest(), name
 
     log = events(run_dir)
     verdicts = [e for e in log if e["event"] == "verdict" and e["role"] == "report-verification"]
@@ -375,21 +379,13 @@ def test_parallel_corrections_are_checked_against_the_round_snapshot(workflow, m
     assert list(swapped["members"]) == list(receipt["members"])
 
 
-def test_construction_writes_the_type_manifest_that_publication_replaces(workflow):
+def test_construction_writes_the_type_manifest_without_launching_workers(workflow):
     run_dir, new = workflow(disposition="complete")
     manifest = run_dir / "artifact" / "ARTIFACT.yaml"
     with new().run:      # construction holds the run's lock; release it before the run
         assert yaml.safe_load(manifest.read_text()) == {
             "type": "agentic-system-analyses/types/agentic-system-analysis-set.md"}
         assert not (run_dir / "log.jsonl").exists() or launches(run_dir) == []
-
-    analysis, receipt = run(new)
-    assert receipt["published"] is True, receipt
-    pinned = yaml.safe_load(manifest.read_text())
-    assert pinned["type"] == "agentic-system-analyses/types/agentic-system-analysis-set.md"
-    assert set(pinned["members"]) == complete_members(analysis), pinned
-    for name, entry in pinned["members"].items():
-        assert entry["sha256"] == sha256((run_dir / "artifact" / name).read_bytes()).hexdigest(), name
 
 
 @pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
@@ -419,26 +415,6 @@ def test_exhausted_verifier_budget_stops_before_correcting(workflow):
     assert launch_counts(run_dir)["runtime"] == 3
 
 
-def test_rerun_resumes_from_the_cache(workflow):
-    run_dir, new = workflow(disposition="complete", problem={"synthesis": [1]})
-    _, stop = run(new, Problem)
-    assert stop.role == "synthesis"
-    before = launch_counts(run_dir)
-    assert before["synthesis"] == 1 and "synthesis-verification" not in before
-    workflow.set_scenario(disposition="complete")
-    status = inspect_analysis(run_dir)
-    assert [problem["job"] for problem in status["problems"]] == ["synthesis"]
-    answers = status["jobs"]["synthesis"]["answers"]
-    assert len(answers) == 1 and answers[0]["problem"]
-    assert [call["call"] for call in dismiss(run_dir, "synthesis")] == [answers[0]["call"]]
-    _, receipt = run(new)
-    assert receipt["published"] is True, receipt
-    after = launch_counts(run_dir)
-    assert {job: n for job, n in after.items() if job not in ("synthesis", "synthesis-verification")} == \
-        {job: n for job, n in before.items() if job != "synthesis"}, (before, after)
-    assert after["synthesis"] == 2 and after["synthesis-verification"] == 1
-
-
 def test_run_command_refuses_a_held_run(workflow, capsys):
     run_dir, _ = workflow(disposition="complete")
     with run_lock(run_dir):
@@ -463,14 +439,17 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     assert [problem["job"] for problem in status["problems"]] == ["synthesis"]
     (answer,) = status["jobs"]["synthesis"]["answers"]
     assert answer["problem"]
+    before = launch_counts(run_dir)
+    assert before["synthesis"] == 1 and "synthesis-verification" not in before
 
     code, out, _ = cli(capsys, "inspect", str(run_dir))
     assert code == 0 and json.loads(out)["state"] == "stopped"
 
     # A retry is dismissing the recorded problem and rerunning.
     workflow.set_scenario(disposition="complete")
-    code, _, err = cli(capsys, "retry", str(run_dir), "synthesis")
+    code, out, err = cli(capsys, "retry", str(run_dir), "synthesis")
     assert code == 0, err
+    assert [call["call"] for call in json.loads(out)] == [answer["call"]]
     code, out, err = cli(capsys, "run", str(run_dir))
     assert code == 0, err
     first, _, rest = out.partition("\n")
@@ -478,6 +457,10 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     receipt = json.loads(rest)
     assert receipt["published"] is True, receipt
     assert receipt == json.loads((run_dir / "receipt.json").read_text())
+    after = launch_counts(run_dir)
+    assert {job: n for job, n in after.items() if job not in ("synthesis", "synthesis-verification")} == \
+        {job: n for job, n in before.items() if job != "synthesis"}, (before, after)
+    assert after["synthesis"] == 2 and after["synthesis-verification"] == 1
     audit = inspect_analysis(run_dir)["advisory-audit"]
     assert audit["state"] == "complete", audit
     audit_dir = Path(audit["directory"])
@@ -656,24 +639,6 @@ def test_second_reset_finishes_an_interrupted_withdrawal(workflow, monkeypatch, 
     assert json.loads(out)["state"] == "rolled-back"
     assert not journal.exists()
     assert inspect_analysis(run_dir)["state"] == "withdrawn"
-
-
-def test_a_start_without_an_end_is_interrupted(workflow, capsys):
-    run_dir, _ = workflow(disposition="complete", problem={"synthesis": [1]})
-    code, _, err = cli(capsys, "run", str(run_dir))
-    assert code == 2, err
-    assert inspect_analysis(run_dir)["state"] == "stopped"
-    with (run_dir / "log.jsonl").open("a") as log:
-        log.write(json.dumps({"event": "start"}) + "\n")
-    status = inspect_analysis(run_dir)
-    assert status["state"] == "interrupted" and status["stopped"] is None, status["state"]
-
-
-def test_a_published_receipt_stands_through_a_later_start_without_an_end(workflow, capsys):
-    run_dir, _ = published_run(workflow, capsys)
-    with (run_dir / "log.jsonl").open("a") as log:
-        log.write(json.dumps({"event": "start"}) + "\n")
-    assert inspect_analysis(run_dir)["state"] == "published"
 
 
 def test_analysis_refuses_an_unusable_worker_profile_before_launching(workflow):
