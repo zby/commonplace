@@ -60,7 +60,7 @@ First-mention glossing and linking in authored artifacts is governed by
 
 | Term | Definition |
 |---|---|
-| Actionable | [Operator-relative methodology](./kb/theory/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
+| Actionable | [Task- and operator-relative methodology](./kb/theory/definitions/actionable-methodology.md); use the technical sense only with a link. Unlinked use is ordinary English. |
 | Addressable theory | [Addressable theory](./kb/theory/definitions/addressable-theory.md) |
 | Codification | [Codification](./kb/theory/definitions/codification.md) |
 | Collection, text contract | [Collection](./kb/reference/definitions/collection.md) |
