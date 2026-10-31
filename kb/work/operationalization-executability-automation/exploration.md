@@ -4,11 +4,11 @@
 
 ## Central result
 
-**Operationalization is relative to an executor, task and operating setting.** It is not an intrinsic property of an artifact: what a trained researcher can use immediately may need adaptation for a novice, an LLM agent, or a deterministic interpreter. Every claim that something is operational must say **operational for whom, to do what, with which capabilities, resources and authority, and to what standard**.
+**Operationalization is relative to a defined task T (including its application area) and an executor E in an operating setting S.** It is not an intrinsic property of a text. A task definition specifies *what* is to be accomplished and *where* its validity is being claimed; operationalization asks how existing knowledge can guide E in accomplishing that task. What a trained researcher can use immediately may need adaptation for a novice, an LLM agent, or a deterministic interpreter. Every claim that something is operational must state the task, application area, executor, resources/authority, and adequacy criterion.
 
 There are more than two possible transformations of a methodology; moreover, properties of the methodology must not be confused with properties of an executor, its runtime, or a particular execution.
 
-**Generality:** which cases the method can guide adequately.
+**Generality (outside operationalization):** which additional tasks or application areas a theory or method can adequately guide. This may be researched or expanded, but doing so changes the knowledge's claimed scope or the task specification rather than being a constituent operation of operationalizing a *given* task.
 
 **Constraining:** which readings, choices, or responses the method permits or prefers for a named consumer.
 
@@ -18,42 +18,52 @@ There are more than two possible transformations of a methodology; moreover, pro
 
 **Situated executability:** whether the specified executor and environment can actually perform the required work to an identified standard. This is a relation, not a textual genre and not a single successful trace.
 
-These are diagnostic coordinates rather than scalar scores or a complete axiomatization. Their separation does not assert statistical independence: improving one may alter another. In particular, adding a correct applicability constraint may increase reliable coverage; a bad constraint may destroy generality; and operational integration may extend the system's *practical reach* without extending the method's *principled domain*. Distinguish intended domain, valid applicability, and empirically successful coverage.
+These are diagnostic coordinates rather than scalar scores or a complete axiomatization. **They do not all belong inside operationalization.** Generality belongs to the knowledge's scope (or to changing task definition); automation, autonomy and warranted reliability characterize the configured executor and outcome. Operationalizing for a *fixed* task may constrain local choices, fill in guidance and integrate resources without claiming that the method now applies in more domains. An accidentally discovered wider application is a possible research result, not part of operationalization by definition. Distinguish the task's intended domain, what the source knowledge justifies, and what E actually handles successfully.
 
-**Operationalization** is best kept provisional as a *source-to-use transformation, assessed relative to a target executor*. There is a real double use: a methodology can make a theory prescriptive for a class of practitioners, while an executor-specific procedure may make that methodology usable for a different actor. These are not the same relation or mandatory successive steps. Simply granting tools, delivering instructions, or preserving runtime state improves *operative integration* without necessarily deriving a new methodological artifact. Merely generalizing a theory is likewise not automatically operationalization.
+**Operationalization** is provisionally the activity of making knowledge K usable for **task T by executor E** under a declared operating setting S. It may produce an artifact or an operating arrangement, and it may leave substantial choices to E. The *task definition* supplies the application area, goal, success/stop conditions and binding boundaries; these are inputs to the operation, not scope to be enlarged by it. There is no requirement that operationalization maximize detail or constrain all choices. Generalization is a separate effort to establish how K or an existing method carries over to other tasks or applications.
 
-This proposal leaves open a narrower, defensible reading of operationalization as *producing a procedure from broader methodology*. Commonplace already makes that specific lineage commitment in [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md): 'operationalized-from' is a method-to-procedure relation adding ordering, defaults or stopping conditions not fixed by its source. Do not redefine that identifier to mean any improvement in usability or integration.
+There is a potential linguistic double use: a theory can be made action-guiding as a methodology **for T**, and an existing methodology can be made operational as a skill **for the same or a narrower T and E**. Both are instances of the same task-relative operation, not necessarily different definitions of 'operationalization' or mandatory successive transformations. Simply granting tools, delivering an existing instruction, or preserving runtime state can also improve the task-facing operating arrangement without deriving another methodological artifact.
 
-## 0. What is being operationalized, and for which executor?
+Commonplace already has a **narrow artifact-lineage convention**, `operationalized-from`, in [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md): a methodology-to-procedure pairing where ordering, defaults, or stopping conditions are added. Do not silently broaden that adopted relation to all task-relative operationalization, especially theory-to-method work or deployment of existing artifacts. The conceptual use can be broader while its formal lineage label remains narrow pending a separate decision.
 
-The statements **'a methodology operationalizes a theory'** and **'a skill operationalizes a methodology'** can both be meaningful, but conflating them hides their different sources and target consumers.
+## 0. Task definition fixes application; operationalization makes knowledge usable for the task
 
-| Transformation | Source | Result | What is claimed |
-|---|---|---|---|
-| **Theory → methodology** | Explanatory/general theory | Prescriptive principles, intervention criteria or strategy for an intended class of actors | Theory is worked into guidance for action, without proving usability for every actor |
-| **Methodology → procedure for E** | Existing intervention-guiding methodology | A checklist, skill, decision interface or other E-facing procedure | Guidance has been adapted for a particular executor, task and assumed background competence |
-| **Method/procedure → integrated runtime use** | Existing guidance | Routing, permissions, tools, context, state and feedback in an operating arrangement | The guidance is actually available for use by E; no source-to-procedure derivation is necessarily involved |
-| **Method plus E → execution** | Guidance and configured executor | Observable actions and outcomes | The work happened, not that the method is complete, correct, or reliably followed |
+**Task definition and operationalization are separate operations.** A task definition T supplies the *application area* (target/problem class), objective, success criterion, and binding scope and authority conditions. It may be a specific case ('assess this empirical claim') or a family ('review the causal claims in this class of papers'). It need not be a complete plan, and an open-ended task can state how its scope may be revised when new evidence appears.
 
-When provenance matters, call the first **prescriptive derivation from theory**, the second **executor-specific procedure adaptation**, and the third **operational integration**. Reserve the broad word 'operationalization' for uses that identify their source, target, executor and application.
+**Operationalization** takes T as a given and asks how knowledge K can guide executor E, with competence and tooling S, to perform T. Its output may be a task-facing methodology, an interpreted checklist/skill, a code component, a hybrid arrangement, or no new artifact when E already knows enough. Success is relative: the arrangement improves or enables E's appropriate task-guided decisions, not merely produces more words. It does not establish generality beyond the application area specified by T or guarantee task success.
 
-**Methodology is not definitionally 'operationalized theory'.** The existing [actionable-methodology definition](../../theory/definitions/actionable-methodology.md) identifies methodology by its intervention-guiding function. A methodology may indeed be worked out from an explanatory theory, but it may also contain practical conventions or organizing principles that are not derived from a single theory. The [two-layer execution account](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) explicitly distinguishes the theory-derived part of a methodology from methodology-native content. The phrase is a possible provenance claim, not an identity.
+A working relation, **not a formal Commonplace definition**, is:
 
-The operation is **executor-relative** in both stages, although the first stage may assume a broad practitioner class rather than one named model. A skilled researcher may use a Popperian criticism methodology without a derived checklist. An LLM may need a short method-selection cue and source access; another may need detailed instructions and a persistent context; a weak model may still be unable to perform reliable criticism no matter how explicit the instructions become. An artifact can satisfy a source-to-procedure lineage description but fail to be operational **for its intended E**. Conversely, an unchanged methodology may already be operational for E, so there is no compulsory infinite regress of ever-finer operationalizations.
+`operationalize(K, T, E, S) → task-facing method or operating arrangement A`
 
-The adopted [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) uses `operationalized-from` only for a narrow **methodology-to-procedure artifact-lineage relation**, involving added ordering, defaults or stopping conditions. That relation does not by itself demonstrate executor-relative executability. Do not broaden this registered identifier merely because its ordinary-English root also describes theory-to-method derivation or runtime integration.
+where T fixes the evaluated application, E and S supply actual competence and action possibilities, and A is judged by whether it makes K usable to guide T. Neither the output type nor the number of steps is fixed.
 
-**Test for any proposed operationalization:** identify the source guidance, resulting representation or operating arrangement, E's already available competence, target task, environment, action possibilities and adequacy criterion. Then ask which decisions E can now make or actions E can carry out that were not feasible before. If the only change is an improved theory, the result may be generalization rather than operationalization. If the only change is tool access, it may be operational integration rather than a new methodology. If E still cannot apply the procedure, calling it operationalized should remain a hypothesis, not a finding.
+**Two examples with the same operation:**
+
+| Starting knowledge K | Fixed task T and executor E | Possible result A |
+|---|---|---|
+| A Popperian explanatory account of conjecture and criticism | T: critically assess claims in a research article; E: research-experienced human | A methodology explaining how to form criticisms and seek discriminating evidence; perhaps no detailed checklist |
+| Existing conjectural-criticism methodology | Same task; E: LLM-based Commonplace agent with bounded context and tools | A selected skill, available source references, authority and stop conditions, and relevant tool access; only the missing pieces need to be supplied |
+
+The first is often described as **theory → methodology**; the second as **methodology → procedure or operating arrangement**. They share the functional test *makes K usable for T by E*. In a different project a methodology might not derive from one articulated theory at all. The [actionable-methodology definition](../../theory/definitions/actionable-methodology.md) classifies methodologies by the guidance they supply, not by their ancestry, and the [two-layer account](../../theory/theory-and-methodology-form-a-two-layer-execution-system.md) explicitly allows methodology-native content.
+
+**Where generalization belongs:** after developing A for T, one can conjecture that K or A works for a broader task T'. Establishing that claim requires new reasoning or evidence about the expanded application area. The act of extending T to T' is a **task-definition or method-scope revision**. Operationalizing for T' is a further task-relative operation. If operationalization for T unexpectedly discovers a general technique, retaining and testing that conjecture is separate from completing T. The same method may be operational for E on T but not on T', even if the theory's principles remain applicable.
+
+**Important boundary case:** operationalizing K for T can reveal that T is infeasible, inconsistent, or under-specified. This is useful feedback to task definition, not license for the operator or agent to silently broaden or replace T. Return the issue to whoever owns task selection, or revise T through an authorized decision. The task can authorize scope discovery as part of its objective; in that case the rules for choosing a new application are part of T rather than an accidental generalization during execution.
+
+**Other boundaries:** constraining choices, supplying a richer method, codifying a local rule and integrating a workflow are *possible means* of operationalizing for T. They are not definitions of operationalization. Automation is subsequently about which task functions the configured system performs, and decision autonomy about what choices E may make. An operationalized arrangement may remain entirely human-executed.
+
+**Provenance versus situated use:** `operationalized-from` in [ADR 054](../../reference/adr/054-add-adapted-from-and-operationalized-from-lineage-relations.md) remains the authorized **methodology→procedure** lineage claim, not a generic marker that K has been made operational for T/E. A procedure can satisfy that lineage convention but be unsuitable for E. An unchanged methodology can be directly usable by E without another derivative. No automatic regress follows from the fact that a methodology can itself operationalize a theory.
 
 ## 1. From descriptions to situated action
 
 A *description* reports how work occurred; an explanatory theory proposes why. A *methodology* supplies an intervention-relevant mapping: which kind of action, comparison, rejection, or evaluation is favored in represented conditions. An instruction like 'critically assess the causal claim' can be a thin method when a proficient actor reconstructs appropriate tests; it is not an exhaustive plan.
 
-To make guidance usable, inspect the specific gap instead of assuming that more detailed steps are the missing ingredient:
+Given a specified task T, inspect the specific barrier to E using K instead of assuming that more detailed steps are the missing ingredient. **Changing the problem domain is a separate task-definition/generalization decision**, not a default operationalization move:
 
 | Potential gap | Candidate intervention | Property principally affected |
 |---|---|---|
-| The method applies to too few classes of situation | Extend or revise its intervention principles | Generality |
+| The method does not cover T's application area | Return a gap to task/method choice; separately propose revising T or researching generalization | **Outside** operationalization for the fixed T |
 | Multiple plausible interpretations cause wrong choices | Add purpose, disambiguation, exclusions or examples | Constraining |
 | The methodology does not address how to handle missing evidence or exceptions | Add decision criteria, evidence-gathering, fallback or stop rules | Methodological coverage |
 | The model knows the method but does not select it | Select/routinely activate a coherent method, perhaps via a short cue | Activation, not necessarily more content |
@@ -64,13 +74,13 @@ To make guidance usable, inspect the specific gap instead of assuming that more 
 | A person still performs an internal function | Transfer the specific function to computation | Automation coverage |
 | The agent has no authority to choose a method or initiate a branch | Deliberately delegate authority and specify bounds | Decision autonomy; perhaps greater unattended scope |
 
-A methodology with excellent generality might be unavailable at the point of need. An extensively integrated procedure might be narrowly applicable. A capable executor may perform judgments never prescribed by the method. These cases falsify a one-directional scale of 'more operational'.
+A broadly general methodology might be unavailable at the point of need for T. A well-integrated task procedure may be narrowly applicable by design. A capable executor may perform judgments never prescribed by the method. These cases falsify a one-directional scale of 'more operational'.
 
 **No necessary monotonicity:** additional operational guidance may lower performance by prescribing a method before relevant evidence appears, forcing premature stopping, overloading context, or requiring a model to resolve contradictory constraints. Commonplace's [author–executor determinability rule](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) addresses this precise risk. A stronger artifact may fix governing intent and leave more means open; this combines stronger *appropriate* constraints with more contingent freedom.
 
 ## 2. Executability and the actor-relative boundary
 
-For a method M, task T, executor E, available operations O, target/environment S, delegated authority A, objective G, time/resource horizon H, and performance criterion Q, the useful question is: can that arrangement execute the task using M adequately over a specified class of cases? There is no reason the answer must be invariant between a trained human, weaker LLM, stronger LLM or code engine.
+For a task definition T (including its application area, objective, success conditions and scope), method M, executor E, supported operations O, target/environment S, delegated authority A, and resource horizon H, the useful question is: can that arrangement execute T using M adequately on the **cases T admits**? There is no reason the answer must be invariant between a trained human, weaker LLM, stronger LLM or code engine.
 
 Three levels of evidence differ:
 
@@ -121,17 +131,17 @@ This separates three propositions: **the method is operable by this system; the 
 
 ## 4. Revised architectural account: several independent changes, not one progression
 
-The earlier chain 'knowledge → selection → execution → evaluation → retention' confused logical functions with a developmental trajectory. All those functions may exist even for a human paper-and-pencil system; the architecture can change any one of them, in different directions.
+The earlier chain 'knowledge → selection → execution → evaluation → retention' confused logical functions with a developmental trajectory. A fixed task definition T gives the application area and evaluation boundary; operationalization concerns making K usable for T by E; generalizing to T' is another project. All those functions may exist even for a human paper-and-pencil system; the architecture can change any one of them, in different directions.
 
 A better analytical map is:
 
 | Layer of question | Variable | Example of progress without codifying more |
 |---|---|---|
-| Method itself | Generality/coverage across situations | Extend criticism method to handle adversarial evidence |
+| Knowledge and task design, **outside operationalization for fixed T** | Generality/domain of applicability | Research whether criticism principles also work for adversarial evidence; define and test T' |
 | Method itself | Semantic commitments/constraints | Preserve binding provenance but leave evidence-gathering tactics open |
 | Method itself | How much application logic is addressed/settled | Add a way to seek discriminating evidence, without preselecting its outcome |
-| Source-to-method transformation | Deriving prescriptions from a theory for an intended practitioner class | Turn an epistemic principle into a strategy for criticizing claims |
-| Executor-facing adaptation | Working the method into a form E can use for a declared task | Derive an LLM skill, or avoid it where the method is already usable |
+| Task-relative operationalization | Derive prescriptions from knowledge K for T and E | Work an epistemic principle into a strategy for criticizing claims of the class specified by T |
+| Task-relative operationalization | Make an existing method usable for T and E | Derive an LLM skill only if E needs it; otherwise supply missing resources or use the method directly |
 | Method use | Selection, activation and authority | Route an existing method and verify that it governs the relevant decision |
 | Operational environment | Tools, state, checkpoints, feedback | Enable an unchanged method to be used over longer tasks |
 | Actor capability | What E can infer and decide when the method falls silent | A stronger model handles new cases through its learned knowledge |
@@ -178,7 +188,7 @@ The sources' meanings do not transfer unchanged: *operational semantics* fixes r
 
 ## 6. Architectural predictions and proposed discriminating experiments
 
-**P1 — generality and integration separate.** For an unchanged methodology, enabling source access, activation and persistent state can increase *situated task success* without expanding the principled set of cases to which the method applies. Test by fixing source-method content while varying the environment; then separately test a revised method on unchanged resources. Failure to separate would be evidence of interaction, not semantic identity.
+**P1 — task-relative operationalization does not entail generalization.** With T and its application area fixed, giving E better activation, source access and state can improve successful execution without altering K's domain of applicability. Separately test extending K or redefining the task as T' while preserving E/S. Better T performance is not by itself evidence that K works on T'.
 
 **P2 — method detail can help or harm.** In tasks with late-arriving information, a step-fixed script may do worse than purpose- and bound-guided execution using the same evidence and executor, especially if the pre-fixed path excludes discovery. Compare outcomes and actual evidence encountered, not prompt length alone.
 
@@ -188,13 +198,13 @@ The sources' meanings do not transfer unchanged: *operational semantics* fixes r
 
 **P5 — autonomy and warrant diverge.** Removing an approval gate can raise computational closure but leave discrimination worse; improving an independent oracle can expand the domain of *warranted* unattended execution. Measure false acceptances and missed exceptions as well as throughput.
 
-**Candidate Commonplace experiment:** select one existing research skill and keep the task family, acceptance criteria and model pinned. Run (a) bare goal, (b) relevant methodology cue, (c) cue plus identical method with improved access/state/recovery, (d) same support with stronger step constraints, and (e) a modified broader-coverage methodology under fixed support. A second contrast transfers one approval or method-choice function from human to LLM while holding task boundaries and evaluation fixed. Log source activation, intervention responsibility, revision fidelity, final correctness, fallback cases, cost and horizon. None of these comparisons has been run here.
+**Candidate Commonplace experiment:** define T explicitly, including the application area, acceptance criteria and authority boundaries; select one existing research method and keep the model pinned. Run (a) bare task, (b) relevant methodology cue, (c) cue plus the same method with improved access/state/recovery, and (d) the same support with stronger step constraints. In a **separate generalization experiment**, propose T' with a wider application area and independently check whether K still applies. A second contrast transfers one approval or method-choice function from human to LLM while holding T and evaluation fixed. Log source activation, intervention responsibility, revision fidelity, final correctness, fallback cases, cost and horizon. None of these comparisons has been run here.
 
 ## 7. Disposition
 
-1. **Revise the conceptual account in the workshop** (this note). The earlier two-pole generality-versus-constraint reading was incomplete. Operationalization is **executor- and task-relative**, and its two source transformations (theory → methodology; methodology → executor-specific procedure) are not interchangeable. It is not a third scalar dimension.
+1. **Define the application area in task T, not inside operationalization.** Operationalization is the task- and executor-relative transformation that makes K usable for T by E in setting S. Theory → methodology and methodology → skill are possible realizations of this same *task-relative* operation, not two mandatory meanings. Generalizing K or extending T is separate, and any newly discovered T' needs a separately warranted scope claim.
 2. **Preserve current Commonplace definitions** of [actionable methodology](../../theory/definitions/actionable-methodology.md), [constraining](../../theory/definitions/constraining.md), [codification](../../theory/definitions/codification.md), and [methodological/computational closure](../../theory/methodological-and-computational-closure-track-different-changes.md); do not create competing 'executability' or 'operationalization' definitions on purely conceptual grounds.
 3. **Treat automation and autonomy separately in future comparisons**: allocate actual task functions to human/computation; separately record discretionary and authorization boundaries, plus which human interventions remain required over the declared horizon. Computational closure is useful for absence of required human decisions, but not a complete proxy for discretionary authority.
-4. **Retain the narrower lineage meaning of 'operationalized-from'**. Do not treat it as proof of operator-relative actionability or as the name for theory-to-method derivation. When ambiguity matters, say 'prescriptive derivation', 'executor-specific procedure adaptation' or 'runtime integration'. Revising ADR 054 needs its own justification.
+4. **Retain the narrower lineage meaning of 'operationalized-from'** as the methodology-to-procedure artifact relation. It is compatible with, but not equivalent to, the proposed task-relative sense. When provenance matters specify the source artifact and kind of transformation; when efficacy matters specify T, E and setting. No ADR change without separate evidence.
 5. **Do not infer fully automated LLM work from operationalization alone.** Demonstrate executor capability and function closure under explicit constraints, then separately demonstrate warrant and adequate outcome quality. Lack of a deterministic procedure is not by itself a blocker.
 6. **No new machinery or extracted theory definition yet.** This workshop's distinctions are useful for architectural decisions, but causal superiority and the need for additional vocabulary await the scoped tests above.
