@@ -4,7 +4,9 @@ This passage is self-contained and can be copied to another agent for independen
 
 ## Question and motivation
 
-Could an LLM with perfect command of English serve as a reference implementation from which a formal semantics of English could be constructed? What would “perfect command” have to mean, what would the model have to expose, and how could the claim be assessed without making the model correct by definition?
+Could a large language model (LLM) with perfect command of English serve as a **reference implementation**—a working standard for interpreting the language? Could we construct from it a **formal semantics**, a mathematically specified account of what English expressions mean in context?
+
+Describing the model’s computation would establish what it does, not whether it correctly interprets English. What would “perfect command” require, what judgments would the model need to provide, and how could we assess its correctness without declaring it correct by definition?
 
 The motivation is a comparison with programming languages. Two C compilers can pass the same tests and disagree elsewhere. Given sufficiently specified source and target machine models, each compiler can still be used to construct a formal account of its behavior, including its bugs. We can select one compiler to define a dialect. Whether that dialect faithfully captures an independently intended C remains a separate question.
 
@@ -33,7 +35,7 @@ Candidate requirements include:
 
 ## What would the semantic interface return?
 
-A distribution over plausible next tokens is not automatically an account of meaning. Specify the relation between the model's observable behavior and the semantics claimed for the language. Possible interfaces include judgments of equivalence or entailment, representations of permitted readings, or judgments about whether candidate actions satisfy an instruction.
+A **semantic interface** is the inputs and outputs through which the model provides judgments about meaning. A distribution over plausible next tokens is not automatically an account of meaning. Specify the relation between the model's observable behavior and the semantics claimed for the language. Possible interfaces include judgments of equivalence or entailment, representations of permitted readings, or judgments about whether candidate actions satisfy an instruction.
 
 For example, “Return an integer greater than 10” permits many outputs without disagreement about which integers qualify. By contrast, interpreters can disagree about the acceptance condition itself. A useful interface must distinguish different permitted outputs from disagreement about the acceptance condition. It must also distinguish linguistic ambiguity from uncertainty about facts and from execution failure.
 
