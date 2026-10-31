@@ -12,13 +12,13 @@ In this KB, making natural language more precise is constraining, but not codifi
 
 ## Criterion and testing
 
-"Operational semantics" here means the rules for permitted behavior that consumers held to one reference are expected to preserve. The reference fixes the language version and any implementation or execution parameters needed to settle what is permitted. When two consumers disagree about what those rules permit, one of them is wrong. Departures are failures to implement the committed rules, not alternative admissible interpretations. This does not guarantee reliable execution: implementations can have bugs, and natural-language interpreters can also violate unambiguous instructions.
+"Operational semantics" here means the rules for permitted behavior that consumers held to one reference are expected to preserve. The reference fixes the language version and any implementation or execution parameters needed to settle what is permitted. When two consumers disagree about what those rules permit, one of them is wrong. Departures are failures to implement the committed rules, not alternative admissible interpretations. Execution can still fail: implementations can have bugs, and natural-language interpreters can also violate unambiguous instructions.
 
 The best intuition is formal semantics: the artifact's meaning is fixed by rules rather than by whoever reads it. The criterion is slightly weaker, because most programming languages have no formal semantics, yet their implementations [aim at a unique operational semantics](../agentic-systems-interpret-underspecified-instructions.md). It conjectures that the reference rules admit a formal semantics for the artifact's language; consumer agreement is evidence for that conjecture, not its definition. That semantics may be unwritten and very complicated.
 
 The clerk test locates where such a semantics can exist: Turing derived the formal machine by asking what a human computer can do when following exact instructions without insight ([Church–Turing](../../sources/church-turing-thesis-sep.ingest.md)). A rule is therefore a candidate for codification when a consumer forbidden insight could follow it. Whether it can is not established merely by inspecting the text. Trying many clerks against the same reference tests whether the rules leave choices that require interpretation.
 
-Independent implementations and conformance tests can corroborate the conjecture by attempting to expose disagreements about the reference rules. Agreement alone is insufficient: clerks can share an assumption, compilers can share a bug, and a test suite can miss both. The reference must specify what is permitted independently of the observed agreement. A disagreement may expose an implementation bug or a gap in the reference; repairing the latter fixes a previously unsettled choice. Testing does not prove uniqueness or guarantee convergence on it. A lone implementation can serve as the reference, but its repeatability alone does not show that another consumer could preserve the same rules. An artifact written in a language with independently tested semantics inherits that support within the tested scope.
+Independent implementations and conformance tests can corroborate the conjecture by trying to reveal disagreements about the reference rules. Agreement alone is insufficient: clerks can share an assumption, compilers can share a bug, and a test suite can miss both. The reference must specify what is permitted independently of the observed agreement. A disagreement may reveal an implementation bug or a gap in the reference; repairing the latter fixes a previously unsettled choice. Testing does not prove uniqueness or guarantee convergence on it. A lone implementation can serve as the reference, but its repeatability alone does not show that another consumer could preserve the same rules. An artifact written in a language with independently tested semantics inherits that support within the tested scope.
 
 Not all English passes the clerk test. The fragment that does is a programming language in the making. Where instructions still require judgment to settle what is permitted, they remain natural-language constraining: [two readings can both be reasonable](../agentic-systems-interpret-underspecified-instructions.md), and the committed rules do not settle the disagreement. The boundary concerns the rules supplied for the operation, not a claim that natural language could never have a complete formal semantics.
 
@@ -36,13 +36,13 @@ Examples: replacing an LLM slug generator with `python-slugify`; moving CSV stat
 
 ## Exclusions
 
-Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the model or human as the interpreter. A skill extracted from methodology notes is not codification while its instructions remain natural language, [since skills derive from methodology](../skills-derive-from-methodology.md) without changing representational form.
+Writing a convention that stays in natural language constrains interpretation while keeping the model or human as the interpreter. A skill extracted from methodology notes is not codification while its instructions remain natural language, [since skills derive from methodology](../skills-derive-from-methodology.md) without changing representational form.
 
-Turning a rule into legalese, a standards document, or a formal prose policy is not codification in this KB's technical sense. It may be strong constraining, but the artifact still depends on natural-language interpretation.
+Turning a rule into legalese, a standards document, or a formal prose policy may be strong constraining while still depending on natural-language interpretation.
 
-Structured Markdown, YAML, or JSON is not automatically codification. It becomes codification only where a consumer gives fields, values, sections, or operations a unique operational semantics.
+Structured Markdown, YAML, or JSON becomes codification only where a consumer gives fields, values, sections, or operations a unique operational semantics.
 
-Numerical content does not by itself require codification. An exact numerical claim can be stated and tested in natural language; it needs symbolic form only when it must have a unique operational semantics, such as mechanically repeatable computation or acceptance.
+An exact numerical claim can be stated and tested in natural language; it needs symbolic form only when it must have a unique operational semantics, such as mechanically repeatable computation or acceptance.
 
 ## Codified parts of a theory
 
@@ -50,13 +50,13 @@ The same crossing gives a part of a retained theory consequences fixed by comput
 
 ## Codification and relaxing
 
-[Progressive constraining](../progressive-constraining-commits-only-after-patterns-stabilize.md) commits a pattern to code once observed runs show it is stable; committing a single LLM output instead freezes an arbitrary reading. How far codification can go depends on the available checks: [hard oracles make it easier, weak oracles resist it](../oracle-strength-spectrum.md). Every codification is a bet that the committed reading stays right. [Relaxing](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) reverses it when the reading turns out to be a wrong proxy, or when a more general component handles the case well enough.
+[Progressive constraining](../progressive-constraining-commits-only-after-patterns-stabilize.md) commits a pattern to code once observed runs show it is stable; committing a single LLM output instead fixes an arbitrary reading. How far codification can go depends on the available checks: [hard oracles make it easier, weak oracles resist it](../oracle-strength-spectrum.md). Every codification is a bet that the committed reading stays right. [Relaxing](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) reverses it when the reading turns out to be a wrong proxy, or when a more general component handles the case well enough.
 
 ## Misuse Cases
 
 - Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting natural language.
 - Calling legalistic or policy prose codified in this KB's technical sense just because it is formalized.
-- Calling a natural-language skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the operative guidance can still be natural-language.
+- Calling a natural-language skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the instructions that guide behavior can still be natural-language.
 - Treating agreement among consumers, or repeatability from one consumer, as sufficient for codification. The consumers must be held to reference rules that settle what is permitted independently of that agreement.
 - Treating only executable code as codification. Schemas, grammars, tables, and other symbolic artifacts also codify when they have a unique operational semantics.
 - Treating a codified check as a codified requirement. A validator excludes readings only within the predicate it checks; when that predicate is a [proxy](../exact-implementation-does-not-validate-a-requirement.md), the requirement itself remains interpreted.
