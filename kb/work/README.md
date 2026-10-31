@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — separating implementation formalizability, test agreement, shared semantics, and conformance before replacing “unique operational semantics”; retains the compiler construction and the unresolved prompt–model boundary
+
 - [epistemic-relevance-and-conceptual-blending](./epistemic-relevance-and-conceptual-blending/README.md) — observational watch and correction checklist for useful threads being given unsupported conceptual relationships; record the next few cases and counterexamples before refining the hypothesis; research retained as background, experiments deferred
 
 - [operationalization-executability-automation](./operationalization-executability-automation/README.md) — conceptual investigation of task-relative operationalization, executability, function-level automation and decision autonomy against Commonplace's existing actionability, closure and codification terms; nine sources ingested and turned into worked cases; the task-relative claim extracted into the actionable-methodology definition; remaining distinctions await tests
