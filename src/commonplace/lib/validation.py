@@ -728,6 +728,19 @@ def resolve_local_link_target(source: Path, link: str) -> Path | None:
     return (source.parent / link_path).resolve()
 
 
+def _local_link_targets(source: Path, links: tuple[str, ...]) -> dict[str, Path | None]:
+    """Resolve each URL path once per document, regardless of fragment or query."""
+    paths: dict[tuple[str, str, str], Path | None] = {}
+    targets = {}
+    for link in links:
+        parsed = urlsplit(link)
+        key = (parsed.scheme, parsed.netloc, unquote(parsed.path))
+        if key not in paths:
+            paths[key] = resolve_local_link_target(source, link)
+        targets[link] = paths[key]
+    return targets
+
+
 def validate_links_from_document(
     results: CheckResults,
     path: Path,
@@ -735,11 +748,13 @@ def validate_links_from_document(
     *,
     available_paths: Collection[Path] = (),
     closed_directory: Path | None = None,
+    targets: Mapping[str, Path | None] | None = None,
 ) -> None:
     """Resolve links against disk and normalized paths supplied by this validation run."""
     missing: list[str] = []
+    targets = _local_link_targets(path, links) if targets is None else targets
     for link in links:
-        target = resolve_local_link_target(path, link)
+        target = targets[link]
         if target is None:
             continue
         in_closed_artifact = closed_directory is not None and target.parent == closed_directory
@@ -759,6 +774,7 @@ def validate_proposal_archive_links(
     links: tuple[str, ...],
     *,
     repo_root: Path,
+    targets: Mapping[str, Path | None] | None = None,
 ) -> None:
     """Keep archived proposals from becoming load-bearing library sources.
 
@@ -789,8 +805,9 @@ def validate_proposal_archive_links(
             return
 
     forbidden: list[str] = []
+    targets = _local_link_targets(source, links) if targets is None else targets
     for link in links:
-        target = resolve_local_link_target(source, link)
+        target = targets[link]
         if target is None or target == archive_readme:
             continue
         try:
@@ -1616,10 +1633,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         note_type=parsed.note_type,
         git_ignored=run.is_git_ignored(parsed.path),
     )
+    targets = _local_link_targets(parsed.path, parsed.document.links)
     validate_links_from_document(
         base,
         parsed.path,
         parsed.document.links,
+        targets=targets,
         available_paths=(set(run.content_overrides) | set(run.criteria.contents)
                          if run.criteria is not None else run.content_overrides),
         closed_directory=(parsed.path.parent if run.criteria is not None
@@ -1630,6 +1649,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.path,
         parsed.document.links,
         repo_root=run.repo_root,
+        targets=targets,
     )
     validate_tag_heads(base, parsed, run=run)
     validate_write_brief_pairing(base, parsed, run=run)

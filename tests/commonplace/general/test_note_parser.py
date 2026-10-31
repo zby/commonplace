@@ -117,6 +117,22 @@ def test_find_markdown_links_with_text_keeps_code_formatted_link_text() -> None:
     assert links == (("`examples/`", "../examples/"),)
 
 
+def test_link_scan_keeps_links_around_and_across_inline_code() -> None:
+    from commonplace.lib.note_parser import find_markdown_links, replace_markdown_links
+
+    body = (
+        "`[hidden](hidden.md)` [first](first.md) `plain code` "
+        "[`label`](label.md) `[also hidden](hidden-too.md)` "
+        "[crossing `code](crossing.md)` [last](last.md)"
+    )
+    expected = ("first.md", "label.md", "crossing.md", "last.md")
+    assert find_markdown_links(body) == expected
+    replaced = replace_markdown_links(body, lambda link: "new/" + link)
+    assert find_markdown_links(replaced) == tuple("new/" + link for link in expected)
+    assert "`[hidden](hidden.md)`" in replaced
+    assert "`[also hidden](hidden-too.md)`" in replaced
+
+
 def test_parse_document_keeps_plain_text_as_no_frontmatter() -> None:
     document, error = parse_document(
         """# Title

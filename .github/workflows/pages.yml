@@ -14,13 +14,13 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Only the newest build is useful. Do not hold the deployment lock while building.
+    concurrency:
+      group: pages-build
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -29,22 +29,13 @@ jobs:
         uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           python-version: "3.11"
-          tool-bin-dir: ${{ runner.temp }}/uv-tool-bin
-
-      - name: Publish uv tool commands
-        run: echo "${{ runner.temp }}/uv-tool-bin" >> "$GITHUB_PATH"
-
-      - name: Install editable Commonplace tool
-        run: uv tool install --python 3.11 --editable .
-
-      - name: Verify Commonplace command discovery
-        run: commonplace-validate --help
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Build static site
-        run: uv run --extra docs properdocs build --clean --site-dir site
+        # uv installs the project and docs extra here; wheel-tool smoke checks live in ci.yml.
+        run: uv run --locked --no-dev --extra docs properdocs build --clean --site-dir site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
@@ -52,6 +43,10 @@ jobs:
           path: site
 
   deploy:
+    # Never cancel a publication that has already started.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

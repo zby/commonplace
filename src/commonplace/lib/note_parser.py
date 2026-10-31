@@ -115,21 +115,22 @@ def extract_headings(body: str) -> tuple[str, ...]:
     return tuple(headings)
 
 
-def _is_inside_span(start: int, end: int, spans: tuple[tuple[int, int], ...]) -> bool:
-    return any(span_start <= start and end <= span_end for span_start, span_end in spans)
-
-
 def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
     # Import at call time: quotation parsing itself uses the fence lexer here.
     from commonplace.lib.quote_matching import blank_quote_bodies
 
     cleaned = blank_quote_bodies(blank_fenced_code_blocks(body))
-    inline_code_spans = tuple(match.span() for match in _INLINE_CODE_RE.finditer(cleaned))
-    return tuple(
-        match
-        for match in _LINK_RE.finditer(cleaned)
-        if not _is_inside_span(match.start(), match.end(), inline_code_spans)
-    )
+    # Both match streams are ordered and non-overlapping. Walk them together
+    # instead of searching every code span for every link in a long report.
+    code_spans = iter(_INLINE_CODE_RE.finditer(cleaned))
+    code = next(code_spans, None)
+    links = []
+    for match in _LINK_RE.finditer(cleaned):
+        while code is not None and code.end() <= match.start():
+            code = next(code_spans, None)
+        if code is None or not (code.start() <= match.start() and match.end() <= code.end()):
+            links.append(match)
+    return tuple(links)
 
 
 def find_markdown_links(body: str) -> tuple[str, ...]:

@@ -536,6 +536,35 @@ traits: []
     assert any(expected in item for item in results.fails)
 
 
+def test_link_targets_share_resolution_but_keep_each_missing_link(tmp_path, monkeypatch):
+    source = tmp_path / "note.md"
+    write(tmp_path / "member name.md", "# Member\n")
+    links = (
+        "./member%20name.md#one", "./member name.md#two",
+        "./member%20name.md?download=1#three", "#local",
+        "https://example.org/member.md", "./missing.md#one", "./missing.md#two",
+    )
+    resolve = validation.resolve_local_link_target
+    expected = {link: resolve(source, link) for link in links}
+    calls = []
+
+    def recording(path, link):
+        calls.append(link)
+        return resolve(path, link)
+
+    monkeypatch.setattr(validation, "resolve_local_link_target", recording)
+    targets = validation._local_link_targets(source, links)
+    assert targets == expected
+    assert len(calls) == 4, "fragments, queries and URL escapes must share path resolution"
+    result = validation.CheckResults("text")
+    validation.validate_links_from_document(result, source, links, targets=targets)
+    assert result.warns == [
+        "link health: missing target ./missing.md#one",
+        "link health: missing target ./missing.md#two",
+    ]
+    assert len(calls) == 4, "checking existence must reuse the resolved targets"
+
+
 def test_git_ignored_artifact_is_exempt_from_authored_length_limits(
     tmp_path: Path,
 ) -> None:
