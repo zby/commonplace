@@ -80,6 +80,12 @@ family. The evidence remains limited to the paths and conditions assessed.
 | An unattended agent inspects failures and chooses a revision using its judgment | No | Yes | No human intervenes, but the retained method leaves consequential choices unresolved. |
 | A maintainer and agent jointly judge a note against “is this good?” | No | No | The method does not settle the criterion and a human participates. |
 
+The first row has a recorded instance. The WHO surgical checklist settled the
+criterion in a list read aloud at three fixed junctures, while the surgical team
+supplied every verdict; adherence to all six measured steps rose from 34.2% to
+56.7%, so a settled criterion still left execution incomplete
+([Haynes 2009](../sources/surgical-safety-checklist-haynes-2009.ingest.md)).
+
 Stable but unarticulated expertise does not, by itself, add a criterion to the
 retained methodology being assessed. That is a limit of what the method states,
 not a claim that the expertise is unreal, inconsistent, or impossible to
@@ -171,4 +177,5 @@ Relevant Notes:
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: describes removal of required human production roles
 - [Software house](./definitions/software-house.md) — defined-in: supplies the complete producer's functional boundary
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: separates actor allocation from justified authority
+- [Haynes et al., A surgical safety checklist to reduce morbidity and mortality](../sources/surgical-safety-checklist-haynes-2009.ingest.md) — evidenced-by: a recorded instance of the exact-checklist row that qualifies it, since a settled criterion still left steps omitted; a before-after bundle study, not a test this note's distinction could have failed
 - [Distinct residue classes require distinct functions in a self-improving architecture](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: distinguishes the functions missing from transfers that remain human

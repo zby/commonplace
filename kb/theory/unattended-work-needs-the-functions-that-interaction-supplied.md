@@ -37,6 +37,14 @@ Recurring interventions therefore identify candidate dependencies to investigate
 
 The inventory is not exhaustive. Unnecessary interventions need no replacement, and an agent's existing judgment may already supply a function. Identifying a dependency does not establish that its proposed replacement is reliable.
 
+A function can also be lost on the delegate's side rather than the operator's. In Norman's autopilot case the automated delegate held the delegated function and dropped the anomaly reporting that a human delegate had supplied, because the task written for the autopilot named only what the autopilot consumed ([Norman 1989](../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md)). That dependency falls outside the five functions above, which interaction supplies from the operator's side.
+
 ## Open Questions
 
 Does supplying a way to detect and handle one recurring intervention improve unattended outcomes beyond fuller initial instructions? Compare the same work class, acceptance criterion, and total resource budget. No improvement would challenge the dependency diagnosis or its proposed replacement.
+
+---
+
+Relevant Notes:
+
+- [Norman, The problem of automation: inappropriate feedback and interaction](../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md) — evidenced-by: qualifies the inventory; the lost function is supplied by the delegate, not the operator, and the evidence is incident narratives rather than a test

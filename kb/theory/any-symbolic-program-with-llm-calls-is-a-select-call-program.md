@@ -88,7 +88,7 @@ The lemma permits sequential phases, parallel maps, barrier-separated pipelines,
 
 ## Known lineage
 
-The construction uses standard programming-language machinery. Small-step operational semantics represents execution as transitions over machine configurations. Abstract-machine compilation reifies control state. CPS plus defunctionalization is the classic route from implicit control flow to explicit symbolic state. This note applies that move where the only distinguished non-symbolic steps are independent, barrier-delimited LLM-call batches.
+The construction uses standard programming-language machinery. Small-step operational semantics specifies execution as transitions over configurations kept to what the rules need, with control left implicit in syntax-directed rules; abstract-machine compilation and defunctionalization are the line that reifies control state in explicit configurations ([Plotkin 2004](../sources/plotkin-origins-of-sos.ingest.md)). CPS plus defunctionalization is the classic route from implicit control flow to explicit symbolic state. This note applies that move where the only distinguished non-symbolic steps are independent, barrier-delimited LLM-call batches.
 
 ## Open questions
 
@@ -99,6 +99,7 @@ The construction uses standard programming-language machinery. Small-step operat
 
 Relevant Notes:
 
+- [Plotkin, The origins of structural operational semantics](../sources/plotkin-origins-of-sos.ingest.md) — evidenced-by: bounds the lineage sentence; SOS keeps configurations minimal and control implicit, so the explicit control state here follows the abstract-machine line
 - [orchestration model](./bounded-context-orchestration-model.md) — grounds: supplies the conditional loop and call-oriented invariants used by the lemma
 - [decomposition heuristics](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: develops transformations between programs that retain the lemma's preconditions
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: separates an explicit symbolic handoff from progression retained inside a model-mediated loop
