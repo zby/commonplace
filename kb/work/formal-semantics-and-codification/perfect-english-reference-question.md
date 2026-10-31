@@ -43,7 +43,7 @@ Would perfect generation of contextually appropriate replies suffice to recover 
 
 **Reference adequacy:** independent judgments from competent speakers are evidence, but speakers can disagree or make mistakes. What makes an interpretation correct independently of both the designated model and a particular panel? Can the assessment retain dialect differences, legitimate ambiguity, and unresolved cases without becoming vacuous?
 
-**Open-ended extension:** each proposed semantic account may encounter a new case requiring extension. This is not just infinitely many cases governed by one fixed rule. Could a fixed model nevertheless capture the rule for making those extensions? Distinguish the claim that a sequence of revisions is endless from the claim that no formal account of that sequence is possible. Ambiguity and context sensitivity alone do not establish impossibility. If invoking Gödel or Tarski, state the relevant result and show that its assumptions apply.
+**Further revisions to the semantic account:** each proposed semantic account may encounter a new case requiring extension. This is not just infinitely many cases governed by one fixed rule. Could a fixed model nevertheless capture the rule for making those extensions? Distinguish the claim that a sequence of revisions is endless from the claim that no formal account of that sequence is possible. Ambiguity and context sensitivity alone do not establish impossibility. If invoking Gödel or Tarski, state the relevant result and show that its assumptions apply.
 
 ## Requested assessment
 
@@ -52,7 +52,7 @@ Please provide:
 1. A defensible definition of perfect command, or a precise explanation of why the proposed ideal cannot be defined as required.
 2. The capabilities and interface a model would need to supply a semantics of the scoped language, rather than only a formal model of its own responses.
 3. A separation of what follows by construction, what requires a substantive adequacy conjecture, and what finite tests could corroborate or refute.
-4. Concrete counterexamples to weak definitions and a bounded assessment design that separates language competence, world knowledge, reasoning, and compliance.
+4. Concrete counterexamples to weak definitions and a bounded assessment design that separates linguistic competence, world knowledge, reasoning, and compliance.
 5. The implication for the C/English comparison: is there a categorical difference, a difference in present reference-interpreter adequacy, or a different distinction?
 
 If drawing on literature, identify the exact claim each source supports and distinguish formal results from philosophical arguments. A reasoned rejection of the conjecture is as useful as a positive construction.
