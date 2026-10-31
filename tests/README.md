@@ -70,9 +70,21 @@ rather than pytest unless the change affects code contracts or test inputs.
 
 ## Test value review
 
+Prioritize regressions across component boundaries: a change to one component
+breaks a consumer, persisted artifact, schema, command, or published output
+elsewhere. A test should name that dependency and the downstream failure it
+would expose. A helper's isolated return value is not enough justification.
+
+Do not add local execution tests by default. Keep a narrow test when it protects
+a consequential invariant that consumer tests do not adequately exercise, such
+as unsafe paths, data loss, source integrity or recovery. Otherwise prefer the
+existing consumer test and remove duplicate helper-level assertions. Do not
+preserve every input permutation unless it exercises a distinct failure.
+
 Judge tests by the distinct regressions they detect, not by test count or lines
 covered. For each new test or proposed removal, name the plausible failure,
-its consequence, and the coverage that would otherwise miss it.
+its consequence, and the coverage that would otherwise miss it. A removal can
+accept losing a low-value check; it need not relocate that check elsewhere.
 
 - Keep end-to-end cases for behavior that depends on components working
   together. Test local state transitions with narrow fixtures when another

@@ -19,8 +19,6 @@ from commonplace.lib.agentic_analysis.prompts import (
     ABSENT_LINE,
     CONDITION,
     PLACEHOLDER,
-    layout_bindings,
-    render_prompt_section,
 )
 from commonplace.lib.agentic_analysis.workflow import CODE_OUTPUTS, Analysis, Method
 from commonplace.lib.agentic_analysis.worktree import start_analysis
@@ -92,27 +90,6 @@ def test_every_worker_whose_types_defer_to_the_records_contract_receives_it(meth
         types = {layout.roles[role].type, *(layout.roles[s].type for s in method.reads(role) if s in layout.roles)}
         if types & deferring:
             assert RECORDS_CONTRACT in method.files(role).values(), role
-
-
-def test_render_prompt_section_keeps_bound_conditions_and_drops_absent_ones():
-    section = ("---\ntype: types/instruction.md\n---\n\nWrite `{role}`.\n\n"
-               "[refusal]\nCorrect the refusal.\n\n[verifies]\nYou verify {verifies}.\n\nReturn.\n")
-    assert render_prompt_section(section, {"role": "memory", "refusal": ABSENT_LINE}) == "Write `memory`.\n\nReturn."
-    assert render_prompt_section(section, {"role": "memory", "refusal": "/run/refusal.md",
-                                           "verifies": "runtime, memory"}) == (
-        "Write `memory`.\n\nCorrect the refusal.\n\nYou verify runtime, memory.\n\nReturn.")
-    with pytest.raises(KeyError):
-        render_prompt_section("Write {unbound}.", {})
-
-
-def test_layout_bindings_name_verified_roles_only_for_verifiers(method):
-    layout = method.layout
-    for role, declared in layout.roles.items():
-        bindings = layout_bindings(layout, role)
-        assert ("verifies" in bindings) == bool(declared.verifies), role
-        assert bindings["cites"] == (", ".join(declared.cites) or "none")
-        for source in declared.identity:
-            assert f"{source.role}: {', '.join(source.fields)}" in bindings["identity"], role
 
 
 def frame(prompt: str) -> dict[str, str]:

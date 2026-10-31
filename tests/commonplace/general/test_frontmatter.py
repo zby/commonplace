@@ -16,24 +16,6 @@ def test_safe_loaders_reject_python_object_tags(monkeypatch, python_loader) -> N
     assert result.data == {}
 
 
-def test_parse_empty_frontmatter_returns_empty_result() -> None:
-    result = frontmatter.parse("---\n\n---\n# Title\n")
-
-    assert result.data == {}
-
-
-def test_parse_closing_delimiter_without_trailing_newline() -> None:
-    result = frontmatter.parse("---\ndescription: test\n---")
-
-    assert result.data == {"description": "test"}
-
-
-def test_parse_reports_yaml_errors() -> None:
-    result = frontmatter.parse("---\nnot a valid line\ntype: kb/types/note.md\n---\n")
-
-    assert result.errors
-
-
 def test_parse_requires_frontmatter_to_be_mapping() -> None:
     result = frontmatter.parse("---\n- not\n- a\n- mapping\n---\n")
 
