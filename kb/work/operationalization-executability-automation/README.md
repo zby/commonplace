@@ -43,3 +43,4 @@ Close only after either (a) making an evidence-backed, nonduplicative theory ext
 ## Deliverable
 
 - [Revised conceptual account, worked cases from the ingested sources, tests, and source status](./exploration.md).
+- [Bounded test design: resource or program when the executor can interpret](./test-plan.md), the protocol record for a run that has not happened.
