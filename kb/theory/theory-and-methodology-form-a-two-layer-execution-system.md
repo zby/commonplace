@@ -61,7 +61,7 @@ The theory-derived subset sits beside that native structure within the methodolo
 
 Relevant Notes:
 
-In this vocabulary, [codification](./definitions/codification.md) is the crossing from natural-language into a symbolic artifact with formal semantics, while [constraining](./definitions/constraining.md) narrows the range of valid interpretations an artifact admits.
+In this vocabulary, [codification](./definitions/codification.md) is the crossing from natural-language into a symbolic artifact with a unique operational semantics, while [constraining](./definitions/constraining.md) narrows the range of valid interpretations an artifact admits.
 
 - [Spec mining is codification's operational mechanism](./spec-mining-as-codification.md) — extends: the special case where promotion crosses the codification line into a symbolic artifact, rather than remaining a same-form natural-language derivation
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — contrasts: same promote/demote dynamics, but there the general fallback layer is the LLM itself, always present for free, not a retained artifact that must remain accessible and validated as a working fallback

@@ -10,7 +10,7 @@ type: types/tag-readme.md
 ## Definition and spectrum
 
 - [constraining](../theory/definitions/constraining.md) — definition and spectrum: definitions, conventions, structured sections, schemas, validators, and deterministic code
-- [codification](../theory/definitions/codification.md) — the far end, where the medium itself changes from natural language to a symbolic artifact with formal semantics
+- [codification](../theory/definitions/codification.md) — the far end, where the medium itself changes from natural language to a symbolic artifact with a unique operational semantics
 - [agentic systems interpret underspecified instructions](../theory/agentic-systems-interpret-underspecified-instructions.md) — the foundation: the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
 
 ## Instances and techniques

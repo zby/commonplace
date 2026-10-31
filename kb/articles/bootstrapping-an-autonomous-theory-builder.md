@@ -152,7 +152,7 @@ computation must take over supplying the knowledge each new demand needs. Automa
 
 A judgment the operator makes repeatedly can move by one of two routes once
 its scope has stabilized. It can be [codified](../theory/definitions/codification.md)
-into a test, validator, or check with formal semantics, which settles the
+into a test, validator, or check with a unique operational semantics, which settles the
 judgment in the retained method. Or it can be delegated to the LLM under a
 retained natural-language procedure, which automates the judgment while the
 method leaves it open. These are
