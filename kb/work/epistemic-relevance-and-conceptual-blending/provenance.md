@@ -22,7 +22,9 @@ The review was not systematic: there is no exhaustive screening count, registere
 
 ## Episode provenance
 
-The operator's handoff is the principal evidence for the operationalization episode. The revised operationalization README corroborates the present distinction, not the exact sequence of earlier responses. No complete original transcript was recovered in the initial pass. Retrospective model explanations are hypotheses, not privileged access to earlier computation. The candidate source passage is kept separate from observed run-level recurrence in the [case log](./observations.md).
+The initial investigation relied primarily on the operator's retrospective handoff. The later [O001 primary-evidence record](./o001-operationalization-exchange.md) improves that basis with **selected exact conversation excerpts** and **immutable historical Git files** from the operationalization workshop at commits `01bab9d` (initial draft), `8f034e4` (first repair still including generality), `56b00de` (executor-relative repair still listing generality), and `961eb45` (generality explicitly outside task-relative operationalization). The revised operationalization README corroborates the eventual distinction, not the sequence by itself.
+
+The new record is manually excerpted from the conversation available when this change was made; it is **not** a full original chat export or a harness-authenticated raw transcript. The Git versions are independently retrievable but represent authored workshop artifacts, not the assistant's hidden deliberation. Retrospective model explanations remain hypotheses, not privileged access to earlier computation. All of the corrections belong to **one episode**, not independent occurrences. The candidate source passage is kept separate from observed run-level recurrence in the [case log](./observations.md).
 
 ## Execution and validation boundary
 
