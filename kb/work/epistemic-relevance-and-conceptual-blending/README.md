@@ -37,6 +37,7 @@ Close when the watch has produced a justified disposition: a supported extractio
 ## Working artifacts
 
 - [Watch checklist](./watch-checklist.md) — noticing, local correction, evidence capture, and reassessment.
+- [Spot-check protocol](./spot-check-protocol.md) — draft operator-triggered procedure for exercising the checklist on existing artifacts between episodes; no run yet.
 - [Observation log](./observations.md) — reported seed episode, a checked and repaired artifact-level case (Q001), a checked non-error on an external artifact (Q002), and a reusable case template.
 - [O001 source excerpts and correction chronology](./o001-operationalization-exchange.md) — original question and responses, pinned historical Git revisions, two partial repairs, final task-relative correction, and explicit evidence gaps; one episode, not a new recurrence.
 - [Findings and competing explanations](./findings.md) — exploratory account from the initial investigation; its experiments are deferred.
