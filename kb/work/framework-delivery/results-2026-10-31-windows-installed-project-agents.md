@@ -8,9 +8,20 @@ Item 4 of the [Windows delivery handoff](./windows-delivery-handoff.md): agents 
 - Project: `<HOME>\cp-install-test-run4`, initialised by that run, Git repository with one commit. `.commonplace/library.md` and the stubs point at `<tool env>/share/commonplace`, outside the project.
 - Smart App Control on; Defender, Avast and McAfee present.
 
-## Claude Code: not run
+## Claude Code
 
-The Claude Code CLI bundled with the desktop app (2.1.308) was run headless (`claude -p`) from the project. It exited at once with `Not logged in · Please run /login`: the desktop app authenticates its own sessions and the bundled CLI does not share that login. Signing in is the operator's action. Not covered, so: whether Claude Code honours the generated `Read(//C:/Users/…/**)` rule, native skill listing, and `/cp-skill-validate <arg>` through a stub. A desktop Code session rooted in the scratch project, or a logged-in CLI, can run them.
+The Claude Code CLI bundled with the desktop app (2.1.308) cannot run headless here: `claude -p` exits with `Not logged in · Please run /login`, because the desktop app authenticates its own sessions. The checks therefore ran on 2026-11-01 in a desktop Code session rooted in the project (Claude Opus 5.5), started from the checkout's session.
+
+| Check | Result |
+|---|---|
+| Skill listing | **Pass.** All 12 `cp-skill-*` skills listed under their bare names, matching `.commonplace/library.md`. |
+| Bare command | **Pass.** PowerShell 5.1 resolves `commonplace-validate` to `.local\commonplace-shims\commonplace-validate.cmd`; Git Bash to the extensionless shim beside it. `commonplace-validate --help` exits 0. |
+| Stub with an argument, `cp-skill-validate kb/log.md` | **Pass.** The skill ran in a fork (`context: fork`) and reported `commonplace-validate kb/log.md` with 0 failures. The fork returns only a summary, so which files it read was not observed; the argument reached the command, so the stub's `$ARGUMENTS` was substituted. Rerun directly: exit 0, `VALIDATION SUCCESS`. |
+| Read rule `Read(//C:/Users/…/share/commonplace/**)` | **Not established.** See below. |
+
+**Permission mode.** The session was requested in default mode but ran in bypass-permissions mode; the app reported `bypassPermissions`, the mode of the session that started it. During that run, the app wrote 8 exact-command allow entries (such as `Bash(commonplace-validate kb/log.md)` and `Skill(cp-skill-validate)`) into `.claude/settings.local.json` beside init's read rule. Init leaves such entries alone. They were removed for the repeat below.
+
+**Read rule repeat.** With the session switched to default mode and the settings file holding only init's rule, the Read tool read the skill file inside the rule's root and `…\llm-commonplace\Lib\site-packages\commonplace\__init__.py` outside it. Both were allowed without a prompt. So in this app, reading these files outside the project needed no rule, and the test cannot show whether Claude Code honours the `//C:/…` form. Two explanations remain open: Read outside the workspace does not prompt in this app, or the mode switch did not reach the session (the app reported `default`; the session could not confirm it). A Code session that the operator starts in default mode, or the CLI after `/login`, can settle it by reading the same two files.
 
 ## Codex
 
@@ -31,6 +42,6 @@ Commands in Codex's sandbox run as a separate local account (`whoami`: `codexsan
 
 ## Not covered
 
-- Claude Code (above). pi is not installed on this machine.
+- Whether Claude Code honours the `//C:/…` read rule (above). pi is not installed on this machine.
 - Upgrade cases: changed skill, library-only change, moved installation, already-running session.
 - Probe revision 7's package; these checks used the real project instead.

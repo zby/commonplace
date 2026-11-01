@@ -296,6 +296,9 @@ or resume step.
   recognised) and the no-stub index route with an argument all passed. Codex's
   sandbox account cannot resolve `uv` or `rg` from the user's WinGet directories,
   and its `read-only` mode cannot use the project as working directory. Claude
-  Code not run: the bundled CLI is not logged in. Evidence:
+  Code (2026-11-01, desktop session rooted in the project; the bundled CLI is
+  not logged in): skill listing, bare command and the stub with an argument
+  passed. Its reads outside the project did not prompt with or without the read
+  rule, so whether the `//C:/` rule is honoured remains open. Evidence:
   [installed-project agents](./results-2026-10-31-windows-installed-project-agents.md).
-  Next: Claude Code checks from a session rooted in the scratch project.
+  Next: settle the read rule from a session the operator starts in default mode.
