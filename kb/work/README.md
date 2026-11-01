@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — replacing “unique operational semantics” with a constitutive criterion: an artifact is symbolic when a designated reference settles what it permits; retains the compiler construction, proposed library wording and a boundary-case table; adequacy of an LLM as a reference for English relegated to a research question
+- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — a better capture of the difference between natural language and programming languages, and from it revised definitions of representational form and codification; four steps: formalizability is not the difference, meaning is settled by a prior reference or by speakers on demand, proposed library wording, and a probe question for other agents
 
 - [epistemic-relevance-and-conceptual-blending](./epistemic-relevance-and-conceptual-blending/README.md) — observational watch and correction checklist for useful threads being given unsupported conceptual relationships; record the next few cases and counterexamples before refining the hypothesis; research retained as background, experiments deferred
 

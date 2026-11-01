@@ -1,6 +1,6 @@
 # An implementation supplies a formal model, not proof of shared semantics
 
-Working draft, 2026-10-31. Reconstructs the operator–assistant discussion behind the [workshop commission](./README.md). The constructions below are arguments and illustrative cases, not reported experiments or claims about universal agreement among programming-language practitioners.
+Working draft, 2026-10-31. This file is step 1 of the [workshop](./README.md): it clears the ground by showing that formalizability is not the difference between programming languages and natural language. Reconstructs the operator–assistant discussion behind the commission. The constructions below are arguments and illustrative cases, not reported experiments or claims about universal agreement among programming-language practitioners.
 
 ## Question
 
@@ -87,7 +87,7 @@ These reductions remove reasons for maintaining a separate technical sense of �
 
 ## Candidate wording and remaining work
 
-The passages below are the initial formulation. [Candidate definitions for codification and symbolic form](./candidate-definitions.md) holds the current candidate, which drops formal semantics as the ground and keeps the reductions as its argument.
+The passages below are the initial formulation. [Where meaning is settled](./where-meaning-is-settled.md) holds the account that replaced them, and [candidate definitions](./candidate-definitions.md) applies it to the library wording. Both keep these reductions as their argument.
 
 A provisional formulation for discussion is:
 
