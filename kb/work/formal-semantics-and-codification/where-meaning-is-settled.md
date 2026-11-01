@@ -1,6 +1,6 @@
 # Where natural-language meaning is settled
 
-Tentative theory, 2026-11-01, revised after [Astra's review](./review-2026-11-01-astra.md). This file is a side result of the [workshop](./README.md): it concerns how English differs from the language a frozen model defines, and it supports one claim of the account, that the frozen-model path of formalization formalizes a different language rather than English, as the second reason beside who is held to what. Nothing in the [account of symbolic form](./symbolic-form-and-codification.md) or the [proposed definitions](./candidate-definitions.md) depends on it. Its claims are weaker than the first draft's, and several are suspended. The [Tarski thread](./tarski-thread.md) and the [evidence ledger](./sources.md) are separate files.
+Tentative theory, 2026-11-01, revised after [Astra's review](./review-2026-11-01-astra.md). This file is a side result of the [workshop](./README.md): it concerns how English differs from the language a frozen model defines, and it supports one claim of the account, that the frozen-model path of formalization formalizes a different language rather than English, as the second reason beside who is held to what. Nothing in the [account of symbolic form](./symbolic-form-and-codification.md) or the proposed [definitions](./representational-form-definition.md) depends on it. Its claims are weaker than the first draft's, and several are suspended. The [Tarski thread](./tarski-thread.md) and the [evidence ledger](./sources.md) are separate files.
 
 ## The claim
 
