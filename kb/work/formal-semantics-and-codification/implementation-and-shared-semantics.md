@@ -1,6 +1,6 @@
 # An implementation supplies a formal model, not proof of shared semantics
 
-Working draft, 2026-10-31. This file is step 1 of the [workshop](./README.md): it clears the ground by showing that formalizability is not the difference between programming languages and natural language. Reconstructs the operator–assistant discussion behind the commission. The constructions below are arguments and illustrative cases, not reported experiments or claims about universal agreement among programming-language practitioners.
+Working draft, 2026-10-31. This file is step 1 of the [workshop](./README.md): it shows that formalizability does not separate programming languages from natural language. Reconstructs the operator–assistant discussion behind the commission. The constructions below are arguments and illustrative cases, not reported experiments or claims about universal agreement among programming-language practitioners.
 
 ## Question
 
@@ -63,7 +63,7 @@ This keeps the authority question in its proper place: it concerns conformance, 
 
 The same construction applies to the computation of a fixed LLM implementation. Supply its weights, inference code, numerical operations, decoding procedure, and relevant state and inputs. Model sampling or environmental variation explicitly where needed. A sufficiently specified machine model can then describe the computation.
 
-It does not follow that this account supplies a formal semantics of the natural-language prompt. It supplies a model of how this particular system responds to that prompt. A different model may respond differently without thereby violating the instruction. Conversely, it can violate an unambiguous instruction; natural-language interpretation is not exemption from correctness.
+It does not follow that this account supplies a formal semantics of the natural-language prompt. It supplies a model of how this particular system responds to that prompt. A different model may respond differently without thereby violating the instruction. Conversely, it can violate an unambiguous instruction; natural-language interpretation can still be wrong.
 
 So “its consumer can be formally modeled” cannot be the distinguishing condition for symbolic content. That would classify prompts as symbolic simply because computers consume them. Nor does requiring an unwritten formal account help: writing the account down should not change an artifact's representational form.
 
