@@ -20,3 +20,5 @@ All five ingests have retained quotes as of 2026-11-01, located by section or pa
 
 - Lakoff 1973, for the fuzziness feature. No accessible copy.
 - Ginzburg 2012, *The Interactive Stance*. Not freely available; the 2001 paper stands in.
+- Barak, Goldreich, Impagliazzo, Rudich, Sahai, Vadhan and Yang 2001, *On the (Im)possibility of Obfuscating Programs*, for the opaque modifier: the impossibility of virtual black-box obfuscation for some function families, and the definition of indistinguishability obfuscation. Suggested by the operator on 2026-11-01.
+- Jain, Lin and Sahai 2021, *Indistinguishability Obfuscation from Well-Founded Assumptions*, for the same: a construction from standard assumptions. Suggested by the operator on 2026-11-01. Both are claims from memory until ingested; the workshop cites them as not yet ingested.

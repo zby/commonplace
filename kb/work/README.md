@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — revised definitions of codification and representational form from an account of the commitment codification makes: a designated reference that settles choices by rules a clerk could follow; formalizability shown not to be the difference; a tentative theory of natural language and a Tarski thread kept as side results; a probe question for other agents
+- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — revised definitions of representational form and codification: symbolic form is a language with a formal semantics or close to one, where close means a reference its users hold consumers to and from which a formal semantics could be derived, and codification is the move into it; formalizability of a consumer shown not to be the difference; a tentative theory of natural language and a Tarski thread kept as side results; a probe question for other agents
 
 - [epistemic-relevance-and-conceptual-blending](./epistemic-relevance-and-conceptual-blending/README.md) — observational watch and correction checklist for useful threads being given unsupported conceptual relationships; record the next few cases and counterexamples before refining the hypothesis; research retained as background, experiments deferred
 
