@@ -23,6 +23,35 @@ The supported test-suite workshop closed on 2026-11-01 after native Windows
 and release CI passed. E1 portability and multi-day antivirus observation keep
 their separate owners and do not block this installation check.
 
+The run's instructions and boundaries are in the
+[Windows delivery handoff](../framework-delivery/windows-delivery-handoff.md#next-run).
+PyPI lists 0.3.3 as the latest release (checked 2026-11-01).
+
+### Disposition of the open problems
+
+Every problem below already has a disposition, so the PyPI run is the only
+remaining condition:
+
+| # | Disposition |
+|---|---|
+| 1 | Fixed: shims start commands through the signed interpreter (INSTALL.md shim step; ADR 064 Windows amendment). |
+| 2 | Fixed: python.org interpreter is a Windows prerequisite; uv-managed Python is the documented no-admin fallback with its known limit. |
+| 3 | Documented limit: INSTALL.md antivirus troubleshooting and the `UV_TOOL_DIR` fallback. Long-term behaviour is owned by windows-signed-python-field-use. |
+| 4 | Fixed in 0.3.3; the PyPI run confirms it. |
+| 5, 7, 9 | Documented workarounds in INSTALL.md (2026-10-31). |
+| 6 | Fixed on Windows: step 2 passes the python.org path instead of `>=3.11`. |
+| 8 | Documented in INSTALL.md; the health check classifies it. |
+| 10 | Fixed in 0.3.3; the PyPI run confirms it. |
+| 11 | Closed with the supported test-suite workshop (2026-11-01). |
+
+The durable results are already in INSTALL.md, ADR 064 and the health check, and
+no library artifact links into this directory. Closure needs only the run report,
+the acceptance-table row in framework-delivery, and then the deletion of this
+directory and its `kb/work/README.md` entry. Before deleting, repoint the links
+into this directory from framework-delivery, execution-channel-compatibility,
+windows-signed-python-field-use and design-space-studies, or note there that
+the files are in git history.
+
 ## Scope
 
 In scope: installing the package and its Python, uv's directories and certificates, `PATH`, starting the commands, Smart App Control, antivirus, and how `commonplace-init` and the health check treat the resulting layout.
@@ -52,13 +81,13 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 1. **Smart App Control blocks and stalls the uv launchers** [10]. The `.exe` files in `uv tool dir --bin` are unsigned and unique to each install, so they have no reputation. The verdict varies between runs; one launch hung until restart.
 2. **Smart App Control can block a uv-managed CPython build** [4]. 3.13.17 was blocked; 3.14.9 and 3.15.1 ran. The builds are unsigned. On 2026-10-28 a build that starts was still blocked in part: 3.14.9 ran, but four of its stdlib extensions (`_decimal`, `_asyncio`, `_overlapped`, `pyexpat`) were refused at load time ([variant U run](./results-2026-10-28-afflicted-variant-u.md)).
 3. **Avast deletes or sandboxes tool files** [11]. It deleted the tool environment's `Scripts\python.exe` and repeatedly sandboxes the launchers. The symptom is `uv trampoline failed to canonicalize script path`. Windows' own logs show nothing.
-4. **`commonplace-init` treated shims as an installation error** [12]. It warned that every command resolves outside uv's tool directory. Fixed in the source on 2026-10-30, not yet released: init and `cp-skill-health-check` accept a `.cmd` shim only when it is the `INSTALL.md` launcher line for that command's entry point and runs the existing `python.exe` of `<uv tool dir>\llm-commonplace`. Other shadowing files are still reported. Verified on this machine against the real shims; see the [run 4 report](./results-2026-10-31-afflicted-main-run4.md). Published 0.3.1 and 0.3.2 still warn. On 2026-10-31 a non-editable install of `main` (`55700da28`) over the signed interpreter gave no warning, inside the app and from a process started by Explorer ([run 4](./results-2026-10-31-afflicted-main-run4.md)). Remaining: repeat from PyPI after the next release.
+4. **`commonplace-init` treated shims as an installation error** [12]. It warned that every command resolves outside uv's tool directory. Fixed on 2026-10-30 and released in 0.3.3: init and `cp-skill-health-check` accept a `.cmd` shim only when it is the `INSTALL.md` launcher line for that command's entry point and runs the existing `python.exe` of `<uv tool dir>\llm-commonplace`. Other shadowing files are still reported. Verified on this machine against the real shims; see the [run 4 report](./results-2026-10-31-afflicted-main-run4.md). Published 0.3.1 and 0.3.2 still warn. On 2026-10-31 a non-editable install of `main` (`55700da28`) over the signed interpreter gave no warning, inside the app and from a process started by Explorer ([run 4](./results-2026-10-31-afflicted-main-run4.md)). Remaining: the PyPI 0.3.3 repeat.
 5. **The desktop app virtualises `%APPDATA%`** [3, 7]. uv's default directories there break the Python junction and hide tools from other processes. The user-level `UV_TOOL_DIR`, `UV_PYTHON_INSTALL_DIR` and `UV_SYSTEM_CERTS` work around it, but a later app session did not inherit them. A fully restarted app inherited them in run 4. Documented in [INSTALL.md](../../../INSTALL.md#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app) on 2026-10-31.
 6. **`--python ">=3.11"` has no upper bound** [1]. uv picked 3.15, which has no pyyaml wheel, and the build failed without MSVC.
 7. **HTTPS interception breaks uv's certificate check** [2]. `UnknownIssuer`; fixed by `UV_SYSTEM_CERTS=1`. winget's `msstore` source fails the same way; `--source winget` avoids it. Documented in [INSTALL.md](../../../INSTALL.md#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app) on 2026-10-31.
 8. **The app keeps its `PATH` until a full restart** [6]. `INSTALL.md` already warns; the health check classifies it correctly.
 9. **Long paths are off by default** [9]. About 60 characters of headroom remain at the checkout location. On 2026-10-27, `uv run` failed with `Trivial strip failed` while installing the project into `.venv`. uv's cache sat in the desktop app's virtualised `…\Packages\AnthropicPBC.Claude_…\LocalCache\Local\uv\cache`, the wheel's library paths went past the limit, and uv compared a `\\?\` path with a plain one. Setting `UV_CACHE_DIR=C:\Users\zzbby\.cache\uv` fixed it, so problems 5 and 9 combine. Documented in [INSTALL.md](../../../INSTALL.md#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app) on 2026-10-31.
-10. **Unix-only `fcntl` file locking** (found 2026-10-27). `commonplace-task --help` and `commonplace-analysis --help` crash on import. The command starts, so the install looks fine, but it cannot work. The import is in Workjig (`workjig/run.py`, 0.1.0; another agent is making Workjig Windows-compatible as of 2026-10-27) and also in Commonplace's own code: `src/commonplace/lib/agentic_analysis/effects.py`, `src/commonplace/lib/agentic_analysis/worktree.py`, `src/commonplace/headless/jobs.py`, `scripts/sync_x_likes.py`, and `tests/commonplace/agentic_analysis/test_publication_locking.py`. Fixing Workjig alone does not fix these commands. Fixed on `main` by 2026-10-30 ([supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance)); in the [run 4](./results-2026-10-31-afflicted-main-run4.md) install of `main` with Workjig 0.3.0, both commands' `--help` exited 0. Not yet released.
+10. **Unix-only `fcntl` file locking** (found 2026-10-27). `commonplace-task --help` and `commonplace-analysis --help` crash on import. The command starts, so the install looks fine, but it cannot work. The import is in Workjig (`workjig/run.py`, 0.1.0; another agent is making Workjig Windows-compatible as of 2026-10-27) and also in Commonplace's own code: `src/commonplace/lib/agentic_analysis/effects.py`, `src/commonplace/lib/agentic_analysis/worktree.py`, `src/commonplace/headless/jobs.py`, `scripts/sync_x_likes.py`, and `tests/commonplace/agentic_analysis/test_publication_locking.py`. Fixing Workjig alone does not fix these commands. Fixed on `main` by 2026-10-30 ([supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance)); in the [run 4](./results-2026-10-31-afflicted-main-run4.md) install of `main` with Workjig 0.3.0, both commands' `--help` exited 0. Released in 0.3.3.
 11. **The full test suite cannot pass on Windows** (2026-10-27, Python 3.14.7, `uv run pytest -m ''` from Git Bash; PowerShell 5.1 drops the empty `''` argument). 795 passed, 47 failed, 21 skipped, 6 collection errors. All failing tests are Commonplace's own; Workjig's tests were not run. Causes, from one-line tracebacks:
     - `fcntl` (problem 10): the 6 collection errors and about 6 failures, through Workjig and through Commonplace's own imports.
     - `\` instead of `/`: about 20 failures. Most are messages that tests compare as strings, but relocation is a real bug: it writes Markdown links such as `[def](..\notes\definitions\d.md)`.
@@ -92,16 +121,11 @@ sandbox checks from escalated execution and records the existing Avast exception
 for pytest. It does not establish a new install, fresh-app acceptance or native
 skill routing from an agent rooted in the temporary project.
 
-## Machine state (2026-10-27)
+## Machine state
 
-Superseded for the tool: since run 4, `llm-commonplace` is the `main` build over python.org 3.14.7, and the shims are on the user `Path`.
+Since run 4, `llm-commonplace` is the `main` build (`55700da28`) over python.org 3.14.7, and the shims are on the user `Path`; the PyPI run replaces it. Checkout: `C:\Users\zzbby\commonplace`. Test project: `C:\Users\zzbby\commonplace-kb`. The 2026-10-27 state is in this file's git history.
 
-- No Commonplace tool environment: `~\.local\share\uv\tools\llm-commonplace` is missing, `~\.local\bin` holds only `trafilatura.exe`, and `~\.local\commonplace-shims` is gone.
-- No real system Python. `python.exe` in `WindowsApps` is the Microsoft Store alias; no Store Python is installed. uv has 3.13.17, 3.14.9 and 3.15.1 under `~\.local\share\uv\python`, all unsigned.
-- User variables: `UV_TOOL_DIR` is `~\.local\share\uv\tools`. User `Path` starts with `~\.local\bin`.
-- Checkout: `C:\Users\zzbby\commonplace`. Test project: `C:\Users\zzbby\commonplace-kb`.
-
-## Next: shims through a signed system Python
+## Signed-Python procedure (rounds 1–2, settled 2026-10-28)
 
 **Proposed procedure:** [proposed-install-procedure.md](./proposed-install-procedure.md) (2026-10-27) gives the full Windows procedure, the code and documentation changes it needs, and a verification protocol for other agents. Verifiers record their runs as new results files in this directory.
 
