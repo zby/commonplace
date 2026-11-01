@@ -23,7 +23,7 @@ The proposed wording therefore:
 
 > The criterion has two parts. First, a designated reference governs the artifact: the system has adopted an implementation, a specification, or a specification plus execution parameters as what the artifact's language means, so a consumer held to it that departs from it is wrong. Second, the reference settles the relevant choices by rules a consumer forbidden insight could follow. A reference that settles by judgment about what was intended, such as a human arbitrator, governs without codifying. Where the reference leaves a choice open, that is a declared gap, not an alternative admissible interpretation. Natural language has conventions that make some readings wrong, but no designated reference for them, so two readings can both be reasonable and no consumer can settle the dispute by rule.
 >
-> Whether a formal semantics exists for the artifact's language is not the criterion. Any implemented consumer together with a machine model supplies a formal account of its own behavior, and this holds for a frozen language model as much as for a compiler. That account describes the consumer. It does not make the consumer constitutive of the artifact's meaning.
+> Whether a formal semantics exists for the artifact's language is not the criterion. Any implemented consumer together with a machine model supplies a formal account of its own behavior, and this holds for a frozen language model as much as for a compiler. That account describes the consumer. It does not make the consumer the artifact's designated reference.
 
 The clerk-test paragraph is kept as written. The testing paragraph is kept with one change: "corroborate the conjecture" becomes "corroborate conformance to the reference", and the sentence "Testing does not prove uniqueness or guarantee convergence on it" becomes "Testing does not prove conformance outside the tested cases."
 
@@ -52,7 +52,7 @@ Other library uses of the fixed phrase are migrated to the same wording. The two
 ## Open questions about the wording
 
 1. Is dropping the Plotkin and operationalism contrasts safe once the colliding phrase is gone, or do readers still arrive with the programming-language sense of "semantics"?
-2. Does any library note rely on the formalizability conjecture rather than on the constitutive reading? The migration list should check each use of the retired phrase, not only replace it.
+2. Does any library note rely on the formalizability conjecture rather than on the two-part criterion? The migration list should check each use of the retired phrase, not only replace it.
 
 Promotion requires coordinated revisions of codification, representational form, constraining, the collision ledger, and the other library uses of the retired phrase. This workshop authorizes none of those edits.
 

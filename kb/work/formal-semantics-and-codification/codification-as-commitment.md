@@ -30,7 +30,7 @@ The hypothesis concerns the operation. Representational form is the separate que
 
 Two conjuncts, and both are needed.
 
-**A designated reference governs.** The system has adopted an implementation, a specification, or a specification plus execution parameters as what the artifact's language means. A consumer held to it that departs from it is wrong. Designation is an act of the system, not a property of the implementation. CPython constitutes Python only where a project has adopted its behavior as the reference; otherwise a CPython deviation from the language reference is a bug. A validator constitutes a schema's meaning only where it is the adopted reference rather than one implementation of a schema language. [Which reference is designated decides what counts as a violation, not whether behavior can be formally described](./implementation-and-shared-semantics.md). The reference is stated outside the artifact's language, in a specification, a machine, or both; whether natural language can have a reference stated outside itself is the [Tarski thread](./tarski-thread.md), and this account does not depend on its answer.
+**A designated reference governs.** The system has adopted an implementation, a specification, or a specification plus execution parameters as what the artifact's language means. A consumer held to it that departs from it is wrong. Designation is an act of the system, not a property of the implementation. CPython is Python's reference only where a project has adopted its behavior as such; otherwise a CPython deviation from the language reference is a bug. A validator fixes what a schema means only where the system has adopted it as the reference rather than as one implementation of a schema language. [Which reference is designated decides what counts as a violation, not whether behavior can be formally described](./implementation-and-shared-semantics.md). The reference is stated outside the artifact's language, in a specification, a machine, or both; whether natural language can have a reference stated outside itself is the [Tarski thread](./tarski-thread.md), and this account does not depend on its answer.
 
 **The reference settles by rules a clerk could follow.** Turing derived the formal machine by asking what a human computer can do when following exact instructions without insight ([Church–Turing](../../sources/church-turing-thesis-sep.ingest.md)). A reference that settles choices by judgment about what was intended governs without codifying. A contract's arbitrator and a workflow's human judge of "sufficient evidence" are designated references that fail this conjunct. An ambiguous passage in a language standard is a gap in a reference that otherwise passes it: the passage governs, but it does not settle.
 
@@ -54,7 +54,7 @@ Diagnostic: if a consumer can legitimately ask the author what the artifact mean
 
 ## Boundary cases
 
-| Artifact | Designated reference | Settles without insight | Form under that path | Note |
+| Artifact | Designated reference | Settles without judgment | Form under that path | Note |
 |---|---|---|---|---|
 | Python script in a project that runs CPython | CPython at a version | yes | symbolic | the project adopted the implementation |
 | schema enum | the validator | yes | symbolic | only for the fields the validator reads |
@@ -62,7 +62,7 @@ Diagnostic: if a consumer can legitimately ask the author what the artifact mean
 | regular expression | the engine | yes | symbolic | the engine's dialect is part of the reference |
 | test suite | the runner and the code under test | yes | symbolic | what it checks is a proxy for the requirement |
 | YAML frontmatter on a skill | the loader, for declared fields | yes, for those fields | mixed | the instructions stay natural-language |
-| prose instruction run by a model | none | — | natural-language | the model does not constitute the instruction |
+| prose instruction run by a model | none | — | natural-language | no reference designated; the model reads the instruction |
 | ambiguous passage in a language standard | the standard | no, at that passage | gap in a symbolic reference | governs without settling |
 | contract clause with a designated arbitrator | the arbitrator | no | natural-language | designation without codification |
 | workflow step judged by a human | the human | no | natural-language | same |
