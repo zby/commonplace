@@ -8,6 +8,22 @@ The forcing case is intentionally small: after installation has placed Commonpla
 
 The workshop widens the existing [channel-compiled instruction artifacts proposal](../../reference/proposals/channel-compiled-instruction-artifacts.md). That proposal already distinguishes compiling promoted skills, the whole instructions tree, and the control plane. Here compilation remains one candidate in a broader catalogue. The unit under investigation is not just the promoted skill: it is every instruction-bearing artifact that invokes Commonplace's Python entry points or another external tool.
 
+## Current closure review (2026-11-01)
+
+Keep open. PyPI 0.3.3 and supported Windows/Linux CI supersede the older
+release and CI summaries below. Native installed-project command and skill
+routing evidence now exists in the
+[delivery report](../framework-delivery/results-2026-10-31-windows-installed-project-agents.md).
+The [independent Codex report](../windows-install/results-2026-11-01-codex-independent.md)
+could run uv and rg in its sandbox; the prior sandbox failure is specific to
+that earlier run, not a universal Windows restriction.
+
+E1 still owns portable validation-all, connect's empty-tag handling, health
+preflights, byte-preserving operations and the static shell-idiom check.
+The broader inventory, v7 capability survey and non-Python tool dispositions
+also remain unfinished. Successful installation does not satisfy these closure
+conditions. Rebaseline from the current manifest before the next E1 batch.
+
 ## Status (rebaselined 2026-09-25)
 
 The workshop opened on 2026-07-28 under the project-venv command model (ADR 014). Two later decisions changed the ground:

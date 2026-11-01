@@ -23,6 +23,34 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (commit `e6103225`). ADR 086, `INSTALL.md`, and the code are now authoritative. [design.md](./design.md) and [alternatives.md](./alternatives.md) are the pre-adoption records; do not update them. This workshop stays open for the follow-ups below.
 
+## Current closure review (2026-11-01)
+
+Keep open. The design shipped through ADR 086 and PyPI 0.3.3, and release CI
+passed on Windows and Linux. The dated status sections below are historical;
+the [handoff](./windows-delivery-handoff.md) is the current queue.
+
+- Windows command installation and fresh-process checks passed for Git main.
+  [windows-install](../windows-install/README.md) owns the remaining PyPI 0.3.3
+  repeat. Template recreation is a documented accepted limit.
+- [Installed-project checks](./results-2026-10-31-windows-installed-project-agents.md)
+  establish native skill listing and stub arguments in Claude Code and Codex,
+  plus Codex's no-stub index route with arguments. They close those specific
+  gaps, not the whole probe. Claude's Windows read-rule behavior remains
+  unestablished; resume in an operator-started default-permission session or
+  an authenticated CLI session, comparing reads inside and outside the rule.
+- The installed-project pi worker-copy acceptance remains deferred until the
+  next installed-project pi run. macOS resumes when a host is available; other
+  harnesses, enterprise policy and large-index behavior resume with an actual
+  user or environment, as recorded in the handoff.
+- Changed-skill, library-only, moved-install and already-running-session
+  upgrade acceptance still need results or explicit deferrals with triggers.
+- The focused Windows Workjig recovery rerun remains unrecorded. Workjig 0.3.0
+  is delivered; this is an evidence gap, not an undelivered dependency.
+
+The supported-suite workshop is closed. E1's procedure-portability work remains
+in execution-channel compatibility. Release completion does not close either
+that work or the acceptance cases above.
+
 ## Status (rebaselined 2026-10-24)
 
 Nothing in this workshop changed after 2026-09-25 except mechanical path

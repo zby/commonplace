@@ -54,6 +54,23 @@ procedure or runtime acceptance case.
   macOS and unavailable runtime cases retain the triggers below. Workshop
   cleanup is separate from releasing these already verified fixes.
 
+## Supported-suite acceptance
+
+Closed the windows-test-suite workshop on 2026-11-01. Its output is the code,
+tests and CI configuration already shipped in 0.3.3; no new platform contract
+is adopted by closure. [Release CI 41342248088](https://github.com/zby/commonplace/actions/runs/41342248088)
+at `526de4edd` passed software tests, wheel build/install, entry-point resolution
+and scratch-project checks on both Windows and Linux. The
+[independent native Windows report](../windows-install/results-2026-11-01-codex-independent.md)
+records 821 passed, 13 skipped, no failures or collection errors, including
+collected slow tests. Its skip inventory and antivirus/sandbox limits remain
+in that report. Agentic analysis execution is Linux-only and its directory is
+excluded from Windows collection, not counted among those skips.
+
+Reopen suite investigation on a supported Windows CI regression. The separate
+focused Workjig recovery check below remains open; the green Commonplace suite
+does not claim that dedicated dependency test ran.
+
 ## Starting point: distinguish decisions from evidence
 
 - Distribution remains one user-level uv tool. The library stays in that
@@ -71,9 +88,8 @@ procedure or runtime acceptance case.
   the first Git commit passed. Later documentation fixes landed in `b9852e7ce`.
   The run used fresh children with registry-derived PATH, not a restarted app;
   in-runtime skill discovery and final runtime checks were not run.
-- [Windows test-suite progress](../windows-test-suite/README.md) last records
-  848 passed, 1 failed, 18 skipped and 2 collection errors. This is historical,
-  not the current result. Current CI runs the full suite only on Linux.
+- [Supported-suite acceptance](#supported-suite-acceptance) is complete locally
+  and in release CI on Windows and Linux.
 - Agentic analysis is deliberately Linux-only. Do not silently expand support
   to make the Windows suite green.
 
@@ -124,7 +140,7 @@ Owner and evidence: [windows-install](../windows-install/README.md).
 - [x] Run the current full suite on native Windows using the signed interpreter
   and a short, non-virtualized uv cache path. Record the commit, Python version,
   shell, exact invocation, failures, skips and collection errors. Follow the
-  [suite workshop](../windows-test-suite/README.md), including the PowerShell 5.1
+  [native report](../windows-install/results-2026-11-01-codex-independent.md), including the PowerShell 5.1
   empty-argument hazard. Do not assume the old failure count still applies.
 - [x] Reconcile Workjig's currently installed API with Commonplace's run locks.
   `src/commonplace/headless/jobs.py` still imports `fcntl`; raising the dependency
@@ -138,8 +154,8 @@ Owner and evidence: [windows-install](../windows-install/README.md).
   or silently overturn the previous reverted import change.
 - [x] Fix remaining supported behavior and test defects. Skip only genuinely
   unsupported features, with explicit reasons; preserve assertions and isolation.
-- [ ] Deliver the Workjig recovery-marker fix before considering the lock
-  migration complete. The local fix in `../workjig` preserves existing lock
+- [ ] Record the focused Windows recovery rerun against released Workjig 0.3.0.
+  Dependency delivery is done; the following describes the original requirement. The local fix in `../workjig` preserves existing lock
   bytes and establishes new-lock provenance through exclusive creation. It is
   not in Commonplace's pinned Workjig 0.2.0. After independent review and a
   separately authorized Workjig release, update Commonplace's minimum and lock
@@ -154,7 +170,7 @@ Owner and evidence: [windows-install](../windows-install/README.md).
 command support boundaries are explicit. Existing Windows wheel smoke checks
 are not evidence that the full suite passes.
 
-Owner: [windows-test-suite](../windows-test-suite/README.md).
+Supported-suite work is closed; this handoff retains the focused recovery follow-up.
 
 ### 3. Make promoted procedures portable
 
@@ -219,7 +235,7 @@ that probe collects evidence without repairing the environment during the run.
 
 ### 5. Reconcile records and close completed work
 
-- [ ] Replace stale “v0.2.0 only”, “no Windows evidence” and “no Windows CI”
+- [x] Replace stale “v0.2.0 only”, “no Windows evidence” and “no Windows CI”
   summaries with scoped current outcomes. Preserve dated historical reports.
 - [ ] Update this checklist and the owning workshops after each completed batch.
   Give deferrals a trigger and blockers an exact next action.

@@ -6,6 +6,23 @@ Posed by the operator on 2026-10-27. Make a normal user-level install of Commonp
 
 **Closes when** `INSTALL.md` gives one Windows procedure that has been verified on this machine in fresh processes, inside and outside the desktop app, and each open problem below is fixed, documented as a known limit, or rejected with a reason. Durable results go to `INSTALL.md`, `cp-skill-health-check`, `commonplace-init`, or an ADR when a decision changes the install model (ADR 064, ADR 086). Then delete this directory and its entry in `kb/work/README.md`.
 
+## Closure review (2026-11-01)
+
+Keep open for one acceptance check: repeat INSTALL.md steps 1–4 from PyPI
+`llm-commonplace==0.3.3` on the Windows machine, rerun the shim snippet, and
+record command/init/check/validation results in fresh processes inside and
+outside the fully restarted desktop app. Run 4 establishes this behavior for
+Git main; the independent Codex run reuses that installation. Neither is a
+PyPI 0.3.3 install. The release is published, so this check can now run.
+
+Template recreation is an operator-accepted, documented limit of 0.3.3, not
+an installation closure blocker. Revisit it when init's control-plane lifecycle
+changes or it interferes with an upgrade. Problems 4 and 10 shipped in 0.3.3;
+the older “not yet released” statements below describe their dated runs.
+The supported test-suite workshop closed on 2026-11-01 after native Windows
+and release CI passed. E1 portability and multi-day antivirus observation keep
+their separate owners and do not block this installation check.
+
 ## Scope
 
 In scope: installing the package and its Python, uv's directories and certificates, `PATH`, starting the commands, Smart App Control, antivirus, and how `commonplace-init` and the health check treat the resulting layout.
@@ -41,14 +58,14 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 7. **HTTPS interception breaks uv's certificate check** [2]. `UnknownIssuer`; fixed by `UV_SYSTEM_CERTS=1`. winget's `msstore` source fails the same way; `--source winget` avoids it. Documented in [INSTALL.md](../../../INSTALL.md#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app) on 2026-10-31.
 8. **The app keeps its `PATH` until a full restart** [6]. `INSTALL.md` already warns; the health check classifies it correctly.
 9. **Long paths are off by default** [9]. About 60 characters of headroom remain at the checkout location. On 2026-10-27, `uv run` failed with `Trivial strip failed` while installing the project into `.venv`. uv's cache sat in the desktop app's virtualised `…\Packages\AnthropicPBC.Claude_…\LocalCache\Local\uv\cache`, the wheel's library paths went past the limit, and uv compared a `\\?\` path with a plain one. Setting `UV_CACHE_DIR=C:\Users\zzbby\.cache\uv` fixed it, so problems 5 and 9 combine. Documented in [INSTALL.md](../../../INSTALL.md#windows-uv-behind-antivirus-or-inside-the-claude-desktop-app) on 2026-10-31.
-10. **Unix-only `fcntl` file locking** (found 2026-10-27). `commonplace-task --help` and `commonplace-analysis --help` crash on import. The command starts, so the install looks fine, but it cannot work. The import is in Workjig (`workjig/run.py`, 0.1.0; another agent is making Workjig Windows-compatible as of 2026-10-27) and also in Commonplace's own code: `src/commonplace/lib/agentic_analysis/effects.py`, `src/commonplace/lib/agentic_analysis/worktree.py`, `src/commonplace/headless/jobs.py`, `scripts/sync_x_likes.py`, and `tests/commonplace/agentic_analysis/test_publication_locking.py`. Fixing Workjig alone does not fix these commands. Fixed on `main` by 2026-10-30 ([windows-test-suite](../windows-test-suite/README.md)); in the [run 4](./results-2026-10-31-afflicted-main-run4.md) install of `main` with Workjig 0.3.0, both commands' `--help` exited 0. Not yet released.
+10. **Unix-only `fcntl` file locking** (found 2026-10-27). `commonplace-task --help` and `commonplace-analysis --help` crash on import. The command starts, so the install looks fine, but it cannot work. The import is in Workjig (`workjig/run.py`, 0.1.0; another agent is making Workjig Windows-compatible as of 2026-10-27) and also in Commonplace's own code: `src/commonplace/lib/agentic_analysis/effects.py`, `src/commonplace/lib/agentic_analysis/worktree.py`, `src/commonplace/headless/jobs.py`, `scripts/sync_x_likes.py`, and `tests/commonplace/agentic_analysis/test_publication_locking.py`. Fixing Workjig alone does not fix these commands. Fixed on `main` by 2026-10-30 ([supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance)); in the [run 4](./results-2026-10-31-afflicted-main-run4.md) install of `main` with Workjig 0.3.0, both commands' `--help` exited 0. Not yet released.
 11. **The full test suite cannot pass on Windows** (2026-10-27, Python 3.14.7, `uv run pytest -m ''` from Git Bash; PowerShell 5.1 drops the empty `''` argument). 795 passed, 47 failed, 21 skipped, 6 collection errors. All failing tests are Commonplace's own; Workjig's tests were not run. Causes, from one-line tracebacks:
     - `fcntl` (problem 10): the 6 collection errors and about 6 failures, through Workjig and through Commonplace's own imports.
     - `\` instead of `/`: about 20 failures. Most are messages that tests compare as strings, but relocation is a real bug: it writes Markdown links such as `[def](..\notes\definitions\d.md)`.
     - Symlink creation needs a privilege (`WinError 1314`): 4 failures, all in test setup.
     - Probably line endings: this checkout has `core.autocrlf=true`, so files are CRLF on disk. A content-hash mismatch and the 6 full-pass "does not match canonical frontmatter rendering" failures fit this; not confirmed.
     - One each: printing ` ` to a cp1250 console (`UnicodeEncodeError`), and a Windows path used inside a regular expression (`bad escape \l`).
-    - A few, in the tag-readme and unquoted-source checks, not yet diagnosed. Since commit `f4ea589dd` (2026-10-26) the full suite runs in GitHub CI rather than before each push, so this no longer blocks pushing. Fixing the failures moved to [windows-test-suite](../windows-test-suite/README.md) on 2026-10-27; the `fcntl` imports in problem 10 are its item 1.
+    - A few, in the tag-readme and unquoted-source checks, not yet diagnosed. Since commit `f4ea589dd` (2026-10-26) the full suite runs in GitHub CI rather than before each push, so this no longer blocks pushing. Fixing the failures moved to [supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance) on 2026-10-27; the `fcntl` imports in problem 10 are its item 1.
 
 ## Attempts
 

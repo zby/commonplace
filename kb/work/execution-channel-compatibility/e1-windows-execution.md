@@ -1,16 +1,14 @@
 # E1 plan — Make native Windows support operative
 
-**State:** open; moved here from the system-contract consistency workshop
-when it closed on 2026-09-25; rebaselined at commit `6660bd2a` on 2026-08-27. The
-[manifest-derived promoted-skill audit](./e1-promoted-skill-rebaseline-2026-08-27.md)
-classifies all ten skills selected in that snapshot without making the count a
-future inventory. The implementation dispositions and native-Windows evidence
-remain open. Rechecked 2026-09-25: health check, connect, and validate still
-carry the unpaired POSIX commands the audit names. Rechecked 2026-10-24: unchanged.
-`commonplace-validate` still lacks an `all` target (item 3); the health check pairs
-PowerShell only in Steps 4 and 5 (item 5); 13 promoted skills declare
-`allowed-tools: Bash` without a disposition (item 6); no Windows CI (item 7);
-still no native-Windows runtime result (item 2).
+**State (2026-11-01):** open. Package installation, supported Windows tests
+and release CI now pass; item 7's pytest/install/init/validation portion is done.
+See [supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance)
+and the [installed-project report](../framework-delivery/results-2026-10-31-windows-installed-project-agents.md)
+for bounded native skill-routing evidence. These do not establish every
+promoted procedure's portability. Items 2–6, focused health checks and the
+static incompatible-idiom check remain open. The
+[2026-08-27 audit](./e1-promoted-skill-rebaseline-2026-08-27.md) is historical;
+derive the current skill set from the manifest before implementation.
 
 ## Resolution selected
 
@@ -61,10 +59,9 @@ package's contract-based discovery.
    multistage writing; portable capture and temporary-file operations for
    snapshot-web; runtime-native orchestration for AutoReason; and an explicit
    disposition for promoted skills' `allowed-tools: Bash` declarations.
-7. Add Windows CI for package install, pristine init, validation, and focused
-   health checks. [partly done 2026-10-26: `ci.yml` runs its wheel-tool job on
-   `windows-latest` too, with the pytest step Linux-only; health checks and
-   the idiom inventory remain; first Windows run pending push] Add a narrow static inventory/check for known incompatible
+7. Windows CI for package install, pristine init, validation and the supported
+   pytest suite is complete (release CI 41342248088, 2026-11-01). Focused health
+   checks remain. Add a narrow static inventory/check for known incompatible
    idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
    becomes visible at review time.
 8. Exercise a freshly initialized project on Windows, including stub and
