@@ -1,6 +1,6 @@
 # Candidate definitions of codification and representational form
 
-Workshop draft, revised 2026-11-01. This file is step 3 of the [workshop](./README.md): it applies the [commitment account](./codification-as-commitment.md) to the library definitions. The rejected formal-semantics candidates of 2026-10-31 are summarized in a footnote[^rejected]. The library definitions remain authoritative and unchanged.
+Workshop draft, revised 2026-11-01. This file is step 3 of the [workshop](./README.md): it applies the [commitment account](./codification-as-commitment.md) to the library definitions. The proposed wording states the criterion as two parts, a designated reference that governs the artifact and settles the relevant choices by rules a clerk could follow, and retires the phrase "unique operational semantics" with the formalizability conjecture behind it. The rejected formal-semantics candidates of 2026-10-31 are summarized in a footnote[^rejected]. The library definitions remain authoritative and unchanged.
 
 ## What changes and why
 
