@@ -51,6 +51,8 @@ There is a crucial alternative: the model may have silently answered a broader q
 
 **Trajectory dependence and local repair.** Once an unsupported frame is present, revisions preserve its organizing relation. Predicts worse correction with the old explanation retained than with the same facts and criticism supplied in a fresh context. This account can explain persistence without explaining initial selection [E3, E7].
 
+**Requested answer form.** The task asks for a unified account, a common mechanism, or the shared insight across inputs, and the model supplies one whether or not the material warrants it. Predicts that the same material yields an unsupported relation under a "what do these have in common" request and a preserved distinction under a "how do these differ" request, with utility held fixed. Multi-document synthesis failures [E17] motivate this account: asked for insights shared across documents, models mostly returned a real insight from one document and presented it as shared, and invented content was rare. The error is a present item put into the requested form, not a fabrication. Q001's "one mechanism, one remedy" wording sat in a section whose job was to state connections. Added 2026-11-01 from the external review; E17 ingested the same day.
+
 **Presentation-only error.** The text places B under a misleading heading, but subsequent classifications and inferences respect the boundary. Predicts disagreement between prose-relation ratings and downstream behavior. This is still a communication defect, but a weaker threat than an operative false relation.
 
 These explanations can combine. Evidence for one does not establish all of them. A mechanism is explanatory only if it predicts which intervention changes which transition.

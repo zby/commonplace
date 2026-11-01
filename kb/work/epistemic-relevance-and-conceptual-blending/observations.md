@@ -1,6 +1,6 @@
 # Observation log
 
-This is an opportunistic case series for the [watch](./README.md), not a benchmark or a frequency estimate. No new post-watch episodes have been recorded. The two records below are initial material from the commissioning investigation; neither counts toward the next-three-episodes review point. Q001 has since been checked and repaired, so it is a finished artifact-level case the review may use.
+This is an opportunistic case series for the [watch](./README.md), not a benchmark or a frequency estimate. No new post-watch episodes have been recorded. The two records below are initial material from the commissioning investigation; neither counts toward the next-three-episodes review point. Q001 has since been checked and repaired, so it is a finished artifact-level case the review may use. Q002 is a checked non-error on an external artifact; it does not count either.
 
 Use one entry per independently arising episode. Keep corrections and later follow-through in that entry. Record checked false alarms, warranted syntheses, and unresolved cases as well as errors. Point to the harness's existing trace when available rather than importing whole session logs into workshop governance.
 
@@ -35,6 +35,18 @@ Use one entry per independently arising episode. Keep corrections and later foll
 Because the GSM-DC ingest contradicted itself, the operator had it re-ingested on 2026-11-01 through `cp-skill-ingest` with a fresh drafting worker and the same pinned snapshot. The regenerated report treats the cross-paradigm relation as a comparison axis with divergent training responses, states that the divergence is evidence against assuming one mechanism without establishing that the mechanisms differ, and flags a source-level problem the old ingest had missed: the paper's sentence defining Δ(SAcc, PAcc) as a ratio where lower means a larger gap, then reading a higher value for clean-trained models as more execution damage. The published Figure 6 caption reports step accuracy, not the ratio, so the paper does not resolve it. Three library sentences had stated the arithmetic-execution finding as settled and were qualified: the soft-degradation note, the process-structure note, and the Gonen ingest's sibling paragraph.
 
 **Hypothesis update:** this case fits the watched pattern at the output level: two directions each useful to a broader goal (the exclusion remedy), joined by an identity relation the evidence did not support, with the stated rationale for the join being that usefulness ("one architectural remedy"). Two further observations are worth carrying to the review. First, the unsupported relation propagated across three artifacts and was cited circularly between them, so a correction has to find every copy. Second, the same artifact withheld the merge where a limitation section prompted it and applied the merge where a connections section rewarded it, which weakens a pure association account and is consistent with a role-of-section or candidate-selection account. Nothing here establishes a cause; the generation context is unavailable.
+
+## Q002 — External literature review checked for the pattern (checked 2026-11-01)
+
+**Date / task / observer:** 2026-11-01. The operator supplied a ChatGPT-generated literature review of this workshop's hypothesis. The review synthesizes about twenty sources into one account, which is the kind of artifact where an unsupported common-mechanism relation could appear, so the checklist was applied to it as an artifact-level check. Generation context unknown beyond the model family.
+
+**Evidence:** [retained review](./external-review-2026-11-01.md), verbatim.
+
+**Relationship and check:** the review's load-bearing relations are "neighboring", "analogue", "precedent" and "motivates". Its summary table assigns each source to one transition of the proposed process and names the remaining gap for each. It explicitly declines the merge: "combining them into a single established theory would exceed their evidence", and it separates four attractions (practical payoff, semantic familiarity, agreement, explanatory completeness) rather than collapsing them.
+
+**Disposition:** checked non-error; warranted separation. The review groups sources by shared relevance to the workshop's goal without asserting identity, inclusion or a common cause among them.
+
+**Hypothesis update:** none on the mechanism. One methodological note: the review was produced under a request that invited criticism of the hypothesis rather than a unified account, which is the answer-form condition the new sixth competing explanation in the [findings](./findings.md#4-competing-explanations-and-discriminators) predicts should reduce the failure. That is consistent with the account, not evidence for it.
 
 ## Template for a new episode
 

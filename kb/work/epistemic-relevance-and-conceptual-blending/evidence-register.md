@@ -134,6 +134,82 @@ Irrelevant cues alter answers while generated explanations often omit those cues
 
 **Commonplace:** reuse [existing ingest](../../sources/language-models-dont-always-say-what-they-think.ingest.md), whose recorded snapshot hash and provenance were inspected.
 
+## Second pass, 2026-11-01
+
+Entries E14 to E20 come from an [external review](./external-review-2026-11-01.md) the operator supplied on 2026-11-01. The same day the operator authorized ingesting the new sources: E15 to E18 and E20 now have tracked ingests, and each entry's summary was rewritten from its ingest. E14 reuses its existing ingest. E19 has no open-access full text; its citation and abstract were verified and it was not ingested.
+
+## E14 — Lampinen et al., Content effects on reasoning
+
+**Primary source:** [Language models, like humans, show content effects on reasoning tasks](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372), PNAS Nexus 2024. The PMC landing page was captcha-blocked; the KB's [existing ingest](../../sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md) is the reference.
+
+**Class:** neighboring phenomenon; criterion substitution.
+
+Varying semantic content while holding logical form fixed changes accuracy on syllogisms, natural-language inference and the Wason task; believable conclusions make invalid arguments more acceptable. A property that makes a conclusion attractive to accept substitutes for the property the task asks the model to judge. Belief-consistency is not practical usefulness, and judging an argument is not constructing an account.
+
+**Commonplace:** reuse the existing ingest.
+
+## E15 — Bertolazzi, Pezzelle, and Bernardi, Validity–plausibility representations
+
+**Primary source:** [How Language Models Conflate Logical Validity with Plausibility: A Representational Analysis of Content Effects](https://aclanthology.org/2026.findings-acl.454/), Findings of ACL 2026; [arXiv 2510.06700](https://arxiv.org/abs/2510.06700), v3 2026-04-20. Ingested on 2026-11-01: [ingest report](../../sources/llm-validity-plausibility-conflation-content-effects.ingest.md).
+
+**Class:** mechanistic precedent for interference between evaluative criteria, with intervention evidence.
+
+From the ingest: 1,280 syllogisms across ten open-weight models; validity and plausibility are aligned difference-in-means directions in the last-token residual stream, steering along either changes judgments on the other in both directions, and a task-difference vector reduces content effects, with its layer and scale chosen during the analysis. Chain-of-thought lowers the behavioural bias but leaves the measured alignment unchanged, so a behavioural gain alone says nothing about the representation. Plausibility is operationalized as binary real-world truth, not usefulness, and the analysis concerns decision representations in a constrained task, not explanation generation. This is the closest precedent for the "wrong criterion governs the judgment" step, not for utility specifically.
+
+**Ingestion:** ingested; see the report for limits of the steering evidence.
+
+## E16 — Peters and Chin-Yee, Generalization bias in summarization
+
+**Primary source:** [Generalization Bias in Large Language Model Summarization of Scientific Research](https://arxiv.org/abs/2504.00025), arXiv 2025-03-28; Royal Society Open Science 2025, [PubMed 40309181](https://pubmed.ncbi.nlm.nih.gov/40309181/). Ingested on 2026-11-01: [ingest report](../../sources/peters-chin-yee-llm-generalization-bias.ingest.md).
+
+**Class:** output-level analogue; unsupported strengthening.
+
+From the ingest: ten models, 4,900 summaries compared with source texts, overgeneralization in 26 to 73% of cases for three named models, and persistence under explicit accuracy prompts. The paper names three moves by which a summary keeps recognizable content while changing what it licenses: quantified to generic, past to present tense, and descriptive to action-guiding. Each summary was coded yes or no on whether its scope is broader than the original's; whether the broader claim was warranted was not coded, and the ingest flags an inconsistency in the paper's per-move table, so the per-move counts should not be relied on. The coding concerns scope and qualifiers, not relations between concepts, and project utility is not manipulated.
+
+**Ingestion:** ingested. The report also names four KB theory notes that could cite it as qualifying evidence, pending quote retention.
+
+## E17 — Belém et al., Multi-document hallucination
+
+**Primary source:** [From Single to Multi: How LLMs Hallucinate in Multi-Document Summarization](https://aclanthology.org/2025.findings-naacl.293/), Findings of NAACL 2025. Ingested on 2026-11-01: [ingest report](../../sources/from-single-to-multi-llm-hallucination-mds.ingest.md).
+
+**Class:** task-level analogue; manufactured commonality.
+
+From the ingest: every document set had at least two planted shared insights, so the paper tests thin shared information, not its absence. When asked for insights shared across documents, models mostly returned real insights from a single document and presented them as shared; with two news documents these made up 58.54 to 67.24% of errors, and invented content was at most 2.4%. Absence was tested only as a subtopic the documents never discuss; models abstained 20.65 to 71.08% of the time, and abstention fell as documents were added. Error shares come from the authors' own multi-label annotation on news with two documents per set, and partly covered insights counted as correct. The dominant error is therefore a present-but-constraint-violating item presented in the requested form, which is the factor the register had not isolated: the requested answer form. An instruction to find a common account may produce one without warrant, independently of any idea's usefulness.
+
+**Ingestion:** ingested. The report's connect pass proposes a combined claim across E15, E16 and E17, that a condition the prompt names (shared, in scope, valid) goes under-enforced when the content is plausible; held for the review point, not adopted.
+
+## E18 — Dash et al., Persona-assigned motivated reasoning
+
+**Primary source:** [Persona-Assigned Large Language Models Exhibit Human-Like Motivated Reasoning](https://aclanthology.org/2026.findings-acl.585/), Findings of ACL 2026; [arXiv 2506.20020](https://arxiv.org/abs/2506.20020), v2 2026-04-16. Ingested on 2026-11-01: [ingest report](../../sources/persona-assigned-llms-motivated-reasoning.ingest.md).
+
+**Class:** context-of-evaluation manipulation; neighboring phenomenon.
+
+From the ingest: eight models given demographic or political personas lost up to 9% on telling true headlines from false ones, and on a numerical-evidence task about gun control their accuracy depended on whether the correct answer matched the persona's politics, measured as the accuracy gap between opposed personas; a politically neutral version of the same task stayed near zero. Step-by-step prompting had no significant effect, and an accuracy instruction made discernment worse. The persona prompt itself tells the model to answer in line with that identity, so the paper cannot separate distorted reasoning from role-play. It shows that framing changes evidential judgments. An assigned identity is not an instrumental payoff, so this is a method precedent, not evidence for the utility account.
+
+**Ingestion:** ingested; carry the role-play caveat in any use.
+
+## E19 — Williams, Lombrozo, and Rehder, Hazards of explanation
+
+**Primary source:** [The hazards of explanation: Overgeneralization in the face of exceptions](https://doi.org/10.1037/a0030996), Journal of Experimental Psychology: General 142(4), 2013; [PubMed 23294346](https://pubmed.ncbi.nlm.nih.gov/23294346/). The host the review cited (cognition.princeton.edu/document/151) returned 403. On 2026-11-01 the citation was verified through Crossref and the abstract read through Europe PMC: two category-learning experiments in artifact and social domains; explaining encourages learners to seek broad patterns, which hinders learning when the patterns involve exceptions. Full text is subscription-only, so the paper was not ingested.
+
+**Class:** human analogue; explanation-driven overgeneralization.
+
+Per the external review: in two category-learning experiments, prompting people to explain increases reliance on broad patterns, which helps when the patterns hold and hurts when exceptions make them misleading. This is the nearest human experimental analogue to "constructing an integrated explanation suppresses distinctions". It does not involve LLMs or manipulate the value of a secondary thread.
+
+**Ingestion:** not ingested; no open-access full text. The abstract supports the review's summary; rely on the abstract-level claim only until the paper is obtained.
+
+## E20 — Lynn, Conceptual blending in humans and language models
+
+**Primary source:** [Conceptual blending in humans and language models](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1849083/full), Frontiers in Psychology, 2026-07-29. Ingested on 2026-11-01: [ingest report](../../sources/conceptual-blending-humans-and-language-models.ingest.md).
+
+**Class:** conceptual resource; theoretical account in which goals drive blending.
+
+From the ingest: a peer-reviewed conceptual analysis with no experiment; its only computational part is a small demonstration of one example that the author calls a model-building hypothesis. For humans, goals decide which features of the source ideas enter a blend, through a goal component in a predictive-processing account, and a test against observation that revises the blend when it errs belongs to the same loop. For language models, goals come from outside as proxy-goals supplied by the prompt or task, and there is no internal step that revises the blend when it is wrong. That places goal-directedness inside the theory of blending itself, which is closer to this workshop's conjecture than E12, but it is a conceptual analysis, not a demonstration of unwarranted integration.
+
+**Open question for the review point.** On Lynn's account, fusing two ideas because both serve one goal is blending working correctly; only the later test against observation separates a sound blend from an unsupported relation. If that is right, the workshop's failure is not that the blend was formed but that nothing tested it, and the corrective sits at the test, not at the selection. The register's existing framing locates the fault at selection. Both readings predict the same episodes; they differ on which intervention should help.
+
+**Ingestion:** ingested. The report also notes that Sato (2025, arXiv 2505.10948), the empirical LLM-blending paper Lynn cites, has no ingest.
+
 ## Additional screened material and stop rule
 
 Shi et al.'s [ICML 2023 distractor study](https://proceedings.mlr.press/v202/shi23a.html) was a precursor; E2 supplied the more discriminating graph-level design. The 2026 preprint [The Development of Sycophancy in Language Models](https://arxiv.org/abs/2610.26655) reports checkpoint-lineage analyses that complicate a single-stage origin story. Its exposed text was reviewed, but its inspected revision was not securely pinned; it is not load-bearing here. Creative-blending papers and broad theoretical LLM-blending accounts did not supply the utility-controlled relationship test.
