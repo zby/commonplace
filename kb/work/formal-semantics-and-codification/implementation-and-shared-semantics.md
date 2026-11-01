@@ -87,7 +87,7 @@ These reductions remove reasons for maintaining a separate technical sense of â€
 
 ## Candidate wording and remaining work
 
-The passages below are the initial formulation. [Where meaning is settled](./where-meaning-is-settled.md) holds the account that replaced them, and [candidate definitions](./candidate-definitions.md) applies it to the library wording. Both keep these reductions as their argument.
+The passages below are the initial formulation. [Codification as commitment](./codification-as-commitment.md) holds the account that replaced them, and [candidate definitions](./candidate-definitions.md) applies it to the library wording. Both keep these reductions as their argument; neither depends on the [tentative theory of natural language](./where-meaning-is-settled.md).
 
 A provisional formulation for discussion is:
 
