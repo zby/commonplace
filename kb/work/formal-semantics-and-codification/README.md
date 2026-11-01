@@ -25,7 +25,7 @@ Supporting files:
 
 ## Status
 
-2026-11-01. Step 1 established. Step 2 rewritten after Astra's review, not reviewed since. Step 3 carries the two-conjunct wording, not reviewed against the open questions. Step 4 sent to no agent. Five sources ingested, Tarski's 1969 article and an encyclopedia entry on the liar standing in for the 1933 monograph; Clark and Brennan pending; Lakoff not ingested.
+2026-11-01. Step 1 established. Step 2 rewritten after Astra's review, not reviewed since. Step 3 carries the two-conjunct wording, not reviewed against the open questions. Step 4 sent to no agent. Five sources ingested, Tarski's 1969 article and an encyclopedia entry on the liar standing in for the 1933 monograph; Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
 
 ## Boundary
 
