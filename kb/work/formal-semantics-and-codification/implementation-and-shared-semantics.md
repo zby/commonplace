@@ -85,18 +85,6 @@ That distinction still needs a boundary test. In particular, a frozen prompt–m
 
 These reductions remove reasons for maintaining a separate technical sense of “operational semantics.” They do not yet establish a complete replacement definition of symbolic form.
 
-## Candidate wording and remaining work
+## What follows
 
-The passages below are the initial formulation. [Codification as commitment](./codification-as-commitment.md) holds the account that replaced them, and [candidate definitions](./candidate-definitions.md) applies it to the library wording. Both keep these reductions as their argument; neither depends on the [tentative theory of natural language](./where-meaning-is-settled.md).
-
-A provisional formulation for discussion is:
-
-> A symbolic artifact has committed rules for permitted behavior that admit a formal description. That description need not have been written down. Tests assess whether consumers conform to the rules; they do not establish formalizability merely by showing agreement.
-
-For [codification](../../theory/definitions/codification.md), the corresponding candidate is:
-
-> Codification commits a rule or operation stated in natural language to a symbolic artifact whose fixed rules determine what behavior is permitted.
-
-The phrase “committed rules” must do more than rename the problem. Before promotion, test the candidate against a schema enum, a route table, a prose instruction executed by a model, and a frozen prompt–model package deliberately used as a reference. Preserve the difference between a precisely implemented check and the requirement it is meant to test, as explained in [fixed artifacts split into exact specs and proxy theories](../../theory/exact-implementation-does-not-validate-a-requirement.md).
-
-The proposed vocabulary change remains open. The reductions above can be retained even if the candidate definition fails the boundary cases. No impossibility claim about formal semantics for natural language is needed to establish them.
+These reductions are the workshop's established result. [Codification as commitment](./codification-as-commitment.md) states the account that replaced the formalizability justification, and [candidate definitions](./candidate-definitions.md) applies it to the library wording. Neither depends on the [tentative theory of natural language](./where-meaning-is-settled.md).
