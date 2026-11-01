@@ -8,7 +8,7 @@ The thread has a settled part and an open part. The settled part, exactly specif
 
 ## Settled: exactly specified structure
 
-Tarski says the problem of truth has a precise meaning only for languages whose structure has been exactly specified: which expressions are meaningful, which terms are undefined, what the rules of definition are, which expressions are sentences, and under what conditions a sentence may be asserted. For natural, spoken languages the problem is vague and its solution can only be approximate. This is the part that sits close to the two conjuncts of the [commitment account](./codification-as-commitment.md): a reference that a clerk could follow presupposes a language whose sentences and assertion conditions a clerk could recognize. It is a precondition, not a result, and Tarski states it as such.
+Tarski says the problem of truth has a precise meaning only for languages whose structure has been exactly specified: which expressions are meaningful, which terms are undefined, what the rules of definition are, which expressions are sentences, and under what conditions a sentence may be asserted. For natural, spoken languages the problem is vague and its solution can only be approximate. This is the precondition the clerk conjunct of the [commitment account](./codification-as-commitment.md) assumes: a reference a clerk could follow presupposes a language whose sentences and assertion conditions a clerk could recognize. Tarski states it as a precondition, not a result.
 
 ## Open: semantic closure and the metalanguage
 
