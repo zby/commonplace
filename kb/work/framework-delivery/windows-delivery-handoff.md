@@ -26,6 +26,33 @@ code, tests, installation guide, skills and owning ADRs.
 > decisions identified below and for any required full app restart. Do not
 > publish a release, weaken security settings, or change unrelated files.
 
+## Current release checkpoint (2026-11-01)
+
+Preparing 0.3.3 as a Windows installation and portability-fix release. This is
+not completion of every Windows procedure or runtime acceptance case.
+
+- Item 2's dependency delivery is present: `pyproject.toml` requires Workjig
+  0.3.0 and `uv.lock` selects it. The installed Windows run 4 used that release,
+  not a local Workjig source overlay. The dedicated focused Windows recovery
+  rerun requested in item 2 is not separately recorded; its checkbox remains
+  open for that evidence, despite the green supported suite.
+- At `a5922fe35`, [CI run 41311866868](https://github.com/zby/commonplace/actions/runs/41311866868)
+  passed the software suite, wheel build/install, entry-point resolution and
+  scratch-project checks on Windows and Linux. The pending-CI statements in
+  historical entries below are superseded.
+- Windows install run 4 and the independent Codex verification passed within
+  their recorded boundaries. Native Windows skill routing has evidence for
+  Codex and Claude Code in item 4's progress record; pi remains untested there.
+- The operator accepted template recreation on init reruns as a known limit
+  for 0.3.3; `INSTALL.md` documents it. Fix it when init's control-plane
+  lifecycle is next revised, or earlier if it interferes with an upgrade.
+- After publication, repeat INSTALL.md steps 1–4 using PyPI 0.3.3 on Windows,
+  then rerun the shim snippet and record fresh-process results. This cannot
+  be replaced by another checkout or Git-main installation.
+- Item 3's promoted-skill portability work stays open. Antivirus field use,
+  macOS and unavailable runtime cases retain the triggers below. Workshop
+  cleanup is separate from releasing these already verified fixes.
+
 ## Starting point: distinguish decisions from evidence
 
 - Distribution remains one user-level uv tool. The library stays in that
@@ -118,7 +145,7 @@ Owner and evidence: [windows-install](../windows-install/README.md).
   to the fixed release, follow the dependency-change installation checks, and
   run the focused recovery tests on Windows. Do not treat local source-overlay
   tests as evidence that installed users have the fix.
-- [ ] Once the supported suite passes locally, enable pytest on `windows-latest`
+- [x] Once the supported suite passes locally, enable pytest on `windows-latest`
   in `.github/workflows/ci.yml`. Keep Linux passing and record actual CI results,
   not just configuration changes. Fix PowerShell argument passing if needed.
 
@@ -216,6 +243,20 @@ that probe collects evidence without repairing the environment during the run.
   harness integrations during this pass.
 
 ## Progress record
+
+- **2026-11-01, 0.3.3 release preparation (Linux).** Operator authorized a
+  maintenance release with template recreation retained as a documented known
+  limit. Updated package/lock version and reconciled current suite status.
+  `uv run pytest -m '' -q`: 1342 passed, 1 skipped in 282.79 seconds;
+  `uv run ruff check .`: passed. An earlier full-suite invocation was stopped
+  by the 200-second tool timeout without a verdict; the completed rerun above
+  is the test result. Editable metadata refresh passed. `uv build` built the
+  wheel from the sdist. An isolated non-editable wheel install loaded every
+  entry point and passed init, check and landing validation; rerunning init
+  preserved both active control-plane files and reproduced the documented
+  template recreation. Both edited workshop files validated with no failures
+  or warnings. No new native Windows or agent-scenario run was performed.
+  Publication and release-commit CI are separate subsequent gates.
 
 Append one short entry per batch: commit tested, task IDs, changes, exact test
 selection/results, runtime/restart state, evidence path, and remaining blocker

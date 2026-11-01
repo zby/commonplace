@@ -6,6 +6,21 @@ Posed by the operator on 2026-10-27. Make the full test suite (`uv run pytest -m
 
 **Closes when** the full suite passes on Windows locally and in CI, with the pytest step in `.github/workflows/ci.yml` no longer Linux-only. Each failure below is fixed or skipped on Windows with a recorded reason. Then mark E1 item 7's pytest part done in [e1-windows-execution.md](../execution-channel-compatibility/e1-windows-execution.md), delete this directory and its entry in `kb/work/README.md`. The workshop produces commits, not library artifacts. The exception is a decision that changes a cross-platform contract, such as which path separator command output uses; that gets an ADR or an amendment to the ADR that owns the contract.
 
+## Release readiness (2026-11-01)
+
+The supported-suite acceptance condition is met. At `a5922fe35`,
+[CI run 41311866868](https://github.com/zby/commonplace/actions/runs/41311866868)
+passed software tests, wheel build/install, entry-point resolution and scratch
+project init/check/validation on both `windows-latest` and `ubuntu-latest`.
+The native Windows runs below and the
+[independent Codex verification](../windows-install/results-2026-11-01-codex-independent.md)
+provide local evidence. Agentic analysis execution remains Linux-only; promoted
+skill portability belongs to E1 and is not implied by this result.
+
+Remaining workshop work is closure bookkeeping under the collection contract,
+not a release blocker. Reopen supported-suite investigation on a Windows CI
+regression; do not carry the old pending-CI statement forward as current status.
+
 ## Coordination
 
 - **Workjig:** another agent is making Workjig Windows-compatible (as of 2026-10-27). Do not patch Workjig here. Commonplace's own `fcntl` imports are this workshop's work.
@@ -135,4 +150,4 @@ Nothing left: the three tests listed here were diagnosed into items 3 and 5.
 
 ### 8. CI
 
-When the suite passes locally on Windows, drop the Linux-only condition on the pytest step in `.github/workflows/ci.yml` and update its comment. Done in the working tree on 2026-10-30: the step runs on both runners under `shell: bash`. No CI result yet; this workshop closes only after a green `windows-latest` run.
+When the suite passes locally on Windows, drop the Linux-only condition on the pytest step in `.github/workflows/ci.yml` and update its comment. Done in the working tree on 2026-10-30: the step runs on both runners under `shell: bash`. The green `windows-latest` and Linux result is now recorded in Release readiness above.

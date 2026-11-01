@@ -232,6 +232,8 @@ On every run it also writes its pointers into the library for this machine:
 
 Rerunning `commonplace-init` is safe. It never overwrites the project's own files: it reports which of them already match the current scaffold and which were left untouched because they differ. It rewrites only its own outputs — the stubs, `.commonplace/library.md`, and the read rule — and removes stubs for skills the package no longer has. It leaves alone any skill directory it did not write, and reports it. It does not create or inspect `.envrc`.
 
+Known limitation in 0.3.3: after the control-plane templates have been renamed or merged in step 4, rerunning init recreates `AGENTS.md.template` and `CLAUDE.md.template`. It does not replace the active control-plane files. Remove the recreated templates if they are no longer needed.
+
 Init leaves existing KB content and review state unchanged. Converting data from an older layout is a separate maintenance task; upgrading the tool and rerunning init do not perform that conversion.
 
 ### Check the setup, validation, and search
