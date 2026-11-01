@@ -64,6 +64,17 @@ The first install, on 2026-10-26, is recorded in [results-windows-install-030.md
 
 After the template gap, the last check is a repeat from PyPI once a release contains these fixes.
 
+## Independent Codex verification (2026-11-01)
+
+[Codex verification](./results-2026-11-01-codex-independent.md) exercised the
+existing run 4 installation with Sol. Five representative commands started;
+a fresh temporary project passed init, pointer checks and landing validation
+without a shim warning. Rerunning init reproduced both templates being recreated.
+The checkout suite passed with 821 passed and 13 skipped. The report distinguishes
+sandbox checks from escalated execution and records the existing Avast exception
+for pytest. It does not establish a new install, fresh-app acceptance or native
+skill routing from an agent rooted in the temporary project.
+
 ## Machine state (2026-10-27)
 
 Superseded for the tool: since run 4, `llm-commonplace` is the `main` build over python.org 3.14.7, and the shims are on the user `Path`.
