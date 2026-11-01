@@ -1,6 +1,6 @@
 # Codification commits an operation to rules a clerk could follow
 
-Workshop draft, 2026-11-01, written after [Astra's review](./review-2026-11-01-astra.md). This file is step 2 of the [workshop](./README.md): it gives the account that the [proposed definitions](./candidate-definitions.md) apply. It is an architectural account of a commitment made in a system, not a theory of language. The [tentative theory of natural language](./where-meaning-is-settled.md) is a side result, and nothing here depends on it.
+Workshop draft, 2026-11-01. A system codifies an operation when it commits the operation to a designated reference that settles the relevant choices by rules a clerk could follow. This file is step 2 of the [workshop](./README.md): it gives the account that the [proposed definitions](./candidate-definitions.md) apply. It is an architectural account of a commitment made in a system, not a theory of language. The [tentative theory of natural language](./where-meaning-is-settled.md) is a side result, and nothing here depends on it.
 
 ## Three questions the current definitions run together
 
@@ -8,7 +8,7 @@ Workshop draft, 2026-11-01, written after [Astra's review](./review-2026-11-01-a
 2. **How content is represented.** Whether an identifiable unit carries the content, and whether its consequences are assigned or reinterpreted on each consumption.
 3. **How unresolved choices are handled.** What happens when the rules do not settle a case.
 
-The current [codification](../../theory/definitions/codification.md) definition answers all three with one phrase, and the first draft of this workshop answered them with another, "a designated reference settles what it permits". Astra's review showed that each needs its own test, and that the first draft made the three do each other's work.
+The current [codification](../../theory/definitions/codification.md) definition answers all three with one phrase. [Astra's review](./review-2026-11-01-astra.md) showed that each needs its own test. The sections below take them in turn.
 
 ## The hypothesis
 
@@ -16,13 +16,7 @@ Astra, in a [follow-up comment](./review-2026-11-01-astra.md#follow-up-comment-p
 
 > The practical difference is not formalizability versus non-formalizability. It is whether the operation has been committed to a delimited interpretation regime, or still relies on ordinary linguistic judgment to settle what its instructions require.
 
-This is the commitment below in one sentence, and the workshop adopts it as the hypothesis under test. Three glosses keep it from sliding.
-
-- **Delimited** is Tarski's exactly specified structure, in the sense the [1944 paper](../../sources/tarski-semantic-conception-of-truth.ingest.md) gives it: the regime fixes which expressions count, which terms are undefined, and under what conditions a sentence is asserted or an action permitted, so what the instructions require is settled within the regime and not by appeal outside it. This is what the clerk conjunct below tests for.
-- **Committed** is an act of the system, not a property of the language. The same instruction can be committed to a regime in one system and left to ordinary judgment in another. This is the designation conjunct.
-- **Ordinary linguistic judgment** is judgment by whoever reads, under conventions that no designated reference fixes. A human arbitrator is a designated reader who still exercises it, so the operation is not committed to a delimited regime. A frozen prompt–model package is committed to one, by stipulation: the regime is the package's behavior, not the conventions of English, even though the prompt stays natural-language in form.
-
-The hypothesis concerns the operation. Representational form is the separate question treated below.
+The workshop adopts this as the hypothesis under test. It concerns the operation; representational form is a separate question, treated below. The commitment restates it in full, and its two conjuncts pin the hypothesis's three terms: *committed* is the first conjunct, *delimited* is what the second tests for, and *ordinary linguistic judgment* is what the second excludes.
 
 ## The commitment
 
@@ -30,9 +24,9 @@ The hypothesis concerns the operation. Representational form is the separate que
 
 Two conjuncts, and both are needed.
 
-**A designated reference governs.** The system has adopted an implementation, a specification, or a specification plus execution parameters as what the artifact's language means. A consumer held to it that departs from it is wrong. Designation is an act of the system, not a property of the implementation. CPython is Python's reference only where a project has adopted its behavior as such; otherwise a CPython deviation from the language reference is a bug. A validator fixes what a schema means only where the system has adopted it as the reference rather than as one implementation of a schema language. [Which reference is designated decides what counts as a violation, not whether behavior can be formally described](./implementation-and-shared-semantics.md). The reference is stated outside the artifact's language, in a specification, a machine, or both; whether natural language can have a reference stated outside itself is the [Tarski thread](./tarski-thread.md), and this account does not depend on its answer.
+**A designated reference governs.** The system has adopted an implementation, a specification, or a specification plus execution parameters as what the artifact's language means. A consumer held to it that departs from it is wrong. Designation is an act of the system, not a property of the language or of the implementation: the same instruction can be committed to a regime in one system and left to ordinary judgment in another. CPython is Python's reference only where a project has adopted its behavior as such; otherwise a CPython deviation from the language reference is a bug. A validator fixes what a schema means only where the system has adopted it as the reference rather than as one implementation of a schema language. [Which reference is designated decides what counts as a violation, not whether behavior can be formally described](./implementation-and-shared-semantics.md). The reference is stated outside the artifact's language, in a specification, a machine, or both. Whether natural language can have a reference stated outside itself is the [Tarski thread](./tarski-thread.md), and this account does not depend on its answer.
 
-**The reference settles by rules a clerk could follow.** Turing derived the formal machine by asking what a human computer can do when following exact instructions without insight ([Church–Turing](../../sources/church-turing-thesis-sep.ingest.md)). A reference that settles choices by judgment about what was intended governs without codifying. A contract's arbitrator and a workflow's human judge of "sufficient evidence" are designated references that fail this conjunct. An ambiguous passage in a language standard is a gap in a reference that otherwise passes it: the passage governs, but it does not settle.
+**The reference settles by rules a clerk could follow.** Turing derived the formal machine by asking what a human computer can do when following exact instructions without insight ([Church–Turing](../../sources/church-turing-thesis-sep.ingest.md)). This conjunct tests for the hypothesis's delimited regime: Tarski's exactly specified structure, in the sense the [1944 paper](../../sources/tarski-semantic-conception-of-truth.ingest.md) gives it. The regime fixes which expressions count, which terms are undefined, and under what conditions a sentence is asserted or an action permitted, so what the instructions require is settled within the regime and not by appeal outside it. The hypothesis's ordinary linguistic judgment is judgment by whoever reads, under conventions that no designated reference fixes. A reference that settles choices by judgment about what was intended governs without codifying. A contract's arbitrator and a workflow's human judge of "sufficient evidence" are designated readers who still exercise that judgment, so they fail this conjunct. A frozen prompt–model package is committed to a delimited regime by stipulation: the regime is the package's behavior, not the conventions of English. An ambiguous passage in a language standard is a gap in a reference that otherwise passes this conjunct: the passage governs, but it does not settle.
 
 Where the reference leaves a choice open, that is a declared gap. C's undefined, unspecified and implementation-defined behaviors are named in advance. Whether a particular program reaches such a gap can be undecidable, so the claim concerns what the reference declares, not what a consumer can decide before running.
 
@@ -40,7 +34,7 @@ Where the reference leaves a choice open, that is a declared gap. C's undefined,
 
 Form is a property of an artifact under a consumption path. Commitment is a property of a system. They usually coincide: a script consumed by its designated interpreter is symbolic because its consequences are assigned by the commitment. They can come apart, and when they do the artifact is split by operative part or consumption path, as [representational form](../../theory/definitions/representational-form.md) already allows for mixed artifacts.
 
-The frozen prompt–model package is the clear case. Adopting the package as the reference for one operation commits that operation. It does not change the form of the parts: the prompt stays natural-language and the weights stay distributed-parametric. What the commitment adds is that, for this operation, the package's behavior is what counts, so a different model reading the same prompt is not a competing reading of the prompt but a different operation.
+The frozen prompt–model package is the clear case of the two coming apart. Adopting the package as the reference for one operation commits that operation. It does not change the form of the parts: the prompt stays natural-language and the weights stay distributed-parametric. What the commitment adds is that, for this operation, the package's behavior is what counts, so a different model reading the same prompt is not a competing reading of the prompt but a different operation.
 
 The assigned-consequences axis of representational form should therefore read: consequences are assigned when the artifact is consumed under a commitment of the kind above, and reinterpreted on each consumption otherwise.
 
@@ -72,7 +66,7 @@ Diagnostic: if a consumer can legitimately ask the author what the artifact mean
 
 ## Open questions
 
-1. Does "designated reference" need a definition of its own in the library, or do the two conjuncts in the criterion paragraph suffice?
+1. Does "designated reference" need a definition of its own in the library, or do the two conjunct paragraphs above suffice?
 2. The second conjunct is the clerk test. Does it classify an LLM-based validator correctly, where a system has adopted a model's judgment as the reference for a check? The account says the operation is committed while the check stays natural-language in form. Confirm this is the answer the KB wants.
 3. Does the boundary table survive a reviewer adding cases?
 4. Is "declared clarification step" enough to separate the parser case from an agent that asks what an instruction means, or does the input-versus-artifact wording need to be explicit in the library?
