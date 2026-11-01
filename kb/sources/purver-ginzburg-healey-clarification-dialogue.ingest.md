@@ -29,7 +29,46 @@ The problem matters: a dialogue system that cannot recognise a CR misreads it as
 
 ## Quotes
 
-No source quotes have been retained yet.
+> CRs were found to make up just under 4%
+> of sentences when calculated over the demo
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §4.4.1, frequency in demographic portion (sentence continues after a footnote block)
+
+> graphic portion, or just under 3% when calculated over all domains.
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §4.4.1, continuation: frequency over all domains
+
+> The clausal reading takes as the basis for
+> its content the content of the conversational
+> move made by the utterance being clari ed.
+> This reading corresponds roughly to \Are
+> you asking/asserting that X?", or \For which
+> X are you asking/asserting that X?".
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §3.1 clausal reading
+
+> Another possible reading is a constituent
+> reading whereby the content of a constituent
+> of the previous utterance is being clari ed.
+> This reading corresponds roughly to
+> \What/who is X?" or \What/who do you
+> mean by X?"
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §3.2 constituent reading
+
+> Another possibility appears to be a lexical
+> reading. This is closely related to the clausal
+> reading, but is distinguished from it in that
+> the surface form of the utterance is being clari ed, rather than the content of the conversational move.
+> This reading therefore takes the form \Did
+> you utter X?" or \What did you utter?".
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §3.3 lexical reading
+
+> The correction reading appears be along the
+> lines of \Did you intend to utter X (instead
+> of Y)?".
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §3.4 correction reading
+
+> Nearly 50% of CRs can be successfully
+> interpreted as having a clausal reading, although both the lexical (about 35%) and constituent (about 15%) readings also make up a
+> signi cant proportion.
+> --- `kb/sources/.snapshots/purver-ginzburg-healey-clarification-dialogue.md` @ `sha256:3b2b3893db8be52f4e0bb7fbf7275f17368f642ecf1c71721fa6fc911f96a6ce` — §4.4.1, reading proportions
 
 ## Connections Found
 

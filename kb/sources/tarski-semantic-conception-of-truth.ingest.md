@@ -29,7 +29,29 @@ The problem is central to logic and semantics: how to use "true" consistently, g
 
 ## Quotes
 
-No source quotes have been retained yet.
+> *The problem of the definition of truth obtains a precise meaning and can be solved in a rigorous way only for those languages whose structure has been exactly specified.* For other languages — thus, for all natural, "spoken" languages — the meaning of the problem is more or less vague, and its solution can have only an approximate character.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 6
+
+> (I) We have implicitly assumed that the language in which the antinomy is constructed contains, in addition to its expressions, also the names of these expressions, as well as semantic terms such as the term "*true*" referring to sentences of this language; we have also assumed that all sentences which determine the adequate usage of this term can be asserted in the language. A language with these properties will be called "*semantically closed*."
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 8, assumption (I)
+
+> (II) We have assumed that in this language the ordinary laws of logic hold.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 8, assumption (II)
+
+> But the assumptions (I) and (II) prove essential. Since every language which satisfies both of these assumptions is inconsistent, we must reject at least one of them;
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 8
+
+> It would be superfluous to stress here the consequences of rejecting the assumption (II), that is, of changing our logic (supposing this were possible) even in its more elementary and fundamental parts. We thus consider only the possibility of rejecting the assumption (I). Accordingly, we decide *not to use any language which is semantically closed* in the sense given.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 8, the decision
+
+> Our everyday language is certainly not one with an exactly specified structure. We do not know precisely, which expressions are sentences, and we know even to a smaller degree which sentences are to be taken as assertible. Thus the problem of consistency has no exact meaning with respect to this language.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 8, everyday language
+
+> upon the fact whether the metalanguage in its logical part is "*essentially richer*" than the object language or not.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 10
+
+> For *the condition of the "essential richness" of the metalanguage proves to be, not only necessary, but also sufficient for the construction of a satisfactory definition of truth;* i.e., if the metalanguage satisfies this condition, the notion of truth can be defined in it.
+> --- `kb/sources/.snapshots/tarski-semantic-conception-of-truth.md` @ `sha256:3efc7f9394fa51e3a5e43dcdca1c462e9a3f0d26f26fc99e40412b33bd953a5e` — section 10, sufficiency
 
 ## Connections Found
 

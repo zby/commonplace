@@ -25,7 +25,75 @@ The article has three sections. **Truth:** Tarski takes the classical, Aristotel
 
 ## Quotes
 
-No source quotes have been retained yet.
+> The
+> common language is universal and is in­
+> tended to be so.
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 67, universality of the common language
+
+> In particular, it is semanti­
+> cally universal in the following sense.
+> Together with the linguistic objects, such
+> as sentences and terms, which are com­
+> ponen ts of this language, names of these
+> objects are also included in the lan guage
+> (as we know, names of expressions can
+> be obtained by puttin g the expressions
+> in quotes) ; in addition, the language
+> contains semantic terms such as "truth",
+> "name", "designation", which directly or
+> indirectly refer to the relationship be­
+> tween linguistic objects and what is
+> expressed by them . Consequently, for
+> every sentence formulated in the com­
+> mon language, we can form in the same
+> language another sentence to the effect
+> that the first sentence is true or that it is
+> false.
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 67, the sense of "semantically universal"
+
+> I do not have in mind any­
+> thing essentially opposed to natural lan­
+> guages. On the contrary, the only formal­
+> ized languages that seem to be of real
+> interest are those which are fragments
+> of natural languages (fragments provid­
+> ed with complete vocabularies and pre­
+> cise syn tactical rules) or those which can
+> at least be adequately translated. into
+> natural languages .
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 68, formalized languages as fragments of natural languages
+
+> Furthermore, the
+> syntactical rules should be purely formal,
+> that is, they should refer exclusively to
+> the form ( the shape) of expressions ; the
+> function and the meaning of an expres­
+> sion should depend exclUSively on its
+> form.
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 68, the purely formal syntactical rules condition
+
+> Hence we conclude that the metalan­
+> guage which provides sufficient means
+> for defining truth must be essen tially
+> richer than the object-language ; it can­
+> not coincide with or be translatable into
+> the latter, since otherwise both lan­
+> guages would turn out to be seman tical­
+> ly universal, and the an tinomy of the liar
+> could be reconstructed in both of them.
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 69, untranslatable metalanguage blocks reconstruction of the liar
+
+> It compelled us to abandon all attempts
+> at clarifying the notion of truth for
+> natural languages . We had to restrict
+> our endeavors to formalized languages
+> of scientific discourse. As a safeguard
+> against a possible reappearance of the
+> antinomy, we had to complicate con­
+> siderably the discussion by distinguish­
+> ing between a language and its meta­
+> language.
+> --- `kb/sources/.snapshots/tarski-truth-and-proof.md` @ `sha256:870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a` — p. 77, abandonment of truth for natural languages
 
 ## Connections Found
 

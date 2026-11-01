@@ -25,7 +25,29 @@ The entry presents the Liar as an argument from apparently obvious premises to a
 
 ## Quotes
 
-No source quotes have been retained yet.
+> Here is a quotation from (Tarski 1944):
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:198-198` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — Tarski section, lead-in to the quoted Tarski 1944 assumptions
+
+> I. We have implicitly assumed that the language in which the antinomy is constructed contains, in addition to its expressions, also the names of these expressions, as well as semantic terms such as the term “*true”* referring to sentences of this language; we have also assumed that all sentences which determine the adequate usage of this term can be asserted in the language. A language with these properties will be called “*semantically closed*.”
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:200-200` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — Tarski section, quoted Tarski 1944 assumption I
+
+> Reflection on the Liar Paradox suggests that either informal English (or any other natural language) is not semantically closed or, if it is semantically closed as it appears to be, then it is inconsistent—assuming for the moment that it does make sense to apply the term *inconsistent* to a natural language with a vague structure.
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:388-388` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — opening of the Tarski hierarchy section
+
+> An important question regarding the Liar Paradox is: What is the relationship between a solution to the Paradox for (interpreted) formal languages and a solution to the Paradox for natural languages? There is significant disagreement on this issue.
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:354-354` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — section on formal versus natural languages
+
+> Is our natural language, for example, English, a semantically closed language?
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:356-356` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — section on formal versus natural languages
+
+> This article raises, but will not resolve, these questions, although some are easier to answer than others.
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:358-358` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — section on formal versus natural languages
+
+> Many of the most important ways out of the Liar Paradox recommend revising classical formal logic. Classical logic is the formal logic known to introductory logic students as Predicate Logic in which, among other things, (i) all sentences of the formal language have exactly one of two possible truth values (TRUE, FALSE), (ii) the rules of inference allow one to deduce any sentence from an inconsistent set of assumptions, (iii) all predicates are totally defined on the range of the variables, and (iv) classical formal semantics is the one invented by Tarski that provided the first precise definition of truth for a formal language in its metalanguage.
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:360-360` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — bracketed paragraph introducing revisions of classical logic
+
+> Kripke rejects the hierarchy of languages and retains the intuition that there is a single, semantically coherent and meaningful Liar Sentence, but argues that it is neither true nor false and so falls into a truth value gap. Kripke successfully develops the details using the tools of symbolic logic. Tarski’s Undefinability Theorem does not apply to languages having sentences that are neither true nor false. So, it can be argued that Kripke successfully shows that a semantically coherent formal language can contain its own global truth predicate in the sense that
+> --- `kb/sources/.snapshots/iep-liar-paradox.md:428-428` @ `sha256:5d1c4f89d687f46f675bba6c174e7f4988c0a93425871089200b2d60122ba03b` — opening bracketed paragraph of the Kripke section
 
 ## Connections Found
 

@@ -29,7 +29,28 @@ The problem matters: before this paper, linguistics treated correction as error 
 
 ## Quotes
 
-No source quotes have been retained yet.
+> Repair/correction is sometimes found where there is no hearable error, mistake, or fault:
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §2.12
+
+> Furthermore, hearable error does not necessarily yield the occurrence of repair/cor-
+>
+> rection:
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §2.12
+
+> In view of the point about repair being initiated with no apparent error, it appears that nothing is, in principle, excludable from the class 'repairable'.
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §2.13
+
+> they are ordered, alternating turn-by-turn between positions for selfand other-initiation, with positions for self-initiation preceding those for otherinitiation.
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §4.2
+
+> The organization of self- and other-initiation is, then, fundamentally located in the organization of repair-initiation opportunity positions; this operates whether or not any repair is initiated, by self or other.
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §4.3
+
+> The space is three turns long,22 starting from (i.e. including) the trouble-source turn.
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §4.3; '22' is a footnote marker in the capture
+
+> However, the organization of repair is the self-righting mechanism for the organization of language use in social interaction.
+> --- `kb/sources/.snapshots/schegloff-jefferson-sacks-self-correction-repair.md` @ `sha256:d428ea3cdcc08af0dd4be01aef2c886ca3e98ae18769bc44ad22e9a594e4402f` — §7
 
 ## Connections Found
 
