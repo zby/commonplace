@@ -1,26 +1,69 @@
 ---
-description: "GSM-DC isolates irrelevant-context effects and finds power-law error growth with distractor count, grounding soft context degradation while comparing training- and inference-time mitigations"
+description: "GSM-DC benchmark: irrelevant context degrades LLM math reasoning as a depth-dependent power law in distractor count, hurting both path selection and arithmetic; hard-distractor training and PRM search help"
 source: https://arxiv.org/html/2505.18761v2
 captured: "2026-03-26"
 capture: pdf-read
 genre: scientific-paper
 snapshot_sha256: 4ca8f78f9c59c7ae2b4d95be21b2e9d42c7ae1458b4947452f60940ba07f3dea
-ingested: "2026-03-26"
+ingested: "2026-11-01"
 type: types/ingest-report.md
-domains: [reasoning-robustness, context-degradation, training-methodology, evaluation-benchmarks]
+domains: [irrelevant-context, distractor-robustness, synthetic-math-benchmark, process-reward-model]
+tags: [context-engineering]
+learning_claims: true
 ---
 
-# Ingest: How Is LLM Reasoning Distracted by Irrelevant Context?
+# Ingest: How Is LLM Reasoning Distracted by Irrelevant Context? (GSM-DC benchmark)
 
 ## Classification
 
-Peer-reviewed benchmark paper with controlled experiments across six models, novel evaluation metrics (SAcc/PAcc/EAcc), and reproducible methodology using symbolic DAGs.
-
-Author: Yang, Huang, Zhang, Surdeanu, Wang, Pan (UC Santa Barbara, University of Arizona). Surdeanu and Wang are established NLP faculty. The contribution is methodological rigor — symbolic DAG construction for controlled distractor injection — rather than scale or novelty of finding.
+This is an empirical research paper. It builds a synthetic benchmark, runs
+controlled prompting experiments on six models, runs fine-tuning ablations on
+one small model, and tests an inference-time search method.
+Author: Minglai Yang, Ethan Huang, Liang Zhang, Mihai Surdeanu, William Wang
+and Liangming Pan. The snapshot names authors only, without affiliations.
+The paper is an arXiv v2 dated 22 Sep 2025 and reads as academic NLP work.
 
 ## Summary
 
-GSM-DC (Grade School Math with Distracting Context) is a synthetic benchmark that represents math word problems as directed acyclic graphs (DAGs), enabling precise injection of irrelevant context (IC) while preserving a unique correct solution path. The key contribution is methodological control: unlike prior work that used ad hoc distractors, GSM-DC independently varies distractor count and reasoning depth, then evaluates with stepwise metrics (step accuracy SAcc, path accuracy PAcc, extraction accuracy EAcc) rather than just final-answer correctness. Six findings: (1) accuracy degrades with distractor count following a power law whose exponent grows with reasoning depth; (2) IC degrades both reasoning path selection and arithmetic execution independently; (3) continued pretraining outperforms LoRA for robustness; (4) training on IC-injected data yields the strongest robustness; (5) hard-IC training generalizes best to out-of-distribution settings; and (6) PRM-guided tree search preserves in-distribution accuracy while boosting OOD robustness by up to 6.29%.
+GSM-DC (Grade School Math with Distracting Context) represents each math word
+problem as a symbolic dependency DAG with one solution path. It then injects
+off-path distractor nodes, which leave the correct solution unchanged, and
+renders the graph into templated sentences. A symbolic parser scores each
+chain of thought for Step Accuracy (SAcc: every equation correct and well
+ordered) and Path Accuracy (PAcc: every required dependency used and no
+distractor used). Across six instruction models under a fixed five-shot
+prompt, accuracy falls as distractor count m rises from 1 to 15. Error
+roughly follows a power law in m, and the exponent grows with reasoning depth
+(Grok-3-Beta: δ ≈ 0.11 at 2 steps, ≈ 0.49 at 5). The paper reads the
+SAcc/PAcc gap as showing that distractors disrupt arithmetic execution as
+well as path selection. All of this holds within one decomposition: a single
+flat prompt in which distractors are shuffled with relevant sentences. No
+arm filters, scopes or decomposes the context. Training ablations, all on
+LLaMA-3.2-1B with 30K samples, find that continued pretraining beats LoRA
+and that training on hard distractors beats clean, mixed or easy training,
+including on out-of-distribution depths. A tree search guided by a process
+reward model (PRM) keeps in-distribution accuracy and raises
+out-of-distribution step accuracy by up to 6.29%.
+
+## Contribution assessment (our opinion)
+
+The problem matters: deployed prompts routinely carry material that the task
+does not need, and the earlier GSM-IC result used a single distractor at
+shallow depth. The main contribution is an instrument rather than an
+explanation. Generating problems from DAGs makes distractor count and depth
+independently controllable, and the stepwise parser separates path errors
+from execution errors. This turns "distractors hurt" into a dose-response
+measurement with a testable depth interaction. That is a real improvement in
+test strength, and the depth × count interaction is the most reusable
+result. The paper offers no mechanism for why the exponent grows with depth.
+Its training and PRM findings are narrower: one 1B model, one training-set
+size, and gains on its own synthetic distribution. They show that the
+benchmark can measure interventions more than they establish general
+remedies. Relative to iGSM and GSM-∞, which the paper itself names, the
+novelty claim is explicit distractor control inside the DAG. I cannot judge
+priority beyond that comparison. The template realization and the missing
+filtering or decomposition baselines narrow how far the results transfer,
+but they do not undermine the benchmark contribution.
 
 ## Quotes
 
@@ -50,60 +93,166 @@ GSM-DC (Grade School Math with Distracting Context) is a synthetic benchmark tha
 
 ## Connections Found
 
-The `/connect` discovery identified 8 note connections and 5 source connections, with substantial integration into existing KB theory.
+This source is the KB's controlled anchor for interference from semantically
+inert irrelevant context. Two notes already depend on it.
+[Soft degradation can bind before the hard cap](../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md)
+cites it as evidence for its interference claim. GSM-DC is evidence for that
+note's point that irrelevant tokens can cost more than their volume. The
+evidence is bounded to templated math problems, m ≤ 15, depths 2 to 5 and a
+single flat prompt. The note's open question, how stable the depth × count
+interaction is outside this benchmark, is one the paper cannot answer.
+[Process structure and output structure are independent levers](../theory/process-structure-and-output-structure-are-independent-levers.md)
+uses the PAcc/SAcc split as a bound rather than a test. The two metrics
+separate path selection from execution inside one shared trace format.
+Neither varies a process instruction against an output constraint.
 
-**Core grounding relationships:** GSM-DC provides the most controlled empirical evidence for two foundational notes. It directly measures the soft degradation curve theorized in [agent-context-is-constrained-by-soft-degradation](../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) (which already cites it), and its depth-dependent exponent delta(rs) growing from 0.11 to 0.49 directly answers the open question in the [soft-degradation note](../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) about "a clean empirical regime where volume can be varied while task difficulty and compositional complexity stay mostly fixed." The DAG-based construction is exactly that regime.
+GSM-DC is evidence for the architectural premise of
+[LLM context is composed without scoping](../theory/llm-context-is-composed-without-scoping.md).
+In a flat context nothing excludes off-path sentences, and they still steer
+the computation. It is the inert-noise end of the comparison that note draws
+with [semantic leakage](./semantic-leakage-lms-gonen.ingest.md) and
+[content effects on reasoning](./language-models-like-humans-show-content-effects-on-reasoning.ingest.md).
+The shared axis is what kind of unlicensed content each study varies: GSM-DC
+varies count, Gonen varies associative concepts, and Lampinen varies belief
+congruence inside the premises. The training responses differ. Hard
+distractor training helps here, whereas instruction tuning increases leakage
+in Gonen and leaves content effects unchanged in Lampinen. That divergence is
+evidence against assuming one mechanism across the three paradigms. It does
+not establish that the mechanisms differ.
+[Context contamination operates below compliance reasoning](../theory/context-contamination-operates-below-an-agents-compliance-reasoning.md)
+compares with it on the same axis, at the agent-stance end.
 
-**Extension relationships:** GSM-DC's PAcc vs SAcc metrics operationalize the [process-structure-and-output-structure-are-independent-levers](../theory/process-structure-and-output-structure-are-independent-levers.md) distinction with empirical evidence that both degrade independently under noise. Its Hard-IC result changes the training data directly, so it contrasts with [structured-prompt gains do not establish training-distribution selection](../theory/structured-prompt-gains-do-not-establish-distribution-selection.md), which concerns whether an inference-time prompt effect identifies such a mechanism. The irrelevant-padding measurement grounds [operational-signals-that-a-component-is-a-relaxing-candidate](../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md) and quantifies the brittleness signal that note describes qualitatively.
+Three sibling sources separate variables that GSM-DC holds together or
+leaves out. [ConvexBench](./convexbench-can-llms-recognize-convex-functions.ingest.md)
+compares with it on depth versus volume. ConvexBench keeps token count small
+while depth varies, and it supplies a focused-context arm, which is the
+scoping baseline that GSM-DC lacks.
+[Paulsen's maximum effective context window](./paulsen-maximum-effective-context-window-mecw.ingest.md)
+compares with it on volume versus interference. Paulsen varies span length;
+GSM-DC bounds total graph size and varies only off-path nodes.
+[The web-agents long-context benchmark](./llm-webagents-long-context-reasoning-benchmark.ingest.md)
+compares with it on dose. That benchmark injects irrelevant prior tasks into
+agent histories of 25k to 150k tokens, but varies length and content
+together. For the execution errors on correct paths,
+[the J-space workspace paper](./verbalizable-representations-global-workspace-llms.ingest.md)
+offers one candidate mechanism, workspace displacement. That paper reports
+that chain of thought makes GSM8K more robust to ablation. GSM-DC enforces
+chain of thought and still degrades, which bounds that relief claim.
 
-**Additional grounding:** The paper's Flanker Task parallel grounds [human-writing-structures-transfer-to-llms](../theory/human-writing-structures-transfer-to-llms-because-failure-modes.md) with controlled evidence for human-LLM failure mode overlap. The PRM-guided tree search exemplifies the amplification mechanism in [error-correction-works-above-chance-oracles](../theory/error-correction-works-above-chance-oracles-with-decorrelated-checks.md). The flat-context distractor injection demonstrates the cost described in [llm-context-is-composed-without-scoping](../theory/llm-context-is-composed-without-scoping.md).
+## Learning Claims (our opinion)
 
-**Source complements:** Lampinen, ConvexBench, Paulsen MECW, the web-agents benchmark, and [semantic-leakage-lms-gonen.ingest.md](./semantic-leakage-lms-gonen.ingest.md) converge on the soft-bound model — but as **surface regimes of one mechanism** (non-selective integration of prompt semantics in flat context), not independent degradation axes. GSM-DC's synthetic distractors are a clean control; Gonen and Lampinen measure the realistic case where irrelevant material is semantically linked to the task.
+On its own terms, the paper's learning mechanism is supervised fine-tuning
+of LLaMA-3.2-1B on GSM-DC problems. The variables are adaptation method
+(continued pretraining vs LoRA) and distractor exposure (clean, IC-only,
+clean+IC, and easy, mixed or hard IC). The inference-time mechanism is a
+PRM. It is trained on reasoning paths into which distractors and arithmetic
+errors were injected, and it scores partial paths to guide a tree search.
 
-**Synthesis opportunity (revised):** Do **not** write a multi-axis taxonomy — benchmark labels (noise, content bias, association, depth) describe what was varied in each study, not separate mechanisms. The synthesis worth writing: one mechanism (prompt semantics the task contract does not license still steer output), multiple empirical regimes, one architectural remedy (exclusion/scoping per [llm-context-is-composed-without-scoping](../theory/llm-context-is-composed-without-scoping.md)). GSM-DC Finding II (depth × distractor interaction) is compounding exposure to the same failure across longer chains, not evidence of a second mechanism.
+Mapped onto Commonplace: the fine-tuning results are weight-level adaptation
+inside a fixed decomposition, as in
+[learning inside a fixed decomposition inherits its mistakes](../theory/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
+The task representation (one flat prompt with distractors shuffled in), the
+action basis (free-text chain of thought), and the template vocabulary stay
+outside the update space. The learner can only become better at ignoring
+distractors that it still reads. The result supports "hard exposure improves
+robustness within this decomposition." It provides no comparison with
+changing the decomposition, for example by filtering, scoping or splitting
+context before the call. It therefore says nothing about whether training is
+preferable to exclusion. The claim that "difficulty rather than variety"
+drives the gain is attributable only to the mixes tested at one model scale
+and one data size.
+
+Against the [theory builder](../theory/definitions/theory-builder.md)
+conditions: the fine-tuned model fails localized content, since what it
+learns resides in weights, with no stated units to point at. Consumption,
+criticism and iteration therefore do not apply in the defined sense. The PRM
+search comes closer within one run. Partial reasoning steps are stated text.
+The PRM criticizes them, which is weak, learned and not itself open to
+criticism. Low-scoring branches are pruned, and the retained frontier shapes
+the next expansion. That meets the content-directed criticism and iteration
+conditions only within an episode, and the results do not persist across
+problems. Whether the PRM scores discriminate distractor use specifically,
+rather than general step quality, is not reported. The learning claim that
+is actually supported is improved future capacity of the fine-tuned 1B model
+on GSM-DC-like distributions, including deeper out-of-distribution problems.
+That is an observed improvement, not a demonstrated mechanism.
 
 ## Extractable Value
 
-1. **Power-law error scaling formula: E(m; rs) ~ m^delta(rs).** This gives the soft-degradation note a quantitative backbone — not just "accuracy degrades" but a specific functional form with depth-dependent exponents. High reach: the power-law form likely transfers beyond math problems to any task where distractors dilute attention across compositional reasoning steps. [quick-win: cite formula in the effective-context note]
-
-2. **IC degrades arithmetic execution independent of path selection (Finding IV).** Most surprising finding (see Curiosity Gate below). Even when the model selects the correct reasoning path (PAcc = 1), it still makes more arithmetic errors when distractors are present (SAcc < PAcc). Irrelevant context does not just mislead planning — it corrupts execution of correctly planned steps. Two distinct degradation channels requiring different mitigations. High reach: if noise degrades execution independent of planning, this affects any multi-step agent system, not just math. [experiment: test whether dual-channel degradation appears in agentic task execution]
-
-3. **Hard-IC training dominates mixed-IC and clean training for OOD generalization (Finding V).** Distractor difficulty, not variety, is the primary driver of robustness improvement. This contradicts the common intuition that diverse training data outperforms uniform hard examples. Moderate reach: established only on LLaMA-3.2-1B with 30K samples; the principle (difficulty > diversity for robustness) may not hold at larger scales. [deep-dive: investigate whether difficulty-over-diversity holds for instruction following and agentic contexts]
-
-4. **SAcc and PAcc as operational metrics for process vs output quality.** These metrics cleanly separate "did the model reason correctly?" (PAcc) from "did it compute correctly?" (SAcc). Existing benchmarks typically conflate these into a single accuracy number. High reach: the distinction transfers to any evaluator that needs to diagnose whether failures are strategic (wrong plan) or tactical (wrong execution). [quick-win: reference in process-structure note as empirical operationalization]
-
-5. **The DAG construction as a controlled empirical regime.** GSM-DC's methodology — independently varying distractor count and reasoning depth while holding the solution path fixed — answers the effective-context note's open question. The methodology itself is the transferable insight: if you want to measure how noise interacts with complexity, you need a framework where both are independently controllable. High reach as a design principle. [just-a-reference]
-
-6. **PRM preserves ID accuracy while boosting OOD robustness (Finding VI).** PRM-guided tree search gets both — no trade-off between in-distribution performance and robustness. The PRM training recipe (inject IC and arithmetic errors as negatives) is explicit oracle-hardening. Moderate reach: the specific PRM architecture is narrow, but the principle (process-level verification that does not degrade baseline performance) transfers to any inference-time verification approach. [just-a-reference]
-
-7. **Model capacity sets the baseline intercept; reasoning depth governs the degradation slope.** GPT-4.1 has higher baseline error than Grok-3-Beta but similar slope. Separates two independent factors in robustness: raw capability vs noise resilience. Low reach: demonstrated only for math. [just-a-reference]
-
-## Curiosity Gate
-
-**What is most surprising?** Finding IV — that irrelevant context degrades arithmetic execution even on correct reasoning paths. The intuitive model of distraction is "the model gets confused about what to compute." But GSM-DC shows distraction also corrupts how the model computes things it has correctly identified as relevant. This is a stronger claim than attention dilution: it implies that irrelevant tokens in the context window actively interfere with the model's ability to perform arithmetic on correctly-selected operands. The simpler account (IC just causes path selection errors) is empirically falsified.
-
-**What is the simpler account?** For the power-law scaling (Finding I-II): the simplest mechanism is that each additional distractor is an independent opportunity to derail reasoning, so error probability compounds with distractor count. The power law (rather than exponential) suggests the opportunities are not independent — later distractors are less disruptive, possibly because the model has already committed to a reasoning path. The depth-dependent exponent could simply reflect that longer chains have more steps where derailment can occur (more exposure). This simpler account (combinatorial exposure) would predict the same qualitative trend without requiring any sophisticated attention-dilution mechanism. However, it does not explain Finding IV (execution degradation on correct paths), which requires a mechanism beyond path-selection exposure.
-
-**Is the central claim hard to vary?** The power-law functional form is soft — the paper says "roughly follows" without rigorous fitting. You could plausibly fit other monotone-increasing functions (logistic, exponential with saturation) to the same data. The qualitative claim (more distractors = worse performance, worse at deeper reasoning) is hard to vary — you would need a different theory of attention to predict otherwise. But the specific functional form is easy to vary, which limits the precision of quantitative extrapolation. The dual-channel finding (IV) is harder to vary: it depends on the specific PAcc/SAcc decomposition, and changing the metric definitions would change whether the effect appears.
+1. **Depth × distractor interaction as a quantitative bound.** Error grows
+   roughly as m^δ, and δ rises with reasoning depth while model capacity sets
+   the intercept. This sharpens the soft-degradation argument: the cost of
+   irrelevant material is not fixed per token; it compounds with how many
+   dependent steps the task needs. This holds for a single flat prompt with
+   shuffled templated distractors. Transfer to natural prose, partially
+   relevant material or agent histories is untested. The reach is moderately
+   high as a design heuristic (scope harder for deeper tasks) and low as a
+   numeric rate. [quick-win]
+2. **Distractors reach execution, not only selection.** SAcc can fail where
+   PAcc succeeds, and the paper reports this gap as larger for clean-trained
+   models. If it holds, filtering that only keeps the model on the right path
+   does not by itself protect arithmetic. The evidence sits in the
+   ambiguously stated Δ passage (see Limitations), and the shared five-shot
+   chain-of-thought format is fixed. Treat this as a conjecture to check
+   against Figure 6 before reuse. [experiment]
+3. **The benchmark design pattern: generate from a graph, inject off-path
+   nodes, score with a symbolic parser.** This is a reusable way to build a
+   controlled interference test in which the correct answer is invariant to
+   the manipulation. A Commonplace-scale analogue could inject off-topic KB
+   notes into a fixed retrieval context and check whether a derivation cites
+   them. [experiment]
+4. **Training on hard distractors helps, within the fixed prompt
+   decomposition.** This is evidence that interference is partly learnable
+   away in weights, and a datum for the cross-paradigm divergence (Gonen,
+   Lampinen). It does not compare training with exclusion, so it is not
+   evidence for choosing training over scoping. [just-a-reference]
+5. **PRM search as an inference-time filter.** A step-level critic trained
+   on corrupted paths gives a modest out-of-distribution gain. It is a datum
+   for verifier-in-the-loop designs, but its discrimination against
+   distractors is not isolated. [just-a-reference]
 
 ## Limitations (our opinion)
 
-**What was not tested:**
-
-- **Single training scale.** All training experiments use LLaMA-3.2-1B with 30K samples. Findings about Hard-IC training, continued pretraining vs LoRA, and PRM-guided search may not generalize to larger models or larger training sets. The difficulty-over-diversity result (Finding V) is particularly vulnerable — at sufficient scale, diversity may matter more.
-
-- **Template-based language only.** GSM-DC problems are generated from templated natural language. Real-world irrelevant context is semantically richer, more varied, and often partially relevant rather than cleanly irrelevant. The power-law scaling may not hold when distractors share semantic content with the target problem — but that is likely the **default case of the same mechanism**, not a different one. [Gonen semantic leakage](./semantic-leakage-lms-gonen.ingest.md) and Lampinen's [content-effects work](https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372) measure that realistic regime directly.
-
-- **Math-only domain.** All findings are established on grade-school math. No evidence that the power-law scaling, dual-channel degradation, or training interventions transfer to reasoning tasks in other domains (code, planning, argumentation). The [explanatory reach](../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) of the findings depends on whether the mechanisms (attention dilution, path selection corruption) are domain-general or exploit math-specific model behaviors.
-
-- **No scoping or decomposition baselines.** The paper tests training-time interventions (Hard-IC training) and inference-time interventions (PRM-guided search), but does not test the most obvious architectural intervention: decomposing the problem so that distractors are out of scope. This is precisely what [llm-context-is-composed-without-scoping](../theory/llm-context-is-composed-without-scoping.md) proposes. The absence of this baseline means the paper cannot assess whether scoping is more or less effective than the tested interventions.
-
-- **Reasoning depth capped at 5 steps for experiments.** The most interesting regime — where compositional depth interacts with distractor count at scale — is unexplored. The power-law exponent delta(rs) is established at only four depth levels (rs = 2, 3, 4, 5). Whether the trend continues, saturates, or changes character at deeper reasoning is unknown.
-
-- **Power-law fit not statistically validated.** The paper shows the trend visually and reports exponents, but does not report goodness-of-fit metrics, confidence intervals, or alternative functional forms tested. The claim "roughly follows a power-law" is plausible from the figures but not rigorously established.
-
-- **No naive baselines for PRM comparison.** The PRM is compared against standard decoding, but not against simpler interventions like self-consistency decoding, majority voting, or explicit "ignore irrelevant information" instructions. The 6.29% OOD improvement is hard to contextualize without these baselines.
+- **No scoping or decomposition baseline.** Every arm keeps distractors in
+  the same flat prompt. The paper cannot say whether pre-filtering,
+  retrieval narrowing or step decomposition would beat Hard-IC training, so
+  its "most effective intervention" claims rank only within-decomposition
+  remedies. ConvexBench's focused-context arm is the nearest comparison in
+  the KB.
+- **Inert, templated distractors.** Distractors are off-path DAG nodes
+  rendered from the same templates and entity vocabulary as relevant
+  sentences. This tests count, not semantic proximity or partial relevance.
+  The paper itself concedes limited linguistic expressiveness. A simpler
+  account is that the model is pattern-matching template surface forms, and
+  it is not ruled out.
+- **The Δ passage is internally inconsistent as stated.** The paper defines
+  Δ as an SAcc/PAcc ratio and says a lower ratio means a larger gap. It then
+  says clean-trained models show a higher Δ, yet concludes that they suffer
+  more execution damage. The ingest cannot resolve which reading Figure 6
+  supports, because the snapshot does not include the figure. The
+  "IC affects arithmetic execution" finding should be used only after
+  checking it against the published figure.
+- **Training evidence is one small model.** All fine-tuning is on
+  LLaMA-3.2-1B with 30K samples. The continued-pretraining vs LoRA and
+  hard-vs-mixed conclusions may not hold at scale.
+- **Power-law fit reported loosely.** "Roughly follows a power-law" is
+  stated without fit quality, intervals or comparison with rival functional
+  forms over a narrow range (m = 1 to 15, 100 instances per condition). The
+  exponents are descriptive, not predictive.
+- **Prompt confound.** The five-shot prompt adds a structured Background
+  section that encodes the relevant dependencies. Robustness under ordinary
+  prompting may differ, and EAcc stays high partly because of the enforced
+  format.
+- **Capture boundary.** The snapshot omits figures and tables (Figure 4 to
+  6, Table 1), so this ingest relies on the paper's text for every numeric
+  result except those quoted in the prose.
 
 ## Recommended Next Action
 
-Write a note titled "Non-selective prompt integration is one mechanism with many benchmark surfaces" connecting to [agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md](../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md), [context-contamination-operates-below-an-agents-compliance-reasoning.md](../theory/context-contamination-operates-below-an-agents-compliance-reasoning.md), and [llm-context-is-composed-without-scoping.md](../theory/llm-context-is-composed-without-scoping.md) — argue that GSM-DC, Lampinen, Gonen, and ConvexBench are converging measurements of the same flat-context failure (semantics in the window steer output the task contract does not license), differing in dose, task grain, and what was injected — not independent axes requiring axis-specific mitigations. Architectural exclusion remains the single remedy that addresses the mechanism; training and prompting interventions test whether the integration can be conditioned away (empirically doubtful for agent contaminants).
+Check the Δ(SAcc, PAcc) direction against Figure 6 of the
+[arXiv paper](https://arxiv.org/html/2505.18761v2). Then update the GSM-DC
+sentence in
+[soft degradation can bind before the hard cap](../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md),
+which currently says the disruption "affected both correct path selection
+and arithmetic execution", to either keep or qualify the arithmetic-execution
+clause.
