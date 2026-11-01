@@ -88,3 +88,4 @@ Relevant Notes:
 3. The criterion now sits in this definition and codification points to it, reversing the current pointer. Which library notes link codification for the test and need to link form instead?
 4. The natural-language paragraph says conventions make some readings wrong "whether or not the author is available". That clause comes from the side theory, which the definitions must not depend on. Keep it as a claim of the definition, or cut it?
 5. Does the boundary table in the [account](./symbolic-form-and-codification.md) survive a reviewer adding cases?
+6. Under the criterion, a community that came to hold its readers to a model would have a symbolic scoped language, whatever the model's adequacy. [Astra's answer](./probe-response-2026-11-01-astra.md) to the probe reaches a similar construction by way of demonstrated fidelity. Should the definition say that adequacy plays no part in the criterion, or is the held-to condition enough to imply it?

@@ -29,6 +29,10 @@ The connection reports propose `evidenced-by` links, each worded as qualifying r
 - [conversation vs prompt refinement](../../theory/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md) to the repair ingest: most self-repair finishes inside the same turn, which qualifies "can only append corrections".
 - The two new ingests on repair and clarification should link each other with `compares-with`.
 
+## Routed from the probe answer
+
+[Astra's answer](./probe-response-2026-11-01-astra.md) to the probe points at the C11 committee draft, WG14 N1570, sections 3.4.1 to 3.4.4, for the categories of unspecified, implementation-defined and undefined behavior. The account's section on what the reference leaves open uses those categories without a retained quote; an ingest of those sections would ground it, and the answer's split between permitted freedom, several actions satisfying one acceptance condition, and unresolved interpretation, uncertainty about which condition governs, is a cleaner wording for the section than the account's. The answer's six interpretation statuses, its ambiguity exception with the undecidability of task-relevant ambiguity for expressive acceptance conditions, and its assessment design belong to the [ideal-interpreter workshop](../ideal-interpreter/README.md), which owns the interpreter device; this workshop takes none of it.
+
 ## A possible new note
 
 The connection passes suggest one claim the theory collection does not state: an agent handoff behaves like a delayed medium, so the cost of confirming understanding shifts to writing the prompt up front. Not written; revisit if the commitment account survives review.
