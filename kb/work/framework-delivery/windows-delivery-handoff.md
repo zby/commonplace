@@ -170,7 +170,7 @@ Owner: [execution-channel-compatibility](../execution-channel-compatibility/READ
 - [ ] Follow [probe revision 7](./probe-package/PROTOCOL.md) for relevant cases.
   Record whether Claude Code honors the generated Windows read rule. Do not
   reuse agents rooted in the Commonplace checkout as installed-project evidence.
-- [ ] Where Codex is available, repeat the no-stub index route with arguments
+- [x] Where Codex is available, repeat the no-stub index route with arguments
   after the routing-file fix, using sessions rooted in the scratch project.
 - [ ] Where pi is available, test INSTALL.md's user-level extension and worker
   copy in an installed scratch project (probe case 10), not just this checkout's
@@ -289,3 +289,13 @@ or resume step.
   workarounds (added to INSTALL.md the same day). Evidence:
   [run 4](../windows-install/results-2026-10-31-afflicted-main-run4.md). No agent
   skill-discovery check (item 4) was run.
+- **2026-10-31, item 4 (installed-project agents).** Project
+  `<HOME>\cp-install-test-run4` over the run 4 install of `main`. Codex
+  0.166.0-alpha.5.1, fresh `codex exec` sessions: skill listing, bare command,
+  `$cp-skill-validate kb/log.md` through the stub, the health check (all 25 shims
+  recognised) and the no-stub index route with an argument all passed. Codex's
+  sandbox account cannot resolve `uv` or `rg` from the user's WinGet directories,
+  and its `read-only` mode cannot use the project as working directory. Claude
+  Code not run: the bundled CLI is not logged in. Evidence:
+  [installed-project agents](./results-2026-10-31-windows-installed-project-agents.md).
+  Next: Claude Code checks from a session rooted in the scratch project.
