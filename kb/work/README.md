@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — separating implementation formalizability, test agreement, shared semantics, and conformance before replacing “unique operational semantics”; retains the compiler construction and the unresolved prompt–model boundary
+- [formal-semantics-and-codification](./formal-semantics-and-codification/README.md) — replacing “unique operational semantics” with a constitutive criterion: an artifact is symbolic when a designated reference settles what it permits; retains the compiler construction, proposed library wording and a boundary-case table; adequacy of an LLM as a reference for English relegated to a research question
 
 - [epistemic-relevance-and-conceptual-blending](./epistemic-relevance-and-conceptual-blending/README.md) — observational watch and correction checklist for useful threads being given unsupported conceptual relationships; record the next few cases and counterexamples before refining the hypothesis; research retained as background, experiments deferred
 

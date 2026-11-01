@@ -1,149 +1,94 @@
-# Candidate definitions using formal semantics
+# Candidate definitions for codification and symbolic form
 
-Workshop draft, 2026-10-31. These candidates develop the [reductions note](./implementation-and-shared-semantics.md) and the subsequent operator discussion. They are for review; the current library definitions remain authoritative and unchanged.
+Workshop draft, revised 2026-11-01. The current candidate replaces the formal-semantics candidates of 2026-10-31, which are retained in a footnote[^rejected]. The [reductions note](./implementation-and-shared-semantics.md) remains the supporting argument. The library definitions remain authoritative and unchanged.
 
-## The proposed distinction
+## What the reductions settle
 
-An implementation together with a sufficiently specified execution machine supplies a construction of a formal account of its behavior. This applies to compilers and LLMs alike. The construction includes implementation bugs and can represent explicitly modeled variation. Its cost does not prevent its availability in principle.
+An implementation together with a sufficiently specified machine model supplies a formal account of its own behavior. This holds for a compiler and for a frozen language model alike. Therefore "a formal semantics exists for this artifact's language" cannot be the property that separates symbolic from natural-language content: every machine-consumed artifact satisfies it.
 
-We can designate that account as defining an operation. Alternatively, we can assess it as an attempted interpretation of meaning specified independently. The same account can play the first role for an implemented operation and the second for the requirement that operation is supposed to satisfy.
+This exposes a defect in the current [codification](../../theory/definitions/codification.md) text. It says the reference rules are conjectured to admit a formal semantics and that consumer agreement is evidence for that conjecture. Agreement corroborates conformance to a reference, not formalizability, and formalizability is trivial. The same sentences appear in the assigned-consequences axis of [representational form](../../theory/definitions/representational-form.md).
 
-Designation alone is insufficient for the distinction we need. Any frozen LLM could define an interface, but this would not make it an adequate reference for English. A reasonable reference must also preserve the linguistic distinctions relevant to the stated language and scope. The proposed property is its actual adequacy, not our belief in that adequacy; evidence for the property remains fallible.
+The current candidate therefore stops grounding the distinction in formal semantics at all. The earlier candidates tried to repair the grounding with an adequacy condition on the reference interpreter; the footnote records why that fails.
 
-The working hypothesis is that a computational interpreter can serve as a semantic reference when its command of the language is adequate within the stated scope. Better command could make reference-by-implementation reasonable for broader English uses. This is a hypothesis to test, not a claim that C implementations are uniformly correct or that English is inherently unformalizable.
+## The current candidate: a constitutive criterion
 
-## Candidate 1: Fixed formal semantics
+The criterion is constitutive, not formal:
 
-> An artifact has a fixed formal semantics within a specified system when a designated account determines what behavior it permits, including explicitly allowed variation. Conforming interpreters must preserve that account. It can be specified mathematically or determined by a designated implementation and execution model.
+> An artifact is **symbolic** when a designated reference settles what it permits. The artifact's language means what that reference says it means, so a consumer that departs from the reference is wrong. An artifact is **natural-language** when no designated consumer constitutes its meaning. Its language exists independently of any interpreter, so two consumers can read it differently without either being wrong.
 
-The account need not have been separately written down as mathematical rules. An implementation and machine model can supply its construction. Equivalent mathematical presentations count as the same semantics; “fixed” does not require a single permitted output.
+The designated reference is an implementation, a specification, or a specification plus implementation parameters. For CPython and a script, the implementation constitutes the language. For a schema and a validator, the validator constitutes what the fields permit. For a route table and a resolver, the resolver constitutes the table's format. In each case the question "what does this artifact permit" has an adjudicator.
 
-The scope fixes the language version, relevant execution conditions, and observations being compared. The designation establishes which rules define the operation. Whether a particular executor conforms to them is a separate question. Independent implementations agreeing under tests that could reveal violations corroborate conformance; passing tests does not prove it.
+English has no adjudicator. A model reading a prompt does not constitute what the prompt means. A second model reading it differently is not thereby wrong. This is the same point the current definitions make with "consumers held to one reference" and with the misuse case about repeatability. The candidate states it directly and drops the formal-semantics decoration around it.
 
-“Shared semantics” describes what conforming interpreters preserve. It need not be introduced as another registered term. A fixed account remains fixed even when an implementation fails to preserve it or nobody has yet established conformance.
+Three consequences:
 
-## Candidate 2: Adequate reference interpreter
+1. **Tests change role.** Independent implementations and conformance tests corroborate that a consumer conforms to the reference. They say nothing about formalizability, and never did. Agreement remains insufficient: consumers can share a bug and a suite can miss it.
+2. **The clerk test stays.** A rule is a candidate for codification when a consumer forbidden insight could follow it ([Church–Turing](../../sources/church-turing-thesis-sep.ingest.md)). The test concerns the rules the artifact states, not the consumer's machinery, so the observation that a model's computation is also mechanical does not touch it.
+3. **The proxy-versus-requirement split stays.** A designated reference fixes what the artifact permits. Whether that is the right operation for the task remains open ([fixed artifacts split into exact specs and proxy theories](../../theory/exact-implementation-does-not-validate-a-requirement.md)).
 
-> A computational interpreter is an adequate semantic reference for a language within a stated scope when it preserves the language's relevant distinctions of meaning, permitted variation, and contextual interpretation. Its designation as a reference does not establish this adequacy. Its implementation and execution model provide a construction of the semantics it realizes.
+## Proposed library wording
 
-Adequacy includes distinguishing legitimate readings from misunderstandings, preserving consequences under meaning-preserving reformulations, and changing interpretation when relevant context changes. Merely producing plausible responses or agreeing with a majority is insufficient.
+### Codification: opening
 
-A perfect reference would preserve all relevant distinctions throughout its scope. A practically acceptable reference may have documented limitations within an explicitly bounded use. The decision to accept those limitations is separate from the claim of perfect command. Tests corroborate competence; they do not convert approximate competence into perfection.
+> Codification commits a rule or operation stated in natural language to a symbolic artifact, such as code or a schema, whose permitted behavior is settled by a designated reference. Fixed rules, implemented by a runtime, parser, validator, type checker, query engine, or resolver, determine what behavior is permitted, including any variation they explicitly allow. The consumer changes from a model or human who reinterprets the text on each use to one bound by those rules, so what the artifact permits no longer depends on who reads it.
 
-This candidate introduces a substantive correctness condition whose assessment is still open. Independent speaker judgments, controlled examples, and adversarial tests are possible evidence, not definitions of correctness. Linguistic competence must also be distinguished from factual knowledge, general reasoning ability, and willingness to follow instructions.
+### Codification: criterion and testing
 
-## Candidate 3: Symbolic representational form
+> The criterion is constitutive, not formal. A symbolic artifact's language means what its designated reference says it means. The reference fixes the language version and any implementation or execution parameters needed to settle what is permitted. When two consumers held to that reference disagree about what the rules permit, one of them is wrong. Departures are failures to implement the committed rules, not alternative admissible interpretations. Natural language has no such reference: its meaning is independent of any consumer, so two readings can both be reasonable.
+>
+> Whether a formal semantics exists for the artifact's language is not the criterion. Any implemented consumer together with a machine model supplies a formal account of its own behavior, and this holds for a frozen language model as much as for a compiler. That account describes the consumer. It does not make the consumer constitutive of the artifact's meaning.
 
-Proposed replacement for the symbolic part of [representational form](../../theory/definitions/representational-form.md):
+The clerk-test paragraph is kept as written. The testing paragraph is kept with one change: "corroborate the conjecture" becomes "corroborate conformance to the reference", and the sentence "Testing does not prove uniqueness or guarantee convergence on it" becomes "Testing does not prove conformance outside the tested cases."
 
-> Symbolic content is retained in identifiable units with fixed rules for permitted behavior. A formal account of those rules is either supplied explicitly or constructible from an adequate reference interpreter and its execution model. Where the interpreter is proposed as a reference for an independently understood language, it must preserve that language's relevant semantic distinctions within the stated scope; designation alone does not suffice.
+The terminology section drops the explanation of the special phrase and keeps the ordinary-English contrast. The Plotkin and operationalism contrasts move to a one-line see-also, since the term they collide with is no longer used.
 
-The criterion concerns actual rules and fidelity to them, not our confidence in a semantic theory. Our knowledge of the rules, the construction, or the interpreter's fidelity can be incomplete. A reference can instead define a new language by stipulation, but its resulting semantics must not silently be presented as an adequate account of an existing language.
+### Representational form: symbolic form
 
-This candidate makes the classification depend on the specified language, scope, and operative part. It does not establish an intrinsic division between all C text and all English text. Whether this is the right refinement of representational form remains a review question.
+> **Symbolic** content sits in localized units whose permitted behavior is settled by a designated reference: fixed rules, implemented by a parser, interpreter, runtime, schema, validator, route table, or similar consumer, determine what behavior is permitted, including any variation they explicitly allow. The category is architectural, not a claim about classical symbolic AI.
 
-Code, schemas, grammars, and resolver-consumed tables are typical cases when their interpretation mechanisms define the relevant operations. Markdown, YAML, and JSON formatting alone does not establish that role. The criterion concerns the operative part and its consumption path, not the notation or the whole file indiscriminately.
+### Representational form: assigned-consequences axis
 
-## Candidate 4: Codification
+> **Assigned consequences** — does a designated reference settle what the artifact permits, or is it reinterpreted on each consumption? A written formal semantics is neither necessary nor sufficient. Most programming languages have none and still sit on this side, because an implementation is designated as their reference. A frozen model's computation can be formally described without the model becoming the reference for the English it reads. Two consumers held to one reference disagreeing about what the rules permit means one of them is wrong ([codification](../../theory/definitions/codification.md) states the test). Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../../theory/agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text.
 
-Proposed replacement for the opening of [codification](../../theory/definitions/codification.md):
+The repeatability misuse case is kept, with "Repeatability is not a unique operational semantics" becoming "Repeatability does not make the model a designated reference".
 
-> Codification commits a rule or operation stated in natural language to a symbolic artifact with fixed rules for permitted behavior. The rules have an explicit formal account or one constructible from an adequate reference interpreter and execution model. The commitment fixes an interpretation for the operation; whether that interpretation satisfies the original requirement remains a separate question.
+### Constraining
 
-Codification remains the symbolic region of [constraining](../../theory/definitions/constraining.md): committing choices that narrow or rank permitted readings or behaviors. No revision of constraining as a whole is proposed here. Making prose more precise, extracting a skill from methodology, or adding frontmatter does not alone establish fixed formal semantics for its instructions.
+Two phrases change: "where the artifact has a unique operational semantics" becomes "where a designated reference settles what the artifact permits", in the misuse case and the footer label.
 
-Keep these limits:
+### Vocabulary collision ledger
 
-- Codification can permit many results. It need not make execution deterministic.
-- Defining an operation does not establish that it is the right operation for the task.
-- Formalizing actual implementation behavior does not prove conformance to an independent specification.
-- A codified check does not establish that it captures its intended requirement.
+The `operational` row loses its codification sense, since the fixed phrase is retired. The row keeps the lineage sense, the external senses, and the workshop-local sense. Its guidance changes from "write the fixed phrase whole" to "say that a designated reference settles what the artifact permits".
 
-## The two-compilers test
+Other library uses of the fixed phrase are migrated to the same wording. The two source ingests that gloss the phrase keep it as a historical reference to the retired term.
 
-Two C compilers can pass the same tests and disagree elsewhere. Each compiler, together with the relevant machine models, still supplies a formal account of its behavior. Their incompatibility does not defeat either construction.
+## Boundary cases
 
-There are two different questions:
+| Artifact | Designated reference | Form | Note |
+|---|---|---|---|
+| Python script | CPython at a version | symbolic | the implementation constitutes the language |
+| schema enum | the validator | symbolic | the validator constitutes what the field permits |
+| route table | the resolver | symbolic | only the operative part the resolver reads |
+| YAML frontmatter on a skill | the loader, for declared fields | mixed | declared fields symbolic, instructions natural-language |
+| prose instruction run by a model | none | natural-language | the model reads English; it does not constitute it |
+| exact numerical claim in prose | none | natural-language | needs symbolic form only when acceptance must be mechanical |
+| frozen prompt–model package used as a reference for one operation | the package, for the operation | split | the packaged operation is symbolic; the prompt text stays natural-language, because another model reading it differently is not wrong |
 
-1. **Choose one compiler to define the dialect.** Its implemented behavior fixes that dialect's interpretation. Another compiler is assessed against it. The choice does not prove that the selected dialect is useful or faithful to an independent C standard.
-2. **Treat both compilers as implementations of independently specified C.** Their behavior is assessed against that specification. A disagreement outside permitted variation may expose an implementation bug or an unsettled part of the specification.
+The last row is the boundary the reductions note left open. The constitutive criterion resolves it by splitting on consumption path, which [representational form](../../theory/definitions/representational-form.md) already allows for mixed artifacts. Whether such a package would be a *good* reference for the English in its prompt is a different question; see below.
 
-Selecting a reference answers which operation is defined. It does not answer whether that operation adequately captures a meaning or requirement that was specified independently.
+## Relegated questions
 
-This is why conformance tests are not evidence needed to establish bare formalizability. One specified implementation already provides a construction. Tests instead put claims of conformance or shared behavior at risk.
+**Adequacy of an interpreter as a reference for English.** Whether a sufficiently competent model could reasonably be designated as a reference for a scoped variety of English is a research question about language fidelity, not a classification criterion. It is graded, currently unassessable, and would make every classification depend on an evaluation nobody can run. The [standalone question for other agents](./perfect-english-reference-question.md) retains it, and the [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the interpreter device.
 
-## Apply the same test to an LLM
-
-Fix an LLM's weights, inference code, runtime, decoding procedure, and relevant execution conditions. Include context as an input and model sampling explicitly if it is part of the operation. Its response behavior then has a formal account under that machinery.
-
-We can stipulate that this account defines an English-language interface: inputs mean what this designated system makes them mean. The stipulation supplies a formal interpretation. Whether calling it a semantics of English is reasonable depends on what the definition is for.
-
-- **Defining an interface:** the stipulation establishes the implemented operation.
-- **Describing ordinary English:** the claim that this operation captures English meaning remains independently assessable. A model can misunderstand; declaring its behavior definitive for the interface does not establish adequacy to ordinary English.
-
-A frozen prompt–model package can define a computational operation by stipulation. That alone does not qualify it as an adequate semantic reference for the English in its prompt. For that stronger role, it must preserve independently assessable distinctions of English meaning in the stated scope.
-
-Better linguistic competence could make such a reference reasonable. The conjecture is not that English becomes formalizable only when models improve: the computation is already formalizable. What improves is the fidelity of the resulting account to English. A compiler chosen as a reference faces the same adequacy question if the claim is that it captures independently specified C, rather than merely defines its own dialect.
-
-The prompt can still express a requirement whose satisfaction is distinct from faithful interpretation. A model can understand an instruction and fail to execute it. Linguistic misunderstanding, execution failure, and a bad requirement must not be counted as the same defect.
-
-## Assessing command of a language
-
-Candidate evidence should test the interpreter's judgments of meaning, not just the appeal of its generated responses:
-
-- Recover roles, reference, negation, and quantifier scope in controlled examples.
-- Preserve meaning under paraphrase and detect small changes that alter commitments.
-- Distinguish entailment, contradiction, permission, and what remains unsettled.
-- Respond to relevant context while resisting irrelevant wording and leading questions.
-- Identify legitimate ambiguity and use clarification to eliminate the appropriate readings.
-- Generalize to independently constructed cases outside familiar examples.
-
-For instructions, judge candidate actions as satisfying the instruction, violating it, or depending on an unresolved legitimate reading. This separates disagreement about meaning from different permitted outputs.
-
-Use independent competent-speaker judgments as fallible evidence. Retain clear agreement, accepted alternative readings, and unresolved disputes separately. Majority voting must not erase dialect differences or genuine ambiguity. Supply relevant facts where possible to distinguish linguistic misunderstanding from ignorance or failed reasoning.
-
-Report separate error patterns, consistency across related cases, and recognition of uncertainty. A high average score can conceal systematic failures that make an interpreter unsuitable as a reference. Tests cannot establish perfect command over an unrestricted domain; they can reveal counterexamples and support bounded use. The standalone [question for other agents](./perfect-english-reference-question.md) asks how to define the stronger ideal and assess its coherence.
-
-## What the reductions establish
-
-1. **Explicit specification is optional.** A formal account can be constructed from specified computational machinery even when nobody has written a separate mathematical semantics.
-2. **Belief is not the criterion.** Our judgment that an artifact satisfies the candidate definition can be mistaken without making the property belief-dependent.
-3. **Bare procedure existence is insufficient.** For any finitely expressible semantics, a program can simply print it. That does not explain how it was obtained or why it should define the artifact.
-4. **Implementation construction applies on both sides.** It works for a designated compiler and a designated LLM. Complexity and computational formalizability therefore do not by themselves separate code from natural-language meaning.
-5. **Bugs do not defeat formal description.** They can defeat conformance to independently specified rules.
-6. **Agreement is corroboration, not proof.** Different implementations can agree on tests while differing elsewhere.
-7. **Variation is compatible with formal semantics.** Different permitted answers need not indicate different interpretations.
-8. **Adequacy remains assessable.** Stipulating a semantics establishes an interpretation; it does not establish that the interpretation captures an independently intended meaning.
-
-An executable and its machine model suffice for the implementation construction. Tracing its compilation history back to lambda calculus is unnecessary for describing its behavior; compilation history matters separately to claims of faithful compilation.
-
-The progress is retained: Commonplace's special sense of “operational semantics” is unnecessary for these distinctions. Fixed formal rules, their implementation, and their adequacy to a requirement can be discussed separately.
-
-## Semantic expansion remains a separate question
-
-“Return an integer greater than 10” permits several answers without leaving interpreters in disagreement about which integers qualify. A different case arises when interpreters disagree about what is permitted. We might revise the semantics to admit both readings, reject one, or require additional words to disambiguate.
-
-The operator's further question concerns an indefinitely continuing sequence:
-
-1. Start with a proposed semantics.
-2. Encounter a disagreement it does not settle.
-3. Expand or revise the semantics to settle that case.
-4. Encounter a further disagreement under the expanded semantics.
-5. Repeat without reaching a final account.
-
-This is different from infinitely many cases covered by one fixed rule. It also leaves two claims separate: no stage in the sequence is final; no fixed formal account can describe the sequence itself. The first does not establish the second. A sequence of unsuccessful accounts does not establish that every possible account must fail.
-
-The discussion identified open texture and semantic-paradox literature as relevant. The search has not yet been retained as a source-grounded argument here. No impossibility result about natural-language semantics is assumed by the candidates above.
+**Semantic expansion.** "Return an integer greater than 10" permits several answers without disagreement about which integers qualify. A different case arises when interpreters disagree about what is permitted and the semantics is revised to settle it, then meets a further disagreement, indefinitely. That no stage is final does not establish that no fixed account of the sequence exists. No impossibility result about natural-language semantics is assumed by the current candidate, and none is needed: the candidate does not claim that English lacks a formal semantics, only that English lacks a designated reference.
 
 ## Review before adoption
 
-The revised candidates add adequacy of the reference interpreter to the construction of its semantics. Review must test this condition rather than treating it as an established classification:
+1. Does "designated reference" need a definition of its own, or does the gloss in the criterion paragraph suffice? The main risk is a reader taking any machine consumer to be a designated reference, which would collapse the distinction again.
+2. Does the boundary table survive a reviewer adding cases? Candidates: a regular expression, a Markdown table consumed only by readers, a test suite, a prompt whose output is parsed by a schema.
+3. Is dropping the Plotkin and operationalism contrasts safe once the colliding phrase is gone, or do readers still arrive with the programming-language sense of "semantics"?
+4. Does any library note rely on the formalizability conjecture rather than on the constitutive reading? The migration list should check each use of the retired phrase, not only replace it.
 
-1. Can adequate command of a language be defined without making the chosen interpreter or current speaker agreement correct by definition?
-2. Does the criterion distinguish the cases we need, or describe a graded suitability for reference use rather than a binary representational form?
-3. Can an LLM with perfect command of a scoped variety of English provide its semantics through a specified interface? What must that interface expose beyond a distribution of plausible replies?
-4. Are language fidelity, conformance to adopted rules, successful execution, and adequacy to a task kept separate?
-5. Are constructing a semantics, executing a program, and deciding every semantic question kept separate? The first need not decide every consequence of the semantics.
-6. Which scope restrictions and residual errors permit practical adoption, and which claims must remain conjectural after testing?
+Promotion requires coordinated revisions of codification, representational form, constraining, the collision ledger, and the other library uses of the retired phrase. This workshop authorizes none of those edits.
 
-Promotion would require coordinated revisions of codification, representational form, the codification passages in constraining, and the vocabulary collision ledger. This workshop authorizes none of those library edits.
+[^rejected]: **Rejected candidates of 2026-10-31.** Four definitions tried to keep formal semantics as the ground. *Fixed formal semantics*: an artifact has one when a designated account determines its permitted behavior, specified mathematically or constructible from an implementation and execution model. *Adequate reference interpreter*: an interpreter is an adequate semantic reference for a language within a scope when it preserves the language's relevant distinctions of meaning; designation alone does not establish adequacy. *Symbolic form*: localized units with fixed rules whose formal account is explicit or constructible from an adequate reference interpreter. *Codification*: commitment to a symbolic artifact whose rules have such an account, where the commitment fixes an interpretation and satisfaction of the original requirement stays separate. They were rejected because the constructibility clause is satisfied by every machine-consumed artifact after the reductions, so all discriminating weight fell on "adequate", which is a graded language-fidelity judgment that nobody can run and that the workshop itself could not settle as a representational distinction. The candidates also smuggled the real discriminator in through an asymmetry: a compiler may "define a new language by stipulation" while a prompt–model package may not. Stated plainly, that asymmetry is the constitutive criterion above. The candidates additionally dropped the clerk test, which survives the reductions. The "fixed formal semantics" candidate would have replaced one KB-special phrase with another needing its own ledger row. The assessment programme that accompanied the adequacy candidate, namely recovering roles and scope, preserving meaning under paraphrase, distinguishing entailment from permission, and separating linguistic competence from knowledge and compliance, is retained in the [standalone question](./perfect-english-reference-question.md).

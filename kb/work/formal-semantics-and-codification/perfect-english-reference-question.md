@@ -41,6 +41,29 @@ For example, “Return an integer greater than 10” permits many outputs withou
 
 Would perfect generation of contextually appropriate replies suffice to recover these judgments? Or would a semantic interface require additional capabilities, representations, or assumptions? If the interface returns more English, explain whether this relocates the interpretation problem. If its output is formal, explain how that representation is grounded without simply presupposing the semantics sought.
 
+## Ambiguity as an exception, clarification as its handler
+
+A candidate execution model makes unresolved ambiguity explicit instead of silently choosing an interpretation. When the instruction and context leave a consequential choice of meaning unsettled, the interpreter raises an ambiguity exception. Clarification is one way to handle it:
+
+```text
+interpret instruction
+    meaning sufficiently determined → proceed
+    unresolved ambiguity → raise Ambiguity(unresolved choice)
+
+interactive handler
+    ask the user which reading is intended
+    receive clarification
+    resume interpretation
+```
+
+In a chat session, the conversation supplies the handler. In a noninteractive run, the exception can stop the task or propagate to the caller. A previously authorized policy can also handle it by selecting a reading within the caller's granted discretion. Resuming interpretation may expose further ambiguity; one clarification need not settle everything.
+
+An ambiguity exception concerns a missing choice of meaning, not freedom already granted by the instruction. “Return an integer greater than 10” permits many results without requiring clarification. Likewise, explicit permission to choose between readings can remove the need to ask. The interpreter must distinguish authorized choice from an interpretation it would otherwise invent.
+
+This would make writing instructions closer to programming: the caller could expect the specified operation or an explicit unresolved choice, rather than a silent guess. Perfect command would include recognizing when clarification is required and when it would merely obstruct a permitted choice. It would not require every instruction to determine one action without interaction.
+
+This is a proposed interface contract, not proof that such an interpreter is constructible. Assess whether it can reliably detect the relevant ambiguity, communicate what needs settling, and resume without losing prior commitments. Distinguish genuine ambiguity from the interpreter's own uncertainty, unsupported input, or an execution failure. A model that always asks for clarification would not meet the proposal.
+
 ## Two possible limits
 
 **Reference adequacy:** independent judgments from competent speakers are evidence, but speakers can disagree or make mistakes. What makes an interpretation correct independently of both the designated model and a particular panel? Can the assessment retain dialect differences, legitimate ambiguity, and unresolved cases without becoming vacuous?
@@ -52,7 +75,7 @@ Would perfect generation of contextually appropriate replies suffice to recover 
 Please provide:
 
 1. A defensible definition of perfect command, or a precise explanation of why the proposed ideal cannot be defined as required.
-2. The capabilities and interface a model would need to supply a semantics of the scoped language, rather than only a formal model of its own responses.
+2. The capabilities and interface a model would need to supply a semantics of the scoped language, rather than only a formal model of its own responses. Evaluate ambiguity exceptions with clarification handlers as one candidate, including missed ambiguities and unnecessary clarification requests.
 3. A separation of what follows by construction, what requires a substantive adequacy conjecture, and what finite tests could corroborate or refute.
 4. Concrete counterexamples to weak definitions and a bounded assessment design that separates linguistic competence, world knowledge, reasoning, and compliance.
 5. The implication for the C/English comparison: is there a categorical difference, a difference in present reference-interpreter adequacy, or a different distinction?

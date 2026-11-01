@@ -87,7 +87,7 @@ These reductions remove reasons for maintaining a separate technical sense of â€
 
 ## Candidate wording and remaining work
 
-The passages below are the initial formulation. [Candidate definitions using formal semantics](./candidate-definitions.md) holds the later wording and records why returning to shared semantics preserves the progress of these reductions.
+The passages below are the initial formulation. [Candidate definitions for codification and symbolic form](./candidate-definitions.md) holds the current candidate, which drops formal semantics as the ground and keeps the reductions as its argument.
 
 A provisional formulation for discussion is:
 
