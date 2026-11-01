@@ -19,7 +19,7 @@ Four steps carry the argument. Each file says at its head which part it serves.
 1. **Clear the ground.** [An implementation supplies a formal model, not proof of shared semantics](./implementation-and-shared-semantics.md): formalizability of a consumer cannot be the difference, and tests corroborate conformance, not formalizability. Established; nothing below is needed for it.
 2. **State the account.** [Symbolic form is a language close to a formal semantics, and codification is the move into it](./symbolic-form-and-codification.md): the hypothesis, symbolic form with the gloss of "close" and its two conditions, why a formalization of a consumer is not the semantics of the language, codification as the move made by rewriting or by adoption, what a reference leaves open, the opaque modifier with its three sources, unresolved choices as an execution contract, the boundary table, open questions.
 3. **Write the definitions.** Complete proposed texts, each ending in its open questions: [representational form](./representational-form-definition.md), where the criterion now sits, and [codification](./codification-definition.md), which points to it.
-4. **Probe it.** [Could an LLM with perfect command of English define its semantics?](./perfect-english-reference-question.md): a self-contained question for other agents, kept open-ended.
+4. **Probe it.** [Could an LLM with perfect command of English define its semantics?](./perfect-english-reference-question.md): a self-contained question for other agents, kept open-ended. [Astra's answer](./probe-response-2026-11-01-astra.md), verbatim, not yet assessed against steps 2 and 3.
 
 Supporting files:
 
@@ -36,7 +36,7 @@ Four candidate definitions of 2026-10-31 kept formal semantics as the ground wit
 
 ## Status
 
-2026-11-01. Step 1 established. Step 2 rewritten around the operator's decisions, not reviewed since. Step 3 written as complete definitions, not reviewed. Step 4 sent to no agent. Seven sources ingested with quotes: two on repair and clarification, three on Tarski and the liar, two on program obfuscation, the last two from substitute copies because the ePrint server refused the downloads. Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
+2026-11-01. Step 1 established. Step 2 rewritten around the operator's decisions, not reviewed since. Step 3 written as complete definitions, not reviewed. Step 4 sent to Astra, answer recorded, not yet assessed. Seven sources ingested with quotes: two on repair and clarification, three on Tarski and the liar, two on program obfuscation, the last two from substitute copies because the ePrint server refused the downloads. Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
 
 ## Boundary
 
