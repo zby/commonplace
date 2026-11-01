@@ -4,14 +4,14 @@
 
 Posed by the operator on 2026-10-31 while revising the definition of [codification](../../theory/definitions/codification.md). The goal is revised definitions of codification and [representational form](../../theory/definitions/representational-form.md) that rest on a correct account of what codification commits to. The trigger was the wish to replace the special phrase "unique operational semantics"; the phrase turned out to conceal a wrong justification, so the account comes first and the wording follows from it.
 
-The hypothesis under test, in Astra's words: the practical difference is not formalizability versus non-formalizability, but whether an operation has been committed to a delimited interpretation regime or still relies on ordinary linguistic judgment to settle what its instructions require.
+After [Astra's second review](./review-2026-11-01-astra-second.md), the operator resolved its blocking question: adopting a frozen prompt–model package as the reference is codification, and addressability of the reference is a separate, graded property that sets inspection and revision cost rather than membership. The hypothesis under test, in Astra's words: the practical difference is not formalizability versus non-formalizability, but whether an operation has been committed to a delimited interpretation regime or still relies on ordinary linguistic judgment to settle what its instructions require.
 
 ## How the parts serve the goal
 
 Four steps carry the argument. Each file says at its head which part it serves.
 
 1. **Clear the ground.** [An implementation supplies a formal model, not proof of shared semantics](./implementation-and-shared-semantics.md): formalizability cannot be the difference, and tests corroborate conformance, not formalizability. Established; nothing below is needed for it.
-2. **State the commitment.** [Codification commits an operation to rules a clerk could follow](./codification-as-commitment.md): the hypothesis, the two-conjunct criterion, commitment separated from representational form and from the handling of unresolved choices, the boundary table, open questions.
+2. **State the commitment.** [Codification commits an operation to rules a clerk could follow](./codification-as-commitment.md): the hypothesis, the two-conjunct criterion, the three cases of what a reference leaves open, commitment separated from representational form, addressability as a separate graded property, the handling of unresolved choices as an execution contract, the boundary table, open questions.
 3. **Apply it to the definitions.** [Candidate definitions](./candidate-definitions.md): proposed wording for codification, representational form, constraining and the ledger's `operational` row, with the migration list.
 4. **Probe it.** [Could an LLM with perfect command of English define its semantics?](./perfect-english-reference-question.md): a self-contained question for other agents, kept open-ended.
 
@@ -21,11 +21,12 @@ Supporting files:
 - [Evidence ledger](./sources.md). Each commissioned source, the claim it was to support, what it supports, and its limits.
 - [Where natural-language meaning is settled](./where-meaning-is-settled.md). A tentative theory of natural language, side result, not load-bearing.
 - [Follow-up library changes](./follow-up-library-changes.md). Ledger rows, the impossibility paragraph, links from theory notes. Not authorized here.
-- [Review by Astra](./review-2026-11-01-astra.md), verbatim. Accepted except one point: codification narrows the clarification channel to declared steps about inputs rather than leaving it open.
+- [First review by Astra](./review-2026-11-01-astra.md), verbatim. Accepted except one point: codification narrows the clarification channel to declared steps about inputs rather than leaving it open.
+- [Second review by Astra](./review-2026-11-01-astra-second.md), verbatim. All points accepted; the blocking question was resolved by the operator in favor of commitment as codification, with addressability separate.
 
 ## Status
 
-2026-11-01. Step 1 established. Step 2 rewritten after Astra's review, not reviewed since. Step 3 carries the two-conjunct wording, not reviewed against the open questions. Step 4 sent to no agent. Five sources ingested, Tarski's 1969 article and an encyclopedia entry on the liar standing in for the 1933 monograph; Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
+2026-11-01. Step 1 established. Step 2 rewritten after Astra's second review, not reviewed since. Step 3 carries the two-conjunct wording plus the addressability paragraph and the revised misuse case, not reviewed against the open questions. Step 4 sent to no agent. Five sources ingested, Tarski's 1969 article and an encyclopedia entry on the liar standing in for the 1933 monograph; Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
 
 ## Boundary
 
