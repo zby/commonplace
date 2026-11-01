@@ -35,25 +35,25 @@ A formalization of a consumer is not the semantics of the language it consumes: 
 | **consequences assigned** | symbolic | — |
 | **consequences not assigned** | natural-language | distributed-parametric |
 
-The fourth cell is unoccupied in this domain rather than impossible. Vector symbolic architectures aim at exactly it: binding and bundling are algebraically defined operations over distributed hypervectors. The three-way carve therefore holds while agent systems retain nothing of that shape, and gains a fourth form if they do.
+The fourth cell is unoccupied in this domain rather than impossible. Vector symbolic architectures aim at exactly this cell: binding and bundling are algebraically defined operations over distributed hypervectors. The three-way division therefore holds while agent systems retain nothing of that shape, and gains a fourth form if they do.
 
-The inspection rule above follows from the axes instead of being stated separately for each form: a localized unit whose language's users hold consumers to a reference can be checked against that reference, a localized unit without one yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). Within the first case, the reference has a form of its own, and that form decides whether the check is by reading or by running cases.
+The inspection rule above follows from the axes instead of being stated separately for each form: a localized unit whose language's users hold consumers to a reference can be checked against that reference, a localized unit without one gives its content only through interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). Within the first case, the reference has a form of its own, and that form decides whether the check is by reading or by running cases.
 
 [Addressability](../../theory/definitions/addressable-theory.md) depends on the localization axis alone, which is why an instruction and a validator are both revisable one item at a time while weights are not. A prompt under an adopted model is the opaque case: it stays revisable as a part while the rule assigning its consequences does not. The parts available for inspection and separate revision in an addressable theory occupy the localized side, while the assigned-consequences axis fixes whether a contradiction is computed or interpreted.
 
-Because natural-language and symbolic share the localized side of the table, the pair is referred to jointly as **the localized forms**. The class name comes from the localization axis rather than adding vocabulary. "Readable artifacts" and "the readable pair" remain informal aliases. Prefer the derived name where the carve matters. The alias is loose, since symbolic content can be opaque.
+Because natural-language and symbolic share the localized side of the table, the pair is referred to jointly as **the localized forms**. The class name comes from the localization axis. "Readable artifacts" and "the readable pair" remain informal aliases. Prefer the derived name where the division matters. The alias is loose, since symbolic content can be opaque.
 
 ## Exclusions
 
 Representational form is not storage substrate. Markdown in a repository can be natural-language, symbolic, or mixed depending on the consumer. A vector store can expose natural-language records while its retrieval behavior depends on distributed-parametric embeddings and ranking.
 
-**Localized** is a claim about unit structure, not about locality of reference: it means an identifiable unit carries the content, not that the content is specific to one deployment. Deployment-specific facts can be retained in any form, including weights.
+**Localized** means an identifiable unit carries the content. It does not mean the content is specific to one deployment. Deployment-specific facts can be retained in any form, including weights.
 
 Representational form is not readability. "Symbolic" says that what counts as wrong is fixed; whether the reference can be read is the opaque modifier's question.
 
 Representational form is not [behavioral authority](../../theory/definitions/behavioral-authority.md). Form says how content is encoded and gets its consequences; authority says which consumer applies it, through which channel, and with what force. A natural-language instruction can bind a worker, and a symbolic schema can be merely advisory.
 
-Representational form is also not consumption path, though form is determined under one. **Prompt** is exact when material is supplied, or explicitly assembled to be supplied, as model input. A stored note, policy, or memory record does not become a prompt by being retrievable later. Retain its precise artifact name, or call it natural-language when the representational category matters. A generated model-input view can be a prompt even when it assembles natural-language and symbolic operative parts. Apply the vocabulary in this order: name the precise artifact when the category adds nothing; use **prompt** when model-input supply is the point; use **natural-language** when representational form matters; keep **prose** for editorial meaning, quotations, historical terminology, and named review machinery.
+Representational form is also not consumption path, though form is determined under one. **Prompt** is exact when material is supplied, or explicitly assembled to be supplied, as model input. A stored note, policy, or memory record does not become a prompt by being retrievable later. Keep its precise artifact name, or call it natural-language when the representational category matters. A generated model-input view can be a prompt even when it assembles natural-language and symbolic operative parts. Apply the vocabulary in this order: name the precise artifact when the category adds nothing; use **prompt** when model-input supply is the point; use **natural-language** when representational form matters; keep **prose** for editorial meaning, quotations, historical terminology, and named review machinery.
 
 ## Misuse Cases
 
