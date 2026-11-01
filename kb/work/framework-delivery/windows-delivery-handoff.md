@@ -28,8 +28,9 @@ code, tests, installation guide, skills and owning ADRs.
 
 ## Current release checkpoint (2026-11-01)
 
-Preparing 0.3.3 as a Windows installation and portability-fix release. This is
-not completion of every Windows procedure or runtime acceptance case.
+Published 0.3.3 to PyPI as a Windows installation and portability-fix release
+(tag `v0.3.3`, commit `526de4edd`). This is not completion of every Windows
+procedure or runtime acceptance case.
 
 - Item 2's dependency delivery is present: `pyproject.toml` requires Workjig
   0.3.0 and `uv.lock` selects it. The installed Windows run 4 used that release,
@@ -256,7 +257,14 @@ that probe collects evidence without repairing the environment during the run.
   preserved both active control-plane files and reproduced the documented
   template recreation. Both edited workshop files validated with no failures
   or warnings. No new native Windows or agent-scenario run was performed.
-  Publication and release-commit CI are separate subsequent gates.
+  Release commit `526de4edd` subsequently passed Windows and Linux
+  [CI run 41342248088](https://github.com/zby/commonplace/actions/runs/41342248088),
+  including software tests and wheel-install smoke checks. Published both
+  wheel and sdist to PyPI and pushed annotated tag `v0.3.3` with release notes.
+  A separate isolated Linux install of `llm-commonplace==0.3.3` from PyPI
+  passed all entry-point loads, init/check/landings and active control-plane
+  preservation; known template recreation was reproduced. Native Windows
+  acceptance from PyPI is still the next machine-specific check.
 
 Append one short entry per batch: commit tested, task IDs, changes, exact test
 selection/results, runtime/restart state, evidence path, and remaining blocker
