@@ -6,7 +6,7 @@ Commissioned by the Commonplace operator on 2026-10-31. The initial investigatio
 
 **Status: observational watch, not an established systematic bias.** The targeted literature review found neighboring effects but did not establish the proposed utility-driven blending mechanism. That is a search result, not a claim that no confirming research exists. The immediate work is observation and correction during ordinary knowledge work, not another broad survey, a benchmark, or a training intervention.
 
-This framing governs the current agenda. The retained research and experimental designs are background, not instructions to begin experiments or adopt their conclusions. No model trials or new source ingests have been performed.
+This framing governs the current agenda. The retained research and experimental designs are background, not instructions to begin experiments or adopt their conclusions. No model trials or new source ingests have been performed. On 2026-11-01 the operator authorized the Q001 inspection; the common-mechanism wording was qualified in two ingests and one theory note, and the case is closed in the log. The watch itself has recorded no independently arising episode yet.
 
 Repository baseline: `e53fc1bb1041d54de99beda36302b6ab889ad536` on `main`, checked again when preparing this workshop.
 
@@ -37,7 +37,7 @@ Close when the watch has produced a justified disposition: a supported extractio
 ## Working artifacts
 
 - [Watch checklist](./watch-checklist.md) — noticing, local correction, evidence capture, and reassessment.
-- [Observation log](./observations.md) — reported seed episode, a separately marked candidate for review, and a reusable case template.
+- [Observation log](./observations.md) — reported seed episode, a checked and repaired artifact-level case (Q001, 2026-11-01), and a reusable case template.
 - [O001 source excerpts and correction chronology](./o001-operationalization-exchange.md) — original question and responses, pinned historical Git revisions, two partial repairs, final task-relative correction, and explicit evidence gaps; one episode, not a new recurrence.
 - [Findings and competing explanations](./findings.md) — exploratory account from the initial investigation; its experiments are deferred.
 - [Evidence register](./evidence-register.md) — primary-source references, evidence classes, limitations, and source-management status.
