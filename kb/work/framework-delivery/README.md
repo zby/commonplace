@@ -1,233 +1,97 @@
-# Framework delivery
+# Framework delivery acceptance
 
-## Commission
+## Goal and authority
 
-Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents read — the framework library, global types, review gates, and skills — to installed projects. Today `commonplace-init` copies all of it into every project, which confuses users and drifts from the installed code (see [design.md](./design.md#problem)). On 2026-09-24, at the operator's direction, the proposal `library-served-from-the-installed-package` was moved into this workshop as `design.md` and removed from `kb/reference/proposals/`, so the design is kept in one place while it changes.
+Posed by the operator on 2026-09-23 to decide how installed projects receive
+Commonplace's library and skills. The design is adopted in
+[ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md).
+The remaining goal is to establish that agents in installed projects can find
+and read that library, invoke skills with arguments, use the required worker
+facility, and recover correctly after upgrades or installation moves.
 
-## Operator direction and constraints
+This is an acceptance workshop. ADR 086, its amendments and
+[INSTALL.md](../../../INSTALL.md) govern the product. Preserve these constraints:
 
-- **Copy GBrain by default** (2026-09-23). GBrain is Commonplace's dominant competitor. Depart from a GBrain method only for a Commonplace-specific reason, and record the reason.
-- **One tree, one channel** (2026-09-24). The uv-installed package is the only tree that commands, agents, and harnesses read. There is no separate plugin tree, and projects get no copy of framework content. uv is the only release channel. This departs from GBrain, whose CLI and plugins install through separate channels and can skew.
-- **One install path on every platform** (2026-09-24). If one platform needs something different, every platform does it that way; there are no platform-specific install paths. Symlinks are unreliable on Windows, so nothing is linked.
-- **Init only, per project** (2026-09-24). No per-machine setup command. `commonplace-init` writes everything a project needs.
-- **Skill stubs** (2026-09-24). Each project gets a stub per skill that redirects to the real skill in the installed package. It costs one extra read per skill use; every alternative was worse.
-- **Generated routing file** (2026-09-24). Agents find the library through a gitignored file that init writes with full paths, not through commands.
-- **Sub-agents are emulated where missing** (2026-09-24). Users should be able to start using Commonplace in a harness without sub-agents, even though skills that need workers are less useful there. The probing agent designs the emulation for its harness.
-- **The source checkout keeps its skill symlinks and does not run init** (2026-09-25).
-- **Report and source types stay scaffolded into projects** (2026-09-25); their schemas stop `$ref`-ing the global note schema.
-- **Plan for harnesses without skills** (2026-09-24). The routing file carries a skill index that emulates the skills mechanism; stubs stay for harnesses with native skills.
-- **No hooks** (2026-09-24). No harness hooks until hooks are standardised. At least one enterprise user runs their own harness.
-- **Harness-neutral base** (2026-09-24). The design rests on files and a project `AGENTS.md`, with Agent Skills as an optional layer above that base. The base must still let an agent find a library instruction that the user names in conversation, outside any skill.
+- One user-level uv tool contains the code and library. Projects receive
+  pointers and skill stubs, not a copied library or a second plugin channel.
+- Init owns project pointers; session start does not repair the installation.
+  Never run init in this source checkout.
+- The base route uses standing instructions and the library index; native
+  skills add a second route. Both must work without hooks or an MCP server.
+- Skills needing workers use a harness-provided sub-agent, including a harness
+  extension. Shell-launched headless processes are not an emulation (ADR 086's
+  worker amendment). The analysis workflow's workers have a separate contract.
+- The signed-Python/shim Windows prerequisite is adopted in
+  [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md).
+  It supersedes the original assumption that every platform needs identical setup.
 
-## Design
+Evaluation covers Claude Code and Codex, the base route in other qualifying
+harnesses, Linux/macOS/Windows, source and installed-project layouts, and
+changed-skill, library-only, moved-install and running-session upgrade cases.
+A result applies only to its recorded runtime, permissions and installation.
 
-Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (commit `e6103225`). ADR 086, `INSTALL.md`, and the code are now authoritative. [design.md](./design.md) and [alternatives.md](./alternatives.md) are the pre-adoption records; do not update them. This workshop stays open for the follow-ups below.
+## Evidence established
 
-## Current closure review (2026-11-01)
+Current baseline: PyPI **0.3.3**, release commit `526de4edd`, Workjig 0.3.0.
+No new runtime evidence is claimed by this reorganization (2026-11-01).
 
-Keep open. The design shipped through ADR 086 and PyPI 0.3.3, and release CI
-passed on Windows and Linux. The dated status sections below are historical;
-the [handoff](./windows-delivery-handoff.md) is the current queue.
+| Surface | Evidence and limit |
+|---|---|
+| Release and supported suite | [Release CI](https://github.com/zby/commonplace/actions/runs/41342248088) passed tests and wheel install/init checks on Windows and Linux. The Windows test-suite workshop is closed; analysis execution remains Linux-only. |
+| Linux installed delivery | Revision 4 [Claude Code](./results-claude-code-r4.md) and [Codex](./results-codex-r4.md) establish baseline routes and upgrade observations. Revision 7 [Claude Code](./results-claude-code-r7.md), [Codex](./results-codex-r7.md) and [pi](./results-pi-r7.md) add index, missing-init, worker and argument checks. Read each report's rooting and coverage limits. |
+| Windows install | [Run 4](../windows-install/results-2026-10-31-afflicted-main-run4.md): all 25 commands, init/check/landings, restarted app and Explorer-started process passed on Git main. [Independent Codex](../windows-install/results-2026-11-01-codex-independent.md): representative commands and 821 tests passed; no fresh install or restart. Neither is PyPI 0.3.3 acceptance. |
+| Windows agent routing | [Installed-project report](./results-2026-10-31-windows-installed-project-agents.md): Claude Code and Codex listed skills and passed stub arguments; Codex passed the no-stub index route. Claude's read-rule effect was not established. |
+| pi workers | [Requirements](./sub-agent-requirements.md) and [checkout verification](./pi-nesting-control.md) cover the extension's worker/depth budgets. INSTALL.md prescribes the user-level copy; installed-project acceptance remains pending. |
 
-- Windows command installation and fresh-process checks passed for Git main.
-  [windows-install](../windows-install/README.md) owns the remaining PyPI 0.3.3
-  repeat. Template recreation is a documented accepted limit.
-- [Installed-project checks](./results-2026-10-31-windows-installed-project-agents.md)
-  establish native skill listing and stub arguments in Claude Code and Codex,
-  plus Codex's no-stub index route with arguments. They close those specific
-  gaps, not the whole probe. Claude's Windows read-rule behavior remains
-  unestablished; resume in an operator-started default-permission session or
-  an authenticated CLI session, comparing reads inside and outside the rule.
-- The installed-project pi worker-copy acceptance remains deferred until the
-  next installed-project pi run. macOS resumes when a host is available; other
-  harnesses, enterprise policy and large-index behavior resume with an actual
-  user or environment, as recorded in the handoff.
-- Changed-skill, library-only, moved-install and already-running-session
-  upgrade acceptance still need results or explicit deferrals with triggers.
-- The focused Windows Workjig recovery rerun remains unrecorded. Workjig 0.3.0
-  is delivered; this is an evidence gap, not an undelivered dependency.
+The original [Windows 0.3.0 report](./results-windows-install-030.md) is retained
+because the installation and antivirus workshops still use its findings.
+Template recreation after renaming the control-plane templates is an accepted,
+documented 0.3.3 limit. Revisit it when init's lifecycle changes or it interferes
+with an upgrade; it does not block acceptance here.
 
-The supported-suite workshop is closed. E1's procedure-portability work remains
-in execution-channel compatibility. Release completion does not close either
-that work or the acceptance cases above.
+## Remaining acceptance
 
-## Status (rebaselined 2026-10-24)
+This table is the single status list. The [Windows handoff](./windows-delivery-handoff.md)
+provides the next run's instructions, not a separate implementation backlog.
 
-Nothing in this workshop changed after 2026-09-25 except mechanical path
-rewrites. A recheck against the repository on 2026-10-24 found:
+| Item | Next action or trigger | Evidence needed |
+|---|---|---|
+| Windows PyPI installation | Next Windows run; owned by [windows-install](../windows-install/README.md). | Follow INSTALL.md steps 1–4 for 0.3.3, rerun shims, test fresh processes inside/outside the restarted app, and record package provenance. |
+| Claude Windows read rule | In that run if a default-permission session or authenticated CLI is available; otherwise retain the exact blocker. | Agent rooted in the scratch project reads one file inside the rule and one outside it. If both are permitted independently, report the rule's effect as unestablished. |
+| Upgrade acceptance | After the PyPI checkpoint, choose the next bounded upgrade probe. | Distinguish changed skill metadata, library-only change, moved installation and an already-running session; record pointer warnings, reads before/after init and any required restart. Existing probe results are partial evidence, not full current-release acceptance. |
+| Focused Workjig recovery | Next Windows run if released dependency tests or a bounded verification fixture are available. | Against installed Workjig 0.3.0: existing interrupted-marker bytes remain unchanged and rejected; a new lock is accepted. Record package provenance; no local source overlay. A missing fixture is a blocker, not a pass. |
+| pi installed worker copy | Deferred until the next installed-project pi run. | INSTALL.md user-level extension and worker copy, then probe case 10 in a scratch project; use the requirements checklist. |
+| macOS | Deferred until a macOS host is available. | Published-package install plus installed-project delivery checks. |
+| Other harnesses and enterprise policy | Deferred until an actual user/environment is available. | [Probe request](./probe-request.md): standing-instruction loading, external reads, skill/index routes and worker availability under normal policy. Internal details may be anonymized. |
+| Large index, unnamed tasks and additional skill metadata | Deferred until a real workload or harness requires these cases. | Verify discovery and triggering at that scale, including metadata beyond name/description; do not infer coverage from the small synthetic index. |
 
-- **Shipped state.** v0.2.0 (tagged 2026-09-25, commit `5c99505a3`) was the
-  only release carrying ADR 086 until v0.3.0 shipped on 2026-10-26 with the
-  1633 commits since, including the probe's two init fixes (next step 1).
-- **Delivery-surface drift since v0.2.0** that an installed project would see:
-  a new runtime dependency on `workjig` from PyPI (commit `005a3f2dd`); two new
-  commands, `commonplace-analysis` (`83c641f00`) and `commonplace-task`
-  (`ef57a1175`), and the two `commonplace-agentic-analysis-*` commands removed;
-  report and source types moved from the project scaffold into the global
-  library types (`704c42c09`); `kb/tags/` and `kb/work/` added to the scaffold
-  (`02ffd8329`, ADR 089); automatic legacy migrations removed from init
-  (`8b8a9c742`); the library's theory collection renamed from `kb/notes/` to
-  `kb/theory/` (ADR 123, `e4c1bfcf1`) while project scaffolds deliberately keep
-  `kb/notes/`. `src/commonplace/cli/init_project.py` shrank by about 260 lines.
-- **Probe package.** [probe-package/](./probe-package/PROTOCOL.md) was still
-  revision 6, modelled on the revision 4 init, until 2026-10-24; revision 7 now
-  mirrors the current `commonplace-init` (see its revision log). Results from
-  revisions 4–6 stay valid for cases 1–7.
-- **Evidence.** Revision 7 ran on 2026-10-24 in three harnesses on Linux:
-  [Claude Code](./results-claude-code-r7.md) (cases 0, 8–11),
-  [Codex](./results-codex-r7.md) (cases 0, 8–11) and [pi](./results-pi-r7.md)
-  (full protocol). No clean-machine install from PyPI is recorded anywhere, on
-  any platform, and there is still no Windows or macOS run. Findings that
-  changed the code: Claude Code substitutes `$ARGUMENTS` at every occurrence
-  in a stub, so the stub's second sentence lost its placeholder (fixed in
-  `library.py` and the probe the same day); the Codex agent reached a skill
-  through the index and reported the literal placeholder, so the routing
-  file now tells index readers to apply the request's arguments. Findings
-  for the record: pi needs no Claude read rule and loads `.agents/skills/`
-  under explicit project trust; stock pi has no sub-agent and the delegate
-  skill stopped safely without emulating one; an editable-install switch let
-  a file-only pi session read stale `share/` paths with no warning until init
-  ran; a sub-agent started from a runner session inherits the runner's
-  project, so probe cases must run as headless sessions rooted in the scratch
-  project.
-- **Sub-agent emulation: decided.** On 2026-10-24 the operator kept the
-  harness-provided sub-agent as the only worker route and ruled that the
-  ADR 118/119 headless launches are not an emulation of it (see next step 3
-  and the ADR 086 worker amendment).
-- **Health check.** `cp-skill-health-check` pairs PowerShell forms only in its
-  uv-tool and legacy-residue steps; layout, pointer and validator steps are
-  Bash-only. Owned by E1 in
-  [execution-channel-compatibility](../execution-channel-compatibility/README.md).
+E1 procedure portability belongs to
+[execution-channel compatibility](../execution-channel-compatibility/e1-windows-execution.md).
+Multi-day antivirus acceptance belongs to
+[signed-Python field use](../windows-signed-python-field-use/README.md).
+Their implementation queues are not duplicated here and they do not block the
+bounded Windows installation repeat.
 
-## Consolidated implementation queue
+## Running and recording checks
 
-Start with the [Windows delivery handoff](./windows-delivery-handoff.md) when
-resuming on the Windows machine. Requested by the operator on 2026-10-30, it
-collects the remaining implementation, acceptance checks, safety boundaries and
-deferred work across this workshop, windows-install, windows-test-suite and E1.
-Its baseline includes v0.3.2 and the later Windows install-guide runs; older
-status paragraphs below are dated evidence, not the current execution queue.
+- [Windows handoff](./windows-delivery-handoff.md): next machine run and its boundaries.
+- [Run prompts](./run-prompts.md): isolated harness runs and upgrade preparation.
+- [Probe protocol](./probe-package/PROTOCOL.md): revision 7 fixture, dated to
+  2026-10-24, with the 2026-11-01 worker-rule clarification. Compare the relevant
+  fixture behavior with current init before treating it as release acceptance.
+- [Probe request](./probe-request.md): external respondents' outcomes and limits.
 
-## Open questions
-
-Status as of the 2026-10-24 runs in brackets.
-
-- **Missing initialization.** [answered on Linux] In Codex's revision 4 run, an agent in a clone without init found a nearby source checkout and answered from it. The `AGENTS.md` rule to stop and ask for init was followed in Claude Code, Codex and pi (case 8, one session each); the Codex result notes one observation does not establish reliability across configurations.
-- **Emulated skills.** [answered on Linux for a named check] The skill index in `library.md` led to the real skill in nine of nine fresh sessions with no stub present (three per harness). Whether the index triggers on an unnamed task, as the router stub did in case 4, is untested. Through the index the request's arguments reached the skill only when the model carried them (pi yes, Codex no), hence the routing-file sentence added 2026-10-24.
-- **Skill metadata.** [no new evidence] No harness needed metadata beyond name and description. The probe's skills still carry none.
-- **The enterprise harness.** [open] No reply. Which of the design's harness assumptions (H1–H6 in [design.md](./design.md#what-the-design-assumes-about-a-harness)) hold there, and what loads standing instructions, remain unknown; the probe request's pointer line is the proposed answer.
-- **The router skill at scale.** [open] It worked with a small index in all three harnesses. Untested with an index the size of the real library.
-- **Windows and macOS.** [open] No run. The byte-order-mark crash (fixed in revision 5) is the only Windows observation. The read rule's form on Windows, `Read(//C:/…/**)`, is what init writes and is untested; the protocol's case 2 asks Windows runners to record whether Claude Code honours it.
-- **Running sessions.** [open] A running Claude Code session picked up skills added after it started. An upgrade inside a running session was not tested; the pi run showed that a file-only session reads stale paths after an install-mode switch with no warning until init runs.
-- **Centrally managed settings.** [open] Untested.
-- **Sub-agents in pi.** [resolved in principle 2026-10-24] Stock pi has no sub-agent tool; the delegate skill stopped with "no sub-agent available". The route is a pi extension supplying one (this checkout's `.pi/extensions/subagent`), per the ADR 086 worker amendment; delivering it to pi users of installed projects is next step 3's remaining follow-up.
-
-## Next steps
-
-Status as of 2026-10-24 in brackets. Order reflects dependency: the probe
-package and the release must match before any new run is evidence.
-
-0. **Refresh the probe package.** [done 2026-10-24] Revision 7 mirrors the
-   current `commonplace-init`: `--root` and `--check` with relative paths and
-   `collision`, symlink-as-foreign, POSIX stub paths with `$ARGUMENTS`
-   pass-through, the four-entry-point `library.md`, the `Read(//…/**)` rule,
-   a fixed skill list, the two control-plane templates, and nearest-project
-   staleness warnings. It adds case 11 (a stub invoked with arguments). The
-   protocol states which cases a revision 4 or 6 runner must repeat. Verified
-   in a scratch venv: normal install, idempotent rerun, upgrade without init
-   (all `ok`), description change (`stale` and warning), collision, foreign
-   symlink, extra stub removal, editable install (`stale`), and `--remove`.
-1. **Release.** [done on Linux 2026-10-26; macOS and Windows open] v0.3.0
-   (tag `v0.3.0`, commit `5438390d8`, 1633 commits after v0.2.0) was published
-   to PyPI on 2026-10-26 at 10:10 UTC. Same day, on Linux: `uv tool install
-   --python 3.12 llm-commonplace==0.3.0` from PyPI into an isolated tool
-   directory (`UV_TOOL_DIR`, `UV_TOOL_BIN_DIR`; uv 0.13.4, Python 3.12.8)
-   installed 25 executables; in a fresh `git init` project, `commonplace-init`
-   created the scaffold, 24 stubs, `.commonplace/library.md`, the read rule
-   and the `.gitignore` block; `--check` reported 26 `ok`; the four scaffold
-   collections validated with no failures; a second and third init reported
-   every file as preserved. The stub and routing file carry the 2026-10-24
-   wording. Not a clean machine: the host has the editable install, which the
-   isolated directories kept out of the way. One local snag, not a product
-   defect: a user-level uv `exclude-newer = "7 days"` setting rejected both
-   `llm-commonplace` 0.3.0 and `workjig` 0.1.0 as too new until overridden
-   with `--exclude-newer`. Still open: the same check on macOS and Windows.
-   Windows install problems moved to [windows-install](../windows-install/README.md)
-   on 2026-10-27; [run-prompts.md](./run-prompts.md#windows--install-check-for-the-published-030-any-harness)
-   has the Windows prompt (written 2026-10-26), and CI gained a
-   `windows-latest` job the same day that installs the built wheel and runs
-   init, `--check` and validation (first run pending push).
-2. **Probe follow-ups.** [Linux done 2026-10-24; other harnesses open]
-   Claude Code and Codex ran cases 0 and 8–11 and pi ran the full protocol,
-   all on Linux. Still open: the index route with arguments after the
-   2026-10-24 routing-file change (rerun case 11 without stubs in Codex); a
-   Codex run with sessions rooted in the project, since its revision 7 agents
-   kept the repository's instructions and never read a stub; Windows and
-   macOS; and agents in other harnesses answering the same
-   [probe request](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose,
-   GitHub Copilot, and enterprise harnesses; enterprise results may come back
-   through the operator, anonymised. Findings that change the decision amend
-   ADR 086.
-3. **Sub-agent emulation.** [decided 2026-10-24; ADR 086 worker amendment]
-   The operator chose the sub-agent route and rejected headless launches as an
-   emulation: a sub-agent is a two-way, inspectable relationship, a headless
-   launch a one-way action. Skill rules stand unchanged; `cp-skill-ingest`
-   keeps forbidding CLI launches. A harness without a native sub-agent gets
-   one as a harness extension, as this checkout's `.pi/extensions/subagent`
-   does for pi, and until then its users lack the worker-dependent skills.
-   Remaining follow-up: how pi users of an installed project receive that
-   extension, since it lives in this checkout's `.pi/`, not in the package or
-   in anything init writes; decide and record when a pi user outside this
-   checkout needs it. What the facility must do is fixed in
-   [sub-agent-requirements.md](./sub-agent-requirements.md) (2026-10-26).
-   Delivery decided the same day, kept simple: `INSTALL.md` step 5 tells pi
-   users to copy the extension and the worker definition from a checkout into
-   their user-level `~/.pi/agent/` once; nothing is added to the package or to
-   init. Untested outside this checkout; the probe's case 10 in a scratch
-   project with that copy in place is the acceptance test. The analysis workflow's Workjig launches are a workflow
-   engine's workers under ADR 118/119 and are unaffected.
-4. **Coupled workshops.** [done 2026-09-25] Both coupled workshops closed that
-   day; no replies are outstanding.
-
-## Evaluation boundary
-
-- Harnesses: Claude Code and Codex, plus the base layer in any harness that meets its stated assumptions.
-- Operating systems: Linux, macOS, and Windows.
-- Places: the source checkout and an installed project.
-- Upgrade cases: an upgrade that changes a skill, one that changes only library files, and one that moves the install location.
-
-## Coupling
-
-None open.
+Keep dated reports unchanged except to repair references. Write each new result
+to a new dated file; record package/commit, runtime, project root, permissions,
+restart state, exact cases, observations, workarounds and omissions. Update this
+table from those results. Probe failures do not authorize changing support scope,
+security policy or the delivery architecture. Bring such decisions to the operator.
 
 ## Closure
 
-The design is recorded in ADR 086. Close when each follow-up above is done or deferred with a trigger and each open question is answered or deferred with a trigger. Then delete this directory and its entry in `kb/work/README.md`.
-
-## Files
-
-Current:
-
-- [design.md](./design.md) — the design as it stood at adoption (pre-adoption record; ADR 086 is authoritative)
-- [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision (pre-adoption record)
-- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 7, 2026-10-24, mirrors the current `commonplace-init`): a throwaway uv package, a test project, the protocol every harness runs, and a results template
-- [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
-- [sub-agent-requirements.md](./sub-agent-requirements.md) — what a skill needs from a harness sub-agent (S1–S13), who demands each, and what the pi extension claims to cover
-- [pi-nesting-control.md](./pi-nesting-control.md) — analysis and handoff for making worker nesting a budget instead of a ban in the pi subagent extension (2026-10-26)
-- [run-prompts.md](./run-prompts.md) — the prompts to paste into a fresh Claude Code, Codex or pi session to run revision 7, and the one-harness-at-a-time rule
-- [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
-- [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
-- [results-claude-code-r7.md](./results-claude-code-r7.md) — Claude Code's run of revision 7 (cases 0, 8–11)
-- [results-codex-r7.md](./results-codex-r7.md) — Codex's run of revision 7 (cases 0, 8–11; agents not rooted in the project)
-- [results-pi-r7.md](./results-pi-r7.md) — pi's run of revision 7 (full protocol)
-
-Background research:
-
-- [comparable-systems-survey.md](./comparable-systems-survey.md) — how harnesses and 14 comparable systems deliver skills and libraries
-- [gbrain-delivery-methods.md](./gbrain-delivery-methods.md) — code-grounded study of GBrain v0.54.1.0's delivery methods
-
-Evidence from earlier revisions, cited by `alternatives.md`:
-
-- [probe-results.md](./probe-results.md) — early probes: a Claude Code link-mode plugin, a Codex skill symlink, uv shared data
-- [results-codex.md](./results-codex.md) — Codex's runs of revisions 1–3
-- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of revision 3
+Close when each remaining item has evidence or an explicit deferral with a
+trigger. After the Windows repeat, reassess the upgrade and recovery items;
+do not silently defer them merely because a release passed CI. Promote any new
+durable rule to INSTALL.md, the owning ADR or instructions. Transfer still-live
+deferrals and evidence needed by their owners before deleting this directory
+and its entry in the workshop index.

@@ -37,7 +37,7 @@ PROTOCOL.md: 33f2560a161dd9366439ec6fe219f95cdc945946dab2c7c7841dc438e0e02dd5
 - **Agent Skills:** discovery returned both project stubs from `.agents/skills/`, with `scope: repo`, `enabled: true`, `pluginId: null`, and `errors: []`. Names were `delivery-probe-read` and `delivery-probe-library`, without a prefix. The installed source tree had no plugin manifest.
 - **Other skill directories:** discovery also returned user skills under `~/.agents/skills/` and system skills under `~/.codex/skills/.system/`. The generated `.claude/skills/` copies were not the discovered paths in this run; this is not an exclusive-directory support claim.
 - **Project permission settings:** Codex required none for this route. Init's machine-specific Claude rule remained in the uncommitted project settings file; removing it and restoring it were confined to the fixture.
-- **Configurable search paths:** not exercised here. The [earlier Codex report](./results-codex.md) records discovery through `skills/extraRoots/set`; that result is not evidence of a complete installation or upgrade workflow. This run used ordinary project discovery.
+- **Configurable search paths:** not exercised here. The earlier Codex report (results-codex.md, retained in Git history) records discovery through `skills/extraRoots/set`; that result is not evidence of a complete installation or upgrade workflow. This run used ordinary project discovery.
 
 ## Cases
 

@@ -3,11 +3,11 @@
 - To: an agent, or a person with an agent, in any harness, including enterprise and in-house ones. A harness that ran an earlier revision needs only what was added since: outcomes 6, 7 and 8, and the stop-on-missing-init rule; revision 7 (2026-10-24) changed the package to mirror the current `commonplace-init`, so repeat outcome 1.
 - From: Claude session on the framework-delivery workshop, at the operator's direction
 - Posted: 2026-09-24; package revised 2026-10-24
-- Status: open
+- Status: open for additional harnesses; worker rule aligned with ADR 086 on 2026-11-01
 
 ## Intent
 
-Commonplace is a framework for agent-operated knowledge bases. We are changing how it reaches the projects that use it. One installed Python package will hold everything agents read (skills, instructions, type specs). Each project gets only a few small, uncommitted pointer files and one line of standing instruction ([design.md](./design.md)).
+Commonplace delivers its library and skills from one installed Python package. Projects receive uncommitted pointers and skill stubs under [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md). This request tests that adopted design in additional harnesses.
 
 We cannot test every harness or write an install route for each. So we want to know whether **an agent in your harness, told what the design is for, can make it work there**, adapting where it has to, and what that adaptation costs. A part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. We are designing the system; you are giving feedback on it. Share as much as your company's policy allows, and no more.
 
@@ -23,7 +23,7 @@ Reach these outcomes. Check each in a **new session that did not do the adaptati
 4. **An upgrade:** after `python3 tools/bump.py 2` and a reinstall, outcomes 2 and 3 report `-V2` tokens, with at most a rerun of init.
 5. **A second project:** outcomes 2 and 3 again, in a new project.
 6. **The skill index alone:** outcome 3 with the skill stubs removed, so only the index in the generated `library.md` can lead to the skill. Skip this if your harness has no native skills; outcome 3 has already tested it.
-7. **A sub-agent:** asked "Run the delivery-probe-delegate check," a session hands one read to a sub-agent and reports `DELEGATED-STEP-V1`. Several Commonplace skills need sub-agents. If your harness cannot start one, let the agent design an emulation that keeps the read out of its own context, and report how it works and what it costs per use.
+7. **A sub-agent:** asked "Run the delivery-probe-delegate check," a session hands one read to a sub-agent and reports `DELEGATED-STEP-V1`. Several Commonplace skills need sub-agents. If your harness has no sub-agent facility, report "no sub-agent available". Do not emulate one with a shell-launched headless process; ADR 086's worker amendment governs this check.
 8. **A skill with arguments:** the echo skill invoked with the argument `kumquat`, the way your harness passes skill arguments, reports `SHARED-STEP-V1` and `ECHO-V1 kumquat`. Say whether the harness substituted `$ARGUMENTS` in the stub or the agent carried the argument itself.
 
 If your harness loads neither `AGENTS.md` nor `CLAUDE.md`, find what does load standing instructions and put this line there:
@@ -46,11 +46,11 @@ These bind any workaround, because the design depends on them:
 
 Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, blocked, or skipped. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness. Any field may be answered "confidential".
 
-Put the reply in `results-<harness>-r7.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
+Put the reply in a new dated `results-<date>-<harness>-r7.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
 
 ## Context
 
-Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). Outcome 6 and the stop-on-missing-init rule are new in revision 5, outcome 7 in revision 6, and outcome 8 in revision 7. Earlier routes and why they were dropped are in [alternatives.md](./alternatives.md).
+Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). Outcome 6 and the stop-on-missing-init rule are new in revision 5, outcome 7 in revision 6, and outcome 8 in revision 7. Rejected alternatives and their reasons are retained in ADR 086.
 
 ## Replies
 
