@@ -315,7 +315,7 @@ No test here types that middle range. Doing so is the next concrete step for the
 
 ## 8. Extraction candidates
 
-What the exploration holds that the library does not, with the obstacle to each. Items 1 and 2 of this list were extracted on 2026-10-31 and are listed in the disposition.
+What the exploration holds that the library does not, with the obstacle to each. The last two rows were extracted on 2026-10-31 and are listed in the disposition; the escalated-cases row was checked on 2026-11-01 and found covered. The section 4 table was checked the same day against the library and adds a routing index, not a mechanism; the README records the placement of each mechanism.
 
 | Candidate claim | Where it sits here | Obstacle |
 |---|---|---|
@@ -323,7 +323,7 @@ What the exploration holds that the library does not, with the obstacle to each.
 | Conformity pressure hides fallback and its lessons: an executor held to apparent compliance suppresses the signals that method promotion needs | 6.6, Orr via Duguid | Thirdhand; needs Orr or an agent-runtime instance. Would qualify the two-layer execution note |
 | A closure claim must name which artifact counts as the method, since the same run is mechanical at one level and judgment-laden at another | 6.1 | Possibly a one-paragraph amendment to the closure note; check whether its boundary section already implies it |
 | Operationalizing K for a task yields a partial indicator hypothesis, checkable only against the part of K it leaves out | 0, conditions 1 and 3 | Transfer by analogy from operationalism; no Commonplace case where the residue was used to catch a wrong operationalization |
-| A full-automation claim must exclude escalated cases in advance or report coverage as partial | 3, item 5 | Check overlap with the closure note's reporting rules before writing |
+| A full-automation claim must exclude escalated cases in advance or report coverage as partial | 3, item 5 | Checked 2026-11-01: the closure note's declaration section already requires the horizon and the treatment of failures and names ending observation before the next human intervention as the masking move; covered, no amendment |
 | Discretion as a declared, versioned catalogue rather than an absence of specification | 6.3, CMMN | A design standard without outcome data; needs a Commonplace case |
 | A method operationalized for human executors in natural language becomes a candidate for LLM execution without rewriting; what stays human is set by the task boundary and the executor's operations, not by the artifact's form | 6.5 | Check overlap with skills-derive-from-methodology and the two-layer note; the Haynes transfer is a possibility, not an observed case |
 | Silent compensation with a limit turns drift into a late, compressed failure | Norman ingest | Needs an agent-runtime instance before it earns a note |
