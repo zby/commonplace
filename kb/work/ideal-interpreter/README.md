@@ -37,6 +37,10 @@ says attribution needs its own evidence and names no standard.
    and something would consume it, or deletion with the reason in the
    closing commit.
 
+## Received material
+
+- [Interpretation probe handoff](./interpretation-probe-handoff.md), received 2026-11-02: six interpretation statuses, an ambiguity contract with a limit on exact relevance detection, and a diagnostic assessment design. Candidates for the functional definition and stress tests, not an adopted device or executed suite.
+
 ## Evaluation boundary
 
 The sketch as moved here and the notes it cites. The

@@ -24,7 +24,8 @@ The [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the experi
 ## Working materials
 
 - [Reading and search record](./reading-and-search.md): sources, reading depth, source claims, transfer candidates, and exclusions.
-- [Import assessment and bounded probe](./import-assessment.md): current interpretation, candidate corrections, worked example, and next discriminating questions.
+- [Import assessment and bounded probe](./import-assessment.md): initial interpretation, candidate corrections, worked example, and next discriminating questions.
+- [Tarski audit handoff](./tarski-audit-handoff.md), received 2026-11-02: delivers the primary-source audit requested by assessment correction 2, with the hedged natural-language consistency claim and the exclusion of execution inferences. Supersedes the initial assessment's “audit still needed” status; both library revisions are integrated and checked.
 
 ## Local starting points
 
