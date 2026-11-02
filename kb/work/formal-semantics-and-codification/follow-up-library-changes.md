@@ -4,13 +4,13 @@ Changes outside the two definitions that this workshop has found necessary, and 
 
 ## Promotion checklist
 
-These tasks implement the workshop's decisions after separate authorization; they are not unresolved conceptual choices. The [question register](./decisions-and-open-questions.md) holds the remaining presentation choices.
+These tasks implement the workshop's decisions after separate authorization; they are not unresolved conceptual choices. The [decision register](./decisions-and-open-questions.md) records the approved presentation choices.
 
 - Audit uses of the retired phrase for dependence on the old formalizability argument; do not merely replace words.
 - Find library links that use codification as the source of the symbolic-form criterion. Repoint those links to representational form while retaining links about the move itself to codification.
 - Promote the definitions with their links repointed from workshop paths to library paths, and remove workshop-only question-register sections from the promoted texts.
 - Coordinate revisions of constraining and the collision ledger with the two definitions.
-- Update opacity coverage to reflect the approved modifier and three sources; settle the remaining placement choice before distributing the detailed explanation across library artifacts.
+- Update opacity coverage to reflect the approved modifier and three sources. Keep the short definition and examples in representational form; promote the detailed mechanisms and obfuscation evidence from the account into the opacity note, then repoint the definition's treatment link there.
 - Validate the promoted artifacts and affected links. Keep source-analysis history and review records distinct from the new library wording.
 
 ## Vocabulary collision ledger

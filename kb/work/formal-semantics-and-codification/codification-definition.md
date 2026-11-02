@@ -1,6 +1,6 @@
 # Codification (proposed definition)
 
-Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [codification](../../theory/definitions/codification.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The criterion moves into [symbolic form](./representational-form-definition.md), and codification becomes the move into that form. The opening, the criterion section, the clerk and testing paragraphs, the terminology section and two misuse cases are new or rewritten; the scope, examples, exclusions, codified-parts and relaxing sections are carried over with the retired phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Decisions, remaining presentation choices and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
+Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [codification](../../theory/definitions/codification.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The criterion moves into [symbolic form](./representational-form-definition.md), and codification becomes the move into that form. The opening, the criterion section, the clerk and testing paragraphs, the terminology section and two misuse cases are new or rewritten; the scope, examples, exclusions, codified-parts and relaxing sections are carried over with the retired phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Conceptual and presentation decisions, review checks and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
 
 ---
 
@@ -15,6 +15,8 @@ Codification is the symbolic region of [constraining](../../theory/definitions/c
 A route table and its resolver pass the criterion. A policy that says "escalate serious incidents", read by whoever is on call, does not, however precise its wording, because no reference settles what it permits. The criterion is the one that symbolic form states: the artifact's language has a formal semantics or is close to one. Here, close means its users hold consumers to a reference (a standard or an implementation) from which a formal semantics could be derived.
 
 C's standard enumerates the options for unspecified behavior, names the implementation's documentation for implementation-defined behavior, and declares no requirement for undefined behavior. An ambiguous passage in the standard settles nothing. What the reference leaves open is permitted variation, a required external selection, an excluded guarantee, or a defect, and only the last is a failure of the reference. An artifact whose consequences no reference fixes is reinterpreted on each consumption, and two readings of it can both be reasonable. Execution can still fail: implementations can have bugs, and natural-language interpreters can also violate unambiguous instructions.
+
+Codification can include declared clarification steps. These are part of execution, not revisions to the governing rules.
 
 The move into symbolic form is made in one of two ways. Rewriting a prose checklist as a Python validator is the usual way: the artifact is rewritten in a language that meets the criterion. Pinning a model version with its decoding procedure and treating the package's output as what the prompt means is the other: a consumer is adopted as the reference for an operation. The text does not change, but its form under that consumption path does. The adopting system is then a user of the language of prompts as that package reads them. It treats the package's behavior as what those prompts mean.
 
@@ -91,6 +93,6 @@ Relevant Notes:
 
 ---
 
-## Decisions and remaining questions
+## Decisions and promotion
 
-The [question register](./decisions-and-open-questions.md) explains the remaining choices about historical terminology, opening placement of adopted models and clarification detail. Adoption as codification is settled. Auditing library dependencies on the old criterion is a [promotion task](./follow-up-library-changes.md#promotion-checklist), not a remaining choice about this definition.
+The [decision register](./decisions-and-open-questions.md) records the approved presentation: adopted models stay in the opening list, clarification gets an explicit statement here and its parser example stays in the account, and historical terminology stays brief. Auditing library dependencies on the old criterion is a [promotion task](./follow-up-library-changes.md#promotion-checklist), not a remaining choice about this definition.

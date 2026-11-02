@@ -57,7 +57,7 @@ Designating a judge does not supply a rule, so a reference that settles by unfor
 
 ### Three grades and consumption paths
 
-Three grades follow. A language has a formal semantics when the derivation has been written and its users accept it as the language's: Standard ML, WebAssembly. It is close when the reference exists and the derivation is possible but unwritten: C, Python, a legacy codebase under its interpreter, a schema under its validator. It is neither when formalizations of its consumers exist and none is accepted as the language's: English.
+The account distinguishes three grades by the reference users accept. In the first, users accept a written formal semantics: Standard ML, WebAssembly. In the second, they rely on a standard or implementation from which a formal semantics could be derived: the C standard, Python's language reference and CPython, a legacy codebase's interpreter, or a schema's validator. This describes the governing reference, not the absence of research formalizations. In the third, formalizations of consumers exist but none governs the language's users: English. The symbolic membership criterion groups the first two grades together.
 
 Form is relative to the consumption path. Under a path with no held-to reference, the same artifact is reinterpreted on each consumption and is natural-language under that path. Mixed artifacts are split by operative part or consumption path, as the library's form definition already allows.
 
@@ -177,6 +177,6 @@ A consumer of natural language can ask the author what the artifact means, and i
 | prompt whose output is parsed by a schema | the schema, for the output | yes, for the output | symbolic, for the schema | mixed | prompt natural-language unless its model is adopted, output contract symbolic |
 | frozen prompt–model package adopted for one operation | the package, decoding included | yes | symbolic under the runtime's path, distributed-parametric under the interpreter's | prompt symbolic, opaque, under that path; weights distributed-parametric under the interpreter's path | codifies the operation; defines nothing about English |
 
-## Decisions and remaining questions
+## Decisions and promotion
 
-The [question register](./decisions-and-open-questions.md) explains which choices are settled and which concern presentation. Adoption, path-relative localization and the opacity modifier are settled decisions. Testing the boundary cases is a [review check](./decisions-and-open-questions.md#review-checks-not-wording-decisions), not a standing request to decide those points again. The [follow-up list](./follow-up-library-changes.md#promotion-checklist) holds promotion tasks.
+The [decision register](./decisions-and-open-questions.md) records the approved conceptual and presentation choices. This account retains the three-grade explanation, opacity mechanisms and evidence, and parser comparison; the definitions keep the membership criterion and shorter explanations. Testing the boundary cases is a [review check](./decisions-and-open-questions.md#review-checks-not-wording-decisions), not a standing request to decide those points again. The [follow-up list](./follow-up-library-changes.md#promotion-checklist) holds promotion tasks.

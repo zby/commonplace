@@ -1,6 +1,6 @@
 # Representational form (proposed definition)
 
-Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [representational form](../../theory/definitions/representational-form.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The natural-language and symbolic forms, the assigned-consequences question, the ordered presentation of the two questions, the inspection rule, the opaque modifier and the misuse cases are new; the distributed-parametric form, the localization question and the exclusions are carried over unchanged or with one phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Decisions, remaining presentation choices and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
+Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [representational form](../../theory/definitions/representational-form.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The natural-language and symbolic forms, the assigned-consequences question, the ordered presentation of the two questions, the inspection rule, the opaque modifier and the misuse cases are new; the distributed-parametric form, the localization question and the exclusions are carried over unchanged or with one phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Conceptual and presentation decisions, review checks and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
 
 ---
 
@@ -16,21 +16,17 @@ A policy that says "escalate serious incidents" is read by whoever handles the i
 
 A route table read by its resolver, or a Python script run by CPython at a version, has consequences the resolver or the language reference fixes, and a resolver that departs from the table is wrong. That is **symbolic** content: it sits in localized units whose consequences, under the consumption path in question, are fixed by the reference of a language that has a formal semantics or is close to one.
 
-A language is close to a formal semantics when its users hold its consumers to a reference, whether a standard or an implementation, from which a formal semantics could be derived. A consumer that is held to the reference and departs from it is wrong. Fixed rules, implemented by a parser, interpreter, runtime, schema, validator, route table, adopted model package, or similar consumer, determine what behavior is permitted, including any variation, external selection, or clarification step they explicitly provide for. The category is architectural, not a claim about classical symbolic AI.
+A language is close to a formal semantics when its users hold its consumers to a reference, whether a standard or an implementation, from which a formal semantics could be derived. A consumer that is held to the reference and departs from it is wrong. Adopting a reference does not establish its adequacy to the task. Fixed rules, implemented by a parser, interpreter, runtime, schema, validator, route table, adopted model package, or similar consumer, determine what behavior is permitted, including any variation, external selection, or clarification step they explicitly provide for. The category is architectural, not a claim about classical symbolic AI.
 
 The weights of a model that a system runs as its interpreter carry what the model does with "summarize", and no part of them carries that item; the system addresses the weights as a whole. That is **distributed-parametric** content: numerical state distributed across parameters or dense representations, with no part the consumer on that path addresses. Weights, adapters, embedding spaces, dense-vector indexes, reward models, learned controllers, and similar artifacts are distributed-parametric under the path on which a system runs them as models. The runtime that executes the same weights addresses them kernel by kernel and parameter by parameter, and under that path they are symbolic data, as the derivation below states.
 
 ### Opacity and inspection
 
-A one-line prompt under an adopted model package is readable, and what editing one word of it will do is not read from the package; it is found by running cases. A trillion-line program is readable line by line against its language reference and not as a whole. An obfuscated program is readable and arranged to defeat reading. All three are symbolic, and all three are **opaque** under their consumption path, relative to a behavior or change of interest: the artifact together with its reference does not let an inspector establish that behavior, or the effect of that change, at acceptable cost. Opacity removes an affordable inspection route for the question at hand; evaluation then relies more on execution, on other analysis such as abstraction or certificates, or on explicitly retained uncertainty.
+A one-line prompt under an adopted model package can be easy to read while the effect of editing it is hard to predict. A large program can be readable line by line but difficult to understand as a whole. An obfuscated program is deliberately arranged to obstruct understanding. These illustrate three sources of opacity: the reference's form, the artifact's scale and deliberate obfuscation.
 
-The three cases are the three sources that obstruct inspection:
+Symbolic content is **opaque** under a consumption path, relative to a behavior or change of interest, when the artifact together with its reference does not let an inspector establish that behavior, or the effect of that change, at acceptable cost. Evaluation then relies more on execution, other analysis such as abstraction or certificates, or explicitly retained uncertainty.
 
-- The artifact's scale: each unit is readable against the reference and the whole is not, and coupling erodes the predictability of local edits as the artifact grows.
-- The reference's form: the reference is readable rule by rule only under a path other than the one the artifact is used on. A frozen model package is readable as kernels and parameters and used as an interpreter, so even a one-line artifact's effect is not read from the reference.
-- Deliberate obfuscation: a function-preserving transformation is chosen to show as little as possible.
-
-Opaque content is still symbolic: what counts as wrong is fixed, and what the reference specifies, including declared variation and failure outputs, stays declared. What it loses is checking by reading and revision by locating the rule, so whether the specified behavior satisfies the requirement is found on use or by other analysis. Opacity is an inspection property, not a form ([opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md)). Write the modifier only where readability is at issue; unmodified "symbolic" says nothing about it.
+Opacity does not change what the reference specifies, including declared variation and failure outputs. It removes an affordable inspection route for the question at hand. It is an inspection property, not a form ([opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md)). Write the modifier only where readability is at issue; unmodified "symbolic" says nothing about it. The [account](./symbolic-form-and-codification.md#opaque-symbolic-form) retains the mechanisms and obfuscation evidence for later promotion to the opacity note.
 
 Form sets the default inspection method. Read natural-language content. Check symbolic artifacts against their reference, by reading where they are not opaque and by running cases or other analysis where they are. Probe distributed-parametric artifacts behaviorally.
 
@@ -94,7 +90,7 @@ A system that addressed distributed state through algebraically defined operatio
 
 A schema is checked against its validator, a note is read, and a model is probed with inputs. The inspection rule above follows from these questions instead of being stated separately for each form: a localized unit whose language's users hold consumers to a reference can be checked against that reference, a localized unit without one gives its content only through interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe).
 
-Within the first case, whether the check is by reading or by running cases is the opaque modifier's question: a short script is read, and a prompt under an adopted package is run.
+Within the first case, whether inspection is affordable or the check needs execution or other analysis is the opaque modifier's question: a short script is read, and a prompt under an adopted package is run.
 
 ### Addressability and the localized forms
 
@@ -110,7 +106,7 @@ Representational form is not storage substrate. Markdown in a repository can be 
 
 **Localized** means an identifiable unit carries the content. It does not mean the content is specific to one deployment. Deployment-specific facts can be retained in any form, including weights.
 
-Representational form is not readability. "Symbolic" says that what counts as wrong is fixed; whether the reference can be read is the opaque modifier's question.
+Representational form is not readability. "Symbolic" says that what counts as wrong is fixed; whether the artifact and its reference can be inspected for the behavior in question is the opaque modifier's question.
 
 Representational form is not [behavioral authority](../../theory/definitions/behavioral-authority.md). Form says how content is encoded and gets its consequences; authority says which consumer applies it, through which channel, and with what force. A natural-language instruction can bind a worker, and a symbolic schema can be merely advisory.
 
@@ -136,13 +132,11 @@ Relevant Notes:
 - [storage substrate](../../theory/definitions/storage-substrate.md) — contrasts: where content is stored, separate from how it is encoded
 - [behavioral authority](../../theory/definitions/behavioral-authority.md) — contrasts: which consumer applies content, through which channel, and with what force
 - [opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md) — contrasts: scale is one source of the opaque modifier, not the only one
-- [addressable theory](../../theory/definitions/addressable-theory.md) — extends: the localized side supplies parts for inspection and separate revision; the assigned-consequences axis fixes whether a contradiction is computed or interpreted
+- [addressable theory](../../theory/definitions/addressable-theory.md) — extends: the localized side supplies parts for inspection and separate revision; the assigned-consequences question fixes whether a contradiction is computed or interpreted
 - [codification and relaxing navigate the bitter-lesson boundary](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to relax a symbolic commitment
-- [Barak and co-authors, On the (Im)possibility of Obfuscating Programs](../../sources/on-the-impossibility-of-obfuscating-programs.ingest.md) — evidenced-by: deliberate obfuscation as a non-scale source of opacity; the strong form of hiding is impossible in general because reading a program can exceed running it
-- [Jain, Lin and Sahai, Indistinguishability Obfuscation from Well-Founded Assumptions](../../sources/indistinguishability-obfuscation-well-founded-assumptions.ingest.md) — evidenced-by: the weaker provable notion exists under four assumptions; cited for existence and scope only
 
 ---
 
-## Decisions and remaining questions
+## Decisions and promotion
 
-The [question register](./decisions-and-open-questions.md) distinguishes settled choices from remaining presentation decisions. In particular, path-relative localization, adoption as codification and opacity as a separate modifier are settled; the amount and placement of explanation remain open. Promotion tasks are tracked [separately](./follow-up-library-changes.md#promotion-checklist).
+The [decision register](./decisions-and-open-questions.md) records the approved conceptual and presentation choices. The definition keeps the membership boundary and a short opacity treatment; the account retains the fuller explanations. [Review checks](./decisions-and-open-questions.md#review-checks-not-wording-decisions) and [promotion tasks](./follow-up-library-changes.md#promotion-checklist) remain separate from those decisions.
