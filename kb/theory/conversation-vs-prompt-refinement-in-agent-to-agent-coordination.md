@@ -15,7 +15,7 @@ The calling agent has at least three options:
 2. **Prompt refinement** — incorporate the answer into a revised, self-contained prompt and re-dispatch with a clean context.
 3. **Hybrid** — answer the question to continue the current invocation, but also capture the answer to refine the prompt template for future similar invocations.
 
-Conversation feels natural because humans can't rewind. Once we've said something, we can only append corrections. Agents have no such constraint — they can cheaply re-invoke with a better prompt, effectively rewinding to before the misunderstanding.
+A conversation cannot erase what a recipient has already heard, but correction is not limited to appending a later turn. [Schegloff, Jefferson and Sacks](../sources/schegloff-jefferson-sacks-self-correction-repair.ingest.md) describe a repair-initiation opportunity space beginning in the trouble-source turn, with self-initiation opportunities preceding other-initiation. That organization qualifies the rewind analogy: human repair is not simply a sequence of completed messages followed by corrections. An agent workflow adds a different option — re-invoking the callee with a revised prompt and without the prior exchange in its context.
 
 ## The tradeoff
 
@@ -61,3 +61,4 @@ Relevant Notes:
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — complicates: when the caller is also an LLM, the "push complexity to the scheduler" argument weakens
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — foundation: prompt refinement works out a focused handoff from the caller's knowledge and the sub-agent's task
 - [evolving understanding needs holistic rewriting](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — parallel: an evolving narrative likewise needs to be rewritten as a whole rather than extended by composition
+- [The preference for self-correction in the organization of repair in conversation](../sources/schegloff-jefferson-sacks-self-correction-repair.ingest.md) — evidenced-by: qualifies the append-only analogy with ordered repair-initiation opportunities beginning in the trouble-source turn; it is a human-interaction comparison, not evidence about agent restart costs

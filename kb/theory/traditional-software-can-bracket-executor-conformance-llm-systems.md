@@ -20,13 +20,15 @@ The second norm is the one that gets forgotten, so state it carefully. A compile
 
 Classical software engineering does not deny the second norm; it brackets it. Compiler and CPU conformance is reliable enough that in practice every wrong output resolves to "my code doesn't mean what I intended". The bracket is what licenses the everyday inference *wrong output ⇒ my spec is wrong*, and it collapses error analysis to one question with one culprit.
 
-A second simplification rides alongside it. Code aims at a unique semantics: once language, implementation, flags, and target are fixed, `V` is a singleton per input, and any divergence counts as a bug, a portability limit, or explicitly unspecified behavior. So there is no residual question of *which* admissible behavior you got.
+A second simplification rides alongside it. For deterministic code under a reference that requires one result per input, `V` is a singleton once the relevant implementation parameters and state are fixed. There is then no residual question of *which* admissible behavior you got. Symbolic form itself does not require that singleton: its criterion is that users hold consumers to a reference that fixes permitted behavior, which can include declared variation.
 
 Together the two simplifications produce the strong form programmers actually say out loud: you cannot call the output wrong if the program is correct. That statement is not a truth about computation. It is the two brackets talking — conformance assumed, plurality assumed away.
 
 ## Neither simplification survives the move to LLM systems
 
-The prompt's public meaning is fixed by shared linguistic-competence norms. These are weaker than a language standard and contestable at the margin, since [natural language has no conforming-interpreter standard to appeal to and no attainable formal semantics](./agentic-systems-interpret-underspecified-instructions.md) — but they are not vacuous. No competent reading of "output JSON only" admits a markdown wrapper.
+The prompt's public meaning is fixed by shared linguistic-competence norms. These are weaker than a language standard and contestable at the margin: English's users do not hold readers to a particular model as their reference, as the [underspecified-instructions account](./agentic-systems-interpret-underspecified-instructions.md) explains. But the norms are not vacuous. No competent reading of "output JSON only" admits a markdown wrapper.
+
+This distinction does not depend on an impossibility of formalizing natural language. [Tarski 1944](../sources/tarski-semantic-conception-of-truth.ingest.md) derives the liar contradiction from semantic closure, including full disquotation for the language's own sentences, together with classical logic; he retains classical logic and defines truth in an essentially richer metalanguage. He does not treat everyday language's vague structure as an exactly specified theory to which a consistency verdict applies. [Truth and Proof](../sources/tarski-truth-and-proof.ingest.md) uses the object-language/metalanguage distinction to block reconstruction of the liar. The [IEP survey](../sources/iep-liar-paradox.ingest.md) reports truth-value-gap alternatives and leaves natural-language closure unresolved. These conditional limits on truth definitions establish no prohibition on executable interpretation.
 
 An LLM in an agentic pipeline is deployed *as* an interpreter of that language, so it occupies exactly the compiler's role and inherits the second norm. What it does not inherit is the reliability that made the norm ignorable. Its conformance to the words' meaning is probabilistic and materially unreliable: [output the spec rules out is produced anyway](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md), across constraint violation, hallucination, fully specified bookkeeping, and framing sensitivity. The compiler-bug case is the dominant regime rather than the negligible one.
 
@@ -60,6 +62,8 @@ The public-meaning boundary is a triage rule, not a decision procedure. Genuinel
 
 Where an LLM is not deployed as an interpreter of an instruction — open-ended generation with no operative spec — the second norm has little content, and the analysis reduces to the first.
 
+A system can adopt a frozen model package, decoding included, as the reference for one operation. Under that path conformance is to the package, not to ordinary English interpretation. Adoption does not establish that the package's specified behavior satisfies the original requirement. This case follows the [symbolic-form criterion](./definitions/representational-form.md), rather than the ordinary prompt-interpreter case analysed here.
+
 ## Open Questions
 
 - Interpreter failure is a rate, so the bracket could in principle return. If conformance reliability rises far enough with model generation, practice would re-collapse toward two questions. The threshold is unknown, and it is worth noting that it would be a change in engineering economics, not in the structure of the analysis.
@@ -69,7 +73,7 @@ Where an LLM is not deployed as an interpreter of an instruction — open-ended 
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: why natural language supports no conforming-interpreter standard and no attainable formal semantics, which is what makes the second norm weak but non-vacuous
+- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: distinguishes a consumer's formally describable behavior from a reference that the language's users hold consumers to
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the component claim for interpreter failure, with the worked catalogue of outputs falling outside `V`
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: supplies the reason the diagnosis has exactly these three questions — it is the classical two-norm analysis with both brackets removed
 - [constraining](./definitions/constraining.md) — defined-in: the narrowing operation this note reads as re-purchasing the conformance bracket

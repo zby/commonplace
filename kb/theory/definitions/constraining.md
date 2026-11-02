@@ -36,7 +36,7 @@ The [representational form](./representational-form.md) of the committed choice 
 
 **Natural-language constraining** — definitions, title conventions, structured sections, worked examples, review criteria — can make readings invalid, not only rank them lower: "output JSON only" rules out Markdown, and a model that produces Markdown has failed to comply. Two things stay open. The artifact usually still admits several reasonable readings at the edges of what it rules out, and compliance depends on an interpreter that fails at some rate.
 
-**[Codification](./codification.md)** — schemas, validators, route tables, deterministic code — settles both within its scope. Fixed rules determine what is permitted, including any variation they explicitly allow, and a consumer that departs from them has a bug rather than an expected failure rate. Codification is constraining that crosses from natural-language into symbolic form, not a separate mechanism.
+**[Codification](./codification.md)** — schemas, validators, route tables, code, adopted model packages — settles what is permitted within its scope by holding consumers to a reference. Fixed rules determine permitted behavior, including declared variation, external selection, and clarification steps. A consumer that departs from the reference fails to conform; behavior that conforms can still fail the original requirement. Codification is constraining that crosses from natural-language into symbolic form, not a separate mechanism.
 
 Many constraints never need to cross. A definition note narrows a term's meaning and stays natural language.
 
@@ -55,7 +55,7 @@ Constraining is not result selection. [Retaining one LLM output](../selecting-an
 ## Misuse Cases
 
 - Calling every improvement constraining. A change that adds information or makes an operation easier is not constraining unless some reading becomes invalid or ranked lower.
-- Treating constraining as synonymous with codification. Codification is only the region where the artifact has a unique operational semantics.
+- Treating constraining as synonymous with codification. Codification is only the region where the artifact's language has a formal semantics or is close to one, as [symbolic form](./representational-form.md) defines it.
 - Treating a violated natural-language constraint as a weak one. "Output JSON only" makes Markdown invalid even when a model produces it; the violation is noncompliance, not evidence that the rule only ranked readings.
 - Stating how constrained an artifact is without naming the consumer.
 
@@ -73,8 +73,8 @@ Gradual typing, formal specification, and ontology engineering each narrow inter
 
 Relevant Notes:
 
-- [codification](./codification.md) — defined-in: the symbolic region of constraining, where the artifact has a unique operational semantics
-- [representational form](./representational-form.md) — defined-in: the natural-language/symbolic split behind what a constraint leaves open
+- [codification](./codification.md) — defined-in: the move from natural-language into symbolic form within constraining
+- [representational form](./representational-form.md) — defined-in: the symbolic criterion, where the artifact's language has a formal semantics or is close to one, and the split behind what a constraint leaves open
 - [lineage](./lineage.md) — contrasts: source derivation, independent of how constrained an artifact is
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — grounds: why natural-language artifacts leave an interpretation space to narrow
 - [learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: Simon's criterion under which an improving constraint counts as learning

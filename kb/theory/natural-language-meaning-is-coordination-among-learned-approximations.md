@@ -13,7 +13,7 @@ This note states a hypothesis. It is our extrapolation from a mechanism Andrew L
 
 Andrew Lampinen argues that a general pattern-learner, brain or network, has no innate symbol manipulation: "Classical symbol manipulation" is "something we learn with effort" ([Lampinen](../sources/symbols-neural-networks-mathematical-intelligence.ingest.md), verbatim). It uses external symbol systems as scaffolds; "by doing so, we can learn to internalize approximations of these systems" ([Lampinen](../sources/symbols-neural-networks-mathematical-intelligence.ingest.md), verbatim). Those approximations stay imperfect: "even then they remain fallible" (verbatim).
 
-"Approximation" presupposes a target. For a formal language such as Lean the target exists: a checker with a unique operational semantics sits outside every learner, and each learner's competence is measured against it.
+"Approximation" presupposes a target. For a formal language such as Lean the target exists: the language's users hold consumers to a checker, and each learner's competence is measured against that reference. This is the [symbolic-form criterion](./definitions/representational-form.md), not a claim that only formal-language consumers can be formally described.
 
 ## The hypothesis
 
@@ -21,7 +21,9 @@ The same learning mechanism produces natural-language competence, but there is n
 
 Other speakers, the shared world, and retained texts such as dictionaries and legal definitions play the checker's role. This checker is weak, distributed, and slow in the sense of the [oracle strength spectrum](./oracle-strength-spectrum.md). The hypothesis predicts that meaning is sharpest where correction is cheap and frequent (concrete nouns, counting, institutionally policed technical terms) and loosest where little checks a use (abstract terms such as "intelligence" or "learning"). Interpretation variance should grow with distance from checkable use.
 
-[Constraining](./definitions/constraining.md) is then the operation that installs a local checker for a natural-language artifact. It does not narrow a fixed meaning. It acts on a population of approximations and raises their alignment by making one reading checkable. [Codification](./definitions/codification.md) is the limit case: the checker becomes a runtime, and the target becomes real.
+Human dialogue provides a bounded comparison, not a test of this hypothesis. [Purver, Ginzburg and Healey](../sources/purver-ginzburg-healey-clarification-dialogue.ingest.md) distinguish requests about the conversational move, the words uttered, a constituent's content, and intended correction. Only about 15% of their clarification requests have the constituent reading that asks what a part refers to; the full clarification rate cannot stand for checking expression meaning. [Schegloff, Jefferson and Sacks](../sources/schegloff-jefferson-sacks-self-correction-repair.ingest.md) describe organized repair opportunities that operate whether or not repair occurs, and repair without hearable error. These qualify the checker analogy: repair is an organized resource of interaction, not simply another speaker correcting an error. Neither source establishes that natural-language meaning has no external target.
+
+[Constraining](./definitions/constraining.md) is then the operation that installs a local checker for a natural-language artifact. It does not narrow a fixed meaning. It acts on a population of approximations and raises their alignment by making one reading checkable. [Codification](./definitions/codification.md) is the limit case: consumers are held to a reference that fixes what the artifact permits. Adopting a model package can establish that local target without establishing the package as the semantics of English.
 
 ## Consequences
 
@@ -64,4 +66,6 @@ Relevant Notes:
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — extends: places the checkers of natural-language meaning at the weak, distributed end of the spectrum
 - [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: reads formal semantics as progressive constraining applied to language
 - [constraining](./definitions/constraining.md) — defined-in: the operation this note recasts as installing a local checker
-- [codification](./definitions/codification.md) — defined-in: the limit case where the checker becomes a runtime
+- [codification](./definitions/codification.md) — defined-in: the limit case where consumers are held to a reference that fixes what the artifact permits
+- [On the Means for Clarification in Dialogue](../sources/purver-ginzburg-healey-clarification-dialogue.ingest.md) — evidenced-by: qualifies the other-speakers-as-checker analogy; only a minority of clarification requests concern a constituent's content
+- [The preference for self-correction in the organization of repair in conversation](../sources/schegloff-jefferson-sacks-self-correction-repair.ingest.md) — evidenced-by: qualifies the checker analogy with repair opportunities organized independently of hearable error, not a test of the no-external-target hypothesis
