@@ -36,13 +36,23 @@ active command route unless that route is also checked.
    command, library reads, native skill listing and a stub with an argument.
    Report each separately. Codex's index-with-arguments route already passed
    on Git main; repeat only where needed for the new installation's acceptance.
-3. **Workjig recovery.** If a bounded fixture or released dependency tests are
-   available, verify that installed Workjig 0.3.0 preserves and rejects an
-   existing interrupted lock marker and accepts a fresh lock. Do not patch
-   Workjig, use a source overlay or infer this result from Commonplace's suite.
-   Record an unavailable fixture as a remaining blocker.
+3. **Workjig recovery.** Run the prepared
+   [fixture](./workjig-030-recovery-fixture.py) using the interpreter of the
+   installed Commonplace 0.3.3 uv tool, with no source overlay:
 
-Upgrade cases are the next planning checkpoint after this run. pi, macOS and
+   ```powershell
+   & (Join-Path (uv tool dir) 'llm-commonplace\Scripts\python.exe') '<copied-fixture-path>'
+   ```
+
+   It verifies Workjig 0.3.0 and its installed origin, checks that `hold()`
+   preserves interrupted lock bytes and `Run()` rejects them, then checks
+   fresh records and mutual exclusion. Retain the JSON output and Windows
+   interpreter/module provenance. The [Linux run](./results-2026-11-02-linux-sol-upgrade.md)
+   passed; Windows execution is still required. Do not infer that result from
+   Commonplace's suite or repair Workjig during this check.
+
+Linux upgrade findings are in the [acceptance report](./results-2026-11-02-linux-sol-upgrade.md).
+After this Windows run, reassess the remaining runtime and live-session gaps. pi, macOS and
 other unavailable harnesses keep the triggers in the README. E1 owns promoted
 procedure portability; this run does not claim that Bash-shaped procedures are
 portable merely because skill routing works.

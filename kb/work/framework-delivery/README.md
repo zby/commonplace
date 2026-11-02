@@ -33,15 +33,17 @@ A result applies only to its recorded runtime, permissions and installation.
 ## Evidence established
 
 Current baseline: PyPI **0.3.3**, release commit `526de4edd`, Workjig 0.3.0.
-No new runtime evidence is claimed by this reorganization (2026-11-01).
+The [2026-11-02 Linux acceptance report](./results-2026-11-02-linux-sol-upgrade.md)
+adds isolated PyPI installation, synthetic upgrade, pi catalog and recovery evidence.
 
 | Surface | Evidence and limit |
 |---|---|
 | Release and supported suite | [Release CI](https://github.com/zby/commonplace/actions/runs/41342248088) passed tests and wheel install/init checks on Windows and Linux. The Windows test-suite workshop is closed; analysis execution remains Linux-only. |
 | Linux installed delivery | Revision 4 [Claude Code](./results-claude-code-r4.md) and [Codex](./results-codex-r4.md) establish baseline routes and upgrade observations. Revision 7 [Claude Code](./results-claude-code-r7.md), [Codex](./results-codex-r7.md) and [pi](./results-pi-r7.md) add index, missing-init, worker and argument checks. Read each report's rooting and coverage limits. |
+| Linux follow-up | [Sol acceptance report](./results-2026-11-02-linux-sol-upgrade.md): isolated PyPI 0.3.3 init/check/landings passed. Fresh Codex Sol read old V2 through stale pointers, then V4 through repaired moved-root pointers after a library-only update without another init. Synthetic versions are not real releases. |
 | Windows install | [Run 4](../windows-install/results-2026-10-31-afflicted-main-run4.md): all 25 commands, init/check/landings, restarted app and Explorer-started process passed on Git main. [Independent Codex](../windows-install/results-2026-11-01-codex-independent.md): representative commands and 821 tests passed; no fresh install or restart. Neither is PyPI 0.3.3 acceptance. |
 | Windows agent routing | [Installed-project report](./results-2026-10-31-windows-installed-project-agents.md): Claude Code and Codex listed skills and passed stub arguments; Codex passed the no-stub index route. Claude's read-rule effect was not established. |
-| pi workers | [Requirements](./sub-agent-requirements.md) and [checkout verification](./pi-nesting-control.md) cover the extension's worker/depth budgets. INSTALL.md prescribes the user-level copy; installed-project acceptance remains pending. |
+| pi workers | [Requirements](./sub-agent-requirements.md) and [checkout verification](./pi-nesting-control.md) cover the extension's worker/depth budgets. The [Linux follow-up](./results-2026-11-02-linux-sol-upgrade.md) loaded that copy from a disposable user-level directory in an installed project. Worker discovery/execution remains unverified; the pi model route had no API credits. |
 
 The original [Windows 0.3.0 report](./results-windows-install-030.md) is retained
 because the installation and antivirus workshops still use its findings.
@@ -58,9 +60,9 @@ provides the next run's instructions, not a separate implementation backlog.
 |---|---|---|
 | Windows PyPI installation | Next Windows run; owned by [windows-install](../windows-install/README.md). | Follow INSTALL.md steps 1–4 for 0.3.3, rerun shims, test fresh processes inside/outside the restarted app, and record package provenance. |
 | Claude Windows read rule | In that run if a default-permission session or authenticated CLI is available; otherwise retain the exact blocker. | Agent rooted in the scratch project reads one file inside the rule and one outside it. If both are permitted independently, report the rule's effect as unestablished. |
-| Upgrade acceptance | After the PyPI checkpoint, choose the next bounded upgrade probe. | Distinguish changed skill metadata, library-only change, moved installation and an already-running session; record pointer warnings, reads before/after init and any required restart. Existing probe results are partial evidence, not full current-release acceptance. |
-| Focused Workjig recovery | Next Windows run if released dependency tests or a bounded verification fixture are available. | Against installed Workjig 0.3.0: existing interrupted-marker bytes remain unchanged and rejected; a new lock is accepted. Record package provenance; no local source overlay. A missing fixture is a blocker, not a pass. |
-| pi installed worker copy | Deferred until the next installed-project pi run. | INSTALL.md user-level extension and worker copy, then probe case 10 in a scratch project; use the requirements checklist. |
+| Upgrade acceptance | Partial Linux acceptance recorded; resume model-backed live-session reads when a working provider is available, and repeat applicable cases for a real release transition or another runtime. | Synthetic library-only and metadata detection/repair passed. Fresh Codex Sol read stale V2 before repair and moved-root V4 after init plus a no-init library update. An ongoing pi RPC process kept old skill metadata after init; a fresh process updated. That catalog observation is not a model-backed live-session read, and `/reload` was not tested. |
+| Focused Workjig recovery | Run the [prepared fixture](./workjig-030-recovery-fixture.py) on Windows using installed Commonplace's interpreter; exact invocation is in the handoff. | Linux passed against installed Workjig 0.3.0. `hold()` preserved interrupted bytes; `Run()` rejected the interrupted state. Fresh records and mutual exclusion passed. Windows result remains open. |
+| pi installed worker copy | Copy/loading prerequisite passed on Linux; resume case 10 with an available Sol model route. | The extension registered active `subagent` from the isolated user-level copy; the worker file was copied unchanged. No worker discovery/execution or fresh-context handoff passed. The configured pi API route returned no credits; no account or billing changes were made. |
 | macOS | Deferred until a macOS host is available. | Published-package install plus installed-project delivery checks. |
 | Other harnesses and enterprise policy | Deferred until an actual user/environment is available. | [Probe request](./probe-request.md): standing-instruction loading, external reads, skill/index routes and worker availability under normal policy. Internal details may be anonymized. |
 | Large index, unnamed tasks and additional skill metadata | Deferred until a real workload or harness requires these cases. | Verify discovery and triggering at that scale, including metadata beyond name/description; do not infer coverage from the small synthetic index. |
@@ -90,7 +92,8 @@ security policy or the delivery architecture. Bring such decisions to the operat
 ## Closure
 
 Close when each remaining item has evidence or an explicit deferral with a
-trigger. After the Windows repeat, reassess the upgrade and recovery items;
+trigger. After the Windows repeat, reassess the remaining live-session, worker
+and platform coverage;
 do not silently defer them merely because a release passed CI. Promote any new
 durable rule to INSTALL.md, the owning ADR or instructions. Transfer still-live
 deferrals and evidence needed by their owners before deleting this directory
