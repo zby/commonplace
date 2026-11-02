@@ -2,11 +2,11 @@
 
 Drafted 2026-11-02 while the account and definitions were under Astra's final revisions. Part of the [workshop](./README.md). This file turns the [closure](./README.md#closure) clause and the [promotion checklist](./follow-up-library-changes.md#promotion-checklist) into an ordered sequence of commits with the files each one touches, so that promotion can be executed in one sitting once the operator authorizes it. Nothing here is authorized by the workshop itself; the sequence starts with the operator's decisions. File lists come from a search of the library on 2026-11-02 and should be re-run before execution.
 
-## Step 0: execution choices the operator makes before any edit
+## Step 0: approved execution choices
 
-The account's content and the [presentation choices](./decisions-and-open-questions.md#approved-presentation-choices) are approved and are not reopened here. The promoted definitions carry no "Decisions and promotion" section; whatever is still genuinely open after promotion is recorded as a limit in the account's theory note. What remains to decide is execution only:
+The account's content and the [presentation choices](./decisions-and-open-questions.md#approved-presentation-choices) are approved and are not reopened here. The promoted definitions carry no "Decisions and promotion" section; whatever is still genuinely open after promotion is recorded as a limit in the account's theory note. The operator approved all execution recommendations below on 2026-11-02, including Sol for bounded bulk work. These are execution decisions, not remaining approval gates:
 
-1. **An ADR for retiring the phrase.** "Unique operational semantics" is a registered term with a collision-ledger row, and the library retired "distillation" through [ADR 053](../../reference/adr/053-retire-distillation-without-a-successor-term.md) and replaced "reach" through ADR 055. Recommended: one ADR, numbered at execution time (124 on 2026-11-02), that retires the phrase, names the successor wording, records why the formalizability conjecture behind it was wrong, and lists the sites migrated. Promotion commits then carry `Decision: ADR 124`.
+1. **An ADR for retiring the phrase.** "Unique operational semantics" is a registered term with a collision-ledger row, and the library retired "distillation" through [ADR 053](../../reference/adr/053-retire-distillation-without-a-successor-term.md) and replaced "reach" through ADR 055. Recommended: one ADR, numbered at execution time (124 on 2026-11-02), that retires the phrase, names the successor wording, records why the formalizability conjecture behind it was wrong, and leaves the migrated-site inventory to the implementing commit messages. Promotion commits then carry `Decision: ADR 124`.
 2. **Whether step 1 becomes its own note.** Recommended: yes, a short separate note; see step 2.
 3. **The opacity note's new title.** Astra's proposal is "Opacity depends on the inspection question and budget". The rename is a relocation commit separate from the content edit.
 4. **The side theory's destination.** Recommended: the log entry in step 5, not an unfinished proposal.
@@ -110,6 +110,8 @@ Trailers on every commit: `Workshop: kb/work/formal-semantics-and-codification`,
 - A final search for the retired phrase returns hits only on an explicit allowlist: the retirement ADR, the collision ledger's historical note if one is kept, the three ingests that gloss the phrase, `kb/agent-memory-systems/`, `kb/reports/retained/`, and other workshops' snapshot packets. Any other hit is a missed site.
 - Freshness: the changed and new notes show as stale or unreviewed; schedule their review pairs through the review system rather than acknowledging them, since the changes are substantive.
 
-## What this plan does not decide
+## Execution authority and adjustments
 
-The six execution choices in step 0 are the operator's. The file lists are a snapshot and may have moved by execution time.
+The operator approved all six choices in step 0 on 2026-11-02. The file lists remain a snapshot and are searched again during execution. Source ingests must not mention workshops: remove workshop references from the seven affected ingests, including their occasion fields, preserving the substantive research questions and source quotations. This explicit cleanup overrides verbatim occasion retention for those fields; do not add a historical-workshop allowlist.
+
+The ADR type excludes migration inventories from the ADR body: record migrated sites and counts in implementing commits instead. The parent retains integration, verification, commit ordering and closure; Sol workers own disjoint source, extraction, migration and handoff batches. Execution state is recorded in `execution-state.md` until closure.
