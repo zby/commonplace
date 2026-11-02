@@ -291,8 +291,7 @@ that copy against the ePrint or the JACM text.
 
 ## Recommended Next Action
 
-Revise [Opacity is a scale threshold, not a class
-property](../theory/opacity-depends-on-the-inspection-question-and-budget.md) to recognize deliberate
+Revise [Opacity depends on the inspection question and budget](../theory/opacity-depends-on-the-inspection-question-and-budget.md) to recognize deliberate
 obfuscation as a non-scale source of opacity while preserving the VBB
 impossibility limit: reading can exceed probing for some contrived function
 families. Distinguish the inefficient iO instance here from the conditional
@@ -304,7 +303,7 @@ ingest](./indistinguishability-obfuscation-well-founded-assumptions.ingest.md).
 Relevant Notes:
 
 - [On the (Im)possibility of Obfuscating Programs](https://www.boazbarak.org/Papers/obfuscate.pdf) — derived-from: author-hosted full version analysed here
-- [Opacity is a scale threshold, not a class property](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — is-evidence-for: deliberate obfuscation is a definable non-scale source of opacity, qualifying the scale-only reading
+- [Opacity depends on the inspection question and budget](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — is-evidence-for: deliberate obfuscation is a definable non-scale source of opacity, qualifying the scale-only reading
 - [Representational form](../theory/definitions/representational-form.md) — is-evidence-for: qualifies the symbolic inspection rule and the opacity misuse case; reading can exceed probing for some families
 - [Inspectable artifact, not supervision, defeats the blackbox problem](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — is-evidence-for: code's inspectability is a property of the particular artifact, not guaranteed by its form
 - [Information value is observer-relative](../theory/information-value-is-observer-relative.md) — is-evidence-for: VBB formalizes extraction bounded by the observer's computational resources

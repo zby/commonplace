@@ -163,7 +163,7 @@ Relevant Notes:
 - [Representational form](./definitions/representational-form.md) — defined-in: the membership criterion, path-relative localization, and opaque modifier
 - [Codification](./definitions/codification.md) — defined-in: the move into symbolic form by rewriting or adoption
 - [Implementations do not establish shared semantics](./implementations-do-not-establish-shared-semantics.md) — grounds: formalizing a consumer supplies a model of execution, not authority or conformance to a language
-- [Opacity is a scale threshold, not a class property](./opacity-depends-on-the-inspection-question-and-budget.md) — extends: separates membership from affordable inspection and develops the three opacity mechanisms
+- [Opacity depends on the inspection question and budget](./opacity-depends-on-the-inspection-question-and-budget.md) — extends: separates membership from affordable inspection and develops the three opacity mechanisms
 - [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: multiple reasonable readings differ from execution variation or instruction violation
 - [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — grounds: choices unavailable to authorized execution must be settled before handoff
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: observation precedes committing a reading to a reference
