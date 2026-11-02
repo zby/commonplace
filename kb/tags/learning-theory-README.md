@@ -33,6 +33,8 @@ These child tags route major parts of the area. A few fundamentals carry only th
 - [The verifiability gradient](../theory/verifiability-gradient.md) — the ladder deploy-time artifacts sit on
 - [Constraining and extraction can trade generality for reliability, speed, or cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
 - [Recognition, not linking, is the hard problem in knowledge systems](../theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — where connecting knowledge actually costs, and how naming amortizes it
+- [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — agreement on tests supports scoped conformance claims, not the inference from formalized consumers to symbolic inputs
+- [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — codification commits an interpretation by rewriting or adoption while keeping conformance and requirement adequacy separate
 
 ## Related Tags
 

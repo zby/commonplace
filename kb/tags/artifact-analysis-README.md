@@ -15,6 +15,8 @@ complete: true
 - [What the four-field record exposes](../theory/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — efficiency, security, and sovereignty questions
 - [Memory design adds operational axes](../theory/memory-design-adds-operational-axes-to-artifact-analysis.md) — write and read policies supplement artifact classification
 - [Opacity is a scale threshold](../theory/opacity-is-a-scale-threshold.md) — inspectability changes as artifacts grow
+- [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — modeling a consumer does not establish language conformance
+- [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — adoption fixes permitted behavior, not readability or adequacy
 
 ## Definitions
 
