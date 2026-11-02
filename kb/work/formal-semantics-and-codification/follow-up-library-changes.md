@@ -2,6 +2,17 @@
 
 Changes outside the two definitions that this workshop has found necessary, and the migration of the retired phrase. Part of the [workshop](./README.md). None is authorized under this commission; each needs its own library revision. The definitions themselves are in [representational form](./representational-form-definition.md) and [codification](./codification-definition.md).
 
+## Promotion checklist
+
+These tasks implement the workshop's decisions after separate authorization; they are not unresolved conceptual choices. The [question register](./decisions-and-open-questions.md) holds the remaining presentation choices.
+
+- Audit uses of the retired phrase for dependence on the old formalizability argument; do not merely replace words.
+- Find library links that use codification as the source of the symbolic-form criterion. Repoint those links to representational form while retaining links about the move itself to codification.
+- Promote the definitions with their links repointed from workshop paths to library paths, and remove workshop-only question-register sections from the promoted texts.
+- Coordinate revisions of constraining and the collision ledger with the two definitions.
+- Update opacity coverage to reflect the approved modifier and three sources; settle the remaining placement choice before distributing the detailed explanation across library artifacts.
+- Validate the promoted artifacts and affected links. Keep source-analysis history and review records distinct from the new library wording.
+
 ## Vocabulary collision ledger
 
 - **operational.** The row loses its codification sense when the fixed phrase is retired. It keeps the lineage sense, the external senses, and the workshop-local sense. Its guidance changes from "write the fixed phrase whole" to "say that the artifact's language has a formal semantics or is close to one, and link symbolic form for the gloss".

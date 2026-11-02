@@ -2,7 +2,7 @@
 
 An artifact is symbolic under a consumption path when its consequences under that path are fixed by the reference of a language that has a formal semantics or is close to one. A language is close to a formal semantics when its users hold its consumers to a reference, a standard or an implementation, from which a formal semantics could be derived. Codification is the move of a rule or operation from natural-language form into symbolic form. Whether the artifact and its reference let its behavior be read is a different property, marked by the modifier *opaque*, which does not change membership.
 
-The difference between prompts and code is this: a prompt that works on a frozen, adopted model is code under this account. It is opaque code that keeps what membership gives and loses what reading gives. A prompt read by whatever model runs is not code under this account. This is an architectural account of artifacts and of a move a system makes, not a theory of language. The [tentative theory of natural language](./where-meaning-is-settled.md) is a side result, and nothing here depends on it.
+The difference between prompts and code is this: a prompt that works on a frozen, adopted model is code under this account. It is opaque code that keeps what membership gives and loses what reading gives. A prompt read by whatever model runs is not code under this account. This is an architectural account of artifacts and of a move a system makes, not a theory of language. The [side theory](./where-meaning-is-settled.md) proposes how repair, redefinition and change through use maintain linguistic conventions. The classification below does not depend on that explanation.
 
 ## Workshop context
 
@@ -67,7 +67,7 @@ Step 1 shows that a frozen language model is as formalizable as a compiler. The 
 
 English's users hold no reader to the frozen model, so a reader that departs from it is not thereby wrong, and the model's formalization fixes nothing about English. The [side theory](./where-meaning-is-settled.md) describes the features by which the practice keeps that authority: repair, redefinition from inside and change by use. They are not what a formalization drops; they are how the practice keeps authority over every formalization. A formalization of English answers to the practice, which can overrule it from inside, and a frozen package is cut off besides, since the practice's corrections never reach it.
 
-[Astra's answer](./probe-response-2026-11-01-astra.md) to the probe makes the limit precise: a fixed update rule fed with new evidence is a fixed formal specification that tracks a changing practice, so change by use does not block a formal account of English in principle, and a model with context handles repair and redefinition within a conversation. What no formalization gets is the direction of authority, and that is the only part of the side theory this account uses.
+[Astra's answer](./probe-response-2026-11-01-astra.md) to the probe makes the limit precise: a fixed update rule fed with new evidence is a fixed formal specification that tracks a changing practice, so change by use does not block a formal account of English in principle, and a model with context handles repair and redefinition within a conversation. Formalizing a model does not by itself make its behavior authoritative for English. Adopting the model for an operation establishes that authority within the adopting system, not for English's users generally.
 
 C's reference changes only by revision under its committee's authority, so the standard is what C's users are held to and a formalization derived from it drops nothing. The asymmetry is in which side answers to which, and that is what makes the gloss non-arbitrary. A community that came to hold its readers to a model would have made a scoped language that is symbolic under the criterion; it would not have made the model the semantics of English.
 
@@ -100,9 +100,7 @@ Whether a particular program reaches an open case can be undecidable, so these a
 
 ## Opaque symbolic form
 
-The language of prompts as a frozen package reads them is symbolic by the definition above. It is not English, because English's users hold no reader to the package, as the previous section says.
-
-What bears on the prompt–code difference here is the result that section leaves: adoption can fix which behavior counts as conforming without making that behavior easy to understand, predict, revise or justify against the requirement. The usual advantages of symbolic form do not follow from membership, and the library already says so: [opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md), not a class property, and any form becomes practically opaque at sufficient size. The account therefore gives symbolic form a modifier rather than a condition.
+Adoption fixes which behavior counts as conforming. It does not make that behavior easy to understand, predict, revise or justify against the requirement. The usual advantages of symbolic form do not follow from membership, and the library already says so: [opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md), not a class property, and any form becomes practically opaque at sufficient size. The account therefore gives symbolic form a modifier rather than a condition.
 
 Symbolic content is **opaque** under a consumption path, relative to a behavior or change of interest, when the artifact together with its reference does not let an inspector establish that behavior, or the effect of that change, at acceptable cost. Opacity removes an affordable inspection route for the question at hand; evaluation then relies more on execution, on other analysis such as abstraction or certificates, or on explicitly retained uncertainty, and none of these is a guaranteed substitute for understanding. The definition is relative because the reference of a frozen package can be read rule by rule under the runtime's path, kernel by kernel, and that reading does not answer a question asked on the interpreter's path. Opaque is a label for an inspection property, as the library's note has it, not a fourth form; the form definition's misuse case against calling weights "opaque" as if opacity were the form still holds.
 
@@ -130,7 +128,7 @@ Lost: checking by reading, since adequacy to intent is not established by compar
 
 Not lost: declared behavior. The adoption declares what the package specifies, the decoding procedure, the output distribution as permitted variation, and any error, refusal or clarification output the package produces, and execution either conforms to it or does not.
 
-A frozen package settles every input, so it has no defects in the sense of the previous section; what is found on use, or by whatever other analysis is affordable, is whether the specified behavior satisfies the requirement. An adopted package that always returns a wrong summary for one input executes exactly and fails the summarization requirement. That is an inadequacy, not a newly discovered gap.
+A frozen package settles every input, so it has no unresolved choices in the sense defined under [What the reference leaves open](#what-the-reference-leaves-open); what is found on use, or by whatever other analysis is affordable, is whether the specified behavior satisfies the requirement. An adopted package that always returns a wrong summary for one input executes exactly and fails the summarization requirement. That is an inadequacy, not a newly discovered gap.
 
 Opacity makes the third question harder, and the prediction of the second; it neither removes declared behavior nor turns inadequacy into an unspecified case. The resemblance to the natural-language side is in where the answer comes from, use rather than reading, not in what is unsettled.
 
@@ -179,11 +177,6 @@ A consumer of natural language can ask the author what the artifact means, and i
 | prompt whose output is parsed by a schema | the schema, for the output | yes, for the output | symbolic, for the schema | mixed | prompt natural-language unless its model is adopted, output contract symbolic |
 | frozen prompt–model package adopted for one operation | the package, decoding included | yes | symbolic under the runtime's path, distributed-parametric under the interpreter's | prompt symbolic, opaque, under that path; weights distributed-parametric under the interpreter's path | codifies the operation; defines nothing about English |
 
-## Open questions
+## Decisions and remaining questions
 
-1. Does the library want the consequence that pinning and adopting a model moves the instructions it reads into symbolic form under that path? If so, the representational-form misuse case and the inspection rule change as the [proposed form definition](./representational-form-definition.md) states.
-2. Are three grades, formal semantics, close, and neither, worth stating in the library, or do the definitions need only the boundary between close and neither?
-3. Opaque is a modifier on symbolic form with three sources, the artifact's scale, the reference's form and deliberate obfuscation. Does the library want the modifier in the form definition, or only the second source added to the opacity note?
-4. Does the boundary table survive a reviewer adding cases?
-5. The parser-versus-agent distinction rests on the input-versus-artifact wording. Does that wording need to be explicit in the library, or does the execution-contract framing carry it?
-6. Localization is read under the consumption path, as form is, so the same weights are symbolic under the runtime's path and distributed-parametric under the interpreter's. Does the library want that stated in the form definition's derivation, or does the storage-substrate exclusion already carry it?
+The [question register](./decisions-and-open-questions.md) explains which choices are settled and which concern presentation. Adoption, path-relative localization and the opacity modifier are settled decisions. Testing the boundary cases is a [review check](./decisions-and-open-questions.md#review-checks-not-wording-decisions), not a standing request to decide those points again. The [follow-up list](./follow-up-library-changes.md#promotion-checklist) holds promotion tasks.

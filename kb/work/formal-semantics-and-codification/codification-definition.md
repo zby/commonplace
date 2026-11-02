@@ -1,6 +1,6 @@
 # Codification (proposed definition)
 
-Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [codification](../../theory/definitions/codification.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The criterion moves into [symbolic form](./representational-form-definition.md), and codification becomes the move into that form. The opening, the criterion section, the clerk and testing paragraphs, the terminology section and two misuse cases are new or rewritten; the scope, examples, exclusions, codified-parts and relaxing sections are carried over with the retired phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Open questions are at the end.
+Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [codification](../../theory/definitions/codification.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The criterion moves into [symbolic form](./representational-form-definition.md), and codification becomes the move into that form. The opening, the criterion section, the clerk and testing paragraphs, the terminology section and two misuse cases are new or rewritten; the scope, examples, exclusions, codified-parts and relaxing sections are carried over with the retired phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Decisions, remaining presentation choices and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
 
 ---
 
@@ -91,9 +91,6 @@ Relevant Notes:
 
 ---
 
-## Open questions about the wording
+## Decisions and remaining questions
 
-1. Is dropping the Plotkin and operationalism contrasts to a see-also safe once the colliding phrase is gone, or do readers still arrive with the programming-language sense of "semantics"?
-2. Does any library note rely on the formalizability conjecture rather than on the criterion in symbolic form? The migration list in [follow-up library changes](./follow-up-library-changes.md) should check each use of the retired phrase, not only replace it.
-3. "Adopted model package" appears in the list of implementing consumers. Does the library want that consequence stated in the opening, or only in the misuse case?
-4. The parser-versus-agent distinction in the [account](./symbolic-form-and-codification.md) rests on the input-versus-artifact wording. Does that wording need to be explicit here, or does the execution-contract framing carry it?
+The [question register](./decisions-and-open-questions.md) explains the remaining choices about historical terminology, opening placement of adopted models and clarification detail. Adoption as codification is settled. Auditing library dependencies on the old criterion is a [promotion task](./follow-up-library-changes.md#promotion-checklist), not a remaining choice about this definition.

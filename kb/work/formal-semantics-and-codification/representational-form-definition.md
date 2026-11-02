@@ -1,6 +1,6 @@
 # Representational form (proposed definition)
 
-Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [representational form](../../theory/definitions/representational-form.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The natural-language and symbolic forms, the assigned-consequences question, the ordered presentation of the two questions, the inspection rule, the opaque modifier and the misuse cases are new; the distributed-parametric form, the localization question and the exclusions are carried over unchanged or with one phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Open questions about the wording are at the end.
+Workshop draft, 2026-11-01. This file is the complete proposed text of the library's [representational form](../../theory/definitions/representational-form.md) definition, written from the [account of symbolic form](./symbolic-form-and-codification.md). The natural-language and symbolic forms, the assigned-consequences question, the ordered presentation of the two questions, the inspection rule, the opaque modifier and the misuse cases are new; the distributed-parametric form, the localization question and the exclusions are carried over unchanged or with one phrase replaced. Links are written for this file's location and change on promotion. The library definition remains authoritative until then. Decisions, remaining presentation choices and promotion tasks are explained in the [question register](./decisions-and-open-questions.md).
 
 ---
 
@@ -64,9 +64,11 @@ Where the C standard requires one result, two compilers producing different resu
 
 The question is asked of units, because a reference assigns consequences to units: what an expression evaluates to, what a field permits, what an instruction does. If two consumers held to one reference disagree about what the rules permit, one of them is wrong. Content no reference fixes can carry two reasonable readings, which is [underspecification](../../theory/agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text.
 
-Python has no written formal semantics and sits on the assigned side, because its users hold implementations to the language reference and CPython, from which one could be derived. A contract clause under a designated arbitrator has a reference too and sits on the other side. A written formal semantics is therefore neither necessary nor sufficient for assigned consequences.
+Python implementations are held to a language reference, with CPython supplying implementation-specific behavior. Classifying a Python script as symbolic does not require a separately written formal semantics.
 
-A formal semantics can be derived from an implementation together with a machine model, or from a specification that states which expressions count and under what conditions an action is permitted. Designating a judge does not supply one, so a reference that settles by unformalized judgment about what was intended governs without assigning consequences. The exclusion is the unformalized judgment, not the human: a workflow step that waits for a human approval is symbolic, because the engine takes the decision as an input, a required external selection, without formalizing the judgment; and a human following a formal procedure is Turing's clerk.
+A separately written formal semantics is not necessary: an implementation and a machine model can supply the formal account. Nor is a formal description of a consumer sufficient: the description must be adopted as the governing reference, or shown to conform to it.
+
+A formal semantics can also be derived from a specification that states which expressions count and under what conditions an action is permitted. A contract clause under a designated arbitrator illustrates why designation alone is insufficient: unformalized judgment governs without supplying mechanically applicable rules. The exclusion is the unformalized judgment, not the human: a workflow step that waits for a human approval is symbolic, because the engine takes the decision as an input, a required external selection, without formalizing the judgment; and a human following a formal procedure is Turing's clerk.
 
 ### Formalizing a consumer and adopting a reference
 
@@ -141,11 +143,6 @@ Relevant Notes:
 
 ---
 
-## Open questions about the wording
+## Decisions and remaining questions
 
-1. "Close to a formal semantics" names a graded thing with a two-valued gloss. Does the library want the three grades the account states, formal semantics, close, and neither, or only the boundary?
-2. Should the three sources of opacity live here, in the opacity note, or in both? The note's title says opacity comes from scale, and two of the sources do not.
-3. The criterion now sits in this definition and codification points to it, reversing the current pointer. Which library notes link codification for the test and need to link form instead?
-4. The natural-language paragraph says conventions make some readings wrong "whether or not the author is available". That clause comes from the side theory, which the definitions must not depend on. Keep it as a claim of the definition, or cut it?
-5. Does the boundary table in the [account](./symbolic-form-and-codification.md) survive a reviewer adding cases?
-6. Under the criterion, a community that came to hold its readers to a model would have a symbolic scoped language, whatever the model's adequacy. [Astra's answer](./probe-response-2026-11-01-astra.md) to the probe reaches a similar construction by way of demonstrated fidelity. Should the definition say that adequacy plays no part in the criterion, or is the held-to condition enough to imply it?
+The [question register](./decisions-and-open-questions.md) distinguishes settled choices from remaining presentation decisions. In particular, path-relative localization, adoption as codification and opacity as a separate modifier are settled; the amount and placement of explanation remain open. Promotion tasks are tracked [separately](./follow-up-library-changes.md#promotion-checklist).
