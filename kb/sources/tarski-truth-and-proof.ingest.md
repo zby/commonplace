@@ -7,7 +7,7 @@ capture_scope: full-source
 genre: conceptual-essay
 snapshot_sha256: 870b717aeb0fa47b4b81b150e1743382fbc7a4bb52287bcd67f3098e0d3c700a
 ingested: "2026-11-01"
-occasion: 'Tarski, "Truth and Proof", Scientific American 220(6), 1969, pp. 63–77; this is a course-site copy, so record the official source as the Scientific American article and note that the copy''s authorization is unverified. The workshop kb/work/formal-semantics-and-codification/ (see tarski-thread.md and sources.md) is substituting this short, later article for Tarski''s 1933 monograph, whose scans are poor, to attribute by quotation three claims: (1) that the common language is universal and "semantically universal", in the sense Tarski defines there; (2) that the languages of the sciences, logic and linguistics do not have to be semantically universal, and that his results concern formalized languages and fragments of natural language provided with complete vocabularies and precise rules; (3) that any such fragment made semantically universal would let the antinomy of the liar be reconstructed, which is why he restricts the definition of truth to formalized languages. Also record what the article says about the relation of truth to proof, since the KB''s note on underspecified instructions appeals to "Tarski, Gödel and halting-style" results together and the Tarski 1944 ingest (kb/sources/tarski-semantic-conception-of-truth.ingest.md) already audits that appeal; say what this article adds to or changes in that audit. Write only the .ingest.md and its snapshot; do not edit the workshop or any library note.'
+occasion: 'What does Tarski 1969 establish about (1) the common language as universal and semantically universal, (2) scientific languages not needing semantic universality and formalized languages as precisely specified natural-language fragments, and (3) reconstruction of the liar if semantic universality is admitted? What are the conditions and causal steps behind his restriction of truth definitions to formalized languages? What does the relation of truth to proof add to or change in the Tarski 1944 audit of the KB''s combined Tarski/Gödel/halting impossibility appeal? The course-site copy substitutes for poorly scanned copies of the 1933 monograph; its authorization is unverified.'
 type: types/ingest-report.md
 domains: [semantic-universality, liar-antinomy, truth-vs-provability, tarski]
 ---
@@ -125,7 +125,7 @@ This is a popular exposition, and it argues less than it reports. It proves none
 
 ## Recommended Next Action
 
-In the formal-semantics workshop's Tarski thread (`kb/work/formal-semantics-and-codification/tarski-thread.md`), reword claims (2) and (3) to the article's two-step form in Extractable Value items 2–3. Then ground all three claims against this ingest with `cp-skill-ground`, using the p. 67 universality passage, the p. 68 sciences and "fragments of natural languages" passages, the p. 69 "cannot coincide with or be translatable" sentence and the p. 77 "compelled us to abandon" sentence.
+Narrow the Tarski appeal in [Agentic systems interpret underspecified instructions](../theory/agentic-systems-interpret-underspecified-instructions.md) to the two-step account in Extractable Value items 2–4: the liar motivates restricting truth definitions to formalized languages, and a richer metalanguage prevents its reconstruction within those languages. Keep the natural-language hedges and the distinction between truth, proof and execution explicit.
 
 ---
 

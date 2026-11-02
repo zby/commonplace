@@ -7,7 +7,7 @@ capture_scope: full-source
 genre: scientific-paper
 snapshot_sha256: 204b0c11eddb338d706cdd9da3f344c38181271a4ccfedd9ce95b98196c079d2
 ingested: "2026-11-01"
-occasion: "Commissioned by kb/work/formal-semantics-and-codification for the opaque modifier on symbolic form: what the construction establishes, under which assumptions, and the paper's own statement of what indistinguishability obfuscation guarantees and does not guarantee about hiding how a program works. Report the paper's own scope limits. Retain verbatim quotes for each of these points in the ingest's Quotes section. Record in the ingest's notes that the paper also appears as IACR ePrint 2020/1003 (https://eprint.iacr.org/2020/1003.pdf, which returned 403 at capture) and at STOC 2021."
+occasion: "What does the construction establish, under which assumptions, and what does the paper itself say indistinguishability obfuscation guarantees or does not guarantee about hiding how a program works? What scope limits must accompany its use as evidence about opacity of symbolic form? The paper also appears as IACR ePrint 2020/1003, whose PDF returned 403 at capture, and at STOC 2021."
 type: types/ingest-report.md
 domains: [indistinguishability-obfuscation, program-obfuscation, cryptographic-assumptions, functional-encryption]
 tags: [artifact-analysis]
@@ -93,4 +93,4 @@ The paper is a security reduction, so its conclusion is only as strong as the fo
 
 ## Recommended Next Action
 
-Ingest the sibling snapshot of Barak et al., "On the (Im)possibility of Obfuscating Programs". The opaque-modifier text in kb/work/formal-semantics-and-codification can then source its statements about what obfuscation can and cannot hide to the paper that actually makes them. Cite this ingest only for the conditional existence of iO under the four named assumptions and for Definition 2.2's equivalent-circuit indistinguishability guarantee.
+Revise [Opacity is a scale threshold, not a class property](../theory/opacity-is-a-scale-threshold.md) to distinguish deliberate obfuscation from scale-driven opacity. Use this ingest only for conditional iO existence under the four named assumptions and Definition 2.2's equivalent-circuit indistinguishability guarantee; use the [Barak et al. ingest](./on-the-impossibility-of-obfuscating-programs.ingest.md) for the VBB limits and the reading-versus-running distinction.

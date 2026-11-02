@@ -7,7 +7,7 @@ capture_scope: full-source
 genre: scientific-paper
 snapshot_sha256: 5d3d6d902b0c89e5f07469cbaf87d427cb7169dd452d038aec24ab88cf309f43
 ingested: "2026-11-01"
-occasion: "Commissioned by kb/work/formal-semantics-and-codification for the opaque modifier on symbolic form: what the virtual black-box impossibility result establishes and for which function families, the definition of indistinguishability obfuscation, and what the paper says about reading versus running a program. Report the paper's own scope limits. Retain verbatim quotes for each of these points in the ingest's Quotes section. (Source is the author-hosted copy https://www.boazbarak.org/Papers/obfuscate.pdf; the ePrint copy https://eprint.iacr.org/2001/069.pdf returned 403; record the ePrint and the CRYPTO 2001 / JACM 2012 venue in the ingest's notes.)"
+occasion: "What does the virtual black-box impossibility result establish, for which function families, how is indistinguishability obfuscation defined, and what does the paper say about reading versus running a program? What scope limits must accompany its use as evidence about opacity of symbolic form? The source is the author-hosted copy; the ePrint 2001/069 PDF returned 403 at capture. The work appeared at CRYPTO 2001 and in JACM 2012."
 type: types/ingest-report.md
 domains: [program-obfuscation, virtual-black-box, indistinguishability-obfuscation, rice-theorem]
 tags: [artifact-analysis]
@@ -239,7 +239,7 @@ carries over.
    leaks the source. Opacity-by-construction therefore cannot in general match
    oracle-only access. The scope is existential and contrived: it rules out a
    general-purpose obfuscator, not obfuscation of specific useful programs.
-   This scope must travel with any use in the workshop. [quick-win]
+   This scope must travel with any use of the result. [quick-win]
 2. **Indistinguishability obfuscation as the achievable-notion candidate** --
    Definition 7.1 hides which of several equivalent same-size implementations
    was used, not what the function is. The trivial inefficient iO is
@@ -291,13 +291,13 @@ that copy against the ePrint or the JACM text.
 
 ## Recommended Next Action
 
-Run `cp-skill-ground` on this ingest to retain verbatim quotes for the
-occasion's four points: the VBB property and the unobfuscatable-ensemble
-conditions (Definitions 2.2 and 3.1); the "fundamental difference between
-getting black-box access to a function and getting a program" passage and the
-"only useful thing ... is to run it" passage; Definition 7.1 with
-Proposition 7.2; and the "somewhat contrived counterexample" scope statement.
-The workshop's opaque-modifier wording can then cite these quotes.
+Revise [Opacity is a scale threshold, not a class
+property](../theory/opacity-is-a-scale-threshold.md) to recognize deliberate
+obfuscation as a non-scale source of opacity while preserving the VBB
+impossibility limit: reading can exceed probing for some contrived function
+families. Distinguish the inefficient iO instance here from the conditional
+efficient construction in the [Jain–Lin–Sahai
+ingest](./indistinguishability-obfuscation-well-founded-assumptions.ingest.md).
 
 ---
 
