@@ -39,7 +39,7 @@ Four candidate definitions of 2026-10-31 kept formal semantics as the ground wit
 
 ## Status
 
-2026-11-02. Step 1 established. Step 2 rewritten around the operator's decisions, reviewed a third time by Astra, and revised on all five points; not reviewed since. Step 3 revised with it, not reviewed since. Step 4 answered by Astra and assessed; one overclaim in step 2 narrowed in response. Seven sources ingested with quotes: two on repair and clarification, three on Tarski and the liar, two on program obfuscation, the last two from substitute copies because the ePrint server refused the downloads. Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
+2026-11-02. Step 1 established. Step 2 rewritten around the operator's decisions, reviewed a third time by Astra, and revised on all five points; not reviewed since. Step 3 revised with it, then restructured so each distinction opens on a concrete case (operator, 2026-11-02), with four consistency fixes: the distributed-parametric scope sentence and the weights misuse case read under the path, the inspection rule defers to the opaque modifier, and the addressability sentence names the interpreter's path. Not reviewed since. Step 4 answered by Astra and assessed; one overclaim in step 2 narrowed in response. Seven sources ingested with quotes: two on repair and clarification, three on Tarski and the liar, two on program obfuscation, the last two from substitute copies because the ePrint server refused the downloads. Clark and Brennan deferred, since it supports only the side theory; Lakoff not ingested.
 
 ## Boundary
 
