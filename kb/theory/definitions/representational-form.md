@@ -62,7 +62,7 @@ Where the C standard requires one result, two compilers producing different resu
 
 The question is asked of units, because a reference assigns consequences to units: what an expression evaluates to, what a field permits, what an instruction does. If two consumers held to one reference disagree about what the rules permit, one of them is wrong. Content no reference fixes can carry two reasonable readings, which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text.
 
-Python implementations are held to a language reference, with CPython supplying implementation-specific behavior. Classifying a Python script as symbolic does not require a separately written formal semantics.
+Python implementations are held to a language reference, with CPython supplying implementation-specific behavior.
 
 A separately written formal semantics is not necessary: an implementation and a machine model can supply the formal account. Nor is a formal description of a consumer sufficient: the description must be adopted as the governing reference, or shown to conform to it.
 

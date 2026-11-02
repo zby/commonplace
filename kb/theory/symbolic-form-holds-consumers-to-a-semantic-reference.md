@@ -20,11 +20,9 @@ The difference between prompts and code is this: a prompt under a frozen model a
 
 ## The hypothesis
 
-Astra formulated the hypothesis:
+This account's hypothesis is that the practical difference is not formalizability versus non-formalizability. It is whether the operation has been committed to a delimited interpretation regime, or still relies on ordinary linguistic judgment to settle what its instructions require.
 
-> The practical difference is not formalizability versus non-formalizability. It is whether the operation has been committed to a delimited interpretation regime, or still relies on ordinary linguistic judgment to settle what its instructions require.
-
-This account adopts that hypothesis. It concerns the move, codification. What the move produces is an artifact in symbolic form, defined next. Whether the result is opaque is a separate question. The gloss of "close to a formal semantics" fixes the hypothesis's three terms: *committed* is the holding of consumers to a reference, *delimited* is what derivability tests for, and *ordinary linguistic judgment* is what derivability excludes.
+The hypothesis concerns the move, codification. What the move produces is an artifact in symbolic form, defined next. Whether the result is opaque is a separate question. The gloss of "close to a formal semantics" fixes the hypothesis's three terms: *committed* is the holding of consumers to a reference, *delimited* is what derivability tests for, and *ordinary linguistic judgment* is what derivability excludes.
 
 ## Symbolic form
 

@@ -65,4 +65,4 @@ The document defines obligations rather than measuring compliance. It provides n
 
 ## Recommended Next Action
 
-Update [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) with one bounded C example distinguishing implementation-defined documentation duties, unspecified permitted alternatives and undefined behavior's absence of standard requirements.
+No further extraction is needed for the occasion: the bounded C examples are incorporated in [the semantic-reference account](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md#what-the-reference-leaves-open) and the [codification definition](../theory/definitions/codification.md#criterion). Keep their scope limited to this committee-draft excerpt; it does not establish the account's separate category of defects in a reference.
