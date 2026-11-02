@@ -26,7 +26,17 @@ The article explains how deterministic GPU kernels can produce user-visible LLM 
 
 ## Quotes
 
-No source quotes have been retained yet.
+> However, when a non-batch-invariant kernel is used as part of a larger inference system, the system can become nondeterministic. When you make a query to an inference endpoint, the amount of load the server is under is effectively “nondeterministic” from the user’s perspective. The load determines the batch size that the kernels are run under, and thus changes the eventual result of each individual request!
+> --- `kb/sources/.snapshots/defeating-nondeterminism-in-llm-inference.md` @ `sha256:95e29665ab558db1bc0159a0781cc0bddae396416d7e5b8d43755ff93a52cfa2` — Batch invariance and determinism
+
+> The requirement for batch invariance is that the <b>reduction order for each element must be fixed regardless of the batch-size of the kernel.</b>
+> --- `kb/sources/.snapshots/defeating-nondeterminism-in-llm-inference.md` @ `sha256:95e29665ab558db1bc0159a0781cc0bddae396416d7e5b8d43755ff93a52cfa2` — Batch-invariant RMSNorm
+
+> We use <code>Qwen/Qwen3-235B-A22B-Instruct-2507</code> and sample 1000 completions at temperature 0 with the prompt “Tell me about Richard Feynman” (non-thinking mode), generating 1000 tokens each. Surprisingly, we generate <em>80</em> unique completions, with the most common of these occuring 78 times.
+> --- `kb/sources/.snapshots/defeating-nondeterminism-in-llm-inference.md` @ `sha256:95e29665ab558db1bc0159a0781cc0bddae396416d7e5b8d43755ff93a52cfa2` — Completion experiment, baseline
+
+> On the other hand, when we enable our batch-invariant kernels, all of our 1000 completions are identical. This is what we would mathematically expect from our sampler, but we aren’t able to achieve deterministic results without our batch-invariant kernels.
+> --- `kb/sources/.snapshots/defeating-nondeterminism-in-llm-inference.md` @ `sha256:95e29665ab558db1bc0159a0781cc0bddae396416d7e5b8d43755ff93a52cfa2` — Completion experiment, intervention
 
 ## Connections Found
 

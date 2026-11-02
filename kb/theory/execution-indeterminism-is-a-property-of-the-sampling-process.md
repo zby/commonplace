@@ -1,33 +1,43 @@
 ---
-description: The same prompt can produce different outputs across runs due to token sampling — this is a property of the execution engine, theoretically eliminable but practically ubiquitous, and often confused with the deeper issue of underspecification
+description: "Separates stochastic decoding, batch-dependent numerical variation, and changing system inputs; deterministic inference is possible without resolving intent or correctness."
 type: types/note.md
-traits: [title-as-claim]
+traits: [title-as-claim, has-external-sources]
 tags: [llm-reliability, learning-theory]
 ---
 
-# Execution indeterminism is a property of the sampling process
+# LLM output variation depends on decoding and execution conditions
 
-LLMs sample from probability distributions over tokens. The same prompt can produce different outputs across runs. This is a property of the execution engine — conceptually simpler than underspecification, and theoretically eliminable via deterministic decoding (temperature=0).
+Run-to-run output variation is not necessary to LLM computation. A model can assign probabilities to tokens while a deterministic decoder always selects the highest-scoring token. Whether a deployed request repeats also depends on the numerical computation and the inputs the system holds fixed. A probabilistic model does not by itself require probabilistic execution.
 
-In practice, true determinism is hard to guarantee (floating-point non-determinism, batching effects, infrastructure changes) and may not be desirable — temperature > 0 helps explore reasoning paths, enables self-consistency techniques, and avoids degenerate repetitive outputs. All deployed systems exhibit indeterminism.
+## Three sources of observed variation
 
-## Why this matters as a distinct claim
+**Stochastic decoding.** Sampling chooses among tokens rather than always selecting the highest-scoring one. It deliberately introduces variation. Greedy decoding removes this sampling choice, but it does not fix the scores supplied to the decoder.
 
-Indeterminism is **engineering noise** — variation in how a chosen interpretation is executed, not variation in which interpretation is chosen. At temperature=0, the LLM still picks one interpretation from the space the spec admits; you just get the same one every time. This is why lowering temperature alone doesn't solve the "wrong interpretation" problem — it eliminates variation without ensuring the remaining interpretation is the one you wanted.
+**Numerical sensitivity to serving conditions.** Even deterministic kernels can give one request different results when the batch changes. [Thinking Machines' batch-invariant inference report](../sources/defeating-nondeterminism-in-llm-inference.ingest.md) explains how server load changes batch size and how fixing reduction order independently of batch size removes that dependency. The issue is not that a deterministic kernel randomly changes its answer to identical complete inputs; the surrounding system changes a condition that affects its computation.
 
-Counterintuitively, indeterminism **obscures** the deeper issue of [underspecification](./agentic-systems-interpret-underspecified-instructions.md). Because outputs vary across runs, people attribute the variation to randomness — "it's stochastic" — and reach for familiar tools: temperature tuning, retries, sampling strategies. This framework avoids confronting the real difference from traditional programming: that the specification language doesn't have precise semantics.
+The authors report 80 distinct completions in 1,000 temperature-zero requests to Qwen3-235B-A22B-Instruct-2507 with the prompt “Tell me about Richard Feynman.” After enabling batch-invariant kernels, all 1,000 completions were identical. This reported intervention supplies a concrete engineering route to repeatability in the tested setup. It does not establish repeatability for every model, prompt, hardware configuration, or serving implementation.
 
-The remedy is **sampling control**: temperature adjustment, deterministic decoding, best-of-N selection. These address run-to-run variation but leave both [underspecification](./agentic-systems-interpret-underspecified-instructions.md) and [interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) untouched.
+**Changing system inputs or dependencies.** Different retrieval results, tool state, assembled context, model versions, or scheduling-dependent inputs can change an agent's output even when inference itself is deterministic. From the caller's perspective, hidden changes can look like randomness. Making inference repeatable does not hold those other inputs fixed.
+
+These mechanisms call for different controls. Sampling settings control token selection; numerical implementation controls address batch sensitivity; captured inputs and pinned dependencies address changes elsewhere in the system. A fixed prompt and temperature setting alone do not establish that the complete computation is fixed.
+
+## Determinism does not settle meaning or correctness
+
+Grant fully deterministic inference. Under an ordinary natural-language consumption path, the model can still select one of several reasonable interpretations, or consistently violate an explicit instruction. A stable answer is not evidence that the prompt uniquely requires it or that it is correct. [Semantic underspecification and interpreter failure remain separate questions](./agentic-systems-interpret-underspecified-instructions.md).
+
+Nor must a language reference require only one output. Under the [representational-form definition](./definitions/representational-form.md), a governing reference can specify permitted variation. A system can adopt a frozen model package as that reference for an operation, with decoding included or its distribution specified. Whether the resulting operation satisfies the requirement remains separate from whether execution conforms to its reference.
+
+Indeterminism distracts from these questions when it is treated as the defining difference between LLMs and other computation. Removing it simplifies replay and comparison; it does not establish intended meaning, instruction compliance, or task adequacy. Conversely, permitted variation does not by itself prevent defined semantics.
+
+## Scope
+
+The empirical case concerns one reported completion trial and a particular numerical intervention, not an independently reproduced universal guarantee. Finite identical outputs do not prove determinism. Claims about replay must name the inputs and execution conditions held fixed or made irrelevant by the implementation. Whole-agent repeatability requires accounting for more than inference.
 
 ---
 
 Relevant Notes:
 
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — elaborates: the full framework including how indeterminism and underspecification layer on each other; covers the deeper phenomenon (underspecification as a property of the specification language) that indeterminism obscures
-- [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — sibling: the third phenomenon, also unaddressed by sampling control
-- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — synthesis: the three-question diagnosis this note is part of, and why sampling control is not a complete substitute for the other remedies
+- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: repeatability does not settle which interpretation the specification permits or the user intends
+- [Out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — contrasts: a repeated instruction violation remains a violation rather than becoming a specification gap
+- [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: separates specification gaps, interpreter failure, and run-to-run variation to select repairs
 - [LLM reliability](../tags/llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery
-
-Sources:
-
-- Ma et al. (2026). [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — cleanest empirical separation of indeterminism from underspecification: by varying prompt framing (emotion/personality) while holding task constant, they isolate the effect of interpretation choice from run-to-run sampling noise
