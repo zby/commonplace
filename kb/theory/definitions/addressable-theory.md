@@ -28,17 +28,27 @@ empirical question.
   revision target that scope separately.
 - **It follows the localization axis.** Of the two axes that derive
   [representational form](./representational-form.md),
-  localization supplies addressability: natural-language and symbolic
-  artifacts have parts to point at, and distributed-parametric state has
-  none. See [reflection buys addressability](../reflection-buys-addressability.md).
+  localization supplies addressability under the consumption path in question.
+  Natural-language and symbolic artifacts have parts the consumer takes up
+  separately. Distributed-parametric state exposes no such instruction-level
+  parts under the path on which a system runs it as a model. The same parameters
+  are addressed numerical units under the runtime's path; changing one does not
+  thereby identify an instruction-level commitment. See
+  [reflection buys addressability](../reflection-buys-addressability.md).
 - **How strongly a case can contradict the theory is a separate matter.** It
-  follows the other axis, assigned consequences. Where a defined consumer
-  such as a validator, schema, or test fixes what a part implies, a
-  contradiction can be mechanically checked relative to that encoding.
-  Whether the encoding captures the intended claim remains criticizable.
-  Where a reader derives the implication from prose, that interpretation
-  also enters the diagnosis. See
-  [codification](./codification.md).
+  follows the other axis, assigned consequences. Where consumers are held to
+  a reference that fixes a part's consequences, a validator or executable test
+  can mechanically check a contradiction within the predicate it implements.
+  This does not make every consequence decidable. Whether the encoding captures
+  the intended claim remains criticizable. Where a reader derives the implication
+  from natural language without such a reference, that interpretation also enters
+  the diagnosis. See [codification](./codification.md).
+- **Addressability does not guarantee affordable inspection of consequences.**
+  A prompt under a pinned model adopted as its reference remains separately
+  editable, but the instruction-level rule assigning its consequences is not
+  separately exposed in the weights. It is symbolic and can be opaque under
+  that path. A readable script or validator can expose that rule; symbolic
+  membership alone does not.
 - **A located part is a candidate.** A failure rarely
   identifies one faulty commitment. Popper notes that a test may bear on a
   large part of a theoretical system, while holding that some cases do
@@ -78,6 +88,9 @@ a preference for minimal revision from them.
   codified.
 - Treating a successful local edit as confirmation of the theory that
   motivated it.
+- Assuming an addressable prompt's consequences can be read from an adopted
+  model reference. The prompt is localized; that does not expose the
+  reference's instruction-level rule.
 
 ---
 
@@ -86,7 +99,7 @@ Relevant Notes:
 - [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
 - [Theory builder](./theory-builder.md) — extends: the system whose condition 1 is addressability's minimum; Commonplace's design commits to finer grades
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
-- [Codification](./codification.md) — grounds: the crossing that gives a part computed consequences
+- [Codification](./codification.md) — grounds: the crossing that fixes a part's consequences against a reference, separately from whether those consequences are affordable to inspect
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — evidenced-by: the classical precedent
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — evidenced-by: the classical precedent and its search limits

@@ -7,9 +7,9 @@ tags: [learning-theory, self-improving-systems, continual-learning, artifact-ana
 
 # Treat continual learning as representational-form coevolution
 
-[Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) argues that continual learning requires governing durable behaviour-changing writes — [system-definition](./definitions/system-definition-artifact.md) writes — beyond storing content, and that a deployed system's writable surface may include three [representational forms](./definitions/representational-form.md) (how an operative part is encoded and consumed): **distributed-parametric** (weights, adapters, embeddings, learned controllers), **natural-language** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). That note defers the general cross-form trade space to this one. [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), so the readable forms already adapt durably during deployment. How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
+[Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) argues that continual learning requires governing durable behaviour-changing writes — [system-definition](./definitions/system-definition-artifact.md) writes — beyond storing content, and that a deployed system's writable surface may include three [representational forms](./definitions/representational-form.md) (how an operative part is encoded and consumed): **distributed-parametric** (weights, adapters, embeddings, learned controllers), **natural-language** (prompts, notes, specs, rubrics), and **symbolic** (code, schemas, tests, tools). That note defers the general cross-form trade space to this one. [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md), so retained natural-language and symbolic artifacts already adapt durably during deployment. How should their improvement loops relate? They aren't independent: optimizing one assumes a position about the others.
 
-Natural-language and symbolic cluster as the **readable artifacts** - inspectable, editable, distinct from distributed-parametric state in inspection method and update cost. The practical question of where to start building automated loops is [the readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). This note is about the generic coevolution frame.
+Natural-language and symbolic content cluster as the **localized forms**: the consumer addresses units that can be revised separately. "Readable artifacts" is an informal alias, not a guarantee of affordable inspection. A prompt under a pinned model adopted as its reference is symbolic and can be opaque; adoption does not expose the instruction-level rule in the weights. The practical starting point is therefore the [readable-artifact loop](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md), scoped to artifacts whose behavior can be inspected and whose changes can be checked at acceptable cost. This note is about the generic coevolution frame.
 
 ## A mainstream direction: scaling the opaque loop
 
@@ -19,7 +19,7 @@ Wikipedia's secondary summary of the [bitter lesson](../sources/wikipedia-bitter
 
 ## Loops today
 
-Current methods range from single-form optimization to early cross-form loops:
+Current methods range from single-form optimization to early cross-form loops. The labels below describe ordinary instruction interpretation and code execution paths; frozen weights alone do not mean that a system adopts the model as the governing reference for its prompts. Under a separately adopted reference, those prompts would instead be symbolic and potentially opaque. "Opaque loop" here is shorthand for instruction-level inspection difficulty in learned numerical state, not another form.
 
 - **DSPy, ProTeGi** — automated search over prompts (natural-language), weights frozen.
 - **Genetic programming, FunSearch** — automated search over code (symbolic), weights frozen.
@@ -37,14 +37,14 @@ The cross-form cases change the inventory, not the underlying difficulty. Symbol
 The three forms have very different dynamics:
 
 - **Distributed-parametric** updates via gradient descent or other numerical optimization. Needs differentiable or probe-derived signal and heavy training infrastructure; large updates cycle on days to weeks, though smaller add-on mechanisms can be faster.
-- **Symbolic** artifacts are mutated by LLMs or search, then evaluated by tests, execution, or formal checks.
+- **Symbolic** scripts and validators can be mutated by LLMs or search, then checked against their reference by reading, tests, execution, or formal analysis. Opaque symbolic artifacts, including prompts under adopted model references, may lack an affordable reading route; symbolic membership alone fixes neither inspection cost nor update tempo.
 - **Natural-language** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./agentic-systems-interpret-underspecified-instructions.md), so verification is softer.
 
 A joint optimizer has to handle **pace mismatch** — either it runs at the slowest class's cadence, or classes coevolve asynchronously without diverging — and **cross-class credit assignment**: a deployment failure rarely says which class wants the update (prompt revision, tool extraction, memory promotion, weight update, retrieval change). Per-class methods sidestep both by fixing the class in advance.
 
 ## Starting point
 
-Coevolution is the right conceptual frame, but a three-way joint optimizer isn't the near-term plan. [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) argues for starting with the natural-language + symbolic pair, on the basis of structural couplings that make the two a natural joint target.
+Coevolution is the right conceptual frame, but a three-way joint optimizer isn't the near-term plan. [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) argues for starting with readable natural-language artifacts plus readable scripts and validators, on the basis of their context coupling and bounded validation costs, not a readability guarantee attached to either form.
 
 ---
 
@@ -53,7 +53,7 @@ Relevant Notes:
 - [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — foundation: continual learning requires governing behaviour-changing writes across whichever of the parametric, natural-language, and symbolic forms an update touches — the premise that lets the readable pair count as a learning target at all
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — foundation: retained readable artifacts already give a persistent deployment-time adaptation path
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — foundation: defines the natural-language/symbolic/distributed-parametric split used throughout this note
-- [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — practical plan: the natural-language + symbolic pair is the tractable first slice
+- [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — extends: readable natural-language artifacts and readable scripts or validators are the tractable first slice where changes have bounded validation costs
 - [In-context learning presupposes context engineering](./in-context-learning-presupposes-context-engineering.md) — extends: the context-engineering buildout is itself part of the joint loop
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — operators: codify, relax, constrain, and adapt are artifact-side update operators
 - [Meta-Harness](../agent-memory-systems/reviews/meta-harness.md) — evidenced-by: a fixed-weight proposer mutates harness code and context/memory logic from raw traces — a readable-artifact loop in practice

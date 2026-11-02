@@ -1,5 +1,5 @@
 ---
-description: Ward Cunningham's wiki design principle — minimize capture friction, refine in place — drives the text→note→structured-claim codification ladder
+description: Ward Cunningham's wiki design principle — minimize capture friction, refine in place — drives the text→note→structured-claim refinement ladder
 type: types/note.md
 traits: [has-external-sources]
 tags: [type-system, document-system]
@@ -7,7 +7,7 @@ tags: [type-system, document-system]
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place
 
-The KB type hierarchy is a codification ladder for thoughts. Its design principle comes from Ward Cunningham's original wiki: make saving a thought trivially easy, then make refining it easy — in place, not by moving it elsewhere.
+The KB type hierarchy is a refinement ladder for thoughts. Its design principle comes from Ward Cunningham's original wiki: make saving a thought trivially easy, then make refining it easy — in place, not by moving it elsewhere.
 
 ## Evidence
 
@@ -39,7 +39,7 @@ collection, but it repairs backlinks and preserves the artifact's body and Git
 history. This makes refinement cheap enough to actually happen — the same
 insight Cunningham had about wiki pages.
 
-This connects to [codification](./definitions/codification.md): codification is the general pattern (stochastic → deterministic), the wiki principle is the UX requirement that makes it work (each step must be low-friction and in-place).
+Refining a document's natural-language argument is not by itself [codification](./definitions/codification.md). The argument remains interpreted even when its structure makes it easier to review. Fields or section requirements become symbolic only where a validator or other held-to reference fixes their consequences. Replacing repeated LLM checks with such a validator is a code-extraction case of codification; the broader definition also permits adopting a pinned model package as the reference, without making its behavior deterministic. The wiki principle concerns capture and refinement costs, not that form boundary.
 
 ## Caveats
 
@@ -53,7 +53,7 @@ Relevant Notes:
 
 - [collections and types](../reference/collections-and-types.md) — the artifact-contract model that supports the text → note → structured-claim ladder
 - [claim notes should use Toulmin-derived sections](./claim-notes-should-use-toulmin-derived-sections-for-structured.md) — the structured-claim type that sits at the top of the refinement ladder
-- [codification](./definitions/codification.md) — the general pattern; the wiki principle is the UX requirement that makes codification practical
+- [codification](./definitions/codification.md) — contrasts: refinement can preserve natural-language form; validator-consumed fields or checks can separately cross into symbolic form
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the theoretical backing: each rung on the ladder trades generality for reliability, speed, and cost
 - [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — the note→structured-claim transition: a claim title is the first refinement step, Toulmin sections are the second
 - [a functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — boundary: the refinement ladder is specifically a library pattern; workshop documents follow the opposite trajectory (consuming value, ending in archival)
