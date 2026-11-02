@@ -153,9 +153,13 @@ execution removes one human role. Each step can fail independently.
 
 ## Scope
 
-Both closure readings are relative to a declared pathway and horizon. A
-completed update is not the same as closure, and an observed closed path is not
-proof of reliable continuation on untested requests. The method may also
+Both closure readings are relative to a declared pathway and horizon, and to
+which retained artifact counts as the method. The same unattended model run is
+mechanical at the level of its inference code and judgment-laden at the level
+of its retained task instructions, so a closure verdict names the artifact it
+assesses; the third row above holds for the task instructions, not for the
+code. A completed update is not the same as closure, and an observed closed
+path is not proof of reliable continuation on untested requests. The method may also
 explicitly leave a tolerable choice open; assess whether that choice matters
 to the claim before treating it as a missing criterion.
 
