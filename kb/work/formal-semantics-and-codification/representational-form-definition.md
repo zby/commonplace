@@ -26,7 +26,7 @@ A one-line prompt under an adopted model package can be easy to read while the e
 
 Symbolic content is **opaque** under a consumption path, relative to a behavior or change of interest, when the artifact together with its reference does not let an inspector establish that behavior, or the effect of that change, at acceptable cost. Evaluation then relies more on execution, other analysis such as abstraction or certificates, or explicitly retained uncertainty.
 
-Opacity does not change what the reference specifies, including declared variation and failure outputs. It removes an affordable inspection route for the question at hand. It is an inspection property, not a form ([opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md)). Write the modifier only where readability is at issue; unmodified "symbolic" says nothing about it. The [account](./symbolic-form-and-codification.md#opaque-symbolic-form) retains the mechanisms and obfuscation evidence for later promotion to the opacity note.
+Opacity does not change what the reference specifies, including declared variation and failure outputs. It removes an affordable inspection route for the question at hand. It is an inspection property, not a form ([opacity is a scale threshold](../../theory/opacity-depends-on-the-inspection-question-and-budget.md)). Write the modifier only where readability is at issue; unmodified "symbolic" says nothing about it. The [account](./symbolic-form-and-codification.md#opaque-symbolic-form) retains the mechanisms and obfuscation evidence for later promotion to the opacity note.
 
 Form sets the default inspection method. Read natural-language content. Check symbolic artifacts against their reference, by reading where they are not opaque and by running cases or other analysis where they are. Probe distributed-parametric artifacts behaviorally.
 
@@ -114,7 +114,7 @@ Representational form is also not consumption path, though form is determined un
 
 ## Misuse Cases
 
-- Calling learned weights "opaque" as if opacity were the form. Under the path on which a system runs them as a model the form is distributed-parametric; under the runtime that executes them they are symbolic and opaque by scale. In both cases opacity is a modifier on symbolic form or a practical inspection property, not the form, with [scale](../../theory/opacity-is-a-scale-threshold.md) as one of its sources.
+- Calling learned weights "opaque" as if opacity were the form. Under the path on which a system runs them as a model the form is distributed-parametric; under the runtime that executes them they are symbolic and opaque by scale. In both cases opacity is a modifier on symbolic form or a practical inspection property, not the form, with [scale](../../theory/opacity-depends-on-the-inspection-question-and-budget.md) as one of its sources.
 - Calling natural-language content "prose". The boundary is interpretive, not editorial: fragments, facts, structured records, and rules are natural-language when they get their consequences through interpretation, though none of them is continuous prose.
 - Counting a fixed prompt and model as symbolic because its behavior repeats. Repeatability is not adoption: a prompt becomes symbolic under a consumption path only when a system adopts the model package, decoding included, as the reference for that operation. Under any other consumption path the same prompt is natural-language, and no adoption makes the package a reference for English.
 - Denying that a prompt under a pinned, adopted model is symbolic because the model cannot be read. It is symbolic and opaque under that consumption path; it loses the advantages that reading gives for that reason and keeps what membership gives.
@@ -131,7 +131,7 @@ Relevant Notes:
 - [codification](./codification-definition.md) — defined-in: the move from natural-language into symbolic form, by rewriting or by adoption
 - [storage substrate](../../theory/definitions/storage-substrate.md) — contrasts: where content is stored, separate from how it is encoded
 - [behavioral authority](../../theory/definitions/behavioral-authority.md) — contrasts: which consumer applies content, through which channel, and with what force
-- [opacity is a scale threshold](../../theory/opacity-is-a-scale-threshold.md) — contrasts: scale is one source of the opaque modifier, not the only one
+- [opacity is a scale threshold](../../theory/opacity-depends-on-the-inspection-question-and-budget.md) — contrasts: scale is one source of the opaque modifier, not the only one
 - [addressable theory](../../theory/definitions/addressable-theory.md) — extends: the localized side supplies parts for inspection and separate revision; the assigned-consequences question fixes whether a contradiction is computed or interpreted
 - [codification and relaxing navigate the bitter-lesson boundary](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to relax a symbolic commitment
 

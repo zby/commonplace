@@ -47,7 +47,7 @@ Representational form is also not consumption path. **Prompt** is exact when mat
 
 ## Misuse Cases
 
-- Calling learned weights "opaque" as if opacity were the form. The form is distributed-parametric; opacity is a practical inspection property that [appears at sufficient scale](../opacity-is-a-scale-threshold.md) in natural-language and symbolic systems too.
+- Calling learned weights "opaque" as if opacity were the form. The form is distributed-parametric; opacity is a practical inspection property that [appears at sufficient scale](../opacity-depends-on-the-inspection-question-and-budget.md) in natural-language and symbolic systems too.
 - Calling natural-language content "prose". The boundary is interpretive, not editorial: fragments, facts, structured records, and rules are natural-language when they get their consequences through interpretation, though none of them is continuous prose.
 - Counting a fixed prompt and model as symbolic because its behavior repeats. Repeatability is not a unique operational semantics: another model can read the same prompt differently without either being wrong.
 - Calling every YAML or Markdown artifact symbolic. It is symbolic only where specific fields, values, or structures have a unique operational semantics.
@@ -61,6 +61,6 @@ Relevant Notes:
 - [codification](./codification.md) — defined-in: the move from natural-language into symbolic form
 - [storage substrate](./storage-substrate.md) — contrasts: where content is stored, separate from how it is encoded
 - [behavioral authority](./behavioral-authority.md) — contrasts: which consumer applies content, through which channel, and with what force
-- [opacity is a scale threshold](../opacity-is-a-scale-threshold.md) — contrasts: practical opacity is not the same as distributed-parametric form
+- [opacity is a scale threshold](../opacity-depends-on-the-inspection-question-and-budget.md) — contrasts: practical opacity is not the same as distributed-parametric form
 - [addressable theory](./addressable-theory.md) — extends: the localized side supplies parts for inspection and separate revision; the assigned-consequences axis fixes whether a contradiction is computed or interpreted
 - [codification and relaxing navigate the bitter-lesson boundary](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to relax a symbolic commitment
