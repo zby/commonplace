@@ -7,7 +7,7 @@ windows-install; the report is `kb/work/windows-install/results-2026-11-03-pypi-
 The [framework acceptance table](./README.md#remaining-acceptance) owns status.
 Do not restart completed shim implementation, suite repair, the E1 rewrite or
 the installation run. The next Windows session runs the additional checks below
-against the existing 0.3.3 installation. Use the [ready-to-run Claude check](#ready-to-run-claude-permission-and-delivery-check) below. Workjig 0.3.1 recovery passed on Windows on 2026-11-03 ([report](./results-2026-11-03-windows-workjig-031-recovery.md)).
+against the existing 0.3.3 installation. The [ready-to-run Claude check](#ready-to-run-claude-permission-and-delivery-check) below ran on 2026-11-03 ([report](./results-2026-11-03-windows-claude-default.md)): delivery passed; the read rule's effect is unestablished. Workjig 0.3.1 recovery passed on Windows on 2026-11-03 ([report](./results-2026-11-03-windows-workjig-031-recovery.md)).
 
 Avoid changing the active user tool while another analysis is running. Use
 isolated tool directories where practical, but identify which layout and PATH
