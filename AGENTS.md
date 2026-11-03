@@ -85,6 +85,9 @@ Use spaced relation phrases in prose (`adapted from`). Hyphenated identifiers
 slots; see [link vocabulary](./kb/reference/link-vocabulary.md).
 Double senses judged weak enough to tolerate, with the decision for new text,
 are in the [vocabulary collision ledger](./kb/reference/vocabulary-collision-ledger.md).
+Candidates where different terms may name one underlying concept are in the
+[vocabulary unification ledger](./kb/reference/vocabulary-unification-ledger.md);
+pending entries do not supersede the definitions.
 
 ## Development
 
