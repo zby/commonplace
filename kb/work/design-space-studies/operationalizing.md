@@ -91,7 +91,7 @@ the schema should be read off the fields that pilots actually used.
    posture of each open choice. No type and no validator.
 2. **Retrospective pilot: Windows command delivery.** The outcome is known.
    The signed-Python prerequisite was adopted on 2026-10-28 after field
-   failures, as recorded in [windows-install](../windows-install/README.md)
+   failures, as recorded in windows-install (`git show 600306e1d:kb/work/windows-install/README.md`)
    and the ADR 064 Windows amendment. Give the mapper only artifacts from
    before the first Smart App Control failure (cut off by commit date). Then
    check whether the map, its rival map or its unknowns ledger would have

@@ -2,22 +2,13 @@
 
 ## Next run
 
-The operator requested the cross-workshop handoff on 2026-10-30 and, after
-0.3.3 shipped, requested one more Windows run on 2026-11-01. The immediate goal
-is to close [windows-install](../windows-install/README.md) with a PyPI install.
+The Windows PyPI 0.3.3 installation acceptance passed on 2026-11-03 and closed
+windows-install; the report is `kb/work/windows-install/results-2026-11-03-pypi-033.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/results-2026-11-03-pypi-033.md`).
 The [framework acceptance table](./README.md#remaining-acceptance) owns status.
-Do not restart completed shim implementation, suite repair or the E1 rewrite.
-
-> Follow INSTALL.md steps 1–4 using `llm-commonplace==0.3.3` from PyPI over
-> signed python.org Python, then rerun the shim snippet. Record the installed
-> version, origin, Workjig version and effective command/library paths. Verify
-> command startup one at a time, scratch-project init, `--check` and landing
-> validation in fresh processes inside and outside the fully restarted desktop
-> app. A Git-main install or checkout test run does not substitute for PyPI.
-> Preserve active control-plane files; record template recreation as the known
-> accepted limit. Write a new dated report under windows-install and update
-> the acceptance table. Stop with an exact resume step if a restart, permission
-> or environment prerequisite is missing.
+Do not restart completed shim implementation, suite repair, the E1 rewrite or
+the installation run. The next Windows session runs the additional checks below
+against the existing 0.3.3 installation; the Workjig fixture first needs the
+decision recorded in the acceptance table.
 
 Avoid changing the active user tool while another analysis is running. Use
 isolated tool directories where practical, but identify which layout and PATH
@@ -81,7 +72,7 @@ owning workshop before expanding this run.
 The Windows test-suite workshop closed on 2026-11-01. Its fixes are in code,
 tests and CI shipped in 0.3.3. [Release CI 41342248088](https://github.com/zby/commonplace/actions/runs/41342248088)
 at `526de4edd` passed tests, wheel install, entry-point resolution and scratch
-checks on Windows and Linux. The [independent native report](../windows-install/results-2026-11-01-codex-independent.md)
+checks on Windows and Linux. The independent native report, `kb/work/windows-install/results-2026-11-01-codex-independent.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/results-2026-11-01-codex-independent.md`),
 records 821 passed and 13 skipped, including collected slow tests, with no
 failures or collection errors. Its skip and antivirus limits remain in that
 report. Linux-only analysis tests are excluded from Windows collection.

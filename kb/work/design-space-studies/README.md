@@ -35,8 +35,9 @@ goes to `kb/theory/`. Then delete this directory and its entry in
 - [conjecture-store](../conjecture-store/README.md) is developing cheap
   refutable records for theory. A map's axes and compatibility rules are
   conjectures of that kind. Borrow from it without adopting its record type.
-- [windows-install](../windows-install/README.md) holds the evidence for the
-  candidate retrospective pilot. Read its records; do not edit them.
+- windows-install, closed on 2026-11-03, holds the evidence for the
+  candidate retrospective pilot. Read its records from git history
+  (`git ls-tree 600306e1d kb/work/windows-install/`); do not restore them.
 
 ## Library this builds on
 

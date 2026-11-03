@@ -14,7 +14,7 @@ Keep open. PyPI 0.3.3 and supported Windows/Linux CI supersede the older
 release and CI summaries below. Native installed-project command and skill
 routing evidence now exists in the
 [delivery report](../framework-delivery/results-2026-10-31-windows-installed-project-agents.md).
-The [independent Codex report](../windows-install/results-2026-11-01-codex-independent.md)
+The independent Codex report, `kb/work/windows-install/results-2026-11-01-codex-independent.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/results-2026-11-01-codex-independent.md`),
 could run uv and rg in its sandbox; the prior sandbox failure is specific to
 that earlier run, not a universal Windows restriction.
 
@@ -44,7 +44,7 @@ The rebaseline brought the working documents in line: the [solution catalogue](.
 - The library's theory collection moved from `kb/notes/` to `kb/theory/` (ADR 123) while project scaffolds keep `kb/notes/`. The [inventory](./inventory.md) still names `kb/notes/` for library files; its counts predate the move and the 2026-10 command changes (`commonplace-analysis`, `commonplace-task` added; `commonplace-agentic-analysis-*` removed) and need a re-count before the dependency map is trusted.
 - Everything released is still v0.2.0 (2026-09-25); the probe must run against a release that carries the current init, which [framework-delivery](../framework-delivery/README.md) step 0 and step 1 now own.
 
-**Recheck 2026-10-27.** The first native-Windows report exists: [2026-10-27-codex-app-windows-powershell-a1.md](./evidence/2026-10-27-codex-app-windows-powershell-a1.md), taken from the Codex desktop app's PowerShell tool calls. It observed bare `commonplace-validate` and `rg` resolving, the former from the user-level uv tool bin, so the app inherits the user `PATH` after a restart, and no shell state surviving between tool calls. It ran procedure v6 on a checkout from 2026-08-08, so its layout section describes the retired project-venv model, and a v7 run is still open. The Windows command-delivery work done alongside it, shims over a signed or a uv-managed interpreter under Smart App Control and antivirus, belongs to [windows-install](../windows-install/README.md): its round 1 plan, the run of that plan on a second machine, and the round 2 plan live there, and the harness run superseded five shorter reports that were retired from this directory the same day.
+**Recheck 2026-10-27.** The first native-Windows report exists: [2026-10-27-codex-app-windows-powershell-a1.md](./evidence/2026-10-27-codex-app-windows-powershell-a1.md), taken from the Codex desktop app's PowerShell tool calls. It observed bare `commonplace-validate` and `rg` resolving, the former from the user-level uv tool bin, so the app inherits the user `PATH` after a restart, and no shell state surviving between tool calls. It ran procedure v6 on a checkout from 2026-08-08, so its layout section describes the retired project-venv model, and a v7 run is still open. The Windows command-delivery work done alongside it, shims over a signed or a uv-managed interpreter under Smart App Control and antivirus, belonged to windows-install, closed on 2026-11-03 (`git show 600306e1d:kb/work/windows-install/README.md`): its round 1 plan, the run of that plan on a second machine, and the round 2 plan are in that directory's history, and the harness run superseded five shorter reports that were retired from this directory the same day.
 
 ## First consideration: implementable evidence gathering
 

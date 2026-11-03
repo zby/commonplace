@@ -4,7 +4,7 @@ Item 4 of the [Windows delivery handoff](./windows-delivery-handoff.md): agents 
 
 ## Setup
 
-- Install: `llm-commonplace` built from GitHub `main` (`55700da28`), non-editable, over python.org 3.14.7, with the `INSTALL.md` shims. Installation record: [windows-install run 4](../windows-install/results-2026-10-31-afflicted-main-run4.md).
+- Install: `llm-commonplace` built from GitHub `main` (`55700da28`), non-editable, over python.org 3.14.7, with the `INSTALL.md` shims. Installation record: windows-install run 4, `kb/work/windows-install/results-2026-10-31-afflicted-main-run4.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/results-2026-10-31-afflicted-main-run4.md`).
 - Project: `<HOME>\cp-install-test-run4`, initialised by that run, Git repository with one commit. `.commonplace/library.md` and the stubs point at `<tool env>/share/commonplace`, outside the project.
 - Smart App Control on; Defender, Avast and McAfee present.
 

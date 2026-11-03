@@ -2,7 +2,7 @@
 
 ## Commission
 
-Posed by the operator on 2026-10-28, split from [windows-install](../windows-install/README.md) as that workshop's test R9. **Back burner:** the maintainers do not normally use Windows, so this waits for a new user who does.
+Posed by the operator on 2026-10-28, split from windows-install as that workshop's test R9. windows-install closed on 2026-11-03; its files are in git history at `600306e1d`. **Back burner:** the maintainers do not normally use Windows, so this waits for a new user who does.
 
 The operator decided on 2026-10-28 that a Windows install needs the signed python.org interpreter as a prerequisite (windows-install, "Round 2 outcome"). The procedure that carries it is variant T: the uv tool built over the signed interpreter, with commands started through the `INSTALL.md` shims. The evidence is one day on one machine: the shims over the signed interpreter (variants S and T) ran with no Code Integrity, Defender or Avast record, while the uv-managed interpreter had four stdlib extensions refused. Smart App Control decides by reputation, and its verdicts vary between runs, so one clean day does not show that T stays accepted. This workshop observes the `INSTALL.md` Windows procedure in ordinary use over days, which is the only test of the deletion Avast made on 2026-10-26.
 
@@ -17,8 +17,8 @@ Durable results go to ADR 064's evidence and to `INSTALL.md`'s Windows troublesh
 
 ## Constraints
 
-- The testing rules in windows-install's README apply: start one command at a time; never start processes through WMI or `powershell -EncodedCommand`; record the antivirus products and back up the user `Path` before the first check; never turn Smart App Control off.
-- A clean result counts only after a positive control on the same machine: one run of a uv-generated launcher that Smart App Control blocks or the antivirus reacts to (windows-install's [shim-delivery-test-plan.md](../windows-install/shim-delivery-test-plan.md), R0). Without it the machine cannot tell acceptance from absence, and the run is uninformative.
+- The testing rules carried over from windows-install apply: start one command at a time; never start processes through WMI or `powershell -EncodedCommand`; record the antivirus products and back up the user `Path` before the first check; never turn Smart App Control off.
+- A clean result counts only after a positive control on the same machine: one run of a uv-generated launcher that Smart App Control blocks or the antivirus reacts to (R0 in `kb/work/windows-install/shim-delivery-test-plan.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/shim-delivery-test-plan.md`)). Without it the machine cannot tell acceptance from absence, and the run is uninformative.
 - Avast keeps an exception list learned per file: a new executable is sandboxed on its first run and excepted afterwards. The first runs after an install or upgrade are the informative ones; record them.
 - Commits carry `Workshop: kb/work/windows-signed-python-field-use`.
 
@@ -33,8 +33,8 @@ Record each check as a dated line in a `log.md` here: date, machine (Smart App C
 
 ## Evidence so far
 
-- [results-2026-10-28-afflicted-variant-t.md](../windows-install/results-2026-10-28-afflicted-variant-t.md) — T, the `INSTALL.md` procedure, passes a short run in a separate tool directory; its state section names the test root used there.
-- [results-2026-10-28-afflicted-variant-s.md](../windows-install/results-2026-10-28-afflicted-variant-s.md) — S passes R0–R8 over the same signed interpreter, covering the tests T's short run skipped.
-- [results-2026-10-28-afflicted-variant-u.md](../windows-install/results-2026-10-28-afflicted-variant-u.md) — the uv-managed interpreter's refused extensions and Avast's first-run sandboxing.
+- `results-2026-10-28-afflicted-variant-t.md` — T, the `INSTALL.md` procedure, passes a short run in a separate tool directory; its state section names the test root used there.
+- `results-2026-10-28-afflicted-variant-s.md` — S passes R0–R8 over the same signed interpreter, covering the tests T's short run skipped.
+- `results-2026-10-28-afflicted-variant-u.md` — the uv-managed interpreter's refused extensions and Avast's first-run sandboxing.
 
-If windows-install has closed when this resumes, read these from git history.
+These were in `kb/work/windows-install/`; read them with `git show 600306e1d:kb/work/windows-install/<file>`. The 2026-11-03 PyPI 0.3.3 run there (`results-2026-11-03-pypi-033.md`) adds one more clean day, with no antivirus exception added.
