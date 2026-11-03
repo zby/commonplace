@@ -51,6 +51,12 @@ Template recreation after renaming the control-plane templates is an accepted,
 documented 0.3.3 limit. Revisit it when init's lifecycle changes or it interferes
 with an upgrade; it does not block acceptance here.
 
+The [2026-11-03 Codex existing-session check](./results-2026-11-03-windows-codex-existing-session.md)
+independently passed the active 0.3.3 shim route, shell library reads,
+index-based validation with a file argument, and all 26 init freshness entries.
+It began in the source checkout, so it adds no fresh installed-project native
+skill-discovery or permission-rule evidence.
+
 ## Remaining acceptance
 
 This table is the single status list. The [Windows handoff](./windows-delivery-handoff.md)
