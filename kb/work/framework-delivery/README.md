@@ -65,7 +65,7 @@ provides the next run's instructions, not a separate implementation backlog.
 | Item | Next action or trigger | Evidence needed |
 |---|---|---|
 | Claude Windows read rule | Defect found 2026-11-03; deferred by the operator until a Windows user reports library-read prompts. Then make init write `//<lowercase drive>/…` on Windows and confirm with one disposable project. | [Matched test](./results-2026-11-03-windows-claude-read-rule-matched.md): in default mode the library read prompted both with init's `Read(//C:/…/**)` rule and with no rule, and went through with `Read(//c/…/**)` or `Read(~/…/**)`. init's rule has no effect on Windows. The earlier [default-permission probe](./results-2026-11-03-windows-claude-default.md), whose reads went through under the same rule, is unexplained. |
-| Upgrade acceptance | Partial Linux acceptance recorded; resume model-backed live-session reads when a working provider is available, and repeat applicable cases for a real release transition or another runtime. | Synthetic library-only and metadata detection/repair passed. Fresh Codex Sol read stale V2 before repair and moved-root V4 after init plus a no-init library update. An ongoing pi RPC process kept old skill metadata after init; a fresh process updated. That catalog observation is not a model-backed live-session read, and `/reload` was not tested. |
+| Upgrade acceptance | Linux pi synthetic live-session checks passed. Repeat applicable cases for a real release transition or another runtime, or obtain an explicit deferral with a trigger before closure. | [Live-session report](./results-2026-11-03-linux-pi-live-upgrades.md): pi 1.3.0 / OpenAI Astra reread V2 without init, followed the V3 skill body after init, and refreshed advertised metadata through the actual TUI `/reload`. A path move left stale pointers reading V3; init repair let the same session and a fresh process read V4. Prompts explicitly requested current reads; no automatic recovery or real Commonplace release transition is certified. |
 | Focused Workjig recovery | Passed on Linux and Windows; reopen on a Workjig locking change. | Windows, 2026-11-03 ([report](./results-2026-11-03-windows-workjig-031-recovery.md)): the unchanged [0.3.1 fixture](./workjig-031-recovery-fixture.py), in-hold read included, passed with PyPI Workjig 0.3.1 under the installed Commonplace 0.3.3 tool's signed python.org interpreter. Linux passed with the full suite (1341 passed, 2 skipped). The historical 0.3.0 fixture failed on Windows on the in-hold read. |
 | pi installed worker copy | Passed on Linux; reopen when the extension's installation or launch path changes, or another platform needs acceptance. | [Installed-copy report](./results-2026-11-03-linux-pi-worker-copy.md): pi 1.3.0, OpenAI Astra, PyPI Commonplace 0.3.3. The unchanged user-level copy launched one fresh worker from a disposable installed project. The worker read the installed probe file and returned its token; the parent did not read it. Initial probe-routing setup failure is retained separately. |
 | macOS | Deferred until a macOS host is available. | Published-package install plus installed-project delivery checks. |
@@ -97,9 +97,10 @@ security policy or the delivery architecture. Bring such decisions to the operat
 ## Closure
 
 Close when each remaining item has evidence or an explicit deferral with a
-trigger. The Windows PyPI repeat and Linux pi worker-copy check passed on
-2026-11-03; reassess the remaining live-session and platform coverage;
-do not silently defer them merely because a release passed CI. Promote any new
+trigger. The Windows PyPI repeat, Linux pi worker-copy check and Linux pi
+synthetic live-session upgrade checks passed on 2026-11-03. Real-release and
+cross-runtime upgrade coverage still needs evidence or explicit disposition;
+do not silently defer it merely because a release passed CI. Promote any new
 durable rule to INSTALL.md, the owning ADR or instructions. Transfer still-live
 deferrals and evidence needed by their owners before deleting this directory
 and its entry in the workshop index.
