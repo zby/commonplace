@@ -19,6 +19,8 @@ Reading each unit need not make an aggregate affordable to inspect. A program's 
 
 Scale therefore matters relative to the question. There is no single size at which every question about an artifact becomes opaque. Nor does readable syntax guarantee an affordable answer to an arbitrary behavioral question.
 
+A candidate condition for when a question about a large artifact stays affordable is [Simon's](../sources/herbert-simon-architecture-of-complexity.ingest.md) near-decomposability: strong coupling inside a block, weak coupling across blocks, and other blocks entering as a few aggregates for the question's horizon and tolerance. The cost of a question then tracks the size of the block that contains its units plus the aggregates crossing the block's boundary, not total size. Dense coupling and hub components are what make scale opaque. Simon's theorem concerns linear dynamic systems; reading interaction as dependency between an artifact's units is a conjecture, developed in [opacity is the lack of a known near-decomposition for the question](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md), which proposes the same condition behind the other two sources.
+
 ### The reference's form
 
 The reference has a form under the path on which it is read. Reading it on that path may not answer a question asked on another path.
@@ -59,5 +61,7 @@ Relevant Notes:
 
 - [Axes of artifact analysis](./axes-of-artifact-analysis.md) — grounds: form and consumption path identify what is being inspected
 - [Inspectable artifact, not supervision, defeats the blackbox problem](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — contrasts: readable code is an inspection opportunity, not a guarantee for every question and budget
+- [Opacity is the lack of a known near-decomposition for the question](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: one condition proposed behind the three sources, with a description-length reading of the cost
+- [Simon, The Architecture of Complexity](../sources/herbert-simon-architecture-of-complexity.ingest.md) — evidenced-by: near-decomposability as the condition under which a local question stays affordable; the transfer to artifacts is conjectural
 - [On the impossibility of obfuscating programs](../sources/on-the-impossibility-of-obfuscating-programs.ingest.md) — evidenced-by: bounds the hiding claim; circuit descriptions can reveal more than oracle access, preventing general virtual black-box obfuscation
 - [Indistinguishability obfuscation from well-founded assumptions](../sources/indistinguishability-obfuscation-well-founded-assumptions.ingest.md) — evidenced-by: bounds deliberate hiding to indistinguishability among equivalent same-size circuits under the stated assumptions

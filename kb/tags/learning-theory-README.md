@@ -35,6 +35,7 @@ These child tags route major parts of the area. A few fundamentals carry only th
 - [Recognition, not linking, is the hard problem in knowledge systems](../theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — where connecting knowledge actually costs, and how naming amortizes it
 - [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — agreement on tests supports scoped conformance claims, not the inference from formalized consumers to symbolic inputs
 - [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — codification commits an interpretation by rewriting or adoption while keeping conformance and requirement adequacy separate
+- [Opacity is the lack of a known near-decomposition for the question](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — blame localizes to a part only where its interactions with other parts are weak on the test's horizon
 
 ## Related Tags
 

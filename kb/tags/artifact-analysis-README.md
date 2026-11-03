@@ -14,9 +14,9 @@ complete: true
 - [Map a design space before selecting](../theory/first-principles-analysis-maps-design-space-before-selection.md) — derive form options before inherited packages narrow the search
 - [What the four-field record exposes](../theory/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — efficiency, security, and sovereignty questions
 - [Memory design adds operational axes](../theory/memory-design-adds-operational-axes-to-artifact-analysis.md) — write and read policies supplement artifact classification
-- [Opacity](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — inspection cost depends on the question, reference, scale and obfuscation
-- [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — modeling a consumer does not establish language conformance
-- [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — adoption fixes permitted behavior, not readability or adequacy
+- [Opacity](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — question-relative inspection cost; [a proposed condition](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) behind its sources
+- [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — modeling a consumer does not establish conformance
+- [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — adoption fixes permitted behavior, not adequacy
 
 ## Definitions
 
@@ -49,7 +49,7 @@ complete: true
 - [Ephemeral computation](../theory/ephemeral-computation-prevents-accumulation.md) — discarding generated artifacts trades accumulation for simplicity
 - [When ephemerality is safe](../theory/ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — disposal depends on embedded knowledge and explanatory-reach
 - [RLM, λ-RLM, Tendril, and llm-do](../theory/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) — restriction and persistence distinguish generated capabilities
-- [Adaptation survey and memory governance](../theory/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) — the four fields expose governance gaps in the survey taxonomy
+- [Adaptation survey and memory governance](../theory/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md) — the four fields expose governance gaps
 - [Compiled memory views](../theory/agent-memory-requirements/keep-compiled-views-aligned.md) — lineage and authority govern regeneration and drift checks
 - [Code as prompt or symbolic operation](../theory/code-complements-weight-prompt-with-symbolic-operations.md) — consumption path changes what the same artifact does
 - [Commitment creates new ground truth](../theory/commitment-not-derivation-creates-new-ground-truth.md) — added resolutions require supersession rather than recomputation

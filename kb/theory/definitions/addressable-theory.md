@@ -56,6 +56,12 @@ empirical question.
   ([Conjectures and Refutations, Chapter 10, section XVI](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
   Unchanged text also does not guarantee unchanged consequences; a revision
   is checked against the failure and against other cases.
+- **Blame localizes only where interactions are weak.** A located part is a
+  sound candidate only where its interactions with the other parts are weak
+  on the horizon of the test. On a longer horizon every part answers to every
+  other through aggregates, which is the structural form of Popper's remark
+  above. Both follow from near-decomposability, since
+  [opacity is the lack of a known near-decomposition for the question](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md).
 
 ## Precedent
 
@@ -101,5 +107,6 @@ Relevant Notes:
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](./codification.md) — grounds: the crossing that fixes a part's consequences against a reference, separately from whether those consequences are affordable to inspect
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway
+- [Opacity is the lack of a known near-decomposition for the question](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: weak interaction on the test's horizon is what lets blame localize to a part
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — evidenced-by: the classical precedent
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — evidenced-by: the classical precedent and its search limits
