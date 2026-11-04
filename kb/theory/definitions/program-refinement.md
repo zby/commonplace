@@ -6,7 +6,7 @@ tags: [learning-theory, constraining]
 
 # Program refinement
 
-An instruction, prompt or formal specification permits a set of behaviors, its **permitted set**. An artifact Q is a **program refinement** of an artifact P when every behavior Q permits is one P permits: Q narrows P's set without leaving it. A **refinement step** is a narrowing that is committed in a retained artifact and checked against P. The term is a compound. The bare word "refinement" stays ordinary English in this KB.
+An instruction, prompt or formal specification permits a set of behaviors, its **permitted set**. An artifact Q is a **program refinement** of an artifact P when every behavior Q permits is one P permits: Q narrows P's set without leaving it. A **refinement step** is a narrowing that is committed in a retained artifact and checked against P. An executor's output is a **candidate refinement** until it is checked. The term is a compound. The bare word "refinement" stays ordinary English in this KB.
 
 The KB needs the term for two jobs. [Constraining](./constraining.md) narrows an artifact's interpretation space, and program refinement is the formal reading of that narrowing. The [two accounts of prompting](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md) need a name for the relation between what an instruction permits and what an executor produces, one that does not assert the executor landed inside the set.
 
@@ -39,7 +39,7 @@ The relation is stated for a named consumer and reference, as constraining is. T
 - **Iterative improvement.** Prompt refinement, note refinement and in-place refinement in this KB mean editing toward a better artifact. They may narrow or widen a permitted set. The bare word keeps that ordinary sense.
 - **Theory refinement.** The EITHER and FORTE line that [addressable theory](./addressable-theory.md) cites repairs a rule set against cases. It is revision, not a narrowing within a permitted set.
 - **Adequacy.** A refinement of a wrong specification is a wrong program. Refinement preserves what the specification requires and says nothing about whether the requirement was the right one, the separation the [semantic-reference account](../symbolic-form-holds-consumers-to-a-semantic-reference.md) keeps.
-- **Projection.** Earlier notes called the executor's collapse of a permitted set to one behavior a projection. The word is ordinary language here, a word that fits a silent and unrecorded choice, and carries no technical properties. The [collision ledger](../../reference/vocabulary-collision-ledger.md) records the decision.
+- **Projection.** Earlier notes called the executor's collapse of a permitted set to one behavior a projection. The word is ordinary language here, fitting a silent and unrecorded choice, and carries no technical properties. The [collision ledger](../../reference/vocabulary-collision-ledger.md) records the decision.
 
 ## Misuse Cases
 
