@@ -40,7 +40,7 @@ The `/connect` discovery found 7 connections to KB notes and 3 to other sources,
 
 **Notable tension:**
 
-- [constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-is-continuous-learning.md) — **contradicts**: Amodei argues continual learning may be unnecessary because pre-training + RL + in-context learning suffice. This challenges the note's premise that deploy-time constraining fills a necessary adaptation gap. The tension may resolve at different levels of analysis: Amodei is talking about model-level capability, while the KB note is about system-level adaptation through inspectable artifacts.
+- [constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — **contradicts**: Amodei argues continual learning may be unnecessary because pre-training + RL + in-context learning suffice. This challenges the note's premise that deploy-time constraining fills a necessary adaptation gap. The tension may resolve at different levels of analysis: Amodei is talking about model-level capability, while the KB note is about system-level adaptation through inspectable artifacts.
 
 **Other connections:**
 

@@ -55,7 +55,7 @@ These conclusions do not follow for the adopted deterministic package. Nor does 
 
 ### F3 — Testing advice conflates semantics, implementation and requirements
 
-[Programming practices](../../theory/underspecification-and-indeterminism-complicate-programming-for.md), lines 12–34, says prompts are harder to verify because code has precise semantics, calls execution indeterminism novel, and says deterministic code has no gap between what it says and does, so only outputs need testing. [Automated tests for text](../../theory/automated-tests-for-text.md), line 21, repeats the last claim.
+[Programming practices](../../theory/programming-practices-for-prompts-need-question-specific-evidence.md), lines 12–34, says prompts are harder to verify because code has precise semantics, calls execution indeterminism novel, and says deterministic code has no gap between what it says and does, so only outputs need testing. [Automated tests for text](../../theory/automated-tests-for-text.md), line 21, repeats the last claim.
 
 The reference-model counterexample removes the proposed categorical distinction. The existing semantics account also separates execution conformance from requirement adequacy for conventional code. Generator testing and generated-artifact testing remain distinct even when a producer is deterministic. The text-testing pyramid can survive without this justification.
 
@@ -79,7 +79,7 @@ The necessity does not follow from the admitted conjecture. A strongly coupled s
 
 ### F6 — Partial evaluation denies semantics where it should question equivalence
 
-[Frontloading is partial evaluation](../../theory/frontloading-is-partial-evaluation-not-divide-and-conquer.md), under “Where the analogy stretches,” says there is no exact `[[P]]` because the program has underspecified semantics. Under the adopted package, a precise computational meaning can exist. What remains difficult is establishing that replacing a procedure by its precomputed result preserves the relevant behavior.
+[Frontloading is partial evaluation](../../theory/frontloading-can-specialize-instructions-around-known-inputs.md), under “Where the analogy stretches,” says there is no exact `[[P]]` because the program has underspecified semantics. Under the adopted package, a precise computational meaning can exist. What remains difficult is establishing that replacing a procedure by its precomputed result preserves the relevant behavior.
 
 **Priority: medium.** Scope the claim to ordinary-language interpretation, and distinguish existence of semantics from evidence of equivalence and the cost of proving it. The separate claim that a shared text medium makes the operation partial evaluation also needs its own justification; it is not established by the new definitions.
 
@@ -96,7 +96,7 @@ These are concrete follow-up targets, with different repair needs:
 - [Metacircular methodologies](../../theory/llm-executed-methodologies-are-metacircular-interpreters.md), “Codification is the compiled path,” says each instruction–skill–hook–script step reduces underspecification and indeterminism. This also conflicts with [methodology enforcement](../../theory/methodology-enforcement-is-constraining.md), which expressly rejects that inherent ladder.
 - [Progressive constraining](../../theory/progressive-constraining-commits-only-after-patterns-stabilize.md) treats code generation as producing a valid implementation from the allowed space, though generation can violate the requirement. Its opening calls the spec-to-program mapping many-to-one while its parent argument says one-to-many. Scope its advice to evidence-guided extraction; observed stability alone does not establish adequacy.
 - [Instructions as typed callables](../../theory/instructions-are-typed-callables.md), line 31, frames operation implementations as movement from underspecified to precise semantics. Preserve that case while distinguishing an adopted model check from an independently justified requirement predicate.
-- [Constraining during deployment](../../theory/constraining-during-deployment-is-continuous-learning.md), lines 10–16, calls prompts symbolic without a named adopted reference and attributes generality, speed, cost and reliability gains to every constraining step. Both exceed the revised definitions and the now-scoped trade-off note it cites.
+- [Constraining during deployment](../../theory/constraining-during-deployment-can-produce-learning-outside-weights.md), lines 10–16, calls prompts symbolic without a named adopted reference and attributes generality, speed, cost and reliability gains to every constraining step. Both exceed the revised definitions and the now-scoped trade-off note it cites.
 - [Codification and relaxing](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) correctly scopes its main argument to code extraction, but its complement paragraph still defines relaxing as replacing a codified component with a learned one. A replacement learned component can itself be codified under adoption; preserve the explicit extraction scope throughout.
 
 **Priority: medium.** Repair these as dependent arguments, not by replacing every occurrence of “natural language” with “opaque.”

@@ -36,7 +36,7 @@ Direct observation of what works in this system — the improvement log, frictio
 Relevant Notes:
 
 - [A borrowed pattern transfers only as far as source and target share a mechanism](../theory/borrowed-patterns-transfer-only-over-shared-mechanism.md) — rests-on: the general discriminator this policy applies — a fast pass only where the shared mechanism reaches, target-side evidence otherwise
-- [Underspecification and indeterminism complicate programming-pattern transfer](../theory/underspecification-and-indeterminism-complicate-programming-for.md) — rests-on: why the programming fast pass stops at the symbolic shell and not the interpretive core
+- [Underspecification and indeterminism complicate programming-pattern transfer](../theory/programming-practices-for-prompts-need-question-specific-evidence.md) — rests-on: why the programming fast pass stops at the symbolic shell and not the interpretive core
 - [Legal drafting solves the same problem as context engineering](../theory/legal-drafting-solves-the-same-problem-as-context-engineering.md) — rests-on: the medium-sharing argument behind treating law as an eligible source
 - [Instruction specificity should match loading frequency](../theory/instruction-specificity-should-match-loading-frequency.md) — see-also: an example of a first-principles adoption the gate references
 - [Directory-scoped types are cheaper than global types](../theory/directory-scoped-types-are-cheaper-than-global-types.md) — see-also: a first-principles adoption derived from the absent import mechanism

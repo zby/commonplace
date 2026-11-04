@@ -71,7 +71,7 @@ The most important local protection is already explicit: [behavioral authority](
 
 This sharpens "learn from traces." Different trace events call for different products. A generic summarizer tends to turn all of them into prose memories, even when the missing capacity is a selector, an exception, a process model, or executable procedure.
 
-The existing KB already rejects retention alone as learning: [constraining during deployment is continuous learning](../../theory/constraining-during-deployment-is-continuous-learning.md) and [trace-extracted memory earns authority per operation, not at capture](../../theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) require operative, governed change. The plausible addition is a **trigger → missing-capacity → artifact-form** diagnostic, if real trace cases populate more than one row.
+The existing KB already rejects retention alone as learning: [constraining during deployment is continuous learning](../../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) and [trace-extracted memory earns authority per operation, not at capture](../../theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) require operative, governed change. The plausible addition is a **trigger → missing-capacity → artifact-form** diagnostic, if real trace cases populate more than one row.
 
 **Best grounding comparison:** Soar for impasse and chunking; EPAM or CHREST for discrimination; HTM only if sequence-conditioned memory becomes an active design question.
 

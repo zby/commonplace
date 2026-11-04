@@ -43,7 +43,7 @@ This boundary became concrete while making knowledge-base (KB) skills—reusable
 Relevant Notes:
 
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: pre-computation moves work out of the consuming call
-- [Frontloading can specialize instructions around known inputs](./frontloading-is-partial-evaluation-not-divide-and-conquer.md) — extends: binding known inputs constructs a candidate specialized instruction; preservation needs a separate check
+- [Frontloading can specialize instructions around known inputs](./frontloading-can-specialize-instructions-around-known-inputs.md) — extends: binding known inputs constructs a candidate specialized instruction; preservation needs a separate check
 - [Semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — mechanism: upstream resolution moves binding work rather than erasing it
 - [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) — contrasts: live execution authority can make runtime resolution safer than an authored literal
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — grounds: repeated loading determines how often model-side work recurs

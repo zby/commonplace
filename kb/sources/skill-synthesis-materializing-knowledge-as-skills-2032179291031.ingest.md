@@ -40,7 +40,7 @@ The `/connect` discovery found 6 strong connections, all in the **exemplifies** 
 
 4. **[inspectable-artifact-not-supervision-defeats-the-blackbox-problem](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)** — exemplifies. The skill file is diffable, versionable, collaboratively refinable. The `npx skills add` distribution model treats skills as inspectable artifacts.
 
-5. **[constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-is-continuous-learning.md)** — exemplifies. Iterative refinement through false positive analysis is constraining during deployment per Simon's definition.
+5. **[constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md)** — exemplifies. Iterative refinement through false positive analysis is constraining during deployment per Simon's definition.
 
 6. **[Both narrowed and use-shaped artifacts trade generality for reliability, speed, and cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md)** — exemplifies. The same material can be reshaped for different consumers (Cramer plans performance prediction next), the resulting skill cannot reconstruct the source, and the source persists.
 

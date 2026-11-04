@@ -23,7 +23,7 @@ Responses may be human maintenance, automated adaptation, or a combination. [Sel
 
 - [the deployed system, not the model alone, is the unit of learning](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md) — prompts, retrieval, tools, and runtime policy jointly determine behavior, so post-deployment change reaches all of them
 - [ad hoc prompts extend the system without schema changes](../theory/ad-hoc-prompts-extend-the-system-without-schema-changes.md) — an LLM layer absorbs new requirements in natural language before the deterministic base changes
-- [constraining during deployment is continuous learning](../theory/constraining-during-deployment-is-continuous-learning.md) — prompts, schemas, tools, and tests accumulate the adaptation outside weights
+- [constraining during deployment is continuous learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — prompts, schemas, tools, and tests accumulate the adaptation outside weights
 - [retained system-definition artifacts enable persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the framework answer: retained, evaluated artifact changes give a deployed system a persistent adaptation path
 - [scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](../theory/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) — stronger models do not remove deployment-specific structure while assigned difficulty keeps pace with capability
 

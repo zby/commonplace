@@ -1,7 +1,7 @@
 ---
 description: "Maps typing, testing, code extraction and versioning to the questions they answer; distinguishes requirement adequacy, conformance, predictive fidelity and execution variation."
 type: types/note.md
-brief: underspecification-and-indeterminism-complicate-programming-for.brief.md
+brief: programming-practices-for-prompts-need-question-specific-evidence.brief.md
 traits: [title-as-claim, has-comparison]
 tags: [learning-theory, computational-model, constraining, llm-reliability]
 ---

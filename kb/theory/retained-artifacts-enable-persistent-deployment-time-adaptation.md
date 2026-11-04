@@ -41,7 +41,7 @@ Persistence alone is insufficient. A manually edited configuration remains an en
 
 ## Forms can coevolve
 
-Deployment-time adaptation does not privilege natural language or code. [Constraining during deployment is continuous learning](./constraining-during-deployment-is-continuous-learning.md) develops one concrete path in which prompts, schemas, tools, tests, and code accumulate adaptive capacity. Settled interpretations can move toward symbolic enforcement, while new evidence can reopen a commitment for model judgment. The allocation of state among natural-language, symbolic, and distributed-parametric forms may therefore change while the timing and persistence of the learning loop remain the same. How those forms should divide responsibility is the separate argument in [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md).
+Deployment-time adaptation does not privilege natural language or code. [Constraining during deployment is continuous learning](./constraining-during-deployment-can-produce-learning-outside-weights.md) develops one concrete path in which prompts, schemas, tools, tests, and code accumulate adaptive capacity. Settled interpretations can move toward symbolic enforcement, while new evidence can reopen a commitment for model judgment. The allocation of state among natural-language, symbolic, and distributed-parametric forms may therefore change while the timing and persistence of the learning loop remain the same. How those forms should divide responsibility is the separate argument in [treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md).
 
 ## Boundary
 

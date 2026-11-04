@@ -42,7 +42,7 @@ The identifiers refer to the dated [coherence audit](../../reports/retained/prom
 - [English approximation](../../theory/english-can-approximate-a-model-defined-prompt-language.md): localized predictions, their assessment criteria and the proposed description-length residual mapping.
 - [Unsettled instruction composition](../../theory/clear-instructions-can-compose-into-an-unsettled-contract.md): applicability, precedence and exceptions under English requirements.
 - [Near-decomposability](../../theory/near-decomposability-may-make-local-inspection-affordable.md): candidate inspection mechanism and invariant-preservation limits.
-- [Programming practices](../../theory/underspecification-and-indeterminism-complicate-programming-for.md): checks matched to requirement adequacy, conformance, prediction and variation. Its title changed; its historical filename has not yet been relocated.
+- [Programming practices](../../theory/programming-practices-for-prompts-need-question-specific-evidence.md): checks matched to requirement adequacy, conformance, prediction and variation. Its title changed; its historical filename has not yet been relocated.
 - [Program refinement](../../theory/definitions/program-refinement.md): candidate versus checked refinement under applicable interpretations and preserved guarantees.
 
 ## Next work and acceptance

@@ -40,7 +40,7 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 **Enters the [discovery lifecycle](../theory/definitions/discovery-lifecycle.md) at conjecture:** Trajectory-to-tip extraction generalizes full execution traces into candidate operational guidance. The reported downstream comparison supplies bounded test evidence that subtask-level guidance transfers better than task-level guidance; authority does not follow from extraction alone.
 
-**Also exemplifies**: [learning-is-not-only-about-generality](../theory/learning-is-not-only-about-generality.md) (tips are low-reach accumulation), [constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-is-continuous-learning.md) (tips constrain future behavior), and [three-space-agent-memory-maps-to-tulving-taxonomy](../theory/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) (tips map cleanly to procedural/operational space — none are semantic or episodic).
+**Also exemplifies**: [learning-is-not-only-about-generality](../theory/learning-is-not-only-about-generality.md) (tips are low-reach accumulation), [constraining-during-deployment-is-continuous-learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) (tips constrain future behavior), and [three-space-agent-memory-maps-to-tulving-taxonomy](../theory/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) (tips map cleanly to procedural/operational space — none are semantic or episodic).
 
 ## Extractable Value
 
