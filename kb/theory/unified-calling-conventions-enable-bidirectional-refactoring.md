@@ -63,7 +63,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 Relevant Notes:
 
 - Abstracted into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md)
-- [agentic-systems-interpret-underspecified-instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which an instruction permits several readings, that this note makes architecturally concrete
 - [constraining](./definitions/constraining.md) — the mechanism that unified calling makes frictionless
 - [codification](./definitions/codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites

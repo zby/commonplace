@@ -73,7 +73,7 @@ A system can adopt a frozen model package, decoding included, as the reference f
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: distinguishes a consumer's formally describable behavior from a reference that the language's users hold consumers to
+- [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: distinguishes a consumer's formally describable behavior from a reference that the language's users hold consumers to
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the component claim for interpreter failure, with the worked catalogue of outputs falling outside `V`
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: supplies the reason the diagnosis has exactly these three questions — it is the classical two-norm analysis with both brackets removed
 - [constraining](./definitions/constraining.md) — defined-in: the narrowing operation this note reads as re-purchasing the conformance bracket

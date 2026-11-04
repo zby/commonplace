@@ -37,7 +37,7 @@ The empirical case concerns one reported completion trial and a particular numer
 
 Relevant Notes:
 
-- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: repeatability does not settle which interpretation the specification permits or the user intends
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: repeatability does not settle which interpretation the specification permits or the user intends
 - [Out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — contrasts: a repeated instruction violation remains a violation rather than becoming a specification gap
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: separates specification gaps, interpreter failure, and run-to-run variation to select repairs
 - [LLM reliability](../tags/llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery

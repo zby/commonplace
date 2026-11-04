@@ -41,7 +41,7 @@ A system like this KB exhibits the pattern directly: its linking contracts accum
 Relevant Notes:
 
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — contrasts: the same layer split read from the correction-cost side; this note reads it from the failure-presentation side
-- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: interpretation as navigation of an admissible space, the source of path multiplicity
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: interpretation as navigation of an admissible space, the source of path multiplicity
 - [Final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — extends: supplies the non-identifiability consequence when a workaround consumes the visible failure event and no independent path signal remains
 - [soft degradation often binds before the hard cap when required evidence fits](./soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — grounds: the silent saturation mechanism the workaround budget rides on
 - [Oracle accumulation improves selection for later candidates in its maintained domain](./oracle-accumulation-improves-the-selection-environment.md) — extends: why harvesting failure events before workarounds consume them feeds the selection environment

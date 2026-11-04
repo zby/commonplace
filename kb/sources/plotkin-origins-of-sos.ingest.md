@@ -38,7 +38,7 @@ The source is **evidence for** the lineage paragraph of [any symbolic program wi
 
 The source **compares with** [statecharts and programs differ in what they show, not in what they can compute](../theory/statecharts-and-programs-differ-in-what-they-show-not-compute.md) on the axis of which structure a representation shows natively. SECD/VDL machines and SOS rules specify the same languages. Plotkin chose between them by what a human reader must reconstruct, not by expressive power. His diagrammatic notation goes one step further and shows the flow of control "rather than having to compute it by looking at the rules". This is an independent, earlier instance of that note's thesis from language semantics.
 
-The source is moderate **evidence for** [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md): there, formal semantics is a plausible ideal for programming languages even when practice falls short. SOS made rule-based specification teachable and robust across "a very wide range of language constructs". Yet the real-language attempt stalled at PASCAL blocks, and the notes were never revised for publication.
+The source is moderate **evidence for** [prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md): there, formal semantics is a plausible ideal for programming languages even when practice falls short. SOS made rule-based specification teachable and robust across "a very wide range of language constructs". Yet the real-language attempt stalled at PASCAL blocks, and the notes were never revised for publication.
 
 ## Extractable Value
 

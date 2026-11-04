@@ -24,6 +24,6 @@ The claim is not that every task needs a named methodology. Some tasks have one 
 Relevant Notes:
 
 - [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: separates stored knowledge, contextual exposure, and behavioral activation; methodology selection concerns which coherent behavioral regime becomes active
-- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — mechanism: when the governing method is not settled, capable agents must supply it through interpretation
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — mechanism: when the governing method is not settled, capable agents must supply it through interpretation
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — complements: once selected, a methodology governs only the decisions its content actually settles
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — motivates: selecting a methodology can constrain many decisions without spending context on a complete procedure

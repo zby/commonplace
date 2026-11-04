@@ -41,7 +41,7 @@ Relevant Notes:
 
 - [Ad hoc prompts extend the system without schema changes](./ad-hoc-prompts-extend-the-system-without-schema-changes.md) — exemplifies: shared representation lowers the cost of turning a natural-language artifact into behavior
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — exemplifies: one attention process provides no binding boundary against scope contamination
-- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: learned interpretation makes both natural-language extension and role confusion possible
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: learned interpretation makes both natural-language extension and role confusion possible
 - [Unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — applies: one interface can resolve names to neural or symbolic implementations
 - [Programming practices apply to prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — context: typing, testing, and compilation compensate for structure the shared natural-language medium lacks
 - [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: moving from instruction to script imposes interpreter-enforced boundaries

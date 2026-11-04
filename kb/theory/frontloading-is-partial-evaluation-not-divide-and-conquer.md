@@ -44,7 +44,7 @@ Relevant Notes:
 
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — operational context: this note is the theoretical mechanism for the operational claim defended there
 - [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — enabling property: the shared token medium is what makes the PE framing precise about substitution rather than metaphorical
-- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — caveat: the underspecified semantics of LLM instructions is the domain PE operates in here
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — caveat: the underspecified semantics of LLM instructions is the domain PE operates in here
 - [Generate KB skills at build time, don't parameterise them](./generate-instructions-at-build-time.md) — instance: template expansion is textbook PE
 - [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — instance: upstream variable resolution is a partial-evaluation specialization step
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — broader frame: the scheduling model treats frontloading as the single-step case

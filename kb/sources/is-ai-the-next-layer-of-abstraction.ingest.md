@@ -27,7 +27,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The source is an external conceptual comparison for [Agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), not empirical corroboration. Both distinguish LLM generation from compilation. The KB note separates semantic underspecification from execution indeterminism, which sharpens Seemann's joint requirement of well-defined and deterministic translation: making a generator repeatable would not establish public semantics for its natural-language input. For agent-operated KBs, the useful role is to challenge compiler-like guarantees inferred merely from natural-language instructions producing executable artifacts. The existing note already develops this distinction and its design consequences; the source adds an accessible external formulation, not a new mechanism.
+The source is an external conceptual comparison for [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), not empirical corroboration. Both distinguish LLM generation from compilation. The KB note separates semantic underspecification from execution indeterminism, which sharpens Seemann's joint requirement of well-defined and deterministic translation: making a generator repeatable would not establish public semantics for its natural-language input. For agent-operated KBs, the useful role is to challenge compiler-like guarantees inferred merely from natural-language instructions producing executable artifacts. The existing note already develops this distinction and its design consequences; the source adds an accessible external formulation, not a new mechanism.
 
 ## Extractable Value
 
@@ -42,4 +42,4 @@ The claim that LLM automation is fundamentally nondeterministic is stronger than
 
 ## Recommended Next Action
 
-File this ingest as a source-only reference for the compiler analogy in [Agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), without promoting a new theory note.
+File this ingest as a source-only reference for the compiler analogy in [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), without promoting a new theory note.

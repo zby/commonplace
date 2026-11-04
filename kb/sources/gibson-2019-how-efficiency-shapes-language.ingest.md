@@ -119,7 +119,7 @@ other.
 
 Beyond the occasion, the source explains why ambiguity persists in natural
 language. This bears on
-[Agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
+[Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
 and on
 [Legal drafting solves the same problem as context engineering](../theory/legal-drafting-solves-the-same-problem-as-context-engineering.md),
 whose premise matches the source's example of legal contracts and programming

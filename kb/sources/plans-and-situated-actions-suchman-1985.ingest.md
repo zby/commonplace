@@ -39,7 +39,7 @@ This is the first primary Suchman text in the KB. Three secondary ingests alread
 
 The source's main role in theory is as a counterpoint and pre-LLM baseline for notes on how instructions guide execution:
 
-- It compares with [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) on where the instruction-action gap originates. The note locates it in semantic underspecification that constraining can narrow. Suchman locates it in indexicality: an instruction's significance depends on circumstances it cannot carry, which she calls "an intractable problem" for providing in advance for the significance of instructions (§4.6). The two positions should be kept side by side rather than reconciled.
+- It compares with [prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) on where the instruction-action gap originates. The note locates it in semantic underspecification that constraining can narrow. Suchman locates it in indexicality: an instruction's significance depends on circumstances it cannot carry, which she calls "an intractable problem" for providing in advance for the significance of instructions (§4.6). The two positions should be kept side by side rather than reconciled.
 - It compares with [the two-layer execution system](../theory/theory-and-methodology-form-a-two-layer-execution-system.md) on which layer runs by default. In §4.2 situated action is the default and rules appear only at breakdown, which inverts the note's method-first fast path for human operators.
 - It compares with [fix what the executor can't determine](../theory/fix-what-the-executor-cant-determine-not-what-it-will.md) through the map metaphor. A map need not represent all the terrain because the traveller has the terrain at the time of use. Suchman gives no rule for what the plan must fix, which the note supplies.
 - It compares with [silent disambiguation](../theory/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) on who detects and repairs breakdowns. The copier could detect neither false alarms nor garden paths; an LLM agent repairs ambiguity, but silently.
@@ -67,14 +67,14 @@ The theoretical chapters lean on authorities (Mead, Garfinkel, Heidegger via Dre
 
 ## Recommended Next Action
 
-Update [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) with a short counterpoint citing this ingest: Suchman's §4.6 claim that an instruction's significance depends on circumstances it cannot carry, so part of the instruction-action gap is situational and cannot be closed by constraining. Keep the two positions side by side and mark the transfer from the copier study to LLM agents as analogy.
+Update [prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) with a short counterpoint citing this ingest: Suchman's §4.6 claim that an instruction's significance depends on circumstances it cannot carry, so part of the instruction-action gap is situational and cannot be closed by constraining. Keep the two positions side by side and mark the transfer from the copier study to LLM agents as analogy.
 
 ---
 
 Relevant Notes:
 
 - [Plans and Situated Actions, ISL-6 (PDF)](https://bitsavers.trailing-edge.com/pdf/xerox/parc/techReports/ISL-6_Plans_and_Situated_Actions.pdf) — derived-from: this analysis is worked out from Suchman's 1985 thesis
-- [Agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — compares-with: where the instruction-action gap originates, semantic underspecification versus indexicality
+- [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — compares-with: where the instruction-action gap originates, semantic underspecification versus indexicality
 - [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../theory/theory-and-methodology-form-a-two-layer-execution-system.md) — compares-with: which layer runs by default, with rules explicated only at breakdown
 - [Silent disambiguation is the semantic analogue of tool fallback](../theory/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — compares-with: who detects and repairs breakdowns, and whether repair is visible
 - [Duguid, On rereading Suchman](./duguid-on-rereading-suchman-situated-action.ingest.md) — compares-with: secondary reading checked against the 1985 primary text
