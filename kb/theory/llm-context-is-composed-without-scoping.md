@@ -43,7 +43,7 @@ Flat logs have a real upside: implicit communication. When a user says "use a mo
 
 ## The architectural response
 
-The scoping problem belongs to the model call, not to the form label. Code has scope because its language defines modules and binding rules and its interpreter enforces them. A prompt read by an adopted model package is symbolic under that consumption path and still has no scope: the package attends over one window, and nothing in its reference marks a token as out of range. A scope guarantee needs a boundary that excludes inputs and an enforcer that holds it. Inside one call there is neither, so scope can only be imposed from outside the call.
+Scope is a usual feature of practical traditional programming languages, but it does not follow from [symbolic form](./definitions/representational-form.md) alone. A prompt can be symbolic under a path that adopts a model package as its reference without thereby acquiring scope. Whether a particular prompt language provides scope is a separate question.
 
 At invocation time this surfaces as a design choice — **flat (parent context)** or **bounded (sub-agent frame)** — same representational form, same substrate, same authority path, different context-efficiency profile. Flat pays the full volume and complexity cost and risks contamination; bounded trades an interface cost for isolation.
 
