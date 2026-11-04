@@ -43,17 +43,27 @@ The [text-testing pyramid](./automated-tests-for-text.md) offers artifact checks
 
 ## Other practices and their limits
 
-**Typing.** [Document types](./document-types-should-be-verifiable.md) identify expected structure and operations. [Procedure signatures](./instructions-are-typed-callables.md) can state which document types an operation accepts and produces. Their benefit depends on checking those expectations. A required Evidence section makes evidence available for review; its presence does not establish that the evidence supports the claim.
+### Typing
 
-**Code extraction.** Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, this may be described as projecting a specification into a particular implementation. Generation does not establish that the implementation is a valid projection. It must be checked against the applicable requirement, including cases the observed runs did not cover.
+[Document types](./document-types-should-be-verifiable.md) identify expected structure and operations. [Procedure signatures](./instructions-are-typed-callables.md) can state which document types an operation accepts and produces. Their benefit depends on checking those expectations. A required Evidence section makes evidence available for review; its presence does not establish that the evidence supports the claim.
+
+### Code extraction
+
+Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, this replacement may be described as projecting a specification into a particular implementation. Generation does not establish that the implementation is a valid projection. The implementation must be checked against the applicable requirement, including cases the observed runs did not cover.
 
 [Progressive constraining](./progressive-constraining-commits-only-after-patterns-stabilize.md) uses recurring behavior to identify candidates for extraction. Recurrence alone establishes neither adequacy nor equivalence. Compare the candidate with the required behavior and assess its inspection and execution costs. The gain depends on the extracted rule and its scope, not on code being inherently correct.
 
-[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves an operation into symbolic form through a governed language or adoption of a consumer as its reference. Adopting a model package can codify an operation without exposing a readable rule. Code extraction is therefore one intervention, not the definition of every codification. Nor do instructions, skills, hooks and scripts form an automatic progression in enforcement: [activation and response must be assessed separately](./methodology-enforcement-is-constraining.md).
+[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves an operation into symbolic form through a governed language or adoption of a consumer as its reference. Adopting a model package can codify an operation without exposing a readable rule. Code extraction is therefore one intervention, not the definition of every codification.
 
-**Version control.** Version the prompt, assembled inputs, model and runtime binding, and the requirements or rubrics used to assess results where these affect the comparison. Version retained [knowledge artifacts](./definitions/knowledge-artifact.md) separately from their generator. Regeneration may reproduce an artifact when the full computation is fixed; when it differs, the recorded versions help identify what changed. A fixed version does not establish an unambiguous instruction or an adequate result.
+Instructions, skills, hooks and scripts do not form an automatic progression in enforcement. [Activation and response must be assessed separately](./methodology-enforcement-is-constraining.md).
 
-**Design for testability.** [Readable scripts and validators](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) can expose individual rules for review. [LLM–code boundaries](./llm-code-boundaries-are-natural-checkpoints.md) expose arguments and results that can be captured, checked and replayed under specified conditions. These mechanisms reduce particular inspection costs. They do not guarantee that the checks encode the right requirement or run at every relevant boundary.
+### Version control
+
+Where they affect the comparison, version the prompt, assembled inputs, model and runtime binding, and the requirements or rubrics used to assess results. Version retained [knowledge artifacts](./definitions/knowledge-artifact.md) separately from their generator. Regeneration may reproduce an artifact when the full computation is fixed. When regeneration produces a different artifact, the recorded versions help identify what changed. A fixed version does not establish an unambiguous instruction or an adequate result.
+
+### Design for testability
+
+[Readable scripts and validators](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) can expose individual rules for review. [LLM–code boundaries](./llm-code-boundaries-are-natural-checkpoints.md) expose arguments and results that can be captured, checked and replayed under specified conditions. These mechanisms reduce particular inspection costs. They do not guarantee that the checks encode the right requirement or run at every relevant boundary.
 
 ## Scope
 
