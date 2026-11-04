@@ -7,7 +7,9 @@ tags: [learning-theory, artifact-analysis]
 
 # Near-decomposability may make local inspection affordable
 
-A known near-decomposition may make local inspection affordable when it captures the dependencies relevant to the question. This note proposes that mechanism for the three sources of [opacity](./opacity-depends-on-the-inspection-question-and-budget.md): scale, the reference's form, and deliberate obfuscation. Whether it explains every affordable inspection route remains open. Description length is explored as a proxy for the amount to explain; finding and checking that explanation also cost work. The transfer from Simon's dynamic systems to dependency structure in artifacts is this note's conjecture, not Simon's claim.
+An artifact may be affordable to inspect when the question can be answered by reading one part and summaries of its interactions with the rest. A division whose parts interact weakly enough for this is a near-decomposition. This note conjectures that knowing such a division can make local inspection affordable. It leaves open whether other inspection methods can be affordable without one.
+
+The proposal applies to three sources of [opacity](./opacity-depends-on-the-inspection-question-and-budget.md), where answering the question exceeds the inspection budget: scale, the reference's form, and deliberate obfuscation. It transfers Herbert Simon's account of dynamic systems to dependencies within artifacts; that transfer is this note's conjecture, not Simon's claim. Description length is explored as a proxy for the amount to explain. Finding and checking the explanation also cost work.
 
 ## The condition
 
