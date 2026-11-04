@@ -1,151 +1,81 @@
 ---
-description: "Separates semantic underspecification from execution indeterminism: natural-language specs admit multiple valid projections, while constraining commits one projection to precise code."
+description: "Two accounts of prompting share a behavior-prediction problem but assign failures differently: English governs requirements, or an adopted model package defines the prompt language."
 type: types/note.md
-traits: [has-external-sources]
+brief: agentic-systems-interpret-underspecified-instructions.brief.md
+traits: [title-as-claim, has-comparison]
 tags: [learning-theory, computational-model, constraining, llm-reliability]
 ---
 
-# Agentic systems interpret underspecified instructions
+# Prompting changes failure diagnosis with the semantic reference
 
-*A theoretical framing for LLM-based agentic systems — enough conceptual machinery to clarify why certain design choices make sense.*
+Prompting can be understood as programming in a model-defined language, using English as an accessible approximation, or as asking a fallible interpreter to execute English instructions. The activity can be identical under both accounts. What changes is the reference that determines whether execution is wrong. Both accounts face the same problem of predicting the package's behavior; changing the reference changes the diagnosis without making that prediction cheaper.
 
-## Two Distinct Phenomena
+This distinction matters when writing and maintaining KB instructions. An unwanted response may reveal an unsettled requirement, a departure from a settled instruction, or a poor prediction of what a particular prompt will do. Those findings can coexist, and their repairs target different things.
 
-LLM-based systems differ from traditional programs in two ways that are often conflated but are conceptually distinct:
+## Programming in a model-defined prompt language
 
-**1. Semantic underspecification.** Natural language specifications don't have precise denotations in general; how far a given text falls short is a matter of degree. "Write a summary" admits a *space* of valid interpretations — different lengths, emphases, structures. This is a property of the specification language itself, not the engine.
+Consider a language whose expressions use English surface forms and whose semantics is supplied by a specified LLM package. Fix the model, inference and decoding rules, runtime assumptions, and how context and other inputs enter execution. A [formal account of the implemented computation](./implementations-do-not-establish-shared-semantics.md) can then describe its behavior. Sampling, if present, is part of that account; precise semantics does not require one identical output on every run.
 
-**2. Execution indeterminism.** The same prompt can produce different outputs because of stochastic decoding or numerical sensitivity to serving conditions. This is an execution property, not a necessary feature of LLM computation. Greedy decoding removes stochastic token selection but does not by itself fix batch-dependent numerics. [Thinking Machines reports identical completions after enabling batch-invariant kernels in a temperature-zero trial](../sources/defeating-nondeterminism-in-llm-inference.ingest.md). The [execution-conditions note](./execution-indeterminism-is-a-property-of-the-sampling-process.md) separates these mechanisms from changing inputs elsewhere in an agent system.
+Under this stipulated reference, writing a prompt is programming in the language the package defines. A system that adopts the package as the governing reference for an operation makes its prompts [symbolic under that consumption path](./definitions/representational-form.md): localized content whose consequences are fixed by the reference. Describing this possible language does not establish that every prompting system has adopted it. Nor does adoption make the package authoritative over English generally.
 
-The two can interact: execution variation can surface different interpretations across runs. But a fully deterministic model can still select one reading from several the specification permits. The first issue is semantics; the second is engineering.
+The package's semantics may be precise while too complex to inspect for a particular question. [Opacity](./opacity-depends-on-the-inspection-question-and-budget.md) means that establishing the behavior or the effect of a change exceeds an acceptable inspection cost. A short prompt can have that problem even when every word is familiar. Conversely, some properties of a prompt can be easy to understand, and conventional code can be opaque for a difficult system-wide question.
 
-### Indeterminism obscures the real difference
+## English makes a coarse behavioral account available
 
-Counterintuitively, indeterminism *hides* the deeper issue rather than revealing it. Because outputs vary across runs, people attribute the variation to randomness — "it's stochastic" — and reach for familiar tools: temperature tuning, retries, sampling strategies. The stochastic framing is comfortable precisely because it avoids confronting the real difference from traditional programming.
+“Translate into French” identifies a task and a place to change the target language. “Preserve personal names” identifies another responsibility. These are useful semantic parts, not merely separately editable strings. They suggest what a prompt edit will change without exposing the model computation that realizes its effects.
 
-If LLMs were deterministic, you'd get one stable output for a given prompt — but you'd have to ask: *why this interpretation and not any of the other equally valid ones?* That question forces you to see that the specification language doesn't have the same semantics as a formal programming language. The indeterminism lets you avoid that question by explaining everything as noise.
+[English can approximate a model-defined prompt language](./english-can-approximate-a-model-defined-prompt-language.md) develops this relationship. The English reading is a candidate coarse account of selected behavioral effects. Its fidelity must be assessed for the package, inputs and edits where it will be used. Model-specific conventions and empirical probes can improve that account.
 
-## Spec-to-Program Projection
+If the account captures the interactions relevant to a question, it supports local reasoning. Where it fails, the inspector needs a refinement or additional evidence. Useful understanding need not locate a separate block of parameters for each clause. [Near-decomposability](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md), where interactions across parts can be summarized within the question's tolerance, is a proposed explanation of when such local inspection stays affordable. The prompting account does not require that conjecture to succeed.
 
-A natural-language spec admits multiple valid programs. The LLM picks one:
+## Executing English through a fallible interpreter
 
-```
-Spec → choose interpretation → execute on input → output
-```
+A caller can instead treat the English instructions as the governing specification and ask the LLM to carry them out. Execution can then violate the instruction even when it follows the model package exactly. It can also select an unwanted outcome that the instruction permits.
 
-The spec-to-program mapping is one-to-many — a semantic property, not a probabilistic one. Even a deterministic LLM would face it: it would always pick the same interpretation, but the user couldn't predict which one from the spec alone.
+A deployed workflow needs to say who settles the applicable English reading. It may use the caller's clarification, a designated reviewer applying stated conventions, or an agreed contract with examples and precedence rules. These are practical adjudication arrangements. Naming a judge does not supply mechanically fixed semantics or make every verdict unambiguous. Where the applicable contract and adjudication process leave a consequential reading unsettled, diagnosis should retain that uncertainty rather than count the disputed outcome as a demonstrated interpreter failure.
 
-The compiler contrast is about which reference governs correctness, not which consumer can be formally described. A programming language's users hold implementations to a reference that fixes permitted behavior, including any declared variation or implementation-specific choices. A compiler that departs from that reference fails to conform. A written formal semantics is not required; a standard or implementation from which one could be derived can govern instead. This is the [symbolic-form criterion](./definitions/representational-form.md).
+The reference is the applicable instruction, including surrounding rules. [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md): “Return JSON only” and “On failure, raise an exception” leave a choice unless the contract or runtime settles whether exceptions use a separate channel or a JSON error record. Scope, precedence and exception handling belong in the interpretation. The issue applies to human readers as well as models.
 
-A fixed model package also has formally describable behavior, but English's users do not hold readers to that package. Under an ordinary natural-language consumption path, the prompt still admits a space of valid interpretations, and the LLM performs a *projection*: it collapses that space to one concrete program. A system can instead adopt a frozen package, decoding included, as the reference for an operation. That [codifies](./definitions/codification.md) the prompt under that path; it does not establish the package as the semantics of English or show that its outputs satisfy the original requirement.
+English consequently serves two roles. It states what the system should do, and it supplies an approximate account of what the model-defined program will do. A successful prediction can describe behavior the caller should reject. A clear requirement can be a poor prediction of what the model will produce.
 
-Tarski's truth results do not supply an impossibility theorem about natural-language execution. In his [1944 account](../sources/tarski-semantic-conception-of-truth.ingest.md), the liar contradiction depends on semantic closure, including asserting every instance of the truth schema for the language's own sentences (full disquotation), together with classical logic. His response keeps classical logic and defines truth in an essentially richer metalanguage. For everyday language, whose structure is not exactly specified, he says the consistency question has no exact meaning. In [Truth and Proof](../sources/tarski-truth-and-proof.ingest.md), he again separates object-language and metalanguage to block reconstruction of the liar. The [IEP survey](../sources/iep-liar-paradox.ingest.md) reports truth-value-gap approaches that relax classical assumptions and leaves natural-language closure unresolved. These are limits on truth definitions under stated assumptions, not a prohibition on formal descriptions of English or on executing instructions.
+## The same prediction problem, a different diagnosis
 
-The two phenomena layer on top of each other: the projection picks an interpretation (semantic underspecification), then execution of that interpretation may vary across runs (indeterminism). But the more interesting variation comes from the first source — qualitatively different strategies, not noisy executions of the same one.
+Suppose the applicable contract requires successful responses to contain JSON only. The caller and reviewer agree that no exception applies to the successful case under inspection. The package nevertheless produces a Markdown wrapper.
 
-### Example: "Refactor for Readability"
+| Account | Diagnosis, assuming execution followed the specified package |
+|---|---|
+| Model-defined prompt language | The program permits behavior that fails the requirement. The English-based prediction was inadequate if it predicted JSON-only output. |
+| English instruction execution | The interpreter violated the settled applicable instruction. |
 
-Ask an LLM coding assistant to refactor a function for readability. Valid interpretations include:
+For a fixed package, prompt, inputs, question and evidence, changing the account changes no behavior and supplies no new predictive information. Under the first account, the difficulty is inspecting an opaque language's behavior. Under the second, it includes predicting where the interpreter will depart from the intended instruction. These are two descriptions of the same behavior-prediction burden. The adjudication of an English requirement can add work, so this does not assert equality of every evaluation cost.
 
-- Extract helper functions
-- Rename variables for clarity
-- Restructure control flow (loops → comprehensions)
-- Add comments explaining intent
+An implementation can also fail to conform to the adopted package, for example by running a different version from the one specified. The model-defined account relocates the conformance reference; it does not make implementation failures impossible. A model upgrade changes that reference when adopted, while in the English account it changes the implementation assessed against the instruction. Neither account licenses assuming unchanged behavior.
 
-These aren't noisy variations of *one* strategy — they're different *interpretations* of "readability." The spec doesn't pick out a unique transformation; the space of valid approaches is genuinely plural.
+## What the distinction changes in practice
 
-This reframes prompt engineering: it's about narrowing the space of valid interpretations, not debugging a fixed program.
+The next action should follow the question that remains unresolved:
 
-## Narrowing the Interpretation Space
+- **Settle the requirement.** Clarify scope, precedence, examples or an adjudication route when materially different obligations remain possible. Repeated model agreement does not decide what the caller should require.
+- **Test the behavioral account.** Compare predicted effects with outputs across relevant inputs and edits. [Execution variation](./execution-indeterminism-is-a-property-of-the-sampling-process.md) determines when repetition or distributional checks are needed. Deterministic execution still needs coverage of different cases.
+- **Check conformance against the named reference.** A test against the package's behavior and a review against the English instruction answer different questions. [Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) is a diagnosis against a sufficiently settled instruction, not a synonym for every unwanted output.
+- **Expose or enforce the needed operation.** A readable procedure or a validator can make a particular rule easier to inspect or enforce. The gain depends on the implemented rule and its activation, and does not establish that it captures the requirement adequately. [LLM–code boundaries](./llm-code-boundaries-are-natural-checkpoints.md) provide explicit values at which to check arguments and results.
 
-The usual tools are system prompts, few-shot examples, tool definitions, output schemas, conversation history, and temperature. In practice it's hard to determine which phenomenon a given mechanism addresses — a more detailed system prompt might narrow the interpretation space, or it might just make one interpretation more likely without eliminating the others. The line between "disambiguating the spec" and "biasing the engine" is rarely clean.
+[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves a rule into symbolic form, either by rewriting it in a governed language or by adopting a consumer as its reference. Adoption can codify an operation without exposing a readable rule or reducing inference cost. Extracting a repeated operation into code is a different intervention with potentially different inspection and execution costs. The [code-extraction trade-off](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) should be assessed against the required scope and available checks.
 
-Temperature is often cited as purely an indeterminism control, but it's subtler than that. Lowering temperature concentrates the sampling distribution — which can change *which interpretation* you see, not just how noisily you see it. Even with fully deterministic inference, the LLM still picks one interpretation from the space the spec admits; it repeats that interpretation without establishing that it is the one the user wanted. This is why repeatability does not solve the "wrong interpretation" problem. Temperature zero alone is a weaker intervention: the numerical implementation may still introduce variation.
+Version the prompt, its execution binding and the requirement used to assess it. Otherwise a changed outcome can hide a change in the program, reference or judging standard. Neither account treats generated code as necessarily a valid interpretation of its source instruction, or removes the need to test adequacy after an operation is made deterministic.
 
-None of these tools eliminates ambiguity in general, but how much remains is measurable. The space is measured relative to a reference set of interpreters and a rule for when two outputs count as the same answer ([epistemic stance](../reference/epistemic-stance.md), point 3): a text is near-determinate when the reference converges on one reading, underspecified when stable competing readings survive. [MAKER](../sources/meyerson-maker-million-step-llm-zero-errors.ingest.md) shows the near-determinate end: over about a million Towers of Hanoi steps, voting across independent samples converged on the correct move every time. Most specs sit far from that end even under heavy constraint. So real systems don't just manage underspecification *within* LLM components — they also manage the transitions between LLM and code.
+## Scope
 
-## Boundaries
+This is a distinction between governing references, not a claim about which account most users hold, a universal ranking of prompts and conventional code by inspection cost, or a literal internal interpret-then-execute pipeline. It needs no impossibility claim about formalizing English. Actual programming-language references can also have defects and unsettled cases.
 
-Agentic systems interleave LLM components and code. Explicit values passed between them provide **checkpoints** for inspecting arguments and results. A deterministic code segment can replay a captured argument when the relevant state is fixed, but an unintended or out-of-spec argument remains wrong after crossing the boundary. See [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) for debugging, testing, and refactoring uses and their limits.
-
-Boundaries aren't fixed. As systems evolve, logic moves across them.
-
-## Constraining and Relaxing
-
-Components exist on a spectrum from underspecified semantics (natural language, LLM-interpreted) to precise semantics (formal language, deterministic code). Logic can move in both directions.
-
-**Constraining**: Replace an LLM component with a deterministic one. This does two things simultaneously: it **resolves semantic underspecification** by choosing one interpretation from the space the spec admits and committing to it in a language with precise semantics, and it **removes execution indeterminism** by eliminating sampling noise. Both matter in practice, but the semantic commitment is the deeper operation.
-
-**Relaxing**: Replace a deterministic component with an LLM-interpreted one. Describe new functionality in natural language; the LLM figures out how to do it.
-
-```
-Underspecified (flexible, handles ambiguity)  ——constrain——>  Precise (reliable, testable, cheap)
-Underspecified (flexible, handles ambiguity)  <——relax———  Precise (reliable, testable, cheap)
-```
-
-### Why constrain?
-
-Constraining a pattern to code has four benefits — three quantitative, one qualitative:
-
-**Cost.** LLM API calls are priced per token. A simple operation like sanitising a filename might cost fractions of a cent, but at scale those fractions compound. The same operation in code costs effectively nothing.
-
-**Latency.** Every LLM call involves network round-trip plus inference time. Even fast models add hundreds of milliseconds. Code executes in microseconds.
-
-**Reliability.** Deterministic code returns the same output for the same input, every time. No hallucination, no refusal, no silent behavior changes when the underlying model is updated.
-
-**Enforcement.** Some properties — scope rules, type rules, contract checks, invariants — only exist if a deterministic interpreter checks them. Natural-language instructions can describe them but can't enforce them; LLM adherence is always probabilistic. Reliability is about output consistency on typical inputs; enforcement is the binary fact that a constraint holds for *all* inputs. For properties that require enforcement, the constraining move is not optional — the alternative is to go without the guarantee. Scope is one such property ([LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md)); bookkeeping is another ([scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
-
-The tradeoff: code requires you to commit to one precise interpretation, while LLMs let you specify *intent* in natural language and defer the choice of interpretation to runtime. That's why constraining should be progressive — wait until patterns emerge before committing to a specific semantics.
-
-LLM code generation is itself a constraining move, but only a one-shot form — freezing a single projection of the spec into code. Progressively extracting only the patterns that stabilize across many runs is a different mode with different tradeoffs; see [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md). For the wider gradient of constraining techniques — from prompt restructuring through evals to deterministic modules — see [constraining](./definitions/constraining.md); [codification](./definitions/codification.md) names the crossing into symbolic form. Either way, **version both spec and artifact** — regeneration is a new projection, not a deterministic rebuild.
-
-### Relaxing as extension
-
-The common path for relaxing is **extension**: you need new capability, describe it in natural language, and it becomes callable. The rarer path is **replacement**: rigid code is drowning in edge cases, so you swap it for an LLM call that handles linguistic variation.
-
-Real systems need both directions. A component might start as an LLM call (quick to add), constrain to code as patterns emerge (reliable and fast), then grow new capabilities via relaxing. The system breathes.
-
-## Testing and Debugging
-
-The two phenomena create different challenges for testing and debugging.
-
-**Testing**: Execution indeterminism means you can't rely on assertion equality for LLM outputs — you need to run the same input multiple times and check that outputs fall within acceptable bounds. In practice this looks more like sampling and checking invariants than formal hypothesis testing, but the principle holds: you're characterising a distribution, not verifying a point. Semantic underspecification adds a second obligation: verify that the *space* of valid interpretations is acceptable, not just that individual outputs look right. Every piece you constrain escapes both obligations and becomes traditionally testable — because you've committed to one interpretation in a precise language.
-
-**Debugging**: narrowing the specification can exclude unwanted interpretations, while retries expose variation across executions. Failure frequency alone does not distinguish these from a model violating an explicit instruction. [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) turns those distinctions into checks for choosing a repair.
-
-## Design Implications
-
-Treating agentic systems as interpreters of underspecified instructions suggests:
-
-1. **Be explicit about semantic boundaries** — know where you're crossing between precise and underspecified semantics
-2. **Enable bidirectional refactoring** — design interfaces so components can move across the boundary without rewriting call sites
-3. **Narrow interpretations where reliability matters** — use schemas, constraints, and deterministic code on critical paths
-4. **Preserve ambiguity where it helps** — don't over-constrain creative or genuinely open-ended tasks
-5. **Version both spec and artifact** — regeneration is a new projection, not a deterministic rebuild
-6. **Design for unpredictable interpretation** — the LLM may resolve ambiguity differently than you expect
-7. **Constrain progressively, relax tactically** — start with underspecified for flexibility, commit to precise semantics as patterns emerge
+The examples are conceptual cases. The reliability of an English-based abstraction, the usefulness of a particular near-decomposition, and the prevalence of failures caused by missing composition rules require empirical assessment. The proposed unification of addressability and near-decomposability remains open; this argument needs only meaningful parts and evidence about their interactions.
 
 ---
 
 Relevant Notes:
 
-- [learning-theory](../tags/learning-theory-README.md) — parent index: learning mechanisms, oracle theory, memory architecture
-- [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — splits from this note: the boundary-as-checkpoint argument expanded with debugging, testing, and refactoring applications
-- [progressive-constraining-commits-only-after-patterns-stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — splits from this note: the one-shot vs progressive distinction for LLM code generation as a constraining mode
-- [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: checks specification adequacy and model conformance separately from failure frequency
-- [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
-- [codification](./definitions/codification.md) — the crossing from natural-language into symbolic form within the wider constraining gradient
-- [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — applies: typing, testing, and version control transfer to prompting under this framework
-- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — applies: keeping a chosen output fixes result identity while semantic ambiguity can survive; downstream constraint requires a separate adoption or authority boundary
-- [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — applies: type assignment resolves semantic underspecification in both document and type definition
-- [unified-calling-conventions-enable-bidirectional-refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — enables: llm-do implements the movable semantic boundary through unified calling conventions
-- [writing styles are strategies for managing underspecification](./writing-styles-are-strategies-for-managing-underspecification.md) — applies: the five empirically observed context-file writing styles map to different strategies for narrowing the interpretation space
-- [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: underspecification means extra context distorts interpretation, not just wastes space — making context scarcity qualitatively worse than traditional resource constraints
-- [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — evidenced-by: contracts resolve semantic underspecification with formal YAML DSL; probabilistic compliance model (p,δ,k) quantifies how tightly a contract narrows the interpretation space
-- [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — bounded by: the two-phenomena model assumes a conforming interpreter; real LLMs add interpreter failure, a third deviation source with different remedies
-- [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — applies: scoping is one interpreter-enforced property that has to be imposed via the constraining move; sub-agents are that move for scope
-- [scheduler-llm-separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — applies: bookkeeping is another interpreter-enforced property; symbolic substrates enforce it for free while natural-language accumulates correction cost
-
-Sources:
-
-- Ma et al. (2026). [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — strongest empirical evidence for the two-phenomena separation: emotion/personality prompt variations change code output while holding task spec constant, isolating underspecification (which interpretation?) from indeterminism (which run?)
+- [Symbolic form holds consumers to a semantic reference](./symbolic-form-holds-consumers-to-a-semantic-reference.md) — grounds: adoption fixes the governing semantics separately from adequacy and inspection cost
+- [English can approximate a model-defined prompt language](./english-can-approximate-a-model-defined-prompt-language.md) — mechanism: a coarse behavioral account supports local reasoning where its predictions hold
+- [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md) — grounds: the English account must assess the whole applicable instruction set
+- [Traditional software can bracket executor conformance; LLM systems cannot assume it](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — extends: develops the conformance question under ordinary instruction interpretation
+- [Opacity depends on the inspection question and budget](./opacity-depends-on-the-inspection-question-and-budget.md) — defined-in: the inspection obstacle shared by the two accounts for a fixed prediction question

@@ -108,6 +108,6 @@ Relevant Notes:
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](./codification.md) — grounds: the crossing that fixes a part's consequences against a reference, separately from whether those consequences are affordable to inspect
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway
-- [Opacity is the lack of a known near-decomposition for the question](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: proposes when weak interaction can make inspection of a repair's effects local
+- [Near-decomposability may make local inspection affordable](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: proposes when weak interaction can make inspection of a repair's effects local
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — evidenced-by: the classical precedent
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — evidenced-by: the classical precedent and its search limits

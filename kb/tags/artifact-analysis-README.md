@@ -6,7 +6,7 @@ complete: true
 
 # artifact-analysis
 
-[Artifact analysis](../theory/axes-of-artifact-analysis.md) classifies retained artifacts by storage substrate, representational form, lineage, and behavioral authority. Assign this tag to work that defines, extends, tests, or draws design consequences from the scheme or an individual field. An application of one field qualifies when the distinction changes a design or maintenance conclusion; it need not address all four. Merely mentioning storage or artifacts, or filling in the fields without drawing a consequence, is insufficient. [Document-system](./document-system-README.md) covers writing and checking documents; this tag covers retained artifacts across forms. A child of [learning-theory](./learning-theory-README.md).
+[Artifact analysis](../theory/axes-of-artifact-analysis.md) classifies retained artifacts by substrate, form, lineage and authority. Assign this tag to definitions, tests or design consequences of the scheme or a field. A field distinction must change a design or maintenance conclusion; merely filling in a record is insufficient. [Document-system](./document-system-README.md) covers writing and checking documents; this tag covers retained artifacts. A child of [learning-theory](./learning-theory-README.md).
 
 ## The scheme
 
@@ -17,6 +17,8 @@ complete: true
 - [Opacity](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — question-relative inspection cost; [a proposed condition](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) behind its sources
 - [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — modeling a consumer does not establish conformance
 - [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — adoption fixes permitted behavior, not adequacy
+
+- [English can approximate a model-defined prompt language](../theory/english-can-approximate-a-model-defined-prompt-language.md) — clause meanings support inspection without parameter blocks
 
 ## Definitions
 

@@ -62,6 +62,14 @@ differences that require separate concepts. Compare the same semantic level,
 consumer, question and tolerance; editable text and isolated parameter blocks
 are not interchangeable tests.
 
+The [JSON/exception case](../theory/clear-instructions-can-compose-into-an-unsettled-contract.md)
+is a constructed test: the clauses are separately editable, but their combined
+obligations are unsettled until scope and exception handling are specified.
+It shows that separate editability does not establish a usable semantic
+decomposition. It does not show that no decomposition is possible, or that
+behavior under an adopted package has strong cross-part interactions; those
+are further questions.
+
 **Decision for new text.** Keep the current terms and definitions. Do not
 infer independent effects from separate editability, or absence of semantic
 addressability from absence of separately located parameter blocks. Treat the

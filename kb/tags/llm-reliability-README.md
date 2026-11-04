@@ -1,18 +1,19 @@
 ---
-description: Why LLM output deviates from intent — underspecification, interpreter failure, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
+description: "Diagnosing and correcting LLM output deviations through specification, conformance and execution checks, with the governing reference made explicit."
 type: types/tag-readme.md
 ---
 
 # LLM reliability
 
-LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each diagnosed by a different question and each repaired at a different primary surface. Assign this tag when an artifact diagnoses those deviations or explains, tests, or improves the machinery that prevents, detects, or corrects them, including oracles, voting, verification, and architectural separation. Merely evaluating an LLM is insufficient: [evaluation](./evaluation-README.md) covers what a check or experiment establishes; this tag requires a substantive connection to output deviation or correction.
+How LLM outputs depart from intended requirements, and how to prevent, detect or correct those departures. Assign this tag to substantive accounts of specification gaps, interpreter conformance, execution variation or their remedies, including oracles and architectural separation. [Evaluation](./evaluation-README.md) covers what a check establishes; this tag requires a connection to deviation or correction. Diagnosis must name the governing reference.
 
 ## The Taxonomy
 
 - [LLM output deviation requires three-way diagnosis](../theory/llm-output-deviation-requires-three-way-diagnosis.md) — the synthesis: the three diagnostic questions, why prompt narrowing, error correction, and sampling control target different relations and so cannot completely substitute for one another, and how to tell the three apart empirically
-- [agentic-systems-interpret-underspecified-instructions](../theory/agentic-systems-interpret-underspecified-instructions.md) — source 1: the spec admits multiple valid interpretations; a property of the specification language that even a perfect interpreter faces
+- [Prompting changes failure diagnosis with the semantic reference](../theory/agentic-systems-interpret-underspecified-instructions.md) — distinguishes package conformance, the adjudicated English requirement and behavioral prediction
+- [Clear instructions can compose into an unsettled contract](../theory/clear-instructions-can-compose-into-an-unsettled-contract.md) — the JSON/exception case exposes uncertainty in which obligations apply before diagnosing interpreter failure
 - [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](../theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
-- [traditional-software-can-bracket-executor-conformance-llm-systems](../theory/traditional-software-can-bracket-executor-conformance-llm-systems.md) — the foundation under the taxonomy: classical stacks can assume executor conformance and unique meaning, LLM systems can assume neither, so error analysis needs three questions where programming needed one
+- [traditional-software-can-bracket-executor-conformance-llm-systems](../theory/traditional-software-can-bracket-executor-conformance-llm-systems.md) — scopes the executor-conformance comparison to ordinary English instruction execution
 - [execution-indeterminism-is-a-property-of-the-sampling-process](../theory/execution-indeterminism-is-a-property-of-the-sampling-process.md) — source 3: the same prompt gives different outputs across runs; a property of the sampling process, theoretically eliminable
 - [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](../theory/llm-debugging-starts-with-retry-versus-rewrite-triage.md) — three checks for choosing a debugging move; failure frequency alone cannot identify the defect
 

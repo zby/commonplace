@@ -5,9 +5,9 @@ traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, artifact-analysis]
 ---
 
-# Opacity is the lack of a known near-decomposition for the question
+# Near-decomposability may make local inspection affordable
 
-This note conjectures that the three sources of [opacity](./opacity-depends-on-the-inspection-question-and-budget.md) share an obstacle: no known decomposition puts the question's units inside an affordable block, with the rest of the artifact entering through a few aggregates. The sources are the artifact's scale, the reference's form, and deliberate obfuscation, as named in [representational form](./definitions/representational-form.md). The proposed mechanism concerns affordable local reading. Its extension to other inspection methods remains open. Description length over a chosen vocabulary is explored as a proxy for the amount to explain; finding and checking that explanation also cost work. The transfer from Simon's dynamic systems to dependency structure in artifacts is this note's conjecture, not Simon's claim.
+A known near-decomposition may make local inspection affordable when it captures the dependencies relevant to the question. This note proposes that mechanism for the three sources of [opacity](./opacity-depends-on-the-inspection-question-and-budget.md): scale, the reference's form, and deliberate obfuscation. Whether it explains every affordable inspection route remains open. Description length is explored as a proxy for the amount to explain; finding and checking that explanation also cost work. The transfer from Simon's dynamic systems to dependency structure in artifacts is this note's conjecture, not Simon's claim.
 
 ## The condition
 
@@ -17,29 +17,11 @@ The proposed transfer reads interaction as dependency between the units of an ar
 
 In this transfer, the horizon and tolerance determine which interactions may be ignored or summarized. A decomposition useful for one question need not support another. The analogy does not establish that every artifact has a short horizon on which questions localize, or that every long-horizon question reaches every block.
 
-## Prompts have coarse and detailed semantic descriptions
-
-A prompt can expose meaningful parts while its precise execution semantics remains expensive to inspect. Consider a system that adopts a fixed LLM package as the reference for an operation, including inference, decoding and the relevant execution conditions. As the [semantic-reference account](./symbolic-form-holds-consumers-to-a-semantic-reference.md) explains, the package defines what the prompt permits under that path. The resulting semantics can be formal and precise, including specified variation, while its computational description is very complex.
-
-Ordinary English supplies a coarser description. In the prompt below, each clause expresses an identifiable part of the task:
-
-> Translate the supplied text into French. Preserve personal names. Return only the translation.
-
-The first clause selects a target language, the second governs names, and the third restricts accompanying material. This reading lets an author identify where to change the language or allow commentary. It supplies a candidate abstraction of the model-defined semantics: a compact account of selected effects, leaving most execution detail out. Adopting the package does not establish that this abstraction faithfully describes its behavior, and does not make the package authoritative over English generally.
-
-This is a conceptual case for near-decomposition. If the clauses' effects interact weakly enough for the question, the inspector can reason about an edit through the changed clause's coarse meaning and summaries of the other clauses. Changing French to German would then change the translation language while preserving the constraints on names and commentary. If name handling interacts with grammatical agreement, those dependencies must enter the account. The decomposition is useful only to the extent that the omitted interactions stay within the question's tolerance.
-
-The relevant blocks here are semantic responsibilities in the prompt, not necessarily disjoint regions of model weights. A useful coarse description need not expose the computation that realizes it. Conversely, identifying a clause's English meaning does not establish that its behavioral effects are independent. The correspondence between the coarse description and the adopted package must be assessed for the inputs and edits where it will be used.
-
-Opacity arises for a question when the available coarse description is insufficient and establishing the required detail exceeds the inspection budget. The inspector might refine that description, obtain behavioral evidence, or inspect more of the implementation; no route requires recovering every computational detail. Thus a prompt can be understandable for changing the target language yet opaque for predicting exactly which facts a shortened translation will omit. Whether either judgment holds for a particular model requires evidence.
-
-An empirical test would fix the package and input set, vary the three clauses separately and together, and compare predicted changes with changes in target language, name handling and commentary. The coarse account must specify those predictions and tolerated interactions before observing the results. Failures would delimit its useful scope. This note reports no such trial; the example explains how localized prompt semantics can coexist with a complex reference, rather than confirming that a model follows this decomposition.
-
 ## A proposed description-length proxy
 
 The reading of inspection cost as a description length follows [Grünwald's](../sources/grunwald-mdl-tutorial.ingest.md) crude two-part form of the minimum description length principle, verbatim: "The best point hypothesis H ∈ H(1) ∪ H(2) ∪ . . . to explain the data D is the one which minimizes the sum L(H) + L(D|H), where • L(H) is the length, in bits, of the description of the hypothesis; and • L(D|H) is the length, in bits, of the description of the data when encoded with the help of the hypothesis."
 
-Mapped to inspection, the hypothesis is the block and its rules, and the residual is what the aggregates and the exceptions add. This mapping proposes a description-length proxy; it does not establish that description length measures inspection effort. The following qualifications constrain the proposal.
+Mapped to inspection, the hypothesis is the block and its rules, and the residual is what the aggregates and the exceptions add. In the [prompt case](./english-can-approximate-a-model-defined-prompt-language.md), the hypothesis is the coarse English account and the residual describes observed behavior left unexplained by it. The proposed empirical test probes that residual; a description-length score additionally requires a specified encoding. This mapping proposes a description-length proxy; it does not establish that description length measures inspection effort. The following qualifications constrain the proposal.
 
 The measure is relative to a description method. [Grünwald](../sources/grunwald-mdl-tutorial.ingest.md) requires one that is, verbatim, "restrictive enough" that the shortest description is computable, chosen by prior knowledge of the domain. For inspection the description method is the vocabulary of units the consumption path exposes, so the same artifact has different costs under different paths, which is why opacity is path-relative.
 
@@ -52,7 +34,7 @@ The hypothesis side can be gamed. [Grünwald](../sources/grunwald-mdl-tutorial.i
 The conjecture reads the three sources of opacity as different obstacles to local decomposition:
 
 - **Scale.** A decomposition is known, and the block containing the question is too large to read, or a hub couples it to everything. Each unit is readable; the question is not affordable.
-- **The reference's form.** The units exposed by the reference may not align with the question. Kernels and tensor operands expose runtime operations without supplying a readable instruction-level rule. A coarse semantic description of the prompt may still answer the question, as the conceptual case above explains. Opacity remains where that description is insufficient and the relevant detail cannot be established affordably; the absence of a separate parameter block alone does not establish it.
+- **The reference's form.** The units exposed by the reference may not align with the question. Kernels and tensor operands expose runtime operations without supplying a readable instruction-level rule. A coarse semantic description of the prompt may still answer the question, as [the English approximation account](./english-can-approximate-a-model-defined-prompt-language.md) explains. Opacity remains where that description is insufficient and the relevant detail cannot be established affordably; the absence of a separate parameter block alone does not establish it.
 - **Deliberate obfuscation.** A transformation may hide or disrupt a decomposition while preserving the function. Whether this explains the inspection obstacle must be established for the transformation and question. The cryptographic results summarized in the opacity note do not by themselves establish this structural account.
 
 Known but expensive, unknown, and disrupted would then be three states of one obstacle. Opacity's definition does not depend on this unification succeeding.
@@ -65,13 +47,13 @@ Under the path that addresses features, the activations are localized for the be
 
 [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) is the same move on weights: a factual association is located, edited, and the edit's effect checked.
 
-Both cases give content-addressability without scope-addressability, and Simon's condition says what that means structurally. The found block is strongly coupled inside: clamping one feature moves everything the feature covers. Its links to the rest are not weak: the clamp leaks into the model's self-identification, and [the authors](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) report, verbatim, that useful steering "typically requires clamping feature activations to values outside their observed range", which they attribute to perturbing one feature when "several correlated features with related meanings" are co-active. A block whose cross-block interactions are not negligible is not yet a nearly decomposable unit, so the edit cannot be confined to the behavior it targets.
+Both cases offer handles on content without establishing independently controllable scope. The proposed transfer of Simon's condition asks whether the relevant interactions are weak enough for the intended intervention. The found block is strongly coupled inside: clamping one feature moves everything the feature covers. Its links to the rest are not weak: the clamp leaks into the model's self-identification, and [the authors](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) report, verbatim, that useful steering "typically requires clamping feature activations to values outside their observed range", which they attribute to perturbing one feature when "several correlated features with related meanings" are co-active. These observations do not establish that cross-block effects stay within a chosen tolerance. Near-decomposability allows weak nonzero interactions; whether a particular intervention is contained needs its own check.
 
 ## Consequence for addressability
 
 The proposed transfer to repair concerns how much must be checked after an edit. If a decomposition captures the dependencies relevant to the test, weak interactions across its blocks may let the inspector assess the edit within one block and its interfaces. Establishing that the decomposition captures those dependencies is part of the work.
 
-That is separate from locating a repair candidate in an [addressable theory](./definitions/addressable-theory.md), whose parts can be inspected and revised individually. Consider a shared conversion routine that adds one where its stated rule requires adding two. A trace through that operation can identify a candidate fault even when many callers depend on the routine. Repairing it still requires checking the affected callers. Strong coupling can broaden the checking burden without preventing fault localization.
+That is separate from locating a repair candidate in an [addressable theory](./definitions/addressable-theory.md), whose parts can be inspected and revised individually. Consider a shared conversion routine that adds one where its stated rule requires adding two. A trace through that operation can identify a candidate fault even when many callers depend on the routine. Repairing it still requires checking the affected callers. Many callers establish a broad dependency footprint, not by themselves strong interaction between blocks. For a direct coupled case, consider the explicitly stated equations `x = y + 1` and `y = 2x`: each equation is separately editable although changing either can change both variables. Separate editability does not require independent consequences.
 
 ## Scope
 
