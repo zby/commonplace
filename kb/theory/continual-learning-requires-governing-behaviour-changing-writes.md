@@ -24,7 +24,7 @@ Relevant Notes:
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: why symbolic writes are cheaply validated and parametric ones are not — the validation requirement
 - [First-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the reach axis — why a governing theory must be explicit to generalise beyond its source cases
 - [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the addressability axis — the form-level trade space this note defers to
-- [Verifiability gradient](./verifiability-gradient.md) — grounds: the verifiability axis across forms, from loose natural language to deterministic code
+- [Verifiability gradient](./verifiability-gradient.md) — grounds: task-relative checks, retry costs and limits of verification across forms
 - [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — grounds: the sample-efficiency axis foregrounded by the sparse deployment loop
 - [Representational form](./definitions/representational-form.md) — defines: the three forms this note ranges over and how form sets the default review method
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: owns the general cross-form trade space and how the parametric, natural-language, and symbolic loops relate

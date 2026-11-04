@@ -23,6 +23,6 @@ Relevant Notes:
 
 - [context engineering](./definitions/context-engineering.md) — foundation: the machinery (routing, loading, scoping, maintenance) that in-context learning presupposes
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — foundation: the framework that context engineering improvement belongs to; the artifacts it produces are the substrate of deployment-time adaptation
-- [constraining during deployment is continuous learning](./constraining-during-deployment-can-produce-learning-outside-weights.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
+- [Constraining during deployment can produce learning outside weights](./constraining-during-deployment-can-produce-learning-outside-weights.md) — extends: the system-layer adaptation that feeds context engineering meets Simon's definition of learning
 - [LLM learning phases fall between human learning modes](./llm-learning-phases-fall-between-human-learning-modes.md) — extends: in-context and deployment-time adaptation remain distinct even if weight updates are eliminated; this note adds a dependency arrow between the two
 - [Dario Amodei ingest](https://www.dwarkesh.com/p/dario-amodei-2) — responds to: Amodei's claim that continual learning may be unnecessary

@@ -31,7 +31,7 @@ These child tags route major parts of the area. A few fundamentals carry only th
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition
 - [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — reference choice separates conformance, requirement adequacy and the inspection burden
-- [The verifiability gradient](../theory/verifiability-gradient.md) — the ladder deploy-time artifacts sit on
+- [The verifiability gradient](../theory/verifiability-gradient.md) — compares task-specific checks, reset conditions and retry costs
 - [Constraining and extraction can trade generality for reliability, speed, or cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
 - [Recognition, not linking, is the hard problem in knowledge systems](../theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — where connecting knowledge actually costs, and how naming amortizes it
 - [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — agreement on tests supports scoped conformance claims, not the inference from formalized consumers to symbolic inputs

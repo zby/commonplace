@@ -9,7 +9,7 @@ tags: [document-system, constraining, learning-theory]
 
 Skills are programs written in natural language and executed by an LLM. Their dependencies — file reads, searches, writes — flow through tool calls. This makes the tool layer the natural seam for dependency injection: replace real tools with mocks that return predetermined data, and you can test the instructions in isolation.
 
-This is the instruction-testing half of the [doubled testing surface](./programming-practices-for-prompts-need-question-specific-evidence.md). The existing [text testing pyramid](./automated-tests-for-text.md) covers artifact testing (is this note good?). Tool mocking covers instruction testing (does this skill reliably produce correct behavior?). Both are needed because [underspecification and indeterminism](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) create failures at both levels — a bad output can come from a good instruction hitting indeterminism, or from a flawed instruction being faithfully executed.
+This is the instruction-testing half of the [doubled testing surface](./programming-practices-for-prompts-need-question-specific-evidence.md). The existing [text testing pyramid](./automated-tests-for-text.md) covers artifact testing (is this note good?). Tool mocking covers instruction testing (does this skill reliably produce correct behavior?). These are separate testing targets even with a deterministic generator: one acceptable artifact does not establish reliable generation across inputs. The [governing reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) determines which departures count as conformance failures.
 
 ## Architecture
 
@@ -43,7 +43,7 @@ The behavioral assertions are cheap and deterministic — ideal for regression t
 
 A test suite for instructions is a [constraining](./definitions/constraining.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what constraining is designed to detect and prevent.
 
-On the [methodology enforcement gradient](./methodology-enforcement-is-constraining.md), instruction tests sit between skills and hooks: they don't block operations in real-time (like hooks do), but they verify skill behavior more rigorously than manual invocation. They're the equivalent of a CI test suite for the instruction layer.
+Instruction tests can run manually or as required gates. [Activation and response](./methodology-enforcement-is-constraining.md) depend on that configuration: a test blocks promotion only when the workflow requires a passing result.
 
 The cost is real — each test execution is an API call — but the alternative is discovering regressions during production use, which is more expensive in both tokens and trust.
 
@@ -58,9 +58,9 @@ The cost is real — each test execution is an API call — but the alternative 
 
 Relevant Notes:
 
-- [programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
+- [Programming practices for prompts need evidence matched to the question](./programming-practices-for-prompts-need-question-specific-evidence.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
 - [automated tests for text](./automated-tests-for-text.md) — complements: covers artifact testing (the other half of the doubled surface); this note covers instruction testing
 - [constraining](./definitions/constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: instruction tests sit on the enforcement gradient between skills (manual invocation) and hooks (automated blocking)
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: behavioral assertions (tool call patterns) are hard-oracle; output assertions (connection quality) are soft-oracle, mirroring the test pyramid split
-- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: an instruction permits several readings and execution varies, which is why both instruction testing and artifact testing are needed
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: conformance judgments require a named reference; generator and artifact checks remain distinct

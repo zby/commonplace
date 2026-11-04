@@ -17,7 +17,7 @@ type: types/tag-readme.md
 ## Instances and techniques
 
 - [Selecting an LLM output fixes a result, not its interpretation](../theory/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — boundary case: selection fixes result identity; it counts as constraining only when adoption also narrows which interpretations remain operative
-- [constraining during deployment is continuous learning](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — versioned constraining beats weight updates on inspectability and rollback
+- [Constraining during deployment can produce learning outside weights](../theory/constraining-during-deployment-can-produce-learning-outside-weights.md) — versioned constraining beats weight updates on inspectability and rollback
 - [spec mining as codification](../theory/spec-mining-as-codification.md) — observe behavior, extract deterministic rules, grow the calculator surface monotonically
 - [error messages that teach are a constraining technique](../theory/error-messages-that-teach-are-a-constraining-technique.md) — in agent systems the error channel is an instruction channel
 - [methodology enforcement is constraining](../theory/methodology-enforcement-is-constraining.md) — review gates and validation as constraining applied to the KB's own methodology

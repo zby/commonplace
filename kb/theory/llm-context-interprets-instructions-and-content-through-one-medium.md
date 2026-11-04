@@ -43,6 +43,6 @@ Relevant Notes:
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — exemplifies: one attention process provides no binding boundary against scope contamination
 - [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: learned interpretation makes both natural-language extension and role confusion possible
 - [Unified calling conventions enable bidirectional refactoring](./unified-calling-conventions-enable-bidirectional-refactoring.md) — applies: one interface can resolve names to neural or symbolic implementations
-- [Programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) — context: typing, testing, and compilation compensate for structure the shared natural-language medium lacks
+- [Programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) — context: typing, testing and code extraction answer distinct questions about requirements and execution
 - [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: moving from instruction to script imposes interpreter-enforced boundaries
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — intensified by: instructions and content compete within the same bounded context

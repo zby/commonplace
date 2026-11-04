@@ -67,7 +67,7 @@ A note can satisfy multiple traits without conflict. What the old system called 
 
 ## The verifiability gradient
 
-[`kb/types/note.md`](../types/note.md) is the base structured type that makes few body-shape claims — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): just as logic starts underspecified and constrains toward precision, documents can start as frontmatter-free text and gain checkable structure.
+[`kb/types/note.md`](../types/note.md) is the base structured type that makes few body-shape claims — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): adding required fields supplies structural checks, while the adequacy of their contents needs separate assessment.
 
 1. New content enters as implicit `text` or as `type: types/note.md` — soft, with no required body sections
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
@@ -104,4 +104,4 @@ Relevant Notes:
 - [automated-tests-for-text](./automated-tests-for-text.md) — enables enforcement: the test pyramid provides the "compiler" for type contracts (deterministic checks for structure, LLM rubrics for judgment-dependent traits)
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: type assignment selects one classification for operative use without proving that it is the only valid reading, so the chosen classification still needs verification
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — types and traits are the navigation hints this note describes; they tell agents what a document offers before opening it
-- [the verifiability gradient](./verifiability-gradient.md) — the ladder that the type maturation path mirrors: `note` is untyped, traits accumulate, base types promote
+- [the verifiability gradient](./verifiability-gradient.md) — grounds: adding structure changes what can be checked; it does not automatically establish content quality

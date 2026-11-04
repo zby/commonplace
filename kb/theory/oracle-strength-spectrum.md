@@ -17,7 +17,7 @@ The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requ
 - **Delayed oracle:** you only know later. Did the user churn? Did the bug surface? Did the decision pay off?
 - **No oracle:** vibes and anecdotes.
 
-The bitter lesson is strongest at the hard-oracle end, where there's a clear training signal for scale to optimise against, and weakest at the no-oracle end, where there's nothing. Note what that does and does not consume: at the hard-oracle end scale replaces the *solution* while the oracle itself persists, because a test that fully specifies the problem has nothing left to be wrong about. The two have opposite fates at the same point on the spectrum. This maps to the Karpathy verifiability framing that [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — three properties that strengthen as oracle strength increases.
+The bitter lesson is strongest at the hard-oracle end, where there's a clear training signal for scale to optimise against, and weakest at the no-oracle end, where there's nothing. Note what that does and does not consume: at the hard-oracle end scale replaces the *solution* while the oracle itself persists, because a test that fully specifies the problem has nothing left to be wrong about. The two have opposite fates at the same point on the spectrum. This maps to the Karpathy verifiability framing that [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) builds on: a task is verifiable to the extent it is resettable, efficient to retry, and rewardable — properties that need separate assessment. A more accurate correctness check does not by itself make execution cheaper or restore state for a retry.
 
 ## The engineering move: harden the oracle
 
@@ -70,7 +70,7 @@ Each extracted claim should link back here as its origin.
 Relevant Notes:
 
 - [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the binary distinction this note refines into a gradient
-- [the verifiability gradient](./verifiability-gradient.md) — the Karpathy verifiability framing (resettable, efficient, rewardable) is an oracle-strength argument; the gradient maps directly to oracle strength
+- [the verifiability gradient](./verifiability-gradient.md) — contrasts: correctness signals, reset conditions and retry costs must be assessed separately
 - [deploy-time-learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — frames where on the system-adaptation timescale the gradient operates
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the manufacturing step: extracting deterministic checks from observed behavior
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — the amplification step: boosting weak oracles through decorrelated repetition

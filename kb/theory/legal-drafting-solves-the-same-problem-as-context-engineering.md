@@ -50,7 +50,7 @@ Two major legal techniques are absent from this table: **boilerplate** (pre-draf
 
 ## Why this matters for knowledge system design
 
-[Programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) because LLM-based systems are a kind of software system. Legal drafting is a second source discipline that addresses the dimension programming abstracts away: how to write specifications that work despite irreducible ambiguity. Programming analogies require translating from a precise medium to an underspecified one; legal analogies require translating from one kind of interpreter (institutionally constrained judges with external memory) to another (stateless LLMs with bounded context). Neither transfer is free, but they address different gaps.
+[Programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) because LLM-based systems are a kind of software system. Legal drafting supplies comparison cases for the English requirement account: applicability, exceptions and precedence can need clarification. Under an adopted model package, the prompt instead has model-defined semantics; legal drafting does not explain the cost of inspecting those semantics. The legal comparison concerns how requirements are written and adjudicated, while programming practices also address implementation and testing.
 
 This doesn't replace the programming lens — typing, testing, and compilation remain powerful. But it adds a complementary perspective native to the underspecified medium.
 
@@ -71,7 +71,7 @@ ABC's hard/soft constraint hierarchy answers the open question below about inter
 Relevant Notes:
 
 - [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which a specification permits several readings and an interpreter chooses one, which legal drafting independently addresses
-- [programming practices apply to prompting](./programming-practices-for-prompts-need-question-specific-evidence.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
+- [Programming practices for prompts need evidence matched to the question](./programming-practices-for-prompts-need-question-specific-evidence.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
 - [Source-adoption policy](../reference/source-adoption-policy.md) — see-also: the shipped policy that treats law as an eligible source alongside programming
 - [constraining](./definitions/constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings
 - [codification](./definitions/codification.md) — contrast: statute-writing is NOT KB-codification — still natural language interpreted by judges; true legal codification would be algorithmic sentencing or automated compliance
