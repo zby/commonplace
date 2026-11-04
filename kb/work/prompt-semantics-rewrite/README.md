@@ -10,7 +10,9 @@ proposal for the argument, not an adopted replacement or an empirical result.
 Its purpose is to settle what the central note should explain before rewriting
 it and its dependents.
 
-Current stage, 2026-11-04: the central rewrite and supporting extraction are
+Current stage, 2026-11-04, later: every audit finding has a repair commit
+and the projection term is retired; see Disposition below. The earlier stage
+note follows. The central rewrite and supporting extraction are
 implemented for review. Fable's review requested an explicit shared prediction
 burden, an English adjudicator, a qualified conjecture title, a standalone
 prompt approximation note, and a concrete MDL residual mapping. The library
@@ -33,6 +35,22 @@ complete and the next dependent repairs are handed back to the audit, or the pro
 rejected with any useful conclusions retained elsewhere. Broader dependent
 repairs remain tracked by the audit. This proposal does not authorize an
 empirical trial or resolve the vocabulary unification candidate.
+
+## Disposition
+
+| Item | Status | Where |
+|---|---|---|
+| F1 central note | closed | aef13b709 rebuild, d3a6459b0 relocation, Astra's revision |
+| F2 navigation | closed | computational-model head summarizes the two accounts |
+| F3 testing advice | closed for the practices note (b4858b39b, a0f274dc7); automated-tests-for-text being edited in another session | |
+| F4 scope from form | closed | 7093080cd |
+| F5 definitional overreach | closed | 9d91230e1 and the near-decomposability revision |
+| F6 partial evaluation | closed | acc843c5d |
+| F7 verifiability gradient | closed | 35daecae2 |
+| F8 five dependents | closed | fa55d03b0 (progressive constraining), 406e44952 (the other four) |
+| Projection term | retired for program refinement | a00f07fa0 definition; sweeps 9d800927d, 6c4fc3ea1, 16c834161; [inventory](./projection-inventory.md) |
+| Astra's Tier 1 review | four claim repairs applied | fa55d03b0, d2751437d, 4176fa06b, 4b35dc051 |
+| Open | review of the repairs above; workshop closure; the addressability unification candidate stays in the ledger | |
 
 ## Proposed main claim
 
