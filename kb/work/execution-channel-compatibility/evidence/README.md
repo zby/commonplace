@@ -28,6 +28,16 @@ The procedure ID distinguishes revisions within a round. Keep reports produced b
 
 The three reports dated 2026-07-28 used procedure v4–v6, written for the project-venv and direnv command model that [ADR 064](../../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) replaced, and before [ADR 086](../../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) moved the library into the installed package. Their tool-call persistence, tool discovery and bare-name results remain usable; their venv, direnv and `kb/commonplace/` layout findings describe the old model only. Procedure v7 reports are not directly comparable on those fields.
 
+## Current coverage — 2026-11-03
+
+The October Windows report in this directory used v6 on an old checkout.
+Later Windows and Linux acceptance is summarized in the
+[retained delivery record](../../../reports/retained/framework-delivery-acceptance-2026-11-03.md),
+but those runs did not execute this workshop's breadth protocol. The
+[November rebaseline](../rebaseline-2026-11-03.md) is source inspection and
+evidence reconciliation, not a new runtime report. Revise v7 for supported
+Windows shims before commissioning a current comparable breadth run.
+
 ## Evidence discipline
 
 - Start from [result-template.md](./result-template.md).

@@ -227,7 +227,7 @@ On every run it also writes its pointers into the library for this machine:
 
 - **Skill stubs** — a stub `SKILL.md` for each `cp-skill-*` skill, and for the router skill `cp-skill-library`, in `.claude/skills/` (Claude Code) and `.agents/skills/` (Codex and others). A stub carries the real skill's name and description and tells the agent to read the real `SKILL.md` in the installed library and follow it. The `cp-skill-` prefix avoids collisions with your project's own skills and with the `commonplace-*` CLI commands.
 - **`.commonplace/library.md`** — the library root on this machine, the library's entry points, and an index of its skills with each `SKILL.md` path. Agents in a runtime without a skills mechanism use this index in place of the stubs.
-- **A read rule for Claude Code** — a `Read(//<library root>/**)` allow rule in `.claude/settings.local.json`, so Claude Code reads the library without permission prompts. Codex needs no rule.
+- **A read rule for Claude Code** — a `Read(//<library root>/**)` allow rule in `.claude/settings.local.json`. The generated Windows drive-letter form did not grant access in matched default-permission tests; Windows library reads may still prompt. The fix is deferred until a Windows user reports those prompts. See the [delivery acceptance record](./kb/reports/retained/framework-delivery-acceptance-2026-11-03.md). Codex needs no rule.
 - **`.gitignore` entries** — for the stubs, `.commonplace/`, and `.claude/settings.local.json`. These outputs name paths on this machine, so they are never committed.
 
 Rerunning `commonplace-init` is safe. It never overwrites the project's own files: it reports which of them already match the current scaffold and which were left untouched because they differ. It rewrites only its own outputs — the stubs, `.commonplace/library.md`, and the read rule — and removes stubs for skills the package no longer has. It leaves alone any skill directory it did not write, and reports it. It does not create or inspect `.envrc`.
@@ -319,8 +319,10 @@ cp /tmp/commonplace-checkout/.pi/agents/commonplace-worker.md ~/.pi/agent/agents
 
 Restart pi (or `/reload`). The `subagent` tool should appear and
 `commonplace-worker` should be listed as an agent. The extension's notes are in
-the checkout's `.pi/README.md`; it has so far been exercised only from that
-checkout, so report anything that differs in an installed project.
+the checkout's `.pi/README.md`. An unchanged user-level copy passed a fresh-worker
+installed-file read on Linux with pi 1.3.0 and OpenAI Astra. This does not certify
+Windows/macOS workers or complete delegating-skill workloads; see the
+[delivery acceptance record](./kb/reports/retained/framework-delivery-acceptance-2026-11-03.md).
 
 The Commonplace source checkout does not run `commonplace-init`. It is where the library is authored, and its committed `.claude/skills/` and `.agents/skills/` symlinks cover all its skills.
 
@@ -362,7 +364,7 @@ If they don't, run `commonplace-init --check`, and `cp-skill-health-check` once 
 
 ## Pre-approve Commonplace commands in Claude Code (optional)
 
-Reading the library needs only the read rule, which `commonplace-init` writes. Agents also run `commonplace-*` commands in ordinary work. If you use Claude Code, skip the per-command permission prompt by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry per `[project.scripts]` entry in `pyproject.toml`:
+`commonplace-init` writes the library read rule; its current Windows form may still leave Claude library reads prompting, as noted above. Agents also run `commonplace-*` commands in ordinary work. If you use Claude Code, skip the per-command permission prompt by adding prefix-wildcard allow rules to `.claude/settings.local.json` (user-local, gitignored). Add one `Bash(<name>:*)` entry per `[project.scripts]` entry in `pyproject.toml`:
 
 ```json
 {
@@ -528,11 +530,13 @@ Upgrade the published user-level tool:
 uv tool upgrade llm-commonplace
 ```
 
-The library changes in place: the next agent read and the next command use the new skills, instructions, gates, and types. Nothing needs to be copied. If the upgrade added, removed, or renamed a skill or changed a skill's description, `commonplace-*` commands warn in each project until you rerun init there:
+The library changes in place: a new file read at the same library root sees the updated content. Nothing needs to be copied. A running agent may still rely on earlier reads, and its harness may retain old skill metadata; an upgrade does not replace that session context automatically. If the upgrade added, removed, or renamed a skill or changed a skill's description, `commonplace-*` commands warn in each project until you rerun init there:
 
 ```bash
 commonplace-init
 ```
+
+After init updates skill metadata, reload or restart the harness so it refreshes its loaded skill catalog. In pi 1.3.0, init alone left the advertised description unchanged; the actual TUI `/reload` refreshed it. Ask an ongoing session to reread the current instructions rather than rely on earlier results. These observations come from [synthetic Linux upgrade checks](./kb/reports/retained/framework-delivery-acceptance-2026-11-03.md), not certification of every real-release or cross-runtime upgrade.
 
 For an editable source install, pull the checkout. Ordinary code and library changes are immediately visible; rerun `uv tool install --reinstall --python ">=3.11" --editable .` when installation metadata or dependencies changed.
 
@@ -546,3 +550,29 @@ uv tool install --python ">=3.11" --editable .          # editable
 ```
 
 The switch moves the library root, so rerun `commonplace-init` in every project immediately afterwards. Until then the stubs and `.commonplace/library.md` may still point at the old root, and an agent can read the old library without any warning; the warning appears only when a `commonplace-*` command or `commonplace-init --check` runs.
+
+### Maintainer acceptance triggers
+
+The delivery workshop closed with bounded acceptance, not universal platform
+certification. These triggers retain the untested cases and deferred defect;
+run them in disposable projects, never by repairing a user's installation as
+part of a diagnostic probe. Preserve failures and record the runtime, model,
+permissions, installation version and whether the session was fresh or ongoing.
+The [acceptance record](./kb/reports/retained/framework-delivery-acceptance-2026-11-03.md)
+contains the tested limits and Git provenance for the original protocols.
+
+| Owner | Trigger | Check or action |
+|---|---|---|
+| Release maintainer | Next published Commonplace release transition | Repeat real-release upgrade acceptance: library-only and skill changes, pointer checks/repair, ongoing-session rereads and harness refresh/restart. Synthetic V1–V4 checks do not substitute for this. |
+| Runtime integration maintainer | A user reports upgrade trouble, or a relevant runtime changes resource loading | Repeat applicable live-session upgrade checks in that runtime. Do not infer its reload behavior from pi. |
+| Init/library maintainer | A Windows user reports Claude library-read prompts | Revisit the deferred drive-letter rule defect. Test `//<lowercase drive>/<path>` generation and native Read access in a disposable project under default permissions, with a matched no-rule control. Do not generalize the tested C-drive result to UNC paths. |
+| Installation maintainer with a macOS operator | A macOS host becomes available | Published-package install and installed-project delivery checks, including normal-policy external-library reads. |
+| Runtime integration maintainer with the affected operator | An actual other-harness or enterprise-policy environment becomes available | Standing instructions, external reads, native/index routes and worker availability under normal policy; inability to run a case is a result. |
+| Skill/index maintainer | A real workload needs a large index, unnamed-task triggering or additional skill metadata | Test discovery and triggering at that scale; small named synthetic checks are insufficient. |
+| pi extension maintainer | Extension installation/launch behavior changes, or another platform needs worker acceptance | Repeat the unchanged user-level-copy check from a fresh installed-project session; require harness delegation and a fresh worker file read. |
+| Dependency maintainer | Workjig locking behavior changes | Repeat strict recovery and in-lock evidence-read checks on Linux and Windows. Recover the 0.3.1 fixture with `git show 6bb76a807:kb/work/framework-delivery/workjig-031-recovery-fixture.py`; adapt its version guard explicitly for a new dependency version, never relax the read assertion to claim acceptance. |
+
+The operator approved the real-release and other-runtime upgrade deferrals on
+2026-11-03. Procedure portability remains separate from installation acceptance;
+long-term antivirus behavior likewise requires field-use observations, not a
+single successful install.

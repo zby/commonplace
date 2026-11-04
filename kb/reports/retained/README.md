@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Framework delivery acceptance, 2026-11-03](./framework-delivery-acceptance-2026-11-03.md) — bounded Windows delivery, deferred Claude read-rule defect, Linux pi installed workers and live-session synthetic upgrades; evidence for install guidance, not universal platform certification.
+
 - [Theory collection rename acceptance](./theory-collection-rename-20261023/README.md) — publication and installed-consumer checks, residual-reference dispositions, preserved state and exact execution inventories; closes the rename workshop.
 
 - [Agentic-system rerun campaign](./agentic-system-reruns/README.md) — final 190/206 inventory checkpoint, 191-set corpus, transfer provenance, historical retrieval paths and external-evidence retention boundary.

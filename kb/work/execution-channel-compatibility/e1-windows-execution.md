@@ -1,78 +1,109 @@
 # E1 plan — Make native Windows support operative
 
-**State (2026-11-01):** open. Package installation, supported Windows tests
-and release CI now pass; item 7's pytest/install/init/validation portion is done.
-See [supported-suite acceptance](../framework-delivery/windows-delivery-handoff.md#supported-suite-acceptance)
-and the [installed-project report](../framework-delivery/results-2026-10-31-windows-installed-project-agents.md)
-for bounded native skill-routing evidence. These do not establish every
-promoted procedure's portability. Items 2–6, focused health checks and the
-static incompatible-idiom check remain open. The
-[2026-08-27 audit](./e1-promoted-skill-rebaseline-2026-08-27.md) is historical;
-derive the current skill set from the manifest before implementation.
+## State — 2026-11-03
+
+Open for **procedure portability**, not installation acceptance. The
+[current rebaseline](./rebaseline-2026-11-03.md) selects 11 promoted skills plus
+one router from `src/commonplace/scaffold_manifest.py`. It supersedes the
+[August audit](./e1-promoted-skill-rebaseline-2026-08-27.md) as current triage;
+the old audit remains a dated observation, not the current manifest.
+
+Windows package installation, supported software CI, installed-project command
+resolution and bounded native/index skill routing passed. See the
+[retained delivery record](../../reports/retained/framework-delivery-acceptance-2026-11-03.md)
+and [release CI](https://github.com/zby/commonplace/actions/runs/41342248088).
+The delivery workshop is closed. Its release/platform/runtime deferrals and
+Windows read-rule defect belong to INSTALL.md, not a duplicate queue here.
+These passes do not establish every promoted procedure's portability.
 
 ## Resolution selected
 
-Retain native Windows support. Installation, PATH ownership, and skill stubs
-already have native-Windows behavior; narrowing support now would
-discard working product surface to avoid fixing three visible procedures.
+Retain native Windows support. Prefer shell-neutral package commands or
+runtime-native operations for load-bearing behavior. Pair literal preflight
+commands where diagnosis must work before package commands can be trusted.
+Do not duplicate entire workflows in Bash and PowerShell.
 
-Prefer shell-neutral package commands or runtime-native tool operations for
-load-bearing behavior. Use paired POSIX/PowerShell snippets only where diagnosis
-must work before a package command can be assumed available.
+Do not implement from the August inventory without checking current consumers.
+The scope here is the promoted set plus its required references; the parent
+workshop owns non-promoted instructions, the control plane and tool policy.
 
-A skill must not recreate collection discovery with shell globs; it calls the
-package's contract-based discovery.
+## Work and disposition
 
-## Work
+The numbers retain the earlier E1 item identities.
 
-1. **Static rebaseline — complete 2026-08-27.** The owner workshop now uses the
-   user-level uv-tool model, and the dated audit derives its exact selected set
-   from `MANIFEST.promoted_skills`. Its implementation guard must preserve that
-   set equality rather than encode “all ten” or a remaining count.
-2. Collect at least one native-Windows PowerShell result after the owning
-   package operations land. The current audit is source-static and Linux-hosted;
-   it makes no native-Windows runtime claim.
-3. Add a package-owned `commonplace-validate all` target. V1 closed without
-   it (ADR 086 removed the nested library collections the glob missed), so
-   E1 now owns it: the CLI enumerates collections through the existing
-   contract-based discovery, honours validation-ignore markers, continues
-   after failures, and reports one aggregate result. Then make
-   `cp-skill-validate` pass its requested target straight to
-   `commonplace-validate <target>` with no shell program in the skill.
-4. Do not replace connect's pipeline with permanent runtime-specific Grep/Read
-   choreography. Put deterministic tag/path collection behind a package command
-   or shared Python helper, preferably T1's exact resolver once available, and
-   keep the skill a thin caller. Preserve a no-match test proving the search
-   never widens to the repository.
-5. Pair every health-check preflight:
-   - project/layout presence;
-   - canonical and projected skill presence;
-   - uv command ownership;
-   - legacy `.envrc` and `.venv` inspection.
-   Keep repair instructions labelled by channel and do not treat the historical
-   `.venv/bin` signature as a current dependency. The legacy `.envrc` check
-   is done (2026-09-25): it no longer prints the file, compares it with the
-   old two-line template in POSIX and PowerShell forms, and reports only
-   absent / exact legacy / differs. The PowerShell form is untested.
-6. Implement the audit's remaining package/runtime dispositions: shared
-   checksum and byte-preservation operations for write, ingest, ground, and
-   multistage writing; portable capture and temporary-file operations for
-   snapshot-web; runtime-native orchestration for AutoReason; and an explicit
-   disposition for promoted skills' `allowed-tools: Bash` declarations.
-7. Windows CI for package install, pristine init, validation and the supported
-   pytest suite is complete (release CI 41342248088, 2026-11-01). Focused health
-   checks remain. Add a narrow static inventory/check for known incompatible
-   idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
-   becomes visible at review time.
-8. Exercise a freshly initialized project on Windows, including stub and
-   `library.md` paths into the installed library, without path-separator
-   leaks.
+1. **Static rebaseline — refreshed.** The November source triage covers all
+   12 selected skills and identifies relocated instruction trees. It is not
+   exhaustive per-locus coverage or a Windows test. Required references and
+   byte-sensitive operations still need worked cases. Any eventual inventory
+   check must derive set equality from the manifest rather than a fixed count.
+2. **Native-Windows procedure verification — open.** After each selected change,
+   exercise it under the relevant normal-policy PowerShell runtime. Installation
+   and a simple validation invocation are not substitutes for health preflight,
+   aggregate validation, empty-tag search or snapshot temporary-file handling.
+3. **Aggregate validation — design reconciliation required.** The older plan
+   proposed a package-owned `commonplace-validate all`. Current
+   `resolve_validation_target()` explicitly rejects `all`, `kb` and `kb/`, and
+   `tests/commonplace/validation/test_validate_notes.py` tests that boundary.
+   Meanwhile the skill implements `all` with a POSIX collection loop. Decide
+   how to provide portable requested aggregate validation without silently
+   overriding the current narrow-scope contract. If a package target is adopted,
+   use contract-based collection discovery, honor ignore markers, continue after
+   failures and report an aggregate result. Preserve draft-role, today/recent,
+   landings, redirects and receipt behavior. No production change is authorized
+   by this rebaseline.
+4. **Connect's tag/path selection — open.** The current `rg -l | xargs -r rg`
+   pipeline still requires the zero-match guard to avoid widening to the whole
+   repository. Prefer a package command or shared Python helper over permanent
+   per-runtime Grep/Read choreography. The old reference to a future T1 resolver
+   is not a verified implementation dependency; establish the current resolver
+   and consumers before choosing the change. Require a no-match regression case.
+5. **Health preflight — partly implemented, partly open.** Steps 1–2 retain
+   POSIX layout/presence tests. Step 3 uses runtime-native delegation diagnosis.
+   Step 4 already has POSIX/PowerShell ownership checks and recognizes supported
+   Windows shims. Step 5 compares legacy `.envrc` without exposing its contents,
+   in both shell forms; complete Windows behavior remains unverified. Step 6
+   uses plain command invocations and is not itself a POSIX program. Pair the
+   actual shell-dependent checks and retain diagnose-only behavior. Also update
+   the denial interpretation: an `ok` init check cannot prove that the generated
+   Windows Read rule grants access. Leave the product rule fix under INSTALL.md's
+   operator-approved trigger.
+6. **Byte-sensitive and workflow operations — open, narrowed by current text.**
+   Ingest now explicitly permits native byte-copy and requires hash verification;
+   ground states digest checks without a shell recipe. Neither is proof of
+   Windows runtime success. Multistage promotion requires exact-byte drift checks
+   and rollback in a supporting reference. Snapshot-web still has POSIX capture,
+   temporary-directory and concatenation blocks; AutoReason has shell filesystem
+   preparation even though delegation is harness-native. Choose shared operations
+   from actual consumers and failure cases, not a blanket checksum-helper plan.
+   All 12 skills include `Bash` in allowed-tools; its enforcement needs a
+   runtime-specific disposition, not inference from successful command execution.
+7. **CI — package coverage done; procedure guard open.** Current CI tests the
+   supported suite on Ubuntu and Windows, builds/installs a wheel, checks every
+   entry point and initializes/checks/validates a temporary project. Analysis
+   tests remain skipped on Windows. Focused procedure fixtures and a narrow
+   incompatible-idiom inventory/check are not established by that CI. Avoid
+   classifying every Bash-labelled single-command fence as incompatible.
+8. **Fresh installed-project delivery — bounded pass.** The retained Windows
+   checks cover stubs, arguments, library pointers and command resolution.
+   Do not rerun those merely to keep this item open. New procedure checks still
+   need installed-project fixtures where source-checkout access would hide a
+   dependency; the newest source-rooted Codex chat is not such a fixture.
+
+## Next bounded step
+
+First reconcile the breadth probe with supported shims and effective permission
+checks. Then select one E1 implementation slice with its consumer set and
+Windows test prerequisites. Health layout checks and connect's empty-tag
+selection are concrete candidates. Aggregate validation needs the explicit
+contract decision in item 3 before implementation.
 
 ## Completion
 
-Every executable promoted-skill step is shell-neutral, runtime-native, or
-explicitly paired, and Linux and Windows CI pass. Native-Windows evidence must
-name successful health preflight, arbitrary-target validation, `validate all`,
-connect's empty-tag path, and snapshot temporary-file handling, plus the audit
-or static coverage of every remaining promoted step. The execution-channel
-workshop then promotes the durable rule and owns closure of E1.
+Every executable promoted-skill step and required reference is shell-neutral,
+runtime-native or explicitly paired, with applicable Linux/Windows tests passing.
+Native-Windows evidence must cover health preflight, ordinary and aggregate
+validation, connect's empty-tag behavior and snapshot temporary-file handling,
+plus a disposition for every remaining promoted step and its runtime metadata.
+The parent execution-channel workshop promotes the durable results and owns
+closure of E1. Missing runtime coverage remains an explicit gap, not a static
+inspection pass.

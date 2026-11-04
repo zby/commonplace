@@ -4,16 +4,49 @@
 
 Catalogue the system differences that can make a Commonplace instruction executable in one environment and non-operative in another, then compare the available solution families without assuming that instruction compilation is the answer.
 
-The forcing case is intentionally small: after installation has placed Commonplace commands in the user-level uv-tool bin directory, a fresh session should be able to invoke `commonplace-validate --help` by bare command name, exactly as later agent tool calls will. A native Windows desktop application may not see the updated `PATH` until it is fully restarted, and a source checkout's editable installation selects one active Commonplace command version per OS user. Since ADR 086 the agent must also read library files (instructions, types, skills) at the installed package's root, outside the workspace. Executable instructions therefore depend on an execution channel composed from operating system, shell, agent runtime, process/environment semantics, working directory, sandbox, installed tools, launch-time environment inheritance, and read access outside the workspace.
+The forcing case is intentionally small: after installation has established the user-level tool and, on Windows, its supported signed-Python shims, a fresh session should be able to invoke `commonplace-validate --help` by bare command name, exactly as later agent tool calls will. A native Windows desktop application may not see the updated `PATH` until it is fully restarted, and a source checkout's editable installation selects one active Commonplace command version per OS user. Since ADR 086 the agent must also read library files (instructions, types, skills) at the installed package's root, outside the workspace. Executable instructions therefore depend on an execution channel composed from operating system, shell, agent runtime, process/environment semantics, working directory, sandbox, installed tools, launch-time environment inheritance, and read access outside the workspace.
 
 The workshop widens the existing [channel-compiled instruction artifacts proposal](../../reference/proposals/channel-compiled-instruction-artifacts.md). That proposal already distinguishes compiling promoted skills, the whole instructions tree, and the control plane. Here compilation remains one candidate in a broader catalogue. The unit under investigation is not just the promoted skill: it is every instruction-bearing artifact that invokes Commonplace's Python entry points or another external tool.
 
-## Current closure review (2026-11-01)
+## Current state — 2026-11-03
+
+The operator requested a current-state update before further work. The
+[source rebaseline](./rebaseline-2026-11-03.md) now selects **11 promoted skills
+plus one router**, **25 package commands**, and all three canonical instruction
+trees. This update ran no runtime probe and changed no production behavior.
+The August audit and September census remain historical, not current counts.
+
+**What is settled:** Windows installed delivery and supported package CI have
+bounded acceptance. Linux pi's user-level worker copy and synthetic live-session
+upgrades also passed. The delivery workshop is closed; INSTALL.md owns its
+remaining release/platform/runtime triggers. Procedure portability remains here.
+
+**What still needs work:** validate's aggregate shell loop, connect's guarded
+pipeline, health-check layout/presence tests, snapshot capture and byte handling,
+AutoReason's filesystem preparation, required-reference coverage, and the
+runtime interpretation of tool metadata. Ingest already names native byte-copy
+alternatives; health Step 6 is plain argv, not a POSIX program. Do not carry the
+old blanket classifications forward.
+
+**Newly identified conflicts:** the old E1 plan to add `validate all` conflicts
+with the current CLI's explicit, tested rejection of broad literal scopes. The
+v7 breadth probe also lacks the supported Windows-shim authority rule. Resolve
+those before implementation or a new comparable Windows survey. A retired
+analysis command remains in a non-promoted instruction; the rebaseline names it
+for a separate consumer-aware repair.
+
+**Next:** revise the breadth probe with a new procedure ID, then choose one
+bounded E1 slice and its runtime fixtures. No production changes or expanded
+support claims are authorized by this status update.
+
+## Previous closure review (2026-11-01; historical)
 
 Keep open. PyPI 0.3.3 and supported Windows/Linux CI supersede the older
 release and CI summaries below. Native installed-project command and skill
 routing evidence now exists in the
-[delivery report](../framework-delivery/results-2026-10-31-windows-installed-project-agents.md).
+[retained delivery acceptance record](../../reports/retained/framework-delivery-acceptance-2026-11-03.md).
+The delivery workshop closed on 2026-11-03; its deferred acceptance triggers
+now belong to INSTALL.md. E1's portability work below remains open.
 The independent Codex report, `kb/work/windows-install/results-2026-11-01-codex-independent.md` (closed workshop; `git show 600306e1d:kb/work/windows-install/results-2026-11-01-codex-independent.md`),
 could run uv and rg in its sandbox; the prior sandbox failure is specific to
 that earlier run, not a universal Windows restriction.
@@ -24,7 +57,10 @@ The broader inventory, v7 capability survey and non-Python tool dispositions
 also remain unfinished. Successful installation does not satisfy these closure
 conditions. Rebaseline from the current manifest before the next E1 batch.
 
-## Status (rebaselined 2026-09-25)
+## Historical rebaselines (2026-09-25 through 2026-10-27)
+
+The dated statements below describe their checkpoints. Current status and
+counts are above; do not treat old absence claims as current blockers.
 
 The workshop opened on 2026-07-28 under the project-venv command model (ADR 014). Two later decisions changed the ground:
 
@@ -35,14 +71,17 @@ The rebaseline brought the working documents in line: the [solution catalogue](.
 
 **Division of work with E1.** The [E1 plan](./e1-windows-execution.md), moved into this workshop when the system-contract consistency workshop closed, owns making the promoted skills work on native Windows: the package commands and paired preflights named in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md), and one native-Windows run after they land. This workshop keeps what E1 does not cover: non-promoted instructions and the control plane, per-surface command visibility and library reachability, the classification of non-Python tools, and the disposition of the channel-compilation proposal.
 
-**Blocking gap.** No native-Windows evidence exists yet. The next useful step is a v7 probe run in the Codex Windows desktop app after a full restart.
+**Blocking gap at the September checkpoint.** No native-Windows evidence had
+then been retained. Later Windows reports supersede that absence claim; a
+current breadth-protocol run is still distinct from delivery acceptance.
 
 **Recheck 2026-10-24.** Nothing here changed after 2026-09-30 except mechanical path rewrites. Against the repository on 2026-10-24:
 
 - The [evidence directory](./evidence/README.md) still holds only the three July reports from the retired project-venv model. No run of probe v7 exists on any surface, Windows or otherwise.
 - E1 items remain open: `commonplace-validate` has no `all` target; `cp-skill-health-check` pairs PowerShell forms only in Step 4 (uv tool) and Step 5 (legacy residue), while Steps 1, 2 and 6 are Bash-only; 13 promoted skills still declare `allowed-tools: Bash` with no recorded disposition; no Windows CI exists.
 - The library's theory collection moved from `kb/notes/` to `kb/theory/` (ADR 123) while project scaffolds keep `kb/notes/`. The [inventory](./inventory.md) still names `kb/notes/` for library files; its counts predate the move and the 2026-10 command changes (`commonplace-analysis`, `commonplace-task` added; `commonplace-agentic-analysis-*` removed) and need a re-count before the dependency map is trusted.
-- Everything released is still v0.2.0 (2026-09-25); the probe must run against a release that carries the current init, which [framework-delivery](../framework-delivery/README.md) step 0 and step 1 now own.
+- Everything released is still v0.2.0 (2026-09-25); the probe must run against a release that carries the current init, which the framework-delivery workshop then owned (now closed; the current
+  baseline and limits are in the retained delivery acceptance record above).
 
 **Recheck 2026-10-27.** The first native-Windows report exists: [2026-10-27-codex-app-windows-powershell-a1.md](./evidence/2026-10-27-codex-app-windows-powershell-a1.md), taken from the Codex desktop app's PowerShell tool calls. It observed bare `commonplace-validate` and `rg` resolving, the former from the user-level uv tool bin, so the app inherits the user `PATH` after a restart, and no shell state surviving between tool calls. It ran procedure v6 on a checkout from 2026-08-08, so its layout section describes the retired project-venv model, and a v7 run is still open. The Windows command-delivery work done alongside it, shims over a signed or a uv-managed interpreter under Smart App Control and antivirus, belonged to windows-install, closed on 2026-11-03 (`git show 600306e1d:kb/work/windows-install/README.md`): its round 1 plan, the run of that plan on a second machine, and the round 2 plan are in that directory's history, and the harness run superseded five shorter reports that were retired from this directory the same day.
 
@@ -116,10 +155,11 @@ This invariant is provisional only in the sense that the exact probe may change.
 
 ## Required work products
 
-- [inventory.md](./inventory.md) — repeatable inventory method, initial counts, execution surfaces, tool-dependency schema, and known gaps.
+- [Current rebaseline](./rebaseline-2026-11-03.md) — November source census, all 12 skill dispositions, retained-evidence limits and next decision boundary.
+- [inventory.md](./inventory.md) — inventory method, historical counts, current-scope pointer, tool-dependency schema and unfinished graph coverage.
 - [solution-catalogue.md](./solution-catalogue.md) — candidate mechanisms and their trade-offs; no preferred architecture until worked cases eliminate options.
-- [probe-procedure.md](./probe-procedure.md) — typed instruction for capability-gated evidence gathering from any current Commonplace environment, with native-Windows Codex as the forcing case rather than the assumed layout. Current revision v7 (2026-09-25).
-- [E1 Windows execution plan](./e1-windows-execution.md) — owned closure plan for native-Windows support and `commonplace-validate all`, moved from the closed system-contract consistency workshop.
+- [probe-procedure.md](./probe-procedure.md) — typed instruction for capability-gated evidence gathering from any current Commonplace environment, with native-Windows Codex as the forcing case rather than the assumed layout. Frozen revision v7 (2026-09-25); revise its authority comparison before the next current Windows run.
+- [E1 Windows execution plan](./e1-windows-execution.md) — current promoted-procedure plan, separating completed delivery from open portability work and the unresolved aggregate-validation contract.
 - [E1 promoted-skill rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md) — manifest-derived static inventory and disposition of every promoted skill selected on 2026-08-27; it records no native-Windows runtime result.
 - [evidence/](./evidence/README.md) — append-only probe reports from different agents, runtimes, operating systems, shells, and launch paths.
 - A dated capability matrix for each observed environment class: install/layout mode, execution interface, command lookup and authority, library reachability, process persistence, restart requirement, worktree behavior, bundled tools, and sandbox constraints.
@@ -172,7 +212,7 @@ The workshop closes when:
 ## Grounding
 
 - [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — commands as a user-level uv tool; restart requirement; one version per user.
-- [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — library served from the installed package; init-written pointers; no hooks; Linux-only evidence.
+- [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — library served from the installed package; init-written pointers; no hooks. The retained delivery record supplies later bounded Windows and Linux evidence.
 - [E1 plan](./e1-windows-execution.md) — owner of promoted-skill native-Windows work.
 - [Channel-compiled instruction artifacts](../../reference/proposals/channel-compiled-instruction-artifacts.md) — existing option space for compiling skills, the instructions tree, the control plane, or a later-bound form.
 - [Windows portability for promoted skills](../self-improvement-cluster-operationalization/windows-portability-for-promoted-skills.md) — prior audit finding and narrower portability proposal.

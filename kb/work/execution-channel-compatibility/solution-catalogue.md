@@ -6,7 +6,17 @@ This is an option inventory, not a recommendation. Several mechanisms may compos
 
 Every option must eventually be tested against the same worked cases: bare `commonplace-validate --help` in a freshly started process, bare `rg`, a compound Bash-shaped procedure, native Windows Codex desktop execution, reading a library file from an initialized project, and a second project or worktree.
 
-## Rebaseline, 2026-09-25
+## Current evidence — 2026-11-03
+
+The [current rebaseline](./rebaseline-2026-11-03.md) and
+[retained delivery record](../../reports/retained/framework-delivery-acceptance-2026-11-03.md)
+replace the old assumption that Windows command/library access is wholly
+untested. Supported Windows shims over signed Python are operative; they are
+not the retired project-aware dispatchers in option 6. Broad procedure
+portability and non-Python tool behavior remain open. Treat the option statuses
+as design dispositions, not proof that their proposed implementations shipped.
+
+## Design rebaseline, 2026-09-25
 
 The catalogue was first written on 2026-07-28, when `commonplace-*` commands came from each project's `.venv` and direnv put that venv on `PATH` (ADR 014). Two later decisions settled or removed several options:
 
@@ -72,7 +82,7 @@ The runtime's own configuration sets subprocess environment, such as Codex `shel
 Add the command directory to the user environment so every newly started process sees it.
 
 - Status: this is what `uv tool update-shell` does under ADR 064. The July objection (it selects one project's venv globally) no longer applies: the directory holds one user-level tool, and one version per user is accepted.
-- Limitation: running processes do not see the change. On Windows a desktop application may need a full quit and restart, not a new window. Whether each surface actually rereads the user environment on restart is the open item for native Windows Codex.
+- Limitation: running processes do not see the change. On Windows a desktop application may need a full quit and restart, not a new window. Bounded Windows desktop and Explorer-started command checks now pass. That does not establish every runtime's restart behavior or access to other tools inside its sandbox.
 
 ### 6. Project-aware dispatcher shims — retired
 
@@ -93,7 +103,7 @@ A `PreToolUse` hook rewrites each shell call to prepend the command directory.
 
 Move load-bearing `find`/`xargs`/`sed`/pipeline behavior behind tested `commonplace-*` commands, so instructions call one stable entry point.
 
-- Status: selected by [E1](./e1-windows-execution.md) for promoted skills. Planned items: `commonplace-validate all`, a package tag/path resolver replacing `cp-skill-connect`'s `rg -l | xargs -r rg` pipeline, and shared byte operations (checksum, verified copy and restore) for ingest, ground and snapshot-web. The per-skill dispositions are in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md).
+- Status: preferred direction in [E1](./e1-windows-execution.md), not a shipped implementation. Connect still uses the guarded pipeline; capture still has POSIX operations. The proposed aggregate-validation target must first reconcile the CLI's explicit rejection of `all`. Ingest now specifies native byte-copy alternatives; checksum requirements alone do not establish a shell defect. Current per-skill triage is in the [November rebaseline](./rebaseline-2026-11-03.md).
 - Open: the same treatment for non-promoted instructions, which E1 does not cover. [inventory.md](./inventory.md) lists them.
 - Limitation: does not absorb ordinary navigation merely to avoid declaring `rg` as a prerequisite.
 
@@ -114,7 +124,7 @@ ADR 086 changes where compilation could happen:
 - **Init time** would mean writing channel-specific copies into each project, which ADR 086 rejected to keep one tree per machine and to stop copies diverging.
 - **A per-channel second tree** inside the installed package (for example a PowerShell rendering beside the canonical one) would keep one install but add a second tree to review and keep in sync.
 
-Given options 9 and 10 remove most channel-specific text, compilation now has little left to resolve. Provisional disposition for the proposal: narrow or reject, pending the inventory's count of shell constructs that remain after E1.
+If options 9 and 10 remove most channel-specific text, compilation may have little left to resolve. That reduction has not been measured and the E1 work is not complete. Narrowing or rejecting the proposal remains provisional until current non-promoted/reference coverage and worked cases establish what remains.
 
 ### 12. Standardized execution environment — retired for now
 
@@ -154,7 +164,7 @@ The channel questions this raises:
 - whether native Windows paths in `library.md` and stubs (drive letters, backslashes, a custom `UV_TOOL_DIR`) are followed correctly by each harness;
 - whether a stale pointer after switching between editable and normal install is detected before an agent reads from the old root. ADR 086 records this as a known silent failure, mitigated only by rerunning init.
 
-ADR 086's evidence is Linux-only. Windows and macOS are outside it.
+The retained delivery record adds Windows native/index routes and library reads, plus Linux pi worker and upgrade checks. It also records the Windows Claude drive-letter read-rule defect: matching init outputs are not proof of effective permission. macOS remains deferred under INSTALL.md's trigger.
 
 ## Native Windows Codex application boundary
 
@@ -162,15 +172,15 @@ Current Codex documentation says the Windows app runs its agent natively with Po
 
 Under ADR 064 the app does not need a project environment. It needs to see the user `PATH` that `uv tool update-shell` wrote, which requires the app process to be started after that change. The remaining desktop questions are:
 
-- whether quitting and restarting the app (not only opening a new window or thread) picks up the new user `PATH`;
-- whether its sandbox permits reading the library root outside the workspace;
-- whether it treats a skill's `allowed-tools: Bash` as binding when the agent's shell is PowerShell (see the E1 rebaseline).
+- reproduce command and external-library access only when the launch class or policy differs from the bounded retained checks; do not treat all Codex sessions as one environment;
+- distinguish native Read, shell reads, skill catalog exposure and index fallback; the latest source-rooted Codex check does not establish fresh native discovery;
+- establish whether the runtime enforces `allowed-tools: Bash` when execution uses PowerShell. Successful validation alone does not identify that metadata contract.
 
 Options 3, 4 and 8 apply only if the restart check fails.
 
 ## Current composition and open decisions
 
-The adopted composition is: user `PATH` via `uv tool update-shell` with a restart (option 5), bare-command verification in the health check and every command (option 1), library pointers written by init (ADR 086), portable package commands for load-bearing shell logic (option 9), and paired preflight only where diagnosis must precede the package (option 10).
+The operative composition is user-level installation and supported Windows shims, user `PATH` with a fresh-process check (option 5), bare-command verification and ownership checks (option 1), and init-owned library pointers (ADR 086). Options 9 and 10 remain the selected direction for unfinished procedure portability, not a completed property of all instructions.
 
 Open decisions before the workshop can close:
 
@@ -182,7 +192,7 @@ Open decisions before the workshop can close:
 
 ## Evidence needed before closure
 
-- A native-Windows run of the v7 probe in the Codex desktop app after a full restart, recording command authority and library reachability.
+- Revise the v7 authority comparison for supported shims before a current native-Windows breadth run. Record the actual launch/restart state; do not require repair or restart during the observational probe.
 - The same probe in at least one IDE-extension surface and one cloud surface.
 - A worktree or second-project run showing that init outputs and the shared tool behave as expected there.
 - The inventory's classification of non-promoted instructions, to size options 9 and 11.

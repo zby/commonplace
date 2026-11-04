@@ -13,6 +13,14 @@ This instruction is the Round 1 breadth probe. Run it unchanged so reports remai
 
 Procedure ID: `execution-channel-round1-v7-2026-09-25`.
 
+**Maintenance notice, 2026-11-03:** this revision is preserved for comparison,
+not ready for a new current-Windows acceptance run. Its command-authority model
+predates the supported signed-Python shims and compares only with the uv bin
+directory. The [current rebaseline](./rebaseline-2026-11-03.md) records the
+required revision and permission-evidence distinctions. Assign a new procedure
+ID before changing those checks; do not silently classify a supported shim as
+an installation conflict or broaden permissions to finish this survey.
+
 The first constraint is implementability: run a check only after its prerequisites are available in the current environment. Do not assume the agent is in the Commonplace source checkout, has Git metadata, can see a project root, uses Bash, can write files, or can launch a second session. Record a skipped check and its missing prerequisite instead of inventing a substitute.
 
 ### Command and library model under test

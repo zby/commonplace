@@ -1060,7 +1060,6 @@ plugins:
         'work/analyse-agentic-system-amendments/process-brief.md': 'reference/agentic-system-analysis-design-brief.md'
         'work/code-scheduled-workflows/loop.md': 'agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md'
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
-        'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'theory/epiplexity-by-example-what-entropy-and-complexity-miss.md'
         'work/system-contract-consistency/087-sources-and-reports-types-are-global-library-types.md': 'reference/adr/087-source-and-report-types-are-global-library-types.md'
         'work/system-contract-consistency/088-type-values-are-paths-on-a-two-root-search-path.md': 'reference/adr/088-type-values-are-paths-on-a-two-root-search-path.md'

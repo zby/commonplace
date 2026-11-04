@@ -1,6 +1,21 @@
 # Execution-channel inventory
 
-## Status
+## Current status — 2026-11-03
+
+Use the [November rebaseline](./rebaseline-2026-11-03.md) for current source
+counts and promoted-skill triage: 11 promoted skills plus one router, 25 commands,
+and 147 files in the expanded canonical/control-plane scan. The expanded scope
+adds `kb/agentic-system-analyses/instructions/` and
+`kb/agentic-systems/instructions/`; the old single-tree scan misses those moved
+procedures. Library `kb/theory/` and scaffold `kb/notes/` are distinct.
+
+The sections through legacy residue below preserve the **September snapshot**.
+Their counts, line numbers, command names and per-file classifications are not
+current acceptance claims. In particular, retired analysis commands are no
+longer declared entry points. The record schema and observation discipline
+remain useful; a complete required-reference graph is still unfinished.
+
+## Historical status — 2026-09-25
 
 Rebaselined 2026-09-25 at `5a178374`, after [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) (commands as a user-level uv tool) and [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (library served from the installed package). The first lexical baseline was taken on 2026-07-28; both columns are kept below. This rebaseline adds a first semantic classification of the non-promoted instruction files. The promoted skills are classified in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md) and are not repeated here.
 
@@ -229,9 +244,14 @@ The eventual sweep must parse fenced blocks and declared command positions rathe
 
 ## Next inventory passes
 
-1. Classify every locus in the 12 shell-dependent non-promoted files with the inventory record above, and decide for each whether a package operation (catalogue option 9) or an `--output`/stdin change on an existing command removes the shell.
-2. Fix or route the ADR 086 path hazards listed above; confirm the three ambiguous cases.
-3. Trace required links from every canonical instruction so command-bearing references enter the graph.
+1. Reclassify non-promoted loci across all three current instruction trees; do
+   not use the historical count of 12 files as the selection. Check existing
+   `--output` and stdin support before proposing new flags.
+2. Resolve the retired command named in the November rebaseline by inspecting
+   its intended operation. Recheck path hazards rather than re-fixing the
+   September repairs; distinguish project collections from library paths.
+3. Trace required links from every canonical instruction so command-bearing
+   references and their byte-sensitive operations enter the graph.
 4. Verify the `rg` contract per runtime: installation source, version, command lookup, regex/flag compatibility, and sandbox behavior.
 5. Repeat for Git, then for workflow-specific tools (curl, awk, Roughdraft).
 6. Extend the sweep to `text` fences and inline code spans that carry commands, which the fence count misses.
