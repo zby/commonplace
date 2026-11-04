@@ -1,6 +1,16 @@
 # Projection inventory
 
-## Decision, 2026-11-04
+## Current status, 2026-11-04
+
+All three migration tiers below have been applied. The dated inventory and
+intermediate progress paragraphs are retained as the search record, not a
+current queue. The technical relation now includes interpretation-relative
+judgments, preservation of required guarantees and qualified composition
+rules; consult the current [definition](../../theory/definitions/program-refinement.md).
+The [integration review](./integration-review-2026-11-04.md) owns residual
+semantic issues. The old inventory is not a reason to repeat the migration.
+
+## Decision and migration record, 2026-11-04
 
 Projection is not registered. It stays ordinary language, and the
 [collision ledger](../../reference/vocabulary-collision-ledger.md) records why.

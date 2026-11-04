@@ -49,7 +49,7 @@ The [text-testing pyramid](./automated-tests-for-text.md) offers artifact checks
 
 ### Code extraction
 
-Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, the generated function is a candidate [program refinement](./definitions/program-refinement.md) of the specification: generation fixes one behavior and does not establish that it lies within what the specification permits. The implementation must be checked against the applicable requirement, including cases the observed runs did not cover.
+Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, the generated function is a candidate [program refinement](./definitions/program-refinement.md) of the specification: generation fixes one candidate implementation without establishing that its permitted behaviors preserve the specification's guarantees. The implementation must be checked against the applicable requirement, including cases the observed runs did not cover.
 
 [Progressive constraining](./progressive-constraining-commits-only-after-patterns-stabilize.md) uses recurring behavior to identify candidates for extraction. Recurrence alone establishes neither adequacy nor equivalence. Compare the candidate with the required behavior and assess its inspection and execution costs. The gain depends on the extracted rule and its scope, not on code being inherently correct.
 
