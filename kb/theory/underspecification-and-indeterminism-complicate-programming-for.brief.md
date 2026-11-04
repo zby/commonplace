@@ -17,4 +17,4 @@ The operator authorized this rewrite on 2026-11-04 as the next repair in the pro
 
 ## Reserved decisions
 
-The operator reports parallel work replacing projection with refinement, including work by Morgan. Projection may remain here for now. Do not settle that terminology or import a refinement theory in this rewrite. Correcting the assumption that generation necessarily produces a valid implementation is within scope.
+Settled 2026-11-04 after the rewrite: projection is ordinary language, and the technical relation is [program refinement](./definitions/program-refinement.md). The code-extraction section calls a generated implementation a candidate refinement. Correcting the assumption that generation necessarily produces a valid implementation was within scope and is done.

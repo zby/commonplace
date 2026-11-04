@@ -49,7 +49,7 @@ The [text-testing pyramid](./automated-tests-for-text.md) offers artifact checks
 
 ### Code extraction
 
-Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, this replacement may be described as projecting a specification into a particular implementation. Generation does not establish that the implementation is a valid projection. The implementation must be checked against the applicable requirement, including cases the observed runs did not cover.
+Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, the generated function is a candidate [program refinement](./definitions/program-refinement.md) of the specification: generation fixes one behavior and does not establish that it lies within what the specification permits. The implementation must be checked against the applicable requirement, including cases the observed runs did not cover.
 
 [Progressive constraining](./progressive-constraining-commits-only-after-patterns-stabilize.md) uses recurring behavior to identify candidates for extraction. Recurrence alone establishes neither adequacy nor equivalence. Compare the candidate with the required behavior and assess its inspection and execution costs. The gain depends on the extracted rule and its scope, not on code being inherently correct.
 
@@ -82,3 +82,4 @@ Relevant Notes:
 - [Automated tests for text](./automated-tests-for-text.md) — extends: checks applied to retained artifacts
 - [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: selects repairs using distinct comparisons
 - [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: packaging a procedure does not by itself establish enforcement
+- [Program refinement](./definitions/program-refinement.md) — grounds: a generated implementation is a candidate refinement of its specification until it is checked
