@@ -43,7 +43,7 @@ The conjecture reads the three sources of opacity as different obstacles to loca
 
 Known but expensive, unknown, and disrupted would then be three states of one obstacle. Opacity's definition does not depend on this unification succeeding.
 
-## Finding a decomposition lowers opacity without changing the artifact
+## Finding an intervention point does not establish safe repair
 
 Mechanistic interpretability is the search for a decomposition where none is exposed. [Templeton and co-authors](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) train sparse autoencoders on a production model's activations and test the found units by intervention. Clamping the Golden Gate Bridge feature to ten times its maximum activation changes behavior as the feature's interpretation predicts; verbatim, "In this example, the model starts to self-identify as the Golden Gate Bridge!"
 
@@ -51,17 +51,15 @@ Under the path that addresses features, the activations are localized for the be
 
 [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) is the same move on weights: a factual association is located, edited, and the edit's effect checked.
 
-Both cases offer handles on content without establishing independently controllable scope. The proposed transfer of Simon's condition asks whether the relevant interactions are weak enough for the intended intervention.
+Finding an interpretable feature provides a place to intervene. It does not establish that the intervention preserves properties the system relies on. Even weak interactions can break a required invariant: an effect small enough to ignore when predicting typical behavior may be decisive when checking correctness.
 
-The found block is strongly coupled inside: clamping one feature moves everything the feature covers. Its links to the rest are not weak: the clamp leaks into the model's self-identification, and [the authors](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) report, verbatim, that useful steering "typically requires clamping feature activations to values outside their observed range", which they attribute to perturbing one feature when "several correlated features with related meanings" are co-active.
-
-These observations do not establish that cross-block effects stay within a chosen tolerance. Near-decomposability allows weak nonzero interactions; whether a particular intervention is contained needs its own check.
+The Golden Gate Bridge intervention demonstrates behavioral influence. It does not establish coupling strength or, without a stated requirement, an invariant violation. To assess whether a decomposition supports a particular repair, we must check whether its interaction summaries capture the effects relevant to the invariants that repair must preserve.
 
 ## Consequence for addressability
 
 The proposed transfer to repair concerns how much must be checked after an edit. If a decomposition captures the dependencies relevant to the test, weak interactions across its blocks may let the inspector assess the edit within one block and its interfaces. Establishing that the decomposition captures those dependencies is part of the work.
 
-That checking cost is separate from locating a repair candidate in an [addressable theory](./definitions/addressable-theory.md), whose parts can be inspected and revised individually.
+That checking cost is separate from locating a repair candidate in an [addressable theory](./definitions/addressable-theory.md), whose parts can be inspected and revised individually. Locating a candidate and establishing that its repair preserves required invariants are separate achievements.
 
 Consider a shared conversion routine that adds one where its stated rule requires adding two. A trace through that operation can identify a candidate fault even when many callers depend on the routine. Repairing it still requires checking the affected callers. Many callers establish a broad dependency footprint, not by themselves strong interaction between blocks.
 
@@ -90,5 +88,5 @@ Relevant Notes:
 - [Localized retention pays when sparse changes have bounded impact in a matching decomposition](./localized-retention-pays-where-change-is-sparse-in-a-matching.md) — contrasts: change locality after Parnas against interaction locality after Simon; its impact closure is an interaction condition stated in change terms
 - [Simon, The Architecture of Complexity](../sources/herbert-simon-architecture-of-complexity.ingest.md) — evidenced-by: the definition of near-decomposability and its two propositions; the theorem is cited there, not stated
 - [Grünwald, A tutorial introduction to the minimum description length principle](../sources/grunwald-mdl-tutorial.ingest.md) — evidenced-by: the two-part code and its relativity to a description method
-- [Templeton et al., Scaling Monosemanticity](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) — evidenced-by: a found decomposition tested by intervention, with partial coverage and leakage across the found blocks
+- [Templeton et al., Scaling Monosemanticity](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) — evidenced-by: interpretable features tested by intervention, with partial coverage; behavioral influence does not establish invariant preservation
 - [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) — evidenced-by: the same move on weights, giving content-addressability without scope-addressability
