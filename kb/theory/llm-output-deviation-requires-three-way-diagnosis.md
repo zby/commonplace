@@ -72,7 +72,7 @@ The decomposition begins after the assembled input is fixed. Wrong retrieval, st
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the source framing for underspecification, and for the projection model that makes `V` an object rather than a metaphor
+- [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which the specification's permitted set makes `V` an object rather than a metaphor
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the third source, with the worked catalogue of out-of-`V` failures
 - [traditional software can bracket executor conformance; LLM systems cannot](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — extends: why the analysis needs exactly these three questions — classical practice collapses to one only because executor conformance and singleton meaning can be assumed there
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — grounds: the sampling-process source and why it obscures the other two

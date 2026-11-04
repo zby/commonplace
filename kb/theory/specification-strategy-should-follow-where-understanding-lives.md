@@ -9,7 +9,7 @@ tags: [learning-theory, constraining, method-guided-action]
 
 Debates about specification strategy often collapse into one question: "Should we write the spec first?" But [Spec Driven Development](https://x.com/juliandeangeIis/status/2033303156340240481), [bidirectional spec maintenance](https://x.com/augmentcode/status/2025993446633492725), and [spec mining](./spec-mining-as-codification.md) solve different failure modes because they store disambiguation in different places — in the initial document, in a live artifact updated during execution, or in rules extracted after repeated behavior. They feel incompatible because they are choosing different storage locations for the same kind of work.
 
-[Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) gives the mechanism. Natural-language instructions admit multiple valid projections; any working system must collapse that space somehow. Specification strategy is therefore a policy for **when** that collapse happens and **which artifact** records it.
+[Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) gives the mechanism. Natural-language instructions permit several readings; any working system must collapse that set to one somehow. Specification strategy is therefore a policy for **when** that collapse happens and **which artifact** records it.
 
 This note is specifically about **durable artifacts**. Interactive clarification inside a conversation is another way to narrow ambiguity, but it does not by itself produce something later sessions can inspect and inherit. The question here is narrower: once a clarification is worth preserving, where should it live?
 
@@ -19,13 +19,13 @@ Spec-first fits cases where the relevant understanding already exists before exe
 
 The gain is front-loaded constraint. If the problem is mainly that the agent lacks enough context to choose among plausible implementations, a good upfront spec removes degrees of freedom before the expensive work begins.
 
-Its failure mode is committing to projections that only execution could validate. The spec becomes a fossilized guess — it looks authoritative, but execution keeps forcing repairs. This is the pattern [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) identifies: what looks like "requirements changed" is often that the upfront spec committed too early to one reading.
+Its failure mode is committing to readings that only execution could validate. The spec becomes a fossilized guess — it looks authoritative, but execution keeps forcing repairs. This is the pattern [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) identifies: what looks like "requirements changed" is often that the upfront spec committed too early to one reading.
 
 ## Bidirectional spec is for ambiguity that is only exposed during execution
 
 Bidirectional spec maintenance fits cases where important understanding emerges while doing the work. The human starts with intent, but the agent discovers real constraints in the codebase or environment that the initial spec did not capture. Augment's pattern keeps the spec live: discovery updates the artifact rather than invalidating it.
 
-This changes the visibility of interpretation choices. Instead of silently repairing the plan in code, the agent writes the repair back into the shared artifact. The spec becomes the place where execution-discovered projections are surfaced and reviewed.
+This changes the visibility of interpretation choices. Instead of silently repairing the plan in code, the agent writes the repair back into the shared artifact. The spec becomes the place where execution-discovered readings are surfaced and reviewed.
 
 Its failure mode is turning the spec into an execution diary. If every local implementation detail flows back into the document, the spec loses its function as a coherence-maintaining narrative. Augment's "directional decisions" requirement is therefore the hard part: bidirectional spec works only if the system can distinguish load-bearing interpretation choices from incidental implementation chatter.
 
@@ -57,7 +57,7 @@ Here "truthfully" means the artifact should not pretend the knowledge is firmer,
 
 ## What this predicts
 
-The framework predicts both advocacy patterns and failure patterns. Each strategy looks right in its zone: spec-first where intent is already clear and the main problem is instruction ambiguity; bidirectional spec where the environment keeps surprising the initial plan and silent projection is the main risk; spec mining where stable rules only appear after observing many executions.
+The framework predicts both advocacy patterns and failure patterns. Each strategy looks right in its zone: spec-first where intent is already clear and the main problem is instruction ambiguity; bidirectional spec where the environment keeps surprising the initial plan and a silently chosen reading is the main risk; spec mining where stable rules only appear after observing many executions.
 
 The corresponding pathologies:
 

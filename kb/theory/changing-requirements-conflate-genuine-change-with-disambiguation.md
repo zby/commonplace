@@ -13,9 +13,9 @@ Agile's "changing requirements" conflate two phenomena: genuine world-change and
 
 Specs are always [underspecified](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — natural language doesn't have precise denotations. When Spec A is underspecified, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
 
-But nothing changed. The ambiguity was present in Spec A from the start. What happened is that B's author performed a **projection** — collapsing the space of valid interpretations to one — and nobody noticed until the consequences surfaced. The later the discovery, the more downstream work is invalidated.
+But nothing changed. The ambiguity was present in Spec A from the start. What happened is that B's author collapsed the space of valid interpretations to one, so B is an unchecked candidate [program refinement](./definitions/program-refinement.md) of A, and nobody noticed until the consequences surfaced. The later the discovery, the more downstream work is invalidated.
 
-The same one-to-many mapping appears in the [spec-to-program projection model](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for LLM systems; traditional development follows the same structure with interpretation buried in implementation rather than surfaced as a distinct step.
+The same one-to-many mapping appears in the [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for LLM systems; traditional development follows the same structure with interpretation buried in implementation rather than surfaced as a distinct step.
 
 ## Two kinds of "changing requirements"
 
@@ -36,7 +36,7 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 ## Deploy-time learning
 
-[Deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation performs an explicit projection, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
+[Deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) extends the same loop to human–AI systems: each deploy surfaces interpretation choices that natural-language specs left open, and [constraining](./definitions/constraining.md) narrows the spec for the next cycle. Every prompt invocation shows its reading in the output, so misreadings surface faster—but the agile propagation bound still applies: shorter cycles limit how much downstream work rests on a wrong reading before correction.
 
 ## Open Questions
 
@@ -48,5 +48,6 @@ This reframes iteration length as an **interpretation-error propagation bound**,
 
 Relevant Notes:
 
+- [program refinement](./definitions/program-refinement.md) — grounds: a downstream spec that commits to one reading of its upstream is a candidate refinement until the reading is checked
 - [silent disambiguation is the semantic analogue of tool fallback](./silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — sharpens: the downstream cascade starts with a runtime event whose degraded status should have been surfaced when the first ambiguity was locally repaired
 - [Ingest: ATAM: Method for Architecture Evaluation](../sources/kazman-2000-atam-architecture-evaluation.ingest.md) — evidenced-by: bounds the two-way split, since the case study's late findings were requirements absent from a specification frozen for two years, a kind of late discovery that is neither genuine change nor a competing interpretation

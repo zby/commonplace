@@ -37,8 +37,8 @@ the choice is described as *what* or *how*. Leaving a choice open still
 requires enough purpose, bounds, and acceptance conditions for the executor to
 recognize permitted adaptation. Otherwise the author has omitted part of the
 commission and the executor must project an interpretation into the gap.
-[Agentic systems interpret underspecified
-instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
+[Prompting changes failure diagnosis with the semantic
+reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
 explains why added framing and constraints narrow this interpretation space.
 Here, an executor can *determine* a choice only when it can select safely from
 authorized evidence, preserve the fixed intent and bounds, and recognize when
@@ -105,13 +105,13 @@ evidence selects among its permitted alternatives. Waiting cannot resolve such
 a choice. If its alternatives are decoupled and all acceptable, it need not be
 fixed. If consistency or hidden cross-task coupling requires several executors
 to use one convention, a coordination-bearing actor must establish or expose
-one shared selection rather than leave independent local projections. This is
+one shared selection rather than leave independent local selections. This is
 a target-side inference combining the hidden-coupling boundary in [intent-
 framed delegation](./intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md),
 the no-discriminating-evidence test in [productive
 deferral](./productive-deferral-requires-option-evidence-and-convergence.md),
-and the plural projections described by [agentic systems interpret
-underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
+and the plural permitted behaviors described by [prompting changes failure
+diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 For interdependent choices, [solving low-degree-of-freedom subproblems first
 can preserve the options of more flexible
 ones](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md);

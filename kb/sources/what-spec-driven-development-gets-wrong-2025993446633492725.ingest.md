@@ -35,7 +35,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 **Strong connections:**
 
-- [agentic-systems-interpret-underspecified-instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — **grounds**: The entire SDD argument rests on the underspecification framework. The dark mode example ("found an existing theme context provider") is an interpretation choice being surfaced rather than silently committed. The bidirectional spec is a mechanism for making projections visible.
+- [prompting-changes-failure-diagnosis-with-the-semantic-reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — **grounds**: The entire SDD argument rests on the underspecification framework. The dark mode example ("found an existing theme context provider") is an interpretation choice being surfaced rather than silently committed. The bidirectional spec is a mechanism for making interpretation choices visible.
 
 - [changing-requirements-conflate-genuine-change-with-disambiguation-failure](../theory/changing-requirements-conflate-genuine-change-with-disambiguation.md) — **exemplifies**: The dark mode example is a disambiguation failure surfacing mid-execution. The human's spec assumed a new store; the agent found an existing context provider. The bidirectional spec catches disambiguation failures in real time rather than at iteration boundaries.
 
@@ -67,7 +67,7 @@ The `/connect` discovery found 11 connections across the KB, with 5 strong, 4 mo
 
 - **Vendor bias.** This is Augment's official account describing their own product. The dark mode example is a marketing scenario, not a case study. We don't know how Intent performs on messy real-world tasks where the "found an existing X, wired into that" narrative breaks down — e.g., when the agent's discovery is wrong, when multiple agents update the spec with contradictory findings, or when the spec becomes too large to review.
 
-- **Survivorship in the junior engineer analogy.** Good juniors surface directional decisions. Bad juniors either narrate everything or surface nothing. The post assumes agents reliably identify what's directional — but this is exactly the interpretation-underspecification problem the KB's [projection model](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) identifies. The agent must decide which of its decisions are "directional" using... an underspecified spec of what "directional" means.
+- **Survivorship in the junior engineer analogy.** Good juniors surface directional decisions. Bad juniors either narrate everything or surface nothing. The post assumes agents reliably identify what's directional — but this is exactly the interpretation-underspecification problem the KB's [English account of prompting](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) identifies. The agent must decide which of its decisions are "directional" using... an underspecified spec of what "directional" means.
 
 - **Sample size of one design.** The bidirectional spec is presented as THE answer, but alternatives exist: background cleanup agents (the [harness engineering](harness-engineering-leveraging-codex-agent-first-world.ingest.md) approach), proof-gating (Decapod), or automated spec mining. These are complementary strategies, not competitors, but the post doesn't acknowledge the design space.
 

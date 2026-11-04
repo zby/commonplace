@@ -91,8 +91,8 @@ decision premise the owner holds and the code does not express. By [an author
 should fix what the executor can't determine, not what it
 will](./fix-what-the-executor-cant-determine-not-what-it-will.md), a choice
 the implementer cannot settle from doctrine, commission and evidence is a gap
-in the commission, and an implementer facing a gap projects an interpretation
-into it. Which way the projection goes is settled by the second mechanism.
+in the commission, and an implementer facing a gap fills it with an
+interpretation of its own. Which way that choice goes is settled by the second mechanism.
 
 The second is oracle asymmetry, and it decides the direction. In the loops
 Goedecke describes, the operative check on generated code is a test suite

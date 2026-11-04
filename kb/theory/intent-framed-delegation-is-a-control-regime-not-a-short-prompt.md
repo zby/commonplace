@@ -188,7 +188,7 @@ One non-exhaustive Commonplace audit heuristic checks scoped authority; usable
 context and resources; output ownership and integration; feedback and
 verification; accountability and an attributable authority path; and recovery
 or escalation. Coupled work also needs consistency, common selection, or an
-actor empowered to resolve incompatible local projections, because
+actor empowered to resolve incompatible local selections, because
 [agent orchestration needs coordination guarantees](./agent-orchestration-needs-coordination-guarantees-not-just.md).
 One mechanism may govern several surfaces, and a task may expose additional
 ones such as timing, liveness, or concurrency.

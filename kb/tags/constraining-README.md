@@ -12,7 +12,7 @@ type: types/tag-readme.md
 - [constraining](../theory/definitions/constraining.md) — definition and spectrum: definitions, conventions, structured sections, schemas, validators, and deterministic code
 - [program refinement](../theory/definitions/program-refinement.md) — the checked narrowing relation behind constraining; an executor's output is a candidate until checked
 - [codification](../theory/definitions/codification.md) — the move from natural language to a symbolic artifact whose consumers are held to a reference that fixes what it permits
-- [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — the foundation: the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
+- [prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — the foundation: two accounts of prompting, under which an instruction permits several behaviors and the executor produces one
 
 ## Instances and techniques
 
