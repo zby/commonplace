@@ -11,11 +11,13 @@ Agile's "changing requirements" conflate two phenomena: genuine world-change and
 
 ## The cascading interpretation problem
 
-A natural-language spec commonly leaves some consequential choice [unsettled](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md). When Spec A does, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
+A natural-language spec can leave a consequential choice [unsettled](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md). When Spec A does, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
 
-But nothing changed. The ambiguity was present in Spec A from the start. What happened is that B's author collapsed the space of valid interpretations to one, so B is an unchecked candidate [program refinement](./definitions/program-refinement.md) of A, and nobody noticed until the consequences surfaced. The later the discovery, the more downstream work is invalidated.
+But nothing changed. The ambiguity was present in Spec A from the start. B's author committed to a reading of A, so B is an unchecked candidate [program refinement](./definitions/program-refinement.md). Whether that reading was permitted may itself be disputed; it is not necessarily an unwanted selection from an agreed set. The later the discovery, the more downstream work is invalidated.
 
-The same one-to-many mapping appears in the [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for LLM systems; traditional development follows the same structure with interpretation buried in implementation rather than surfaced as a distinct step.
+Constructed example: Spec A says “retain records for a year,” and Spec B fixes deletion at 365 days. If the applicable policy already defines a year as 365 days, this is not an interpretation error. If the parties disagree about calendar anniversaries and leap days, B has committed before the permission boundary was settled. A later correction need not reflect a new retention goal.
+
+The [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) exposes the same distinction for LLM systems: selecting among agreed alternatives differs from committing to a disputed reading.
 
 ## Two kinds of "changing requirements"
 

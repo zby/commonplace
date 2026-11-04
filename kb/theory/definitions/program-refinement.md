@@ -36,6 +36,8 @@ Use the term when one artifact's permitted set is claimed to lie inside another'
 
 The relation is stated for a named consumer and reference, as constraining is, and under a named interpretation where English leaves one open. The same prompt permits different sets under an ordinary reading and under an adopted package.
 
+For English requirements, the permitted-set model is a simplification. Satisfaction can be graded, interpretations disputed, or evidence insufficient. “Make the summary more concise” can improve a quality without establishing a boundary of permitted outputs; “at most 100 words” supplies a definite boundary for length, but not for faithfulness. Use set inclusion only for the requirements whose membership conditions are sufficiently definite, and retain the unresolved judgments separately. No numerical or fuzzy-set membership rule is adopted here.
+
 ## Exclusions
 
 - **Iterative improvement.** Prompt refinement, note refinement and in-place refinement in this KB mean editing toward a better artifact. They may narrow or widen a permitted set. The bare word keeps that ordinary sense.

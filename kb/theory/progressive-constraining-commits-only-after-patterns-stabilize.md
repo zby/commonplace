@@ -1,5 +1,5 @@
 ---
-description: Constraining via LLM code generation freezes one unchecked reading of the spec in one shot, but progressive constraining observes behavior across many runs and commits only the interpretations that consistently emerge
+description: "Progressive extraction uses repeated behavior to identify stable candidates, then checks the extracted rule against the applicable requirement before committing it."
 type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, constraining]
@@ -7,22 +7,22 @@ tags: [learning-theory, computational-model, constraining]
 
 # Progressive constraining commits only after patterns stabilize
 
-LLMs can generate code from a spec — spec in, code out. But this is not compilation: the LLM resolves the semantic ambiguity of the spec and produces one implementation. The output is a candidate [program refinement](./definitions/program-refinement.md) of the spec, inside the permitted set or outside it, and nothing in the output says which. See [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for why one spec admits several implementations and generation is not semantics-preserving.
+LLMs can generate code from a spec — spec in, code out. Generation alone does not establish the guarantees expected of a conformant compilation. The LLM produces one candidate implementation and may make choices the spec leaves unsettled. The output is a candidate [program refinement](./definitions/program-refinement.md), not evidence of conformance. Judging it requires an applicable interpretation of the spec; disputed permission boundaries must be settled or reported. The [two accounts of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) distinguish these questions.
 
-This property gives LLM code generation a specific character: it is **one-shot constraining** — freeze a single unchecked candidate into code. Whatever interpretation the LLM landed on this run becomes law, and the other valid interpretations are discarded silently. Regenerating the same spec later may produce a different law.
+Adopting the generated code immediately is **one-shot constraining**: the operation is committed to the candidate's choices before they have been checked. Producing code alone does not make it authoritative. Once adopted, the implementation can exclude alternatives the English requirement allowed, or implement a reading whose permissibility remains disputed.
 
-The alternative is **progressive constraining**: don't freeze on one run. Observe the LLM's behavior across many runs, identify which interpretations it consistently favours, and extract *those* stable patterns into deterministic code — keeping the LLM for genuinely ambiguous cases.
+The alternative is **progressive constraining**: don't freeze on one run. Observe the LLM's behavior across many runs, identify which interpretations it consistently favours, and check those stable patterns against the requirement before extracting them into deterministic code. Leave unresolved cases with an explicit route for judgment or clarification.
 
-Example: a file-renaming agent initially uses LLM judgment for everything. You notice it always lowercases and replaces spaces with underscores — so you extract `sanitize_filename()` to code. The agent still handles ambiguous cases ("is '2024-03' a date or a version?"), but the common path is now deterministic.
+Constructed example: a file-renaming agent consistently lowercases names and replaces spaces with underscores. That stability identifies a candidate `sanitize_filename()` rule; it does not establish permission to lowercase. If the contract requires preserving case, the stable behavior is a violation. If it only asks for “clean names,” whether case changes are allowed may need clarification. Once the policy is settled, check the extracted function against it, including collision cases such as `Report` and `report`. A case such as “is '2024-03' a date or a version?” can still require judgment.
 
 The two modes trade off differently:
 
-- **One-shot** commits immediately. You get a deterministic artifact now, but the commitment is arbitrary — whatever the LLM sampled on that run. If the spec was wide, the chance that the frozen candidate matches what you actually wanted is low.
-- **Progressive** defers commitment. You only codify what's empirically stable across runs, so the resulting code reflects behavior the system actually exhibited — not a single sample of what the spec allows. Stability is not conformance: a model can consistently violate an instruction, so the extracted rule is still checked against the applicable requirement before it is committed. You pay for this with observation time, the check, and the cost of running the underspecified version longer.
+- **One-shot** commits immediately. The artifact fixes the generated choices without establishing that they match the requirement. A wide or disputed permission boundary increases what must be checked; it does not by itself give a probability of failure.
+- **Progressive** defers commitment. You only codify what's empirically stable across runs, so the resulting code reflects behavior the system actually exhibited — not a single generated candidate. Stability is not conformance: a model can consistently violate an instruction, so the extracted rule is still checked against the applicable requirement before it is committed. You pay for this with observation time, the check, and the cost of running the underspecified version longer.
 
-Progressive is [codification](./definitions/codification.md) taken seriously: commit to symbolic media where a pattern has proven itself, not where the spec happens to admit it. One-shot is faster when the spec is narrow enough that one reading is as good as another — or when you genuinely don't care which interpretation wins. Progressive pays off when the interpretation space is wide and only part of it matters in practice.
+Progressive extraction uses [codification](./definitions/codification.md) to retain patterns supported by both behavioral evidence and checks against the requirement; stability alone supplies only the first. One-shot is faster when the spec is narrow enough that one reading is as good as another — or when you genuinely don't care which interpretation wins. Progressive pays off when the interpretation space is wide and only part of it matters in practice.
 
-Either way, **version both spec and artifact**. Regeneration is another candidate — potentially a different resolution of the same ambiguity — not a deterministic rebuild from source.
+Either way, **version both spec and artifact**. Regeneration is another candidate — potentially a different resolution of the same ambiguity. Even repeatable generation does not establish conformance to the English requirement.
 
 ---
 

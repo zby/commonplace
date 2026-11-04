@@ -7,7 +7,7 @@ tags: [llm-reliability, computational-model, evaluation, learning-theory]
 
 # LLM output deviation requires three-way diagnosis because remedies target different relations
 
-When an LLM's output is not what the user wanted, diagnosis must answer three distinct questions. Represent the problem with the intended set `I` of outputs the user would accept, the valid set `V` of outputs the specification admits, and the output distribution `D` the interpreter produces from that specification.
+When an LLM's output is not what the user wanted, diagnosis must answer three distinct questions. Where the applicable interpretation makes the relevant membership judgments sufficiently definite, represent the problem with the intended set `I` of outputs the user would accept, the valid set `V` of outputs the specification admits, and the output distribution `D` the interpreter produces from that specification. This is a simplifying model: graded satisfaction, disputed interpretations and missing evidence can prevent an inside/outside judgment for a particular output.
 
 - **[Underspecification](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)** — Does `V` extend beyond `I`? The specification admits outputs the user did not want. A perfect, deterministic interpreter still faces this mismatch.
 - **[Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md)** — Does `D` put mass outside `V`? The specification rules an output out, but the interpreter can produce it anyway.
@@ -47,7 +47,7 @@ The three questions have different empirical signatures, although none is a comp
 
 - Hold the assembled input fixed and resample: variation that crosses `I` or `V` shows that sampling affects whether failure is realized. Stable failure does not by itself distinguish underspecification from interpreter failure.
 - Hold public meaning fixed and vary only surface style or the ordering of equivalent candidates: systematic performance change reflects interpreter sensitivity because `V` did not move.
-- Read the spec against the bad output: if a competent reader, given only that spec, would accept the output, `V` admits it and the failure is underspecification, not interpreter failure.
+- Read the output against the full applicable contract and its adjudication conventions. If these sufficiently settle that the output is permitted but unwanted, diagnose underspecification. If they settle that it is forbidden, diagnose interpreter failure. One competent reader's acceptance is evidence about an interpretation, not a verdict that overrides a reasonable dispute.
 
 [Ma et al.'s prompt stability study](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) generates prompt variants intended to preserve semantics and interfaces while changing emotion and personality framing. With a uniform temperature of 0.2, it draws 16 independent samples per prompt. Its reported stability result aggregates those samples into per-prompt elasticity and then averages across prompts. That comparison does not separately identify within-prompt sampling dispersion, so sampling variation and framing sensitivity remain mixed in the result. Conditional on the variants preserving public meaning as intended, `V` is fixed and the study does not test underspecification. Across 14 models, the reported Pass@1–AUC-E rank correlation is Spearman ρ = −0.433 (p = 0.122; 95% CI [−0.875, 0.249]). This nonsignificant correlation does not by itself establish that performance and stability are decoupled optimization objectives.
 
@@ -59,7 +59,9 @@ The three diagnostic relations are distinct, but they are not independent knobs.
 
 Repeated sampling is one way to make a plural `V` visible, because a deterministic interpreter can silently choose the same admissible interpretation every time. Reading the specification can reveal the same mismatch without resampling.
 
-Attribution between underspecification and interpreter failure depends on how the spec is read. In genuinely borderline cases, the assignment is contestable. The competent-reader test above operationalizes the distinction well enough for triage, but it is not a decision procedure.
+Attribution between underspecification and interpreter failure depends on how the spec is read. Consider three constructed cases. A contract permits JSON or CSV, but the caller wanted JSON: a CSV response is permitted but unwanted. A settled JSON-only contract receives CSV: execution violates the instruction. Reviewers disagree about whether CSV satisfies “a suitable export format”: membership is unsettled, so neither diagnosis is established. Clarification or adjudication is needed, not merely more samples.
+
+For “a concise, useful summary,” satisfaction can also be graded without an agreed acceptance threshold. If reviewers agree on the criterion but lack the original document, the problem is instead missing evidence. These limits on applying `I` and `V` do not require adding a fourth output-failure category or assigning numerical membership scores. Retain the uncertainty and judge any independently settled requirements separately.
 
 The decomposition begins after the assembled input is fixed. Wrong retrieval, stale memory, or bad tool output change that input upstream rather than adding another relation inside it. It also assumes `I` exists and is known to the user. When intent is itself unformed — the user cannot say what would count as acceptable — no remedy in this taxonomy applies.
 

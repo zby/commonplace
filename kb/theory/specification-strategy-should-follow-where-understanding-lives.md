@@ -9,7 +9,9 @@ tags: [learning-theory, constraining, method-guided-action]
 
 Debates about specification strategy often collapse into one question: "Should we write the spec first?" But [Spec Driven Development](https://x.com/juliandeangeIis/status/2033303156340240481), [bidirectional spec maintenance](https://x.com/augmentcode/status/2025993446633492725), and [spec mining](./spec-mining-as-codification.md) solve different failure modes because they store disambiguation in different places — in the initial document, in a live artifact updated during execution, or in rules extracted after repeated behavior. They feel incompatible because they are choosing different storage locations for the same kind of work.
 
-[Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) gives the mechanism. Natural-language instructions permit several readings. Where a reading is consequential and must hold across runs, something has to commit to it. Specification strategy is therefore a policy for **when** that commitment happens and **which artifact** records it.
+[Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) gives the mechanism. Natural-language instructions can permit several alternatives or leave disagreement about what is permitted. Where a reading is consequential and must hold across runs, something has to commit to it. Specification strategy is therefore a policy for **when** that commitment happens and **which artifact** records it.
+
+Constructed example: a report exporter can deliberately permit either JSON or CSV, selecting anew for each request. It need not commit to one forever. But if a downstream importer requires JSON, that restriction needs a retained home. If the instruction merely says “a suitable export format,” whether CSV is acceptable may first need adjudication; recording the generator's usual choice does not settle it.
 
 This note is specifically about **durable artifacts**. Interactive clarification inside a conversation is another way to narrow ambiguity, but it does not by itself produce something later sessions can inspect and inherit. The question here is narrower: once a clarification is worth preserving, where should it live?
 
@@ -43,7 +45,7 @@ These strategies look like competing ideologies only if you assume a system shou
 
 1. Start with a spec-first sketch to bound ambiguity.
 2. Switch to bidirectional maintenance as execution discovers mismatches.
-3. Promote recurring discoveries into extracted rules once the pattern is stable.
+3. Promote recurring discoveries into extracted rules once the pattern is stable and checked against the applicable requirement.
 
 This is why [deploy-time learning's agile-style natural-language/code co-evolution](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) needs a finer breakdown than "natural-language and code co-evolve." Co-evolution is real, but the right natural-language strategy depends on when the system can say something trustworthy.
 
