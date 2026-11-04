@@ -8,7 +8,7 @@ tags: [learning-theory, constraining]
 
 Constraining is committing choices in a retained artifact that narrow which readings or behaviors its consumer should treat as valid, or rank which valid reading it should choose. This KB calls the set of valid readings the artifact's **interpretation space**; constraining narrows it or ranks within it. When a retained constraint improves the system's capacity to act, constraining is learning in [Simon's sense](../learning-is-not-only-about-generality.md): one of the main ways a deployed system learns without weight updates. A change that only makes an artifact easier to find, shorter, or more useful is not constraining unless some reading that was valid before is now invalid or ranked lower.
 
-Interpretation space depends on the consumer. Natural language [admits several valid readings](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md), and a model or human picks one on each use, so the same convention leaves a different interpretation space for a weaker model, a stronger model, and a human reader. How constrained an artifact is should be stated for a named consumer. Reliability, speed, cost control, and reviewability may follow from constraining, but they are consequences rather than the definition.
+Interpretation space depends on the consumer. Natural language [admits several valid readings](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md), and a model or human picks one on each use, so the same convention leaves a different interpretation space for a weaker model, a stronger model, and a human reader. How constrained an artifact is should be stated for a named consumer. A constraining step is a [program refinement](./program-refinement.md) step when the narrowed set lies inside the old one and the narrowing is checked. Reliability, speed, cost control, and reviewability may follow from constraining, but they are consequences rather than the definition.
 
 ## Scope
 
@@ -74,6 +74,7 @@ Gradual typing, formal specification, and ontology engineering each narrow inter
 Relevant Notes:
 
 - [codification](./codification.md) — defined-in: the move from natural-language into symbolic form within constraining
+- [program refinement](./program-refinement.md) — defined-in: the formal reading of a checked narrowing, and the candidate status of an executor's unchecked output
 - [representational form](./representational-form.md) — defined-in: the symbolic criterion, where the artifact's language has a formal semantics or is close to one, and the split behind what a constraint leaves open
 - [lineage](./lineage.md) — contrasts: source derivation, independent of how constrained an artifact is
 - [agentic systems interpret underspecified instructions](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: why natural-language artifacts leave an interpretation space to narrow

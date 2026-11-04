@@ -1,5 +1,20 @@
 # Projection inventory
 
+## Decision, 2026-11-04
+
+Projection is not registered. It stays ordinary language, and the
+[collision ledger](../../reference/vocabulary-collision-ledger.md) records why.
+The technical relation is registered as
+[program refinement](../../theory/definitions/program-refinement.md), a compound,
+because the bare word already means iterative improvement across the library.
+An executor's unchecked output is a candidate refinement. The remaining work
+is a wording pass, not a rename: the Tier 1 sites that treat projection as a
+model ("projection model", "spec-to-program projection model", "a valid
+projection", "the projection-versus-compilation distinction") are reworded in
+terms of candidate and checked refinement; metaphorical uses may stay. Tier 2
+backlinks are re-grounded on the program-refinement and constraining
+definitions.
+
 Working inventory for deciding whether "projection", the KB-local term for an
 executor choosing one outcome from the set an instruction permits, is kept,
 redefined or replaced by "refinement" after the Dijkstra and Morgan ingests.

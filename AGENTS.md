@@ -72,6 +72,7 @@ First-mention glossing and linking in authored artifacts is governed by
 | Explanatory-reach | [Explanatory-reach](./kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
 | Frontloading | [Frontloading](./kb/theory/frontloading-spares-execution-context.md) |
 | Mark | [Tag-readme marks](./kb/types/tag-readme.md) |
+| Program refinement | [Program refinement](./kb/theory/definitions/program-refinement.md); bare "refinement" is ordinary English for iterative improvement. |
 | Representational form | [Representational form](./kb/theory/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
 | System-definition artifact | [System-definition artifact](./kb/theory/definitions/system-definition-artifact.md) |
 | Tentative theory | [Tentative theory](./kb/theory/definitions/tentative-theory.md) |

@@ -30,7 +30,7 @@ If the account captures the interactions relevant to a question, it supports loc
 
 ## Executing English through a fallible interpreter
 
-A caller can instead treat the English instructions as the governing specification and ask the LLM to carry them out. Execution can then violate the instruction even when it follows the model package exactly. It can also select an unwanted outcome that the instruction permits.
+A caller can instead treat the English instructions as the governing specification and ask the LLM to carry them out. Execution can then violate the instruction even when it follows the model package exactly. It can also select an unwanted outcome that the instruction permits. The instruction permits a set of behaviors and the executor produces one; that output is a candidate [program refinement](./definitions/program-refinement.md) of the instruction, inside the set or outside it, and nothing in the output says which.
 
 The governing reference includes the surrounding rules as well as the instruction. [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md): “Return JSON only” and “On failure, raise an exception” leave a choice unless the contract or runtime settles whether exceptions use a separate channel or a JSON error record. Scope, precedence and exception handling belong in the interpretation. The issue applies to human readers as well as models.
 
