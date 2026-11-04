@@ -73,6 +73,20 @@ The problem matters: top-down program development needed a single semantic frame
 > negative numbers stand for insoluble equations in elementary arithmetic
 > --- `kb/sources/.snapshots/morgan-the-specification-statement.md` @ `sha256:14ace2bad0042b6766bf07099c05017a730f93aa8f17fb6a06fdacb4f670d9c7` — introduction; "tAt: t:zduded miracle" is OCR for "the Excluded Miracle"
 
+> But Q differs from P in that Q will
+> always terminate, even when z = 7. And Q is deterministic: if z = 6, Q will
+> establish z = 3.
+> --- `kb/sources/.snapshots/morgan-the-specification-statement.md` @ `sha256:14ace2bad0042b6766bf07099c05017a730f93aa8f17fb6a06fdacb4f670d9c7` — section 3, refinement example: termination as well as reduced nondeterminism
+
+> Proof: Structural induction, over the program constructors ";", "if") and
+> "do".
+> --- `kb/sources/.snapshots/morgan-the-specification-statement.md` @ `sha256:14ace2bad0042b6766bf07099c05017a730f93aa8f17fb6a06fdacb4f670d9c7` — Theorem 2, scope of the monotonicity proof; punctuation retained from OCR
+
+> Definition 10 i8 an extension of Dijkstra's language (necessarily, since
+> it is not monotonic with respect to ~ i it is in fact the "+" operator of
+> [25]).
+> --- `kb/sources/.snapshots/morgan-the-specification-statement.md` @ `sha256:14ace2bad0042b6766bf07099c05017a730f93aa8f17fb6a06fdacb4f670d9c7` — section 7, the extended guardless if; OCR retained
+
 ## Connections Found
 
 For the occasion, the source is a **formal anchor**. It gives an exact model of a specification as a program with permitted variation, and of code as a narrowing of that variation. One correction to the occasion's framing matters. The paper's semantics is a predicate transformer, not a set of outcomes. Read relationally, `[pre, post]` permits, from any pre-state, every final state satisfying post. Refinement then does two things: it may shrink the set of permitted outcomes where the predecessor terminates, and it may add termination where the predecessor could abort. "Choosing a subset" is therefore only half of refinement. Miracles are the edge case where the permitted set is empty and termination is still promised.

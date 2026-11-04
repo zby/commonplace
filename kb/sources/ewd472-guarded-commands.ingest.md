@@ -61,6 +61,9 @@ The problem is how to give programs a semantics that supports deriving them from
 > wp(S, F) = F
 > --- `kb/sources/.snapshots/ewd472-guarded-commands.md` @ `sha256:a6a25b25c97c641aef61283653706ab5428d142470d041ce0c64ac4617841618` — §3.1: property 1; the capture does not name it the Law of the Excluded Miracle
 
+> More specifically: we shall use the notation “wp(S, R)”, where S denotes a statement list and R some condition on the state of the system, to denote the weakest pre-condition for the initial state of the system such that activation of S is guaranteed to lead to a properly terminating activity leaving the system in a final state satisfying the post-condition R .
+> --- `kb/sources/.snapshots/ewd472-guarded-commands.md` @ `sha256:a6a25b25c97c641aef61283653706ab5428d142470d041ce0c64ac4617841618` — section 3.1, weakest precondition includes proper termination
+
 ## Connections Found
 
 For the occasion, the source is the formal anchor for a specification that denotes a closed set of permitted outcomes. It is the KB's first source on classical formal program semantics. Its main role is to supply a precise instance for claims that currently state permitted variation abstractly. [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) says a reference "may leave permitted variation". EWD 472 is evidence for that claim: a fully formal semantics whose meaning is a permitted outcome set. [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) says nondeterminism can be represented as permitted transitions. The paper is evidence for that claim too: the semantics is authored independently of any implementation, guard order is irrelevant, and concurrent guard evaluation is admitted.
