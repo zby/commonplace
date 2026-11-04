@@ -25,11 +25,11 @@ fix-what-the-executor, constraining-README, both ingests) were re-grounded in
 the same commits.
 
 Tier 2 done in 6c4fc3ea1 (fourteen files). Tier 3 done in the next commit
-(thirty-two files relabeled, four glosses rewritten). Left as they were, for
-an operator decision: `tarski-truth-and-proof`, `tarski-semantic-conception-of-truth`
-and `iep-liar-paradox` describe an impossibility paragraph that the rewritten
-central note no longer contains, and the retained audit and rename reports
-are historical records.
+(thirty-two files relabeled, four glosses rewritten). The three ingests that analysed
+the old note's impossibility paragraph (`tarski-truth-and-proof`,
+`tarski-semantic-conception-of-truth`, `iep-liar-paradox`) carry a
+"since rewritten" marker and their recommendations are marked closed. The
+retained audit and rename reports are historical records and untouched.
 
 Working inventory for deciding whether "projection", the KB-local term for an
 executor choosing one outcome from the set an instruction permits, is kept,
