@@ -33,7 +33,7 @@ Role markers remain evidence the model interprets unless architecture makes thei
 
 **Discoverability.** When behavioral specifications live in ordinary prose files, the operative system is distributed across artifacts that also look like documentation. Without routing, indexing, or registration, it becomes hard to tell which text actually changes behavior.
 
-[Constraining](./methodology-enforcement-is-constraining.md)—narrowing the range of valid interpretations—is the architectural response. Moving recurring requirements from instructions toward schemas and scripts gives symbolic interpreters the authority and scope rules that the natural-language medium itself does not enforce.
+[Constraining](./methodology-enforcement-is-constraining.md)—narrowing the range of valid interpretations—is the architectural response. Moving recurring requirements from instructions toward schemas and scripts gives interpreters whose language defines scope, such as a parser or runtime, the authority and scope rules that the natural-language medium itself does not enforce.
 
 ---
 
