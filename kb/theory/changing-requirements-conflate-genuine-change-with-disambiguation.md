@@ -11,7 +11,7 @@ Agile's "changing requirements" conflate two phenomena: genuine world-change and
 
 ## The cascading interpretation problem
 
-Specs are always [underspecified](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — natural language doesn't have precise denotations. When Spec A is underspecified, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
+A natural-language spec commonly leaves some consequential choice [unsettled](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md). When Spec A does, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
 
 But nothing changed. The ambiguity was present in Spec A from the start. What happened is that B's author collapsed the space of valid interpretations to one, so B is an unchecked candidate [program refinement](./definitions/program-refinement.md) of A, and nobody noticed until the consequences surfaced. The later the discovery, the more downstream work is invalidated.
 
@@ -32,7 +32,7 @@ The agile insight that short iterations "reduce risk" is usually framed as: deli
 
 In waterfall, a wrong interpretation in an early spec can cascade through months of downstream work before anyone deploys and discovers the error. In agile, you deploy after weeks — so the wrong interpretation has less downstream work built on top of it when it surfaces. The cost of correction grows with how much was built on the wrong reading.
 
-This reframes iteration length as an **interpretation-error propagation bound**, not just a change-response latency. Even in a world where requirements never genuinely changed, short iterations would still be valuable — because specs are always underspecified and interpretation errors are inevitable.
+This reframes iteration length as an **interpretation-error propagation bound**, not just a change-response latency. Even in a world where requirements never genuinely changed, short iterations would still be valuable — because a spec that leaves a consequential choice unsettled invites interpretation errors that only downstream work reveals.
 
 ## Deploy-time learning
 
