@@ -20,6 +20,8 @@ Repair: say generation fixes one candidate implementation, whose permitted behav
 
 ## R2 — Scoping needs a stated architecture and influence path
 
+Disposition: corrected on 2026-11-04. The operator chose a local definition of frame as the complete context supplied to one model invocation. Summaries and tool results supplied to that invocation are inside the frame. The note now states direct access exclusion rather than absence of all causal influence. Scope is treated as a usual feature of practical traditional programming languages, not a consequence of symbolic form; no general account of its origin is adopted. The zero-error claim and dependent glosses now describe code applying defined input-selection rules without repeated model interpretation; the rule and implementation still need checking. The finding below records the earlier wording.
+
 [LLM context is composed without scoping](../../theory/llm-context-is-composed-without-scoping.md), The architectural response, correctly stops deriving scope from symbolic membership. But it now says no adopted package marks tokens out of range, scope can only be imposed outside a call, and excluded tokens “cannot influence” a frame.
 
 Those conclusions exceed the reference-choice argument. The claim needs the flat-context architecture it describes; a governing reference alone says nothing about masking or enforced internal boundaries. Excluding a token sequence from direct input also does not exclude information conveyed by a summary, a tool result or shared state. The same section still assigns “zero error cost” to surrounding code.
@@ -52,4 +54,4 @@ These are follow-ups to repaired arguments, not a finding that all of F8 remains
 
 The previous workshop header claimed every audit finding had a repair commit while its table still named the uncommitted F3 correction. More importantly, it used “closed” where repair review remained outstanding. The README now distinguishes applied repairs from unresolved claims and replaces the obsolete proposal-stage instructions with current acceptance checks. The projection inventory remains a historical search record; its current-status header must be read before its original counts and recommendations.
 
-No library artifact was changed by this integration review. Subsequent R1 correction is recorded above. Retain and commit the compatible local F3 correction when requested, then work through R2–R5 one note at a time. Review completion, not the existence of repair commits, determines closure.
+No library artifact was changed by this integration review. Subsequent R1 and R2 corrections are recorded above. R1 and the compatible local F3 correction were committed in `b69e7b478`. Next work through R3–R5 one note at a time. Review completion, not the existence of repair commits, determines closure.

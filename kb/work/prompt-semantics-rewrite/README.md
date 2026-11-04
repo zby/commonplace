@@ -4,7 +4,7 @@
 
 The operator commissioned the coherence audit and central rewrite on 2026-11-03, then requested integration of the parallel revisions on 2026-11-04. The purpose is to make the KB consistent with two accounts of prompting: programming in a model-defined language and executing English instructions through a fallible interpreter. Opacity remains relative to the inspection question, tools and budget.
 
-The central rewrite is implemented. The latest integration review covers the 22 commits after `693ab4306` through `6ecdced41`, together with the uncommitted correction to `automated-tests-for-text.md`. The parallel work largely supports the rewrite. It also repairs much of the dependent material that this session had planned to tackle next. Do not repeat those migrations.
+The central rewrite is implemented. The latest integration review covers the 22 commits after `693ab4306` through `6ecdced41`, together with the generator/artifact correction to `automated-tests-for-text.md`, subsequently committed in `b69e7b478`. The parallel work largely supports the rewrite. It also repairs much of the dependent material that this session had planned to tackle next. Do not repeat those migrations.
 
 Repair commits are not the same as reviewed closure. Several revised passages retain categorical claims that conflict with the central account. [The integration review](./integration-review-2026-11-04.md) records their exact scope and proposed repairs. The workshop remains open for those items and final acceptance checks.
 
@@ -27,8 +27,8 @@ The identifiers refer to the dated [coherence audit](../../reports/retained/prom
 |---|---|---|
 | F1 central argument | Rebuilt; latest additions compatible with our work | `aef13b709`, `d3a6459b0`, `e76d0972e`, `6ecdced41`; two accounts, English adjudication, disputed membership |
 | F2 navigation | Main thesis repaired | Computational-model head uses the revised account; final gloss check remains |
-| F3 testing | Practices rewrite and R1 correction implemented | `b4858b39b`, `a0f274dc7`, `693ab4306`, `263966e5c`; R1 now distinguishes a candidate implementation from its permitted behaviors. Generator/artifact correction in `automated-tests-for-text.md` is validated but uncommitted |
-| F4 scoping | Form-label inference repaired; guarantee still too broad | `7093080cd`; review R2 |
+| F3 testing | Practices rewrite and R1 correction implemented | `b4858b39b`, `a0f274dc7`, `693ab4306`, `263966e5c`; R1 now distinguishes a candidate implementation from its permitted behaviors. Generator/artifact correction in `automated-tests-for-text.md` and R1 committed in `b69e7b478` |
+| F4 scoping | R2 corrected: frame means one invocation’s complete input; direct exclusion and checked selection rules | `7093080cd`, `5b53e7b18`; completed disposition in review R2 |
 | F5 opacity and near-decomposition | Definition/necessity rollback and invariant distinction implemented | `a14b910e9`, `9d91230e1`, `f377f14ca`; broader invariant theory is parked separately |
 | F6 partial evaluation | Precise-semantics objection removed; inspection/equivalence overclaims remain | `acc843c5d`; review R3 |
 | F7 verifiability | Independent properties named; categorical ladder remains | `35daecae2`; review R4 |
@@ -47,7 +47,7 @@ The identifiers refer to the dated [coherence audit](../../reports/retained/prom
 
 ## Next work and acceptance
 
-R1 is corrected: generation fixes a candidate implementation without establishing that its permitted behaviors preserve the specification's guarantees. Retain the compatible generator/artifact correction already in the working tree. Next address R2, the scope guarantee, then R3–R5 one note at a time, rather than rerunning the completed vocabulary migration.
+R1 is corrected: generation fixes a candidate implementation without establishing that its permitted behaviors preserve the specification's guarantees. The compatible generator/artifact correction is committed in `b69e7b478`. R2 is corrected: frame construction selects inputs without guaranteeing all causal isolation or scope within those inputs, and code selection does not imply zero error cost. Next address R3, the partial-evaluation argument, then R4–R5 one note at a time.
 
 Before closure, inspect the revised passages and relevant navigation against these conceptual cases:
 
@@ -60,7 +60,7 @@ Before closure, inspect the revised passages and relevant navigation against the
 - An isolated model input with information arriving through summaries, tools or shared state: distinguish direct exclusion from complete noninterference.
 - A local intervention that changes a small quantity but breaks a required invariant: weak interaction alone does not justify ignoring the effect.
 
-These are review cases, not a commissioned empirical trial. The workshop closes after the remaining claims are resolved or explicitly deferred to a durable owner, the local testing correction is committed, and final navigation and acceptance checks are complete. Extract any useful remaining working material, then delete the workshop and its index entry.
+These are review cases, not a commissioned empirical trial. The workshop closes after the remaining claims are resolved or explicitly deferred to a durable owner, and final navigation and acceptance checks are complete. Extract any useful remaining working material, then delete the workshop and its index entry.
 
 ## Boundaries
 
