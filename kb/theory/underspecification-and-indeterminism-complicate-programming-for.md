@@ -1,64 +1,74 @@
 ---
-description: Indeterminism doubles test runs (statistical testing over distributions); underspecification doubles test targets (spec analysis for ambiguity). Conflating the two leads to misdiagnosis
+description: "Maps typing, testing, code extraction and versioning to the questions they answer; distinguishes requirement adequacy, conformance, predictive fidelity and execution variation."
 type: types/note.md
-traits: [title-as-claim]
+brief: underspecification-and-indeterminism-complicate-programming-for.brief.md
+traits: [title-as-claim, has-comparison]
 tags: [learning-theory, computational-model, constraining, llm-reliability]
 ---
 
-# Underspecification and indeterminism complicate programming for prompts in distinct ways
+# Programming practices for prompts need evidence matched to the question
 
-*Provisional decomposition. The distinction is useful operationally but has not been tested as an exhaustive account.*
+Typing, testing, code extraction and version control help maintain prompts and KB instructions when each practice addresses a specific question. A type check can establish that required fields are present without establishing that their contents are correct. Repeated runs can estimate failure frequency without settling which outputs should count as failures. The useful transfer from programming is the check and the evidence it supplies, together with the limits of that evidence.
 
-Much of what we do in llm-do and this knowledge base is applying established programming practices to prompts, documents, and LLM workflows. The transfers are practical and actionable. Two properties of LLM-based systems — [semantic underspecification and execution indeterminism](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — make some practices harder than their traditional-programming originals, but in distinct ways.
+[The two accounts of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) distinguish executing an English instruction from programming in a language defined by an adopted model package. The same prompt can be assessed under either account. A precise model-defined semantics can remain [opaque](./opacity-depends-on-the-inspection-question-and-budget.md): establishing a behavior or the effect of an edit can exceed the inspection budget. English then supplies a candidate prediction of behavior, as well as a possible requirement against which behavior is judged.
 
-## Practices we apply
+## Testing starts with the question
 
-**Typing.** We assign types to documents to mark what operations they afford — a `claim` can be verified, a `spec` can be implemented, `instructions` can be followed. This is the same practice as typing values in code: [the type determines valid operations](./instructions-are-typed-callables.md). The [verifiability criterion](./document-types-should-be-verifiable.md) ensures types do real work — a type that doesn't enable specific operations is noise.
+Four questions call for different evidence. They can arise together; they are not exclusive failure classes.
 
-**Progressive compilation.** We constrain LLM behaviour into code as patterns emerge — the same move as compiling: freezing a flexible representation into a rigid, efficient one. [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) frames this explicitly. The [verifiability gradient](./verifiability-gradient.md) maps the spectrum from prompt tweaks through evals to deterministic modules. Unlike compilation, constraining is projection from an underspecified spec — the natural-language specification admits multiple valid implementations, and committing to code means choosing one interpretation and fixing it in a language with precise semantics. Indeterminism adds noise on top (different runs may surface different interpretations), but the deeper operation is resolving the semantic ambiguity. The "progressive" qualifier matters: LLM code generation itself is one-shot — freezing whatever projection the LLM sampled this run — whereas progressive constraining extracts only the patterns that stabilize across many runs; see [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md). The same pattern applies to [methodology enforcement](./methodology-enforcement-is-constraining.md) — written instructions compile into skills, then hooks, then scripts — with the added insight that not all methodology should complete the trajectory.
+| Question | Useful check | What it leaves unresolved |
+|---|---|---|
+| Does the requirement capture what is wanted? | Review examples, exclusions, scope and interactions with other instructions against the caller's intent. | Whether execution follows that requirement. |
+| Does execution conform? | Compare behavior with the named reference: the applicable English instruction or the adopted package. | Whether conforming behavior meets the task's needs. |
+| Does the behavioral description predict execution? | Compare predicted effects with observations across relevant inputs and edits. | Whether accurately predicted behavior is acceptable. |
+| Do repeated executions vary in a way that matters? | Record execution conditions and compare outputs using the acceptance criterion. | Whether that criterion captures the requirement, or what caused a failure. |
 
-**Testing.** We test prompts and templates the way we test code. But LLM-based systems are harder to test, and the two phenomena create different challenges. Execution indeterminism means the same input produces different outputs across runs — you need statistical testing over distributions, not assertion equality. Semantic underspecification means the spec itself admits multiple valid interpretations — you need to test whether the instructions are sufficiently constraining, not just whether individual outputs look right. The first challenge requires running N times and checking the distribution; the second requires inspecting the spec for ambiguity, consistency, and sufficient constraint. The [text testing pyramid](./automated-tests-for-text.md) sketches what this looks like concretely: deterministic checks at the base, LLM rubric grading in the middle, corpus compatibility at the top.
+For example, suppose the caller and reviewer agree that every successful response must be JSON, with no Markdown wrapper. A wrapper violates that English requirement. Under a model-defined language, the same wrapper can conform to the package while defeating the programmer's prediction and failing the requirement. Repeating the request can help estimate how often the wrapper appears. It does not determine whether wrappers should be accepted.
 
-**Version control.** We version prompts, templates, and [knowledge artifacts](./definitions/knowledge-artifact.md) in git, treating them as source code. [Selecting a specific LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) fixes which generated result is versioned without making its text unambiguous. Versioning the spec still matters because regeneration is a new projection from the same underspecified spec — potentially a different result and perhaps a different resolution, not a deterministic rebuild.
+When the applicable instruction leaves a consequential choice unsettled, clarify it or retain the uncertainty in the verdict. [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md), so reviewing each clause separately may miss a scope or precedence issue. [Legal drafting](./legal-drafting-solves-the-same-problem-as-context-engineering.md) offers comparison cases for that English requirement work; it is not the explanation of every prompt-testing difficulty.
 
-**Design for testability.** [Codification chooses repo artifacts](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) specifically because they're inspectable — any agent can diff, test, and verify them. Testability as a design property, applied to LLM output.
+### Repetition and assertions answer different questions
 
-## The hard cases
+[Output variation depends on decoding and execution conditions](./execution-indeterminism-is-a-property-of-the-sampling-process.md). Sampling can vary outputs; changing context, tool state or numerical serving conditions can also change them. A fixed prompt alone does not fix the complete computation.
 
-The difficulty is relative to the comparison domain. Compared to code (precise semantics), prompts are harder to test and verify. But compared to natural language specifications interpreted by humans, the challenges are familiar — [legal drafting has centuries of methodology](./legal-drafting-solves-the-same-problem-as-context-engineering.md) for managing the same underspecification. Execution indeterminism is genuinely novel; underspecification is not. The real difference is that humans accumulate judgment through experience — a developer reads the wiki, internalizes it, eventually transcends it. Agents are [permanently stateless](./agent-statelessness-makes-routing-architectural-not-learned.md): always a newbie, always needing the skill loaded. The practices transfer, but what's a pedagogical convenience for humans is architectural necessity for agents.
+Variation does not prevent assertions. Each response can be checked for valid JSON even when its contents differ. Repeated trials support estimates of failure frequency under the tested conditions; the number of trials depends on the estimate and uncertainty required, not a universal multiplier. Exact-output comparison is useful when exact reproduction is the property being checked.
 
-Testing is the clearest example, and it doubles the testing surface — but the two halves come from different phenomena.
+A deterministic setup still needs coverage of different inputs and interactions. A finite sequence of identical answers does not prove determinism, and a consistently wrong answer is still wrong. [Debugging](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) therefore compares intent, instruction and output before treating retry frequency as a diagnosis.
 
-**Indeterminism doubles the test runs.** The same prompt produces different outputs across runs due to sampling, so you can't assert equality — you test the distribution. This requires statistical techniques (run N times, check pass rates, set confidence thresholds) where traditional code needs a single assertion.
+### Generators and their artifacts are separate testing targets
 
-**Underspecification doubles the test targets.** In deterministic code there's no gap between what the code says and what it does, so you only test outputs. With natural-language specs, the instructions admit multiple valid interpretations — you need to test the instructions themselves (are they consistent? unambiguous? sufficiently constraining?) as well as the outputs. A consistently unwanted answer may be permitted by the specification or may violate an explicit requirement. [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) explains why reading the specification against intent and output is necessary before deciding what repeated runs establish.
+A prompt or template can be tested for the quality of the artifacts it produces. A retained artifact can also be checked on its own merits. [Selecting one output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) fixes the artifact to inspect without settling how later readers interpret it. This distinction applies to deterministic generators too.
 
-The two phenomena compound: you're testing an underspecified specification executed by an indeterministic engine. Each requires different techniques — statistical testing for indeterminism, structural analysis for underspecification — and conflating them leads to misdiagnosis.
+The [text-testing pyramid](./automated-tests-for-text.md) offers artifact checks at different levels: deterministic structure checks, rubric-based content judgments, and compatibility with the surrounding corpus. A generated note passing those checks does not establish that its generator reliably produces acceptable notes. A good generator likewise does not certify every retained output.
 
-## Why the practices transfer
+## Other practices and their limits
 
-Both domains solve the same problems: making behaviour predictable, making systems composable, making artifacts verifiable. The underlying concepts (type theory, compilation, contracts) explain *why* a practice works in both settings. [Thalo](../agent-memory-systems/reviews/thalo.md) demonstrates the endpoint: a system that built a full compiler (Tree-Sitter grammar, LSP, 27 validation rules) for knowledge management, taking typing and testing to their logical extreme. [Codification systematises these transfers](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the accumulated prompt adjustments, output post-processing, and workflow changes that every deployed system accumulates are exactly these programming practices applied informally. The motivation is practical — these are things we do, not abstractions we admire.
+**Typing.** [Document types](./document-types-should-be-verifiable.md) identify expected structure and operations. [Procedure signatures](./instructions-are-typed-callables.md) can state which document types an operation accepts and produces. Their benefit depends on checking those expectations. A required Evidence section makes evidence available for review; its presence does not establish that the evidence supports the claim.
 
-## Open Questions
+**Code extraction.** Replacing a repeated prompt operation with a readable function can expose its rule for inspection and testing. Under English instruction execution, this may be described as projecting a specification into a particular implementation. Generation does not establish that the implementation is a valid projection. It must be checked against the applicable requirement, including cases the observed runs did not cover.
 
-- What other programming practices haven't been applied yet but could be? (Code review for prompts? Dependency injection for context? Refactoring patterns?)
-- Where do the practices break down — which ones mislead when applied to systems with underspecified instructions?
-- Can we develop prompt-native practices that have no programming equivalent?
+[Progressive constraining](./progressive-constraining-commits-only-after-patterns-stabilize.md) uses recurring behavior to identify candidates for extraction. Recurrence alone establishes neither adequacy nor equivalence. Compare the candidate with the required behavior and assess its inspection and execution costs. The gain depends on the extracted rule and its scope, not on code being inherently correct.
+
+[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves an operation into symbolic form through a governed language or adoption of a consumer as its reference. Adopting a model package can codify an operation without exposing a readable rule. Code extraction is therefore one intervention, not the definition of every codification. Nor do instructions, skills, hooks and scripts form an automatic progression in enforcement: [activation and response must be assessed separately](./methodology-enforcement-is-constraining.md).
+
+**Version control.** Version the prompt, assembled inputs, model and runtime binding, and the requirements or rubrics used to assess results where these affect the comparison. Version retained [knowledge artifacts](./definitions/knowledge-artifact.md) separately from their generator. Regeneration may reproduce an artifact when the full computation is fixed; when it differs, the recorded versions help identify what changed. A fixed version does not establish an unambiguous instruction or an adequate result.
+
+**Design for testability.** [Readable scripts and validators](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) can expose individual rules for review. [LLM–code boundaries](./llm-code-boundaries-are-natural-checkpoints.md) expose arguments and results that can be captured, checked and replayed under specified conditions. These mechanisms reduce particular inspection costs. They do not guarantee that the checks encode the right requirement or run at every relevant boundary.
+
+## Scope
+
+This account does not rank all prompts as harder to test than all conventional programs. Inspection cost depends on the question, available descriptions, tools and evidence. Conventional programs also need requirement assessment, implementation checks and adequate test coverage.
+
+Underspecification and execution variation remain distinct concerns when present. Neither is necessary to every prompt operation, and neither exhausts its testing obligations. Precise semantics and deterministic execution can coexist with an opaque program and an inadequate requirement.
+
+The examples are conceptual checks, not empirical claims that these practices improve every workflow. The choice and cost of a check depend on the property it must establish and the consequences of missing a defect.
 
 ---
+
 Relevant Notes:
 
-- [programming-language types applied to documents](./instructions-are-typed-callables.md) — typing practice applied to KB documents
-- [document types should be verifiable](./document-types-should-be-verifiable.md) — quality criterion for document types
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — conceptual foundation: underspecified vs precise semantics, constrain/relax, spec-to-program projection
-- [progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — sharpens: the "progressive" qualifier in progressive compilation names a specific contrast with one-shot LLM code generation
-- [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: distinguishes a missing requirement from a violated one before using retries to assess variation
-- [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — extends: explicit boundary values support inspection and replay when the relevant state is fixed
-- [codification](./definitions/codification.md) — progressive compilation in practice
-- [constraining is learning](./definitions/constraining.md) — synthesizes: the informal programming practices accumulated by every deployed system are what codification systematises
-- [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — extends: version control fixes one generated result while generator and artifact remain separate testing targets
-- [inspectable artifact](./inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md) — design for testability applied to LLM artifacts
-- [automated tests for text](./automated-tests-for-text.md) — extends the testing discussion: concrete test pyramid for the doubled testing surface this note identifies
-- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: progressive compilation applied specifically to KB methodology, with a concrete gradient (instruction -> skill -> hook -> script) and the insight that judgment-requiring operations stay at skill level permanently
-- [Context Engineering for AI Agents in OSS](https://arxiv.org/pdf/2510.21413) — validates: 466 OSS projects independently apply version control, iterative refinement, and structured conventions to AI context files — empirical confirmation that programming practices transfer to prompting at scale
-- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: the most extreme available case — structural tests, linters, CI, and dependency graphs applied wholesale to a 1M LOC agent-first codebase where all code is agent-generated
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the reference determines what counts as a conformance failure
+- [English can approximate a model-defined prompt language](./english-can-approximate-a-model-defined-prompt-language.md) — grounds: predictive fidelity is separate from requirement adequacy
+- [Automated tests for text](./automated-tests-for-text.md) — extends: checks applied to retained artifacts
+- [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: selects repairs using distinct comparisons
+- [Methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: packaging a procedure does not by itself establish enforcement
