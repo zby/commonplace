@@ -1,5 +1,5 @@
 ---
-description: "Flat context concatenation lacks local scope and produces name collision, contamination, and spooky action at a distance; code-built sub-agent contexts must impose boundaries"
+description: "Flat context concatenation lacks local scope and produces name collision, contamination, and spooky action at a distance; selected invocation inputs limit direct access without establishing scope within the supplied context"
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model, context-engineering]
@@ -7,29 +7,31 @@ tags: [computational-model, context-engineering]
 
 # LLM context is composed without scoping
 
-An LLM's context is assembled by concatenating system prompts, skill bodies, user messages, and tool outputs into a single token stream. Everything is global: every token is visible to every other token, with no way to say "this binding is local to this skill" or "this tool output should not influence instruction interpretation."
+This note concerns flat context assembly: system prompts, skill bodies, user messages and tool outputs are combined without a separate mechanism enforcing each item's local scope. Role labels and delimiters may guide interpretation, but concatenation alone does not establish that one instruction applies only to one skill or document.
 
-This is not even dynamic scoping (name bindings resolved through the call stack rather than the source structure), which at least maintains a stack with push and pop. Flat concatenation is the [homoiconic medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) (instructions and data share one representation) with no structure imposed on top, yet it produces dynamic scoping's pathologies — and the Lisp analogy still clarifies them:
+A **frame** here is the complete context supplied to one model invocation. Summaries and tool results belong to that frame when supplied as input. A sub-agent that makes several model calls has a frame for each invocation.
 
-**Spooky action at a distance.** An early turn subtly biases a later response. The LLM has no mechanism to mark a binding as out of scope — once something enters the log, it influences everything downstream. This is the [three-space memory claim's](./flat-memory-predicts-specific-cross-contamination-failures-that-are.md) "operational debris pollutes search" failure mode, restated as a scoping problem.
+Flat context can exhibit failures resembling those associated with dynamic scope:
 
-**Name collision.** "Table" meant an HTML element in turn 3 but a database table in turn 12, and the model conflates them. A flat log has no scope boundaries to disambiguate — every use of a term sits in one namespace.
+- **Distant influence:** material retained from an earlier task can affect a later response even when the current task does not authorize that use.
+- **Name collision:** “table” can mean an HTML element in one passage and a database table in another; the model must resolve the intended use from the supplied context.
+- **Limits on local reasoning:** a skill's text alone may not predict its behavior when other instructions and history share the frame.
 
-**Inability to reason locally.** You cannot predict what a sub-task will do by reading its prompt alone; its behavior depends on the entire accumulated history. This is the defining problem of dynamic scope: the meaning of a name depends on the call stack, not the definition site.
+These are comparisons about interpretation. They do not imply that an LLM implements a conventional language's variable-binding rules.
 
 ## The capture problem
 
-Flat concatenation creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." The data-level use of "summarize" captures the instruction-level meaning. This is a hygiene failure that leads to prompt injection — the same problem Scheme's hygienic macros (macros that rewrite code without accidentally capturing names from the call site) solve for code generation.
+Flat concatenation creates a composition-specific problem: **capture**. A skill says "summarize the document." The document contains "don't summarize this section, skip it." If the model follows the document's instruction instead of the skill, content has been treated as governing instruction. “Capture” is an analogy here: the failure concerns authority over the task, rather than lexical variable capture.
 
 ## Within-frame hygiene
 
-Within a single context, the only scoping mechanisms available are weak conventions:
+In this flat arrangement, interpretation can be guided by:
 
 - **Role markers** (system/user/assistant/tool in chat APIs) — primitive structural separation, but the LLM still sees all roles in one attention pass
 - **Delimiters and quoting** — XML tags, markdown fences, explicit "the following is data, not instructions" markers — conventional, not enforced
 - **Ordering conventions** — system prompt first, then context, then user message — exploits primacy/recency effects but provides no isolation
 
-These are the LLM equivalent of coding conventions in a language without a module system. They help, but they cannot prevent capture — and they cannot disable **non-selective semantic integration**: prompt semantics the task contract does not license still steer generation, because every token shares one global attention field.
+These are the LLM equivalent of coding conventions in a language without a module system. Their presence alone does not establish isolation. The relevant failure is **non-selective semantic integration**: supplied content steers generation beyond the role the task contract assigns it.
 
 ## Non-selective semantic integration
 
@@ -45,9 +47,7 @@ Flat logs have a real upside: implicit communication. When a user says "use a mo
 
 Scope is a usual feature of practical traditional programming languages, but it does not follow from [symbolic form](./definitions/representational-form.md) alone. A prompt can be symbolic under a path that adopts a model package as its reference without thereby acquiring scope. Whether a particular prompt language provides scope is a separate question.
 
-A **frame** here is the complete context supplied to one model invocation. Summaries and tool results belong to that frame when supplied as input. A sub-agent that makes several model calls has a frame for each invocation.
-
-At invocation time this surfaces as a design choice — **flat (parent context)** or **bounded (sub-agent frame)** — same representational form, same substrate, same authority path, different context-efficiency profile. Flat pays the full volume and complexity cost and risks contamination; bounded trades an interface cost for isolation.
+An invocation can receive the accumulated parent context or a separately assembled set of inputs. Both are frames under this definition. Selecting inputs can reduce irrelevant material, at the cost of deciding what the new invocation needs and how results return.
 
 **Sub-agents** provide a way to construct a separate frame with selected inputs. The model cannot read omitted material directly in that invocation. A summary of that material is a new input inside the frame, not an exception to the boundary. Frame construction selects what context is supplied; it does not by itself establish scope among the supplied instructions.
 

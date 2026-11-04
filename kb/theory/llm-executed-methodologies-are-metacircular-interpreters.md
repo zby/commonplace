@@ -19,9 +19,11 @@ The metacircular part appears when those same artifacts govern edits to themselv
 
 ## Codification is the compiled path
 
-The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted natural-language while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. Each step is [constraining](./definitions/constraining.md), as [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) argues, and the gradient is not inherent: a step can fix when a rule applies without settling what satisfies it, or settle what is permitted without supplying a check, so what a step buys has to be stated for that step.
+The compiled analogue is [codification](./definitions/codification.md): committing a natural-language rule to symbolic execution. Packaging a practice as an instruction, skill, hook or command does not by itself establish that transition. A change is [constraining](./definitions/constraining.md) when it commits choices about applicability or acceptable responses, as [methodology enforcement](./methodology-enforcement-is-constraining.md) explains.
 
-This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in natural language where humans and agents can still revise the interpretation cheaply.
+Consider a review rule: “Check that each claim has supporting evidence.” Moving that text into a skill can make it easier to find without changing when it applies or what counts as support. Requiring the review before publication settles its activation while leaving the support judgment to the reviewer. Adding a validator that rejects a missing review record codifies the record check; it does not codify the judgment that the evidence supports the claim.
+
+The JIT analogy concerns selective implementation: particular operations can move into code while others remain interpreted. It does not make stability alone a reason to extract code. The choice depends on what the operation commits and how its conformance and task adequacy can be checked. A judgment-heavy review can remain natural language even when a required code check controls whether its acceptance has been recorded.
 
 ## Self-hosting remains partial
 
@@ -33,7 +35,7 @@ The characteristic failure mode is the interpreter version of trusting-trust: an
 
 Relevant Notes:
 
-- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — mechanism: the interpreted-to-symbolic enforcement gradient
+- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — mechanism: separates commitments about activation from commitments about acceptable responses
 - [codification](./definitions/codification.md) — defined-in: the natural-language-to-symbolic crossing that supplies the compiled path
 - [system-definition artifact](./definitions/system-definition-artifact.md) — grounds: explains why methodology files can shape future behavior
 - [a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — scope: why self-hosting remains partial and closure-bounded

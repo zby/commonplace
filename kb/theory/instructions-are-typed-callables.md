@@ -7,28 +7,32 @@ tags: []
 
 # Instructions are typed callables with document type signatures
 
-[Document types mark affordances](./document-types-should-be-verifiable.md) — a `structured-claim` affords verification, a `spec` affords implementation, an `index` affords navigation. Each type step [trades generality for compound gains in reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md): the structure guarantees the parts are there, making operations reliable without reading the whole document first.
+[Document types mark affordances](./document-types-should-be-verifiable.md): a structured claim can be reviewed for evidential support, while an index can be used for navigation. Instructions that operate on these documents can declare their input and output types. This makes their interfaces checkable before an agent follows the procedure.
 
-But some documents aren't data — they're *procedures*. Skills, tasks, workflows: their primary affordance is *being followed*. A task has prerequisites, a goal, a checklist of steps, a verification plan. An agent picks it up and executes it. Skills are the same — `/ingest` is a procedure that transforms a source into a `source-review`. These are the document equivalent of callables: the content is a procedure, and the valid operation is execution.
+Skills, tasks and workflows are callable in this limited sense: a caller supplies inputs and asks an executor to perform an operation. Their bodies may remain natural-language procedures. Declaring a signature does not turn those procedures into conventional functions or establish their correctness.
 
 ## Skills have type signatures
 
-If types mark valid operations on documents, then instructions that operate on documents should declare which types they accept — the same way functions declare parameter types.
+A path alone does not state which document type an operation accepts. An enforced signature can reject an index passed to a workflow that requires a structured claim. It establishes interface compatibility, not that the document's evidence is good or that the workflow will review it correctly.
 
-Currently KB operations take a path and hope for the best. `/connect` implicitly expects a `note` or `index`. `/ingest` expects a source file. A verification workflow would expect a `structured-claim`. None of them check.
+Illustrative signatures, rather than a catalog of current commands:
 
-With type annotations on instructions, you get early validation: "this document is an `index`, but this workflow operates on `structured-claim` — wrong type." The instruction is a function, the document is an argument, and the document's type determines whether the operation is valid.
+| Operation | Signature |
+|---|---|
+| Source analysis | `source → source-analysis` |
+| Connection discovery | `note → connection-report` |
+| Structural validation | `note → validation-report` |
+| Note conversion | `text → note` |
 
-This gives skills type signatures:
+A signature must describe the operation's actual outputs and mutations. A connection report and an edited note are different results; a caller needs to know which one a procedure promises.
 
-| Skill | Signature |
-|-------|-----------|
-| `/ingest` | `source → source-review` |
-| `/connect` | `note \| index → note \| index` (mutates links) |
-| `/validate` | `note → validation-report` |
-| `/convert` | `text → note` |
+## The signature leaves semantic questions open
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns stabilize, committing to one reading as a checked [program refinement](./definitions/program-refinement.md) of the operation. An adopted model check and a predicate justified against the requirement both implement the operation; only the second settles what the operation requires.
+Consider two checks on a structured claim: whether it contains an Evidence section, and whether that evidence supports its conclusion. The first can use a heading predicate. The second needs a standard for support and evidence sufficient to apply it. Both can return a review report, so their shared signature does not capture this difference.
+
+The [governing reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) determines what counts as the operation's semantics. Adopting a model package as that reference can fix the support-checking operation's semantics, even when predicting its judgments is costly. Under an English requirement, the caller, reviewer or stated conventions must settle what support means. Neither choosing a model reference nor implementing a predicate establishes adequacy to that requirement.
+
+The implementation can change while the interface stays fixed. Rewriting a check as code is [codification](./definitions/codification.md); treating it as a checked [program refinement](./definitions/program-refinement.md) additionally requires evidence that it preserves the applicable guarantees. Stable behavior alone supplies neither that evidence nor a reason to prefer code.
 
 ## Open questions
 
@@ -42,6 +46,5 @@ Relevant Notes:
 
 - [document-types-should-be-verifiable](./document-types-should-be-verifiable.md) — foundation: types mark affordances; this note extends the idea from data types to function types
 - [collections and types](../reference/collections-and-types.md) — the artifact type model whose contracts would appear in skill signatures
-- [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [codification](./definitions/codification.md) — the operations afforded by types can themselves codify from LLM to code
-- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: operations on types range from underspecified to precise semantics; constraining commits to one interpretation
+- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: separates the governing semantic reference from adequacy to an English requirement

@@ -9,9 +9,9 @@ tags: []
 
 [Frontloading](./frontloading-spares-execution-context.md) computes known instruction inputs before a consuming LLM call and inserts the results. When it replaces work that depends on those inputs while leaving the remaining task open, it resembles program specialization. This comparison helps identify what can be computed early and what behavior the replacement needs to preserve.
 
-For example, an instruction can ask an agent to list a directory and choose a file relevant to the user's request. Frontloading supplies the listing in advance and leaves the choice to the agent. The listing is static for that call; the request remains dynamic. This constructs a candidate specialized instruction. Whether it preserves the original instruction's meaning is a separate question.
+For example, an instruction can ask an agent to list a directory and choose a file relevant to the user's request. Frontloading supplies the listing in advance and leaves the choice to the agent. The listing is static for the specialization; the request is an input the resulting instruction still accepts. This constructs a candidate specialized instruction. Whether it preserves the original instruction's meaning is a separate question.
 
-Standard PE specialises a program P with respect to known **static** inputs s, producing a **residual program** Ps that needs only the remaining **dynamic** inputs d:
+Partial evaluation (PE) specialises a program P with respect to known **static** inputs s, producing a **residual program** Ps that needs only the remaining **dynamic** inputs d:
 
 ```
 [[Ps]](d) = [[P]](s, d)
@@ -20,8 +20,8 @@ Standard PE specialises a program P with respect to known **static** inputs s, p
 | PE concept | Candidate mapping to frontloading |
 |---|---|
 | Program P | The instruction set (CLAUDE.md, skills, prompts) |
-| Static inputs s | Everything known before the LLM runs (paths, file listings, config, search results over stable content) |
-| Dynamic inputs d | The user's request, conversation state, evolving task |
+| Static inputs s | Inputs fixed at specialization time (paths, file listings, config, search results over stable content) |
+| Dynamic inputs d | Inputs left open by that specialization, such as a later request or task state |
 | Residual program Ps | The frontloaded instructions — static sub-procedures replaced with their results |
 | Binding-time analysis | The author's judgment about what depends on runtime context vs what doesn't |
 | Specialisation | The build-time/setup-time step that produces concrete instructions |
@@ -38,7 +38,7 @@ Applying the equivalence equation above to prompts requires a governing referenc
 
 The comparison must also say which effects matter. Replacing “list the files, then answer” with a supplied listing removes a tool call. Equality of the full execution trace is therefore different from preservation of the answer's required properties. The listing must remain valid for the consuming call, as the [frontloading note](./frontloading-spares-execution-context.md) requires.
 
-Frontloading targets execution-context savings and may improve reliability. Those benefits need their own assessment; neither follows from semantic equivalence alone. The shared text medium makes insertion straightforward, but does not establish that the substituted instructions preserve the relevant behavior.
+Frontloading targets execution-context savings and may improve reliability. Those benefits need their own assessment; neither follows from semantic equivalence alone.
 
 ## What the shared medium establishes
 

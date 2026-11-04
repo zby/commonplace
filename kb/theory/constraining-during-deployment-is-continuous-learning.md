@@ -1,32 +1,51 @@
 ---
-description: Continuous learning can happen outside of weights; constraining is one retained-artifact form where prompts, schemas, tools, and tests accumulate durable adaptive capacity during deployment
+description: Evaluated constraints retained during deployment can change later behavior without weight updates; persistence and successful composition require separate assessment
 type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining, deploy-time-learning, self-improving-systems, continual-learning]
 ---
 
-# Constraining during deployment is continuous learning
+# Constraining during deployment can produce learning outside weights
 
-AI labs frame "continuous learning" as a weight-update problem: how do you adapt a deployed model to new data, new tasks, and shifting distributions without a full retraining cycle? The standard approaches — fine-tuning on deployment logs, online learning, experience replay — all modify the model's parameters. But [constraining](./definitions/constraining.md) — accumulating retained artifacts like prompts, schemas, evals, tools, and deterministic code — adapts deployed systems through a different mechanism entirely.
+[Constraining](./definitions/constraining.md) commits choices about what a rule permits or prefers. When deployment experience leads a system to select and retain a useful constraint, later executions can benefit without changing the model's weights. This is one path within [deployment-time adaptation through retained artifacts](./retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 
-A constraining step [can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) when the committed reading fits the task; which of those it buys depends on the step. Extracting a deterministic `format_date()` function makes date formatting reliable, fast, and cheap. Versioning a system prompt with house style examples makes tone more consistent across sessions without changing speed or cost. Adding a validation script catches the errors its predicate covers, which previously required human review. Retained gains persist, accumulate, and compose — and they produce the same narrowing of the behavior distribution that fine-tuning targets, just through inspectable, rollbackable artifacts instead of opaque weight updates.
+Retention makes the change available for later use. To establish an improvement, the system must also check what the constraint changes and whether those effects serve the task. Saving an instruction or committing a validator does not by itself establish a gain in adaptive capacity.
 
-Herbert Simon: learning is any change that produces a more or less permanent change in a system's [capacity for adapting to its environment](learning-is-not-only-about-generality.md). Constraining during deployment meets every part of this definition — it changes the system (new or modified artifacts), the change is permanent (versioned, committed), and the capacity for adaptation improves. The definition doesn't require weight updates. It requires capacity change.
+## What a retained constraint can improve
 
-This note is therefore a subset claim, not the umbrella claim. It does not argue that retained artifacts are the only form of continuous learning. It argues that constraining is one concrete way continuous learning happens outside weights.
+A constraining step [can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) when its committed reading fits the task. The benefit depends on the change:
 
-This isn't hypothetical. Systems like DSPy and ProTeGi already automate one slice of constraining — searching over prompt components to optimize against an objective — and the ML community recognizes this as learning. Research on [professional developers using AI agents](https://arxiv.org/html/2512.14012v1) shows the same pattern in manual form: developers iteratively refine prompts, tools, and workflows based on deployment experience. Agent memory systems (Claude's memory files, Cursor rules, AGENTS.md conventions) store preferences across sessions. All of this is continuous learning through constraining — it just isn't recognized as such.
+- Specifying a date format and timezone rule removes choices that a general date-formatting instruction leaves open. A tested implementation can then apply the rule without repeated model calls.
+- Retaining house-style examples gives later sessions the same guidance. Whether the examples improve tone consistency needs comparison against the style requirement.
+- Requiring a validation script at publication checks its encoded predicates on each candidate. The predicates still need to represent the intended requirements.
 
-Weight-based learning captures distributional knowledge (style, tone, world knowledge) that doesn't reduce to explicit artifacts — not all continuous learning is constraining. But the extractable, testable subset that constraining handles covers most of what deployed systems need. The manual version works; [automating the judgment-heavy parts](./automating-kb-learning-is-an-open-problem.md) is where the real gap is.
+These changes can improve different dimensions. Faster execution, lower cost and better conformance should be assessed separately, as the [verifiability examples](./verifiability-gradient.md) illustrate.
+
+## Persistence does not establish composition
+
+Versioning preserves an artifact and makes rollback possible. Its benefit persists only while later executions use it under conditions where the commitment remains useful.
+
+Two useful constraints can also conflict. A rule requiring every quotation to include a source URL can improve traceability; a separate rule forbidding URLs in public output can protect private locations. Used together on a quotation from a private source, they require a decision about applicability or precedence. Keeping both rules does not settle that decision or preserve both benefits.
+
+Evaluate a retained change with the other rules it will encounter. Record the conditions under which it helped and revise or remove it when those conditions change. Accumulation supplies more retained commitments; successful composition is a further result to establish.
+
+## When this counts as learning
+
+The capacity-change account in [learning is not only about generality](./learning-is-not-only-about-generality.md) does not require weight updates. Here, deployment evidence drives a proposed constraint, evaluation selects it, and operative retention changes later behavior. The relevant capacity belongs to the deployed system, including its instructions, tools and checks.
+
+This claim concerns that evaluated adaptation loop. An arbitrary durable edit is not evidence of improvement, and not all adaptation constrains behavior: new evidence can instead justify reopening a commitment. [Automating the judgment-heavy parts](./automating-kb-learning-is-an-open-problem.md) includes deciding what to commit, how to evaluate it and when to reconsider it.
+
+## Scope
+
+Constraining is one possible mechanism of learning outside weights. This note does not claim that retained constraints cover most deployment needs, reproduce the effects of weight training, or improve simply by accumulating.
 
 ---
 
 Relevant Notes:
 
-- [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) — foundation: this note is one concrete readable-artifact behaviour-change loop under the broader claim
-- [Axes of artifact analysis](./axes-of-artifact-analysis.md) — sharpens: constraining operates on one family of retained artifacts regardless of whether they live in repos or other storage substrates
-- [constraining](./definitions/constraining.md) — foundation: the general mechanism; this note argues it constitutes continuous learning during deployment
-- [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — foundation: the trade-off that constraining operates on
-- [learning is not only about generality](learning-is-not-only-about-generality.md) — foundation: Simon's definition of capacity change that grounds the claim
-- [automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — applies: the vocabulary gap and automation challenge that follow from recognising constraining as continuous learning
-- [Professional developers don't vibe — they control](https://arxiv.org/html/2512.14012v1) — empirical evidence that developers naturally practice the constraining loop
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — grounds: distinguishes evidence-responsive adaptation from arbitrary durable maintenance
+- [Constraining](./definitions/constraining.md) — defined-in: the commitment operation whose evaluated use this note examines
+- [Constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: benefits depend on the committed reading fitting the task
+- [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: capacity change can concern reliability, speed or cost
+- [The verifiability gradient](./verifiability-gradient.md) — mechanism: compares checks for particular requirements without ranking artifact forms
+- [Automating KB learning is an open problem](./automating-kb-learning-is-an-open-problem.md) — extends: develops the automation problem for selecting and evaluating retained changes

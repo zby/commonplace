@@ -9,7 +9,7 @@ tags: [computational-model, context-engineering, constraining, learning-theory]
 
 The cost of an instruction reference depends on who resolves it. A shell, harness, or tool can expand `$PROJECT_ROOT` after the model emits it; the model need not reconstruct the path. But if the model receives `{{project_root}}` and must turn it into a literal path, resolving the binding becomes part of model execution. This is **model-resolved indirection**: the model must use information elsewhere in its context to produce or apply the referenced value.
 
-This differs from indirection in conventional code. A configuration read may perform I/O, and a lookup may miss a cache, but the programming runtime still provides a formal resolution procedure. Natural-language instructions have no equivalent procedure unless the surrounding harness supplies one.
+This differs from indirection in conventional code. A configuration read may perform I/O, and a lookup may miss a cache, but the programming runtime still provides a formal resolution procedure. An English instruction to resolve a reference leaves that operation to the model. Adopting the model package as its semantic reference fixes what that operation means, but does not supply a separately inspectable resolver.
 
 When the model resolves a reference, the consuming context bears three structural costs:
 
