@@ -6,13 +6,13 @@ tags: [learning-theory, constraining]
 
 # Program refinement
 
-An instruction, prompt or formal specification permits a set of behaviors, its **permitted set**. An artifact Q is a **program refinement** of an artifact P when every behavior Q permits is one P permits: Q narrows P's set without leaving it. A **refinement step** is a narrowing that is committed in a retained artifact and checked against P. The term is a compound; the bare word "refinement" stays ordinary English in this KB.
+An instruction, prompt or formal specification permits a set of behaviors, its **permitted set**. An artifact Q is a **program refinement** of an artifact P when every behavior Q permits is one P permits: Q narrows P's set without leaving it. A **refinement step** is a narrowing that is committed in a retained artifact and checked against P. The term is a compound. The bare word "refinement" stays ordinary English in this KB.
 
 The KB needs the term for two jobs. [Constraining](./constraining.md) narrows an artifact's interpretation space, and program refinement is the formal reading of that narrowing. The [two accounts of prompting](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md) need a name for the relation between what an instruction permits and what an executor produces, one that does not assert the executor landed inside the set.
 
-## The relation and its source
+## The relation and its sources
 
-The definition follows [Morgan's](../../sources/morgan-the-specification-statement.ingest.md) specification statement. A specification written as a precondition and a postcondition is read, verbatim, as "assuming an initial state satisfying pre, establish a final state satisfying post", and it is itself a program, "albeit an abstract one". Refinement orders such programs: Q refines P when every specification P satisfies, Q satisfies too, which Morgan glosses as "This means that Q is an acceptable replacement for P." Composition is monotonic, so refining a fragment in place refines the enclosing program. Morgan calls a specification with no concrete solution a miracle: it has a meaning in the calculus and no implementation.
+The definition follows [Morgan's](../../sources/morgan-the-specification-statement.ingest.md) specification statement. A specification written as a precondition and a postcondition is read, verbatim, as "assuming an initial state satisfying pre, establish a final state satisfying post", and it is itself a program, "albeit an abstract one". Refinement orders such programs: Q refines P when Q satisfies every specification that P satisfies, which Morgan glosses as "This means that Q is an acceptable replacement for P." Composition is monotonic, so refining a fragment in place refines the enclosing program. Morgan calls a specification with no concrete solution a miracle: it has a meaning in the calculus and no implementation.
 
 The permitted set is a closed list, not an absence of rules. [Dijkstra's](../../sources/ewd472-guarded-commands.ingest.md) guarded commands make the choice a construct: when several guards hold, verbatim, "an arbitrary guarded list with a true guard will be selected for execution", and for the resulting program "Only permissible final states are possible and each permissible final state is possible". The weakest-precondition semantics requires every selectable branch to establish the postcondition, the reading later called demonic: the program is correct only if every permitted behavior is acceptable. Under that reading an instruction is only as good as the worst behavior it permits.
 
@@ -23,6 +23,8 @@ Programming-language standards grade the same openness. [N1570](../../sources/wg
 A refinement step is checked. An executor's output is not. Under the English account of prompting, the instruction has a permitted set and the executor produces one behavior. That behavior is a **candidate refinement** of the instruction: it may lie inside the set, where it is a selection the caller may still reject on adequacy, or outside it, where it is a violation, as [out-of-spec output](../out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) states. Nothing in the output marks which. Calling an unchecked output a refinement would assert the conformance that still has to be established.
 
 Compilation by a trusted tool is a refinement step: the tool is held to a reference and its conformance is corroborated by independent tests outside the run, within their tested scope. Generated code is a candidate until checked against the applicable requirement, which is why [progressive constraining](../progressive-constraining-commits-only-after-patterns-stabilize.md) commits a pattern only after observed runs support it. [Codification](./codification.md) by rewriting is a refinement step when the rewritten artifact is checked against the rule it replaces. Codification by adopting a package fixes the permitted set without checking the English requirement against it.
+
+## Monotonicity
 
 Monotonicity holds only where composition is settled. When two instructions leave their scope and precedence open, as in [unsettled composition](../clear-instructions-can-compose-into-an-unsettled-contract.md), the combined permitted set is not defined, so no refinement of the combination can be checked. Settling the composition rule is the step that makes refinement of the parts meaningful for the whole.
 
@@ -37,14 +39,14 @@ The relation is stated for a named consumer and reference, as constraining is. T
 - **Iterative improvement.** Prompt refinement, note refinement and in-place refinement in this KB mean editing toward a better artifact. They need not narrow a permitted set and may widen it. The bare word keeps that ordinary sense.
 - **Theory refinement.** The EITHER and FORTE line that [addressable theory](./addressable-theory.md) cites repairs a rule set against cases. It is revision, not a narrowing within a permitted set.
 - **Adequacy.** A refinement of a wrong specification is a wrong program. Refinement preserves what the specification requires and says nothing about whether the requirement was the right one, the separation the [semantic-reference account](../symbolic-form-holds-consumers-to-a-semantic-reference.md) keeps.
-- **Projection.** Earlier notes called the executor's collapse of a permitted set to one behavior a projection. The word is ordinary language here, apt for a silent and unrecorded choice, and carries no technical properties; the [collision ledger](../../reference/vocabulary-collision-ledger.md) records the decision.
+- **Projection.** Earlier notes called the executor's collapse of a permitted set to one behavior a projection. The word is ordinary language here, apt for a silent and unrecorded choice, and carries no technical properties. The [collision ledger](../../reference/vocabulary-collision-ledger.md) records the decision.
 
 ## Misuse Cases
 
 - Calling a model's output a refinement of its prompt. It is a candidate until checked.
 - Writing "refinement" bare for the technical relation. In the library the bare word mostly names iterative improvement.
 - Treating monotonicity as a free guarantee for prompts. It holds where the composition of instructions is settled, and the composition note shows when it is not.
-- Reading an adopted package's documented choice as a refinement of the English requirement. It fixes the set; adequacy to the requirement is a separate check.
+- Reading an adopted package's documented choice as a refinement of the English requirement. It fixes the set. Adequacy to the requirement is a separate check.
 
 ---
 
