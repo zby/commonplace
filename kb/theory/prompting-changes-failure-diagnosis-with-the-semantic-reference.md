@@ -50,6 +50,8 @@ A deployed workflow needs to say who settles the applicable English reading. It 
 
 Where the applicable contract and adjudication process leave a consequential reading unsettled, the diagnosis should retain that uncertainty. The disputed outcome cannot yet count as a demonstrated interpreter failure.
 
+The KB does not model how natural-language meaning changes. Under the [epistemic stance](../reference/epistemic-stance.md), the meaning of an instruction is the reading a designated reference set converges on, and the set is chosen, not the speech community. A permission judgment is therefore relative to those referees and dated by their rulings, the way a formal reference is pinned by a snapshot and a model by an adopted package. Different readers may hold different parts of a shifting usage, and no universal time orders those states. A later disagreement is a new ruling by a re-consulted or re-designated reference set, not evidence that the earlier judgment was wrong. What the KB retains is the rulings, as [rejected-interpretation capture](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) proposes; the population-level process stays out of scope.
+
 English consequently serves two roles. It states what the system should do, and it supplies an approximate account of what the model-defined program will do. A successful prediction can describe behavior the caller should reject. A clear requirement can be a poor prediction of what the model will produce.
 
 ## The same prediction problem, a different diagnosis
@@ -96,6 +98,7 @@ The examples are conceptual cases. The reliability of an English-based abstracti
 
 Relevant Notes:
 
+- [epistemic stance](../reference/epistemic-stance.md) — grounds: meaning as the convergence of a designated reference set, which makes permission judgments relative to named referees and dated by their rulings
 - [Symbolic form holds consumers to a semantic reference](./symbolic-form-holds-consumers-to-a-semantic-reference.md) — grounds: adoption fixes the governing semantics separately from adequacy and inspection cost
 - [English can approximate a model-defined prompt language](./english-can-approximate-a-model-defined-prompt-language.md) — mechanism: a coarse behavioral account supports local reasoning where its predictions hold
 - [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md) — grounds: the English account must assess the whole applicable instruction set
