@@ -32,7 +32,7 @@ Template variable expansion is textbook PE. The [generate-at-build-time](./gener
 
 Standard PE assumes precise denotational semantics, exact equivalence, and time as the optimisation target. LLM instructions differ on all three points:
 
-- The "program" has [underspecified semantics](./agentic-systems-interpret-underspecified-instructions.md), so there is no exact `[[P]]`
+- The "program" has [underspecified semantics](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), so there is no exact `[[P]]`
 - Replacing a procedure with its result is only approximately equivalent
 - The gain is context and reliability, not runtime speed
 
@@ -44,7 +44,7 @@ Relevant Notes:
 
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — operational context: this note is the theoretical mechanism for the operational claim defended there
 - [LLM contexts interpret instructions and content through the same token medium](./llm-context-interprets-instructions-and-content-through-one-medium.md) — enabling property: the shared token medium is what makes the PE framing precise about substitution rather than metaphorical
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — caveat: the underspecified semantics of LLM instructions is the domain PE operates in here
+- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — caveat: the underspecified semantics of LLM instructions is the domain PE operates in here
 - [Generate KB skills at build time, don't parameterise them](./generate-instructions-at-build-time.md) — instance: template expansion is textbook PE
 - [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — instance: upstream variable resolution is a partial-evaluation specialization step
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — broader frame: the scheduling model treats frontloading as the single-step case

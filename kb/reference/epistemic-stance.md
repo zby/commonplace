@@ -29,7 +29,7 @@ commitments. This page is a stub; it grows from the connections notes make to it
    The meaning of an instruction is read as the reading a designated reference
    set of interpreters converges on, under a stated rule for when two outputs
    count as the same answer; see
-   [agentic systems interpret underspecified instructions](../theory/agentic-systems-interpret-underspecified-instructions.md).
+   [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 
 4. **Objectivity is intersubjective testability** (*Logic of Scientific
    Discovery*, §8), and knowledge lives in artifacts

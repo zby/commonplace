@@ -26,7 +26,7 @@ Together the two simplifications produce the strong form programmers actually sa
 
 ## Neither simplification survives the move to LLM systems
 
-The prompt's public meaning is fixed by shared linguistic-competence norms. These are weaker than a language standard and contestable at the margin: English's users do not hold readers to a particular model as their reference, as the [underspecified-instructions account](./agentic-systems-interpret-underspecified-instructions.md) explains. But the norms are not vacuous. No competent reading of "output JSON only" admits a markdown wrapper.
+The prompt's public meaning is fixed by shared linguistic-competence norms. These are weaker than a language standard and contestable at the margin: English's users do not hold readers to a particular model as their reference, as the [underspecified-instructions account](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) explains. But the norms are not vacuous. No competent reading of "output JSON only" admits a markdown wrapper.
 
 This distinction does not depend on an impossibility of formalizing natural language. [Tarski 1944](../sources/tarski-semantic-conception-of-truth.ingest.md) derives the liar contradiction from semantic closure, including full disquotation for the language's own sentences, together with classical logic; he retains classical logic and defines truth in an essentially richer metalanguage. He does not treat everyday language's vague structure as an exactly specified theory to which a consistency verdict applies. [Truth and Proof](../sources/tarski-truth-and-proof.ingest.md) uses the object-language/metalanguage distinction to block reconstruction of the liar. The [IEP survey](../sources/iep-liar-paradox.ingest.md) reports truth-value-gap alternatives and leaves natural-language closure unresolved. These conditional limits on truth definitions establish no prohibition on executable interpretation.
 
@@ -73,7 +73,7 @@ A system can adopt a frozen model package, decoding included, as the reference f
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: distinguishes a consumer's formally describable behavior from a reference that the language's users hold consumers to
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: distinguishes a consumer's formally describable behavior from a reference that the language's users hold consumers to
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the component claim for interpreter failure, with the worked catalogue of outputs falling outside `V`
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: supplies the reason the diagnosis has exactly these three questions — it is the classical two-norm analysis with both brackets removed
 - [constraining](./definitions/constraining.md) — defined-in: the narrowing operation this note reads as re-purchasing the conformance bracket

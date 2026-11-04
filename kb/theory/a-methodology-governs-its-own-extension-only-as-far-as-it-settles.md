@@ -57,7 +57,7 @@ criterion or result and the pathway must use it. If a choice's variation is
 tolerable, the method can leave it outside the consequential decision set.
 That narrows the claim rather than supplying the missing criterion.
 
-[Underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md)
+[Underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
 can allow different interpretations. Whether that variation matters must be
 assessed against outcomes, rather than treating every unstated detail as a
 reason the method must expand.

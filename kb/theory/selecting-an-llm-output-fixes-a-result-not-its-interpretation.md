@@ -9,7 +9,7 @@ tags: [learning-theory, constraining, evaluation]
 
 *Conceptual claim. The distinction between testing the generator and testing the selected artifact follows from the selection boundary. Whether exploiting that distinction improves outcomes is empirical.*
 
-LLM output can vary for two distinct reasons. A natural-language prompt may admit several valid interpretations, and one inference configuration may produce different renderings across runs. [Semantic underspecification belongs to the instruction, while execution indeterminism belongs to the sampling process](./agentic-systems-interpret-underspecified-instructions.md).
+LLM output can vary for two distinct reasons. A natural-language prompt may admit several valid interpretations, and one inference configuration may produce different renderings across runs. [Semantic underspecification belongs to the instruction, while execution indeterminism belongs to the sampling process](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 
 Selecting one output for reuse directly settles result identity. Alternative completions cease to be candidates for that consumption path; persisting and versioning the selected output fixes the bytes that later consumers receive. This is a [commitment](./commitment-not-derivation-creates-new-ground-truth.md) to a result, not proof that the text expresses a unique interpretation. The selected artifact may still admit several legitimate readings.
 

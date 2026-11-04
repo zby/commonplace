@@ -29,7 +29,7 @@ Human dialogue provides a bounded comparison, not a test of this hypothesis. [Pu
 
 **Deviation diagnosis.** [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) models deviation with the set of outputs the user would accept (`I`), the set the specification admits (`V`), and the interpreter's output distribution (`D`). The hypothesis reshapes each question.
 
-- [Underspecification](./agentic-systems-interpret-underspecified-instructions.md), `V` wider than `I`, is not only an author's omission. For weakly checked terms no artifact fixes what the specification admits, so `V` has no sharp boundary. Underspecification is structural for natural language and shrinks only where a checker exists.
+- [Underspecification](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), `V` wider than `I`, is not only an author's omission. For weakly checked terms no artifact fixes what the specification admits, so `V` has no sharp boundary. Underspecification is structural for natural language and shrinks only where a checker exists.
 - [Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md), `D` outside `V`, presupposes a determinate `V`. Its test asks whether a competent reader given only the spec would accept the output. For unchecked terms that question has no determinate answer, so the line between underspecification and interpreter failure blurs. Registered definitions sharpen `V`'s boundary and make the question askable.
 - [Indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md), the spread of `D`, is the single-model analogue of variance across speakers.
 

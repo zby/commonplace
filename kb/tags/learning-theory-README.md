@@ -29,13 +29,13 @@ These child tags route major parts of the area. A few fundamentals carry only th
 - [Theory builder](../theory/definitions/theory-builder.md) — localized theories that are consumed and criticized for what they say, with the result of criticism shaping the next conjecture; whether a builder learns is tested, not assumed. The [research companion](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) states the program's conjectures about builders
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition
-- [Prompting changes failure diagnosis with the semantic reference](../theory/agentic-systems-interpret-underspecified-instructions.md) — reference choice separates conformance, requirement adequacy and the inspection burden
+- [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — reference choice separates conformance, requirement adequacy and the inspection burden
 - [The verifiability gradient](../theory/verifiability-gradient.md) — the ladder deploy-time artifacts sit on
 - [Constraining and extraction can trade generality for reliability, speed, or cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md) — how the two transforming mechanisms relate
 - [Recognition, not linking, is the hard problem in knowledge systems](../theory/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — where connecting knowledge actually costs, and how naming amortizes it
 - [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — agreement on tests supports scoped conformance claims, not the inference from formalized consumers to symbolic inputs
 - [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — codification commits an interpretation by rewriting or adoption while keeping conformance and requirement adequacy separate
-- [Near-decomposability may make local inspection affordable](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — conjectured mechanism for affordable local inspection; separates locating a fault from containing a repair
+- [Near-decomposability may make local inspection affordable](../theory/near-decomposability-may-make-local-inspection-affordable.md) — conjectured mechanism for affordable local inspection; separates locating a fault from containing a repair
 
 ## Related Tags
 

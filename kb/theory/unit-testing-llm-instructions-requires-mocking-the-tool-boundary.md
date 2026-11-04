@@ -9,7 +9,7 @@ tags: [document-system, constraining, learning-theory]
 
 Skills are programs written in natural language and executed by an LLM. Their dependencies — file reads, searches, writes — flow through tool calls. This makes the tool layer the natural seam for dependency injection: replace real tools with mocks that return predetermined data, and you can test the instructions in isolation.
 
-This is the instruction-testing half of the [doubled testing surface](./underspecification-and-indeterminism-complicate-programming-for.md). The existing [text testing pyramid](./automated-tests-for-text.md) covers artifact testing (is this note good?). Tool mocking covers instruction testing (does this skill reliably produce correct behavior?). Both are needed because [underspecification and indeterminism](./agentic-systems-interpret-underspecified-instructions.md) create failures at both levels — a bad output can come from a good instruction hitting indeterminism, or from a flawed instruction being faithfully executed.
+This is the instruction-testing half of the [doubled testing surface](./underspecification-and-indeterminism-complicate-programming-for.md). The existing [text testing pyramid](./automated-tests-for-text.md) covers artifact testing (is this note good?). Tool mocking covers instruction testing (does this skill reliably produce correct behavior?). Both are needed because [underspecification and indeterminism](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) create failures at both levels — a bad output can come from a good instruction hitting indeterminism, or from a flawed instruction being faithfully executed.
 
 ## Architecture
 
@@ -63,4 +63,4 @@ Relevant Notes:
 - [constraining](./definitions/constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: instruction tests sit on the enforcement gradient between skills (manual invocation) and hooks (automated blocking)
 - [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: behavioral assertions (tool call patterns) are hard-oracle; output assertions (connection quality) are soft-oracle, mirroring the test pyramid split
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: underspecification and indeterminism are why both instruction testing and artifact testing are needed

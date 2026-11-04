@@ -39,7 +39,7 @@ A possible sequence is:
 
 This is a testable process hypothesis, not an observed hidden computation. It contains at least three independently variable transitions: selecting material, assigning relationships, and preserving an existing organization. They may have different causes.
 
-There is a crucial alternative: the model may have silently answered a broader question, such as how to improve the project, while presenting the result as an answer to what A means. That is a task-interpretation error, not necessarily a failure to know the distinction. Compare [underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md), but do not relabel violations of explicit constraints as legitimate ambiguity.
+There is a crucial alternative: the model may have silently answered a broader question, such as how to improve the project, while presenting the result as an answer to what A means. That is a task-interpretation error, not necessarily a failure to know the distinction. Compare [underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), but do not relabel violations of explicit constraints as legitimate ambiguity.
 
 ## 4. Competing explanations and discriminators
 

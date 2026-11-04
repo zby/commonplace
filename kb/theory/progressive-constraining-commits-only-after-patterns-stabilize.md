@@ -7,7 +7,7 @@ tags: [learning-theory, computational-model, constraining]
 
 # Progressive constraining commits only after patterns stabilize
 
-LLMs can generate code from a spec — spec in, code out. But this is *projection*, not compilation: the LLM resolves the semantic ambiguity of the spec and produces one valid implementation from the space the spec admits. See [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) for why spec-to-program is many-to-one rather than semantics-preserving.
+LLMs can generate code from a spec — spec in, code out. But this is *projection*, not compilation: the LLM resolves the semantic ambiguity of the spec and produces one valid implementation from the space the spec admits. See [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for why spec-to-program is many-to-one rather than semantics-preserving.
 
 This property gives LLM code generation a specific character: it is **one-shot constraining** — freeze a single projection of the spec into code. Whatever interpretation the LLM landed on this run becomes law, and the other valid interpretations are discarded silently. Regenerating the same spec later may produce a different law.
 
@@ -28,7 +28,7 @@ Either way, **version both spec and artifact**. Regeneration is another projecti
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the projection model explains why code generation freezes one of many valid interpretations
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the projection model explains why code generation freezes one of many valid interpretations
 - [codification](./definitions/codification.md) — related: progressive constraining is codification applied only to patterns that stabilize across runs
 - [constraining](./definitions/constraining.md) — related: both modes are constraining moves; they differ in when commitment happens
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — contrasts: selecting one generated artifact immediately fixes result identity, while progressive constraining waits for repeated evidence before narrowing semantics

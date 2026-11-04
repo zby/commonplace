@@ -14,7 +14,7 @@ complete: true
 - [Map a design space before selecting](../theory/first-principles-analysis-maps-design-space-before-selection.md) — derive form options before inherited packages narrow the search
 - [What the four-field record exposes](../theory/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md) — efficiency, security, and sovereignty questions
 - [Memory design adds operational axes](../theory/memory-design-adds-operational-axes-to-artifact-analysis.md) — write and read policies supplement artifact classification
-- [Opacity](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — question-relative inspection cost; [a proposed condition](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) behind its sources
+- [Opacity](../theory/opacity-depends-on-the-inspection-question-and-budget.md) — question-relative inspection cost; [a proposed condition](../theory/near-decomposability-may-make-local-inspection-affordable.md) behind its sources
 - [Implementations do not establish shared semantics](../theory/implementations-do-not-establish-shared-semantics.md) — modeling a consumer does not establish conformance
 - [Symbolic form holds consumers to a semantic reference](../theory/symbolic-form-holds-consumers-to-a-semantic-reference.md) — adoption fixes permitted behavior, not adequacy
 

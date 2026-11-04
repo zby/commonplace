@@ -14,7 +14,7 @@ In [Tarski 1944](../../sources/tarski-semantic-conception-of-truth.ingest.md), s
 
 Library destinations for the narrowed paragraphs are:
 
-- [Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md).
+- [Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 - [Traditional software can bracket executor conformance](../../theory/traditional-software-can-bracket-executor-conformance-llm-systems.md).
 
 Both library paragraphs now carry the narrower argument. Parent integration checked them against the retained quotes and corrected an overbroad attribution about formalized-language fragments after independent review. Delivery does not establish any broader institutional construction.

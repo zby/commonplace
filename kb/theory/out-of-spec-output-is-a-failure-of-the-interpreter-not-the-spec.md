@@ -7,7 +7,7 @@ tags: [llm-reliability, learning-theory]
 
 # Out-of-spec output is a failure of the interpreter, not the spec
 
-Real LLMs produce outputs outside the space of valid interpretations. The spec rules them out, but the LLM fails to comply. This is not [underspecification](./agentic-systems-interpret-underspecified-instructions.md) (where multiple outputs are valid) and not [indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md) (sampling noise across runs). It is **interpreter failure**: the gap between what a conforming interpreter of the spec's public meaning would do and what a real LLM does.
+Real LLMs produce outputs outside the space of valid interpretations. The spec rules them out, but the LLM fails to comply. This is not [underspecification](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) (where multiple outputs are valid) and not [indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md) (sampling noise across runs). It is **interpreter failure**: the gap between what a conforming interpreter of the spec's public meaning would do and what a real LLM does.
 
 Calling it a *failure* is a claim about a role, not about the computation. The forward pass computes its own function flawlessly, the way a buggy compiler binary executes its own instructions flawlessly; the fault is non-conformance to what the spec's words publicly mean — the same norm a compiler is held to by a language standard. Classical stacks can bracket that norm because compilers honor it reliably; [LLM systems cannot](./traditional-software-can-bracket-executor-conformance-llm-systems.md). And the norm — the spec's public meaning — is the reading a designated reference set of interpreters converges on ([epistemic stance](../reference/epistemic-stance.md), point 3), never the author's private intent: an unwanted output the words admit is underspecification, the author's problem — not this phenomenon.
 
@@ -24,7 +24,7 @@ Not every measured sensitivity establishes interpreter failure. In the pinned [M
 
 ## Why this matters as a distinct claim
 
-The [idealised two-phenomena model](./agentic-systems-interpret-underspecified-instructions.md) implicitly assumes a conforming interpreter — one that always lands within the valid interpretation space. This is a useful simplification for reasoning about system design, but it leaves out a prominent practical failure mode: the LLM just getting it wrong. The examples above establish existence and variety, not a comparative prevalence rate.
+The [idealised two-phenomena model](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) implicitly assumes a conforming interpreter — one that always lands within the valid interpretation space. This is a useful simplification for reasoning about system design, but it leaves out a prominent practical failure mode: the LLM just getting it wrong. The examples above establish existence and variety, not a comparative prevalence rate.
 
 The remedy is fundamentally different from the other two phenomena. Narrowing the spec (underspecification remedy) can make things worse by overloading context. Sampling control (indeterminism remedy) is irrelevant — a deterministic LLM still fails as an interpreter. The correct remedies are **error detection and correction**: validation, [oracles](./oracle-strength-spectrum.md), [voting](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md), guardrails, and [architectural separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) that moves error-prone operations to reliable substrates.
 
@@ -34,7 +34,7 @@ This is also one phenomenon that makes [discrimination](./the-augmentation-autom
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the idealised two-phenomena model this note extends; covers underspecification and indeterminism in depth
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the idealised two-phenomena model this note extends; covers underspecification and indeterminism in depth
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — sibling: the second phenomenon, a property of the execution engine
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — synthesis: the three-question diagnosis this note is part of, and why error detection and correction is the primary repair surface for out-of-spec output
 - [LLM reliability](../tags/llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery

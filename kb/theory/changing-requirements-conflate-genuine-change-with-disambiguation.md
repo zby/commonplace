@@ -11,11 +11,11 @@ Agile's "changing requirements" conflate two phenomena: genuine world-change and
 
 ## The cascading interpretation problem
 
-Specs are always [underspecified](./agentic-systems-interpret-underspecified-instructions.md) — natural language doesn't have precise denotations. When Spec A is underspecified, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
+Specs are always [underspecified](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — natural language doesn't have precise denotations. When Spec A is underspecified, Spec B (written downstream) silently commits to one interpretation of A. Further specs build on B's interpretation. If that interpretation later turns out wrong, the entire downstream chain breaks — and it looks like "requirements changed."
 
 But nothing changed. The ambiguity was present in Spec A from the start. What happened is that B's author performed a **projection** — collapsing the space of valid interpretations to one — and nobody noticed until the consequences surfaced. The later the discovery, the more downstream work is invalidated.
 
-The same one-to-many mapping appears in the [spec-to-program projection model](./agentic-systems-interpret-underspecified-instructions.md) for LLM systems; traditional development follows the same structure with interpretation buried in implementation rather than surfaced as a distinct step.
+The same one-to-many mapping appears in the [spec-to-program projection model](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) for LLM systems; traditional development follows the same structure with interpretation buried in implementation rather than surfaced as a distinct step.
 
 ## Two kinds of "changing requirements"
 

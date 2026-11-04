@@ -3,7 +3,7 @@
 ## Commission and status
 
 On 2026-11-03 the operator requested a proposal for rewriting
-[Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md),
+[Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md),
 following the [coherence audit](../../reports/retained/prompt-semantics-coherence-audit-2026-11-03.md)
 and the discussion of coarse and detailed prompt semantics. This is an agent
 proposal for the argument, not an adopted replacement or an empirical result.

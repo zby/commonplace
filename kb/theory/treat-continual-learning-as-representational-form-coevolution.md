@@ -38,7 +38,7 @@ The three forms have very different dynamics:
 
 - **Distributed-parametric** updates via gradient descent or other numerical optimization. Needs differentiable or probe-derived signal and heavy training infrastructure; large updates cycle on days to weeks, though smaller add-on mechanisms can be faster.
 - **Symbolic** scripts and validators can be mutated by LLMs or search, then checked against their reference by reading, tests, execution, or formal analysis. Opaque symbolic artifacts, including prompts under adopted model references, may lack an affordable reading route; symbolic membership alone fixes neither inspection cost nor update tempo.
-- **Natural-language** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./agentic-systems-interpret-underspecified-instructions.md), so verification is softer.
+- **Natural-language** artifacts are mutated by LLMs and evaluated by execution, use, or LLM-as-judge. Semantics stay [underspecified](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), so verification is softer.
 
 A joint optimizer has to handle **pace mismatch** — either it runs at the slowest class's cadence, or classes coevolve asynchronously without diverging — and **cross-class credit assignment**: a deployment failure rarely says which class wants the update (prompt revision, tool extraction, memory promotion, weight update, retrieval change). Per-class methods sidestep both by fixing the class in advance.
 

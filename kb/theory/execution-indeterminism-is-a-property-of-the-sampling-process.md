@@ -23,7 +23,7 @@ These mechanisms call for different controls. Sampling settings control token se
 
 ## Determinism does not settle meaning or correctness
 
-Grant fully deterministic inference. Under an ordinary natural-language consumption path, the model can still select one of several reasonable interpretations, or consistently violate an explicit instruction. A stable answer is not evidence that the prompt uniquely requires it or that it is correct. [Semantic underspecification and interpreter failure remain separate questions](./agentic-systems-interpret-underspecified-instructions.md).
+Grant fully deterministic inference. Under an ordinary natural-language consumption path, the model can still select one of several reasonable interpretations, or consistently violate an explicit instruction. A stable answer is not evidence that the prompt uniquely requires it or that it is correct. [Semantic underspecification and interpreter failure remain separate questions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 
 Nor must a language reference require only one output. Under the [representational-form definition](./definitions/representational-form.md), a governing reference can specify permitted variation. A system can adopt a frozen model package as that reference for an operation, with decoding included or its distribution specified. Whether the resulting operation satisfies the requirement remains separate from whether execution conforms to its reference.
 
@@ -37,7 +37,7 @@ The empirical case concerns one reported completion trial and a particular numer
 
 Relevant Notes:
 
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: repeatability does not settle which interpretation the specification permits or the user intends
+- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: repeatability does not settle which interpretation the specification permits or the user intends
 - [Out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — contrasts: a repeated instruction violation remains a violation rather than becoming a specification gap
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — extends: separates specification gaps, interpreter failure, and run-to-run variation to select repairs
 - [LLM reliability](../tags/llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery

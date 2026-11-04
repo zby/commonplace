@@ -38,7 +38,7 @@ requires enough purpose, bounds, and acceptance conditions for the executor to
 recognize permitted adaptation. Otherwise the author has omitted part of the
 commission and the executor must project an interpretation into the gap.
 [Agentic systems interpret underspecified
-instructions](./agentic-systems-interpret-underspecified-instructions.md)
+instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)
 explains why added framing and constraints narrow this interpretation space.
 Here, an executor can *determine* a choice only when it can select safely from
 authorized evidence, preserve the fixed intent and bounds, and recognize when
@@ -111,7 +111,7 @@ framed delegation](./intent-framed-delegation-is-a-control-regime-not-a-short-pr
 the no-discriminating-evidence test in [productive
 deferral](./productive-deferral-requires-option-evidence-and-convergence.md),
 and the plural projections described by [agentic systems interpret
-underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md).
+underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 For interdependent choices, [solving low-degree-of-freedom subproblems first
 can preserve the options of more flexible
 ones](./solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md);

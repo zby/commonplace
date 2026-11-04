@@ -59,7 +59,7 @@ empirical question.
 - **Locating a fault and containing a repair are separate.** A trace can
   implicate a shared rule even when many other parts depend on it. That rule
   can be a repair candidate while checking the edit requires cases across
-  those dependencies. [Near-decomposability](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md)
+  those dependencies. [Near-decomposability](../near-decomposability-may-make-local-inspection-affordable.md)
   proposes weak interaction as a condition that can reduce this inspection
   burden; it is not a requirement for addressability or for identifying a
   candidate part.
@@ -108,6 +108,6 @@ Relevant Notes:
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](./codification.md) — grounds: the crossing that fixes a part's consequences against a reference, separately from whether those consequences are affordable to inspect
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway
-- [Near-decomposability may make local inspection affordable](../opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: proposes when weak interaction can make inspection of a repair's effects local
+- [Near-decomposability may make local inspection affordable](../near-decomposability-may-make-local-inspection-affordable.md) — mechanism: proposes when weak interaction can make inspection of a repair's effects local
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — evidenced-by: the classical precedent
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — evidenced-by: the classical precedent and its search limits

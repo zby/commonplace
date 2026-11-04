@@ -11,7 +11,7 @@ type: types/tag-readme.md
 
 - [constraining](../theory/definitions/constraining.md) — definition and spectrum: definitions, conventions, structured sections, schemas, validators, and deterministic code
 - [codification](../theory/definitions/codification.md) — the move from natural language to a symbolic artifact whose consumers are held to a reference that fixes what it permits
-- [agentic systems interpret underspecified instructions](../theory/agentic-systems-interpret-underspecified-instructions.md) — the foundation: the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
+- [agentic systems interpret underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — the foundation: the spec-to-program projection model, semantic boundaries, and the constrain/relax cycle
 
 ## Instances and techniques
 

@@ -29,7 +29,7 @@ The [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the experi
 
 ## Local starting points
 
-- [Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md): audit the distinction between multiple realizations and imprecise denotation, and the scope of its impossibility argument.
+- [Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md): audit the distinction between multiple realizations and imprecise denotation, and the scope of its impossibility argument.
 - [Three-way diagnosis](../../theory/llm-output-deviation-requires-three-way-diagnosis.md): separates intended outputs, valid outputs, and the interpreter's distribution.
 - [Interpreter failure](../../theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md): supplies the conformance question without making actual model behavior its own standard.
 - [Constraining](../../theory/definitions/constraining.md): tests whether a change preserves meaning, narrows admitted candidates, or changes the interpretation convention.

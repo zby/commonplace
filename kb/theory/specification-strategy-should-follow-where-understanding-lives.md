@@ -9,7 +9,7 @@ tags: [learning-theory, constraining, method-guided-action]
 
 Debates about specification strategy often collapse into one question: "Should we write the spec first?" But [Spec Driven Development](https://x.com/juliandeangeIis/status/2033303156340240481), [bidirectional spec maintenance](https://x.com/augmentcode/status/2025993446633492725), and [spec mining](./spec-mining-as-codification.md) solve different failure modes because they store disambiguation in different places — in the initial document, in a live artifact updated during execution, or in rules extracted after repeated behavior. They feel incompatible because they are choosing different storage locations for the same kind of work.
 
-[Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) gives the mechanism. Natural-language instructions admit multiple valid projections; any working system must collapse that space somehow. Specification strategy is therefore a policy for **when** that collapse happens and **which artifact** records it.
+[Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) gives the mechanism. Natural-language instructions admit multiple valid projections; any working system must collapse that space somehow. Specification strategy is therefore a policy for **when** that collapse happens and **which artifact** records it.
 
 This note is specifically about **durable artifacts**. Interactive clarification inside a conversation is another way to narrow ambiguity, but it does not by itself produce something later sessions can inspect and inherit. The question here is narrower: once a clarification is worth preserving, where should it live?
 

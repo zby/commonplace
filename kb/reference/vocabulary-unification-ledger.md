@@ -40,7 +40,7 @@ semantics following the opacity coherence audit.
 
 **Terms and homes.** [Addressable theory](../theory/definitions/addressable-theory.md)
 exposes assumptions, scope conditions and parts for individual inspection and
-revision. [Near-decomposability](../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md)
+revision. [Near-decomposability](../theory/near-decomposability-may-make-local-inspection-affordable.md)
 is proposed as a mechanism for local inspection: interactions within blocks
 can be considered while interactions across blocks are summarized or neglected
 within a question's tolerance.

@@ -19,7 +19,7 @@ Relevant Notes:
 
 - [What requirements don't you have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md) — evidenced-by: illustrates silent resolution of an open branch toward an unrequested guard; practitioner observation, not a test of the claim
 - [Final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — extends: this note carries the same non-identifiability argument one layer up, from tool failure to unacknowledged semantic underdetermination
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: ambiguity exists because natural-language specs admit multiple valid interpretations
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: ambiguity exists because natural-language specs admit multiple valid interpretations
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — sharpens: the first silent choice is already a degraded run state, not only a future maintenance problem
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — distinguishes: this note is about insufficient specification, not violating a sufficient one
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — applies: ambiguity handling also needs typed recovery and escalation

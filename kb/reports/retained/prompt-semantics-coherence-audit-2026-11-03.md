@@ -41,7 +41,7 @@ This supports the user's revised emphasis, with a qualification already required
 
 ### F1 — The central prompting note incorporates the exception but retains the old thesis
 
-[Agentic systems interpret underspecified instructions](../../theory/agentic-systems-interpret-underspecified-instructions.md), especially lines 16–44, 75–98 and 112–126 at the inspected revision, acknowledges reference adoption and nonessential indeterminism. Later sections still organize the design space as underspecified LLM semantics versus precise deterministic code. They define replacement with code as simultaneously resolving ambiguity and removing sampling, call LLM adherence always probabilistic, and say each constrained piece escapes both testing obligations.
+[Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), especially lines 16–44, 75–98 and 112–126 at the inspected revision, acknowledges reference adoption and nonessential indeterminism. Later sections still organize the design space as underspecified LLM semantics versus precise deterministic code. They define replacement with code as simultaneously resolving ambiguity and removing sampling, call LLM adherence always probabilistic, and say each constrained piece escapes both testing obligations.
 
 These conclusions do not follow for the adopted deterministic package. Nor does moving to a symbolic reference necessarily expose a readable rule or settle requirement adequacy. The migration changed a local explanation without rebuilding the note's governing argument.
 
@@ -71,7 +71,7 @@ An adopted model prompt is symbolic under the new definition without acquiring l
 
 ### F5 — The latest commit turns a conjectural mechanism into a definition and necessity claim
 
-[The near-decomposition note](../../theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) explicitly calls the transfer conjectural. Its Scope says it needs a worked case before entering a definition as more than a mechanism. Yet [representational form](../../theory/definitions/representational-form.md), under “Opacity and inspection,” states that inspection cost *is* the length of the cheapest known explanation. [Addressable theory](../../theory/definitions/addressable-theory.md), under “Blame localizes only where interactions are weak,” states weak interaction as necessary for a located part to be a sound repair candidate.
+[The near-decomposition note](../../theory/near-decomposability-may-make-local-inspection-affordable.md) explicitly calls the transfer conjectural. Its Scope says it needs a worked case before entering a definition as more than a mechanism. Yet [representational form](../../theory/definitions/representational-form.md), under “Opacity and inspection,” states that inspection cost *is* the length of the cheapest known explanation. [Addressable theory](../../theory/definitions/addressable-theory.md), under “Blame localizes only where interactions are weak,” states weak interaction as necessary for a located part to be a sound repair candidate.
 
 The necessity does not follow from the admitted conjecture. A strongly coupled shared routine can still be implicated by a trace and repaired; coupling may broaden regression obligations without making it an unsound candidate. Also, description length alone does not account for the work of finding or checking an explanation. The earlier opacity definition admits abstraction, certificates and other analysis, not only affordable local reading.
 

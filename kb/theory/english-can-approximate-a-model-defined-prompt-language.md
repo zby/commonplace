@@ -33,7 +33,7 @@ The clause-variation test probes that residual by comparing predicted and observ
 
 ## Scope
 
-The decomposition here is of a coarse semantic description into responsibilities. Whether it tracks a useful decomposition of behavioral effects is an empirical question. It makes no claim that the model's parameters divide into corresponding blocks. The [near-decomposability conjecture](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) offers a possible mechanism for affordable local inspection, not confirmation that this example has that structure.
+The decomposition here is of a coarse semantic description into responsibilities. Whether it tracks a useful decomposition of behavioral effects is an empirical question. It makes no claim that the model's parameters divide into corresponding blocks. The [near-decomposability conjecture](./near-decomposability-may-make-local-inspection-affordable.md) offers a possible mechanism for affordable local inspection, not confirmation that this example has that structure.
 
 English is a candidate approximation for the named package and questions, not a universally faithful or uniquely usable description. The requirement role of English remains separate: a faithful prediction can describe behavior the caller should reject.
 
@@ -43,4 +43,4 @@ Relevant Notes:
 
 - [Symbolic form holds consumers to a semantic reference](./symbolic-form-holds-consumers-to-a-semantic-reference.md) — grounds: adoption fixes model-defined semantics without establishing their adequacy to English requirements
 - [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md) — contrasts: English as a governing requirement can itself leave instruction interactions unsettled
-- [Near-decomposability may make local inspection affordable](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md) — mechanism: proposes when manageable interactions could support local reasoning through an abstraction
+- [Near-decomposability may make local inspection affordable](./near-decomposability-may-make-local-inspection-affordable.md) — mechanism: proposes when manageable interactions could support local reasoning through an abstraction

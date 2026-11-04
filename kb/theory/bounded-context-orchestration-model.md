@@ -66,7 +66,7 @@ The form supplies no objective function. To compare two selection strategies, ho
 
 ## Scope and open questions
 
-The form applies most directly to closed-world, barriered-call workflows with explicit resumable state. The representation does not imply one global objective. Goals are [underspecified](./agentic-systems-interpret-underspecified-instructions.md), calls are stochastic, and latency, context cost, reliability, and auditability trade off. The form instead gives scoped comparisons a shared vocabulary for their invariants and criteria.
+The form applies most directly to closed-world, barriered-call workflows with explicit resumable state. The representation does not imply one global objective. Goals are [underspecified](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), calls are stochastic, and latency, context cost, reliability, and auditability trade off. The form instead gives scoped comparisons a shared vocabulary for their invariants and criteria.
 
 - Which task- and model-relative feasibility predicates predict successful calls well enough to guide `select`?
 - When should an orchestrator retain, compress, or discard explicit state?

@@ -7,7 +7,7 @@ tags: [learning-theory, computational-model, constraining]
 
 # Unified calling conventions enable bidirectional refactoring between neural and symbolic
 
-The [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — constrain patterns to code, relax rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
+The [underspecified instructions framing](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — constrain patterns to code, relax rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
 
 ## The mechanism
 
@@ -63,7 +63,7 @@ The imperative style means refactoring between neural and symbolic uses the same
 Relevant Notes:
 
 - Abstracted into: [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](./rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md)
-- [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
+- [agentic-systems-interpret-underspecified-instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the underspecified instructions framing that this note makes architecturally concrete
 - [constraining](./definitions/constraining.md) — the mechanism that unified calling makes frictionless
 - [codification](./definitions/codification.md) — the phase transition from neural to symbolic that unified calling makes a local operation
 - [spec-mining-as-codification](./spec-mining-as-codification.md) — the operational mechanism: observe agent behavior, extract to code — enabled by stable call sites

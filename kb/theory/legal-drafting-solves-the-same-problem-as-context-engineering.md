@@ -7,13 +7,13 @@ tags: [learning-theory, constraining, context-engineering]
 
 # Legal drafting solves the same problem as context engineering
 
-Context engineering for LLMs is writing natural language instructions interpreted by a processor exercising judgment. Law has been doing this for centuries. The parallel is structural rather than merely metaphorical — both domains face [semantic underspecification](./agentic-systems-interpret-underspecified-instructions.md) as a property of natural language, and both have developed techniques to manage it.
+Context engineering for LLMs is writing natural language instructions interpreted by a processor exercising judgment. Law has been doing this for centuries. The parallel is structural rather than merely metaphorical — both domains face [semantic underspecification](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) as a property of natural language, and both have developed techniques to manage it.
 
 The parallel has limits. Judges have decades of domain training, access to external context (legislative history, prior rulings), and operate under institutional constraints (stare decisis, appellate review). LLMs have none of these. At the abstract level, the shared structure is: a spec in a language with irreducible ambiguity, interpreted by a processor that must choose among multiple reasonable readings. The interpreters differ enough that techniques do not transfer intact at the operational level, but the abstract spec-writing problem is the same.
 
 ## The structural parallel
 
-A statute is a natural language specification that a judge must interpret, resolving its ambiguity through judgment rather than compilation. This matches the abstract structure the [underspecified instructions framing](./agentic-systems-interpret-underspecified-instructions.md) describes: a spec that admits multiple valid interpretations, resolved by a processor exercising judgment. What makes the parallel structural is the shared formal situation, not shared subject matter: natural-language specifications remain partly ambiguous, admit multiple reasonable readings, and require an interpreter to choose one in application.
+A statute is a natural language specification that a judge must interpret, resolving its ambiguity through judgment rather than compilation. This matches the abstract structure the [underspecified instructions framing](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) describes: a spec that admits multiple valid interpretations, resolved by a processor exercising judgment. What makes the parallel structural is the shared formal situation, not shared subject matter: natural-language specifications remain partly ambiguous, admit multiple reasonable readings, and require an interpreter to choose one in application.
 
 No natural language specification eliminates all ambiguity. Legal drafters have known this for centuries; context engineers are learning it now.
 
@@ -70,7 +70,7 @@ ABC's hard/soft constraint hierarchy answers the open question below about inter
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
 - [programming practices apply to prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
 - [Source-adoption policy](../reference/source-adoption-policy.md) — see-also: the shipped policy that treats law as an eligible source alongside programming
 - [constraining](./definitions/constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings

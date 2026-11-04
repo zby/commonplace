@@ -28,7 +28,7 @@ This gives skills type signatures:
 | `/validate` | `note → validation-report` |
 | `/convert` | `text → note` |
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns [constrain](./agentic-systems-interpret-underspecified-instructions.md) — committing to one interpretation from the space the spec admits.
+The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns [constrain](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — committing to one interpretation from the space the spec admits.
 
 ## Open questions
 
@@ -44,4 +44,4 @@ Relevant Notes:
 - [collections and types](../reference/collections-and-types.md) — the artifact type model whose contracts would appear in skill signatures
 - [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — the capacity framework: each type step trades generality for reliability+speed+cost, making operations reliable without reading the full document
 - [codification](./definitions/codification.md) — the operations afforded by types can themselves codify from LLM to code
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — parent framing: operations on types range from underspecified to precise semantics; constraining commits to one interpretation

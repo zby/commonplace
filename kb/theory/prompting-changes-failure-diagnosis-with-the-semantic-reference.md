@@ -1,7 +1,7 @@
 ---
 description: "Two accounts of prompting share a behavior-prediction problem but assign failures differently: English governs requirements, or an adopted model package defines the prompt language."
 type: types/note.md
-brief: agentic-systems-interpret-underspecified-instructions.brief.md
+brief: prompting-changes-failure-diagnosis-with-the-semantic-reference.brief.md
 traits: [title-as-claim, has-comparison]
 tags: [learning-theory, computational-model, constraining, llm-reliability]
 ---
@@ -26,7 +26,7 @@ The package's semantics may be precise while too complex to inspect for a partic
 
 [English can approximate a model-defined prompt language](./english-can-approximate-a-model-defined-prompt-language.md) develops this relationship. The English reading is a candidate coarse account of selected behavioral effects. Its fidelity must be assessed for the package, inputs and edits where it will be used. Model-specific conventions and empirical probes can improve that account.
 
-If the account captures the interactions relevant to a question, it supports local reasoning. Where it fails, the inspector needs a refinement or additional evidence. Useful understanding need not locate a separate block of parameters for each clause. [Near-decomposability](./opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md), where interactions across parts can be summarized within the question's tolerance, is a proposed explanation of when such local inspection stays affordable. The prompting account does not require that conjecture to succeed.
+If the account captures the interactions relevant to a question, it supports local reasoning. Where it fails, the inspector needs a refinement or additional evidence. Useful understanding need not locate a separate block of parameters for each clause. [Near-decomposability](./near-decomposability-may-make-local-inspection-affordable.md), where interactions across parts can be summarized within the question's tolerance, is a proposed explanation of when such local inspection stays affordable. The prompting account does not require that conjecture to succeed.
 
 ## Executing English through a fallible interpreter
 

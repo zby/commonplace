@@ -34,7 +34,7 @@ Independent implementations and conformance tests corroborate conformance to the
 
 A lone implementation can serve as the reference once its users hold consumers to it, but its repeatability alone does not show that another consumer could preserve the same rules. An artifact written in a language with independently tested semantics inherits that support within the tested scope.
 
-Not all English passes the clerk. The fragment that does, once its users hold consumers to a reference, is a programming language in the making. Where instructions still require judgment to settle what is permitted, they remain natural-language constraining: [two readings can both be reasonable](../agentic-systems-interpret-underspecified-instructions.md), and no reference settles the disagreement. The boundary concerns the rules supplied for the operation, not a claim that no fragment of natural language can have a formal semantics.
+Not all English passes the clerk. The fragment that does, once its users hold consumers to a reference, is a programming language in the making. Where instructions still require judgment to settle what is permitted, they remain natural-language constraining: [two readings can both be reasonable](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md), and no reference settles the disagreement. The boundary concerns the rules supplied for the operation, not a claim that no fragment of natural language can have a formal semantics.
 
 ## Terminology
 

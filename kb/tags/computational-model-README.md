@@ -11,7 +11,7 @@ Instruction interpretation, scoping, state and orchestration of bounded LLM call
 
 ## Foundations
 
-- [Prompting changes failure diagnosis with the semantic reference](../theory/agentic-systems-interpret-underspecified-instructions.md) — model-defined programming and English instruction execution share a prediction problem but judge conformance against different references
+- [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — model-defined programming and English instruction execution share a prediction problem but judge conformance against different references
 - [Context efficiency](../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — why context is the scarce resource; cost has two dimensions (volume and complexity) that drive the mechanisms below
 - [Bounded-context orchestration](../theory/bounded-context-orchestration-model.md) — gives closed-world orchestration with explicit state and barriered independent call batches a conditional select/call normal form
 - [LLM contexts interpret instructions and content through the same token medium](../theory/llm-context-interprets-instructions-and-content-through-one-medium.md) — instructions and data share the same representation, enabling extensibility but removing structural guardrails

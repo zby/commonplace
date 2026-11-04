@@ -10,7 +10,7 @@ How LLM outputs depart from intended requirements, and how to prevent, detect or
 ## The Taxonomy
 
 - [LLM output deviation requires three-way diagnosis](../theory/llm-output-deviation-requires-three-way-diagnosis.md) — the synthesis: the three diagnostic questions, why prompt narrowing, error correction, and sampling control target different relations and so cannot completely substitute for one another, and how to tell the three apart empirically
-- [Prompting changes failure diagnosis with the semantic reference](../theory/agentic-systems-interpret-underspecified-instructions.md) — distinguishes package conformance, the adjudicated English requirement and behavioral prediction
+- [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — distinguishes package conformance, the adjudicated English requirement and behavioral prediction
 - [Clear instructions can compose into an unsettled contract](../theory/clear-instructions-can-compose-into-an-unsettled-contract.md) — the JSON/exception case exposes uncertainty in which obligations apply before diagnosing interpreter failure
 - [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](../theory/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
 - [traditional-software-can-bracket-executor-conformance-llm-systems](../theory/traditional-software-can-bracket-executor-conformance-llm-systems.md) — scopes the executor-conformance comparison to ordinary English instruction execution

@@ -9,7 +9,7 @@ tags: [llm-reliability, computational-model, evaluation, learning-theory]
 
 When an LLM's output is not what the user wanted, diagnosis must answer three distinct questions. Represent the problem with the intended set `I` of outputs the user would accept, the valid set `V` of outputs the specification admits, and the output distribution `D` the interpreter produces from that specification.
 
-- **[Underspecification](./agentic-systems-interpret-underspecified-instructions.md)** — Does `V` extend beyond `I`? The specification admits outputs the user did not want. A perfect, deterministic interpreter still faces this mismatch.
+- **[Underspecification](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md)** — Does `V` extend beyond `I`? The specification admits outputs the user did not want. A perfect, deterministic interpreter still faces this mismatch.
 - **[Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md)** — Does `D` put mass outside `V`? The specification rules an output out, but the interpreter can produce it anyway.
 - **[Indeterminism](./execution-indeterminism-is-a-property-of-the-sampling-process.md)** — How dispersed is `D`? Repeated draws can differ, and that spread contributes to user-visible failure when it crosses the boundaries of `I` or `V`.
 
@@ -72,7 +72,7 @@ The decomposition begins after the assembled input is fixed. Wrong retrieval, st
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — grounds: the source framing for underspecification, and for the projection model that makes `V` an object rather than a metaphor
+- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the source framing for underspecification, and for the projection model that makes `V` an object rather than a metaphor
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — grounds: the third source, with the worked catalogue of out-of-`V` failures
 - [traditional software can bracket executor conformance; LLM systems cannot](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — extends: why the analysis needs exactly these three questions — classical practice collapses to one only because executor conformance and singleton meaning can be assumed there
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — grounds: the sampling-process source and why it obscures the other two

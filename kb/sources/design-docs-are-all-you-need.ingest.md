@@ -30,7 +30,7 @@ No source quotes have been retained yet.
 
 SMART is a bounded implementation example for [specification strategy following where understanding lives](../theory/specification-strategy-should-follow-where-understanding-lives.md): documents govern generation, while execution difficulties return through an orchestrator's log to human edits for the next version. This supports the feasibility of combining upfront specification with feedback from execution, rather than comparing their relative effectiveness.
 
-The worked traces also supply a concrete comparison for [agentic systems interpreting underspecified instructions](../theory/agentic-systems-interpret-underspecified-instructions.md). Traces and exact expected outputs constrain interpretation, but every regeneration still selects an implementation. Reported agreement with selected references under SMART's symbolic cost-model architecture establishes neither identical builds nor equivalence outside those checks.
+The worked traces also supply a concrete comparison for [agentic systems interpreting underspecified instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md). Traces and exact expected outputs constrain interpretation, but every regeneration still selects an implementation. Reported agreement with selected references under SMART's symbolic cost-model architecture establishes neither identical builds nor equivalence outside those checks.
 
 ## Learning Claims (our opinion)
 

@@ -42,7 +42,7 @@ Relevant Notes:
 
 - [Constraining](./definitions/constraining.md) — defined-in: supplies the semantic-narrowing operation that both enforcement axes instantiate
 - [Representational form](./definitions/representational-form.md) — defined-in: separates natural-language and symbolic operative parts inside mixed enforcement artifacts
-- [Agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — mechanism: explains why interpreted response rules retain several valid executions even when activation is fixed
+- [Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — mechanism: explains why interpreted response rules retain several valid executions even when activation is fixed
 - [Skills are instructions plus routing and execution policy](./skills-are-instructions-plus-routing-and-execution-policy.md) — grounds: shows why skill packaging can strengthen activation without changing the procedure's representational form
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — grounds: supplies the evidential condition for hardening response semantics rather than freezing one arbitrary interpretation
 - [Moving the interpretation–enforcement boundary requires cross-form coverage](./moving-the-interpretation-enforcement-boundary-requires-coverage.md) — extends: develops the governance requirements for transferring responsibility between interpreted and symbolic responses
