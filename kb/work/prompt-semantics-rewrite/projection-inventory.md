@@ -15,6 +15,15 @@ terms of candidate and checked refinement; metaphorical uses may stay. Tier 2
 backlinks are re-grounded on the program-refinement and constraining
 definitions.
 
+Tier 1 done, 2026-11-04: commits 263966e5c (practices note and brief),
+a3f3ccb75 (progressive constraining) and 9d800927d (the other eleven files).
+No library file outside the ledger uses projection in the spec-to-program
+sense. Tier 2 re-grounding and the Tier 3 label sweep remain; the Tier 1
+files that also sat in Tier 2 (changing-requirements, commitment-not-derivation,
+llm-output-deviation, progressive-constraining, specification-strategy,
+fix-what-the-executor, constraining-README, both ingests) were re-grounded in
+the same commits.
+
 Working inventory for deciding whether "projection", the KB-local term for an
 executor choosing one outcome from the set an instruction permits, is kept,
 redefined or replaced by "refinement" after the Dijkstra and Morgan ingests.
