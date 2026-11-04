@@ -45,7 +45,7 @@ The [text-testing pyramid](./automated-tests-for-text.md) offers artifact checks
 
 ### Typing
 
-[Document types](./document-types-should-be-verifiable.md) identify expected structure and operations. [Procedure signatures](./instructions-are-typed-callables.md) can state which document types an operation accepts and produces. Their benefit depends on checking those expectations. A required Evidence section makes evidence available for review; its presence does not establish that the evidence supports the claim.
+[Document types](./document-types-should-be-verifiable.md) identify expected structure and operations. [Procedure signatures](./instructions-are-typed-callables.md) can state which document types an operation accepts and produces. Their benefit depends on checking those expectations. Supplying an Evidence section makes evidence available for review; it does not establish that the evidence supports the claim.
 
 ### Code extraction
 
