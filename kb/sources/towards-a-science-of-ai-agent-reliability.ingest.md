@@ -40,7 +40,7 @@ Eight connections identified:
 
 5. **[spec-mining-as-codification](../theory/spec-mining-as-codification.md)** -- exemplifies: Table 3's mapping of real-world agent failures to reliability metrics is spec mining applied to evaluation itself -- each failure class becomes a testable property.
 
-6. **[agentic-systems-interpret-underspecified-instructions](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
+6. **[prompting-changes-failure-diagnosis-with-the-semantic-reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md)** -- extends: prompt robustness findings are empirical evidence that semantic underspecification (not execution noise) is the deeper issue -- models break under paraphrase because the instruction interpretation space is fragile, not because of stochastic execution.
 
 7. **[constraining-and-distillation-both-trade-generality-for-reliability-speed-and-cost](../theory/constraining-and-extraction-both-trade-generality-for-reliability.md)** -- grounds: the four reliability dimensions operationalise the "compound" (reliability/speed/cost) that constraining and distillation trade generality for.
 

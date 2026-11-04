@@ -11,7 +11,7 @@ This note tries to apply Popperian epistemology — conjecture and refutation �
 
 ## Why conjecture is forced, not chosen
 
-[Agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), so every agent run selects among multiple valid interpretations. That selection is an implicit hypothesis about what the instruction means in this context. The agent conjectures whether it wants to or not.
+[An instruction permits a set of behaviors and the executor produces one](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), so every agent run selects among the readings the instruction permits. That selection is an implicit hypothesis about what the instruction means in this context. The agent conjectures whether it wants to or not.
 
 This is distinct from claim-level conjecture. A claim-titled note is an object-level proposition ("context efficiency is the central design concern"). A runtime interpretation is an execution-level guess about intent ("the user probably wants me to add a link here, not rewrite the section"). Both are criticizable, but they live at different levels and need different criticism mechanisms:
 
@@ -52,7 +52,7 @@ If bounded-context systems could reliably detect contradictions without external
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: why execution already entails conjecture selection
+- [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which execution already entails selecting one permitted reading
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — grounds: why criticism must be externalized into explicit structure
 - [context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — constrains: bounded context makes ambient contradiction detection unreliable
 - [error correction works with above-chance oracles and decorrelated checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — enables: why falsifier blocks produce better criticism than re-reading

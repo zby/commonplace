@@ -24,7 +24,7 @@ Not every measured sensitivity establishes interpreter failure. In the pinned [M
 
 ## Why this matters as a distinct claim
 
-The [idealised two-phenomena model](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) implicitly assumes a conforming interpreter — one that always lands within the valid interpretation space. This is a useful simplification for reasoning about system design, but it leaves out a prominent practical failure mode: the LLM just getting it wrong. The examples above establish existence and variety, not a comparative prevalence rate.
+Reasoning about system design often assumes a conforming interpreter — one that always lands within the valid interpretation space. That is a useful simplification, but it leaves out a prominent practical failure mode: the LLM just getting it wrong. The [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) admits the case: execution can violate the instruction even when it follows the model package exactly, so an unchecked output is a candidate [program refinement](./definitions/program-refinement.md) that may lie outside the permitted set. The examples above establish existence and variety, not a comparative prevalence rate.
 
 The remedy is fundamentally different from the other two phenomena. Narrowing the spec (underspecification remedy) can make things worse by overloading context. Sampling control (indeterminism remedy) is irrelevant — a deterministic LLM still fails as an interpreter. The correct remedies are **error detection and correction**: validation, [oracles](./oracle-strength-spectrum.md), [voting](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md), guardrails, and [architectural separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) that moves error-prone operations to reliable substrates.
 
@@ -34,7 +34,8 @@ This is also one phenomenon that makes [discrimination](./the-augmentation-autom
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the idealised two-phenomena model this note extends; covers underspecification and indeterminism in depth
+- [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which execution can violate the instruction; this note establishes that case in practice
+- [program refinement](./definitions/program-refinement.md) — extends: an unchecked output is a candidate refinement, and out-of-spec output is the case where it lies outside the permitted set
 - [execution indeterminism is a property of the sampling process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — sibling: the second phenomenon, a property of the execution engine
 - [LLM output deviation requires three-way diagnosis](./llm-output-deviation-requires-three-way-diagnosis.md) — synthesis: the three-question diagnosis this note is part of, and why error detection and correction is the primary repair surface for out-of-spec output
 - [LLM reliability](../tags/llm-reliability-README.md) — parent area: deviation sources plus the verification and correction machinery

@@ -13,7 +13,7 @@ The parallel has limits. Judges have decades of domain training, access to exter
 
 ## The structural parallel
 
-A statute is a natural language specification that a judge must interpret, resolving its ambiguity through judgment rather than compilation. This matches the abstract structure the [underspecified instructions framing](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) describes: a spec that admits multiple valid interpretations, resolved by a processor exercising judgment. What makes the parallel structural is the shared formal situation, not shared subject matter: natural-language specifications remain partly ambiguous, admit multiple reasonable readings, and require an interpreter to choose one in application.
+A statute is a natural language specification that a judge must interpret, resolving its ambiguity through judgment rather than compilation. This matches the abstract structure the [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) describes: a spec that admits multiple valid interpretations, resolved by a processor exercising judgment. What makes the parallel structural is the shared formal situation, not shared subject matter: natural-language specifications remain partly ambiguous, admit multiple reasonable readings, and require an interpreter to choose one in application.
 
 No natural language specification eliminates all ambiguity. Legal drafters have known this for centuries; context engineers are learning it now.
 
@@ -70,7 +70,7 @@ ABC's hard/soft constraint hierarchy answers the open question below about inter
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the underspecified instructions framing that legal drafting independently addresses
+- [prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which a specification permits several readings and an interpreter chooses one, which legal drafting independently addresses
 - [programming practices apply to prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — parallel: the programming lens on the same problem; this note adds a second source discipline native to natural language
 - [Source-adoption policy](../reference/source-adoption-policy.md) — see-also: the shipped policy that treats law as an eligible source alongside programming
 - [constraining](./definitions/constraining.md) — mapped: legal precedent is constraining — narrowing interpretation space through repeated consistent rulings

@@ -77,7 +77,7 @@ Relevant Notes:
 - [program refinement](./program-refinement.md) — defined-in: the formal reading of a checked narrowing, and the candidate status of an executor's unchecked output
 - [representational form](./representational-form.md) — defined-in: the symbolic criterion, where the artifact's language has a formal semantics or is close to one, and the split behind what a constraint leaves open
 - [lineage](./lineage.md) — contrasts: source derivation, independent of how constrained an artifact is
-- [agentic systems interpret underspecified instructions](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: why natural-language artifacts leave an interpretation space to narrow
+- [prompting changes failure diagnosis with the semantic reference](../prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account, under which an instruction permits several readings and its consumer picks one, which is why natural-language artifacts leave an interpretation space to narrow
 - [learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: Simon's criterion under which an improving constraint counts as learning
 - [methodology enforcement is constraining](../methodology-enforcement-is-constraining.md) — extends: activation and response as independent axes of enforcement strength
 - [progressive constraining commits only after patterns stabilize](../progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: when to commit, and why one-shot commitment freezes an arbitrary reading

@@ -7,7 +7,7 @@ tags: [computational-model, context-engineering, constraining, learning-theory]
 
 # Writing styles are strategies for managing underspecification
 
-An [empirical study of AI context files](https://arxiv.org/pdf/2510.21413) across 466 open-source projects identified five writing styles in convention sections: descriptive, prescriptive, prohibitive, explanatory, and conditional. The authors treat these as stylistic variation, but viewed through the [underspecification lens](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md), each style is a distinct strategy for narrowing the interpretation space — and the choice encodes how much autonomy the author grants the agent.
+An [empirical study of AI context files](https://arxiv.org/pdf/2510.21413) across 466 open-source projects identified five writing styles in convention sections: descriptive, prescriptive, prohibitive, explanatory, and conditional. The authors treat these as stylistic variation, but viewed as [constraining](./definitions/constraining.md), each style is a distinct strategy for narrowing the interpretation space — and the choice encodes how much autonomy the author grants the agent.
 
 ## The five styles as constraint strategies
 
@@ -32,7 +32,7 @@ prescriptive → prohibitive → conditional → explanatory → descriptive
 
 Moving left buys reliability at the cost of coverage — prescriptive instructions handle their case perfectly but say nothing about adjacent ones. Moving right buys coverage at the cost of reliability — descriptive context helps the agent handle novel situations but risks unexpected interpretations.
 
-The [underspecification note](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) identifies this same tradeoff: narrowing interpretations versus preserving ambiguity. Prescriptive style constrains within the instruction medium — committing to one interpretation without extracting it to code. Descriptive style deliberately keeps the space open, because the author trusts the agent's judgment or cannot enumerate the cases.
+The [constraining definition](./definitions/constraining.md) identifies this same tradeoff: narrowing the interpretation space versus relaxing it. Prescriptive style constrains within the instruction medium — committing to one interpretation without extracting it to code. Descriptive style deliberately keeps the space open, because the author trusts the agent's judgment or cannot enumerate the cases.
 
 ## Interaction with loading tier
 
@@ -44,7 +44,7 @@ The KB's own CLAUDE.md illustrates this: universal rules are prescriptive ("No w
 
 Relevant Notes:
 
-- [agentic systems interpret underspecified instructions](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — foundation: the interpretation-space model that gives these styles their theoretical grounding
+- [constraining](./definitions/constraining.md) — grounds: the interpretation space these styles narrow, and the trade-off against relaxing it
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — applies: style choice interacts with loading tier — always-loaded favours prescriptive/prohibitive, on-demand can afford explanatory
 - [legal drafting solves the same problem as context engineering](./legal-drafting-solves-the-same-problem-as-context-engineering.md) — parallel: law's narrowing techniques (defined terms, enumeration, canons of interpretation) operate within instructions; writing styles describe how instructions are framed — two complementary taxonomies of the same activity
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — extends: prescriptive style is constraining within the instruction medium, short of extracting to code
