@@ -32,9 +32,11 @@ If the account captures the interactions relevant to a question, it supports loc
 
 A caller can instead treat the English instructions as the governing specification and ask the LLM to carry them out. Execution can then violate the instruction even when it follows the model package exactly. It can also select an unwanted outcome that the instruction permits.
 
-A deployed workflow needs to say who settles the applicable English reading. It may use the caller's clarification, a designated reviewer applying stated conventions, or an agreed contract with examples and precedence rules. These are practical adjudication arrangements. Naming a judge does not supply mechanically fixed semantics or make every verdict unambiguous. Where the applicable contract and adjudication process leave a consequential reading unsettled, diagnosis should retain that uncertainty rather than count the disputed outcome as a demonstrated interpreter failure.
+The governing reference includes the surrounding rules as well as the instruction. [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md): “Return JSON only” and “On failure, raise an exception” leave a choice unless the contract or runtime settles whether exceptions use a separate channel or a JSON error record. Scope, precedence and exception handling belong in the interpretation. The issue applies to human readers as well as models.
 
-The reference is the applicable instruction, including surrounding rules. [Clear instructions can compose into an unsettled contract](./clear-instructions-can-compose-into-an-unsettled-contract.md): “Return JSON only” and “On failure, raise an exception” leave a choice unless the contract or runtime settles whether exceptions use a separate channel or a JSON error record. Scope, precedence and exception handling belong in the interpretation. The issue applies to human readers as well as models.
+A deployed workflow needs to say who settles the applicable English reading. It may use the caller's clarification, a designated reviewer applying stated conventions, or an agreed contract with examples and precedence rules. These arrangements let a workflow adjudicate requirements. Naming a judge does not supply mechanically fixed semantics or make every verdict unambiguous.
+
+Where the applicable contract and adjudication process leave a consequential reading unsettled, the diagnosis should retain that uncertainty. The disputed outcome cannot yet count as a demonstrated interpreter failure.
 
 English consequently serves two roles. It states what the system should do, and it supplies an approximate account of what the model-defined program will do. A successful prediction can describe behavior the caller should reject. A clear requirement can be a poor prediction of what the model will produce.
 
@@ -47,7 +49,9 @@ Suppose the applicable contract requires successful responses to contain JSON on
 | Model-defined prompt language | The program permits behavior that fails the requirement. The English-based prediction was inadequate if it predicted JSON-only output. |
 | English instruction execution | The interpreter violated the settled applicable instruction. |
 
-For a fixed package, prompt, inputs, question and evidence, changing the account changes no behavior and supplies no new predictive information. Under the first account, the difficulty is inspecting an opaque language's behavior. Under the second, it includes predicting where the interpreter will depart from the intended instruction. These are two descriptions of the same behavior-prediction burden. The adjudication of an English requirement can add work, so this does not assert equality of every evaluation cost.
+For a fixed package, prompt, inputs, question and evidence, changing the account changes no behavior and supplies no new predictive information. Under the first account, the difficulty is inspecting an opaque language's behavior. Under the second, it includes predicting where the interpreter will depart from the intended instruction. These are two descriptions of the same behavior-prediction burden.
+
+The adjudication of an English requirement can add work, so this does not assert equality of every evaluation cost.
 
 An implementation can also fail to conform to the adopted package, for example by running a different version from the one specified. The model-defined account relocates the conformance reference; it does not make implementation failures impossible. A model upgrade changes that reference when adopted, while in the English account it changes the implementation assessed against the instruction. Neither account licenses assuming unchanged behavior.
 
@@ -60,9 +64,13 @@ The next action should follow the question that remains unresolved:
 - **Check conformance against the named reference.** A test against the package's behavior and a review against the English instruction answer different questions. [Interpreter failure](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) is a diagnosis against a sufficiently settled instruction, not a synonym for every unwanted output.
 - **Expose or enforce the needed operation.** A readable procedure or a validator can make a particular rule easier to inspect or enforce. The gain depends on the implemented rule and its activation, and does not establish that it captures the requirement adequately. [LLM–code boundaries](./llm-code-boundaries-are-natural-checkpoints.md) provide explicit values at which to check arguments and results.
 
-[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves a rule into symbolic form, either by rewriting it in a governed language or by adopting a consumer as its reference. Adoption can codify an operation without exposing a readable rule or reducing inference cost. Extracting a repeated operation into code is a different intervention with potentially different inspection and execution costs. The [code-extraction trade-off](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) should be assessed against the required scope and available checks.
+[Constraining](./definitions/constraining.md) commits choices that narrow or rank permitted readings or behaviors. [Codification](./definitions/codification.md) moves a rule into symbolic form, either by rewriting it in a governed language or by adopting a consumer as its reference. Adoption can codify an operation without exposing a readable rule or reducing inference cost.
 
-Version the prompt, its execution binding and the requirement used to assess it. Otherwise a changed outcome can hide a change in the program, reference or judging standard. Neither account treats generated code as necessarily a valid interpretation of its source instruction, or removes the need to test adequacy after an operation is made deterministic.
+Extracting a repeated operation into code is a different intervention with potentially different inspection and execution costs. The [code-extraction trade-off](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) should be assessed against the required scope and available checks.
+
+Version the prompt, its execution binding and the requirement used to assess it. Otherwise a changed outcome can hide a change in the program, reference or judging standard.
+
+Neither account treats generated code as necessarily a valid interpretation of its source instruction, or removes the need to test adequacy after an operation is made deterministic.
 
 ## Scope
 

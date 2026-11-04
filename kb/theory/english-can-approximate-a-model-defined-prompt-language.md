@@ -9,19 +9,25 @@ tags: [computational-model, artifact-analysis]
 
 A prompt can expose meaningful parts while its precise execution semantics remains expensive to inspect. Consider a system that adopts a fixed LLM package as the reference for an operation, including inference, decoding and the relevant execution conditions. As the [semantic-reference account](./symbolic-form-holds-consumers-to-a-semantic-reference.md) explains, the package defines what the prompt permits under that path. The resulting semantics can be formal and precise, including specified variation, while its computational description is very complex.
 
-Here ordinary English supplies a candidate coarse description of what the adopted package does. Its role is predictive: how faithfully does the description capture execution for the question at hand? English can separately govern what an interpreter ought to do; [unsettled instruction composition](./clear-instructions-can-compose-into-an-unsettled-contract.md) concerns that requirement role. A failure of the coarse prediction does not by itself settle whether the English requirement was clear or whether execution violated it.
+Here ordinary English supplies a candidate coarse description of what the adopted package does. Its role is predictive: how faithfully does the description capture execution for the question at hand?
+
+English can separately govern what an interpreter ought to do. [Unsettled instruction composition](./clear-instructions-can-compose-into-an-unsettled-contract.md) concerns that requirement role. A failure of the coarse prediction does not by itself settle whether the English requirement was clear or whether execution violated it. Conversely, a faithful prediction can describe behavior the caller should reject.
 
 In the prompt below, each clause expresses an identifiable part of the task:
 
 > Translate the supplied text into French. Preserve personal names. Return only the translation.
 
-The first clause selects a target language, the second governs names, and the third restricts accompanying material. This reading lets an author identify where to change the language or allow commentary. It supplies a candidate abstraction of the model-defined semantics: a compact account of selected effects, leaving most execution detail out. Adopting the package does not establish that this abstraction faithfully describes its behavior, and does not make the package authoritative over English generally.
+The first clause selects a target language, the second governs names, and the third restricts accompanying material. This reading lets an author identify where to change the language or allow commentary. It supplies a candidate abstraction of the model-defined semantics: a compact account of selected effects, leaving most execution detail out.
 
-This is a conceptual case for near-decomposition. If the clauses' effects interact weakly enough for the question, the inspector can reason about an edit through the changed clause's coarse meaning and summaries of the other clauses. Changing French to German would then change the translation language while preserving the constraints on names and commentary. If name handling interacts with grammatical agreement, those dependencies must enter the account. The decomposition is useful only to the extent that the omitted interactions stay within the question's tolerance.
+Adopting the package does not establish that this abstraction faithfully describes its behavior, and does not make the package authoritative over English generally.
 
-The relevant blocks here are semantic responsibilities in the prompt, not necessarily disjoint regions of model weights. A useful coarse description need not expose the computation that realizes it. Conversely, identifying a clause's English meaning does not establish that its behavioral effects are independent. The correspondence between the coarse description and the adopted package must be assessed for the inputs and edits where it will be used.
+If the clauses' effects interact weakly enough for the question, the inspector can reason about an edit through the changed clause's coarse meaning and summaries of the other clauses. Changing French to German would then change the translation language while preserving the constraints on names and commentary.
 
-Opacity arises for a question when the available coarse description is insufficient and establishing the required detail exceeds the inspection budget. The inspector might refine that description, obtain behavioral evidence, or inspect more of the implementation; no route requires recovering every computational detail. Thus a prompt can be understandable for changing the target language yet opaque for predicting exactly which facts a shortened translation will omit. Whether either judgment holds for a particular model requires evidence.
+If name handling interacts with grammatical agreement, those dependencies must enter the account. The decomposition is useful only to the extent that the omitted interactions stay within the question's tolerance.
+
+The relevant blocks here are semantic responsibilities in the prompt, not necessarily disjoint regions of model weights. A useful coarse description need not expose the computation that realizes it. Conversely, identifying a clause's English meaning does not establish that its behavioral effects are independent. Whether this description tracks a useful decomposition of behavioral effects must be assessed empirically for the inputs and edits where it will be used. The [near-decomposability conjecture](./near-decomposability-may-make-local-inspection-affordable.md) offers a possible mechanism for affordable local inspection, not confirmation that this example has that structure.
+
+Opacity arises for a question when the available coarse description is insufficient and establishing the required detail exceeds the inspection budget. The inspector might refine that description, obtain behavioral evidence, or inspect more of the implementation. No route requires recovering every computational detail. Thus a prompt can be understandable for changing the target language yet opaque for predicting exactly which facts a shortened translation will omit. Whether either judgment holds for a particular model requires evidence.
 
 An empirical test would fix the package and input set, vary the three clauses separately and together, and compare predicted changes with changes in target language, name handling and commentary. The coarse account must specify those predictions and tolerated interactions before observing the results. Failures would delimit its useful scope. This note reports no such trial; the example explains how localized prompt semantics can coexist with a complex reference, rather than confirming that a model follows this decomposition.
 
@@ -33,9 +39,7 @@ The clause-variation test probes that residual by comparing predicted and observ
 
 ## Scope
 
-The decomposition here is of a coarse semantic description into responsibilities. Whether it tracks a useful decomposition of behavioral effects is an empirical question. It makes no claim that the model's parameters divide into corresponding blocks. The [near-decomposability conjecture](./near-decomposability-may-make-local-inspection-affordable.md) offers a possible mechanism for affordable local inspection, not confirmation that this example has that structure.
-
-English is a candidate approximation for the named package and questions, not a universally faithful or uniquely usable description. The requirement role of English remains separate: a faithful prediction can describe behavior the caller should reject.
+English is a candidate approximation for the named package and questions, not a universally faithful or uniquely usable description.
 
 ---
 
