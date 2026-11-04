@@ -9,7 +9,7 @@ tags: [computational-model, artifact-analysis]
 
 A prompt can expose meaningful parts while its precise execution semantics remains expensive to inspect. Consider a system that adopts a fixed LLM package as the reference for an operation, including inference, decoding and the relevant execution conditions. As the [semantic-reference account](./symbolic-form-holds-consumers-to-a-semantic-reference.md) explains, the package defines what the prompt permits under that path. The resulting semantics can be formal and precise, including specified variation, while its computational description is very complex.
 
-Here ordinary English supplies a candidate coarse description of what the adopted package does. Its role is predictive: how faithfully does the description capture execution for the question at hand?
+Here ordinary English supplies a candidate coarse description of what the adopted package does. Its role is predictive: how faithfully does the description capture execution for the question at hand? This reverses the comparison used when English governs execution: there we assess the machine against the instruction; here we assess the English description against the machine-defined behavior.
 
 English can separately govern what an interpreter ought to do. [Unsettled instruction composition](./clear-instructions-can-compose-into-an-unsettled-contract.md) concerns that requirement role. A failure of the coarse prediction does not by itself settle whether the English requirement was clear or whether execution violated it. Conversely, a faithful prediction can describe behavior the caller should reject.
 

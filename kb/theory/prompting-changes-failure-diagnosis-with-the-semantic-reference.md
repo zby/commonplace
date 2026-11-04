@@ -42,12 +42,14 @@ English consequently serves two roles. It states what the system should do, and 
 
 ## The same prediction problem, a different diagnosis
 
+The two accounts reverse the direction of assessment. When English governs, we assess whether the machine's behavior satisfies the applicable instruction. When the model package governs, we assess how faithfully the programmer's English description predicts the package's behavior. Execution can conform exactly to the package's specified semantics even when that description predicts it poorly. The first comparison asks about interpreter conformance; the second asks about the fidelity of a behavioral description. Neither comparison is settled merely by choosing the account.
+
 Suppose the applicable contract requires successful responses to contain JSON only. The caller and reviewer agree that no exception applies to the successful case under inspection. The package nevertheless produces a Markdown wrapper.
 
-| Account | Diagnosis, assuming execution followed the specified package |
-|---|---|
-| Model-defined prompt language | The program permits behavior that fails the requirement. The English-based prediction was inadequate if it predicted JSON-only output. |
-| English instruction execution | The interpreter violated the settled applicable instruction. |
+| Account | What is assessed against what | Diagnosis, assuming execution followed the specified package |
+|---|---|---|
+| Model-defined prompt language | The English-based behavioral description against the package's specified behavior | The program permits behavior that fails the requirement. The English-based prediction was inadequate if it predicted JSON-only output. |
+| English instruction execution | The machine's behavior against the applicable English requirement | The interpreter violated the settled applicable instruction. |
 
 For a fixed package, prompt, inputs, question and evidence, changing the account changes no behavior and supplies no new predictive information. Under the first account, the difficulty is inspecting an opaque language's behavior. Under the second, it includes predicting where the interpreter will depart from the intended instruction. These are two descriptions of the same behavior-prediction burden.
 
