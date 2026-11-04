@@ -30,8 +30,8 @@ The identifiers refer to the dated [coherence audit](../../reports/retained/prom
 | F3 testing | Practices rewrite and R1 correction implemented | `b4858b39b`, `a0f274dc7`, `693ab4306`, `263966e5c`; R1 now distinguishes a candidate implementation from its permitted behaviors. Generator/artifact correction in `automated-tests-for-text.md` and R1 committed in `b69e7b478` |
 | F4 scoping | R2 corrected: frame means one invocation’s complete input; direct exclusion and checked selection rules | `7093080cd`, `5b53e7b18`; completed disposition in review R2 |
 | F5 opacity and near-decomposition | Definition/necessity rollback and invariant distinction implemented | `a14b910e9`, `9d91230e1`, `f377f14ca`; broader invariant theory is parked separately |
-| F6 partial evaluation | Precise-semantics objection removed; inspection/equivalence overclaims remain | `acc843c5d`; review R3 |
-| F7 verifiability | Independent properties named; categorical ladder remains | `35daecae2`; review R4 |
+| F6 partial evaluation | R3 corrected: candidate specialization and preservation obligations replace shared-medium identity | `acc843c5d`; review R3 |
+| F7 verifiability | R4 corrected: examples compare requirements, retry costs and checking limits without ranking artifact kinds | `35daecae2`; review R4 |
 | F8 extraction dependents | Repairs applied; several implications still need qualification | `fa55d03b0`, `406e44952`, `6ecdced41`; review R5 |
 | Program-refinement terminology and backlinks | Migration applied; preserve latest interpretation and guarantee qualifications | `263966e5c`, `9d800927d`, `6c4fc3ea1`, `16c834161`, `3aed3acae`, `408b509a1`, `6ecdced41` |
 | Earlier Tier 1 claim review | Four repairs applied | `fa55d03b0`, `d2751437d`, `4176fa06b`, `4b35dc051`; do not treat these commits as clearance of all surrounding prose |
@@ -47,7 +47,7 @@ The identifiers refer to the dated [coherence audit](../../reports/retained/prom
 
 ## Next work and acceptance
 
-R1 is corrected: generation fixes a candidate implementation without establishing that its permitted behaviors preserve the specification's guarantees. The compatible generator/artifact correction is committed in `b69e7b478`. R2 is corrected: frame construction selects inputs without guaranteeing all causal isolation or scope within those inputs, and code selection does not imply zero error cost. Next address R3, the partial-evaluation argument, then R4–R5 one note at a time.
+R1 is corrected: generation fixes a candidate implementation without establishing that its permitted behaviors preserve the specification's guarantees. The compatible generator/artifact correction is committed in `b69e7b478`. R2 is corrected: frame construction selects inputs without guaranteeing all causal isolation or scope within those inputs, and code selection does not imply zero error cost. R3 now separates precise semantics, affordable proof and behavioral evidence. Its shared-medium identity claim has been replaced with a candidate-specialization account, including separate checks for template expansion and model behavior. R4 replaces the artifact ladder with concrete checking arrangements and task-relative placement advice. Next address R5 one note at a time; final navigation review must also repair remaining backlinks that describe a universal verifiability ladder.
 
 Before closure, inspect the revised passages and relevant navigation against these conceptual cases:
 

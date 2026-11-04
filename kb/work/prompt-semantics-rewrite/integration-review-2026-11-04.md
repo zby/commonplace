@@ -30,11 +30,15 @@ Repair: describe the actual harness exclusion and what is held fixed. Distinguis
 
 ## R3 — Precise semantics does not imply either cheap or impossible inspection
 
+Disposition: corrected on 2026-11-04. Corrected the inspection and equivalence claims. The note now allows proofs where available, bounds behavioral evidence to tested cases, and distinguishes preservation of English requirements from equivalence under an adopted package. A file-listing example separates answer requirements from execution traces. The shared-medium identity claim is removed: textual insertion does not establish specialization or equivalence. The note now presents candidate specialization, distinguishes template expansion from model behavior, and no longer treats staged task organization as incompatible with specialization. Dependent link summaries were corrected. The finding below records the earlier wording.
+
 [Frontloading as partial evaluation](../../theory/frontloading-is-partial-evaluation-not-divide-and-conquer.md), Where the analogy stretches, now permits exact semantics under an adopted package. However, it says the meaning “is too costly to inspect” and equivalence must be evidenced “rather than derived from the semantics.” These are categorical where our account is question- and budget-relative.
 
 Repair: distinguish availability of precise semantics from the cost and method of establishing this particular substitution's equivalence. Some substitutions may admit proofs; others need scoped behavioral evidence. The shared-medium claim that distinguishes partial evaluation from divide-and-conquer also remains an independent warrant question already named in F6; this repair did not resolve it.
 
 ## R4 — A caveat does not yet repair the verifiability ladder
+
+Disposition: corrected on 2026-11-04 after the operator requested examples. The note now compares JSON syntax, summary faithfulness, evidence-array shape, date formatting and deterministic sentence selection. Reset conditions, execution cost, checking cost and check strength are separate; stable prose is no longer automatically misplaced. Examples are explicitly illustrative, with no measured timing claims. The finding below records the earlier wording.
 
 [The verifiability gradient](../../theory/verifiability-gradient.md) now names reference adoption, inspection cost, execution cost and oracle quality separately. Its table and following paragraph still say restructured prompts require human review, deterministic module tests run in milliseconds, and verification becomes cheaper and sharper down the table. The placement section still treats stable behavior remaining in natural language as misplaced.
 
@@ -54,4 +58,9 @@ These are follow-ups to repaired arguments, not a finding that all of F8 remains
 
 The previous workshop header claimed every audit finding had a repair commit while its table still named the uncommitted F3 correction. More importantly, it used “closed” where repair review remained outstanding. The README now distinguishes applied repairs from unresolved claims and replaces the obsolete proposal-stage instructions with current acceptance checks. The projection inventory remains a historical search record; its current-status header must be read before its original counts and recommendations.
 
-No library artifact was changed by this integration review. Subsequent R1 and R2 corrections are recorded above. R1 and the compatible local F3 correction were committed in `b69e7b478`. Next work through R3–R5 one note at a time. Review completion, not the existence of repair commits, determines closure.
+No library artifact was changed by this integration review. Subsequent R1 and R2 corrections are recorded above. R1 and the compatible local F3 correction were committed in `b69e7b478`. R3 is also corrected above. R4 is corrected above. Next work through R5 one note at a time. Review completion, not the existence of repair commits, determines closure.
+
+
+## Navigation follow-up after R4
+
+The backlink scan found remaining ladder language in [orchestration strategies and run state](../../theory/orchestration-strategies-and-run-state-have-opposite-persistence.md), [automating KB learning](../../theory/automating-kb-learning-is-an-open-problem.md), and [governing behavior-changing writes](../../theory/continual-learning-requires-governing-behaviour-changing-writes.md). The [oracle-strength spectrum](../../theory/oracle-strength-spectrum.md) also identifies retry properties with oracle strength. Review these against the revised requirement-relative examples during final navigation acceptance; repairing the target note does not settle those claims.
