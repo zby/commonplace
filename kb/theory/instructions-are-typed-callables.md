@@ -28,7 +28,7 @@ This gives skills type signatures:
 | `/validate` | `note → validation-report` |
 | `/convert` | `text → note` |
 
-The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns [constrain](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — committing to one interpretation from the space the spec admits.
+The operations afforded by a type can range from precise semantics (does this `structured-claim` have an `## Evidence` section?) to underspecified semantics (does the evidence actually support the claim?). The type is the interface; the implementation can [codify](./definitions/codification.md) from LLM to code as patterns stabilize, committing to one reading as a checked [program refinement](./definitions/program-refinement.md) of the operation. An adopted model check and a predicate justified against the requirement both implement the operation; only the second settles what the operation requires.
 
 ## Open questions
 

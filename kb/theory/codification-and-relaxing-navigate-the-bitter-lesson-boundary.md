@@ -18,7 +18,7 @@ Code extraction can [trade generality for gains in reliability, speed, and cost]
 - **Arithmetic-regime decompositions**: the spec fully captures the subproblem, so implementing it need not lose generality within that declared scope. An inspectable script or validator can improve reliability, speed, and cost without excluding required behavior; the economic gain still depends on implementation and maintenance costs.
 - **Vision-feature decompositions**: the spec is a plausible theory of a larger capability, so an efficient local implementation can lose generality at that larger scope. When scale makes the general approach good enough on reliability, speed, and cost, that loss may no longer be worth it.
 
-Codification therefore has a complement: **relaxing** — replacing a codified component with a learned or general-purpose one when scale makes that viable, accepting higher cost and lower reliability in exchange for regaining generality.
+Code extraction therefore has a complement: **relaxing** — replacing an extracted component with a more general one, often a model call, when scale makes that viable, accepting higher cost and lower reliability in exchange for regaining generality. The replacement can itself be codified by adoption; what relaxing reverses is the extraction, not symbolic membership.
 
 The trajectory runs in both directions, and can repeat at different levels of the stack. Edge detection was codified (hand-coded algorithms), relaxed (replaced by learned features), and may re-codify as an accelerator inside a learned architecture. FlashAttention is hand-crafted algorithmic optimization embedded within learned architectures; tokenizers are engineered preprocessing that learned models depend on. The bitter lesson describes a trajectory, not a law of nature.
 
@@ -44,7 +44,7 @@ The induction bias results ([Ebrahimi et al., 2026](https://arxiv.org/pdf/2602.1
 
 2. **Prefer specs that describe what over how.** The more a codified artifact encodes a theory of how something works (rather than what it should produce), the more likely it is a relaxing candidate. "This endpoint returns X given Y" survives longer than "always process requests in three stages."
 
-3. **Watch for composition failure as a relaxing signal.** If codified conventions don't compose into better systems, that's the signal to relax — replace the rigid decomposition with a learned one.
+3. **Watch for composition failure as a relaxing signal.** If codified conventions don't compose into better systems, that's the signal to relax — replace the rigid decomposition with a more general one.
 
 ---
 

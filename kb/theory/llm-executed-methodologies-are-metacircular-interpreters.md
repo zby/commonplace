@@ -19,7 +19,7 @@ The metacircular part appears when those same artifacts govern edits to themselv
 
 ## Codification is the compiled path
 
-The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted natural-language while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. That is why [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md): each step reduces semantic underspecification and execution indeterminism.
+The compiled analogue is [codification](./definitions/codification.md). A practice starts as interpreted natural-language while its meaning is still moving, then moves down the enforcement gradient as it stabilizes: instruction, skill, hook, script, schema, validator, or command. Each step is [constraining](./definitions/constraining.md), as [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) argues, and the gradient is not inherent: a step can fix when a rule applies without settling what satisfies it, or settle what is permitted without supplying a check, so what a step buys has to be stated for that step.
 
 This is closer to a JIT than to whole-program compilation. Stable hot paths become symbolic artifacts with assigned consequences; unsettled judgment stays in natural language where humans and agents can still revise the interpretation cheaply.
 
