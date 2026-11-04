@@ -41,7 +41,7 @@ This supports the user's revised emphasis, with a qualification already required
 
 ### F1 — The central prompting note incorporates the exception but retains the old thesis
 
-[Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md), especially lines 16–44, 75–98 and 112–126 at the inspected revision, acknowledges reference adoption and nonessential indeterminism. Later sections still organize the design space as underspecified LLM semantics versus precise deterministic code. They define replacement with code as simultaneously resolving ambiguity and removing sampling, call LLM adherence always probabilistic, and say each constrained piece escapes both testing obligations.
+[Agentic systems interpret underspecified instructions](../../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) (since rewritten; the link reaches the replacement note), especially lines 16–44, 75–98 and 112–126 at the inspected revision, acknowledges reference adoption and nonessential indeterminism. Later sections still organize the design space as underspecified LLM semantics versus precise deterministic code. They define replacement with code as simultaneously resolving ambiguity and removing sampling, call LLM adherence always probabilistic, and say each constrained piece escapes both testing obligations.
 
 These conclusions do not follow for the adopted deterministic package. Nor does moving to a symbolic reference necessarily expose a readable rule or settle requirement adequacy. The migration changed a local explanation without rebuilding the note's governing argument.
 

@@ -1,5 +1,5 @@
 ---
-description: "Conjectures near-decomposability as a mechanism for affordable inspection; explores description length as a cost proxy and separates locating a faulty part from containing a repair."
+description: "Conjectures near-decomposability as a mechanism for affordable inspection; explores description length as a cost proxy and separates locating an intervention point from establishing that a repair preserves required invariants."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, artifact-analysis]
@@ -89,4 +89,4 @@ Relevant Notes:
 - [Simon, The Architecture of Complexity](../sources/herbert-simon-architecture-of-complexity.ingest.md) — evidenced-by: the definition of near-decomposability and its two propositions; the theorem is cited there, not stated
 - [Grünwald, A tutorial introduction to the minimum description length principle](../sources/grunwald-mdl-tutorial.ingest.md) — evidenced-by: the two-part code and its relativity to a description method
 - [Templeton et al., Scaling Monosemanticity](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) — evidenced-by: interpretable features tested by intervention, with partial coverage; behavioral influence does not establish invariant preservation
-- [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) — evidenced-by: the same move on weights, giving content-addressability without scope-addressability
+- [ROME](../sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md) — evidenced-by: the same move on weights: a located association is edited and the edit's effect checked, which does not establish invariant preservation
