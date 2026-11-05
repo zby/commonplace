@@ -1,42 +1,31 @@
 # Invariants under composition
 
-## Parked question
+## Commission and question
 
-Posed by the operator on 2026-11-04 while revising the near-decomposability account. The operator asked to park the ideas here, not begin the investigation.
+Posed by the operator on 2026-11-04 during the prompt-semantics rewrite. Initially parked; resumed the same day for at least five rounds of fresh-context brainstorming, independent critique, revision and cleanup. Every new element must distinguish a case, expose a missing obligation or change a proposed check.
 
-How can we build larger systems from smaller components while preserving the properties the larger system relies on? What must be known, specified, enforced or checked at component boundaries?
+How can we build larger systems from smaller components while preserving the properties the larger system relies on? The starting insight is that interactions need not be strong to break an important invariant. Locating a component to change and establishing that the change preserves required properties are separate achievements.
 
-The starting insight is that interactions need not be strong to break an important invariant. A decomposition adequate for predicting typical behavior may omit effects that matter for correctness. Locating a component to change and establishing that a change preserves required invariants are separate achievements.
+## Current result
 
-This could inform how Commonplace composes instructions, tools, validators and maintenance workflows. It is not yet a theory or a proposed system change.
+Five rounds are complete, using ten fresh-context agents. The working account connects a named requirement to concrete probes: interleave checking and use, challenge a no-mutation premise, or compare public observations across executions. After a local edit, re-establish affected premises before reusing an argument. Passing an isolated component test does not discharge these obligations.
 
-## Ideas to revisit
+The evidence consists of constructed finite examples and an explicitly bounded reading of Commonplace's freshness architecture. It establishes neither a runtime defect nor a general method for discovering every dependency. The literature informs the examples; no theorem has been adopted for prompt behavior.
 
-- Distinguish invariants, interface contracts, environmental assumptions, and probabilistic guarantees rather than treating every useful property as an invariant.
-- Ask when component guarantees survive composition, including feedback and shared state.
-- Relate near-decomposability to the cost of checking preservation, without assuming weak interactions guarantee it.
-- Explore the operator's suggested connections to chaos, nonlinear systems and mathematical catastrophe theory. Determine which mechanisms actually apply; do not equate every threshold violation with chaos or catastrophe.
-- Compare those connections with compositional verification, assume–guarantee and rely–guarantee reasoning, and robustness or small-gain conditions in control theory.
-- Keep unsettled requirements distinct from violations of settled requirements. The JSON/exception example concerns the former; a system's failure to preserve an agreed invariant concerns the latter.
+- [Working account](./working-account.md): the candidate argument, probe-selection table and worked cases.
+- [Source assessments](./source-assessments.md): reading scope, proposed transfers, limits and parked leads.
+- [Round record](./rounds.md): what each brainstorm added, how critique changed it, and what cleanup removed.
 
-## Local starting points
+The numerical example shows that convergence can coexist with crossing a required bound. Its calculation stays in the round record. Small-gain machinery, chaos and catastrophe theory remain parked until a concrete KB case needs them.
 
-- [Near-decomposability may make local inspection affordable](../../theory/near-decomposability-may-make-local-inspection-affordable.md): the invariant-preservation distinction that prompted this workshop.
-- [Clear instructions can compose into an unsettled contract](../../theory/clear-instructions-can-compose-into-an-unsettled-contract.md): composition can leave the requirement itself unsettled.
-- [Addressable theory](../../theory/definitions/addressable-theory.md): locating and revising parts.
+## Connection to the preceding workshop
 
-## Unassessed reading leads
+- [Near-decomposability may make local inspection affordable](../../theory/near-decomposability-may-make-local-inspection-affordable.md): motivates separating weak interaction from preservation of requirements.
+- [Clear instructions can compose into an unsettled contract](../../theory/clear-instructions-can-compose-into-an-unsettled-contract.md): distinguishes an unsettled requirement from failure to preserve an agreed one.
+- [Addressable theory](../../theory/definitions/addressable-theory.md): concerns locating and revising parts; preservation needs further evidence.
 
-These locators were found in an initial search on 2026-11-04 before the operator asked to park the work. They are a reading queue, not source ingests or grounds for adopted claims. No literature review or transfer assessment has been completed.
+## Next test and closure
 
-- Abadi and Lamport, [Composing Specifications](https://www.microsoft.com/en-us/research/publication/composing-specifications/) and [Conjoining Specifications](https://www.microsoft.com/en-us/research/publication/conjoining-specifications/).
-- Benveniste and co-authors, [Contracts for System Design](https://research-explorer.ista.ac.at/record/5677).
-- Jiang, Teel and Praly, [Small-gain theorem for ISS systems and applications](https://web.ece.ucsb.edu/~teel/ECE236/jiang-teel-praly-1994).
-- Lorenz, [Deterministic Nonperiodic Flow](https://doi.org/10.1175/1520-0469(1963)020%3C0130:DNF%3E2.0.CO;2).
-- Zeeman, [Catastrophe Theory](https://imechanica.egr.uh.edu/sites/default/files/1976%20zeeman%20catastrophe%20theory.pdf).
+The next proposed test adds retained state: two calls over two public documents share a cache whose population may depend on the first call's confidential bit. Specify the cache and public observations first, then enumerate finite histories and compare with a public-only cache control. Its role is to test whether the account catches an indirect dependence after the direct output-order leak is removed. This test has not been run.
 
-## Resumption and closure
-
-Resume substantive work only when the operator asks. No reading sequence, experiment or implementation is commissioned now.
-
-If resumed, the useful outcome is a supported account of which composition obligations matter for agent-operated KBs, with worked cases and limits on any mathematical transfer. Close by extracting supported conclusions and necessary source records, or recording why no useful transfer survives, then removing the workshop and its index entry.
+The commission covers bounded investigation, not runtime implementation or library promotion. Before promotion, test whether the account changes a maintainer's decision in a further KB case, and ground any retained source claims through the source workflow. Close by extracting supported conclusions and necessary source records, or recording why no useful transfer survives, then removing this workshop and its index entry.
