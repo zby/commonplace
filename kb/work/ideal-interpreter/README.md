@@ -41,6 +41,10 @@ says attribution needs its own evidence and names no standard.
 
 - [Interpretation probe handoff](./interpretation-probe-handoff.md), received 2026-11-02: six interpretation statuses, an ambiguity contract with a limit on exact relevance detection, and a diagnostic assessment design. Candidates for the functional definition and stress tests, not an adopted device or executed suite.
 
+## Draft connection to the library
+
+- [Attribution needs a reference set, not an ideal interpreter](./attribution-needs-a-reference-set-not-an-ideal-interpreter.md), 2026-11-05: connects the semantic-reference account to this workshop's goal by a three-way sort of failures. Basic draft; new directions listed as open questions.
+
 ## Evaluation boundary
 
 The sketch as moved here and the notes it cites. The
