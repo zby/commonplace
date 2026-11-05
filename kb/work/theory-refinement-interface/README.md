@@ -53,3 +53,19 @@ question of modelling the LLM as an interpreter of semantics; this workshop
 does not reopen it, and nothing here may depend on it.
 
 Write scope while open: this directory only.
+
+## Received question
+
+From [open-ended-work-economics](../open-ended-work-economics/README.md),
+direction 4 of its [reconciliation map](../open-ended-work-economics/reconciliation.md),
+delivered 2026-11-05: for each of the six operations, what does it cost
+interpreted versus mechanical, and does reuse across theories amortize the
+cost of making it mechanical? The economics workshop found the interface
+asks expressiveness and guarantee questions but not this cost question,
+and records that a gap in scope, not a disagreement. Domain examples are
+evidence for the architecture-level conjecture and stay with
+[its proposal](../../reference/proposals/reusable-commitment-support-across-kinds-of-knowledge-work.md).
+The same map notes that several operation lists coexist unreconciled (this
+interface, the discovery lifecycle's six phases, the theory-builder Boundary
+list, the reflective operation profile, the change-operations catalogue);
+reconciling them is a separate question this workshop may take or decline.

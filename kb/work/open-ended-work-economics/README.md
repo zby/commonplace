@@ -229,6 +229,54 @@ Notes found while framing (not exhaustive; each file's description says what it 
   records, controller inventory and worker inventory under `search/` have
   no library home yet. Next: the step-8 note is now this note's role 2; the
   program statement in `kb/reference/` beside the instrument note remains.
+- 2026-11-05: successor work reconciled. The "convert into routine" reading
+  above opened three vocabulary workshops in the days after 2026-10-30, and
+  each has now delivered. Consequences for this workshop:
+  - [operationalization-executability-automation](../operationalization-executability-automation/README.md)
+    (opened 2026-10-31, closure-ready): the task became the fifth element of
+    the [actionable-methodology definition](../../theory/definitions/actionable-methodology.md).
+    Operationalizing a method for one executor does not make the task
+    automatable, and automation is separate from decision autonomy. A
+    conversion in the routine-conversion account therefore names a task and
+    an executor; "routine" is routine for that executor on that task.
+  - formal-semantics-and-codification (opened 2026-10-31, closed 2026-11-02,
+    [ADR 124](../../reference/adr/124-retire-unique-operational-semantics-as-the-form-criterion.md)):
+    [codification](../../theory/definitions/codification.md) is the move into
+    symbolic form under a governing semantic reference, by rewriting the
+    artifact or by adopting a consumer such as a frozen model package as the
+    reference for an operation. The split in "Why the operator wants this"
+    between semantic routines in prompts and symbolic routines in code is
+    no longer a split by artifact: a prompt executed under an adopted package
+    is a codified routine for that operation, and its opacity, which is
+    question- and budget-relative, decides which checks it affords. The
+    stake-and-odds section of the codify-versus-LLM note is unaffected
+    because its terms price costs, not forms. "Routine" stays ordinary
+    English (vocabulary default 3).
+  - prompt-semantics-rewrite (opened 2026-11-03, closed 2026-11-04) rebuilt
+    the central prompting note around two semantic references. No claim
+    here depends on it.
+  - [invariants-under-composition](../invariants-under-composition/README.md)
+    (opened 2026-11-04, open): a component that passes its isolated test can
+    still break a requirement the larger system relies on. Candidate
+    mechanism behind exposure in the routine-conversion account; not adopted.
+
+  Handoff done: the direction-4 question is now recorded in
+  [theory-refinement-interface](../theory-refinement-interface/README.md)
+  under "Received question". Still unextracted: the effort-allocation
+  classification paragraph, the three log entries, and the records under
+  `search/`. Final deletion remains held by the operator.
+- 2026-11-05: the operator reframed the allocation question around three
+  resource tiers (operator attention, LLM work, classical compute) whose two
+  boundaries are feasibility lines before they are prices; recorded in
+  [resource-tiers.md](./resource-tiers.md) with the maximand candidate stated
+  per tier (work moved downward across the frontiers at required reliability,
+  per operator judgment), rival maximands, and what would refute it. Not
+  adopted. It reopens the direction-1 tension (retain individual return
+  guesses, or test only the controller) as the next discriminating question;
+  the cheapest test site is the active-workshop triage. This supersedes the
+  10-30 verdict that the architecture-level conjecture is the only new
+  content in direction 6: the tier model is new content for directions 2
+  and 6 and was not in the brief.
 
 ## Evaluation boundary and coupling
 
