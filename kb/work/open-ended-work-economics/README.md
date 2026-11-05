@@ -1,304 +1,172 @@
 # Workshop: open-ended work as resource allocation under uncertainty
 
-## Goal
+## Live question
 
-Test the conjecture that open-ended knowledge work is a recursive process of
-allocating limited time, context and budget across search judgments (where
-effort goes next) and commitments (retained resolutions about what to believe
-or build), and decide what the library should retain from it. Term choices
-are in [vocabulary.md](./vocabulary.md). The operator's reason for
-posing it, set out below, is that it would make epistemic work the layer all
-open-ended knowledge work shares. The conjecture has two parts that must be
-judged separately:
+**What should guide automatic search in open-ended knowledge work?**
 
-- **Work-level conjecture.** Managing search judgments and commitments
-  recursively — including those about how to investigate and how to improve
-  the method — is an economical way to do open-ended work under bounded
-  resources.
-- **Architecture-level conjecture.** Reusable computational support for that
-  process is an economical route from Commonplace toward a general
-  computational environment. This does not follow from the work-level
-  conjecture.
+An automatic system must choose what to investigate, how much effort to spend,
+and when to stop or change direction. Checking a developed result does not by
+itself tell the system which undeveloped possibility deserves the next
+investment. The operator's current framing is that this is an economic
+question: what further work might return, what it costs, and what else those
+resources could support. This does not require assuming that returns can be
+estimated reliably or reduced to one numerical score.
 
-The question kept in view: can reusable machinery make open-ended
-intellectual work cheaper for bounded actors while the machinery improves
-through the same process?
+Keep this workshop and its name. The original investigation supplied much of
+the background; the current question continues it rather than starting a
+separate workshop.
 
-The economic framing must extend the [epistemic stance](../../reference/epistemic-stance.md),
-not replace it. A judgment that something is worth investigating is not a
-claim that it is true, and the account must keep the two apart.
+## Intent and origin
 
-## Why the operator wants this
+The operator posed the original investigation on 2026-10-30, adopting the
+external brief retained verbatim in [handoff.md](./handoff.md). Its six
+research directions asked whether open-ended work could be understood as
+recursive effort allocation and commitment management, and what that implied
+for Commonplace's architecture. Ideas were to be developed here before
+extraction, not applied directly to library notes as the brief suggested.
 
-The operator gave this reading on 2026-10-30. Routine work is largely solved:
-language models do routine semantic work, and software does routine symbolic
-work. Commonplace's goal is a framework that converts more and more knowledge
-work into routine work. Open-ended work is the frontier where no routine
-exists yet.
+On 2026-11-05 the operator introduced three resource tiers: operator
+attention, LLM work and classical compute. In the current cleanup discussion,
+the operator clarified the purpose of that turn: understanding what guides
+**automatic search**, and recognizing the economic character of that choice.
+The tier model is supporting analysis, not the workshop's objective.
 
-On that frontier, an actor allocates effort by guessing what each investment
-will yield, and these guesses are fallible. Allocation is only as reliable as
-the guesses that guide it, and improving them is epistemic work. Epistemic
-work also produces the routines: it finds which choices are stable enough to
-commit, in prompts and skills for semantic routines or in code for symbolic
-ones. Converting work into routine is then the return on epistemic
-investment.
+The practical aim is an account that can guide automatic choices about what
+to do next and make those choices open to improvement. It must extend the
+[epistemic stance](../../reference/epistemic-stance.md), not replace it:
+being worth investigating does not make a claim true or warrant adopting it.
 
-The reading would answer a question the project has struggled with. Most of
-this KB develops machinery for epistemic work, and its main application field
-has been unclear. If the reading holds, epistemic work is the layer that every
-open-ended kind of knowledge work shares, and Commonplace's epistemic
-machinery is the base for more general knowledge tools.
+## What remains unsettled
 
-The library already names the conversion into routine:
-[constraining](../../theory/definitions/constraining.md) and its symbolic
-region, [codification](../../theory/definitions/codification.md);
-[progressive constraining commits only after patterns stabilize](../../theory/progressive-constraining-commits-only-after-patterns-stabilize.md);
-[codification and relaxing navigate the bitter-lesson boundary](../../theory/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
-No note found while framing gives one account of when conversion is worth
-paying for: how often the work recurs, what the routine saves, what
-conversion and maintenance cost, and how likely the pattern is to stay
-stable.
+- **Returns.** What makes further investigation worth pursuing under the
+  declared objective in [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)?
+  Saving operator judgment or making work cheaper are possible returns;
+  moving work between resource tiers is not assumed to be the maximand.
+- **Uncertainty.** How can search use guesses about returns when the
+  consequential possibilities and their outcomes are not yet known? What
+  distinguishes useful economic guidance from unsupported numerical precision?
+- **Resources and constraints.** How should operator attention, LLM work,
+  classical compute, context limits, reliability and authority enter a search
+  choice? Which constraints determine feasibility before costs are compared?
+- **Learning from choices.** Must individual return guesses be recorded and
+  compared with outcomes, or can evaluation of the search controller provide
+  enough feedback? This is one design question within automatic search
+  guidance, not the whole problem.
+- **Control.** What supports choosing among investigations, continuing,
+  stopping and backtracking without spending more on the allocation mechanism
+  than its decisions save?
 
-The claim that epistemic work is the shared layer is the one this workshop
-most needs to test. Known weak points:
+These are research questions, not an adopted controller design. The existing
+[search-before-evaluation result](../../theory/open-ended-improvement-allocates-search-before-evaluation.md),
+[separation of search control from adoption](../../theory/lightweight-search-control-does-not-license-adoption.md),
+and [controller evaluation guidance](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md)
+are starting constraints. The investigation must identify what an economic
+account adds rather than rename those results.
 
-- **The frontier does not shrink by itself.**
-  [Codifying predictable choices leaves agents with less predictable work](../../theory/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md):
-  each conversion leaves the remaining work harder. Converting more work may
-  raise the epistemic share of what remains rather than reduce it.
-- **"Solved" is graded.** A model doing routine semantic work still makes
-  errors, and a routine can stop fitting when conditions change and need
-  [relaxing](../../theory/operational-signals-that-a-component-is-a-relaxing-candidate.md).
-  Maintaining routines is recurring work that may not itself be routine.
-- **Goals are not beliefs.** Allocation needs beliefs about consequences and
-  also goals or preferences. Epistemic machinery covers the beliefs. Work
-  whose discoveries change its goals strains the claim most.
-- **Layer versus implementation.** A shared epistemic layer would not show
-  that Commonplace's particular machinery is the right one. That is the
-  architecture-level conjecture, and it needs its own evidence.
-- **Testability.** "All knowledge work is epistemic" says nothing until it
-  names what a knowledge tool without the epistemic layer would fail to do.
-  One candidate: better epistemic machinery should show up as faster or more
-  reliable conversion into routines, not only as better notes.
+## Status of the three-tier model
 
-## Posed by
+[resource-tiers.md](./resource-tiers.md) records the 2026-11-05 framing. It is
+provisional, including its feasibility claims, proposed maximand and proposed
+refuters. Its candidate objective—work moved downward across two frontiers at
+required reliability per operator judgment—is not adopted and does not define
+the current commission. A transfer between tiers is one possible investment
+and return for automatic search to consider.
 
-The operator, on 2026-10-30, adopting a brief written in an external ChatGPT
-session. The brief is kept verbatim in [handoff.md](./handoff.md) as the
-statement of intent and its six research directions. Where it says to revise
-library notes directly, the operator's decision overrides it: the ideas are
-developed here first and reach the library only by extraction.
+Active-workshop triage was suggested as a cheap test site for the question
+about individual return guesses. No test protocol is commissioned by that
+suggestion. The next consequential decision is to choose a bounded comparison
+that could distinguish competing accounts of search guidance; if no such
+comparison can yet be stated, retain the gap rather than build a controller.
 
-## Starting position
+## Delivered background
 
-The library already holds results about allocation, so the first job is to
-map them and find what the economic framing adds.
-Notes found while framing (not exhaustive; each file's description says what it holds):
+The original investigation mapped the six directions in
+[reconciliation.md](./reconciliation.md). Its work-level conjecture largely
+composed results already held by the library. The architecture-level claim
+was separated from it and remains a conjecture, not an adopted architecture.
+The durable outputs include:
 
-- Allocation before evidence:
-  [open-ended improvement allocates search before evaluation](../../theory/open-ended-improvement-allocates-search-before-evaluation.md),
-  [lightweight search control does not license adoption](../../theory/lightweight-search-control-does-not-license-adoption.md),
-  [backtracking keeps lightweight search control provisional](../../theory/backtracking-keeps-lightweight-search-control-provisional.md),
-  [ad hoc explanation can be rational when error is cheap and local](../../theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md),
-  [cost-sensitive formalisms for tentative theory search](../../theory/cost-sensitive-formalisms-for-tentative-theory-search.md).
-- Commitments:
-  [theory and capacity building make the same kind of commitment](../../theory/theory-and-capacity-building-make-the-same-kind-of-commitment.md),
-  [commitment, not derivation, creates new ground truth](../../theory/commitment-not-derivation-creates-new-ground-truth.md),
-  [current-task fit alone does not warrant costly entrenchment](../../theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md),
-  [prototype standing is revision-cost binding plus lost investment](../../theory/prototype-standing-is-revision-cost-binding-plus-lost-investment.md).
-- Recursion and machinery investment:
-  [an optimal long-run learning strategy invests in its own machinery](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
-  [computationally directed self-improvement is a reallocation](../../theory/computationally-directed-self-improvement-is-a-reallocation.md),
-  [machinery persists by warrant, not position in a reflective loop](../../theory/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md),
-  [reflection makes retained lessons second-order](../../theory/reflection-makes-retained-lessons-second-order.md).
-- Retention economics:
-  [LLM recompute cost inverts the store-vs-recompute default](../../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md),
-  [design rationale must preserve unregenerable decision premises](../../theory/design-rationale-must-preserve-unregenerable-decision-premises.md),
-  [superseded choices are retained, superseded beliefs are not](../../theory/superseded-choices-are-retained-superseded-beliefs-are-not.md),
-  [cheap adoption and weak retirement accumulate cost](../../theory/cheap-adoption-and-weak-retirement-accumulate-cost.md),
-  [information value is observer-relative](../../theory/information-value-is-observer-relative.md).
-- Generality claims:
-  [universal software factory needs a declared universality axis](../../theory/universal-software-factory-needs-a-declared-universality-axis.md),
-  [Commonplace builds a theory builder and tests whether it learns](../../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md),
-  [bounded-context orchestration model](../../theory/bounded-context-orchestration-model.md).
+- [Reusable commitment support across kinds of knowledge work](../../reference/proposals/reusable-commitment-support-across-kinds-of-knowledge-work.md):
+  the architecture conjecture, alternatives and a comparative adoption test.
+- [Cost-per-yield records for routine controllers](../../reference/proposals/cost-per-yield-records-for-routine-controllers.md):
+  proposed instrumentation; context regime is feasibility metadata, not a
+  cost figure. Cost comparisons require resource figures or mark cost unknown.
+- [Codify-versus-LLM decision heuristics](../../theory/codify-versus-llm-decision-heuristics.md):
+  the "Stake and odds" addition, narrowed from the
+  [routine-conversion account](./routine-conversion-account.md).
+- [Controller evaluation guidance](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md):
+  the scoring rule and unequal-cost comparison option alongside matched-budget
+  comparison.
+- [The shared epistemic layer](../../theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md)
+  and the [goal-prioritization tag](../../tags/goal-prioritization-README.md).
+  Extraction is not independent confirmation of the shared-layer claim.
+- The direction-4 question delivered to
+  [theory-refinement-interface](../theory-refinement-interface/README.md),
+  and the deferred epistemic-versus-resource-rational rivalry recorded in
+  [the log](../../log.md). The proposed relaxing-trigger test was withdrawn
+  because it did not discriminate the accounts.
+
+Successor work also qualified the original "convert into routine" reading:
+[operationalization-executability-automation](../operationalization-executability-automation/README.md)
+names the task and executor;
+[ADR 124](../../reference/adr/124-retire-unique-operational-semantics-as-the-form-criterion.md)
+allows adoption of a model package as a governing semantic reference for an
+operation. Semantic routines in prompts versus symbolic routines in code are
+therefore not an adequate split by artifact. "Routine" remains ordinary
+English, not a new technical state.
+
+## How to use the remaining files
+
+- This README is the current commission. It supersedes the earlier
+  "closing conditions met except deletion" status and the older extraction
+  queues where they conflict with the delivered results above.
+- [resource-tiers.md](./resource-tiers.md) is the live supporting draft.
+- [handoff.md](./handoff.md) is the original brief, not a fresh execution plan.
+- [reconciliation.md](./reconciliation.md),
+  [routine-conversion-account.md](./routine-conversion-account.md),
+  [architecture-proposal.md](./architecture-proposal.md),
+  [vocabulary.md](./vocabulary.md) and `search/` are earlier analysis and
+  evidence. Consult the library successors for current extracted claims;
+  do not execute their old extraction lists as a backlog.
+
+The old reconciliation also proposed an effort-allocation classification
+paragraph and questions about episode handoff, third-order lessons and value
+decay. These remain unextracted candidates, not required outputs of the current
+investigation. The search inventories do not need library homes merely because
+they exist. Before eventual deletion, check which surviving claims need their
+retained evidence and extract only what is needed.
 
 ## What closes the workshop
 
-1. A reconciliation map: for each of the brief's six directions, which
-   existing notes already state the result, which tensions or gaps the
-   economic framing exposes, and which of its claims are restatements in new
-   vocabulary. A direction that adds nothing is recorded as such.
-2. The work-level conjecture is either stated as a mechanism the library does
-   not yet hold — including what separates open-ended, cumulative,
-   knowledge-dependent work from purposeful activity in general — or
-   rejected with the reason recorded. Its relation to bounded rationality,
-   metareasoning, value of information and resource-rational analysis is
-   checked against sources.
-3. The claim that epistemic work is the shared layer of open-ended knowledge
-   work is stated with a prediction a rival account would not make, tested
-   against the weak points listed under "Why the operator wants this", and
-   kept, narrowed, or dropped.
-4. The architecture-level conjecture is stated with the evidence that would
-   support or defeat it: reuse across domains, implementation complexity,
-   human judgment still required, reliability, and the cost of maintaining
-   the shared abstractions. It stays a conjecture; this workshop does not
-   adopt it.
-5. Survivors are extracted by type: new mechanisms to `kb/theory/`, finished
-   but unadopted theory to `kb/theory/proposals/`, revisions to existing
-   notes as separate commits, open questions to `kb/log.md` or a successor
-   workshop. Then the directory is deleted.
-
-## State
-
-- 2026-10-30: closing condition 1 done in [reconciliation.md](./reconciliation.md)
-  over the search files under [`search/`](./search/). Verdict: the
-  work-level conjecture is a composition of held results; the new content
-  is in direction 6 (routine-conversion economics, the architecture-level
-  conjecture with defeaters) and one tension in direction 1 (whether value
-  conjectures or only controllers are evaluated). Four discriminating tests
-  and an extraction order are listed there.
-- 2026-10-30: test 3 run in
-  [routine-conversion-account.md](./routine-conversion-account.md) over four
-  recorded cases ([search/conversion-cases.md](./search/conversion-cases.md)).
-  The account predicted all four decisions; in two it disagreed with the
-  decision taken and the outcome sided with it. One correction: exposure
-  (the cost of a wrong routine before it is noticed) promoted to a named
-  term. On Astra's objection the epistemic-versus-economic rivalry is
-  deferred (relaxing triggers do not discriminate), and the extraction is
-  narrowed to a section in the codify-versus-LLM note carrying the two
-  considerations that guidance lacks. Extracted the same day as the "Stake and
-  odds" section of the codify-versus-LLM note. Next: test 1 (controller
-  cost) or the architecture-level proposal.
-- 2026-10-30: test 1 concluded against the Russell–Wefald ingest (see the
-  reconciliation map). Commonplace's practice is the zero-exchange-rate
-  limit of their rule; no recorded preference flips. The operator's
-  reading: that limit is the regime Commonplace is leaving as it adds
-  unattended pipelines, so the net-value form becomes the required
-  comparison as automation grows. Extraction: a qualification of the
-  controller note adding unequal-cost comparison as an option beside
-  matched-budget comparison, and a proposal candidate for cost-per-yield
-  records on routine controllers. Next: the architecture-level
-  proposal (closing condition 4).
-- 2026-10-30: architecture-level proposal drafted in
-  [architecture-proposal.md](./architecture-proposal.md) under the
-  design-proposal type: the conjecture in `configure(G, K_P)` form with its
-  universality axis declared, three options (interface first; second kind
-  first then extract; no shared layer), forces, and adoption and defeat
-  criteria reusing the bootstrap failure conditions and the ablation
-  measures. Not adopted. Next: operator review, then extraction to
-  `kb/reference/proposals/` and closing condition 3.
-- 2026-10-30: proposed artifacts written. After Astra's third review the
-  adoption criteria were reduced to one comparison within the second kind
-  against a competent baseline, with mechanical conversion a possible
-  source rather than a gate. Extracted:
-  `kb/reference/proposals/reusable-commitment-support-across-kinds-of-knowledge-work.md`
-  (the architecture proposal; **G** defined as theory-building machinery,
-  with the shared-layer claim left out of the comparison);
-  `kb/reference/proposals/cost-per-yield-records-for-routine-controllers.md`
-  (the test 1 instrumentation candidate); the controller note qualified
-  with the net-value scoring rule and the unequal-cost option beside
-  matched-budget comparison, evidenced by the Russell–Wefald ingest; a
-  local mailbox message to the unattended-workflow workshops; log entries
-  for the deferred rivalry and the missing PostScript snapshot route.
-  Astra's fourth review corrected both proposals, and the operator agreed:
-  the context regime is feasibility metadata, not a cost figure; cost
-  comparisons use resource figures or mark cost unknown. Closing
-  conditions: 1 and 4 met; 2 met by the reconciliation verdict
-  (composition of held results) and the metareasoning ingests; 3 resolved
-  by narrowing, with the shared-layer claim dropped from the proposal and
-  the rivalry recorded in `kb/log.md` as deferred; 5 met except the final
-  deletion, which the operator holds.
-- 2026-10-30: two further extractions, after the operator's review of what
-  the workshop left unextracted. The `goal-prioritization` tag
-  (`kb/tags/goal-prioritization-README.md`, twenty members) is the
-  reconciliation map's "held" allocation results made navigable; it is the
-  right form for a verdict of "composition of held results". The theory
-  note
-  `kb/theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md`
-  defines the epistemic layer (derivable, decided, guessed, each criticized)
-  and names six roles that consume it, with the record-level prediction for
-  the constraining role that the withdrawn relaxing-trigger test lacked. It
-  is the definition note vocabulary.md said "epistemic work" would need if
-  the layer exceeded theory building; it does, so default 2 there is
-  reversed: "theory building" names roles 1, 5 and 6, "epistemic layer" the
-  whole. Closing condition 3 is therefore stated, not only narrowed. Still
-  unextracted from the candidate list: the effort-allocation classification
-  paragraph, the question to theory-refinement-interface, and the three log
-  entries (episode handoff, third-order lessons, value decay); the case
-  records, controller inventory and worker inventory under `search/` have
-  no library home yet. Next: the step-8 note is now this note's role 2; the
-  program statement in `kb/reference/` beside the instrument note remains.
-- 2026-11-05: successor work reconciled. The "convert into routine" reading
-  above opened three vocabulary workshops in the days after 2026-10-30, and
-  each has now delivered. Consequences for this workshop:
-  - [operationalization-executability-automation](../operationalization-executability-automation/README.md)
-    (opened 2026-10-31, closure-ready): the task became the fifth element of
-    the [actionable-methodology definition](../../theory/definitions/actionable-methodology.md).
-    Operationalizing a method for one executor does not make the task
-    automatable, and automation is separate from decision autonomy. A
-    conversion in the routine-conversion account therefore names a task and
-    an executor; "routine" is routine for that executor on that task.
-  - formal-semantics-and-codification (opened 2026-10-31, closed 2026-11-02,
-    [ADR 124](../../reference/adr/124-retire-unique-operational-semantics-as-the-form-criterion.md)):
-    [codification](../../theory/definitions/codification.md) is the move into
-    symbolic form under a governing semantic reference, by rewriting the
-    artifact or by adopting a consumer such as a frozen model package as the
-    reference for an operation. The split in "Why the operator wants this"
-    between semantic routines in prompts and symbolic routines in code is
-    no longer a split by artifact: a prompt executed under an adopted package
-    is a codified routine for that operation, and its opacity, which is
-    question- and budget-relative, decides which checks it affords. The
-    stake-and-odds section of the codify-versus-LLM note is unaffected
-    because its terms price costs, not forms. "Routine" stays ordinary
-    English (vocabulary default 3).
-  - prompt-semantics-rewrite (opened 2026-11-03, closed 2026-11-04) rebuilt
-    the central prompting note around two semantic references. No claim
-    here depends on it.
-  - [invariants-under-composition](../invariants-under-composition/README.md)
-    (opened 2026-11-04, open): a component that passes its isolated test can
-    still break a requirement the larger system relies on. Candidate
-    mechanism behind exposure in the routine-conversion account; not adopted.
-
-  Handoff done: the direction-4 question is now recorded in
-  [theory-refinement-interface](../theory-refinement-interface/README.md)
-  under "Received question". Still unextracted: the effort-allocation
-  classification paragraph, the three log entries, and the records under
-  `search/`. Final deletion remains held by the operator.
-- 2026-11-05: the operator reframed the allocation question around three
-  resource tiers (operator attention, LLM work, classical compute) whose two
-  boundaries are feasibility lines before they are prices; recorded in
-  [resource-tiers.md](./resource-tiers.md) with the maximand candidate stated
-  per tier (work moved downward across the frontiers at required reliability,
-  per operator judgment), rival maximands, and what would refute it. Not
-  adopted. It reopens the direction-1 tension (retain individual return
-  guesses, or test only the controller) as the next discriminating question;
-  the cheapest test site is the active-workshop triage. This supersedes the
-  10-30 verdict that the architecture-level conjecture is the only new
-  content in direction 6: the tier model is new content for directions 2
-  and 6 and was not in the brief.
+1. State what economic guidance adds to the held search-control account, or
+   conclude that it adds nothing useful within the tested scope.
+2. Make the answer criticizable through a bounded comparison or discriminating
+   observation. Separate a conceptual argument from demonstrated improvement
+   in automatic search; an unrun test remains a proposal.
+3. Give the tier model an explicit disposition: useful resource model,
+   revised model, or rejected framing. Do not adopt its maximand by default.
+4. Extract surviving results and genuinely live questions into their proper
+   library or workshop destinations, then delete this directory and remove
+   its index entry. The earlier operator hold on final deletion is not
+   discharged by this cleanup.
 
 ## Evaluation boundary and coupling
 
-- Write scope while open: this directory only. Library notes are not edited
-  from here; proposed revisions are drafted here and applied at extraction.
+- Research write scope remains this directory. Library changes are proposed
+  here and applied separately at extraction. Updating the workshop index for
+  this cleanup does not authorize broader library edits or implementation.
 - [theory-refinement-interface](../theory-refinement-interface/README.md)
-  owns the derive, compare, locate, revise, evaluate, and apply interface.
-  Direction 4 (general operations) reads it as the starting interface and
-  sends proposed changes there.
+  owns the derive, compare, locate, revise, evaluate and apply interface.
+  Proposed changes to those operations go there.
 - [conjecture-store](../conjecture-store/README.md) and
   [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
-  own storage and lifecycle of conjectures and decisions. Nothing here
-  designs a generalized commitment store; the brief rules that out as
-  premature.
+  own conjecture and decision storage and lifecycle. Do not design a
+  generalized commitment store here.
 - [reflective-improvement-divergence](../reflective-improvement-divergence/README.md)
   and [self-revision-design-space](../self-revision-design-space/README.md)
-  own non-termination and redesign reach of the recursive levels; direction 3
-  (recursion) cites them.
-- [use-and-outcome-records](../use-and-outcome-records/README.md) owns
-  operational observation records; direction 5 (retention)
-  may use it as evidence of retention costs.
-- The brief's research discipline binds: look for counterexamples and rival
-  frameworks that explain the same phenomena, mark each claim as established
-  result, argument, design hypothesis or untested empirical claim, and prefer
-  a few substantial results to many notes.
+  own non-termination and redesign reach of recursive improvement.
+- [use-and-outcome-records](../use-and-outcome-records/README.md) owns operational
+  observation records. Coordinate proposed recording requirements with it.
+- Look for counterexamples and rival accounts. Distinguish established
+  results, arguments, design hypotheses and untested empirical claims.
+  Prefer a few substantial results to many notes.

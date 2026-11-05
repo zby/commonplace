@@ -1,9 +1,11 @@
 # Three resource tiers and two feasibility frontiers
 
-Operator's framing, 2026-11-05, recorded as workshop analysis. It supplies
-the resource model behind the maximand candidate in the README's state
-entry of the same date. Nothing here is adopted vocabulary; "tier" and
-"frontier" are workshop-local words.
+Operator's framing, 2026-11-05, recorded as workshop analysis. The current [workshop framing](./README.md) places it under the question of
+what should guide automatic search. This file retains the earlier candidate
+model for criticism; its proposed maximand and refuters are not adopted.
+Moving work between tiers is one possible return on search, not the assumed
+objective. Nothing here is adopted vocabulary; "tier" and "frontier" are
+workshop-local words.
 
 ## The tiers
 
