@@ -35,9 +35,49 @@ those before implementation or a new comparable Windows survey. A retired
 analysis command remains in a non-promoted instruction; the rebaseline names it
 for a separate consumer-aware repair.
 
-**Next:** revise the breadth probe with a new procedure ID, then choose one
-bounded E1 slice and its runtime fixtures. No production changes or expanded
-support claims are authorized by this status update.
+**Next:** revise the breadth probe with a new procedure ID, then take the
+health-check layout/presence checks as the first bounded E1 slice. The operator
+approved this work sequence after the status review. This plan update records
+that direction; it does not itself change the probe, production instructions
+or support claims. Acceptance remains subject to the gates below.
+
+## Agreed next work
+
+The immediate purpose is to make the evidence procedure current and improve
+portable diagnosis before changing more complex workflows. Keep installation
+acceptance closed; INSTALL.md retains its existing delivery triggers.
+
+1. **Revise the breadth probe before another comparable current-Windows run.**
+   Assign a new procedure ID. Recognize supported signed-Python Windows shims
+   without treating every command outside the uv bin directory as shadowing.
+   Separate effective permission from matching init/read-rule files, and native
+   file-read results from shell-read results. Record uv inventory denial as
+   partial evidence. Preserve the no-repair, no-escalation and disclosure rules.
+2. **Take health-check portability first.** Follow the bounded scope and
+   acceptance gates in the [E1 plan](./e1-windows-execution.md#next-bounded-step).
+   Pair actual POSIX layout/presence tests in Steps 1–2 and correct the inference
+   that an `ok` init check proves effective library-read permission. Do not move
+   the Windows read-rule product fix out of INSTALL.md's existing trigger.
+3. **Replan after that slice.** Connect's guarded tag search is the next
+   candidate, not an implementation selected in advance. Establish its consumers
+   and package/helper ownership; require a regression case proving that zero
+   matching tag files cannot widen the search to the whole repository.
+   Aggregate validation needs an explicit interface decision before changing
+   the CLI's tested rejection of broad literal scopes.
+4. **Finish the inventory before deciding on channel compilation.** Cover all
+   three canonical instruction trees and required references. Prioritize
+   snapshot capture and exact bytes, AutoReason filesystem preparation,
+   multistage drift checks and rollback, runtime tool metadata, and external-tool
+   ownership. Repair the retired analysis-command prescription separately after
+   inspecting its intended operation; do not apply a blind rename.
+
+Before implementation, trace the affected consumers and select Linux/Windows
+fixtures, including an installed-project case where checkout access could hide
+an assumption. A missing Windows runtime leaves its acceptance pending. If the
+health slice requires broader workflow changes or permission repair, stop and
+replan rather than silently expanding it. After its static checks and available
+runtime evidence are retained, choose the next slice from the remaining gaps.
+No new runtime evidence is claimed by this plan update.
 
 ## Previous closure review (2026-11-01; historical)
 

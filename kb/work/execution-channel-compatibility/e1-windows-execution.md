@@ -91,11 +91,40 @@ The numbers retain the earlier E1 item identities.
 
 ## Next bounded step
 
-First reconcile the breadth probe with supported shims and effective permission
-checks. Then select one E1 implementation slice with its consumer set and
-Windows test prerequisites. Health layout checks and connect's empty-tag
-selection are concrete candidates. Aggregate validation needs the explicit
-contract decision in item 3 before implementation.
+The operator approved the sequence recorded in the
+[parent plan](./README.md#agreed-next-work): first reconcile the breadth probe
+with supported shims and effective permission evidence, then take health-check
+layout/presence checks as the first E1 slice. The probe revision is a prerequisite
+for a new comparable breadth report, not proof of health-check acceptance.
+
+**Health slice scope.** Pair the shell-dependent layout/presence tests in
+`cp-skill-health-check` Steps 1–2 with PowerShell forms. Correct the denial
+interpretation so matching init outputs or an `ok` init check do not establish
+effective library-read permission. Preserve diagnose-only behavior and existing
+Step 4 shim recognition. Do not rewrite Step 3's runtime-native diagnosis or
+Step 6's plain argv as if they were POSIX programs. Do not implement the Windows
+read-rule product fix here; INSTALL.md retains that trigger.
+
+**Before editing.** Trace the affected consumer instructions and identify
+Linux/Windows fixtures for the layout branches being changed. Include missing
+and present paths, paths requiring quoting, and permission-denial evidence where
+the runtime exposes it. Use an initialized-project fixture where source-checkout
+access would hide a dependency. Define expected observations before the run;
+do not repair an environment to obtain them.
+
+**Acceptance.** Validate changed Markdown and retain results for the selected
+checks on Linux and normal-policy native Windows PowerShell. Report unavailable
+runtime cases as pending, not passed. The slice must preserve the distinction
+between file presence, matching generated files and effective access. Package CI
+or a simple validation invocation alone cannot satisfy this acceptance.
+
+**Stop and replan** if the slice needs broader workflow changes, a new command
+interface or permission repair. After retaining its checks and remaining gaps,
+choose the next slice. Connect's zero-match selection is the next candidate;
+establish consumers and package/helper ownership and require a no-match
+regression case before implementation. Aggregate validation still needs the
+explicit contract decision in item 3. Complete the wider required-reference
+inventory before deciding whether channel compilation is unnecessary.
 
 ## Completion
 
