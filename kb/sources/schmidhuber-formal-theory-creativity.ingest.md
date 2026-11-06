@@ -28,7 +28,38 @@ The work addresses an important problem: how an agent can choose informative act
 
 ## Quotes
 
-No source quotes have been retained yet.
+> The above description of the agent’s motivation conceptually separates the goal (finding or creating data that can be modeled better or faster than before) from the means of achieving the goal. Let the controller’s RL mechanism figure out how to translate such rewards into action sequences that allow the given world model improvement algorithm to find and exploit previously unknown types of regularities.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section II-A
+
+> Cl (p, h(≤ t)) denotes p’s compression performance on h(≤ t): the number of bits needed to specify both the predictor and the deviations of the sensory history from its predictions, in the sense of loss-free compression.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section II-B
+
+> The basic principle can be formulated as follows: Learn a mapping from actions (or action sequences) to the expectation of future performance improvement of the world model. Encourage action sequences where this expectation is high.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-B
+
+> The second implementation replaces the confidence network by a network H which at every time step is trained to predict the current change of the model network’s output due to the model’s learning algorithm. That is, H will learn to approximate the expected first derivative of the model’s prediction error, given the inputs. The absolute value of H’s output is taken as the intrinsic reward, thus rewarding learning progress.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-B
+
+> Both variants avoid the theoretically desirable but impractical regular evaluations of the predictor on the entire history so far, as discussed in Section II-B. Instead they monitor the recent effects of learning on the learning mechanism (a neural network in this case).
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-B
+
+> Here the curiosity reward is proportional to the predictor’s surprise / information gain [15], measured as the Kullback-Leibler distance [39] between the learning predictor’s subjective probability distributions on possible next events before and after new observations - the relative entropy between its prior and posterior, essentially another measure of learning progress.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-C
+
+> An internal storage for temporary computational results of the programs is viewed as part of the changing environment. Each module can suggest experiments in the form of probabilistic algorithms to be executed, and make predictions about their effects, betting intrinsic reward on their outcomes. The opposing module may accept such a bet in a zero-sum game by making a contrary prediction, or reject it. In case of acceptance, the winner is determined by executing the algorithmic experiment and checking its outcome; the intrinsic reward eventually gets transferred from the surprised loser to the confirmed winner.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-D, opposing program modules
+
+> Thus both modules are motivated to discover truly novel algorithmic patterns, where the dynamically changing subjective baseline for novelty is given by what the opponent already knows about the (external or internal) world’s repetitive patterns. Since the execution of any computational or physical action costs something (as it will reduce the cumulative reward per time ratio), both modules are motivated to focus on those parts of the dynamic world that currently make learning progress easy, to minimize the costs of identifying promising experiments and executing them.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section III-D
+
+> d) Results of internal computations through sequences of internal actions as in Section III-D [79]? This will motivate a curious agent to create novel patterns not only in the space of sensory inputs but also in the space of abstract input transformations, such as earlier learnt mappings from images of cars to an internal symbol “car”. The agent will also be motivated to create purely “mental” novel patterns independent of external inputs, such as number sequences obeying previously unknown mathematical laws (corresponding to mathematical discoveries).
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section V, predictor subtype 1A(d)
+
+> A) Is the entire history used to evaluate the predictor’s performance as in Section II [85], [92], [97], [96] (in theory the correct thing to do, but sometimes impractical)? Or only recent data, e.g., the one acquired at the present time step as in Section III-B [70], or in a limited time window of recent inputs? (If so, a performance decline on earlier parts of the history may go unnoticed.)
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section V, progress reward subtype 2A
+
+> a) Mean squared prediction error or similar measures as in Section III-A [71], [3], [107], [36]? This may fail whenever high prediction errors do not imply expected prediction progress, e. g., in noisy environments, but also when the limitations of the predictor’s learning algorithm prevent learning progress even in deterministic worlds.
+> --- `kb/sources/.snapshots/schmidhuber-formal-theory-creativity.md` @ `sha256:260f63e52578ab7c128cdd2fd7ab5b4d450d5e9aa6830a3e5173efdbdf4f73a6` — Section V, progress reward subtype 2B(a)
 
 ## Connections Found
 
