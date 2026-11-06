@@ -8,7 +8,7 @@ traits: [title-as-claim]
 
 A programmer may restrict how code is organized because they need those restrictions to write the next part. Useful structure could therefore arise from the author's need to understand the code, even when making it maintainable is not an explicit goal. An LLM that can complete the same change without those restrictions may face less pressure to introduce them, even when they would help later contributors.
 
-This is a conjecture about how useful structure arises. The proposed human–LLM difference and its training explanation remain untested. Greater capacity to work without these restrictions could remove one reason to introduce them without necessarily producing worse code.
+This is a conjecture about how useful structure arises. The proposed human–LLM difference and its training explanation remain untested.
 
 Here, a **design commitment** is a restriction on acceptable future implementations: only one component owns a state transition, validation happens at a particular boundary, or two subsystems remain independent even when sharing code would remove duplication. A commitment is unwritten when its holder relies on it without recording it as a shared requirement. It need not be a formal invariant or an explicitly stated rule.
 
