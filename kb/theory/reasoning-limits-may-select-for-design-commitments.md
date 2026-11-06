@@ -8,7 +8,7 @@ traits: [title-as-claim]
 
 A programmer may restrict how code is organized because they need those restrictions to write the next part. Useful structure could therefore arise from the author's need to understand the code, even when making it maintainable is not an explicit goal. An LLM that can complete the same change without those restrictions may face less pressure to introduce them, even when they would help later contributors.
 
-This is a conjecture about how useful structure arises, not evidence that humans introduce more useful structure than current LLMs. The proposed human–LLM difference and its training explanation remain untested. Greater capacity to work without these restrictions could remove one reason to introduce them without necessarily producing worse code.
+This is a conjecture about how useful structure arises. The proposed human–LLM difference and its training explanation remain untested. Greater capacity to work without these restrictions could remove one reason to introduce them without necessarily producing worse code.
 
 Here, a **design commitment** is a restriction on acceptable future implementations: only one component owns a state transition, validation happens at a particular boundary, or two subsystems remain independent even when sharing code would remove duplication. A commitment is unwritten when its holder relies on it without recording it as a shared requirement. It need not be a formal invariant or an explicitly stated rule.
 
@@ -21,7 +21,7 @@ The proposed mechanism is:
 3. Those restrictions make further work manageable for that author.
 4. Where the restrictions also help later contributors, maintainability is a by-product of solving the author's immediate reasoning problem.
 
-The benefit need not have been selected directly as a maintainability objective. Restrictions that suit the original author can also hinder others. More structure is not automatically better structure; its value depends on subsequent work. Reasoning difficulty can also produce bad abstractions, abandonment, or mistakes. Experiments must establish both the range in which the mechanism produces useful commitments and the benefit to later contributors.
+The benefit need not have been selected directly as a maintainability objective. Restrictions that suit the original author can also hinder others. Reasoning difficulty can also produce bad abstractions, abandonment, or mistakes. Experiments must establish both the range in which the mechanism produces useful commitments and the benefit to later contributors.
 
 General practices such as SOLID supply some restrictions but leave project-specific choices unresolved. Avoiding duplication can conflict with keeping components independent. A local design commitment settles which consideration takes priority in this project and why. Applying familiar practices case by case does not necessarily preserve that decision across changes.
 
@@ -29,20 +29,20 @@ General practices such as SOLID supply some restrictions but leave project-speci
 
 A useful commitment can replace many separate facts with a rule and its exceptions. If all state changes pass through one function, a contributor can use that rule to locate behavior instead of remembering each path independently. The compression hypothesis is that the rule and its exceptions are easier for that contributor to represent and use than the separate facts. Additional structure helps only when it achieves this reduction; elaborate rules with many exceptions can cost more than they save.
 
-This connects to Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md), which proposes encouraging actions expected to improve a world model's performance and describes compression cost as including both the predictor and deviations from its predictions. Our application is that organizing code can make it easier for its author to model. The paper does not test that application or the proposed human–LLM difference. Its objective is progress in modeling, rather than compressibility alone; a compact organization that is already understood offers no further progress merely by remaining compact.
+This connects to Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md), which proposes encouraging actions expected to improve a world model's performance and describes compression cost as including both the predictor and deviations from its predictions. Applying this framework to code organization is our conjecture: organizing code can make it easier for its author to model. Its objective is progress in modeling, rather than compressibility alone; a compact organization that is already understood offers no further progress merely by remaining compact.
 
 ## The proposed human–LLM difference is a selection difference
 
-The hypothesis is not that LLMs use no structure. It is that they can sometimes complete changes without introducing restrictions a human would need to continue reasoning. If training rewards successful changes of limited scope more strongly than their consequences for later contributors, it can underselect those additional commitments.
+LLMs may sometimes complete changes without introducing restrictions a human would need to continue reasoning. If training rewards successful changes of limited scope more strongly than their consequences for later contributors, it can underselect those additional commitments.
 
 Two candidate explanations need separate tests:
 
 - A model may handle a larger change without comparable reasoning aids.
 - Its training may provide insufficient feedback from later modification.
 
-Neither explanation follows from the length of the model's context window. Effective code-tracking capacity, human working memory, and training objectives cannot be equated merely by analogy.
+Neither explanation follows from the length of the model's context window.
 
-This is not proposed as a permanent model limitation. Training on continued modification and contributor handoffs could reward commitments that improve later work. Rewarding architectural-looking output alone could instead produce unnecessary layers and rules.
+Training on continued modification and contributor handoffs could reward commitments that improve later work. Rewarding architectural-looking output alone could instead produce unnecessary layers and rules.
 
 ## Unwritten commitments do not reliably survive contributor changes
 
@@ -54,7 +54,7 @@ For KB design, the continuity problem is the central implication: fresh agents m
 
 ## Predictions and tests
 
-The prediction concerns sequences of changes, not the appearance of a finished patch. A useful comparison would track when humans and models introduce commitments and whether those commitments precede or follow reasoning failures. It would also test whether an independent contributor can make the next change more reliably at comparable total cost.
+Test the prediction across a sequence of changes. A useful comparison would track when humans and models introduce commitments and whether those commitments precede or follow reasoning failures. It would also test whether an independent contributor can make the next change more reliably at comparable total cost.
 
 ### Reasoning-difficulty mechanism
 
@@ -71,7 +71,7 @@ Compare the same code with and without accurate commitment records. Control avai
 ## Scope
 
 - The mechanism concerns commitments introduced to support reasoning. Product requirements, explicit architecture instructions, and enforced contracts can supply structure independently.
-- Preserving a commitment is not always correct. New requirements may require revising it; successful continuity includes deliberate revision with reasons.
+- New requirements may call for deliberately revising a commitment and explaining why.
 
 ---
 

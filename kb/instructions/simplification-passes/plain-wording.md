@@ -48,7 +48,10 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
    contrast being the sentence's point is not enough to keep its negative
    form when a positive sentence carries the same point. Threshold set by
    the operator on 2026-09-25, after LLM-drafted articles overused contrast
-   and negation.
+   and negation. When a claim is explicitly marked as a conjecture, cut an
+   added denial that it is evidence unless the denial identifies a separate
+   evidential misuse. Keep any distinct limitation, such as which comparison
+   remains untested; do not replace the redundant denial with another hedge.
 5. Return the list marked keep or replace, with the reason in a few words.
    The operator strikes items. Apply only what survives.
 6. When the literal phrase needs a referent the figure did not name (who is
