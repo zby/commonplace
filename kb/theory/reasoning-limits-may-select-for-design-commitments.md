@@ -25,7 +25,7 @@ One possible benefit is compression. If all state changes pass through one funct
 
 ## Capacity and feedback timing are rival explanations
 
-An LLM may be able to make a larger change without commitments a human needs to keep track of the code. If so, the model has less immediate need to introduce them. Alternatively, it may encounter similar difficulty but produce a change whose incoherence appears only during later work. Immediate checks could accept either result.
+A human may need design commitments to keep track of the code during a large change. An LLM may be able to make the same change without them. In that case, the task itself gives the model no reason to create them. Alternatively, it may encounter similar difficulty but produce a change whose incoherence appears only during later work. Immediate checks could accept either result.
 
 The [delayed-feedback account](./program-theory-sustains-search-under-delayed-feedback.md) explains why passing a narrow check can conceal damage to the program's organization. Training on immediate success may leave the later cost unrewarded. These are different questions: what prompts an author to generate useful structure, and [whether acceptance favors that structure](./weakly-discriminated-qualities-tend-to-be-underselected.md).
 
