@@ -1,5 +1,5 @@
 ---
-description: "Schmidhuber formalizes curiosity as compression progress, offering a bounded account of creative search rather than evidence that creative LLM outputs imply intrinsic motivation."
+description: "Earlier compression-progress account retained for grounded citations and the LLM creativity question; Formal Theory of Creativity is the preferred later overview."
 source: https://arxiv.org/abs/0812.4360
 captured: "2026-09-18"
 capture: pdftotext
@@ -41,6 +41,8 @@ Schmidhuber proposes that curiosity and essential aspects of creativity arise fr
 > --- `kb/sources/.snapshots/driven-by-compression-progress.md` @ `sha256:5207c0abb218e20972dc46c774efde31194ac9a3cc2c55f7d6aca8229c23a141` — Appendix A.5, Measures of Compressor Progress / Learning Progress, following equation (5) (arXiv:0812.4360v2)
 
 ## Connections Found
+
+**Reading order:** Start with [Formal Theory of Creativity, Fun, and Intrinsic Motivation (1990–2010)](./schmidhuber-formal-theory-creativity.ingest.md) for the preferred later overview of the same research program. Keep this earlier account for its particular exposition, the LLM creativity question, and existing grounded citations. The newer treatment does not constitute independent empirical corroboration or automatically replace this source's citations.
 
 For the creativity question, the paper is a formal anchor for the pattern-learning component of [observer-relative information value](../theory/information-value-is-observer-relative.md): an object's interestingness depends on what a particular learner can newly understand, not on novelty alone. Its distinct contribution is the change in coding performance, rather than merely the amount of accessible structure. This does not establish goal-relative usefulness in general.
 
