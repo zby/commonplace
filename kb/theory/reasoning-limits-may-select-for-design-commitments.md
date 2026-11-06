@@ -25,6 +25,12 @@ The benefit need not have been selected directly as a maintainability objective.
 
 General practices such as SOLID supply some restrictions but leave project-specific choices unresolved. Avoiding duplication can conflict with keeping components independent. A local design commitment settles which consideration takes priority in this project and why. Applying familiar practices case by case does not necessarily preserve that decision across changes.
 
+## Useful commitments can make code easier to describe
+
+A useful commitment can replace many separate facts with a rule and its exceptions. If all state changes pass through one function, a contributor can use that rule to locate behavior instead of remembering each path independently. The compression hypothesis is that the rule and its exceptions are easier for that contributor to represent and use than the separate facts. Additional structure helps only when it achieves this reduction; elaborate rules with many exceptions can cost more than they save.
+
+This connects to Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md), which proposes encouraging actions expected to improve a world model's performance and describes compression cost as including both the predictor and deviations from its predictions. Our application is that organizing code can make it easier for its author to model. The paper does not test that application or the proposed human–LLM difference. Its objective is progress in modeling, rather than compressibility alone; a compact organization that is already understood offers no further progress merely by remaining compact.
+
 ## The proposed human–LLM difference is a selection difference
 
 The hypothesis is not that LLMs use no structure. It is that they can sometimes complete changes without introducing restrictions a human would need to continue reasoning. If training rewards successful changes of limited scope more strongly than their consequences for later contributors, it can underselect those additional commitments.
