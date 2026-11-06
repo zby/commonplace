@@ -6,9 +6,9 @@ traits: [title-as-claim]
 
 # Reasoning limits may select for design commitments
 
-Status: conjecture. The proposed mechanism is that an author's need to understand code supplies indirect selection pressure for useful structure. The human–LLM difference and its training explanation remain untested.
+A programmer may restrict how code is organized because they need those restrictions to write the next part. Useful structure could therefore arise from the author's need to understand the code, rather than an explicit goal of making it maintainable. An LLM that can complete the same change without those restrictions may face less pressure to introduce them, even when they would help later contributors.
 
-A programmer may introduce project-specific design commitments because they need those restrictions to write the next part of the program. If another programmer can complete the same change without those restrictions, immediate task success supplies less pressure to introduce them. Greater capacity to work with unstructured code could therefore remove one source of structure that benefits subsequent development. This predicts a possible cost of greater capacity, not that greater capacity necessarily produces worse code.
+This is a conjecture about how useful structure arises. The proposed human–LLM difference and its training explanation remain untested. Greater capacity to work without these restrictions could remove one reason to introduce them; it need not produce worse code.
 
 Here, a **design commitment** is a restriction on acceptable future implementations: only one component owns a state transition, validation happens at a particular boundary, or two subsystems remain independent even when sharing code would remove duplication. A commitment is unwritten when its holder relies on it without recording it as a shared requirement. It need not be a formal invariant or an explicitly articulated rule.
 
