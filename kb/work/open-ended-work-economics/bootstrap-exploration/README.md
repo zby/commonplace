@@ -8,7 +8,7 @@ This is also a trial of that approach: use delegated exploration, criticism and 
 
 ## Directions
 
-Five conversational turns, with an operator response before proceeding to the next. These are starting directions, not fixed research questions; the coordinator may reframe the next turn from findings and operator feedback.
+Five exploration turns. The original commission required an operator response before each next turn. After turn 1, the operator instructed: “run all 5 turns without stopping”. Continue through turns 2–5 without further response gates; retain unresolved purpose choices rather than infer substantive answers from permission to continue. These are starting directions, not fixed research questions; the coordinator may reframe the next turn from findings and operator feedback.
 
 1. **Objectives:** what should increase, and how do present usefulness and future ability to automate conflict?
 2. **Productive drift:** how can exploration discover possibilities outside the initial framing without becoming endless preparation?
@@ -30,4 +30,16 @@ Five conversational turns, with an operator response before proceeding to the ne
 
 After turn five, deliver a proposed revision of the main plan, surviving questions, and a judgment about which parts of this procedure deserve another trial. Useful findings do not by themselves demonstrate superiority to simpler conversation or delegation. Extraction, implementation and deletion require a separate decision; preserve the parent workshop's existing deletion hold.
 
-Status: plan recorded; no exploration agents launched. The [parent framing](../README.md) supplies background and adjacent-work boundaries; this commission adds deliberate drift and the bootstrap purpose, not adoption of the resource-tier model or any objective function.
+Status: all five turns completed. Each used two independent explorers, a critic and an integrator, run sequentially. The operator removed response gates after turn 1. The [final integration](./turn-05/integration.md) delivers the proposed main-plan revision, surviving questions and procedure assessment; it is not an adopted revision. [Final worker costs](./costs-final.md) retain measured totals and limits. Each turn's coordination and result files retain assignments, session paths and decisions. No experiments, implementation, extraction, commits or deletion were performed.
+
+- [Turn 1: objectives](./turn-01/integration.md)
+- [Turn 2: productive drift](./turn-02/integration.md)
+- [Turn 3: executable methodology](./turn-03/integration.md)
+- [Turn 4: investment comparison proposal](./turn-04/integration.md)
+- [Turn 5: retrospective and proposed revision](./turn-05/integration.md)
+
+The [parent framing](../README.md) supplies background and adjacent-work boundaries; this commission adds deliberate drift and the bootstrap purpose, not adoption of the resource-tier model or any objective function.
+
+## Follow-up direction
+
+The operator approved recording a [second exploration brief: curiosity, compression and retention](./second-exploration-brief.md) on 2026-11-06. It revises the positive direction of inquiry and the record of consequential selection and parking decisions. The first trial remains intact. The second exploration has not been launched; the brief requires separate execution authorization.
