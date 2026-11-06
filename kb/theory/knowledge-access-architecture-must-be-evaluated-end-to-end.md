@@ -11,6 +11,8 @@ For a specified task, knowledge-access architecture must be evaluated across the
 
 A retrieval evaluation observes a particular event or property, such as candidate coverage, ordering, a relevance decision, payload return, or read-back. None alone establishes that the returned material stays within the amount of context the task can use reliably, supports the required transformation, changes the agent's behavior, improves the outcome being evaluated, or stays valid as the knowledge base changes. A storage substrate likewise shapes available operations and their costs, but is not itself an outcome measure.
 
+[Amortized Reasoning Index (ARI)](../sources/amortized-reasoning-index.ingest.md) provides a bounded example: the authors report 3.2–7× gains in held-out Recall@100, evaluated without reasoning-model calls on those queries, while presenting persistent agent memory as a future application. Those results establish a reported discovery gain, not an agent-outcome gain. This locates the evaluation boundary; it does not show that better retrieval cannot improve agent outcomes.
+
 ## Discovery is not a task-facing context
 
 Stored material becomes a candidate only when the consumer can identify it as relevant through an affordable route and a sufficiently discriminating cue. This is the task-relative discoverability requirement in [agent memory needs discoverable, composable, trusted knowledge under a context budget](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md), while [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) explains why the cue must justify the cost of following it. Storage can therefore succeed while candidate discovery fails.
