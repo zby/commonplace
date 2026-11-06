@@ -45,7 +45,7 @@ The prediction concerns sequences of changes, not the appearance of a finished p
 
 For the proposed mechanism, consider a range where the author can still solve the task. Within that range, reducing the author's effective ability to track interactions should increase the introduction of useful commitments before failure. Merely reducing change size or adding stylistic structure would not satisfy that prediction. If commitments instead follow only explicit instructions or learned conventions, the reasoning-difficulty explanation loses support.
 
-For the training explanation, compare immediate-success selection with selection that includes later changes and fresh contributors. An improvement only under the latter would support the proposed selection gap. If bounded-change selection preserves equally useful commitments, that explanation loses support.
+For the training explanation, compare immediate-success selection with selection that includes later changes and fresh contributors. An improvement only under the latter would be consistent with the proposed selection gap. Attributing it to design commitments would also require checking whether the later-work reward improved other aspects of the solutions. If bounded-change selection preserves equally useful commitments, that explanation loses support.
 
 For the retention intervention, compare the same code with and without accurate commitment records. Control available information and total effort. No improvement in later coherent modification would count against the proposed benefit of making the commitments visible.
 
