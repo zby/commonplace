@@ -17,13 +17,23 @@ The proposed human–LLM difference is an untested conjecture.
 
 An author may find it difficult to track all the interactions involved in a change. Boundaries, conventions, or abstractions can make that work manageable. The author then relies on these commitments to continue constructing correct code.
 
-The benefit need not have been selected directly as a maintainability objective. The immediate pressure is to make the next part of the implementation possible. General practices such as SOLID leave many of these project-specific choices unresolved.
+The benefit need not have been selected directly as a maintainability objective. The immediate pressure is to keep programming. General practices such as SOLID leave many of these project-specific choices unresolved.
 
-One possible benefit is compression. If all state changes pass through one function, a contributor can track that rule instead of remembering each path independently. Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md) measures compression cost using both the predictor and deviations from its predictions. Our application is that a commitment helps when its rule and exceptions cost less to track than the separate facts.
+One possible benefit is compression. If all state changes pass through one function, a contributor can track that rule instead of remembering each path independently. Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md) measures compression cost using both the predictor and deviations from its predictions. Applied to code, the conjecture is that a commitment helps when its rule and exceptions cost less to track than the separate facts.
+
+## Reorganizing partial work is a separate capability
+
+The need for structure is one part of the account. Two others are the opportunity to reconsider partial work and the learned response to difficulty.
+
+Human authors can alternate writing with reconsideration: write part, work out what comes next, reorganize, then continue. A model producing a whole change in one pass has fewer opportunities to reorganize unfinished work. Agents can alternate edits and inspection, but checking for errors may leave the design unchanged.
+
+The relevant capability is to notice difficulty continuing, introduce a small local commitment, and resume work under it. Refactoring when explicitly asked starts from a different position: restructuring is already the objective.
+
+A prompt to think before continuing supplies an opportunity; it may not elicit this response. One hypothesis is that training examples favor refactoring as a whole task over these intermediate adjustments. A final diff can show the resulting structure without showing when it was introduced or why. The distribution of such examples in model training is unknown.
 
 ## Correctness can leave the structural difference unrewarded
 
-A model that can construct a correct solution without the commitments a human needs lacks that immediate reason to introduce them. Both solutions meet the current requirements, but they may leave different amounts of reasoning for the next contributor. For example, several implementations of a state transition may agree on all current behavior while leaving later contributors responsible for finding and updating each one.
+Whichever process produced the code, correct implementations can impose different demands on later contributors. For example, several implementations of a state transition may agree on current behavior while requiring later contributors to find and update each one. A commitment to one owner could reduce that work.
 
 Training that rewards current correctness may provide little incentive for commitments whose benefit appears only during later modification. The [delayed-feedback account](./program-theory-sustains-search-under-delayed-feedback.md) explains why later demands matter to evaluating coherent modification. This note asks what prompts useful structure during construction; the [underselection account](./weakly-discriminated-qualities-tend-to-be-underselected.md) asks whether acceptance favors it once proposed.
 
@@ -33,11 +43,19 @@ A fresh agent invocation retains general programming competence but must reconst
 
 Recording commitments and their reasons could preserve continuity across invocations. Code can show that behavior is centralized without saying whether future changes must keep it centralized. The [rationale-retention note](./design-rationale-must-preserve-unregenerable-decision-premises.md) explains this information gap. The records help when later contributors retrieve and use them.
 
-## Test later work on correct implementations
+## Proposed test
 
-Compare humans and models implementing the same requirements, retaining implementations that actually meet those requirements. Record when authors introduce commitments and what reasoning difficulty precedes them. Then compare the cost and reliability of further changes, including work by independent contributors, at comparable total cost.
+An experiment could follow humans and models through a sequence of changes to examine when commitments arise and whether they help later work. Participants would implement the same requirements. The study would retain correct implementations, record when commitments are introduced and what difficulty precedes them, and measure the cost and reliability of later changes by original authors and independent contributors.
 
-The conjecture predicts that humans introduce useful commitments at a lower level of interaction complexity than models need them. It also predicts that those commitments reduce later modification cost or errors. Evidence for the first without the second would explain a difference in construction without establishing a maintainability benefit. If commitments arise only from instructions or learned conventions, rather than in response to difficulty, the proposed mechanism loses support.
+With matched resource budgets, the model comparison could include:
+
+- **One-pass construction.** Produce the implementation in one pass.
+- **Neutral reconsideration.** Pause to inspect partial work without being asked to add structure.
+- **Guided reconsideration.** Pause with explicit guidance to examine and revise local commitments.
+
+The capacity hypothesis predicts that models can handle more interacting behavior than humans before needing comparable commitments. The staged conditions would test whether opportunities and guidance change which commitments models introduce. If only guided reconsideration produces commitments that help later work, a pause alone is insufficient; the cause could still be something other than the proposed training-data gap.
+
+A difference in structure would establish a maintainability benefit only if it improves later modification. If commitments arise only from instructions or conventions, rather than in response to difficulty, that weakens the proposed difficulty-driven mechanism. This is an experiment sketch; measures of interaction complexity, reasoning difficulty, and resource matching remain to be specified.
 
 ## Scope
 
