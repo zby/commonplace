@@ -15,7 +15,7 @@ This is a conjecture about how useful structure arises. The proposed human–LLM
 
 ## The author's difficulty can select useful structure
 
-When an author can no longer reliably track the interactions needed for a change, boundaries, conventions, or abstractions may make further work manageable. The author can then continue by relying on those commitments. Where later contributors can use them too, the same structure helps maintenance.
+Sometimes an author can no longer reliably track every interaction a change involves. Boundaries, conventions, or abstractions may then make further work manageable. The author can then continue by relying on those commitments. Where later contributors can use them too, the same structure helps maintenance.
 
 The benefit need not have been selected directly as a maintainability objective. The immediate pressure is to make the next change possible. General practices such as SOLID leave many of these project-specific choices unresolved.
 
