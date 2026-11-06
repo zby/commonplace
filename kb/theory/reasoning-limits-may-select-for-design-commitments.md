@@ -23,17 +23,19 @@ The proposed benefit depends on what the author invents: restrictions that suit 
 
 One possible benefit is compression. If all state changes pass through one function, a contributor can track that rule instead of remembering each path independently. Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md) measures compression cost using both the predictor and deviations from its predictions. Our application is that a design commitment can make code easier to model when the rule and its exceptions cost less to track than the separate facts. Elaborate rules with many exceptions can cost more than they save.
 
-## Capacity and feedback timing are rival explanations
+## Greater capacity can remove the trigger
 
-An LLM may be able to make a larger change without commitments a human needs to keep track of the code. If so, the model has less immediate need to introduce them. Alternatively, it may encounter similar difficulty but produce a change whose incoherence appears only during later work. Immediate checks could accept either result.
+The hard case is a model-written change that meets its immediate requirements yet contains fewer design commitments than a human author would have introduced. Because the change works, the model did not reach the limit at which it could no longer produce correct code. On this conjecture, reaching that limit is what prompts an author to invent commitments. A model that tracks more interactions can work further without that prompt.
 
-The [delayed-feedback account](./program-theory-sustains-search-under-delayed-feedback.md) explains why passing a narrow check can conceal damage to the program's organization. Training on immediate success may leave the later cost unrewarded. These are different questions: what prompts an author to generate useful structure, and [whether acceptance favors that structure](./weakly-discriminated-qualities-tend-to-be-underselected.md).
+The missing structure still has a cost. Each change made without commitments leaves more interactions that later work must track: for example, one state transition implemented in several places that agree now but are bound by no rule. Contributors with less project context reach their limit sooner. The model reaches its own limit later, on code that is larger and less organized than a human's would have been at that point.
+
+Immediate checks cannot see this cost because the change works. The [delayed-feedback account](./program-theory-sustains-search-under-delayed-feedback.md) explains why passing a narrow check can conceal damage to the program's organization, and training on immediate success may leave the later cost unrewarded. Capacity explains why the model was not prompted to generate structure; delayed feedback explains why [acceptance does not favor that structure](./weakly-discriminated-qualities-tend-to-be-underselected.md) either.
 
 ## Test continued modification
 
-Follow humans and models through successive changes and recovery. Track when they introduce commitments, when reasoning failures appear, and whether those commitments help an independent contributor make later changes at comparable total cost.
+Follow humans and models through successive changes and recovery, starting from changes that meet their immediate requirements. Track when they introduce commitments, when reasoning failures appear, and whether those commitments help an independent contributor make later changes at comparable total cost.
 
-The capacity explanation predicts reliable progress through more demanding changes before comparable commitments become necessary. The feedback-timing explanation predicts that follow-up work exposes failures the initial checks missed. Both effects could occur. If commitments arise only from instructions or learned conventions, rather than in response to difficulty, the proposed mechanism loses support.
+The conjecture predicts that models introduce their first comparable commitments, if any, at more demanding changes than humans do. It also predicts that later changes to the model's uncommitted code cost more than changes to comparable human code, first for independent contributors and eventually for the model itself. If commitments arise only from instructions or learned conventions, rather than in response to difficulty, the proposed mechanism loses support.
 
 ## Consequence for fresh agents
 
