@@ -111,12 +111,18 @@ errors, otherwise 0 even when report findings exist. See `--help` for options.
 
 ## Tool failure scanning
 
-`python3 scripts/scan_tool_failures.py --format pi-json /path/to/stdout.log`
+Harness-specific scanners live in `scripts/scan_tools/`; see its [README](scan_tools/README.md).
+
+`python3 scripts/scan_tools/scan_pi_tool_failures.py --format pi-json /path/to/stdout.log`
 reports explicit tool failures in Pi JSON-mode output. Use `--format pi-session`
 for native session JSONL. Supply one or more files; the helper does not discover
 sessions, follow embedded paths, launch workers or modify inputs. Native sessions
-include all stored branches, not just active context. Codex and Claude are not
-yet supported.
+include all stored branches, not just active context. For native Codex rollouts, use
+`python3 scripts/scan_tools/scan_codex_tool_failures.py /path/to/rollout.jsonl`.
+For Claude Code session and subagent JSONL, use
+`python3 scripts/scan_tools/scan_claude_code_tool_failures.py /path/to/session.jsonl`,
+which also lists harness denials and blocks, API errors, interruptions and
+compaction boundaries.
 
 JSON findings include source line and call IDs, arguments/command, exit code
 when available, and a bounded diagnostic tail. Repeated stream representations
@@ -125,7 +131,7 @@ visible: they may be expected no-match outcomes, not defects. Exit 0 means no
 detected input issues, not zero tool failures; exit 2 reports malformed,
 unreadable or unsupported input or incomplete correlation, retaining partial
 findings. Commands and excerpts may contain secrets; review before sharing.
-See `--help` for scope and input formats. The wrapper uses the same scanner as
+See `--help` for scope and input formats. The Pi wrapper uses the same scanner as
 the analysis workflow (`commonplace.lib.agentic_analysis.tool_failures`), which
 adds manifest-wide collection and saves advisory audit inputs under each run.
 

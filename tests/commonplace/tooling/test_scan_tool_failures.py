@@ -9,7 +9,7 @@ import pytest
 
 from commonplace.lib.agentic_analysis.tool_failures import scan
 
-SCRIPT = Path(__file__).resolve().parents[3] / "scripts/scan_tool_failures.py"
+SCRIPT = Path(__file__).resolve().parents[3] / "scripts/scan_tools/scan_pi_tool_failures.py"
 
 
 def trace(tmp_path, records):
