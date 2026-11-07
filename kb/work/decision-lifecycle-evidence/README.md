@@ -2,13 +2,16 @@
 
 ## Live question
 
-**What should maintained architectural accounts retain, and what can remain in
-Git history, so agents can understand and reconsider decisions without the
-originating sessions?**
+**How should decision accounts be indexed, discovered and updated across ADR
+files and Git commits, so agents can understand and reconsider decisions without
+the originating sessions?**
 
 The live alternatives are maintained ADR files, rich marked decision commits,
-and combinations. Compare them before selecting a carrier or adding machinery.
-The [Git and retained-artifact exploration](./git-and-retained-artifacts.md)
+and combinations. They can carry essentially the same decision text, including
+rationale, alternatives, links to other documents and consolidation across changes.
+Do not infer a content division from the carrier. First establish what needs
+retaining; compare access and maintenance arrangements with that content held
+constant. The [Git and retained-artifact exploration](./git-and-retained-artifacts.md)
 records the operator discussion and the unresolved division of labour.
 
 ## Intent and constraints
@@ -21,7 +24,11 @@ should not disappear merely because the current account omits them.
 On 2026-11-07 the operator shifted attention to Git as durable project memory,
 including richer commit messages and marked commits closing larger changes.
 Requiring Git for all Commonplace KBs is an option to evaluate, not adopted policy.
-The operator then requested cleanup around this direction.
+The operator then requested cleanup around this direction and clarified that
+essentially the same content can be put in an ADR or a commit message. Indexing,
+rather than an assumed difference in explanatory content, must organize the
+comparison. ADR mutability remains relevant through how updates are made and
+how readers find the applicable account.
 
 The following constraints remain:
 
@@ -36,9 +43,12 @@ The following constraints remain:
   reasons and contrary outcomes where needed for reconsideration. Git cannot
   recover information never recorded; retrospective reconstruction is not
   contemporaneous capture.
-- ADRs are mutable and consolidate information, but also record history. Commit
-  messages can contain rationale and consolidate several changes. Neither
-  “current view versus history” nor “rationale versus detail” settles the boundary.
+- Content quality, completeness and consolidation are not carrier advantages:
+  the same account can be placed in either carrier. Neither “current view versus
+  history” nor “rationale versus detail” settles the boundary. An ADR has an
+  editable current path; a commit-based account can be updated through later
+  commits and an index. Compare how those routes expose the applicable version,
+  not editable prose against an artificially frozen decision process.
 
 ## Existing contract
 
@@ -63,12 +73,17 @@ Checked on 2026-11-07 against source-checkout HEAD `91810b276`:
 
 1. What durability and history-availability contract would Git-required KBs need?
    Treat squashing and rewriting as exceptions with preservation obligations.
-2. What does an editable ADR contribute over a rich marked decision commit?
-   Which history belongs in the maintained account, and which is affordable to
-   recover on demand? Useful overlap is allowed; duplication needs a purpose.
-3. Can ADR history, nearby changes and `Decision:` trailers usually find the
+2. With equivalent decision text, what access and update arrangement does each
+   carrier need? Compare a current ADR path with marked commits, including any
+   index needed to locate the latest relevant account. Count maintaining that
+   index, links and update relationships on either side.
+3. How does an agent reach the account from affected code, contracts or
+   instructions? Can ADR history, nearby changes and `Decision:` trailers find
    consequential commits? Add explicit anchors where they help. Finding files
    within the right commit is normally easier than finding the right commit.
+   Both carriers can link to documents. Does following a link from a commit
+   message require extra repository, base-path or version conventions compared
+   with a file-relative ADR link? Separate resolving a link from merely storing it.
 4. What must be captured in commit messages or other retained records before
    temporary sources expire? Check existing capture before extracting copies.
    A reason to inspect evidence and an opportunity to run a search are different.
@@ -78,9 +93,49 @@ Checked on 2026-11-07 against source-checkout HEAD `91810b276`:
 
 ## Evaluation
 
-Compare concrete histories on recording, discovery, interpretation, maintenance
-and retention cost. Include a decision committed with its implementation, one
-spread across commits, an edited ADR, and the marked closing-commit alternative.
+Start with an operation-level design comparison, not an agent-performance trial.
+The operator noted that creating realistic alternative environments is difficult:
+existing ADRs already have paths, links, search visibility and conventions, while
+a marked-commit alternative would need comparable support. Comparing the live KB
+with a small mock-up would confound the carrier with environment maturity.
+
+For one real decision, trace how each arrangement identifies the account, connects
+consumers to it, resolves supporting-document references, records corrections and
+exposes the applicable account and its predecessors. Inspect actual file and Git
+operations where useful. Record required conventions, dependencies, ambiguities
+and maintenance obligations; this is design analysis, not measured retrieval or
+agent-performance evidence. Do not select a marker or index merely to make a
+trial runnable.
+
+Only propose an execution test after identifying a consequential uncertainty
+that the design comparison cannot settle. Scope the environment to that question
+and justify realism, cost and how the result could change the choice. A complete
+alternative KB or benchmark is not a prerequisite for continuing this workshop.
+Mechanism inspection or evidence from ordinary use may suffice; otherwise retain
+the uncertainty explicitly.
+
+Separate two comparisons. Real histories reveal what was captured or omitted;
+those differences do not establish a carrier's capabilities. To compare carriers,
+use the same decision text and evidence references in an ADR file and a marked
+commit. Include an equally consolidated account on both sides, including when a
+decision spans several implementation commits.
+
+Compare entry points, ordinary search visibility, links from consumers and to
+supporting documents, discovery of the applicable version, and correction,
+amendment and supersession paths. Test local agent navigation and the intended
+published interface: a stored path may be usable by an agent without being a
+clickable link. Distinguish a reference to a document's current version from one
+to its version at the decision; both carriers need that distinction.
+Give both arrangements the same later information and compare their update routes
+without rewriting historical commits. An index or maintained summary is a valid
+candidate, not a free capability: count its creation, maintenance and navigation
+cost, just as for ADR listings and links. Differences in completeness or writing
+quality must not be reported as evidence for one carrier.
+
+Include a decision committed with its implementation, one spread across commits
+and an ADR edited after implementation. Distinguish capture, discovery,
+interpretation and maintenance failures, and name which arrangement caused or
+exposed a difference rather than attributing it to the stored text.
 
 A candidate must distinguish settled but unimplemented work, partial adoption,
 abandonment, shipped but unevaluated changes and contrary later outcomes. Test
@@ -134,8 +189,10 @@ need checking before any future use.
 
 Close with a design proposal or a reasoned decision that existing records suffice,
 possibly with procedural repairs. State the division of labour, lifecycle and
-history contract, discovery routes, consumers and adoption criteria. Dispose of
-the Git-required and marked-commit alternatives explicitly. Record worked-case
+history contract, indexing and update routes, consumers and adoption criteria.
+Justify carrier choices by access and maintenance differences with equivalent
+content, not by assigning richer explanations to one side. Dispose of the
+Git-required and marked-commit alternatives explicitly. Record worked-case
 limits and whether theory-side reconciliation is useful or needs more evidence.
 
 Extract durable findings and preserve essential evidence with usable discovery
