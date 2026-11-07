@@ -185,9 +185,10 @@ stopped and printed why; 1 means the command itself failed.
 ### Advisory trace audit
 
 Before `run` exits, code saves a scan of every manifest-recorded attempt,
-including failed and superseded ones. The scanner detects explicit Pi tool
-failures; missing, incomplete and unsupported traces remain visible as coverage
-limits. It does not discover nested workers outside the manifest.
+including failed and superseded ones. The scan detects explicit tool failures
+in Pi and Claude Code worker streams; missing and incomplete traces and other
+protocols remain visible as unscanned coverage limits. It does not discover
+nested workers outside the manifest.
 
 After a completed Pi analysis, code passes the scan, attempt inventory and
 accepted artifact paths to a fresh [meta-analyser](./meta-analyser.md). It uses

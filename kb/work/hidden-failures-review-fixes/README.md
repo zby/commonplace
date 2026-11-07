@@ -79,6 +79,24 @@ Open operator decisions before option (b): which model runs the Pi auditor
 when the run profile is not Pi, and authority for one trial launch on the
 parcha audit snapshot.
 
+Status 2026-11-07, option (a) implemented. The Claude Code scanner moved into
+`src/commonplace/lib/agentic_analysis/claude_code_tool_failures.py`, reads
+both session files and `claude-stream-json` streams, correlates results to
+calls by tool-use ID and records permission denials and the stream's final
+result. The audit selects a scanner by the attempt's output protocol and
+reports a null finding count when nothing was scanned. The code landed in
+`5184dd297` together with the shared v2 result contract from a concurrent
+session; this commit carries the SKILL.md and commands reference wording and
+this record. Verified on the committed tree: the six review-window session
+files reproduce the pre-change baseline tool counts, failures, compactions
+and provider errors; the parcha streams scan with exit 0, both Bash failures
+located to their calls, and both permission denials recorded; general,
+tooling and agentic-analysis suites pass, including slow. Not verified:
+subagent streams with `parent_tool_use_id`, and no parcha audit was rerun,
+since the scope string change gives a new audit fingerprint. Option (b) and
+its two operator decisions stay open; ADR 121 line 58 still states the
+meta-analyser runs only for Pi analyses, which remains true.
+
 ### C. Exhaustive claim on capped evidence (I2)
 
 Finding: a prioritisation reply said every open workshop README had been

@@ -219,7 +219,8 @@ failure, a worker's problem, an exhausted budget, blockers at a verifier's
 last attempt, a launch an earlier run left unsettled), 1 means the command
 failed.
 
-Before returning, `run` saves an all-attempt Pi trace scan under
+Before returning, `run` saves an all-attempt trace scan of Pi and Claude Code
+worker streams under
 `<run>/audit/<input-digest>/`. Completed Pi analyses then receive an advisory,
 read-only meta-analysis using the saved scan and accepted outputs. It has a
 900-second ceiling (or the shorter `--timeout`), with prompt limits of three
