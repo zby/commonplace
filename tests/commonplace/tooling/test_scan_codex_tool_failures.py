@@ -158,3 +158,19 @@ def test_successful_command_output_is_not_parsed_as_exec_status(tmp_path):
     ])
     assert code == 0 and report["finding_count"] == 0
     assert trace["tool_results_seen"] == 1
+
+
+def test_arbitrary_tool_data_discriminators_do_not_crash_or_hide_findings(tmp_path):
+    # Output data is not a native record: keys named type/status can have any
+    # JSON value. Inspect supported evidence without requiring those to be tags.
+    code, report, trace = run_scan(tmp_path, [
+        record("response_item", {"type": "custom_tool_call", "call_id": "c",
+                                 "name": "exec", "input": "text(result)"}),
+        record("response_item", {"type": "custom_tool_call_output", "call_id": "c",
+                                 "output": [
+                                     {"type": [], "exit_code": 2, "output": "failed"},
+                                     {"result": {"status": []}},
+                                 ]}),
+    ])
+    assert code == 0 and report["finding_count"] == 1
+    assert trace["findings"][0]["evidence"][0]["exit_code"] == 2

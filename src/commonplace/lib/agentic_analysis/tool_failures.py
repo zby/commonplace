@@ -119,6 +119,9 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
                         report["first_timestamp"] = stamp
                     report["last_timestamp"] = stamp
                 kind = event.get("type")
+                if not isinstance(kind, str):
+                    issue(line, "record type is not a string")
+                    continue
                 if kind == "session":
                     recognized = True
                     report["session_id"] = event.get("id")

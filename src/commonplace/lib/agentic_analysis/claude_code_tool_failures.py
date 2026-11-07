@@ -149,6 +149,9 @@ def scan(path: Path) -> dict[str, Any]:
                     issue(line, "JSON record is not an object")
                     continue
                 kind = event.get("type")
+                if not isinstance(kind, str):
+                    issue(line, "record type is not a string")
+                    continue
                 if kind in FOREIGN_RECORD_TYPES:
                     issue(line, f"record type {kind!r} belongs to another harness format")
                     continue
@@ -205,14 +208,16 @@ def scan(path: Path) -> dict[str, Any]:
                                 continue
                             if block.get("type") == "tool_result":
                                 complete(event, block, index, line)
-                            elif block.get("type") == "text" and INTERRUPTION.match(
-                                block.get("text", "")
-                            ):
-                                report["interruptions"].append({
-                                    "line": line, "entry_id": uuid,
-                                    "timestamp": event.get("timestamp"),
-                                    "text": block["text"][:EXCERPT_LIMIT],
-                                })
+                            elif block.get("type") == "text":
+                                text = block.get("text")
+                                if not isinstance(text, str):
+                                    issue(line, "text block lacks string text")
+                                elif INTERRUPTION.match(text):
+                                    report["interruptions"].append({
+                                        "line": line, "entry_id": uuid,
+                                        "timestamp": event.get("timestamp"),
+                                        "text": text[:EXCERPT_LIMIT],
+                                    })
                     result = event.get("toolUseResult")
                     if isinstance(result, dict) and isinstance(result.get("agentId"), str):
                         worker_ids[result["agentId"]] = None

@@ -41,14 +41,20 @@ CASES = [
 @pytest.mark.parametrize("harness,trace_format,records", CASES, ids=[c[1] for c in CASES])
 def test_cli_contract_preserves_evidence_and_distinguishes_coverage(tmp_path, harness, trace_format, records):
     path = tmp_path / "trace.jsonl"
-    path.write_text("".join(json.dumps(r) + "\n" for r in records))
+    original = "".join(json.dumps(r) + "\n" for r in records)
     argv = [sys.executable, str(ROOT / f"scripts/scan_tools/scan_{harness}_tool_failures.py")]
     if harness != "claude_code":
         argv += ["--format", trace_format]
-    for broken in (False, True):
-        if broken:
-            with path.open("a") as stream:
-                stream.write('{"incomplete":')
+    suffixes = ["", '{"incomplete":', '{"type": [], "payload": {}}']
+    if harness == "codex":
+        suffixes.append(json.dumps(record("response_item", {"type": []})))
+    elif harness == "claude_code":
+        suffixes.append(json.dumps({"type": "user", "message": {
+            "content": [{"type": "text", "text": None}],
+        }}))
+    for suffix in suffixes:
+        broken = bool(suffix)
+        path.write_text(original + suffix)
         before = path.read_bytes()
         proc = subprocess.run([*argv, str(path)], capture_output=True, text=True, check=False)
         assert path.read_bytes() == before

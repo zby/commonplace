@@ -40,7 +40,7 @@ def signals(value: Any) -> list[dict[str, Any]]:
         # Codex can split the exec envelope and its printed values across blocks.
         # Join only text blocks when the first block establishes that envelope.
         texts = [block.get("text", "") for block in value
-                 if isinstance(block, dict) and block.get("type") in {"text", "input_text"}
+                 if isinstance(block, dict) and block.get("type") in ("text", "input_text")
                  and isinstance(block.get("text"), str)]
         if texts and EXEC_STATUS.match(texts[0]):
             found.extend(signals(texts[0]))
@@ -53,7 +53,7 @@ def signals(value: Any) -> list[dict[str, Any]]:
         for block in value:
             found.extend(signals(block))
     elif isinstance(value, dict):
-        if value.get("type") in {"text", "input_text"}:
+        if value.get("type") in ("text", "input_text"):
             return signals(value.get("text"))
         # Promise.allSettled records may be printed directly, in arrays, or
         # inside the indexed {i, result: ...} wrapper used by local sessions.
@@ -62,9 +62,9 @@ def signals(value: Any) -> list[dict[str, Any]]:
         if value.get("status") == "rejected" and "reason" in value:
             return [{"signals": ["promise_rejected"], "exit_code": None,
                      "diagnostic": str(value["reason"])}]
-        if isinstance(value.get("result"), dict) and value["result"].get("status") in {
+        if isinstance(value.get("result"), dict) and value["result"].get("status") in (
             "fulfilled", "rejected"
-        }:
+        ):
             return signals(value["result"])
         code = value.get("exit_code")
         reasons = []
@@ -164,6 +164,9 @@ def scan(path: Path) -> dict[str, Any]:
                     issue(line, "JSON record is not an object")
                     continue
                 kind = event.get("type")
+                if not isinstance(kind, str):
+                    issue(line, "record type is not a string")
+                    continue
                 payload = event.get("payload")
                 if kind not in {"session_meta", "response_item", "event_msg",
                                 "turn_context", "compacted", "world_state",
@@ -187,6 +190,9 @@ def scan(path: Path) -> dict[str, Any]:
                 if kind != "response_item":
                     continue
                 item_type = payload.get("type")
+                if not isinstance(item_type, str):
+                    issue(line, "response item type is not a string")
+                    continue
                 if item_type not in CALL_TYPES | OUTPUT_TYPES:
                     continue
                 cid = payload.get("call_id")
