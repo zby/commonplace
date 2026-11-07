@@ -17,6 +17,10 @@ The proposed human–LLM difference is an untested conjecture.
 
 An author may find it difficult to track all the interactions involved in a change. Boundaries, conventions, or abstractions can make that work manageable. The author then relies on these commitments to continue constructing correct code.
 
+The structure need not be newly introduced. An author may discover that all state changes already pass through one function, find that regularity useful for reasoning, and commit to preserving it. Discovering the regularity establishes a fact about the current implementation; adopting it as an invariant restricts acceptable future changes. Enforcement can make that reliance more dependable, but the commitment alone does not ensure compliance.
+
+[Goedecke's account of thinking clearly](../sources/goedecke-think-clearly.ingest.md) offers a related reasoning method: identify dependable premises and use them to evaluate less reliable assumptions. These premises provide structure for further thinking when immediate insight fails. The additional step proposed here is to preserve a useful regularity as a design commitment, so subsequent construction can continue to rely on it. Goedecke does not explicitly describe that step or test its maintainability benefit or the human–LLM difference.
+
 The benefit need not have been selected directly as a maintainability objective. The immediate pressure is to keep programming. General practices such as SOLID leave many of these project-specific choices unresolved.
 
 One possible benefit is compression. If all state changes pass through one function, a contributor can track that rule instead of remembering each path independently. Jürgen Schmidhuber's [Formal Theory of Creativity, Fun, and Intrinsic Motivation](../sources/schmidhuber-formal-theory-creativity.ingest.md) measures compression cost using both the predictor and deviations from its predictions. Applied to code, the conjecture is that a commitment helps when its rule and exceptions cost less to track than the separate facts.
