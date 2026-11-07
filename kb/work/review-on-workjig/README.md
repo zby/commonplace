@@ -152,9 +152,9 @@ change it.
    [runner-execution-profiles](../runner-execution-profiles/README.md)
    deferred it. Three points are interactive today and stay so:
    - the assessment, which the operator reads and may redirect before any
-     pass runs: the workflow runs it and stops with the report; the
-     operator writes the approved pass list, the purpose and the defend
-     lines into one file, and the next invocation takes that file as input;
+     pass runs: the workflow runs it and stops with the report and a
+     proposed plan file; the operator edits the plan, and the next
+     invocation takes the edited file as input;
    - the plain-wording list, which the operator strikes before it is
      applied: two asks with the struck list as an operator-supplied input
      between them;
@@ -166,7 +166,51 @@ change it.
      asks for, or the pass stays interactive and the workflow runs the
      others around it.
    The rule under all three: a workflow stops with a file and a rerun
-   continues with the operator's answer as an input. Whether the operator
+   continues with the operator's answer as an input.
+
+   **The plan is a decision output.** The assessor chooses the passes and
+   code runs them, so the choice must reach code through a channel code
+   can parse. That channel is a declared output, not a new mechanism:
+   the assessment ask has two outputs, `assessment.md` for the operator
+   and `plan.yaml` for code. Declared outputs already carry fresh paths
+   per launch, replay, attempt counting and provenance; a side file or
+   JSON scraped from stdout would carry none of them. A worker that
+   cannot plan writes the problem file, as for any ask.
+
+   ```yaml
+   purpose: "..."
+   defend: ["claim text", ...]
+   passes:              # in run order
+     - pass: split-out-a-treatment
+       scope: "§3 only"   # optional
+     - pass: plain-wording
+   stop: null           # or "rewrite-needed: <reason>"
+   ```
+
+   Code supplies the choices and keeps the dispatch:
+   - the script lists the pass files and their `effort` values from
+     `kb/instructions/simplification-passes/` and hands the list to the
+     assessor as an input, so the assessor chooses from a closed set;
+   - the check parses `plan.yaml` and rejects unknown passes, missing
+     fields and an order that breaks the depth order of
+     [revise an article or note](../../instructions/simplification-passes/revise-an-article-or-note.md);
+     through `checked()`, a malformed plan costs one corrected attempt,
+     not a crashed run. The analysis workflow's `verdict_check` is the
+     precedent;
+   - code branches on the parsed plan: a `stop` accepts the assessment
+     and ends the run; otherwise each listed pass is one `ask`, with its
+     profile chosen from the pass's `effort` and its diff checked before
+     `accept`.
+
+   The operator's edited plan returns as an input, so the passes' call
+   identities change only when the plan does, and an unedited rerun
+   replays. The same shape serves the full pass's `disposition`, the
+   closing status of item 6 and the gate verdicts of item 1, so the
+   generic piece is one helper in `commonplace.headless`, roughly
+   `decide(job, prompt, schema, choices)`: `checked()` with a parse, a
+   schema check and a closed-choices check, returning the parsed object.
+   It is written when the first of these workflows needs it, with the
+   result file and packet schemas of item 8. Whether the operator
    prefers that to the interactive skill is answered by phase 3, not here;
    the interactive orchestrator stays until then. Workjig's own README
    calls agent-led delegation the right tool for exploratory work, so a
