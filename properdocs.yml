@@ -252,6 +252,7 @@ plugins:
         'instructions/ground-source-dependent-claims.md': 'instructions/cp-skill-ground/SKILL.md'
         'instructions/refresh-agent-memory-review-taxonomy.md': 'agentic-systems/instructions/refresh-agent-memory-review-taxonomy.md'
         'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
+        'instructions/review-recent-pi-logs-for-hidden-failures.md': 'instructions/review-recent-logs-for-hidden-failures.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'instructions/simplification-passes/figurative-phrasing.md': 'instructions/simplification-passes/plain-wording.md'
         'instructions/simplify-prose-without-weakening-claims.md': 'instructions/simplify-prose-sentence-by-sentence.md'
