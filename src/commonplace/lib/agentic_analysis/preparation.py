@@ -16,6 +16,8 @@ import re
 import subprocess
 import tomllib
 import uuid
+from contextlib import contextmanager
+from contextvars import ContextVar
 from hashlib import sha256
 from pathlib import Path
 
@@ -34,11 +36,28 @@ STARTUP_FILENAMES = {
 }
 
 
+_DRAINING_COMMANDS = ContextVar("analysis_draining_commands", default=False)
+
+
+@contextmanager
+def draining_commands():
+    """Isolate command groups only while a caller owns signal handling and drain.
+
+    Context-local state keeps concurrent preparation threads independent. Legacy
+    CLI callers retain terminal/group cancellation instead of orphaning children.
+    """
+    token = _DRAINING_COMMANDS.set(True)
+    try:
+        yield
+    finally:
+        _DRAINING_COMMANDS.reset(token)
+
+
 def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
     try:
         return subprocess.run(
             ["git", *args], cwd=repo_root, check=False,
-            capture_output=True, text=True, timeout=30,
+            capture_output=True, text=True, timeout=30, start_new_session=_DRAINING_COMMANDS.get(),
         )
     except (OSError, subprocess.SubprocessError) as exc:
         raise ValueError(f"cannot run git {args[0]} in the repository") from exc
@@ -105,7 +124,10 @@ def require_committed_startup(origin: Path, commit: str) -> None:
 
 def run_command(args: list[str], *, cwd: Path, env: dict[str, str] | None = None) -> str:
     try:
-        result = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True, check=False)
+        # Only a controller owning signal handling may detach and drain these
+        # commands. Low-level prepare/integrate retain group cancellation.
+        result = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True, check=False,
+                                start_new_session=_DRAINING_COMMANDS.get())
     except OSError as error:
         raise ValueError(f"could not run {args[0]}: {error}") from error
     if result.returncode:

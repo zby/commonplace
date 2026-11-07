@@ -253,6 +253,8 @@ def test_explicit_resume_replays_answers_under_original_profile(command_origin, 
     [{"source": "docs", "source-kind": "documents"}],
     [{"source": IDENTITY, "source-revision": "abc"}],
     [{"source": IDENTITY, "triage": "not analyst input"}],
+    [{"source": IDENTITY, "source-identity": "https://github.com/other/not-approved"}],
+    [{"source": IDENTITY}, {"source": IDENTITY, "source-identity": "alias:system"}],
 ])
 def test_invalid_intake_has_no_preparation_effects(tmp_path, monkeypatch, data):
     monkeypatch.setattr(auto, "select_method", lambda *a: pytest.fail("intake must fail before method/setup"))
@@ -260,6 +262,27 @@ def test_invalid_intake_has_no_preparation_effects(tmp_path, monkeypatch, data):
         auto.create(tmp_path, data, profile="pi-sol", revision=None, state=tmp_path / "state", worktree_root=None,
                     concurrency=4, max_workers=3, timeout=60, require_clean_origin=False)
     assert not (tmp_path / "state").exists()
+
+
+@pytest.mark.slow
+def test_shared_opening_failure_pauses_before_preparing_next_target(command_origin, capsys, tmp_path):
+    origin, scenario, _ = command_origin
+    retained = origin / "kb/agentic-system-analyses/retained"
+    retained.mkdir(parents=True, exist_ok=True)
+    (retained / "not-an-artifact.txt").write_text("Invalid shared publication state.\n")
+    git(origin, "add", "kb/agentic-system-analyses/retained/not-an-artifact.txt")
+    git(origin, "commit", "--quiet", "-m", "Pin invalid shared publication fixture")
+    targets = tmp_path / "targets.txt"
+    targets.write_text(IDENTITY + "\nhttps://github.com/example/second\n")
+    code, record, err = invoke(capsys, "batch", str(targets), "--concurrency", "1",
+                               "--state", str(tmp_path / "state"))
+    assert code == 3, (record, err)  # pending work has interruption/attention precedence
+    assert record["counts"] == {"command-failed": 1, "pending": 1}
+    first, second = record["targets"]
+    assert first["result"]["inspection"]["stop-type"] == "OpeningFailed"
+    assert "current analysis must be a directory" in first["error"]
+    assert not Path(second["worktree"]).exists()
+    assert not scenario.with_name("counts").exists()
 
 
 @pytest.mark.slow
@@ -621,6 +644,87 @@ def test_sigterm_drains_owned_children_and_stops_new_claims(scripted_queue):
     finally:
         for key in keys:
             (barriers / f"{key}.release").touch()
+        if process.poll() is None:
+            process.kill()
+        process.wait(timeout=10)
+
+
+@pytest.mark.parametrize("signum", [signal.SIGINT, signal.SIGTERM])
+def test_low_level_commands_keep_group_cancellation_for_descendants(tmp_path, signum):
+    ready, stopped = tmp_path / "ready", tmp_path / "stopped"
+    descendant = (
+        "from pathlib import Path\nimport signal, sys, time\n"
+        "def stop(*args):\n"
+        f"    Path({str(stopped)!r}).touch()\n"
+        "    sys.exit(0)\n"
+        "signal.signal(signal.SIGTERM, stop)\nsignal.signal(signal.SIGINT, stop)\n"
+        f"Path({str(ready)!r}).touch()\n"
+        "while True: time.sleep(.02)\n"
+    )
+    child = f"import subprocess, sys; subprocess.run([sys.executable, '-c', {descendant!r}])"
+    script = (
+        "import sys, signal\nfrom pathlib import Path\n"
+        "signal.signal(signal.SIGINT, signal.default_int_handler)\n"
+        f"sys.path.insert(0, {str(ROOT / 'src')!r})\n"
+        "from commonplace.lib.agentic_analysis.preparation import run_command\n"
+        f"run_command([sys.executable, '-c', {child!r}], cwd=Path({str(tmp_path)!r}))\n"
+    )
+    process = subprocess.Popen([sys.executable, "-c", script], start_new_session=True,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        wait_for(ready.exists)
+        os.killpg(process.pid, signum)
+        assert process.wait(timeout=20) != 0
+        wait_for(stopped.exists)
+    finally:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=10)
+
+
+@pytest.mark.parametrize("signum", [signal.SIGINT, signal.SIGTERM])
+def test_group_signal_drains_preparation_before_stopping_claims(tmp_path, signum):
+    state = scheduler_state(tmp_path, 2)
+    record = auto.report(state)
+    record.pop("counts")
+    record.update({"origin": str(tmp_path), "method-commit": "fixture", "concurrency": 1,
+                   "require-clean-origin": False})
+    for item in record["targets"]:
+        item.update(phase="pending", label="fixture")
+    save(state / "controller.json", record)
+    started, release, finished = [tmp_path / name for name in ("started", "release", "finished")]
+    installer = (
+        "from pathlib import Path\nimport time\n"
+        f"Path({str(started)!r}).touch()\n"
+        f"while not Path({str(release)!r}).exists(): time.sleep(.02)\n"
+        f"Path({str(finished)!r}).touch()\n"
+    )
+    script = (
+        "import sys\nfrom pathlib import Path\n"
+        f"sys.path.insert(0, {str(ROOT / 'src')!r})\n"
+        "from commonplace.lib.agentic_analysis import automation as auto, preparation\n"
+        "def prepare(*args, **kwargs):\n"
+        f"    preparation.run_command([sys.executable, '-c', {installer!r}], cwd=Path({str(tmp_path)!r}))\n"
+        "    return {'status': 'ready'}\n"
+        "auto.prepare_worktree = prepare\n"
+        f"raise SystemExit(auto.exit_code(auto.Controller(Path({str(state)!r})).run()))\n"
+    )
+    process = subprocess.Popen([sys.executable, "-c", script], start_new_session=True)
+    try:
+        wait_for(started.exists)
+        os.killpg(process.pid, signum)
+        time.sleep(.2)
+        assert process.poll() is None, "preparation must drain, not receive the group signal"
+        release.touch()
+        assert process.wait(timeout=20) == 3
+        assert finished.exists()
+        result = auto.report(state)
+        assert result["counts"] == {"pending": 2}
+        assert [item["phase"] for item in result["targets"]] == ["prepared", "pending"]
+    finally:
+        release.touch()
         if process.poll() is None:
             process.kill()
         process.wait(timeout=10)

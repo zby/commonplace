@@ -27,6 +27,7 @@ from commonplace.lib.agentic_analysis.durable import lease, save
 from commonplace.lib.agentic_analysis.execution import outcome
 from commonplace.lib.agentic_analysis.preparation import (
     command_environment,
+    draining_commands,
     preparation_for,
     prepare_worktree,
     run_command,
@@ -63,6 +64,8 @@ def target(data: dict) -> dict:
         if not REMOTE.fullmatch(source):
             raise ValueError("provide a repository root locator, or explicitly select --source-kind local/documents")
         identity = source_identity(data.get("source-identity", source))
+        if identity != source_identity(source):
+            raise ValueError("repository source-identity must agree with its normalized locator")
         system = data.get("system", normalize_source_identity(source).rsplit("/", 1)[-1])
     elif kind == "local":
         path = Path(source).expanduser().resolve()
@@ -243,10 +246,11 @@ class Controller:
             with lease(self.state / "leases" / item["key"]) as fd:
                 if item["phase"] == "pending":
                     self.update(item, status="active", phase="preparing")
-                    preparation = prepare_worktree(
-                        Path(self.record["origin"]), name=item["label"], revision=self.record["method-commit"],
-                        worktree=Path(item["worktree"]), require_clean_origin=self.record["require-clean-origin"],
-                    )
+                    with draining_commands():
+                        preparation = prepare_worktree(
+                            Path(self.record["origin"]), name=item["label"], revision=self.record["method-commit"],
+                            worktree=Path(item["worktree"]), require_clean_origin=self.record["require-clean-origin"],
+                        )
                     self.update(item, phase="prepared", preparation=preparation)
                 if self.halt.is_set():
                     self.update(item, status="pending")

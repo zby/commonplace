@@ -196,7 +196,9 @@ one queue. Its input is newline repository locators or a JSON list of objects
 with `source` and optional `source-kind`, `system`, `source-identity` and
 `source-revision`; unknown fields and duplicate normalized identities are refused
 before effects. Repository roots are shape-checked without network probes.
-GitHub SSH/HTTPS aliases and case normalize to one identity.
+GitHub SSH/HTTPS aliases and case normalize to one identity. A repository's
+explicit `source-identity` must match its normalized locator; aliases that cannot
+be resolved locally must be supplied as one consistent canonical locator.
 `--source-kind local` requires an existing path and makes it absolute;
 `--source-kind documents` requires explicit system and identity. Non-Git capture
 remains boundary-owned. Explicit GitHub identities retain code-owned acquisition.
@@ -231,9 +233,14 @@ interrupted audits pause new launches. No missing PID establishes settlement.
 There is no automatic retry, acknowledgement, reset or replacement allocation.
 Ordinary stops do not prevent independent pending targets from continuing;
 shared preparation/command failures and uncertain ownership pause new claims.
+Opening and pinned-method guard failures are command failures for the queue,
+not ordinary target-local stops. The lower-level `run` still exits 2 for them.
 
 Controller/child leases require POSIX local-filesystem locks. A second controller
-is refused. SIGINT/SIGTERM stop claims and drain owned children; abrupt death
+is refused. SIGINT/SIGTERM stop claims and drain owned children, including
+Git/installer subprocesses isolated from the terminal process group while the
+controller owns their drain. Low-level commands retain group cancellation.
+Abrupt death
 leaves intents to reconcile, and an orphan prepared child keeps its lease until
 it exits. Workjig remains the worker-launch authority. `execute <allocation-key>`
 and `inspect-execution <allocation-key>` are the pinned-child protocol: allocation

@@ -682,5 +682,7 @@ def test_run_command_stops_with_2_on_a_guard_refusal(workflow, capsys):
     code, _, err = cli(capsys, "run", str(run_dir))
     assert code == 2, err
     status = inspect_analysis(run_dir)
-    assert status["state"] == "stopped" and "ValueError" in status["stopped"], status["stopped"]
+    assert status["state"] == "stopped" and "OpeningFailed" in status["stopped"], status["stopped"]
+    assert status["stop-type"] == "OpeningFailed" and status["command-failed"]
+    assert "clean worktree" in status["stopped"]
     assert launch_counts(run_dir) == {}

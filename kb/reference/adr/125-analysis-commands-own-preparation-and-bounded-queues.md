@@ -50,14 +50,22 @@ before claims. Unsettled worker reservations, uncertain effects and interrupted
 audits require operator attention. Explicit target resume keeps the original
 run, method and profile and performs no automatic acknowledgement or retry.
 Ordinary analysis stops permit independent queued work; preparation failures,
-command failures and uncertain ownership pause new claims.
+command failures and uncertain ownership pause new claims. Opening/pinned-method
+guard refusals pause the queue as command failures rather than consuming the
+remaining queue against a potentially invalid shared method. Git/installer
+subprocesses use separate sessions while the controller owns their drain, so
+terminal process-group signals reach its handler, not its preparation children.
+Low-level prepare/integrate callers keep group cancellation; they do not detach
+children without a drain owner.
 
 Preparation checks origin startup files against the selected commit. Default
 revision selection refuses a HEAD behind or diverging from the locally known
 default branch, without fetching. Another revision is an operator choice.
 The prepared worktree's existing code, cleanliness and method guards remain
 mandatory. Local paths and explicit document inputs retain their source route;
-remote plausibility validation performs no acquisition probes.
+remote plausibility validation performs no acquisition probes. Repository
+locators and explicit source identities must agree after normalization; intake
+must not describe one repository while code-owned acquisition selects another.
 
 ## Considered alternatives
 

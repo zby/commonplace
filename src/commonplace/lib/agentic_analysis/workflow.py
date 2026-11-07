@@ -135,6 +135,10 @@ class Stopped(Exception):
     """The run stops here; a rerun after the operator's repair resumes from the cache."""
 
 
+class OpeningFailed(ValueError):
+    """Opening/pinned-method guards failed before source work; pause the queue."""
+
+
 class Problem(Stopped):
     def __init__(self, role: str, text: str):
         super().__init__(f"{role} reported a problem: {text.strip()}")
@@ -307,11 +311,16 @@ class Analysis:
     def opening(self) -> bytes:
         def open_run() -> bytes:
             return open_analysis(self.parameters, self.profiles, self.run_dir, self.library)
-        metadata = self.code_job("opening", open_run)
-        # A rerun reasserts the pins opening checked: the cache is replayed only in the environment it was made in.
-        require_prepared_method(self.worktree, json.loads(metadata)["inputs-commit"], preparation_for(self.worktree),
-                                job="run")
-        return metadata
+        try:
+            metadata = self.code_job("opening", open_run)
+            # Reassert pins before replaying cached opening in this environment.
+            require_prepared_method(self.worktree, json.loads(metadata)["inputs-commit"],
+                                    preparation_for(self.worktree), job="run")
+            return metadata
+        except (ValueError, OSError) as error:
+            # These guards can reject shared method/publication state. Do not
+            # classify them like a target-local acquisition or analytical stop.
+            raise OpeningFailed(str(error)) from error
 
     # Prompts
 
@@ -653,7 +662,7 @@ def run_analysis(run_dir: Path, *, timeout: float | None, max_workers: int | Non
             analysis.run.log(event="stopped", reason=f"{type(stop).__name__}: {stop}",
                              **{"stop-type": type(stop).__name__,
                                 "uncertain": isinstance(stop, (UncertainEffectError, UncertainLaunchError, RecordError)),
-                                "command-failed": not isinstance(stop, STOPS)})
+                                "command-failed": isinstance(stop, OpeningFailed) or not isinstance(stop, STOPS)})
             if not isinstance(stop, STOPS):
                 raise
             print(f"stopped: {stop}", file=sys.stderr)

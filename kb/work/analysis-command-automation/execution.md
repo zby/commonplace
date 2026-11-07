@@ -142,5 +142,7 @@ was owned for cleanup.
 All initially dirty unrelated paths remain unstaged. Another writer added
 `kb/sources/dreaming-with-a-dynamic-workflow-cookbook.ingest.md` during this work;
 it is also outside scope and excluded. Shared workshop navigation remains
-unstaged. This workshop remains open solely for the commissioned independent
-parent review and any repairs before closure.
+unstaged. The subsequent [parent acceptance](./parent-review.md) records the
+completed independent review, local repairs and full-suite verification. The
+workshop is retained for operator handoff and later archival; a live pilot
+remains separately authorized.

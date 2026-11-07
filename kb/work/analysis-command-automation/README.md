@@ -11,7 +11,10 @@ local repairs. If substantial rearchitecture is needed, the parent may revert
 the implementation, revise the plan and commission a fresh worker, for at most
 three implementation attempts. This does not authorize live analysis runs,
 campaign launches, integration of analysis publications or evidence cleanup.
-[Execution record](./execution.md) tracks assignments and review outcomes.
+[Execution record](./execution.md) tracks assignments.
+[Parent acceptance](./parent-review.md) records the independent review, three
+local repairs and the complete passing test run. Attempt 1 is accepted for
+deterministic execution mechanics; live-provider behavior remains untested.
 
 The intended operator experience is one command for one supplied system, or a
 URL list with bounded concurrency, without a supervising agent preparing,
@@ -29,7 +32,8 @@ A batch command should apply the same lifecycle to an explicit input list,
 keep durable target/worktree/run bindings, bound concurrent analyses and
 reconcile interrupted execution before starting more work.
 
-Provisional interface, not an adopted command contract:
+Implemented interface (adopted in [ADR 125](../../reference/adr/125-analysis-commands-own-preparation-and-bounded-queues.md));
+see the [command reference](../../reference/commands.md#commonplace-analysis) for options:
 
 ```text
 commonplace-analysis analyse <repository-url>
