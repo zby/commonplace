@@ -11,9 +11,14 @@ import argparse
 import json
 import os
 import re
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+
+from commonplace.lib.trace_scan import scan_report, trace_result
 
 EXCERPT_LIMIT = 600
 CALL_TYPES = {"function_call", "custom_tool_call"}
@@ -123,15 +128,15 @@ def scan(path: Path) -> dict[str, Any]:
     report: dict[str, Any] = {
         "trace": str(path), "format": "codex-session", "session_id": None,
         "cwd": None, "first_timestamp": None, "last_timestamp": None,
-        "last_line": 0, "cutoff_utc": None, "completed_tools": 0,
-        "failures": [], "scan_issues": [],
+        "last_line": 0, "cutoff_utc": None, "tool_results_seen": 0,
+        "findings": [], "input_issues": [],
     }
     calls: dict[str, tuple[int, dict[str, Any]]] = {}
     outputs: dict[str, dict[str, Any]] = {}
     recognized = False
 
     def issue(line: int | None, message: str) -> None:
-        report["scan_issues"].append({"line": line, "message": message})
+        report["input_issues"].append({"line": line, "message": message})
 
     try:
         with path.open("rb") as stream:
@@ -200,7 +205,7 @@ def scan(path: Path) -> dict[str, Any]:
                         issue(line, f"conflicting duplicate output: {cid}")
                     continue
                 outputs[cid] = payload
-                report["completed_tools"] += 1
+                report["tool_results_seen"] += 1
                 call = calls.get(cid)
                 if call is None:
                     issue(line, f"output has no preceding call: {cid}")
@@ -222,7 +227,7 @@ def scan(path: Path) -> dict[str, Any]:
                     diagnostic = item.pop("diagnostic")
                     item["diagnostic_excerpt"] = diagnostic[-EXCERPT_LIMIT:]
                     item["diagnostic_truncated"] = len(diagnostic) > EXCERPT_LIMIT
-                report["failures"].append({
+                report["findings"].append({
                     "line": line, "timestamp": stamp, "tool_call_id": cid,
                     "tool_name": source.get("name"), "call_line": call[0] if call else None,
                     "arguments": args,
@@ -237,7 +242,8 @@ def scan(path: Path) -> dict[str, Any]:
         if cid not in outputs:
             issue(line, f"call has no output at scan cutoff: {cid}")
     report["cutoff_utc"] = datetime.now(UTC).isoformat()
-    return report
+    return trace_result(report, harness="codex", checks=("tool_failures",),
+                        branch_scope="stored_records")
 
 
 def main() -> int:
@@ -246,12 +252,10 @@ def main() -> int:
     parser.add_argument("traces", type=Path, nargs="+", help="explicit native rollout JSONL paths")
     args = parser.parse_args()
     reports = [scan(path) for path in dict.fromkeys(p.resolve() for p in args.traces)]
-    print(json.dumps({
-        "schema_version": 1,
-        "scope": "explicit tool failure candidates; recovery and semantic correctness not assessed",
-        "failure_count": sum(len(r["failures"]) for r in reports), "traces": reports,
-    }, indent=2, ensure_ascii=False))
-    return 2 if any(r["scan_issues"] for r in reports) else 0
+    print(json.dumps(scan_report(
+        reports, scope="explicit failure candidates and supported observations; recovery not assessed",
+    ), indent=2, ensure_ascii=False))
+    return 2 if any(r["input_issues"] for r in reports) else 0
 
 
 if __name__ == "__main__":

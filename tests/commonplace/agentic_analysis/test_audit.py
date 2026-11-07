@@ -79,13 +79,54 @@ def test_collect_all_attempts_and_missing_unsupported(analysis):
     add_call(root, "codex-job", ["delivered"], harness="codex", protocol="codex-json")
     (root / "calls/launches/old-memory-0/stdout.log").unlink()
     inventory, scanner = module.collect(root)
-    assert len(inventory) == scanner["attempt_count"] == 5
-    assert scanner["failure_count"] == 3
-    assert scanner["unscanned_attempt_count"] == scanner["partial_attempt_count"] == 1
+    assert len(inventory) == scanner["details"]["attempt_count"] == 5
+    assert scanner["finding_count"] == 3
+    assert scanner["details"]["unscanned_attempt_count"] == scanner["details"]["partial_attempt_count"] == 1
     assert len(scanner["traces"]) == 4
-    assert any(t["scan_issues"] for t in scanner["traces"])
+    assert any(t["input_issues"] for t in scanner["traces"])
     assert {i["status"] for i in inventory} == {"timeout", "process_error", "delivered"}
     assert next(i for i in inventory if i["job"] == "codex-job")["reason"] == "unsupported harness/protocol"
+
+
+def test_collect_scans_claude_code_stream_by_protocol(analysis):
+    root = analysis.run_dir
+    add_call(root, "claude-job", ["delivered"], harness="claude-code", protocol="claude-stream-json")
+    records = [{"type": "system", "subtype": "init", "cwd": "/w", "session_id": "s"},
+               {"type": "assistant", "uuid": "a", "session_id": "s", "message": {"role": "assistant", "content": [
+                   {"type": "tool_use", "id": "toolu_1", "name": "Bash", "input": {"command": "false"}}]}},
+               {"type": "user", "uuid": "u", "session_id": "s", "message": {"role": "user", "content": [
+                   {"type": "tool_result", "tool_use_id": "toolu_1", "content": "Exit code 1\n",
+                    "is_error": True}]}},
+               {"type": "result", "subtype": "success", "is_error": False, "num_turns": 2,
+                "session_id": "s", "permission_denials": []}]
+    (root / "calls/launches/claude-job-0/stdout.log").write_text("\n".join(json.dumps(r) for r in records))
+    inventory, scanner = module.collect(root)
+    item = next(i for i in inventory if i["job"] == "claude-job")
+    assert (item["scan_status"], item["harness"], item["reason"]) == ("scanned", "claude-code", None)
+    [report] = [t for t in scanner["traces"] if t["format"] == "claude-stream-json"]
+    assert [(f["tool_name"], f["command"], f["evidence"][0]["exit_code"]) for f in report["findings"]] == [("Bash", "false", 1)]
+    assert scanner["finding_count"] == 3  # two Pi attempts in the fixture call, one Claude attempt
+    # The mixed-harness audit is a consumer of the same contract as the CLIs.
+    from jsonschema import Draft202012Validator
+
+    schema = json.loads((ROOT / "scripts/scan_tools/result.schema.json").read_text())
+    Draft202012Validator(schema).validate(scanner)
+    assert scanner["schema_version"] == 2
+    assert all(t["coverage"]["checks"]["recovery"] == "unsupported" for t in scanner["traces"])
+
+
+def test_all_unscanned_attempts_report_no_failure_count(analysis, monkeypatch):
+    path = analysis.run_dir / "calls/run.json"
+    data = json.loads(path.read_text())
+    for versions in data["calls"].values():
+        for entry in versions.values():
+            entry["request"]["worker"] = {"name": "codex", "output_protocol": "codex-json"}
+    write_json(path, data)
+    analysis.run.profile.harness = "codex"
+    monkeypatch.setattr(module, "launch", lambda *args: pytest.fail("must not launch"))
+    coverage = module.audit(analysis, completed=True)["trace-scan"]
+    assert coverage["attempt_count"] == coverage["unscanned_attempt_count"] == 2
+    assert coverage["finding_count"] is None
 
 
 def test_collect_does_not_follow_redirected_traces(analysis):
@@ -97,7 +138,7 @@ def test_collect_does_not_follow_redirected_traces(analysis):
     assert inventory[0]["scan_status"] == "unscanned"
     assert inventory[0]["reason"] == "trace outside run launch tree"
     assert "stdout_sha256" not in inventory[0]
-    assert scanner["failure_count"] == 1 and len(scanner["traces"]) == 1
+    assert scanner["finding_count"] == 1 and len(scanner["traces"]) == 1
 
 
 def test_capture_precedes_worker_and_reuses_then_invalidates(analysis, monkeypatch):
@@ -107,7 +148,7 @@ def test_capture_precedes_worker_and_reuses_then_invalidates(analysis, monkeypat
         invocations.append(directory)
         assert timeout == 900
         scanner = json.loads((directory / "scanner.json").read_text())
-        assert scanner["failure_count"] == 2
+        assert scanner["finding_count"] == 2
         prompt = (directory / "prompt.txt").read_text()
         assert str(directory / "scanner.json") in prompt
         assert str(directory / "attempts.json") in prompt

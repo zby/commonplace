@@ -1,6 +1,5 @@
-"""Claude Code session scans: correlation across blocks and branches, no recovery verdicts."""
+"""Claude Code session and stream scans: ID correlation across blocks and branches, no recovery verdicts."""
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -8,11 +7,13 @@ from pathlib import Path
 
 import pytest
 
+from commonplace.lib.agentic_analysis.claude_code_tool_failures import scan
+
 SCRIPT = Path(__file__).resolve().parents[3] / "scripts/scan_tools/scan_claude_code_tool_failures.py"
-_spec = importlib.util.spec_from_file_location("scan_claude_code_tool_failures", SCRIPT)
-module = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(module)
-scan = module.scan
+
+
+def observations(report, kind):
+    return [o for o in report["observations"] if o["kind"] == kind]
 
 
 def trace(tmp_path, records, name="session.jsonl"):
@@ -48,16 +49,16 @@ def test_failure_then_success_is_not_a_recovery_verdict(tmp_path):
     ])
     report = scan(path)
     assert report["session_id"] == "s1"
-    assert report["completed_tools"] == 2
-    assert report["scan_issues"] == []
-    assert len(report["failures"]) == 1
-    failure = report["failures"][0]
-    assert (failure["line"], failure["call_line"], failure["exit_code"]) == (2, 1, 1)
+    assert report["tool_results_seen"] == 2
+    assert report["input_issues"] == []
+    assert len(report["findings"]) == 1
+    failure = report["findings"][0]
+    assert (failure["line"], failure["call_line"], failure["evidence"][0]["exit_code"]) == (2, 1, 1)
     assert failure["command"] == "rg absent file"
-    assert failure["signals"] == ["is_error", "nonzero_exit"]
+    assert failure["evidence"][0]["signals"] == ["tool_error", "nonzero_exit"]
     assert failure["recovery"] == "not_assessed"
-    assert (report["last_line"], report["last_timestamp"]) == (4, "2026-11-07T10:00:01.000Z")
-    assert report["first_timestamp"] == "2026-11-07T10:00:00.000Z"
+    assert (report["coverage"]["last_line"], report["coverage"]["last_timestamp"]) == (4, "2026-11-07T10:00:01.000Z")
+    assert report["coverage"]["first_timestamp"] == "2026-11-07T10:00:00.000Z"
     assert report["cwd"] == "/project"
 
 
@@ -67,9 +68,9 @@ def test_absent_error_flag_is_success_and_exit_text_in_success_is_ignored(tmp_pa
         use("c", "b", cid="toolu_2"), result("d", "c", cid="toolu_2", text="Exit code 1\nx", error=False),
     ])
     report = scan(path)
-    assert report["failures"] == []
-    assert report["scan_issues"] == []
-    assert report["completed_tools"] == 2
+    assert report["findings"] == []
+    assert report["input_issues"] == []
+    assert report["tool_results_seen"] == 2
 
 
 def test_tool_use_found_across_block_records_attachments_and_branches(tmp_path):
@@ -85,9 +86,9 @@ def test_tool_use_found_across_block_records_attachments_and_branches(tmp_path):
         result("y", "x", cid="toolu_9", text="Exit code 2\nno"),
     ])
     report = scan(path)
-    assert report["scan_issues"] == []
-    assert [f["command"] for f in report["failures"]] == ["first block", "rewound branch"]
-    assert [f["entry_id"] for f in report["failures"]] == ["b", "y"]
+    assert report["input_issues"] == []
+    assert [f["command"] for f in report["findings"]] == ["first block", "rewound branch"]
+    assert [f["entry_id"] for f in report["findings"]] == ["b", "y"]
 
 
 def test_harness_outcomes_get_distinct_signals(tmp_path):
@@ -103,12 +104,12 @@ def test_harness_outcomes_get_distinct_signals(tmp_path):
         records.append(result(f"r{index}", f"u{index}", cid=cid, text=text))
         parent = f"r{index}"
     report = scan(trace(tmp_path, records))
-    assert [f["signals"] for f in report["failures"]] == [
-        ["is_error", "user_rejected"], ["is_error", "permission_denied"],
-        ["is_error", "tool_use_error"], ["is_error"],
+    assert [f["evidence"][0]["signals"] for f in report["findings"]] == [
+        ["tool_error", "user_rejected"], ["tool_error", "permission_denied"],
+        ["tool_error", "tool_use_error"], ["tool_error"],
     ]
-    assert report["failures"][3]["exit_code"] is None
-    assert report["failures"][3]["tool_name"] == "WebFetch"
+    assert report["findings"][3]["evidence"][0]["exit_code"] is None
+    assert report["findings"][3]["tool_name"] == "WebFetch"
 
 
 def test_harness_strings_quoted_in_successful_output_are_not_failures(tmp_path):
@@ -120,10 +121,10 @@ def test_harness_strings_quoted_in_successful_output_are_not_failures(tmp_path):
         use("e", "d", cid="toolu_3", command="cat log"), result("f", "e", cid="toolu_3", text=quoted),
     ])
     report = scan(path)
-    assert report["scan_issues"] == []
-    assert [f["entry_id"] for f in report["failures"]] == ["f"]
-    assert report["failures"][0]["signals"] == [
-        "is_error", "user_rejected", "permission_denied", "tool_use_error",
+    assert report["input_issues"] == []
+    assert [f["entry_id"] for f in report["findings"]] == ["f"]
+    assert report["findings"][0]["evidence"][0]["signals"] == [
+        "tool_error", "user_rejected", "permission_denied", "tool_use_error",
     ]
 
 
@@ -133,10 +134,10 @@ def test_exit_code_only_parsed_for_shell_or_unknown_tool(tmp_path):
         result("orphan", "b", cid="toolu_missing", text="Exit code 4\nno call"),
     ])
     report = scan(path)
-    assert [f["exit_code"] for f in report["failures"]] == [None, 4]
-    assert report["failures"][1]["arguments"] is None
-    assert len(report["scan_issues"]) == 1
-    assert "no matching tool_use" in report["scan_issues"][0]["message"]
+    assert [f["evidence"][0]["exit_code"] for f in report["findings"]] == [None, 4]
+    assert report["findings"][1]["arguments"] is None
+    assert len(report["input_issues"]) == 1
+    assert "no matching tool_use" in report["input_issues"][0]["message"]
 
 
 def test_api_errors_interruptions_compactions_and_workers_are_listed(tmp_path):
@@ -155,32 +156,33 @@ def test_api_errors_interruptions_compactions_and_workers_are_listed(tmp_path):
          "toolUseResult": {"agentId": "af86", "status": "forked"}},
     ])
     report = scan(path)
-    assert report["failures"] == []
-    assert report["scan_issues"] == []
-    assert report["api_errors"] == [{
-        "line": 1, "entry_id": "e", "timestamp": None, "error": "authentication_failed", "text": "Login expired",
+    assert report["findings"] == []
+    assert report["input_issues"] == []
+    assert observations(report, "provider_error") == [{
+        "kind": "provider_error", "line": 1, "entry_id": "e", "block_index": None, "timestamp": None,
+        "details": {"error": "authentication_failed", "text": "Login expired"},
     }]
-    assert [i["line"] for i in report["interruptions"]] == [2, 3]
-    assert report["compactions"][0]["pre_tokens"] == 254216
-    assert report["compactions"][0]["logical_parent"] == "i2"
-    assert report["worker_ids"] == ["af86"]
+    assert [i["line"] for i in observations(report, "interruption")] == [2, 3]
+    assert observations(report, "compaction")[0]["details"]["pre_tokens"] == 254216
+    assert observations(report, "compaction")[0]["details"]["logical_parent"] == "i2"
+    assert report["details"]["worker_ids"] == ["af86"]
 
 
 def test_subagent_file_reports_agent_id(tmp_path):
     records = [use("a", None, agentId="af86", isSidechain=True), result("b", "a", agentId="af86")]
     report = scan(trace(tmp_path, records, name="agent-af86.jsonl"))
     assert report["agent_id"] == "af86"
-    assert len(report["failures"]) == 1
+    assert len(report["findings"]) == 1
 
 
 def test_bounded_diagnostic_and_unicode_separators(tmp_path):
     report = scan(trace(tmp_path, [use("a", None), result("b", "a", text="Exit code 1\n" + "x" * 700)]))
-    failure = report["failures"][0]
-    assert failure["diagnostic_truncated"] is True
-    assert len(failure["diagnostic_excerpt"]) == 600
+    failure = report["findings"][0]
+    assert failure["evidence"][0]["diagnostic_truncated"] is True
+    assert len(failure["evidence"][0]["diagnostic_excerpt"]) == 600
     report = scan(trace(tmp_path, [use("a", None), result("b", "a", text="a b c")]))
-    assert report["scan_issues"] == []
-    assert report["failures"][0]["diagnostic_excerpt"] == "a b c"
+    assert report["input_issues"] == []
+    assert report["findings"][0]["evidence"][0]["diagnostic_excerpt"] == "a b c"
 
 
 def test_malformed_line_preserves_later_findings(tmp_path):
@@ -188,8 +190,8 @@ def test_malformed_line_preserves_later_findings(tmp_path):
     path.write_text(json.dumps(use("a", None)) + "\nnot-json\n" + json.dumps(result("b", "a")) + "\n",
                     encoding="utf-8")
     report = scan(path)
-    assert report["scan_issues"][0]["line"] == 2
-    assert report["failures"][0]["line"] == 3
+    assert report["input_issues"][0]["line"] == 2
+    assert report["findings"][0]["line"] == 3
 
 
 @pytest.mark.parametrize("records", [
@@ -198,11 +200,59 @@ def test_malformed_line_preserves_later_findings(tmp_path):
     [{"type": "response_item", "payload": {}}],
 ])
 def test_empty_or_foreign_input_is_not_a_clean_scan(tmp_path, records):
-    assert scan(trace(tmp_path, records))["scan_issues"]
+    assert scan(trace(tmp_path, records))["input_issues"]
 
 
 def test_missing_file_is_reported(tmp_path):
-    assert scan(tmp_path / "absent")["scan_issues"]
+    assert scan(tmp_path / "absent")["input_issues"]
+
+
+def test_stream_json_correlates_by_id_and_records_denials_and_result(tmp_path):
+    # `claude --print --output-format stream-json` records carry uuid and
+    # session_id but no parentUuid; successful tool_results omit is_error.
+    sid = "766c8fb8-1897-47da-9516-181f85c85201"
+
+    def call(cid, command):
+        return {"type": "assistant", "uuid": f"u-{cid}", "session_id": sid, "parent_tool_use_id": None,
+                "message": {"role": "assistant", "content": [
+                    {"type": "tool_use", "id": cid, "name": "Bash", "input": {"command": command}}]}}
+
+    def answer(cid, text, **flag):
+        return {"type": "user", "uuid": f"r-{cid}", "session_id": sid, "parent_tool_use_id": None,
+                "message": {"role": "user", "content": [
+                    {"type": "tool_result", "tool_use_id": cid, "content": text, **flag}]}}
+
+    path = trace(tmp_path, [
+        {"type": "system", "subtype": "init", "cwd": "/worktree", "session_id": sid, "uuid": "i"},
+        call("toolu_1", "ls"), answer("toolu_1", "README.md"),
+        call("toolu_2", "cd x && git status"),
+        {"type": "system", "subtype": "permission_denied", "tool_name": "Bash", "tool_use_id": "toolu_2",
+         "decision_reason_type": "other", "decision_reason": "changes directory", "session_id": sid},
+        answer("toolu_2", "Permission for this action was denied", is_error=True),
+        {"type": "result", "subtype": "success", "is_error": False, "num_turns": 3, "session_id": sid,
+         "permission_denials": [{"tool_name": "Bash", "tool_use_id": "toolu_2"}]},
+    ], name="stdout.log")
+    report = scan(path)
+    assert report["input_issues"] == []
+    assert report["format"] == "claude-stream-json"
+    assert (report["session_id"], report["cwd"]) == (sid, "/worktree")
+    assert report["tool_results_seen"] == 2
+    [failure] = report["findings"]
+    assert (failure["tool_name"], failure["call_line"], failure["command"]) == ("Bash", 4, "cd x && git status")
+    assert failure["evidence"][0]["signals"] == ["tool_error", "permission_denied"]
+    assert observations(report, "permission_denial") == [{
+        "kind": "permission_denial", "line": 5, "entry_id": None, "timestamp": None, "block_index": None,
+        "details": {"tool_name": "Bash", "tool_use_id": "toolu_2", "decision_reason": "changes directory"},
+    }]
+    assert report["details"]["result"] == {"subtype": "success", "is_error": False, "num_turns": 3,
+                                "permission_denials": 1}
+
+
+def test_session_file_has_no_stream_fields(tmp_path):
+    # Real session records may carry session_id beside sessionId; that is not a stream.
+    report = scan(trace(tmp_path, [use("a", None, session_id="s1"), result("b", "a", session_id="s1")]))
+    assert report["format"] == "claude-code-session"
+    assert (observations(report, "permission_denial"), report["details"]["result"]) == ([], None)
 
 
 def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
@@ -213,10 +263,10 @@ def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
     assert run.returncode == 0
     assert path.read_bytes() == before
     output = json.loads(run.stdout)
-    assert output["failure_count"] == 1
+    assert output["finding_count"] == 1
     assert len(output["traces"]) == 1
     path.write_text("{truncated", encoding="utf-8")
     run = subprocess.run([sys.executable, str(SCRIPT), str(path)],
                          capture_output=True, text=True, check=False)
     assert run.returncode == 2
-    assert json.loads(run.stdout)["traces"][0]["scan_issues"]
+    assert json.loads(run.stdout)["traces"][0]["input_issues"]

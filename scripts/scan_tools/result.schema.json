@@ -1,0 +1,433 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Commonplace trace scan result v2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "scope",
+    "finding_count",
+    "traces",
+    "input_issues",
+    "details"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "scope": {
+      "type": "string"
+    },
+    "finding_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "traces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/trace"
+      }
+    },
+    "input_issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/input_issue"
+      }
+    },
+    "details": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": [
+        "signals",
+        "exit_code",
+        "diagnostic_excerpt",
+        "diagnostic_truncated",
+        "details"
+      ],
+      "properties": {
+        "signals": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "exit_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "diagnostic_excerpt": {
+          "type": "string",
+          "maxLength": 600
+        },
+        "diagnostic_truncated": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "kind",
+        "line",
+        "entry_id",
+        "block_index",
+        "timestamp",
+        "tool_call_id",
+        "tool_name",
+        "call_line",
+        "arguments",
+        "command",
+        "evidence",
+        "recovery",
+        "details"
+      ],
+      "properties": {
+        "kind": {
+          "const": "tool_failure"
+        },
+        "line": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "entry_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "block_index": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "timestamp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_call_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "call_line": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "arguments": {},
+        "command": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "recovery": {
+          "const": "not_assessed"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "required": [
+        "kind",
+        "line",
+        "entry_id",
+        "block_index",
+        "timestamp",
+        "details"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "provider_error",
+            "interruption",
+            "compaction",
+            "permission_denial"
+          ]
+        },
+        "line": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "entry_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "block_index": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "timestamp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_issue": {
+      "type": "object",
+      "required": [
+        "line",
+        "message"
+      ],
+      "properties": {
+        "line": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "checks",
+        "input_status",
+        "branch_scope",
+        "last_line",
+        "first_timestamp",
+        "last_timestamp",
+        "cutoff_utc"
+      ],
+      "properties": {
+        "checks": {
+          "type": "object",
+          "required": [
+            "tool_failures",
+            "provider_errors",
+            "interruptions",
+            "compactions",
+            "permission_denials",
+            "recovery",
+            "output_quality"
+          ],
+          "properties": {
+            "tool_failures": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "provider_errors": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "interruptions": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "compactions": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "permission_denials": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "recovery": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            },
+            "output_quality": {
+              "enum": [
+                "supported",
+                "unsupported"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "input_status": {
+          "enum": [
+            "read",
+            "partial"
+          ]
+        },
+        "branch_scope": {
+          "enum": [
+            "all_stored_branches",
+            "stored_records",
+            "stream"
+          ]
+        },
+        "last_line": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "first_timestamp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_timestamp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cutoff_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    "trace": {
+      "type": "object",
+      "required": [
+        "trace",
+        "harness",
+        "format",
+        "session_id",
+        "agent_id",
+        "cwd",
+        "tool_results_seen",
+        "coverage",
+        "findings",
+        "observations",
+        "input_issues",
+        "details"
+      ],
+      "properties": {
+        "trace": {
+          "type": "string"
+        },
+        "harness": {
+          "enum": [
+            "pi",
+            "codex",
+            "claude-code"
+          ]
+        },
+        "format": {
+          "enum": [
+            "pi-session",
+            "pi-json",
+            "codex-session",
+            "claude-code-session",
+            "claude-stream-json"
+          ]
+        },
+        "session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "agent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cwd": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_results_seen": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage": {
+          "$ref": "#/$defs/coverage"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/finding"
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observation"
+          }
+        },
+        "input_issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/input_issue"
+          }
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

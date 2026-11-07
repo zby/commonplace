@@ -15,6 +15,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from commonplace.lib.trace_scan import scan_report, trace_result
+
 EXCERPT_LIMIT = 600
 
 
@@ -37,9 +39,10 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
         "trace": str(path),
         "format": trace_format,
         "session_id": None,
-        "completed_tools": 0,
-        "failures": [],
-        "scan_issues": [],
+        "tool_results_seen": 0,
+        "last_line": 0, "first_timestamp": None, "last_timestamp": None,
+        "findings": [],
+        "input_issues": [],
     }
     pending: dict[str, tuple[int, dict[str, Any]]] = {}
     # Only parent links and tool calls are retained, not the full conversation.
@@ -47,13 +50,13 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
     recognized = False
 
     def issue(line: int | None, message: str) -> None:
-        report["scan_issues"].append({"line": line, "message": message})
+        report["input_issues"].append({"line": line, "message": message})
 
     def complete(
         event: dict[str, Any], result: dict[str, Any], line: int,
         call: tuple[int, dict[str, Any]] | None,
     ) -> None:
-        report["completed_tools"] += 1
+        report["tool_results_seen"] += 1
         error = event.get("isError")
         if not isinstance(error, bool):
             issue(line, "completed tool has no boolean isError flag")
@@ -78,7 +81,7 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
         if call is None:
             issue(line, "failed tool has no matching call; arguments unavailable")
         args = call[1] if call else None
-        report["failures"].append({
+        report["findings"].append({
             "line": line,
             "entry_id": event.get("id"),
             "tool_call_id": event.get("toolCallId"),
@@ -86,10 +89,12 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
             "call_line": call[0] if call else None,
             "arguments": args,
             "command": args.get("command") if isinstance(args, dict) else None,
-            "exit_code": code,
-            "signals": signals,
-            "diagnostic_excerpt": output[-EXCERPT_LIMIT:],
-            "diagnostic_truncated": len(output) > EXCERPT_LIMIT,
+            "evidence": [{
+                "exit_code": code,
+                "signals": signals,
+                "diagnostic_excerpt": output[-EXCERPT_LIMIT:],
+                "diagnostic_truncated": len(output) > EXCERPT_LIMIT,
+            }],
             "recovery": "not_assessed",
         })
 
@@ -97,6 +102,7 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
         with path.open(encoding="utf-8") as stream:
             # File iteration splits on LF, not Unicode separators within JSON strings.
             for line, raw in enumerate(stream, 1):
+                report["last_line"] = line
                 if not raw.strip():
                     continue
                 try:
@@ -107,6 +113,11 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
                 if not isinstance(event, dict):
                     issue(line, "JSON record is not an object")
                     continue
+                stamp = event.get("timestamp")
+                if isinstance(stamp, str):
+                    if report["first_timestamp"] is None:
+                        report["first_timestamp"] = stamp
+                    report["last_timestamp"] = stamp
                 kind = event.get("type")
                 if kind == "session":
                     recognized = True
@@ -170,7 +181,8 @@ def scan(path: Path, trace_format: str) -> dict[str, Any]:
         issue(None, "no recognized Pi records; empty or unsupported trace")
     for call_id, (line, _) in pending.items():
         issue(line, f"tool start has no completion: {call_id}")
-    return report
+    return trace_result(report, harness="pi", checks=("tool_failures",),
+                        branch_scope=("all_stored_branches" if trace_format == "pi-session" else "stream"))
 
 
 def main() -> int:
@@ -180,13 +192,10 @@ def main() -> int:
     args = parser.parse_args()
     paths = dict.fromkeys(path.resolve() for path in args.traces)
     reports = [scan(path, args.format) for path in paths]
-    print(json.dumps({
-        "schema_version": 1,
-        "scope": "explicit tool failures only; recovery and semantic correctness not assessed",
-        "failure_count": sum(len(report["failures"]) for report in reports),
-        "traces": reports,
-    }, indent=2, ensure_ascii=False))
-    return 2 if any(report["scan_issues"] for report in reports) else 0
+    print(json.dumps(scan_report(
+        reports, scope="explicit failure candidates and supported observations; recovery not assessed",
+    ), indent=2, ensure_ascii=False))
+    return 2 if any(report["input_issues"] for report in reports) else 0
 
 
 if __name__ == "__main__":

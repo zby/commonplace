@@ -17,7 +17,13 @@ from pathlib import Path
 from workjig import Request, Run
 
 from commonplace.headless.harness import Profile
+from commonplace.lib.agentic_analysis import claude_code_tool_failures
 from commonplace.lib.agentic_analysis.tool_failures import scan
+from commonplace.lib.trace_scan import scan_report
+
+# Worker output protocols whose stdout the advisory scan can read.
+SCANNERS = {"pi-json": lambda stdout: scan(stdout, "pi-json"),
+            "claude-stream-json": claude_code_tool_failures.scan}
 
 INSTRUCTION = "agentic-system-analyses/instructions/analyse-agentic-system/meta-analyser.md"
 TIMEOUT = 900
@@ -65,7 +71,8 @@ def collect(run_dir: Path) -> tuple[list[dict], dict]:
                 stdout, prompt = directory / "stdout.log", directory / "prompt.txt"
                 owned = all(path.resolve().is_relative_to(run_dir / "calls/launches")
                             for path in (directory, stdout, prompt))
-                supported = worker.get("name") == "pi" and worker.get("output_protocol") == "pi-json"
+                scanner = SCANNERS.get(worker.get("output_protocol"))
+                supported = scanner is not None
                 item = {"job": job, "key": key, "launch_id": attempt["launch_id"],
                         "status": attempt["status"], "harness": worker.get("name"),
                         "stdout": str(stdout), "prompt": str(prompt),
@@ -75,19 +82,20 @@ def collect(run_dir: Path) -> tuple[list[dict], dict]:
                 if owned:
                     item["stdout_sha256"], item["prompt_sha256"] = file_hash(stdout), file_hash(prompt)
                 if supported and owned:
-                    report = scan(stdout, "pi-json")
+                    report = scanner(stdout)
                     traces.append(report)
-                    if report["scan_issues"]:
+                    if report["input_issues"]:
                         item["scan_status"] = "partial"
                 inventory.append(item)
-    return inventory, {"schema_version": 1,
-                       "scope": "manifest attempts; explicit Pi tool failures only; recovery not assessed; "
-                                "nested workers not discovered",
-                       "failure_count": sum(len(t["failures"]) for t in traces),
-                       "attempt_count": len(inventory),
-                       "unscanned_attempt_count": sum(i["scan_status"] == "unscanned" for i in inventory),
-                       "partial_attempt_count": sum(i["scan_status"] == "partial" for i in inventory),
-                       "scan_issues": issues, "traces": traces}
+    return inventory, scan_report(
+        traces,
+        scope="manifest attempts; supported worker streams only; recovery not assessed; "
+              "nested workers not discovered",
+        input_issues=[{"line": None, "message": message} for message in issues],
+        details={"attempt_count": len(inventory),
+                 "unscanned_attempt_count": sum(i["scan_status"] == "unscanned" for i in inventory),
+                 "partial_attempt_count": sum(i["scan_status"] == "partial" for i in inventory)},
+    )
 
 
 def launch(directory: Path, worktree: Path, profile: Profile, harness, timeout: float) -> tuple[dict, str]:
@@ -195,16 +203,24 @@ def audit(analysis, *, completed: bool) -> dict:
               "instruction_sha256": sha256(instruction.encode()).hexdigest(),
               "profile": {"harness": analysis.run.profile.harness,
                           "launch-model": analysis.run.profile.launch_model, "effort": analysis.run.profile.effort}}
-    fingerprint = sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
+    # Inspection wall time changes on a replay of identical bytes. It belongs
+    # in retained coverage, but must not force a new audit/model invocation.
+    fingerprint_inputs = {**inputs, "scanner": {**scanner, "traces": [
+        {**trace, "coverage": {k: v for k, v in trace["coverage"].items() if k != "cutoff_utc"}}
+        for trace in scanner["traces"]
+    ]}}
+    fingerprint = sha256(json.dumps(fingerprint_inputs, sort_keys=True).encode()).hexdigest()
     directory = root / fingerprint
     directory.mkdir(exist_ok=True)
     status_path = directory / "status.json"
 
     def finish(status: dict) -> dict:
-        coverage = {key: scanner[key] for key in ("attempt_count", "failure_count", "partial_attempt_count",
-                                                 "unscanned_attempt_count")}
-        coverage["scan_issue_count"] = len(scanner["scan_issues"]) + sum(
-            len(trace["scan_issues"]) for trace in scanner["traces"])
+        coverage = dict(scanner["details"])
+        coverage["finding_count"] = scanner["finding_count"]
+        if coverage["attempt_count"] and coverage["unscanned_attempt_count"] == coverage["attempt_count"]:
+            coverage["finding_count"] = None  # Unscanned attempts must not read as clean.
+        coverage["input_issue_count"] = len(scanner["input_issues"]) + sum(
+            len(trace["input_issues"]) for trace in scanner["traces"])
         status = {**identities, "snapshot": fingerprint, "directory": str(directory), "trace-scan": coverage, **status}
         save(status_path, status)
         save(root / "status.json", status)

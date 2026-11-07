@@ -45,12 +45,12 @@ def test_native_wrapped_results_and_duplicate_events(tmp_path):
         record("inter_agent_communication_metadata", {"trigger_turn": "worker"}),
     ])
     assert code == 0
-    assert report["failure_count"] == trace["completed_tools"] == 1
-    failure = trace["failures"][0]
+    assert report["finding_count"] == trace["tool_results_seen"] == 1
+    failure = trace["findings"][0]
     assert failure["call_line"] == 2 and failure["line"] == 4
     assert failure["evidence"][0]["exit_code"] == 1
     assert failure["recovery"] == "not_assessed"
-    assert trace["session_id"] == "s1" and trace["last_line"] == 7
+    assert trace["session_id"] == "s1" and trace["coverage"]["last_line"] == 7
 
 
 def test_shell_envelope_and_successful_stdout_are_distinct(tmp_path):
@@ -67,10 +67,10 @@ def test_shell_envelope_and_successful_stdout_are_distinct(tmp_path):
                                      "output": output}),
         ])
     code, report, trace = run_scan(tmp_path, records)
-    assert code == 0 and report["failure_count"] == 2
-    assert trace["completed_tools"] == 3
-    assert trace["failures"][0]["command"] == "test"
-    assert [f["tool_call_id"] for f in trace["failures"]] == ["bad", "patch"]
+    assert code == 0 and report["finding_count"] == 2
+    assert trace["tool_results_seen"] == 3
+    assert trace["findings"][0]["command"] == "test"
+    assert [f["tool_call_id"] for f in trace["findings"]] == ["bad", "patch"]
 
 
 def test_partial_input_retains_failures_and_correlation_gaps(tmp_path):
@@ -80,19 +80,19 @@ def test_partial_input_retains_failures_and_correlation_gaps(tmp_path):
         record("response_item", {"type": "function_call", "call_id": "pending",
                                  "name": "exec_command", "arguments": "{}"}),
     ], suffix='{"type":')
-    assert code == 2 and report["failure_count"] == 1
-    messages = [i["message"] for i in trace["scan_issues"]]
+    assert code == 2 and report["finding_count"] == 1
+    messages = [i["message"] for i in trace["input_issues"]]
     assert any("no preceding call" in m for m in messages)
     assert any("no output" in m for m in messages)
     assert any("invalid JSON" in m for m in messages)
-    evidence = trace["failures"][0]["evidence"][0]
+    evidence = trace["findings"][0]["evidence"][0]
     assert evidence["diagnostic_truncated"]
     assert len(evidence["diagnostic_excerpt"]) == 600
 
 
 def test_other_harness_is_not_a_clean_scan(tmp_path):
     code, _, trace = run_scan(tmp_path, [{"type": "session", "id": "pi"}])
-    assert code == 2 and trace["scan_issues"]
+    assert code == 2 and trace["input_issues"]
 
 
 def test_exec_envelopes_keep_script_failures_and_nested_results(tmp_path):
@@ -129,8 +129,8 @@ def test_exec_envelopes_keep_script_failures_and_nested_results(tmp_path):
     records.append(records[-1])
     code, report, trace = run_scan(tmp_path, records)
     assert code == 0
-    assert report["failure_count"] == trace["completed_tools"] == len(inputs)
-    failures = {f["tool_call_id"]: f for f in trace["failures"]}
+    assert report["finding_count"] == trace["tool_results_seen"] == len(inputs)
+    failures = {f["tool_call_id"]: f for f in trace["findings"]}
     for cid in ("split_script_error", "string_script_error"):
         evidence = failures[cid]["evidence"]
         assert len(evidence) == 1
@@ -156,5 +156,5 @@ def test_successful_command_output_is_not_parsed_as_exec_status(tmp_path):
                                      {"type": "input_text", "text": json.dumps(result)},
                                  ]}),
     ])
-    assert code == 0 and report["failure_count"] == 0
-    assert trace["completed_tools"] == 1
+    assert code == 0 and report["finding_count"] == 0
+    assert trace["tool_results_seen"] == 1
