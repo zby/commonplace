@@ -41,6 +41,8 @@ def test_native_wrapped_results_and_duplicate_events(tmp_path):
         record("session_meta", {"id": "s1", "cwd": "/project"}), call,
         record("event_msg", {"type": "item_completed", "item": {"exit_code": 1}}),
         output, output,
+        record("token_usage_record", {"usage": {"input_tokens": 10}}),
+        record("inter_agent_communication_metadata", {"trigger_turn": "worker"}),
     ])
     assert code == 0
     assert report["failure_count"] == trace["completed_tools"] == 1
@@ -48,7 +50,7 @@ def test_native_wrapped_results_and_duplicate_events(tmp_path):
     assert failure["call_line"] == 2 and failure["line"] == 4
     assert failure["evidence"][0]["exit_code"] == 1
     assert failure["recovery"] == "not_assessed"
-    assert trace["session_id"] == "s1" and trace["last_line"] == 5
+    assert trace["session_id"] == "s1" and trace["last_line"] == 7
 
 
 def test_shell_envelope_and_successful_stdout_are_distinct(tmp_path):

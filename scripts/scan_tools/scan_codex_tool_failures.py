@@ -107,7 +107,8 @@ def scan(path: Path) -> dict[str, Any]:
                 kind = event.get("type")
                 payload = event.get("payload")
                 if kind not in {"session_meta", "response_item", "event_msg",
-                                "turn_context", "compacted", "world_state"}:
+                                "turn_context", "compacted", "world_state",
+                                "token_usage_record", "inter_agent_communication_metadata"}:
                     issue(line, f"unsupported rollout record type: {kind!r}")
                     continue
                 if not isinstance(payload, dict):
