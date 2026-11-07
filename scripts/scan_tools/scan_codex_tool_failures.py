@@ -25,14 +25,42 @@ SHELL_STATUS = re.compile(
 )
 
 
+EXEC_STATUS = re.compile(r"\AScript (completed|failed)\nWall time [^\n]+\nOutput:\n")
+
+
 def signals(value: Any) -> list[dict[str, Any]]:
-    """Inspect structured results and known envelopes, not generic error words."""
+    """Inspect result containers and envelopes without searching command stdout."""
     found = []
     if isinstance(value, list):
+        # Codex can split the exec envelope and its printed values across blocks.
+        # Join only text blocks when the first block establishes that envelope.
+        texts = [block.get("text", "") for block in value
+                 if isinstance(block, dict) and block.get("type") in {"text", "input_text"}
+                 and isinstance(block.get("text"), str)]
+        if texts and EXEC_STATUS.match(texts[0]):
+            found.extend(signals(texts[0]))
+            for evidence in found:
+                if "script_failed" in evidence["signals"]:
+                    evidence["diagnostic"] = "\n".join(texts)
+            for text in texts[1:]:
+                found.extend(printed_signals(text))
+            return found
         for block in value:
-            if isinstance(block, dict) and block.get("type") in {"text", "input_text"}:
-                found.extend(signals(block.get("text")))
+            found.extend(signals(block))
     elif isinstance(value, dict):
+        if value.get("type") in {"text", "input_text"}:
+            return signals(value.get("text"))
+        # Promise.allSettled records may be printed directly, in arrays, or
+        # inside the indexed {i, result: ...} wrapper used by local sessions.
+        if value.get("status") == "fulfilled" and "value" in value:
+            return signals(value["value"])
+        if value.get("status") == "rejected" and "reason" in value:
+            return [{"signals": ["promise_rejected"], "exit_code": None,
+                     "diagnostic": str(value["reason"])}]
+        if isinstance(value.get("result"), dict) and value["result"].get("status") in {
+            "fulfilled", "rejected"
+        }:
+            return signals(value["result"])
         code = value.get("exit_code")
         reasons = []
         if type(code) is int and code != 0:
@@ -42,11 +70,21 @@ def signals(value: Any) -> list[dict[str, Any]]:
         if reasons:
             found.append({"signals": reasons, "exit_code": code,
                           "diagnostic": str(value.get("output", value))})
-        # These are tool result containers, not arbitrary recursively searched JSON.
+        # Never recurse into output: a successful command may print error
+        # examples or JSON containing nonzero exit codes as ordinary data.
         for key in ("content", "structuredContent"):
             if key in value:
                 found.extend(signals(value[key]))
     elif isinstance(value, str):
+        envelope = EXEC_STATUS.match(value)
+        if envelope:
+            if envelope[1] == "failed":
+                found.append({"signals": ["script_failed"], "exit_code": None,
+                              "diagnostic": value})
+            # exec prints a sequence of values, not necessarily one JSON value.
+            # Decode only its leading JSON stream, never arbitrary stdout lines.
+            found.extend(printed_signals(value[envelope.end():]))
+            return found
         try:
             structured = json.loads(value)
         except ValueError:
@@ -62,6 +100,22 @@ def signals(value: Any) -> list[dict[str, Any]]:
                                "write_stdin failed:", "apply_patch verification failed:")):
             found.append({"signals": ["tool_error_prefix"], "exit_code": None,
                           "diagnostic": value})
+    return found
+
+
+def printed_signals(text: str) -> list[dict[str, Any]]:
+    """Decode JSON values printed by exec, stopping when non-JSON text begins."""
+    found = []
+    body = text.lstrip()
+    decoder = json.JSONDecoder()
+    while body:
+        try:
+            structured, end = decoder.raw_decode(body)
+        except ValueError:
+            break
+        if isinstance(structured, (dict, list)):
+            found.extend(signals(structured))
+        body = body[end:].lstrip()
     return found
 
 

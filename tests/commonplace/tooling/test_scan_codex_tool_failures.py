@@ -93,3 +93,68 @@ def test_partial_input_retains_failures_and_correlation_gaps(tmp_path):
 def test_other_harness_is_not_a_clean_scan(tmp_path):
     code, _, trace = run_scan(tmp_path, [{"type": "session", "id": "pi"}])
     assert code == 2 and trace["scan_issues"]
+
+
+def test_exec_envelopes_keep_script_failures_and_nested_results(tmp_path):
+    failed_header = "Script failed\nWall time 0.1 seconds\nOutput:\n"
+    completed_header = "Script completed\nWall time 0.1 seconds\nOutput:\n"
+    command = {"exit_code": 2, "output": "missing required file"}
+    settled = {"status": "fulfilled", "value": command}
+    inputs = {
+        "split_script_error": [
+            {"type": "input_text", "text": failed_header},
+            {"type": "input_text", "text": "Script error:\napply_patch verification failed: missing file"},
+        ],
+        "string_script_error": failed_header + "\nScript error:\nSyntaxError: Unexpected token",
+        "settled": [{"type": "input_text", "text": json.dumps(settled)}],
+        "indexed": {"i": 0, "result": settled},
+        "array": [settled, {"status": "fulfilled", "value": {"exit_code": 0}}],
+        "printed_values": completed_header + json.dumps({"exit_code": 0}) + "\n" + json.dumps(settled),
+        "prose_then_result": [
+            {"type": "input_text", "text": completed_header},
+            {"type": "input_text", "text": "Progress message"},
+            {"type": "input_text", "text": json.dumps(settled)},
+        ],
+        "rejected": {"status": "rejected", "reason": "tool unavailable"},
+    }
+    records = []
+    for cid, output in inputs.items():
+        records.extend([
+            record("response_item", {"type": "custom_tool_call", "call_id": cid,
+                                     "name": "exec", "input": "text(result)"}),
+            record("response_item", {"type": "custom_tool_call_output", "call_id": cid,
+                                     "output": output}),
+        ])
+    # A repeated envelope must not inflate the number of failed operations.
+    records.append(records[-1])
+    code, report, trace = run_scan(tmp_path, records)
+    assert code == 0
+    assert report["failure_count"] == trace["completed_tools"] == len(inputs)
+    failures = {f["tool_call_id"]: f for f in trace["failures"]}
+    for cid in ("split_script_error", "string_script_error"):
+        evidence = failures[cid]["evidence"]
+        assert len(evidence) == 1
+        assert evidence[0]["signals"] == ["script_failed"]
+        assert "Script error:" in evidence[0]["diagnostic_excerpt"]
+    for cid in ("settled", "indexed", "array", "printed_values", "prose_then_result"):
+        assert failures[cid]["evidence"][0]["exit_code"] == 2
+    assert failures["rejected"]["evidence"][0]["signals"] == ["promise_rejected"]
+
+
+def test_successful_command_output_is_not_parsed_as_exec_status(tmp_path):
+    # Documentation and fixtures printed by a successful command are data,
+    # even if they look exactly like harness failures or Promise results.
+    examples = 'Script failed\nWall time 0 seconds\nOutput:\nScript error: example\n'
+    examples += json.dumps({"status": "fulfilled", "value": {"exit_code": 9}})
+    result = {"status": "fulfilled", "value": {"exit_code": 0, "output": examples}}
+    code, report, trace = run_scan(tmp_path, [
+        record("response_item", {"type": "custom_tool_call", "call_id": "ok",
+                                 "name": "exec", "input": "text(result)"}),
+        record("response_item", {"type": "custom_tool_call_output", "call_id": "ok",
+                                 "output": [
+                                     {"type": "input_text", "text": "Script completed\nWall time 0 seconds\nOutput:\n"},
+                                     {"type": "input_text", "text": json.dumps(result)},
+                                 ]}),
+    ])
+    assert code == 0 and report["failure_count"] == 0
+    assert trace["completed_tools"] == 1

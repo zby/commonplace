@@ -18,7 +18,7 @@ Each command accepts multiple files of the selected format. The wrapper imports
 implement a separate parser. It discovers no sessions, follows no embedded
 paths, launches no workers and modifies no inputs.
 
-Use [Review recent Pi logs for hidden failures](../../kb/instructions/review-recent-pi-logs-for-hidden-failures.md)
+Use [Review recent logs for hidden failures](../../kb/instructions/review-recent-logs-for-hidden-failures.md)
 for discovery, incident assessment and the handoff to diagnosis. The scanner
 alone detects explicit tool failures, not recovery, provider retries or final
 output quality. Native sessions include all stored branches. Expected search
@@ -40,13 +40,18 @@ Accepts one or more explicit native Codex rollout JSONL files (the optional
 only Python's standard library. It does not accept `codex exec --json` streams,
 discover sessions, follow worker references, execute trace contents or modify
 inputs. Select project sessions and a bounded review window before scanning.
-The Pi procedure's review principles apply, but its parser and branch model do
-not apply to Codex.
+Use the universal review instruction above; select this parser for Codex
+rollouts rather than importing Pi's parser or branch model.
 
 Correlates `response_item` function/custom calls with outputs by `call_id`.
 Detects nonzero structured `exit_code`, `isError`, native shell status envelopes
-and selected tool-error prefixes. Inspects JSON results in text blocks, including
-nested command results printed by `functions.exec`. Counts a failed outer call
+and selected tool-error prefixes. Recognizes `Script failed` exec envelopes,
+including envelopes split across text blocks, and inspects JSON values printed
+by `functions.exec`. Supports `Promise.allSettled` fulfilled/rejected records,
+arrays of results and indexed `{i, result: ...}` wrappers. A fulfilled promise
+can still contain a nonzero command exit; promise rejection is a separate signal.
+Command stdout remains data: error examples printed by a successful command do
+not become failures. Counts a failed outer call
 once, retaining its individual evidence signals. Repeated outputs and mirrored
 `event_msg` items are not counted again. Identical file paths are deduplicated;
 copied files and shared histories across files are not deduplicated.
