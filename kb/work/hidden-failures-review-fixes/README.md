@@ -66,6 +66,19 @@ Closes with: a diagnosis record here and either an ADR-backed change to the
 audit or a recorded decision to keep Pi-only auditing with the gap stated in
 the analysis instruction.
 
+Status 2026-11-07: diagnosis done, see [b-audit-diagnosis.md](./b-audit-diagnosis.md),
+reviewed and corrected once. Finding: unfinished scope, not design pressure.
+The 18 parcha streams correlate every one of 602 results to its call by ID
+and hold 21 explicit errors, 20 of them harness permission refusals. The
+right scan target is the manifest-owned `stdout.log` stream, on ownership
+and retention grounds. Recommended repair, option (a): a `claude-stream-json`
+scan path keyed on protocol, with tests and a SKILL.md wording change, under
+existing authority since ADR 121 already requires every attempt be scanned;
+also report `failure_count` as null or qualified when nothing was scanned.
+Open operator decisions before option (b): which model runs the Pi auditor
+when the run profile is not Pi, and authority for one trial launch on the
+parcha audit snapshot.
+
 ### C. Exhaustive claim on capped evidence (I2)
 
 Finding: a prioritisation reply said every open workshop README had been
