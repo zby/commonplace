@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [hidden-failures-review-fixes](./hidden-failures-review-fixes/README.md) — seven items from the 2026-11-07 hidden-failures review of this checkout's Claude Code sessions: scanner precision fix, advisory-audit gap for Claude Code workers (diagnosis pending worktree authorization), capped-evidence and silent-edit observations, generalizing the Pi-only review instruction, two recorded lapses and two operator decisions; review report retained
+
 - [curiosity-exploration](./open-ended-work-economics/curiosity-exploration/README.md) — second five-turn exploration complete: bounded explanation-seeking and evidence-preservation requirements survive as candidates; no compression-steering advantage established; final findings and measured costs retained
 
 - [bootstrap-exploration](./open-ended-work-economics/bootstrap-exploration/README.md) — first five-turn exploration complete; second exploration brief on curiosity, compression and retention recorded 2026-11-06 and executed separately in curiosity-exploration; preserves first-trial evidence and costs
