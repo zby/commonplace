@@ -37,6 +37,11 @@ that `xargs` masks the scanner's exit code (I7).
 Closes with: a commit, and the tooling suite run after the last edit (I6).
 Authority: ordinary code change to a script committed this morning.
 
+Status 2026-11-07: done. The three signals are gated on `is_error`, a
+regression test covers false, absent and true flags, and the README notes
+the xargs masking. Ruff and the general plus tooling suites passed after the
+last edit; the whole-corpus scan lost exactly the two `is_error: false` leads.
+
 ### B. Advisory audit skipped for analysis runs with Claude Code workers (I5)
 
 Finding: the parcha-recall analysis ran with Opus workers. The audit in

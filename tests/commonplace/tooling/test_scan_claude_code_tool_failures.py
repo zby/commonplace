@@ -111,6 +111,22 @@ def test_harness_outcomes_get_distinct_signals(tmp_path):
     assert report["failures"][3]["tool_name"] == "WebFetch"
 
 
+def test_harness_strings_quoted_in_successful_output_are_not_failures(tmp_path):
+    quoted = ("The user doesn't want to proceed with this tool use\n"
+              "Permission for this action was denied\n<tool_use_error>x</tool_use_error>")
+    path = trace(tmp_path, [
+        use("a", None, command="cat log"), result("b", "a", text=quoted, error=False),
+        use("c", "b", cid="toolu_2", command="cat log"), result("d", "c", cid="toolu_2", text=quoted, error=None),
+        use("e", "d", cid="toolu_3", command="cat log"), result("f", "e", cid="toolu_3", text=quoted),
+    ])
+    report = scan(path)
+    assert report["scan_issues"] == []
+    assert [f["entry_id"] for f in report["failures"]] == ["f"]
+    assert report["failures"][0]["signals"] == [
+        "is_error", "user_rejected", "permission_denied", "tool_use_error",
+    ]
+
+
 def test_exit_code_only_parsed_for_shell_or_unknown_tool(tmp_path):
     path = trace(tmp_path, [
         use("a", None, name="Write"), result("b", "a", text="Exit code 3\nnot a shell"),

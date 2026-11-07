@@ -90,3 +90,5 @@ successful output is not inspected. Separate lists give API error messages,
 user interruptions and compaction boundaries as leads for provider retries and
 overflow recovery; `last_line` and `last_timestamp` record the inspected
 cutoff for live files. Exit codes and limits are as for the Pi scanner.
+Pass files directly, not through `xargs`: xargs replaces the scanner's exit 2
+with its own 123 and hides the input issue.

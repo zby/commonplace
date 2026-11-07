@@ -104,11 +104,12 @@ def scan(path: Path) -> dict[str, Any]:
             signals.append("is_error")
         if code is not None and code != 0:
             signals.append("nonzero_exit")
-        if USER_REJECTED in output:
+        # Successful output may quote these strings (e.g. when reading logs).
+        if error and USER_REJECTED in output:
             signals.append("user_rejected")
-        if PERMISSION_DENIED in output:
+        if error and PERMISSION_DENIED in output:
             signals.append("permission_denied")
-        if "<tool_use_error>" in output:
+        if error and "<tool_use_error>" in output:
             signals.append("tool_use_error")
         if not signals:
             return
