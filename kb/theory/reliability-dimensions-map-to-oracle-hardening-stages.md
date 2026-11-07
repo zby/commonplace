@@ -16,6 +16,8 @@ The [oracle-strength spectrum](./oracle-strength-spectrum.md) describes a gradie
 | **Predictability** | "Will this work next time?" | Calibrate confidence. If the system says 80% and it's right 80% of the time, the confidence score *is* a soft oracle. Discrimination (assigning higher confidence to correct answers) would push it toward hard. |
 | **Safety** | "What happens when it doesn't work?" | Bound the damage. Not a continuous score but a hard constraint — a gate, not a gradient. This is the only dimension that's already a hard oracle by design: either the failure is bounded or it isn't. |
 
+Ma et al.'s [PromptSE study](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) measures prompt stability with AUC-E over semantically equivalent variants. That supplies a robustness measurement; it does not itself turn a soft oracle into a deterministic one.
+
 ## Why this mapping matters
 
 The oracle-strength note says "invest in telemetry and eval harnesses *before* investing in capability, because guidance is the bottleneck." The reliability framework shows exactly where to invest: each dimension is a separate oracle that can be hardened independently. You don't need to solve all four at once.
@@ -45,4 +47,3 @@ Relevant Notes:
 - [MAKER: Solving a Million-Step LLM Task with Zero Errors](https://arxiv.org/abs/2511.09030) — concrete architectural hardening: decomposition + voting hardens consistency, red-flagging hardens predictability, both enabled by hard per-step oracles
 - [ABC: Agent Behavioral Contracts](https://arxiv.org/html/2602.22302v1) — extends: maps onto all four dimensions — safety (hard invariants), consistency (soft invariants with recovery), predictability (drift monitoring via D*=α/γ), robustness (compositionality theorem)
 - [the augmentation-automation boundary is discrimination not accuracy](./the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — deepens: extracts and develops the predictability gap paragraph into a standalone claim — the boundary depends on per-instance discrimination, which is empirically stagnant
-- Ma et al. (2026). [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — exemplifies: AUC-E metric directly operationalizes robustness (R_Rob) hardening — measures how much prompt perturbation changes outputs, quantifying the soft-to-hard oracle transition for robustness

@@ -22,7 +22,7 @@ The primary success criterion here is **not invariance** but less-correlated sig
 
 ## Diagnosis: prompt variation as brittleness measurement
 
-In [operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md), paraphrase and reordering tests are not trying to create independent judges. They ask whether a component is stable under semantically equivalent surface changes. The [PromptSE ingest](https://arxiv.org/pdf/2509.13680) makes this concrete: emotion and personality prompt variants preserve the task while changing expression style, so performance shifts are interpreted as prompt sensitivity, not as evidence from multiple judges.
+In [operational signals that a component is a relaxing candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md), paraphrase and reordering tests are not trying to create independent judges. They ask whether a component is stable under semantically equivalent surface changes. The [PromptSE ingest](../sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md) makes this concrete: emotion and personality prompt variants preserve the task while changing expression style, so performance shifts are interpreted as prompt sensitivity, not as evidence from multiple judges.
 
 The success criterion here **is invariance**. If the task is unchanged, large output swings indicate the system is tracking surface cues instead of underlying structure — a diagnostic signal that a component is overfit to prompt format rather than task specification.
 
@@ -65,6 +65,5 @@ Relevant Notes:
 
 - [error-correction-works-above-chance-oracles-with-decorrelated-checks](./error-correction-works-above-chance-oracles-with-decorrelated-checks.md) — foundation: prompt variation as a way to decorrelate weak oracles for verification
 - [operational-signals-that-a-component-is-a-relaxing-candidate](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — foundation: prompt variation as a diagnostic for paraphrase brittleness and theory-like components
-- [Prompt Stability in Code LLMs](https://arxiv.org/pdf/2509.13680) — evidenced-by: controlled emotion/personality variants operationalize diagnostic prompt variation at scale
 - [first-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — contrasts: Deutsch's "vary" test changes the explanation to test mechanism and explanatory-reach, not the prompt to test model behavior
 - [prompt ablation converts human insight into deployable agent framing](./prompt-ablation-converts-human-insight-to-deployable-framing.md) — adjacent method: controlled prompt variation used for framing selection rather than diagnosis or decorrelation

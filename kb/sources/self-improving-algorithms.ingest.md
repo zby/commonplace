@@ -23,7 +23,20 @@ The paper studies algorithms that improve expected running time by learning an u
 
 ## Quotes
 
-No source quotes have been retained yet.
+> guarantee. As the algorithm sees more and more inputs, it can learn something about
+> the structure of D. We call this the training phase of the self-improving algorithm.
+> During this phase, the algorithm collects and organizes information about the inputs
+> in the hope that it can be used to improve the running time (with respect to inputs
+> from D). The algorithm then moves to the limiting phase. Having decided that
+> enough has been learned about D, the algorithm uses this information to compute
+> f(I) faster. Note that this behavior is tuned to the distribution D.
+> --- `kb/sources/.snapshots/self-improving-algorithms.md` @ `sha256:cbba9379376d523543dd0a2dd1637c947efd3691334726b7a3807c8ebcbd8c2b` — introduction, training and limiting phases
+
+> As we mentioned earlier, the self-improving algorithm initially undergoes a training phase. At the end of this phase, some data structures storing information about
+> the distributions are constructed. In the limiting phase, the self-improving algorithm
+> is fixed, and these data structures do not change. In the context of sorting, the
+> self-improving sorter becomes some fixed comparison tree.
+> --- `kb/sources/.snapshots/self-improving-algorithms.md` @ `sha256:cbba9379376d523543dd0a2dd1637c947efd3691334726b7a3807c8ebcbd8c2b` — section 1.1, sorter model
 
 ## Connections Found
 
