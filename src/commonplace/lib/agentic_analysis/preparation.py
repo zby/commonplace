@@ -126,6 +126,7 @@ def command_environment(worktree: Path) -> dict[str, str]:
     env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
     env["VIRTUAL_ENV"] = str(environment)
     env["UV_PROJECT_ENVIRONMENT"] = str(environment)
+    env["COMMONPLACE_LIBRARY_ROOT"] = str(worktree / "kb")
     return env
 
 
@@ -208,6 +209,24 @@ def require_run_code(run: Path, *, cwd: Path | None = None) -> None:
         )
 
 
+def select_method(origin: Path, revision: str | None = None) -> tuple[Path, str]:
+    """Select only a committed method; never fetch or choose an alternate revision."""
+    origin = Path(run_command(["git", "rev-parse", "--show-toplevel"], cwd=origin)).resolve()
+    commit = run_command(
+        ["git", "rev-parse", "--verify", "--end-of-options", f"{revision or 'HEAD'}^{{commit}}"], cwd=origin,
+    )
+    require_committed_startup(origin, commit)
+    if revision is None:
+        remote = _git(origin, "symbolic-ref", "--quiet", "refs/remotes/origin/HEAD")
+        candidates = [remote.stdout.strip()] if remote.returncode == 0 else ["refs/heads/main", "refs/heads/master"]
+        for branch in candidates:
+            if _git(origin, "show-ref", "--verify", "--quiet", branch).returncode == 0:
+                if _git(origin, "merge-base", "--is-ancestor", branch, commit).returncode:
+                    raise ValueError("HEAD is behind or diverges from the default branch; operator must select --revision")
+                break
+    return origin, commit
+
+
 def prepare_worktree(
     origin: Path,
     *,
@@ -223,11 +242,7 @@ def prepare_worktree(
     """
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
         raise ValueError("name must contain lowercase letters, digits and hyphens")
-    origin = Path(run_command(["git", "rev-parse", "--show-toplevel"], cwd=origin)).resolve()
-    commit = run_command(
-        ["git", "rev-parse", "--verify", "--end-of-options", f"{revision or 'HEAD'}^{{commit}}"],
-        cwd=origin,
-    )
+    origin, commit = select_method(origin, revision)
     dirty = bool(run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin))
     if dirty and require_clean_origin:
         raise ValueError(

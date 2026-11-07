@@ -650,7 +650,10 @@ def run_analysis(run_dir: Path, *, timeout: float | None, max_workers: int | Non
             completed = True
             return receipt
         except Exception as stop:
-            analysis.run.log(event="stopped", reason=f"{type(stop).__name__}: {stop}")
+            analysis.run.log(event="stopped", reason=f"{type(stop).__name__}: {stop}",
+                             **{"stop-type": type(stop).__name__,
+                                "uncertain": isinstance(stop, (UncertainEffectError, UncertainLaunchError, RecordError)),
+                                "command-failed": not isinstance(stop, STOPS)})
             if not isinstance(stop, STOPS):
                 raise
             print(f"stopped: {stop}", file=sys.stderr)

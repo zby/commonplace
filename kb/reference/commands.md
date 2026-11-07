@@ -180,10 +180,73 @@ but decides nothing. Design and its limits: `kb/work/recurring-task-runner/`.
 
 ### commonplace-analysis
 
-The analysis lifecycle: prepare a worktree, run the analysis in it, inspect,
-retry, reset and integrate the run. The workflow is `commonplace.lib.agentic_analysis.workflow`
-over the headless primitives in `commonplace.headless`; see
-[the analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md).
+Run one explicit source or a bounded queue without a supervising agent:
+
+```bash
+commonplace-analysis analyse https://github.com/owner/repository
+commonplace-analysis batch targets.txt --concurrency 4
+commonplace-analysis resume /absolute/controller
+commonplace-analysis resume /absolute/controller --target https://github.com/owner/repository
+commonplace-analysis report /absolute/controller
+```
+
+`analyse` owns validation, isolated preparation, execution through the prepared
+command environment, waiting and reporting. `batch` uses the same lifecycle and
+one queue. Its input is newline repository locators or a JSON list of objects
+with `source` and optional `source-kind`, `system`, `source-identity` and
+`source-revision`; unknown fields and duplicate normalized identities are refused
+before effects. Repository roots are shape-checked without network probes.
+GitHub SSH/HTTPS aliases and case normalize to one identity.
+`--source-kind local` requires an existing path and makes it absolute;
+`--source-kind documents` requires explicit system and identity. Non-Git capture
+remains boundary-owned. Explicit GitHub identities retain code-owned acquisition.
+
+New runs default to `pi-sol`. `--worker-profile`, `--source-revision`,
+`--revision`, `--max-workers`, `--timeout` and `--require-clean-origin` preserve
+the corresponding lower-level choices. `--state` selects a new durable controller
+directory; the default is under ignored `.commonplace/worktrees/controllers/`.
+`--worktree-root` selects an external worktree parent. Existing destinations are
+not reused. Four analyses with three role workers each permit twelve role
+workers; advisory audits occupy their analysis's slot after its roles finish.
+Provider capacity, storage/inodes and placement need operator preflight before
+a substantial batch. No capacity probes or automatic cleanup occur.
+
+JSON stdout uses `commonplace.analysis-controller.v1`; stderr summarizes
+outcomes. Each target retains source identity, preparation/worktree, allocated
+run, method/profile bindings, logs and the pinned child's inspection, including
+receipt, disposition and `advisory-audit` evidence. Statuses distinguish
+`pending`, `active`, `published`, `local-complete`, `stopped`,
+`preparation-failed`, `command-failed` and `operator-attention`.
+Aggregate exits: 0 only when all targets published/completed locally; 2 for
+ordinary stops; 1 for command/preparation failures; 3 for pending, active or
+operator-attention work (takes precedence). A stopped target is not success.
+`report` reads saved state without reconciling or claiming liveness.
+
+`resume` first reconciles preparation/allocation evidence and inherited child
+leases, then continues pending targets. Completed targets are not rerun;
+ordinary stops require explicit `--target <recorded-normalized-identity>` after
+operator repair. A resumable interrupted allocation keeps its original run,
+method and profile. Unknown effects, unsettled workers, unreadable records and
+interrupted audits pause new launches. No missing PID establishes settlement.
+There is no automatic retry, acknowledgement, reset or replacement allocation.
+Ordinary stops do not prevent independent pending targets from continuing;
+shared preparation/command failures and uncertain ownership pause new claims.
+
+Controller/child leases require POSIX local-filesystem locks. A second controller
+is refused. SIGINT/SIGTERM stop claims and drain owned children; abrupt death
+leaves intents to reconcile, and an orphan prepared child keeps its lease until
+it exits. Workjig remains the worker-launch authority. `execute <allocation-key>`
+and `inspect-execution <allocation-key>` are the pinned-child protocol: allocation
+is journaled before directory creation and replayed by key, never inferred from
+console output. The coordinator does not import another worktree's workflow.
+New controllers require a committed method carrying this execution protocol;
+older runs keep their own worktree's original commands, not a new binding.
+See [ADR 125](./adr/125-analysis-commands-own-preparation-and-bounded-queues.md).
+
+Low-level preparation, execution, inspection and recovery remain available.
+The workflow is `commonplace.lib.agentic_analysis.workflow` over
+`commonplace.headless`; [the analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md)
+is a target-selection and invocation adapter.
 
 `prepare --name <system>` creates a dedicated Commonplace source
 worktree and installs and verifies its local command environment. It pins a

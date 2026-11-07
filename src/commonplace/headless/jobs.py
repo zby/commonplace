@@ -387,7 +387,9 @@ def recorded_calls(root: Path) -> list[dict]:
             calls.append({"job": call_id.partition("#")[0], "call": call_id, "key": key, "status": status,
                           "launches": [attempt["launch_id"] for attempt in entry["attempts"]],
                           "problem": last["problem"]["message"] if status == "worker_problem" else None,
-                          "dismissed": last["launch_id"] in dismissed})
+                          "dismissed": last["launch_id"] in dismissed,
+                          "unsettled": [attempt["launch_id"] for attempt in entry["attempts"]
+                                        if attempt["status"] in ("reserved", "running")]})
     return calls
 
 

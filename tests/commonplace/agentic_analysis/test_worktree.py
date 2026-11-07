@@ -380,6 +380,21 @@ def test_inspect_audit_separates_interrupted_controller_from_publication(tmp_pat
     assert path.read_bytes() == before, "inspection must not rewrite the audit record"
 
 
+def test_inspection_exposes_unsettled_auditor_even_after_advisory_failure(tmp_path, monkeypatch):
+    from commonplace.headless import jobs
+
+    run = fake_checkout(tmp_path / "worktree")
+    (run / aw.RECEIPT).write_text(json.dumps({"published": True}))
+    directory = run / "audit/snapshot"
+    directory.mkdir(parents=True)
+    (run / "audit/status.json").write_text(json.dumps({"state": "failed", "directory": str(directory)}))
+    monkeypatch.setattr(jobs, "recorded_calls", lambda root: [
+        {"unsettled": ["audit-launch"]}] if root == directory else [])
+    view = aw.inspect_analysis(run)
+    assert view["state"] == "published", "advisory failure never withdraws a receipt"
+    assert view["advisory-audit"]["unsettled-launches"] == ["audit-launch"]
+
+
 def test_run_cli_requires_start_options_or_a_run_alone(tmp_path: Path, capsys) -> None:
     assert main(["run"]) == 1
     error = capsys.readouterr().err

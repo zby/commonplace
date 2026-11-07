@@ -1,4 +1,9 @@
-"""Analysis lifecycle: prepare a worktree, run an analysis in it, inspect, reset and integrate the run.
+"""Analyse explicit sources unattended, resume/report durable queues, or use low-level recovery.
+
+    commonplace-analysis analyse SOURCE [--source-kind repository|local|documents] [--state DIRECTORY]
+    commonplace-analysis batch FILE [--concurrency 4] [--worktree-root DIRECTORY]
+    commonplace-analysis resume CONTROLLER [--target NORMALIZED_IDENTITY]
+    commonplace-analysis report CONTROLLER
 
     commonplace-analysis prepare --name LABEL [--revision COMMIT] [--worktree PATH] [-- COMMAND ...]
     commonplace-analysis run --system NAME --source-identity ID --source TEXT [--worker-profile NAME]
@@ -53,6 +58,37 @@ DEFAULT_WORKER_PROFILE = "pi-sol"
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="commonplace-analysis", description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
+    analyse = commands.add_parser("analyse", help="prepare, run and report one explicit source without a supervising agent")
+    analyse.add_argument("source")
+    analyse.add_argument("--source-kind", choices=("repository", "local", "documents"), default="repository")
+    analyse.add_argument("--system")
+    analyse.add_argument("--source-identity")
+    analyse.add_argument("--source-revision")
+    batch = commands.add_parser("batch", help="run an explicit newline URL list or JSON target list as one bounded queue")
+    batch.add_argument("targets", type=Path)
+    batch.add_argument("--concurrency", type=int, default=4, help="simultaneous analyses (each allows --max-workers role workers)")
+    for command in (analyse, batch):
+        command.add_argument("--revision", help="operator-selected committed method (default HEAD, freshness checked)")
+        command.add_argument("--worker-profile", default=DEFAULT_WORKER_PROFILE)
+        command.add_argument("--max-workers", type=int, default=3)
+        command.add_argument("--timeout", type=float, default=3 * 3600)
+        command.add_argument("--state", type=Path, help="new durable controller directory; retained, never cleaned automatically")
+        command.add_argument("--worktree-root", type=Path, help="new worktree parent (default ignored .commonplace/worktrees)")
+        command.add_argument("--require-clean-origin", action="store_true")
+    resume = commands.add_parser("resume", help="reconcile a controller before continuing pending or explicitly selected stopped targets")
+    resume.add_argument("controller", type=Path)
+    resume.add_argument("--target", action="append", default=[], help="recorded normalized identity to explicitly resume; never allocates a replacement")
+    report = commands.add_parser("report", help="read the durable controller report without effects")
+    report.add_argument("controller", type=Path)
+    execute = commands.add_parser("execute", help="pinned-child execution with an idempotent allocation key (automation protocol)")
+    execute.add_argument("key")
+    for name in ("system", "source-identity", "source", "worker-profile"):
+        execute.add_argument("--" + name, required=True)
+    execute.add_argument("--source-revision")
+    execute.add_argument("--timeout", type=float, default=3 * 3600)
+    execute.add_argument("--max-workers", type=int, default=3)
+    execution_report = commands.add_parser("inspect-execution", help="read allocation/result and current inspection through the pinned command")
+    execution_report.add_argument("key")
     prepare = commands.add_parser("prepare", help="prepare a commit-bound worktree and local commands")
     prepare.add_argument("--name", required=True)
     prepare.add_argument("--revision")
@@ -159,9 +195,67 @@ def _acknowledge(run: Path, launch: str) -> None:
     print(f"acknowledged: {launch}")
 
 
+def _automate(arguments: argparse.Namespace) -> int:
+    from commonplace.lib.agentic_analysis.automation import (
+        Controller,
+        create,
+        exit_code,
+        report,
+        targets_file,
+    )
+
+    if arguments.command in ("report", "resume"):
+        state = arguments.controller
+    else:
+        targets = targets_file(arguments.targets) if arguments.command == "batch" else [{
+            name.replace("_", "-"): getattr(arguments, name)
+            for name in ("source", "source_kind", "system", "source_identity", "source_revision")
+            if getattr(arguments, name) is not None
+        }]
+        state = create(Path.cwd(), targets, profile=arguments.worker_profile, revision=arguments.revision,
+                       state=arguments.state, worktree_root=arguments.worktree_root,
+                       concurrency=getattr(arguments, "concurrency", 1), max_workers=arguments.max_workers,
+                       timeout=arguments.timeout, require_clean_origin=arguments.require_clean_origin)
+        print(f"controller: {state}", file=sys.stderr, flush=True)
+    result = (report(state) if arguments.command == "report" else
+              Controller(state).run(selected=getattr(arguments, "target", [])))
+    print(json.dumps(result, indent=2, sort_keys=True))
+    print(f"analyses: {result['counts']}; up to {result['concurrency']} analyses × "
+          f"{result['max-workers']} role workers = {result['maximum-role-workers']}; "
+          "no integration or cleanup performed", file=sys.stderr)
+    for item in result["targets"]:
+        print(f"{item['target']['source-identity']}: {item['status']}; worktree={item['worktree']}; "
+              f"run={item['run']}; {item['error'] or ''}", file=sys.stderr)
+        view = (item.get("result") or {}).get("inspection") or {}
+        if view:
+            audit = view.get("advisory-audit") or {}
+            print(f"  disposition={view.get('result-disposition')}; receipt={view.get('receipt') is not None}; "
+                  f"audit={audit.get('state', 'not-recorded')}; evidence={audit.get('directory')}; "
+                  f"audit limits={audit.get('reason') or audit.get('trace-scan')}", file=sys.stderr)
+    return exit_code(result)
+
+
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     try:
+        if arguments.command in ("analyse", "batch", "resume", "report"):
+            return _automate(arguments)
+        if arguments.command in ("execute", "inspect-execution"):
+            from commonplace.lib.agentic_analysis.automation import limits
+            from commonplace.lib.agentic_analysis.execution import (
+                execute,
+                inspect_execution,
+            )
+
+            if arguments.command == "inspect-execution":
+                print(json.dumps(inspect_execution(Path.cwd(), arguments.key), indent=2))
+                return 0
+            limits(1, arguments.max_workers, arguments.timeout)
+            parameters = {name: getattr(arguments, name) for name in
+                          ("system", "source_identity", "source", "worker_profile", "source_revision")
+                          if getattr(arguments, name) is not None}
+            return execute(Path.cwd(), arguments.key, parameters=parameters, timeout=arguments.timeout,
+                           max_workers=arguments.max_workers)
         if arguments.command == "run":
             return _run(arguments)
         if arguments.command == "integrate":

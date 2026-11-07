@@ -61,6 +61,8 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
 if "--no-context-files" in sys.argv:
+    if json.loads(Path(os.environ["FAKE_SCENARIO"]).read_text()).get("audit-failure"):
+        sys.exit(19)
     assert "scanner_report" in prompt and "attempt_inventory" in prompt
     output = Path(prompt.split('- report.md: ')[1].splitlines()[0])
     output.write_text("Fixture audit only.\n")
@@ -95,6 +97,18 @@ counts.mkdir(exist_ok=True)
 counter = counts / role
 call = int(counter.read_text()) + 1 if counter.exists() else 1
 counter.write_text(str(call))
+if scenario.get("process-info"):
+    Path(scenario["process-info"]).write_text(json.dumps({"pid": os.getpid(), "ppid": os.getppid()}))
+if "expected" in scenario:
+    assert role in scenario["expected"] and call <= scenario["expected"][role], (role, call)
+if call in scenario.get("missing", {}).get(role, []):
+    sys.exit(0)
+if call in scenario.get("nonzero", {}).get(role, []):
+    sys.exit(17)
+if call in scenario.get("usage", {}).get(role, []):
+    Path(problem_file).write_text(json.dumps({"kind": "usage_limit", "message": "fixture usage limit"}))
+    sys.exit(1)
+time.sleep(scenario.get("sleep", {}).get(role, 0))
 
 a = ScriptedRun(run_dir)
 if call in scenario.get("problem", {}).get(role, []):
@@ -154,6 +168,9 @@ elif refusal is not None:
     path = sections.get("Optional outputs", {}).get("answers.md")
     if path:
         Path(path).write_text(answers)
+print(json.dumps({"type": "message_end", "message": {"role": "assistant", "model": "fixture-only-no-model",
+                  "stopReason": "stop", "content": [{"type": "text", "text": "Fixture only."}]}}))
+print(json.dumps({"type": "agent_settled", "aborted": False}))
 '''
 
 REFUSE_RUNTIME_AND_MEMORY = "- runtime: reconsider the SRC-1 runtime account.\n- memory: reconsider the SRC-1 memory account."

@@ -12,6 +12,11 @@ status: accepted
 **Amends:** [ADR 117](./117-plans-derive-their-structural-jobs-from-the-type.md): the plan no longer expands into check and apply jobs, and nothing is a judgment input; the compact plan as method data, the verification protocol, the prompt composed from `name = value` lines and the prompt section, and the rule-ownership rules stay. [ADR 114](./114-directory-types-declare-what-a-role-verifies.md): a `verifies` relation is settled by code applying the verifying role's verdict to the subjects it was handed, not by a recorded judgment with a scope. [ADR 101](./101-open-analysis-runs-through-workflow-start.md): opening runs at the start of `commonplace-analysis run`, in the same process, before any worker. [ADR 106](./106-merge-analysis-publications-from-isolated-worktrees.md): the integration command is `commonplace-analysis integrate`; run identifiers and the guarded merge are unchanged.
 **Amended by:** [ADR 119](./119-analysis-workers-launch-through-workjig.md) (2026-10-21): workers launch through Workjig; launches are reserved durably and acknowledged after an interruption, relaunches wait a fixed 30 seconds, a failing launch's problem file is its result, and usage limits are read from the harness's terminal event.
 
+**Amended by:** [ADR 125](./125-analysis-commands-own-preparation-and-bounded-queues.md) (2026-11-07):
+commands own isolated preparation, reporting and a durable bounded queue;
+origin startup and default-branch freshness checks apply at intake. The
+worktree-only origin policy and shell-loop batch below are historical.
+
 ## Context
 
 ADR 113 moved the analysis schedule from prose into an engine so that a

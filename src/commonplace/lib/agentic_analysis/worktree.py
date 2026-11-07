@@ -12,6 +12,7 @@ from __future__ import annotations
 import datetime
 import json
 import os
+import re
 from hashlib import sha256
 from pathlib import Path
 
@@ -43,10 +44,16 @@ OPENING = Path("code") / "opening.json"
 
 
 def start_analysis(worktree: Path, *, system: str, source_identity: str, source: str,
-                   source_revision: str | None = None, worker_profile: str) -> Path:
+                   source_revision: str | None = None, worker_profile: str,
+                   allocation_key: str | None = None) -> Path:
     """Allocate a run directory in a prepared worktree and pin its parameters, without running it."""
+    from workjig import hold
+
+    from commonplace.lib.agentic_analysis.durable import save
     from commonplace.lib.agentic_analysis.sources import github_checkout_path
 
+    if allocation_key is not None and not re.fullmatch(r"[a-f0-9]{32}", allocation_key):
+        raise ValueError("allocation key must be 32 lowercase hex characters")
     worktree = worktree.resolve()
     preparation = preparation_for(worktree)
     require_run_code(worktree, cwd=Path.cwd())
@@ -71,16 +78,49 @@ def start_analysis(worktree: Path, *, system: str, source_identity: str, source:
         parameters["source-revision"] = source_revision
     root = worktree / STATE_ROOT
     root.mkdir(parents=True, exist_ok=True)
-    date = datetime.datetime.now(datetime.UTC).date().isoformat()
-    for number in range(1, 100):
-        run_dir = root / run_ids.run_id(date, source_slug(identity, system), preparation["token"], number)
-        try:
-            run_dir.mkdir()                           # atomic allocation: never another run's state
-        except FileExistsError:
-            continue
-        (run_dir / PARAMETERS).write_text(json.dumps(parameters, indent=2) + "\n")
+    # All allocators share ownership, including legacy unbound allocations.
+    # Reserve before mkdir: recovery never guesses ownership from console text.
+    with hold(root / ".allocation-lock"):
+        journal = allocation_path(worktree, allocation_key) if allocation_key else None
+        if journal is not None and journal.exists():
+            bound = json.loads(journal.read_text())
+            if bound["parameters"] != parameters or bound["method-commit"] != preparation["commit"]:
+                raise ValueError("allocation binding differs from the requested parameters or method")
+            run_dir = root / bound["run-id"]
+            if (not run_ids.is_run_id(run_dir.name, token=preparation["token"])
+                    or run_dir.parent != root or run_dir.is_symlink()):
+                raise ValueError("invalid allocated run binding")
+        else:
+            reserved = {json.loads(path.read_text())["run-id"]
+                        for path in (root / ".allocations").glob("*.json")
+                        if not path.name.endswith(".result.json")}
+            date = datetime.datetime.now(datetime.UTC).date().isoformat()
+            for number in range(1, 100):
+                run_dir = root / run_ids.run_id(date, source_slug(identity, system), preparation["token"], number)
+                if not run_dir.exists() and run_dir.name not in reserved:
+                    break
+            else:
+                raise ValueError("analysis run sequence exhausted for this source and worktree")
+            if journal is not None:
+                save(journal, {"run-id": run_dir.name, "parameters": parameters,
+                               "method-commit": preparation["commit"]})
+        run_dir.mkdir(exist_ok=journal is not None)
+        path = run_dir / PARAMETERS
+        if path.exists():
+            if json.loads(path.read_text()) != parameters:
+                raise ValueError("allocated run parameters differ from the binding")
+        else:
+            if any(run_dir.iterdir()):
+                raise ValueError("allocated directory has effects but no parameters; preserve evidence")
+            save(path, parameters)
         return run_dir
-    raise ValueError("analysis run sequence exhausted for this source and worktree")
+
+
+def allocation_path(worktree: Path, key: str) -> Path:
+    """The supported discovery journal for a command-owned allocation."""
+    if not re.fullmatch(r"[a-f0-9]{32}", key):
+        raise ValueError("allocation key must be 32 lowercase hex characters")
+    return worktree / STATE_ROOT / ".allocations" / f"{key}.json"
 
 
 def analysis_run(run_dir: Path) -> tuple[Path, Path]:
@@ -172,12 +212,21 @@ def inspect_analysis(run_dir: Path) -> dict:
     boundary = next((e.get("disposition") for e in events if e["event"] == "boundary"), None)
     audit_path = run_dir / "audit/status.json"
     audit = json.loads(audit_path.read_text()) if audit_path.is_file() else None
-    if audit is not None and audit.get("state") == "running" and not locked:
-        audit = {**audit, "state": "interrupted",
-                 "reason": "controller no longer holds the run lock; confirm the audit process has stopped"}
+    if audit is not None:
+        directory = audit.get("directory")
+        if directory:
+            audit = {**audit, "unsettled-launches": [launch for call in recorded_calls(Path(directory))
+                                                    for launch in call.get("unsettled", [])]}
+        if audit.get("state") == "running" and not locked:
+            audit = {**audit, "state": "interrupted",
+                     "reason": "controller no longer holds the run lock; confirm the audit process has stopped"}
     return {
         "run-id": run_dir.name, "worktree": str(worktree), "state": state,
         "stopped": None if stop is None else stop["reason"],
+        "stop-type": None if stop is None else stop.get("stop-type"),
+        "uncertain": False if stop is None else stop.get("uncertain", False),
+        "command-failed": False if stop is None else stop.get("command-failed", False),
+        "unsettled-launches": [launch for call in calls for launch in call.get("unsettled", [])],
         "parameters": json.loads((run_dir / PARAMETERS).read_text()),
         "opening": json.loads((run_dir / OPENING).read_text()) if (run_dir / OPENING).exists() else None,
         "result-disposition": boundary,
