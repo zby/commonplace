@@ -16,10 +16,17 @@ nor publication authority.
 Read the prompt completely, recovering every truncated part, and its inputs
 in the reading batches it prints. Use the supplied absolute paths for inputs and outputs, including patch targets.
 Do not reconstruct supplied paths from run IDs, directory names or relative
-links. For shell commands using paths relative to the analyzed repository, set
-the working directory to that repository's checkout path, supplied as
-`source.path` in the acquired source object or boundary. Commonplace commands
-run from the prepared Commonplace worktree.
+links. Commonplace commands run from the prepared Commonplace worktree.
+
+Write shell commands that a headless harness runs without a prompt. Claude
+Code refuses a command it cannot check statically, and no operator answers its
+prompts.
+
+- Use absolute literal paths. The analyzed repository's checkout path is
+  `source.path` in the acquired source object or boundary.
+- For Git, use `git -C <checkout path>`, not `cd`.
+- Do not set shell variables in a command.
+- Write files with the Write or Edit tool, not shell redirection or `sed -i`.
 
 Read source files and searches in bounded ranges too. Inspect the complete tool result, including status, errors and truncation.
 Recover a truncated read with a smaller range; a larger inner token limit

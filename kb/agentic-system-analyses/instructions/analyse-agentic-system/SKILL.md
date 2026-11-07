@@ -44,8 +44,9 @@ The run uses a worker profile from
 [worker-profiles.yaml](./worker-profiles.yaml): a harness, the model it
 launches and the effort. Every worker of the run uses it, verification
 included, and it is fixed for the run; another profile means another run.
-The advisory meta-analyser also uses that model and effort, but only on Pi,
-with ambient instructions, skills and extensions disabled.
+The advisory meta-analyser also uses that harness, model and effort, with its
+own isolation flags instead of the profile's (see
+[Advisory trace audit](#advisory-trace-audit)).
 Use **`pi-sol`** (`gpt-6.1-sol`, medium effort) when the caller does not name a
 profile. The command defaults to it for new runs. The caller can override it,
 for example:
@@ -190,13 +191,17 @@ in Pi and Claude Code worker streams; missing and incomplete traces and other
 protocols remain visible as unscanned coverage limits. It does not discover
 nested workers outside the manifest.
 
-After a completed Pi analysis, code passes the scan, attempt inventory and
-accepted artifact paths to a fresh [meta-analyser](./meta-analyser.md). It uses
-failures as leads for at most three verification questions and 30 tool calls,
-with a timeout of 900 seconds or `--timeout`, whichever is shorter. The question
-and call limits are prompt instructions, not a tool sandbox. Only read and bash
-tools are exposed; read-only authority is prompt-enforced. Code saves the
-returned text. No findings is not a correctness certificate.
+After a completed analysis, code passes the scan, attempt inventory and
+accepted artifact paths to a fresh [meta-analyser](./meta-analyser.md). It runs
+in the run profile's harness with that profile's model and effort, but not its
+extra flags. Pi and Claude Code have auditor configurations; Codex does not, so
+a Codex run records a skipped audit. The meta-analyser uses failures as leads
+for at most three verification questions and 30 tool calls, with a timeout of
+900 seconds or `--timeout`, whichever is shorter. The question and call limits
+are prompt instructions, not a tool sandbox. Pi exposes read and bash tools.
+Claude Code exposes Read, Grep, Glob, Bash and Write, with the workers'
+`acceptEdits` permission mode. Read-only authority is prompt-enforced. Code
+saves the returned text. No findings is not a correctness certificate.
 
 `<run>/audit/status.json` identifies the latest snapshot. Each
 `audit/<input-digest>/` keeps `scanner.json`, `attempts.json`, the input digests,
@@ -204,7 +209,7 @@ exact prompt, launch record, stdout, stderr, status and any completed report.
 An unchanged rerun reuses its snapshot, including a failed audit; changed inputs
 create a new one. Audit failure, timeout or incomplete coverage does not change
 the analysis receipt or exit status. A stopped analysis is scanned but does not
-launch the meta-analyser. Other harnesses do not launch it.
+launch the meta-analyser.
 
 The audit is advisory: report material findings and unresolved concerns to the
 operator. Do not repair accepted artifacts or rerun workers on its authority.

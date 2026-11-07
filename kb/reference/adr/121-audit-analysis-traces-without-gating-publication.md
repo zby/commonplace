@@ -6,7 +6,7 @@ status: accepted
 
 # 121 — Audit analysis traces without gating publication
 
-**Status:** accepted
+**Status:** accepted — amended 2026-11-07: the meta-analyser launches through the run profile's harness with its model and effort; Pi and Claude Code have auditor configurations, Codex does not
 **Date:** 2026-10-21
 
 ## Context
@@ -18,8 +18,9 @@ read proves that the accepted analysis is wrong.
 ## Decision
 
 Save an explicit-failure scan of every recorded attempt, including failed and
-superseded attempts. After a completed Pi analysis, launch a fresh, read-only
-meta-analyser to investigate at most three consequential questions within
+superseded attempts. After a completed analysis, launch a fresh, read-only
+meta-analyser in the run profile's harness (as amended 2026-11-07; originally
+Pi only) to investigate at most three consequential questions within
 30 tool calls. Use failures as leads; distinguish supported content defects
 from claims that a process failure caused them. No findings is valid.
 
@@ -55,4 +56,6 @@ retained independently of the deleted audit workshop.
 Limits: one real case and one constructed case establish feasibility, not detection
 rates, general superiority or cost effectiveness. The compact prompt has no positive
 constructed-case test. Status scanning misses masked errors; empty findings do not
-certify correctness. The meta-analyser currently runs only for Pi analyses.
+certify correctness. The meta-analyser runs only for harnesses with an auditor
+configuration: Pi and Claude Code, not Codex. The pilot used only Pi; no Claude
+Code audit has been evaluated.

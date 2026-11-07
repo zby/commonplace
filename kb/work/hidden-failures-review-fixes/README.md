@@ -97,6 +97,28 @@ since the scope string change gives a new audit fingerprint. Option (b) and
 its two operator decisions stay open; ADR 121 line 58 still states the
 meta-analyser runs only for Pi analyses, which remains true.
 
+Status 2026-11-07, option (b) implemented, item closed. Operator decisions:
+the whole workflow runs in one harness, and the auditor reuses the run
+profile's model and effort. The meta-analyser now launches through the run
+profile's harness; Pi and Claude Code have auditor configurations, Codex
+records a skipped audit. ADR 121 amended. Trial launch on the parcha run
+snapshot (`audit/a441e124…` in the run directory): state complete, 18 tool
+calls, 0 permission denials, model `claude-opus-5-5`, 101 seconds, report
+with no material finding. Analysis of the parcha workers' 20 permission
+refusals: all 18 workers ran print mode with `acceptEdits`, which covers
+only Edit and Write tool changes; Bash commands that defeat static checking
+(`cd` before `git`, 10 of 10 refused; shell variable prefixes, 9 of 9;
+shell writes, 1) are refused because no operator answers prompts. Every
+refusal was recovered on the next call. The worker rules paragraph that
+told workers to change into the source checkout caused the first pattern;
+it is replaced by four command rules, also added to the meta-analyser
+instruction, and the `UNATTENDED` docstring now states what each flag
+grants. Not verified: an auditor whose allowed roots lie outside the
+worktree, where `--add-dir` is added but untested. Candidate catalogue
+entry for `kb/work/unattended-processing-failure-modes/`: a harness safety
+check converts an operator prompt into a silent refusal, paid repeatedly
+by independent workers because nothing carries the rule between them.
+
 ### C. Exhaustive claim on capped evidence (I2)
 
 Finding: a prioritisation reply said every open workshop README had been

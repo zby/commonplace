@@ -221,8 +221,10 @@ failed.
 
 Before returning, `run` saves an all-attempt trace scan of Pi and Claude Code
 worker streams under
-`<run>/audit/<input-digest>/`. Completed Pi analyses then receive an advisory,
-read-only meta-analysis using the saved scan and accepted outputs. It has a
+`<run>/audit/<input-digest>/`. Completed Pi and Claude Code analyses then
+receive an advisory, read-only meta-analysis using the saved scan and accepted
+outputs. It runs in the run profile's harness with that profile's model and
+effort; a Codex run records a skipped audit. It has a
 900-second ceiling (or the shorter `--timeout`), with prompt limits of three
 questions and 30 tool calls. Missing and unsupported traces are coverage gaps,
 not successful scans. An unchanged rerun reuses the snapshot; changed inputs

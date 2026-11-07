@@ -114,7 +114,13 @@ CODE_OUTPUTS = {"opening": "metadata", "acquire": "source", REPORT_CHECK: "findi
 """The code jobs' outputs, which a role's read names as `job:output`."""
 UNATTENDED = {"claude-code": {"permission-mode": "acceptEdits"}, "codex": {"sandbox": "workspace-write"},
               "pi": {"approve": True}}
-"""Per-harness flags that let a worker read, write and run commands without a prompt (phase 0)."""
+"""Per-harness unattended flags (phase 0); each grants less than full autonomy.
+
+Claude Code `acceptEdits` auto-approves only file changes made through the Edit
+and Write tools. Bash still goes through permission checks, and print mode
+refuses whatever would have prompted. Codex `workspace-write` is an OS sandbox.
+Pi `approve` is project trust (resource loading); Pi has no permission layer.
+"""
 COMPLETE = "complete"
 PLACEHOLDER = re.compile(r"\{(param:)?([A-Za-z0-9_-]+)\}")
 READ_BATCH_BYTES = 24 * 1024

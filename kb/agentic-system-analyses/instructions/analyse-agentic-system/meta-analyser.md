@@ -1,5 +1,5 @@
 ---
-description: Audit a completed analysis from saved trace failures when the workflow launches its advisory Pi meta-analyser
+description: Audit a completed analysis from saved trace failures when the workflow launches its advisory meta-analyser in the run's harness
 type: types/instruction.md
 ---
 
@@ -49,6 +49,12 @@ outputs. That report is the sole permitted file mutation. Do not modify evidence
 access the network, execute the target, rerun validators or launch workers.
 If unable to finish, you may instead write only the frame's named problem file
 using its specified JSON format. You are not a publication gate.
+
+Write shell commands that headless Claude Code can run. It refuses a command
+it cannot check statically, and no operator answers its prompts. Use absolute
+literal paths. For Git, use `git -C <checkout path>`, not `cd`. Do not set
+shell variables in a command. When a Write tool is available, write the report
+with it, not with shell redirection or `sed -i`.
 
 Use at most 30 tool calls and investigate at most three consequential questions.
 Select by likely impact, doubtful recovery and cost of resolving the question;

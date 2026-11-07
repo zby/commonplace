@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from commonplace.headless.harness import Harness, Profile
+from commonplace.headless.harness import HARNESSES, Harness, Profile
 from commonplace.lib.agentic_analysis import audit as module
 from tests.commonplace.link_helpers import symlink_or_skip
 
@@ -61,7 +61,7 @@ def analysis(tmp_path):
                            method=SimpleNamespace(frozen="boundary"),
                            layout=SimpleNamespace(path=lambda role: role + ".md"),
                            run=SimpleNamespace(artifact=artifact, profile=Profile("pi", "test-model", "medium"),
-                                               timeout=10800, harnesses={"pi": None}, log=lambda **kw: None))
+                                               timeout=10800, harnesses=HARNESSES, log=lambda **kw: None))
 
 
 def answer(directory, text="No material defect established.", calls=2, stop="stop", terminal=True):
@@ -144,7 +144,7 @@ def test_collect_does_not_follow_redirected_traces(analysis):
 def test_capture_precedes_worker_and_reuses_then_invalidates(analysis, monkeypatch):
     invocations = []
 
-    def launch(directory, worktree, profile, harness, timeout):
+    def launch(directory, worktree, profile, harness, timeout, roots):
         invocations.append(directory)
         assert timeout == 900
         scanner = json.loads((directory / "scanner.json").read_text())
@@ -173,12 +173,15 @@ def test_capture_precedes_worker_and_reuses_then_invalidates(analysis, monkeypat
     assert json.loads((analysis.run_dir / "audit/status.json").read_text()) == second
 
 
-@pytest.mark.parametrize("completed,harness", [(False, "pi"), (True, "codex")])
-def test_scan_saved_even_when_meta_analysis_skipped(analysis, monkeypatch, completed, harness):
+@pytest.mark.parametrize("completed,harness,reason", [
+    (False, "pi", "analysis did not complete"), (False, "claude-code", "analysis did not complete"),
+    (True, "codex", "no advisory auditor for harness codex"),
+])
+def test_scan_saved_even_when_meta_analysis_skipped(analysis, monkeypatch, completed, harness, reason):
     analysis.run.profile.harness = harness
     monkeypatch.setattr(module, "launch", lambda *args: pytest.fail("must not launch"))
     status = module.audit(analysis, completed=completed)
-    assert status["state"] == "skipped"
+    assert (status["state"], status["reason"]) == ("skipped", reason)
     assert (Path(status["directory"]) / "scanner.json").is_file()
 
 
@@ -223,7 +226,7 @@ def test_capture_failure_cannot_fail_analysis(analysis, monkeypatch, capsys):
                                                       ("stop", False, 1, "failed")])
 def test_result_requires_successful_terminal_answer(tmp_path, stop, terminal, calls, state):
     answer(tmp_path, calls=calls, stop=stop, terminal=terminal)
-    assert module.result(tmp_path, "No material defect established.")["state"] == state
+    assert module.result(tmp_path, "No material defect established.", "pi")["state"] == state
     assert (tmp_path / "report.md").exists() == (stop == "stop" and terminal)
 
 
@@ -252,8 +255,8 @@ def test_launch_strips_profile_flags_and_passes_exact_prompt(tmp_path):
     assert attempts[0]["status"] == "delivered"
     assert "--no-context-files" in argv and "--no-session" in argv
     assert "--no-extensions" in argv and "--no-skills" in argv and "--no-mcp" in argv
-    assert argv[argv.index("--system-prompt") + 1] == module.FLAGS["system-prompt"]
-    assert argv[argv.index("--append-system-prompt") + 1] == module.FLAGS["append-system-prompt"]
+    assert argv[argv.index("--system-prompt") + 1] == module.SYSTEM_PROMPT
+    assert argv[argv.index("--append-system-prompt") + 1] == module.APPEND_SYSTEM_PROMPT
     assert argv[argv.index("--tools") + 1] == "read,bash"
     assert not any(arg.startswith("--tools=") for arg in argv)
     assert "--approve" not in argv and "not-allowed" not in argv
@@ -278,3 +281,95 @@ def test_workjig_failures_remain_advisory_without_relaunch(analysis, monkeypatch
     assert module.audit(analysis, completed=True) == status
     assert len(invocations) == 1
     assert (analysis.run.artifact / "synthesis.md").read_text() == "Accepted synthesis\n"
+
+
+def claude_answer(directory, calls=2, subtype="success", is_error=False, denials=0, garbage=False):
+    records = [{"type": "system", "subtype": "init", "session_id": "s", "model": "claude-test"}]
+    for index in range(calls):
+        records.append({"type": "assistant", "session_id": "s", "message": {
+            "role": "assistant", "model": "claude-test",
+            "content": [{"type": "tool_use", "id": f"toolu_{index}", "name": "Read", "input": {}}]}})
+        records.append({"type": "user", "session_id": "s", "message": {"role": "user", "content": [
+            {"type": "tool_result", "tool_use_id": f"toolu_{index}", "content": "ok"}]}})
+    records.extend({"type": "system", "subtype": "permission_denied", "session_id": "s", "tool_name": "Bash",
+                    "tool_use_id": f"toolu_{index}"} for index in range(denials))
+    records.append({"type": "result", "subtype": subtype, "is_error": is_error, "session_id": "s",
+                    "modelUsage": {"claude-test-1": {}}, "permission_denials": []})
+    lines = [json.dumps(r) for r in records] + (["not json"] if garbage else [])
+    (directory / "stdout.log").write_text("\n".join(lines) + "\n")
+
+
+@pytest.mark.parametrize("kwargs,state", [
+    ({}, "complete"), ({"calls": 30}, "complete"), ({"calls": 31}, "budget-exceeded"),
+    ({"is_error": True}, "failed"), ({"subtype": "error_max_turns", "is_error": True}, "failed"),
+    ({"garbage": True}, "failed"),
+])
+def test_claude_result_requires_successful_final_result(tmp_path, kwargs, state):
+    claude_answer(tmp_path, **kwargs)
+    status = module.result(tmp_path, "No material defect established.", "claude-code")
+    assert status["state"] == state
+    assert status["tool_calls"] == kwargs.get("calls", 2)
+    assert status["parse_errors"] == int(kwargs.get("garbage", False))
+    assert status["model"] == "claude-test-1"
+    complete = kwargs.get("subtype", "success") == "success" and not kwargs.get("is_error")
+    assert (tmp_path / "report.md").exists() == complete
+
+
+def test_claude_result_counts_permission_denials_and_needs_report(tmp_path):
+    claude_answer(tmp_path, denials=3)
+    status = module.result(tmp_path, "  ", "claude-code")
+    assert status["state"] == "failed" and status["permission_denials"] == 3
+    assert status["result_subtype"] == "success" and status["is_error"] is False
+    assert not (tmp_path / "report.md").exists()
+
+
+def test_launch_uses_run_profile_harness(analysis, monkeypatch):
+    analysis.run.profile = Profile("claude-code", "sonnet", "medium", {"permission-mode": "acceptEdits"})
+    harnesses = {"pi": SimpleNamespace(protocol="pi-json"),
+                 "claude-code": SimpleNamespace(protocol="claude-stream-json")}
+    analysis.run.harnesses = harnesses
+    received = []
+
+    def launch(directory, worktree, profile, harness, timeout, roots):
+        received.append((profile, harness, roots))
+        claude_answer(directory)
+        return {"returncode": 0, "workjig_status": "delivered"}, "No material defect established."
+
+    monkeypatch.setattr(module, "launch", launch)
+    status = module.audit(analysis, completed=True)
+    [(profile, harness, roots)] = received
+    assert harness is harnesses["claude-code"] and profile is analysis.run.profile
+    assert analysis.run.artifact.resolve() in roots
+    assert status["state"] == "complete" and status["model"] == "claude-test-1"
+
+
+def test_launch_claude_code_auditor_flags(tmp_path):
+    script = tmp_path / "fake.py"
+    script.write_text(
+        "import json,sys,pathlib\n"
+        "prompt = pathlib.Path(sys.argv[-1].split('`')[1])\n"
+        "frame = prompt.read_text()\n"
+        "output = pathlib.Path(frame.split('- report.md: ')[1].splitlines()[0])\n"
+        "output.write_text('Audit report')\n"
+        "print(json.dumps({'type': 'argv', 'argv': sys.argv[1:]}))\n"
+        "print(json.dumps({'type': 'result', 'subtype': 'success', 'is_error': False}))\n")
+    (tmp_path / "prompt.txt").write_text("Exact commissioned task")
+    worktree = tmp_path / "worktree"
+    worktree.mkdir()
+    outside = tmp_path / "source"
+    defaults = {**HARNESSES["claude-code"].defaults, "_subcommand": str(script)}
+    harness = Harness(sys.executable, defaults, HARNESSES["claude-code"].translate, "claude-stream-json")
+    profile = Profile("claude-code", "sonnet", "high", {"permission-mode": "bypassPermissions", "extra": "no"})
+    metrics, report = module.launch(tmp_path, worktree, profile, harness, 10, [outside, worktree / "kb", outside])
+    assert metrics["workjig_status"] == "delivered" and report == "Audit report"
+    argv = json.loads((tmp_path / "stdout.log").read_text().splitlines()[0])["argv"]
+    assert argv[argv.index("--model") + 1] == "sonnet" and argv[argv.index("--effort") + 1] == "high"
+    assert argv[argv.index("--permission-mode") + 1] == "acceptEdits"
+    assert "bypassPermissions" not in argv and "--extra" not in argv
+    assert [a for a in argv if a.startswith("--tools=")] == [
+        "--tools=Read", "--tools=Grep", "--tools=Glob", "--tools=Bash", "--tools=Write"]
+    assert "--tools" not in argv and "read,bash" not in argv
+    assert [a for a in argv if a.startswith("--add-dir")] == [f"--add-dir={outside.resolve()}"]
+    assert "--no-session-persistence" in argv and "--strict-mcp-config" in argv
+    assert argv[argv.index("--system-prompt") + 1] == module.SYSTEM_PROMPT
+    assert argv[argv.index("--append-system-prompt") + 1] == module.APPEND_SYSTEM_PROMPT

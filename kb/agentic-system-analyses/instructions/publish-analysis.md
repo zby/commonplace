@@ -11,7 +11,7 @@ not. Analyst obligations end at their assigned outputs. No regeneration or Git
 authority follows from this instruction.
 
 Assembly and publication finish acceptance in `commonplace-analysis run` in
-the prepared worktree. The subsequent trace scan and Pi meta-analysis are
+the prepared worktree. The subsequent trace scan and meta-analysis are
 advisory; they neither change the receipt nor gate publication or integration.
 Assembly and publication require exact members, every member passing its check
 against the current members, pinned validation criteria, producer
