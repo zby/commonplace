@@ -71,7 +71,7 @@ destination without adding information, and their range refusal stays.
 - An analysis run started before this change has members in the old
   grammar and fails validation on resume; it must restart.
 
-## Alternatives
+## Considered alternatives
 
 - **A raw HTML anchor before a labelled heading**, `<a id="rt-obj-store"></a>`,
   would keep the label in the heading. It adds markup the writer must keep

@@ -169,9 +169,9 @@ Their reports also identify internal roles that remain human.
   retained "old rulings that were obsolete or had changed"
   ([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md),
   verbatim), which is the maintenance cost of retention made visible.
-  Unsettled: rulings are stated, enforced, and later changed, but the report
-  cited here does not say whether a change answered criticism of what a
-  ruling said.
+  Unsettled: obsolete rulings show incomplete curation, not that no rulings
+  were revised; the report does not trace a particular change from criticism
+  of what a ruling said into later use.
 - OpenAI's agent-first product keeps repository documents that explain the
   business domain and repairs them recurrently. People generalize: when
   agents struggle, engineers ask "what capability is missing? What
@@ -217,10 +217,11 @@ the evidence cited here does not complete the trace for any of them.
   for the same reason as the Darwin Gödel Machine.
 - Recuris proposes memory patches from traces and decides each through a
   deterministic paired held-out gate, with the memory coordinates supplied
-  in advance: "The memory only grows, and it can afford to."
-  ([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
-  verbatim). Unsettled on condition 3: patches are proposed from traces, but
-  a memory that only grows shows no retained entry revised or rejected.
+  in advance: "Across eight accepted patches it added 51 skills, revised 2
+  and deprecated none" ([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
+  verbatim). Unsettled on condition 3: revision occurred, but the retained
+  passage does not identify a stated consequence tested by the gate or show
+  whether a patch answered criticism of what a skill said.
 - [Harness Continual Learning](../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
   retains edits that improve the current task, respect sampled anchors, and
   pass validity checks; held-out forgetting persists even at zero loss on
