@@ -1,266 +1,143 @@
 # Decision lifecycle and evidence
 
-## Commission
+## Live question
 
-Opened on 2026-09-25 at the operator's request. Determine how Commonplace
-should preserve a decision's development from proposal through deliberation,
-implementation, and later evaluation, while making its current state clear
-to agents and readers.
+**What should maintained architectural accounts retain, and what can remain in
+Git history, so agents can understand and reconsider decisions without the
+originating sessions?**
 
-The operator connected this to an earlier concern: evidence must be retained
-during ordinary work before later self-improvement measurements can use it.
-ADRs are one form of evidence of deliberation. The operator proposed exploring
-whether ADRs could be views over a richer record, with proposals as an early
-stage. This workshop investigates that direction; it does not adopt a new
-storage model or change the current ADR contract.
+The live alternatives are maintained ADR files, rich marked decision commits,
+and combinations. Compare them before selecting a carrier or adding machinery.
+The [Git and retained-artifact exploration](./git-and-retained-artifacts.md)
+records the operator discussion and the unresolved division of labour.
 
-## Architecture exploration: parallel development
+## Intent and constraints
 
-On 2026-10-26 the operator extended the commission: explore the current
-architecture as a projection from a larger retained space of design claims,
-options, criticism and choices, parallel to the theory-layer investigation in
-[conjecture-store](../conjecture-store/README.md). The compressed architectural
-account remains useful, but should not determine how much reasoning survives.
-This is a direction to investigate, not adoption of a projection mechanism.
+The operator opened this investigation on 2026-09-25 after an accepted ADR was
+recorded before implementation. On 2026-10-26 the operator asked to explore concise
+architectural accounts over richer retained reasoning: alternatives and criticism
+should not disappear merely because the current account omits them.
 
-The operator's preferred eventual outcome is a unified treatment of theory and
-architecture. First let the two investigations develop independently so their
-differences can emerge from use. This workshop may borrow ideas from the theory
-workshop, but does not inherit its record type, thresholds, location-based
-selection, or select-without-transforming rule as architectural requirements.
-Nor does it revise that workshop's current shared-store design. Its design
-projection is a comparison candidate here, not a settled integration contract.
-A later reconciliation must resolve any disagreement before shared machinery
-is adopted.
+On 2026-11-07 the operator shifted attention to Git as durable project memory,
+including richer commit messages and marked commits closing larger changes.
+Requiring Git for all Commonplace KBs is an option to evaluate, not adopted policy.
+The operator then requested cleanup around this direction.
 
-The governing question is now: **what must remain available behind a concise
-account of the adopted architecture so that later work can criticize its
-grounds, reconsider alternatives and revise the choice without reconstructing
-the design space from scratch?** The existing lifecycle and session-loss cases
-remain acceptance constraints on any answer.
+The following constraints remain:
 
-Keep three distinctions visible while exploring; they do not prescribe file
-boundaries or a schema:
+- Essential evidence must survive session loss. Retained Git history can satisfy
+  this requirement; the evidence need not be duplicated in current artifacts.
+- Session logs and source snapshots may be long-lived and indexed without being
+  permanent. Volume, privacy and copyright limit retention. External access does
+  not guarantee recovery of an old observation.
+- Adoption is an authorized choice, not corroboration of its rationale.
+  Implementation and observed benefit require separate evidence.
+- Preserve original expectations, consequential operator contributions, deciding
+  reasons and contrary outcomes where needed for reconsideration. Git cannot
+  recover information never recorded; retrospective reconstruction is not
+  contemporaneous capture.
+- ADRs are mutable and consolidate information, but also record history. Commit
+  messages can contain rationale and consolidate several changes. Neither
+  “current view versus history” nor “rationale versus detail” settles the boundary.
 
-- Claims about a design's expected effects can be criticized and contradicted
-  by evidence.
-- Adoption is an authorized commitment, not a consequence of a claim clearing
-  an evidential threshold. Implementation and observed benefit remain separate.
-- A concise current view selects what its reader needs; omission from that view
-  must not silently delete retained alternatives, objections or original
-  expectations.
+## Existing contract
 
-Do not resolve the question by retaining every conversation or by copying the
-current ADR into a larger wrapper. Compare what later revision can recover,
-what routine work must load, and the cost of capture and maintenance. Whether
-an architectural projection selects existing records or synthesizes a compact
-account remains open. If it synthesizes, its provenance, refresh and editing
-rules must prevent the view becoming a competing source of truth.
+Checked on 2026-11-07 against source-checkout HEAD `91810b276`:
 
-Revisit unification after a candidate handles the lifecycle cases below and a
-reconsideration case: a deciding assumption changes, a previously rejected
-option becomes viable, and the current view is updated without erasing the
-original grounds. Compare the two workshops then: which distinctions and
-operations are genuinely shared, which need domain-specific treatment, and
-whether a common model helps more than separate models. A reasoned decision
-not to unify is admissible; premature common machinery is not the goal.
-
-Exploration writes stay within this workshop and its active-list entry.
-Changes to library contracts, the conjecture-store workshop, runtime code or
-repository-wide records require a separately authorized adoption or follow-up.
-
-## Retention direction fixed by the operator
-
-On 2026-09-25 the operator clarified the retention policy for this design:
-Commonplace must own records containing the most obviously important data.
-Those records may point to agent sessions for additional detail, but their
-essential evidence must survive loss of access to those sessions. Cleanup
-risk motivated this direction. Retention differs between harnesses and must
-not serve as Commonplace's evidence guarantee.
-
-Sessions are useful source material. Capture the important facts while that
-material is available, and retain a session identifier or link when supplied.
-A session pointer supplements the owned record; it cannot be the only place
-holding a deciding reason or a result needed to assess the change. Preserve
-the relevant excerpt, measurement, or small evidence artifact when a summary
-alone would not support later inspection. Missing facts remain missing;
-later reconstruction must be distinguished from contemporaneous capture.
-
-The working interpretation of “most obviously important” is the information
-needed to understand, revisit, and evaluate the choice:
-
-- the problem, relevant starting state, and constraints;
-- the options actually considered, the choice, and deciding reasons;
-- who supplied consequential judgments, especially human interventions;
-- the expected effect, uncertainty, and what would prompt reconsideration;
-- what was implemented and verified, with artifact or commit references;
-- observed outcomes, failures, reversals, and available cost measurements;
-- dates and source-session references for recovering further detail.
-
-This list is a starting capture scope, not an adopted schema. Record facts as
-they become available: a pre-implementation decision cannot already contain
-implementation or outcome evidence. Preserve its original expectations when
-adding later results. The record's durable home and capture trigger remain
-design questions, including how capture covers interrupted or abandoned work.
-
-The acceptance test is to make every session link unavailable: can a later
-reader still recover the decision, its grounds, its implementation state, and
-the evidence actually retained for its outcome? Detailed reconstruction may
-be lost, but essential facts must remain. A missing measurement must still be
-identifiable as missing, rather than silently turning into a success claim.
-
-## Motivating problem
-
-The [ADR 089 episode](./adr-089-premature-placement.md) records the immediate
-inconsistency. An agent wrote an accepted ADR into `kb/reference/adr/` before
-its implementation. Commonplace's ADR contract reserves that location and
-type for decided and implemented choices.
-
-The operator reports that this is a recurring, easy mistake. The intended
-decision needs to be written before implementation so it can guide the work.
-The usual practice is to draft the ADR in the workshop and promote it after
-implementation. An agent can produce the needed decision text but place it
-directly in the directory named for that artifact, accidentally making it
-look like a record of the shipped system.
-
-The current contracts make that distinction awkward: a proposal is undecided,
-and an ADR is decided and implemented. Workshops can hold the intervening
-state, but its meaning and promotion depend on placement and authoring
-discipline. The design should make the necessary pre-implementation record
-easy to create without falsely describing implementation as complete.
+- The [ADR type](../../reference/types/adr.md) remains for made and implemented
+  choices. A settled but unimplemented decision stays in workshop material under
+  current rules. The [ADR 089 episode](./adr-089-premature-placement.md) preserves
+  the concrete mismatch; implementation later completed in `b745bcc8`.
+- [ADR 074](../../reference/adr/074-git-is-the-change-history-layer.md) assigns
+  change history to Git for this source checkout. The [storage contract](../../reference/storage-architecture.md)
+  still permits installed KBs without Git. Extending that dependency is a
+  framework decision, separate from making runtime commands invoke Git or
+  replacing database freshness baselines.
+- [ADR 075](../../reference/adr/075-commit-messages-carry-read-path-trailers.md)
+  supplies decision/workshop trailers and migration narrative in commit bodies.
+  [ADR 077](../../reference/adr/077-content-routing-by-regeneration-source-and-consumer.md)
+  adds change intent and placement by regeneration source and consumer. Start
+  from these existing practices rather than assuming a new event store.
 
 ## Questions to settle
 
-- When should Commonplace search sessions for evidence to retain? The operator
-  clarified that future telemetry needs are open-ended and sessions already
-  contain much of the material. Map demand-driven searches, lifecycle events,
-  session hooks, scheduled processing, and protection against source loss;
-  compare concrete mechanisms in the reviewed systems. The [trigger design
-  space](./session-evidence-triggers.md) records this follow-up commission,
-  candidate policy, and mechanism inventory.
-- What is the continuing object: one decision record with several views,
-  linked proposal and ADR documents, or another arrangement? What should have
-  a stable identity through revisions, partial adoption, and supersession?
-- How should acceptance of a choice, implementation progress, and evidence
-  of benefit be represented separately? How should rejected, withdrawn,
-  abandoned, and partially implemented choices remain available for analysis?
-- Which evidence must survive each transition: original problem and available
-  evidence, alternatives, deciding reasons, participants and roles, expected
-  effects, implementation departures, costs, and observed outcomes? Which
-  parts already survive in git, proposals, workshops, or reports?
-- Which reader needs each view: deliberation, implementation, understanding
-  the shipped architecture, revision, or evaluation? What may each view claim
-  about the system, and what evidence permits that claim?
-- What is the retained design space behind those views? How are rival claims,
-  options, objections, constraints and adoption related without treating a
-  commitment as a corroborated belief? What remains retrievable when a view
-  omits it, and how does editing or refreshing the view affect its source?
-- What prevents the ADR 089 placement error? Compare a clearer drafting and
-  promotion procedure with richer records or derived views before selecting
-  machinery. Distinguish mechanically checkable evidence links from judgments
-  about whether implementation actually fulfills a decision.
-- How can decision-time expectations remain distinguishable from later
-  explanations and observations? How does a later evaluation find the original
-  record, including unsuccessful choices, without treating an ADR citation or
-  an accepted implementation as proof of improvement?
+1. What durability and history-availability contract would Git-required KBs need?
+   Treat squashing and rewriting as exceptions with preservation obligations.
+2. What does an editable ADR contribute over a rich marked decision commit?
+   Which history belongs in the maintained account, and which is affordable to
+   recover on demand? Useful overlap is allowed; duplication needs a purpose.
+3. Can ADR history, nearby changes and `Decision:` trailers usually find the
+   consequential commits? Add explicit anchors where they help. Finding files
+   within the right commit is normally easier than finding the right commit.
+4. What must be captured in commit messages or other retained records before
+   temporary sources expire? Check existing capture before extracting copies.
+   A reason to inspect evidence and an opportunity to run a search are different.
+5. How can a revised account improve understanding without hiding original
+   expectations, rejected alternatives, qualifications and failures? Shorter
+   text alone is not compression progress.
 
-## Evaluation boundary
+## Evaluation
 
-A satisfactory design must represent a settled choice before implementation,
-an implementation in progress, a shipped change whose benefit is unmeasured,
-and a later outcome that contradicts the original expectation. It must also
-handle partial adoption and a proposal that never ships. These are cases to
-test the design against, not a prescribed status enum.
+Compare concrete histories on recording, discovery, interpretation, maintenance
+and retention cost. Include a decision committed with its implementation, one
+spread across commits, an edited ADR, and the marked closing-commit alternative.
 
-Every case must also pass the session-loss test in the retention direction
-above. Workshop closure must preserve the owned evidence needed for those
-uses, even when the source sessions are still accessible at closure time.
+A candidate must distinguish settled but unimplemented work, partial adoption,
+abandonment, shipped but unevaluated changes and contrary later outcomes. Test
+reconsideration when a deciding assumption changes and a rejected option becomes
+viable. Remove session access but retain the chosen durable substrate. Separately
+check missing history and a squashed referenced commit: retaining a final tree is
+not necessarily retaining the evidence a reader needs.
 
-Use the recorded ADR 089 episode as one concrete test. The recurrence claim
-comes from the operator; this workshop has not measured its frequency. Added
-recording, retrieval, and maintenance costs must be justified by a named use.
-No database, event log, generated ADR renderer, schema, or repository-wide
-migration is selected at opening.
+Name missing evidence and narrow conclusions rather than adding machinery to hide
+the gap. This framing commissions no worker launches, behavioral experiment or
+implementation. A design that keeps existing records with a small procedural
+repair is an acceptable result.
 
-## Coordination and current contracts
+## Coordination and authority
 
-- ADR 089 was implemented by the tag-contract-convergence workshop, which
-  closed in commit `b745bcc8`. This workshop records the lifecycle failure;
-  that later completion does not erase the earlier mismatch.
-- [ADR routing](../adr-routing/README.md) and the [site back-pointer
-  proposal](../../reference/proposals/decisions-bind-their-consumers-through-site-back-pointers.md)
-  concern finding decisions when changing their consumers. This workshop owns
-  lifecycle and evidence retention; coordinate changes to shared ADR surfaces.
-- The [ADR type](../../reference/types/adr.md), [proposal
-  type](../../reference/types/design-proposal.md), and [reference collection
-  contract](../../reference/COLLECTION.md) remain binding until changed through
-  an adopted design. Drafts belong here under the current workshop exception.
-- [ADR 056](../../reference/adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)
-  restricts links into archived proposals; [ADR
-  074](../../reference/adr/074-git-is-the-change-history-layer.md) assigns change
-  history to git; [ADR
-  085](../../reference/adr/085-withdrawn-proposals-are-deleted.md) deletes
-  withdrawn proposals after extracting current content. Evaluate whether these
-  retention and access rules serve the proposed evidence use before revising
-  them. Recording evidence need not mean loading all history into routine work.
+Writes stay within this workshop and its active-list entry. Current contracts
+remain binding; framework adoption and peer-workshop changes need separate
+authorization.
 
-## Evidence and conceptual inputs
+- [Lineage mechanisms](../lineage-mechanisms/README.md) owns general provenance,
+  retention and storage-weight design. Coordinate rather than duplicate it.
+- [ADR testing](../adr-testing/README.md) tests existing record usefulness;
+  [ADR routing](../adr-routing/README.md) owns consultation routes.
+- [Use-and-outcome records](../use-and-outcome-records/README.md) owns growing
+  observational histories; [design-space studies](../design-space-studies/README.md)
+  explores richer design maps, leaving durable retention here.
+- [Conjecture-store](../conjecture-store/README.md) develops independently. The
+  operator prefers eventual unification, but its schema and thresholds do not
+  bind this investigation. Reconcile differences before adopting shared machinery.
+- The [compression exploration](../open-ended-work-economics/curiosity-exploration/turn-05/integration.md)
+  supplies preservation questions, not a selected storage architecture or a
+  demonstrated advantage for compression-driven inquiry.
 
-- [ADRs4AI comparison](./adrs4ai-comparison.md) — direct inspection of the
-  [ADRs4AI GitHub account](https://github.com/ADRs4AI), comparing its
-  deliberation records and question tooling with Commonplace ADRs; includes
-  pinned sources, evidence limits and the operator's correction that concise
-  architectural accounts should be projections of richer retained reasoning.
-- [Competing causal theories can guide distinguishing
-  experiments](../../theory/competing-causal-theories-can-guide-distinguishing-experiments.md)
-  — retained alternatives can guide what evidence to seek before current
-  observations favor either explanation. The worked example distinguishes
-  statistical discrimination and corroboration from final verification; for
-  this workshop, it motivates keeping competing predictions, test assumptions,
-  and results alongside the decision record.
-- [Trace-derived system scan](./trace-derived-system-scan.md) — follow-up
-  commissioned on 2026-09-26: all positively marked entries in both system
-  collections, including archival capture, correction/failure triggers,
-  activity thresholds, and staged evidence-to-proposal mechanisms.
-- [Session evidence: trigger design space](./session-evidence-triggers.md) —
-  separates source capture from evidence extraction, compares system triggers,
-  and names the choices and failure cases a proposal must resolve.
-- [Audit of `evidenced-by` edges](./evidenced-by-audit/README.md) — 356
-  edges classified against ADR 091: few name a test, about a quarter record
-  origin, and three label decisions block the relabel.
-- [Existing articles and system reviews](./corpus-scan.md) — ADR-focused
-  search of articles and full agentic analyses, related mechanisms, and
-  separately marked legacy decision-history leads.
-- [ADR 089 premature placement](./adr-089-premature-placement.md) — dated
-  incident, repository anchors, operator account, and limits of the diagnosis.
-- [Citing retained theory at the decision point is a mediation
-  trace](../../theory/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
-  — the contribution and limits of recording which knowledge informed a choice.
-- [Retaining episode evidence keeps a distilled rule open to
-  re-examination](../../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
-  — why a decision summary may need linked evidence.
-- [Compounding is tested in later improvement, not by the accepting
-  metric](../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
-  — separates acceptance evidence from evidence about later improvement.
-- [Downstream evidence
-  protocol](../first-downstream-run/commonplace-evidence-protocol.md) — proposed
-  outcome and comparison records; designing this lifecycle does not itself
-  produce measurements.
+## Historical material
 
-## What closes this workshop
+Older external-system scans, the ADRs4AI comparison, session-trigger survey and
+evidence-link audit with its batch manifests are no longer active work here. Recover them only
+for a specific question from the retained pre-cleanup tree:
 
-Close when the design question has a recorded disposition: either a finished
-design proposal naming the retained evidence, lifecycle distinctions, views,
-consumers, adoption criteria, and changes to existing contracts, or a reasoned
-decision that a smaller procedural repair suffices. Record how the candidate
-handles the evaluation cases, including reconsideration after a deciding
-assumption changes, and what remains untested. Record a comparison with the
-theory workshop's model: propose a justified common treatment, explain which
-parts should remain distinct, or defer unification with the missing evidence
-named. Closure does not require implementing a shared store or projection
-engine.
+```bash
+git ls-tree -r --name-only 91810b276 -- kb/work/decision-lifecycle-evidence/
+git show 91810b276:kb/work/decision-lifecycle-evidence/<path>
+```
 
-Before deleting the workshop, extract any durable finding and the incident
-evidence its future consumers require. Promotion of a design proposal closes
-this investigation without claiming that its implementation has shipped.
-Remove the workshop from the active list at closure.
+The audit's three label decisions had been resolved; batch completion was not
+established by the refresh. Removing its stale working list neither applies its
+suggested edits nor declares cleanup complete. Its old paths and classifications
+need checking before any future use.
+
+## Closure
+
+Close with a design proposal or a reasoned decision that existing records suffice,
+possibly with procedural repairs. State the division of labour, lifecycle and
+history contract, discovery routes, consumers and adoption criteria. Dispose of
+the Git-required and marked-commit alternatives explicitly. Record worked-case
+limits and whether theory-side reconciliation is useful or needs more evidence.
+
+Extract durable findings and preserve essential evidence with usable discovery
+paths before deleting the workshop and removing its active-list entry. A finished
+proposal does not claim its implementation has shipped.
