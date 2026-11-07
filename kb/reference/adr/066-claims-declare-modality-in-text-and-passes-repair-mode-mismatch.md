@@ -1,5 +1,5 @@
 ---
-description: "Claims assert in one of three modes — universal, statistical, ideal-type — declared in the claim text; the full pass detects mode mismatch via counterexample shape and repairs it through mode-guarded reframes in both directions"
+description: "Claim modes and their refuters remain active in text and premise review; ADR 080 replaced in-pass mode conversion with author hand-back, and ADR 091 tightened the universal refuter"
 type: reference/types/adr.md
 tags: []
 status: accepted
@@ -18,11 +18,11 @@ The counter-machinery was tested before adoption. The two-stage idealization cri
 
 ## Decision
 
-1. **Three claim modes, refuter-defined.** Universal (one genuine counterexample refutes), statistical (only prevalence evidence refutes; the claim must state what prevalence would refute it), ideal-type (a declared first-order model; refuted by unpriced-ordinary exceptions or dominance failure). Declared in `kb/notes/COLLECTION.md` under "Claim modality" — the binding surface the full pass reads.
+1. **Three claim modes, refuter-defined.** Universal (a counterexample others can check again refutes, as amended by ADR 091), statistical (only prevalence evidence refutes; the claim must state what prevalence would refute it), ideal-type (a declared first-order model; refuted by unpriced-ordinary exceptions or dominance failure). Declared in [the theory collection contract](../../theory/COLLECTION.md) under "Claim modality" — the binding surface the full pass reads.
 2. **Modality lives in the claim text, not frontmatter.** Title, thesis, or a named section carries the mode; an ideal-type claim carries its adequacy record (declared use, omitted mechanism, consequence bound, explanatory dominance) in the body. Undeclared text reads as universal. Rationale: the premise-decomposition gate quotes premises verbatim, so in-text modality is tested automatically, as the in-pass assessment demonstrated, while a frontmatter field would be a second copy of claim semantics that can drift. Mode is orthogonal to lifecycle stage (a status-conjecture note declares both when both apply).
 3. **The premise-decomposition gate reads premises at their stated modality** and annotates every non-HOLDS premise's counterexample shape — `instance`, `prevalence`, or `priced-exception` — as routed attention, never a verdict.
-4. **The full pass repairs mode mismatch through the existing keep-reframe, mode-guarded and bidirectional.** Counterexample shapes route the target mode. Guards: a statistical retitle must state its refuter or the reframe fails as vacuous; an ideal-type conversion must write the adequacy record into the body, where the closing cycle's premise rerun attacks it — that closing attack is the conversion's required resistance. A claim hedged below its warrant is the same finding in reverse, reframed up.
-5. **Conversions outside a pass remain permitted**; the mode guards bind whoever converts, and the next full pass supplies the deferred attack, since the record is content the premise gate tests by default.
+4. **In-pass mode conversion is superseded by ADR 080.** The original decision let counterexample shapes route a bidirectional, mode-guarded keep-reframe. The full pass now hands mode mismatch back as a pending `revise`: its brief names candidate claims, target modes and their guards, but applies no claim change. A claim hedged below its warrant also routes to the author rather than being reframed in-pass.
+5. **Author-applied conversions remain permitted under the mode guards.** A statistical claim must state its refuter; an ideal-type conversion must carry its adequacy record in the body. The next full pass supplies the deferred attack on those commitments as ordinary content. This permission does not restore in-pass conversion.
 
 ## Considered alternatives
 
@@ -38,11 +38,13 @@ The option space was developed in the design proposal "Repair dispositions for d
 
 **Deciding forces.** Every repair the pipeline offered weakened the claim; three worked episodes and the 22-note survey showed the cost; the first in-pass adequacy assessment showed that declared commitments can be attacked as ordinary content; and an idealization form must not become an immunizing stratagem, hence the adequacy record and the stated-refuter guard.
 
-**Free choices.** Resolved: all three conversion paths the proposal named (write-time declaration, in-pass reframe, direct revision outside a pass) remain permitted under the same guards (decision 5). The proposal flagged "idealization" as a naming risk (praise-adjacent readings) and listed "first-order model" and "declared-ideal" as alternatives; the decision names the mode "ideal-type", the term the proposal's option 2 already used, and the record gives no further reason for that choice. Left open: profile-level policy declaration and attestation drift tracking. ADR 080 later removed in-pass mode conversion from the full pass (see Status).
+**Free choices.** At adoption, all three conversion paths the proposal named (write-time declaration, in-pass reframe, direct revision outside a pass) were permitted under the same guards. Write-time declaration and author-applied revision remain available; in-pass reframe does not. The proposal flagged "idealization" as a naming risk (praise-adjacent readings) and listed "first-order model" and "declared-ideal" as alternatives; the decision names the mode "ideal-type", the term the proposal's option 2 already used, and the record gives no further reason for that choice. Left open: profile-level policy declaration and attestation drift tracking. ADR 080 later removed in-pass mode conversion from the full pass (see Status).
 
 ## Consequences
 
-- The 22 surveyed candidates are repairable by ordinary full passes; no migration or batch operation is needed.
-- The narrowing-direction guards gain mode-specific companions: the refuter test already polices analytic narrowing; the stated-refuter guard polices vacuous statistical landings; the adequacy record polices immunized ideal-type landings.
+- A full pass can identify a mode mismatch and produce a revision brief, but the author must make the claim-level repair. The original survey is not a current automatic-repair queue.
+- The stated-refuter guard constrains statistical landings; the adequacy record constrains ideal-type landings. Premise review attacks the resulting commitments at their declared mode, whether the author introduced them at write time or through revision.
 - No frontmatter modality field ships. If corpus sweeps later need to enumerate declared ideal-type or statistical claims mechanically, addressability can be added then, under the derived-copy rule (checked or absent).
 - Adopted in part from the design proposal "Repair dispositions for defeated claims are an epistemic policy with an option space", which keeps its undecided remainder: profile-level repair-policy declaration and freshness-store drift tracking for pricing attestations.
+
+**Limits.** The retained policy governs claim declaration and review in this KB; it does not authorize automatic claim conversion. The original 23-pass validation series accepted no in-pass conversion. Its missing positive conversion cases remain limits of that historical evidence, not a reason to exercise the retired path. The active consumers are the theory collection contract, premise-decomposition method and full-pass revision brief.
