@@ -87,7 +87,9 @@ implement a separate parser. It discovers no sessions, follows no embedded
 paths, launches no workers and modifies no inputs.
 
 Use [Review recent logs for hidden failures](../../kb/instructions/review-recent-logs-for-hidden-failures.md)
-for discovery, incident assessment and the handoff to diagnosis. The scanner
+for discovery, incident assessment and the handoff to diagnosis. That procedure
+limits each agent to reviewing logs from its own harness; the operator invokes
+a separate agent per harness for broader coverage. The scanner
 alone detects explicit tool failures, not recovery, provider retries or final
 output quality. Native sessions include all stored branches. Expected search
 no-matches can be findings; masked shell failures can be missed.

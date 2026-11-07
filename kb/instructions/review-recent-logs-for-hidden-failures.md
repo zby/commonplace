@@ -1,5 +1,5 @@
 ---
-description: "Use when reviewing recent agent sessions for hidden failures, retries, workarounds or degraded execution, including runs that ultimately succeeded."
+description: "Use when reviewing recent sessions from your own harness for hidden failures, retries, workarounds or degraded execution, including runs that ultimately succeeded."
 type: types/instruction.md
 ---
 
@@ -11,9 +11,19 @@ Expose execution problems and recovery costs that successful completion or a con
 
 The operator explicitly invokes this instruction for a project and recent time
 window or session set. It is a read-only discovery stage, not an automatic
-acceptance gate or a final-output audit. Identify the harness and log format
-for each input, then choose a compatible scanner. Mixed-harness reviews are
-permitted; do not assume their formats or event meanings are interchangeable.
+acceptance gate or a final-output audit.
+
+For now, review only logs produced by the harness executing this review. A
+Codex agent reviews Codex logs; a Claude Code agent reviews Claude Code logs;
+a Pi agent reviews Pi logs. Harness identity means the runtime, not the model
+name. Establish your current harness before reading transcript bodies; if it
+cannot be established, ask the operator to identify it.
+
+The operator must invoke an agent in each harness to obtain coverage across
+harnesses. Do not launch another harness or inspect another harness's transcript
+bodies as part of this procedure. Identify excluded harnesses from metadata or
+supplied paths and report the separate reviews still needed. A shared scanner
+result contract does not expand this review boundary.
 
 Review successful, failed and interrupted work. Recovery closes the immediate
 incident but does not remove it from this review. Do not assume every recovery
@@ -32,7 +42,7 @@ review budget. If “latest” is unspecified, propose a bounded window or count
 and obtain agreement before reading transcript bodies. Resolve ambiguous
 project ownership before including a session.
 
-Locate the effective log directories from each harness’s launch configuration
+Locate the effective log directories from your harness’s launch configuration
 or operator-supplied paths. Check storage overrides rather than assuming a
 default directory. Inspect candidate metadata and event timestamps to establish
 project identity, harness, format and recent activity. File
@@ -40,9 +50,10 @@ mtime is a discovery hint, not proof of when work occurred. Include sessions
 started earlier if they contain activity in the selected window.
 
 Record selected paths, session IDs, covered times and selection rules. Follow
-worker references only within the authorized scope; list missing or out-of-scope
-children rather than silently treating the parent as complete. Distinguish
-persisted sessions from event streams or exports and avoid counting multiple copies
+worker references only within the authorized project and harness scope. List
+missing children and children from other harnesses as evidence gaps for the
+operator's separate reviews; do not silently treat the parent as complete.
+Distinguish persisted sessions from event streams or exports and avoid counting multiple copies
 of the same event. For live files, record the last inspected entry or line and
 cutoff time; later events are outside the review.
 
@@ -54,10 +65,10 @@ Read its usage and limits, including dependencies, exit-status meanings and
 coverage. Batch only inputs supported by the selected invocation. Record the
 scanner, format and command used for each group.
 
-Choose by the scanner’s declared supported format, not by filename suffix or
-the harness running this review. A `.jsonl` suffix alone does not establish
-compatibility. Native sessions and streaming exports from the same harness may
-need different parsers or options. Do not adapt unsupported logs to another
+Within your harness, choose by the scanner’s declared supported input format,
+not by filename suffix. A `.jsonl` suffix alone does not establish compatibility.
+Native sessions and streaming exports from the same harness may need different
+parsers or options. Do not adapt unsupported logs to another
 harness’s parser by assumption.
 
 If no compatible scanner exists or it is unavailable, report that limit and
@@ -132,9 +143,10 @@ A single costly incident can warrant diagnosis; recurrence is not required.
 Lead with the most consequential hidden problems and the decision they support.
 Include:
 
-- Coverage: project, interval, harnesses, formats, selected scanners or manual
+- Coverage: project, interval, your harness, formats, selected scanner or manual
   inspection, sessions and children, sample choices, cutoff, missing evidence
-  and unexamined work.
+  and unexamined work. Name excluded harnesses and the separate reviews needed;
+  do not present this report as coverage of all harnesses.
 - Incidents: intended operation, failure, recovery and disposition, effects,
   operator visibility, and exact path plus line, entry or call ID locators.
 - Groups: recurrence counts, observed overhead and representative evidence;
@@ -159,6 +171,8 @@ do not wait for exhaustive counting or perform uncommissioned containment.
 
 - Recovered incidents remain visible even when the delivered result is sound.
 - Findings have trace evidence; suspected causes and quality effects are qualified.
+- Every inspected transcript belongs to the harness executing this review;
+  other harnesses remain explicit exclusions for separate operator invocations.
 - Scanner choice matches each input’s harness and format; unsupported inputs
   remain explicit gaps or receive bounded manual inspection.
 - Counts exclude duplicate representations and identify branch scope.
