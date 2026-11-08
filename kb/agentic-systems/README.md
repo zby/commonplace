@@ -1,25 +1,48 @@
 # Agentic Systems
 
-Coverage of external **agentic systems and harnesses**: execution loops,
-orchestration, scheduling, permissioning, memory, knowledge, and context.
-Memory comparisons now consume the main analysis's retained results; see
-[comparison inputs and builds](./comparisons/README.md). The companion
-[agent-memory-systems collection](../agent-memory-systems/README.md) retains
-legacy reviews and historical comparison snapshots.
+Research on how agentic systems retain information, control execution, check
+knowledge and recover from failure. Explore architectural alternatives and
+trace the comparisons to source-grounded analyses of concrete implementations.
+This is research into mechanisms and trade-offs, not a product ranking.
 
-[Workflow analyses](../agentic-system-analyses/README.md) now have their own collection.
-Lens pages list each current analysis's member by lens:
-[runtime](./comparisons/runtime/README.md), [memory](./comparisons/memory/README.md),
-[epistemic](./comparisons/epistemic/README.md) and [workflow](./comparisons/workflow/README.md).
-The current comparison population is empty until regeneration.
+## Start with a question
 
-## Method and evidence
+**[Agent Memory](./topics/memory.md)** is the most developed topic: what is
+retained, how does it reach the next decision, and what happens when it is
+wrong? Start with the
+[agent-memory landscape](./comparisons/memory/agent-memory-landscape.md), a
+frozen synthesis of 191 analyses from October 2026, then follow its evidence
+to individual systems.
 
-- [Analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md) — analyse one frozen source boundary and publish its accepted set
-- [Landscape synthesis](./instructions/synthesize-agent-memory-landscape/SKILL.md) — compare retained memory findings
-- [Taxonomy maintenance](./instructions/refresh-agent-memory-review-taxonomy.md) — refresh shared comparison terms
-- [Report types](../agentic-system-analyses/types/agentic-system-analysis-set.md) — set membership and member contracts
-- [Layout migration evidence](./reports/retained/layout-migration-2026-10-01/README.md) — path/hash map and acceptance checks
+- [Research Topics](./topics/README.md) — Agent Memory, Runtime & Control,
+  Knowledge & Verification, and Workflow & Recovery.
+- [Comparisons](./comparisons/README.md) — cross-system research organized by
+  architectural question.
+- [Systems Directory](../agentic-system-analyses/current-analyses.md) — current
+  accepted individual analyses, generated at each site build.
+- [Methods & Data](./methods.md) — how to interpret the evidence, with the
+  memory table, CSV and reproducible population boundaries.
+
+## Follow the evidence
+
+An accepted analysis is more than a project description. It traces operational
+routes at a frozen source boundary, separates documentation claims from
+inspected code, and retains supporting records and verification judgments.
+Its overview links the source register, detailed accounts and limitations.
+
+A wired retrieval path does not establish observed use, measured benefit or
+causal improvement. Coverage gaps stay distinct from evidence of absence.
+Compare the scope and evidence of each route rather than assigning a
+system-wide property from a single feature. [Methods & Data](./methods.md)
+explains these distinctions and why current listings, dataset snapshots and
+historical research can have different populations.
+
+The primary research program charts the design space and seeks solutions
+useful to Commonplace. These public accounts keep source-system findings
+separate from judgments about adoption in Commonplace. The
+[historical Agent Memory Systems collection](../agent-memory-systems/README.md)
+remains accessible; its reviews and comparison snapshots are not the current
+accepted-analysis population.
 
 ## Authored accounts
 

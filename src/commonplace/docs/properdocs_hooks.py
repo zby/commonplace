@@ -29,12 +29,12 @@ REPORTS = "reports"
 HIDDEN_FROM_NAV = frozenset({"agent-memory-systems", "types"})
 
 # The "Agentic Systems" menu entry gathers these two collections into one
-# dropdown: the analyses list, each landed lens, then the authored accounts.
+# dropdown: public research entrances, with generated analyses as a directory.
 AGENTIC_SYSTEMS_GROUP = ("agentic-system-analyses", "agentic-systems")
 
 # Lens directories under agentic-systems/comparisons/ hold cross-system pages
 # for one analyst member; each gets a build-time list of that member across
-# the current analyses. A lens joins the menu when its README.md lands.
+# the current analyses. Topic pages link these lists without exposing the layout.
 LENS_ROOT = Path("agentic-systems/comparisons")
 LENSES = {"runtime": "Runtime", "memory": "Memory", "epistemic": "Epistemic", "workflow": "Workflow"}
 # Extra members a lens list links beside its own member.
@@ -51,7 +51,7 @@ def on_config(config):
     Public directories directly under docs_dir with a README.md become
     top-nav entries. Tags comes first, followed by alphabetical discovery;
     the operational mailbox and HIDDEN_FROM_NAV are omitted, and the two
-    agentic-systems collections share one dropdown with the landed lenses.
+    agentic-systems collections share one public research dropdown.
     Fixed Home and GitHub entries bracket the auto-discovered list.
     """
     _tag_space.cache_clear()
@@ -87,14 +87,20 @@ def on_config(config):
 
 
 def _agentic_systems_entry(docs_dir: Path) -> dict:
+    # The mkdocs theme renders one dropdown cleanly on desktop and mobile.
+    # Keep topics one click away on their index rather than nesting dropdowns.
+    destinations = [
+        ("Overview", "agentic-systems/README.md"),
+        ("Research Topics", "agentic-systems/topics/README.md"),
+        ("Comparisons", "agentic-systems/comparisons/README.md"),
+        ("Systems Directory", "agentic-system-analyses/current-analyses.md"),
+        ("Methods & Data", "agentic-systems/methods.md"),
+    ]
     entries = []
-    if (docs_dir / "agentic-system-analyses" / "README.md").exists():
-        entries.append({"Analyses": "agentic-system-analyses/current-analyses.md"})
-    for lens, label in LENSES.items():
-        if (docs_dir / LENS_ROOT / lens / "README.md").exists():
-            entries.append({label: (LENS_ROOT / lens / "README.md").as_posix()})
-    if (docs_dir / "agentic-systems" / "README.md").exists():
-        entries.append({"Authored accounts": "agentic-systems/README.md"})
+    for label, target in destinations:
+        source = "agentic-system-analyses/README.md" if label == "Systems Directory" else target
+        if (docs_dir / source).exists():
+            entries.append({label: target})
     return {"Agentic Systems": entries}
 
 

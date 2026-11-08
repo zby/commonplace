@@ -24,14 +24,14 @@ The [theory builder definition](./theory/definitions/theory-builder.md) states t
 
 **Agent-usable memory.** Agents need [discoverable, composable, and trusted knowledge under bounded context](./theory/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). [Explicit link semantics](./tags/links-README.md) show support, contrast, and consequence; routing selects what reaches a task; provenance and review indicate how strongly to rely on it. Because [information value is observer-relative](./theory/information-value-is-observer-relative.md), useful condensation depends on the consuming agent and task.
 
-**Systems compared.** We have reviewed [more than 150 agent memory systems](./agent-memory-systems/README.md), including Mem0, Graphiti, Cognee, and Letta. The [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that the reviewed systems differ less in where they store memory than in how memory reaches the agent's next action and whether anyone checks that it changed behavior. The reviews over-sample file-based systems, so their counts describe this set of reviews rather than the field.
+**Systems compared.** The [Agentic Systems research resource](./agentic-systems/README.md) investigates architectural alternatives through source-grounded analyses. Start with [Agent Memory](./agentic-systems/topics/memory.md) and its [October 2026 landscape of 191 analyses](./agentic-systems/comparisons/memory/agent-memory-landscape.md), or browse the generated [Systems Directory](./agentic-system-analyses/current-analyses.md). These populations are selected research corpora, not representative samples of the field. The [earlier comparative review](./agent-memory-systems/agentic-memory-systems-comparative-review.md) remains a historical snapshot of the older review corpus.
 
 ## Browse
 
 - [Theory](./theory/README.md) — research claims
 - [Tags](./tags/README.md) — browse by topic across notes, reference, instructions, and system reviews
 - [Reference](./reference/README.md) — the current system, decisions, and artifact contracts
-- [Agentic Systems](./agentic-systems/README.md) — external-system accounts and workflow analyses, compared by lens
+- [Agentic Systems](./agentic-systems/README.md) — research topics, architectural comparisons and source-grounded system analyses
 - [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md) — evidence, procedures, and work in flight
 
 ## Use it yourself

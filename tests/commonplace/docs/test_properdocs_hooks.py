@@ -300,21 +300,31 @@ def test_on_config_groups_agentic_systems_and_hides_unlisted_collections(tmp_pat
     docs_dir = tmp_path / "kb"
     for collection in ("agent-memory-systems", "agentic-system-analyses", "agentic-systems", "notes", "types"):
         write(docs_dir / collection / "README.md", f"# {collection}\n")
-    write(docs_dir / "agentic-systems/comparisons/memory/README.md", "# Memory lens\n")
+    for path in ("topics/README.md", "comparisons/README.md", "methods.md",
+                 "comparisons/memory/README.md"):
+        write(docs_dir / "agentic-systems" / path, "# Research\n")
 
     nav = properdocs_hooks.on_config({"docs_dir": str(docs_dir)})["nav"]
 
     assert {"Agentic Systems": [
-        {"Analyses": "agentic-system-analyses/current-analyses.md"},
-        {"Memory": "agentic-systems/comparisons/memory/README.md"},
-        {"Authored accounts": "agentic-systems/README.md"},
+        {"Overview": "agentic-systems/README.md"},
+        {"Research Topics": "agentic-systems/topics/README.md"},
+        {"Comparisons": "agentic-systems/comparisons/README.md"},
+        {"Systems Directory": "agentic-system-analyses/current-analyses.md"},
+        {"Methods & Data": "agentic-systems/methods.md"},
     ]} in nav
     labels = [next(iter(entry)) for entry in nav]
     assert "Agent Memory Systems" not in labels
     assert "Agentic System Analyses" not in labels
     assert "Types" not in labels
     assert "Recent Changes" not in labels
+    assert labels.count("Agentic Systems") == 1
+    assert {"Notes": "notes/README.md"} in nav
     assert labels.index("Agentic Systems") < labels.index("Notes")
+    # Every public destination is authored or is the existing generated directory.
+    for entry in next(entry["Agentic Systems"] for entry in nav if "Agentic Systems" in entry):
+        target = next(iter(entry.values()))
+        assert target.endswith("current-analyses.md") or (docs_dir / target).is_file()
 
 
 def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> None:

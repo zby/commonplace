@@ -95,7 +95,7 @@ The [rendered site](https://zby.github.io/commonplace/) is the main route into t
 - The [theory builder definition](./kb/theory/definitions/theory-builder.md) and [Commonplace builds a theory builder and tests whether it learns](./kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — what a theory builder is, and the research program that tests whether one learns.
 - [Deployment-time learning](./kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/tags/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
 - [Self-improving systems](./kb/tags/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/theory/evidence/commonplace-as-a-reflective-system.md).
-- Reviews of [agent memory systems](./kb/agent-memory-systems/README.md) and [agentic systems](./kb/agentic-systems/README.md), with a [comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md).
+- [Agentic Systems research](./kb/agentic-systems/README.md): research topics, architectural comparisons and source-grounded system analyses. Start with [Agent Memory](./kb/agentic-systems/topics/memory.md); the [earlier memory comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md) remains a historical snapshot.
 
 ## Commands, skills, and instructions
 
