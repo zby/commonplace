@@ -1,66 +1,62 @@
 ---
-description: Skills are programs whose I/O boundary is tool calls — mocking that boundary creates controlled environments for testing whether instructions produce correct behavior, complementing text artifact testing with instruction-level regression detection
+description: "Controlled tool responses and captured effects let instruction tests expose protocol violations that a plausible final artifact can hide; coverage depends on mock fidelity."
 type: types/note.md
+brief: unit-testing-llm-instructions-requires-mocking-the-tool-boundary.brief.md
 traits: [title-as-claim]
 tags: [document-system, constraining, learning-theory]
 ---
 
-# Unit testing LLM instructions requires mocking the tool boundary
+# Mocking the tool boundary makes instruction behavior testable in isolation
 
-Skills are programs written in natural language and executed by an LLM. Their dependencies — file reads, searches, writes — flow through tool calls. This makes the tool layer the natural seam for dependency injection: replace real tools with mocks that return predetermined data, and you can test the instructions in isolation.
+When an LLM instruction uses tools to read, search or modify external state,
+replacing those tools with controlled responses lets a test fix what the agent
+encounters and capture what it attempts. The test can check execution behavior
+that is not recoverable from the final artifact alone.
 
-This is the instruction-testing half of the [doubled testing surface](./programming-practices-for-prompts-need-question-specific-evidence.md). The existing [text testing pyramid](./automated-tests-for-text.md) covers artifact testing (is this note good?). Tool mocking covers instruction testing (does this skill reliably produce correct behavior?). These are separate testing targets even with a deterministic generator: one acceptable artifact does not establish reliable generation across inputs. The [governing reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) determines which departures count as conformance failures.
+This tests the instruction's execution, not just its output: [a satisfactory
+artifact does not establish a reliable generator](./programming-practices-for-prompts-need-question-specific-evidence.md).
+The expected behavior must come from the [applicable requirement](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md),
+not merely reproduce what an earlier run happened to do.
 
-## Architecture
+## Example: discovery without source modification
 
-A test fixture has three parts:
+Suppose an instruction must find connections among notes and write a report,
+without modifying the source notes. A test supplies a target and candidate notes
+through controlled reads and searches, and captures attempted writes.
 
-1. **Mock KB state** — a small set of fake notes with known relationships, provided as a dictionary of path→content. Five to ten notes suffice for most skill tests.
-2. **Mock tool layer** — intercepts tool calls and returns fixture data. `Read` returns predetermined content, `Grep` returns predetermined matches, `Write` captures output for assertion. The fidelity question: mocks can return hardcoded results (fast, brittle) or actually search the fixture data (slower, catches more bugs).
-3. **Assertions** — check the captured output (what the skill wrote) and optionally the tool call trace (what the skill did).
+The agent might produce a convincing report while also attempting to rewrite a
+source note. Checking the report alone would miss that violation. Capturing the
+attempted effects exposes it, even when the mock prevents the actual change.
 
-For the connect skill, the mock surface is: `Bash` (qmd commands, grep fallback), MCP semantic search tools, `Grep`, `Glob`, `Read` for discovery; `Write` for the connection report output. The Write mock is the primary assertion target — did the report find the expected connections with articulated relationships?
+The test must cover every available mutation route. Checking that no editing
+tool was called is insufficient if a shell or another write tool can change the
+same files. An unobserved route is a gap in the isolation claim.
 
-## What assertions look like
+## What the checks establish
 
-Assertions split into two kinds that map to different [oracle strengths](./oracle-strength-spectrum.md):
+A captured trace can support deterministic checks such as whether an attempted
+write targeted a protected source. Output structure can also be checked
+mechanically. Whether a reported connection is justified usually needs semantic
+judgment; a required name appearing in the report does not establish that
+judgment.
 
-**Behavioral assertions (hard oracle)** — did the skill follow its protocol?
-- Called Read on the target note before searching (correct sequencing)
-- No Edit calls made (connect-new is discovery-only)
-- Attempted semantic search before falling back to grep
-- Checked that candidate paths exist
+A deterministic assertion does not make the agent's behavior deterministic.
+Repeated runs can expose variation under the recorded conditions, but passing
+the tested cases does not establish compliance on untested inputs.
 
-**Output assertions (soft oracle)** — did the skill produce correct results?
-- Report mentions note X as a connection (grep the output)
-- Relationship type is specific, not "related" (pattern match)
-- No false connections to unrelated fixture notes
-- Handles edge cases: reports honestly when no connections exist
+## Scope
 
-The behavioral assertions are cheap and deterministic — ideal for regression testing. The output assertions require either LLM-as-judge or careful fixture design where expected connections are unambiguous enough to check with string matching.
+Mocking tests behavior against the simulated environment. A canned search result
+can test how the agent uses that result; it cannot establish that a real search
+implementation would return it. The mock must preserve the behavior relevant to
+the failure being tested.
 
-## This is constraining tooling
+Mocking is one route to controlled execution, not a requirement for all
+instruction tests. Real tools operating on an isolated temporary corpus can
+support other checks. Neither route by itself demonstrates correctness in the
+production environment.
 
-A test suite for instructions is a [constraining](./definitions/constraining.md) mechanism. Each test constrains the interpretation space by asserting "this instruction, given these inputs, must produce behavior in this range." When an instruction edit or model update causes a test to fail, the failure is visible evidence that the interpretation has shifted — exactly what constraining is designed to detect and prevent.
+## Open Questions
 
-Instruction tests can run manually or as required gates. [Activation and response](./methodology-enforcement-is-constraining.md) depend on that configuration: a test blocks promotion only when the workflow requires a passing result.
-
-The cost is real — each test execution is an API call — but the alternative is discovering regressions during production use, which is more expensive in both tokens and trust.
-
-## Open questions
-
-- What granularity? Test full skill execution, or test individual phases (discovery, evaluation, output)?
-- How to handle indeterminism? Run N times and check pass rate, or design fixtures with such obvious connections that any reasonable execution finds them?
-- Should the mock layer be skill-specific or generic? A reusable mock KB runtime vs per-skill test fixtures.
-- When is this worth the API cost? Probably after a skill has constrained enough that regressions matter more than rapid iteration.
-
----
-
-Relevant Notes:
-
-- [Programming practices for prompts need evidence matched to the question](./programming-practices-for-prompts-need-question-specific-evidence.md) — foundation: identifies the doubled testing surface (instruction testing + artifact testing) that this note proposes a concrete mechanism for
-- [automated tests for text](./automated-tests-for-text.md) — complements: covers artifact testing (the other half of the doubled surface); this note covers instruction testing
-- [constraining](./definitions/constraining.md) — positions: instruction tests are constraining tooling — they constrain the interpretation space by asserting behavioral expectations
-- [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — grounds: tests constrain promotion only when their activation and blocking response are required
-- [oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: behavioral assertions (tool call patterns) are hard-oracle; output assertions (connection quality) are soft-oracle, mirroring the test pyramid split
-- [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: conformance judgments require a named reference; generator and artifact checks remain distinct
+- Which tool behaviors must a mock preserve for failures found in isolation to
+  remain relevant under real execution?
