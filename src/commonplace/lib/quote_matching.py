@@ -9,14 +9,16 @@ import html
 import re
 import unicodedata
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Literal
 from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.note_parser import blank_fenced_code_blocks
 
 Normalization = Literal["prose", "code"]
-ATTRIBUTION_RE = re.compile(r"^\s*>\s*---\s*(?P<attribution>.*\S)?\s*$")
+ATTRIBUTION_RE = re.compile(
+    r"^\s*>\s*(?P<divider>-{3,})(?!-)\s*(?P<attribution>.*\S)?\s*$"
+)
 _RANGES = r"[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*"
 LOCAL_SOURCE_RE = re.compile(
     rf"`(?P<path>[^`\n]+?)(?::(?P<ranges>{_RANGES}))?`\s*@\s*`(?P<version>[^`]+)`"
@@ -127,28 +129,47 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
     )
 
 
-def parse_blockquotes(content: str) -> tuple[Citation, ...]:
-    """Read attributed blocks, excluding fenced examples and attribution bytes."""
-    citations = []
-    lines = blank_fenced_code_blocks(content).splitlines()
+def _blockquote_attributions(lines: Sequence[str]) -> dict[int, Citation]:
+    """Separate long source dividers from attributions without hiding refusals.
+
+    Three dashes remain the canonical, reserved marker. Longer dividers also
+    introduce source attributions, tolerating extra dashes. Unparseable prose
+    after a longer divider is body text when the blockquote continues. Retain
+    source-shaped and closing markers even when malformed, for diagnostics.
+    """
+    attributions = {}
     for index, line in enumerate(lines):
         match = ATTRIBUTION_RE.fullmatch(line)
         if match is None:
             continue
+        attribution = (match["attribution"] or "").strip()
+        citation = _attributed_citation("", attribution, index + 1)
+        continues = index + 1 < len(lines) and re.match(r"^\s*>", lines[index + 1])
+        source_shaped = (
+            attribution.startswith("`")
+            or URL_RE.search(attribution) is not None
+            or re.match(r"\[[^\]]*\]\(", attribution) is not None
+        )
+        if len(match["divider"]) > 3 and citation.error and continues and not source_shaped:
+            continue
+        attributions[index] = citation
+    return attributions
+
+
+def parse_blockquotes(content: str) -> tuple[Citation, ...]:
+    """Read attributed blocks, excluding fenced examples and attribution bytes."""
+    citations = []
+    lines = blank_fenced_code_blocks(content).splitlines()
+    attributions = _blockquote_attributions(lines)
+    for index, citation in attributions.items():
         quote_lines = []
         cursor = index - 1
         while cursor >= 0 and re.match(r"^\s*>", lines[cursor]):
-            if ATTRIBUTION_RE.fullmatch(lines[cursor]):
+            if cursor in attributions:
                 break
             quote_lines.append(re.sub(r"^\s*> ?", "", lines[cursor], count=1))
             cursor -= 1
-        citations.append(
-            _attributed_citation(
-                "\n".join(reversed(quote_lines)),
-                (match["attribution"] or "").strip(),
-                index + 1,
-            )
-        )
+        citations.append(replace(citation, quote="\n".join(reversed(quote_lines))))
     return tuple(citations)
 
 
@@ -180,8 +201,9 @@ def ranged_prose_anchors(content: str) -> list[tuple[int, str]]:
     """
     lines = blank_fenced_code_blocks(blank_quote_bodies(content)).splitlines()
     found: list[tuple[int, str]] = []
+    attributions = _blockquote_attributions(lines)
     for index, line in enumerate(lines, start=1):
-        if ATTRIBUTION_RE.fullmatch(line):
+        if index - 1 in attributions:
             continue
         for match in LOCAL_ANCHOR_RE.finditer(line):
             found.append((index, match.group()))

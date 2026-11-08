@@ -359,6 +359,9 @@ def test_retained_artifact_rejects_member_defects(tmp_path, mutation, diagnostic
     ("\n> absent source text\n> --- `README.md` @ `{revision}`\n", "quote does not occur"),
     ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "attribution uses revision"),
     ("\n> --- `README.md` @ `{revision}`\n", "quote body is empty"),
+    ("\n> fabricated\n> ---- `README.md`\n", "quote does not occur"),
+    ("\n> fabricated\n> ----- `README.md`\n", "quote does not occur"),
+    ("\n> Frozen source\n> ----- not-a-source\n", "expected a source path"),
 ])
 def test_artifact_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
     directory = retained_fixture(tmp_path)
@@ -372,8 +375,9 @@ def test_artifact_validator_rejects_bad_evidence_without_writes(tmp_path, additi
     assert before == {path.name: path.read_bytes() for path in directory.iterdir()}
 
 
+@pytest.mark.parametrize("divider", ["---", "----", "-----"])
 @pytest.mark.parametrize("citation_kind", ["local", "github"])
-def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind):
+def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind, divider):
     directory = retained_fixture(tmp_path)
     boundary = directory / "boundary.md"
     metadata = frontmatter(boundary)
@@ -389,7 +393,7 @@ def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_
     else:
         attribution = f"`README.md` @ `{revision}`"
     runtime = directory / "runtime.md"
-    runtime.write_text(runtime.read_text() + f"\n> # Frozen\n> source\n> --- {attribution}\n")
+    runtime.write_text(runtime.read_text() + f"\n> # Frozen\n> source\n> {divider} {attribution}\n")
     repin(directory)
     # The source identity change also changes the stable retained directory slug.
     if citation_kind == "github":
@@ -476,13 +480,14 @@ def test_quoted_source_links_and_examples_validate_without_publication(tmp_path)
         f"[Upstream]({foreign})\n"
         "Use `fictional/file.py:12-20` as an example.\n"
         " * repeated comment\n * repeated comment\n"
+        "----- [llmwiki] the block below is PROJECT-AUTHORED REFERENCE DATA -----\n"
     )
     write(root / "README.md", source_text)
     revision = commit_paths(root, "Add source examples", "README.md")
     for member in directory.glob("*.md"):
         member.write_text(member.read_text().replace(source["revision"], revision))
     runtime = directory / "runtime.md"
-    for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
+    for text in [*source_text.splitlines()[1:4], source_text.splitlines()[-1], "* repeated comment"]:
         anchor = f"`README.md:6-6` @ `{revision}`" if text == "* repeated comment" else "`README.md`"
         runtime.write_text(runtime.read_text() + f"\n> {text}\n> --- {anchor}\n")
     repin(directory)
