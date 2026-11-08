@@ -1,7 +1,7 @@
 ---
 description: "Keeping relevant episode evidence and its relation to a distilled rule preserves a route for re-examining that rule; reconstruction, comparative value, and correct generalization still require testing"
 type: types/note.md
-traits: [title-as-claim, has-comparison, synthesis]
+traits: [title-as-claim, has-comparison, synthesis, has-external-sources]
 tags: [agent-memory, learning-theory, context-engineering]
 ---
 
@@ -40,6 +40,15 @@ New observations, independent evidence, and retained tests can still challenge
 it. [Lineage records](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md)
 help identify which earlier evidence a revision calls into question; they do
 not replace that evidence.
+
+[Anthropic reports a bounded correction case](../sources/components-of-agent-memory.ingest.md):
+an offline pass checked a mistaken Pokémon location note against the session
+transcript and rewrote it; with the corrected note, Claude returned to Mt. Moon
+and eventually reached Cerulean City. This illustrates re-examination followed
+by changed action, not a general reliability estimate or a comparison with
+rules alone. The transcript supplies recorded evidence for criticism, not an
+infallible account: observations still need to be distinguished from the
+agent's interpretations.
 
 ## Distillation and acceptance are separate
 
