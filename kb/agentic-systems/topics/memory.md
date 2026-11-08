@@ -11,6 +11,16 @@ a source-grounded snapshot of 191 analyses from October 2026. Use the
 candidate mechanisms, then read the linked per-system records before making
 an architectural claim.
 
+## Focused comparisons
+
+- [How memory reaches the next decision](../comparisons/memory/read-back-mechanisms.md) —
+  compare whole-file loading, requested retrieval, automatic injection and
+  maintenance-model inputs in Hermes, A-MEM, Hindsight and Basic Memory.
+- [How corrections propagate through retained memory](../comparisons/memory/correction-propagation.md) —
+  compare temporal invalidation, dependent-record cleanup and explicit
+  replacement in Graphiti, Hindsight and Mem0, then test the consumers that
+  can still receive stale information.
+
 ## Research questions
 
 ### What information is retained?
@@ -33,7 +43,8 @@ something. Follow each table row to its scope and evidence basis.
 
 Ask who initiates a read, which selector runs, and who receives the result.
 Memory selected for a maintenance model is not necessarily delivered to an
-answering agent. Begin with the
+answering agent. Read [How memory reaches the next decision](../comparisons/memory/read-back-mechanisms.md)
+for concrete contrasts, or begin with the
 [landscape's read-back analysis](../comparisons/memory/agent-memory-landscape.md#read-back-push-usually-selects-coarsely)
 and use the [per-system accounts](../comparisons/memory/systems.md) to trace
 the full route.
@@ -41,7 +52,9 @@ the full route.
 ### What happens when information changes or becomes invalid?
 
 Updating a source, invalidating a fact and repairing every dependent summary
-are different operations. The [curation findings](../comparisons/memory/agent-memory-landscape.md#curation-revision-and-forgetting-are-common-synthesis-is-rare)
+are different operations. [How corrections propagate](../comparisons/memory/correction-propagation.md)
+traces those boundaries and proposes multi-interface experiments.
+The [curation findings](../comparisons/memory/agent-memory-landscape.md#curation-revision-and-forgetting-are-common-synthesis-is-rare)
 provide candidates for investigation, not a guarantee of complete correction.
 Check which consumer and derived representation each inspected route reaches.
 

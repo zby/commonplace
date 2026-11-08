@@ -7,6 +7,12 @@ not copies of the individual analyses.
 
 ## Comparative research
 
+- [How memory reaches the next decision](./read-back-mechanisms.md) —
+  selection, delivery and consumer identity across four contrasting systems.
+- [How corrections propagate through retained memory](./correction-propagation.md) —
+  invalidation, withdrawal, derived repair and stale consumers across three
+  systems, with experiments for testing propagation.
+
 [Agent-memory landscape](./agent-memory-landscape.md) compares admission,
 read-back, curation and trace learning across 191 analyses. This is a frozen
 synthesis dated 2026-10-22 at inputs commit `5f92f75e5`, not a continuously

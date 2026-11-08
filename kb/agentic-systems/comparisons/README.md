@@ -6,6 +6,13 @@ citations to the frozen analysis records to check a conclusion's scope.
 
 ## Agent memory
 
+- [How memory reaches the next decision](./memory/read-back-mechanisms.md) —
+  who initiates retrieval, how selection works, and which consumer receives
+  the result. Contrasts Hermes, A-MEM, Hindsight and Basic Memory; distinguishes
+  delivered context from demonstrated reliance.
+- [How corrections propagate through retained memory](./memory/correction-propagation.md) —
+  what changes after correction or withdrawal in Graphiti, Hindsight and Mem0,
+  and which derived representations and consumer copies still need repair.
 - [What the current corpus shows about agent memory mechanisms](./memory/agent-memory-landscape.md)
   — a frozen landscape of 191 analyses, dated 2026-10-22, at inputs commit
   `5f92f75e5`. Covers admission, read-back, curation and trace learning,

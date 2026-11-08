@@ -1,3 +1,19 @@
+/* Keep research tables readable without widening the mobile viewport.
+   Full source revisions and run identifiers must remain available to scroll. */
+div[role="main"] table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 767.98px) {
+  div[role="main"] table th,
+  div[role="main"] table td {
+    /* Scroll columns rather than squeezing prose into one-word lines. */
+    min-width: 12rem;
+  }
+}
+
 /* Give quoted passages enough separation to read as distinct content. */
 div[role="main"] blockquote {
   margin: 1.5rem 0;
