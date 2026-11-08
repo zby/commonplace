@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [informed-direction-and-autonomous-judgment](./informed-direction-and-autonomous-judgment/README.md) — posed 2026-11-08: parked hypothesis that agents assume informed operator acceptance while operators rely on their advice; await local cases distinguishing missed objections, unreported difficulties, and knowingly exploratory work
+
 - [link-label-premise-contribution](./link-label-premise-contribution/README.md) — posed 2026-11-08: determine when descriptive link text supplies a missing premise; calibrate reconstruction assessment, design controlled comparisons, retain evidence, then write bounded claims and decide the old note's disposition
 
 - [unresolved-work-reconsideration](./unresolved-work-reconsideration/README.md) — posed 2026-11-08: test an instruction that scans notes, logs, ledgers, proposals and workshops for the next straightforward useful task; starts with an Open Questions inventory and a read-only selection trial, with broader lifecycle and search-allocation questions deferred
