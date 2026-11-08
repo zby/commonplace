@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
 from properdocs.structure.files import File, Files, InclusionLevel
 
 from commonplace.docs import properdocs_hooks
@@ -349,13 +350,16 @@ def test_lens_listing_links_each_current_member(tmp_path: Path, tmp_library) -> 
     assert "[Current analyses](./systems.md)" in properdocs_hooks.on_page_markdown("# Memory lens\n", page)
 
 
-def test_on_files_leaves_marked_report_subtrees_off_the_site(tmp_path: Path) -> None:
+@pytest.mark.parametrize("collection", ["reports", "work", "agentic-systems"])
+def test_on_files_leaves_marked_subtrees_off_the_site(tmp_path: Path, collection: str) -> None:
     docs_dir = tmp_path / "kb"
-    report = write(docs_dir / "reports/retained/trial/README.md", "# Trial\n")
-    capture = write(docs_dir / "reports/retained/trial/captures/out.md", "# Out\n")
-    write(docs_dir / "reports/retained/trial/captures/.commonplace-validation-ignore", "")
+    trial = docs_dir / collection / "retained/trial"
+    report = write(trial / "README.md", "# Trial\n")
+    capture = write(trial / "captures/nested/out.md", "# Captured content\n")
+    asset = write(trial / "captures/nested/raw.txt", "Raw capture\n")
+    write(trial / "captures/.commonplace-validation-ignore", "")
     note = write(docs_dir / "notes/n.md", "# N\n")
-    write(docs_dir / "reports/COLLECTION.md", "# Reports\n")
+    write(docs_dir / collection / "COLLECTION.md", "# Collection\n")
     copied = docs_dir / "reports/cache/bundle/kb/notes"
     write(copied / "COLLECTION.md", "# Copied notes\n")
     write(copied / "README.md", "# Copied notes\n")
@@ -365,12 +369,22 @@ def test_on_files_leaves_marked_report_subtrees_off_the_site(tmp_path: Path) -> 
         plugins = SimpleNamespace(_current_plugin="test")
     config = Config(docs_dir=str(docs_dir))
     files = Files([File(p.relative_to(docs_dir).as_posix(), str(docs_dir), config.site_dir, False,
-                        inclusion=InclusionLevel.INCLUDED) for p in (report, capture, note)])
+                        inclusion=InclusionLevel.INCLUDED) for p in (report, capture, asset, note)])
+    virtual_uri = f"{collection}/retained/trial/captures/generated.md"
+    files.append(File.generated(config, virtual_uri, content="# Generated capture\n",
+                                inclusion=InclusionLevel.INCLUDED))
 
     properdocs_hooks.on_files(files, config)
 
     inclusion = {f.src_uri: f.inclusion for f in files}
-    assert inclusion["reports/retained/trial/README.md"] is InclusionLevel.INCLUDED
-    assert inclusion["reports/retained/trial/captures/out.md"] is InclusionLevel.EXCLUDED
+    assert inclusion[f"{collection}/retained/trial/README.md"] is InclusionLevel.INCLUDED
+    assert inclusion[f"{collection}/retained/trial/captures/nested/out.md"] is InclusionLevel.EXCLUDED
+    assert inclusion[f"{collection}/retained/trial/captures/nested/raw.txt"] is InclusionLevel.EXCLUDED
+    assert inclusion[virtual_uri] is InclusionLevel.EXCLUDED
     assert inclusion["notes/n.md"] is InclusionLevel.INCLUDED
-    assert not [uri for uri in inclusion if uri.startswith("reports/") and uri.endswith("dir-index.md")]
+    for file in files:
+        if file.src_uri.endswith("dir-index.md") and file.inclusion is InclusionLevel.INCLUDED:
+            assert "Captured content" not in file.content_string
+            assert "/captures/" not in file.src_uri
+    if collection == "reports":
+        assert not [uri for uri in inclusion if uri.startswith("reports/") and uri.endswith("dir-index.md")]

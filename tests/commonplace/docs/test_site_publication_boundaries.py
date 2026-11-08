@@ -21,6 +21,18 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert not excluded.match_file("sources/README.md")
 
 
+def test_redirects_do_not_target_validation_ignored_subtrees() -> None:
+    config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
+    redirects = next(plugin["redirects"]["redirect_maps"] for plugin in config["plugins"]
+                     if isinstance(plugin, dict) and "redirects" in plugin)
+    docs_dir = ROOT / config["docs_dir"]
+    for target in redirects.values():
+        directory = (docs_dir / target).parent
+        while directory.is_relative_to(docs_dir):
+            assert not (directory / ".commonplace-validation-ignore").exists(), target
+            directory = directory.parent
+
+
 def test_only_retained_reports_and_analysis_sets_are_published() -> None:
     config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
     excluded = PathSpec().run_validation(config["exclude_docs"])

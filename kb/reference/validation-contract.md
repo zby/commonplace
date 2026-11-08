@@ -55,6 +55,14 @@ subtree notices. They do not scan other collections or bypass validation-ignore
 markers. A directory artifact's target timestamp is the directory's mtime,
 not an aggregation of its members' mtimes.
 
+A `.commonplace-validation-ignore` marker excludes its subtree from
+collection-scoped validation and, with the shipped ProperDocs hook, from the
+published site in every collection. Site exclusion includes assets and
+generated pages; it does not delete the files or prevent explicit validation
+of an individual artifact. Keep the interpreting report outside a marked
+capture subtree. Links to excluded evidence need a repository URL rather than
+a local site-page link.
+
 ## Directory artifacts
 
 A [directory artifact](./definitions/directory-artifact.md) is a directory

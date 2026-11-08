@@ -19,11 +19,9 @@ from commonplace.lib import index_directory, index_generated
 from commonplace.lib.index_directory import UNPUBLISHED_COLLECTIONS
 from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER
 
-# Report retained/ pages are published, except subtrees carrying the
-# validation-ignore marker: exact captures and trial bundles are data, not
-# pages whose links or types the KB vouches for. properdocs.yml excludes the
-# local state/ and cache/ areas.
-REPORTS = "reports"
+# Across the KB, validation-ignore markers also exclude subtrees from the
+# site: exact captures and trial bundles are data, not vouched-for pages.
+# properdocs.yml separately excludes local state/ and cache/ areas.
 
 # Published collections left out of the main menu; their pages still build.
 HIDDEN_FROM_NAV = frozenset({"agent-memory-systems", "types"})
@@ -151,7 +149,7 @@ def on_files(files, config):
     leftover) is replaced by the generated version.
     """
     _generated_index_dirs.clear()
-    _exclude_marked_reports(files, Path(config["docs_dir"]).resolve())
+    _exclude_marked_subtrees(files, Path(config["docs_dir"]).resolve())
     docs_dir = Path(config["docs_dir"]).resolve()
     root = docs_dir.parent
     published_paths = {
@@ -217,23 +215,24 @@ def on_files(files, config):
             if (lens_dir / "README.md").exists():
                 _replace_generated(files, config, (LENS_ROOT / lens / "systems.md").as_posix(),
                                    _lens_listing(lens, analyses, lens_dir.resolve()))
+    # Generated files must obey the same boundary as authored pages/assets.
+    _exclude_marked_subtrees(files, docs_dir)
     return files
 
 
-def _exclude_marked_reports(files, docs_dir: Path) -> None:
-    reports = docs_dir / REPORTS
+def _exclude_marked_subtrees(files, docs_dir: Path) -> None:
     marked: dict[Path, bool] = {}
 
     def is_marked(directory: Path) -> bool:
         if directory not in marked:
             marked[directory] = (directory / VALIDATION_IGNORE_MARKER).exists() or (
-                directory != reports and is_marked(directory.parent))
+                directory != docs_dir and is_marked(directory.parent))
         return marked[directory]
 
     for file in files:
-        if file.abs_src_path is None or not file.src_uri.startswith(f"{REPORTS}/"):
-            continue
-        if is_marked(Path(file.abs_src_path).resolve().parent):
+        # src_uri also identifies generated files, which have no source path.
+        directory = (docs_dir / file.src_uri).resolve().parent
+        if directory.is_relative_to(docs_dir) and is_marked(directory):
             file.inclusion = InclusionLevel.EXCLUDED
 
 
