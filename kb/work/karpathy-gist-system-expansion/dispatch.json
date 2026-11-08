@@ -1,0 +1,902 @@
+[
+  {
+    "key": "liushengyu/memexos",
+    "reason": "Review-separated wiki updates and use-feedback maintenance",
+    "question": "Which checks and independent review decisions actually gate wiki promotion?",
+    "url": "https://github.com/liushengyu/memexos",
+    "canonical_key": "liushengyu/memexos",
+    "preparation_label": "liushengyu-memexos",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6452852,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6452852#gistcomment-6452852",
+        "created_at": "2026-11-02T04:08:06Z",
+        "updated_at": "2026-11-02T04:08:06Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "3171ffad7cd8a43274e9c7fcda47959036f2f1863f2073621726dcca7a4ccf69",
+    "readme_sha256": "d092b9f9b0e7f4cfe30eca28c96fc5a5ef85d2fa00731538b1638c4105e9e0fb"
+  },
+  {
+    "key": "obelyth/cortex",
+    "reason": "Commit-bound quote verification and guest proposal boundary",
+    "question": "What does quote verification establish, and who can bypass proposal review?",
+    "url": "https://github.com/Obelyth/cortex",
+    "canonical_key": "obelyth/cortex",
+    "preparation_label": "obelyth-cortex",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6365460,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6365460#gistcomment-6365460",
+        "created_at": "2026-09-12T09:51:49Z",
+        "updated_at": "2026-09-12T09:53:09Z",
+        "origin": "new"
+      },
+      {
+        "id": 6365468,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6365468#gistcomment-6365468",
+        "created_at": "2026-09-12T09:59:41Z",
+        "updated_at": "2026-09-12T09:59:41Z",
+        "origin": "new"
+      },
+      {
+        "id": 6401465,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6401465#gistcomment-6401465",
+        "created_at": "2026-10-01T16:46:35Z",
+        "updated_at": "2026-10-01T16:46:35Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "8433224344672ebefcdd87b60937b544ef4ed062632b17394e8d6ab651b7ab21",
+    "readme_sha256": "93d8eca606839dcc8f882e5df468ffbde8e1686488c7ade4cb1197ef6c12b26f"
+  },
+  {
+    "key": "francisdu53/exia-seed",
+    "reason": "Graph activation recall and source-line admission checks",
+    "question": "How do retained raw evidence, consolidation and automatic recall connect?",
+    "url": "https://github.com/francisdu53/exia-seed",
+    "canonical_key": "francisdu53/exia-seed",
+    "preparation_label": "francisdu53-exia-seed",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6448248,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6448248#gistcomment-6448248",
+        "created_at": "2026-10-28T20:09:47Z",
+        "updated_at": "2026-11-02T11:58:17Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "02528a40a43618ea5f8069ece9d1cd3a463132efec49f86ec00acb60cc812b64",
+    "readme_sha256": "da82f27c19aa80e47f3caaf48e942006b5bc9316af773f4a47a93b5414aa8c89"
+  },
+  {
+    "key": "suwonleee/llmwiki",
+    "reason": "Cross-harness capture, decision recall and edit-time rules",
+    "question": "Which harness paths deliver decisions into later context and edits?",
+    "url": "https://github.com/suwonleee/llmwiki",
+    "canonical_key": "suwonleee/llmwiki",
+    "preparation_label": "suwonleee-llmwiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6265997,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6265997#gistcomment-6265997",
+        "created_at": "2026-07-20T10:49:47Z",
+        "updated_at": "2026-07-20T10:49:47Z",
+        "origin": "new"
+      },
+      {
+        "id": 6284942,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6284942#gistcomment-6284942",
+        "created_at": "2026-07-29T15:03:34Z",
+        "updated_at": "2026-07-29T15:03:34Z",
+        "origin": "new"
+      },
+      {
+        "id": 6321505,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6321505#gistcomment-6321505",
+        "created_at": "2026-08-19T12:29:32Z",
+        "updated_at": "2026-08-19T12:35:12Z",
+        "origin": "new"
+      },
+      {
+        "id": 6349500,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6349500#gistcomment-6349500",
+        "created_at": "2026-09-03T09:09:23Z",
+        "updated_at": "2026-09-03T09:09:23Z",
+        "origin": "new"
+      },
+      {
+        "id": 6425841,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6425841#gistcomment-6425841",
+        "created_at": "2026-10-14T11:34:47Z",
+        "updated_at": "2026-10-14T11:34:47Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "357b3baa301b85e0353197ad69036c2523eb8764a3c7d21dba6b0b5d6ce6180d",
+    "readme_sha256": "b49e0b014e91bf13970ceda4d6de5a75c792374b857dad294385fe151839e131"
+  },
+  {
+    "key": "alfadur7/llm-wiki-newsroom",
+    "reason": "Separated author/reviewer roles and proposed rule improvement",
+    "question": "Are editorial promotion and rule-change regression gates enforced or prescribed?",
+    "url": "https://github.com/alfadur7/llm-wiki-newsroom",
+    "canonical_key": "alfadur7/llm-wiki-newsroom",
+    "preparation_label": "alfadur7-llm-wiki-newsroom",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6218432,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6218432#gistcomment-6218432",
+        "created_at": "2026-06-26T07:04:04Z",
+        "updated_at": "2026-06-26T07:04:04Z",
+        "origin": "new"
+      },
+      {
+        "id": 6223045,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6223045#gistcomment-6223045",
+        "created_at": "2026-06-30T01:46:25Z",
+        "updated_at": "2026-06-30T01:52:16Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "8cbac39d00dbb1f55f2159c3d45f35221f12dc53389fb1b323832fbf9367b8f1",
+    "readme_sha256": "7021ae0c4bea2792ea99da0ceedf7dbf4ae19b8bb70a4a25eb96ce189051552e"
+  },
+  {
+    "key": "crow-hq/llm-wiki-v2",
+    "reason": "Typed classification before model-authored wiki updates",
+    "question": "Which decisions belong to the classifier, and how are mistaken classifications corrected?",
+    "url": "https://github.com/crow-hq/llm-wiki-v2",
+    "canonical_key": "crow-hq/llm-wiki-v2",
+    "preparation_label": "crow-hq-llm-wiki-v2",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6427891,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6427891#gistcomment-6427891",
+        "created_at": "2026-10-15T09:10:06Z",
+        "updated_at": "2026-10-15T09:10:06Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "fc1bc28e7628d07d08568240d7e34c5b5edc39edcfdc7937bb013e7d166deef9",
+    "readme_sha256": "6414723c5772d5c5938986d16286e8acfe7878804262a026ad328d0715ed7a83"
+  },
+  {
+    "key": "nfeldman/amanuensis",
+    "reason": "Durable code accounts with challenge and freshness state",
+    "question": "How do challenged findings become accepted or stale and reach later agents?",
+    "url": "https://github.com/nfeldman/amanuensis",
+    "canonical_key": "nfeldman/amanuensis",
+    "preparation_label": "nfeldman-amanuensis",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6344820,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6344820#gistcomment-6344820",
+        "created_at": "2026-08-31T22:31:13Z",
+        "updated_at": "2026-08-31T22:33:05Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "fcd55704d8ecb2a6e5794b90801ab5c25c4a8c99f7e8b0f635be186912e033d2",
+    "readme_sha256": "6a3b5c5b13f7dcf521886285e9b7d189b41c02755a7f5df11104e62a19a165b7"
+  },
+  {
+    "key": "demartinogiuseppe/antinomia",
+    "reason": "Contradictions represented as maintained objects",
+    "question": "What closes a tension, and how is resolution evidence retained?",
+    "url": "https://github.com/demartinogiuseppe/antinomia",
+    "canonical_key": "demartinogiuseppe/antinomia",
+    "preparation_label": "demartinogiuseppe-antinomia",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6207255,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6207255#gistcomment-6207255",
+        "created_at": "2026-06-19T07:00:06Z",
+        "updated_at": "2026-06-19T07:00:06Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "ff9ff301d189487bb5aa14fceb5ac36dfd6e5a047aec3d6f3cb8e77071de2237",
+    "readme_sha256": "96097b19fb25e83b624dd845bd312fe9b493899c39c17ad02ce46989c4a826f7"
+  },
+  {
+    "key": "xbluesky/cortexes",
+    "reason": "Capture, bounded distillation and fusion into existing memory",
+    "question": "Which checks prevent incomplete or duplicate session evidence from replacing memory?",
+    "url": "https://github.com/XBlueSky/cortexes",
+    "canonical_key": "xbluesky/cortexes",
+    "preparation_label": "xbluesky-cortexes",
+    "default_branch_observed": "plugin",
+    "comments": [
+      {
+        "id": 6284110,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6284110#gistcomment-6284110",
+        "created_at": "2026-07-29T06:34:09Z",
+        "updated_at": "2026-07-29T06:34:09Z",
+        "origin": "new"
+      },
+      {
+        "id": 6317008,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6317008#gistcomment-6317008",
+        "created_at": "2026-08-17T05:49:36Z",
+        "updated_at": "2026-08-17T05:49:36Z",
+        "origin": "new"
+      },
+      {
+        "id": 6382464,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6382464#gistcomment-6382464",
+        "created_at": "2026-09-22T05:48:40Z",
+        "updated_at": "2026-09-22T05:48:40Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "761ef8349edc6747a75b109b2b591d2b6f59d1d973bf31a1ca86a0831daf610a",
+    "readme_sha256": "3f5f887b579a853093fadf62a0fdc7d5d830f343c87d7100382bea0d4123f750"
+  },
+  {
+    "key": "frankchu91/mindbase-llm-wiki",
+    "reason": "Human-approved wiki changes and quote-checked lint",
+    "question": "Where are source/wiki authority and approval boundaries enforced?",
+    "url": "https://github.com/frankchu91/mindbase-llm-wiki",
+    "canonical_key": "frankchu91/mindbase-llm-wiki",
+    "preparation_label": "frankchu91-mindbase-llm-wiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6328804,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6328804#gistcomment-6328804",
+        "created_at": "2026-08-24T06:25:18Z",
+        "updated_at": "2026-08-24T06:25:18Z",
+        "origin": "new"
+      },
+      {
+        "id": 6368378,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6368378#gistcomment-6368378",
+        "created_at": "2026-09-14T05:14:52Z",
+        "updated_at": "2026-09-14T05:14:52Z",
+        "origin": "new"
+      },
+      {
+        "id": 6430961,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6430961#gistcomment-6430961",
+        "created_at": "2026-10-16T20:43:18Z",
+        "updated_at": "2026-10-16T20:43:18Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "372a616634fc1bcc2770ab5b43cd4c0faff43e10142c8c9806f9132e7e963b88",
+    "readme_sha256": "c278e610e00bf4e911d4d8297a145c2970473e31bcdb903cb9f24054078ee72a"
+  },
+  {
+    "key": "equationalapplications/curated-thoughts",
+    "reason": "Shared Markdown/SQLite memory with MCP proposal flow",
+    "question": "Which representation is canonical and how do reviewed proposals reach agent reads?",
+    "url": "https://github.com/equationalapplications/curated-thoughts",
+    "canonical_key": "equationalapplications/curated-thoughts",
+    "preparation_label": "equationalapplications-curated-thoughts",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6144258,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6144258#gistcomment-6144258",
+        "created_at": "2026-05-11T13:29:14Z",
+        "updated_at": "2026-05-11T13:55:40Z",
+        "origin": "earlier"
+      },
+      {
+        "id": 6337308,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6337308#gistcomment-6337308",
+        "created_at": "2026-08-27T22:07:34Z",
+        "updated_at": "2026-08-27T22:11:18Z",
+        "origin": "new"
+      },
+      {
+        "id": 6377303,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6377303#gistcomment-6377303",
+        "created_at": "2026-09-18T13:30:37Z",
+        "updated_at": "2026-09-18T13:30:37Z",
+        "origin": "new"
+      },
+      {
+        "id": 6386128,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6386128#gistcomment-6386128",
+        "created_at": "2026-09-23T20:17:40Z",
+        "updated_at": "2026-09-23T20:17:59Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "d871f2da0e60851b3bfe2df01465ebbbad9e533f11997a0b324ef0034d6f1344",
+    "readme_sha256": "c85ecd36d30a83ff938bec898f71d25173ba9f84d5288b0696bf337fa056c18a"
+  },
+  {
+    "key": "madgodinc/mgi-mind",
+    "reason": "Deterministic conflict admission and stale/quarantine states",
+    "question": "What inputs authorize replacement, confirmation and quarantine at write time?",
+    "url": "https://github.com/madgodinc/mgi-mind",
+    "canonical_key": "madgodinc/mgi-mind",
+    "preparation_label": "madgodinc-mgi-mind",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6340323,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6340323#gistcomment-6340323",
+        "created_at": "2026-08-29T15:19:08Z",
+        "updated_at": "2026-08-29T15:19:08Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "340bb0aff2c8f1fd3e9fe031dd8be12407cffcf648fb34905b05e1008e1f2bee",
+    "readme_sha256": "39d48de48a54c45fd0917b85a6fd5937ae5804950691a5c89b68d6ca5f748407"
+  },
+  {
+    "key": "sturlese/stigmergy",
+    "reason": "Team entity stewardship and audience-scoped memory reads",
+    "question": "Do admission and visibility checks bind the same bytes that are committed and retrieved?",
+    "url": "https://github.com/sturlese/stigmergy",
+    "canonical_key": "sturlese/stigmergy",
+    "preparation_label": "sturlese-stigmergy",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6301167,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6301167#gistcomment-6301167",
+        "created_at": "2026-08-07T11:14:10Z",
+        "updated_at": "2026-08-07T11:14:10Z",
+        "origin": "new"
+      },
+      {
+        "id": 6306038,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6306038#gistcomment-6306038",
+        "created_at": "2026-08-10T17:25:33Z",
+        "updated_at": "2026-08-10T17:25:33Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "da691347f4ddd058b385e32e5648438ad71f99460b2bfdf0006aedf4b2b0f335",
+    "readme_sha256": "4ce6663734f01f63e21e061f3af7f1c7e9cb14c41e96be0ede9c4d0c8845458a"
+  },
+  {
+    "key": "rightl/rightmemory",
+    "reason": "Structured Git-backed memory and controlled shared views",
+    "question": "How are private roots, shared views and multi-agent updates separated?",
+    "url": "https://github.com/RightL/RightMemory",
+    "canonical_key": "rightl/rightmemory",
+    "preparation_label": "rightl-rightmemory",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6224846,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6224846#gistcomment-6224846",
+        "created_at": "2026-07-01T04:00:27Z",
+        "updated_at": "2026-07-01T04:00:27Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "74dd276c4a55a8460770013a54acf06b48268bca885d1d4018f3cb670d853ab5",
+    "readme_sha256": "05193aced6682a19f20f7721925851666753abbc9d84db0e955e6e461cba20ff"
+  },
+  {
+    "key": "serradura/okf-gem",
+    "reason": "Skill, deterministic CLI and maintenance hook split",
+    "question": "Which invariants are checked mechanically and which require the host agent?",
+    "url": "https://github.com/serradura/okf",
+    "canonical_key": "serradura/okf",
+    "preparation_label": "serradura-okf",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6255287,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6255287#gistcomment-6255287",
+        "created_at": "2026-07-15T00:12:07Z",
+        "updated_at": "2026-07-15T12:26:53Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "9b38ba486f19f74afb98bf6f2958c0e74fe878ae197dce1f4167b55f25b63d4d",
+    "readme_sha256": "a997ad3a6dcb59d9a820747cf3d8eba1850bd55cc3f95ab83a00bbeb6412983c"
+  },
+  {
+    "key": "wikibrain-app/wikibrain",
+    "reason": "MCP wiki and server-side agent sharing one tool surface",
+    "question": "How do instruction reads, pending-source computation and server-side writes interact?",
+    "url": "https://github.com/wikibrain-app/wikibrain",
+    "canonical_key": "wikibrain-app/wikibrain",
+    "preparation_label": "wikibrain-app-wikibrain",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6362239,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6362239#gistcomment-6362239",
+        "created_at": "2026-09-10T15:47:20Z",
+        "updated_at": "2026-09-10T15:47:20Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "12a8a4702eb9084ef91886e8d8f14e3b2ce25d3e45e6c21663fa027d3cb7e40d",
+    "readme_sha256": "35fce62a45c3cb70e88e7bb9df2bc97688260f32191145226f6646f6cbe32106"
+  },
+  {
+    "key": "sidleo/llm-wiki",
+    "reason": "One core across Pi, plugin and CLI with directory write rules",
+    "question": "Do all hosts apply the same verification and write authority rules?",
+    "url": "https://github.com/sidleo/llm-wiki",
+    "canonical_key": "sidleo/llm-wiki",
+    "preparation_label": "sidleo-llm-wiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6371101,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6371101#gistcomment-6371101",
+        "created_at": "2026-09-15T09:35:59Z",
+        "updated_at": "2026-09-15T09:35:59Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "b805f3cb57127f163ea89cbe46b31739e652fefc0e617b81c08cdeeb9978c517",
+    "readme_sha256": "a366bb0f366b866c29cbe921fee77cb29694b08cbd55c37f0e77e9326d613744"
+  },
+  {
+    "key": "nimbalyst/nimbalyst-wiki",
+    "reason": "Operator-facing decision and open-question memory",
+    "question": "How are significant decisions selected, attributed and restored into continuing work?",
+    "url": "https://github.com/nimbalyst/nimbalyst-wiki",
+    "canonical_key": "nimbalyst/nimbalyst-wiki",
+    "preparation_label": "nimbalyst-nimbalyst-wiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6436773,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6436773#gistcomment-6436773",
+        "created_at": "2026-10-20T14:55:52Z",
+        "updated_at": "2026-10-20T14:55:52Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "0945ab0044818d60a6fff2777f59a8bfced0d39be30130820f1c96ca38bc687f",
+    "readme_sha256": "0e0c698304e1104491d7d79e1af24155105a5a3aaca3e53ab595d3d57f349d63"
+  },
+  {
+    "key": "jimmybackend/mcma-openmemory",
+    "reason": "Portable memory separate from generated wiki views",
+    "question": "How are validation, provenance and encryption preserved across storage adapters?",
+    "url": "https://github.com/jimmybackend/MCMA-OpenMemory",
+    "canonical_key": "jimmybackend/mcma-openmemory",
+    "preparation_label": "jimmybackend-mcma-openmemory",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6348262,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6348262#gistcomment-6348262",
+        "created_at": "2026-09-02T18:00:55Z",
+        "updated_at": "2026-09-02T18:00:55Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "da1e109f090c8876ff81151e7ca714eb1e5fefd6603768e05b90b592a1a2d9d9",
+    "readme_sha256": "284a313b512c712b43910482da4858dee20d07114050effd382570f26e27cef9"
+  },
+  {
+    "key": "azaylamba/repocodex",
+    "reason": "Code-state-bound rationale and freshness attestation",
+    "question": "What does a pin check prove and what triggers rationale revision?",
+    "url": "https://github.com/azaylamba/repocodex",
+    "canonical_key": "azaylamba/repocodex",
+    "preparation_label": "azaylamba-repocodex",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6366954,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6366954#gistcomment-6366954",
+        "created_at": "2026-09-13T10:36:24Z",
+        "updated_at": "2026-09-13T10:36:24Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "bc7675e07d8a1ee23b2fbcdd876c4a35201e61524b4110695f7281953cc4d922",
+    "readme_sha256": "62a0f35b1b92017d5cd181a8a58dfa8d4f90bb96932cd15f57a81c01c34042c0"
+  },
+  {
+    "key": "orangeproai/orangepro-mcp",
+    "reason": "Maintained behavioral knowledge and change verification",
+    "question": "How does retained behavioral knowledge affect later verification and get corrected?",
+    "url": "https://github.com/OrangeproAI/orangepro-mcp",
+    "canonical_key": "orangeproai/orangepro-mcp",
+    "preparation_label": "orangeproai-orangepro-mcp",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6237886,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6237886#gistcomment-6237886",
+        "created_at": "2026-07-07T06:33:09Z",
+        "updated_at": "2026-07-07T06:33:09Z",
+        "origin": "new"
+      },
+      {
+        "id": 6263632,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6263632#gistcomment-6263632",
+        "created_at": "2026-07-18T11:53:36Z",
+        "updated_at": "2026-07-18T11:53:36Z",
+        "origin": "new"
+      },
+      {
+        "id": 6295034,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6295034#gistcomment-6295034",
+        "created_at": "2026-08-03T22:16:22Z",
+        "updated_at": "2026-08-03T22:16:22Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "a0fc0f509f768982120c8f45afe3beeaff03804a5ea0a2a74915c95f905d6c41",
+    "readme_sha256": "c99f8320d3da276181fcfdb5a4a3f9e6060447cdb367f3bd7b5053de8653e1fe"
+  },
+  {
+    "key": "janyork/llm-wiki-cli",
+    "reason": "SQLite-canonical memory graph with Markdown projection",
+    "question": "How are agent writes, revisions and citations kept coherent across projections?",
+    "url": "https://github.com/JanYork/llm-wiki-cli",
+    "canonical_key": "janyork/llm-wiki-cli",
+    "preparation_label": "janyork-llm-wiki-cli",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6288782,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6288782#gistcomment-6288782",
+        "created_at": "2026-07-31T04:35:01Z",
+        "updated_at": "2026-07-31T04:35:01Z",
+        "origin": "new"
+      },
+      {
+        "id": 6289082,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6289082#gistcomment-6289082",
+        "created_at": "2026-07-31T08:58:53Z",
+        "updated_at": "2026-07-31T08:58:53Z",
+        "origin": "new"
+      },
+      {
+        "id": 6308835,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6308835#gistcomment-6308835",
+        "created_at": "2026-08-12T03:02:00Z",
+        "updated_at": "2026-08-12T03:02:00Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "0ddfeed63179bae08c51d53508ea2cd1ac397fb4237b57fc589d8dc6447e9c9d",
+    "readme_sha256": "7a0f45d165ce852c3e6185f8bab535b08cacac505c9d735a4977a81f30d2e69b"
+  },
+  {
+    "key": "kostey/khms-memory",
+    "reason": "Immutable typed cards and hook-pushed recall",
+    "question": "How do supersession and review decisions change what later sessions receive?",
+    "url": "https://github.com/ksx-cz/khms-memory",
+    "canonical_key": "ksx-cz/khms-memory",
+    "preparation_label": "ksx-cz-khms-memory",
+    "default_branch_observed": "master",
+    "comments": [
+      {
+        "id": 6338688,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6338688#gistcomment-6338688",
+        "created_at": "2026-08-28T13:22:50Z",
+        "updated_at": "2026-08-28T13:22:50Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "a8c7808bfb00e388bce25867e25e81b2e9e2f8dff3c2dcd9f1260dc516303e50",
+    "readme_sha256": "ccb599d289132e42b140c525075217541ade9191bab5bf2f0e87100e1d3a27f1"
+  },
+  {
+    "key": "alphazede/bran",
+    "reason": "Deterministic knowledge traversal and bounded context packets",
+    "question": "How does the maintained schema affect ranking and host-agent context delivery?",
+    "url": "https://github.com/alphazede/bran",
+    "canonical_key": "alphazede/bran",
+    "preparation_label": "alphazede-bran",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6302004,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6302004#gistcomment-6302004",
+        "created_at": "2026-08-07T22:34:11Z",
+        "updated_at": "2026-08-07T22:34:11Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "9a93cd2035b1af6a811dc399b3be6445064111bcd0267074c84dbd6cb12c1894",
+    "readme_sha256": "c8b7ada0b1b6d9cb85a3d36b3a512fba437edd32705421b38b535ee4095c4c3b"
+  },
+  {
+    "key": "mohammadmaso/kherad",
+    "reason": "Git-backed wiki compilation through merge requests",
+    "question": "Which review and merge routes distinguish generated drafts from canonical pages?",
+    "url": "https://github.com/mohammadmaso/kherad",
+    "canonical_key": "mohammadmaso/kherad",
+    "preparation_label": "mohammadmaso-kherad",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6262844,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6262844#gistcomment-6262844",
+        "created_at": "2026-07-17T17:53:10Z",
+        "updated_at": "2026-07-17T17:53:10Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "3b28b879d6d34585bf99fd53b2d68c6ec0aa39c5f4601b6805896318d9c633e3",
+    "readme_sha256": "827af47cdd6d533864a8d0a9975911ea155f337ad7f9b7f43b242c51d7d68e64"
+  },
+  {
+    "key": "sturlese/hippocampus",
+    "reason": "Small injected cache plus index-guided retrieval",
+    "question": "What refreshes the cache and what happens when index-guided retrieval fails?",
+    "url": "https://github.com/sturlese/hippocampus",
+    "canonical_key": "sturlese/hippocampus",
+    "preparation_label": "sturlese-hippocampus",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6264580,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6264580#gistcomment-6264580",
+        "created_at": "2026-07-19T07:41:14Z",
+        "updated_at": "2026-07-19T07:41:14Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "5982be5232f1e73113dbe0d6213e29bd5d79ae0fc3e1141920e9e0e695553062",
+    "readme_sha256": "6ed7b7f083eb0dc8e59b9a7ba5dba153ccaa2c5a0b9343e963e2ed4066509adf"
+  },
+  {
+    "key": "sistema2d/framecode-vibework",
+    "reason": "Carryover executable-spec governance and technical memory",
+    "question": "Which activation artifacts deliver its governance into target workspaces?",
+    "url": "https://github.com/Sistema2D/FrameCode-VibeWork",
+    "canonical_key": "sistema2d/framecode-vibework",
+    "preparation_label": "sistema2d-framecode-vibework",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6152026,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6152026#gistcomment-6152026",
+        "created_at": "2026-05-15T16:26:48Z",
+        "updated_at": "2026-05-15T16:26:48Z",
+        "origin": "earlier"
+      },
+      {
+        "id": 6155060,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6155060#gistcomment-6155060",
+        "created_at": "2026-05-18T11:14:23Z",
+        "updated_at": "2026-05-18T11:14:23Z",
+        "origin": "earlier"
+      },
+      {
+        "id": 6186108,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6186108#gistcomment-6186108",
+        "created_at": "2026-06-06T17:40:32Z",
+        "updated_at": "2026-06-06T17:40:32Z",
+        "origin": "earlier"
+      },
+      {
+        "id": 6213280,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6213280#gistcomment-6213280",
+        "created_at": "2026-06-23T13:40:50Z",
+        "updated_at": "2026-06-23T13:40:50Z",
+        "origin": "new"
+      },
+      {
+        "id": 6321615,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6321615#gistcomment-6321615",
+        "created_at": "2026-08-19T14:24:11Z",
+        "updated_at": "2026-08-19T14:24:11Z",
+        "origin": "new"
+      },
+      {
+        "id": 6343649,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6343649#gistcomment-6343649",
+        "created_at": "2026-08-31T17:32:45Z",
+        "updated_at": "2026-08-31T17:32:45Z",
+        "origin": "new"
+      },
+      {
+        "id": 6399956,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6399956#gistcomment-6399956",
+        "created_at": "2026-10-01T02:02:43Z",
+        "updated_at": "2026-10-01T02:02:43Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "bda4910909a139d22d60cd3ed0887817fb3c5d5e38abe376e7f7c6a92d7a3504",
+    "readme_sha256": "ec661c38d2eaf0c6bd0ffee0de08906d1c2b1cb7d63a0ef914efab343fa913b6"
+  },
+  {
+    "key": "giodra96/project-wiki",
+    "reason": "Code/spec/ADR traceability and progressive context routing",
+    "question": "What detects stale code links and how does routing deliver relevant constraints?",
+    "url": "https://github.com/giodra96/project-wiki",
+    "canonical_key": "giodra96/project-wiki",
+    "preparation_label": "giodra96-project-wiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6321649,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6321649#gistcomment-6321649",
+        "created_at": "2026-08-19T14:54:01Z",
+        "updated_at": "2026-08-19T14:54:01Z",
+        "origin": "new"
+      },
+      {
+        "id": 6381463,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6381463#gistcomment-6381463",
+        "created_at": "2026-09-21T14:36:35Z",
+        "updated_at": "2026-09-21T14:36:35Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "6d944c3192fda1f765ff1b61d383bd9a91fafa5eeeafd1b6d5cdd3e95fef7730",
+    "readme_sha256": "deb226492ef397e4e59cbb44fea653d6944453d29af1275112c3763b35ea7ff4"
+  },
+  {
+    "key": "equationalapplications/expo-llm-wiki",
+    "reason": "Portable SQLite memory engine with configurable ontologies",
+    "question": "Which schema constraints bind extraction, persistence and later graph reads?",
+    "url": "https://github.com/equationalapplications/expo-llm-wiki",
+    "canonical_key": "equationalapplications/expo-llm-wiki",
+    "preparation_label": "equationalapplications-expo-llm-wiki",
+    "default_branch_observed": "main",
+    "comments": [
+      {
+        "id": 6148265,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6148265#gistcomment-6148265",
+        "created_at": "2026-05-13T14:34:26Z",
+        "updated_at": "2026-05-13T14:52:35Z",
+        "origin": "earlier"
+      },
+      {
+        "id": 6211662,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6211662#gistcomment-6211662",
+        "created_at": "2026-06-22T13:27:22Z",
+        "updated_at": "2026-06-22T19:07:17Z",
+        "origin": "new"
+      },
+      {
+        "id": 6308450,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6308450#gistcomment-6308450",
+        "created_at": "2026-08-11T21:14:25Z",
+        "updated_at": "2026-08-12T02:20:33Z",
+        "origin": "new"
+      },
+      {
+        "id": 6337114,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6337114#gistcomment-6337114",
+        "created_at": "2026-08-27T19:44:03Z",
+        "updated_at": "2026-08-27T19:44:03Z",
+        "origin": "new"
+      },
+      {
+        "id": 6342074,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6342074#gistcomment-6342074",
+        "created_at": "2026-08-30T23:15:13Z",
+        "updated_at": "2026-08-30T23:16:13Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "2efc1eb0303875ac4062785ff1d185b993cd69b8544df8c84757a8b78c4e9570",
+    "readme_sha256": "ba182d8335ea6bcf07dde6c2d37ce17b81f5859d715cfef8cd8d7f16dc39f697"
+  },
+  {
+    "key": "iwe-org/iwe",
+    "reason": "Structural Markdown graph operations and validation",
+    "question": "How do structural editing and schema checks constrain agent-maintained knowledge?",
+    "url": "https://github.com/iwe-org/iwe",
+    "canonical_key": "iwe-org/iwe",
+    "preparation_label": "iwe-org-iwe",
+    "default_branch_observed": "master",
+    "comments": [
+      {
+        "id": 6317613,
+        "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f?permalink_comment_id=6317613#gistcomment-6317613",
+        "created_at": "2026-08-17T10:44:53Z",
+        "updated_at": "2026-08-17T10:44:53Z",
+        "origin": "new"
+      }
+    ],
+    "coverage_paths": [],
+    "source_revision": null,
+    "worker_profile": "pi-sol",
+    "metadata_sha256": "96b2523b2f015b974af4b7771820c71c295566df01a224a4081ecae754fa6eb9",
+    "readme_sha256": "6a225498535f78bcc630f8f6f9540da5a3d39ff00343055f4f8800738839edbc"
+  }
+]

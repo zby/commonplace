@@ -104,6 +104,24 @@ publication, runner success, or semantic correctness. In-flight attempts that
 never produced reports cannot be detected. Exit status is 2 for root scan
 errors, otherwise 0 even when report findings exist. See `--help` for options.
 
+## Gist repository triage
+
+`python3 scripts/triage_gist_repositories.py --help` describes the offline
+inventory helper for saved GitHub gist comment API pages. It verifies contiguous
+pagination and a terminal Link header, rejects duplicate comment IDs, extracts
+repository roots, and records exact response hashes. Coverage checks use only
+publication/review filenames and the completion workshop's source identities;
+they do not inspect analysis contents or establish accepted coverage.
+
+With a human-authored selection plus captured repository metadata and READMEs,
+it resolves canonical source URLs, rejects duplicate/covered/owned selections,
+and can render a dispatch URL list and provisional candidate dispositions.
+It performs no network requests, semantic ranking, target execution or worker
+launches. Its checks cannot replace human relevance screening or a fresh
+ownership check. Use a distinct capture directory for every observation; never
+overwrite captured source bytes. Run with `--help` for the input layout and
+output options.
+
 ## Memory landscape queries
 
 `scripts/memory_landscape_queries/` holds the query ledger behind the
