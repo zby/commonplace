@@ -22,6 +22,21 @@ In longer work, implementation progress may further obscure an unresolved obstac
 
 The competing requirements are real: act autonomously, respect direction, use technical judgment, support novel research, and report consequential difficulties without interrupting for every uncertainty. Neither unconditional compliance nor automatic refusal resolves them. Raising a decision-relevant objection may reconcile them, but whether to investigate independently, report without pausing, or ask for a decision depends on the task and granted discretion. This workshop does not prescribe a universal escalation gate.
 
+## Comparison with conceptual blending: preserving uncertainty may not permit action
+
+In a follow-up on 2026-11-08, the operator identified a possible common structure with the [conceptual-blending workshop](../epistemic-relevance-and-conceptual-blending/README.md): the agent faces a choice without the information needed to settle it, under conflicting pressures to acknowledge what it does not know and to finish the task. This is a proposed comparison, not evidence that the two failures share a cause.
+
+The operator distinguished opposite errors involving a second reading of the request:
+
+- In conceptual blending, the agent develops an additional reading but merges it into the main line without warrant. It could instead pursue both readings separately, preserving the distinction without settling which was intended.
+- Here, the agent may fail to consider the additional reading: the operator could be relying on its feasibility judgment rather than knowingly accepting the difficulty. Following the explicit direction alone can miss that reliance.
+
+The candidate shared requirement is to consider an alternative interpretation without silently adopting it or blending it into the explicit request. But that does not supply a general solution for autonomous action.
+
+In an interactive session, the agent can surface the objection and establish the operator's understanding or purpose. Without an available operator, the readings may require incompatible actions: continue a knowingly exploratory attempt, or stop or redirect work intended to deliver a feasible result. The agent cannot necessarily do both. An asynchronous warning preserves reporting but does not determine the next action.
+
+Some interpretive uncertainties can therefore remain explicit in an output; others must be resolved, or provided for, before consequential action. Prior knowledge of the operator, delegated discretion, or an agreed fallback might supply grounds for action. Without those grounds, further technical reasoning cannot establish the operator's intended commitment, and there may be no well-grounded choice available. This is a limit to investigate, not a new requirement to stop whenever intent is uncertain.
+
 ## Distinctions to preserve
 
 - **Requested versus informed continuation.** An instruction establishes what was requested, not necessarily what risks the operator understood.
@@ -54,13 +69,15 @@ The aim is to reconstruct the division of judgment at the consequential decision
 - The difficulty and its basis, including whether it was visible then or identified only retrospectively.
 - Any objection actually raised, its specificity, and the operator's response.
 - Subsequent tests, construction, progress claims, and changes of direction.
+- Whether an alternative reading was considered, kept separate, blended into the main course, or omitted.
+- Whether useful work could preserve both readings, or the next action required choosing between them; if so, what prior agreement or delegated discretion supplied grounds for the choice.
 - What remains unknown, and which rival explanation best fits the available evidence.
 
 Keep exact excerpts or stable session references where available. Distinguish observations from participant recollections and later interpretations. Count successive corrections in one task as one episode. No formal case schema is needed before the first example shows what information is useful.
 
 ## Neighbors, reopening, and closure
 
-[Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) supplies the existing distinction between answering a prompted question and raising an unasked concern. The [structural-coherence workshop](../agent-curiosity-and-structural-coherence/README.md) investigates failures to originate structural concerns during otherwise locally competent work. These are neighboring questions, not evidence of one shared cause. The operator also noted similarity to another recent recorded failure; the exact intended episode was not confirmed in this discussion.
+[Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) supplies the existing distinction between answering a prompted question and raising an unasked concern. The [structural-coherence workshop](../agent-curiosity-and-structural-coherence/README.md) investigates failures to originate structural concerns during otherwise locally competent work. These are neighboring questions, not evidence of one shared cause. The operator subsequently identified conceptual blending as the other failure under comparison; the proposed relationship and its autonomous-action limit are retained above.
 
 Reopen when an independently arising local case materially distinguishes unnoticed difficulty, unreported difficulty, assumed informed direction, or informed acceptance. A strong counterexample is equally useful. The first review should ask whether this framing adds anything beyond existing knowledge-use and delegation accounts, and narrow, split, or reject it accordingly. No recurrence count or deadline is imposed.
 
