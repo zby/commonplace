@@ -63,6 +63,22 @@ of an individual artifact. Keep the interpreting report outside a marked
 capture subtree. Links to excluded evidence need a repository URL rather than
 a local site-page link.
 
+The site can project checkout-relative links without changing Markdown bytes.
+`extra.repository_files_url` in `properdocs.yml` supplies the public repository
+base. Existing targets inside the checkout but outside the published pages
+(including marked evidence) link there; missing targets retain normal site
+warnings. The configured base must correspond to the checkout being published.
+
+Attributed external quotations have a separate link boundary. The renderer
+uses an explicit commit-pinned GitHub source file, the accepted analysis's
+frozen Git source plus its attributed file, or a name-paired, checksum-bound
+ingest capture's source URL. A web source URL identifies the original page,
+not an immutable remote copy. If no reliable source-file base is available,
+quoted relative links render as their label and literal original path, not
+Commonplace navigation. Ordinary unattributed blockquotes and authored links
+keep normal link diagnostics. Rendering does not verify external destinations
+or alter retained quotations.
+
 ## Directory artifacts
 
 A [directory artifact](./definitions/directory-artifact.md) is a directory

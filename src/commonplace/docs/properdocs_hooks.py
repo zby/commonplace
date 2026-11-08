@@ -15,6 +15,7 @@ from pathlib import Path
 from properdocs.plugins import event_priority
 from properdocs.structure.files import File, InclusionLevel
 
+from commonplace.docs.site_links import install as install_site_links
 from commonplace.lib import index_directory, index_generated
 from commonplace.lib.index_directory import UNPUBLISHED_COLLECTIONS
 from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER
@@ -300,6 +301,7 @@ def _tag_link(tag: str, note_dir: Path, root: Path | None) -> str:
 
 
 def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
+    install_site_links(page, config, kwargs.get("files"))
     meta = page.meta or {}
 
     if meta:

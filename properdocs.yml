@@ -1,6 +1,9 @@
 site_name: Commonplace
 site_description: Commonplace knowledge base rendered as static HTML.
 site_url: https://zby.github.io/commonplace/
+extra:
+  # Website-only destination for existing checkout files not published as pages.
+  repository_files_url: https://github.com/zby/commonplace/blob/main/
 docs_dir: kb
 # Explicit filenames also let readers follow links when opening HTML from disk.
 use_directory_urls: false
