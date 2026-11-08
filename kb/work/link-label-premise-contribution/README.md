@@ -14,9 +14,11 @@ note or justify a predetermined review gate.
 
 ## Starting point, not established conclusions
 
-The [existing note](../../theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md)
-reports five initial reconstruction PASS verdicts and a later comparison of
-three mature notes with and without descriptive labels; all six later verdicts
+The deleted note, “Descriptive link labels may supply the self-sufficiency a
+reconstruction gate would check,” is retained as an [unverified starting
+record](./prior-note-2026-11-08.md) from revision
+`7c3fa9b8d140812a5d56b8af99452169cc797a21`. It reports five initial reconstruction
+PASS verdicts and a later comparison of three mature notes with and without descriptive labels; all six later verdicts
 were PASS. These are reported results, not yet independently recovered evidence
 for this workshop.
 
@@ -82,16 +84,17 @@ results. Specify the durable evidence destination before writing library claims,
 so the claims can cite inspectable evidence rather than an account in a workshop
 that will disappear. Follow the destination collection and type contracts.
 
-No new experiment has run. The existing library note is unchanged. Its eventual
-rewrite, replacement, consolidation or retirement must follow the evidence and
-applicable lifecycle procedures; keeping a standalone claim is not required.
+No new experiment has run. The operator approved deleting the old library note
+on 2026-11-08 without a public redirect. Its text remains an unverified starting
+record above. Any replacement claim must follow the evidence; keeping a
+standalone theory note is not required.
 No gate adoption or review-system change is part of this investigation by default.
 
 ## Closure
 
 Close when the question has a bounded answer or an explicit inconclusive result,
 the evidence and its limits have a durable home, any warranted claims have been
-written without local operating detail, and the old note has a justified
-disposition. Update the predecessor workshop's pointer, extract the results, and
-close under the workshop collection contract. A negative result or no new theory
+written without local operating detail, and the old note's approved deletion has
+been completed. Update the predecessor workshop's pointer, extract the results,
+and close under the workshop collection contract. A negative result or no new theory
 note is a valid outcome.

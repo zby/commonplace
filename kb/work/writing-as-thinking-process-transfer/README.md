@@ -34,7 +34,7 @@ Status ∈ {open, testing, promoted, rejected}. Method and first target are deli
 
 ## Open discriminating tests carried in from the two promoted conjectures
 
-- [descriptive-link-labels may supply claim self-sufficiency](../../theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md) — investigation transferred on 2026-11-08 to [link-label premise contribution](../link-label-premise-contribution/README.md). The earlier ablation reports 6/6 cold-reader PASS with and without labels, but does not establish the cause or the reconstruction check's sensitivity. The new workshop owns question formation, controlled experiment design, retained evidence and the old note's disposition; the thin-draft test is not an already settled protocol.
+- “Descriptive-link-labels may supply claim self-sufficiency” (deleted note) — investigation transferred on 2026-11-08 to [link-label premise contribution](../link-label-premise-contribution/README.md). The earlier ablation reports 6/6 cold-reader PASS with and without labels, but does not establish the cause or the reconstruction check's sensitivity. The new workshop owns question formation, controlled experiment design, retained evidence and the old note's disposition; the thin-draft test is not an already settled protocol.
 - [claim-routed reading may beat reading-first for synthesis notes](../../theory/claim-routed-reading-may-beat-reading-first-for-synthesis-notes.md) — its head-to-head test (build one synthesis note both ways, compare warranted update vs context cost) is **deferred** by maintainer to control scope.
 
 ## Sources

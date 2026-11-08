@@ -75,7 +75,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/decomposition-heuristics-for-bounded-context-scheduling.md](../../theory/decomposition-heuristics-for-bounded-context-scheduling.md) — line 75: `## Open Questions`
 - [theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md](../../theory/dependency-locality-supports-ordering-heuristics-not-a-reading-cost.md) — line 70: `## Open Questions`
 - [theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md](../../theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md) — line 61: `## Open Questions`
-- [theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md](../../theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md) — line 38: `## Open questions`
+- `theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md` (historical entry; note subsequently deleted) — line 38: `## Open questions`
 - [theory/documentation-generates-the-system-rather-than-describing-it.md](../../theory/documentation-generates-the-system-rather-than-describing-it.md) — line 66: `## Open Questions`
 - [theory/domain-pricing-routes-an-exception-to-idealization-assessment.md](../../theory/domain-pricing-routes-an-exception-to-idealization-assessment.md) — line 63: `## Open Questions`
 - [theory/elicitation-requires-maintained-question-generation-systems.md](../../theory/elicitation-requires-maintained-question-generation-systems.md) — line 72: `## Open questions`

@@ -501,7 +501,6 @@ plugins:
         'notes/deploy-time-learning-README.md': 'tags/deploy-time-learning-README.md'
         'notes/deploy-time-learning-the-missing-middle.md': 'theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md'
         'notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md': 'theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md'
-        'notes/descriptive-link-labels-may-supply-claim-self-sufficiency.md': 'theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md'
         'notes/design-for-the-first-time-human-except-on-access-cost.md': 'theory/design-for-the-first-time-human-except-on-access-cost.md'
         'notes/design-rationale-must-preserve-unregenerable-decision-premises.md': 'theory/design-rationale-must-preserve-unregenerable-decision-premises.md'
         'notes/designing-agent-memory-systems.md': 'theory/designing-agent-memory-systems.md'

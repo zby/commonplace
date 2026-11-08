@@ -45,7 +45,7 @@ Evidence: the note proposes “Attempted semantic search before falling back to 
 
 ### 3. Test the unresolved thin-draft case for claim reconstruction
 
-Source: [descriptive link labels may supply claim self-sufficiency](../../theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md), Open questions.
+Source: “Descriptive link labels may supply claim self-sufficiency” (historical source: `89dd98770eec00359da3a3aee6a8866ea51c0658:kb/theory/descriptive-link-labels-may-supply-claim-self-sufficiency.md`), Open questions.
 
 Evidence: the retained ablation found mature bodies sufficient without labels; a genuinely thin pre-connect draft remains untested. The [writing-as-thinking workshop](../writing-as-thinking-process-transfer/README.md) carries the test as open.
 
