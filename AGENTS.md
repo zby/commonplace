@@ -76,6 +76,7 @@ First-mention glossing and linking in authored artifacts is governed by
 | Representational form | [Representational form](./kb/theory/definitions/representational-form.md); prompt is a consumption path, not a fourth form. |
 | System-definition artifact | [System-definition artifact](./kb/theory/definitions/system-definition-artifact.md) |
 | Tentative theory | [Tentative theory](./kb/theory/definitions/tentative-theory.md) |
+| Unresolved frontier | [Unresolved frontier](./kb/reference/definitions/unresolved-frontier.md) |
 | Theory builder | [Theory builder](./kb/theory/definitions/theory-builder.md) |
 | Workshop | [Workshop layer](./kb/theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) |
 

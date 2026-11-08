@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [unresolved-work-reconsideration](./unresolved-work-reconsideration/README.md) — posed 2026-11-08: test an instruction that scans notes, logs, ledgers, proposals and workshops for the next straightforward useful task; starts with an Open Questions inventory and a read-only selection trial, with broader lifecycle and search-allocation questions deferred
+
 - [karpathy-gist-system-expansion](./karpathy-gist-system-expansion/README.md) — 30 canonical URLs; six sequential live analyses passed and remain unintegrated; paused before system 7 because worker path/quotation mistakes recur beyond five runs, despite checked recovery; no controller or material result defect established by bounded audits
 
 - [hidden-failures-review-fixes](./hidden-failures-review-fixes/README.md) — seven items from the 2026-11-07 hidden-failures review of this checkout's Claude Code sessions: scanner precision fix, advisory-audit gap for Claude Code workers (diagnosis pending worktree authorization), capped-evidence and silent-edit observations, generalizing the Pi-only review instruction, two recorded lapses and two operator decisions; review report retained
