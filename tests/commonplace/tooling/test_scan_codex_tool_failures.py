@@ -5,6 +5,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 SCRIPT = Path(__file__).resolve().parents[3] / "scripts/scan_tools/scan_codex_tool_failures.py"
 
 
@@ -14,19 +16,26 @@ def record(kind, payload):
 
 def run_scan(tmp_path, records, suffix=""):
     trace = tmp_path / "rollout.jsonl"
-    trace.write_text("".join(json.dumps(r) + "\n" for r in records) + suffix)
+    trace.write_text("".join(json.dumps(r) + "\n" for r in records) + suffix, encoding="utf-8")
     before = trace.read_bytes()
     result = subprocess.run(
         [sys.executable, str(SCRIPT), str(trace), str(trace)],
-        capture_output=True, text=True, check=False,
+        capture_output=True, text=True, encoding="utf-8", check=False,
     )
     assert trace.read_bytes() == before
+    # Exit 2 is a supported partial report, not a crashed subprocess. Surface
+    # crashes (including stdout encoding errors) before attempting JSON decode.
+    assert result.returncode in (0, 2), result.stderr
     report = json.loads(result.stdout)
     assert len(report["traces"]) == 1
     return result.returncode, report, report["traces"][0]
 
 
-def test_native_wrapped_results_and_duplicate_events(tmp_path):
+@pytest.mark.parametrize("stdout_encoding", ["utf-8", "cp1252"])
+def test_native_wrapped_results_and_duplicate_events(tmp_path, monkeypatch, stdout_encoding):
+    # Exercise the real CLI's output stream under both Unicode and legacy
+    # encodings. JSON escapes must preserve the diagnostic in either case.
+    monkeypatch.setenv("PYTHONIOENCODING", stdout_encoding)
     call = record("response_item", {
         "type": "custom_tool_call", "call_id": "c1", "name": "functions.exec",
         "input": "text(await tools.exec_command({cmd: 'rg absent file'}))",
@@ -49,6 +58,7 @@ def test_native_wrapped_results_and_duplicate_events(tmp_path):
     failure = trace["findings"][0]
     assert failure["call_line"] == 2 and failure["line"] == 4
     assert failure["evidence"][0]["exit_code"] == 1
+    assert failure["evidence"][0]["diagnostic_excerpt"] == "missing\u2028match"
     assert failure["recovery"] == "not_assessed"
     assert trace["session_id"] == "s1" and trace["coverage"]["last_line"] == 7
 

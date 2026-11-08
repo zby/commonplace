@@ -260,7 +260,7 @@ def main() -> int:
     reports = [scan(path) for path in dict.fromkeys(p.resolve() for p in args.traces)]
     print(json.dumps(scan_report(
         reports, scope="explicit failure candidates and supported observations; recovery not assessed",
-    ), indent=2, ensure_ascii=False))
+    ), indent=2, ensure_ascii=True))
     return 2 if any(r["input_issues"] for r in reports) else 0
 
 

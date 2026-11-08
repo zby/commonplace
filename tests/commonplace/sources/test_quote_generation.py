@@ -2,6 +2,7 @@
 import subprocess
 from dataclasses import replace
 from hashlib import sha256
+from pathlib import Path
 
 import pytest
 
@@ -32,7 +33,9 @@ def test_occurrences_are_exact_source_substrings_without_context_expansion(text,
 
 def capture(tmp_path, text):
     path = tmp_path / "capture.md"
-    path.write_text(text)
+    # Captures are UTF-8; keep the digest tied to the actual on-disk bytes,
+    # including the platform's newline translation.
+    path.write_text(text, encoding="utf-8")
     return CapturePin("https://example.com/doc", "capture", path, sha256(path.read_bytes()).hexdigest())
 
 
@@ -170,6 +173,35 @@ def test_capture_path_and_hash_are_checked_even_without_version(tmp_path):
     result, = resolve_citations(parse_blockquotes(block(source, "changed")), replace(source), kind="code")
     assert result.status == "unverified"
     assert "source unavailable" in result.detail and "SHA-256 mismatch" in result.detail
+
+
+def test_utf8_crlf_capture_matches_but_normalized_byte_hash_is_rejected(tmp_path, monkeypatch):
+    # Emulate Windows defaults: a legacy encoding unless explicitly supplied,
+    # plus CRLF translation. This catches a fixture reverting to locale encoding.
+    write_text = Path.write_text
+
+    def windows_write_text(path, data, **kwargs):
+        kwargs.setdefault("encoding", "cp1252")
+        kwargs.setdefault("newline", "\r\n")
+        return write_text(path, data, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", windows_write_text)
+    text = "café — first\nsecond\n"
+    source = capture(tmp_path, text)
+    content = source.file.read_bytes()
+    assert content == text.replace("\n", "\r\n").encode("utf-8")
+    assert source.checksum == sha256(content).hexdigest()
+    citation, = parse_blockquotes(block(source, "café — first\nsecond"))
+    result, = resolve_citations([citation], source, kind="code")
+    assert result.status == "match", result.detail
+
+    normalized_hash = sha256(text.encode("utf-8")).hexdigest()
+    assert source.checksum != normalized_hash
+    result, = resolve_citations(
+        [citation], replace(source, checksum=normalized_hash), kind="code",
+    )
+    assert result.status == "unverified"
+    assert "SHA-256 mismatch" in result.detail
 
 
 def test_path_only_git_attribution_uses_frozen_revision(tmp_path):
