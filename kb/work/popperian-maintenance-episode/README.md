@@ -6,6 +6,14 @@ Record the 2026-08 history of `kb/notes/llm-output-deviation-requires-three-way-
 
 The episode matters beyond its note: it is the first end-to-end trace in this repository of a bold causal claim being defeated by the premise-decomposition gate, repaired under the [narrowing guards](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md), drifting toward an analytic claim, and then re-earning empirical content through a worked comparison. It is also the trigger case for two questions the library did not yet hold: whether the repair-disposition vocabulary is missing an idealization option, and whether repair policy is a per-installation profile choice. A second witness arrived the same day from a parallel session — the class-instance-analogy defeats, where the counterexamples are domain-priced exceptions — and supplied the operational honesty test the first case lacked. This workshop is the coordination point for the idealization thread across sessions.
 
+## Evidence publication policy
+
+Raw captures in `fifth-episode-record/evidence/`, `fifth-episode-record/versions/`
+and `sixth-episode-record/evidence/` are excluded from validation and site
+publication by `.commonplace-validation-ignore`. Stored links preserve their
+source spelling, not live navigation. Episode findings and record READMEs remain
+live and published; their relative evidence links support checkout use.
+
 ## Threads
 
 - [episode-record.md](./episode-record.md) — the first witness reconstructed: timeline, the three acts, what the gates defeated and what held, the content accounting, and the drivers

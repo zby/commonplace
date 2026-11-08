@@ -16,7 +16,7 @@ note or justify a predetermined review gate.
 
 The deleted note, “Descriptive link labels may supply the self-sufficiency a
 reconstruction gate would check,” is retained as an [unverified starting
-record](./prior-note-2026-11-08.md) from revision
+record](./evidence/prior-note-2026-11-08.md) from revision
 `7c3fa9b8d140812a5d56b8af99452169cc797a21`. It reports five initial reconstruction
 PASS verdicts and a later comparison of three mature notes with and without descriptive labels; all six later verdicts
 were PASS. These are reported results, not yet independently recovered evidence
@@ -35,6 +35,13 @@ its other process-transfer work remains separate. The
 records how the candidate was selected. The subsequent reassessment found that
 it needs experimental design rather than immediate execution of that shortlist
 recommendation.
+
+## Evidence publication policy
+
+Raw captures in `evidence/` are excluded from validation and site publication by
+`.commonplace-validation-ignore`. Stored links preserve their source spelling,
+not live navigation. This framing and any live conclusions remain published;
+the relative evidence link above supports checkout use.
 
 ## Evaluation boundary
 

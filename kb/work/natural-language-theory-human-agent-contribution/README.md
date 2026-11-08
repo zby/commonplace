@@ -14,6 +14,13 @@ Contribution is assessed by interventions in the revision episode, not by word c
 
 This workshop does not yet claim compounding. It records a candidate pathway: retain the epistemological theory, use it to revise the machinery that guides writing or review, and then test whether that revised machinery improves later knowledge work. Weaving the theory into an instruction, criterion, or other operative path would establish installation and reuse; compounding additionally requires a later improvement that depends on the retained benefit. Nor does this single selected case estimate how often agents make substantive contributions.
 
+## Evidence publication policy
+
+Raw evidence in `evidence/` is excluded from validation and site publication by
+`.commonplace-validation-ignore`. Stored links preserve their source spelling;
+they are not maintained as live navigation. This framing and `analysis.md` remain
+live and published. Relative links below retain checkout access to the evidence.
+
 ## Working files
 
 - [Session and process record](./evidence/session-and-process-record.md) — exact human prompts plus reconstructed agent and multistage contributions

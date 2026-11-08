@@ -10,6 +10,13 @@ recorded for reuse "after we have more examples and process them into a
 coherent procedure". This is a record-and-accumulate workshop, not an
 execution plan.
 
+## Evidence publication policy
+
+Raw examples in `evidence/` are excluded from validation and site publication by
+`.commonplace-validation-ignore`. Stored links preserve their source spelling,
+not live navigation. The method, taxonomy, run findings and this framing remain
+live and published. Relative evidence links below support checkout use.
+
 ## The approach as observed
 
 The loop has two phases and the operator drives the first.
@@ -38,7 +45,7 @@ diagnosis of *why* it fails, which is what makes the sweep possible.
 
 For an agent asked to apply this method to a draft article:
 
-1. Read the [examples file](./examples-automated-software-houses-2026-09-05.md)
+1. Read the [examples file](./evidence/examples-automated-software-houses-2026-09-05.md)
    first. It holds every edit from the first run with the operator's verdict,
    the diagnosis, and the text before and after. The verdicts show what the
    operator counts as a failure; the before/after pairs show the size and kind
@@ -71,7 +78,7 @@ For an agent asked to apply this method to a draft article:
    article), with the diagnosis in the commit body. Record the operator's
    verdict verbatim in the run's examples file, not only in the commit.
 8. Add a run section to this README and a new examples file named
-   `examples-<article-stem>-<date>.md`. Revise the taxonomy against the run:
+   `evidence/examples-<article-stem>-<date>.md`. Revise the taxonomy against the run:
    add a row only for a kind seen in that run, and note any row that fired
    wrongly.
 
@@ -191,7 +198,7 @@ procedure's checklist; rows that appear once are dropped.
 `kb/articles/automated-software-houses-with-fixed-llms.md`, commits
 `298295d2` through `3f3fa5f7` (nineteen, one unrelated landscape commit
 interleaved). Fifteen edits with before/after text and verdicts in
-[examples-automated-software-houses-2026-09-05.md](./examples-automated-software-houses-2026-09-05.md). Phase 1 covered the claim, the TL;DR, the open-ended
+[examples-automated-software-houses-2026-09-05.md](./evidence/examples-automated-software-houses-2026-09-05.md). Phase 1 covered the claim, the TL;DR, the open-ended
 definition, the mechanism paragraph, and the Naur section. Phase 2 produced
 eight candidates, all applied. Side effects: the software-house definition
 note lost its declared-scope clause (`08215a3d`), and one supplement was
@@ -204,7 +211,7 @@ renamed.
 operator's instruction to do as much as possible alone, so phase 2 ran without
 phase 1; the whole-article read produced five findings reported for the
 operator and not edited. Edits and findings in
-[examples-bootstrapping-the-first-automated-software-house-2026-09-05.md](./examples-bootstrapping-the-first-automated-software-house-2026-09-05.md).
+[examples-bootstrapping-the-first-automated-software-house-2026-09-05.md](./evidence/examples-bootstrapping-the-first-automated-software-house-2026-09-05.md).
 The five findings were then applied on the operator's "OK - apply these"
 (`764bd476` through `f0d7e2c9`, five more commits), and a second re-read
 produced seven small candidates, all applied on the same verdict
@@ -225,7 +232,7 @@ held.
 `kb/articles/the-software-house-as-the-unit-of-training.md`, commits
 `d353c642` through `f21963ad` (twenty-four). Twenty-one edits and one recorded
 skip in
-[examples-the-software-house-as-the-unit-of-training-2026-09-05.md](./examples-the-software-house-as-the-unit-of-training-2026-09-05.md).
+[examples-the-software-house-as-the-unit-of-training-2026-09-05.md](./evidence/examples-the-software-house-as-the-unit-of-training-2026-09-05.md).
 The whole-article read produced two findings, both accepted: an undrawn
 training/learning distinction, and a TL;DR that had dropped one of its three
 hypotheses. Phase 2 ran from the first run's examples after only those three
