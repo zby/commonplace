@@ -33,6 +33,23 @@ Recover a truncated read with a smaller range; a larger inner token limit
 cannot fix outer delivery truncation. Use the available read tool for files when
 the runtime requires it.
 
+For example, this correction pattern is unsafe unless the read is complete:
+
+```javascript
+const baseline = await tools.read({ path: previousReport });
+const corrected = baseline.replace(oldText, newText);
+await tools.write({ path: outputReport, content: corrected });
+```
+
+A read can return a shortened file plus a notice such as
+`[Showing lines 1-405 of 428 ... Use offset=406 to continue.]`.
+The write then succeeds but saves the notice instead of the missing tail.
+Keeping the result inside a script does not bypass the read tool's own limit.
+Recover every missing range and remove tool continuation notices before
+assembling the output; deleting a notice alone does not restore missing text.
+Check that the correction preserves untouched baseline content. A passing
+content check does not by itself establish complete preservation.
+
 Preserve and expose each shell command's exit code alongside stdout and stderr.
 Wait for completion and inspect the exit code before using the result. When
 calling through a script or tool wrapper, forward the complete command result;
