@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [link-label-premise-contribution](./link-label-premise-contribution/README.md) — posed 2026-11-08: determine when descriptive link text supplies a missing premise; calibrate reconstruction assessment, design controlled comparisons, retain evidence, then write bounded claims and decide the old note's disposition
+
 - [unresolved-work-reconsideration](./unresolved-work-reconsideration/README.md) — posed 2026-11-08: test an instruction that scans notes, logs, ledgers, proposals and workshops for the next straightforward useful task; starts with an Open Questions inventory and a read-only selection trial, with broader lifecycle and search-allocation questions deferred
 
 - [karpathy-gist-system-expansion](./karpathy-gist-system-expansion/README.md) — 30 canonical URLs; six sequential live analyses passed and remain unintegrated; paused before system 7 because worker path/quotation mistakes recur beyond five runs, despite checked recovery; no controller or material result defect established by bounded audits
