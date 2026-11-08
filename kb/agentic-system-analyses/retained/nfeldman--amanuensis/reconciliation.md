@@ -1,0 +1,60 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of Amanuensis analyst records at a98093dc7aad3c0e64d42132ece305fc5ea7f3f9."
+run-id: AAS-2026-11-08-amanuensis-b3a8e3e53488-01
+reviewed-boundary: a98093dc7aad3c0e64d42132ece305fc5ea7f3f9
+---
+
+# Amanuensis reconciliation
+
+## Reconciliation
+
+This account connects the current pinned reports within the [frozen boundary](boundary.md#boundary-and-evidence). No source reads were needed. No analyst correction answers or declined objections were supplied. The previous reconciliation is not evidence for the current findings. Supersessions identify common referents without replacing either analyst's fields or transferring statuses.
+
+### Duplicate referents
+
+Amendment: [EPI-OBJ-claims](epistemic.md#epi-obj-claims) is superseded by [MEM-OBJ-claims](memory.md#mem-obj-claims). Both declare SQLite claims, evidence attachments and validity/event history from SRC-1: `mcp-server/src/tools/claims.ts`: the same statements, symbolic keys and revision intervals. The epistemic admission, challenge and withdrawal findings concern the memory report's retained object. Neither declaration establishes the statements' truth.
+
+Amendment: [EPI-OBJ-findings](epistemic.md#epi-obj-findings) is superseded by [MEM-OBJ-findings](memory.md#mem-obj-findings). Both identify findings and finding-resolution events from SRC-1: `mcp-server/src/tools/findings.ts`, including symptom/root-cause prose, repair status, revisions and evidence links. The epistemic repair-verification findings and memory resolution account concern this same object. Pending and verified repair remain distinct; identity does not strengthen caller verification into independent proof.
+
+Amendment: [EPI-OBJ-explanations](epistemic.md#epi-obj-explanations) is superseded by [MEM-OBJ-explanations](memory.md#mem-obj-explanations). Both declare append-only purpose/account rows with explanation-evidence links from SRC-1: `mcp-server/src/tools/explanations.ts`. Their recorded bodies, declined slots and effective-selection metadata are the same referent. The epistemic recording/selection assessment and memory lifecycle findings retain their separate fields; slot discharge remains different from semantic acceptance.
+
+Amendment: [EPI-OBJ-research-results](epistemic.md#epi-obj-research-results) is superseded by [MEM-OBJ-research-results](memory.md#mem-obj-research-results). Both identify landed results, source records, external claims and consumption records from SRC-1: `mcp-server/src/tools/research.ts`. Memory adds workspace-artifact custody rather than a different object. Epistemic provenance and confidence limits still apply; neither landing nor a consumption receipt establishes destination mutation.
+
+Amendment: [EPI-OBJ-stale-ledger](epistemic.md#epi-obj-stale-ledger) is superseded by [MEM-OBJ-file-ledger](memory.md#mem-obj-file-ledger). Both identify the per-file freshness/revision state in SQLite file_ledger and scope_gaps, supported by SRC-1: `mcp-server/src/tools/stale.ts`. Heat-based ranking and unresolved initialization in memory add fields to the same ledger. Epistemic's narrower clearing checks do not resolve initial admission control or establish actual re-examination.
+
+### Overlap without identity
+
+[RT-RTE-survey-cycle](runtime.md#rt-rte-survey-cycle) remains the request-to-publication container; [WF-RTE-adversarial-review](workflow.md#wf-rte-adversarial-review) explicitly declares a part of it. The latter's target selection, evidence checks and packaging handback do not replace the whole survey. Its overlaps with [EPI-RTE-claim-challenge](epistemic.md#epi-rte-claim-challenge), [EPI-RTE-finding-resolution](epistemic.md#epi-rte-finding-resolution) and [EPI-RTE-explanation-record](epistemic.md#epi-rte-explanation-record) span several targets, not a single duplicate route. No supersession is warranted. Wired evidence/status writes, afforded orchestration and doctrine-only semantic disproof concern different functions, not competing statuses for one guarantee.
+
+[MEM-RTE-knowledge-revision](memory.md#mem-rte-knowledge-revision) combines claim correction/history with finding transitions. [EPI-RTE-claim-withdrawal](epistemic.md#epi-rte-claim-withdrawal) isolates claim invalidation/successors, while [EPI-RTE-finding-resolution](epistemic.md#epi-rte-finding-resolution) includes finding admission, repair verification and overturn. Neither has the same endpoints and target set as the memory container. [EPI-RTE-claim-admission](epistemic.md#epi-rte-claim-admission) and [EPI-RTE-claim-challenge](epistemic.md#epi-rte-claim-challenge) also differ: initial current authority precedes challenge. The combined memory record is not shown wrong by these separate functions; it is not superseded by an incomplete split.
+
+[MEM-RTE-explanation-cycle](memory.md#mem-rte-explanation-cycle) covers recording, effective reading and reset withdrawal. [EPI-RTE-explanation-record](epistemic.md#epi-rte-explanation-record) and [EPI-RTE-explanation-selection](epistemic.md#epi-rte-explanation-selection) isolate writer and selection/gate functions. They are narrower referents, not alternative names for that lifecycle. No route supersession follows.
+
+[MEM-RTE-research-consumption](memory.md#mem-rte-research-consumption) spans landing, destination receipts and later retrieval. [EPI-RTE-research-landing](epistemic.md#epi-rte-research-landing) and [EPI-RTE-research-consumption](epistemic.md#epi-rte-research-consumption) separate provenance admission from declared use. The shared consumption label does not establish identical scope. All preserve receipt-only destination effects, so the broader container remains valid alongside these functions.
+
+[MEM-BAP-recorded-standing](memory.md#mem-bap-recorded-standing) carries changing retained context to a later answer; [RT-BAP-server-opening](runtime.md#rt-bap-server-opening) instructs a model to request it. [RT-BAP-phase-instructions](runtime.md#rt-bap-phase-instructions) instead carries static method guidance. Their payloads and causal positions differ. [MEM-RTE-brief-delivery](memory.md#mem-rte-brief-delivery) likewise differs from [RT-RTE-locus-read](runtime.md#rt-rte-locus-read): persisted task candidates, lexical/exact-ID targeting and design packets are not byte-budgeted locus lenses.
+
+[RT-RTE-tool-dispatch](runtime.md#rt-rte-tool-dispatch) is binding/transport, not the domain writers it invokes. Memory's retained notes, prose, logs, carry obligations, briefs and lesson/policy objects do not duplicate the static skill or host-model component. In particular, [MEM-OBJ-learning-lessons](memory.md#mem-obj-learning-lessons) and [MEM-OBJ-learning-policy](memory.md#mem-obj-learning-policy) differ from each other and from [RT-RTE-policy-admission](runtime.md#rt-rte-policy-admission), their admission route. Epistemic's evidence, disposition, contradiction, diagnosticity and sealed-review declarations have no counterpart declaration in the other reports. No further identity or required missing split part is established.
+
+### Current agreement and disposition of the previous conflict
+
+The previous delegation-scope conflict is no longer present. [RT-RTE-survey-cycle](runtime.md#rt-rte-survey-cycle), the runtime ordinary invocation and host-model component now explicitly restrict optional phase delegation to Phases 1–4 and reserve Phase 5 for the coordinator. This agrees with the workflow account and its survey annotation. Runtime retains the coordinator-only passage from SRC-1: `.claude/skills/amanuensis/references/phase-5-packaging.md` and distinguishes generic skill language from the specialized rule. Workflow retains the same explicit instruction. Memory's survey annotation describes optional Task-agent context separation without asserting that packaging is delegated. There is no current dependent finding requiring the former all-phases reading. This disposition compares the supplied reports; it does not assume an unseen correction answer or establish host compliance.
+
+[MEM-OBJ-findings](memory.md#mem-obj-findings), [EPI-RTE-finding-resolution](epistemic.md#epi-rte-finding-resolution) and [WF-RTE-adversarial-review](workflow.md#wf-rte-adversarial-review) converge on evidence-custody checks without treating them as semantic proof. Same-commit repair ancestry agrees with memory's “fix revision or a descendant”; claim withdrawal's strict-descendant boundary governs a different transition. Workflow also distinguishes an error's open-question guidance from an actual inserted question.
+
+[RT-RTE-survey-cycle](runtime.md#rt-rte-survey-cycle), [EPI-RTE-claim-challenge](epistemic.md#epi-rte-claim-challenge) and workflow retain the deferred-path exception to the ordinary prerequisite walk, alongside separately enforced explanation discharge. Thus none treats mapped standing as universal evidence of completed challenge. Epistemic's field-note/structured-challenge-row distinction adds a source procedure/implementation tension, not a conflicting peer finding. Runtime and workflow also retain the end_session/final-checkpoint ordering limit rather than presuming successful completion.
+
+[RT-RTE-docs-publication](runtime.md#rt-rte-docs-publication) supplies distinct default non-clean, verified clean, verification-disabled and standalone paths. Memory, epistemic and workflow preserve those limits. Workflow's publication with open explanation slots concerns visible incompleteness, not proof of mapped admission or source correctness. No unconditional preservation or readback guarantee can be selected from the reports.
+
+### Remaining integration limits
+
+[MEM-RTE-carry-recheck](memory.md#mem-rte-carry-recheck) retains a source-level recovery tension: instructions suggest repeating carry from the same archive, while the existing archive/finding pair is rejected. No other report establishes working same-pair recovery. The unresolved recovery mechanism remains a limitation, not a cross-report disagreement or an invented rollback.
+
+[MEM-OBJ-learning-policy](memory.md#mem-obj-learning-policy), memory's policy annotation and epistemic's ledger agree with [RT-RTE-policy-admission](runtime.md#rt-rte-policy-admission) on active database representation/readback without established future host dependence. Reasons survive in [MEM-OBJ-learning-lessons](memory.md#mem-obj-learning-lessons) but are omitted from the active serializer. This bounds rationale delivery, not persistence in the ledger. No exercised learning, causal benefit or self-improvement follows from choosing the strongest status word.
+
+Memory's forced selections before optional mode filtering in [MEM-RTE-brief-delivery](memory.md#mem-rte-brief-delivery) qualify a packet-selection guarantee. [EPI-RTE-review-aggregation](epistemic.md#epi-rte-review-aggregation) separately selects role packets. Neither proves host blindness. [EPI-RTE-review-scoring](epistemic.md#epi-rte-review-scoring) uses caller-supplied sealed reference keys; ordinary surveys and policy qualification do not thereby acquire that oracle. These selectors and evaluation domains remain separate.
+
+Memory's unknown initial file-ledger control, caller-asserted query origin and untraced maintenance/evaluation/adapter and driver chains remain local uncertainties. Epistemic adds directly inspected disposition, contradiction, diagnosticity and sealed-review mechanisms without contradicting memory's narrower inspection claims. The [whole-system boundary](boundary.md#boundary-and-evidence) defines functional inclusion, not exhaustive tracing. Available but unassessed receipts do not supply operation evidence. The reports leave system-complete negatives about acceptance, integration, theory building and benefit unavailable; no observed-run or causal support is established by the records reconciled here.
+
+No current cross-report disagreement is established by these pinned inputs. The remaining source tensions and scoped uncertainties above are retained without being judged or silently repaired.
