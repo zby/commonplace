@@ -1,0 +1,59 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent report verification of SIGN's preparation toolchain and declared agent delivery at the frozen partial-loop boundary."
+run-id: AAS-2026-11-09-sign-lang-379ffbdd642c-01
+reviewed-boundary: "f4eb1a82b114615754bbe5c2e6f4255a4ec1eeba"
+---
+
+# sign-lang report verification
+
+## Verification
+
+The reports support a bounded account of deterministic knowledge preparation and declared external agent delivery. I independently read the complete CLI, parser, rules, compiler, validation, coverage, drift and diff implementations, rather than relying on the analysts' check statements. HEAD equals the reviewed revision and the source checkout is clean. The tracked tree, package entry points, CI, editor manifest, corpus configuration and all four shipped corpus documents support the [boundary's classification](boundary.md#boundary-and-evidence): complete artifact, partial loop. No target code, tests, examples or provider calls were executed. Source reads supply implementation or doctrine/design evidence under SRC-1, not observed operation or causal benefit.
+
+### Record support and consequential branches
+
+All declared records and their load-bearing source anchors were assessed for meaning, status and scope. Deterministic link and quotation checks are left to code. There are no evidenced-absence declarations to treat as universal negatives.
+
+- [RT-CMP-validator](runtime.md#rt-cmp-validator) matches the package, bin and fixed JavaScript consumers. The six CLI branches support its scope; no model component is called by this preparation implementation. External model properties remain uninspected, not absent.
+- [RT-RTE-compile-canon](runtime.md#rt-rte-compile-canon) has the claimed pre-write error veto. I traced parse-error accumulation and all rule calls before active selection, then raw rereading, hashing and sequential writes. Multiple valid headers are supported parser input, and rules do not reject mixed lifecycle statuses; whole-file bundle inclusion therefore makes the mixed-status qualification reachable, not merely a hypothetical unchecked branch. Strict link resolution uses all parsed IDs before active filtering; status warnings do not restore active-only retrievability. Stable-input and nontransactional-write qualifications correctly limit the gate's invariant. The chars/4 check omits build headers and cannot guarantee a tokenizer-independent prompt budget.
+- [RT-RTE-validate-source](runtime.md#rt-rte-validate-source) correctly distinguishes standalone validation. A directly supplied file containing only a malformed header can leave zero documents while accumulating a parse error, reaching early success. This does not bypass compilation's separate error-array consumer. Fragment creation by other sigils does not invalidate that supported-input case.
+- [RT-RTE-source-signals](runtime.md#rt-rte-source-signals) accurately bounds coverage and drift to parsed anchors, current walked files and the Git comparison. I checked the CLI's discarded parse errors, lack of validation dispatch, lifecycle-independent anchor selection, ignored/unreadable directories, current-file intersection and governing-file-change suppression. Signals are not a mandatory compile gate or persistent review queue.
+- [RT-RTE-corpus-diff](runtime.md#rt-rte-corpus-diff) correctly reports current-path historical reconstruction, swallowed historical-read failures, after-only iteration and seven-sigil textual classification. The epistemic report's edge-provenance substitution reaches equal empty meaning signatures and no anchor difference in the inspected source; this is a valid deduction about classification, not evidence of an actual unauthorized promotion. Neither the CLI nor direct API supplies complete deletion detection.
+- [RT-RTE-import-delegation](runtime.md#rt-rte-import-delegation) matches ordered existence-based discovery, Node child execution, inherited stdio and exit handling. This does not disclose the external importer's admission or transformations. [RT-CLM-agent-contract](runtime.md#rt-clm-agent-contract) and [RT-BAP-canon-guidance](runtime.md#rt-bap-canon-guidance) correctly preserve the README's intended host channel without turning illustrative registration into a shipped resolver, provider loop or action barrier.
+
+The memory declarations distinguish input, projections and metadata correctly. [MEM-OBJ-canon-source](memory.md#mem-obj-canon-source) retains unknown authoring/approval and mixed symbolic/text consumption. [MEM-OBJ-canon-index](memory.md#mem-obj-canon-index) correctly identifies copied, last-assigned summaries and code-summarized anchors, not model summarization. [MEM-OBJ-canon-bundle](memory.md#mem-obj-canon-bundle) preserves raw-file lineage and the withdrawal qualification. [MEM-OBJ-canon-manifest](memory.md#mem-obj-canon-manifest) and [MEM-OBJ-bundle-checksum](memory.md#mem-obj-bundle-checksum) have known producers but no evidenced downstream verifier. [MEM-OBJ-skill-reference](memory.md#mem-obj-skill-reference) is static guidance with a named external reader. [MEM-RTE-canon-delivery](memory.md#mem-rte-canon-delivery) supports an afforded host role, not implemented or observed consumption. Memory annotations, write-side and read-back prose preserve those distinctions; static preparation is not evidence of trace-fed learning, context eviction or improved capacity.
+
+The epistemic inventory and ledger maintain separate checks, disposition, transformation, retention and intended consumption. [EPI-OBJ-sign-content](epistemic.md#epi-obj-sign-content), [EPI-OBJ-infer](epistemic.md#epi-obj-infer) and [EPI-OBJ-edge-provenance](epistemic.md#epi-obj-edge-provenance) distinguish policy, truth-apt rule text and claimed history from authenticated acceptance. [EPI-OBJ-canon-index](epistemic.md#epi-obj-canon-index), [EPI-OBJ-canon-bundle](epistemic.md#epi-obj-canon-bundle) and [EPI-OBJ-canon-manifest](epistemic.md#epi-obj-canon-manifest) retain the corresponding projection and warrant limits. [EPI-RTE-infer-check](epistemic.md#epi-rte-infer-check) checks Boolean prefix presence; empty values can satisfy it, and no source identity or derivation is checked. Its implemented status and uninspected operation are supported. [EPI-CLM-governed-inference](epistemic.md#epi-clm-governed-inference) is doctrine about intended reasoning, not a demonstrated inference engine. [EPI-CLM-provenance-authority](epistemic.md#epi-clm-provenance-authority) accurately preserves differing asserted conventions and the proposed machine-drafted exception. The inspected skill reference, main specification's inference/provenance sections and worked examples support those readings. No acceptance, learning or theory-builder iteration is inferred from notation alone.
+
+The [workflow account](workflow.md#workflow-account) follows one supported preparation chain and keeps the host continuation explicitly declared. Its annotations correctly assign caller initiation/recovery, software progression and optional maintenance. Source-read and mkdir failures return failed results; write exceptions can escape to CLI exit two after partial persistence. No independent delegated-agent task or final answer acceptance has been invented.
+
+### Relations, reconciliation and structural findings
+
+The three [reconciliation amendments](reconciliation.md#duplicate-identities-and-retained-parts) correctly identify duplicate source, index and bundle objects. They preserve IDs and findings rather than replacing values. Keeping the combined epistemic manifest/checksum record is justified: its findings remain valid alongside the two finer memory objects, and no downstream consumer is fabricated. Infer and edge-provenance objects are contained in the authored-source container; their `Part of:` relations are supported. The infer checker is an embedded subroute of compilation even though standalone validation also reuses it. Its check/disposition separation is valid, not duplicate identity.
+
+The reconciliation correctly connects the delivery claim, behavioral-authority path and memory route without upgrading evidence strength. Its integration-issue dispositions preserve unresolved host resolution, content delivery, authorship, metadata consumers and external transformations. No cross-report contradiction or missing-part conflict requiring correction was identified. Source-doctrine differences are already exposed in the provenance claim, not an analyst disagreement hidden by reconciliation. All four correction-answer files are empty; there are no corrected or declined objections to adjudicate. The supplied structural report contains `none`, so there is no structural failure requiring routing.
+
+### Omission questions and stopping decision
+
+The frozen tree and producer/consumer dependencies guided three challenges beyond the listed evidence: whether another shipped driver closes the host-consumption loop; whether maintenance or direct APIs bypass the claimed compile gate; and whether other shipped provenance/currency surfaces change the epistemic account. Package/CLI imports, all executable modules, local corpus configuration and the editor manifest establish no additional enclosing consumer. The local corpus is included as content, not excluded as an external caller. Maintenance and API alternatives are already bounded by their route records. External drafting, ingestion and platform references do not license importing those implementations into this source boundary.
+
+The third search found an inventory omission, retained below. SRC-1, `proposals/2026-08-sources-currency-blocks.md`, describes accepted optional citation and verification-posture blocks:
+
+> - `@sources` takes pipe-separated rows: authority (issuer), citation (pin cite), url. The
+>   third field is optional.
+> - Neither block appears in the Layer-1 index entry.
+> - Both are optional for every document type.
+> --- `proposals/2026-08-sources-currency-blocks.md`
+
+The same document specifies `research-pulled`, `volatility` and `verify-before-use` for `@currency`. Direct inspection of SRC-1, `validator/src/parse.js`, `validator/src/rules.js` and `validator/src/compile.js` shows order recognition and raw passthrough, not a currency evaluator or external-authority check. This fits the reports' structural-preparation account but leaves the provenance inventory incomplete. The July codebase proposal was also read to distinguish its external compiler claims from this implementation; it does not overturn the declared boundary.
+
+Further optional expansion stopped because the selected questions have supported dispositions and no identified material challenge remains undisposed. Exhaustive language fidelity, all examples, test coverage, external host policies and deployed performance remain outside the conclusions. Additional specification or test files alone do not warrant expanding this verification into those claims.
+
+## Blockers
+
+none
+
+## Limits
+
+- The memory and epistemic inventories do not separately characterize the accepted optional `@sources` citation triples and `@currency` verification-posture text within [MEM-OBJ-canon-source](memory.md#mem-obj-canon-source) and [EPI-OBJ-sign-content](epistemic.md#epi-obj-sign-content). SRC-1, `proposals/2026-08-sources-currency-blocks.md`, supplies their doctrine; `validator/src/parse.js`, `validator/src/rules.js` and `validator/src/compile.js` support ordering/raw retention rather than semantic verification. The bounded preparation and non-authentication conclusions remain supported. Readers should withhold an exhaustive comparison of SIGN's source-provenance and freshness-posture vocabulary, and must not read this inventory omission as absence of citation or verify-before-use guidance. No observed consumer compliance or external citation checking is established.
