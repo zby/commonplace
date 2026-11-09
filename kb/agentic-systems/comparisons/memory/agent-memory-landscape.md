@@ -34,8 +34,9 @@ Within those limits, four contrasts stand out:
   is rare among the recorded memory-maintenance operations.
 - **Trace learning:** automatic updates from recorded activity to retained
   artifacts or learned parameters that shape later behavior are wired in most
-  code-grounded systems. This includes thin forms such as access counters,
-  not just richer changes to rules or model weights.
+  code-grounded systems. This includes access-counter feedback, changes to
+  rules and model-weight updates. These change different parts of the system;
+  the shared classification does not rank their usefulness.
 
 ## Evidence boundary
 
@@ -119,7 +120,10 @@ Three sets show the gap between instructed approval and wired control:
 
   Run `AAS-2026-10-13-cass-memory-system-30c18219cf68-01`, manifest `2dcdb811124058ca…`.
 
-In all three, a wired manual route covers a narrow decision. Most retained content passes through automatic routes.
+These examples separate requested approval from wired human decisions. CQ
+affords manual approval through instructions; DocMason and cass_memory_system
+wire it for specific decisions. Automatic writes coexist with these approval
+mechanisms. Their presence does not establish human approval of every write.
 
 ## Read-back: push usually selects coarsely
 
@@ -149,7 +153,9 @@ Wired curation operations: evolve in 148 systems, consolidate 126, decay 111, in
 
 In cass_memory_system the wired synthesis is an inversion rule. A positive playbook rule whose decayed harmful count crosses a threshold becomes a new avoidance rule, and the original is deprecated. The record gives `Use cache` turning into `AVOID: cache. Marked harmful 3 times` ([EPI-RTE-curator-inversion](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/epistemic.md#epi-rte-curator-inversion)). The record calls this "a policy rewrite", and the profile classifies it as policy synthesis, "not accepted causal knowledge". Synthesis in this population can therefore be mechanical and need not involve model inference.
 
-## Trace learning: widely wired, uneven in depth
+<a id="trace-learning-widely-wired-uneven-in-depth"></a>
+
+## Trace learning: one classification, different update mechanisms
 
 Trace learning means automatic, trace-fed writes that produce durable behavior-shaping artifacts or learned parameters. It is wired in 130 of 176 code-grounded systems. Another 20 reach `"yes"` only through claimed or afforded findings. The remaining 26 have no system-level value; 24 of those axes are `not-determinable`.
 
@@ -161,7 +167,8 @@ Among the 130 wired systems:
 - **Co-occurring values:** 122 also wire `learning` authority and 129 wire `trace-extracted` lineage.
 - **Weights:** four update model weights: AgentFly, SAGE, Self-Training-LLM and SkillRL. The rest retain learning in artifacts, metadata or indexes.
 
-The `"yes"` value spans very different depths:
+The `"yes"` value covers updates to different retained material and different
+later consumers:
 
 - **REM** ([profile](../../../agentic-system-analyses/retained/satyammistari--rem/memory-profile.md)) reaches `"yes"` through two wired routes. Session turns are turned into parse metadata and vectors. Retrieval increments a `retrieval_count` that later adds a capped ranking bonus ([MEM-OBJ-retrieval-count](../../../agentic-system-analyses/retained/satyammistari--rem/memory.md#mem-obj-retrieval-count)).
 
@@ -173,20 +180,58 @@ The `"yes"` value spans very different depths:
   Run `AAS-2026-10-14-skillrl-0dba0e1c895e-01`, manifest `9771fa25ae76ce88…`.
 - **A-MEM** shows that automatic revision is not trace learning. A-MEM rewrites retained notes automatically, but its trace-learning axis is `not-determinable`. Its shipped paths do not update usage or history fields ([MEM-ABS-usage-feedback](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/memory.md#mem-abs-usage-feedback)), and whether other writes are trace-fed is unresolved.
 
-The 130 therefore counts access-count feedback, generated continuation summaries, rule extraction and weight updates alike. The profile vocabulary does not separate these depths. Splitting them would need a new axis or a reading of every set, which this comparison does not attempt.
+The count of 130 includes access-count feedback, generated continuation
+summaries, rule extraction and weight updates. The shared `"yes"` value does
+not distinguish what changes or which later consumer uses it. The examples
+above preserve those differences where their records support them; they do
+not establish an ordering of capability or benefit.
+
+A focused comparison can distinguish mechanisms by reading the retained
+accounts, without changing the profile. Counts for the whole population would
+require a systematic classification, with insufficiently documented cases
+left unresolved. Adding that distinction to routinely generated comparisons
+would require shared classification rules and corresponding profile changes.
+The current matrix alone cannot supply it.
 
 ## Doc-grounded tier (qualitative only)
 
-Fifteen sets describe systems from papers, specifications or documentation: AgeMem, aide2, arsumbris, claude-code-dynamic-workflows, context-constitution, From Agent Memory to Portable Skills, incremental-self-improvement, interview-doc-agent, IsaacCLupus_mnemosyn_spec, llm-context-base, llm-project-wiki, Prove2Me_workspace, sig-releases, trajectory-informed-memory-generation and wikiskill. Their 531 findings are 495 claimed, 21 wired and 15 afforded. Ten of the fifteen claim trace learning, all at `claimed` basis.
+Fifteen sets describe systems from papers, specifications or documentation:
+AgeMem, aide2, arsumbris, claude-code-dynamic-workflows, context-constitution,
+From Agent Memory to Portable Skills, incremental-self-improvement,
+interview-doc-agent, IsaacCLupus_mnemosyn_spec, llm-context-base,
+llm-project-wiki, Prove2Me_workspace, sig-releases,
+trajectory-informed-memory-generation and wikiskill. Ten of the fifteen
+describe trace-learning designs, without establishing their implementation.
 
-AgeMem ([profile](../../../agentic-system-analyses/retained/2601-01885v1/memory-profile.md)) is the clearest case. It claims three routes: conversational extraction into long-term memory, summaries carried into later context, and GRPO updates of policy weights from scored trajectories. The profile records all three as claimed design, with "actual execution, causal benefit and production loading" unestablished. This tier shows which designs are described in documents; it gives no evidence that they are implemented.
+This source tier describes the overall evidence boundary, not the support
+for every finding. Four accounts also report inspecting limited code:
+
+- **Arsumbris:** a [configuration seeder](../../../agentic-system-analyses/retained/arsumbris--arsumbris/runtime.md#rt-rte-device-seeding)
+  reads existing registry mappings, merges discovered entries and writes YAML
+  when enabled. Engine and host consumption remains described, not inspected.
+- **llm-context-base:** a [metadata converter](../../../agentic-system-analyses/retained/asakin--llm-context-base/runtime.md#rt-rte-metadata-migrate)
+  rewrites matching files under fixed rules. This does not establish execution
+  of the template's assistant-directed knowledge workflow.
+- **Mnemosyne:** a legacy prototype [copies and normalizes Markdown](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/runtime.md#rt-rte-vault-publish)
+  and [forwards client queries](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/runtime.md#rt-rte-client-query).
+  Successful external-backend operation and implementation of the proposed
+  unified lifecycle remain unestablished.
+- **Prove2Me_workspace:** two [Lean helpers](../../../agentic-system-analyses/retained/prove2me--prove2me_workspace/epistemic.md#epi-rte-extraction-facts)
+  derive and emit structural facts. Their later use by a planner, converter
+  or resumable uploader is prescribed, not demonstrated.
+
+These are records of static code inspection, not successful executions of
+those helpers or implementation of the complete documented systems. Their
+profile classifications and provenance are retained in the query ledger.
+
+AgeMem ([profile](../../../agentic-system-analyses/retained/2601-01885v1/memory-profile.md)) illustrates the document-only support for trace learning. Its paper describes three routes: conversational extraction into long-term memory, summaries carried into later context, and GRPO updates of policy weights from scored trajectories. The profile records all three as claimed design, with "actual execution, causal benefit and production loading" unestablished. Unlike the narrow code examples above, these AgeMem routes are supported here by the paper's description, not inspected implementation.
 
 ## Withheld conclusions and evidence gaps
 
 - **Prevalence and complete-set shares** are withheld for every axis, for the coverage reasons above. Statements such as "most systems are pull-only" or "X% lack human admission" are unsupported.
 - **Deployment, activation and effect:** no finding reaches `observed` or `causally supported`. The population cannot say whether any memory mechanism improves task outcomes.
 - **Absence of manual control or push read-back:** omitted findings are not negatives. Write-agency units are frequently `not-determinable` because generic callers do not reveal a human decision.
-- **Depth of trace learning:** the `"yes"` value does not separate access counters from rule synthesis or weight updates. Splitting it needs a profile-revision decision, not a reading of this matrix.
+- **Trace-learning mechanisms:** the `"yes"` value does not separate access counters from summaries, rule extraction or weight updates. Selected records can support qualitative contrasts; population counts by mechanism need systematic classification beyond this matrix. Routine structured comparison would additionally need corresponding profile changes.
 - **Change over time:** there is one snapshot. No trend claim is made, and the legacy agent-memory-systems corpus is not merged in.
 - **Quote verification:** 98 sets carry quotations that could not be checked against source bytes here. The findings rest on their accepted records and independent report verifications, not on a fresh check of the quotes.
 - **Commonplace implications** are out of scope. They belong in a separately commissioned transfer scan.
@@ -209,3 +254,18 @@ The query scripts and their output are in the repository at `scripts/memory_land
 | Q10 curation | strong `synthesize`; systems with 3–7 strong operations | 12 systems named above; 120 |
 | Q11 storage | strong files only; any strong database-type substrate; no strong files | 25; 95; 16 |
 | Q13 doc tier | basis census over the 15 doc-grounded rows | 495 claimed, 21 wired, 15 afforded |
+
+The 21 findings labelled `wired` in Q13 are distributed across the four
+accounts below. These are the retained profile labels, not a claim that the
+whole documented system was implemented. Their cited records describe the
+limited code inspections summarized above. The check used the profiles and
+records at the same inputs commit, without reclassifying findings or
+re-inspecting upstream source bytes. All other eleven document-grounded
+profiles contain no finding with that label.
+
+| Profile | Findings labelled `wired` | Run | Manifest SHA-256 prefix |
+|---|---:|---|---|
+| [Arsumbris](../../../agentic-system-analyses/retained/arsumbris--arsumbris/memory-profile.md) | 7 | `AAS-2026-10-15-arsumbris-a9be6bac297f-01` | `6d5063eddc867119…` |
+| [llm-context-base](../../../agentic-system-analyses/retained/asakin--llm-context-base/memory-profile.md) | 3 | `AAS-2026-10-14-llm-context-base-f63a7c0fb5f2-01` | `cc73ff16d61391b6…` |
+| [Mnemosyne](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/memory-profile.md) | 9 | `AAS-2026-10-15-isaacclupus-mnemosyn-spec-1887e13dcc13-01` | `29f6cf530ccdf62f…` |
+| [Prove2Me_workspace](../../../agentic-system-analyses/retained/prove2me--prove2me_workspace/memory-profile.md) | 2 | `AAS-2026-10-14-prove2me-workspace-187ef30582c9-01` | `299bf835ee296bd7…` |
