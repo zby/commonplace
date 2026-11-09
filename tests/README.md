@@ -9,7 +9,7 @@ is required before pushing. Subsystem directories describe responsibility; the
 
 ```bash
 # Local iteration: general tests plus the affected subsystem (fast tests).
-uv run pytest tests/commonplace/general tests/commonplace/review
+uv run pytest tests/commonplace/general tests/commonplace/review_workflows
 
 # Slow coverage for a subsystem. An explicit -m replaces the default filter.
 uv run pytest tests/commonplace/agentic_analysis -m slow
@@ -44,24 +44,21 @@ All suite paths below are relative to `tests/commonplace/`.
 | `src/commonplace/headless/` | `headless/`, `agentic_analysis/` (the workflow runs on it; its end-to-end tests are slow), `review_workflows/` |
 | `lib/tasks.py`, `cli/task.py` | `headless/` (the task launcher runs on the fake harness there); `review_workflows/` for `load_profile` |
 | `lib/agentic_analysis/`, `cli/analysis.py`, analysis plan, instructions, roles, schemas | `agentic_analysis/` (include the slow workflow tests for behavior changes); also `comparison/`, `validation/`, or `docs/` when their inputs/contracts change |
-| `lib/review_workflows/`, `cli/review_workflows.py`, `kb/instructions/review-profiles.yaml` | `review_workflows/`, which runs on `src/commonplace/headless/` (so a `headless/` change also selects it) |
-| `src/commonplace/review/`, `cli/review/` | `review/`; also `freshness/` and `relocation/` when shared review state or selectors change |
-| `src/commonplace/freshness/`, `cli/freshness_*.py` | `freshness/`, `review/` |
-| `lib/validation.py`, `lifecycle_validation.py`, `full_pass.py`, validation/guard CLIs | `validation/`, `sources/`, `review/`, `agentic_analysis/`, `installation/` (validation consumers); include relevant slow analysis tests |
+| `lib/review_workflows/`, `cli/review_workflows.py`, `kb/instructions/review-profiles.yaml` | `review_workflows/`, which runs on `src/commonplace/headless/` (so a `headless/` change also selects it); also `relocation/`, whose tests pin that a move leaves result files alone |
+| `lib/validation.py`, `lifecycle_validation.py`, `full_pass.py`, validation/guard CLIs | `validation/`, `sources/`, `agentic_analysis/`, `installation/` (validation consumers); include relevant slow analysis tests |
 | `lib/quote_*.py`, `snapshot.py`, `source_identity.py`, snapshot/source/quote CLIs, `scripts/sync_x_likes.py` | `sources/`; also `validation/` and `agentic_analysis/` for shared quote, snapshot, or source-identity changes |
 | `lib/relocation.py`, relocation CLIs | `relocation/` |
 | `lib/index_*.py`, `promotion.py`, promotion CLI | `indexing/`; also `relocation/`, `installation/`, `docs/` for shared generated-index behavior |
 | `lib/systems_matrix.py`, matrix build/render/analyze scripts | `comparison/` |
-| `lib/project_status.py`, `cli/status.py` | `review/`, `freshness/` |
-| `store.py`, `store-schema.sql` | `review/`, `freshness/`, `relocation/` |
+| `lib/project_status.py`, `cli/status.py` | `review_workflows/` (the status tests, including its review summary, live there) |
 | Foundational parsing, naming, library/type/path resolution, directory contracts | Full fast suite, plus relevant slow tests for affected consumers |
 | `cli/init_project.py`, `scaffold_manifest.py`, `build_hooks.py`, packaging/dependency metadata | Full suite; follow editable-installation checks in `INSTALL.md` |
 | Site configuration, `src/commonplace/docs/`, published collection/type/command contracts | `docs/`; also `validation/` for schema or validator contract changes |
 | Test-state capture, isolated Codex runner | `tooling/` |
 | Test helpers or fixtures | Every suite importing them; full fast suite if uncertain |
 
-`general/` contains shared parsing, path/library/type resolution, directory-layout,
-and store-health checks. Keep it inexpensive and broadly applicable. It is not a
+`general/` contains shared parsing, path/library/type resolution and
+directory-layout checks. Keep it inexpensive and broadly applicable. It is not a
 bucket for unclassified tests. Tests for a subsystem's CLI live with that
 subsystem's library tests. `docs/` holds repository-wide publication and contract
 checks; `installation/` holds scaffolding and package-build checks.

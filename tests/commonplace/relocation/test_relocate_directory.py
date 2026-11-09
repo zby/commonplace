@@ -6,14 +6,13 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib import relocation
-from commonplace.review import review_db, review_target_selector
+from commonplace.lib.review_workflows import results
 from tests.commonplace.relocation.relocation_review_helpers import (
-    GATE_ID,
-    TEST_MODEL,
+    GATE_PATH,
     make_gate,
     make_reviewable_note,
-    review_state_rows,
-    seed_accepted_review,
+    seed_result,
+    use_repository_library,
 )
 from tests.commonplace.relocation.write_brief_helpers import (
     install_brief_types,
@@ -168,19 +167,17 @@ def test_relocate_directory_moves_hidden_payload_without_inspecting_it(
     assert external_link in (destination / ".hidden.md").read_text(encoding="utf-8")
 
 
-def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_derived(
-    tmp_path: Path, capsys
+def test_relocate_directory_apply_leaves_review_results_alone(
+    tmp_path: Path, capsys, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    use_repository_library(tmp_path, monkeypatch)
     source_dir = tmp_path / "kb" / "notes" / "related-systems"
     foo = make_reviewable_note(source_dir / "foo.md", "Foo")
     bar = make_reviewable_note(source_dir / "bar.md", "Bar")
     make_gate(tmp_path)
-
-    db_path = tmp_path / "kb" / "reports" / "state" / "commonplace-store.sqlite"
-    seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/foo.md")
-    seed_accepted_review(tmp_path, db_path, note_path="kb/notes/related-systems/bar.md")
-    with review_db.connect(db_path) as conn:
-        rows_before = review_state_rows(conn)
+    stored = sorted([seed_result(tmp_path, note_path="kb/notes/related-systems/foo.md"),
+                     seed_result(tmp_path, note_path="kb/notes/related-systems/bar.md")])
+    before = [path.read_bytes() for path in stored]
 
     exit_code = relocation.relocate_directory(
         root=tmp_path,
@@ -196,26 +193,10 @@ def test_relocate_directory_apply_leaves_review_state_rows_unchanged_and_paths_d
     assert not bar.exists()
     assert (tmp_path / "kb" / "agent-memory-systems" / "foo.md").is_file()
     assert (tmp_path / "kb" / "agent-memory-systems" / "bar.md").is_file()
-
-    with review_db.connect(db_path) as conn:
-        rows_after = review_state_rows(conn)
-
-    assert rows_after == rows_before
-
-    stale = review_target_selector.select_stale_criteria(
-        tmp_path,
-        model=TEST_MODEL,
-        criterion_ids=[GATE_ID],
-        note_filter=[
-            "kb/agent-memory-systems/bar.md",
-            "kb/agent-memory-systems/foo.md",
-        ],
-        db_path=db_path,
-    )
-    assert [(record.note_path, record.criterion_id, record.reasons) for record in stale] == [
-        ("kb/agent-memory-systems/bar.md", GATE_ID, ("missing-baseline",)),
-        ("kb/agent-memory-systems/foo.md", GATE_ID, ("missing-baseline",)),
-    ]
+    assert [path.read_bytes() for path in stored] == before
+    assert results.orphaned(tmp_path) == stored
+    rows = results.status(tmp_path, [(f"kb/agent-memory-systems/{name}.md", GATE_PATH) for name in ("bar", "foo")])
+    assert [row.freshness.state for row in rows] == ["missing", "missing"]
 
 
 def test_relocate_directory_rejects_existing_destination(tmp_path: Path) -> None:

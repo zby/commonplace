@@ -3,23 +3,19 @@
 from __future__ import annotations
 
 import shlex
-import sqlite3
 import subprocess
 import tomllib
 from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
-from commonplace.freshness.status import load_target_status
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
     list_collection_validation_paths,
     resolve_collection,
 )
+from commonplace.lib.review_workflows import results
 from commonplace.lib.validation import run_validation
-from commonplace.review.review_db import connect
-from commonplace.review.warn_selector import scan_reviews
-from commonplace.store import resolve_db_path
 
 
 @dataclass(frozen=True)
@@ -50,18 +46,15 @@ class CheckStatus:
 
 @dataclass(frozen=True)
 class ReviewStatus:
-    available: bool
-    actionable_warn_notes: int = 0
-    actionable_warn_findings: int = 0
-    stale_warn_pairs: int = 0
-    queued_jobs: int = 0
-    queued_pairs: int = 0
-    failed_jobs: int = 0
-    failed_pairs: int = 0
-    stale_freshness_targets: int = 0
-    missing_input_targets: int = 0
-    version_error_targets: int = 0
-    error: str | None = None
+    """Counts over the stored review results; `warn` and `fail` count fresh results only."""
+
+    results: int = 0
+    fresh: int = 0
+    stale: int = 0
+    orphaned: int = 0
+    warn: int = 0
+    fail: int = 0
+    error: str | None = None          # a result file that could not be read
 
 
 @dataclass(frozen=True)
@@ -172,66 +165,13 @@ def load_lifecycle_status(repo_root: Path) -> CheckStatus:
     )
 
 
-def _job_counts(conn: sqlite3.Connection) -> dict[str, tuple[int, int]]:
-    rows = conn.execute(
-        """
-        SELECT
-            j.status,
-            count(DISTINCT j.review_job_id) AS job_count,
-            count(rp.review_pair_id) AS pair_count
-        FROM review_jobs AS j
-        LEFT JOIN review_pairs AS rp
-          ON rp.review_job_id = j.review_job_id
-        WHERE j.status IN ('queued', 'failed')
-        GROUP BY j.status
-        """
-    ).fetchall()
-    return {
-        str(row["status"]): (int(row["job_count"]), int(row["pair_count"]))
-        for row in rows
-    }
-
-
-def load_review_status(repo_root: Path, *, db_override: str | None = None) -> ReviewStatus:
-    db_path = resolve_db_path(repo_root, db_override)
-    if not db_path.is_file():
-        return ReviewStatus(available=False, error=f"store not found: {db_path}")
+def load_review_status(repo_root: Path) -> ReviewStatus:
     try:
-        notes, stale_warn_pairs = scan_reviews(repo_root, db_path=db_path)
-        with connect(db_path) as conn:
-            jobs = _job_counts(conn)
-            freshness = load_target_status(
-                conn,
-                repo_root=repo_root,
-                include_fresh=False,
-                include_diff=False,
-            )
-    except (OSError, RuntimeError, ValueError, sqlite3.Error) as exc:
-        return ReviewStatus(available=False, error=str(exc))
-
-    queued_jobs, queued_pairs = jobs.get("queued", (0, 0))
-    failed_jobs, failed_pairs = jobs.get("failed", (0, 0))
-    missing_input_targets = sum(
-        any(item.status == "input-missing" for item in target.changed_inputs)
-        for target in freshness.targets
-    )
-    version_error_targets = sum(
-        any(item.status == "version-error" for item in target.changed_inputs)
-        for target in freshness.targets
-    )
-    return ReviewStatus(
-        available=True,
-        actionable_warn_notes=len(notes),
-        actionable_warn_findings=sum(note.count for note in notes),
-        stale_warn_pairs=len(stale_warn_pairs),
-        queued_jobs=queued_jobs,
-        queued_pairs=queued_pairs,
-        failed_jobs=failed_jobs,
-        failed_pairs=failed_pairs,
-        stale_freshness_targets=len(freshness.targets),
-        missing_input_targets=missing_input_targets,
-        version_error_targets=version_error_targets,
-    )
+        summary = results.summarize(repo_root)
+    except (OSError, ValueError) as exc:
+        return ReviewStatus(error=str(exc))
+    return ReviewStatus(results=summary.results, fresh=summary.fresh, stale=summary.stale,
+                        orphaned=summary.orphaned, warn=summary.warn, fail=summary.fail)
 
 
 def _actions(
@@ -287,70 +227,46 @@ def _actions(
     if review.error is not None:
         actions.append(
             StatusAction(
-                "status.review.inspect-store",
+                "status.review.inspect-results",
                 "failure",
                 review.error,
-                "commonplace-freshness-status",
+                "commonplace-review status",
             )
         )
-    if review.actionable_warn_findings:
+    if review.fail:
+        actions.append(
+            StatusAction(
+                "status.review.fix-failures",
+                "warning",
+                f"{review.fail} current review results fail",
+                "commonplace-review status --fresh --outcome fail",
+            )
+        )
+    if review.warn:
         actions.append(
             StatusAction(
                 "status.review.triage-warnings",
                 "warning",
-                (
-                    f"{review.actionable_warn_findings} current actionable review "
-                    f"findings affect {review.actionable_warn_notes} notes"
-                ),
-                "commonplace-warn-selector",
+                f"{review.warn} current review results warn",
+                "commonplace-review status --fresh --outcome warn",
             )
         )
-    if review.failed_jobs:
+    if review.stale:
         actions.append(
             StatusAction(
-                "status.review.inspect-failed-jobs",
+                "status.review.rerun-stale",
                 "warning",
-                f"{review.failed_jobs} failed review jobs contain {review.failed_pairs} pairs",
-                "commonplace-review-job-list --status failed",
+                f"{review.stale} review results are stale; rerun their pairs with commonplace-review run gates",
+                "commonplace-review status --stale",
             )
         )
-    if review.missing_input_targets:
+    if review.orphaned:
         actions.append(
             StatusAction(
-                "status.freshness.retire-missing-inputs",
+                "status.review.delete-orphans",
                 "warning",
-                (
-                    f"{review.missing_input_targets} stale targets reference deleted "
-                    "inputs and need retirement review"
-                ),
-                "commonplace-freshness-status --missing",
-            )
-        )
-    if review.version_error_targets:
-        actions.append(
-            StatusAction(
-                "status.freshness.inspect-version-errors",
-                "failure",
-                f"{review.version_error_targets} freshness targets have version errors",
-                "commonplace-freshness-status",
-            )
-        )
-    if review.queued_jobs:
-        actions.append(
-            StatusAction(
-                "status.review.resume-queued-jobs",
-                "warning",
-                f"{review.queued_jobs} queued review jobs contain {review.queued_pairs} pairs",
-                "commonplace-review-job-list --status queued",
-            )
-        )
-    if review.stale_freshness_targets:
-        actions.append(
-            StatusAction(
-                "status.freshness.inspect-stale-targets",
-                "warning",
-                f"{review.stale_freshness_targets} registered targets are stale",
-                "commonplace-freshness-status",
+                f"{review.orphaned} review results name a deleted note or criterion; delete their files",
+                "commonplace-review status",
             )
         )
     return tuple(actions)
@@ -360,7 +276,6 @@ def load_project_status(
     *,
     repo_root: Path,
     collection: str,
-    db_override: str | None = None,
     include_review: bool = False,
 ) -> ProjectStatus:
     resolved_root = repo_root.resolve()
@@ -368,11 +283,7 @@ def load_project_status(
     command_version = _command_version()
     notes_validation = load_notes_validation_status(resolved_root, collection)
     lifecycle = load_lifecycle_status(resolved_root)
-    review = (
-        load_review_status(resolved_root, db_override=db_override)
-        if include_review
-        else None
-    )
+    review = load_review_status(resolved_root) if include_review else None
     return ProjectStatus(
         repo_root=str(resolved_root),
         project_version=project_version,

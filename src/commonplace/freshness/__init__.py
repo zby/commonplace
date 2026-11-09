@@ -1,1 +1,0 @@
-"""General artifact freshness substrate."""

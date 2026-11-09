@@ -45,10 +45,10 @@ validation. `--collection NAME_OR_PATH` is required and scopes notes validation;
 Git, lifecycle, and optional review summaries retain their separate project
 scopes. The JSON `notes_validation.scope` and each check's `scope` identify
 what was inspected. The default view gives stable next-action IDs and
-drill-down commands without embedding underlying rows. Review warnings, jobs, and
-freshness state are deliberately absent from the normal path while the review
-system remains irregular operational state; request them with `--review`.
-`--json` emits `commonplace.status.v1`. The command does not mutate, rank with a
+drill-down commands without embedding underlying rows. Counts over the stored
+review results (fresh, stale, orphaned, and current `warn` and `fail`) are
+absent from the normal path; request them with `--review`.
+`--json` emits `commonplace.status.v2`. The command does not mutate, rank with a
 model, schedule work, or become an authority for any displayed state.
 
 ### commonplace-validate
@@ -360,79 +360,28 @@ worktree, whose `.venv` installs its pinned source; see
 
 ## Review system
 
-Review execution composes selection, job creation, an external worker, and
-finalization. Use [the review-system guide](./README-REVIEW-SYSTEM.md) for the
-operator workflow, [run review batches](../instructions/run-review-batches.md)
-for the executable procedure, and [review architecture](./review-architecture.md)
-for internal invariants.
+`commonplace-review` reviews notes against criteria with headless workers and
+keeps one result file per (note, criterion) pair under
+`kb/reports/state/review/results/`. A result is fresh while the hashes of the
+note (the parts the criterion watches) and of the criterion match the current
+files. The review-system guide and architecture pages still describe the
+store-based system it replaced.
 
-Partition-valued flags are named `--model-partition`. The only `--model` flag
-is finalization's concrete worker-model provenance; it must map into the job's
-partition.
+### commonplace-review
 
-### commonplace-create-review-jobs
+`status [NOTES... [--criteria C...]] [--outcome O...] [--fresh | --stale] [--json]`
+shows each pair's freshness and stored outcome and launches nothing. With
+NOTES it covers every applicable pair, including pairs never reviewed; without
+NOTES it covers every stored result. `--fresh --outcome warn` lists the current
+warnings, `--stale` what a sweep would ask; `--json` gives each row's result
+file. Orphaned results, whose note or criterion is gone, are listed apart;
+removing one is deleting its file.
 
-Consume selector JSON and create queued, result-kind-homogeneous review jobs
-grouped by note or criterion.
-
-### commonplace-review-job-list
-
-List queued, completed, or failed review jobs and optionally emit JSON.
-
-### commonplace-finalize-review-job
-
-Finalize one job-owned output all-or-nothing, record worker provenance, write
-pair results, advance their freshness baselines, and return the committed
-per-pair outcomes and result paths. Unsuccessful finalization returns an empty
-`pairs` array.
-
-### commonplace-freshness-status
-
-Report freshness for registered targets. [Freshness architecture](./freshness-architecture.md)
-explains status, acknowledgement, and retirement; the live implementation owns
-their exact JSON fields.
-
-### commonplace-freshness-ack
-
-Acknowledge changed inputs for an existing registered target from a
-status-derived manifest.
-
-### commonplace-freshness-retire
-
-Remove a registered freshness baseline from a retire manifest, including a
-baseline whose input artifact was deleted.
-
-### commonplace-store-healthcheck
-
-Verify operational-store structure, snapshot hashes, foreign keys, and
-freshness-baseline invariants.
-
-### commonplace-ack-review
-
-Advance exact changed-input observations from inspected review-selector JSON
-without rerunning the assay. It preserves the evidence review pair and rejects
-an inspection-to-ack hash or baseline-revision race; for a report, it does not
-endorse or resolve the findings.
-
-### commonplace-ack-trivial-note-changes
-
-Auto-acknowledge `note-changed` verdict pairs when none of the criterion's
-watched note parts changed. Invoking it is explicit human authorization for
-the qualifying trivial-change workflow. Type and collection conformance pairs
-have no `watches:` declaration and never qualify.
-
-### commonplace-resolve-criteria
-
-Resolve gate, bundle, concrete type- or collection-conformance, or critique
-requests into their criterion definitions.
-
-### commonplace-review-target-selector
-
-Select applicable assay pairs either by current staleness or by an explicit
-requested-mode scope, for inspection or piping into job creation.
-
-### commonplace-warn-selector
-
-Extract actionable findings from effective `warn` review pairs whose live inputs
-match their freshness baseline. Stale WARN pairs are reported separately. This
-command is the entry point to the [fix system](../instructions/FIX-SYSTEM.md).
+`run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]` asks one
+worker per pair without a fresh result, in a new run under
+`kb/reports/state/review/runs/`, and writes a result file for each accepted
+review. `--resume RUN_DIR` continues a run; `retry RUN JOB` and
+`acknowledge RUN LAUNCH` settle a worker problem or an unsettled launch.
+Criteria are catalog gate ids, bundle names, and the `type`, `collection` and
+`critique` lenses; worker profiles come from the library's
+`instructions/review-profiles.yaml`.

@@ -6,14 +6,13 @@ import pytest
 
 from commonplace.lib import relocation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
-from commonplace.review import review_db, review_target_selector
+from commonplace.lib.review_workflows import results
 from tests.commonplace.relocation.relocation_review_helpers import (
-    GATE_ID,
-    TEST_MODEL,
+    GATE_PATH,
     make_gate,
     make_reviewable_note,
-    review_state_rows,
-    seed_accepted_review,
+    seed_result,
+    use_repository_library,
 )
 from tests.commonplace.relocation.write_brief_helpers import (
     install_brief_types,
@@ -140,20 +139,20 @@ def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path)
         )
 
 
-def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derived(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+def test_relocate_note_apply_leaves_review_results_alone(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    # Results are keyed by note path: the old note's result is orphaned and the moved note is unreviewed.
     repo_root = tmp_path
     kb_root = repo_root / "kb"
     notes_root = kb_root / "notes"
+    use_repository_library(repo_root, monkeypatch)
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
     old_note = make_reviewable_note(notes_root / "old-note.md")
     make_gate(repo_root)
     write(repo_root / "properdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
-    db_path = kb_root / "reports" / "state" / "commonplace-store.sqlite"
-    seed_accepted_review(repo_root, db_path, note_path="kb/notes/old-note.md")
-    with review_db.connect(db_path) as conn:
-        rows_before = review_state_rows(conn)
+    stored = seed_result(repo_root, note_path="kb/notes/old-note.md")
+    before = stored.read_bytes()
 
     result = relocation.relocate_note(
         root=repo_root,
@@ -162,28 +161,15 @@ def test_relocate_note_apply_leaves_review_state_rows_unchanged_and_paths_derive
         apply=True,
     )
 
-    new_note = notes_root / "archive" / "new-note-title.md"
     output = capsys.readouterr().out.lower()
     assert result == 0
     assert "review" not in output
     assert not old_note.exists()
-    assert new_note.exists()
-
-    with review_db.connect(db_path) as conn:
-        rows_after = review_state_rows(conn)
-
-    assert rows_after == rows_before
-
-    stale = review_target_selector.select_stale_criteria(
-        repo_root,
-        model=TEST_MODEL,
-        criterion_ids=[GATE_ID],
-        note_filter=["kb/notes/archive/new-note-title.md"],
-        db_path=db_path,
-    )
-    assert [(record.note_path, record.criterion_id, record.reasons) for record in stale] == [
-        ("kb/notes/archive/new-note-title.md", GATE_ID, ("missing-baseline",))
-    ]
+    assert (notes_root / "archive" / "new-note-title.md").exists()
+    assert stored.read_bytes() == before
+    assert results.orphaned(repo_root) == [stored]
+    [row] = results.status(repo_root, [("kb/notes/archive/new-note-title.md", GATE_PATH)])
+    assert row.freshness.state == "missing"
 
 
 def test_relocate_note_apply_moves_file_with_to_directory(tmp_path: Path) -> None:

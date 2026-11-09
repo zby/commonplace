@@ -44,14 +44,11 @@ def format_status(status: ProjectStatus) -> str:
     if review is not None:
         review_summary = (
             (
-                f"{review.actionable_warn_findings} actionable findings / "
-                f"{review.stale_warn_pairs} stale warn pairs; "
-                f"jobs {review.queued_jobs} queued, {review.failed_jobs} failed; "
-                f"freshness {review.stale_freshness_targets} stale targets, "
-                f"{review.missing_input_targets} with missing inputs"
+                f"{review.results} results: {review.fresh} fresh, {review.stale} stale, "
+                f"{review.orphaned} orphaned; current {review.warn} warn, {review.fail} fail"
             )
-            if review.available
-            else f"unavailable ({review.error})"
+            if review.error is None
+            else f"unreadable ({review.error})"
         )
         lines.append(f"Review: {review_summary}")
     if status.actions:
@@ -67,7 +64,7 @@ def format_status(status: ProjectStatus) -> str:
 
 def format_status_json(status: ProjectStatus) -> str:
     payload = asdict(status)
-    payload["schema"] = "commonplace.status.v1"
+    payload["schema"] = "commonplace.status.v2"
     payload["status"] = status.status
     return json.dumps(payload, indent=2, sort_keys=True)
 
@@ -85,21 +82,14 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument(
         "--review",
         action="store_true",
-        help="Include review warnings, jobs, and freshness state.",
-    )
-    parser.add_argument(
-        "--db",
-        help="Override COMMONPLACE_STORE (requires --review).",
+        help="Include counts over the stored review results.",
     )
     args = parser.parse_args(argv)
-    if args.db and not args.review:
-        parser.error("--db requires --review")
 
     try:
         status = load_project_status(
             repo_root=cwd if cwd is not None else Path.cwd(),
             collection=args.collection,
-            db_override=args.db,
             include_review=args.review,
         )
     except (FileNotFoundError, ValueError) as exc:

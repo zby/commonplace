@@ -9,8 +9,7 @@ tags: []
 This page answers which representation is authoritative and which may be
 reconstructed. It does not catalogue the installed directory tree or the
 SQLite schema. For those exact surfaces, see [Commonplace architecture](./architecture.md)
-and the live [`commonplace.store`](../../src/commonplace/store.py) and
-[`store-schema.sql`](../../src/commonplace/store-schema.sql).
+and the former `commonplace.store` and `store-schema.sql`, both since deleted.
 
 ## Storage roles
 

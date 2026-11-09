@@ -104,9 +104,8 @@ never supply the case-specific judgment itself. A scaffolding change that shifts
 judgments is a system upgrade requiring deliberate corpus-wide re-review or
 acknowledgement rather than ordinary file-triggered staleness.
 
-The live comments in
-[`freshness.py`](../../src/commonplace/review/freshness.py) and
-[`protocol/prompt.py`](../../src/commonplace/review/protocol/prompt.py) place
+The comments in the former `review/freshness.py` and
+`review/protocol/prompt.py`, both since deleted, placed
 this rule in both change loops. [ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
 and [041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)
 apply it to type and collection criteria.
