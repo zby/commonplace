@@ -9,6 +9,15 @@ This topic studies how systems produce claims, check them and decide whether lat
 - Which checked results actually constrain later execution?
 - What happens when a claim is contradicted or a check fails?
 
+## Design-space questions
+
+The kind of check, its placement and its power to block work are separate
+choices. Which combinations prevent unchecked claims from reaching a
+consequential action, and at what review cost? The
+[future-work agenda](./README.md#future-work) proposes failed-check and
+missing-check tests; a verification component's presence alone does not
+answer whether downstream execution depends on it.
+
 ## Inspect implementations
 
 The [current epistemic accounts](../comparisons/epistemic/systems.md) link directly

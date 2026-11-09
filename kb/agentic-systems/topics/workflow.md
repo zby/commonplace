@@ -9,6 +9,14 @@ This topic follows multi-step work across delegation, verification, failure, res
 - What is retained after failure, and what must be repeated on resume?
 - How are duplicate actions, stale results and interrupted workers handled?
 
+## Design-space questions
+
+Retained state, retry policy and ownership of external effects interact.
+Which combinations let work resume without repeating effects or accepting
+stale results? The [future-work agenda](./README.md#future-work) proposes
+interruption tests around effect boundaries. A checkpoint mechanism alone
+does not establish safe recovery.
+
 ## Inspect implementations
 
 The [current workflow accounts](../comparisons/workflow/systems.md) link directly

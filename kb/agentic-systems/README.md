@@ -1,11 +1,25 @@
 # Agentic Systems
 
-Research on how agentic systems retain information, control execution, check
-knowledge and recover from failure. Explore architectural alternatives and
-trace the comparisons to source-grounded analyses of concrete implementations.
-This is research into mechanisms and trade-offs, not a product ranking.
+This research explores the design space of agentic systems: which choices
+matter, which combinations are possible, what constrains them, and what
+evidence would justify committing to a design. Concrete systems provide
+source-grounded examples, not a product ranking or an exhaustive map of
+possible architectures.
 
-## Start with a question
+The choices include how systems retain information, control execution, check
+knowledge and recover from failure. The aim is to explain alternatives and
+their conditions, not merely catalogue features.
+
+## Start with a design question
+
+- **Identify choices and alternatives:** use [Research Topics](./topics/README.md)
+  to find relevant dimensions and questions about their interactions.
+- **Investigate combinations and constraints:** follow
+  [Comparisons](./comparisons/README.md) to mechanisms and their supporting
+  records. A combination missing from this corpus is not thereby impossible.
+- **Decide what evidence is still needed:** use [Methods & Data](./methods.md#what-the-evidence-can-settle)
+  and the [future-work agenda](./topics/README.md#future-work) to distinguish
+  source inspection from experiments needed before commitment.
 
 **[Agent Memory](./topics/memory.md)** is the most developed topic: what is
 retained, how does it reach the next decision, and what happens when it is

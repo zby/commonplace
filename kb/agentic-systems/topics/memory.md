@@ -75,6 +75,16 @@ findings. The frozen landscape reports
 not causal improvement. Experiments need to measure downstream decisions and
 compare conditions with and without the relevant memory route.
 
+## Design-space questions
+
+Admission, selection and correction are separate choices whose interactions
+need investigation. Can automatic injection coexist with reliable withdrawal
+of stale context? Does a more selective read reduce distraction without
+missing information needed for the task? The
+[future-work agenda](./README.md#future-work) proposes delivery and correction
+tests; the existing comparisons supply candidate mechanisms, not proof that
+every combination works.
+
 ## Find systems and data
 
 - [Current memory accounts and profiles](../comparisons/memory/systems.md) —

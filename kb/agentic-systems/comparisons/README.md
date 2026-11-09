@@ -1,8 +1,11 @@
 # Comparisons
 
 Comparisons investigate architectural questions across selected systems.
-They explain mechanisms and consequences, not product rankings. Follow the
-citations to the frozen analysis records to check a conclusion's scope.
+They contribute to design-space exploration by identifying alternatives,
+examining combinations and bounding claims about constraints and consequences.
+They are not product rankings. Follow the citations to the frozen analysis
+records to check a conclusion's scope; an unrepresented combination remains
+open unless evidence rules it out.
 
 ## Agent memory
 
@@ -32,9 +35,12 @@ these materials address.
 [Runtime & Control](../topics/runtime.md),
 [Knowledge & Verification](../topics/epistemic.md) and
 [Workflow & Recovery](../topics/workflow.md) currently provide questions and
-per-system reading paths. Cross-system articles will be added when inspected
-evidence supports a useful comparison; no equivalent structured datasets
-exist for these lenses yet.
+per-system reading paths. The [future-work agenda](../topics/README.md#future-work)
+prioritizes interactions and decision-critical uncertainties, rather than
+coverage for its own sake. Cross-system articles can compare alternatives
+where inspected evidence supports them; experiments are needed where the
+question concerns actual behavior or benefit. No equivalent structured
+datasets exist for these lenses yet.
 
 ## Interpret and reproduce
 

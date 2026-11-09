@@ -9,6 +9,15 @@ Runtime architecture determines how a system chooses, authorizes and executes it
 - How is execution context assembled, and which state survives a restart?
 - What can a trace establish about the actions actually taken?
 
+## Design-space questions
+
+Control placement and permission enforcement need not be the same choice.
+Which combinations permit flexible action selection while keeping every
+effect within an enforced authority boundary? Distinguish limits of one
+implementation from constraints on all such designs. The
+[future-work agenda](./README.md#future-work) proposes enforcement and
+interruption tests before committing to a combination.
+
 ## Inspect implementations
 
 The [current runtime accounts](../comparisons/runtime/systems.md) link directly
