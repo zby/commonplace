@@ -44,6 +44,7 @@ All suite paths below are relative to `tests/commonplace/`.
 | `src/commonplace/headless/` | `headless/`, `agentic_analysis/` (the workflow runs on it; its end-to-end tests are slow) |
 | `lib/tasks.py`, `cli/task.py` | `headless/` (the task launcher runs on the fake harness there) |
 | `lib/agentic_analysis/`, `cli/analysis.py`, analysis plan, instructions, roles, schemas | `agentic_analysis/` (include the slow workflow tests for behavior changes); also `comparison/`, `validation/`, or `docs/` when their inputs/contracts change |
+| `lib/review_workflows/` | `review_workflows/`; also `review/` when a `commonplace.review` helper it imports changes |
 | `src/commonplace/review/`, `cli/review/` | `review/`; also `freshness/` and `relocation/` when shared review state or selectors change |
 | `src/commonplace/freshness/`, `cli/freshness_*.py` | `freshness/`, `review/` |
 | `lib/validation.py`, `lifecycle_validation.py`, `full_pass.py`, validation/guard CLIs | `validation/`, `sources/`, `review/`, `agentic_analysis/`, `installation/` (validation consumers); include relevant slow analysis tests |

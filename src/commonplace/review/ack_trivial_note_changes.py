@@ -68,7 +68,7 @@ def _frontmatter_other(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _note_parts(content: str) -> dict[str, Any] | None:
+def note_parts(content: str) -> dict[str, Any] | None:
     parsed = frontmatter.parse(content)
     if not parsed.ok:
         return None
@@ -81,7 +81,7 @@ def _note_parts(content: str) -> dict[str, Any] | None:
     }
 
 
-def _gate_watches(criterion_text: str) -> set[str] | None:
+def gate_watches(criterion_text: str) -> set[str] | None:
     parsed = frontmatter.parse(criterion_text)
     if not parsed.ok:
         return None
@@ -116,8 +116,8 @@ def has_only_unwatched_changes(
     Callers pass texts whose raw hashes already differ; a purely cosmetic
     change (whitespace, formatting) alters no parsed part and qualifies.
     """
-    previous = _note_parts(previous_text)
-    current = _note_parts(current_text)
+    previous = note_parts(previous_text)
+    current = note_parts(current_text)
     if previous is None or current is None:
         return False
     return all(previous.get(key) == current.get(key) for key in watches)
@@ -166,7 +166,7 @@ def qualifying_records(
             continue
         criterion_snapshot_id = freshness_baseline.baseline_criterion_snapshot_id
         if criterion_snapshot_id not in gate_watches_cache:
-            gate_watches_cache[criterion_snapshot_id] = _gate_watches(
+            gate_watches_cache[criterion_snapshot_id] = gate_watches(
                 freshness_baseline.baseline_criterion_text
             )
         watches = gate_watches_cache[criterion_snapshot_id]
