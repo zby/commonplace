@@ -1,0 +1,33 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Memory profile verification of verbatim-citation-gate at commit 2113d603031a554ed901a44648307bd3b711ea10."
+run-id: AAS-2026-11-08-verbatim-citation-gate-d205c9f72d5a-01
+reviewed-boundary: "2113d603031a554ed901a44648307bd3b711ea10"
+---
+
+# verbatim-citation-gate memory profile verification
+
+## Verification
+
+I checked all ten axes in the handed [memory profile](memory-profile.md#comparison-rationale) against the accepted records and their annotations, using reconciliation to check identities and supersessions. Reconciliation establishes no supersessions or unresolved report conflicts. No source reads, new records or new quotations were needed. This judgment concerns classification support, natural units and coverage, not execution or demonstrated benefit.
+
+The memory scope is supported: the process-local cache and retained evaluation corpus and report are included. Static judge instructions, current-call documents and verdicts, external application memory and inaccessible provider internals are not silently classified as accumulated memory. The callback and shipped caller records preserve the reasons for these exclusions: [RT-CMP-llm-call](runtime.md#rt-cmp-llm-call), [RT-OBJ-judge-system](runtime.md#rt-obj-judge-system), [RT-RTE-judge-support](runtime.md#rt-rte-judge-support), [WF-RTE-demo-batch](workflow.md#wf-rte-demo-batch).
+
+- **Storage substrate:** The known inventory is supported by process-local LRU retention and the two filesystem JSON artifacts. Grouping corpus and report for their common substrate does not equate their contents or consumers. File presence and the implemented retention paths do not establish observed execution: [MEM-OBJ-normalized](memory.md#mem-obj-normalized), [MEM-OBJ-corpus](memory.md#mem-obj-corpus), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Representational form:** Fixed-rule cache matching and benchmark text operations support symbolic consumption. The report separates the wired symbolic evaluation data from afforded human interpretation of its readable excerpts. No numeric scalar or JSON encoding is mistaken for parametric representation. The records support both forms at their stated consumers: [MEM-RTE-normalization-reuse](memory.md#mem-rte-normalization-reuse), [MEM-RTE-corpus-reload](memory.md#mem-rte-corpus-reload), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Lineage:** Normalized values have a wired compiled derivation; corpus acquisition is wired import; aggregate report generation extracts evaluation outcomes. These generation paths do not authenticate the committed instances. The partial assessment correctly preserves historical provenance uncertainty. Raw cache-key provenance remains a local inventory limitation below: [MEM-OBJ-normalized](memory.md#mem-obj-normalized), [MEM-OBJ-corpus](memory.md#mem-obj-corpus), [MEM-OBJ-results](memory.md#mem-obj-results), [EPI-RTE-benchmark-check](epistemic.md#epi-rte-benchmark-check).
+- **Behavioral authority:** Retained matching strings and corpus text supply validation references at deterministic consumers. The report affords human reference use, not a wired policy update. The separate unresolved product-change unit prevents that affordance from being promoted to learning or enforcement authority: [MEM-RTE-normalization-reuse](memory.md#mem-rte-normalization-reuse), [MEM-RTE-corpus-reload](memory.md#mem-rte-corpus-reload), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Write agency:** Cache-miss admission and corpus replacement are automatic mechanisms despite caller initiation. Unresolved report retention and committed-artifact admission are not assigned manual agency merely because a shell command or file exists. The partial inventory preserves that distinction: [MEM-RTE-normalization-reuse](memory.md#mem-rte-normalization-reuse), [MEM-RTE-corpus-reload](memory.md#mem-rte-corpus-reload), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Curation operations:** LRU eviction supports decay locally. Corpus acquisition and overwrite do not by themselves establish semantic evolution or deduplication. Report aggregation and excerpt truncation do not establish consolidation of retained memory. The partial assessment does not claim a complete operation inventory: [MEM-OBJ-normalized](memory.md#mem-obj-normalized), [MEM-RTE-corpus-reload](memory.md#mem-rte-corpus-reload), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Read-back direction and signal:** Exact-key cache reuse and explicit corpus loading are requested pulls. The raw-string key does not establish identifier-based push. Unresolved later report delivery remains separate, so the direction axis stays partial and the signal axis stays not-determinable rather than claiming inventory-wide inapplicability: [MEM-RTE-normalization-reuse](memory.md#mem-rte-normalization-reuse), [MEM-RTE-corpus-reload](memory.md#mem-rte-corpus-reload), [MEM-OBJ-results](memory.md#mem-obj-results).
+- **Trace learning and trace source:** The accepted records establish neither a qualifying automatic trace-to-durable-behavior update with later consumption nor a canonical evidenced-absence record. Accordingly, the profile emits neither a learning negative nor a trace-source value. Trace-extracted report lineage is not promoted to trace learning. Human release authority does not close the missing automatic update path: [MEM-OBJ-results](memory.md#mem-obj-results), [EPI-RTE-benchmark-check](epistemic.md#epi-rte-benchmark-check), [RT-RTE-release-admission](runtime.md#rt-rte-release-admission).
+
+The emitted findings remain supported at their stated wiring or affordance bases. None claims observed operation, successful activation, improved capacity or causal benefit. The local omission below does not invalidate an emitted value or a known axis, and does not require a replacement profile before publication.
+
+## Blockers
+
+none
+
+## Limits
+
+- The profile's lineage inventory classifies derived cache values but does not separately inventory the retained raw keys. [MEM-OBJ-normalized](memory.md#mem-obj-normalized) distinguishes raw inputs from normalized values, and [MEM-RTE-normalization-reuse](memory.md#mem-rte-normalization-reuse) leaves input authorship caller-controlled. The [profile rationale](memory-profile.md#comparison-rationale) supports compilation of values, not complete provenance of the keys. The lineage axis already expresses partial coverage, so its compiled, imported and trace-extracted findings remain valid; readers should withhold a complete part-by-part lineage comparison for the cache and must not extend the compiled-value finding to raw-key provenance.
