@@ -80,19 +80,23 @@ def git(root: Path, *args: str) -> str:
     return subprocess.run(["git", *args], cwd=root, check=True, capture_output=True, text=True).stdout
 
 
-@pytest.fixture
-def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    root = tmp_path / "repo"
+LIBRARY_FILES = ("kb/instructions/", "kb/types/")
+
+
+def _project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, *, installed: bool):
+    """A repository with the fake harness. Installed: the library files live outside it, as shared data does."""
+    root, lib = tmp_path / "repo", (tmp_path / "share" / "commonplace" if installed else tmp_path / "repo" / "kb")
     for rel, text in FILES.items():
-        (root / rel).parent.mkdir(parents=True, exist_ok=True)
-        (root / rel).write_text(text, encoding="utf-8")
+        target = lib / rel.removeprefix("kb/") if installed and rel.startswith(LIBRARY_FILES) else root / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
     git(root, "init", "-q")
     git(root, "config", "user.email", "t@example.com")
     git(root, "config", "user.name", "t")
     git(root, "add", ".")
     git(root, "commit", "-q", "-m", "seed")
     (root / "other.md").write_text("another session's uncommitted work\n")
-    monkeypatch.setattr(library, "_library_root", lambda _override: (root / "kb").resolve())
+    monkeypatch.setattr(library, "_library_root", lambda _override: lib.resolve())
     monkeypatch.chdir(root)
     script, log = tmp_path / "fake.py", tmp_path / "launches.log"
     script.write_text(FAKE)
@@ -100,6 +104,16 @@ def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     harness = Harness(sys.executable, {"_subcommand": [str(script)], "_env": {"FAKE_LOG": str(log)}},
                       lambda profile: {}, model_used=lambda launch: "fake-model-1")
     return root, {"fake": harness}, log
+
+
+@pytest.fixture
+def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    return _project(tmp_path, monkeypatch, installed=False)
+
+
+@pytest.fixture
+def installed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    return _project(tmp_path, monkeypatch, installed=True)
 
 
 def review(repo, capsys, *args: str) -> tuple[int, dict, list[str]]:
@@ -200,6 +214,62 @@ def test_status_reports_fresh_stale_missing_and_orphaned_results(repo, capsys):
     }
     assert status["orphaned"] == [
         "kb/reports/state/review/results/kb/notes/gamma.md/prose/body-gate.md"]
+
+
+def status_rows(repo, capsys, *args: str) -> list[tuple[str, str, str | None]]:
+    _, harnesses, _ = repo
+    assert main(["status", *args, "--json"], harnesses=harnesses) == 0
+    payload = json.loads(capsys.readouterr().out)
+    return [(row["note"], row["freshness"], row["outcome"]) for row in payload["pairs"]]
+
+
+def test_status_filters_list_current_findings_and_what_a_sweep_would_ask(repo, capsys):
+    root = repo[0]
+    write(root, "kb/notes/gamma.md", note("Gamma", "Gamma FAILME body."))
+    assert review(repo, capsys, "kb/notes", "--criteria", "prose/body-gate")[0] == 0
+    write(root, "kb/notes/gamma.md", note("Gamma", "Gamma FAILME body, edited."))      # its fail is stale
+    write(root, "kb/notes/delta.md", note("Delta", "Delta body."))                     # never reviewed
+
+    # Without NOTES: every stored result, so a fixer needs no note list to find the current failures.
+    assert status_rows(repo, capsys, "--fresh", "--outcome", "fail") == [("kb/notes/beta.md", "fresh", "fail")]
+    assert status_rows(repo, capsys, "--outcome", "fail", "--outcome", "pass") == [
+        ("kb/notes/alpha.md", "fresh", "pass"), ("kb/notes/beta.md", "fresh", "fail"),
+        ("kb/notes/gamma.md", "stale", "fail")]
+    assert status_rows(repo, capsys, "--stale") == [("kb/notes/gamma.md", "stale", "fail")]
+    # With NOTES, a pair never reviewed is not fresh either.
+    assert status_rows(repo, capsys, "kb/notes", "--criteria", "prose/body-gate", "--stale") == [
+        ("kb/notes/delta.md", "missing", None), ("kb/notes/gamma.md", "stale", "fail")]
+
+    assert main(["status", "--fresh", "--outcome", "fail", "--json"], harnesses=repo[1]) == 0
+    [row] = json.loads(capsys.readouterr().out)["pairs"]
+    assert row["criterion-id"] == "prose/body-gate"
+    assert read_result(root / row["result"]).body.endswith("## Result: FAIL\n")
+    assert main(["status", "--criteria", "prose", "--json"], harnesses=repo[1]) == 2
+
+
+def test_installed_project_reviews_against_library_criteria(installed, capsys):
+    root = installed[0]
+    lib = library.library_root()
+    assert not lib.is_relative_to(root)
+    code, report, launches = review(installed, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate", "type",
+                                    "collection", "critique")
+    assert code == 0, report
+    assert sorted(launches) == sorted(f"kb/notes/beta.md::{criterion}" for criterion in (
+        "commonplace:instructions/review-gates/prose/body-gate.md", "commonplace:types/note.md",
+        "kb/notes/COLLECTION.md", "commonplace:instructions/critique-note.md"))
+    gate = read_result(result_path(root, "kb/notes/beta.md", "prose/body-gate"))
+    assert (gate.criterion, gate.outcome) == ("commonplace:instructions/review-gates/prose/body-gate.md", "fail")
+    assert result_path(root, "kb/notes/beta.md", "commonplace/types/note").is_file()
+    assert result_path(root, "kb/notes/beta.md", "commonplace/instructions/critique-note").is_file()
+
+    (lib / "types/note.md").write_text("# Note type\n\nWrite one claim, sharply.\n", encoding="utf-8")
+    assert status_rows(installed, capsys, "--stale") == [("kb/notes/beta.md", "stale", "fail")]
+    code, report, launches = review(installed, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate", "type")
+    assert (code, launches) == (0, ["kb/notes/beta.md::commonplace:types/note.md"])
+    (lib / "instructions/critique-note.md").unlink()
+    assert main(["status", "--json"], harnesses=installed[1]) == 0
+    assert json.loads(capsys.readouterr().out)["orphaned"] == [
+        "kb/reports/state/review/results/kb/notes/beta.md/commonplace/instructions/critique-note.md"]
 
 
 def test_run_gates_refuses_to_default_to_all_gates(repo) -> None:

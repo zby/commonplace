@@ -1,6 +1,6 @@
 """Review notes against criteria with headless workers, keeping one result file per pair.
 
-    commonplace-review status NOTES... [--criteria C...] [--json]
+    commonplace-review status [NOTES... [--criteria C...]] [--outcome O...] [--fresh | --stale] [--json]
     commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]
                                  [--max-workers N] [--timeout SECONDS] [--force] [--resume RUN_DIR]
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
@@ -11,6 +11,16 @@ recursively). C are gate ids, bundle names or the lenses `type`, `collection`
 and `critique`. `status` without `--criteria` covers all gates (critique stays
 opt-in); `run gates` launches one worker per stale pair, so it takes all gates
 only when asked with `--all-gates`.
+
+`status` with NOTES shows each applicable pair, including pairs never
+reviewed (`missing`); without NOTES it shows every stored result whose note
+and criterion still exist. `--outcome` keeps the rows whose stored outcome is
+one of those given, `--fresh` the rows with a fresh result, and `--stale` the
+rows without one (stale or missing): `--fresh --outcome warn` lists the
+current warnings, `--stale` what a sweep would ask. Orphaned results, whose
+note or criterion is gone, are listed apart and are not filtered; removing
+one is deleting its file. `--json` gives each row's result file, so a fixer
+can read the finding.
 
 `run gates` opens a new run under kb/reports/state/review/runs/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
@@ -43,8 +53,13 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="commonplace-review", description=__doc__.splitlines()[0])
     commands = parser.add_subparsers(dest="command", required=True)
     status = commands.add_parser("status", help="show each pair's freshness and stored outcome; launches nothing")
-    status.add_argument("notes", nargs="+")
-    status.add_argument("--criteria", nargs="+")
+    status.add_argument("notes", nargs="*", help="notes or directories; without them, every stored result")
+    status.add_argument("--criteria", nargs="+", help="with NOTES: gate ids, bundles or lenses (default: all gates)")
+    status.add_argument("--outcome", nargs="+", action="extend", choices=results.OUTCOMES,
+                        help="keep rows whose stored outcome is one of these")
+    freshness = status.add_mutually_exclusive_group()
+    freshness.add_argument("--fresh", action="store_true", help="keep rows with a fresh result")
+    freshness.add_argument("--stale", action="store_true", help="keep rows without a fresh result (stale or missing)")
     status.add_argument("--json", action="store_true")
     run = commands.add_parser("run", help="run a review workflow")
     workflows = run.add_subparsers(dest="workflow", required=True)
@@ -53,7 +68,8 @@ def _parser() -> argparse.ArgumentParser:
     chosen = sweep.add_mutually_exclusive_group(required=True)
     chosen.add_argument("--criteria", nargs="+")
     chosen.add_argument("--all-gates", action="store_true", help="every bundle plus `type` and `collection`")
-    sweep.add_argument("--profile", help=f"worker profile from {gates.PROFILES.as_posix()} (default: its `default`)")
+    sweep.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL} "
+                       "(default: its `default`)")
     sweep.add_argument("--max-workers", type=int, default=4, help="workers running at once")
     sweep.add_argument("--timeout", type=float, help="seconds a launch may take")
     sweep.add_argument("--force", action="store_true", help="review fresh pairs too")
@@ -78,13 +94,29 @@ def _pairs(root: Path, arguments: argparse.Namespace) -> list[gates.Pair]:
     return gates.pairs(root, gates.note_paths(root, arguments.notes), arguments.criteria)
 
 
+def _keep(row: results.Row, arguments: argparse.Namespace) -> bool:
+    fresh = row.freshness.state == "fresh"
+    return ((not arguments.outcome or row.outcome in arguments.outcome)
+            and not (arguments.fresh and not fresh) and not (arguments.stale and fresh))
+
+
 def _status(root: Path, arguments: argparse.Namespace) -> int:
-    rows = results.status(root, [(pair.note, pair.criterion) for pair in _pairs(root, arguments)])
-    orphans = [path.relative_to(root).as_posix() for path in results.orphaned(root)]
+    if arguments.notes:
+        rows = results.status(root, [(pair.note, pair.criterion) for pair in _pairs(root, arguments)])
+        orphans = results.orphaned(root)
+    elif arguments.criteria:
+        raise ValueError("--criteria needs NOTES")
+    else:
+        rows, orphans = results.stored(root)
+    rows = [row for row in rows if _keep(row, arguments)]
+    orphans = [path.relative_to(root).as_posix() for path in orphans]
     if arguments.json:
-        print(json.dumps({"pairs": [{"note": row.note, "criterion": row.criterion, "freshness": row.freshness.state,
-                                     "changed": list(row.freshness.changed), "outcome": row.outcome,
-                                     "model": row.model} for row in rows],
+        print(json.dumps({"pairs": [{"note": row.note, "criterion": row.criterion,
+                                     "criterion-id": results.criterion_id(root, row.criterion),
+                                     "freshness": row.freshness.state, "changed": list(row.freshness.changed),
+                                     "outcome": row.outcome, "model": row.model,
+                                     "result": row.path.relative_to(root).as_posix() if row.path else None}
+                                    for row in rows],
                           "orphaned": orphans}, indent=2))
         return 0
     for row in rows:
@@ -116,10 +148,10 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
 def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Profile:
     if resumed:
         recorded = Profile(**json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))["profile"])
-        if name is not None and load_profile(root, name, gates.PROFILES) != recorded:
+        if name is not None and load_profile(root, name, gates.profiles()) != recorded:
             raise ValueError(f"the run was opened with another profile: {recorded}")
         return recorded
-    profile = load_profile(root, name, gates.PROFILES)
+    profile = load_profile(root, name, gates.profiles())
     (run_dir / SWEEP).write_text(json.dumps({"profile": asdict(profile)}, indent=2), encoding="utf-8")
     return profile
 

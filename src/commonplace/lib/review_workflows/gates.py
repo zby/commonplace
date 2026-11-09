@@ -1,13 +1,15 @@
 """The gate sweep: review notes against criteria, one headless worker call per pair.
 
 `pairs()` expands note paths and criterion requests into the applicable
-(note, criterion) pairs with the old review package's pure resolution:
-catalog gate ids and bundle names filtered by the gate's `requires_type` and
-`requires_trait`, the virtual `type` and `collection` lenses resolved from the
-note's frontmatter and location, and the `critique` assay. Omitted requests
-mean all gates, as `--all-gates` did: every bundle plus `type` and
-`collection`; critique stays opt-in. Each pair's result contract follows from
-its criterion: a report for the critique instruction, a verdict otherwise.
+(note, criterion) pairs through `criteria.select`: catalog gate ids and
+bundle names filtered by the gate's `requires_type` and `requires_trait`, the
+virtual `type` and `collection` lenses resolved from the note's frontmatter
+and location, and the `critique` assay. Omitted requests mean all gates:
+every bundle plus `type` and `collection`; critique stays opt-in. Each pair's
+result contract follows from its criterion: a report for the critique
+instruction, a verdict otherwise. A criterion may be a library file outside
+the repository, as the gates are in an installed project; its text is read
+through the library.
 
 `sweep()` skips pairs whose result file is fresh, unless forced, and asks a
 worker for each other pair in one Workjig run: one `checked()` call named
@@ -20,9 +22,9 @@ reported for that pair. A launch failure or usage limit stops the sweep: no
 pair not yet started is asked, results already written stay, and a rerun
 with the same run directory continues.
 
-The prompt around the two inputs is outside the freshness hashes, as the old
-scaffolding was: keep it mechanical (how to read the inputs and write the
-result). Judgment belongs in criterion files, where the hash sees it.
+The prompt around the two inputs is outside the freshness hashes: keep it
+mechanical (how to read the inputs and write the result). Judgment belongs
+in criterion files, where the hash sees it.
 
 The checkout guard compares `git status` (with untracked files), the content
 of every path it lists, and HEAD before and after the run, ignoring the
@@ -53,61 +55,42 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
-from commonplace.lib.library import is_library_identity
+from commonplace.lib.library import library_root
 from commonplace.lib.project_paths import (
     VALIDATION_IGNORE_MARKER,
     is_collection_metadata,
 )
-from commonplace.lib.review_workflows import results
-from commonplace.review.collection_conformance import (
-    is_collection_conformance_request,
-    is_collection_md_criterion_path,
-    note_collection_md_path,
-    resolve_collection_criterion_id,
-)
-from commonplace.review.critique import (
-    critique_criterion_path,
-    is_critique_request,
-    result_kind_for_criterion_path,
-)
-from commonplace.review.paths import criterion_path_for_id, review_gates_dir
-from commonplace.review.protocol.outcomes import (
-    parse_report_completion,
-    parse_review_outcome,
-)
-from commonplace.review.protocol.prompt import (
-    collection_conformance_wrapper_lines,
-    type_conformance_wrapper_lines,
-)
-from commonplace.review.resolve_criteria import (
-    all_gate_requests,
-    applicable_criterion_ids_for_note,
-    resolve_criterion_requests,
-)
-from commonplace.review.type_conformance import (
-    is_type_conformance_request,
-    is_type_spec_criterion_path,
-    note_type_spec_path,
-    resolve_type_criterion_id,
-)
+from commonplace.lib.review_workflows import criteria, results
+from commonplace.lib.review_workflows.outcomes import parse_report, parse_verdict
 
 STATE = Path("kb/reports/state/review")
 RUNS = STATE / "runs"
-PROFILES = Path("kb/instructions/review-profiles.yaml")
+PROFILES_REL = "instructions/review-profiles.yaml"
 ATTEMPTS = 3
 """Attempts per pair, counting rejected reviews and launches that returned no answer."""
+
+
+def profiles() -> Path:
+    """The review worker profiles: the library's instructions/review-profiles.yaml."""
+    return library_root() / PROFILES_REL
 
 
 @dataclass(frozen=True)
 class Pair:
     note: str          # repository-relative POSIX path
-    criterion: str     # repository-relative POSIX path
-    contract: str      # "verdict" (PASS, WARN or FAIL) or "report" (REPORT)
+    criterion: str     # artifact identity: repository path or `commonplace:<path>`
+    kind: str          # one of criteria.KINDS
+    criterion_id: str  # results.criterion_id of the criterion
+
+    @property
+    def contract(self) -> str:
+        """`verdict` (PASS, WARN or FAIL) or `report` (REPORT)."""
+        return criteria.Criterion(self.criterion, self.kind).contract
 
     @property
     def job(self) -> str:
         """The Workjig call name: unique per pair, the same in every run."""
-        return f"{self.note}::{results.criterion_id(Path('.'), self.criterion)}"
+        return f"{self.note}::{self.criterion_id}"
 
 
 @dataclass
@@ -181,47 +164,19 @@ def note_paths(root: Path, requests: list[str]) -> list[str]:
     return found
 
 
-def pairs(root: Path, notes: list[str], criteria: list[str] | None = None) -> list[Pair]:
+def pairs(root: Path, notes: list[str], requests: list[str] | None = None) -> list[Pair]:
     """The applicable (note, criterion) pairs for repository-relative notes and criterion requests.
 
-    `criteria` holds gate ids, bundle names and the lenses `type`,
+    `requests` holds gate ids, bundle names and the lenses `type`,
     `type/<name>`, `collection`, `collection/<path>` and `critique`; None
-    means all gates. A criterion outside the repository is refused: phase 1
-    reviews only in a Commonplace checkout, where the library is its kb/.
+    means all gates.
     """
-    gates_dir = review_gates_dir(root)
-    requests = all_gate_requests(gates_dir) if criteria is None else resolve_criterion_requests(criteria, gates_dir)
-    catalog = [request for request in requests if not (is_type_conformance_request(request)
-               or is_collection_conformance_request(request) or is_critique_request(request))]
-    paths = {request: criterion_path_for_id(root, request) for request in catalog}
-    types = [request.strip() for request in requests if is_type_conformance_request(request)]
-    collections = [request.strip() for request in requests if is_collection_conformance_request(request)]
-    type_paths = {resolve_type_criterion_id(root, request) for request in types if request != "type"}
-    collection_paths = {resolve_collection_criterion_id(root, request) for request in collections
-                        if request != "collection"}
-    critique = critique_criterion_path(root) if any(is_critique_request(request) for request in requests) else None
-
     found: list[Pair] = []
-    for note in notes:
-        note_abs = root / note
-        chosen = [paths[request] for request in applicable_criterion_ids_for_note(note_abs, catalog, gates_dir)]
-        if types:
-            spec = note_type_spec_path(root, note_abs)
-            if spec is not None and ("type" in types or spec in type_paths):
-                chosen.append(spec)
-        if collections:
-            contract = note_collection_md_path(root, note_abs)
-            if contract is not None and ("collection" in collections or contract in collection_paths):
-                chosen.append(contract)
-        if critique is not None:
-            chosen.append(critique)
-        for criterion in dict.fromkeys(chosen):
-            if is_library_identity(criterion):
-                raise ValueError(f"criterion {criterion} is outside the repository; review runs in a checkout")
-            pair = Pair(note, criterion, result_kind_for_criterion_path(criterion))
-            if "#" in pair.job:
-                raise ValueError(f"{pair.job}: '#' is reserved in job names by the runtime")
-            found.append(pair)
+    for note, criterion in criteria.select(root, notes, requests):
+        pair = Pair(note, criterion.identity, criterion.kind, results.criterion_id(root, criterion.identity))
+        if "#" in pair.job:
+            raise ValueError(f"{pair.job}: '#' is reserved in job names by the runtime")
+        found.append(pair)
     return found
 
 
@@ -249,6 +204,35 @@ file in the repository, and run no command that changes it or its git state.
 {contract}
 """
 
+TYPE_WRAPPER = (
+    "This is a type-conformance gate. The gate is the note's type spec:",
+    "authoring instructions and a template, not a Failure mode / Test procedure.",
+    "The embedded type spec below is the authoritative gate text for this pair.",
+    "Judge whether the note does what the type spec's authoring instructions ask.",
+    "If the type spec carries a `## Review` section, treat it as the operative test.",
+    "- PASS: the note does what the authoring instructions ask.",
+    "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
+    "- FAIL: the note does not do what the authoring instructions ask.",
+    "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+)
+"""Mechanical only: how to apply a type spec as a gate. What a good note of the type is belongs in the spec."""
+
+COLLECTION_WRAPPER = (
+    "This is a collection-conformance gate. The gate is the authoring contract",
+    "(COLLECTION.md) of the collection the note lives in: conventions and routing",
+    "rules, not a Failure mode / Test procedure.",
+    "The embedded contract below is the authoritative gate text for this pair.",
+    "Judge whether the note follows the collection's authoring conventions:",
+    "placement, title and description conventions, quality goal, and outbound linking rules.",
+    "If the COLLECTION.md carries a `## Review` section, treat it as the operative test.",
+    "- PASS: the note follows the collection's conventions.",
+    "- WARN: the note conforms overall, but specific conventions go unmet; name each unmet convention as a finding.",
+    "- FAIL: the note does not follow the collection's conventions: wrong placement, or its conventions are systematically unmet.",
+    "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+    "The note's conformance to its type spec is the type-conformance pair's job; judge only what the collection contract asks beyond the type contract.",
+)
+"""Mechanical only: how to apply a collection contract as a gate; its criteria belong in the contract."""
+
 VERDICT_OUTPUT = """\
 - Structure the review as `### Summary` (a short paragraph), `### Findings` \
 (`- <severity>: <finding>` items) and, when needed, `### Suggested Revision`.
@@ -264,12 +248,7 @@ REPORT_OUTPUT = """\
 
 def prompt(pair: Pair, problems: list[list[str]] = ()) -> str:
     """The reviewer's task for one pair; `problems` are earlier attempts' rejections, oldest first."""
-    if is_type_spec_criterion_path(pair.criterion):
-        wrapper = type_conformance_wrapper_lines()
-    elif is_collection_md_criterion_path(pair.criterion):
-        wrapper = collection_conformance_wrapper_lines()
-    else:
-        wrapper = ()
+    wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER}.get(pair.kind, ())
     text = PROMPT.format(
         problem=PROBLEM_REF, note=pair.note, note_input=input_ref("note"), criterion=pair.criterion,
         criterion_input=input_ref("criterion"), wrapper="".join(f"\n{line}" for line in wrapper) + "\n" * bool(wrapper),
@@ -285,16 +264,16 @@ def check(pair: Pair, text: str) -> list[str]:
     """The strict result-line check: empty when the review is acceptable."""
     try:
         if pair.contract == "verdict":
-            parse_review_outcome(text)
+            parse_verdict(text)
         else:
-            parse_report_completion(text)
+            parse_report(text)
     except ValueError as error:
         return [str(error)]
     return []
 
 
 def outcome(pair: Pair, text: str) -> str:
-    return parse_review_outcome(text) if pair.contract == "verdict" else "report"
+    return parse_verdict(text) if pair.contract == "verdict" else "report"
 
 
 # --- The checkout guard ------------------------------------------------------------
@@ -357,7 +336,7 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
             return
         report = reports[pair]
         note_text = (root / pair.note).read_text(encoding="utf-8")
-        criterion_text = (root / pair.criterion).read_text(encoding="utf-8")
+        criterion_text = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
         try:
             answer = run.checked(pair.job, lambda problems: prompt(pair, problems),
                                  lambda answer: check(pair, answer.outputs["review"]), ["review"],

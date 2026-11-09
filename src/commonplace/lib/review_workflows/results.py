@@ -14,27 +14,41 @@ hash is computed under the criterion's current `watches:`: a criterion edit
 that changes the declaration stales its pairs on the criterion and may report
 the note changed as well.
 
-Everything here is a pure function of the files under `root`.
+A criterion is named by its artifact identity: a repository path, or
+`commonplace:<path>` for a library file outside the repository. Its text is
+read through the library resolution, so a project that reads the installed
+library and this checkout, whose library is its own kb/, keep results the same
+way.
+
+Everything here is a pure function of the files under `root` and the library.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 import uuid
-from collections.abc import Iterable
-from dataclasses import dataclass, replace
+from collections.abc import Iterable, Iterator
+from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
 
 import yaml
 
 from commonplace.lib import frontmatter
-from commonplace.review.ack_trivial_note_changes import gate_watches, note_parts
-from commonplace.review.paths import GATES_REL
+from commonplace.lib.library import (
+    LIBRARY_IDENTITY_PREFIX,
+    artifact_file,
+    artifact_identity,
+    is_library_identity,
+)
+from commonplace.lib.review_workflows.criteria import gates_dir
 
 RESULTS = Path("kb/reports/state/review/results")
-GATES = PurePosixPath("kb") / GATES_REL
+LIBRARY_ID_PREFIX = "commonplace/"
+"""Where a library criterion outside the gate catalog keeps its results; repository criteria live under kb/."""
+WATCHABLE = {"title", "description", "body"}
 OUTCOMES = ("pass", "warn", "fail", "report")
 PARTS_DOMAIN = "commonplace-review-watched-parts/1\n"
 """Prefix of a watched-parts hash input, so it never equals a whole note's text by design."""
@@ -44,7 +58,7 @@ PARTS_DOMAIN = "commonplace-review-watched-parts/1\n"
 class Result:
     note: str                         # repository-relative POSIX path
     note_sha256: str                  # over the parts the criterion watches, see `note_sha256()`
-    criterion: str                    # repository-relative POSIX path
+    criterion: str                    # artifact identity: repository path or `commonplace:<path>`
     criterion_sha256: str
     outcome: str                      # one of OUTCOMES
     profile: dict[str, Any]           # harness, launch-model, effort
@@ -69,6 +83,17 @@ class Row:
     outcome: str | None = None        # None when the result is missing
     profile: dict[str, Any] | None = None
     model: str | None = None
+    path: Path | None = None          # the result file, None when the result is missing
+
+
+@dataclass(frozen=True)
+class Summary:
+    results: int = 0
+    fresh: int = 0
+    stale: int = 0
+    orphaned: int = 0
+    warn: int = 0                     # fresh results whose outcome is warn
+    fail: int = 0                     # fresh results whose outcome is fail
 
 
 _KEYS = {"note": "note", "note-sha256": "note_sha256", "criterion": "criterion",
@@ -86,12 +111,78 @@ def _posix(path: str | Path, *, label: str) -> str:
     return text
 
 
-def criterion_id(root: Path, criterion_path: str | Path) -> str:
-    """The catalog gate id (`prose/source-residue`) for a gate; else the repository path without `.md`."""
-    path = PurePosixPath(_posix(criterion_path, label="criterion"))
-    if path.is_relative_to(GATES):
-        path = path.relative_to(GATES)
-    return path.with_suffix("").as_posix() if path.suffix == ".md" else path.as_posix()
+def _identity(criterion: str | Path) -> str:
+    """A criterion identity: a repository-relative path, or a library identity whose path stays in the library."""
+    text = str(criterion)
+    if is_library_identity(text):
+        _posix(text[len(LIBRARY_IDENTITY_PREFIX):], label="library criterion")
+        return text
+    return _posix(criterion, label="criterion")
+
+
+def criterion_id(root: Path, criterion: str | Path) -> str:
+    """The criterion's short name, which keys its result file under the note.
+
+    A catalog gate is `<lens>/<name>` (`prose/source-residue`) in both
+    layouts. Any other repository criterion is its path without `.md`
+    (`kb/types/note`); any other library criterion is `commonplace/` and its
+    library path without `.md` (`commonplace/types/note`).
+    """
+    identity = _identity(criterion)
+    gates = artifact_identity(root, gates_dir()) + "/"
+    if identity.startswith(gates):
+        name = identity[len(gates):]
+    elif is_library_identity(identity):
+        name = LIBRARY_ID_PREFIX + identity[len(LIBRARY_IDENTITY_PREFIX):]
+    else:
+        name = identity
+    return name.removesuffix(".md")
+
+
+def criterion_file(root: Path, criterion: str | Path) -> Path:
+    """The file a criterion identity names, in the repository or in the library."""
+    return artifact_file(root, _identity(criterion))
+
+
+_TITLE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
+
+
+def _normalize_markdown(text: str) -> str:
+    return "\n".join(line.rstrip() for line in text.splitlines() if line.strip())
+
+
+def _normalize_scalar(value: Any) -> Any:
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, list):
+        return tuple(_normalize_scalar(item) for item in value)
+    return value
+
+
+def note_parts(note_text: str) -> dict[str, Any] | None:
+    """The watchable parts of a note, normalized; None when its frontmatter does not parse.
+
+    The title is the first `# ` heading; the body is the text after it with
+    blank lines and trailing spaces dropped, so a whitespace-only edit changes
+    no part.
+    """
+    parsed = frontmatter.parse(note_text)
+    if not parsed.ok:
+        return None
+    body = frontmatter.strip(note_text)
+    title = _TITLE.search(body)
+    return {"title": title.group(1).strip() if title else "",
+            "description": _normalize_scalar(parsed.data.get("description", "")),
+            "body": _normalize_markdown(body[title.end():] if title else body)}
+
+
+def watches(criterion_text: str) -> set[str] | None:
+    """The note parts the criterion declares in `watches:`; None without a valid declaration."""
+    parsed = frontmatter.parse(criterion_text)
+    raw = parsed.data.get("watches") if parsed.ok else None
+    if not isinstance(raw, list) or not raw or not all(isinstance(item, str) for item in raw):
+        return None
+    return set(raw) if set(raw) <= WATCHABLE else None
 
 
 def note_sha256(note_text: str, criterion_text: str) -> str:
@@ -101,12 +192,12 @@ def note_sha256(note_text: str, criterion_text: str) -> str:
     or the note's frontmatter does not parse. The parts are JSON-encoded, so
     part content cannot forge a part boundary.
     """
-    watches = gate_watches(criterion_text)
-    parts = note_parts(note_text) if watches is not None else None
+    watched = watches(criterion_text)
+    parts = note_parts(note_text) if watched is not None else None
     if parts is None:
         data = note_text
     else:
-        data = PARTS_DOMAIN + json.dumps([[key, parts[key]] for key in sorted(watches)],
+        data = PARTS_DOMAIN + json.dumps([[key, parts[key]] for key in sorted(watched)],
                                          ensure_ascii=False, default=repr)
     return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
@@ -135,7 +226,7 @@ def make_result(note: str | Path, note_text: str, criterion: str | Path, criteri
                 body: str) -> Result:
     """A result hashing the note and criterion texts the reviewer was given."""
     return Result(note=_posix(note, label="note"), note_sha256=note_sha256(note_text, criterion_text),
-                  criterion=_posix(criterion, label="criterion"), criterion_sha256=criterion_sha256(criterion_text),
+                  criterion=_identity(criterion), criterion_sha256=criterion_sha256(criterion_text),
                   outcome=outcome, profile=dict(profile), model=model, run=run, launch=launch,
                   completed_at=completed_at, body=body)
 
@@ -182,20 +273,29 @@ def read_result(path: Path) -> Result:
     return Result(**{field: data[key] for key, field in _KEYS.items()}, body=frontmatter.strip(text))
 
 
-def _check(root: Path, note: str | Path, criterion: str | Path) -> tuple[Freshness, Result | None]:
-    note, criterion = _posix(note, label="note"), _posix(criterion, label="criterion")
+def _check(root: Path, note: str | Path, criterion: str | Path) -> tuple[Freshness, Result | None, Path]:
+    note, criterion = _posix(note, label="note"), _identity(criterion)
     path = result_path(root, note, criterion_id(root, criterion))
     if not path.is_file():
-        return Freshness("missing"), None
+        return Freshness("missing"), None, path
     result = read_result(path)
     if (result.note, result.criterion) != (note, criterion):
         raise ValueError(f"review result {path} records {result.note} and {result.criterion}, "
                          f"not {note} and {criterion}")
-    criterion_text = _read(root / criterion)
+    return _freshness(root, result, {}), result, path
+
+
+def _freshness(root: Path, result: Result, texts: dict[Path, str]) -> Freshness:
+    """Compare the result's hashes with the current files; `texts` caches file texts across results."""
+    def text(path: Path) -> str:
+        if path not in texts:
+            texts[path] = _read(path)
+        return texts[path]
+    criterion_text = text(criterion_file(root, result.criterion))
     changed = tuple(name for name, same in (
-        ("note", note_sha256(_read(root / note), criterion_text) == result.note_sha256),
+        ("note", note_sha256(text(root / result.note), criterion_text) == result.note_sha256),
         ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256)) if not same)
-    return Freshness("stale", changed) if changed else Freshness("fresh"), result
+    return Freshness("stale", changed) if changed else Freshness("fresh")
 
 
 def freshness(root: Path, note: str | Path, criterion: str | Path) -> Freshness:
@@ -203,26 +303,58 @@ def freshness(root: Path, note: str | Path, criterion: str | Path) -> Freshness:
     return _check(root, note, criterion)[0]
 
 
+def _row(result: Result, state: Freshness, path: Path) -> Row:
+    return Row(result.note, result.criterion, state, result.outcome, result.profile, result.model, path)
+
+
 def status(root: Path, pairs: Iterable[tuple[str | Path, str | Path]]) -> list[Row]:
     """One row per (note, criterion) pair, with the stored outcome and executor when there is a result."""
     rows = []
     for note, criterion in pairs:
-        state, result = _check(root, note, criterion)
-        row = Row(_posix(note, label="note"), _posix(criterion, label="criterion"), state)
-        if result is not None:
-            row = replace(row, outcome=result.outcome, profile=result.profile, model=result.model)
-        rows.append(row)
+        state, result, path = _check(root, note, criterion)
+        rows.append(_row(result, state, path) if result is not None
+                    else Row(_posix(note, label="note"), _identity(criterion), state))
     return rows
+
+
+def _stored_files(root: Path) -> Iterator[tuple[Path, Result]]:
+    results = root / RESULTS
+    if not results.is_dir():
+        return
+    for path in sorted(path for path in results.rglob("*.md") if path.is_file()):  # note dirs end in .md
+        yield path, read_result(path)
+
+
+def _is_orphan(root: Path, result: Result) -> bool:
+    try:
+        return not (root / result.note).is_file() or not criterion_file(root, result.criterion).is_file()
+    except ValueError:                    # an identity that no longer resolves in this library
+        return True
 
 
 def orphaned(root: Path) -> list[Path]:
     """Stored result files whose note or criterion file no longer exists; removing one is deleting it."""
-    results = root / RESULTS
-    if not results.is_dir():
-        return []
-    found = []
-    for path in sorted(path for path in results.rglob("*.md") if path.is_file()):  # note dirs end in .md
-        result = read_result(path)
-        if not (root / result.note).is_file() or not (root / result.criterion).is_file():
-            found.append(path)
-    return found
+    return [path for path, result in _stored_files(root) if _is_orphan(root, result)]
+
+
+def stored(root: Path) -> tuple[list[Row], list[Path]]:
+    """Every stored result once: rows for those whose inputs exist, and the orphaned result files.
+
+    Each note and criterion file is read once however many results name it.
+    """
+    rows, orphans, texts = [], [], {}
+    for path, result in _stored_files(root):
+        if _is_orphan(root, result):
+            orphans.append(path)
+        else:
+            rows.append(_row(result, _freshness(root, result, texts), path))
+    return rows, orphans
+
+
+def summarize(root: Path) -> Summary:
+    """Counts over every stored result: fresh, stale and orphaned, and the fresh warn and fail outcomes."""
+    rows, orphans = stored(root)
+    fresh = [row for row in rows if row.freshness.state == "fresh"]
+    return Summary(results=len(rows) + len(orphans), fresh=len(fresh), stale=len(rows) - len(fresh),
+                   orphaned=len(orphans), warn=sum(row.outcome == "warn" for row in fresh),
+                   fail=sum(row.outcome == "fail" for row in fresh))
