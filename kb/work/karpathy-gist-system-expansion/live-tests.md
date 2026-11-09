@@ -1,5 +1,14 @@
 # Sequential live command tests
 
+## Historical record — current status supersedes the handoff
+
+The sections below retain the six-run pilot, its stop decision and initial
+integration refusal. They are not current pending-work instructions. The
+[2026-11-09 reconciliation](./status-2026-11-09.md) confirms that all 30 original
+targets, including these six, now have integrated publications and comparisons
+have been refreshed. Later execution does not by itself establish prevention of
+the recurring worker mistakes diagnosed here.
+
 ## Commission and limits
 
 The operator authorized sequential live testing of the dispatch list on

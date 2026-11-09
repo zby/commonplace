@@ -1,6 +1,19 @@
 # Find additional systems in Karpathy's LLM Wiki comments
 
-## Commission and outcome
+## Current status — 2026-11-09
+
+**All 30 original dispatch targets now have integrated publications.** The
+[reconciled status](./status-2026-11-09.md) links each selected run and records
+later expansion, integration and comparison-refresh evidence. Sourcebook remains
+a recorded acquisition failure outside the original queue. The next decision is
+bounded continuation or closure, not resuming at target 7.
+
+The discovery inventory and dispatch files below preserve the November 7
+selection; they are not a current pending-work queue. The pilot record preserves
+its original stop decision and diagnosis. This refresh authorizes no new runs,
+integration or cleanup.
+
+## Commission and historical outcome
 
 The operator opened this workshop on **2026-11-07** to prepare analysis of more
 systems linked in comments on Karpathy's LLM Wiki gist, reusing earlier triage
@@ -21,11 +34,14 @@ its stop conditions. Six systems completed in isolated worktrees. Testing
 stopped before the seventh because worker-level path and quotation mistakes
 still recurred beyond the first five runs, despite checked recovery. No
 controller defect or material accepted-result defect was established by the
-bounded reviews. Publications remain unintegrated; cleanup is not authorized.
+bounded reviews. Publications were then unintegrated; later integration and
+comparison refresh are recorded in the current status above. Cleanup is not
+authorized by this refresh.
 
 ## Discovery result and dispatch handoff
 
-**30 canonical repository URLs are ready for target selection and dispatch.**
+**The original discovery handoff selected 30 canonical repository URLs.**
+All thirty now have integrated results; retain this section as discovery history.
 
 - [Plain URL list](./dispatch-urls.txt): one source per line, in suggested order.
 - [Dispatch queue](./dispatch.md): selection rationale, inspection question and
@@ -72,7 +88,7 @@ coverage gap or after this batch. Repeated promotion is not evidence of merit.
 The old `frankchu91/mindbase` link is treated as the earlier MindBase identity,
 not a second job alongside `frankchu91/mindbase-llm-wiki`.
 
-### Before launching
+### Original launch prerequisites
 
 Send workers only the selected repository URL and the current
 `analyse-agentic-system` invocation, not triage conclusions or old reports.
@@ -179,9 +195,9 @@ Distinguish already covered, unresolved elsewhere, recommended, deferred and
 excluded. For deferrals, state what would reopen them. No current candidate
 count or priority order is fixed by this framing.
 
-The discovery queue is ready; new launches now require resolving the
-[live pilot's stop decision](./live-tests.md#stop-decision-and-handoff) with the
-operator. If acquisition is blocked,
+The original queue is complete; any new launch requires a bounded continuation
+commission using the [current status](./status-2026-11-09.md), not the historical
+pilot pause as the current execution boundary. If acquisition is blocked,
 return the partial queue and the coverage gap rather than implying an empty
 thread or inventing candidates. Source ambiguity, overlapping ownership and
 consequential scope choices also return to decision before analysis launch.
