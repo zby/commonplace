@@ -1,0 +1,33 @@
+# Worker profiles for `commonplace-review run`. Same entry shape as
+# kb/tasks/profiles.yaml: harness, launch-model, effort and optional extra
+# harness flags. A reviewer reads the checkout and writes only its output
+# file under kb/reports/state/review/runs/; unlike a task profile, it has no
+# edit grant on repository files and no git commit. The workflow's checkout
+# guard reports any change the run saw, whatever the flags allowed.
+default: sonnet
+profiles:
+  sonnet:
+    harness: claude-code
+    launch-model: sonnet
+    effort: medium
+    flags:
+      allowed-tools: "Read,Grep,Glob,Edit(kb/reports/state/review/runs/**),Write(kb/reports/state/review/runs/**)"
+      # Bash is denied outright: project settings allow `Bash(commonplace-*)`,
+      # which includes commands that rewrite the checkout.
+      disallowed-tools: "Bash,NotebookEdit"
+  opus:
+    harness: claude-code
+    launch-model: opus
+    effort: medium
+    flags:
+      allowed-tools: "Read,Grep,Glob,Edit(kb/reports/state/review/runs/**),Write(kb/reports/state/review/runs/**)"
+      disallowed-tools: "Bash,NotebookEdit"
+  # codex's sandbox cannot make the working directory read-only while keeping
+  # one subdirectory writable, so this profile can write the checkout at the
+  # sandbox level; the prompt forbids it and the guard reports it.
+  codex:
+    harness: codex
+    launch-model: gpt-6.1-sol
+    effort: medium
+    flags:
+      sandbox: workspace-write

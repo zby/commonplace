@@ -40,7 +40,7 @@ from commonplace.review.protocol.format import (
 from commonplace.review.type_conformance import is_type_spec_criterion_path
 
 
-def _type_conformance_wrapper_lines() -> tuple[str, ...]:
+def type_conformance_wrapper_lines() -> tuple[str, ...]:
     """Gate block rendered for a type spec serving as a gate.
 
     Mechanical only: it says how to apply authoring instructions as a gate,
@@ -60,7 +60,7 @@ def _type_conformance_wrapper_lines() -> tuple[str, ...]:
     )
 
 
-def _collection_conformance_wrapper_lines() -> tuple[str, ...]:
+def collection_conformance_wrapper_lines() -> tuple[str, ...]:
     """Gate block rendered for a COLLECTION.md serving as a gate.
 
     Mechanical only: it says how to apply a collection contract as a gate,
@@ -356,9 +356,9 @@ def render_pairs_prompt(
     for criterion_path in criterion_paths:
         lines.append(f"=== criterion: {criterion_path} ===")
         if is_type_spec_criterion_path(criterion_path):
-            lines.extend(_type_conformance_wrapper_lines())
+            lines.extend(type_conformance_wrapper_lines())
         elif is_collection_md_criterion_path(criterion_path):
-            lines.extend(_collection_conformance_wrapper_lines())
+            lines.extend(collection_conformance_wrapper_lines())
         lines.extend([criterion_texts[criterion_path].rstrip(), ""])
 
     lines.extend(

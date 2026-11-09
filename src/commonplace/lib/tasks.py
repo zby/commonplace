@@ -95,13 +95,14 @@ def load_runbook(root: Path, name: str) -> Runbook:
     return Runbook(name, path, scope, subject.group(1))
 
 
-def load_profile(root: Path, name: str | None) -> Profile:
-    config = yaml.safe_load((root / PROFILES).read_text(encoding="utf-8"))
+def load_profile(root: Path, name: str | None, profiles: Path = PROFILES) -> Profile:
+    """The profile `name`, or the file's `default`, from `profiles` (relative to `root`)."""
+    config = yaml.safe_load((root / profiles).read_text(encoding="utf-8"))
     chosen = config["default"] if name is None else name
     try:
         entry = config["profiles"][chosen]
     except KeyError:
-        raise ValueError(f"no profile {chosen!r} in {PROFILES}") from None
+        raise ValueError(f"no profile {chosen!r} in {profiles.as_posix()}") from None
     return Profile.from_yaml_entry(entry)
 
 
