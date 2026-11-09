@@ -1,0 +1,38 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of Eva-brain runtime, memory, epistemic and workflow records at commit 706fb91f4ee851cc355785f4e7c6eab37146938f."
+run-id: AAS-2026-11-09-eva-brain-de4240cd9e79-01
+reviewed-boundary: "706fb91f4ee851cc355785f4e7c6eab37146938f"
+---
+
+# Eva-brain reconciliation
+
+## Reconciliation
+
+### Duplicate identities
+
+Amendment: [EPI-OBJ-raw](epistemic.md#epi-obj-raw) is superseded by [MEM-OBJ-raw](memory.md#mem-obj-raw). Both identify the original source collection under `raw/`, copied and Git-committed before proposal generation. The epistemic record's SRC-1 `schema/EVA.md` passage names the same collection whose copying and later consumers the memory record traces through `apps/desktop/src-tauri/src/ingest.rs`. This is one retained object, not two evidence stores. The epistemic acquisition and object-inventory findings concern that object; their unknown source warrant remains unchanged. The quoted immutability instruction does not conflict with the memory record's distinction between admission protection and physical immutability.
+
+Amendment: [EPI-RTE-wiki-navigation](epistemic.md#epi-rte-wiki-navigation) is superseded by [MEM-RTE-mcp-navigation](memory.md#mem-rte-mcp-navigation). Both identify the four-tool MCP service in SRC-1 `packages/eva-mcp/server.mjs` and its loader in `packages/eva-mcp/vault-io.mjs`: per-call reload, lexical top-ten search, full page reads and explicit-link graph operations. Their endpoints, selector and consumer coincide. The epistemic ledger's selection/consumption assessment therefore concerns the memory-declared navigation route. Both retain wired implementation and uninspected operation; the epistemic architectural status of implemented does not assert observed operation. Neither record licenses endorsement of returned statements or causal influence on an answer.
+
+### Containers, parts and distinct identities
+
+[EPI-OBJ-wiki](epistemic.md#epi-obj-wiki) remains a valid corpus container alongside [MEM-OBJ-knowledge-pages](memory.md#mem-obj-knowledge-pages), [MEM-OBJ-summaries](memory.md#mem-obj-summaries), [MEM-OBJ-analyses](memory.md#mem-obj-analyses) and [MEM-OBJ-page-metadata](memory.md#mem-obj-page-metadata). The memory records separate prose categories and symbolic metadata where lineage, checks or consumption differ. They do not identify four duplicates of the corpus. The epistemic record already distinguishes prose interpretation from parser/graph consumption and grants neither body truth nor metadata a common semantic warrant. No supersession or split of that container is required by these findings.
+
+[RT-OBJ-ingest-worktree](runtime.md#rt-obj-ingest-worktree) is temporary proposal staging, not the durable corpus or any accepted page category. [EPI-OBJ-query-answer](epistemic.md#epi-obj-query-answer) and [EPI-OBJ-profile-result](epistemic.md#epi-obj-profile-result) are transient products that can supply a saved [MEM-OBJ-analyses](memory.md#mem-obj-analyses); conversion and later retention do not make their identities equal. Analyses can also originate through ingest or bootstrap. [EPI-OBJ-health-report](epistemic.md#epi-obj-health-report) is a separate advisory product without the inspected automatic edit consumer. These overlaps require no supersession.
+
+[EPI-RTE-structural-check](epistemic.md#epi-rte-structural-check) and [EPI-RTE-analysis-format](epistemic.md#epi-rte-analysis-format) explicitly identify material functions within [RT-RTE-source-ingest](runtime.md#rt-rte-source-ingest) and [RT-RTE-analysis-save](runtime.md#rt-rte-analysis-save), respectively. Producing lint evidence is distinct from comparing issue strings and deciding admission. Formatting an answer is distinct from deciding whether to merge it. The parent routes remain valid progression accounts; their declared parts do not replace them. [EPI-OBJ-lint-issues](epistemic.md#epi-obj-lint-issues) is evaluator output, not the stored page metadata it assesses.
+
+[MEM-RTE-desktop-reload](memory.md#mem-rte-desktop-reload) identifies the person-facing reload consumer, not the model-facing MCP selector or the ingest route that triggers delivery. [MEM-OBJ-log](memory.md#mem-obj-log) identifies retained operation text and its filename-matching use, not another declaration of source ingestion. [MEM-BAP-wiki-evidence](memory.md#mem-bap-wiki-evidence) carries subject evidence; [RT-BAP-vault-contract](runtime.md#rt-bap-vault-contract) carries operating instructions and configuration. Their common model consumer does not establish identity. [EPI-CLM-durable-knowledge](epistemic.md#epi-clm-durable-knowledge) concerns the durable intermediary, whereas [RT-CLM-structural-gate](runtime.md#rt-clm-structural-gate) concerns a narrower review predicate. Neither claim supersedes the other.
+
+### Cross-report convergence and integration dispositions
+
+The [workflow account](workflow.md#workflow-account) independently traces the runtime-declared ingestion workflow and annotates its existing record rather than declaring a competing route. It connects source commitment, delegated editing, protected-path rejection, automatic merge or held review, and merge-triggered desktop reload. Its additional recovery ordering qualifies delivery: an error after merge need not mean rollback, and removal of held metadata before a failed merge need not restore the review item. These details extend, rather than contradict, the runtime's limited recovery account and the memory reload route.
+
+The memory report's [integration issues](memory.md#integration-issues) propose no runtime correction. Its direct parser/navigation findings and the epistemic structural-check record converge with the runtime's bounded gate claim: structural cleanliness is not semantic verification, inherited issue strings need not hold a proposal, and a person may accept held issues. The epistemic distinction between operational admission and evidence-consuming semantic acceptance therefore does not dispute the other reports' use of acceptance for a merge decision.
+
+The runtime query record and its memory annotation agree that working-set IDs supply model-directed scope, not a hard tool-level exclusion. The navigation records explain why the full loader remains available. The save route, memory analysis object and epistemic formatter part also agree that answer prose can survive while reference filtering omits lineage. Retention and later availability do not establish source entailment, exercised reliance or improved answers.
+
+The runtime ingest route, memory log object and workflow rejection account agree that retained rejection text suppresses later filename eligibility. This deterministic scheduling effect does not establish semantic learning. Likewise, advisory Health findings do not themselves close an automatic diagnosis-to-revision loop. The epistemic research-profile discussion preserves requested theory revision without upgrading that request to completed criticism or iteration; it does not contradict the memory report's broader description of source-fed curation.
+
+No unresolved cross-report conflict or required undeclared part was identified in the supplied members. No correction answers or declined objections were supplied. Unknown imported provenance, source warrant, model compliance, external-runtime context behavior and causal benefit remain local limitations, not disagreements. The evidence boundary remains the [boundary member](boundary.md#boundary-and-evidence); reconciliation required no additional source reads and adds no observed-run or causal evidence.
