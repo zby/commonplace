@@ -11,14 +11,14 @@ open unless evidence rules it out.
 
 - [How memory reaches the next decision](./memory/read-back-mechanisms.md) —
   who initiates retrieval, how selection works, and which consumer receives
-  the result. Contrasts Hermes, A-MEM, Hindsight and Basic Memory; distinguishes
-  delivered context from demonstrated reliance.
+  the result. Contrasts Hermes, Nemsy, OpenKB, Hindsight and sqz; distinguishes
+  catalog visibility, recoverable content and model-visible bodies from reliance.
 - [How corrections propagate through retained memory](./memory/correction-propagation.md) —
-  what changes after correction or withdrawal in Graphiti, Hindsight and Mem0,
-  and which derived representations and consumer copies still need repair.
+  store changes, index freshness, prose repair and stale consumer copies across
+  Graphiti, Hindsight, Mem0, OpenKB, SQLite Graph Memory and Project Wiki.
 - [What the current corpus shows about agent memory mechanisms](./memory/agent-memory-landscape.md)
-  — a frozen landscape of 191 analyses, dated 2026-10-22, at inputs commit
-  `5f92f75e5`. Covers admission, read-back, curation and trace learning,
+  — a frozen landscape of 243 analyses, dated 2026-11-09, at inputs commit
+  `bf2da04db`. Covers admission, read-back, curation and trace learning,
   with evidence filters and withheld conclusions.
 - [Memory comparison table](./memory/memory-systems-table.md) and
   [CSV](./memory/memory-systems.csv) — find candidate implementations and

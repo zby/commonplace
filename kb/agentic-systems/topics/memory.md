@@ -6,7 +6,7 @@ information is admitted, selected, revised and consumed under a limited
 context budget.
 
 Start with the [agent-memory landscape](../comparisons/memory/agent-memory-landscape.md),
-a source-grounded snapshot of 191 analyses from October 2026. Use the
+a source-grounded snapshot of 243 analyses from November 2026. Use the
 [comparison table](../comparisons/memory/memory-systems-table.md) to find
 candidate mechanisms, then read the linked per-system records before making
 an architectural claim.
@@ -14,12 +14,12 @@ an architectural claim.
 ## Focused comparisons
 
 - [How memory reaches the next decision](../comparisons/memory/read-back-mechanisms.md) —
-  compare whole-file loading, requested retrieval, automatic injection and
-  maintenance-model inputs in Hermes, A-MEM, Hindsight and Basic Memory.
+  compare whole-block loading, recency windows, internal and external consumers,
+  and explicit recovery in Hermes, Nemsy, OpenKB, Hindsight and sqz.
 - [How corrections propagate through retained memory](../comparisons/memory/correction-propagation.md) —
-  compare temporal invalidation, dependent-record cleanup and explicit
-  replacement in Graphiti, Hindsight and Mem0, then test the consumers that
-  can still receive stale information.
+  distinguish store updates, retrieval freshness, prose repair and consumer
+  copies across six systems, including OpenKB's source-list cleanup and
+  Project Wiki's host-led correction.
 
 ## Research questions
 
@@ -34,13 +34,13 @@ Distinguish raw conversations, extracted facts, summaries, procedures and
 derived representations. A storage format does not by itself explain what
 later work can use. The [memory accounts](../comparisons/memory/systems.md)
 trace retained objects and consumers; the
-[landscape's curation discussion](../comparisons/memory/agent-memory-landscape.md#curation-revision-and-forgetting-are-common-synthesis-is-rare)
+[landscape's curation discussion](../comparisons/memory/agent-memory-landscape.md#curation-changing-retained-content-does-not-certify-new-knowledge)
 compares the transformations identified in its frozen population.
 
 ### Who decides what enters memory?
 
 An automatic write can still depend on model judgment, fixed rules or caller
-selection. The [write-admission comparison](../comparisons/memory/agent-memory-landscape.md#write-admission-automatic-is-near-universal-manual-is-often-instructed-not-wired)
+selection. The [write-admission comparison](../comparisons/memory/agent-memory-landscape.md#admission-human-decisions-model-proposals-and-software-gates-differ)
 separates code-wired routes from instructions that merely ask an agent to save
 something. Follow each table row to its scope and evidence basis.
 
@@ -50,7 +50,7 @@ Ask who initiates a read, which selector runs, and who receives the result.
 Memory selected for a maintenance model is not necessarily delivered to an
 answering agent. Read [How memory reaches the next decision](../comparisons/memory/read-back-mechanisms.md)
 for concrete contrasts, or begin with the
-[landscape's read-back analysis](../comparisons/memory/agent-memory-landscape.md#read-back-push-usually-selects-coarsely)
+[landscape's read-back analysis](../comparisons/memory/agent-memory-landscape.md#read-back-unsolicited-supply-need-not-infer-relevance)
 and use the [per-system accounts](../comparisons/memory/systems.md) to trace
 the full route.
 
@@ -62,7 +62,7 @@ needed for the task?
 Updating a source, invalidating a fact and repairing every dependent summary
 are different operations. [How corrections propagate](../comparisons/memory/correction-propagation.md)
 traces those boundaries and proposes multi-interface experiments.
-The [curation findings](../comparisons/memory/agent-memory-landscape.md#curation-revision-and-forgetting-are-common-synthesis-is-rare)
+The [curation findings](../comparisons/memory/agent-memory-landscape.md#curation-changing-retained-content-does-not-certify-new-knowledge)
 provide candidates for investigation, not a guarantee of complete correction.
 Check which consumer and derived representation each inspected route reaches.
 Can automatic injection coexist with reliable withdrawal of stale context?
@@ -79,10 +79,10 @@ conclusion must be checked before reliance.
 ### What evidence establishes that memory improves performance?
 
 A retrieval route, an observed read and a controlled improvement are separate
-findings. The frozen landscape reports
-[static wiring or weaker evidence](../comparisons/memory/agent-memory-landscape.md#every-positive-finding-is-static-wiring-or-weaker),
-not causal improvement. Experiments need to measure downstream decisions and
-compare conditions with and without the relevant memory route.
+findings. The frozen landscape distinguishes
+[static wiring from narrow observations of experiment artifacts](../comparisons/memory/agent-memory-landscape.md#wiring-dominates-the-observation-exception-is-narrow);
+neither establishes causal performance improvement. Experiments need to measure
+downstream decisions and compare conditions with and without the memory route.
 
 ## Find systems and data
 

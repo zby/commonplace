@@ -8,14 +8,14 @@ not copies of the individual analyses.
 ## Comparative research
 
 - [How memory reaches the next decision](./read-back-mechanisms.md) —
-  selection, delivery and consumer identity across four contrasting systems.
+  selection, delivery and consumer identity across contrasting routes.
 - [How corrections propagate through retained memory](./correction-propagation.md) —
-  invalidation, withdrawal, derived repair and stale consumers across three
-  systems, with experiments for testing propagation.
+  invalidation, withdrawal, index freshness, derived prose and stale consumers,
+  with experiments for testing propagation.
 
 [Agent-memory landscape](./agent-memory-landscape.md) compares admission,
-read-back, curation and trace learning across 191 analyses. This is a frozen
-synthesis dated 2026-10-22 at inputs commit `5f92f75e5`, not a continuously
+read-back, curation and trace learning across 243 analyses. This is a frozen
+synthesis dated 2026-11-09 at inputs commit `bf2da04db`, not a continuously
 updated survey or a representative sample of the field.
 
 ## Datasets and individual systems
@@ -25,8 +25,9 @@ updated survey or a representative sample of the field.
 - [Current memory accounts and profiles](./systems.md) — generated during each
   site build, linking the accepted memory members without copying them.
 
-The table and CSV were generated on 2026-10-22 from all 191 analyses current at
-commit `5f92f75e5`. Their population can differ from the build-time listing.
+The table and CSV were generated on 2026-11-09 from all 243 analyses current at
+commit `bf2da04db`: 225 code-grounded and 18 doc-grounded sets. Their population
+can differ from the build-time listing.
 A row records a scoped finding, not a blanket property of the whole system.
 Read evidence and coverage alongside the value.
 

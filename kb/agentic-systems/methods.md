@@ -65,8 +65,8 @@ separate from source-system accounts.
 - [CSV download](./comparisons/memory/memory-systems.csv) — machine-readable
   findings, evidence bases, scope, profile revisions and artifact hashes.
 - [Agent-memory landscape](./comparisons/memory/agent-memory-landscape.md) —
-  a frozen synthesis of 191 analyses at inputs commit `5f92f75e5`, dated
-  2026-10-22. Its counts describe that selected corpus, not the field.
+  a frozen synthesis of 243 analyses at inputs commit `bf2da04db`, dated
+  2026-11-09. Its counts describe that selected corpus, not the field.
 - [Current memory accounts and profiles](./comparisons/memory/systems.md) —
   build-time listing; it can include analyses newer than the table or synthesis.
 - [Population selection, interpretation and regeneration](./comparisons/builds.md) —

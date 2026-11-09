@@ -30,7 +30,7 @@ their conditions, not merely catalogue features.
 retained, how does it reach the next decision, and what happens when it is
 wrong? Start with the
 [agent-memory landscape](./comparisons/memory/agent-memory-landscape.md), a
-frozen synthesis of 191 analyses from October 2026, then follow its evidence
+frozen synthesis of 243 analyses from November 2026, then follow its evidence
 to individual systems.
 
 ## Follow the evidence

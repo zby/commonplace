@@ -1,271 +1,479 @@
 ---
-description: "Commit-bound memory comparison of all 191 current analyses (Oct 2026): wired existence counts per profile axis, withheld distributions, and grounded contrasts in admission, read-back, curation and trace learning"
+description: "Commit-bound comparison of 243 current agentic-system analyses: memory admission, read-back, curation and trace-fed updates, with existence counts, grounded mechanisms and explicit coverage limits"
 type: types/note.md
 traits: [has-comparison, has-external-sources]
 tags: [agent-memory]
 ---
 
-# What the 191 current agentic-system analyses show about agent memory mechanisms (October 2026)
+# What the 243 current agentic-system analyses show about agent memory mechanisms (November 2026)
 
-Across the 191 analyses current in October 2026, which memory mechanisms does
-code connect, and what can the evidence say about them? This comparison follows
-how information enters memory, returns to later work, is revised, and changes
-through recorded activity.
+The current accepted analyses connect memory to more than reference retrieval.
+Retained information also selects work, ranks candidates, gates admission and
+feeds later updates. This snapshot compares those mechanisms at one frozen
+evidence boundary. It asks how information enters memory, reaches later work,
+is revised and changes through recorded activity—not which product is best.
 
-The evidence shows which mechanisms are connected in code—called **wired**
-here—not whether they run in deployment or improve outcomes. No finding reaches
-`observed` or `causally supported`; the positive findings are static wiring or
-weaker evidence.
+Four contrasts organize the findings:
 
-The counts are lower bounds on how many systems wire each mechanism, called
-**existence counts**. Almost no analysis fully assesses a comparison dimension,
-or **axis**, so the corpus cannot support **complete-value distributions**:
-shares of systems with an exhaustive set of properties, such as retrieval only
-on request.
+- **Admission:** 221 of 225 code-grounded sets wire at least one automatic
+  admission mechanism. Explicit human content decisions are wired in 63;
+  another 55 support manual admission only through claims or affordances.
+  Starting a workflow is not approval of each resulting memory item.
+- **Read-back:** both requested retrieval and unsolicited context supply are
+  extensively wired. Inferred relevance is not required for context supply:
+  availability, chronology and identifiers also select what reaches a model.
+  Selection must be distinguished from delivery and actual reliance.
+- **Curation:** revision, compression and forgetting have many recorded
+  implementations. Creating a claim absent from the inputs—`synthesize` in
+  this comparison—has only 12 strong system witnesses. Calling a model or
+  naming an operation “synthesis” does not establish semantic novelty.
+- **Trace-fed updates:** the same `trace_learning: "yes"` classification
+  includes access counters, retained mistake-prevention rules and trained
+  weights. These change different material and reach different consumers.
+  The shared classification is not an ordering of capability or benefit.
 
-Within those limits, four contrasts stand out:
-
-- **Admission:** automatic entry into memory is nearly universal; explicit
-  human approval is often only instructed or made available.
-- **Read-back:** information supplied without a consumer request, called
-  **push**, is mostly selected by coarse availability or identifiers rather
-  than inferred relevance.
-- **Curation:** creating claims absent from the inputs, called **synthesis**,
-  is rare among the recorded memory-maintenance operations.
-- **Trace learning:** automatic updates from recorded activity to retained
-  artifacts or learned parameters that shape later behavior are wired in most
-  code-grounded systems. This includes access-counter feedback, changes to
-  rules and model-weight updates. These change different parts of the system;
-  the shared classification does not rank their usefulness.
+These are **existence counts**, not prevalence estimates. They count systems
+with a supported mechanism even when the rest of the inventory remains
+unresolved. They do not establish how often the mechanism runs or works.
 
 ## Evidence boundary
 
-- **Mode:** current snapshot.
-- **Inputs commit:** `5f92f75e502f8cd11ec318d8e69d3e17cbe53df3`. This commit holds every retained set, the profile and boundary contracts, the matrix reader under `src/commonplace/lib/` and `scripts/`, and the [synthesis instruction](../../instructions/synthesize-agent-memory-landscape/SKILL.md). Before reading, `git status --porcelain` on those paths printed nothing.
-- **Selection rule:** all current analysis sets, with no `--review` filter. That is 191 sets under `kb/agentic-system-analyses/retained/`, one per source identity (191 distinct identities and 191 distinct runs). Nothing was excluded.
-- **Matrix:** built with `scripts/build_systems_matrix.py` and no review filter. It exited 0, wrote 191 rows, and has SHA-256 `d68ae22877ff7b34ae598ce423b0a0d8f325ca180aef29880b09226403ec07a5`. The public [memory-systems.csv](./memory-systems.csv) is a separate output and is not this matrix.
-- **Profile revision:** all 191 profiles are `comparison_version` 2. No revision-1 write-agency values are present, so no cross-revision pooling arises.
-- **Source tiers:** 176 sets are code-grounded and 15 are doc-grounded. The counts below use only the code-grounded sets; the doc-grounded tier is discussed separately.
-- **Boundary kinds:** 151 sets are whole-system, 34 cover a complete artifact with a partial loop, and 6 are subsystem-only. Among the code-grounded sets the split is 148, 24 and 4.
-- **Analysis cutoffs:** 2026-10-11 to 2026-10-19. 139 of the 191 cutoffs fall on 2026-10-14 or 2026-10-15.
-- **Lens:** the `memory-comparison` profile defined by the [memory profile type](../../../agentic-system-analyses/types/agentic-system-memory-profile.md). Examples are read from the cited members and their canonical records.
-- **Validation:** `commonplace-validate` reports success for all 191 set directories. In 98 sets it also notes that quotations could not be checked, because the pinned source checkout is not present on this machine. Quotes in those sets are therefore unverified against source bytes here.
-- **Verification mode:** local. Every count was recomputed from the matrix with an executable query. Each example was checked against its profile units, its cited records and the set's reconciliation. No independent reviewer was commissioned.
+- **Mode and selection:** current snapshot, all 243 accepted sets under
+  `kb/agentic-system-analyses/retained/`, with no review filter. The successful
+  builder supplies current membership and source-identity selection. Legacy
+  reviews, archives, local runs, transfer advice and upstream sources supply
+  no findings here.
+- **Inputs commit:** `bf2da04db03fb4cb60be52d1bb04e638a79eda79`. It holds the
+  retained members, contracts, reader and [synthesis instruction](../../instructions/synthesize-agent-memory-landscape/SKILL.md).
+  Relevant input paths were clean and unchanged from that commit before
+  writing. Output paths are not evidence inputs.
+- **Matrix identity:** the successful `scripts/build_systems_matrix.py` build,
+  without a review filter, recorded SHA-256
+  `19da70a6ca54b9c659dd9d1bf734e5f46885325d48f58b40685eccea083ce0bc`.
+  Its row identities, including manifest hashes, are the provenance used here.
+  The public [memory matrix](./memory-systems.csv) and table are separately
+  maintained outputs, not additional evidence.
+- **Population and revision:** 225 code-grounded and 18 doc-grounded sets.
+  All 243 profiles use `comparison_version` 2. Revision 2 measures human
+  content-admission decisions, not generic caller identity; no revision-1
+  write-agency values are pooled with it.
+- **Boundary kinds:** code-grounded sets comprise 193 whole-system, 27
+  complete-artifact/partial-loop and 5 subsystem-only boundaries. The
+  doc-grounded split is 4, 12 and 2. Whole-system inclusion does not imply
+  exhaustive inspection of every path.
+- **Source cutoffs:** 2026-10-11 through 2026-11-09. Individual cutoffs and
+  reviewed source revisions remain in the query ledger; this is not a
+  simultaneous observation of deployed products.
+- **Lens:** the ten axes of the [memory profile contract](../../../agentic-system-analyses/types/agentic-system-memory-profile.md).
+  Units retain their scope, coverage, evidence basis and canonical records.
+- **Verification:** local checking of selected retained members, profile units,
+  canonical records and reconciliations. Selected directories were validated
+  before reading members; the matrix builder validates population membership.
+  Quantitative claims use the retained query output. No independent reviewer
+  was commissioned.
 
-## How to read the numbers
+## How to read the evidence
 
-- **Existence count:** the number of code-grounded systems (out of 176) with at least one profile finding for that value at `wired`, `observed` or `causally supported` basis. Each system counts once per value, however many stores or routes carry it. Both `known` and `partial` coverage count. Such a count is a lower bound for the population. It is not a prevalence estimate, because most axes are only partially assessed.
-- **Weak-only:** systems whose findings for a value are all `claimed` or `afforded`. These are reported apart from the existence counts and never added to them.
-- **No negatives from omission:** a missing value, an unresolved unit or a weaker finding is not a negative. Local `"no"` findings for trace learning are bounded to their unit and are reported as such.
+A **strong witness** has basis `wired`, `observed` or `causally supported` in a
+code-grounded profile. `wired` means inspected code connects a mechanism, not
+that it ran successfully. Each system counts once per value, regardless of
+how many stores or routes support it. Both `known` and `partial` axes can
+support a positive witness. **Weak-only** means that a value is present only
+at `claimed` or `afforded` basis in that system; it is not added to the strong
+count.
 
-### Complete-value distributions are withheld
+Missing values and unresolved units are not negatives. An `absent` assessment
+needs bounded evidence. `inapplicable`, `uninspected` and `not-determinable`
+are different limitations, not observed absence. A strong witness for one
+unit does not upgrade a weaker unit with the same value.
 
-A complete-value distribution answers questions such as "what share of systems are pull-only?". It needs an axis assessed `known`, with strong evidence for every positive finding. Few code-grounded sets meet those requirements:
+### Complete-value distributions remain withheld
 
-| Axis | Eligible sets (of 176) |
+Answering “what share is pull-only?” requires `known` axis coverage and strong
+evidence for **every** positive unit finding, not just the strongest witness
+for each union value. Few code-grounded sets qualify:
+
+| Axis | Eligible sets (of 225) |
 |---|---:|
-| `storage_substrate` | 26 |
-| `representational_form` | 15 |
-| `read_back_signal` | 9 |
-| `read_back_direction` | 7 |
-| `write_agency` | 2 |
-| `behavioral_authority` | 1 |
-| `curation_operations` | 1 |
-| `lineage`, `trace_learning`, `trace_source` | 0 |
+| Storage substrate | 36 |
+| Representational form | 20 |
+| Read-back signal | 17 |
+| Read-back direction | 11 |
+| Behavioral authority | 6 |
+| Write agency | 2 |
+| Curation operations | 1 |
+| Trace learning | 1 |
+| Lineage; trace source | 0 |
 
-No set in any tier assesses `trace_learning` or `trace_source` as `known`. The eligible sets are also self-selected: their inventories were small or simple enough to assess completely. Their distributions would describe that subset, not the landscape, so this comparison reports none. This is the main limit on what the population can answer.
+These assessed subsets do not stand in for the whole population. This snapshot
+therefore gives no complete-value distribution or whole-population percentage
+for any axis. Even a set with only files among its strong storage findings
+need not be a files-only system: weak or unresolved alternatives remain.
 
-### Every positive finding is static wiring or weaker
+<a id="every-positive-finding-is-static-wiring-or-weaker"></a>
 
-The 191 profiles hold 9,852 findings. 7,958 are `wired`, 1,246 `claimed` and 648 `afforded`. None is `observed` or `causally supported`.
+### Wiring dominates; the observation exception is narrow
 
-Many cited records end with "operation conclusion status: uninspected" (for example [Hindsight's hook route](../../../agentic-system-analyses/retained/vectorize-io--hindsight/runtime.md#rt-rte-claude-hooks) and [SkillRL's policy update](../../../agentic-system-analyses/retained/aiming-lab--skillrl/runtime.md#rt-rte-policy-update)). Every count below therefore says that code connects a mechanism. None says the mechanism runs in deployment or changes outcomes.
+The 225 code-grounded profiles contain 9,379 `wired`, 849 `claimed`, 820
+`afforded` and 2 `observed` findings. The 18 doc-grounded profiles separately
+contain 43 `wired`, 567 `claimed` and 22 `afforded` findings. Neither tier has a
+`causally supported` finding.
 
-## Wired existence counts by axis
+Both observed findings concern **llm-wiki-newsroom's experiment artifacts**:
+natural-language judgments and symbolic score/manifest fields at a later
+analysis consumer. The [experiment-ledger object](../../../agentic-system-analyses/retained/alfadur7--llm-wiki-newsroom/epistemic.md#epi-obj-experiment-ledger)
+and [judge-measurement route](../../../agentic-system-analyses/retained/alfadur7--llm-wiki-newsroom/epistemic.md#epi-rte-judge-measurement)
+retain sampled labels and scores, not an independently authenticated
+production memory run. The reference labels are model judgments; hidden
+scorer/questions and missing originals limit replication and attribution.
+The observations do not establish deployed memory activation, improved
+answers or a reviewer-family effect.
 
-All counts are over the 176 code-grounded sets. Axis assessments are given so that partial coverage stays visible.
+## Strong existence counts by axis
 
-| Axis | Axis assessment | Wired existence counts | Weak-only, most frequent |
+Every count below has denominator **225 code-grounded sets, revision 2**.
+Counts overlap across values. Weak-only columns show selected frequent gaps;
+the ledger retains every value and every excluded run.
+
+| Axis | Axis assessment | Strong existence counts | Selected weak-only counts |
 |---|---|---|---|
-| Storage substrate | partial 134, known 41, not-determinable 1 | files 160, in-memory 95, sqlite 60, vector 49, repo 29, graph 26, rdbms 25, kv 12, service-object 12, model-weights 7 | repo 10, service-object 4 |
-| Representational form | partial 154, known 22 | symbolic 172, natural-language 163, parametric 82 | natural-language 11 |
-| Lineage | partial 175, known 1 | other-compiled 164, imported 158, trace-extracted 140, authored 105 | authored 35, trace-extracted 17 |
-| Behavioral authority | partial 168, known 7, not-determinable 1 | routing 164, knowledge 160, enforcement 149, ranking 138, validation 135, learning 123, instruction 94 | instruction 33, learning 24 |
-| Write agency | partial 174, known 2 | automatic 173, manual 46 | manual 42 |
-| Curation operations | partial 174, known 2 | evolve 148, consolidate 126, decay 111, invalidate 89, dedup 64, promote 46, synthesize 12 | consolidate 29, evolve 22 |
-| Read-back direction | partial 158, known 18 | pull 169, push 139 | pull 7, push 5 |
-| Read-back signal | partial 133, not-determinable 16, uninspected 10, known 10, inapplicable 7 | coarse 133, identifier 106, inferred-lexical 32, inferred-embedding 30, inferred-judgment 21 | coarse 4, identifier 3 |
-| Trace learning | partial 151, not-determinable 24, uninspected 1 | yes 130 (local unit `"no"` in 5; no system-wide `"no"`) | yes 20 |
-| Trace source | partial 140, not-determinable 35, uninspected 1 | session-logs 85, tool-traces 82, event-streams 35, trajectories 24 | session-logs 17, tool-traces 12 |
+| Storage substrate | partial 168, known 56, not-determinable 1 | files 204, in-memory 107, sqlite 77, vector 60, repo 45, graph 34, rdbms 34, service-object 16, kv 14, model-weights 7 | repo 16, files 5, service-object 4 |
+| Representational form | partial 195, known 30 | symbolic 221, natural-language 209, parametric 100 | natural-language 14, parametric 3, symbolic 3 |
+| Lineage | partial 224, known 1 | other-compiled 212, imported 200, trace-extracted 176, authored 131 | authored 48, trace-extracted 23 |
+| Behavioral authority | partial 209, known 15, not-determinable 1 | routing 211, knowledge 204, enforcement 190, ranking 183, validation 175, learning 151, instruction 116 | instruction 45, learning 31 |
+| Write agency | partial 222, known 3 | automatic 221, manual 63 | manual 55, automatic 4 |
+| Curation operations | partial 223, known 2 | evolve 184, consolidate 153, decay 134, invalidate 113, dedup 79, promote 59, synthesize 12 | consolidate 42, evolve 31, dedup 24 |
+| Read-back direction | partial 196, known 29 | pull 216, push 179 | pull 9, push 7 |
+| Read-back signal | partial 166, not-determinable 21, known 19, uninspected 10, inapplicable 9 | coarse 171, identifier 131, inferred-lexical 44, inferred-embedding 36, inferred-judgment 25 | coarse 5, identifier 3, inferred-judgment 2 |
+| Trace learning | partial 187, not-determinable 36, known 1, uninspected 1 | yes 160; local unit no in 6, system-union no in 1 | yes 26 |
+| Trace source | partial 176, not-determinable 47, inapplicable 1, uninspected 1 | session-logs 107, tool-traces 97, event-streams 46, trajectories 25 | session-logs 24, tool-traces 16 |
 
-**Storage.** Files are wired in 160 of 176 systems, but rarely alone. 95 systems also wire at least one database-type substrate (sqlite, rdbms, vector, graph or kv). Only 25 wire files and nothing else. 16 systems have no wired file storage within their memory boundary. The profile classifies the operative store of retained parts, not their encoding.
+**Storage is not representation.** Files have strong witnesses in 204 sets;
+123 wire at least one database-type substrate (sqlite, rdbms, vector, graph or
+kv). A set can occur in both counts. In 36 sets files are the only *strongly
+reported* substrate, not necessarily the only substrate. Text, fixed-rule
+metadata and dense numerical representations can coexist within one store.
 
-**Authority.** All seven behavioral-authority values are each wired in at least 94 systems. Retained memory commonly routes, ranks, validates and vetoes, as well as informing. `instruction` has the lowest wired count and the most weak-only systems (33): standing directions from memory are more often asserted than traced to a consumer.
+**Authority is consumer-relative.** Retained material supplies reference
+knowledge, but it also routes, ranks, validates and enforces. Those values do
+not imply that retained prose itself has veto power: symbolic state consumed
+by code and advice interpreted by a model are different paths. Instruction
+has 116 strong witnesses and 45 weak-only witnesses, illustrating the gap
+between requested standing guidance and a traced consumer.
 
-## Write admission: automatic is near-universal; manual is often instructed, not wired
+<a id="write-admission-automatic-is-near-universal-manual-is-often-instructed-not-wired"></a>
 
-Automatic admission is wired in 173 of 176 systems. Manual admission, meaning an explicit human decision on the content, appears in 88 systems at some basis. It is wired in only 46. In the other 42 it is only `claimed` or `afforded`. Among those 42, 26 systems carry a claimed manual finding and 19 an afforded one (some carry both).
+## Admission: human decisions, model proposals and software gates differ
 
-Across the 176 systems the write-agency inventories contain 1,041 units. 240 of them are `not-determinable` and 113 `uninspected`, mostly because a generic caller does not show whether a human decided. So 88 systems with no manual finding is not evidence that 88 systems lack human control.
+Manual admission appears at some basis in 118 of 225 code-grounded sets. It
+has a strong witness in 63 and only weak support in 55. These are positive
+memberships, not a count of systems lacking human control. Of 1,250
+write-agency units, 302 are `not-determinable` and 124 `uninspected`; a generic
+API caller often leaves the content decision unresolved.
 
-Three sets show the gap between instructed approval and wired control:
+**CQ separates instructed approval from handler enforcement.** Its shipped
+skill makes user approval a precondition of interactive `propose`. The
+[approval claim](../../../agentic-system-analyses/retained/mozilla-ai--cq/runtime.md#rt-clm-proposal-approval)
+classifies this as policy with afforded implementation. The
+[proposal route](../../../agentic-system-analyses/retained/mozilla-ai--cq/runtime.md#rt-rte-knowledge-proposal)
+checks structure and credentials, not approval; headless guidance permits
+model judgment under separate conditions. This does not establish a universal
+human gate, nor does a generic direct call establish automatic authorship.
 
-- **CQ** ([profile](../../../agentic-system-analyses/retained/mozilla-ai--cq/memory-profile.md)). The shipped skill says user approval is "a precondition of every direct `propose` call". The record classifies this as a natural-language policy with afforded implementation. The MCP handler and SDK clients accept content directly, and headless guidance lets the model admit proposals without a user ([RT-CLM-proposal-approval](../../../agentic-system-analyses/retained/mozilla-ai--cq/runtime.md#rt-clm-proposal-approval), [RT-RTE-knowledge-proposal](../../../agentic-system-analyses/retained/mozilla-ai--cq/runtime.md#rt-rte-knowledge-proposal)). Manual is afforded; automatic metadata, score, vector and drain writes are wired.
+**cass_memory_system wires a real but scoped human decision.** The
+[trauma-admission route](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/memory.md#mem-rte-trauma-admission)
+asks whether to add a displayed candidate batch to a permanent safety
+blocklist. That batch decision supports manual admission. Generic add/import
+callers remain unresolved, while other reflection and curation writes can be
+automatic. The human branch does not certify every future memory write.
 
-  Run `AAS-2026-10-14-cq-8fb3dc41c334-01`, manifest `8d2fcd66aa870727…`.
-- **DocMason** ([profile](../../../agentic-system-analyses/retained/jetxu-llm--docmason/memory-profile.md)). Manual admission is wired, but only for explicit user gate and scope decisions. The record notes that starting a question-answering run "is not approval of every generated sentence" ([RT-RTE-canonical-ask](../../../agentic-system-analyses/retained/jetxu-llm--docmason/runtime.md#rt-rte-canonical-ask)). Interaction capture and promotion into published memory are automatic.
+**pi-self-learning shows why invocation and admission must be separated.**
+Automatic task-end reflection and `/learning-now` use the same
+[proposal/parse/write route](../../../agentic-system-analyses/retained/mcollina--pi-self-learning/runtime.md#rt-rte-task-reflection).
+A model receives selected branch activity and proposes mistakes/fixes;
+software accepts nonempty parsed lists and writes journals and derived rules.
+Manual invocation does not make each generated item manually admitted.
+Structural admission can reject malformed output without detecting a
+plausible false lesson. No prevention benefit is observed.
 
-  Run `AAS-2026-10-13-docmason-deba9ae199d5-01`, manifest `f832cb91cd31db72…`.
-- **cass_memory_system** ([profile](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/memory-profile.md)). The single wired manual route is a batch yes/no approval when the initializer imports candidate "trauma" patterns into a permanent blocklist ([MEM-RTE-trauma-admission](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/memory.md#mem-rte-trauma-admission)). Reflection, grading and curation writes are automatic. Generic add, mark and import callers stay `not-determinable`.
+<a id="read-back-push-usually-selects-coarsely"></a>
 
-  Run `AAS-2026-10-13-cass-memory-system-30c18219cf68-01`, manifest `2dcdb811124058ca…`.
+## Read-back: unsolicited supply need not infer relevance
 
-These examples separate requested approval from wired human decisions. CQ
-affords manual approval through instructions; DocMason and cass_memory_system
-wire it for specific decisions. Automatic writes coexist with these approval
-mechanisms. Their presence does not establish human approval of every write.
+Pull has strong witnesses in 216 of 225 sets; push in 179. Here **pull**
+fulfills a consumer's request for retained material. **Push** selects and
+supplies retained material without that request. Delivery by code alone does
+not make a requested result push.
 
-## Read-back: push usually selects coarsely
+Among the 179 strong push sets, 71 also have a strong inferred selector
+(lexical, embedding or model judgment). The other 108 have strong
+coarse/identifier signals but no strong inferred finding. Partial coverage
+and weak alternatives prevent calling those 108 exclusively coarse systems.
+Only 4 sets establish a complete, strongly evidenced pull-only direction
+inventory. A relevance-ranked pull result is not evidence of relevance-based
+push.
 
-Pull is wired in 169 systems and push in 139. Among the 139 push systems, 56 wire at least one inferred selector (lexical, embedding or model judgment). The remaining 83 wire only coarse availability or identifier matching. All 139 carry at least one wired signal.
+Three routes expose distinct selection and consumption boundaries:
 
-30 systems record no push finding at any basis. That is not evidence that they are pull-only: only 4 sets establish pull-only read-back at complete, strongly evidenced coverage. Seven sets mark read-back signal `inapplicable` on a known pull-only direction inventory.
+- **Hindsight:** a `UserPromptSubmit` hook derives a recall query from the
+  prompt, filters scores and emits formatted retained text as
+  `additionalContext` ([RT-RTE-claude-hooks](../../../agentic-system-analyses/retained/vectorize-io--hindsight/runtime.md#rt-rte-claude-hooks)).
+  The [profile](../../../agentic-system-analyses/retained/vectorize-io--hindsight/memory-profile.md)
+  records embedding and cross-encoder-judgment selection for this route,
+  while keeping unresolved retrieval arms and other integrations separate.
+  Emitted context is not evidence of host reliance or complete transcript
+  delivery.
+- **A-MEM:** new-note ingestion supplies up to five embedding-selected
+  retained neighbors to its own evolution model, which can revise links,
+  tags and contexts ([RT-RTE-neighbor-evolution](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/runtime.md#rt-rte-neighbor-evolution)).
+  This push consumer maintains memory; it is not an answering agent.
+  Partial mutation and uncertain snapshot refresh prevent a universal
+  synchronized-read guarantee.
+- **pi-self-learning:** the next-agent-start hook selects available core and
+  optional dated files, plus recent process notes. Selection follows flags,
+  chronology, counts and prefix caps, not the user's query
+  ([RT-RTE-context-injection](../../../agentic-system-analyses/retained/mcollina--pi-self-learning/runtime.md#rt-rte-context-injection)).
+  Long-term memory is named by path rather than automatically bundled.
+  Later sections can disappear under character caps; process notes have a
+  separate cap boundary. “Strict” consultation requests are not enforced
+  reads.
 
-Three contrasting push routes:
+These examples distinguish the selector, selected retained part, actual
+recipient and surviving payload. Storage availability does not guarantee that
+all reasons or conditions reach the next consumer. The focused
+[read-back comparison](./read-back-mechanisms.md) examines that question in
+more detail.
 
-- **Hindsight** ([profile](../../../agentic-system-analyses/retained/vectorize-io--hindsight/memory-profile.md)). A Claude Code `UserPromptSubmit` hook builds a recall query from the prompt. It filters by score and emits the selected retained facts as `additionalContext` ([RT-RTE-claude-hooks](../../../agentic-system-analyses/retained/vectorize-io--hindsight/runtime.md#rt-rte-claude-hooks)). The profile records both embedding and cross-encoder-judgment selection on this route. Directive loading during reflect is a separate coarse push.
+<a id="curation-revision-and-forgetting-are-common-synthesis-is-rare"></a>
 
-  Run `AAS-2026-10-14-hindsight-34c2ca821edf-01`, manifest `3e9e67f75bff2a28…`.
-- **A-MEM** ([profile](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/memory-profile.md)). The push consumer is the system's own memory-evolution model, not the answering agent. When a new note arrives, Chroma nearest-neighbour search supplies up to five retained neighbours, and the model decides whether to revise them ([RT-RTE-neighbor-evolution](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/runtime.md#rt-rte-neighbor-evolution)).
+## Curation: changing retained content does not certify new knowledge
 
-  Run `AAS-2026-10-16-a-mem-sys-eff95cd80440-01`, manifest `16fad56f4a88e833…`.
-- **Napkin** ([profile](../../../agentic-system-analyses/retained/michaelliv--napkin/memory-profile.md)). The only positive push signal is a claimed always-loaded `NAPKIN.md` context note, selected whole rather than by relevance. Its search ranking serves explicit requests and therefore classifies as pull.
+Revision (`evolve`) has strong witnesses in 184 of 225 sets; consolidation in
+153, decay in 134 and invalidation in 113. There are 147 sets with three to
+seven strong operation values. These memberships describe recorded
+transformations, not exhaustive maintenance inventories.
 
-  Run `AAS-2026-10-12-napkin-2b85bef38252-01`, manifest `54279eca29b4b0ad…`.
+The 12 strong `synthesize` witnesses are Agent-R, cass_memory_system, deja-vu,
+DocMason, eal-bench, Engraph, Kompl, LACP, Sparks, Swamp, VLM-wiki and Zikkaron.
+Another 8 sets support that value only weakly. Under the contract, synthesis
+creates a claim absent from its inputs; extraction, compression, index
+rebuilding and requested model behavior do not alone establish it.
 
-The profile counts relevance-ranked context injection as push only when no consumer requested it. Hindsight's hook is push; its ranked search results, returned on request, are pull.
+In **cass_memory_system**, harmful feedback crossing a threshold can turn an
+eligible positive playbook rule into a new avoidance rule and deprecate the
+original. The [curator-inversion record](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/epistemic.md#epi-rte-curator-inversion)
+gives the code deduction `Use cache` → `AVOID: cache. Marked harmful 3 times`.
+This is policy synthesis, not accepted causal knowledge that avoiding cache
+works. Synthesis need not involve model inference.
 
-## Curation: revision and forgetting are common; synthesis is rare
+Conversely, **Signet's aggregate recall** requests model-authored notes and
+can save eligible output by default without a maintenance pass
+([MEM-RTE-aggregate-recall](../../../agentic-system-analyses/retained/signet-ai--signetai/memory.md#mem-rte-aggregate-recall)).
+It links evidence, deduplicates or refreshes a note and attempts embedding;
+prior aggregate notes are excluded from aggregate searches to limit recursive
+reuse. But its [save guard](../../../agentic-system-analyses/retained/signet-ai--signetai/epistemic.md#epi-rte-aggregate-guard)
+checks evidence eligibility and output surface form, not proposition-level
+entailment. [Retention](../../../agentic-system-analyses/retained/signet-ai--signetai/epistemic.md#epi-rte-aggregate-retention)
+can survive embedding failure, and an unsaved result can still be returned.
+The profile supports deduplication and evolution without inferring semantic
+novelty from the “synthesis” prompt. Recall here can write memory; neither
+saving nor source linkage confers a truth warrant.
 
-Wired curation operations: evolve in 148 systems, consolidate 126, decay 111, invalidate 89, dedup 64, promote 46 and synthesize 12. Eleven systems have no wired curation value. Most systems wire several operations: 120 wire between three and seven.
-
-`synthesize` means creating a claim absent from the inputs. It is wired in only 12 systems: Agent-R, cass_memory_system, deja-vu, DocMason, eal-bench, Engraph, Kompl, LACP, Sparks, Swamp, VLM-wiki and Zikkaron. It is claimed or afforded only in 8 more.
-
-In cass_memory_system the wired synthesis is an inversion rule. A positive playbook rule whose decayed harmful count crosses a threshold becomes a new avoidance rule, and the original is deprecated. The record gives `Use cache` turning into `AVOID: cache. Marked harmful 3 times` ([EPI-RTE-curator-inversion](../../../agentic-system-analyses/retained/dicklesworthstone--cass_memory_system/epistemic.md#epi-rte-curator-inversion)). The record calls this "a policy rewrite", and the profile classifies it as policy synthesis, "not accepted causal knowledge". Synthesis in this population can therefore be mechanical and need not involve model inference.
+Revision and withdrawal also have consumer-specific horizons. Changing a
+current row does not by itself retract already delivered context or external
+copies. The focused [correction comparison](./correction-propagation.md)
+separates those propagation mechanisms; no population frequency follows from
+the examples selected here.
 
 <a id="trace-learning-widely-wired-uneven-in-depth"></a>
 
-## Trace learning: one classification, different update mechanisms
+## Trace learning: one classification, different durable changes
 
-Trace learning means automatic, trace-fed writes that produce durable behavior-shaping artifacts or learned parameters. It is wired in 130 of 176 code-grounded systems. Another 20 reach `"yes"` only through claimed or afforded findings. The remaining 26 have no system-level value; 24 of those axes are `not-determinable`.
+Trace learning in this profile means automatic trace-fed writes producing
+durable behavior-shaping artifacts or learned parameters. It does not require
+new knowledge or observed improvement. There are 160 strong `"yes"` witnesses
+among 225 code-grounded sets, plus 26 weak-only witnesses. Session logs,
+tool traces, events and trajectories supply different update inputs; their
+strong memberships are 107, 97, 46 and 25 respectively. These values can overlap
+and do not inventory every source in a partial boundary.
 
-No system has a system-wide `"no"`. Five systems (EchoWiki, ModularRSI, Phantom, REM and secure-llm-wiki) hold a wired local `"no"` unit, and the profile rules keep it out of the union.
+Four strong `"yes"` sets also wire model-weight storage: AgentFly,
+Amazon Science's SAGE, Self-Training-LLM and SkillRL. This co-occurrence does not classify every
+learning route in those systems as weight training. The retained records are
+needed to distinguish what changes:
 
-Among the 130 wired systems:
+- **REM changes selection metadata.** Retrieval asynchronously increments a
+  durable count that can add a capped bonus to later rankings
+  ([MEM-OBJ-retrieval-count](../../../agentic-system-analyses/retained/satyammistari--rem/memory.md#mem-obj-retrieval-count)).
+  This is use-fed feedback, not a checked outcome or model training.
+  Its proposed semantic write-back is a different route: the shipped Go
+  router lacks the accepting endpoints
+  ([RT-ABS-writeback-routes](../../../agentic-system-analyses/retained/satyammistari--rem/runtime.md#rt-abs-writeback-routes)).
+  A local learning `"no"` for that branch coexists with a system `"yes"`
+  from the counter and other wired paths. Updates can fail silently; no
+  ranking improvement is observed.
+- **pi-self-learning changes retained advice.** Selected session activity
+  becomes mistakes/fixes, journals and scored rules for later context. Its
+  structural gate does not evaluate whether the lesson prevents recurrence.
+  This route is distinct from REM's fixed numerical ranking feedback and
+  from provider parameter training.
+- **SkillRL changes instructions and parameters on separate routes.**
+  [Validation failures](../../../agentic-system-analyses/retained/aiming-lab--skillrl/runtime.md#rt-rte-validation-admission)
+  can produce new skills admitted to a training bank after structural checks.
+  The proposer receives bounded failure excerpts and titles, not full bank
+  principles. Separately, [reward-driven policy updates](../../../agentic-system-analyses/retained/aiming-lab--skillrl/runtime.md#rt-rte-policy-update)
+  change actor parameters. Bank persistence/resume and numerical checkpoint
+  recovery are not one coupled guarantee. Neither route establishes better
+  later actions here.
+- **A-MEM prevents an invalid inference from automatic revision.** Neighbor
+  evolution is automatic, but the original input is not established as an
+  activity trace. Its trace-learning axis remains `not-determinable`.
+  A [bounded absence](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/memory.md#mem-abs-usage-feedback)
+  establishes that shipped paths do not update usage/history fields; it does
+  not rule out caller-supplied experiences or all trace-fed writes.
 
-- **Sources:** session logs feed learning in 85, tool traces in 82, event streams in 35 and trajectories in 24. 81 wire more than one source; 7 have no wired source finding.
-- **Co-occurring values:** 122 also wire `learning` authority and 129 wire `trace-extracted` lineage.
-- **Weights:** four update model weights: AgentFly, SAGE, Self-Training-LLM and SkillRL. The rest retain learning in artifacts, metadata or indexes.
+### Local negatives and a bounded system negative
 
-The `"yes"` value covers updates to different retained material and different
-later consumers:
+Six sets retain a strong local unit `"no"`: EchoWiki, ModularRSI, Phantom, REM,
+secure-llm-wiki and team-ai-workflows. Only **team-ai-workflows** has a known
+whole scoped learning inventory supporting the system-union `"no"`.
+Its [absence record](../../../agentic-system-analyses/retained/umezy--team-ai-workflows/memory.md#mem-abs-trace-update)
+covers all shipped corpus acquisition, lookup and access-maintenance paths:
+search reads files and prints results; synchronization changes access links;
+no automatic query/answer/feedback-to-retained-content route is shipped.
+Manual experience-derived authoring, external host/provider updates and
+adopter additions remain outside that negative.
 
-- **REM** ([profile](../../../agentic-system-analyses/retained/satyammistari--rem/memory-profile.md)) reaches `"yes"` through two wired routes. Session turns are turned into parse metadata and vectors. Retrieval increments a `retrieval_count` that later adds a capped ranking bonus ([MEM-OBJ-retrieval-count](../../../agentic-system-analyses/retained/satyammistari--rem/memory.md#mem-obj-retrieval-count)).
+The other five local negatives do not become system-wide absence. A `"yes"`
+elsewhere or unresolved included coverage prevents that inference. Likewise,
+the 36 `not-determinable` and one `uninspected` code-grounded learning axes are
+not negative observations.
 
-  The README's "Write → Consolidate → Retrieve" loop stays claimed ([RT-CLM-memory-loop](../../../agentic-system-analyses/retained/satyammistari--rem/runtime.md#rt-clm-memory-loop)). The shipped Go router registers no endpoint that accepts the worker's semantic write-back ([RT-ABS-writeback-routes](../../../agentic-system-analyses/retained/satyammistari--rem/runtime.md#rt-abs-writeback-routes)). The profile keeps that as a bounded local `"no"` beside the system-level `"yes"`.
+The broad `"yes"` category cannot answer whether counters, summaries, rules or
+weight updates produce greater benefit. Selected records support the
+contrasts above. Population counts by those finer mechanisms would require a
+systematic classification with unresolved cases retained, not classification
+by missing prose mentions.
 
-  Run `AAS-2026-10-14-rem-a81fdc774400-01`, manifest `0e45470aeb4b227b…`.
-- **SkillRL** ([profile](../../../agentic-system-analyses/retained/aiming-lab--skillrl/memory-profile.md)) wires three routes. Failed validation trajectories feed admission of new skills into the training bank ([RT-RTE-validation-admission](../../../agentic-system-analyses/retained/aiming-lab--skillrl/runtime.md#rt-rte-validation-admission)). Offline experience is abstracted into rules. Reward-driven GRPO updates the actor's parameters ([RT-RTE-policy-update](../../../agentic-system-analyses/retained/aiming-lab--skillrl/runtime.md#rt-rte-policy-update)). In each case the record establishes wiring and states that "no evidence here establishes better later actions".
+## Doc-grounded tier: designs remain distinct from implementation
 
-  Run `AAS-2026-10-14-skillrl-0dba0e1c895e-01`, manifest `9771fa25ae76ce88…`.
-- **A-MEM** shows that automatic revision is not trace learning. A-MEM rewrites retained notes automatically, but its trace-learning axis is `not-determinable`. Its shipped paths do not update usage or history fields ([MEM-ABS-usage-feedback](../../../agentic-system-analyses/retained/wujiangxu--a-mem-sys/memory.md#mem-abs-usage-feedback)), and whether other writes are trace-fed is unresolved.
+The 18 doc-grounded sets are AgeMem, aide2, arsumbris,
+claude-code-dynamic-workflows, context-constitution, From Agent Memory to
+Portable Skills, incremental-self-improvement, interview-doc-agent,
+IsaacCLupus_mnemosyn_spec, llm-context-base, llm-project-wiki, nimbalyst-wiki,
+pm-llm-wiki, Prove2Me_workspace, recall (parcha-skills), sig-releases,
+trajectory-informed-memory-generation and wikiskill. Thirteen carry claimed
+trace-learning `"yes"` findings, none a strong `"yes"`. They do not enter the
+225-set implementation counts.
 
-The count of 130 includes access-count feedback, generated continuation
-summaries, rule extraction and weight updates. The shared `"yes"` value does
-not distinguish what changes or which later consumer uses it. The examples
-above preserve those differences where their records support them; they do
-not establish an ordering of capability or benefit.
+A doc-grounded boundary can contain narrow code-inspected or executable
+configuration findings: the tier is the account's overall evidence boundary,
+not a basis assigned uniformly to every finding. The ledger retains all 43
+`wired` labels in this tier without promoting the documented systems to
+code-grounded or assuming successful execution.
 
-A focused comparison can distinguish mechanisms by reading the retained
-accounts, without changing the profile. Counts for the whole population would
-require a systematic classification, with insufficiently documented cases
-left unresolved. Adding that distinction to routinely generated comparisons
-would require shared classification rules and corresponding profile changes.
-The current matrix alone cannot supply it.
+Two designs illustrate what the tier can contribute without that promotion:
 
-## Doc-grounded tier (qualitative only)
+- **AgeMem** describes conversation-to-store updates, replacement summaries
+  consumed by later invocations and GRPO policy updates. The canonical
+  [store-maintenance](../../../agentic-system-analyses/retained/2601-01885v1/memory.md#mem-rte-store-maintenance),
+  [summary](../../../agentic-system-analyses/retained/2601-01885v1/runtime.md#rt-rte-context-summary)
+  and [policy-update](../../../agentic-system-analyses/retained/2601-01885v1/runtime.md#rt-rte-policy-update)
+  records support these as claimed design from the captured paper, not
+  inspected executor behavior. Summary fidelity, checkpoint lineage and
+  production loading remain unresolved. A shared trajectory score does not
+  identify the contribution of each memory action.
+- **Nimbalyst Wiki** prescribes capturing decisions, rejected alternatives
+  and reasons from sessions into subject pages, then reading a few full pages
+  because reasoning surrounds the marks
+  ([RT-RTE-session-capture](../../../agentic-system-analyses/retained/nimbalyst--nimbalyst-wiki/runtime.md#rt-rte-session-capture),
+  [RT-RTE-wiki-recall](../../../agentic-system-analyses/retained/nimbalyst--nimbalyst-wiki/runtime.md#rt-rte-wiki-recall)).
+  Ordinary additions are agent-admitted without per-edit approval; destructive
+  changes have separately scoped approval rules. CLI, host and service
+  implementations are external to the frozen plugin. This supports a
+  claimed trace-fed path and whole-page recall policy, not verified
+  persistence, compliance or prevention of decision reversals.
 
-Fifteen sets describe systems from papers, specifications or documentation:
-AgeMem, aide2, arsumbris, claude-code-dynamic-workflows, context-constitution,
-From Agent Memory to Portable Skills, incremental-self-improvement,
-interview-doc-agent, IsaacCLupus_mnemosyn_spec, llm-context-base,
-llm-project-wiki, Prove2Me_workspace, sig-releases,
-trajectory-informed-memory-generation and wikiskill. Ten of the fifteen
-describe trace-learning designs, without establishing their implementation.
+## Example provenance
 
-This source tier describes the overall evidence boundary, not the support
-for every finding. Four accounts also report inspecting limited code:
+Member links above name supporting sections and canonical IDs. The following
+identities come from the frozen matrix's manifest fields.
+Full source identities, reviewed revisions, member paths and hashes also
+remain in the ledger. Hashes identify `ARTIFACT.yaml`, not an upstream source
+commit. Each example uses the accepted member at the inputs commit.
 
-- **Arsumbris:** a [configuration seeder](../../../agentic-system-analyses/retained/arsumbris--arsumbris/runtime.md#rt-rte-device-seeding)
-  reads existing registry mappings, merges discovered entries and writes YAML
-  when enabled. Engine and host consumption remains described, not inspected.
-- **llm-context-base:** a [metadata converter](../../../agentic-system-analyses/retained/asakin--llm-context-base/runtime.md#rt-rte-metadata-migrate)
-  rewrites matching files under fixed rules. This does not establish execution
-  of the template's assistant-directed knowledge workflow.
-- **Mnemosyne:** a legacy prototype [copies and normalizes Markdown](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/runtime.md#rt-rte-vault-publish)
-  and [forwards client queries](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/runtime.md#rt-rte-client-query).
-  Successful external-backend operation and implementation of the proposed
-  unified lifecycle remain unestablished.
-- **Prove2Me_workspace:** two [Lean helpers](../../../agentic-system-analyses/retained/prove2me--prove2me_workspace/epistemic.md#epi-rte-extraction-facts)
-  derive and emit structural facts. Their later use by a planner, converter
-  or resumable uploader is prescribed, not demonstrated.
-
-These are records of static code inspection, not successful executions of
-those helpers or implementation of the complete documented systems. Their
-profile classifications and provenance are retained in the query ledger.
-
-AgeMem ([profile](../../../agentic-system-analyses/retained/2601-01885v1/memory-profile.md)) illustrates the document-only support for trace learning. Its paper describes three routes: conversational extraction into long-term memory, summaries carried into later context, and GRPO updates of policy weights from scored trajectories. The profile records all three as claimed design, with "actual execution, causal benefit and production loading" unestablished. Unlike the narrow code examples above, these AgeMem routes are supported here by the paper's description, not inspected implementation.
+| Example | Run ID | Manifest SHA-256 |
+|---|---|---|
+| A-MEM | `AAS-2026-10-16-a-mem-sys-eff95cd80440-01` | `16fad56f4a88e833d4c0f5ffa129af99bca8a0383acbd6799d2dc99b28cd2f28` |
+| cass_memory_system | `AAS-2026-10-13-cass-memory-system-30c18219cf68-01` | `2dcdb811124058cacf2dcde3b50b127dc826f2a8e603fb06ef92531b910c4729` |
+| CQ | `AAS-2026-10-14-cq-8fb3dc41c334-01` | `8d2fcd66aa8707273424c810f716e9203b9f7c90be7296a5b1a10666c7d415aa` |
+| Hindsight | `AAS-2026-10-14-hindsight-34c2ca821edf-01` | `3e9e67f75bff2a28a6ffc32ceb894615058008641f960da1e24bc9d70fb38579` |
+| llm-wiki-newsroom | `AAS-2026-11-08-llm-wiki-newsroom-ea04687a5ff6-01` | `f16203ad8057cd9261819ac693dfc60e5eadd949f04f1afb80834032daf05bf0` |
+| pi-self-learning | `AAS-2026-10-15-pi-self-learning-1a318610d4b1-01` | `903a6b625bf0d805a25d222dec241e857cf9bf8d0fe8677b009ff5e1832e0984` |
+| REM | `AAS-2026-10-14-rem-a81fdc774400-01` | `0e45470aeb4b227b6deb7877ab75e9cc4db0199c9c6cf5aa590506243d3a3dee` |
+| Signet | `AAS-2026-10-14-signetai-64f703d83203-01` | `4eb6367fe3884963d0c083b7c276bef866a089d4bcc8a1f0680bf1d7401bece9` |
+| SkillRL | `AAS-2026-10-14-skillrl-0dba0e1c895e-01` | `9771fa25ae76ce88c6efdfc88fb4e126b1abe0bd3fac23ae510761d4acb361f4` |
+| team-ai-workflows | `AAS-2026-11-09-team-ai-workflows-c00fb85f7ed1-01` | `3bbf81f1b11585b33fbc615ee2c7dcc994fee3f77782075805ecba7cd11b7c40` |
+| AgeMem | `AAS-2026-10-12-2601-01885v1-32274e5bddc1-01` | `ec5ef488e3864432af6583e3410daeba596badd0839a85b58c257f4f7322306e` |
+| Nimbalyst Wiki | `AAS-2026-11-08-nimbalyst-wiki-d9ff54186a76-01` | `0d48a874284207505fa604f5447fc3c1798179c57f4b9a10110f08cf90562a4f` |
 
 ## Withheld conclusions and evidence gaps
 
-- **Prevalence and complete-set shares** are withheld for every axis, for the coverage reasons above. Statements such as "most systems are pull-only" or "X% lack human admission" are unsupported.
-- **Deployment, activation and effect:** no finding reaches `observed` or `causally supported`. The population cannot say whether any memory mechanism improves task outcomes.
-- **Absence of manual control or push read-back:** omitted findings are not negatives. Write-agency units are frequently `not-determinable` because generic callers do not reveal a human decision.
-- **Trace-learning mechanisms:** the `"yes"` value does not separate access counters from summaries, rule extraction or weight updates. Selected records can support qualitative contrasts; population counts by mechanism need systematic classification beyond this matrix. Routine structured comparison would additionally need corresponding profile changes.
-- **Change over time:** there is one snapshot. No trend claim is made, and the legacy agent-memory-systems corpus is not merged in.
-- **Quote verification:** 98 sets carry quotations that could not be checked against source bytes here. The findings rest on their accepted records and independent report verifications, not on a fresh check of the quotes.
-- **Commonplace implications** are out of scope. They belong in a separately commissioned transfer scan.
+- **Prevalence, exclusivity and rankings:** incomplete inventories prevent
+  population shares or claims such as “only pull,” “no human control” or
+  “files only” from missing positive witnesses. Named mechanisms establish
+  examples, not prevalence of unstructured properties.
+- **Activation and benefit:** wiring, delivery, model instructions, retained
+  scores and experiment artifacts do not by themselves establish successful
+  deployed use or improved task outcomes. No profile finding is causally
+  supported.
+- **Semantic novelty and warrant:** generated prose can compress, derive or
+  invent. Without proposition-level input/output evidence, a model call does
+  not settle which. Structural admission and provenance are not truth tests.
+- **Consumer completeness:** truncation, optional context paths, separate
+  stores and residual copies limit universal fidelity and withdrawal claims.
+  No cross-system correction-coverage rate is inferred.
+- **Retained-set limits:** partial units, opaque dependencies and verification
+  limits remain operative. CQ and cass_memory_system retain coarse-part
+  declaration issues outside the selected admission/inversion mechanisms;
+  pi-self-learning retains a registration-count disagreement, not a disputed
+  reflection route. Those issues are not repaired or silently generalized
+  away here.
+- **Source-byte verification:** selected validation logs include notices that
+  some pinned source checkouts are unavailable for quotation checking. This
+  synthesis checks committed accepted records, not upstream source bytes;
+  it makes no fresh quotation-authentication claim or population-wide count
+  of those notices.
+- **Change over time:** this is one current snapshot. Counts do not establish
+  growth, adoption trends or improvement relative to an older population.
+  Historical outputs remain separate and are not pooled.
+- **Commonplace advice:** design recommendations and transfer judgments are
+  outside this public comparison.
 
 ## Query ledger
 
-The query scripts and their output are in the repository at `scripts/memory_landscape_queries/`. Each query decodes `<axis>_units` as JSON. `strong` means basis ∈ {`wired`, `observed`, `causally supported`}. Denominator: the 176 code-grounded rows unless stated otherwise.
+Executable queries and dated outputs are retained in
+`scripts/memory_landscape_queries/`. `refresh.py` uses the existing unit decoder
+and strong-basis helper. Its `outputs-2026-11-09/snapshot.json` records revision
+and tier strata, field names, tests, basis filters, numerator, denominator,
+included runs and exclusions. Every assessment category is retained separately.
+`evidence.py` extracts selected committed record sections and profile units
+for semantic checking; it acquires no upstream evidence.
 
-| Query | Test | Result |
+| Query family | Membership or coverage test | Published use |
 |---|---|---|
-| Q0 population | row count by `source_tier`, `comparison_version` | 191; 176 code, 15 doc; revision 2 only |
-| Q1 axis coverage | count of `<axis>_assessment` | table above |
-| Q2 existence | per system, any unit finding with value v and strong basis | table above |
-| Q3 weak-only | value present only at `claimed`/`afforded` | table above |
-| Q4 complete-set eligibility | axis `known` and every unit finding strong | eligibility table |
-| Q5 basis census | count of every finding's basis, all 191 rows | 7,958 wired; 1,246 claimed; 648 afforded; 0 observed or causally supported |
-| Q6 trace learning | strong `"yes"`; its strong `trace_source`, `learning` authority, `trace-extracted` lineage and `model-weights` co-occurrence | 130; 85/82/35/24; 122; 129; 4 |
-| Q8 manual admission | `manual` at any basis vs strong; weak-only systems by basis | 88 vs 46; 42 weak-only (26 claimed, 19 afforded); 1,041 units with 240 not-determinable and 113 uninspected |
-| Q9 push signal | strong `push` with strong inferred-* signal | 56 of 139 |
-| Q10 curation | strong `synthesize`; systems with 3–7 strong operations | 12 systems named above; 120 |
-| Q11 storage | strong files only; any strong database-type substrate; no strong files | 25; 95; 16 |
-| Q13 doc tier | basis census over the 15 doc-grounded rows | 495 claimed, 21 wired, 15 afforded |
+| Population | revision/tier split; boundary-kind and cutoff census | Evidence boundary |
+| Axis existence | any strong unit witness for value; each system once | Ten-axis table |
+| Weak-only | value present, no strong unit witness | Ten-axis table and admission contrast |
+| Complete eligibility | known axis; every positive unit finding strong | Withheld distributions |
+| Basis census | every finding, separately by tier | Wiring/observation boundary |
+| Manual admission | manual at any basis versus strong | 118 / 63 / 55 of 225 |
+| Push selection | strong push with any strong inferred signal; separately no strong inferred signal | 71 / 108 of 179 push sets |
+| Complete pull-only | known direction, strong set exactly pull, every finding strong | 4 of 225 |
+| Storage | strong files set exactly `{files}`; any strong database-type substrate | 36 reported strong-only files; 123 with database witness |
+| Curation | any strong synthesize; three to seven strong operation values | 12; 147 of 225 |
+| Trace learning | strong yes/units; local no retained apart from system unions; strong yes plus model-weights | 160 yes; 6 local no; 1 system no; 4 weight co-occurrences |
 
-The 21 findings labelled `wired` in Q13 are distributed across the four
-accounts below. These are the retained profile labels, not a claim that the
-whole documented system was implemented. Their cited records describe the
-limited code inspections summarized above. The check used the profiles and
-records at the same inputs commit, without reclassifying findings or
-re-inspecting upstream source bytes. All other eleven document-grounded
-profiles contain no finding with that label.
-
-| Profile | Findings labelled `wired` | Run | Manifest SHA-256 prefix |
-|---|---:|---|---|
-| [Arsumbris](../../../agentic-system-analyses/retained/arsumbris--arsumbris/memory-profile.md) | 7 | `AAS-2026-10-15-arsumbris-a9be6bac297f-01` | `6d5063eddc867119…` |
-| [llm-context-base](../../../agentic-system-analyses/retained/asakin--llm-context-base/memory-profile.md) | 3 | `AAS-2026-10-14-llm-context-base-f63a7c0fb5f2-01` | `cc73ff16d61391b6…` |
-| [Mnemosyne](../../../agentic-system-analyses/retained/noirblue--isaacclupus_mnemosyn_spec/memory-profile.md) | 9 | `AAS-2026-10-15-isaacclupus-mnemosyn-spec-1887e13dcc13-01` | `29f6cf530ccdf62f…` |
-| [Prove2Me_workspace](../../../agentic-system-analyses/retained/prove2me--prove2me_workspace/memory-profile.md) | 2 | `AAS-2026-10-14-prove2me-workspace-187ef30582c9-01` | `299bf835ee296bd7…` |
+The query results come from the frozen matrix; smoke checks cover ledger
+structure and membership consistency. Historical `outputs-2026-10-22/` remain
+separate; this snapshot makes no numerical change claim against them.
