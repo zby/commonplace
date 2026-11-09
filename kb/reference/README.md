@@ -159,7 +159,7 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 | Command | Purpose |
 |---|---|
 | `commonplace-validate <target>` | Validate an artifact or collection, global type specs, collection landings, or the published redirect map |
-| `commonplace-guard-full-pass-report <report>` | Refuse a full-pass transition unless every packet capture still matches its live artifact |
+| `commonplace-review packet <note-or-packet>` | Check whether a full-pass packet's recorded hashes still match the note and any merge target |
 | `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
 | `commonplace-github-snapshot <url>` | Snapshot a GitHub issue or PR into local `kb/sources/.snapshots/` |
 | `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into local `kb/sources/.snapshots/` |
