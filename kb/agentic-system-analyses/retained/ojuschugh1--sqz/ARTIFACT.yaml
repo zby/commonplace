@@ -1,0 +1,32 @@
+type: agentic-system-analyses/types/agentic-system-analysis-set.md
+members:
+  boundary.md:
+    sha256: 5ee2b25ce749873ec10c3c95365ecc8846f0888538ab0db877a61911959ceb0b
+  runtime.md:
+    sha256: cefad22b18c5f86a967f2e5ca7a83b6cf848ce1c5ae4891ab1f74fe347394a81
+  memory.md:
+    sha256: 162475d9ce8a7806de134d1ca023a07c1ae172457f0478a671431597822a6743
+  epistemic.md:
+    sha256: 99c3b936a7287ecc51f194a023bf6e6517a3ad0ed46decb17fb88c6953e49571
+  workflow.md:
+    sha256: dcf0b4606329a6e844f9099f7dd2e1c95a711f18439f3a075ff0e101426aea8a
+  reconciliation.md:
+    sha256: 5e0f1623662f99867a7ae6b5111a80b64cd1a87c89935ee4bac9966aeb8b8ed9
+  memory-profile.md:
+    sha256: 418fb236518a02d63e15c08ecc496118da4835e31c16b179fd838d27f6e478a5
+  synthesis.md:
+    sha256: 65252ba4baf8f49a36bce71230f558288996cda26890ecfe4db6e9cc1e0346c5
+  report-verification.md:
+    sha256: 3729b9e31078ed3005da45ad686fd0fa13383afaf6c5636444bdd0e3926fa81c
+  profile-verification.md:
+    sha256: 71bb4c8d92a8fd23beae586944f839ac86606af59ef16c3b4a7023db822d791a
+  synthesis-verification.md:
+    sha256: d5739835f83000dca68f775f0a7b72b70d482453a47d57dd0505175d87798360
+  overview.md:
+    sha256: f0fafe8b608235c350d650f65803cb666fc6634e4bdde8fc01e8677cb5c35007
+worker:
+  profile: pi-sol
+  harness: pi
+  launch-model: gpt-6.1-sol
+  effort: medium
+  model: gpt-6.1-sol
