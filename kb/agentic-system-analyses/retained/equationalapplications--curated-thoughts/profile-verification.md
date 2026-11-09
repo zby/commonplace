@@ -1,0 +1,33 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Curated Thoughts memory comparison values, natural units and coverage at the frozen revision."
+run-id: AAS-2026-11-08-curated-thoughts-00ab3a770403-01
+reviewed-boundary: "433ebbd48c2ffd0e871e34a1505dcdef1a78c8fd"
+---
+
+# Curated Thoughts profile verification
+
+## Verification
+
+The handed [memory profile](memory-profile.md#comparison-rationale) was checked against the accepted runtime, memory, epistemic and workflow accounts and the reconciliation. Reconciliation declares no supersessions; its narrower operations and broader containers therefore remain available at their respective scopes. The empty profile answers supply no argument to accept or reject. No source reread, new record or replacement classification was needed.
+
+The profile's scope follows accumulated source content, derived content, access structures and later-consumer routes. It does not substitute shipped prompts, the bridge capability gate or provider weights for accumulated memory. Included opaque engine, import, merge/draft, replay and replica alternatives remain explicitly unresolved rather than disappearing behind local witnesses. Eight axes retain positive local findings with partial inventory coverage; the two trace axes retain no controlled findings and are not-determinable. No axis asserts complete system coverage, absence or inapplicability.
+
+- **Storage substrate:** Files and SQLite are supported by [MEM-OBJ-source-material](memory.md#mem-obj-source-material), [MEM-OBJ-wiki-content](memory.md#mem-obj-wiki-content), [MEM-OBJ-embedding-blobs](memory.md#mem-obj-embedding-blobs), [MEM-OBJ-verification-ledgers](memory.md#mem-obj-verification-ledgers) and [MEM-OBJ-unverified-match](memory.md#mem-obj-unverified-match). Shared local substrate warrants the grouped rows. Graph structure and dense encoding are not incorrectly promoted into graph or vector storage findings.
+- **Representational form:** Prose, fixed-rule structure and numerical embeddings are distinguished at their consumption paths. [EPI-OBJ-proposal-items](epistemic.md#epi-obj-proposal-items) and [EPI-OBJ-fact-evidence](epistemic.md#epi-obj-fact-evidence) support the mixed proposal/evidence classifications; [MEM-OBJ-embedding-blobs](memory.md#mem-obj-embedding-blobs) supports the parametric representation finding without implying weight updates. Opaque payloads are not classified from readable summaries.
+- **Lineage:** Authored app content, imported files and compiled model/vector derivatives have recorded paths. [MEM-RTE-human-maintenance](memory.md#mem-rte-human-maintenance), [MEM-OBJ-source-material](memory.md#mem-obj-source-material) and [RT-RTE-librarian-synthesis](runtime.md#rt-rte-librarian-synthesis) support these findings. Known derivation is not allowed to settle initial text provenance or provider training provenance; partial units retain those distinctions.
+- **Behavioral authority:** [MEM-BAP-retained-fact](memory.md#mem-bap-retained-fact) supports informational consumption by the agent and librarian, not standing instructions. [RT-RTE-context-recall](runtime.md#rt-rte-context-recall) and [MEM-RTE-wisdom-match](memory.md#mem-rte-wisdom-match) support ranking inputs and delivery eligibility. [MEM-RTE-verification-state](memory.md#mem-rte-verification-state) and [EPI-RTE-anchor-check](epistemic.md#epi-rte-anchor-check) support conformance checks and enforced exclusions. The grouped metadata unit names those separate effects rather than implying that every carrier has every force. [RT-RTE-librarian-synthesis](runtime.md#rt-rte-librarian-synthesis) and [MEM-RTE-verification-prompt](memory.md#mem-rte-verification-prompt) support the watermark and queued-ID routing effects.
+- **Write agency:** Automatic accept-all and maintenance are separated from explicit app decisions. [RT-RTE-proposal-admission](runtime.md#rt-rte-proposal-admission), [MEM-RTE-human-maintenance](memory.md#mem-rte-human-maintenance), [MEM-RTE-verification-state](memory.md#mem-rte-verification-state) and [MEM-RTE-memory-withdrawal](memory.md#mem-rte-memory-withdrawal) support the local mechanisms. Generic caller identity, terminal presence and workflow initiation are correctly left insufficient to establish manual admission.
+- **Curation operations:** The normalized-body duplicate outcome in [EPI-RTE-fact-retention](epistemic.md#epi-rte-fact-retention) is content deduplication rather than a primary-key check. Direct edits support evolution; soft withdrawal supports invalidation; age-based pruning supports decay; [EPI-RTE-fact-confirmation](epistemic.md#epi-rte-fact-confirmation) supports promotion through changed status and delivery eligibility. The indeterminate model transformation is not upgraded to consolidation or synthesis solely from its prompt or name. Pending supersession is not counted as an applied revision.
+- **Read-back direction and signal:** Requested recall/search/getter results are pull. Automatic candidate supply and desktop verification solicitation are distinct push operations. [RT-RTE-librarian-synthesis](runtime.md#rt-rte-librarian-synthesis) supports name/vector targeting and coarse caps; [MEM-RTE-verification-prompt](memory.md#mem-rte-verification-prompt) supports eligibility/budget filtering and a real queued-ID match to the current row. The requested return is not counted as an additional push, and external CTI injection is not inferred.
+- **Trace learning and trace source:** [MEM-OBJ-source-material](memory.md#mem-obj-source-material) leaves caller text origin unresolved. [RT-CLM-agent-workflow](runtime.md#rt-clm-agent-workflow) requests post-task deposit but does not establish recorded turns, tool results, events or trajectories as input. [MEM-OBJ-unverified-match](memory.md#mem-obj-unverified-match) establishes an event queue, not by itself a qualifying automatic durable update. With no bounded absence records and unresolved alternative writes, neither a local negative nor a system-wide negative is warranted. The profile preserves that uncertainty without requiring evidence of measured improvement for a wired positive.
+
+All emitted positive findings stay at wired evidence strength. The [workflow account](workflow.md#workflow-account) independently preserves source acknowledgement, proposal production, admission, retrieval and downstream use as separate milestones. The profile does not turn any of these into observed activation, reliable factual correctness or causal benefit. Its unresolved coverage is faithfully expressed in the extracted assessments themselves; it does not require a separate publication limit to rescue an unsupported value.
+
+## Blockers
+
+none
+
+## Limits
+
+none
