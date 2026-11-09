@@ -13,13 +13,18 @@ their conditions, not merely catalogue features.
 ## Start with a design question
 
 - **Identify choices and alternatives:** use [Research Topics](./topics/README.md)
-  to find relevant dimensions and questions about their interactions.
+  to find relevant dimensions and questions about their interactions across
+  Agent Memory, Runtime & Control, Knowledge & Verification, and Workflow & Recovery.
 - **Investigate combinations and constraints:** follow
-  [Comparisons](./comparisons/README.md) to mechanisms and their supporting
-  records. A combination missing from this corpus is not thereby impossible.
+  [Comparisons](./comparisons/README.md) to cross-system research organized by
+  architectural question, with mechanisms and their supporting records.
+  A combination missing from this corpus is not thereby impossible.
 - **Decide what evidence is still needed:** use [Methods & Data](./methods.md#what-the-evidence-can-settle)
   and the [future-work agenda](./topics/README.md#future-work) to distinguish
   source inspection from experiments needed before commitment.
+- **Find an individual system:** use the
+  [Systems Directory](../agentic-system-analyses/current-analyses.md) for current
+  accepted analyses, generated at each site build.
 
 **[Agent Memory](./topics/memory.md)** is the most developed topic: what is
 retained, how does it reach the next decision, and what happens when it is
@@ -27,15 +32,6 @@ wrong? Start with the
 [agent-memory landscape](./comparisons/memory/agent-memory-landscape.md), a
 frozen synthesis of 191 analyses from October 2026, then follow its evidence
 to individual systems.
-
-- [Research Topics](./topics/README.md) — Agent Memory, Runtime & Control,
-  Knowledge & Verification, and Workflow & Recovery.
-- [Comparisons](./comparisons/README.md) — cross-system research organized by
-  architectural question.
-- [Systems Directory](../agentic-system-analyses/current-analyses.md) — current
-  accepted individual analyses, generated at each site build.
-- [Methods & Data](./methods.md) — how to interpret the evidence, with the
-  memory table, CSV and reproducible population boundaries.
 
 ## Follow the evidence
 
@@ -49,7 +45,8 @@ causal improvement. Coverage gaps stay distinct from evidence of absence.
 Compare the scope and evidence of each route rather than assigning a
 system-wide property from a single feature. [Methods & Data](./methods.md)
 explains these distinctions and why current listings, dataset snapshots and
-historical research can have different populations.
+historical research can have different populations. It also provides the memory
+table, CSV and reproducible population boundaries.
 
 The primary research program charts the design space and seeks solutions
 useful to Commonplace. These public accounts keep source-system findings

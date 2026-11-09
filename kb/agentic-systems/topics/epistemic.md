@@ -4,17 +4,16 @@ This topic studies how systems produce claims, check them and decide whether lat
 
 ## Research questions
 
+The kind of check, its placement and its power to block work are separate
+choices.
+
 - What objects hold claims, evidence and unresolved uncertainty?
 - Is verification a prompt request, an executable check or a human decision?
 - Which checked results actually constrain later execution?
+- Which combinations prevent unchecked claims from reaching a consequential action, and at what review cost?
 - What happens when a claim is contradicted or a check fails?
 
-## Design-space questions
-
-The kind of check, its placement and its power to block work are separate
-choices. Which combinations prevent unchecked claims from reaching a
-consequential action, and at what review cost? The
-[future-work agenda](./README.md#future-work) proposes failed-check and
+The [future-work agenda](./README.md#future-work) proposes failed-check and
 missing-check tests; a verification component's presence alone does not
 answer whether downstream execution depends on it.
 
@@ -25,8 +24,8 @@ to the corresponding member of each accepted analysis. Start with the system's
 overview and boundary when interpreting a route: different analyses inspect
 different versions and scopes.
 
-The [epistemic lens landing](../comparisons/epistemic/README.md) explains that member's
-scope. There is no structured comparison table or cross-system synthesis for
+The [epistemic lens landing](../comparisons/epistemic/README.md) explains the epistemic
+member's scope. There is no structured comparison table or cross-system synthesis for
 this lens yet. These questions are a research agenda, not findings about every
 listed system.
 

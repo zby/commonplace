@@ -4,7 +4,7 @@ Comparisons investigate architectural questions across selected systems.
 They contribute to design-space exploration by identifying alternatives,
 examining combinations and bounding claims about constraints and consequences.
 They are not product rankings. Follow the citations to the frozen analysis
-records to check a conclusion's scope; an unrepresented combination remains
+records to check a conclusion's scope. An unrepresented combination remains
 open unless evidence rules it out.
 
 ## Agent memory
@@ -25,7 +25,7 @@ open unless evidence rules it out.
   inspect their scoped evidence. See the [dataset boundary](./memory/README.md)
   before interpreting counts.
 - [Current per-system memory accounts](./memory/systems.md) — build-time
-  listing, which may be newer than those snapshots.
+  listing, which may be newer than the landscape and memory-table snapshots.
 
 The [Agent Memory topic](../topics/memory.md) maps the research questions
 these materials address.

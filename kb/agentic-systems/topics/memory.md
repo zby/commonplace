@@ -23,6 +23,11 @@ an architectural claim.
 
 ## Research questions
 
+Admission, selection and correction are separate choices whose interactions
+need investigation. The [future-work agenda](./README.md#future-work) proposes
+delivery and correction tests; the existing comparisons supply candidate
+mechanisms, not proof that every combination works.
+
 ### What information is retained?
 
 Distinguish raw conversations, extracted facts, summaries, procedures and
@@ -49,6 +54,9 @@ for concrete contrasts, or begin with the
 and use the [per-system accounts](../comparisons/memory/systems.md) to trace
 the full route.
 
+Does a more selective read reduce distraction without missing information
+needed for the task?
+
 ### What happens when information changes or becomes invalid?
 
 Updating a source, invalidating a fact and repairing every dependent summary
@@ -57,6 +65,7 @@ traces those boundaries and proposes multi-interface experiments.
 The [curation findings](../comparisons/memory/agent-memory-landscape.md#curation-revision-and-forgetting-are-common-synthesis-is-rare)
 provide candidates for investigation, not a guarantee of complete correction.
 Check which consumer and derived representation each inspected route reaches.
+Can automatic injection coexist with reliable withdrawal of stale context?
 
 ### How does experience modify future behavior?
 
@@ -74,16 +83,6 @@ findings. The frozen landscape reports
 [static wiring or weaker evidence](../comparisons/memory/agent-memory-landscape.md#every-positive-finding-is-static-wiring-or-weaker),
 not causal improvement. Experiments need to measure downstream decisions and
 compare conditions with and without the relevant memory route.
-
-## Design-space questions
-
-Admission, selection and correction are separate choices whose interactions
-need investigation. Can automatic injection coexist with reliable withdrawal
-of stale context? Does a more selective read reduce distraction without
-missing information needed for the task? The
-[future-work agenda](./README.md#future-work) proposes delivery and correction
-tests; the existing comparisons supply candidate mechanisms, not proof that
-every combination works.
 
 ## Find systems and data
 
