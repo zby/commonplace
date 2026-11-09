@@ -162,6 +162,7 @@ def test_integration_git_actions_are_scoped_and_merge(proof, monkeypatch, tmp_pa
     run = tree / proof.run.relative_to(origin)
     run.mkdir(parents=True)
     (run / aw.PARAMETERS).write_text(json.dumps(proof.records.parameters))
+    (run / aw.RECEIPT).write_text(json.dumps(proof.records.receipt))
     preparation = {"status": "ready", "worktree": str(tree), "origin": str(origin),
                    "commit": proof.method, "token": "abcdefabcdef"}
     tree.with_name(tree.name + ".preparation.json").write_text(json.dumps(preparation))

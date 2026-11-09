@@ -456,29 +456,6 @@ def require_running_package_unchanged(inputs_commit: str) -> None:
         )
 
 
-def prepared_origin(worktree: Path) -> tuple[dict[str, object], Path, str]:
-    """The ready preparation, its origin on clean ``main``, and the method commit.
-
-    The worktree must still be at the method commit with its startup files,
-    and the method commit must be an ancestor of ``main``.
-    """
-    record = preparation_for(worktree)
-    origin = Path(str(record["origin"]))
-    if Path(run_command(["git", "rev-parse", "--show-toplevel"], cwd=origin)).resolve() != origin:
-        raise ValueError("preparation origin is not its current Git root")
-    if run_command(["git", "symbolic-ref", "--quiet", "HEAD"], cwd=origin) != "refs/heads/main":
-        raise ValueError("integration requires the origin checkout on main")
-    if run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin):
-        raise ValueError("integration requires a clean origin checkout")
-    method = str(record["commit"])
-    if run_command(["git", "rev-parse", "HEAD"], cwd=worktree) != method:
-        raise ValueError("worktree HEAD differs from its preparation commit")
-    require_committed_startup(worktree, method)
-    if _git(origin, "merge-base", "--is-ancestor", method, "main").returncode:
-        raise ValueError("the method commit is not an ancestor of main")
-    return record, origin, method
-
-
 def committed_tree(worktree: Path, commit: str, relative: str) -> dict[str, bytes] | None:
     """A directory's direct files at ``commit``, or None when it is absent there."""
     if _git(worktree, "cat-file", "-e", f"{commit}:{relative}").returncode:
@@ -491,39 +468,3 @@ def committed_tree(worktree: Path, commit: str, relative: str) -> dict[str, byte
         files[name] = subprocess.run(["git", "show", f"{commit}:{relative}/{name}"],
                                      cwd=worktree, capture_output=True, check=True).stdout
     return files
-
-
-def merge_paths(worktree: Path, origin: Path, method: str, *, branch: str, paths: list[str],
-                subject: str, body: str) -> str:
-    """Commit exactly ``paths`` on a new worktree branch and merge it into main.
-
-    Refuses when the origin changed those paths since ``method``, when the
-    worktree has staged changes or tracked changes outside them, or when the
-    branch exists. A conflict is aborted in main; the branch remains for review.
-    """
-    def inside(path: str) -> bool:
-        return any(path == allowed or path.startswith(allowed + "/") for allowed in paths)
-
-    if changed_paths(origin, method, "HEAD", "--", *paths):
-        raise ValueError("origin paths changed since the method commit")
-    if _git(worktree, "show-ref", "--verify", "--quiet", f"refs/heads/{branch}").returncode == 0:
-        raise ValueError(f"branch already exists: {branch}")
-    if changed_paths(worktree, "--cached"):
-        raise ValueError("worktree already has staged changes")
-    outside = [path for path in changed_paths(worktree, "HEAD") if not inside(path)]
-    if outside:
-        raise ValueError("tracked changes outside the merged paths: " + ", ".join(outside))
-    run_command(["git", "switch", "-c", branch], cwd=worktree)
-    run_command(["git", "add", "--", *paths], cwd=worktree)
-    staged = changed_paths(worktree, "--cached")
-    if not staged or not all(inside(path) for path in staged):
-        raise ValueError("staging is empty or includes another path")
-    run_command(["git", "commit", "-m", subject, "-m", body], cwd=worktree)
-    merge = subprocess.run(["git", "merge", "--no-ff", "--no-edit", branch], cwd=origin,
-                           capture_output=True, text=True, check=False)
-    if merge.returncode:
-        merge_head = Path(run_command(["git", "rev-parse", "--git-path", "MERGE_HEAD"], cwd=origin))
-        if (origin / merge_head).exists():
-            run_command(["git", "merge", "--abort"], cwd=origin)
-        raise ValueError(f"integration stopped; branch {branch} kept: {merge.stderr.strip() or merge.stdout.strip()}")
-    return run_command(["git", "rev-parse", "HEAD"], cwd=origin)

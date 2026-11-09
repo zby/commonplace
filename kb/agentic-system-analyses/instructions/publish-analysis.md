@@ -30,17 +30,31 @@ complete locally without retained mutation. `commonplace-analysis inspect
 <run>` distinguishes these results: `published` means the receipt says so,
 `local` a non-complete result; neither is a fresh audit of retained files.
 
-After the report and separate operator authorization, run
-`commonplace-analysis integrate <run>` with the prepared worktree's
-command directory and working directory; its recorded origin must be clean and
-on `main` (an agent adds `--model <model-id>`). Integration independently checks
-current completion and coverage, exact pinned publication inputs, retained bytes,
-publication journal and archive evidence. It stages only the changed retained
-artifact and its archive, commits them on `analysis/<run-id>` from the method commit,
-and merges that branch into `main`. It refuses unrelated tracked changes or
-pre-existing staging in the worktree and a method commit not ancestral to
-`main`. A merge conflict is aborted; preserve the branch and worktree for the
-operator. Do not copy the artifact or choose a conflict side automatically.
+New `analyse` and `batch` invocations authorize integration as their final
+phase. After analysis children drain, the controller integrates complete
+publications serially through each prepared worktree's pinned command and
+working directory. Low-level `run` still stops at publication; integrating such
+a result or a legacy publication-only controller needs separate authorization.
+For that route, call `commonplace-analysis integrate <run>` from its prepared
+worktree (an agent adds `--model <model-id>`).
+
+The recorded origin must be clean and on `main`. Integration proves the opening
+and receipt bindings, exact retained bytes and the archive of the method commit's
+incumbent. It does not rerun acceptance under the current method or use an audit
+verdict as a gate. It stages only the publication and required archive, commits
+them on `analysis/<run-id>` from the method commit, and merges into `main`.
+Exact-byte checks also cover the Git transfer. Unrelated tracked changes,
+pre-existing staging, competing origin publication and a method commit not
+ancestral to `main` are refusals, not permission to regenerate or overwrite.
+
+Integration records its own durable intent and result. Cooperating integrations
+share an origin-wide lock; exclude non-cooperating Git writers. Reentry verifies
+recorded effects before continuing and recognizes proven committed or merged
+work without duplicating it. Unknown branches, ambiguous staging or uncertain
+merge effects need operator repair. A conflict is aborted; preserve the branch,
+publication and worktree. Do not copy the artifact or choose a conflict side.
+Publication and integration remain distinct outcomes: a refused integration
+does not withdraw acceptance or launch another analysis.
 
 Publication journals record exact trees before mutation. A shared repository
 lock coordinates cooperating publishers; exclude non-cooperating writers from

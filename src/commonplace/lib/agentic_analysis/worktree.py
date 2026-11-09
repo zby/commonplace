@@ -27,9 +27,7 @@ from commonplace.lib.agentic_analysis.analyses import (
 )
 from commonplace.lib.agentic_analysis.preparation import (
     committed_tree,
-    merge_paths,
     preparation_for,
-    prepared_origin,
     require_committed_startup,
     require_run_code,
     run_command,
@@ -294,25 +292,7 @@ def _integration_publication(run_dir: Path, worktree: Path, method: str) -> tupl
 
 
 def integrate_analysis(run_dir: Path, *, model: str | None = None) -> str:
-    """Commit one completed publication in its worktree and merge it into main.
+    """Transfer a publication with durable recognition of committed/merged effects."""
+    from commonplace.lib.agentic_analysis.integration import integrate
 
-    Calling this is the separate authorization to transfer a published run.
-    The run and publication locks serialize cooperating run and publisher
-    mutations. A conflict is aborted in main; its branch remains for review.
-    """
-    from commonplace.headless.jobs import run_lock
-    from commonplace.lib.agentic_analysis.guards import publication_lock
-
-    run_dir, worktree = analysis_run(run_dir)
-    require_run_code(run_dir, cwd=Path.cwd())
-    with run_lock(run_dir), publication_lock(worktree):
-        record, origin, method = prepared_origin(worktree)
-        run_id = run_dir.name
-        if not run_ids.is_run_id(run_id, token=record["token"]):
-            raise ValueError("run ID does not match the worktree preparation token")
-        paths, source_revision = _integration_publication(run_dir, worktree, method)
-        body = f"Run: {run_id}\nMethod: {method}\nSource: {source_revision}"
-        if model:
-            body += f"\n\nModel: {model}"
-        return merge_paths(worktree, origin, method, branch=f"analysis/{run_id}", paths=paths,
-                           subject="Publish analysis result", body=body)
+    return integrate(run_dir, model=model)

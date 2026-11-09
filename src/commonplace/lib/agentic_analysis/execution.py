@@ -19,6 +19,9 @@ from commonplace.lib.agentic_analysis.worktree import (
     start_analysis,
 )
 
+# Capability marker read from the selected committed method before preparation.
+INTEGRATION_PROTOCOL = "commonplace.analysis-integration.v1"
+
 
 def outcome(view: dict) -> str:
     audit = view.get("advisory-audit") or {}

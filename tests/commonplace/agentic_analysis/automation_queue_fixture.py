@@ -17,11 +17,24 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command")
     parser.add_argument("key")
-    for name in ("system", "source-identity", "source", "worker-profile", "source-revision", "timeout", "max-workers"):
+    for name in ("system", "source-identity", "source", "worker-profile", "source-revision", "timeout", "max-workers", "model"):
         parser.add_argument("--" + name)
     args = parser.parse_args()
     root = Path(os.environ["QUEUE_FIXTURE"])
     result = Path.cwd() / "queue-result.json"
+    if args.command in ("integrate", "inspect-integration"):
+        data = json.loads(result.read_text())
+        key = data["result"]["allocation-key"]
+        integration = Path.cwd() / "integration-result.json"
+        if args.command == "integrate":
+            (root / f"{key}.integration-started").touch()
+            while (root / "integration-hold").exists() and not (root / f"{key}.integration-release").exists():
+                time.sleep(.02)
+            integration.write_text(json.dumps({"state": "integrated", "publication-commit": key,
+                                               "merge-commit": "merge-" + key}))
+            (root / f"{key}.integration-finished").touch()
+        print(integration.read_text() if integration.exists() else json.dumps({"state": "pending"}))
+        return
     if args.command == "execute":
         (root / f"{args.key}.started").touch()
         while not (root / f"{args.key}.release").exists():

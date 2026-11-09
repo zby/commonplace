@@ -187,7 +187,14 @@ def test_complete_prepared_command_correction_audit_and_fresh_controller(command
     assert resumed["targets"][0]["run"] == str(run)
     assert {p.name: p.read_text() for p in scenario.with_name("counts").iterdir()} == counts
     assert len(list((tree / STATE_ROOT).glob("AAS-*"))) == 1
-    assert git(origin, "rev-parse", "main") == before
+    integration = resumed["targets"][0]["integration"]
+    assert integration["state"] == "integrated"
+    assert git(origin, "rev-parse", "main") == integration["merge-commit"] != before
+    assert git(origin, "rev-list", "--count", f"{before}..main") == "2"
+    destination = Path(view["receipt"]["destination"]).relative_to(tree)
+    assert {p.name: p.read_bytes() for p in (origin / destination).iterdir()} == {
+        p.name: p.read_bytes() for p in (tree / destination).iterdir()}
+    assert "Model:" not in git(tree, "log", "-1", "--format=%B")
     assert git(origin, "status", "--porcelain") == ""
     assert tree.is_dir() and tree.with_name(tree.name + ".preparation.json").is_file()
     assert (state / f"{item['key']}.stdout.log").is_file()
@@ -377,7 +384,7 @@ def scheduler_state(tmp_path, count=5):
     items = [{"key": f"{i:032x}", "target": {"source-identity": f"source:{i}"}, "phase": "prepared",
               "worktree": str(tmp_path / f"tree-{i}"), "status": "pending", "run": None, "result": None,
               "error": None} for i in range(count)]
-    save(state / "controller.json", {"schema": auto.SCHEMA, "controller": str(state), "concurrency": 4,
+    save(state / "controller.json", {"schema": auto.LEGACY_SCHEMA, "controller": str(state), "concurrency": 4,
                                    "max-workers": 3, "maximum-role-workers": 12, "targets": items})
     return state
 

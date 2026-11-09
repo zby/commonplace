@@ -9,6 +9,9 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-10-05
 **Amended by:** [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md) (2026-10-19): the integration command is `commonplace-analysis integrate` and a run is allocated by `commonplace-analysis run`; run identifiers and the guarded merge are unchanged.
+[ADR 126](./126-integrate-analysis-publications-by-default.md) (2026-11-09)
+authorizes guarded integration by default for new high-level invocations;
+existing publication-only runs retain their authority boundary.
 
 ## Context
 

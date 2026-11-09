@@ -1,4 +1,4 @@
-"""Analyse explicit sources unattended, resume/report durable queues, or use low-level recovery.
+"""Analyse explicit sources and integrate publications into main; resume/report queues or use low-level recovery.
 
     commonplace-analysis analyse SOURCE [--source-kind repository|local|documents] [--state DIRECTORY]
     commonplace-analysis batch FILE [--concurrency 4] [--worktree-root DIRECTORY]
@@ -58,13 +58,17 @@ DEFAULT_WORKER_PROFILE = "pi-sol"
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="commonplace-analysis", description=__doc__.split("\n\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
-    analyse = commands.add_parser("analyse", help="prepare, run and report one explicit source without a supervising agent")
+    analyse = commands.add_parser(
+        "analyse", help="analyse one source and automatically integrate its publication into main",
+        description="Analyse one source in isolation, then automatically integrate its complete publication into clean main.")
     analyse.add_argument("source")
     analyse.add_argument("--source-kind", choices=("repository", "local", "documents"), default="repository")
     analyse.add_argument("--system")
     analyse.add_argument("--source-identity")
     analyse.add_argument("--source-revision")
-    batch = commands.add_parser("batch", help="run an explicit newline URL list or JSON target list as one bounded queue")
+    batch = commands.add_parser(
+        "batch", help="analyse an explicit target list and automatically integrate publications into main",
+        description="Run one bounded queue, then automatically integrate complete publications serially into clean main.")
     batch.add_argument("targets", type=Path)
     batch.add_argument("--concurrency", type=int, default=4, help="simultaneous analyses (each allows --max-workers role workers)")
     for command in (analyse, batch):
@@ -75,6 +79,7 @@ def _parser() -> argparse.ArgumentParser:
         command.add_argument("--state", type=Path, help="new durable controller directory; retained, never cleaned automatically")
         command.add_argument("--worktree-root", type=Path, help="new worktree parent (default ignored .commonplace/worktrees)")
         command.add_argument("--require-clean-origin", action="store_true")
+        command.add_argument("--model", help="explicit initiating-agent attribution for the integration commit")
     resume = commands.add_parser("resume", help="reconcile a controller before continuing pending or explicitly selected stopped targets")
     resume.add_argument("controller", type=Path)
     resume.add_argument("--target", action="append", default=[], help="recorded normalized identity to explicitly resume; never allocates a replacement")
@@ -120,6 +125,8 @@ def _parser() -> argparse.ArgumentParser:
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
     acknowledge.add_argument("run", type=Path)
     acknowledge.add_argument("launch")
+    integration_report = commands.add_parser("inspect-integration", help="read pinned integration intent and Git evidence")
+    integration_report.add_argument("run", type=Path)
     integrate = commands.add_parser("integrate", help="commit exact published bytes and merge into main")
     integrate.add_argument("run", type=Path)
     integrate.add_argument("--model")
@@ -215,17 +222,17 @@ def _automate(arguments: argparse.Namespace) -> int:
         state = create(Path.cwd(), targets, profile=arguments.worker_profile, revision=arguments.revision,
                        state=arguments.state, worktree_root=arguments.worktree_root,
                        concurrency=getattr(arguments, "concurrency", 1), max_workers=arguments.max_workers,
-                       timeout=arguments.timeout, require_clean_origin=arguments.require_clean_origin)
+                       timeout=arguments.timeout, require_clean_origin=arguments.require_clean_origin, model=arguments.model)
         print(f"controller: {state}", file=sys.stderr, flush=True)
     result = (report(state) if arguments.command == "report" else
               Controller(state).run(selected=getattr(arguments, "target", [])))
     print(json.dumps(result, indent=2, sort_keys=True))
     print(f"analyses: {result['counts']}; up to {result['concurrency']} analyses × "
           f"{result['max-workers']} role workers = {result['maximum-role-workers']}; "
-          "no integration or cleanup performed", file=sys.stderr)
+          f"integration policy={result.get('integration-policy', 'publication-only')}; no cleanup performed", file=sys.stderr)
     for item in result["targets"]:
         print(f"{item['target']['source-identity']}: {item['status']}; worktree={item['worktree']}; "
-              f"run={item['run']}; {item['error'] or ''}", file=sys.stderr)
+              f"run={item['run']}; {item['error'] or ''}; integration={item.get('integration')}", file=sys.stderr)
         view = (item.get("result") or {}).get("inspection") or {}
         if view:
             audit = view.get("advisory-audit") or {}
@@ -258,7 +265,11 @@ def main(argv: list[str] | None = None) -> int:
                            max_workers=arguments.max_workers)
         if arguments.command == "run":
             return _run(arguments)
-        if arguments.command == "integrate":
+        if arguments.command == "inspect-integration":
+            from commonplace.lib.agentic_analysis.integration import inspect_integration
+
+            print(json.dumps(inspect_integration(arguments.run), indent=2))
+        elif arguments.command == "integrate":
             print(integrate_analysis(arguments.run, model=arguments.model))
         elif arguments.command == "inspect":
             print(json.dumps(inspect_analysis(arguments.run), indent=2, sort_keys=True))

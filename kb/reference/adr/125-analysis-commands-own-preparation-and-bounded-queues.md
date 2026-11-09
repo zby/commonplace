@@ -11,6 +11,9 @@ status: accepted
 **Amends:** [ADR 118](./118-analyses-run-as-a-workflow-over-headless-harnesses.md):
 the shell-loop batch and worktree-only preparation policy. Workflow roles,
 budgets, checks and publication remain unchanged.
+**Amended by:** [ADR 126](./126-integrate-analysis-publications-by-default.md)
+(2026-11-09): new high-level invocations finish with guarded integration;
+existing controllers keep their recorded policy.
 
 ## Context
 

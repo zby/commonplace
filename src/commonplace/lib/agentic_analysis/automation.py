@@ -24,7 +24,7 @@ from commonplace.lib.agentic_analysis.analyses import (
     resolve_worker_profile,
 )
 from commonplace.lib.agentic_analysis.durable import lease, save
-from commonplace.lib.agentic_analysis.execution import outcome
+from commonplace.lib.agentic_analysis.execution import INTEGRATION_PROTOCOL, outcome
 from commonplace.lib.agentic_analysis.preparation import (
     command_environment,
     draining_commands,
@@ -37,7 +37,8 @@ from commonplace.lib.agentic_analysis.run_ids import is_commit
 from commonplace.lib.agentic_analysis.sources import github_checkout_path
 from commonplace.lib.source_identity import normalize_source_identity
 
-SCHEMA = "commonplace.analysis-controller.v1"
+SCHEMA = "commonplace.analysis-controller.v2"
+LEGACY_SCHEMA = "commonplace.analysis-controller.v1"
 REMOTE = re.compile(r"^(?:https?://[^/\s?#]+/|ssh://[^/\s?#]+/|git@[^:\s]+:)[^/\s?#]+/[^/\s?#]+/?$")
 FINAL = {"published", "local-complete"}
 PAUSE = {"operator-attention", "command-failed", "preparation-failed"}
@@ -118,11 +119,16 @@ def limits(concurrency: int, max_workers: int, timeout: float) -> None:
 
 def create(origin: Path, targets: list[dict], *, profile: str, revision: str | None,
            state: Path | None, worktree_root: Path | None, concurrency: int,
-           max_workers: int, timeout: float, require_clean_origin: bool) -> Path:
+           max_workers: int, timeout: float, require_clean_origin: bool, model: str | None = None) -> Path:
     targets = validate_targets(targets)
+    if model is not None and (not model.strip() or any(c in model for c in "\r\n\x00")):
+        raise ValueError("model must be nonempty single-line text")
     limits(concurrency, max_workers, timeout)
     origin, commit = select_method(origin, revision)
-    run_command(["git", "cat-file", "-e", f"{commit}:src/commonplace/lib/agentic_analysis/execution.py"], cwd=origin)
+    protocol = run_command(["git", "show", f"{commit}:src/commonplace/lib/agentic_analysis/execution.py"], cwd=origin)
+    if f'INTEGRATION_PROTOCOL = "{INTEGRATION_PROTOCOL}"' not in protocol.splitlines():
+        raise ValueError("selected method lacks the automatic integration protocol; choose a committed new method")
+    run_command(["git", "cat-file", "-e", f"{commit}:src/commonplace/lib/agentic_analysis/integration.py"], cwd=origin)
     profiles = run_command(["git", "show", f"{commit}:kb/{WORKER_PROFILES}"], cwd=origin).encode()
     resolve_worker_profile(profiles, profile)
     if require_clean_origin and run_command(["git", "status", "--porcelain", "--untracked-files=all"], cwd=origin):
@@ -137,11 +143,13 @@ def create(origin: Path, targets: list[dict], *, profile: str, revision: str | N
         label = re.sub(r"[^a-z0-9]+", "-", source["system"].lower()).strip("-")[:60] or "system"
         items.append({"target": source, "key": key, "label": label, "status": "pending",
                       "phase": "pending", "worktree": str(root / f"{label}-{key[:12]}"),
-                      "run": None, "result": None, "error": None})
+                      "run": None, "result": None, "error": None,
+                      "integration": {"state": "pending"}})
     record = {"schema": SCHEMA, "controller": str(state), "origin": str(origin), "method-commit": commit,
               "worker-profile": profile, "concurrency": concurrency, "max-workers": max_workers,
               "maximum-role-workers": concurrency * max_workers, "timeout": timeout,
-              "require-clean-origin": require_clean_origin, "targets": items}
+              "require-clean-origin": require_clean_origin, "targets": items,
+              "integration-policy": INTEGRATION_PROTOCOL, "model": model}
     state.mkdir(parents=True, exist_ok=False)
     save(state / "controller.json", record)
     return state
@@ -150,13 +158,24 @@ def create(origin: Path, targets: list[dict], *, profile: str, revision: str | N
 def report(state: Path) -> dict:
     state = state.resolve()
     record = json.loads((state / "controller.json").read_text())
-    if record.get("schema") != SCHEMA or record.get("controller") != str(state):
+    if record.get("schema") not in (SCHEMA, LEGACY_SCHEMA) or record.get("controller") != str(state):
         raise ValueError("controller schema or location differs from its binding")
+    if record["schema"] == SCHEMA and record.get("integration-policy") != INTEGRATION_PROTOCOL:
+        raise ValueError("unknown controller integration policy")
     return {**record, "counts": dict(Counter(item["status"] for item in record["targets"]))}
+
+
+def automatic(record: dict) -> bool:
+    # A legacy receipt never acquires commit authority from newer outer code.
+    return record["schema"] == SCHEMA and record.get("integration-policy") == INTEGRATION_PROTOCOL
 
 
 def exit_code(record: dict) -> int:
     statuses = {item["status"] for item in record["targets"]}
+    if automatic(record) and any(item["status"] == "published" and
+                                 (item.get("integration") or {}).get("state") != "integrated"
+                                 for item in record["targets"]):
+        return 3
     if statuses & {"pending", "active", "operator-attention"}:
         return 3
     if statuses & {"command-failed", "preparation-failed"}:
@@ -183,7 +202,9 @@ class Controller:
         tree = Path(item["worktree"])
         commands = Path(str(preparation_for(tree)["path-prefix"]))
         argv = [str(commands / "commonplace-analysis"), *args]
-        kwargs = {"cwd": tree, "env": command_environment(tree),
+        env = command_environment(tree)
+        env["COMMONPLACE_ANALYSIS_LEASE_FD"] = str(fd)
+        kwargs = {"cwd": tree, "env": env,
                   "start_new_session": True, "pass_fds": (fd,), "text": True}
         if probe:
             return subprocess.run(argv, capture_output=True, check=False, **kwargs)
@@ -207,6 +228,38 @@ class Controller:
                 raise ValueError("discovered allocation differs from the controller binding")
             self.update(item, run=str(Path(item["worktree"]) / "kb/agentic-system-analyses/state" / allocation["run-id"]))
         return data
+
+    def integration_probe(self, item: dict, fd: int) -> dict:
+        response = self.child(item, ["inspect-integration", item["run"]], fd, probe=True)
+        if response.returncode:
+            raise ValueError(f"pinned integration inspection failed: {response.stderr.strip()}")
+        return json.loads(response.stdout)
+
+    def finalize(self) -> None:
+        if not automatic(self.record):
+            return
+        for item in self.record["targets"]:
+            if self.halt.is_set():
+                break
+            if item["status"] != "published" or item["integration"]["state"] == "integrated":
+                continue
+            try:
+                with lease(self.state / "leases" / item["key"]) as fd:
+                    self.update(item, phase="finalizing", integration={"state": "active"})
+                    args = ["integrate", item["run"]]
+                    if self.record.get("model") is not None:
+                        args.extend(["--model", self.record["model"]])
+                    response = self.child(item, args, fd)
+                    integration = self.integration_probe(item, fd)
+                    if integration["state"] != "integrated":
+                        integration = {**integration, "state": "refused" if response.returncode else "operator-attention",
+                                       "error": integration.get("error") or
+                                       f"integration child exited {response.returncode}; see target stderr log"}
+                        self.halt.set()
+                    self.update(item, integration=integration)
+            except Exception as error:  # noqa: BLE001 - uncertain effects never launch replacement work
+                self.update(item, integration={"state": "operator-attention", "error": str(error)})
+                self.halt.set()
 
     def parameters(self, item: dict) -> dict:
         data = item["target"]
@@ -240,6 +293,14 @@ class Controller:
             status = "operator-attention"
         self.update(item, status=status, result={"inspection": view, "execution": result},
                     error=None if status in FINAL else view.get("stopped"))
+        if automatic(self.record):
+            if status == "published":
+                integration = self.integration_probe(item, fd)
+                self.update(item, integration=integration)
+                if integration["state"] == "operator-attention":
+                    self.halt.set()
+            elif status == "local-complete":
+                self.update(item, integration={"state": "not-applicable"})
 
     def work(self, item: dict) -> None:
         try:
@@ -300,7 +361,9 @@ class Controller:
                         and audit.get("state") not in ("running", "interrupted"))
                 if item["key"] in reconciled and item["target"]["source-identity"] in selected and safe:
                     self.update(item, status="pending")
-            if any(item["status"] in PAUSE for item in self.record["targets"]):
+            if any(item["status"] in PAUSE or (automatic(self.record) and
+                   (item.get("integration") or {}).get("state") == "operator-attention")
+                   for item in self.record["targets"]):
                 return report(self.state)
             self.halt.clear()  # reconciliation/explicit selection resolved every prior pause
             queue = [item for item in self.record["targets"] if item["status"] == "pending"]
@@ -318,6 +381,7 @@ class Controller:
                             done, active = wait(active, return_when=FIRST_COMPLETED)
                             for future in done:
                                 future.result()
+                self.finalize()
             finally:
                 for signum, handler in old.items():
                     signal.signal(signum, handler)

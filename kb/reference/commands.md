@@ -191,8 +191,12 @@ commonplace-analysis report /absolute/controller
 ```
 
 `analyse` owns validation, isolated preparation, execution through the prepared
-command environment, waiting and reporting. `batch` uses the same lifecycle and
-one queue. Its input is newline repository locators or a JSON list of objects
+command environment, waiting, guarded integration and reporting. `batch` uses
+the same lifecycle and one queue. New invocations authorize integration of
+complete publications into the recorded origin's `main`; low-level `run` remains
+publication-only. After analysis children drain, integration runs serially
+through each worktree's pinned command. A merge refusal preserves publication
+and evidence rather than launching another analysis. Its input is newline repository locators or a JSON list of objects
 with `source` and optional `source-kind`, `system`, `source-identity` and
 `source-revision`; unknown fields and duplicate normalized identities are refused
 before effects. Repository roots are shape-checked without network probes.
@@ -211,25 +215,31 @@ directory; the default is under ignored `.commonplace/worktrees/controllers/`.
 not reused. Four analyses with three role workers each permit twelve role
 workers; advisory audits occupy their analysis's slot after its roles finish.
 Provider capacity, storage/inodes and placement need operator preflight before
-a substantial batch. No capacity probes or automatic cleanup occur.
+a substantial batch. No capacity probes or automatic cleanup occur. `--model`
+records explicit initiating-agent attribution for integration commits; absent
+that argument, no model trailer is inferred from the analyst profile.
 
-JSON stdout uses `commonplace.analysis-controller.v1`; stderr summarizes
+JSON stdout records the controller schema and policy; stderr summarizes
 outcomes. Each target retains source identity, preparation/worktree, allocated
 run, method/profile bindings, logs and the pinned child's inspection, including
-receipt, disposition and `advisory-audit` evidence. Statuses distinguish
-`pending`, `active`, `published`, `local-complete`, `stopped`,
-`preparation-failed`, `command-failed` and `operator-attention`.
-Aggregate exits: 0 only when all targets published/completed locally; 2 for
-ordinary stops; 1 for command/preparation failures; 3 for pending, active or
-operator-attention work (takes precedence). A stopped target is not success.
-`report` reads saved state without reconciling or claiming liveness.
+receipt, disposition and `advisory-audit` evidence. Publication and integration
+are separate recorded outcomes. A local non-complete result has no publication
+to integrate. For new automatic controllers, aggregate exit 0 requires each
+target to be integrated or completed locally without publication.
+Legacy controllers retain publication-only success. Exit 2 means ordinary stops;
+1 means command/preparation failures; 3 means pending work, unintegrated
+publication or operator attention and takes precedence. A stopped target is not
+success. `report` reads saved state without reconciliation or liveness claims.
 
 `resume` first reconciles preparation/allocation evidence and inherited child
 leases, then continues pending targets. Completed targets are not rerun;
 ordinary stops require explicit `--target <recorded-normalized-identity>` after
 operator repair. A resumable interrupted allocation keeps its original run,
-method and profile. Unknown effects, unsettled workers, unreadable records and
-interrupted audits pause new launches. No missing PID establishes settlement.
+method and profile. Integration reconciliation recognizes proven committed or
+merged effects without rerunning workers or duplicating commits. Existing
+publication-only controllers do not gain automatic integration authority.
+Unknown effects, unsettled workers, unreadable records and interrupted audits
+pause new effects. No missing PID establishes settlement.
 There is no automatic retry, acknowledgement, reset or replacement allocation.
 Ordinary stops do not prevent independent pending targets from continuing;
 shared preparation/command failures and uncertain ownership pause new claims.
@@ -246,9 +256,11 @@ it exits. Workjig remains the worker-launch authority. `execute <allocation-key>
 and `inspect-execution <allocation-key>` are the pinned-child protocol: allocation
 is journaled before directory creation and replayed by key, never inferred from
 console output. The coordinator does not import another worktree's workflow.
-New controllers require a committed method carrying this execution protocol;
-older runs keep their own worktree's original commands, not a new binding.
-See [ADR 125](./adr/125-analysis-commands-own-preparation-and-bounded-queues.md).
+New automatic controllers require a committed method carrying both execution
+and integration protocols; incompatible methods are refused before allocation.
+Older runs keep their own worktree's original commands, not a new binding.
+See [ADR 125](./adr/125-analysis-commands-own-preparation-and-bounded-queues.md)
+and [ADR 126](./adr/126-integrate-analysis-publications-by-default.md).
 
 Low-level preparation, execution, inspection and recovery remain available.
 The workflow is `commonplace.lib.agentic_analysis.workflow` over
@@ -325,13 +337,21 @@ under the run's `withdrawn/` as evidence, restores the opening incumbent and
 deletes the receipt, so a rerun after changed members can publish again.
 Already integrated results are refused.
 
-`integrate <run>` independently verifies the run's opening metadata and
-receipt against the retained bytes and the archive, then, after separate
-operator authorization, commits the published artifact and incumbent archive
-on an analysis branch and merges into `main`. The origin checkout must be clean
-and on `main`. A conflict leaves the branch and worktree for review while
-`main` stays unchanged. An agent supplies `--model <model-id>` for its commit
-trailer.
+`integrate <run>` verifies opening and receipt bindings, exact retained bytes
+and the incumbent archive before committing and merging the publication. New
+high-level invocations supply this authority; manual integration of existing
+publications requires authorization. The origin must be clean and on `main`;
+competing publications and unrelated staging are refused. Cooperating
+integrations serialize through an origin-wide lock. Integration records durable
+intent/result evidence and verifies exact bytes through Git; it does not rerun
+acceptance under current contracts or use advisory verdicts as a gate.
+Reentry recognizes proven effects; ambiguous partial effects require repair.
+`inspect-integration <run>` reads the pinned integration intent and actual Git
+evidence without starting a transfer. It reports integration separately from
+`inspect <run>`'s analytical publication state.
+A conflict preserves the publication branch and worktree for review, without
+automatically choosing a side. An agent supplies `--model <model-id>` for its
+commit trailer. Cleanup and cross-analysis refresh remain separate commissions.
 
 Run directories made by the retired artifact-run engine (`run.json`) are not
 read by these commands. Inspect or integrate such a run from inside its own
