@@ -23,17 +23,19 @@ have interactive parts and need care.
 ## Starting state
 
 The review system is the largest subsystem the headless runtime has not
-reached. Measured 2026-10-23:
+reached. Measured 2026-10-23 and re-measured 2026-11-09; the code sizes did
+not change, because no commit touched the review or freshness code between
+the two dates:
 
 | Surface | Size |
 |---|---|
 | `src/commonplace/review` and `cli/review` | 6,059 lines, 11 console commands |
 | `src/commonplace/freshness` and `cli/freshness_*` | 1,432 lines, 3 commands |
 | full pass guard and library | 510 lines, 1 command |
-| tests under `tests/commonplace/review` and `freshness` | 5,877 lines in 26 files |
-| ADRs that decide review or freshness behaviour | 12 of 122 |
-| `kb/reports/state/commonplace-store.sqlite` | 50 MB, 9,217 baselines, 6,942 recorded jobs |
-| `kb/reports/state/review-jobs/` | 82 MB of prompts and outputs |
+| tests under `tests/commonplace/review` and `freshness` | 5,855 lines in 25 files |
+| ADRs that decide review or freshness behaviour | 12 of 125 |
+| `kb/reports/state/commonplace-store.sqlite` | 50 MB, 9,217 baselines, 6,947 recorded jobs; the last job completed 2026-09-26 |
+| `kb/reports/state/review-jobs/` | 84 MB of prompts and outputs |
 
 Operating documents: the review README (240 lines),
 [run review batches](../../instructions/run-review-batches.md),
@@ -49,18 +51,43 @@ Readers of the store besides the review commands: the warn selector and the
 fix system, review triage, `commonplace-status`, retirement (freshness
 retire) and relocation (review-store rekeying, which
 [relocation-move-map-engine](../relocation-move-map-engine/README.md)
-already wants gone). Phase 0 confirms this list from the code.
+already wants gone). Phase 0 confirmed the code side of this list on
+2026-11-09; see [Phase 0 results](#phase-0-results).
 
-The runtime exists and has two consumers.
+The runtime exists and has three consumers.
 [ADR 118](../../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md)
 and [ADR 119](../../reference/adr/119-analysis-workers-launch-through-workjig.md)
-put the analysis workflow on Workjig; `commonplace-task`
+put the analysis workflow on Workjig, and
+[ADR 121](../../reference/adr/121-audit-analysis-traces-without-gating-publication.md)
+runs its advisory audits the same way; `commonplace-task`
 ([recurring-task-runner](../recurring-task-runner/README.md)) launches one
-runbook the same way. `commonplace.headless.jobs` gives `ask`, `checked`,
+runbook through it. `commonplace.headless.jobs` gives `ask`, `checked`,
 `gather`, `accept`, a run lock, durable launch records, replay of answered
-calls by the work they asked for, worker problems, usage-limit stops and
-the operator's `retry` and `acknowledge`. Profiles in YAML name harness,
-model, effort and flags.
+calls by the work they asked for, worker problems, usage-limit stops, and
+`dismiss` and `acknowledge_stopped`, which `commonplace-analysis` exposes
+to the operator as `retry` and `acknowledge`. Profiles in YAML name
+harness, model, effort and flags. Since the workshop opened the runtime
+moved to Workjig 0.3.1 and runs on Windows; the `jobs` interface this
+design relies on did not change.
+
+Reading `jobs.py` on 2026-11-09 found three places where the design below
+assumed more than the runtime gives. Each is small, and the
+[plan](./plan.md) assigns it:
+
+- **One profile per run.** `Run` builds its worker from one profile at
+  construction, and the run lock allows one `Run` per root. Item 7's
+  per-pass profile needs `ask` to accept a profile, which then enters the
+  call's identity and provenance.
+- **`accept` writes only under the run's `artifact/`.** A result file
+  lives outside the run directory, so the workflow writes it with its own
+  atomic write. `accept` stays for per-run artifacts such as a hand-back
+  packet.
+- **No worker profile is read-only.** The profiles in
+  `kb/tasks/profiles.yaml` grant `Edit` and `git commit`, because a task
+  commits. Item 5's rule that workers never write the checkout needs
+  review profiles without those grants, and a check in code that the
+  working tree is unchanged after a run, as `lib/tasks.py` checks
+  `leftover`.
 
 ## What the runtime already supplies
 
@@ -87,10 +114,11 @@ both hashes gives it without a store.
 ## Design direction
 
 A proposal, open until phase 1 has run it. Each item names what would
-change it.
+change it. The [plan](./plan.md) turns the items into build steps and
+records the choices it had to make where an item was silent.
 
 1. **A result is a file.** Each completed pair writes
-   `kb/reports/state/review/<note-path>/<criterion-id>.md` (untracked, as
+   `kb/reports/state/review/results/<note-path>/<criterion-id>.md` (untracked, as
    the store is now) with frontmatter: note path and SHA-256, criterion
    path and SHA-256, outcome or `report`, profile, recorded model, run and
    launch identifiers; the body is the reviewer's text. The provenance
@@ -101,6 +129,22 @@ change it.
    a pure function over these files and the criterion catalog. It replaces
    the selector, `freshness-status`, `review-job-list` and the manifest.
    The fix system reads the same files.
+
+   The current system keys a baseline by model partition as well, so a
+   review under one model does not satisfy freshness under another. This
+   item drops that: one result per pair, with the profile and recorded
+   model as provenance. `status` can filter on them, so a sweep can
+   re-ask the pairs a named profile did not judge. What would change it: a
+   sweep in which the operator wants two models' verdicts on one pair kept
+   side by side.
+
+   Gates declare `watches:` (title, description, body), which the current
+   system uses only to acknowledge note changes outside the watched
+   parts. A result file can serve the same purpose without an
+   acknowledgement: the note hash covers only the parts the criterion
+   watches, and the whole file when it declares none. This is the first
+   candidate answer to the acknowledgement question below, decided in
+   phase 1.
 2. **One Workjig run per invocation**, under
    `kb/reports/state/review/runs/<stamp>/`, as `commonplace-task` does.
    Replay serves crash-resume within a sweep; result files serve freshness
@@ -112,6 +156,9 @@ change it.
    to share a prompt becomes an option. Phase 0 measures what a one-gate
    launch costs against a bundle launch on the same note; if a launch's
    fixed cost dominates, the default flips to one call per note and bundle.
+   Moved on 2026-11-09 from phase 0 to phase 1's first sweep: the gate
+   workflow is itself the measuring instrument, and the launch records
+   carry the harness's usage evidence.
 4. **A criterion is any markdown file.** Catalog gates, a type spec, a
    `COLLECTION.md`, the critique instruction and the compression criteria
    are all the `criterion` input; the workflow names the output contract
@@ -266,9 +313,10 @@ result-kind homogeneity and job grouping; all-or-nothing finalization;
 path, so a move is a path rewrite in files or a re-review).
 
 Acknowledgement, which advances a baseline past a change that does not
-invalidate the evidence, has no replacement planned. Phase 0 counts how
-often it was used; if it was rare, the rule is re-review, and an
-acknowledgement command returns only when a sweep shows the cost.
+invalidate the evidence, has no replacement planned. Phase 0 counted its
+use (below): 37 of 9,217 current baselines stand on one. That is rare, so
+the rule is re-review, softened by the watched-parts hash of item 1, and
+an acknowledgement command returns only when a sweep shows the cost.
 
 A new ADR would supersede ADR 010, 035, 043, 052, 065 and 067 and amend
 038, 041, 051 and 080. The review README, run review batches, both
@@ -283,12 +331,43 @@ the first sweep produces its own baselines. The store file and
 `review-jobs/` stay on disk, untracked, until phase 4 deletes them; nothing
 reads them meanwhile.
 
+## Phase 0 results
+
+Measured 2026-11-09 from the store and the code. No worker was launched.
+
+**Acknowledgement use.** An acknowledgement leaves a baseline whose
+accepted input snapshot differs from the snapshot its evidence pair
+reviewed. 37 of 9,217 current baselines are in that state on the note
+side and none on the criterion side. The count is a lower bound on
+historical use, because a later review of the same pair replaces an
+acknowledged baseline: 3,392 baselines are past their first revision, and
+the store does not say which revisions were acknowledgements.
+
+**Readers of the store in code.** Outside `src/commonplace/review`,
+`src/commonplace/freshness` and their CLIs, three modules import the
+store or the review and freshness packages: `store.py` (path resolution
+and schema), `lib/project_status.py` (the review section of
+`commonplace-status`) and `cli/store_healthcheck.py`. `lib/relocation.py`,
+`lib/full_pass.py` and `lib/promotion.py` do not. Relocation's rekeying
+therefore lives inside the review package and retires with it.
+
+**Readers in documents.** Eighteen authored pages outside workshops,
+reports, sources, ADRs and the proposal archive name the store or its
+commands: the review README, run review batches, review triage,
+FIX-SYSTEM and both fix-warnings instructions, the full pass instruction,
+retire-artifact, the gate-migration instruction, the theory-layout
+upgrade instruction, `commands.md`, storage architecture, where change
+candidates come from, one theory note, and four live proposals
+(structured output codec, review configuration object,
+collection-as-artifact freshness, periodic connect-report mining). Phase
+4 rewrites or retires each.
+
+**Launch cost** was not measured; see item 3.
+
 ## Order of work
 
-**Phase 0, measurements**, no code: acknowledgement use in the store;
-every reader of the store; launch cost of one gate against one bundle on
-one note through `commonplace.headless` with the Sonnet profile from
-`kb/tasks/profiles.yaml`.
+**Phase 0, measurements**, no code: done 2026-11-09 except launch cost,
+which moved to phase 1.
 
 **Phase 1, the gate sweep.** Result files, `status`, `gates`, one command.
 Run over one collection with one profile; its results are the first
