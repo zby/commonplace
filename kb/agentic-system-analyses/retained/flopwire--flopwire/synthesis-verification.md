@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent synthesis verification of Flopwire at commit 057a4b87603cc878e81d9eb49298ddc4eb9eeb23"
+run-id: AAS-2026-10-20-flopwire-184bd013bba1-01
+reviewed-boundary: "057a4b87603cc878e81d9eb49298ddc4eb9eeb23"
+---
+
+# Flopwire synthesis verification
+
+## Verification
+
+The handed [public synthesis](synthesis.md#bounded-synthesis) supports publication as a bounded account of implemented evidence retention, navigation and coordination. I read the complete invocation, governing contracts, all handed members and synthesis answers. I checked each substantive synthesis statement against the cited records, the reconciliation's supersessions and the settled verification findings. The answers file is empty; no refusal or earlier synthesis verification was supplied. No source read, target execution or additional evidence was needed. This judgment concerns semantic support, independently of deterministic validation.
+
+The opening states the frozen SRC-1 repository and revision, cutoff, whole-system functional boundary and implementation/design evidence basis. It distinguishes shipped responsibilities from external harness scheduling, permissions and interpretation. Whole-system scope is not presented as exhaustive inspection. The absence of registered execution and causal evidence remains beside the capacity claims. See [boundary](boundary.md#boundary-and-evidence) and the synthesis's [Limitations](synthesis.md#limitations).
+
+Acquisition and retention are supported by [RT-RTE-transcript-index](runtime.md#rt-rte-transcript-index), [MEM-OBJ-message-text](memory.md#mem-obj-message-text) and [MEM-OBJ-index-metadata](memory.md#mem-obj-index-metadata). The account distinguishes automatic structural admission from human authorship and factual acceptance. Shared storage remains separate from local extracted text. Upload acknowledgement is not promoted to query visibility; the export, empty-policy and explicit-import alternatives remain beside the parsed-byte discussion. Successful upload without qualified restriction provenance is preserved. See [RT-RTE-shared-upload](runtime.md#rt-rte-shared-upload), [MEM-OBJ-archive](memory.md#mem-obj-archive) and [MEM-RTE-import-recovery](memory.md#mem-rte-import-recovery).
+
+Derived navigation and commit provenance are supported at their different scopes. The synthesis follows the reconciliation's canonical memory objects rather than counting superseded epistemic objects as extra mechanisms. [MEM-RTE-derive-navigation](memory.md#mem-rte-derive-navigation), [MEM-OBJ-delivery-metadata](memory.md#mem-obj-delivery-metadata) and [MEM-BAP-history-restriction](memory.md#mem-bap-history-restriction) support automatic retained updates with later consumers. The text explains this limited trace-learning sense and expressly withholds improved future capacity. [EPI-RTE-commit-check](epistemic.md#epi-rte-commit-check), [EPI-RTE-commit-store](epistemic.md#epi-rte-commit-store) and [EPI-RTE-change-lookup](epistemic.md#epi-rte-change-lookup) support conditional command/result observations, separate whole-call outcome and prefix-qualified lookup. Neither independent Git authentication nor sole authorship is claimed. The account of arbitrary conversation warrant and reader interpretation agrees with the [epistemic conclusion](epistemic.md#bounded-conclusion).
+
+Retrieval compression preserves consequential controls and uncertainty. [RT-RTE-history-retrieval](runtime.md#rt-rte-history-retrieval) and the [runtime scope account](runtime.md#scope-isolation-and-guarantees) support fixed backend selection while retaining explicit local choice and the exceptions to caller self-exclusion. The synthesis does not turn that discovery policy into access denial. Its display, navigation, raw-read and budget claims agree with [EPI-RTE-text-render](epistemic.md#epi-rte-text-render) and the [memory retrieval annotation](memory.md#on-rt-rte-history-retrieval). Readable host compaction capture remains separate from opaque checkpoint production, selection and reuse; instruction renewal is not described as reconstruction of discarded conversation. See [MEM-RTE-capture-compaction](memory.md#mem-rte-capture-compaction).
+
+The coordination account preserves eligible-event and budget conditions, assumed instruction delivery after repeated unconfirmed attempts, and alternate adapter semantics. It distinguishes escaped markup from model-interpreted permission guidance and a cloud busy check from atomic no-wake behavior. See [RT-RTE-hook-delivery](runtime.md#rt-rte-hook-delivery), [RT-RTE-adapter-delivery](runtime.md#rt-rte-adapter-delivery) and [RT-BAP-message-guidance](runtime.md#rt-bap-message-guidance). The representative workflow remains local own-user coordination, with substantive acceptance owned by the requester and no observed exchange or exactly-once guarantee. Historical thread reads retain their separate evidence-only authority. See [WF-RTE-request-reply](workflow.md#wf-rte-request-reply) and [MEM-RTE-thread-history](memory.md#mem-rte-thread-history).
+
+Withdrawal does not become a global erasure promise: masking, native files, prior contexts, hiding, permanent tombstones, asynchronous purge and independent backups remain distinct. The pending-redaction backup override is retained. See [MEM-RTE-redact-content](memory.md#mem-rte-redact-content), [MEM-RTE-withdraw-history](memory.md#mem-rte-withdraw-history) and [MEM-RTE-restore-state](memory.md#mem-rte-restore-state). Evaluation and installation likewise remain scoped checks rather than proof of improved operation or an automatic promotion loop, consistent with [RT-RTE-workflow-trial](runtime.md#rt-rte-workflow-trial), [EPI-RTE-parser-parity](epistemic.md#epi-rte-parser-parity) and [RT-RTE-binary-upgrade](runtime.md#rt-rte-binary-upgrade).
+
+The final property assessment does not manufacture per-condition theory-builder statuses that the runtime never established. It separately withholds criticism-driven capacity improvement, reflection, autonomous theory building and exercised self-improvement, without asserting their absence from unassessed routes. It identifies evidence that could change those conclusions and preserves the positive trace-fed contribution. These qualifications agree with the [epistemic conclusion](epistemic.md#bounded-conclusion).
+
+The [Limitations](synthesis.md#limitations) faithfully carries the report verifier's coverage-diagnostic omission, including the consequence that omitted issue counts do not mean zero. Its citation of [RT-RTE-history-retrieval](runtime.md#rt-rte-history-retrieval) identifies the affected route; the text does not invent a new accepted diagnostic record or imply complete inventory coverage. The other rows preserve the unresolved host storage, checkpoint, admission agency, evaluator, import, policy and withdrawal questions described by the reports and profile verification. The profile verification declares no additional limit, and reconciliation establishes no unresolved conflict. No newly discovered record fault or material unsupported synthesis claim remains. Faithfully stated uncertainty does not require a duplicate verification limit.
+
+## Blockers
+
+none
+
+## Limits
+
+none
