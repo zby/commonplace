@@ -82,7 +82,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/enforcement-without-structured-recovery-is-incomplete.md](../../theory/enforcement-without-structured-recovery-is-incomplete.md) — line 55: `## Open questions`
 - [theory/evidence/commonplace-revision-used-theory-guided-computational-search.md](../../theory/evidence/commonplace-revision-used-theory-guided-computational-search.md) — line 130: `## Open Questions`
 - [theory/evolving-understanding-needs-holistic-rewrite-not-composition.md](../../theory/evolving-understanding-needs-holistic-rewrite-not-composition.md) — line 48: `## Open questions`
-- [theory/execution-shaping-determines-directory-placement.md](../../theory/execution-shaping-determines-directory-placement.md) — line 36: `## Open Questions`
+- `theory/execution-shaping-determines-directory-placement.md` (historical entry; note subsequently deleted) — line 36: `## Open Questions`
 - [theory/final-task-success-does-not-establish-intended-path-health.md](../../theory/final-task-success-does-not-establish-intended-path-health.md) — line 62: `## Open Questions`
 - [theory/first-principles-analysis-maps-design-space-before-selection.md](../../theory/first-principles-analysis-maps-design-space-before-selection.md) — line 58: `## Open Questions`
 - [theory/first-principles-reasoning-selects-for-explanatory-reach-over.md](../../theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) — line 41: `## Open Questions`

@@ -19,7 +19,7 @@ This record preserves the initial assessment. That follow-up question is not sil
 
 ### 1. Reconcile the directory-placement note with adopted placement rules
 
-Source: [execution shaping determines directory placement](../../theory/execution-shaping-determines-directory-placement.md), opening example and Open Questions.
+Source: “Execution shaping determines directory placement” (historical source: `44ea70b86de2534f195d3b8d925f27e5109f2d1e:kb/theory/execution-shaping-determines-directory-placement.md`), opening example and Open Questions.
 
 Evidence: the note describes `kb/instructions/WRITING.md` as sitting “at the top of the KB directory.” Later rules permit collection-owned instructions: [content routing](../../reference/content-routing.md), [ADR 084](../../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md), and [ADR 099](../../reference/adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md).
 
