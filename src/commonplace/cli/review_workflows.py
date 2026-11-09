@@ -4,6 +4,9 @@
     commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--grouping {pair,bundle}]
                                  [--profile NAME] [--max-workers N] [--timeout SECONDS] [--force]
                                  [--resume RUN_DIR]
+    commonplace-review run full-pass NOTE [--direction TEXT] [--profile NAME] [--max-workers N]
+                                     [--timeout SECONDS] [--resume RUN_DIR]
+    commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
 
@@ -25,6 +28,19 @@ note or criterion is gone, are listed apart and are not filtered; removing
 one is deleting its file. `--json` gives each row's result file, so a fixer
 can read the finding.
 
+`run full-pass` runs the full improvement pass over one note (see
+`commonplace.lib.review_workflows.full_pass` and the library's
+instructions/run-full-improvement-pass-on-note.md). It writes the note only
+for an accepted `keep`, keeps the note's current packet under
+kb/reports/state/review/packets/, and returns a pending packet that still
+matches the note instead of starting. `--direction` hands the packet ask the
+operator's direction, such as the choice an undetermined update asks for;
+give it with `--resume` to decide again over the same method reports. It
+prints a JSON report and exits 0 for an accepted edit or a hand-back packet
+with a clean guard, and for a returned pending packet; 1 for a stop, a
+conflict or a guard change; and 2 when the command failed. `packet` exits 0 when every recorded hash
+matches, 1 otherwise.
+
 `run gates` opens a new run under kb/reports/state/review/runs/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
@@ -45,7 +61,7 @@ from pathlib import Path
 
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss
-from commonplace.lib.review_workflows import gates, results
+from commonplace.lib.review_workflows import full_pass, gates, results
 from commonplace.lib.tasks import load_profile
 
 SWEEP = "sweep.json"
@@ -79,9 +95,19 @@ def _parser() -> argparse.ArgumentParser:
     sweep.add_argument("--timeout", type=float, help="seconds a launch may take")
     sweep.add_argument("--force", action="store_true", help="review fresh pairs too")
     sweep.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
+    full = workflows.add_parser("full-pass", help="run the full improvement pass over one note")
+    full.add_argument("note")
+    full.add_argument("--direction", help="the operator's direction for the packet, which prevails")
+    full.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL}")
+    full.add_argument("--max-workers", type=int, default=4, help="workers running at once")
+    full.add_argument("--timeout", type=float, help="seconds a launch may take")
+    full.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
+    packet = commands.add_parser("packet", help="check a full-pass packet's recorded hashes against the files")
+    packet.add_argument("target", help="a note, or its packet under kb/reports/state/review/packets/")
     retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
     retry.add_argument("run", type=Path)
-    retry.add_argument("job", help="the pair's job name, `<note>::<criterion-id>`")
+    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`, or a full-pass job "
+                       "such as `packet` or `initial/compression`")
     retry.add_argument("--key", help="the answer to dismiss; otherwise the worker problems")
     acknowledge = commands.add_parser(
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
@@ -150,14 +176,19 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
     raise ValueError(f"no free run directory for {stamp}")
 
 
-def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Profile:
+def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool, **opened) -> Profile:
+    """The run's profile, recorded when it opens with what else must not change on resume (`opened`)."""
     if resumed:
-        recorded = Profile(**json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))["profile"])
-        if name is not None and load_profile(root, name, gates.profiles()) != recorded:
-            raise ValueError(f"the run was opened with another profile: {recorded}")
-        return recorded
+        recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
+        profile = Profile(**recorded["profile"])
+        if name is not None and load_profile(root, name, gates.profiles()) != profile:
+            raise ValueError(f"the run was opened with another profile: {profile}")
+        for key, value in opened.items():
+            if recorded.get(key) != value:
+                raise ValueError(f"the run was opened with {key} {recorded.get(key)!r}, not {value!r}")
+        return profile
     profile = load_profile(root, name, gates.profiles())
-    (run_dir / SWEEP).write_text(json.dumps({"profile": asdict(profile)}, indent=2), encoding="utf-8")
+    (run_dir / SWEEP).write_text(json.dumps({"profile": asdict(profile), **opened}, indent=2), encoding="utf-8")
     return profile
 
 
@@ -172,6 +203,42 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     return 0 if report.ok else 1
 
 
+def _note(root: Path, raw: str) -> str:
+    path = (root / raw).resolve()
+    if not path.is_relative_to(root) or not path.is_file():
+        raise ValueError(f"note not found in the repository: {raw}")
+    return path.relative_to(root).as_posix()
+
+
+def _full_pass(root: Path, arguments: argparse.Namespace, harnesses) -> int:
+    note = _note(root, arguments.note)
+    blocked = None if arguments.resume else full_pass.blocking(root, note)
+    if blocked is not None:                               # no run directory for a pass that does not start
+        print(json.dumps(blocked.to_dict(), indent=2))
+        return 0
+    run_dir = _run_dir(root, arguments.resume)
+    profile = _profile(root, run_dir, arguments.profile, arguments.resume is not None,
+                       workflow="full-pass", note=note)
+    report = full_pass.full_pass(root, note, profile, run_dir, max_workers=arguments.max_workers,
+                                 timeout=arguments.timeout, direction=arguments.direction, harnesses=harnesses)
+    print(json.dumps(report.to_dict(), indent=2))
+    return 0 if report.ok else 1
+
+
+def _packet(root: Path, arguments: argparse.Namespace) -> int:
+    path = (root / arguments.target).resolve()
+    packets = (root / full_pass.PACKETS).resolve()
+    if not path.is_relative_to(packets):                  # a note, which a resolution may have removed
+        if not path.is_relative_to(root):
+            raise ValueError(f"not in the repository: {arguments.target}")
+        path = full_pass.packet_file(root, path.relative_to(root).as_posix())
+    if not path.is_file():
+        raise ValueError(f"no packet: {path.relative_to(root).as_posix()}")
+    checked = full_pass.check_packet(root, path)
+    print(json.dumps(checked, indent=2))
+    return 0 if checked["matching"] else 1
+
+
 def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
     """Run the command; `harnesses` lets tests substitute a fake worker."""
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
@@ -180,7 +247,11 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
         if arguments.command == "status":
             return _status(root, arguments)
         if arguments.command == "run":
+            if arguments.workflow == "full-pass":
+                return _full_pass(root, arguments, harnesses)
             return _gates(root, arguments, harnesses)
+        if arguments.command == "packet":
+            return _packet(root, arguments)
         run_dir = (root / arguments.run).resolve()
         if arguments.command == "retry":
             print(json.dumps(dismiss(run_dir, arguments.job, arguments.key), indent=2))

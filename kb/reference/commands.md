@@ -105,18 +105,6 @@ use the scoped `rg` routes in [navigation](./navigation.md). The retired
 
 ## Note operations
 
-### commonplace-guard-full-pass-report
-
-Compare each of a full-pass packet's guarded logical artifacts with its latest
-packet capture — `final.txt` for a keep pass that reached its closing phase,
-otherwise `source.txt`; `merge-target.txt` for a merge target — before any
-disposition, edit, or follow-up is executed. Emits per-input JSON with status
-`matching`, `changed` (with a diff), `missing`, or `corrupt-capture`; exits 0
-only when every input matches. The
-[full-improvement instruction](../instructions/run-full-improvement-pass-on-note.md)
-and [resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)
-own the refusal and reconciliation workflow.
-
 ### commonplace-relocate-note
 
 Rename or move one note and rewrite its KB backlinks. A note that declares a
@@ -387,3 +375,18 @@ gets its own result file. `--resume RUN_DIR` continues a run; `retry RUN JOB` an
 Criteria are catalog gate ids, bundle names, and the `type`, `collection` and
 `critique` lenses; worker profiles come from the library's
 `instructions/review-profiles.yaml`.
+
+`run full-pass NOTE [--direction TEXT]` runs the
+[full improvement pass](../instructions/run-full-improvement-pass-on-note.md)
+over one note as a workflow: the method asks in parallel, a packet, and for
+an accepted `keep` an edit, a copyedit and the closing cycle. Workers write
+only output files; the command writes the note, and only from the text it
+expects to find there. The note's current packet is kept at
+`kb/reports/state/review/packets/<note-path>`; a pending packet that still
+matches the note is returned instead of starting a new pass. `--resume
+RUN_DIR` continues a stopped run without applying an edit twice.
+
+`packet NOTE_OR_PACKET` prints whether a packet's recorded hashes still match
+the note and any merge target, and exits 0 only when every input matches;
+[resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)
+runs it before acting on a packet.

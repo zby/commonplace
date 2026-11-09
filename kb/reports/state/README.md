@@ -9,8 +9,10 @@ Current state includes:
 - `commonplace-store.sqlite` — canonical freshness and review execution state;
 - `review-jobs/`, `reviews/`, and `bundle-reviews/` — prompts, worker outputs,
   and retained judgment bodies;
-- [`full-pass/`](./full-pass/README.md) — guarded captures and actionable pass
-  dispositions;
+- `review/` — `commonplace-review` result files, run directories, and each
+  note's current full-pass packet under `review/packets/`;
+- [`full-pass/`](./full-pass/README.md) — abandoned packets of the agent-run
+  full pass, which nothing reads;
 - `fixes/` — warning dispositions;
 - `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
 - legacy review stores, backups, and revise-autoreason runs.

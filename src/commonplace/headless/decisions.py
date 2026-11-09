@@ -6,8 +6,9 @@ decision, or a YAML mapping as the whole file, and checks the mapping against
 a declared schema: each field is required and takes one of a closed set of
 values or a value of the given type. A violation is the rejection the next
 attempt answers, through `checked()`, so a malformed decision costs one
-corrected attempt rather than a crashed run. `check(data)` adds the checks a
-schema cannot state, such as a field required only for one choice.
+corrected attempt rather than a crashed run. `check(data, text)` adds the
+checks a schema cannot state, such as a field required only for one choice or
+a section the markdown body must have.
 
 The prompt is the caller's. `decide()` appends the schema's fields, so a
 worker sees the closed choices it must pick from, and on a retry the problems
@@ -83,7 +84,7 @@ def violations(data: Mapping, schema: Schema) -> list[str]:
 
 
 def decide(run: Run, job: str, prompt: str, schema: Schema, *, output: str = "decision",
-           inputs: dict[str, str] | Callable | None = None, check: Callable[[dict], list[str]] | None = None,
+           inputs: dict[str, str] | Callable | None = None, check: Callable[[dict, str], list[str]] | None = None,
            attempts: int = 3) -> tuple[dict | None, Answer]:
     """Ask for the decision output, check it, and return the parsed mapping with the answer.
 
@@ -100,14 +101,15 @@ def decide(run: Run, job: str, prompt: str, schema: Schema, *, output: str = "de
         return text
 
     def found(answer: Answer) -> list[str]:
+        text = answer.outputs[output]
         try:
-            data = parse(answer.outputs[output])
+            data = parse(text)
         except ValueError as error:
             return [str(error)]
         if not isinstance(data, dict):
             return ["the decision must be a YAML mapping"]
         problems = violations(data, schema)
-        return problems or (list(check(data)) if check else [])
+        return problems or (list(check(data, text)) if check else [])
 
     answer = run.checked(job, build, found, [output], attempts=attempts, inputs=inputs)
     return (None if answer.problem is not None else parse(answer.outputs[output])), answer

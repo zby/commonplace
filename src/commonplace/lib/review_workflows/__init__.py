@@ -7,6 +7,8 @@ files of an installed project work as this checkout's kb/ does. ``outcomes``
 is the strict result-line parser. ``results`` is the durable state: one file
 per reviewed pair carrying the hashes of the texts it was produced from, and
 the pure freshness, status and summary functions over those files. ``gates``
-is the first workflow: the gate sweep that asks a worker per stale pair and
-writes those files.
+is the gate sweep that asks workers for the stale pairs, one call per pair or
+per note and bundle, and writes those files. ``full_pass`` is the full
+improvement pass over one note: the methods, the gate sweep, a packet, and
+for an accepted ``keep`` the edit and closing cycle whose text code writes.
 """

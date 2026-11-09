@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: full-pass-report
-description: Stateful report for one full-improvement pass and any asynchronous disposition resolution
+description: Packet of one full improvement pass over a note, holding its disposition, closing status and the resolution of a pending hand-back
 schema: ./full-pass-report.schema.yaml
 ---
 
@@ -9,58 +9,64 @@ schema: ./full-pass-report.schema.yaml
 
 ## Authoring Instructions
 
-Use `full-pass-report` only for the packet produced by `kb/instructions/run-full-improvement-pass-on-note.md`. The report is authoritative for the pass's disposition and resolution. Its packet-owned `.txt` captures are immutable; resolving the report changes only its resolution fields and the canonical `Resolution` section.
+The `commonplace-review run full-pass` workflow writes this packet; nobody
+authors one by hand. It keeps one current packet per note at
+`kb/reports/state/review/packets/<note-path>` and a copy in the run's
+`artifact/packet.md`. A later pass over the same note replaces the current
+packet; the run directory keeps the earlier one.
 
-`source` is the historical repository-relative logical path read at pass start. It identifies the artifact copied to `source_capture` and hashed by `source_sha256`; set all three once and never realign `source` after a rename, rehome, merge, or delete. The packet's `<note-name>` directory, frontmatter description, H1, and displayed Target likewise retain the pass-start path or title. Do not retrofit retained packets when the live artifact moves.
+Code writes the frontmatter. `note` is the repository path the pass ran on.
+`start-sha256` hashes the note's text when the pass started, and
+`final-sha256` the text the pass left: the accepted edit after `ready`, the
+start text otherwise. `run` names the run directory. `disposition`,
+`update` and `merge-target` are the packet worker's decision;
+`merge-target-sha256` hashes the merge target's text when the packet was
+written. `closing-status` is `ready`, `hand-back` (the start text was
+restored) or null when the pass stopped at the packet. `repaired` records
+whether the one bounded repair was spent. Hashes are SHA-256 of the UTF-8
+text, as review result files use.
 
-The guard compares each guarded logical path with its **latest** packet capture: `final.txt` for a `keep` pass that reached phase `closing` or `complete`, otherwise `source.txt`; a merge target is always compared with `merge-target.txt`. It does not resolve redirects, so `missing` is the expected result after a rename. ProperDocs redirects preserve published navigation and may point to a distinct successor after retirement; they are not artifact identity and must not be used to associate a retained packet with their target.
+`resolution` starts `not-required` for an accepted `keep` and `pending`
+otherwise. Only the resolution fields change after the run, under
+[resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md):
+`accepted`, `rejected` or `alternative-applied` with `user` authority, or
+`superseded` with `version-guard` authority when `commonplace-review packet`
+finds a changed input. Quote `resolved-at` so YAML keeps it a string.
 
-`merge_target` is also a repository-relative logical path. Capture fields are normalized packet-relative `.txt` paths and must resolve to regular non-symlink files inside the report's packet directory. Never substitute a capture path for a logical path when invoking an assessment method.
-
-`phase` records execution progress (`packet`, `editing`, `closing`, `complete`) and is distinct from `resolution`. Every disposition other than `keep` stays in phase `packet`. `closing_status` records the closing decision for the current final capture: null while closing has not been reconciled, `ready` when completion is allowed, `repair-needed` for one bounded correction of defects introduced by the pass, or `hand-back` when a claim-level failure or exhausted recovery requires author action. `closing_repair_attempted` starts false and may become true once; `repair-needed` is invalid after that attempt. A complete packet must be `ready`. Packet and editing phases require null status and no attempted repair.
-
-`final_capture` and `final_sha256` are set together, only on a `keep` report, when the pass enters phase `closing` after its copyedit; they are null otherwise. Each capture file is immutable. A bounded closing repair writes a new capture and changes the pointer instead of overwriting the failed capture. A closing hand-back restores the live note from `source_capture` and points `final_capture` to that same immutable source text, so the guard describes the text the unsuccessful pass actually left. A `merge` disposition requires all merge-target fields. Other dispositions set them to null. A `keep` report begins `resolution: not-required`; `revise`, `delete`, `merge`, and `rehome` reports begin `pending`. Any of them may become `superseded` when its pre-transition live-version guard finds changed text. Only explicit user authority may accept, reject, or apply an alternative. A missing input or corrupted capture requires reconciliation and does not change resolution automatically.
-
-Render the `Resolution` section exactly from the structured fields. Quote a terminal ISO-8601 `resolved_at` value in YAML so it remains a string rather than becoming a YAML timestamp object. Null values and an empty `resulting_paths` list render as an em dash. Non-empty resulting paths render as comma-separated code spans.
+The body is the packet worker's text under an H1 naming the note, then one
+`## Closing cycle: <cycle>` section per closing decision. It names files as
+repository paths in code spans, because relative links would resolve from
+the packet's directory, not the note's.
 
 ## Template
 
 ```markdown
 ---
-description: "Full improvement pass over <pass-start source title>"
+description: Packet of a full improvement pass over kb/theory/example.md, with its disposition and resolution
 type: types/full-pass-report.md
-source: kb/theory/example.md
-source_capture: source.txt
-source_sha256: <lowercase SHA-256>
-pass_id: <unique pass ID>
-phase: packet
-closing_status: null
-closing_repair_attempted: false
+note: kb/theory/example.md
+start-sha256: <lowercase SHA-256>
+final-sha256: <lowercase SHA-256>
+run: kb/reports/state/review/runs/<stamp>
 disposition: keep
-merge_target: null
-merge_target_capture: null
-merge_target_title: null
-merge_target_sha256: null
-final_capture: null
-final_sha256: null
+update: determined
+merge-target: null
+merge-target-sha256: null
+closing-status: ready
+repaired: false
 resolution: not-required
-resolved_at: null
-resolution_authority: null
-resolution_summary: null
-resolution_rationale: null
-resulting_paths: []
+resolved-at: null
+resolution-authority: null
+resolution-summary: null
+resolution-rationale: null
+resulting-paths: []
 ---
 
-# Full Improvement Pass: <pass-start source title>
+# Full Improvement Pass: <note title>
 
-<packet body>
+## Warranted contribution
+...
 
-## Resolution
-
-**Status:** not-required
-**Resolved at:** —
-**Authority:** —
-**Outcome:** —
-**Rationale:** —
-**Resulting paths:** —
+## Closing cycle: closing
+...
 ```

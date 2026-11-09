@@ -35,7 +35,6 @@ Homepage = "https://zby.github.io/commonplace/"
 Repository = "https://github.com/zby/commonplace"
 
 [project.scripts]
-commonplace-guard-full-pass-report = "commonplace.cli.guard_full_pass_report:main"
 commonplace-github-snapshot = "commonplace.cli.github_snapshot:main"
 commonplace-init = "commonplace.cli.init_project:main"
 commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"

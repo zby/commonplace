@@ -21,13 +21,6 @@ from commonplace.lib.directory_artifact import (
     member_paths,
 )
 from commonplace.lib.directory_layout import Finding, layout_findings
-from commonplace.lib.full_pass import (
-    FULL_PASS_REPORT_TYPE,
-    parse_full_pass_report,
-    render_resolution_section,
-    resolution_section,
-    verify_capture,
-)
 from commonplace.lib.index_generated import (
     TagSpace,
     collect_tag_space,
@@ -1343,45 +1336,6 @@ def validate_unquoted_sources(
             f"unquoted sources: {len(unquoted)} of {len(targets)} tracked sources "
             f"need a full read (limit {limit})"
         )
-
-
-@type_rule(FULL_PASS_REPORT_TYPE)
-def validate_full_pass_report(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
-) -> None:
-    """Verify report-owned captures and the canonical resolution projection."""
-    try:
-        report = parse_full_pass_report(
-            parsed.path, parsed.document, repo_root=run.repo_root
-        )
-    except ValueError as exc:
-        results.fails.append(f"full-pass report: {exc}")
-        return
-
-    capture_failures = 0
-    for capture in report.captures:
-        _text, actual_sha256, error = verify_capture(
-            capture, packet_dir=report.packet_dir
-        )
-        if error is not None:
-            capture_failures += 1
-            results.fails.append(
-                f"{capture.role} capture: {error}"
-                + (f" ({actual_sha256})" if actual_sha256 is not None else "")
-            )
-    if not capture_failures:
-        results.passes.append(
-            f"packet captures: all {len(report.captures)} present and hash-verified"
-        )
-
-    expected_resolution = render_resolution_section(report.frontmatter)
-    actual_resolution = resolution_section(report.body)
-    if actual_resolution != expected_resolution:
-        results.fails.append(
-            "resolution projection: body section does not match canonical frontmatter rendering"
-        )
-    else:
-        results.passes.append("resolution projection: body matches frontmatter")
 
 
 def _schema_error_message(error: ValidationError) -> tuple[str, str]:

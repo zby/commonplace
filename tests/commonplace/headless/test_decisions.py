@@ -76,7 +76,7 @@ def test_decide_returns_the_parsed_decision_after_one_corrected_attempt(run):
 def test_decide_applies_the_extra_check_and_runs_out_of_attempts(run):
     prompt = "Decide. FIRST:disposition: keep\\ndetermined: true\\ntarget: null\\n| RETRY:not: [valid|"
 
-    def needs_target(data):
+    def needs_target(data, text):
         return [] if data["target"] else ["`target` is required"]
     with pytest.raises(OutOfAttempts) as spent:
         decide(run, "status", prompt, SCHEMA, check=needs_target, attempts=2)

@@ -8,99 +8,68 @@ allOf:
         required:
           - description
           - type
-          - source
-          - source_capture
-          - source_sha256
-          - pass_id
-          - phase
-          - closing_status
-          - closing_repair_attempted
+          - note
+          - start-sha256
+          - final-sha256
+          - run
           - disposition
-          - final_capture
-          - final_sha256
-          - merge_target
-          - merge_target_capture
-          - merge_target_title
-          - merge_target_sha256
+          - update
+          - merge-target
+          - merge-target-sha256
+          - closing-status
+          - repaired
           - resolution
-          - resolved_at
-          - resolution_authority
-          - resolution_summary
-          - resolution_rationale
-          - resulting_paths
+          - resolved-at
+          - resolution-authority
+          - resolution-summary
+          - resolution-rationale
+          - resulting-paths
         properties:
           type:
             const: types/full-pass-report.md
-          source:
+          note:
             type: string
-            pattern: '^kb/.+\.md$'
-          source_capture:
-            type: string
-            pattern: '^[^/].*\.txt$'
-          source_sha256:
+            pattern: '^[^/].*\.md$'
+          start-sha256:
             type: string
             pattern: '^[0-9a-f]{64}$'
-          pass_id:
+          final-sha256:
+            type: string
+            pattern: '^[0-9a-f]{64}$'
+          run:
             type: string
             minLength: 1
-          phase:
-            enum: [packet, editing, closing, complete]
-          closing_status:
-            enum: [ready, repair-needed, hand-back, null]
-          closing_repair_attempted:
-            type: boolean
           disposition:
             enum: [keep, revise, delete, merge, rehome]
-          final_capture:
-            anyOf:
-              - type: "null"
-              - type: string
-                pattern: '^[^/].*\.txt$'
-          final_sha256:
-            anyOf:
-              - type: "null"
-              - type: string
-                pattern: '^[0-9a-f]{64}$'
-          merge_target:
+          update:
+            enum: [determined, undetermined, none]
+          merge-target:
             type: [string, "null"]
-          merge_target_capture:
-            type: [string, "null"]
-          merge_target_title:
-            type: [string, "null"]
-          merge_target_sha256:
+          merge-target-sha256:
             anyOf:
               - type: "null"
               - type: string
                 pattern: '^[0-9a-f]{64}$'
+          closing-status:
+            enum: [ready, hand-back, null]
+          repaired:
+            type: boolean
           resolution:
-            enum:
-              - not-required
-              - pending
-              - accepted
-              - rejected
-              - alternative-applied
-              - superseded
-          resolved_at:
+            enum: [not-required, pending, accepted, rejected, alternative-applied, superseded]
+          resolved-at:
             type: [string, "null"]
-          resolution_authority:
+          resolution-authority:
             enum: [user, version-guard, null]
-          resolution_summary:
+          resolution-summary:
             type: [string, "null"]
-          resolution_rationale:
+          resolution-rationale:
             type: [string, "null"]
-          resulting_paths:
+          resulting-paths:
             type: array
             uniqueItems: true
             items:
               type: string
-              pattern: '^kb/'
         additionalProperties: true
-      headings:
-        type: array
-        contains:
-          const: "## Resolution"
-        minContains: 1
-        maxContains: 1
   - if:
       properties:
         frontmatter:
@@ -111,136 +80,45 @@ allOf:
       properties:
         frontmatter:
           properties:
-            merge_target:
+            merge-target:
               type: string
               minLength: 1
-            merge_target_capture:
-              type: string
-              minLength: 1
-            merge_target_title:
-              type: string
-              minLength: 1
-            merge_target_sha256:
+            merge-target-sha256:
               type: string
     else:
       properties:
         frontmatter:
           properties:
-            merge_target:
+            merge-target:
               const: null
-            merge_target_capture:
-              const: null
-            merge_target_title:
-              const: null
-            merge_target_sha256:
+            merge-target-sha256:
               const: null
   - if:
+      properties:
+        frontmatter:
+          properties:
+            closing-status:
+              enum: [ready, hand-back]
+    then:
       properties:
         frontmatter:
           properties:
             disposition:
               const: keep
-    then:
+            update:
+              const: determined
+  - if:
       properties:
         frontmatter:
           properties:
             resolution:
-              enum: [not-required, superseded]
-    else:
-      properties:
-        frontmatter:
-          properties:
-            resolution:
-              enum: [pending, accepted, rejected, alternative-applied, superseded]
-            phase:
-              const: packet
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              enum: [closing, complete]
+              const: not-required
     then:
       properties:
         frontmatter:
           properties:
-            final_capture:
-              type: string
-              minLength: 1
-            final_sha256:
-              type: string
-    else:
-      properties:
-        frontmatter:
-          properties:
-            final_capture:
-              const: null
-            final_sha256:
-              const: null
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              enum: [packet, editing]
-    then:
-      properties:
-        frontmatter:
-          properties:
-            closing_status:
-              const: null
-            closing_repair_attempted:
-              const: false
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              const: complete
-    then:
-      properties:
-        frontmatter:
-          properties:
-            closing_status:
+            closing-status:
               const: ready
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            closing_status:
-              const: ready
-    then:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              const: complete
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            closing_status:
-              const: repair-needed
-    then:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              const: closing
-            closing_repair_attempted:
-              const: false
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            closing_status:
-              const: hand-back
-    then:
-      properties:
-        frontmatter:
-          properties:
-            phase:
-              const: closing
   - if:
       properties:
         frontmatter:
@@ -251,29 +129,29 @@ allOf:
       properties:
         frontmatter:
           properties:
-            resolved_at:
+            resolved-at:
               const: null
-            resolution_authority:
+            resolution-authority:
               const: null
-            resolution_summary:
+            resolution-summary:
               const: null
-            resolution_rationale:
+            resolution-rationale:
               const: null
-            resulting_paths:
+            resulting-paths:
               maxItems: 0
     else:
       properties:
         frontmatter:
           properties:
-            resolved_at:
+            resolved-at:
               type: string
               minLength: 1
               format: date-time
-            resolution_summary:
+            resolution-summary:
               type: string
               minLength: 1
               pattern: '^[^\r\n]+$'
-            resolution_rationale:
+            resolution-rationale:
               type: string
               minLength: 1
               pattern: '^[^\r\n]+$'
@@ -287,7 +165,7 @@ allOf:
       properties:
         frontmatter:
           properties:
-            resolution_authority:
+            resolution-authority:
               const: version-guard
     else:
       if:
@@ -300,5 +178,5 @@ allOf:
         properties:
           frontmatter:
             properties:
-              resolution_authority:
+              resolution-authority:
                 const: user
