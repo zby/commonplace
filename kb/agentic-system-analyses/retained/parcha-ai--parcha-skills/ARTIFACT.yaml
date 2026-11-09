@@ -1,0 +1,32 @@
+type: agentic-system-analyses/types/agentic-system-analysis-set.md
+members:
+  boundary.md:
+    sha256: 30ed7b4e97e27380a64a2a3e637160fbe1503bf50ebe84d548b31ea1acd41d65
+  runtime.md:
+    sha256: a1eadb48d5af03e1dc853a67fc3ad0de60b52f597815390950e7f0ec8dad7f14
+  memory.md:
+    sha256: c3d32b89cfafe6bc61cc89c1759df25868c10add1fea1df54224daa7e33e9bba
+  epistemic.md:
+    sha256: 62fe956cbfa38cd338fdd032d3a7bcad20cf8dd747e89ef3a3f795e57d6e2f46
+  workflow.md:
+    sha256: 575087c355b3a6e5d659f8986e72935324f4834efc0b84321598d4da7bb5bd73
+  reconciliation.md:
+    sha256: e82ed2d60bfb1a820071da7a2d669d6bd21aa09d3f5013f02f9ec4ab381ce49c
+  memory-profile.md:
+    sha256: efef5021dbab07192e6c2098a24be43ef8d7dca5a97beba994678a07c75ef10f
+  synthesis.md:
+    sha256: b7079692dc5abd63292ade18e345ac0f8da9df1a9344f737d47bc3b8c6e6e3a1
+  report-verification.md:
+    sha256: 1292003335f9c026a245835d2a9d7f5101c0120ec657696dedc3514ae2e34c8c
+  profile-verification.md:
+    sha256: 90ef85a6d586918448ad508e2deed7f77bcd4b4a5643e9965d4bd5b736bedd93
+  synthesis-verification.md:
+    sha256: 9f9aec9c6d58434b7025cf2b9428a9099354ea6b401baa4900a6a09381b3f572
+  overview.md:
+    sha256: 44cb5769a46e935e696aa118e49572be18e1f127ed51f581cf29b01fa5746f56
+worker:
+  profile: opus
+  harness: claude-code
+  launch-model: opus
+  effort: medium
+  model: claude-opus-5-5
