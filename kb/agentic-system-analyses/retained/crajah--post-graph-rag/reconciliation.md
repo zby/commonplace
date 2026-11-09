@@ -1,0 +1,60 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of post-graph-rag analyst records at bce4146a7dc4684e9b66806915c29b0eed57ba23."
+run-id: AAS-2026-11-08-post-graph-rag-448d75e4222d-01
+reviewed-boundary: "bce4146a7dc4684e9b66806915c29b0eed57ba23"
+---
+
+# post-graph-rag reconciliation
+
+## Reconciliation
+
+### Boundary and basis
+
+The reports share the frozen whole-system knowledge-system boundary in [boundary](boundary.md#boundary-and-evidence). Runtime establishes caller-driven indexing, maintenance and answering; memory follows retained products and later consumers; epistemic separates truth-related checks from operational admission; workflow traces the shipped quickstart. This reconciliation uses only those supplied members. No source read was needed to resolve their connections. No correction answers or refusal were supplied.
+
+The reports' implementation findings do not establish observed execution or benefit. Their unassessed tracked results and evaluator branches remain limits, not absent or inaccessible evidence. The workflow's selective quickstart account does not purport to cover every evaluator or maintenance route.
+
+### Duplicate supersessions and retained containers
+
+Amendment: [EPI-OBJ-document](epistemic.md#epi-obj-document) is superseded by [MEM-OBJ-documents](memory.md#mem-obj-documents). Both identify the caller passage stored through add_document and consumed by later retrieval, with embeddings treated separately. Their retained passages anchor the engine insertion and store payload in SRC-1, `post_graph_rag/engine.py` and `post_graph_rag/graph_store.py`. The epistemic inventory and import ledger concern this same passage; their unknown source warrant is not changed by the identity connection. Symbolic metadata attached to the stored vertex does not establish a different passage referent.
+
+Amendment: [EPI-OBJ-community-report](epistemic.md#epi-obj-community-report) is superseded by [MEM-OBJ-community-text](memory.md#mem-obj-community-text). Both identify generated title, summary and findings retained in community vertices and later consumed by reporting or answering. The declarations cite SRC-1, `post_graph_rag/reporting.py`, with the memory record additionally tracing storage and parent projections. Neither includes the separately consumed rating as report prose. The epistemic report's usability-versus-grounding distinction and the memory report's lossy-lineage finding therefore concern the same retained content, not competing artifacts.
+
+Amendment: [EPI-RTE-source-withdrawal](epistemic.md#epi-rte-source-withdrawal) is superseded by [MEM-RTE-document-withdrawal](memory.md#mem-rte-document-withdrawal). Both trace caller deletion/replacement through delete_document_chunks, mention removal, source withdrawal, dormancy and reason-specific revival, including endpoint-orphan repair. Their SRC-1 `post_graph_rag/graph_store.py` evidence identifies the same maintenance progression and later relation consumers. The epistemic record emphasizes loss of documentary support rather than falsification; the memory record additionally explains expiration/delta limits. These are compatible findings on the same route. Its use inside replacement does not make it identical to the entire document-admission route.
+
+No supersession is warranted for [EPI-OBJ-entity](epistemic.md#epi-obj-entity) against [MEM-OBJ-entities](memory.md#mem-obj-entities) and [MEM-OBJ-entity-metadata](memory.md#mem-obj-entity-metadata). The epistemic record is a valid entity-vertex container spanning interpreted descriptions and symbolic identity fields; memory separates the consumers of those parts. Alias equality can control merging while alias/name semantics remain unverified. That difference in consumption does not make either finding inconsistent. Both parts are declared; no missing part or erroneous combined finding requires splitting away the container.
+
+Likewise, [EPI-OBJ-triple](epistemic.md#epi-obj-triple) is a valid relation-edge container, not an interchangeable duplicate of either [MEM-OBJ-relations](memory.md#mem-obj-relations) or [MEM-OBJ-relation-metadata](memory.md#mem-obj-relation-metadata) alone. Its truth scope depends on assertion text, polarity and temporal/provenance fields together. Memory's separate encoding and consumer findings remain attached to those parts. No supersession of the valid container is required.
+
+[EPI-OBJ-community-rating](epistemic.md#epi-obj-community-rating) identifies the rating part within the broader [MEM-OBJ-community-metadata](memory.md#mem-obj-community-metadata), which also covers hierarchy, membership and build clocks. They are not coextensive duplicates. Their common clamp-and-rank evidence in SRC-1, `post_graph_rag/engine.py`, establishes the shared rating referent; the broader metadata container remains valid. The rating is an importance judgment with symbolic ranking force, not a source-truth certificate.
+
+### Route connections that do not assert identity
+
+The validation, upsert, contradiction and supersession routes—[EPI-RTE-validation-check](epistemic.md#epi-rte-validation-check), [EPI-RTE-relation-upsert](epistemic.md#epi-rte-relation-upsert), [EPI-RTE-contradiction-check](epistemic.md#epi-rte-contradiction-check) and [EPI-RTE-supersession-write](epistemic.md#epi-rte-supersession-write)—are declared subroutes of [RT-RTE-document-admission](runtime.md#rt-rte-document-admission), not duplicates of it. They respectively filter candidates, merge same-key payloads, judge compatibility and change relation reliance. The transient [EPI-OBJ-contradiction-result](epistemic.md#epi-obj-contradiction-result) is distinct from the persisted flags in [MEM-OBJ-relation-metadata](memory.md#mem-obj-relation-metadata). A consequential judgment can therefore exist without a retained textual rationale. No supersession joins a check to its disposition or its durable result.
+
+[EPI-RTE-community-render](epistemic.md#epi-rte-community-render) is an input-projection part of [RT-RTE-community-build](runtime.md#rt-rte-community-build), not the complete build. Memory's annotation of that build and its community-text record agree that parent reports consume projections, not original documents. Runtime's warning about unfiltered supersession before generation and the specialists' finding that lifecycle fields are omitted from reporting input describe successive stages, not conflicting guarantees.
+
+[MEM-RTE-change-polling](memory.md#mem-rte-change-polling) and [MEM-RTE-corpus-inspection](memory.md#mem-rte-corpus-inspection) return change or structural projections to callers, unlike the context selection/synthesis in [RT-RTE-question-answer](runtime.md#rt-rte-question-answer). Neither is its duplicate. Their exposed consumer roles also do not establish an autonomous explorer.
+
+[MEM-RTE-evaluation-memory](memory.md#mem-rte-evaluation-memory) covers shipped ingestion, retained corpus/replay inputs, questioning and caller-side output retention. [EPI-RTE-benchmark-check](epistemic.md#epi-rte-benchmark-check) covers selected offline scoring implementations over stored predictions and gold. The routes overlap at evaluation outputs but do not have identical endpoints or scope; neither supersedes the other. Offline reference-consuming judgments do not contradict the runtime and workflow finding that ordinary query delivery has no answer-correctness veto. [EPI-OBJ-grade](epistemic.md#epi-obj-grade) is also distinct from [EPI-OBJ-answer](epistemic.md#epi-obj-answer).
+
+[MEM-OBJ-embeddings](memory.md#mem-obj-embeddings) is retained numerical output, not a duplicate of the runtime embedding producer components. [MEM-OBJ-retrieval-events](memory.md#mem-obj-retrieval-events) is retained exposure data, not the retention route itself. [MEM-BAP-access-state](memory.md#mem-bap-access-state) describes symbolic selector force, unlike interpreted extraction guidance and answer evidence in [RT-BAP-extraction-guidance](runtime.md#rt-bap-extraction-guidance) and [RT-BAP-answer-context](runtime.md#rt-bap-answer-context). No further identities are asserted between these records.
+
+### Convergence and integration-issue dispositions
+
+The admission findings converge without promoting usability to truth. Runtime's default-branch and external-bypass distinctions in [RT-RTE-extractor-extension](runtime.md#rt-rte-extractor-extension), memory's annotations, epistemic's validation record and [workflow's admission annotation](workflow.md#annotations) all distinguish model proposals, software gates and physical writes. Workflow adds that the quickstart proceeds on a returned result while displaying only an extraction count. It declares no independent records requiring supersession.
+
+The passage-priority qualification also converges. [RT-CLM-passage-priority](runtime.md#rt-clm-passage-priority) is a source-native claim bounded by preparation failures, ordered writes and replacement behavior, not a claim that every indexing call succeeds atomically. Memory's withdrawal details and workflow's missing repair branch qualify recovery without contradicting that bounded runtime account.
+
+Memory's integration issues about idempotence and exactly-once polling concern source-native example promises, not a disagreement with runtime. [MEM-RTE-change-polling](memory.md#mem-rte-change-polling) retains the timestamp/deletion limitations, while [RT-RTE-document-admission](runtime.md#rt-rte-document-admission) distinguishes direct chunk APIs from replacement-aware index_text. No report correction is inferred from those source-claim mismatches.
+
+Withdrawal and historical-context limits connect [MEM-RTE-document-withdrawal](memory.md#mem-rte-document-withdrawal), [EPI-RTE-supersession-write](epistemic.md#epi-rte-supersession-write), [EPI-CLM-close-fact](epistemic.md#epi-clm-close-fact) and the temporal qualification in [RT-RTE-question-answer](runtime.md#rt-rte-question-answer). Filtered relations can be withheld while passages, descriptions or stale reports still supply old assertions. Audit residue is not complete event sourcing, universal forgetting or reproducible historical answering. The epistemic source-claim mismatch does not conflict with the other reports' already bounded findings.
+
+Runtime and memory agree on raw-context return before rendering budgets. Epistemic and workflow additionally distinguish richer synthesis input from abbreviated returned triple strings. [EPI-OBJ-answer](epistemic.md#epi-obj-answer) explains the omitted polarity/period fields; this does not contradict memory's account of retained relation metadata. Neither display nor delivery establishes faithful model use.
+
+[RT-RTE-retention-control](runtime.md#rt-rte-retention-control), memory's annotation and access-state record, and epistemic's adaptation ledger converge on exposure-fed archival selection with channel-specific force. Archived seeds can be withheld without every corresponding fact disappearing from answers. Exposure is not correctness, and selector adaptation does not establish improved capacity or exercised self-improvement.
+
+The unresolved provenance, mutable provider identity and dependency transaction semantics in memory remain compatible with runtime's component and recovery limits. Known downstream transformations remain describable despite those unknowns. Similarly, [EPI-CLM-benchmark-rates](epistemic.md#epi-clm-benchmark-rates) and [EPI-CLM-validity-effect](epistemic.md#epi-clm-validity-effect) retain attributed scores and effect claims without independent verification. Memory's narrower evaluator coverage and epistemic's additional scorer inspection do not disagree: neither assessed result bodies or established causal benefit.
+
+No unresolved inter-report conflict was identified in the supplied findings. No dependent finding here relies on a supplied record having a superseded value. The remaining uncertainties limit conclusions as stated by their declaring reports; they are not converted into defects, stronger statuses or system-wide negatives.
