@@ -31,6 +31,33 @@ for scoped comparison findings and coverage. Uninspected operation is not a
 claim that a system has never been tested. Partial coverage is not absence.
 The retained verification reports expose disagreements and remaining limits.
 
+## What the evidence can settle
+
+Design-space exploration asks more than whether a feature exists. It asks
+which choices can vary, which combinations can work, what conditions limit
+them, and what would justify choosing one over another.
+
+- **Choices:** use inspected mechanisms to identify candidate dimensions.
+  The current categories are a way to compare sources, not a claim that every
+  relevant dimension has been found or that the dimensions are independent.
+- **Combinations:** source inspection can establish that mechanisms are wired
+  together within a stated boundary. Execution evidence is needed to show
+  that the combination works under particular conditions. Separate features
+  found in different systems do not establish their compatibility.
+- **Constraints:** distinguish an operator requirement, an implementation
+  limit, an observed failure and a hypothesized incompatibility. Keep each
+  constraint's basis and scope beside it. Neither prevalence nor an empty
+  comparison-table cell establishes necessity or impossibility.
+- **Commitment:** state the decision, competing alternatives and evidence
+  that could change the choice. A claim of benefit needs outcome evidence
+  under relevant conditions, including cost and failure behavior; static
+  wiring alone cannot supply it.
+
+The [future-work agenda](./topics/README.md#future-work) turns these distinctions
+into candidate comparisons and tests. It does not change the analysis
+contracts or authorize experiments. Commonplace adoption judgments remain
+separate from source-system accounts.
+
 ## Memory datasets and synthesis
 
 - [Comparison table](./comparisons/memory/memory-systems-table.md) — inspect
