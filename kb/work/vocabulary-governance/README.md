@@ -49,10 +49,13 @@ implement the registry or expand the write skill as a prerequisite.
 ### Draft gate
 
 The [vocabulary-reconciliation gate](./vocabulary-reconciliation.md) is a typed
-workshop draft for collision and unification detection during review. It includes
-recognizing implicit technical meanings, comparing existing usage, and emitting
-pending candidate records for the respective ledgers. It does not judge whether
-a coinage earns its place; that is the complementary jargon question.
+workshop draft for collision detection during review. It recognizes implicit
+technical meanings and compares a name's existing uses. Only supported collisions
+determine the verdict. Unification candidates encountered in the inspected
+material are retained separately for their ledger, without claiming coverage or
+requiring broader discovery. Systematic unification needs a separate comparative
+pass over a bounded related set. The gate does not judge whether a coinage earns
+its place; that is the complementary jargon question.
 
 The draft is not in the live gate catalog. Promotion needs a review path that
 permits scoped vocabulary discovery and records the comparison inputs in the

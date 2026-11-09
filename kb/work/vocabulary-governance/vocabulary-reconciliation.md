@@ -1,7 +1,7 @@
 ---
 gate_id: semantic/vocabulary-reconciliation
 name: Vocabulary reconciliation
-description: "A technical meaning conflicts with existing usage, or different technical names may duplicate one concept without a consequential distinction."
+description: "Detect consequential conflicts in a technical name's existing uses; retain incidental unification candidates without claiming conceptual-duplication coverage."
 type: types/review-gate.md
 lens: semantic
 watches: [body, frontmatter]
@@ -11,23 +11,25 @@ staleness: changed
 ## Failure mode
 
 An artifact uses a technical name with a meaning that conflicts with existing KB
-usage, or different names may duplicate one concept without a consequential
-distinction.
+usage in a way that changes an inference, classification, action, obligation or
+attribution.
 
 ## Test
 
-Find specific vocabulary decisions worth revisiting during revision. Return
-evidence-backed collision and unification candidates for the respective ledgers,
-not adopted definitions, forced renames or instructions to avoid new terms.
+Find consequential naming conflicts worth revisiting during revision. Return
+evidence-backed collision candidates, not adopted definitions, forced renames or
+instructions to avoid new terms. Retain unification candidates only when the
+inspected material happens to reveal them; they do not determine this gate's
+verdict.
 
 ### Evidence and discretion
 
 Judge the artifact against the invoking KB's active vocabulary, definitions and
 existing ledger decisions. Discover comparison material within the authorized
-local corpus; do not acquire external sources. Choose search terms, comparison
-cases and reading depth to resolve the candidate meanings. Exact-name search can
-expose collisions but cannot establish that a concept has no existing name.
-Record the inspected scope and limits; do not claim exhaustive coverage.
+local corpus; do not acquire external sources. Choose searches for candidate
+names and spelling variants, comparison cases and reading depth to resolve their
+meanings. Record the inspected scope and limits; do not claim exhaustive coverage.
+Do not broaden the pass into a search for every other name of each concept.
 
 Recognize technical meanings even without an announced definition: ask whether
 a name carries a distinction on which the argument or procedure depends.
@@ -40,39 +42,44 @@ context. If either is unavailable, return ERROR naming the gap; do not silently
 substitute a linked-definitions-only check. Missing optional ledgers need not
 block review, but their absence belongs in the scope report.
 
-### Finding threshold
+### Collision threshold
 
-- **Collision:** establish the same name's competing meanings and show how
-  confusing them could change an inference, classification, action, obligation
-  or attribution. Respect explicit scope and schema positions; shared spelling
-  is not enough.
-- **Unification candidate:** propose a common account of the differently named
-  concepts, explain what each contributes, and identify a condition that could
-  distinguish them. Similar wording, shared examples or related goals alone
-  justify neither a candidate nor a declaration of equivalence.
-
+Establish the same name's competing meanings and show a consequential misreading.
+Respect explicit scope and schema positions; shared spelling is not enough.
 Honor existing ledger decisions unless the artifact violates their writing rule
 or new evidence challenges them. Reference a matching pending entry instead of
-proposing a duplicate. If both patterns apply, explain what each ledger would
-track.
+proposing a duplicate.
 
 ### Verdict and handoff
 
-Return WARN for a supported, consequential unresolved finding; PASS when none
-is found within the inspected scope. INFO may retain a weak lead but must not
-be submitted as a supported ledger candidate. ERROR means the review could not
-be completed under the evidence requirements above.
+Return WARN for a supported, consequential unresolved collision; PASS when none
+is found within the inspected scope. PASS does not establish that concepts have
+unique names across the KB. ERROR means the collision review could not be
+completed under the evidence requirements above.
 
-Each WARN must give:
+Each WARN must give the name, competing meanings, consequential misreading and
+question to resolve. Include exact passages, artifact paths and inspected
+revisions or content hashes, including the target. Identify any matching collision
+ledger entry, violated writing rule or new evidence challenging a prior decision.
 
-- the kind, destination ledger and any matching entry;
-- the names, meanings and exact supporting passages;
-- artifact paths and inspected revisions or content hashes, including the target;
-- the consequential misreading, or common account and distinguishing condition;
-- the unresolved question, identifying new evidence or a violated rule when
-  an existing decision applies.
+### Incidental unification candidates
 
-New candidates are pending. Existing definitions and writing decisions remain
+If inspected material reveals differently named concepts with a specific common
+account, retain that account, what each concept contributes, and a condition that
+could distinguish them. Supply the same passage and version evidence as for a
+collision, and identify any matching unification ledger entry. Related goals,
+similar prose or shared examples alone are insufficient.
+
+Report supported candidates separately from verdict findings, for pending
+unification-ledger entries. A weak lead may be INFO but is not a supported ledger
+candidate. Neither finding a candidate nor finding none changes the collision
+verdict. Do not claim that an exact-name search rules out conceptual duplication.
+Systematic unification belongs to a separate comparative pass over a bounded,
+related set; it is not required to complete this gate.
+
+### Persistence boundary
+
+New candidates in either ledger are pending. Existing definitions and writing decisions remain
 in force; adjudication chooses whether to tolerate, distinguish, unify or rename.
 Whether a name earns its place or needs a gloss belongs to jargon/accessibility
 review, not this gate. A clear, useful definition can still collide.
@@ -90,7 +97,7 @@ new artifact uses it for inferring a reusable rule, then requires checking the
 capture against the original text. The meanings imply different verification
 obligations. Flag the conflicting passages, not a preferred replacement name.
 
-## Example (fail — unification candidate)
+## Example (incidental unification — no effect on verdict)
 
 “Inspection block” and “review cluster” both denote claims selected for joint
 checking under a context limit, with the same membership rule and no stated
