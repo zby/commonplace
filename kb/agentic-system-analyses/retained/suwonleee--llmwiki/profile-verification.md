@@ -1,0 +1,29 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of llmwiki's memory profile against accepted records at e6be788bdfd969c3695f839a5d6b5752bb233cfc."
+run-id: AAS-2026-11-08-llmwiki-7f7e35008c0f-01
+reviewed-boundary: "e6be788bdfd969c3695f839a5d6b5752bb233cfc"
+---
+
+# llmwiki profile verification
+
+## Verification
+
+I checked all ten axes, their unit scopes, findings, evidence bases and coverage notes in the [profile](memory-profile.md#comparison-rationale) against the handed records and annotations. I resolved the page, quiz and topic-merge supersessions through the supplied reconciliation. The profile uses the surviving memory declarations and does not treat overlapping feedback or review containers as identical whole objects. No source reads were needed; this judgment adds no evidence.
+
+- **Storage and form:** [MEM-OBJ-wiki-pages](memory.md#mem-obj-wiki-pages), [MEM-OBJ-wiki-index](memory.md#mem-obj-wiki-index) and [MEM-OBJ-emission-ledger](memory.md#mem-obj-emission-ledger) support file/repository and SQLite storage. Graph rows do not require a separate graph substrate. The split between interpreted prose and fixed-rule metadata is supported, particularly the lexical consumption of [MEM-OBJ-recall-triggers](memory.md#mem-obj-recall-triggers). Numerical affinity counts are not distributed parameters. The profile does not classify external model weights as accumulated memory.
+- **Lineage:** authored, imported, trace-extracted and other-compiled findings have distinct derivation witnesses in [RT-RTE-warm-save](runtime.md#rt-rte-warm-save), the ingest annotation on [RT-RTE-auto-update](runtime.md#rt-rte-auto-update), [MEM-RTE-feedback-fold](memory.md#mem-rte-feedback-fold) and [MEM-OBJ-wiki-index](memory.md#mem-obj-wiki-index). Known subsequent transformations do not resolve arbitrary initial page or recall provenance; the profile preserves that uncertainty.
+- **Authority:** the seven emitted forces have supporting consumers. Reference supply differs from imperative rule delivery and first-edit denial in [RT-BAP-wiki-context](runtime.md#rt-bap-wiki-context). Lexical triggers and affinity support ranking; capture offsets, gap status and quiz schedules support routing. Revision markers support eligibility checks and withholding, while silver expectations support diagnostic conformance only. [MEM-RTE-feedback-fold](memory.md#mem-rte-feedback-fold) and [RT-RTE-auto-update](runtime.md#rt-rte-auto-update) support learning authority at durable-update consumers independently of downstream knowledge or ranking. None establishes improved capacity.
+- **Admission and curation:** ordinary model/software admission is automatic even when a human starts the workflow. Human direction and ask approval are separately classified as claimed manual policies; reviewed tier application has an implemented review-ID/hash path in [MEM-RTE-tier-cleanup](memory.md#mem-rte-tier-cleanup), without authenticating the editor. Generic freshness and receipt callers remain unresolved. Extraction/combination, topic replacement, tier decay, version-bound withdrawal and salience changes support the emitted curation values. [MEM-RTE-topic-merge](memory.md#mem-rte-topic-merge) supports evolution despite its rollback defect; neither requested synthesis nor added-claim checks establishes semantic novelty.
+- **Read-back:** requested query/maintenance consumption and unsolicited host-event delivery remain separate. [RT-RTE-context-delivery](runtime.md#rt-rte-context-delivery) and its memory annotation support coarse cold supply and lexical prompt selection. [RT-RTE-edit-rules](runtime.md#rt-rte-edit-rules) supports target-path matching for identifier-based push, not reliable obedience. A delivered pointer is not assumed to have been followed.
+- **Trace learning and origin:** session-to-page compilation and usage-to-selector adaptation each have automatic writes, retained results and later consumers. Their wired yes findings do not imply observed operation or benefit. Session turns and tool activity support the emitted source classes through [RT-RTE-auto-update](runtime.md#rt-rte-auto-update), [EPI-RTE-mechanical-check](epistemic.md#epi-rte-mechanical-check) and [MEM-RTE-feedback-fold](memory.md#mem-rte-feedback-fold). Static dropped files are not automatically traces. Explicit legacy scans are not presented as an active default daemon learner. No local or system-wide no is inferred without absence records.
+
+Every axis is partial. The unresolved commit/absence alternatives in [RT-RTE-context-delivery](runtime.md#rt-rte-context-delivery), together with local provenance, caller-control and maintenance gaps, prevent complete-value claims. These are faithfully represented uncertainties, not unsupported negatives. The profile's supported existence findings survive them.
+
+## Blockers
+
+none
+
+## Limits
+
+- The [profile](memory-profile.md#comparison-rationale) groups several resolved objects and mechanisms into broad units rather than providing an object-by-object comparison inventory. In particular, [MEM-OBJ-capture-state](memory.md#mem-obj-capture-state) distinguishes raw source/export bodies from queue metadata, and the memory annotation on [RT-RTE-context-delivery](runtime.md#rt-rte-context-delivery) distinguishes session seen/term state from page knowledge. The profile includes these surfaces in scope but does not separately classify every such part and consumer on every axis. Withhold exhaustive per-object storage, lineage and authority comparisons, including a full account of session selector-state effects. This is a local inventory-granularity limit: all axes already express partial coverage, the supported system-level values remain valid, and no absence or complete inventory is asserted.
