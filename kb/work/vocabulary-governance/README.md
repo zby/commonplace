@@ -18,6 +18,50 @@ A second unresolved thread is how to migrate a load-bearing term after its bound
 
 A constraint on that design arrived from the distillation migration and is now a library note: [vocabulary collisions are prevented at write time, not resolved at read time](../../theory/vocabulary-collisions-prevented-at-write-time-not-read-time.md) (promoted 2026-07-17 from this workshop's [prose-has-no-scope.md](./prose-has-no-scope.md), which retains the evidence pointers and open policy items). Prose offers no read-time scoping and context assembly is concatenation without a linker, so two senses of one term merge silently whenever notes co-load — and the sub-agent isolation remedy cannot apply to library artifacts that exist to be co-loaded. Consequence for the candidate model: imports, qualified names, and shadowing have no prose implementation; collision *handling* must mean collision *prevention* — a one-term-one-sense invariant across all vocabulary sources that can co-load, with multi-word coinages as the collision-free naming path.
 
+## Operator direction: investigate vocabulary checks during revision
+
+During the frontier-work reconsideration on 2026-11-08, the operator declined
+adding a naming-time collision check to the writing instructions. Keep the
+writing path unchanged: the writer should retain maximum freedom rather than
+carry another mandatory check.
+
+The hard part is recognizing that a passage introduces a new technical term,
+not executing an exact-string search after the term has been identified.
+Detection requires interpreting whether a name is being given a special,
+consequential meaning, including when no definition is explicitly announced.
+The operator therefore rejected treating the screen as nearly cost-free.
+
+The candidate direction is to revise more often and include vocabulary checks
+among routine revision checks. This is a proposal to investigate, not an adopted
+cadence, new gate, or authorization to redesign revision workflows. A possible
+check would first identify names carrying technical meanings, compare them with
+existing definitions and terminology decisions, and then assess whether different
+uses create consequential ambiguity. Search supplies occurrences, not that
+judgment; ordinary wording must not be classified as a new technical term merely
+because it is unfamiliar.
+
+Next, examine what existing revision already checks and try the missing part on
+a real revision. Retain candidate terms, consequential findings, false alarms,
+and effort before deciding whether a routine check or more frequent revision is
+worth adopting. A zero-finding pass need not justify more machinery. Do not
+implement the registry or expand the write skill as a prerequisite.
+
+### Draft gate
+
+The [vocabulary-reconciliation gate](./vocabulary-reconciliation.md) is a typed
+workshop draft for collision and unification detection during review. It includes
+recognizing implicit technical meanings, comparing existing usage, and emitting
+pending candidate records for the respective ledgers. It does not judge whether
+a coinage earns its place; that is the complementary jargon question.
+
+The draft is not in the live gate catalog. Promotion needs a review path that
+permits scoped vocabulary discovery and records the comparison inputs in the
+evidence-validity boundary. The current note-and-criterion freshness hashes do
+not track changes in all comparison artifacts. Automatic ledger insertion also
+needs pending-entry semantics for the collision ledger, duplicate handling and
+coordinator-owned writes. None of those runtime or ledger changes is implemented
+by this draft. Detection performance has not been calibrated.
+
 ## Question
 
 How should commonplace support both a shared baseline vocabulary and user- or collection-specific vocabularies without hardcoding this repo's terms into the shipped write machinery?
