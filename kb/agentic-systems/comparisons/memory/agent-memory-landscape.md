@@ -7,9 +7,35 @@ tags: [agent-memory]
 
 # What the 191 current agentic-system analyses show about agent memory mechanisms (October 2026)
 
-The question: across every current analysis set, which memory mechanisms are wired, how are they admitted, read back, curated and fed by traces, and which population-level conclusions does the evidence withhold?
+Across the 191 analyses current in October 2026, which memory mechanisms does
+code connect, and what can the evidence say about them? This comparison follows
+how information enters memory, returns to later work, is revised, and changes
+through recorded activity.
 
-The short answer has three parts. First, the population supports existence counts: lower bounds on how many systems wire a mechanism. It does not support complete-value distributions, because almost no set assesses an axis completely. Second, every positive finding is static wiring or weaker. No finding in the population reaches `observed` or `causally supported`. Third, within those limits some contrasts are clear. Automatic admission is nearly universal, while manual admission is often only instructed or afforded. Push read-back mostly selects by coarse availability or identifiers, not inferred relevance. Synthesizing curation is rare. Trace-fed learning is wired in most code-grounded systems, but that count includes thin forms such as access counters.
+The evidence shows which mechanisms are connected in code—called **wired**
+here—not whether they run in deployment or improve outcomes. No finding reaches
+`observed` or `causally supported`; the positive findings are static wiring or
+weaker evidence.
+
+The counts are lower bounds on how many systems wire each mechanism, called
+**existence counts**. Almost no analysis fully assesses a comparison dimension,
+or **axis**, so the corpus cannot support **complete-value distributions**:
+shares of systems with an exhaustive set of properties, such as retrieval only
+on request.
+
+Within those limits, four contrasts stand out:
+
+- **Admission:** automatic entry into memory is nearly universal; explicit
+  human approval is often only instructed or made available.
+- **Read-back:** information supplied without a consumer request, called
+  **push**, is mostly selected by coarse availability or identifiers rather
+  than inferred relevance.
+- **Curation:** creating claims absent from the inputs, called **synthesis**,
+  is rare among the recorded memory-maintenance operations.
+- **Trace learning:** automatic updates from recorded activity to retained
+  artifacts or learned parameters that shape later behavior are wired in most
+  code-grounded systems. This includes thin forms such as access counters,
+  not just richer changes to rules or model weights.
 
 ## Evidence boundary
 
