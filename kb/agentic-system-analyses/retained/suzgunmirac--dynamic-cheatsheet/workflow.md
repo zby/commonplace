@@ -1,7 +1,7 @@
 ---
 type: agentic-system-analyses/types/agentic-system-workflow-report.md
-description: "Dynamic Cheatsheet cumulative benchmark workflow from question delegation through local execution, curation, scoring, checkpoint delivery and continuation."
-run-id: AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01
+description: "Dynamic Cheatsheet cumulative benchmark workflow: generator-curator handoffs, extraction admission, scoring, delivery and continuation."
+run-id: AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01
 reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
 ---
 
@@ -11,49 +11,39 @@ reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
 
 ### Selected workflow and evidence
 
-This report traces one cumulative benchmark question through answer generation, optional local Python continuation, reference replacement, scoring and checkpoint delivery, then follows the reference into a later question or resumed run. This is representative because cumulative curation is the driver's default approach and includes both the memory producer and its shipped persistence/reload consumer. The selected configuration supplies the shipped cumulative curator prompt and uses local execution rather than provider-native tools. The CLI default alone does not supply that curator prompt: without its path, the driver substitutes `(empty)`. SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`; [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation).
+This account follows one cumulative benchmark example through solving, memory replacement, scoring and checkpointing, then the handoff to the next example. This workflow was selected because it closes the shipped producer–maintenance–consumer loop rather than ending at the library return. It uses `DynamicCheatsheet_Cumulative` with the shipped generator and cumulative curator templates explicitly supplied. The CLI default curator template is `(empty)`, so this account does not attribute the curator's instructions to an invocation that omits that path. The baseline is [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle) and [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update).
 
-The account establishes implementation at the frozen revision, not a successful run. It does not join retrieval or native execution into this selected path. Those alternatives change handoff order or execution ownership and remain characterized by [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) and [RT-RTE-native-execution](runtime.md#rt-rte-native-execution). No benchmark, provider request or target example was executed. No retained result payload was inspected for workflow success.
+Evidence is SRC-1 implementation and doctrine/design at the frozen boundary. Inspection covered `run_benchmark.py`, the cumulative branch of `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py` and both relevant prompts. These paths were already included in the supplied boundary/runtime; no source or coverage expansion is introduced. No target execution or historical result inspection was performed. The trace below establishes implemented handoffs and requested behavior, not successful solving or improved later performance.
 
-### Request, principals and handoffs
+### Request and delegation
 
-The caller chooses task, model, prompt files, initial or resumed reference and execution settings. The driver loads the task, optionally shuffles it with seed 10, constructs the numbered problem and answer-format instructions, and calls `advanced_generate`. It keeps the dataset target outside this request. Python owns scheduling; the configured model supplies answer and reference content. The generator and curator are sequential roles of one configured backend, not independent workers that select their own delegates. SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`; [RT-CMP-language-model](runtime.md#rt-cmp-language-model).
+The operator selects task, model, approach, prompts and generation settings. The driver loads the dataset, optionally shuffles it with seed 10, initializes an empty or file-supplied sheet, and constructs a numbered question. It calls `advanced_generate` with that question, current sheet, templates and execution settings. Dataset `target` stays in the driver and is not supplied to either model role through this call (SRC-1, `run_benchmark.py`; [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle)).
 
-| Handoff | Supplied material | Recipient responsibility and return |
-|---|---|---|
-| Driver → wrapper | Current question, live cheatsheet, templates, generation/round/execution settings | Schedule at least one generator–curator round and return a result dictionary. |
-| Wrapper → generator | One user message containing question and cheatsheet; later refinement rounds can also include previous extracted answers | Produce solution text and optionally request local code execution. |
-| Wrapper → local executor → generator | First Python fence selected from eligible flagged text; execution output inserted into assistant text, followed by a user continuation request | Executor returns output/error text; model is asked to complete or try alternatives. |
-| Wrapper → curator | Question, full generator output and previous cheatsheet; twice the generator token limit, local execution disabled | Propose replacement reference under the curation template, without target or score. |
-| Wrapper → driver | Round steps, previous answers, final answer, final output and final cheatsheet | Carry state forward, score the answer and write JSONL. |
+Python, not a model planner, owns the sequence. In each of at least one configured rounds, it substitutes the question and sheet into the generator template and creates a fresh one-user-message history. On later rounds it can append earlier extracted answers to the supplied sheet. The generator is asked to identify applicable reference strategies, check its work and emit an answer tag; it does not choose the curator's invocation or the next dataset item (SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/generator_prompt.txt`; [RT-BAP-reference-context](runtime.md#rt-bap-reference-context)).
 
-These handoffs are implemented in SRC-1, `dynamic_cheatsheet/language_model.py` and `run_benchmark.py`; their minimum source passages are retained in [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation), [RT-RTE-local-execution](runtime.md#rt-rte-local-execution) and [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict). There is no parallel join in this inspected sequence. The wrapper returns the last round's answer/output and successor reference, while its steps preserve earlier round prompts, outputs and old/new references. It does not include the curator's full response in those step records. SRC-1, `dynamic_cheatsheet/language_model.py`.
+The generator may request a local Python continuation. Its output and execution transcript can then become curator input; execution errors can be returned to the generator for another attempt. This is bounded continuation, not an independent reviewing worker. The local execution path has ambient privileges and its depth check follows execution, so neither the prompt's last-round warning nor the execution flag supplies a whole-system isolation guarantee. Native-provider execution is an alternate path. Those mechanics and limits are established by [RT-RTE-local-execution](runtime.md#rt-rte-local-execution) and [RT-RTE-provider-execution](runtime.md#rt-rte-provider-execution).
 
-### Verification and rejection are separate decisions
+### Curator handoff and verification
 
-The curator prompt asks the model to assess correctness, preserve useful material and refine reusable strategies. This is requested model judgment, not an independently supplied answer oracle. The extractor decides which reference text becomes live, using delimiters rather than correctness. Missing the opening cheatsheet tag preserves the previous reference; an opening tag without a closing tag can still admit the remaining text. Omitted old content is not automatically merged back. SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`, `dynamic_cheatsheet/utils/extractor.py`; [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation).
+After answer extraction, Python calls the same configured model/client in a separate curator context. The handoff supplies the current question, full generator output and previous sheet, not the generator's entire internal state or an expected answer. The curator receives twice the generator's output-token allowance and local execution is disabled for this call (SRC-1, `dynamic_cheatsheet/language_model.py`). The roles therefore separate context and requested work, not model identity or independent ground truth.
 
-Answer extraction is likewise not a delivery gate for curation. If the generator has no recognized final-answer marker, extraction can return a failure string, but the wrapper still supplies the full generator output to the curator. There is no conditional retry or admission veto on that failure string in the selected cumulative branch. SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`; see the workflow annotation below.
+The curator prompt requests correctness assessment, preservation of useful material, synthesis of reusable examples, and usage counters. That is a model review request, not evidence that each proposed entry was tested. Python then extracts a replacement sheet; it does not read a correctness verdict or compare the proposal with dataset targets before accepting it. The supporting request and extraction passage are retained in [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update).
 
-The driver scores only after the wrapper has returned the successor reference and the driver has assigned it. Its task scorer uses the dataset target or task validity rules, but a false score neither rejects the new cheatsheet nor restarts curation. Thus task correctness reporting and memory admission do not form a verification loop. The next question can consume a reference derived from an incorrect answer. SRC-1, `run_benchmark.py`; [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring), [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context). This is a wired possibility, not evidence that a particular wrong strategy was retained or used.
+Two verification layers must therefore be kept separate. Curator review may influence the content it proposes, but is not a software-enforced correctness gate. Task scoring uses a reference target or task-specific arithmetic/rule checks only after the driver has received the updated sheet. A wrong answer can increment no correctness count while its associated memory update is still carried forward. The scorer cannot veto that update on this path (SRC-1, `run_benchmark.py`; [RT-RTE-score-answer](runtime.md#rt-rte-score-answer)).
 
-### Failure ownership and recovery
+### Rejection and recovery path
 
-On the optional local execution path, the executor reports a timeout or execution error as text. The wrapper places that text in the continuation conversation and asks the generator to complete the answer or try alternatives. This delegates recovery reasoning to the model; it does not establish that recovery succeeds. The subprocess has a three-second timeout and direct-child kill, not demonstrated isolation or rollback of filesystem effects. The depth check occurs after execution, so the final warning is not a hard three-execution gate. SRC-1, `dynamic_cheatsheet/utils/execute_code.py`, `dynamic_cheatsheet/language_model.py`; [RT-RTE-local-execution](runtime.md#rt-rte-local-execution).
+A concrete failure branch exists for an unformatted curator response. If it has no opening `<cheatsheet>` tag, `extract_cheatsheet` returns the old sheet. The generator's answer can still be returned and scored: failed memory extraction does not reject the entire example. Conversely, a missing closing tag does not force rejection because splitting on an absent closing delimiter returns the remaining text. An empty tagged sheet can also replace prior content. These are delimiter rules, not semantic validation (SRC-1, `dynamic_cheatsheet/utils/extractor.py`; [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update)).
 
-An unparseable curator response takes the extractor fallback without a new curator attempt. A parseable but poor replacement has no automatic semantic rollback. Previous reference versions in round steps/checkpoints can assist external manual recovery; they are not an automatic recovery controller. SRC-1, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/language_model.py`; [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation).
+Accepted replacement is whole-sheet replacement. The prompt warns that omitted content will be lost; earlier versions may remain in driver logs, but no automatic semantic rollback follows a bad score. The recovery owner differs by failure: extraction preserves the old sheet on the missing-opening-tag branch; provider retries belong to the client; interrupted benchmark continuation belongs to the driver. Provider retry exhaustion raises rather than yielding a completed example, and retries do not guarantee idempotent tool effects ([RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update), [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle); SRC-1, `text_generation/simple_unified_client.py`).
 
-### Delivery and continuation
+### Delivery and next consumption
 
-Library delivery is the returned dictionary, not disk persistence. Driver delivery adds the original target/raw input to that dictionary, updates its in-memory histories and reference, prints and scores the result, and rewrites the accumulated JSONL after each example. The loop ends at the dataset boundary or configured sample limit; it writes again and prints accuracy for processed examples. Neither a correct answer nor successful curation is required to reach the save call. An exception before that call can prevent the current example from being checkpointed. SRC-1, `run_benchmark.py`; [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict), [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation).
+The library returns the final round's answer, full generator output, extracted sheet, previous answers and per-round steps. The step log contains generator prompt/output and old/new sheets, not a dedicated field retaining the full curator response (SRC-1, `dynamic_cheatsheet/language_model.py`). Its final answer is the generator answer, not a curator-corrected answer. The exact returned identity is [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict).
 
-A later invocation explicitly requested by the caller reloads JSONL and companion parameters, rejects mismatches in selected arguments, recovers the last final cheatsheet and full-output history, and skips a number of examples equal to the loaded row count. It writes to a continued filename. This is positional continuation, not exact replay: prompt bytes, several settings and provider identity resolution are not completely checked, and writes are truncating rather than atomic. Bad/empty checkpoint contents can prevent recovery. SRC-1, `run_benchmark.py`; [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation). The driver owns this recovery protocol; no autonomous worker repairs a checkpoint.
+At driver level, delivery has two stages: the in-memory envelope is returned, then a scored example is persisted. The driver appends that envelope with input and target, updates the current sheet, prints the answer and score totals, and rewrites the output JSONL after each example. At normal termination it writes once more and reports the result location. Only the extracted sheet crosses from curator work into the next generator context; the curator context is discarded. The prior full generator output is separately accumulated by the driver, although cumulative generation does not retrieve that corpus as an extra reference source (SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`).
 
-The terminal result therefore has two distinct consumers: the evaluator reads the answer/target, while later generation reads the returned or restored reference. Retention and delivery to that later model are wired; reliance, correctness preservation and improvement remain unobserved. SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`; [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context).
-
-### Inspection coverage
-
-This member checked the complete benchmark driver and extractor, the complete local executor and cumulative curator prompt, and the `generate` and cumulative `advanced_generate` implementation ranges in SRC-1, `dynamic_cheatsheet/language_model.py`. These are implementation or doctrine/design evidence already inside the boundary. It also inspected the provider retry helper in SRC-1, `text_generation/simple_unified_client.py`; that helper alone is not an end-to-end recovery guarantee. No new source or observed-run evidence is added. External service behavior and result payloads remain outside the conclusions reached here.
+Continuation reloads output rows, restores the last sheet and previous generator outputs, and skips the saved row count. It checks selected arguments, but not all settings, dataset identity or prompt contents. JSONL rewriting is non-atomic and occurs after scoring, so evaluation failure or an interrupted write can prevent durable delivery of the newest update. This is best-effort checkpoint recovery, not an exactly-once transaction or exact replay guarantee ([RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle); SRC-1, `run_benchmark.py`). No observed execution establishes that these recovery paths succeeded in a particular run.
 
 ## Shared records
 
@@ -83,19 +73,25 @@ none declared in this member
 
 ## Annotations
 
-#### On [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation)
+#### On [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update)
 
-Workflow verification boundary: the wrapper extracts an answer but does not make successful extraction a prerequisite for the curator handoff. SRC-1, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/language_model.py`.
+Workflow handoff: Python delegates solution production and reference maintenance as separate contexts on the same client. Only the extracted replacement enters the next generator invocation; raw curator analysis is not a dedicated returned step field. This limits reconstruction of why a retained entry was selected. The generator's answer remains the delivered answer even if the curator questions it. SRC-1 implementation, `dynamic_cheatsheet/language_model.py`.
 
-> if not("FINAL ANSWER" in response):
->     return "No final answer found"
-> --- `dynamic_cheatsheet/utils/extractor.py`
+> "generator_output": generator_output,
+> "generator_answer": generator_answer,
+> "current_cheatsheet": current_cheatsheet,
+> "new_cheatsheet": new_cheatsheet,
+> --- `dynamic_cheatsheet/language_model.py:442-445`
 
-> # Extract the output from the generator model
-> generator_answer = extract_answer(generator_output)
->
-> ## STEP 2: Run the cheatsheet extraction model with the generator output and the current cheatsheet
-> cheatsheet_prompt = cheatsheet_template.replace("[[QUESTION]]", input_txt).replace("[[MODEL_ANSWER]]", generator_output).replace("[[PREVIOUS_CHEATSHEET]]", current_cheatsheet)
-> --- `dynamic_cheatsheet/language_model.py`
+#### On [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle)
 
-The curator receives full output even when the answer string signals extraction failure. This source branch establishes scheduling, not an observed failed-answer episode or successful correction. No new referent is declared: this is a workflow-specific acceptance limit on the supplied cumulative route.
+Workflow delivery boundary: persistence follows generation, memory handoff and scoring. A scorer rejection is an evaluation result, not a memory-admission rejection. The checkpoint is written only after that evaluation path completes. SRC-1 implementation, `run_benchmark.py`.
+
+> if result:
+>     correct_so_far += 1
+> total_so_far += 1
+> --- `run_benchmark.py`
+
+> # Save the outputs to a file after each example (for crash recovery)
+> write_jsonl(args.save_path_name, outputs)
+> --- `run_benchmark.py`

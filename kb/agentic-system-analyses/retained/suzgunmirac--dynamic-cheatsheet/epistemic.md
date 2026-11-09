@@ -1,7 +1,7 @@
 ---
 type: agentic-system-analyses/types/agentic-system-epistemic-report.md
-description: "Dynamic Cheatsheet's candidate generation, model-requested verification, unchecked reference admission and bounded benchmark evaluators."
-run-id: AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01
+description: "Dynamic Cheatsheet epistemic routes: model-requested validation, syntactic memory admission and disconnected benchmark scoring."
+run-id: AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01
 reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
 ---
 
@@ -9,326 +9,393 @@ reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
 
 ## Source-and-claim boundary
 
-The question is whether inference-time reference updates acquire or produce warranted content, rather than merely change later model context. Scope and exclusions are see [boundary](boundary.md#boundary-and-evidence); evidence identities and layers are see its [Source register](boundary.md#source-register). The shipped driver, library, prompts, provider client and notebook consumers belong to the boundary. Provider internals, remote dataset bytes and the uncaptured paper do not supply evidence here.
+The question is whether the shipped inference-memory loop turns solutions into warranted reusable content, and what gives that content force in later solving. Scope, dependencies and exclusions are those of [the boundary](boundary.md#boundary-and-evidence); evidence identities are in its [Source register](boundary.md#source-register). This member adds direct source inspection within SRC-1, not another source or revision. Implementation evidence establishes wiring, not successful model judgment. No target execution was performed.
 
-All direct reads below use SRC-1 at the frozen revision. Supplied runtime records remain provisional but their core routes agree with the inspected source. No supersession is needed. Direct reads support implementation or doctrine/design, not observed activation. No model, benchmark or target code was executed.
+The public memory and learning claim is [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory). More specific warrant and performance claims are [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) and [EPI-CLM-performance-gains](#epi-clm-performance-gains). Instructions to verify are compared with the actual admission and score consumers, rather than treated as successful verification.
 
-| Entry point or operation | Source path | Coverage and records | Limit and conclusion prevented |
+| Entry point or operation | Source path, SRC-1 | Coverage and records | Limit and conclusion prevented |
 |---|---|---|---|
-| CLI dispatch, initialization, dataset import, checkpoint, resume and online scoring | `run_benchmark.py` | Direct full read; see [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation), [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring) | Initial file authorship, target truth and exact dataset/embedding provenance unresolved; no imported-warrant claim |
-| Six advanced generation branches; local/native execution dispatch | `dynamic_cheatsheet/language_model.py` | Direct full read; see [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [EPI-RTE-answer-generation](#epi-rte-answer-generation) | Actual candidate content and compliance not inspected |
-| Delimiter extraction, including unused solution-evaluation extraction | `dynamic_cheatsheet/utils/extractor.py` | Direct full read; see [EPI-RTE-reference-admission](#epi-rte-reference-admission) | Extracting a section is not evaluating its assertions; no consumer of extract_solution in inspected driver/library |
-| All three shipped model prompts | `prompts/generator_prompt.txt`, `prompts/curator_prompt_for_dc_cumulative.txt`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt` | Direct full reads; see [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) and runtime curation/context records | Requested correctness, usage counts and provenance references not enforced |
-| Local code extraction, print adjustment, subprocess, output and cleanup | `dynamic_cheatsheet/utils/execute_code.py` | Direct full read; see [RT-RTE-local-execution](runtime.md#rt-rte-local-execution) | Actual execution/result fidelity and semantic problem encoding unobserved |
-| Active task scorers and exposed auxiliary puzzle/checkmate/soft-match scorers | `dynamic_cheatsheet/utils/evaluation.py` | Direct full read; see [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring), [EPI-RTE-choice-scoring](#epi-rte-choice-scoring) | Auxiliary evaluators not dispatched by shipped benchmark; no complete evaluator-validity conclusion |
-| Retained-output scoring and repeated-problem example | `EvaluatingResults.ipynb`, `ExampleUsage.ipynb` | Direct source-cell reads; see runtime scoring/checkpoint records | Saved outputs not inspected; source comments do not establish success |
-| Client generate/chat/history, Tavily, native search, citation logging, provider text projection and native code | `text_generation/simple_unified_client.py` | Direct reads of methods from _web_search through generate_from_messages, citation extraction, all provider generation methods, native code methods and chat/history methods; see [EPI-RTE-search-acquisition](#epi-rte-search-acquisition), [EPI-RTE-chat-history](#epi-rte-chat-history) | Tool configuration helpers and initialization rely on supplied runtime/findings and source search rather than a complete direct audit; remote tool internals remain opaque |
-| Auxiliary sonnet evaluation | `dynamic_cheatsheet/utils/sonnet_eval.py` | Direct entry-point/doctrine read, lines 1–85; evaluation.py comments out its import | Rhyme/syllable helper internals unassessed; prevents system-complete negative about all evaluation routes |
-| Knowledge-production and improvement claims | `README.md` | Direct overview, features, performance and usage reads; see [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory), [EPI-CLM-zero-shot](#epi-clm-zero-shot) | Full result payloads, comparisons and experimental controls uninspected; benefit and component attribution not established |
-| Task/embedding/result payloads | `data/`, `embeddings/`, `results/` | Supplied boundary inventory only | No content-level provenance, leakage, transfer or observed acceptance conclusion |
+| CLI setup, prompt default, import, initialization and resume | `run_benchmark.py` | Direct full read; [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle) | Dataset/embedding payload integrity uninspected; no label-truth or vector-quality finding |
+| Six approaches and repeated cumulative rounds | `dynamic_cheatsheet/language_model.py` | Direct full read; [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update) | No observed semantic compliance or capacity improvement |
+| Answer, sheet and solution-evaluation extraction | `dynamic_cheatsheet/utils/extractor.py` | Direct full read; [EPI-RTE-sheet-admission](#epi-rte-sheet-admission), [EPI-ABS-score-feedback](#epi-abs-score-feedback) | Standalone `extract_solution` is a string slicer, not a truth evaluator or a called admission gate |
+| Cumulative and synthesis instructions; generator reliance | `prompts/curator_prompt_for_dc_cumulative.txt`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`, `prompts/generator_prompt.txt` | Direct full reads; [EPI-RTE-curator-review](#epi-rte-curator-review), [RT-BAP-reference-context](runtime.md#rt-bap-reference-context) | Requested tests, usage counts and references are not machine-checked assertions |
+| Local and hosted execution | `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/execute_code.py`, `text_generation/simple_unified_client.py` | Direct wrapper read and adapter `generate_from_messages`; executor/provider internals of wrapper routes otherwise supplied by [RT-RTE-local-execution](runtime.md#rt-rte-local-execution), [RT-RTE-provider-execution](runtime.md#rt-rte-provider-execution) | A calculation result does not validate encoding, premises or generalization; hosted tool progression uninspected |
+| Four task-scoring families and auxiliary evaluators | `dynamic_cheatsheet/utils/evaluation.py` | Direct full read; [RT-RTE-score-answer](runtime.md#rt-rte-score-answer), [EPI-OBJ-score-result](#epi-obj-score-result) | Checkmate, soft match and programming-puzzle helpers not dispatched by the inspected CLI/notebook; no observed quality judgment |
+| Interactive caller and post-hoc evaluator | `ExampleUsage.ipynb`, `EvaluatingResults.ipynb` | Example caller supplied runtime finding; evaluator cell source directly read, outputs omitted; [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle), [RT-RTE-score-answer](runtime.md#rt-rte-score-answer) | Saved notebook outputs not assessed; no observed benefit or authentic run attribution |
+| Poetry checker and corpus/test operations | `dynamic_cheatsheet/utils/sonnet_eval.py` | Direct interface/docstring read and function/call search; no CLI/notebook call found; standalone implementation otherwise unassessed | Its separate rhyme/syllable evaluator is not a memory-admission consumer; prevents a system-complete negative about all checking capabilities |
+| Standalone chat/web-search/provider conveniences | `text_generation/simple_unified_client.py` | Function inventory directly searched; ordinary wrapper dispatch directly inspected; remaining provider details supplied runtime findings | Standalone acquisition/chat APIs remain unassessed, not absent; no universal negative about external-evidence acquisition |
+| Documentation and result corpus | `README.md`, `results/` | README directly read; [EPI-CLM-performance-gains](#epi-clm-performance-gains); historical payloads uninspected | No independently inspected observed run or causal comparison; performance attribution remains reported only |
 
-This coverage does not authorize a system-complete absence verdict. The bounded negative is that the inspected driver/library update and reload paths do not use the benchmark score to veto reference admission. The separate public client search routes are included below rather than mistaken for an excluded host.
+The available but uninspected datasets, vectors, result payloads, poetry-checker internals and standalone adapter APIs are not access gaps. They bound conclusions rather than justify an assertion that the whole repository lacks evaluators. Remote model internals, current service behavior and the linked paper are outside the frozen evidence, as specified by the boundary. They prevent exact parameter-state, live compatibility and independently assessed experimental claims. None is needed to establish the inspected separation between sheet admission and benchmark scoring.
 
 ## Epistemic-object inventory
 
 | Object ID | Candidate truth-apt content or none | Claimed role | Evidence source ID and local anchor | Gap/limit |
 |---|---|---|---|---|
-| [EPI-OBJ-final-output](#epi-obj-final-output) | see record | see record | SRC-1, `dynamic_cheatsheet/language_model.py` | Particular answers, explanations and code truth unassessed |
-| [EPI-OBJ-final-answer](#epi-obj-final-answer) | see record | see record | SRC-1, `dynamic_cheatsheet/utils/extractor.py` | Extraction can change selected answer without checking it |
-| [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | see record | see record | SRC-1, `dynamic_cheatsheet/language_model.py` | Strategies can mix propositions and non-truth-apt instructions; no instance classification |
-| [EPI-OBJ-target](#epi-obj-target) | see record | see record | SRC-1, `run_benchmark.py` | Imported target warrant unknown |
-| [EPI-OBJ-curator-prompt](#epi-obj-curator-prompt) | see record | see record | SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt` | Instructions and warrant claims are requested, not enforced |
-| [EPI-OBJ-synthesis-prompt](#epi-obj-synthesis-prompt) | see record | see record | SRC-1, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt` | Effectiveness judgment and preservation unobserved |
-| [RT-OBJ-generator-prompt](runtime.md#rt-obj-generator-prompt) | Instructions, chiefly not truth-apt claims | see record | SRC-1, `prompts/generator_prompt.txt` | Requested verification not evidence of verification |
-| [RT-CMP-language-model](runtime.md#rt-cmp-language-model) | not determinable from accessible weights | see record | SRC-1, `dynamic_cheatsheet/language_model.py` | Latent propositions cannot be individuated; no weight-training conclusion beyond inspected calls |
-| [RT-CMP-input-embeddings](runtime.md#rt-cmp-input-embeddings) | Similarity representation, not explicit truth claims | see record | SRC-1, `run_benchmark.py` | Ranking warrant is numerical similarity, not solution correctness |
-| [EPI-OBJ-search-results](#epi-obj-search-results) | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | Source content and reliability unknown; URLs are not endorsement |
-| [EPI-OBJ-messages](#epi-obj-messages) | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | Chat state is separate from externally managed LanguageModel history |
-
-Local code output is a material evidential part of final_output, not a separate retained tool artifact: see [RT-RTE-local-execution](runtime.md#rt-rte-local-execution). It includes stdout or failure text. Provider-native result text has the separate opaque projection boundary in [RT-RTE-native-execution](runtime.md#rt-rte-native-execution).
+| [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet) | Strategies' applicability claims, examples, theorem statements and code behavior claims; policy advice need not be truth-apt | See record | SRC-1, `dynamic_cheatsheet/language_model.py`, curator prompts in record | Mixed semantic content; actual generated claims not individuated in this source-only analysis |
+| [EPI-OBJ-generator-output](#epi-obj-generator-output) | Proposed answers, explanations, code and embedded execution-result text | See record | SRC-1, `dynamic_cheatsheet/language_model.py` | Model assertion, executed output and formal proof are different; transcript concatenation does not certify them |
+| [EPI-OBJ-score-result](#epi-obj-score-result) | Boolean assertion that extracted answer passes a task-specific program | See record | SRC-1, `dynamic_cheatsheet/utils/evaluation.py`, `run_benchmark.py` | Does not assert the strategy or explanation is correct |
+| [EPI-OBJ-target](#epi-obj-target) | Imported expected answer or reference equation | See record | SRC-1, `run_benchmark.py` | Dataset source warrant unknown; labels reach scorers, not curator input |
+| [RT-CMP-language-model](runtime.md#rt-cmp-language-model) | Not determinable at the level of individual propositions in weights | See record | SRC-1, `dynamic_cheatsheet/language_model.py`, `README.md` | No source-owned weight update; remote parameter lineage and exact endpoint state uninspected |
+| [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict) | None in keys/serialization themselves; text parts above carry content | See record | SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py` | Stored envelopes do not constitute acceptance records |
+| [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) | Retained prior question/output pairs contain candidate claims; numerical similarities carry ranking, not truth warrant | See record | SRC-1, `dynamic_cheatsheet/language_model.py` | Precomputed vector provenance unresolved; old answers are not replaced by targets |
 
 ## Authority-route ledger
 
-Rows separate checking, admission, retention and later consumption even where one supplied route record spans them. Fields owned by those records are referenced rather than redeclared. Relation judgments are local assessments of the cited implementation. Model-generated semantics remain indeterminate: a call can copy, derive or invent, and the accessible call site cannot choose among those cases.
+The linked records own shared identity, progression, activation and evidence fields; `see` references below avoid redeclaring them. Architectural status and content/update classifications below are this overlay's assessments. Repeated citations split functions of a route, not its identity. No implemented force here is a claim of observed compliance.
 
-| Route ID | Route function | Architectural status | Object/candidate ID | Content/update relation | Transition or check target | Evaluator/condition and domain | Activation and timing | Possible or observed result | Implemented force | Epistemic authority and scope | Operational authority: behavior permitted, blocked, or changed | Behavioral-authority path: consumer, channel, force, horizon | Evidence source ID and local anchor | Claim IDs or none | Mismatch marker or none | Gap/limit |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| [EPI-RTE-answer-generation](#epi-rte-answer-generation) | content transformation | implemented | [EPI-OBJ-final-output](#epi-obj-final-output) | truth-apt transformation: indeterminate | see record | see record | see record | see record | see record | Candidate answer, no independent truth license | see record | see record | SRC-1, `dynamic_cheatsheet/language_model.py` | [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory) | none | Copy, derivation or conjecture not distinguishable without content |
-| [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) | content transformation | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | truth-apt transformation: indeterminate | Curator successor proposal; see records | see records | see records | see records | see records | No established entailed derivation or accepted ampliative claim | see records | see [RT-BAP-curator-guidance](runtime.md#rt-bap-curator-guidance) | SRC-1, `dynamic_cheatsheet/language_model.py` | [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) | Requested verification exceeds observed warrant | Content-level evidence would distinguish reshaping, derivation and non-entailing generalization |
-| [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) | check/evidence production | doctrine only | [EPI-OBJ-final-output](#epi-obj-final-output) | no content change | Solution correctness before updating | see record | see record | see record | Model-facing request only | Requested accuracy/effectiveness assessment, not independently established acceptance | see record | see [RT-BAP-curator-guidance](runtime.md#rt-bap-curator-guidance) | SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt` | [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) | No recorded evidence-consuming semantic decision inspected | Sending a check instruction is implemented; performance of the check is doctrine only |
-| [EPI-RTE-reference-admission](#epi-rte-reference-admission) | disposition/acceptance | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | no content change | see record | see record | see record | see record | see record | Delimiter admission only; not epistemic acceptance | see record | see record | SRC-1, `dynamic_cheatsheet/utils/extractor.py` | [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) | Semantic warrant is not an admission condition | Empty or unclosed tagged text can replace prior reference |
-| [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) | content transformation | implemented | [EPI-OBJ-final-output](#epi-obj-final-output) | truth-apt transformation: non-ampliative reshaping | Pair selection and labelled assembly, not model synthesis | see record | see record | see record | see record | Preserves selected strings, not their correctness | see record | see [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context) | SRC-1, `dynamic_cheatsheet/language_model.py` | none | none | Selection omits other pairs; labels and similarity do not license truth |
-| [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) | operational admission/selection/consumption | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | no content change | see record | see record | see record | see record | see record | Relevance ranking only, not correctness ranking | see record | see [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context) | SRC-1, `dynamic_cheatsheet/language_model.py` | none | none | Direct retrieval and full-history bypass curator checks |
-| [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation) | retention | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet), [EPI-OBJ-final-output](#epi-obj-final-output) | no content change | see record | see record | see record | see record | see record | Retention licenses no truth claim | see record | see record | SRC-1, `run_benchmark.py` | [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory) | none | Save after scoring still saves candidates regardless of score |
-| [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation) | lineage/freshness/recovery | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | no content change | see record | see record | see record | see record | see record | Argument equality is not endorsement or exact replay | see record | see record | SRC-1, `run_benchmark.py` | none | none | Changed prompt bytes, curator configuration and data order not fully guarded |
-| [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context) | operational admission/selection/consumption | implemented | [EPI-OBJ-final-cheatsheet](#epi-obj-final-cheatsheet) | no content change | Reference delivery to solving | see record | see record | see record | see record | Advisory reference use, not enforced truth | see record | see record | SRC-1, `prompts/generator_prompt.txt` | [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory) | none | Model reliance and benefit unobserved |
-| [RT-RTE-local-execution](runtime.md#rt-rte-local-execution) | check/evidence production | implemented | [EPI-OBJ-final-output](#epi-obj-final-output) | truth-apt transformation: indeterminate | Model-selected Python, not automatically a complete solution test | see record | see record | see record | see record | Bounded computational outcome evidence if exercised; no problem-encoding or transfer license | see record | see record | SRC-1, `dynamic_cheatsheet/utils/execute_code.py` | none | none | stdout can mask nonempty stderr when stdout exists; self-reported output is not a proof |
-| [RT-RTE-native-execution](runtime.md#rt-rte-native-execution) | check/evidence production | implemented | [EPI-OBJ-final-output](#epi-obj-final-output) | truth-apt transformation: indeterminate | Provider tool-enabled answer, inner test domain uninspected | see record | see record | see record | see record | Opaque tool result, no independently inspected correctness acceptance | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | none | none | Text projection does not retain a complete execution/evidence envelope |
-| [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring) | check/evidence production | implemented | [EPI-OBJ-final-answer](#epi-obj-final-answer), [EPI-OBJ-target](#epi-obj-target) | no content change | Game of 24: expression value and number multiset | see record | see record | see record | see record | Numeric tolerance plus token-use predicate, not process correctness | see record | see record | SRC-1, `dynamic_cheatsheet/utils/evaluation.py` | [EPI-CLM-zero-shot](#epi-clm-zero-shot) | none | Operator grammar not restricted before eval; no reference-update veto |
-| [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring) | check/evidence production | implemented | [EPI-OBJ-final-answer](#epi-obj-final-answer), [EPI-OBJ-target](#epi-obj-target) | no content change | AIME: normalized target string | see record | see record | see record | see record | Target-string match only; target truth and derivation not checked | see record | see record | SRC-1, `dynamic_cheatsheet/utils/evaluation.py` | [EPI-CLM-zero-shot](#epi-clm-zero-shot) | none | Online normalization differs from notebook; no curator veto |
-| [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring) | check/evidence production | implemented | [EPI-OBJ-final-answer](#epi-obj-final-answer), [EPI-OBJ-target](#epi-obj-target) | no content change | Equation balancing: numeral format and value tolerance | see record | see record | see record | see record | Expression/target-value agreement within tolerance; no explanation license | see record | see record | SRC-1, `dynamic_cheatsheet/utils/evaluation.py` | [EPI-CLM-zero-shot](#epi-clm-zero-shot) | none | Format predicate precedes eval; no curator veto |
-| [EPI-RTE-choice-scoring](#epi-rte-choice-scoring) | check/evidence production | implemented | [EPI-OBJ-final-answer](#epi-obj-final-answer) | no content change | see record | see record | see record | see record | see record | Answer-format/substring predicate, not semantic entailment | see record | see record | SRC-1, `dynamic_cheatsheet/utils/evaluation.py` | [EPI-CLM-zero-shot](#epi-clm-zero-shot) | Predicate can accept a negated target text | Concrete counterexample in record; accuracy cannot validate curation |
-| [EPI-RTE-search-acquisition](#epi-rte-search-acquisition) | content transformation | implemented | [EPI-OBJ-search-results](#epi-obj-search-results) | truth-apt transformation: acquisition/import | Tavily snippet import; see record | see record | see record | see record | see record | External warrant unknown; title/URL/snippet retained as text | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | none | none | Query results are context, not source endorsement |
-| [EPI-RTE-search-acquisition](#epi-rte-search-acquisition) | content transformation | implemented | [EPI-OBJ-search-results](#epi-obj-search-results) | truth-apt transformation: indeterminate | Native searched generation and text projection; see record | see record | see record | see record | see record | External source warrant unknown; structured citation lineage degraded on text projection | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | none | none | Native imported inputs, derivations and conjectures not individually distinguishable |
-| [EPI-RTE-chat-history](#epi-rte-chat-history) | retention | implemented | [EPI-OBJ-messages](#epi-obj-messages) | no content change | see record | see record | see record | see record | see record | Conversation retention is not acceptance | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | none | none | No semantic invalidation; reset/set replaces state |
-| [EPI-RTE-chat-history](#epi-rte-chat-history) | operational admission/selection/consumption | implemented | [EPI-OBJ-messages](#epi-obj-messages) | no content change | see record | see record | see record | see record | see record | Prior turns are contextual material only | see record | see record | SRC-1, `text_generation/simple_unified_client.py` | none | none | Not used by benchmark generate_from_messages |
+Route ID: [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle)
+Route function: content transformation
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-target](#epi-obj-target), [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet)
+Content/update relation: truth-apt transformation: acquisition/import
+Transition or check target: external problem/target loading and optional initial sheet or resumed rows.
+Evaluator/condition and domain: file/dataset reads and argument consistency checks, not truth evaluation.
+Activation and timing: see route; before subsequent question generation.
+Possible or observed result: supplied text and target available; source warrant unknown, not upgraded by import.
+Implemented force: inputs supplied to distinct consumers.
+Epistemic authority and scope: no new source-truth license.
+Operational authority: initialization or resume can determine later reference text without per-entry approval.
+Behavioral-authority path: generator/curator via sheet user-message content, advisory across later queries; scorer via target argument, enforcing Boolean computation only.
+Evidence source ID and local anchor: SRC-1, `run_benchmark.py`; see route.
+Claim IDs or none: [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory).
+Mismatch marker or none: none.
+Gap/limit: import fidelity is inspectable at the field level, but provenance and truth of imported content remain unknown.
 
-Implementation evidence for the local-output license limit:
+Route ID: [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update)
+Route function: content transformation
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-generator-output](#epi-obj-generator-output), [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet)
+Content/update relation: truth-apt transformation: indeterminate
+Transition or check target: generator produces answer; curator proposes a replacement sheet after the answer.
+Evaluator/condition and domain: see route; same provider-backed model, guided by supplied templates.
+Activation and timing: cumulative rounds; one hybrid update. Generator is before curator.
+Possible or observed result: candidate answers and reusable text requested; actual semantic relation unobserved.
+Implemented force: returned/extracted text, not verified derivation.
+Epistemic authority and scope: source code alone cannot classify outputs as mere compression, entailed derivation or ampliative conjecture. The prompt permits generalization, but permission is not an emitted non-entailing proposition.
+Operational authority: admitted sheet can become subsequent reference text.
+Behavioral-authority path: see [RT-BAP-reference-context](runtime.md#rt-bap-reference-context).
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/curator_prompt_for_dc_cumulative.txt`; see route.
+Claim IDs or none: [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory), [EPI-CLM-verified-solutions](#epi-clm-verified-solutions).
+Mismatch marker or none: requested verified/generalizable output is not itself verified/generalizable output.
+Gap/limit: actual candidate contents and linked judgments needed to decide remaining semantic classifications; bare CLI defaults omit these curator instructions.
 
-> captured_output = stdout.decode().strip()
-> error_output = stderr.decode().strip()
->
-> if captured_output == "":
->     if error_output != "":
->         captured_output = f"Error in execution: {error_output}"
-> --- `dynamic_cheatsheet/utils/execute_code.py`
+Route ID: [EPI-RTE-curator-review](#epi-rte-curator-review)
+Route function: check/evidence production
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-generator-output](#epi-obj-generator-output)
+Content/update relation: no content change
+Transition or check target: correctness and usefulness of current solution for future reference.
+Evaluator/condition and domain: model judgment requested by cumulative prompt; no independent target is passed.
+Activation and timing: see record; after answer, before extraction.
+Possible or observed result: model may reject, correct, preserve or generalize content within proposed sheet; no structured judgment is inspected.
+Implemented force: advisory instructions influence the proposal; no separately parsed pass/fail result.
+Epistemic authority and scope: requested assessment, not evidence-consuming acceptance against an independently checked outcome.
+Operational authority: curator chooses what text to include; Python does not enforce its reasoning.
+Behavioral-authority path: curator via prompt, advisory on current proposal; proposal passes to extractor.
+Evidence source ID and local anchor: SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`, `dynamic_cheatsheet/language_model.py`; see record.
+Claim IDs or none: [EPI-CLM-verified-solutions](#epi-clm-verified-solutions).
+Mismatch marker or none: semantic validation delegated to model, not established by software admission.
+Gap/limit: critique could occur in opaque model processing, but neither successful checking nor absence of formulated criticism follows from that opacity.
 
-Lifecycle integration: no route found within boundary of the inspected driver/library reference updates and reloads **after evidence-consuming acceptance**. Organizing candidate text is requested and context installation is implemented, but neither establishes prior acceptance. This is not a negative about inaccessible provider reasoning or the unassessed sonnet helpers. Non-truth-apt behavioral heuristics can travel alongside propositions through the same advisory context path; their effects are likewise unobserved.
+Route ID: [EPI-RTE-sheet-admission](#epi-rte-sheet-admission)
+Route function: disposition/acceptance
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet)
+Content/update relation: truth-apt transformation: non-ampliative reshaping
+Transition or check target: extract tagged replacement text; accept it operationally or use fallback.
+Evaluator/condition and domain: opening tag/string splitting; formatting only.
+Activation and timing: after cumulative/hybrid curator, or before retrieval-synthesis generator; see record.
+Possible or observed result: extracted substring replaces sheet; no opening tag returns fallback. Missing closing tag still permits replacement.
+Implemented force: enforcing selection of live text.
+Epistemic authority and scope: no truth license from delimiters. This is operational admission, not epistemic acceptance.
+Operational authority: arbitrary tagged text, including false claims, can reach later generator context before any independent check.
+Behavioral-authority path: extractor to carried sheet/current synthesis, enforcing at write; generator via user prompt, advisory at later use.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/language_model.py`; see record's concrete trace.
+Claim IDs or none: [EPI-CLM-verified-solutions](#epi-clm-verified-solutions).
+Mismatch marker or none: no correctness veto at this admission boundary.
+Gap/limit: classification concerns substring extraction only, not semantic preservation by the preceding model call.
+
+Route ID: [RT-RTE-context-selection](runtime.md#rt-rte-context-selection)
+Route function: operational admission/selection/consumption
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-generator-output](#epi-obj-generator-output), [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet)
+Content/update relation: truth-apt transformation: non-ampliative reshaping
+Transition or check target: choose/format all prior pairs or cosine-top-k pairs; default empties reference context.
+Evaluator/condition and domain: approach dispatch, cosine ranking, array indexing and string formatting; relevance heuristic, not truth test.
+Activation and timing: see route; before generation or synthesis.
+Possible or observed result: selected original text placed in prompt, with warnings that previous solutions may be wrong.
+Implemented force: enforcing inclusion/order, advisory semantic reliance.
+Epistemic authority and scope: imported/model-generated source warrant is not improved by similarity or display; selected text preserves candidate content, not proof status.
+Operational authority: determines examples visible to generator; omitted raw pairs remain in corpus.
+Behavioral-authority path: see [RT-BAP-reference-context](runtime.md#rt-bap-reference-context); per-query reference context.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/language_model.py`; see route.
+Claim IDs or none: [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory).
+Mismatch marker or none: none; caution text is a counterexample to assuming all retrieved answers are endorsed.
+Gap/limit: embedding alignment assumed by API; relevance, correctness and obedience unobserved.
+
+Route ID: [RT-RTE-context-selection](runtime.md#rt-rte-context-selection)
+Route function: content transformation
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet), [EPI-OBJ-generator-output](#epi-obj-generator-output)
+Content/update relation: truth-apt transformation: indeterminate
+Transition or check target: retrieval-synthesis curator builds custom sheet from old sheet, selected pairs and next question.
+Evaluator/condition and domain: model requested to assess effectiveness and generalize; unlike cumulative review it runs before the current answer.
+Activation and timing: see route; retrieval-synthesis only.
+Possible or observed result: new model-proposed sheet or raw-pair fallback; old synthesized sheet is not the missing-tag fallback.
+Implemented force: proposal generation, followed by separate [EPI-RTE-sheet-admission](#epi-rte-sheet-admission).
+Epistemic authority and scope: neither known semantic preservation nor established non-entailment without a candidate instance; no target-grounded acceptance.
+Operational authority: current generator sees synthesis in place of raw selected pairs.
+Behavioral-authority path: curator prompt advisory; extractor enforcing text replacement; generator advisory current-query guidance.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`; see route.
+Claim IDs or none: [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory).
+Mismatch marker or none: reshaping/generalization goals do not determine actual transformation class.
+Gap/limit: no retained criticism-to-revision trace inspected.
+
+Route ID: [RT-RTE-local-execution](runtime.md#rt-rte-local-execution)
+Route function: check/evidence production
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-generator-output](#epi-obj-generator-output)
+Content/update relation: truth-apt transformation: indeterminate
+Transition or check target: model-selected Python computation over whatever inputs the proposed code encodes.
+Evaluator/condition and domain: local Python execution and stdout/error capture; see route for permission and recursion conditions.
+Activation and timing: model request during generation; result returns in continuation before answer/curation.
+Possible or observed result: numerical/text output or failure/timeout, not necessarily a solution check.
+Implemented force: continuation receives result and request to finish/try alternatives; no compulsory rejection on error.
+Epistemic authority and scope: execution can supply evidence within the executed program's domain; no source-truth, encoding-fidelity or transfer warrant. Not every execution is an evaluator of a solution.
+Operational authority: permits model-directed continuation and subsequent sheet proposal informed by transcript.
+Behavioral-authority path: local executor to generator continuation, advisory; then full output to curator and later raw-output consumers.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/execute_code.py`; see route.
+Claim IDs or none: [EPI-CLM-performance-gains](#epi-clm-performance-gains).
+Mismatch marker or none: executable result is not automatically a checked entailed domain conclusion.
+Gap/limit: no concrete executed target program supplied for this analysis; no warranted-premise derivation asserted.
+
+Route ID: [RT-RTE-provider-execution](runtime.md#rt-rte-provider-execution)
+Route function: check/evidence production
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-generator-output](#epi-obj-generator-output)
+Content/update relation: truth-apt transformation: indeterminate
+Transition or check target: provider-selected computation, if native session/tool request activates.
+Evaluator/condition and domain: external tool implementation; see route.
+Activation and timing: native generator branch, not ordinary curator calls.
+Possible or observed result: returned text; structured tool-event details omitted from wrapper result.
+Implemented force: returned provider text enters answer/curator pipeline.
+Epistemic authority and scope: no inspected tool-level validation warrant beyond provider contract request.
+Operational authority: generator may use returned text; local-execution flag does not veto native branch.
+Behavioral-authority path: service response to generator output and downstream curator/raw-pair consumers, advisory, current and subsequent queries.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/language_model.py`, `text_generation/simple_unified_client.py`; see route.
+Claim IDs or none: none.
+Mismatch marker or none: no complete tool lineage in returned text.
+Gap/limit: domain and actual tool invocation not determinable from source requests alone.
+
+Route ID: [RT-RTE-score-answer](runtime.md#rt-rte-score-answer)
+Route function: check/evidence production
+Architectural status: implemented
+Object/candidate ID: [EPI-OBJ-score-result](#epi-obj-score-result), [EPI-OBJ-target](#epi-obj-target)
+Content/update relation: truth-apt transformation: entailed derivation
+Transition or check target: extracted final answer against task scorer predicate, not explanation, curator text or strategy transfer.
+Evaluator/condition and domain: deterministic Python predicate: normalized AIME equality; MC letter/text matching; GameOf24 value tolerance and number-token multiset; equation number-string shape and numerical equality.
+Activation and timing: after generation/curation in driver; later file traversal in evaluation notebook.
+Possible or observed result: Boolean follows inspected predicate, conditional on inputs/program execution; no actual result calculated here.
+Implemented force: counters/printed aggregates, not admission.
+Epistemic authority and scope: predicate satisfaction only, conditional on target validity. MC substring acceptance can accept a negated target-option statement; that limits semantic correctness license.
+Operational authority: evaluation runs and can fail before disk write; ordinary false result only leaves counters unchanged and does not reject sheet.
+Behavioral-authority path: driver/notebook counters and console, enforcing arithmetic of reported totals, current evaluation; no score-to-model feedback.
+Evidence source ID and local anchor: SRC-1, `dynamic_cheatsheet/utils/evaluation.py`, `run_benchmark.py`, `EvaluatingResults.ipynb`; see [EPI-OBJ-score-result](#epi-obj-score-result).
+Claim IDs or none: [EPI-CLM-performance-gains](#epi-clm-performance-gains).
+Mismatch marker or none: output scoring is not memory validation.
+Gap/limit: extraction differs across consumers; causal benefit and explanation validity do not follow from a pass.
+
+Route ID: [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle)
+Route function: retention
+Architectural status: implemented
+Object/candidate ID: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict), [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet), [EPI-OBJ-generator-output](#epi-obj-generator-output)
+Content/update relation: no content change
+Transition or check target: carry sheet/output list and serialize rows, irrespective of Boolean correctness.
+Evaluator/condition and domain: driver assignment/file write; see route.
+Activation and timing: handoff before score; disk rewrite after score.
+Possible or observed result: latest sheet and prior outputs remain available for next round/query or resume.
+Implemented force: actual input-state selection and persistence wired.
+Epistemic authority and scope: retention confers no acceptance; row contains target, but later generator corpus uses `final_output`, not corrected target.
+Operational authority: next invocation may rely on unvalidated retained text; continuation restores last non-null sheet.
+Behavioral-authority path: see [RT-BAP-reference-context](runtime.md#rt-bap-reference-context), advisory beyond one query and through resume.
+Evidence source ID and local anchor: SRC-1, `run_benchmark.py`; see route.
+Claim IDs or none: [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory).
+Mismatch marker or none: retention is not lifecycle integration following acceptance.
+Gap/limit: file/score exceptions can interrupt retention; no automatic semantic rollback or score-triggered withdrawal, as [EPI-ABS-score-feedback](#epi-abs-score-feedback) establishes.
+
+Route ID: [EPI-ABS-score-feedback](#epi-abs-score-feedback)
+Route function: lifecycle integration
+Architectural status: no route found within boundary
+Object/candidate ID: [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet)
+Content/update relation: no content change
+Transition or check target: acceptance of a truth claim against explicit evidence/criterion followed by integration or withdrawal on a failed benchmark score.
+Evaluator/condition and domain: none found in the inspected wrapper, extractor, CLI and evaluator cell-source consumers; see bounded search record.
+Activation and timing: none found for this function; operational reuse occurs without it.
+Possible or observed result: no acceptance record or score-driven sheet rejection in those paths.
+Implemented force: none found for this function.
+Epistemic authority and scope: does not establish absence of model-internal criticism or standalone checker capability.
+Operational authority: no score-based block on later sheet supply.
+Behavioral-authority path: none found for score-to-sheet feedback; existing text reuse remains independently wired.
+Evidence source ID and local anchor: SRC-1, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`, `EvaluatingResults.ipynb`; see record.
+Claim IDs or none: [EPI-CLM-verified-solutions](#epi-clm-verified-solutions).
+Mismatch marker or none: operational use can precede any independently evidenced epistemic acceptance.
+Gap/limit: bounded shipped-loop conclusion, not a negative about inaccessible provider reasoning or every auxiliary API.
 
 ## System-claim versus route comparison
 
 | Claim ID | Claimed operation or warrant | Claim source ID/anchor and evidence layer | Doctrine/design support | Implemented route IDs | Observed-run support | Causal support and design limits | Supported conclusion | Mismatch/unknown |
 |---|---|---|---|---|---|---|---|---|
-| [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory) | see record | SRC-1, `README.md`; doctrine/design and reported operation | see record | [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation) | see record | see record | Installed reference can reach later calls without an explicit local weight update | Reduced mistakes, generalization and improved capacity remain unestablished |
-| [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) | see record | SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`; doctrine/design | see record | [EPI-RTE-reference-admission](#epi-rte-reference-admission), [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) | none inspected | No specific solution check/acceptance trace; benchmark scorer runs downstream | Verification is a model-facing responsibility; reference admission is syntactic | “Verified” cannot be assigned to every retained item |
-| [EPI-CLM-zero-shot](#epi-clm-zero-shot) | see record | SRC-1, `README.md`; doctrine/design and reported operation | see record | [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring), [EPI-RTE-choice-scoring](#epi-rte-choice-scoring), [EPI-RTE-reference-admission](#epi-rte-reference-admission) | Full results not inspected | No frozen intervention/comparison assessed; no curator, tool or retrieval component attribution | Driver keeps labels out of curator/generator update context, while using them for measurement | Label-free updating is not label-free evaluation; improvement figures not independently warranted here |
+| [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory) | See record | SRC-1, `README.md`; doctrine/design | Explicit cross-query reuse without parameter changes | [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update) | No payload/trace assessed | Same endpoint supplies generator/curator; source-owned weight updates not found by supplied component inspection | Text-based adaptive input pathway implemented | Accumulated useful strategies and changed capacity not established by wiring |
+| [EPI-CLM-verified-solutions](#epi-clm-verified-solutions) | See record | SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`; doctrine/design | Correctness review and tested/effective entry selection requested | [EPI-RTE-curator-review](#epi-rte-curator-review), [EPI-RTE-sheet-admission](#epi-rte-sheet-admission), [RT-RTE-score-answer](runtime.md#rt-rte-score-answer) | No acceptance trace inspected | Score checks answer after update; format controls replacement | Model asked to curate; code admits tagged proposal | Verified-entry warrant not enforced or observed; missing closing delimiter still admits |
+| [EPI-CLM-performance-gains](#epi-clm-performance-gains) | See record | SRC-1, `README.md`; reported operation | Zero-shot, cumulative learning and task accuracy assertions | [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [RT-RTE-local-execution](runtime.md#rt-rte-local-execution), [RT-RTE-score-answer](runtime.md#rt-rte-score-answer) | README report only; historical corpora uninspected | No inspected intervention/comparison establishes memory-specific effect, strategy transfer or component attribution | Claims have plausible implemented input and scoring pathways | Magnitude, mechanism, transfer and causal improvement remain unassessed |
 
 ## Bounded conclusion
 
-Dynamic Cheatsheet implements answer-fed model curation and immediate installation of extracted reference text. The old reference and generated solution reach the update consumer; the replacement reaches subsequent solving through a user-message reference channel. See [RT-BAP-curator-guidance](runtime.md#rt-bap-curator-guidance), [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context) and [EPI-RTE-reference-admission](#epi-rte-reference-admission). This is operational authority without established epistemic acceptance. A tagged candidate, even empty or unclosed, can supersede prior text before scoring. Missing opening tags retain the old text or retrieved fallback; that is formatting rejection, not correctness rejection.
+Dynamic Cheatsheet implements operational reuse of retained text, not a software-certified knowledge base. It imports problem data, labels, optional initial sheets and saved state with source warrant unknown; it preserves raw candidate outputs for later full-history/retrieval consumption and lets a model replace a carried sheet. Cosine similarity grants visibility, not correctness. Curation may change meaning or introduce new generalizations, but source-only inspection cannot individuate actual propositions or decide between compression, entailed derivation and ampliative conjecture for those model outputs. These conclusions follow [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle) and [EPI-OBJ-cheatsheet](#epi-obj-cheatsheet).
 
-Direct retrieval and full-history modes reuse prior full responses without model curation. Cosine selection licenses similarity priority, not truth. Curator synthesis may preserve propositions, deduce new ones or conjecture broader strategies; no particular transformation is established from the call sites. A deterministic extraction does establish a non-ampliative substring operation, as the concrete trace in [EPI-RTE-reference-admission](#epi-rte-reference-admission) shows. No checked derivation from warranted premises or produced accepted ampliative claim is established in the inspected reference loop.
+There are real but distinct checking paths. Local execution returns evidence about the selected program; hosted execution returns provider text with incomplete tool lineage; neither by itself validates problem encoding or broader strategies. Deterministic answer scoring derives a predicate result from an extracted answer and, where used, an imported target. Its license stops at the program's checked domain. In particular, multiple-choice text inclusion is not semantic entailment, and the notebook's extraction can select a different answer than runtime extraction. These are [RT-RTE-local-execution](runtime.md#rt-rte-local-execution), [RT-RTE-provider-execution](runtime.md#rt-rte-provider-execution) and [EPI-OBJ-score-result](#epi-obj-score-result), not interchangeable oracles.
 
-Imported task targets and caller initialization text have unresolved source warrant. Optional client search acquires externally supplied snippets with visible URLs, while native provider text projection can omit structured citation metadata. See [EPI-RTE-search-acquisition](#epi-rte-search-acquisition). Import, retrieval and fluent synthesis do not add warrant. Disk checkpoints preserve candidates and reconnect them to later calls without reevaluation; argument checks support a limited continuation protocol, not freshness endorsement or exact replay.
+The cumulative curator receives proposed solution text, including available execution transcript, and is asked to assess correctness and future usefulness. It does not receive the benchmark target or score through that update route. Its proposal is admitted by delimiters; false answer scores do not veto or withdraw it. Thus no inspected evidence-consuming acceptance decision licenses a new ampliative claim for a named future-use scope. No subsequent lifecycle integration following such acceptance is established. This does not deny that the model can check or criticize; it distinguishes the implemented request from an evidenced result and a consequential acceptance decision ([EPI-RTE-curator-review](#epi-rte-curator-review), [EPI-RTE-sheet-admission](#epi-rte-sheet-admission), [EPI-ABS-score-feedback](#epi-abs-score-feedback)).
 
-Local execution can produce computational evidence and error feedback, but its code is model-selected and transformed before execution. Its license does not extend to correctness of problem encoding, explanation, transfer or reference admission. Native tools have an independently opaque evaluator boundary. Task scorers check narrow predicates and print counts, not proposed reference content. The multiple-choice counterexample in [EPI-RTE-choice-scoring](#epi-rte-choice-scoring) limits even the semantic reading of a score. None of these results is a wired curator correctness veto in the inspected driver.
+The implemented behavioral authority is substantial but advisory at semantic use: carried sheet and selected outputs enter later generator user-message context, while the extractor and caller enforce which text is supplied. The horizon includes later rounds, queries and resumed runs. Whole replacement can remove old errors, but can also remove correct content; logged history does not implement semantic rollback. Direct strategy/policy adaptation through natural-language guidance can occur without producing or accepting a truth-apt proposition. Evidence-responsive improvement remains a separate question, not a consequence of retention ([RT-BAP-reference-context](runtime.md#rt-bap-reference-context), [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update)).
 
-The claimed future-capacity pathway has reference updating, persistence and a live advisory consumption channel. Exercised learning and successful self-improvement remain unestablished without content-dependent outcome and attribution evidence; reported performance does not identify a curator or memory component effect. Reflection and autonomous theory-building are separately unresolved: requested localized strategies and iteration wiring do not demonstrate content-directed criticism, criticism-result reuse or method-text revision. See [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) and [RT-RTE-context-selection](runtime.md#rt-rte-context-selection). Provider weights remain uninspected; no remote parametric-state verdict follows from the absence of a local training call. These are independent route limits, not one epistemic score.
+Localized rule text and computational update/read-back routes afford iterative guidance revision. Whether formulated theories are actually criticized, revised and used because of their content remains uninspected, as does retained criticism shaping later rounds. The wrapper supports a dispositional, improvement-directed change to its own future guidance, not source-grounded proof of exercised self-improvement: subsequent behavior causally depending on a particular evidence-shaped change is not established. Improved capacity, reflective two-way self-representation, autonomous performance of every theory-building operation and successful self-improvement remain independent, unestablished conclusions, not a bundled negative. Provider weights are separately opaque and not updated by inspected wrapper code ([RT-CMP-language-model](runtime.md#rt-cmp-language-model)). The README's performance reports need inspected run/comparison evidence before attributing benefit or transferable mechanisms ([EPI-CLM-performance-gains](#epi-clm-performance-gains)).
 
 ## Shared records
 
 ### Operative objects
 
-#### EPI-OBJ-curator-prompt
-Label: Cumulative curator template
-
-Source-native identity: curator_prompt_for_dc_cumulative template. Representational form: natural-language instructions with literal placeholders substituted by the wrapper. Storage substrate: shipped text, loaded string and model user message. Claimed role: correctness assessment, reusable-strategy selection, refinement, preservation and usage counts. Candidate truth-apt content: claims about verified/effective solutions and any instantiated prior-reference/answer propositions; most static content is policy rather than a factual candidate. No supplied object counterpart: [RT-OBJ-generator-prompt](runtime.md#rt-obj-generator-prompt) is the solving template, while [RT-BAP-curator-guidance](runtime.md#rt-bap-curator-guidance) is this template's authority path, not the text object. SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`; doctrine/design. Its warranty claim is see [EPI-CLM-verified-solutions](#epi-clm-verified-solutions); correctness request evidence is see [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation).
-
-> Each entry must include a usage count: Increase the count every time a strategy is successfully used in problem-solving.
-> --- `prompts/curator_prompt_for_dc_cumulative.txt`
-
-#### EPI-OBJ-synthesis-prompt
-Label: Retrieval synthesis template
-
-Source-native identity: curator_prompt_for_dc_retrieval_synthesis template. Representational form: natural-language update instructions with substituted selected pairs, prior reference and next question. Storage substrate: shipped text and model user message. Claimed role: task-suited synthesis, effectiveness assessment, removal of weak strategies, generalization and preservation. Candidate truth-apt content: instantiated strategy/example assertions; optimization instructions are not themselves factual candidates. Distinct from [EPI-OBJ-curator-prompt](#epi-obj-curator-prompt), this runs before generation and receives selected earlier pairs/next question rather than the just-produced answer. No supplied object counterpart; evidence for the consumer route and replacement request is see [RT-RTE-context-selection](runtime.md#rt-rte-context-selection). SRC-1, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`; doctrine/design.
-
-> - Introduce new meta-strategies based on recent problem-solving experiences.
-> --- `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`
-
-#### EPI-OBJ-final-output
-Label: Full generator output
+#### EPI-OBJ-cheatsheet
+Label: cheatsheet reference text
 
 Part of: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict)
 
-Source-native identity: final_output, containing natural-language answers/explanations and possible Python/output text. Representational form: natural-language interpretation, with symbolic Python executed on the local tool path. Storage substrate: returned string, driver corpus and JSONL. Claimed role: answer and source material for curator/retrieval. Candidate truth-apt content: problem answers, intermediate assertions and possible general rules; individual truth not assessed. This is a material field of the supplied result container, not a new identity for that container. SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`; implementation.
+Source-native identity: `final_cheatsheet` and its live carried string. Representational form: natural-language strategy/claim text and code interpreted by the generator/curator; delimiters are symbolic selection syntax, not validated per-entry schemas. Storage substrate: Python string, caller JSONL, optional initial file. This is the semantic part of the supplied result envelope, not a duplicate envelope. The text can contain truth-apt claims about applicability and examples as well as non-truth-apt instructions. SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/curator_prompt_for_dc_cumulative.txt`.
+
+> cheatsheet = new_cheatsheet
+> --- `dynamic_cheatsheet/language_model.py:435-435`
+
+> - Clearly state any assumptions, limitations, or dependencies (e.g., specific Python libraries or solution hacks).
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
+
+Counts and Q references are requested prose. No fixed parser in the inspected wrapper/extractor checks individual entries, counts, reference support or scope. Their truth status therefore does not follow from being present.
+
+#### EPI-OBJ-generator-output
+Label: generator_output solution transcript
+
+Part of: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict)
+
+Source-native identity: `final_output`/`generator_output` solution text; includes recursive local-execution transcript when that branch operates. Representational form: natural language and code, with symbolic answer tags; provider text does not expose all hosted events. Storage: Python string and caller JSONL. This is a material text part distinct from the sheet and the envelope. SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`; closest execution records are [RT-RTE-local-execution](runtime.md#rt-rte-local-execution) and [RT-RTE-provider-execution](runtime.md#rt-rte-provider-execution).
+
+> current_output = f"{output_prefix}\n{code_execution_flag}\n\n{executed_code}"
+> --- `dynamic_cheatsheet/language_model.py`
 
 > generator_outputs_so_far.append(output_dict["final_output"])
 > --- `run_benchmark.py`
 
-#### EPI-OBJ-final-answer
-Label: Extracted final answer
-
-Part of: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict)
-
-Source-native identity: final_answer/generator_answer. Representational form: model answer text, subsequently consumed by fixed string or arithmetic scoring rules. Storage substrate: returned dictionary and JSONL. Claimed role: scored task response. Candidate truth-apt content: the proposed answer over the current benchmark item, distinct from the full response. SRC-1, `dynamic_cheatsheet/utils/extractor.py`; implementation. The extractor selects the last answer opening tag; notebook source instead selects the first, so contradictory multiple tags can change the measured answer without changing the saved response.
-
-> txt = response.split("<answer>")[-1].strip()
-> txt = txt.split("</answer>")[0].strip()
-> return txt
-> --- `dynamic_cheatsheet/utils/extractor.py`
-
-#### EPI-OBJ-final-cheatsheet
-Label: Live returned reference
-
-Part of: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict)
-
-Source-native identity: final_cheatsheet. Representational form: natural-language guidance and examples, potentially containing executable code or proposition-like strategies. Storage substrate: Python string, later prompts, JSONL. Claimed role: reusable reference. Candidate truth-apt content: conditional strategies, computational examples, claims of effectiveness and usage counts when produced as requested; non-truth-apt instructions may coexist. No actual candidate instance is assessed. SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`; implementation. Container field is distinct from its producer and consumers; these are see [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) and [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context).
-
-> cheatsheet = output_dict["final_cheatsheet"]
-> --- `run_benchmark.py`
-
 #### EPI-OBJ-target
-Label: Dataset target
+Label: original_target expected outcome
 
-Part of: [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict)
-
-Source-native identity: target/original_target. Representational form: target answer text interpreted by symbolic scoring rules. Storage substrate: dataset item and saved JSONL. Claimed role: reference outcome for measurement, not curator guidance. Candidate truth-apt content: expected benchmark answer; truth/provenance of the dataset item uninspected. SRC-1, `run_benchmark.py`; implementation. This is the target part of the supplied mixed result/checkpoint object, distinct from model responses.
+Source-native identity: dataset `target`, saved with result rows and passed to selected scoring functions. Form: natural-language/answer text, consumed symbolically by predicates. Storage: loaded dataset and JSONL envelope. Distinct from [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict): imported oracle input, not the API's returned envelope; the driver augments that envelope. SRC-1, `run_benchmark.py`.
 
 > original_target = dataset[idx]["target"]
 > --- `run_benchmark.py`
 
-#### EPI-OBJ-search-results
-Label: Search results context
+> "target": original_target,
+> --- `run_benchmark.py`
 
-Source-native identity: search_context and provider-native searched response text. Representational form: natural-language snippets with symbolic URL labels in Tavily assembly; opaque native search text. Storage substrate: string prepended to a client user message or returned provider text. Claimed role: optional external context. Candidate truth-apt content: imported snippet assertions; source warrant unknown. Compared with [RT-OBJ-generator-prompt](runtime.md#rt-obj-generator-prompt), this is newly acquired external content, not a static generator template; no supplied object counterpart. SRC-1, `text_generation/simple_unified_client.py`; implementation. Structured provider citations are not returned as an evidence object by these text-returning methods.
+This establishes import and routing, not label accuracy. GameOf24 uses the input numbers and computed target value 24 instead of trusting an answer label.
 
-> prompt = f"Web Search Results:\n{search_context}\n\nUser Query: {prompt}"
-> --- `text_generation/simple_unified_client.py`
+#### EPI-OBJ-score-result
+Label: result Boolean task score
 
-#### EPI-OBJ-messages
-Label: Client chat messages
+Source-native identity: local `result` Boolean and correctness counters. Representational form: symbolic Boolean/integer state with fixed consumer rules. Storage: transient driver/notebook variables and console totals; the inspected driver does not add `result` to the saved output dictionary. This is the product of [RT-RTE-score-answer](runtime.md#rt-rte-score-answer), not a duplicate route or the saved envelope. SRC-1, `dynamic_cheatsheet/utils/evaluation.py`, `run_benchmark.py`, `EvaluatingResults.ipynb`.
 
-Source-native identity: UnifiedLLMClient.messages. Representational form: symbolic role/content envelopes around natural-language turns. Storage substrate: in-memory list with shallow get/set copies. Claimed role: conversation context. Candidate truth-apt content: prior user and assistant assertions, not automatically endorsed. Compared with [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict), this is a distinct client-owned history, not benchmark disk state or external generate_from_messages history. SRC-1, `text_generation/simple_unified_client.py`; implementation.
+> if result:
+>     correct_so_far += 1
+> total_so_far += 1
+> --- `run_benchmark.py`
 
-> self.messages.append({"role": "user", "content": message})
-> self.messages.append({"role": "assistant", "content": full_response})
-> --- `text_generation/simple_unified_client.py`
+Scorer target/domain and limits: AIME compares output after punctuation/newline removal with provided target. GameOf24 checks cleaned expression value within 1e-3 of 24 and exact sorted token multiset after removing arithmetic symbols. Equation balancing checks operator-stripped number-string equality to the reference and numerical equality within 1e-6 to the target RHS. These do not establish explanation correctness. Multiple choice permits letter matches or inclusion of target option text:
+
+> if target_text and target_text in clean_answer:
+>     return True
+> --- `dynamic_cheatsheet/utils/evaluation.py`
+
+Concrete implementation deduction, without execution: with `input_text = "Options:\n(A) red\n(B) blue"`, `target = "(A)"`, `final_answer = "not red"`, cleaning gives target letter `a`, option extraction gives `red`, and substring acceptance returns True. The assertion that the answer is the target option is not thereby established. This narrows the scorer's license to its predicate, not arbitrary multiple-choice semantics.
+
+Extraction also changes the object evaluated. Runtime selects the last opening tag, while notebook selects the first in the last step:
+
+> txt = response.split("<answer>")[-1].strip()
+> --- `dynamic_cheatsheet/utils/extractor.py`
+
+> "                final_answer = model_output.split(\"<answer>\")[1].split(\"</answer>\")[0].strip()\n",
+> --- `EvaluatingResults.ipynb:60-60`
+
+A response `<answer>1</answer><answer>2</answer>` therefore yields runtime `2` versus notebook `1`, before task scoring. This is a deterministic source deduction, not an observed benchmark discrepancy.
 
 ### Routes
 
-#### EPI-RTE-answer-generation
-Label: Model answer generation
+#### EPI-RTE-curator-review
+Label: Requested correctness assessment by curator
 
-This is the common model-answer stage across default and all five context approaches. It overlaps the generator stages of [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) and [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), but neither supplied route alone contains the all-mode producer. It does not duplicate either complete update/selection route.
+Part of: [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update)
 
-Endpoints/progression: caller question and assembled reference → template → provider model → full answer text → extract_answer. Owner: wrapper for dispatch and extraction; configured remote model for proposed content. Context/state/action effects: candidate text becomes current answer and, in selected approaches, curator/history input. SRC-1, `dynamic_cheatsheet/language_model.py`; implementation. Semantic relation is indeterminate: no candidate content has been inspected to establish copying, entailment or non-entailment. The model's internal evidence and parameter truth-apt contents remain opaque.
+This isolates the proposed semantic check from that supplied route's generation/admission container. Endpoints: current question, full generator output and current sheet to curator model; proposed replacement text to extractor. Python owns timing; model proposes revisions and effectively chooses their semantic content. Computational inference rather than per-entry human review is wired. Operating modes: caller questions and benchmark sequence; update is unconditional each cumulative round or single hybrid pair, not score-triggered. Answer oracle: no reference target or score argument enters this prompt assembly. The check target is correctness/usefulness of the solution and retained strategies, not formatting. SRC-1, `dynamic_cheatsheet/language_model.py`, `prompts/curator_prompt_for_dc_cumulative.txt`.
 
+- Immediate return: curator output text to extraction; no independently parsed correctness verdict.
+- Later read-back: extracted proposal can replace sheet and reach later round/query through caller handoff.
+- Delegated visibility: model sees current solution and prior sheet but not dataset target or score through this route.
+- Selection predicate: cumulative/hybrid approach with curator template; default CLI supplies `(empty)` unless configured.
+- Invalidation or expiry: new text can omit/replace previous content; no semantic expiry rule enforced.
+- Activation or effect: prompt request and replacement pathway wired; successful criticism, correction and downstream behavioral activation unobserved.
+- Evidence limits: model internals uninspected; an instruction to assess is not an assessment result or acceptance record.
 - implementation conclusion status: wired
 - operation conclusion status: uninspected
-- Immediate return: Full response string and extracted answer in the advanced result.
-- Later read-back: Driver appends full output for future retrieval/history; cumulative rounds may add extracted prior answers.
-- Delegated visibility: Generator sees current question/reference; no target or online score from driver.
-- Selection predicate: Approach selects reference context; extractor selects answer text, not correctness.
-- Invalidation or expiry: New answer per call; previous outputs remain in caller corpus/checkpoint.
-- Activation or effect: Provider dispatch and answer delivery implemented; content-dependent reliance unobserved.
-- Evidence limits: No inspected generated instance, provider weights or answer-producing trace.
 
-Behavioral-authority path: curator consumes full answer through its natural-language input, advisory evidence for a successor proposal; driver scorer consumes extracted answer through a fixed task predicate, determining immediate counts. Scheduling is computational in bounded benchmark or open caller modes. No answer oracle is supplied to the model producer. The static generator prompt requests checking assumptions, not an independently recorded acceptance decision.
+> Before updating the cheatsheet, however, you should first assess the correctness of the provided solution and strategically incorporate code blocks, insights, and solutions into the new cheatsheet. Always aim to preserve and keep correct, useful, and illustrative solutions and strategies for future cheatsheets.
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
 
-> output = self.client.generate_from_messages(
->     messages=history,
->     temperature=temperature,
->     max_completion_tokens=max_tokens,
->     **self.extra_api_params,
-> )
-> --- `dynamic_cheatsheet/language_model.py`
+> cheatsheet_prompt = cheatsheet_template.replace("[[QUESTION]]", input_txt).replace("[[MODEL_ANSWER]]", generator_output).replace("[[PREVIOUS_CHEATSHEET]]", current_cheatsheet)
+> --- `dynamic_cheatsheet/language_model.py:423-423`
 
-#### EPI-RTE-reference-admission
-Label: Delimiter reference admission
+Guidance requests tested/effective entries and usage counters; it shapes the proposal but is not itself revised. Persisted output is the extracted sheet, not necessarily the rationale or a localized theory criticism. Rollback is missing-tag fallback only; logs may preserve older versions but no evidence-driven rollback consumer was found.
 
-Distinct identity: the syntactic extraction/install stage spans [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation) and synthesis in [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), not either entire proposal/selection loop. The concrete evaluator target is tag presence and substring extraction, not proposition truth. Endpoints/progression: curator response and fallback reference → extract_cheatsheet → live replacement string → later generator/driver. Owner: extractor and wrapper. SRC-1, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/language_model.py`; implementation.
+Theory account, conditional on sheet entries expressing formulated rules: whole units can be inspected/replaced, so condition 1 has an implementation conclusion status of afforded. Condition 2 has an implementation conclusion status of afforded for interpretation-dependent use, not observed dependence on a particular theory. Condition 3 has an operation conclusion status of uninspected: correctness review is requested, but no challenged proposition, result and blame placement leading to revision was inspected. Condition 4 has an implementation conclusion status of afforded through round/query handoff, but an operation conclusion status of uninspected for kept criticism shaping a next round. None is inferred from another. Addressability is textual whole-sheet replacement, with optional model-authored entry tags, not fixed per-assumption update machinery. Persistence horizon is later rounds/queries and caller resume. Under `learning`: improved future capacity remains uninspected; no inspected comparison attributes it to a change. Reflection and autonomous theory-building remain uninspected, rather than inferred from automated curation.
 
+#### EPI-RTE-sheet-admission
+Label: Tagged sheet extraction and replacement
+
+Distinct identity comparison: this is the shared deterministic admission submechanism spanning [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update) and retrieval-synthesis in [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), not a replacement for either larger route. Endpoints: model response and fallback string to extracted live sheet. Owner: Python `extract_cheatsheet` and its callers. Model proposes arbitrary content; software chooses the substring; no human approval or oracle is required. SRC-1, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/language_model.py`.
+
+- Immediate return: first opening-tag content up to first closing tag, or fallback.
+- Later read-back: cumulative/hybrid sheet reaches next round/query; synthesized sheet reaches immediate generator and can be carried by caller.
+- Delegated visibility: generator gets selected sheet, not a parsed correctness verdict or full curator reasoning.
+- Selection predicate: `<cheatsheet>` present; closing tag not required for successful split.
+- Invalidation or expiry: replaces entire live string; omissions vanish from sheet but may survive earlier logs or raw-output corpus.
+- Activation or effect: enforcing string replacement wired; semantic endorsement and improved behavior not established.
+- Evidence limits: extraction establishes text selection only, not that curator followed instructions or checked evidence.
 - implementation conclusion status: wired
 - operation conclusion status: uninspected
-- Immediate return: First opening-tag segment, trimmed and stopped at the first closing tag, or fallback text.
-- Later read-back: Installed text reaches next cumulative round and caller carry-forward; synthesis supplies it immediately to the next generator.
-- Delegated visibility: Generator receives extracted text, not necessarily curator reasoning outside tags.
-- Selection predicate: Opening cheatsheet tag and successful string operations; no semantic predicate.
-- Invalidation or expiry: Replacement discards omitted live content; absent tag retains old cumulative reference or assembled retrieval fallback in synthesis.
-- Activation or effect: Syntactic reference replacement enforced; correctness and model reliance unobserved.
-- Evidence limits: No independent evidence-consuming acceptance criterion for truth, usefulness or transfer on inspected admission path.
-
-Trigger/proposed change: every cumulative generated response or incoming synthesis query leads to a whole-reference proposal. Model proposes; software decides the substring; no human per-item approval or oracle on this path. Rejection ability is formatting fallback, not an accuracy veto. Recovery is caller/manual reconstruction from saved steps, not automatic rollback. Guidance requests accurate reusable strategies and copying useful prior content; only extracted text persists. Consumer/channel/force/horizon: downstream generator's user-message reference region, permissive installation plus advisory use, next round/query and resumed runs if saved. This is operational disposition, not epistemic acceptance or lifecycle integration.
-
-Concrete implementation deduction without execution: response `prefix <cheatsheet>2+2=5`, old reference `2+2=4` → strip unchanged → opening-tag segment `2+2=5` → no closing tag means split leaves the same segment → returns `2+2=5`. Thus even an unclosed false candidate replaces a true fallback. Conversely a response with no opening tag returns fallback. This counterexample falsifies a universal semantic/closed-tag admission guarantee, not model compliance in any particular run.
 
 > if "<cheatsheet>" in response:
 >     try:
 >         txt = response.split("<cheatsheet>")[1].strip()
 >         txt = txt.split("</cheatsheet>")[0].strip()
 >         return txt
->     except:
->         return old_cheatsheet
-> else:
->     return old_cheatsheet
 > --- `dynamic_cheatsheet/utils/extractor.py`
 
-#### EPI-RTE-choice-scoring
-Label: Multiple choice scoring
+Concrete input trace, deduced from inspected implementation: `response = "<cheatsheet>2+2=5"`, `old_cheatsheet = "old"` passes the opening-tag test, selects `2+2=5`, finds no closing delimiter and returns that same substring. The false claim replaces the old sheet; there is no truth predicate in this function. `response = "2+2=4"` without the opening tag returns the supplied fallback despite its true arithmetic content. This separates syntactic admission from semantic acceptance without executing the target.
 
-Part of: [RT-RTE-answer-scoring](runtime.md#rt-rte-answer-scoring)
-
-Endpoints/progression: question/answer/target → eval_for_multiple_choice → boolean → benchmark or notebook accuracy count. Owner: deterministic evaluator and count consumer. Domain: GPQA/MMLU answer formats, target letters and target-option substrings. Context/state/action effects: count/print only, not live reference revision. SRC-1, `dynamic_cheatsheet/utils/evaluation.py`, `run_benchmark.py`, `EvaluatingResults.ipynb`; implementation.
-
-- implementation conclusion status: wired
-- operation conclusion status: uninspected
-- Immediate return: Boolean match result.
-- Later read-back: inapplicable — score is not saved as reference/update state; saved answer/target can be scored afresh.
-- Delegated visibility: Scorer sees target; curator and generator do not receive this result.
-- Selection predicate: Exact equality or accepted letter format or occurrence of target option text in normalized answer.
-- Invalidation or expiry: Counters scoped to evaluation pass/new continuation examples.
-- Activation or effect: Boolean controls reported count; no score-driven reference veto.
-- Evidence limits: Predicate is not semantic entailment; target truth and measurement activation unobserved.
-
-Dataset expected answer is the oracle for this bounded scoring mode. Software decides; no content approval by humans or models. Behavioral-authority path: scorer result → driver/notebook boolean counter branch → printed accuracy, enforcing the count for that pass only. No future proposal improvement trigger.
-
-Concrete source deduction: question `Options:\n(A) red\n(B) blue`, target `(A)`, final answer `not red` → clean_target `a`, clean_answer `not red` → no exact/letter-format match → extract_option_text finds `red` → substring branch returns True. Therefore acceptance by this predicate does not establish endorsement of the target proposition. No target execution is needed for this deduction.
-
-> if target_text and target_text in clean_answer:
->     return True
-> --- `dynamic_cheatsheet/utils/evaluation.py`
-
-#### EPI-RTE-search-acquisition
-Label: Optional search acquisition
-
-No supplied route counterpart after comparison with [RT-RTE-context-selection](runtime.md#rt-rte-context-selection): that selects earlier benchmark outputs, whereas this imports externally supplied search content. Endpoints/progression: client generate/chat with Tavily enabled → query → formatted title/URL/content snippets → prepended user prompt → provider. The separate native alternatives request server-side search through Claude/xAI/Gemini tools or an OpenAI search-capable model; they are not Tavily evaluation. Owner: client for request/formatting, external service for search and model for interpretation. SRC-1, `text_generation/simple_unified_client.py`; implementation. Benchmark generate_from_messages supplies false for the explicit native-search switch and does not call Tavily; OpenAI search-model behavior is an opaque exception to any universal no-search claim.
-
-- implementation conclusion status: wired
-- operation conclusion status: uninspected
-- Immediate return: Tavily snippets are prepended to generation context; provider methods return generated text, not search-verification decisions.
-- Later read-back: Chat can retain generated response; raw Tavily context is not stored in chat.messages by chat's two append operations. The original user message is retained instead.
-- Delegated visibility: Tavily titles, URLs and snippet content reach the model; native provider metadata is projected into returned text rather than preserved as a structured evidence envelope.
-- Selection predicate: Tavily enabled/requested with initialized client; query supplied or original prompt, max_results default five; native switch/provider branch selects a different external search operation.
-- Invalidation or expiry: Fresh optional search per generate call; no source endorsement or freshness check in inspected formatting/projection methods.
-- Activation or effect: Query dispatch and snippet context injection implemented; native tool declaration/text extraction implemented, external searching and actual reliance unobserved.
-- Evidence limits: Native search internals, source truth, source selection and live compatibility uninspected; no inspected search result or generated claim.
-
-Content relation: acquisition/import for external snippets, source warrant unknown. Tavily keeps title/URL/content as text; no authenticity or entailment check. Native answer generation is indeterminate, independently of its imported inputs. Native citation lineage is degraded at the structured-return boundary: OpenAI logs distinct URLs/titles but returns message.content; Claude takes text blocks, xAI takes output_text and Gemini returns text/candidate text. Text can still contain citations, so this does not establish that every citation is lost.
-
-Decision/authority: software injects successful nonempty Tavily text (including the literal no-results text); service selects results; caller chooses search flags, not per-claim approval. No answer oracle, semantic veto or rollback on these inspected paths. Consumer/channel/force/horizon: model receives a user-message search prefix, advisory context for current generation; chat can carry the answer into later turns. Citation logger has logging force only, not a claim-certification or admission consumer. Operational mode is caller-open generation/chat, not a benchmark correctness curriculum.
-
-> search_context = self._web_search(query)
-> if search_context and not search_context.startswith("Web search failed"):
->     prompt = f"Web Search Results:\n{search_context}\n\nUser Query: {prompt}"
-> --- `text_generation/simple_unified_client.py`
-
-> if message.content:
->     return message.content
-> --- `text_generation/simple_unified_client.py`
-
-> logger.info("Web Search URLs Visited:")
-> --- `text_generation/simple_unified_client.py`
-
-#### EPI-RTE-chat-history
-Label: Client chat history
-
-Distinct identity compared with [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation): this client-owned in-memory conversation is neither JSONL reload nor the LanguageModel external message path. Endpoints/progression: chat → generate with previous self.messages → response → append original user message and assistant response → next generate/chat reads messages. Owner: client plus caller reset/set controls. Context/state/action effects: earlier turns reach later provider decisions. SRC-1, `text_generation/simple_unified_client.py`; implementation.
-
-- implementation conclusion status: wired
-- operation conclusion status: uninspected
-- Immediate return: Full response string, streaming chunks joined before retention when necessary.
-- Later read-back: Later generate/chat extends its prompt with stored messages; benchmark generate_from_messages does not read this history.
-- Delegated visibility: Later provider receives prior roles/content and current user message; Tavily prefix is not in the original message appended by chat.
-- Selection predicate: All stored messages included by generate, without correctness ranking.
-- Invalidation or expiry: reset_history clears messages; set_history replaces them with caller-supplied shallow copy; no semantic expiry on chat append.
-- Activation or effect: Append and later delivery implemented; behavioral dependence and benefit unobserved.
-- Evidence limits: No inspected conversation trace, semantic approval, disk persistence or outcome-driven invalidation on these methods.
-
-Admission/control: caller proposes set/reset/history inputs, model proposes response; software appends both without content checks. Caller identity does not establish human authorship/approval. No expected-answer oracle or improvement trigger. Mode: open conversation. Retention is not acceptance; replacement/clear is caller-controlled, not correctness rollback. Consumer/channel/force/horizon: provider model, role/content history in the next generate/chat request, advisory prior context, client lifetime across turns. No guidance-method revision is implemented here.
-
-> messages.extend(self.messages)
-> messages.append({"role": "user", "content": prompt})
-> --- `text_generation/simple_unified_client.py`
-
-> self.messages = messages.copy()
-> --- `text_generation/simple_unified_client.py`
+Trigger: curator response after update/synthesis; proposed change: whole sheet. Software veto is only missing-tag/exception fallback, not answer correctness. Recovery uses previous sheet for cumulative/hybrid, retrieved raw pairs for synthesis. Guidance resides in curator prompts, with no independently checked compliance gate. No revised production machinery is installed.
 
 ### Claims
 
 #### EPI-CLM-verified-solutions
-Label: Verified reusable solutions
+Label: Verified solutions as curator objective
 
-Claimed operation: curator consolidates verified solutions and only retains tested/effective strategies. SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`; doctrine/design. Compared with [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory), this is a distinct retention-warrant requirement, not a performance claim. Its model-requested check has no inspected instance-level acceptance trace. Usage counts and Q references are requested text, not software-computed success/provenance records.
+Distinct from broad [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory): this claim concerns the warrant expected of retained entries, not just storage/reuse. Source: SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`, doctrine/design. Its imperative wording sets a normative selection condition; it does not report observed compliance.
 
 > The cheatsheet's purpose is to consolidate verified solutions, reusable strategies, and critical insights into a single, well-structured resource.
 > --- `prompts/curator_prompt_for_dc_cumulative.txt`
@@ -336,10 +403,10 @@ Claimed operation: curator consolidates verified solutions and only retains test
 > - Only include solutions and strategies that have been tested and proven effective.
 > --- `prompts/curator_prompt_for_dc_cumulative.txt`
 
-#### EPI-CLM-zero-shot
-Label: Label free performance improvement
+#### EPI-CLM-performance-gains
+Label: Zero-shot and benchmark improvement claims
 
-Claimed operation: improvement without ground-truth labels or human feedback, accompanied by specific benchmark improvement reports. SRC-1, `README.md`; doctrine/design and reported operation. Distinct from [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory): this adds the label/feedback condition and empirical benefit claims. Source supports label-free curator updating, not absence of ground-truth evaluation or causal benefit. Full result traces and comparisons remain uninspected.
+Distinct from [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory): isolates claimed measured benefit and attribution from parameter-preserving reuse architecture. SRC-1, `README.md`, doctrine/design for learning objective and reported operation for task gains. No causal experiment was independently assessed in this member.
 
 > * **Zero-Shot Learning**: Improves performance without ground-truth labels or human feedback
 > --- `README.md`
@@ -347,6 +414,28 @@ Claimed operation: improvement without ground-truth labels or human feedback, ac
 > * **Puzzles**: GPT-4o's success rate on Game of 24 increased from approximately 10% to 99% after discovering and reusing Python-based solutions
 > --- `README.md`
 
+### Evidenced absences
+
+#### EPI-ABS-score-feedback
+Label: No score-driven memory veto in shipped loop
+
+- implementation conclusion status: absent
+
+Searched boundary: SRC-1 at the reviewed revision; full `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`, `dynamic_cheatsheet/utils/evaluation.py`, plus all cell source in `EvaluatingResults.ipynb`. Query/call-flow inspection: generation and curator arguments, assignments to `cheatsheet`/`final_cheatsheet`, uses of `result`, score dispatch, extractor calls, `extract_solution` callers and iteration consumers. Closest supplied records are [RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle), [RT-RTE-score-answer](runtime.md#rt-rte-score-answer) and [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update); this record isolates their absent score-to-memory feedback edge, not their implemented checking or retention routes.
+
+The driver updates its live sheet before evaluation. Its ordinary Boolean result changes counters only; subsequent inputs are drawn from prior `final_output` and current sheet, not score/target-based corrections. Notebook scoring prints aggregate results. No failed-score sheet veto, claim withdrawal, acceptance record or semantic rollback consumer was found in these paths. This supports a bounded absence of score-grounded acceptance/integration, not absence of all possible model reasoning, imported human edits, external or auxiliary evaluation.
+
+> cheatsheet = output_dict["final_cheatsheet"]
+> final_answer = output_dict["final_answer"]
+> --- `run_benchmark.py`
+
+> if result:
+>     correct_so_far += 1
+> total_so_far += 1
+> --- `run_benchmark.py`
+
+A counterexample sought was a later restoration/correction using targets. Resume instead restores saved sheet and `final_output`, while ordinary false scores still proceed to save and the next iteration. No automatic target substitution or correction is wired. Evaluation exceptions can abort before disk write; that is an execution failure, not a truth-sensitive rejection of the proposed memory.
+
 ### Behavioral-authority paths
 
-none declared in this member
+none declared in this member; see [RT-BAP-reference-context](runtime.md#rt-bap-reference-context).
