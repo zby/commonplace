@@ -1,0 +1,30 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of semquery's memory comparison against accepted records at commit 0820927160b1400990fa8cc057807c73bbf6d025."
+run-id: AAS-2026-11-09-semquery-b21559990932-01
+reviewed-boundary: "0820927160b1400990fa8cc057807c73bbf6d025"
+---
+
+# semquery profile verification
+
+## Verification
+
+I checked all ten axes of the [memory profile](memory-profile.md#comparison-rationale), their unit scopes, findings, evidence bases and coverage assessments against the handed runtime, memory, epistemic and workflow accounts. Reconciliation establishes no supersessions or unresolved conflicts; the declaring records remain the comparison warrants. The supplied profile answers are empty. No source inspection was needed, and no new records or quotations were introduced.
+
+- **Storage and form:** SQLite covers the corpus parts, while the vector finding belongs specifically to retained dense vectors. Files cover saved configuration, diagnostics and cached artifacts. Natural-language chunk/system text, symbolic lexical/control fields and distributed numerical representations are distinguished. The grouped units are coarse, but finding citations and notes identify the operative parts rather than attributing every form or substrate to every member of a group. Unknown injected payloads and tokenizer contents remain unresolved. See [MEM-OBJ-chunks](memory.md#mem-obj-chunks), [MEM-OBJ-fts-chunks](memory.md#mem-obj-fts-chunks), [MEM-OBJ-vec-chunks](memory.md#mem-obj-vec-chunks), [MEM-OBJ-config](memory.md#mem-obj-config), [MEM-OBJ-semq-log](memory.md#mem-obj-semq-log) and [RT-CMP-gguf-llm](runtime.md#rt-cmp-gguf-llm).
+- **Lineage:** Import of document slices and external artifacts is separate from compiled lexical, embedding and metadata derivatives. Diagnostic trace extraction describes the origin of raw logs, not a learned update. Initial authorship and exact model provenance are not resolved by those positive paths. The partial assessment preserves these distinctions. See [MEM-OBJ-chunks](memory.md#mem-obj-chunks), [MEM-OBJ-document-paths](memory.md#mem-obj-document-paths), [MEM-OBJ-semq-log](memory.md#mem-obj-semq-log) and [RT-CMP-fast-embed](runtime.md#rt-cmp-fast-embed).
+- **Behavioral authority:** Chunk text supplies reference context and separately feeds reranking; lexical terms and dense vectors influence priority. Metadata and saved controls select maintenance scope, components and budgets. Edited system text supplies standing directions at model consumption. These support knowledge, ranking, routing and instruction without asserting compliance or factual acceptance. Transient citation checking is not misclassified as retained-memory validation. See [MEM-OBJ-chunks](memory.md#mem-obj-chunks), [MEM-OBJ-document-paths](memory.md#mem-obj-document-paths), [MEM-OBJ-system-prompt](memory.md#mem-obj-system-prompt), [RT-RTE-hybrid-search](runtime.md#rt-rte-hybrid-search) and [EPI-RTE-marker-check](epistemic.md#epi-rte-marker-check).
+- **Write agency:** Automatic admission is supported for default extraction, derivatives, maintenance, logging and acquisition. External document/configuration replacement is kept unresolved; starting the CLI does not establish per-content human approval. Automatic creation of a default file does not assert use-derived revision of its shipped guidance. See [RT-RTE-index-admission](runtime.md#rt-rte-index-admission), [RT-RTE-config-admission](runtime.md#rt-rte-config-admission) and [MEM-OBJ-config](memory.md#mem-obj-config).
+- **Curation:** Shared-text collapse supports deduplication beyond a bare key-collision check. Explicit withdrawal and orphan deletion support deletion-based decay, not history-preserving invalidation. Reembedding and rebuilding do not alone establish consolidation or synthesis. The known units concern these mechanisms, not a complete curation inventory. Shared ownership, skipped-empty retention and cleanup qualifications remain explicit. See [MEM-CLM-chunk-lineage](memory.md#mem-clm-chunk-lineage), [MEM-CLM-empty-retention](memory.md#mem-clm-empty-retention) and [RT-RTE-index-admission](runtime.md#rt-rte-index-admission).
+- **Read-back direction and signal:** Search/ask, maintenance and component loading fulfill consumer requests. Selection inside those chains does not constitute another push operation. Accordingly pull is supported, and signal is inapplicable only for the classified concrete routes. Unknown alternative delivery policies prevent a system-complete pull-only or signal-inapplicable conclusion. Suffix truncation remains a delivery qualification, not an additional retained summary route. See [RT-RTE-hybrid-search](runtime.md#rt-rte-hybrid-search), [RT-RTE-answer-generation](runtime.md#rt-rte-answer-generation) and [RT-RTE-config-admission](runtime.md#rt-rte-config-admission).
+- **Trace learning and source:** The records establish neither a qualifying automatic trace-fed durable update with a later consumer nor an evidenced-absence declaration licensing a local learning negative. Raw diagnostics, transient answers and fixed inference parameters do not supply either warrant. Both axes appropriately retain no controlled findings and remain not-determinable, rather than emitting a system-wide negative or making trace source inapplicable. See [MEM-OBJ-semq-log](memory.md#mem-obj-semq-log), [RT-RTE-answer-generation](runtime.md#rt-rte-answer-generation) and [RT-RTE-config-admission](runtime.md#rt-rte-config-admission).
+
+All emitted positives stay at wired strength. No finding relies on an observed run, demonstrated benefit or authenticated deployed model identity. Partial inventories retain their unresolved included alternatives; they do not claim complete-value coverage. The residual uncertainties already expressed in the profile do not constitute additional publication limits. No unsupported emitted value or materially misleading coverage assessment was found.
+
+## Blockers
+
+none
+
+## Limits
+
+none
