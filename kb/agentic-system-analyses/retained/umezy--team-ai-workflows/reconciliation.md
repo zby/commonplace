@@ -1,0 +1,38 @@
+---
+type: agentic-system-analyses/types/agentic-system-reconciliation-report.md
+description: "Reconciliation of team-ai-workflows analyst records at commit 9aebd7a6c2803da450904eb5621ae5439508ff94."
+run-id: AAS-2026-11-09-team-ai-workflows-c00fb85f7ed1-01
+reviewed-boundary: "9aebd7a6c2803da450904eb5621ae5439508ff94"
+---
+
+# team-ai-workflows reconciliation
+
+## Reconciliation
+
+### Duplicate identities
+
+Amendment: [EPI-OBJ-sources](epistemic.md#epi-obj-sources) is superseded by [MEM-OBJ-sources](memory.md#mem-obj-sources). Both identify the same Git-tracked `sources/` Markdown corpus, including the API sample, getting-started instructions and writing tips. Both retain the sample-replacement passage and distinguish illustrative assertions from warranted facts about a deployed SDK. Their common evidence is SRC-1, `sources/api-reference/sample-api.md`, with corpus scope also established by `README.md` and the other two corpus files in the memory record. The epistemic inventory, retention ledger, ranking ledger and bounded conclusion concern this same payload, not a second store. The supersession connects those findings to the memory identity without changing either report's findings about provenance, warrant or consumers. Both IDs remain declared.
+
+Amendment: [EPI-OBJ-search-output](epistemic.md#epi-obj-search-output) is superseded by [MEM-OBJ-search-results](memory.md#mem-obj-search-results). Both identify the temporary Python results and emitted ranked paths, counts and line previews from SRC-1, `skills/docs-grep/scripts/docs_search.py`. The epistemic record retains the output-format passage; the memory record retains the preview construction and output limits. Their symbolic access metadata and natural-language excerpts are the same operative parts, not two outputs with separate persistence. The epistemic inventory and ranking, preview and weak-hit ledger entries therefore concern the output described by memory. Neither record establishes durable query memory, truth checking or actual host consumption. The epistemic record's relation to the runtime search route remains a product-of-route relation; this amendment does not identify the object with that route.
+
+### Containers, parts and distinct identities
+
+[RT-RTE-knowledge-search](runtime.md#rt-rte-knowledge-search) remains a valid container for the question-to-answer procedure and its direct CLI branch. [EPI-RTE-keyword-ranking](epistemic.md#epi-rte-keyword-ranking), [EPI-RTE-preview-output](epistemic.md#epi-rte-preview-output), [EPI-RTE-weak-retry](epistemic.md#epi-rte-weak-retry) and [EPI-RTE-answer-synthesis](epistemic.md#epi-rte-answer-synthesis) declare different consequential parts of that progression: lexical evaluation, excerpt delivery, model sufficiency judgment and requested answer production. Their evidence separates implemented Python behavior from doctrine-only host behavior in SRC-1, `skills/docs-grep/scripts/docs_search.py` and `skills/docs-grep/SKILL.md`. The parent already separates wired search, claimed instructions and uninspected operation. Its findings do not become wrong when these parts are separated, so no split supersession is warranted. The epistemic ledger's doctrine-only entry on the parent explicitly assesses query generation, not the implemented search routine.
+
+[EPI-OBJ-answer](epistemic.md#epi-obj-answer) is the requested host output part of that container, not the ranked preview object or an available answer instance. [RT-OBJ-docs-grep](runtime.md#rt-obj-docs-grep) is the static procedure directing those actions, not their output. [MEM-OBJ-team-workflows-dir](memory.md#mem-obj-team-workflows-dir) is location configuration produced through [RT-RTE-machine-setup](runtime.md#rt-rte-machine-setup), not that setup route, corpus content or [RT-OBJ-skill-links](runtime.md#rt-obj-skill-links). These identities remain distinct.
+
+[MEM-BAP-corpus-answer](memory.md#mem-bap-corpus-answer) and [RT-BAP-user-skills](runtime.md#rt-bap-user-skills) share an external host but carry different payloads and force: retrieved informational content versus procedural skill guidance. Neither duplicates the complete search route. [MEM-ABS-trace-update](memory.md#mem-abs-trace-update) is a bounded absence of an automatic trace-fed write chain, not a negative replacement for the positive repository-admission or retrieval routes. [EPI-CLM-repository-rag](epistemic.md#epi-clm-repository-rag) concerns retrieval and synthesis; [RT-CLM-machine-distribution](runtime.md#rt-clm-machine-distribution) concerns installation reach. Shared distribution machinery does not make those claims identical. Workflow declares no additional records; its annotation uses the existing search identity.
+
+### Cross-report connections and integration dispositions
+
+The memory report states no corrections to runtime facts or possible duplicate declarations relative to its supplied runtime. Its later overlap with epistemic is resolved by the two amendments above. No correction answers or declined objections were supplied for this invocation.
+
+The runtime baseline, memory annotations and [workflow account](workflow.md#workflow-account) converge on a consequential handoff: Python returns bounded navigation output, while the skill separately requests full-file reading and a cited answer. The epistemic preview and answer records preserve the same separation. The records' passages from SRC-1, `skills/docs-grep/SKILL.md` and `skills/docs-grep/scripts/docs_search.py`, support this connection without establishing that reading occurred. Preview limits therefore do not establish a complete answer-context budget; citations and lexical ranking do not establish answer correctness. Workflow's term “verification” describes weak-hit judgment, consistently with the epistemic retry record's limited relevance domain, not an independent truth oracle.
+
+[RT-RTE-repository-admission](runtime.md#rt-rte-repository-admission) affords documented human customization with unresolved merge governance. The epistemic ledger assesses implemented retention and later availability within that route, not an observed import or semantic acceptance decision. Memory likewise separates human authoring guidance from actual per-content approval. These findings do not disagree merely because their status fields assess different layers. Repository retention, live link exposure and read-back do not establish accepted knowledge or lifecycle integration after acceptance.
+
+The memory integration issues remain shared limits rather than conflicts. Actual corpus approval and rollback practice are unresolved for repository admission. Host file resolution, reading compliance, precedence and context retention limit both the corpus authority path and the search route. Actual environment and link state limit claims about deployed corpus identity or active skill version. Runtime's configured-root branch and kept-entry behavior support those limits; workflow and epistemic do not require stronger deployment facts. No extension of the frozen boundary is needed to state them faithfully.
+
+The bounded absence of automatic trace-fed updates coexists with manual experience-derived authoring and within-question keyword revision. None entails improved future capacity, observed activation or exercised self-improvement. Across the reports, implementation and doctrine remain separate from operation and causal benefit, as bounded by the [Source register](boundary.md#source-register).
+
+No unresolved cross-report disagreement was identified in the supplied members. No source reads were needed to resolve record ambiguity; this reconciliation uses the pinned members and their retained evidence passages only.
