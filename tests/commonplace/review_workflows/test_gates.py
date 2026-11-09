@@ -200,3 +200,11 @@ def test_status_reports_fresh_stale_missing_and_orphaned_results(repo, capsys):
     }
     assert status["orphaned"] == [
         "kb/reports/state/review/results/kb/notes/gamma.md/prose/body-gate.md"]
+
+
+def test_run_gates_refuses_to_default_to_all_gates(repo) -> None:
+    # A sweep spends one launch per stale pair: all gates must be asked for, not assumed.
+    _, harnesses, log = repo
+    with pytest.raises(SystemExit):
+        main(["run", "gates", "kb/notes"], harnesses=harnesses)
+    assert log.read_text() == ""

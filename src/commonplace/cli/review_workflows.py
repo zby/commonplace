@@ -1,14 +1,16 @@
 """Review notes against criteria with headless workers, keeping one result file per pair.
 
     commonplace-review status NOTES... [--criteria C...] [--json]
-    commonplace-review run gates NOTES... [--criteria C...] [--profile NAME] [--max-workers N]
-                                 [--timeout SECONDS] [--force] [--resume RUN_DIR]
+    commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]
+                                 [--max-workers N] [--timeout SECONDS] [--force] [--resume RUN_DIR]
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
 
 NOTES are files or directories (a directory means its reviewable notes, not
 recursively). C are gate ids, bundle names or the lenses `type`, `collection`
-and `critique`; without `--criteria`, all gates (critique stays opt-in).
+and `critique`. `status` without `--criteria` covers all gates (critique stays
+opt-in); `run gates` launches one worker per stale pair, so it takes all gates
+only when asked with `--all-gates`.
 
 `run gates` opens a new run under kb/reports/state/review/runs/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
@@ -48,7 +50,9 @@ def _parser() -> argparse.ArgumentParser:
     workflows = run.add_subparsers(dest="workflow", required=True)
     sweep = workflows.add_parser("gates", help="review each pair without a fresh result")
     sweep.add_argument("notes", nargs="+")
-    sweep.add_argument("--criteria", nargs="+")
+    chosen = sweep.add_mutually_exclusive_group(required=True)
+    chosen.add_argument("--criteria", nargs="+")
+    chosen.add_argument("--all-gates", action="store_true", help="every bundle plus `type` and `collection`")
     sweep.add_argument("--profile", help=f"worker profile from {gates.PROFILES.as_posix()} (default: its `default`)")
     sweep.add_argument("--max-workers", type=int, default=4, help="workers running at once")
     sweep.add_argument("--timeout", type=float, help="seconds a launch may take")
