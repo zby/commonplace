@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Analysis worker path-selection base rates, 2026-11-09](./analysis-worker-path-selection-2026-11-09/path-selection-base-rates.md) — successful inferred paths, missing-path recovery and compound-shell status masking across 16 runs; retained counts, trace identities and representative tool events, not an adopted navigation rule.
+
 - [Framework delivery acceptance, 2026-11-03](./framework-delivery-acceptance-2026-11-03.md) — bounded Windows delivery, deferred Claude read-rule defect, Linux pi installed workers and live-session synthetic upgrades; evidence for install guidance, not universal platform certification.
 
 - [Theory collection rename acceptance](./theory-collection-rename-20261023/README.md) — publication and installed-consumer checks, residual-reference dispositions, preserved state and exact execution inventories; closes the rename workshop.

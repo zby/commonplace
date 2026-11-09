@@ -1,0 +1,61 @@
+{
+  "retained-at": "2026-11-09T09:00:22.357619+00:00",
+  "role": "Supporting records for the dated path-selection report; projections and selected tool events, not full transcript retention.",
+  "records": [
+    {
+      "name": ".commonplace-validation-ignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "census-script.py",
+      "bytes": 8074,
+      "sha256": "4db423b193858e061d8218d6a0527443f12f9e97e8e9b24d2f4cb8cc15ccdfb4"
+    },
+    {
+      "name": "exclusions.json",
+      "bytes": 66060,
+      "sha256": "0183d68e8bb3303a9a2dd39f99c788790d96106864103bafb9a1196733e91b4b"
+    },
+    {
+      "name": "file-targets.csv",
+      "bytes": 257794,
+      "sha256": "99f8cb3e56b50a6357f9126c1078f31cef6a6a93b2fd3f973d2a7c2228d33cf5"
+    },
+    {
+      "name": "glob-availability.json",
+      "bytes": 56892,
+      "sha256": "6cfb993df93266be36e2af3c511c1b289cf69b99e193096136fa98151664a919"
+    },
+    {
+      "name": "missing-call-index.json",
+      "bytes": 20597,
+      "sha256": "54799afbf321b2e651381f1abe6fcbfb583a49895de97e6fe7fc01e726804c73"
+    },
+    {
+      "name": "representative-sequences.json",
+      "bytes": 692912,
+      "sha256": "0c86fc9502df32254d06b4c08b9cd3e9c0724d808e70a9fe0cfdaf22ff1cf9a5"
+    },
+    {
+      "name": "runs.json",
+      "bytes": 7629,
+      "sha256": "d821089238d870fa78a303dee83d2daf37518807a0cba497986062be51d50a4e"
+    },
+    {
+      "name": "source-bindings.json",
+      "bytes": 3038,
+      "sha256": "3a6aef80fc15e54654b77d88e20745f067eac670155d15921a5c629e45516d92"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 8366,
+      "sha256": "2401751df479e6ea0a3be4c3c576ae69a2a47403394b4e794dc52552560df8f7"
+    },
+    {
+      "name": "traces.json",
+      "bytes": 201961,
+      "sha256": "56f041804fbd1b9b77a214107b9b7958f9dfb5b0d5950115099b7573dd8d184a"
+    }
+  ]
+}

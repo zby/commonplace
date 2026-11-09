@@ -1,0 +1,162 @@
+[
+  {
+    "system": "cortexes",
+    "run-id": "AAS-2026-11-08-cortexes-af94078f2405-01",
+    "method-commit": "1d70490506788fd638b76261169d6d2408cbc034",
+    "source-revision": "2b8e79f0099203e0453147b708346349952bb963",
+    "source-root-locator": ".commonplace/worktrees/cortexes-ce9cf1445c07/related-systems/xbluesky--cortexes",
+    "worktree-locator": ".commonplace/worktrees/cortexes-ce9cf1445c07",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "curated-thoughts",
+    "run-id": "AAS-2026-11-08-curated-thoughts-00ab3a770403-01",
+    "method-commit": "1d70490506788fd638b76261169d6d2408cbc034",
+    "source-revision": "433ebbd48c2ffd0e871e34a1505dcdef1a78c8fd",
+    "source-root-locator": ".commonplace/worktrees/curated-thoughts-1b731af19e7c/related-systems/equationalapplications--curated-thoughts",
+    "worktree-locator": ".commonplace/worktrees/curated-thoughts-1b731af19e7c",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "khms-memory",
+    "run-id": "AAS-2026-11-08-khms-memory-c5267e800c56-01",
+    "method-commit": "1d70490506788fd638b76261169d6d2408cbc034",
+    "source-revision": "f739eb976dab199fd4cd64e352192cc0b112c047",
+    "source-root-locator": ".commonplace/worktrees/khms-memory-6b2eaa00ba9d/related-systems/ksx-cz--khms-memory",
+    "worktree-locator": ".commonplace/worktrees/khms-memory-6b2eaa00ba9d",
+    "role-streams": 14,
+    "auditor-streams": 1
+  },
+  {
+    "system": "project-wiki",
+    "run-id": "AAS-2026-11-08-project-wiki-b055e5c71dc7-01",
+    "method-commit": "1d70490506788fd638b76261169d6d2408cbc034",
+    "source-revision": "3af1e28d0a3ed3daeb9f923102cd5cefb51b0f41",
+    "source-root-locator": ".commonplace/worktrees/project-wiki-d88135c77d9c/related-systems/giodra96--project-wiki",
+    "worktree-locator": ".commonplace/worktrees/project-wiki-d88135c77d9c",
+    "role-streams": 13,
+    "auditor-streams": 1
+  },
+  {
+    "system": "verbatim-citation-gate",
+    "run-id": "AAS-2026-11-08-verbatim-citation-gate-d205c9f72d5a-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "2113d603031a554ed901a44648307bd3b711ea10",
+    "source-root-locator": ".commonplace/worktrees/verbatim-citation-gate-1aab9156abd4/related-systems/tonydzi--verbatim-citation-gate",
+    "worktree-locator": ".commonplace/worktrees/verbatim-citation-gate-1aab9156abd4",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "qiju",
+    "run-id": "AAS-2026-11-08-qiju-1a12c31c13d1-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "a5ea9db29262ce7ec514cdc1dc5c5d017a6a3f89",
+    "source-root-locator": ".commonplace/worktrees/qiju-9b7c9ef79e6f/related-systems/jasonshrepo--qiju",
+    "worktree-locator": ".commonplace/worktrees/qiju-9b7c9ef79e6f",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "omni-memory",
+    "run-id": "AAS-2026-11-08-omni-memory-09378abbfe6b-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "20f9f9ffd7ece0c6514542677ba6a549841f5536",
+    "source-root-locator": ".commonplace/worktrees/omni-memory-27d76f8b7250/related-systems/singhabhinav04--omni-memory",
+    "worktree-locator": ".commonplace/worktrees/omni-memory-27d76f8b7250",
+    "role-streams": 14,
+    "auditor-streams": 1
+  },
+  {
+    "system": "sqlite-graph-memory",
+    "run-id": "AAS-2026-11-08-sqlite-graph-memory-ca3785ec5c2e-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "f05db2778159d50a0ad8a35be4f2be3a6aea94b1",
+    "source-root-locator": ".commonplace/worktrees/sqlite-graph-memory-91b6673f336e/related-systems/tonydzi--sqlite-graph-memory",
+    "worktree-locator": ".commonplace/worktrees/sqlite-graph-memory-91b6673f336e",
+    "role-streams": 14,
+    "auditor-streams": 1
+  },
+  {
+    "system": "post-graph-rag",
+    "run-id": "AAS-2026-11-08-post-graph-rag-448d75e4222d-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "bce4146a7dc4684e9b66806915c29b0eed57ba23",
+    "source-root-locator": ".commonplace/worktrees/post-graph-rag-2c29e35fc2c9/related-systems/crajah--post-graph-rag",
+    "worktree-locator": ".commonplace/worktrees/post-graph-rag-2c29e35fc2c9",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "mdcp",
+    "run-id": "AAS-2026-11-08-mdcp-1e4e8314c1e4-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "1a198715a4da72dd89bad93f84cf5d4b3ab56b01",
+    "source-root-locator": ".commonplace/worktrees/mdcp-b6e2b2e8741f/related-systems/betsalel-williamson--mdcp",
+    "worktree-locator": ".commonplace/worktrees/mdcp-b6e2b2e8741f",
+    "role-streams": 14,
+    "auditor-streams": 1
+  },
+  {
+    "system": "eva-brain",
+    "run-id": "AAS-2026-11-09-eva-brain-de4240cd9e79-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "706fb91f4ee851cc355785f4e7c6eab37146938f",
+    "source-root-locator": ".commonplace/worktrees/eva-brain-aee72a7a2324/related-systems/jp-lorenc1o--eva-brain",
+    "worktree-locator": ".commonplace/worktrees/eva-brain-aee72a7a2324",
+    "role-streams": 13,
+    "auditor-streams": 1
+  },
+  {
+    "system": "llm-repo-wiki",
+    "run-id": "AAS-2026-11-09-llm-repo-wiki-55aae7f87b1b-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "38a439cd649105c0cd90b687fc1f8d8dd1d0986c",
+    "source-root-locator": ".commonplace/worktrees/llm-repo-wiki-bf93d895d69f/related-systems/lucaslimafons--llm-repo-wiki",
+    "worktree-locator": ".commonplace/worktrees/llm-repo-wiki-bf93d895d69f",
+    "role-streams": 13,
+    "auditor-streams": 1
+  },
+  {
+    "system": "citadel",
+    "run-id": "AAS-2026-11-09-citadel-de4383eefa4e-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "749a24014a6cef59499dbe13b6fb4c348f8044a4",
+    "source-root-locator": ".commonplace/worktrees/citadel-9cf4f0730f32/related-systems/masumi-network--citadel",
+    "worktree-locator": ".commonplace/worktrees/citadel-9cf4f0730f32",
+    "role-streams": 14,
+    "auditor-streams": 1
+  },
+  {
+    "system": "pm-llm-wiki",
+    "run-id": "AAS-2026-11-09-pm-llm-wiki-4c3839e25928-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "64fb748ac9d187be4c51636aa56bfee1d9e5b116",
+    "source-root-locator": ".commonplace/worktrees/pm-llm-wiki-61a4e13cd848/related-systems/alimahmoud15486--pm-llm-wiki",
+    "worktree-locator": ".commonplace/worktrees/pm-llm-wiki-61a4e13cd848",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "team-ai-workflows",
+    "run-id": "AAS-2026-11-09-team-ai-workflows-c00fb85f7ed1-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "9aebd7a6c2803da450904eb5621ae5439508ff94",
+    "source-root-locator": ".commonplace/worktrees/team-ai-workflows-d4887b78cf12/related-systems/umezy--team-ai-workflows",
+    "worktree-locator": ".commonplace/worktrees/team-ai-workflows-d4887b78cf12",
+    "role-streams": 11,
+    "auditor-streams": 1
+  },
+  {
+    "system": "sign-lang",
+    "run-id": "AAS-2026-11-09-sign-lang-379ffbdd642c-01",
+    "method-commit": "b4f3eb5ff47846da2c77940152815918f9573e75",
+    "source-revision": "f4eb1a82b114615754bbe5c2e6f4255a4ec1eeba",
+    "source-root-locator": ".commonplace/worktrees/sign-lang-a98eb4c6c701/related-systems/sign-protocol--sign-lang",
+    "worktree-locator": ".commonplace/worktrees/sign-lang-a98eb4c6c701",
+    "role-streams": 11,
+    "auditor-streams": 1
+  }
+]

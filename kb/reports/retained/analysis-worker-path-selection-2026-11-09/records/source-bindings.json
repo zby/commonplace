@@ -1,0 +1,98 @@
+[
+  {
+    "system": "citadel",
+    "acquired-revision": "749a24014a6cef59499dbe13b6fb4c348f8044a4",
+    "observed-head": "749a24014a6cef59499dbe13b6fb4c348f8044a4",
+    "same": true
+  },
+  {
+    "system": "cortexes",
+    "acquired-revision": "2b8e79f0099203e0453147b708346349952bb963",
+    "observed-head": "2b8e79f0099203e0453147b708346349952bb963",
+    "same": true
+  },
+  {
+    "system": "curated-thoughts",
+    "acquired-revision": "433ebbd48c2ffd0e871e34a1505dcdef1a78c8fd",
+    "observed-head": "433ebbd48c2ffd0e871e34a1505dcdef1a78c8fd",
+    "same": true
+  },
+  {
+    "system": "eva-brain",
+    "acquired-revision": "706fb91f4ee851cc355785f4e7c6eab37146938f",
+    "observed-head": "706fb91f4ee851cc355785f4e7c6eab37146938f",
+    "same": true
+  },
+  {
+    "system": "khms-memory",
+    "acquired-revision": "f739eb976dab199fd4cd64e352192cc0b112c047",
+    "observed-head": "f739eb976dab199fd4cd64e352192cc0b112c047",
+    "same": true
+  },
+  {
+    "system": "llm-repo-wiki",
+    "acquired-revision": "38a439cd649105c0cd90b687fc1f8d8dd1d0986c",
+    "observed-head": "38a439cd649105c0cd90b687fc1f8d8dd1d0986c",
+    "same": true
+  },
+  {
+    "system": "mdcp",
+    "acquired-revision": "1a198715a4da72dd89bad93f84cf5d4b3ab56b01",
+    "observed-head": "1a198715a4da72dd89bad93f84cf5d4b3ab56b01",
+    "same": true
+  },
+  {
+    "system": "omni-memory",
+    "acquired-revision": "20f9f9ffd7ece0c6514542677ba6a549841f5536",
+    "observed-head": "20f9f9ffd7ece0c6514542677ba6a549841f5536",
+    "same": true
+  },
+  {
+    "system": "pm-llm-wiki",
+    "acquired-revision": "64fb748ac9d187be4c51636aa56bfee1d9e5b116",
+    "observed-head": "64fb748ac9d187be4c51636aa56bfee1d9e5b116",
+    "same": true
+  },
+  {
+    "system": "post-graph-rag",
+    "acquired-revision": "bce4146a7dc4684e9b66806915c29b0eed57ba23",
+    "observed-head": "bce4146a7dc4684e9b66806915c29b0eed57ba23",
+    "same": true
+  },
+  {
+    "system": "project-wiki",
+    "acquired-revision": "3af1e28d0a3ed3daeb9f923102cd5cefb51b0f41",
+    "observed-head": "3af1e28d0a3ed3daeb9f923102cd5cefb51b0f41",
+    "same": true
+  },
+  {
+    "system": "qiju",
+    "acquired-revision": "a5ea9db29262ce7ec514cdc1dc5c5d017a6a3f89",
+    "observed-head": "a5ea9db29262ce7ec514cdc1dc5c5d017a6a3f89",
+    "same": true
+  },
+  {
+    "system": "sign-lang",
+    "acquired-revision": "f4eb1a82b114615754bbe5c2e6f4255a4ec1eeba",
+    "observed-head": "f4eb1a82b114615754bbe5c2e6f4255a4ec1eeba",
+    "same": true
+  },
+  {
+    "system": "sqlite-graph-memory",
+    "acquired-revision": "f05db2778159d50a0ad8a35be4f2be3a6aea94b1",
+    "observed-head": "f05db2778159d50a0ad8a35be4f2be3a6aea94b1",
+    "same": true
+  },
+  {
+    "system": "team-ai-workflows",
+    "acquired-revision": "9aebd7a6c2803da450904eb5621ae5439508ff94",
+    "observed-head": "9aebd7a6c2803da450904eb5621ae5439508ff94",
+    "same": true
+  },
+  {
+    "system": "verbatim-citation-gate",
+    "acquired-revision": "2113d603031a554ed901a44648307bd3b711ea10",
+    "observed-head": "2113d603031a554ed901a44648307bd3b711ea10",
+    "same": true
+  }
+]

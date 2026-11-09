@@ -1,0 +1,398 @@
+{
+  "all": {
+    "attempts": 3276,
+    "existing": 3261,
+    "missing": 15,
+    "missing-percent": 0.458,
+    "sessions": 120,
+    "systems": 16
+  },
+  "by-tool": {
+    "read": {
+      "attempts": 2491,
+      "existing": 2489,
+      "missing": 2,
+      "missing-percent": 0.08,
+      "sessions": 106,
+      "systems": 16
+    },
+    "shell": {
+      "attempts": 785,
+      "existing": 772,
+      "missing": 13,
+      "missing-percent": 1.656,
+      "sessions": 105,
+      "systems": 16
+    }
+  },
+  "first-access": {
+    "read-not-previously-named": {
+      "attempts": 49,
+      "existing": 47,
+      "missing": 2,
+      "missing-percent": 4.082,
+      "sessions": 27,
+      "systems": 11
+    },
+    "read-previously-named": {
+      "attempts": 1292,
+      "existing": 1292,
+      "missing": 0,
+      "missing-percent": 0.0,
+      "sessions": 101,
+      "systems": 16
+    },
+    "shell-not-previously-named": {
+      "attempts": 85,
+      "existing": 73,
+      "missing": 12,
+      "missing-percent": 14.118,
+      "sessions": 20,
+      "systems": 10
+    },
+    "shell-previously-named": {
+      "attempts": 593,
+      "existing": 592,
+      "missing": 1,
+      "missing-percent": 0.169,
+      "sessions": 104,
+      "systems": 16
+    }
+  },
+  "by-system": {
+    "citadel": {
+      "all": {
+        "attempts": 374,
+        "existing": 369,
+        "missing": 5,
+        "missing-percent": 1.337,
+        "sessions": 9,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 30,
+        "existing": 25,
+        "missing": 5,
+        "missing-percent": 16.667,
+        "sessions": 5,
+        "systems": 1
+      }
+    },
+    "cortexes": {
+      "all": {
+        "attempts": 178,
+        "existing": 177,
+        "missing": 1,
+        "missing-percent": 0.562,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 6,
+        "existing": 5,
+        "missing": 1,
+        "missing-percent": 16.667,
+        "sessions": 2,
+        "systems": 1
+      }
+    },
+    "curated-thoughts": {
+      "all": {
+        "attempts": 285,
+        "existing": 277,
+        "missing": 8,
+        "missing-percent": 2.807,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 36,
+        "existing": 29,
+        "missing": 7,
+        "missing-percent": 19.444,
+        "sessions": 4,
+        "systems": 1
+      }
+    },
+    "eva-brain": {
+      "all": {
+        "attempts": 182,
+        "existing": 182,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 7,
+        "existing": 7,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 3,
+        "systems": 1
+      }
+    },
+    "khms-memory": {
+      "all": {
+        "attempts": 324,
+        "existing": 324,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 8,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 7,
+        "existing": 7,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 1,
+        "systems": 1
+      }
+    },
+    "llm-repo-wiki": {
+      "all": {
+        "attempts": 242,
+        "existing": 241,
+        "missing": 1,
+        "missing-percent": 0.413,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 5,
+        "existing": 4,
+        "missing": 1,
+        "missing-percent": 20.0,
+        "sessions": 2,
+        "systems": 1
+      }
+    },
+    "mdcp": {
+      "all": {
+        "attempts": 250,
+        "existing": 250,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 9,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 12,
+        "existing": 12,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 6,
+        "systems": 1
+      }
+    },
+    "omni-memory": {
+      "all": {
+        "attempts": 296,
+        "existing": 296,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 9,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 8,
+        "existing": 8,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 4,
+        "systems": 1
+      }
+    },
+    "pm-llm-wiki": {
+      "all": {
+        "attempts": 113,
+        "existing": 113,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 0,
+        "existing": 0,
+        "missing": 0,
+        "missing-percent": null,
+        "sessions": 0,
+        "systems": 0
+      }
+    },
+    "post-graph-rag": {
+      "all": {
+        "attempts": 208,
+        "existing": 208,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 12,
+        "existing": 12,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 4,
+        "systems": 1
+      }
+    },
+    "project-wiki": {
+      "all": {
+        "attempts": 187,
+        "existing": 187,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 6,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 2,
+        "existing": 2,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 2,
+        "systems": 1
+      }
+    },
+    "qiju": {
+      "all": {
+        "attempts": 165,
+        "existing": 165,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 2,
+        "existing": 2,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 1,
+        "systems": 1
+      }
+    },
+    "sign-lang": {
+      "all": {
+        "attempts": 110,
+        "existing": 110,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 0,
+        "existing": 0,
+        "missing": 0,
+        "missing-percent": null,
+        "sessions": 0,
+        "systems": 0
+      }
+    },
+    "sqlite-graph-memory": {
+      "all": {
+        "attempts": 204,
+        "existing": 204,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 9,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 7,
+        "existing": 7,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 4,
+        "systems": 1
+      }
+    },
+    "team-ai-workflows": {
+      "all": {
+        "attempts": 62,
+        "existing": 62,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 0,
+        "existing": 0,
+        "missing": 0,
+        "missing-percent": null,
+        "sessions": 0,
+        "systems": 0
+      }
+    },
+    "verbatim-citation-gate": {
+      "all": {
+        "attempts": 96,
+        "existing": 96,
+        "missing": 0,
+        "missing-percent": 0.0,
+        "sessions": 7,
+        "systems": 1
+      },
+      "first-unmentioned": {
+        "attempts": 0,
+        "existing": 0,
+        "missing": 0,
+        "missing-percent": null,
+        "sessions": 0,
+        "systems": 0
+      }
+    }
+  },
+  "exclusion-reasons": {
+    "glob-or-pattern": 40,
+    "non-simple-program-path": 7,
+    "unparsed-shell": 2,
+    "missing-directory-discovery-root": 1
+  },
+  "first-all": {
+    "attempts": 2019,
+    "existing": 2004,
+    "missing": 15,
+    "missing-percent": 0.743,
+    "sessions": 120,
+    "systems": 16
+  },
+  "first-unmentioned": {
+    "attempts": 134,
+    "existing": 120,
+    "missing": 14,
+    "missing-percent": 10.448,
+    "sessions": 38,
+    "systems": 12
+  },
+  "first-mentioned": {
+    "attempts": 1885,
+    "existing": 1884,
+    "missing": 1,
+    "missing-percent": 0.053,
+    "sessions": 120,
+    "systems": 16
+  },
+  "unmentioned-with-basename-cue": {
+    "attempts": 77,
+    "existing": 77,
+    "missing": 0,
+    "missing-percent": 0.0,
+    "sessions": 28,
+    "systems": 10
+  },
+  "unmentioned-without-basename-cue": {
+    "attempts": 57,
+    "existing": 43,
+    "missing": 14,
+    "missing-percent": 24.561,
+    "sessions": 19,
+    "systems": 7
+  }
+}
