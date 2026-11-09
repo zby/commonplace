@@ -1,18 +1,18 @@
 ---
 type: agentic-system-analyses/types/agentic-system-boundary.md
-description: "Dynamic Cheatsheet's shipped memory-generation, retrieval, persistence and evaluation paths at commit 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9."
-run-id: AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01
+description: "Dynamic Cheatsheet's shipped inference-memory loop, benchmark drivers and evaluation at commit 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9."
+run-id: AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01
 result-disposition: complete
 target-class: memory/knowledge/context-engineering system
 boundary-kind: whole-system
 reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
-analysis-cutoff: "2026-10-12"
+analysis-cutoff: "2026-10-20"
 evidence-tier: code-grounded
 source:
   identity: https://github.com/suzgunmirac/dynamic-cheatsheet
   kind: git
-  path: /home/zby/llm/commonplace/.commonplace/worktrees/dynamic-cheatsheet-workflow-ca0a0b29d273/related-systems/suzgunmirac--dynamic-cheatsheet
-  revision: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
+  path: /home/zby/llm/commonplace/.commonplace/worktrees/dynamic-cheatsheet-523b6948294d/related-systems/suzgunmirac--dynamic-cheatsheet
+  revision: 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
   sha256: null
 ---
 
@@ -20,64 +20,52 @@ source:
 
 ## Boundary and evidence
 
-This run analyses how Dynamic Cheatsheet creates, carries forward, retrieves and consumes inference-time memory. The target is the shipped repository system, not just the `LanguageModel` API. It is an in-scope **memory/knowledge/context-engineering system**: model-generated answers supply material for model-based curation, and retained text or previous input-output pairs become context for later model calls. The README declares this intended use (SRC-1, `README.md`):
+This run examines how Dynamic Cheatsheet produces, curates, retains and reuses inference-time memory. It includes the shipped benchmark and notebook callers, not only the `LanguageModel` API. The target is a memory/knowledge/context-engineering system with a whole-system functional boundary: generator and curator calls, text extraction, cumulative and retrieval variants, code-execution continuations, caller-owned state, persistence and reload, and evaluation. This classification is grounded in SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`, `ExampleUsage.ipynb` and the three files under `prompts/`.
 
-> A lightweight framework that gives language models (LMs) a persistent, evolving memory during inference time.
-> --- `README.md`
+The wrapper returns updated memory; the shipped benchmark driver carries it into later queries and restores it on continuation. These are target responsibilities, not an excluded host's storage service (SRC-1, `run_benchmark.py`). The notebook also passes returned memory into subsequent calls (SRC-1, `ExampleUsage.ipynb`). Minimal implementation anchors establish the complete caller/API loop:
 
-The **whole-system** boundary includes the benchmark driver and interactive example as well as the library, its shipped prompts, provider client and evaluation consumers. The driver owns cross-example state, disk persistence and continuation; these responsibilities are not assigned to an excluded host. Initial inspection traced all six supported approaches in `advanced_generate`: default generation, cumulative curation, retrieval with synthesis, cumulative plus retrieval, full-history appending and direct retrieval. It also traced the generator's local-code continuation and provider-native code-execution branches (SRC-1, `dynamic_cheatsheet/language_model.py`, `run_benchmark.py`, `text_generation/simple_unified_client.py`).
+> cheatsheet = output_dict["final_cheatsheet"]
+> --- `run_benchmark.py`
 
-Cumulative curation passes the question, generated response and previous cheatsheet into a curator call, then admits the extractor's returned text as the next cheatsheet (SRC-1, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/extractor.py`). This is an executable memory-update path, not solely a claim in documentation:
-
-> # Extract the new cheatsheet from the output (if present); otherwise, return the old cheatsheet
-> new_cheatsheet = extract_cheatsheet(response=cheatsheet_output, old_cheatsheet=current_cheatsheet)
-> cheatsheet = new_cheatsheet
-> --- `dynamic_cheatsheet/language_model.py`
-
-The shipped curator prompts are part of the system's maintenance contract. They request retention, refinement, usage counts and explicit copying of useful previous content. Their instructions to verify correctness are model-facing intent, not evidence of an independently enforced correctness gate (SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`, `prompts/curator_prompt_for_dc_retrieval_synthesis.txt`). The generator prompt supplies the consumption contract and answer/code-execution formatting (SRC-1, `prompts/generator_prompt.txt`).
-
-The benchmark driver initializes memory, optionally reloads the last cheatsheet and previous outputs from JSONL, passes earlier state to the library, carries the returned cheatsheet into the next example and rewrites the output checkpoint after each example. The standalone example notebook also feeds returned cheatsheets into subsequent calls (SRC-1, `run_benchmark.py`, `ExampleUsage.ipynb`). The continuation path is explicit:
-
-> # Load the previous cheatsheet from the last output (if available)
 > last_cheatsheet = outputs[-1].get("final_cheatsheet")
 > if last_cheatsheet is not None:
 >     cheatsheet = last_cheatsheet
->
-> generator_outputs_so_far = [output["final_output"] for output in outputs]
 > --- `run_benchmark.py`
 
-The evaluation boundary includes online scoring in the benchmark driver and later scoring of retained JSONL in the evaluation notebook. This prevents treating the repository as only a stateless API or omitting its shipped persistence/reload/evaluation loop (SRC-1, `run_benchmark.py`, `EvaluatingResults.ipynb`, `dynamic_cheatsheet/utils/evaluation.py`).
+> write_jsonl(args.save_path_name, outputs)
+> --- `run_benchmark.py:314-317`
 
-### Tracked top-level coverage
+The curator instructions are part of the mechanism, including the explicit replacement-loss warning; they are not evidence that the model reliably obeys it (SRC-1, `prompts/curator_prompt_for_dc_cumulative.txt`).
 
-All rows refer to SRC-1 at the reviewed commit. “Not yet inspected” describes available evidence, not an access gap. Artifact contents remain available to later jobs at the same revision.
+> N.B. Keep in mind that once the cheatsheet is updated, any previous content not directly included will be lost and cannot be retrieved. Therefore, make sure to explicitly copy any (or all) relevant information from the previous cheatsheet to the new cheatsheet!!!
+> --- `prompts/curator_prompt_for_dc_cumulative.txt`
 
-| Top-level tracked path | Inclusion and material paths | Inspection and role; exclusions or remaining limits |
+The frozen evidence is SRC-1 at full commit `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`; the acquisition checkout's HEAD was verified against that pin. The applicability cutoff is 2026-10-20, not a claim that the checkout reflects later upstream changes. Overall evidence is code-grounded. No target code, tests, examples or provider requests were executed.
+
+External dependencies include provider SDKs and model services, local Python and installed packages, filesystem storage, and Hugging Face dataset access for the Game of 24 benchmark. Their implementations and live availability are outside this source boundary. Consequently this run cannot establish current provider compatibility, model obedience, execution isolation supplied by hosted services, or reproducibility of remote dataset contents from source inspection alone (SRC-1, `README.md`, `run_benchmark.py`, `dynamic_cheatsheet/utils/execute_code.py`, `text_generation/simple_unified_client.py`). The linked paper is not separately acquired: statements reproduced in the README remain attributed claims, not independently inspected paper evidence.
+
+### Top-level tracked coverage
+
+“Included, pending” denotes available frozen evidence not yet inspected, not an access gap. The operational producer/maintenance/consumer paths were traced before choosing whole-system; pending corpus inspection does not remove those paths from the boundary.
+
+| Top-level tracked path | Treatment and inspected material paths | Role and limits |
 |---|---|---|
-| `.gitignore` | Included as repository configuration. | Inspected; ignores environment files and several generated paths. Does not establish runtime retention guarantees. |
-| `LICENSE` | Deliberately excluded from operational analysis. | Legal text; no licensing conclusion is reached. |
-| `README.md` | Included: overview, approaches, API usage, CLI, continuation, dependencies and reported performance. | Fully inspected. Design and reported-operation evidence only; advertised improvements are not independently reproduced. |
-| `run_benchmark.py` | Included: argument entry point, task loading, prompt loading, initialization, continuation, embedding alignment, sequential generation, state carry-forward, scoring and JSONL writes. | Fully inspected; shipped producer, persister, reloader and consumer of memory. |
-| `ExampleUsage.ipynb` | Included: all source cells loading prompts, calling cumulative generation and passing returned cheatsheets into later calls. | Source cells inspected through JSON extraction; saved outputs not yet inspected. No observed-success claim is drawn from notebook comments. |
-| `EvaluatingResults.ipynb` | Included: JSONL loader, retained-output answer extraction and task-specific scoring loop. | Fully inspected as source; no new evaluation executed. |
-| `dynamic_cheatsheet/` | Included: `language_model.py`; `utils/extractor.py`, `utils/execute_code.py`, `utils/evaluation.py`; package initializers and auxiliary `utils/sonnet_eval.py`. | Core model/memory paths and three active utilities fully inspected. Initializers and sonnet evaluator received tree/signature-level inspection; `evaluation.py` comments out the sonnet import. Auxiliary sonnet scoring internals are not yet inspected, so no sonnet-evaluator correctness conclusion is reached. `.DS_Store` and tracked `__pycache__/` files are deliberately excluded as metadata/compiled artifacts; no equivalence between bytecode and source is claimed. |
-| `text_generation/` | Included: `__init__.py` exports and `simple_unified_client.py` provider initialization, message-based dispatch, retries, provider response handling and native code execution. | Active routes used by `LanguageModel` inspected. Additional client web-search helpers, citation logging and standalone chat/history convenience methods are not yet fully inspected; no claim about their full behavior or compatibility. They are not an excluded host. |
-| `prompts/` | Included: `generator_prompt.txt`, `curator_prompt_for_dc_cumulative.txt`, `curator_prompt_for_dc_retrieval_synthesis.txt`. | All three fully inspected; state-consumption and maintenance instructions. |
-| `data/` | Included: AIME 2020–2024, AIME 2024, AIME 2025, GPQA Diamond, MMLU-Pro Engineering/Physics and MathEquationBalancer task bundles; each bundle's `dataset_info.json`, `state.json` and Arrow data/cache files. | Metadata inspected for all seven bundles and driver loading traced. Arrow payloads not yet inspected; no item-level quality, provenance or leakage conclusion. `.DS_Store` deliberately excluded; no operational conclusion depends on it. |
-| `embeddings/` | Included: eight task CSVs, including `GameOf24.csv`, and their retrieval consumption in the driver. | All CSV headers and first-row structure inspected; input-to-vector alignment path traced. Full vectors and their generation provenance not yet inspected; no embedding-quality or reproducibility conclusion. |
-| `results/` | Included: task JSONL bundles for baseline, empty-cheatsheet, direct-retrieval, cumulative and retrieval-synthesis configurations. | Tracked inventory, one AIME cumulative record's keys/step keys and both scoring/persistence consumers inspected. Full trace payloads not yet inspected; no accuracy, causal improvement or equivalence to current code claim. `.DS_Store` deliberately excluded. |
-| `figures/` | Deliberately excluded: `Illustration.png`, `OverallPerformance.png`, `ClaudeSonnetRadarChart.png`. | Presentation images, not executable paths; no graph-derived measurement or performance conclusion. |
-
-### Frozen evidence and dependencies
-
-The sole frozen source is SRC-1, repository `https://github.com/suzgunmirac/dynamic-cheatsheet` at full commit `5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9`. The acquired checkout's HEAD matches that commit and its status was clean at inspection. The applicability cutoff is **2026-10-12**; later repository revisions and live services are outside this evidence. Overall evidence is **code-grounded**. No target execution, provider call or benchmark reproduction was performed.
-
-External dependencies include the selected provider's SDK/service, OpenAI-compatible endpoints, Python and the local subprocess environment, NumPy/scikit-learn for retrieval, tiktoken, pandas, datasets, dotenv and typed argument parsing. The driver loads Game of 24 through the external `turingmachine/meta-prompting` dataset rather than a shipped local task bundle. These interfaces are visible in SRC-1, `README.md`, `run_benchmark.py`, `dynamic_cheatsheet/language_model.py`, `dynamic_cheatsheet/utils/execute_code.py` and `text_generation/simple_unified_client.py`; their external implementations and moving service/data versions are not frozen here. This prevents conclusions about present provider compatibility, remote execution isolation, exact external dataset bytes or complete environment reproducibility. Local execution source remains included; remote sandbox claims do not establish local sandboxing.
-
-The linked paper is not captured or registered and is deliberately excluded. Paper-only experimental conditions and causal explanations cannot support this run. Repository result files remain eligible frozen evidence, but their presence or schema alone does not establish an observed memory benefit. No required shipped state-producing, updating, admitting, persisting, reloading or consuming source path was unavailable; the uninspected artifact payloads and auxiliary facilities above limit claims rather than turning the core loop into a partial boundary.
+| `.gitignore` | Excluded; tree-listed only | Repository hygiene. No conclusions about ignored credentials or untracked deployment files. |
+| `LICENSE` | Excluded; tree-listed only | Legal metadata; licensing assessment is not undertaken. |
+| `README.md` | Included; inspected | Declared purpose, installation, API examples, approaches and reported performance. Performance prose is not an independently verified outcome. |
+| `run_benchmark.py` | Included; inspected in full | CLI entry point, prompt/dataset loading, previous-output corpus and embedding alignment, generator invocation, memory handoff, initialization, JSONL persistence, continuation and scoring. |
+| `ExampleUsage.ipynb` | Included; all cell source inspected | Shipped interactive caller reloads prompts and reuses returned cheatsheets on repeated inputs. Saved outputs not inspected; no notebook-success inference. |
+| `EvaluatingResults.ipynb` | Included; all cell source inspected | Reloads JSONL results, extracts answers and dispatches task scorers. Saved outputs not inspected; no aggregate accuracy conclusion. |
+| `dynamic_cheatsheet/` | Included; `language_model.py`, `utils/extractor.py`, `utils/execute_code.py`, `utils/evaluation.py` inspected in full; empty root `__init__.py` inspected | Generator/curator, retrieval and hybrid branches, full-history baseline, extraction/admission, local execution, and scoring. `utils/sonnet_eval.py` inspected only by function/import inventory; available auxiliary poetry scorer, not called by inspected benchmark/notebook paths. No poetry-evaluation correctness claim. Empty package initializers have no substantive loop role. Tracked `__pycache__/` and `.DS_Store` excluded as generated artifacts; bytecode/source parity not assessed. |
+| `text_generation/` | Included; `__init__.py` and relevant `simple_unified_client.py` dispatch, retry, provider generation and code-interpreter methods inspected | Shipped provider adapter consumed by `LanguageModel`. Additional standalone chat/web-search conveniences are available but not fully inspected; no claim about those standalone APIs. Remote SDK/service internals excluded. |
+| `prompts/` | Included; `generator_prompt.txt`, `curator_prompt_for_dc_cumulative.txt`, `curator_prompt_for_dc_retrieval_synthesis.txt` inspected in full | Memory consumption and maintenance doctrine, requested validation, formatting and retention. Instructions do not establish compliance. |
+| `data/` | Included, pending content inspection; tree inventories AIME_2020_2024, AIME_2024, AIME_2025, GPQA_Diamond, MMLU_Pro_Engineering, MMLU_Pro_Physics and MathEquationBalancer Arrow datasets, metadata and state files | Frozen benchmark inputs and labels loaded by driver. No dataset-integrity or leakage conclusion from this boundary pass. `.DS_Store` excluded as generated metadata. |
+| `embeddings/` | Included, pending content inspection; CSVs for those seven datasets plus GameOf24 identified | Precomputed retrieval input consumed by driver and API. No assertion about embedding generation, alignment correctness or vector quality beyond inspected caller logic. |
+| `results/` | Included, pending content inspection; task directories and baseline/cumulative/retrieval-synthesis/retrieval/empty-cheatsheet JSONL files inventoried | Supplied historical result artifacts, available for later bounded run-evidence inspection. No observed-run or causal-experiment claim yet. `.DS_Store` excluded. |
+| `figures/` | Excluded; `ClaudeSonnetRadarChart.png`, `Illustration.png`, `OverallPerformance.png` tree-listed | Expository diagrams/charts. Their graphical content supplies no independently inspected performance or mechanism evidence here. |
 
 ## Source register
 
-| source ID | kind | identity/location | revision or capture | evidence layer | inspected scope | citation anchors | access gaps and conclusion prevented |
+| Source ID | Kind | Identity/location | Revision or capture | Evidence layer | Inspected scope | Citation anchors | Access gaps and conclusion prevented |
 |---|---|---|---|---|---|---|---|
-| SRC-1 | git | `https://github.com/suzgunmirac/dynamic-cheatsheet` | 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9 | implementation; doctrine/design; reported operation | Access root: `/home/zby/llm/commonplace/.commonplace/worktrees/dynamic-cheatsheet-workflow-ca0a0b29d273/related-systems/suzgunmirac--dynamic-cheatsheet`. Implementation: complete benchmark driver, model wrapper, extractor, local executor and active evaluation utility; notebook source cells; exported client and its active provider/message/retry/code-execution routes; task metadata, CSV headers and one result-record schema. Doctrine/design: README and all three shipped prompts. Reported operation: README performance statements, not independently validated. Coverage table distinguishes auxiliary and payload inspection limits. | Implementation: [driver](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py), [memory wrapper](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py), [evaluation consumer](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/EvaluatingResults.ipynb), [provider client](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/text_generation/simple_unified_client.py). Doctrine/design: [cumulative prompt](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/prompts/curator_prompt_for_dc_cumulative.txt). Doctrine/design and reported operation: [README](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/README.md). | No unavailable required repository source. External providers, SDK implementations, remote dataset revision and linked paper are not frozen; prevents current-service, full reproducibility and paper-only conclusions. Available but uninspected notebook outputs, full results, Arrow payloads and embedding provenance do not yet support observed-run or causal-experiment findings. |
+| SRC-1 | git | `https://github.com/suzgunmirac/dynamic-cheatsheet` | 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9 | implementation; doctrine/design; reported operation | Access root: `/home/zby/llm/commonplace/.commonplace/worktrees/dynamic-cheatsheet-523b6948294d/related-systems/suzgunmirac--dynamic-cheatsheet`. Implementation: full tracked-tree inventory, benchmark driver, language-model wrapper, extraction, local execution and task evaluation; notebook cell source; provider dispatch/retry/generation/code-interpreter methods. Doctrine/design: README and all shipped prompt templates. Reported operation: README performance prose only. Remaining available material is distinguished in coverage above. | Implementation: [driver](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/run_benchmark.py), [wrapper](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/dynamic_cheatsheet/language_model.py), [example caller](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/ExampleUsage.ipynb), [result consumer](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/EvaluatingResults.ipynb), [provider adapter](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/text_generation/simple_unified_client.py). Doctrine/design: [curator](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/prompts/curator_prompt_for_dc_cumulative.txt). Reported operation: [README](https://github.com/suzgunmirac/dynamic-cheatsheet/blob/5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9/README.md). | No repository access gap found. Remote providers, remote dataset snapshot and linked paper are not separately frozen, preventing claims about their internals or present operation. Result payloads and saved notebook outputs remain uninspected, not unavailable; no measured outcome or causal attribution is established by this member. |

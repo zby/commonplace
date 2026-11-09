@@ -1,790 +1,391 @@
 ---
 type: agentic-system-analyses/types/agentic-system-memory-profile.md
-description: Dynamic Cheatsheet memory profile covering curated reference, response/checkpoint history,
-  exported client history and opaque native execution state.
-run-id: AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01
-source-identity: https://github.com/suzgunmirac/dynamic-cheatsheet
-reviewed-boundary: 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
+description: "Dynamic Cheatsheet memory profile: caller-carried sheets, solution archives, retrieval access structures and opaque hosted state."
+run-id: AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01
+source-identity: "https://github.com/suzgunmirac/dynamic-cheatsheet"
+reviewed-boundary: "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9"
 memory-comparison:
   version: 2
-  scope: Use-accumulated final reference, full responses, within-call retained answers, checkpoint envelopes
-    and diagnostic/selection fields, retained evaluation targets, exported client conversation history,
-    local native dispatch handle and associated opaque provider execution payload; includes initialization/replacement,
-    maintenance, continuation, evaluation and later model consumers. Excludes shipped static prompt templates,
-    precomputed CSV embeddings and model weights as accumulated memory, initial dataset storage, transient
-    unretained search snippets and deleted temporary scripts. Search-conditioned retained response contributions
-    and native payload alternatives remain included with uncertainty.
+  scope: >-
+    Includes accumulated cheatsheet bodies, archived question/solution pairs,
+    extracted previous-round answers, their JSONL recovery envelope and numerical
+    retrieval access structures, initialization and resume admissions, and the
+    separate opaque hosted-state alternative exposed through container reuse.
+    Excludes static shipped prompt templates, model weights not updated by the
+    inspected loop, transient scoring counters and targets not fed into memory
+    updates, local subprocess variables, and ordinary adapter chat accumulation.
+    Adapter history reset/set remains a context-control affordance, not an
+    established retained-memory consumer route.
   axes:
     storage_substrate:
       assessment: partial
       units:
-      - scope: Benchmark reference, response corpus, diagnostic/selection fields, answer/target and checkpoint
-          envelope
-        assessment: known
-        findings:
-        - value: in-memory
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-steps
-          - memory.md#mem-obj-retrieved-selection
-          - runtime.md#rt-obj-output-dict
-          note: Strings, lists and dictionaries hold live and historical parts.
-        - value: files
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-steps
-          - memory.md#mem-obj-retrieved-selection
-          - runtime.md#rt-obj-output-dict
-          - epistemic.md#epi-obj-final-answer
-          - epistemic.md#epi-obj-target
-          note: Driver JSONL retains the checkpoint parts for reload or evaluation.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-steps
-        - memory.md#mem-obj-retrieved-selection
-        - runtime.md#rt-obj-output-dict
-        - epistemic.md#epi-obj-final-answer
-        - epistemic.md#epi-obj-target
-        note: The recorded operative checkpoint parts have local strings/containers and JSONL persistence.
-      - scope: Exported client history and native dispatch handle
-        assessment: known
-        findings:
-        - value: in-memory
-          basis: wired
-          records:
-          - memory.md#mem-obj-messages
-          - memory.md#mem-obj-container-id
-          note: Python list and wrapper handle are local state, not model weights.
-        records:
-        - memory.md#mem-obj-messages
-        - memory.md#mem-obj-container-id
-        note: Both local state surfaces reside in client/wrapper instances.
-      - scope: Associated native provider payload
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Provider-managed execution state is opaque; a service handle does not establish the storage
-          substrate of accumulated payload.
-      records:
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-final-output
-      - memory.md#mem-obj-steps
-      - memory.md#mem-obj-retrieved-selection
-      - runtime.md#rt-obj-output-dict
-      - epistemic.md#epi-obj-final-answer
-      - epistemic.md#epi-obj-target
-      - memory.md#mem-obj-messages
-      - memory.md#mem-obj-container-id
-      note: Local checkpoint and client storage are covered; provider payload storage remains unresolved.
-        Static prompt files and CSV vectors are excluded.
+        - scope: "Carried sheet, raw solution archive and extracted round answers, including JSONL checkpoints"
+          assessment: known
+          findings:
+            - value: in-memory
+              basis: wired
+              records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+              note: "Strings and lists retain these parts between later model invocations."
+            - value: files
+              basis: wired
+              records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+              note: "The driver serializes result parts as JSONL; an initial sheet can also come from a text file. Saving round answers does not establish their reload into later questions."
+          records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+          note: "The records establish local process retention and filesystem persistence, not transactional durability."
+        - scope: "Retrieval vectors, paired input strings, array indices and local container identifier"
+          assessment: known
+          findings:
+            - value: files
+              basis: wired
+              records: [memory.md#mem-obj-input-embeddings]
+              note: "Vectors and input strings are loaded from CSV files; repository distribution does not make the operative substrate repo."
+            - value: in-memory
+              basis: wired
+              records: [memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id]
+              note: "Parsed arrays and the local container identifier are process-local access state."
+          records: [memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id]
+          note: "This classifies exposed access structures, not the hosted payload selected by the identifier."
+        - scope: "Potentially retained provider-hosted interpreter payload"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "A tool/container request does not expose the operative payload substrate or persistence contract; service-object is not inferred from remote hosting alone."
+      records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id, runtime.md#rt-rte-benchmark-cycle]
+      note: "Local retained objects and access structures are classified; hosted payload storage remains unresolved."
     representational_form:
       assessment: partial
       units:
-      - scope: Reference and retained response/history text at model consumers
-        assessment: known
-        findings:
-        - value: natural-language
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-messages
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-rte-chat-history
-          note: Generator/curator/provider receive model-interpreted strategies, examples and prior turns.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-messages
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-rte-chat-history
-        note: Models interpret text, including example code as reference.
-      - scope: Checkpoint envelopes, selection lists, history roles, native handle and evaluator inputs
-          at fixed-code consumers
-        assessment: known
-        findings:
-        - value: symbolic
-          basis: wired
-          records:
-          - runtime.md#rt-obj-output-dict
-          - memory.md#mem-obj-steps
-          - memory.md#mem-obj-retrieved-selection
-          - memory.md#mem-obj-messages
-          - memory.md#mem-obj-container-id
-          - epistemic.md#epi-obj-final-answer
-          - epistemic.md#epi-obj-target
-          - runtime.md#rt-rte-answer-scoring
-          note: JSON/list fields, role labels, handle dispatch and task-scoring strings have localized
-            code-defined effects.
-        records:
-        - runtime.md#rt-obj-output-dict
-        - memory.md#mem-obj-steps
-        - memory.md#mem-obj-retrieved-selection
-        - memory.md#mem-obj-messages
-        - memory.md#mem-obj-container-id
-        - epistemic.md#epi-obj-final-answer
-        - epistemic.md#epi-obj-target
-        - runtime.md#rt-rte-answer-scoring
-        note: Fixed parsing, dispatch, indexing and answer predicates establish symbolic paths separately
-          from text interpretation.
-      - scope: Native execution payload encoding and tool consumption
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Readable returned text does not determine the remote payload form.
-      records:
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-final-output
-      - memory.md#mem-obj-messages
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-rte-chat-history
-      - runtime.md#rt-obj-output-dict
-      - memory.md#mem-obj-steps
-      - memory.md#mem-obj-retrieved-selection
-      - memory.md#mem-obj-container-id
-      - epistemic.md#epi-obj-final-answer
-      - epistemic.md#epi-obj-target
-      - runtime.md#rt-rte-answer-scoring
-      note: Text and fixed-code paths are split. Precomputed dense vectors and provider weights are not
-        use-accumulated memory here; opaque tool payload may have additional forms.
+        - scope: "Sheet, raw solution pairs and previous-round answers at generator and curator consumption"
+          assessment: known
+          findings:
+            - value: natural-language
+              basis: wired
+              records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, runtime.md#rt-bap-reference-context]
+              note: "Models interpret strategy prose, examples, displayed code and rendered execution text; sheet code is not directly evaluated."
+          records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+          note: "This unit covers text consumption, not the fixed-rule envelope or an independently generated executable program."
+        - scope: "Recovery envelope, extraction delimiters, pair indices, original-input lookup strings and container identifier at fixed-rule consumers"
+          assessment: known
+          findings:
+            - value: symbolic
+              basis: wired
+              records: [runtime.md#rt-obj-output-dict, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id, epistemic.md#epi-rte-sheet-admission]
+              note: "Dictionary fields, tag splits, exact string lookup, indices and identifiers receive fixed code interpretations."
+          records: [runtime.md#rt-obj-output-dict, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id, epistemic.md#epi-rte-sheet-admission]
+          note: "Symbolic access syntax is separate from the semantic body it selects."
+        - scope: "Dense input vectors at cosine-similarity selection"
+          assessment: known
+          findings:
+            - value: parametric
+              basis: wired
+              records: [memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-context-selection]
+              note: "Distributed numerical representations supply cosine ranking; this does not imply weight training or known embedding provenance."
+          records: [memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-context-selection]
+          note: "The accepted record establishes vector encoding and consumer despite uninspected numerical payload quality."
+        - scope: "Provider-hosted retained payload, distinct from returned text and local identifier"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "Returned output_text cannot classify hidden interpreter state or files."
+      records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, runtime.md#rt-obj-output-dict, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id]
+      note: "Text, fixed-rule access material and dense vectors are separated; the hosted alternative prevents complete coverage."
     lineage:
       assessment: partial
       units:
-      - scope: Derived cumulative/hybrid and retrieval-synthesis reference
-        assessment: known
-        findings:
-        - value: trace-extracted
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-obj-final-cheatsheet
-          note: Generated responses and possible execution feedback feed extracted successor reference.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        note: Known subsequent model/software transformations are independent of unresolved seed authorship.
-      - scope: Deterministic retrieval/history rendering and checkpoint snapshots
-        assessment: known
-        findings:
-        - value: other-compiled
-          basis: wired
-          records:
-          - memory.md#mem-obj-retrieved-selection
-          - memory.md#mem-obj-steps
-          - runtime.md#rt-rte-context-selection
-          - runtime.md#rt-rte-checkpoint-continuation
-          note: Code selects/labels prior pairs and snapshots prompts, answers and reference versions.
-        records:
-        - memory.md#mem-obj-retrieved-selection
-        - memory.md#mem-obj-steps
-        - runtime.md#rt-rte-context-selection
-        - runtime.md#rt-rte-checkpoint-continuation
-        note: These parts are assembled or snapshotted by code rather than semantically curated.
-      - scope: New generator and chat assistant response text
-        assessment: known
-        findings:
-        - value: authored
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-messages
-          - memory.md#mem-rte-chat-history
-          note: Generated response text enters corpus/history through software append.
-        records:
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-messages
-        - memory.md#mem-rte-chat-history
-        note: Model generation authors responses; later retention does not certify their content.
-      - scope: Imported benchmark targets in retained checkpoints
-        assessment: known
-        findings:
-        - value: imported
-          basis: wired
-          records:
-          - epistemic.md#epi-obj-target
-          - runtime.md#rt-obj-output-dict
-          note: Dataset answers enter the saved envelope and later scorer.
-        records:
-        - epistemic.md#epi-obj-target
-        - runtime.md#rt-obj-output-dict
-        note: The driver copies dataset targets without establishing source warrant.
-      - scope: Caller seed, submitted history and replacement checkpoint content
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-messages
-        - runtime.md#rt-rte-checkpoint-continuation
-        note: File/API provision is established, but original authorship and derivation are not; cannot
-          choose authored versus imported content provenance.
-      - scope: Native provider payload provenance
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Creation/handle reuse does not establish original content or derivation.
-      - scope: Search-conditioned retained assistant text
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-messages
-        - memory.md#mem-rte-chat-history
-        - epistemic.md#epi-rte-search-acquisition
-        note: Chat retains the generated answer, not raw Tavily snippets. The proportions of imported,
-          derived and newly authored content are indeterminate; the known response-authoring path does
-          not settle these contributions.
-      records:
-      - memory.md#mem-obj-final-cheatsheet
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-obj-retrieved-selection
-      - memory.md#mem-obj-steps
-      - runtime.md#rt-rte-checkpoint-continuation
-      - memory.md#mem-obj-final-output
-      - memory.md#mem-obj-messages
-      - memory.md#mem-rte-chat-history
-      - epistemic.md#epi-obj-target
-      - runtime.md#rt-obj-output-dict
-      - memory.md#mem-obj-container-id
-      - epistemic.md#epi-rte-search-acquisition
-      note: Known derivation paths coexist with unknown caller provenance and opaque native state. Search-conditioned
-        generated chat responses retain unresolved imported versus generated semantic contributions, as
-        recorded by search acquisition.
+        - scope: "Generated solution records, extracted round answers and trace-fed curator sheet replacements"
+          assessment: known
+          findings:
+            - value: trace-extracted
+              basis: wired
+              records: [memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection]
+              note: "Generator experience is retained as solution text or extracted answers and feeds cumulative/hybrid and retrieval-synthesis guidance. This names derivation from activity, not semantic novelty."
+          records: [memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection]
+          note: "Known runtime derivation does not resolve independent initial-content provenance."
+        - scope: "Initial caller/file sheets, restored external rows and precomputed vector inputs"
+          assessment: partial
+          findings:
+            - value: imported
+              basis: wired
+              records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-benchmark-cycle]
+              note: "Loader and resume routes import supplied content into the live loop."
+          records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-benchmark-cycle]
+          note: "Import is established, but original sheet authorship, restored-row production and embedding generation are not; authored or other-compiled origins cannot be assigned generally."
+        - scope: "Fixed-rule checkpoint and access metadata produced by the inspected driver"
+          assessment: known
+          findings:
+            - value: other-compiled
+              basis: wired
+              records: [runtime.md#rt-obj-output-dict, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-input-embeddings]
+              note: "Code assembles keys, row structure and aligned array indices; this is not the lineage of the semantic text or original numerical vectors."
+          records: [runtime.md#rt-obj-output-dict, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-input-embeddings]
+          note: "Limited to the exposed fixed-rule assembly path."
+        - scope: "Supplied container identifier and hosted-state content provenance"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id]
+          note: "Caller supply/session creation does not reveal payload derivation or a common provenance for all identifier alternatives."
+      records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id, runtime.md#rt-rte-benchmark-cycle]
+      note: "Known trace derivation and imports coexist with unresolved initial, vector and hosted provenance."
     behavioral_authority:
       assessment: partial
       units:
-      - scope: Live reference and raw history/examples at solving consumers
-        assessment: known
-        findings:
-        - value: knowledge
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-messages
-          - runtime.md#rt-bap-cheatsheet-context
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-rte-chat-history
-          note: Generator/provider receives examples, strategies and prior turns as reference context.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-messages
-        - runtime.md#rt-bap-cheatsheet-context
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-rte-chat-history
-        note: Reference and prior conversational material supply advisory context; delivery is not demonstrated
-          reliance.
-      - scope: Prior reference and response traces at curator update consumer
-        assessment: known
-        findings:
-        - value: learning
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - runtime.md#rt-bap-curator-guidance
-          note: Experience and prior reference feed a durable behavior-shaping reference update without
-            a parameter update.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - runtime.md#rt-bap-curator-guidance
-        note: Update-consumer force is separate from successor reference use.
-      - scope: Checkpoint envelope at continuation controller
-        assessment: known
-        findings:
-        - value: routing
-          basis: wired
-          records:
-          - runtime.md#rt-obj-output-dict
-          - runtime.md#rt-rte-checkpoint-continuation
-          note: Retained checkpoint state determines next dataset window and restored context.
-        records:
-        - runtime.md#rt-obj-output-dict
-        - runtime.md#rt-rte-checkpoint-continuation
-        note: Saved row count selects restart position, and last reference/all outputs select reconstructed
-          model inputs.
-      - scope: Retained targets at offline task evaluator
-        assessment: known
-        findings:
-        - value: validation
-          basis: wired
-          records:
-          - epistemic.md#epi-obj-target
-          - runtime.md#rt-rte-answer-scoring
-          note: Saved expected answers determine whether the retained candidate answer meets the task
-            predicate.
-        records:
-        - epistemic.md#epi-obj-target
-        - runtime.md#rt-rte-answer-scoring
-        note: Targets are measurement criteria, not curator admission feedback.
-      - scope: Native payload at later provider tool consumers
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Actual payload, consumer and force are not established by handle reuse.
-      records:
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-final-output
-      - memory.md#mem-obj-messages
-      - runtime.md#rt-bap-cheatsheet-context
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-rte-chat-history
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-bap-curator-guidance
-      - runtime.md#rt-obj-output-dict
-      - runtime.md#rt-rte-checkpoint-continuation
-      - epistemic.md#epi-obj-target
-      - runtime.md#rt-rte-answer-scoring
-      - memory.md#mem-obj-container-id
-      note: Recorded advisory, update, restart and scoring effects are included. Static instructions and
-        embedding ranking inputs are excluded; no privileged instruction or correctness-enforcement force
-        is inferred for reference text.
+        - scope: "Retained sheet, retrieved/full-history examples and round answers at the solving generator"
+          assessment: known
+          findings:
+            - value: knowledge
+              basis: wired
+              records: [runtime.md#rt-bap-reference-context, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+              note: "Text supplies reference, strategies and prior answers through user-message context. Advice is not an enforced algorithm or guaranteed truth source."
+          records: [runtime.md#rt-bap-reference-context, memory.md#mem-obj-previous-answers]
+          note: "The actual downstream force is interpreted reference context, not standing host instructions."
+        - scope: "Old sheet and solution experience at cumulative/hybrid and retrieval-synthesis update consumers"
+          assessment: known
+          findings:
+            - value: learning
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-final-output, memory.md#mem-obj-cheatsheet]
+              note: "Retained experience and prior guidance feed automatic revision of a behavior-shaping sheet that reaches later invocations. Improved capacity is not established."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection]
+          note: "Update-consumer authority is distinct from the output sheet's knowledge authority at the generator."
+        - scope: "Retained input vectors at top-k selection"
+          assessment: known
+          findings:
+            - value: ranking
+              basis: wired
+              records: [memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-context-selection]
+              note: "Question vectors determine relative similarity and therefore which archived pairs are delivered."
+          records: [memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-context-selection]
+          note: "Answer text is delivered after vector selection; no retained success score ranks it."
+        - scope: "Saved-row checkpoint and container identifier at continuation/tool dispatch"
+          assessment: known
+          findings:
+            - value: routing
+              basis: wired
+              records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+              note: "Saved-row count determines the resumed input window; a truthy container ID selects native dispatch and its container destination."
+          records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "Routing is established for exposed access state, not for hidden provider content."
+        - scope: "Hosted payload at later provider/tool consumers"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "The consumed state and its effects are opaque; returned reference text does not classify that separate path."
+      records: [runtime.md#rt-bap-reference-context, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id]
+      note: "Knowledge, update learning, ranking and routing have distinct consumers. Static extraction rules and scorer predicates are not retained memory criteria, so their enforcement/validation is not attributed to the retained sheet."
     write_agency:
       assessment: partial
       units:
-      - scope: Curator extraction/install, driver corpus/snapshot admission and client chat append
-        assessment: known
-        findings:
-        - value: automatic
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - runtime.md#rt-rte-checkpoint-continuation
-          - memory.md#mem-obj-final-output
-          - memory.md#mem-obj-steps
-          - memory.md#mem-rte-chat-history
-          note: Curator proposal extraction and successful generation append occur computationally; launch/path
-            choice is not content approval.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - runtime.md#rt-rte-checkpoint-continuation
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-steps
-        - memory.md#mem-rte-chat-history
-        note: Software/model admission has no per-content human approval.
-      - scope: Seed-file, checkpoint replacement and set/reset-history content control
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - runtime.md#rt-rte-checkpoint-continuation
-        - memory.md#mem-obj-messages
-        - memory.md#mem-rte-chat-history
-        note: Caller APIs afford replacement, but caller identity and explicit human content decision
-          are unresolved; manual is not established.
-      - scope: Native payload writes/admission
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Remote writers and admission controls are opaque.
-      records:
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - runtime.md#rt-rte-checkpoint-continuation
-      - memory.md#mem-obj-final-output
-      - memory.md#mem-obj-steps
-      - memory.md#mem-rte-chat-history
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-messages
-      - memory.md#mem-obj-container-id
-      note: Automatic downstream admission is known despite unresolved caller initialization/replacement
-        control and native writes.
+        - scope: "Generator-trace append, round-answer extraction, curator proposal admission and checkpoint serialization"
+          assessment: known
+          findings:
+            - value: automatic
+              basis: wired
+              records: [memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-sheet-admission, runtime.md#rt-rte-benchmark-cycle]
+              note: "Software/model admission proceeds without per-content human approval; benchmark initiation does not make these writes manual."
+          records: [memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, epistemic.md#epi-rte-sheet-admission, runtime.md#rt-rte-benchmark-cycle]
+          note: "Content admission is classified separately from filesystem I/O or model authorship."
+        - scope: "Initial caller/file sheet, supplied archive, vector production and replacement checkpoint admission"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-benchmark-cycle]
+          note: "The loader is wired, but caller identity and path choice do not establish who approved or replaced each retained content item. No manual classification is warranted."
+        - scope: "Hosted-state write/admission mechanisms"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "The service controls hidden admissions; local session selection cannot classify individual hosted writes."
+      records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id, epistemic.md#epi-rte-sheet-admission, runtime.md#rt-rte-benchmark-cycle]
+      note: "Automatic runtime writes are supported; initial and external replacement control and hosted admissions remain unresolved."
     curation_operations:
       assessment: partial
       units:
-      - scope: Whole live reference replacement
-        assessment: known
-        findings:
-        - value: evolve
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          note: Existing reference text is revised by whole-text replacement; no semantic improvement
-            is implied.
-        - value: invalidate
-          basis: wired
-          records:
-          - memory.md#mem-obj-final-cheatsheet
-          - runtime.md#rt-rte-cumulative-curation
-          - epistemic.md#epi-rte-reference-admission
-          note: Omitted content loses its live-reference role while old snapshots can remain.
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - epistemic.md#epi-rte-reference-admission
-        note: Extractor replaces an existing live reference; omission withdraws live reliance while checkpoint
-          history can remain.
-      - scope: Requested model maintenance of retained references
-        assessment: known
-        findings:
-        - value: consolidate
-          basis: claimed
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - epistemic.md#epi-clm-verified-solutions
-          note: Cumulative guidance requests combining reusable prior experience into reference.
-        - value: dedup
-          basis: claimed
-          records:
-          - runtime.md#rt-rte-context-selection
-          note: Retrieval-synthesis guidance requests duplicate removal.
-        - value: evolve
-          basis: claimed
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          note: Guidance requests refinement and replacement of inferior prior methods.
-        - value: synthesize
-          basis: claimed
-          records:
-          - epistemic.md#epi-obj-synthesis-prompt
-          note: Guidance requests new meta-strategies from experience; novel claims are not demonstrated.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - epistemic.md#epi-obj-synthesis-prompt
-        - epistemic.md#epi-clm-verified-solutions
-        note: Semantic operations are requested, not established from generated instances.
-      - scope: Client reset of retained conversation
-        assessment: known
-        findings:
-        - value: decay
-          basis: wired
-          records:
-          - memory.md#mem-rte-chat-history
-          - memory.md#mem-obj-messages
-          note: The implemented reset forgets retained messages; no gradual weighting policy is implied.
-        records:
-        - memory.md#mem-rte-chat-history
-        - memory.md#mem-obj-messages
-        note: Reset clears accumulated history without retaining an invalidation ledger.
-      - scope: Semantic result of model-curated replacement
-        assessment: not-determinable
-        findings: []
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        note: No candidate instance distinguishes reduced restatement from new claims; cannot upgrade
-          claimed consolidation/dedup/synthesis to wired semantic transformations.
-      - scope: Native payload maintenance
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: No remote transformation is inspected.
-      records:
-      - memory.md#mem-obj-final-cheatsheet
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - epistemic.md#epi-rte-reference-admission
-      - epistemic.md#epi-obj-synthesis-prompt
-      - epistemic.md#epi-clm-verified-solutions
-      - memory.md#mem-rte-chat-history
-      - memory.md#mem-obj-messages
-      - memory.md#mem-obj-container-id
-      note: Whole replacement/withdrawal and history forgetting are executable operations; requested semantic
-        curation remains claimed and opaque native maintenance remains unresolved. Assembly, indexing
-        and acquisition alone are not curation findings.
+        - scope: "Whole-sheet revision through cumulative/hybrid and retrieval-synthesis extraction"
+          assessment: known
+          findings:
+            - value: evolve
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-sheet-admission]
+              note: "The existing carried sheet is revised by accepting an extracted replacement; missing-tag fallbacks differ by route. This does not establish correctness or a particular semantic change."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-sheet-admission]
+          note: "Coverage is complete for the implemented whole-body replacement operation, not all possible model semantic transformations."
+        - scope: "Requested semantic maintenance inside curator proposals"
+          assessment: partial
+          findings:
+            - value: consolidate
+              basis: claimed
+              records: [epistemic.md#epi-clm-verified-solutions, runtime.md#rt-rte-cumulative-update]
+              note: "The prompt asks to consolidate useful solutions and strategies; this is a requested transformation, not demonstrated faithful compression."
+            - value: dedup
+              basis: claimed
+              records: [runtime.md#rt-rte-cumulative-update]
+              note: "The memory annotation on this route records requested redundancy removal, not verified duplicate elimination."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-curator-review, epistemic.md#epi-clm-verified-solutions]
+          note: "Model output semantics remain indeterminate. Generalization requests do not establish a new claim absent from inputs, so synthesize is not inferred; requested counts do not prove promotion, decay or invalidation."
+        - scope: "Raw corpus and round-answer retention, vector alignment and checkpoint reload"
+          assessment: inapplicable
+          findings: []
+          records: [memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-benchmark-cycle]
+          note: "Append, answer extraction, index alignment and state restoration alone are acquisition/access operations, not semantic maintenance of existing retained entries."
+        - scope: "Provider-hosted retained-state transformations"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id]
+          note: "Hidden tool state cannot establish or exclude any controlled curation operation."
+      records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-sheet-admission, epistemic.md#epi-clm-verified-solutions, memory.md#mem-obj-container-id]
+      note: "Wired replacement and claimed semantic maintenance retain distinct bases; opaque state and uninspected proposal semantics prevent complete classification."
     read_back_direction:
       assessment: partial
       units:
-      - scope: Automatic question/round-conditioned reference and example supply
-        assessment: known
-        findings:
-        - value: push
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - runtime.md#rt-bap-cheatsheet-context
-          note: Whole reference or automatically selected prior pairs reach generator/curator.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - runtime.md#rt-bap-cheatsheet-context
-        note: Incoming task triggers context selection without a generator request for retained examples.
-      - scope: Automatic exported-client prior-turn supply
-        assessment: known
-        findings:
-        - value: push
-          basis: wired
-          records:
-          - memory.md#mem-rte-chat-history
-          - memory.md#mem-obj-messages
-          note: Client automatically extends the next model request with history.
-        records:
-        - memory.md#mem-rte-chat-history
-        - memory.md#mem-obj-messages
-        note: Subsequent generate/chat includes the retained list, not a requested retrieval return.
-      - scope: Explicit checkpoint reload and retained-output evaluation reads
-        assessment: known
-        findings:
-        - value: pull
-          basis: wired
-          records:
-          - runtime.md#rt-rte-checkpoint-continuation
-          - runtime.md#rt-rte-answer-scoring
-          - memory.md#mem-obj-steps
-          note: Resume/evaluation explicitly reads retained file content.
-        records:
-        - runtime.md#rt-rte-checkpoint-continuation
-        - runtime.md#rt-rte-answer-scoring
-        - memory.md#mem-obj-steps
-        note: Caller-selected resume and notebook reads fulfill requests for saved material; downstream
-          context selection remains separately push.
-      - scope: Native payload reuse/read-back
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Repeated handle delivery does not establish a payload read request, selector or later consumer.
-      records:
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - runtime.md#rt-bap-cheatsheet-context
-      - memory.md#mem-rte-chat-history
-      - memory.md#mem-obj-messages
-      - runtime.md#rt-rte-checkpoint-continuation
-      - runtime.md#rt-rte-answer-scoring
-      - memory.md#mem-obj-steps
-      - memory.md#mem-obj-container-id
-      note: Both explicit requested reads and unsolicited model-context supply occur in local chains;
-        native payload direction remains unresolved.
+        - scope: "Automatic sheet, prior-answer and archived-pair supply to generator/curator invocations"
+          assessment: known
+          findings:
+            - value: push
+              basis: wired
+              records: [runtime.md#rt-rte-context-selection, runtime.md#rt-rte-cumulative-update, memory.md#mem-obj-previous-answers, runtime.md#rt-rte-benchmark-cycle]
+              note: "Python supplies retained material while fulfilling a solving request, without a model request to retrieve that memory."
+          records: [runtime.md#rt-rte-context-selection, runtime.md#rt-rte-cumulative-update, memory.md#mem-obj-previous-answers]
+          note: "Includes all-history, retrieval, synthesis, cumulative and hybrid supply; default's empty reference is not another memory route."
+        - scope: "Explicit initialization and continuation requests for retained file/JSONL content"
+          assessment: known
+          findings:
+            - value: pull
+              basis: wired
+              records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output]
+              note: "The caller-selected initialization/resume request loads the requested sheet or saved rows; subsequent automatic prompt selection is a separate push operation."
+          records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output]
+          note: "Requested loading is not counted again as push merely because code returns the data."
+        - scope: "Hosted state reaching later native tool invocations"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "Identifier reuse requests a channel, but hidden state persistence, selection and later consumers are not exposed."
+      records: [runtime.md#rt-rte-context-selection, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-previous-answers, memory.md#mem-obj-container-id]
+      note: "Pull loading and automatic push to model contexts coexist; unresolved hosted reuse prevents known coverage."
     read_back_signal:
       assessment: partial
       units:
-      - scope: Cosine-selected prior examples on incoming question
-        assessment: known
-        findings:
-        - value: inferred-embedding
-          basis: wired
-          records:
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-obj-retrieved-selection
-          - runtime.md#rt-cmp-input-embeddings
-          note: Trigger is incoming question; selector input is current/prior question vectors; selected
-            retained part is corresponding prior full outputs.
-        records:
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-obj-retrieved-selection
-        - runtime.md#rt-cmp-input-embeddings
-        note: Current question vector ranks prior question vectors; matching indices select delivered
-          prior outputs.
-      - scope: Whole-reference, full-history and client-history context supply
-        assessment: known
-        findings:
-        - value: coarse
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-rte-chat-history
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-messages
-          note: Next round/question/chat triggers inclusion of whole live reference or supplied available
-            history prefix.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-rte-chat-history
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-messages
-        note: These push operations include the available whole reference/list rather than targeted item
-          matches.
-      - scope: Native payload selection
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        note: Handle is dispatch state, not evidence of identifier matching to delivered memory parts.
-      records:
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-obj-retrieved-selection
-      - runtime.md#rt-cmp-input-embeddings
-      - runtime.md#rt-rte-cumulative-curation
-      - memory.md#mem-rte-chat-history
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-messages
-      - memory.md#mem-obj-container-id
-      note: Known push selectors are embedding similarity and coarse inclusion; explicit file requests
-        add no identifier-based push. Model semantic content choices during curation are not independently
-        evidenced selectors of preserved delivered items.
+        - scope: "Per-query retrieval and hybrid selection of retained question/output pairs"
+          assessment: known
+          findings:
+            - value: inferred-embedding
+              basis: wired
+              records: [runtime.md#rt-rte-context-selection, memory.md#mem-obj-input-embeddings]
+              note: "On the solving trigger, current and prior question vectors feed cosine top-k; selected parts are whole paired prior inputs and outputs, not matching sheet entries."
+          records: [runtime.md#rt-rte-context-selection, memory.md#mem-obj-input-embeddings]
+          note: "Pair-count budget affects selection size but does not bound prompt tokens or establish vector quality."
+        - scope: "Automatic whole-sheet, previous-round-answer and full-history delivery"
+          assessment: known
+          findings:
+            - value: coarse
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-previous-answers, runtime.md#rt-rte-benchmark-cycle]
+              note: "On the next round/query, approach, availability and the previous-answer option select whole carried bodies or all available pairs; there is no targeted entry match."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-previous-answers]
+          note: "Automatic coarse delivery remains distinct from embedding selection inside retrieval chains."
+        - scope: "Curator selection of material surviving in a pushed replacement or custom sheet"
+          assessment: known
+          findings:
+            - value: inferred-judgment
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-curator-review, epistemic.md#epi-rte-sheet-admission]
+              note: "After a solution or before retrieval-synthesis generation, the curator interprets old sheet and solution experience, with the question, to choose retained content for the extracted body. Reliable correctness selection is not established."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, epistemic.md#epi-rte-sheet-admission]
+          note: "This is model-mediated content selection inside the push chain; deterministic delivery of its whole output is separately coarse."
+        - scope: "Requested initialization/resume file loading"
+          assessment: inapplicable
+          findings: []
+          records: [runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-cheatsheet]
+          note: "These are pull operations. A requested file path alone is not an identifier-based push selector."
+        - scope: "Selection of hidden hosted payload for later tool use"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, runtime.md#rt-rte-provider-execution]
+          note: "A container identifier selects a destination, not evidenced identity-matched delivery of retained payload parts; no identifier signal is inferred."
+      records: [runtime.md#rt-rte-context-selection, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-benchmark-cycle, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-previous-answers, memory.md#mem-obj-container-id]
+      note: "Embedding, coarse and model-judgment selection describe different operations; hosted payload selection remains unresolved."
     trace_learning:
       assessment: partial
       units:
-      - scope: Cumulative/hybrid automatic successor reference
-        assessment: known
-        findings:
-        - value: 'yes'
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - runtime.md#rt-rte-checkpoint-continuation
-          note: Automatic trace-fed reference replacement reaches later model context; no observed benefit
-            or weight training is required.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - runtime.md#rt-rte-checkpoint-continuation
-        note: Current generated response, optional execution feedback and old reference produce retained
-          text consumed by next round/question or resumed run.
-      - scope: Retrieval-synthesis automatic successor reference
-        assessment: known
-        findings:
-        - value: 'yes'
-          basis: wired
-          records:
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-obj-final-cheatsheet
-          - memory.md#mem-obj-final-output
-          - runtime.md#rt-rte-checkpoint-continuation
-          note: The synthesized extracted reference is retained and delivered to current generator and
-            future invocations.
-        records:
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-final-output
-        - runtime.md#rt-rte-checkpoint-continuation
-        note: Prior response traces and derived reference feed query-conditioned replacement, carried
-          forward by driver.
-      - scope: Raw corpus/history append, diagnostic persistence and scoring without derived update
-        assessment: inapplicable
-        findings: []
-        records:
-        - memory.md#mem-obj-final-output
-        - memory.md#mem-obj-steps
-        - memory.md#mem-rte-chat-history
-        - runtime.md#rt-rte-answer-scoring
-        note: Raw logging/replay and evaluator counts alone do not constitute a qualifying transformed
-          behavior-shaping artifact write.
-      - scope: Caller replacement and native payload update routes
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-final-cheatsheet
-        - memory.md#mem-obj-messages
-        - memory.md#mem-obj-container-id
-        note: Opaque origins/control and remote writes prevent complete classification of possible qualifying
-          updates.
-      records:
-      - runtime.md#rt-rte-cumulative-curation
-      - memory.md#mem-obj-final-cheatsheet
-      - memory.md#mem-obj-final-output
-      - runtime.md#rt-rte-checkpoint-continuation
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-obj-steps
-      - memory.md#mem-rte-chat-history
-      - runtime.md#rt-rte-answer-scoring
-      - memory.md#mem-obj-messages
-      - memory.md#mem-obj-container-id
-      note: Two wired automatic trace-fed reference routes qualify. Raw logging does not establish another
-        route; unresolved supplied/native writes prevent complete system coverage or a global negative.
+        - scope: "Cumulative/hybrid post-answer and retrieval-synthesis pre-answer sheet writes"
+          assessment: known
+          findings:
+            - value: "yes"
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-final-output]
+              note: "Automatic trace-fed replacement creates retained behavior-shaping reference text consumed by later generator/curator invocations, including within a run. No improvement observation is required for this wiring classification."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-cheatsheet]
+          note: "The chain is experience to curator to admitted sheet to later model context; raw-log persistence alone is not the warrant."
+        - scope: "Automatic extraction of cumulative round answers for later-round reference"
+          assessment: known
+          findings:
+            - value: "yes"
+              basis: wired
+              records: [memory.md#mem-obj-previous-answers]
+              note: "Software derives a retained answer list from generator experience and optionally supplies it as context to the next round's model invocation. Its horizon is within one advanced_generate call."
+          records: [memory.md#mem-obj-previous-answers]
+          note: "This is a smaller derived continuation artifact, not just the archived raw transcript; the option conditions activation."
+        - scope: "Raw solution archival and replay considered without a derived sheet or extracted round-answer write"
+          assessment: inapplicable
+          findings: []
+          records: [memory.md#mem-obj-final-output, runtime.md#rt-rte-context-selection]
+          note: "Bare trace retention and replay are not alone a qualifying automatic trace-fed artifact update. This is not an evidenced-absence no for the wider system."
+        - scope: "Initial external content and provider-hosted automatic update alternatives"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-cheatsheet, memory.md#mem-obj-input-embeddings, memory.md#mem-obj-container-id]
+          note: "Initial production and hosted-state writes are unresolved; neither a qualifying learning route nor a bounded absence is established for these alternatives."
+      records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-previous-answers, memory.md#mem-obj-final-output, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-container-id]
+      note: "Supported yes routes coexist with unresolved alternatives. No local or system-wide no is asserted; measured learning and successful self-improvement remain separate questions."
     trace_source:
       assessment: partial
       units:
-      - scope: Conversational problem/response input to cumulative and synthesis updates
-        assessment: known
-        findings:
-        - value: session-logs
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - runtime.md#rt-rte-context-selection
-          - memory.md#mem-obj-final-output
-          note: Problem and generated conversational response content feeds reference production.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - runtime.md#rt-rte-context-selection
-        - memory.md#mem-obj-final-output
-        note: The update consumes recorded agent problem-solving text and earlier response pairs.
-      - scope: Local execution content within trace-fed reference updates
-        assessment: known
-        findings:
-        - value: tool-traces
-          basis: wired
-          records:
-          - runtime.md#rt-rte-cumulative-curation
-          - memory.md#mem-obj-final-output
-          - runtime.md#rt-rte-local-execution
-          note: Recorded Python execution feedback is original tool activity, not merely a response label.
-        records:
-        - runtime.md#rt-rte-cumulative-curation
-        - memory.md#mem-obj-final-output
-        - runtime.md#rt-rte-local-execution
-        note: Local code request/result/error text survives in full response and can feed curation or
-          later synthesis.
-      - scope: Native execution and search-derived contributions to qualifying retained reference input
-        assessment: not-determinable
-        findings: []
-        records:
-        - memory.md#mem-obj-container-id
-        - runtime.md#rt-rte-native-execution
-        - memory.md#mem-obj-final-output
-        - epistemic.md#epi-rte-search-acquisition
-        note: Native response is a text projection; inaccessible original tool inputs/results and search
-          contributions cannot be enumerated from the visible display text.
-      - scope: Raw logging and scoring without qualifying trace-fed write
-        assessment: inapplicable
-        findings: []
-        records:
-        - memory.md#mem-rte-chat-history
-        - memory.md#mem-obj-steps
-        - runtime.md#rt-rte-answer-scoring
-        note: These routes alone have no qualifying learning-source assignment.
-      records:
-      - runtime.md#rt-rte-cumulative-curation
-      - runtime.md#rt-rte-context-selection
-      - memory.md#mem-obj-final-output
-      - runtime.md#rt-rte-local-execution
-      - memory.md#mem-obj-container-id
-      - runtime.md#rt-rte-native-execution
-      - epistemic.md#epi-rte-search-acquisition
-      - memory.md#mem-rte-chat-history
-      - memory.md#mem-obj-steps
-      - runtime.md#rt-rte-answer-scoring
-      note: Conversational turns and local tool feedback are supported sources. No event-stream or trajectory
-        classification is inferred from serialization or question/output pairing alone; native projected
-        origins remain unresolved.
+        - scope: "Question/solution interaction text feeding sheet updates and extracted later-round answers"
+          assessment: known
+          findings:
+            - value: session-logs
+              basis: wired
+              records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+              note: "Recorded questions, generator responses and extracted answers originate in solving interactions; later retrieval does not change their origin."
+          records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers]
+          note: "Covers the exposed conversational source content, not hidden tool events or unknown initial-sheet ancestry."
+        - scope: "Rendered local code requests and execution feedback reaching trace-fed sheet updates"
+          assessment: known
+          findings:
+            - value: tool-traces
+              basis: wired
+              records: [runtime.md#rt-rte-local-execution, memory.md#mem-obj-final-output, runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection]
+              note: "When local execution activates, code/result text enters full generator output, then current or retrieved curator input and retained guidance."
+          records: [runtime.md#rt-rte-local-execution, memory.md#mem-obj-final-output, runtime.md#rt-rte-cumulative-update]
+          note: "Conditional wiring is established, not observed execution or a complete event log."
+        - scope: "Native-provider text lineage, hosted writes and initial external/vector content within qualifying update alternatives"
+          assessment: not-determinable
+          findings: []
+          records: [memory.md#mem-obj-container-id, memory.md#mem-obj-cheatsheet, memory.md#mem-obj-input-embeddings, runtime.md#rt-rte-provider-execution]
+          note: "Flattened provider text does not expose original tool-event contents; initial and vector production is unknown. Event-streams or trajectories cannot be inferred from serialization or sequential questions."
+        - scope: "Raw archival/replay without a qualifying derived write"
+          assessment: inapplicable
+          findings: []
+          records: [memory.md#mem-obj-final-output, runtime.md#rt-rte-context-selection]
+          note: "Trace source here classifies learning writes, not every stored log; the independent curator routes above remain applicable."
+      records: [runtime.md#rt-rte-cumulative-update, runtime.md#rt-rte-context-selection, runtime.md#rt-rte-local-execution, runtime.md#rt-rte-provider-execution, memory.md#mem-obj-final-output, memory.md#mem-obj-previous-answers, memory.md#mem-obj-container-id]
+      note: "Exposed conversational and local-tool inputs are classified separately; opaque original inputs prevent a complete source inventory."
 ---
 
 # Dynamic Cheatsheet memory profile
 
 ## Comparison rationale
 
-This profile classifies accepted records, not observed benefit. The canonical live reference, response corpus and client messages are [MEM-OBJ-final-cheatsheet](memory.md#mem-obj-final-cheatsheet), [MEM-OBJ-final-output](memory.md#mem-obj-final-output) and [MEM-OBJ-messages](memory.md#mem-obj-messages). Reconciliation supersedes their epistemic duplicates and the duplicate chat route with [MEM-RTE-chat-history](memory.md#mem-rte-chat-history). Those identity resolutions affect storage, form, lineage, authority, admission and read-back citations, without strengthening evidence. The valid checkpoint container and its separately consumed parts remain distinct.
+The comparison concerns retained material and its access paths, not everything stored or executed by the runtime. The sheet, raw solution archive and extracted round answers are distinct retained parts with different consumers and horizons. Their envelope is classified only where fixed fields carry recovery/access effects. Ordinary adapter chat accumulation and its reset/set affordance do not establish a shipped retained-memory reload route ([MEM-OBJ-cheatsheet](memory.md#mem-obj-cheatsheet), [MEM-OBJ-final-output](memory.md#mem-obj-final-output), [MEM-OBJ-previous-answers](memory.md#mem-obj-previous-answers), [RT-OBJ-output-dict](runtime.md#rt-obj-output-dict), [MEM-RTE-history-controls](memory.md#mem-rte-history-controls)).
 
-Reference replacement is a wired behavioral update. Prior experience has learning authority at the curator, while its successor has knowledge authority at the generator. This does not demonstrate improved capacity or epistemic acceptance. [RT-BAP-curator-guidance](runtime.md#rt-bap-curator-guidance) and [RT-BAP-cheatsheet-context](runtime.md#rt-bap-cheatsheet-context) establish different consumer paths. Formatting admission in [EPI-RTE-reference-admission](epistemic.md#epi-rte-reference-admission) is not a retained validation criterion; benchmark targets at [EPI-OBJ-target](epistemic.md#epi-obj-target) instead constrain the evaluator, not curator admission. Mixed proposition and policy content does not alone establish a standing-instruction channel.
+Reconciliation supersedes the epistemic sheet and generator-output object declarations with [MEM-OBJ-cheatsheet](memory.md#mem-obj-cheatsheet) and [MEM-OBJ-final-output](memory.md#mem-obj-final-output). All classifications above use those canonical objects. The epistemic admission and curator-review routes remain distinct accepted mechanisms, not superseded duplicates. No other supersession affects a value.
 
-Whole replacement revises live memory and can withdraw reliance on omitted content while preserving snapshots. Semantic consolidation, deduplication and new meta-strategies remain prompt requests: the accepted records do not expose instances that establish which transformation occurred. The known replacement mechanism cannot upgrade those semantic claims. Raw response/history append and checkpoint I/O alone do not establish trace learning; automatic production of retained successor reference with later consumption does. See [RT-RTE-cumulative-curation](runtime.md#rt-rte-cumulative-curation), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection) and [MEM-OBJ-steps](memory.md#mem-obj-steps).
+The sheet's downstream authority is reference knowledge, while experience has learning authority at the curator that revises durable guidance. Neither establishes reliable compliance or improved capacity. Numerical vectors supply ranking; the saved checkpoint and container identifier supply routing. The static tag parser's enforcing replacement rule is not a retained validation criterion, and target-based scoring does not feed a memory veto ([RT-BAP-reference-context](runtime.md#rt-bap-reference-context), [RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [EPI-RTE-sheet-admission](epistemic.md#epi-rte-sheet-admission), [EPI-ABS-score-feedback](epistemic.md#epi-abs-score-feedback)).
 
-Checkpoint reads are pull at explicit resume/evaluation consumers; subsequent automatic context assembly is push. Cosine ranking establishes inferred-embedding selection of prior outputs, not reliability or a learned ranking policy. Whole reference and whole history inclusion use coarse selection. Caller choice of a file does not establish manual content approval or identifier-based push. See [RT-RTE-checkpoint-continuation](runtime.md#rt-rte-checkpoint-continuation) and [MEM-RTE-chat-history](memory.md#mem-rte-chat-history).
+Whole-sheet replacement supports wired evolution. Consolidation and deduplication remain requested semantic work. A generalization request is not evidence that an emitted claim is absent from its inputs, so it does not establish synthesis. Missing closing tags can still admit a body, and a failed answer score does not roll it back. These limits preserve the implemented trace-fed learning route without upgrading its semantic reliability ([RT-RTE-cumulative-update](runtime.md#rt-rte-cumulative-update), [EPI-RTE-curator-review](epistemic.md#epi-rte-curator-review), [EPI-RTE-sheet-admission](epistemic.md#epi-rte-sheet-admission), [EPI-ABS-score-feedback](epistemic.md#epi-abs-score-feedback)).
 
-Every axis remains partial because included native payload has unresolved operative content, writes, maintenance or later consumers. [MEM-OBJ-container-id](memory.md#mem-obj-container-id) establishes a local handle and opaque alternative, not reusable remote memory or its properties. Claude's sentinel is dispatch only. Caller-controlled seeds/history/checkpoints additionally retain unknown authorship and human control; known subsequent automation is not downgraded by those gaps. Optional search can contribute to retained generated responses, but its transient snippet context is not itself accumulated chat memory; [EPI-RTE-search-acquisition](epistemic.md#epi-rte-search-acquisition) preserves this distinction.
+Read-back separates requested file restoration from automatic supply to solving contexts. Push selection can be coarse whole-body inclusion, vector-based pair selection, or model judgment about what survives into a replacement sheet. These occur at different operations in a chain. A requested file path or container destination alone does not establish identifier-based push of retained parts ([RT-RTE-benchmark-cycle](runtime.md#rt-rte-benchmark-cycle), [RT-RTE-context-selection](runtime.md#rt-rte-context-selection), [MEM-OBJ-container-id](memory.md#mem-obj-container-id)).
 
-Source-read log: none. Classification used only the supplied accepted members and reconciliation; no frozen source ambiguity required a direct read.
+Every axis retains hosted-state uncertainty rather than treating returned text as a description of the consumed payload. Initial content approval and original vector production are also unresolved. The exposed local positives therefore yield partial inventories, not complete-value claims or bounded negatives. The profile asserts no observed operation or causal benefit: no historical result payload was assessed by the supplied reports, and provider internals remain opaque ([MEM-OBJ-container-id](memory.md#mem-obj-container-id), [MEM-OBJ-input-embeddings](memory.md#mem-obj-input-embeddings), [RT-CLM-adaptive-memory](runtime.md#rt-clm-adaptive-memory), [EPI-CLM-performance-gains](epistemic.md#epi-clm-performance-gains)).
+
+Source-read log: none. Classification used only the supplied accepted members and reconciliation; no source ambiguity required a source read, and no records or evidence were added.

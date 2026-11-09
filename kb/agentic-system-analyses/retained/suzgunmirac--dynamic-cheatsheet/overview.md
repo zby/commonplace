@@ -1,18 +1,18 @@
 ---
 type: agentic-system-analyses/types/agentic-system-analysis-overview.md
-description: Dynamic Cheatsheet carries model-curated reference text and retrieved
-  responses into later solving without a semantic admission gate or established causal
-  benefit.
-run-id: AAS-2026-10-12-dynamic-cheatsheet-ca0a0b29d273-01
+description: Dynamic Cheatsheet automatically turns solution traces into reusable
+  reference text; admission checks delimiters, while correctness and improvement remain
+  unestablished.
+run-id: AAS-2026-10-20-dynamic-cheatsheet-523b6948294d-01
 result-disposition: complete
 target-class: memory/knowledge/context-engineering system
 boundary-kind: whole-system
 reviewed-boundary: 5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9
-analysis-cutoff: '2026-10-12'
+analysis-cutoff: '2026-10-20'
 evidence-tier: code-grounded
 system: Dynamic Cheatsheet
-run-date: '2026-10-12'
-inputs-commit: bb155f68660d0c7294f410e3aea4816ae3c6e2b1
+run-date: '2026-10-20'
+inputs-commit: 14fa721faf87a8fa0da5d37c2b57443f22d313ae
 ---
 
 # Dynamic Cheatsheet agentic-system analysis
@@ -35,7 +35,7 @@ Disposition: `complete`. See the boundary for its stopping condition.
 
 ## Amendment index
 
-Amended or superseded records: EPI-OBJ-final-cheatsheet, EPI-OBJ-final-output, EPI-OBJ-messages, EPI-RTE-chat-history; [reconciliation](reconciliation.md).
+Amended or superseded records: EPI-OBJ-cheatsheet, EPI-OBJ-generator-output; [reconciliation](reconciliation.md).
 
 ## Deterministic validation
 
