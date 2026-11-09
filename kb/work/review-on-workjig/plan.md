@@ -123,6 +123,54 @@ review section is before the first deletion.
 | Step | State | Commit |
 |---|---|---|
 | README update, phase 0 | done 2026-11-09 | with this plan |
-| 1.1 results and status | pending | |
-| 1.2 gates workflow and command | pending | |
+| 1.1 results and status | done 2026-11-09, Opus worker, accepted unchanged | `7d2af63dd` |
+| 1.2 gates workflow and command | done 2026-11-09, Opus worker in a worktree; the planner made criteria explicit for a sweep | `5ce47edc3`, `0bc400508`, `4e03cbcff` |
+| 1.2 live pair | done 2026-11-09, see below | |
 | 1.3 first sweep | waits for the operator | |
+
+## Live pair, 2026-11-09
+
+`commonplace-review run gates kb/theory/definitions/storage-substrate.md
+--criteria prose/source-residue` with the default `sonnet` profile wrote a
+`pass` result on the first attempt. The rerun launched nothing and
+`status` showed the pair fresh.
+
+| Measure | Value |
+|---|---|
+| wall time | 13 s |
+| harness-reported cost | $0.095 |
+| turns | 5 (three reads, one write) |
+| context read from cache | 95,525 tokens over the turns |
+| context written to cache | 18,399 tokens |
+| output | 1,201 tokens |
+| permission denials | 0 |
+
+The cost is almost all fixed context: the note and criterion are about
+2,000 tokens together, and each turn rereads roughly 30,000 tokens of
+harness and project context. At this rate all 43 gates on one note cost
+about $4 as 43 calls. This is one observation, and it points the
+granularity decision of README item 3 toward one call per note and
+bundle; step 1.3 measures a bundle call on the same note before deciding.
+
+What the live pair did not show:
+
+- that the profile denies a write outside the run directory. The worker
+  did not try one. The guard is the only verified control.
+- the `opus` and `codex` profiles. The codex profile can write the
+  checkout at the sandbox level, which its comment states.
+
+## Open after step 1.2
+
+- **The guard fails a sweep when another session edits the checkout.**
+  It reports every path that changed while the run was open and cannot
+  tell whose change it was. In this checkout other sessions commit
+  several times an hour, so a long sweep will usually exit nonzero with
+  paths to inspect. Step 1.3 shows whether that is useful or noise.
+- **A sweep with nothing stale still creates a run directory.**
+- **`retry` of an answer needs `--force` on the rerun**, because the
+  written result makes the pair fresh.
+- **The prompt is part of each call's identity.** Editing
+  `gates.PROMPT` relaunches calls on `--resume`; it does not stale
+  results, which hash only the note and the criterion.
+- **Directory expansion is reimplemented** in `gates.note_paths`,
+  because the old selector module imports the store.

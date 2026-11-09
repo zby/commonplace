@@ -362,7 +362,9 @@ candidates come from, one theory note, and four live proposals
 collection-as-artifact freshness, periodic connect-report mining). Phase
 4 rewrites or retires each.
 
-**Launch cost** was not measured; see item 3.
+**Launch cost** was not measured in phase 0; see item 3. The first live
+pair, recorded in the [plan](./plan.md#live-pair-2026-11-09), cost $0.095,
+nearly all of it fixed context.
 
 ## Order of work
 
