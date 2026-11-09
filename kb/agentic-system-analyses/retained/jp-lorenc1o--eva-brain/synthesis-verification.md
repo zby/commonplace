@@ -1,0 +1,36 @@
+---
+type: agentic-system-analyses/types/agentic-system-verification.md
+description: "Independent verification of Eva-brain's public synthesis against the accepted records at the frozen repository boundary."
+run-id: AAS-2026-11-09-eva-brain-de4240cd9e79-01
+reviewed-boundary: "706fb91f4ee851cc355785f4e7c6eab37146938f"
+---
+
+# Eva-brain synthesis verification
+
+## Verification
+
+I checked the complete [public account](synthesis.md#bounded-synthesis) and its [limitations](synthesis.md#limitations) against the handed boundary, runtime, memory, epistemic and workflow members, reconciliation supersessions, and report and profile verification judgments. The synthesis answers file is empty. No source ambiguity required an additional source read. This judgment concerns support and public meaning, not a repetition of deterministic form or quotation checks.
+
+The opening accurately identifies the desktop knowledge-maintenance boundary, frozen revision, evidence layers and external dependencies. It does not treat code-grounded analysis as observed operation. The durable intermediary characterization is supported by [EPI-CLM-durable-knowledge](epistemic.md#epi-clm-durable-knowledge) and the [boundary](boundary.md#boundary-and-evidence), without attributing external runtime internals or actual user-vault outcomes to Eva.
+
+The source-to-admission progression preserves the consequential conditions of [RT-RTE-source-ingest](runtime.md#rt-rte-source-ingest): filename/log eligibility, committed raw inputs, delegated worktree editing, protected-path checks over both dirty and committed changes, the uncommitted-edit requirement, deletion/new-issue comparison, automatic merge and held review. The synthesis distinguishes proposal authorship from admission ownership. Its account of retained page categories follows [MEM-OBJ-knowledge-pages](memory.md#mem-obj-knowledge-pages), [MEM-OBJ-summaries](memory.md#mem-obj-summaries), [MEM-OBJ-analyses](memory.md#mem-obj-analyses) and [MEM-OBJ-page-metadata](memory.md#mem-obj-page-metadata). It uses the memory raw-object and navigation identities selected by reconciliation rather than treating the superseded epistemic declarations as additional stores or routes.
+
+The public explanation does not widen the structural gate into a truth oracle or universal write boundary. Summary source-prefix checking, inbound-link checking, inherited issue strings and human override remain beside the affected claims. These distinctions are supported by [RT-CLM-structural-gate](runtime.md#rt-clm-structural-gate) and [EPI-RTE-structural-check](epistemic.md#epi-rte-structural-check). Copying, merging and review are not promoted to evidence-consuming semantic acceptance. The absence of actual source/output pairs is preserved as uncertainty about semantic transformation, not proof that every generated statement is conjectural or false.
+
+The representative workflow remains a connected ingestion path with merge and desktop reload as delivery, supported by the [workflow account](workflow.md#workflow-account) and [MEM-RTE-desktop-reload](memory.md#mem-rte-desktop-reload). The synthesis faithfully carries the settled scheduling limit: an ordinary worker hold is not universal exclusion of further work, and the alternate enqueue route is not reported as observed concurrency or as an established production-UI sequence. The recovery account preserves process-held state, ignored cleanup failures, post-merge error ordering and lost held metadata without inventing a successful rollback or durable reconstruction protocol.
+
+Later consumption is supported by [MEM-RTE-mcp-navigation](memory.md#mem-rte-mcp-navigation) and [MEM-BAP-wiki-evidence](memory.md#mem-bap-wiki-evidence). Lexical ranking, bounded excerpts, full reads and graph connectivity are distinguished from endorsement. Loader exclusions remain channel-local. Automatic startup supply of retained profile/configuration is distinguished from requested wiki retrieval using [RT-RTE-brain-settings](runtime.md#rt-rte-brain-settings) and [RT-BAP-vault-contract](runtime.md#rt-bap-vault-contract). The working-set account retains the empty/nonempty input distinction and identifies restriction as model-directed policy, not enforced exclusion or an observed bypass ([RT-RTE-vault-query](runtime.md#rt-rte-vault-query)).
+
+The query, Health, profile-tool and save descriptions preserve separate products and authorities. Health advice does not become an automatic repair loop; a generated study key does not become its own independent oracle. Separate mandatory save review, arbitrary supplied-answer provenance, reference filtering and possible synthesis-on-synthesis reuse are supported by [RT-RTE-advisory-tools](runtime.md#rt-rte-advisory-tools), [EPI-OBJ-profile-result](epistemic.md#epi-obj-profile-result), [RT-RTE-analysis-save](runtime.md#rt-rte-analysis-save) and [EPI-RTE-analysis-format](epistemic.md#epi-rte-analysis-format). The prose does not promise complete reasoning retention or source entailment.
+
+The adaptive assessment leads with the supported log-write-to-later-eligibility contribution ([MEM-OBJ-log](memory.md#mem-obj-log)). Its narrow trace-fed memory characterization is explicitly separated from improved capacity. The research-profile account preserves the positive request for competing-explanation revision and separately assesses all four theory-builder conditions at the statuses supported by the [epistemic conclusion](epistemic.md#bounded-conclusion). Learning, reflection, autonomous theory building and exercised self-improvement are not collapsed into a negative grade. The text withholds completed criticism, next-round reliance, causally connected self-representation and objective-linked exercised self-change rather than declaring all capacities absent.
+
+The scenario-relative closing stays within the supported mechanism and identifies evidence or enforcement changes that would alter each assessment. It offers neither product ranking nor Commonplace transfer advice. The limitations table carries the report verification's scheduling caveat with its affected route and workflow citations; profile verification declares no additional publication limit. Reconciliation contains no unresolved conflict requiring another row. Other table rows preserve source warrant, imported provenance, external-runtime opacity, scope, recovery and missing operation/benefit evidence. No additional material defect was found.
+
+## Blockers
+
+none
+
+## Limits
+
+- The ordinary hold in [RT-RTE-source-ingest](runtime.md#rt-rte-source-ingest) and the [workflow review handoff](workflow.md#human-handoff-and-delivery) does not establish a system-wide scheduling barrier. The settled report-verification finding concerns SRC-1, `apps/desktop/src-tauri/src/ingest.rs` and `apps/desktop/src/main.ts`: enqueue can restart a worker without checking held entries, including through a shipped dev empty-source scan. Withhold both a universal prohibition on work during review and any claim of observed concurrency or a demonstrated production-UI click sequence. The ordinary per-proposal admission and delivery conclusions remain supported. The [synthesis limitations](synthesis.md#limitations) already carry this consequence, and the adjacent workflow prose expressly bounds the alternate route.
