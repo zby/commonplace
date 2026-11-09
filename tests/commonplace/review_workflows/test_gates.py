@@ -1,8 +1,8 @@
 """The gate sweep and `commonplace-review` end to end on a fake harness; no model is called.
 
 The fake worker reads the frame it is pointed at, logs `<note>::<criterion>`
-per launch, and writes a review whose result line follows the contract the
-prompt asks for. Words in the note's text choose its behaviour: FAILME gives
+per launch (criteria comma-separated for a bundle call), and writes each
+review output with a result line that follows the contract the prompt asks for. Words in the note's text choose its behaviour: FAILME gives
 FAIL, MALFORMED omits the result line until the prompt carries a rejection,
 CANNOT writes the problem file, and STRAY also writes a file in the checkout.
 """
@@ -28,7 +28,8 @@ frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_tex
 def listed(name):
     return re.search(rf"^- {re.escape(name)}: (.+)$", frame, re.MULTILINE).group(1)
 note = Path(listed("note.md")).read_text()
-pair = re.search(r"The note is `([^`]+)`", frame).group(1) + "::" + re.search(r"The criterion is `([^`]+)`", frame).group(1)
+criteria = re.findall(r"The criterion is `([^`]+)`|^- `([^`]+)`: its text is", frame, re.MULTILINE)
+pair = re.search(r"The note is `([^`]+)`", frame).group(1) + "::" + ",".join(a or b for a, b in criteria)
 with open(os.environ["FAKE_LOG"], "a") as log:
     log.write(pair + "\n")
 if "CANNOT" in note:
@@ -43,7 +44,8 @@ elif "`## Result: REPORT`" in frame:
     result = "## Result: REPORT"
 else:
     result = "## Result: FAIL" if "FAILME" in note else "## Result: PASS"
-Path(listed("review.md")).write_text(f"### Summary\n\nReviewed.\n\n{result}\n")
+for review in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
+    Path(listed(review)).write_text(f"### Summary\n\nReviewed.\n\n{result}\n")
 """
 
 PROFILES = """default: fake
@@ -270,6 +272,42 @@ def test_installed_project_reviews_against_library_criteria(installed, capsys):
     assert main(["status", "--json"], harnesses=installed[1]) == 0
     assert json.loads(capsys.readouterr().out)["orphaned"] == [
         "kb/reports/state/review/results/kb/notes/beta.md/commonplace/instructions/critique-note.md"]
+
+
+def test_bundle_grouping_writes_one_result_per_gate_from_one_launch(repo, capsys):
+    root = repo[0]
+    write(root, f"{GATE_DIR}/title-gate.md", gate("title-gate", "title"))
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose", "type",
+                                    "--grouping", "bundle")
+    assert code == 0, report
+    assert sorted(launches) == sorted([f"kb/notes/alpha.md::{BODY_GATE},{DESCRIPTION_GATE},{GATE_DIR}/title-gate.md",
+                                       "kb/notes/alpha.md::kb/types/note.md"])
+    written = [read_result(result_path(root, "kb/notes/alpha.md", f"prose/{name}"))
+               for name in ("body-gate", "description-gate", "title-gate")]
+    assert {(result.outcome, result.launch) for result in written} == {("pass", written[0].launch)}
+
+    # An edit of body and description stales two of the three gates: one launch re-asks those two.
+    write(root, "kb/notes/alpha.md", note("Alpha", "Alpha body, edited.", description="Alpha restated"))
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose",
+                                    "--grouping", "bundle")
+    assert (code, launches, report["counts"]) == (0, [f"kb/notes/alpha.md::{BODY_GATE},{DESCRIPTION_GATE}"],
+                                                  {"fresh": 1, "reviewed": 2})
+    # One stale gate is a pair call, with the pair's own job.
+    write(root, "kb/notes/alpha.md", note("Alpha", "Alpha body, edited twice.", description="Alpha restated"))
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose",
+                                    "--grouping", "bundle")
+    assert (code, launches) == (0, [f"kb/notes/alpha.md::{BODY_GATE}"])
+    assert [pair["job"] for pair in report["pairs"] if pair["state"] == "reviewed"] == [
+        "kb/notes/alpha.md::prose/body-gate"]
+
+
+def test_malformed_review_in_a_bundle_reasks_the_bundle(repo, capsys):
+    root = repo[0]
+    write(root, "kb/notes/alpha.md", note("Alpha", "MALFORMED body."))
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose",
+                                    "--grouping", "bundle")
+    assert code == 0 and launches == [f"kb/notes/alpha.md::{BODY_GATE},{DESCRIPTION_GATE}"] * 2
+    assert report["counts"] == {"reviewed": 2}
 
 
 def test_run_gates_refuses_to_default_to_all_gates(repo) -> None:

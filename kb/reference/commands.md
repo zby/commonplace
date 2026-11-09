@@ -380,7 +380,9 @@ removing one is deleting its file.
 `run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]` asks one
 worker per pair without a fresh result, in a new run under
 `kb/reports/state/review/runs/`, and writes a result file for each accepted
-review. `--resume RUN_DIR` continues a run; `retry RUN JOB` and
+review. `--grouping bundle` asks one worker per note and bundle of catalog
+gates for that bundle's stale gates instead of one per pair; each gate still
+gets its own result file. `--resume RUN_DIR` continues a run; `retry RUN JOB` and
 `acknowledge RUN LAUNCH` settle a worker problem or an unsettled launch.
 Criteria are catalog gate ids, bundle names, and the `type`, `collection` and
 `critique` lenses; worker profiles come from the library's

@@ -1,8 +1,9 @@
 """Review notes against criteria with headless workers, keeping one result file per pair.
 
     commonplace-review status [NOTES... [--criteria C...]] [--outcome O...] [--fresh | --stale] [--json]
-    commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]
-                                 [--max-workers N] [--timeout SECONDS] [--force] [--resume RUN_DIR]
+    commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--grouping {pair,bundle}]
+                                 [--profile NAME] [--max-workers N] [--timeout SECONDS] [--force]
+                                 [--resume RUN_DIR]
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
 
@@ -10,7 +11,9 @@ NOTES are files or directories (a directory means its reviewable notes, not
 recursively). C are gate ids, bundle names or the lenses `type`, `collection`
 and `critique`. `status` without `--criteria` covers all gates (critique stays
 opt-in); `run gates` launches one worker per stale pair, so it takes all gates
-only when asked with `--all-gates`.
+only when asked with `--all-gates`. `--grouping bundle` asks one worker per
+note and bundle of catalog gates for that bundle's stale gates, sharing one
+launch's fixed context; type, collection and critique pairs stay one call each.
 
 `status` with NOTES shows each applicable pair, including pairs never
 reviewed (`missing`); without NOTES it shows every stored result whose note
@@ -68,6 +71,8 @@ def _parser() -> argparse.ArgumentParser:
     chosen = sweep.add_mutually_exclusive_group(required=True)
     chosen.add_argument("--criteria", nargs="+")
     chosen.add_argument("--all-gates", action="store_true", help="every bundle plus `type` and `collection`")
+    sweep.add_argument("--grouping", choices=gates.GROUPINGS, default="pair",
+                       help="one call per pair, or per note and bundle of catalog gates (default: pair)")
     sweep.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL} "
                        "(default: its `default`)")
     sweep.add_argument("--max-workers", type=int, default=4, help="workers running at once")
@@ -161,7 +166,8 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     run_dir = _run_dir(root, arguments.resume)
     profile = _profile(root, run_dir, arguments.profile, arguments.resume is not None)
     report = gates.sweep(root, wanted, profile, run_dir, max_workers=arguments.max_workers,
-                         timeout=arguments.timeout, force=arguments.force, harnesses=harnesses)
+                         timeout=arguments.timeout, force=arguments.force, grouping=arguments.grouping,
+                         harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 

@@ -1,4 +1,4 @@
-"""The gate sweep: review notes against criteria, one headless worker call per pair.
+"""The gate sweep: review notes against criteria in headless worker calls.
 
 `pairs()` expands note paths and criterion requests into the applicable
 (note, criterion) pairs through `criteria.select`: catalog gate ids and
@@ -11,18 +11,30 @@ instruction, a verdict otherwise. A criterion may be a library file outside
 the repository, as the gates are in an installed project; its text is read
 through the library.
 
-`sweep()` skips pairs whose result file is fresh, unless forced, and asks a
-worker for each other pair in one Workjig run: one `checked()` call named
-`<note>::<criterion-id>`, with inputs `note` and `criterion` and one output
-`review`, checked by the strict outcome parser, so a malformed review is a
-rejected attempt whose problem goes into the next prompt. An accepted review
-is written as the pair's result file, hashed over the exact texts the worker
-was given. A worker problem or a pair out of attempts writes nothing and is
-reported for that pair. A launch failure or usage limit stops the sweep: no
-pair not yet started is asked, results already written stay, and a rerun
-with the same run directory continues.
+`review()` skips pairs whose result file is fresh, unless forced, and forms
+worker calls from the others in one of two groupings:
 
-The prompt around the two inputs is outside the freshness hashes: keep it
+- `pair`: one `checked()` call per pair, named `<note>::<criterion-id>`, with
+  inputs `note` and `criterion` and one output `review`;
+- `bundle`: one call per note and bundle of catalog gates, named
+  `<note>::<bundle>/*`, with input `note`, one input `gate-<name>` and one
+  output `review-<name>` per stale gate of that bundle. A launch's fixed
+  context dominates its cost, so this shares it across the bundle. Only the
+  stale gates are asked, so per-pair freshness is unchanged; a bundle with
+  one stale gate, and every type, collection and critique pair, is a pair
+  call.
+
+Each review is checked by the strict outcome parser, so a malformed review is
+a rejected attempt whose problem goes into the next prompt (in a bundle call,
+the whole call is asked again). An accepted review is written as its pair's
+result file, hashed over the exact texts the worker was given. A worker
+problem or a call out of attempts writes nothing and is reported for each of
+its pairs. A launch failure or usage limit stops the sweep: no call not yet
+started is asked, results already written stay, and a rerun with the same
+run directory continues. `sweep()` runs `review()` in its own run between two
+checkout snapshots.
+
+The prompt around the inputs is outside the freshness hashes: keep it
 mechanical (how to read the inputs and write the result). Judgment belongs
 in criterion files, where the hash sees it.
 
@@ -67,7 +79,8 @@ STATE = Path("kb/reports/state/review")
 RUNS = STATE / "runs"
 PROFILES_REL = "instructions/review-profiles.yaml"
 ATTEMPTS = 3
-"""Attempts per pair, counting rejected reviews and launches that returned no answer."""
+"""Attempts per call, counting rejected reviews and launches that returned no answer."""
+GROUPINGS = ("pair", "bundle")
 
 
 def profiles() -> Path:
@@ -91,6 +104,37 @@ class Pair:
     def job(self) -> str:
         """The Workjig call name: unique per pair, the same in every run."""
         return f"{self.note}::{self.criterion_id}"
+
+    @property
+    def bundle(self) -> str | None:
+        """The catalog bundle of a gate pair; None for the type, collection and critique lenses."""
+        return self.criterion_id.split("/", 1)[0] if self.kind == "gate" else None
+
+
+@dataclass(frozen=True)
+class Call:
+    """One worker call: a single pair, or the stale gates of one bundle on one note."""
+    job: str
+    pairs: tuple[Pair, ...]
+
+    def names(self) -> list[tuple[Pair, str, str]]:
+        """Each pair with its criterion input and review output name."""
+        if len(self.pairs) == 1:
+            return [(self.pairs[0], "criterion", "review")]
+        return [(pair, f"gate-{name}", f"review-{name}")
+                for pair, name in ((pair, pair.criterion_id.split("/", 1)[1]) for pair in self.pairs)]
+
+
+def calls(pending: list[Pair], grouping: str = "pair") -> list[Call]:
+    """The worker calls for the pending pairs: one per pair, or one per note and bundle of gates."""
+    if grouping not in GROUPINGS:
+        raise ValueError(f"grouping must be one of {', '.join(GROUPINGS)}: {grouping}")
+    groups: dict[tuple[str, str], list[Pair]] = {}
+    for pair in pending:
+        key = (pair.note, pair.bundle) if grouping == "bundle" and pair.bundle else (pair.job, "")
+        groups.setdefault(key, []).append(pair)
+    return [Call(members[0].job if len(members) == 1 else f"{note}::{bundle}/*", tuple(members))
+            for (note, bundle), members in groups.items()]
 
 
 @dataclass
@@ -182,6 +226,16 @@ def pairs(root: Path, notes: list[str], requests: list[str] | None = None) -> li
 
 # --- The worker call -----------------------------------------------------------
 
+READING = """\
+Reading scope:
+- The note's relative links resolve from `{note_dir}/`. For grounding or \
+consistency checks, read only files the note links to, except for one exact \
+local path that the criterion explicitly tells you to derive from such a link.
+- Ignore review backups, workshop copies and historical artifacts unless the \
+note links to them.
+- Do not delegate or start another agent.
+"""
+
 PROMPT = """\
 Review one note against one criterion. Nobody will answer questions. If you \
 cannot judge the pair, write {problem} instead of guessing.
@@ -190,17 +244,29 @@ The note is `{note}` in this repository; its text is {note_input}. The \
 criterion is `{criterion}`; its text is {criterion_input}. Judge these input \
 texts; the files on disk may have changed since.
 {wrapper}
-Reading scope:
-- The note's relative links resolve from `{note_dir}/`. For grounding or \
-consistency checks, read only files the note links to, except for one exact \
-local path that the criterion explicitly tells you to derive from such a link.
-- Ignore review backups, workshop copies and historical artifacts unless the \
-note links to them.
-- Do not delegate or start another agent.
-
+{reading}
 Output:
 - Write the review to {review}. Write nothing else: create, edit or delete no \
 file in the repository, and run no command that changes it or its git state.
+{contract}
+"""
+
+BUNDLE_PROMPT = """\
+Review one note against each gate of one bundle. Nobody will answer questions. \
+If you cannot judge the note, write {problem} instead of guessing.
+
+The note is `{note}` in this repository; its text is {note_input}. Judge this \
+input text; the file on disk may have changed since. Each gate's text is an \
+input, and each gate's review is its own output:
+{gates}
+Judge each gate independently, as if it were the only one: apply only its own \
+failure mode and test, and let no finding or result under one gate decide another.
+
+{reading}
+Output:
+- Write each gate's review to its output. Write nothing else: create, edit or \
+delete no file in the repository, and run no command that changes it or its git state.
+- Each review stands alone, with its own structure and result line:
 {contract}
 """
 
@@ -246,16 +312,26 @@ REPORT_OUTPUT = """\
 `## Result: REPORT`. Do not write PASS, WARN or FAIL."""
 
 
-def prompt(pair: Pair, problems: list[list[str]] = ()) -> str:
-    """The reviewer's task for one pair; `problems` are earlier attempts' rejections, oldest first."""
-    wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER}.get(pair.kind, ())
-    text = PROMPT.format(
-        problem=PROBLEM_REF, note=pair.note, note_input=input_ref("note"), criterion=pair.criterion,
-        criterion_input=input_ref("criterion"), wrapper="".join(f"\n{line}" for line in wrapper) + "\n" * bool(wrapper),
-        note_dir=Path(pair.note).parent.as_posix(), review=output_ref("review"),
-        contract=VERDICT_OUTPUT if pair.contract == "verdict" else REPORT_OUTPUT)
+def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
+    """The reviewer's task for one call; `problems` are earlier attempts' rejections, oldest first."""
+    call = call if isinstance(call, Call) else Call(call.job, (call,))
+    first = call.pairs[0]
+    reading = READING.format(note_dir=Path(first.note).parent.as_posix())
+    if len(call.pairs) == 1:
+        wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER}.get(first.kind, ())
+        text = PROMPT.format(
+            problem=PROBLEM_REF, note=first.note, note_input=input_ref("note"), criterion=first.criterion,
+            criterion_input=input_ref("criterion"),
+            wrapper="".join(f"\n{line}" for line in wrapper) + "\n" * bool(wrapper), reading=reading,
+            review=output_ref("review"), contract=VERDICT_OUTPUT if first.contract == "verdict" else REPORT_OUTPUT)
+    else:
+        gates = "".join(f"- `{pair.criterion}`: its text is {input_ref(given)}; write its review to "
+                        f"{output_ref(output)}.\n" for pair, given, output in call.names())
+        text = BUNDLE_PROMPT.format(problem=PROBLEM_REF, note=first.note, note_input=input_ref("note"),
+                                    gates=gates, reading=reading, contract=VERDICT_OUTPUT)
     if problems:
-        text += "\nAn earlier review of this pair was rejected. Write it again, correcting:\n"
+        text += ("\nAn earlier review of this pair was rejected. Write it again, correcting:\n" if len(call.pairs) == 1
+                 else "\nAn earlier answer to this bundle was rejected. Write every review again, correcting:\n")
         text += "".join(f"- {problem}\n" for problem in problems[-1])
     return text
 
@@ -314,55 +390,90 @@ def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
-def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
-          timeout: float | None = None, force: bool = False, harnesses=HARNESSES) -> SweepReport:
-    """Review the pairs without a fresh result (all of them when `force`) in the run at `run_dir`."""
-    run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
+def _fresh(root: Path, pair: Pair, note_text: str, criterion_text: str) -> bool:
+    """Whether the pair's stored result was produced from exactly these texts."""
+    path = results.result_path(root, pair.note, pair.criterion_id)
+    if not path.is_file():
+        return False
+    stored = results.read_result(path)
+    return (stored.note_sha256 == results.note_sha256(note_text, criterion_text)
+            and stored.criterion_sha256 == results.criterion_sha256(criterion_text))
+
+
+def review(run: Run, root: Path, wanted: list[Pair], profile: Profile, *, grouping: str = "pair",
+           force: bool = False, texts: dict[str, str] | None = None,
+           max_workers: int | None = None) -> tuple[list[PairReport], str | None]:
+    """Review the pairs without a fresh result in `run`; return their reports and what stopped the sweep.
+
+    `texts` gives a note's text by path in place of the file's, so a caller
+    that captured it reviews exactly that text; freshness and result hashes
+    use the same text.
+    """
+    run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
+    texts = dict(texts or {})
+    for pair in wanted:
+        if pair.note not in texts:
+            texts[pair.note] = (root / pair.note).read_text(encoding="utf-8")
+    criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
+                       for pair in wanted}
     reports = {pair: PairReport(pair.note, pair.criterion, pair.job, "not-run") for pair in wanted}
     pending = []
     for pair in wanted:
-        if not force and results.freshness(root, pair.note, pair.criterion).state == "fresh":
+        if not force and _fresh(root, pair, texts[pair.note], criterion_texts[pair.criterion]):
             reports[pair].state = "fresh"
         else:
             pending.append(pair)
-    if not pending:
-        return SweepReport(run_id, list(reports.values()))
-
     stop = threading.Event()
     stopped: list[str] = []
 
-    def review(run: Run, pair: Pair) -> None:
+    def ask(call: Call) -> None:
         if stop.is_set():
             return
-        report = reports[pair]
-        note_text = (root / pair.note).read_text(encoding="utf-8")
-        criterion_text = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
+        names = call.names()
+        note_text = texts[call.pairs[0].note]
+        inputs = {"note": note_text, **{given: criterion_texts[pair.criterion] for pair, given, _ in names}}
+
+        def found(answer) -> list[str]:
+            if len(names) == 1:
+                return check(call.pairs[0], answer.outputs["review"])
+            return [f"{output}: {problem}" for pair, _, output in names
+                    for problem in check(pair, answer.outputs[output])]
         try:
-            answer = run.checked(pair.job, lambda problems: prompt(pair, problems),
-                                 lambda answer: check(pair, answer.outputs["review"]), ["review"],
-                                 attempts=ATTEMPTS, inputs={"note": note_text, "criterion": criterion_text})
+            answer = run.checked(call.job, lambda problems: prompt(call, problems), found,
+                                 [output for _, _, output in names], attempts=ATTEMPTS, inputs=inputs)
         except OutOfAttempts as spent:
-            report.state = "out-of-attempts"
-            report.problem = str(spent)
+            for pair in call.pairs:
+                reports[pair].state, reports[pair].problem = "out-of-attempts", str(spent)
             return
         except LaunchFailed as failure:              # and UsageLimited: the environment needs the operator
             stop.set()
             stopped.append(str(failure))
             return
         if answer.problem is not None:
-            report.state, report.problem = "problem", answer.problem
+            for pair in call.pairs:
+                reports[pair].state, reports[pair].problem = "problem", answer.problem
             return
-        text = answer.outputs["review"]
-        result = results.make_result(
-            pair.note, note_text, pair.criterion, criterion_text, outcome=outcome(pair, text),
-            profile={"harness": profile.harness, "launch-model": profile.launch_model, "effort": profile.effort},
-            model=answer.record["model"], run=run_id, launch=Path(answer.record["launches"][-1]).name,
-            completed_at=_now(), body=text)
-        results.write_result(root, result)
-        report.state, report.outcome = "reviewed", result.outcome
+        for pair, given, output in names:
+            text = answer.outputs[output]
+            result = results.make_result(
+                pair.note, note_text, pair.criterion, inputs[given], outcome=outcome(pair, text),
+                profile={"harness": profile.harness, "launch-model": profile.launch_model, "effort": profile.effort},
+                model=answer.record["model"], run=run_id, launch=Path(answer.record["launches"][-1]).name,
+                completed_at=_now(), body=text)
+            results.write_result(root, result)
+            reports[pair].state, reports[pair].outcome = "reviewed", result.outcome
 
+    gather(*(lambda call=call: ask(call) for call in calls(pending, grouping)), max_workers=max_workers)
+    return list(reports.values()), stopped[0] if stopped else None
+
+
+def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
+          timeout: float | None = None, force: bool = False, grouping: str = "pair",
+          harnesses=HARNESSES) -> SweepReport:
+    """Review the pairs without a fresh result (all of them when `force`) in the run at `run_dir`."""
+    run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
     before = checkout_state(root)
     with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
-        gather(*(lambda pair=pair: review(run, pair) for pair in pending), max_workers=max_workers)
-    changed = changed_paths(before, checkout_state(root))
-    return SweepReport(run_id, list(reports.values()), stopped[0] if stopped else None, changed)
+        reports, stopped = review(run, root, wanted, profile, grouping=grouping, force=force,
+                                  max_workers=max_workers)
+    return SweepReport(run_id, reports, stopped, changed_paths(before, checkout_state(root)))
