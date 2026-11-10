@@ -142,6 +142,47 @@ retire instructions operate the new command. Sixteen proposals and seven
 theory notes were corrected where they stated the store as present
 fact, and two proposals were archived.
 
+## Phase 5, runs as functions of their inputs
+
+On 2026-11-10 an outside review (Astra) found two defects in resumed
+runs: a resumed run could report success for text the operator had
+edited since, and a plan named with `--plan` was lost on the next
+resume. Both were fixed in place, and both came from one cause. The
+workflows wrote the note during a run, while the runtime treats a run as
+a replayable function of its inputs. The operator then directed a
+simplification on that line. Four changes were built the same way as the
+earlier phases:
+
+1. **One write, at the end.** The full pass and the revision carry each
+   edited text in memory and in the run's `artifact/texts/`. The last
+   step writes the note once, and only over the start text. A hand-back
+   writes nothing, so there is nothing to restore. A revision applies
+   its text only when every pass of the plan ended well. The write log,
+   its replay, the interrupted-write recovery and the restore are
+   deleted.
+2. **The run directory is derived from the inputs**:
+   `runs/<workflow>/<note path>/<start-text hash prefix>`. Repeating a
+   command continues its run by replay, and an edited note opens a new
+   run. `--resume` is gone from `full-pass` and `revise`; the options a
+   run recorded are reused when a repeat omits them.
+3. **Gate verdicts in the full pass come from answers.** `gates.ask()`
+   returns results without writing them; `gates.sweep()` writes them as
+   they arrive. The full pass writes result files once, at its end, for
+   the text the note then holds. The per-cycle report cache is deleted,
+   and gate applicability is computed from the text under review.
+4. **One mechanism for operator input**, `headless.operator.answer()`:
+   the workflow proposes a file in the run and stops; on the repeat the
+   file, edited or not, is the answer. The plan stop and the strike stop
+   use it, and `--direction` is a recorded option.
+
+The change is in kind, not in size: `src/` is about 30 lines larger
+than before phase 5, because the documentation in docstrings grew by
+more than the deleted machinery. A fifth candidate, dropping the closing
+cycle's rerun of every method, was left out. It changes the method, and
+the evidence is one live run.
+
+None of phase 5 has run with a live worker.
+
 ## Execution record
 
 | Step | State | Commits |
@@ -153,6 +194,10 @@ fact, and two proposals were archived.
 | 2 bundle grouping, `decide()`, full pass | done 2026-11-10 | `1b27a9b40`, `84fdda681`, `27d6ba9af`, `ef7b5a07c` |
 | 3 profile per ask, revision | done 2026-11-10 | `07e2f984b`, `4422a531c` |
 | 4 ADR and documents | done 2026-11-10 | `2fe4c0585` and the six commits after it |
+| resume defects found in review | fixed 2026-11-10 | `7751d4f4c` |
+| 5 one write, input-derived runs | done 2026-11-10 | `13ed322bf`, `563f4076b` |
+| 5 gate results published once | done 2026-11-10 | `32c281ddd` |
+| 5 one operator-input mechanism | done 2026-11-10 | `f9779b18f` |
 | 1.3 first sweep | waits for the operator | |
 
 ## Live runs
@@ -226,10 +271,10 @@ Known limits of the code:
 - The codex profile can write the checkout at the sandbox level.
 - A sweep with nothing stale still creates a run directory.
 - `retry` of an answered pair needs `--force` on the rerun.
-- A revision plan edited after a pass has written needs a new run with
-  `--plan`.
-- Gate applicability in a closing cycle reads the note's frontmatter
-  from disk, not from the captured text.
+- A full pass no longer reuses fresh gate results from an earlier
+  sweep; it asks every applicable gate, and replay covers a repeat.
+- A finished run cannot be repeated for its report: the applied note has
+  another hash, so the same command opens a new run.
 - The review profiles deny Bash, so `audit-a-prior-pass` cannot read a
   diff and one step of `place-external-systems` cannot run.
 
@@ -237,7 +282,8 @@ Behaviour of the agent-run full pass that the workflow dropped or
 changed:
 
 - An undetermined update is not asked of the user mid-pass. The packet
-  is pending, and the operator answers by resuming with `--direction`.
+  is pending, and the operator answers by repeating the command with
+  `--direction`.
 - The copyedit is accepted or rejected whole; code cannot apply only its
   in-bounds edits.
 - The editor no longer rereads the friction and premise attention lines
@@ -248,7 +294,6 @@ changed:
 - A hand-back or undetermined packet is `pending` and blocks a new pass
   until it is resolved or the note changes.
 - A worker problem or a spent call in any method stops the pass.
-- Gate and critique results that are fresh for the same text are reused.
 - The packet has no "Proposed revision shape" section and keeps the
   merge target's hash without a capture file.
 

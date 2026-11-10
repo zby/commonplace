@@ -5,7 +5,9 @@ and its commands, ADR 127 and the rewritten documents are built and
 committed. The [plan](./plan.md) records what was built, the live runs
 and what remains for the operator: the first collection sweep, keeping or
 reverting one result from each workflow, and deleting the abandoned
-local data. The sections below are the framing and design as posed;
+local data. Phase 5 of the plan then removed mid-run writes and
+`--resume`: a run writes the note once, at its end, and repeating a
+command continues its run. The sections below are the framing and design as posed;
 where they describe the store-based system as present, read them as the
 starting state.
 
