@@ -9,6 +9,30 @@ the choices the design left open, and the state of each step.
 The plan details phase 1 and keeps phases 2 to 4 coarse. Each coarse phase
 names what returns it to a decision.
 
+## Current state and next work
+
+As of 2026-11-10. Phases 1 to 5 are built and committed; phase 5 has not
+run with a live worker. Phase 6 is a direction with nothing built. An
+outside review of phases 5 and 6 (Astra) is recorded at the end of
+phase 6.
+
+Next work, in order. Items 1 and 2 cost paid launches and wait for the
+operator to start them. Item 3 is directed; items 4 and 5 are proposed.
+
+1. Run a live revision and a live full pass on the phase 5 code. The
+   revision includes an operator stop, an edited plan and a strike-list
+   pass. At least one of the two ends with a changed note.
+2. Run step 1.3, the first collection sweep.
+3. Build the approval command, so that repeating a run never approves
+   a proposal (operator's direction; phase 6, the operator interface).
+4. Add fake-harness tests for a changed instruction, a changed profile
+   and a changed operator answer on the same start text.
+5. Build ingest's own prepare, check and write commands. Compare them
+   with review's before extracting anything shared.
+
+Not next: the shared layer and anything else under phase 6's remote
+goal.
+
 ## Choices this plan makes
 
 The design items were silent on these. Each is the planner's choice, open
@@ -239,12 +263,14 @@ text. The code's `edits.apply()` is the write.
 a packet, a closing status and a revision plan are all reports. They
 differ in the contract code checks on the output: a strict result line,
 a closed schema, or a report type's schema. A packet is a report whose
-inputs include other reports. Reports never change a text, so they can
-run in parallel and be repeated.
+inputs include other reports. Reports never change a text, so reports
+that do not consume each other can run in parallel, and any report can
+be repeated.
 
 **Edit.** Each edit consumes the previous text, so edits run in order.
-An edit also makes every report about the earlier text out of date.
-That is why the full pass has a closing cycle. Code checks each edited
+An edit also makes a report about the earlier text out of date when it
+changes a part that report's criterion watches. That is why the full
+pass has a closing cycle. Code checks each edited
 text against bounds that depend on the task.
 
 **Write.** Code writes the final text once, only when the note still
@@ -302,14 +328,18 @@ What stays different:
   launch records and replay. A sub-agent reads live files with the
   session's tools.
 - **Pinning.** A Workjig worker reads a captured copy, so the recorded
-  hash is exact. For a sub-agent, code hashes the inputs before dispatch
-  and verifies them after, as ingest does with the snapshot checksum.
+  hash is of the text it was given. For a sub-agent, code hashes the
+  inputs before dispatch and verifies them after, as ingest does with
+  the snapshot checksum. That detects a change that is still there
+  afterwards. It does not prove which bytes the worker read, so it is
+  the weaker guarantee.
 - **Provenance.** A result file records profile, launch and the model
   the harness recorded. A result from a sub-agent needs a truthful
   executor value.
-- **Enforcement.** Python cannot skip a check. An agent can. The write
-  command can refuse an unchecked candidate, but an agent can still
-  write the file directly.
+- **Enforcement.** The supported Workjig path runs every check, because
+  the workflow's code calls it. An agent follows a prose sequence and
+  can omit a step. The write command can refuse an unchecked candidate,
+  but an agent can still write the file directly.
 
 Three proposed conditions. The first applies from the first step; the
 other two apply once tasks can move:
@@ -366,6 +396,33 @@ Its place in the architecture:
   file does not record who edited it or on whose word, so an
   instruction that allows this must state that the agent does not
   decide for the operator.
+
+**An unchanged proposal is not yet an approval.** As built, `answer()`
+reads any existing file as the answer, so repeating the command approves
+the proposal. An agent that repeats a command only to continue after an
+interruption would approve it without the operator. The rule the trial
+must hold to (from Astra's review): continuing past an operator stop
+requires an intentional approval of the current proposal, and retrying
+execution must not supply it.
+
+Operator's direction: a repeated run stays a repeated run, and approval
+is a separate command. Not built. The proposed shape:
+
+- **Repeating never approves.** A repeat of a run that waits for an
+  answer reports the same stop again and launches nothing. Any agent or
+  script may therefore repeat any run safely.
+- **An approval command records the answer.** It takes the run and the
+  proposed file and stores that file's current text, edited or not, as
+  the answer. The workflow reads only the stored answer.
+- **Approval binds to the text.** An edit made after approval has no
+  effect until the file is approved again.
+- **The next repeat continues**, with the stored answer as an input.
+
+This keeps the workflow free of run state: the approval is one more
+file in the run. The command is a distinct act, so an instruction can
+say who may run it: the operator, or an agent on the operator's stated
+word for that proposal. Until it is built, only the operator repeats a
+command that stopped for an answer.
 
 What a trial should show:
 
@@ -461,7 +518,7 @@ None is decided unless marked. Each needs the operator's direction.
 | Check the connect report in code | schema and path existence are deterministic | nothing |
 | Drop `--resume`, `retry` and `acknowledge` from `run gates` | a rerun already skips fresh pairs, so replay only helps under `--force` | nothing; independent of live evidence |
 | Keep one of `pair` and `bundle` | two groupings for one job | the verdict comparison of step 1.3 |
-| Stop the guard from setting the exit code, or isolate workers in a worktree | no workflow writes mid-run now, and the guard cannot attribute a change | a worktree shows linked files at `HEAD` and hides ignored snapshots |
+| Replace the guard's unattributed failure with worker containment | the guard cannot tell a worker's change from another session's | the guard keeps setting the exit code until containment is verified: the profiles' write restriction has not been seen to refuse a write, and a worktree shows linked files at `HEAD` and hides ignored snapshots |
 
 **Remote goal.**
 
@@ -482,6 +539,15 @@ For the first step:
   result the README asks for.
 - **One live full pass on the phase 5 code**, which has not run with a
   live worker.
+- **A changed note.** At least one of the two runs ends with the note
+  written, so the one write is seen live.
+- **A conflicting edit and a changed answer during a continuation**:
+  edit the note while a run is open, and change an answer file between
+  two repeats.
+- **Fake-harness tests** for a changed instruction, a changed profile
+  and a changed operator answer on the same start text. Judged by test
+  names, an edited plan, recorded options, an edited note and a conflict
+  are covered; a changed instruction and a changed profile are not.
 
 For the remote goal, when it is taken up:
 
@@ -491,6 +557,33 @@ For the remote goal, when it is taken up:
   record it through a command. If `commonplace-review status` cannot
   tell that result from a sweep's, apart from the executor value, the
   file format is shared.
+
+### Outside review of phases 5 and 6
+
+Astra reviewed `plan.md`, the workshop README and ADR 127 on 2026-11-10,
+as a design assessment without verifying the implementation. Its
+verdict: the separation of worker drafts from the one checked write is
+convincing; the common framework is still a hypothesis; proceed with
+the trials and the bounded ingest change, and do not build the shared
+layer yet. That matches the staging above.
+
+| Point | Disposition |
+|---|---|
+| An unchanged proposal is not operator approval | accepted; confirmed in `headless/operator.py`; the operator directed a separate approval command, described under the operator interface |
+| A hash-derived directory is not complete input identity | accepted; see below |
+| One write at the end does not replace worker containment | accepted; the candidate to stop the guard setting the exit code is withdrawn |
+| Four absolute statements in phase 6 were too strong | accepted; narrowed in place (parallel reports, reports made stale by an edit, hashing live inputs, enforcement) |
+| A section at the top naming the current decision and next work | added |
+
+**Where a run is found, and what makes an answer reusable.** These are
+two mechanisms. The run directory is found from the workflow, the note
+path and the hash of the start text. It says nothing about instructions,
+criteria, profiles, options or operator answers. Reuse is decided per
+call: Workjig keys each call by its task, inputs, outputs and profile,
+so a changed instruction or answer asks that call again inside the same
+directory. "A run is a function of its inputs" holds for each call's
+answer. It does not hold for the directory, which can contain answers
+made under several versions of an instruction.
 
 ## Execution record
 
