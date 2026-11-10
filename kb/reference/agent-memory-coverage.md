@@ -22,9 +22,9 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../t
 | Trace extraction | `kb/log.md` can serve as a manual observation inbox between raw traces and durable artifacts. The current system is strongest once an agent or maintainer already understands what should be written. | Automated session-trace extraction is not implemented. |
 | Discoverability | Titles, descriptions, tags, directory indexes, generated indexes, key-index pointers, `rg`, file paths, and skill metadata provide progressive routing surfaces. | Ranking and quality scoring remain underdeveloped. |
 | Composability | Link prose, collection-owned link labels, claim titles, definitions, and indexes preserve relationships among artifacts. | Automated connection discovery is report-based, not continuously maintained. |
-| Trust | Script validation checks frontmatter, links, enum values, required sections, and template headings. Review gates add semantic checks with stored freshness-baseline state. See [review system architecture](./review-architecture.md). | Behavioral faithfulness and activation effects are not measured as first-class metrics. |
+| Trust | Script validation checks frontmatter, links, enum values, required sections, and template headings. Review gates add semantic checks whose result files record the input hashes that keep them fresh. See [review system architecture](./review-architecture.md). | Behavioral faithfulness and activation effects are not measured as first-class metrics. |
 | Multiple consumer surfaces | Notes, reference docs, instructions, sources, reports, workshops, commands, skills, and control-plane files serve different agent, maintainer, reviewer, and workflow needs. | Retrospective episodes and typed cue indexes remain underdeveloped. |
-| Storage roles | Authored markdown is the source of truth; generated indexes are rebuildable; reports are operational artifacts; review state lives in SQLite. See [storage](./storage-architecture.md). | Compiled behavior-facing views need stronger source-of-truth and regeneration rules. |
+| Storage roles | Authored markdown is the source of truth; generated indexes are rebuildable; reports are operational artifacts; review state is one result file per reviewed pair. See [storage](./storage-architecture.md). | Compiled behavior-facing views need stronger source-of-truth and regeneration rules. |
 | Activation | Always-loaded `AGENTS.md`, on-demand file reads, and on-invoke skills load relevant memory into agent work. | Situation-triggered activation and behavioral faithfulness tests for activated memory remain future work. |
 | Natural-language-to-code promotion | Repeated procedures and stable rules can become instructions, skills, type specs, schemas, review gates, validators, scripts, or commands. Manual promotion from log entries, notes, and workshops into stronger artifacts is supported. | There is no mature candidate queue that scores future value against maintenance cost. |
 | Lifecycle | Status fields, validation failures, review staleness, generated-index refresh, workshop closure, and log review provide partial lifecycle handling. | Retirement, supersession, relaxation, recurrence tracking, and scheduled lifecycle work are incomplete. |
@@ -42,10 +42,10 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 ## Related implementation references
 
 - [Commonplace architecture](./architecture.md) — contains: installed layout, shipped library, user collections, and skill discovery surfaces
-- [Storage](./storage-architecture.md) — contains: authored markdown, generated indexes, reports, and review SQLite state
+- [Storage](./storage-architecture.md) — contains: authored markdown, generated indexes, reports, and review result files
 - [Control-plane goals](./control-plane-goals.md) — contains: always-loaded KB goals and routing context in `AGENTS.md`
 - [Collections and types](./collections-and-types.md) — implements: collection contracts plus type contracts
-- [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, freshness baselines, and stale-pair detection
+- [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, result-file freshness, and stale-pair detection
 - [Instruction generation](./instruction-generation.md) — implements: scaffold generation and multi-harness skill installation
 
 ---

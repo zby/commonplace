@@ -352,8 +352,8 @@ worktree, whose `.venv` installs its pinned source; see
 keeps one result file per (note, criterion) pair under
 `kb/reports/state/review/results/`. A result is fresh while the hashes of the
 note (the parts the criterion watches) and of the criterion match the current
-files. The review-system guide and architecture pages still describe the
-store-based system it replaced.
+files. The [review-system guide](./README-REVIEW-SYSTEM.md) covers operation
+and [review architecture](./review-architecture.md) how it is built.
 
 ### commonplace-review
 

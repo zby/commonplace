@@ -1,132 +1,132 @@
 ---
-description: "Architecture boundaries of the Commonplace review subsystem: parent-owned dispatch, canonical state, derived artifacts, atomic finalization, and freshness hashing"
+description: "How Commonplace review is built: workflows over the headless runtime, result files as the only durable review state, the two-input freshness hash with watched parts, write safety and the checkout guard"
 type: types/note.md
 tags: []
 ---
 
-# Review system architecture (`commonplace.review` + `commonplace.cli.review`)
+# Review architecture
 
-The review subsystem is deterministic coordination around externally dispatched
-judgment. Commonplace selects `(note, criterion)` pairs, snapshots their inputs,
-creates jobs and prompts, validates worker output, and persists completion and
-freshness. The parent agent or harness launches workers; Commonplace does not
-launch reviewer models. The persisted generic assay field remains named
-`criterion_path`.
+Review is a set of Python workflows over the headless runtime, behind one
+command, `commonplace-review`. Code owns the control flow, every check that
+can be checked and every write to the checkout. Workers only judge and write
+their output files. The only durable review state is files: one result per
+(note, criterion) pair and one current packet per note that had a full pass.
 
-For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md) and
-[run review batches](../instructions/run-review-batches.md). Exact behavior
-belongs to the executing `commonplace.review` and `commonplace.cli.review`
-source.
+For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
+[ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
+the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
+`commonplace.headless` and `commonplace.cli.review_workflows`.
 
-## Execution and ownership
+## Components
 
-```
-target selector  -> selector JSON
-job creation     -> queued job + pair rows + captured prompt
-external worker  -> job-owned output file
-finalization     -> parsed results + completion + freshness baselines
-```
+| Part | Role |
+|---|---|
+| `headless.jobs` | `ask()`, one agent call with named inputs and outputs; `checked()`, retry with a deterministic check; `gather()`, parallel calls; `Run`, a run directory with a lock, durable launch records and replay; `dismiss()` and `acknowledge_stopped()` |
+| `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
+| `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
+| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
+| `review_workflows.outcomes` | the strict result-line parser |
+| `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
+| `review_workflows.gates` | the gate sweep, call grouping, the worker prompt and the checkout guard |
+| `review_workflows.edits` | the bounds an edited text must keep, the write-once log and the guard minus a workflow's own write |
+| `review_workflows.full_pass` | the full improvement pass and its packet |
+| `review_workflows.revise` | the revision workflow over the simplification passes |
 
-Ordinary review CLI job creation takes selector JSON. A job groups pairs by
-note or by criterion for prompt sharing, but every pair remains an independent
-unit of output and freshness, and every job uses one persisted result kind.
+Workjig launches each worker in the checkout through the harness's headless
+mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
+worker loads the project's normal configuration and the profile's flags.
 
-The agentic-analysis publication operation is the one specialized preparation
-path. It may supply candidate note text while retaining the intended public
-`note_path`. The ordinary pair still snapshots exactly note text and criterion
-text, and finalization still creates the ordinary freshness baseline. Until the
-candidate is published, that baseline is current for the candidate snapshot
-and stale relative to the incumbent file.
+## Ownership
 
-The parent owns dispatch and concurrency. Each review worker starts without the
-parent's task conversation, reads one generated prompt path, and writes only the
-job-owned output named there. It does not mutate notes, criteria, manifests, or
-the store. [ADR 067](./adr/067-review-workers-read-one-prompt-and-write-one-output.md)
-owns that worker boundary; the generated prompt is its executable instance.
+A workflow is ordinary Python that branches only on what code parsed: a
+verdict line, a decision schema, an edit's bounds. A worker receives its
+inputs as files Workjig writes for each launch, so it judges captured text,
+not the live file, and the result hashes exactly that text. A worker writes
+only its declared outputs, or a problem file when it cannot do the job. Code
+turns an accepted output into a result file, a packet or a write to the
+checkout.
 
-## Canonical state and artifacts
+An edit reaches the checkout only through code. The edited text is checked
+first; for the full pass, frontmatter `title` and `type` and the H1 must be
+kept, `user-verified` removed after a body change, and no validation failure
+added. It is then written
+only when the file holds the text the workflow expects: the start text or
+the text the run last wrote. Each write is recorded in the run as the hashes
+of the replaced and written text, so a resumed run never applies a write
+twice. Any other text on disk is a concurrent change, and the run stops
+without writing.
 
-SQLite is canonical for job and pair protocol state, execution provenance, and
-freshness. [Storage architecture](./storage-architecture.md) places that state
-among Commonplace's other storage roles; live schema, location, and query
-behavior remain in `commonplace.store` and `commonplace.review.review_db`.
+## Durable state and run state
 
-Review artifacts have narrower roles:
+| State | Location | Lifetime |
+|---|---|---|
+| result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
+| current full-pass packet | `kb/reports/state/review/packets/<note-path>` | until a later pass replaces it; holds the resolution of a pending hand-back |
+| run directory | `kb/reports/state/review/runs/<stamp>/` | one invocation and its resumes |
 
-- the prompt is generated job input carrying the captured review task;
-- `job-output.md` is the worker-to-finalizer transport;
-- per-pair result files retain the review body, which is evidence not stored in
-  SQLite; and
-- `MANIFEST.json` is a reconstructable inspection surface.
+A run directory holds Workjig's records under `calls/`, the profile and
+options it opened with in `sweep.json`, and accepted per-run artifacts under `artifact/`
+(the full pass's start text, method reports, write log and packet copy). Its
+records exist for replay inside the run and promise no format stability
+across versions. Freshness across runs never reads them.
 
-Artifact paths are derived from store state rather than persisted as another
-authority. `MANIFEST.json` is never pipeline state. A worker's optional
-self-reported model remains a labelled artifact claim; it does not become
-harness provenance or freshness identity. Review identity is
-`(note_path, criterion_path, model_partition)`; missing runner telemetry is
-normal.
-
-The output transport also carries one soft, per-pair report of which pre-resolved
-linked artifacts the worker opened and whether budget or evidential sufficiency
-stopped inspection. Finalization removes that bookkeeping from the retained
-review body and joins it with code-generated available cost in job telemetry.
-Missing, partial, malformed, or unpriced bookkeeping remains measurement state;
-it cannot change a result, completion, freshness, or review identity.
-
-## Finalization boundary
-
-Finalization accepts only queued jobs and is all-or-nothing across every pair in
-the job. It validates provenance, output structure, pair coverage, and each
-pair's persisted result contract before advancing state. Success completes all
-pairs, creates or replaces their freshness baselines, and prunes superseded
-evidence. Failure completes none and advances no baseline. [ADR 035](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md)
-owns this transaction boundary.
-
-The artifact failure policy follows the state boundary. A per-pair result-file
-write failure prevents DB completion because that file carries review evidence.
-A later manifest refresh failure is only a warning because the manifest is
-reconstructable from completed state.
+Result files are written atomically. One run holds a lock on its directory;
+two runs over the same pair both write, and the later write stands.
 
 ## Freshness hash boundary
 
-A review baseline pins exactly two source files: the note and the persisted
-criterion. The criterion may be a catalog gate, type spec, collection contract,
-or critique instruction. Selector applicability and `missing-baseline`
-discovery remain review-specific; registered-target status belongs to
-[freshness architecture](./freshness-architecture.md).
+A result pins exactly two inputs: the note and the criterion. The criterion
+hash covers the criterion file's whole text. The note hash covers the parts
+the criterion declares in `watches:` (title, description, body) under the
+criterion's current text, or the whole note without a valid declaration.
+Parts are normalized: the title is the first `# ` heading, and the body drops
+blank lines and trailing spaces, so a whitespace-only edit changes nothing.
+A criterion edit that changes `watches:` may therefore report both inputs
+changed.
 
-Prompt scaffolding is deliberately outside the freshness hash. This includes
-the worker instructions, output protocol, reading scope, prompt assembly, and
-the mechanical wrappers that present type specs or collection contracts as
-criteria. Therefore judgment-bearing particulars must live in the hashed note
-or criterion files. A wrapper may say how to apply a dependency document,
-never supply the case-specific judgment itself. A scaffolding change that shifts
-judgments is a system upgrade requiring deliberate corpus-wide re-review or
-acknowledgement rather than ordinary file-triggered staleness.
-
-The comments in the former `review/freshness.py` and
-`review/protocol/prompt.py`, both since deleted, placed
-this rule in both change loops. [ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
+Everything else is outside the hashes: the prompt around the inputs, the
+type and collection wrappers, the output contract and the reading scope.
+Judgment-bearing text therefore belongs in criterion files, where the hash
+sees it ([ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
 and [041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)
-apply it to type and collection criteria.
+apply this to their wrappers). A prompt change is part of each call's
+identity, so a resumed run asks those calls again, but it stales no result. A
+prompt change that shifts judgments needs a deliberate `--force` sweep.
 
-Semantic gates may follow the target note's pre-resolved links. The linked
-files are reading context, not freshness inputs. In particular,
-`semantic/grounding-alignment` reads an ingest's append-only Quotes or an exact
-snapshot declared by the link text. [ADR 073](./adr/073-untracked-source-snapshots-require-ingest-grounding.md)
-owns that source-specific mutation and availability boundary; it does not
-widen the review pair.
+Linked files a worker reads, including the one path a criterion may derive
+from a link ([ADR 073](./adr/073-untracked-source-snapshots-require-ingest-grounding.md)),
+are reading context, not freshness inputs.
+
+## Criterion identity
+
+A criterion is named by its artifact identity, and its text is read through
+the library resolution. In this checkout the library is `kb/`, so every
+criterion is a repository path. In an installed project, the gate catalog,
+global types and the critique instruction are `commonplace:<path>`
+identities, while project type specs and `COLLECTION.md` contracts are
+repository paths ([ADR 086](./adr/086-projects-read-the-library-from-the-installed-package.md)).
+The criterion id that keys a result file follows from the identity, so both
+layouts store results the same way.
+
+## Checkout guard
+
+`gates.checkout_state()` records `HEAD` and, for each path `git status` lists
+(including untracked files) outside `kb/reports/state/review/`, its status
+code and content digest. A run compares the record before and after; a
+workflow that writes the checkout drops the file it wrote when that file
+holds exactly its last recorded text. The guard can say that a path changed while the run was
+open. It cannot attribute the change, and it misses ignored files and changes
+undone before the run ended. It reverts nothing.
 
 ## Maintenance scope
 
-Review this page when execution ownership, canonical-state roles, the
-finalization transaction, or the two-file freshness boundary changes. Module
-additions, function signatures, table columns, command arguments, and protocol
-fields do not by themselves require an edit; their live owners remain source,
-schema, or command help.
+Review this page when the ownership split between code and workers, the
+durable state, the freshness inputs or the guard's claim changes. New
+workflows, prompt wording, profile flags and command arguments do not by
+themselves require an edit; source and `--help` own them.
 
 ## See also
 
-- [ADR 030](./adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — parent-owned orchestration around deterministic endpoints
-- [ADR 043](./adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md) — completion, outcome, and freshness are separate state dimensions
-- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — generic freshness store and review adapter boundary
+- [ADR 118](./adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) — decided-by: the headless workflow runtime review shares with the analysis workflow
+- [Storage architecture](./storage-architecture.md) — part-of: where review state sits among Commonplace's storage roles
+- [Full improvement pass closure](./full-improvement-pass-closure.md) — see-also: why the full pass reviews its final text once more

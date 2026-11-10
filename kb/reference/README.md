@@ -136,19 +136,19 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 ### Review notes
 
-*What it's for.* Run snapshot-anchored assays against notes: closed-ended gates return decisions, while open-ended assays such as critique retain current reports.
+*What it's for.* Judge notes against criterion files with headless workers: closed-ended gates return verdicts, while the opt-in critique returns a report.
 
 *How to ask.*
 
 - "Review `kb/theory/foo.md` with the prose bundle."
 - "Run the semantic review sweep over anything I've changed recently."
-- "Ack the trivial changes in the review queue."
+- "Show me the current review warnings."
 
-*What happens.* The review system stores state in SQLite, selects target `(note, criterion)` pairs, creates result-kind-homogeneous queued jobs, delegates each prompt to a worker, and advances the freshness baseline only after all pairs in the job finalize successfully.
+*What happens.* `commonplace-review run gates` expands the request into `(note, criterion)` pairs, skips pairs whose result is fresh, asks a headless worker for each other pair (or for each note and bundle), checks each review's result line, and writes one result file per accepted review with the hashes of the note and criterion it judged.
 
-*What you get.* Per-gate `PASS` / `WARN` / `FAIL` / `ERROR` decisions or open-ended reports, plus current freshness state pinned to the note and criterion bytes.
+*What you get.* Per-gate `pass` / `warn` / `fail` results or critique reports, each fresh while its note and criterion are unchanged, and a JSON run report with a checkout guard.
 
-*Limitations.* The review UX is still agent-driven. Gate selection depends on note traits, worker delegation is owned by the current harness, and the selector/create/finalize command sequence is more operator-facing than a finished end-user CLI.
+*Limitations.* Every launch is paid and a changed pair is always re-reviewed. Gate selection depends on note types and traits. The checkout guard cannot tell a worker's change from another session's.
 
 See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system and [review-architecture.md](./review-architecture.md) for how it is built; [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) covers the complementary fix system.
 
@@ -186,8 +186,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
 - [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
-- [review-architecture.md](./review-architecture.md) — review dispatch ownership, canonical state versus derived artifacts, all-or-nothing finalization, and the freshness hash boundary (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
-- [freshness-architecture.md](./freshness-architecture.md) — target and input identity, registered-status versus review discovery, transition semantics, and queue-to-finalize concurrency
+- [review-architecture.md](./review-architecture.md) — review workflows over the headless runtime, result files as review state, the freshness hash boundary, write safety and the checkout guard (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
 
 ### Type system and collection model
 
@@ -254,8 +253,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-059: external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — extends collection-owned authorization to external targets without making the open web a connect-search surface
 - [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle under the historical theoretical-default grouping
-- [ADR-035: review jobs finalize all-or-nothing with derived artifacts](./adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — established all-or-nothing finalization and derived artifact paths
-- [ADR-043: review state separates completion, outcomes, and freshness baselines](./adr/043-review-state-separates-completion-outcomes-and-freshness-baselines.md) — current review vocabulary, schema-v7 state model, and v5 preservation decision
+- [ADR-127: review runs as workflows over result files](./adr/127-review-runs-as-workflows-over-result-files.md) — the current review decision: one command, result files with input hashes, no store; supersedes ADRs 035 and 043
 
 ## Collection boundary
 

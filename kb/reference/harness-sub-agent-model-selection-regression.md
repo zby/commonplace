@@ -17,7 +17,7 @@ The later `multi_agent_v2` collaboration surface accepts task identity, context-
 | `multi_agent_v2` | No model field | Workers inherited `gpt-5.6-sol` |
 | `codex exec --model luna` | CLI flag exists | Backend rejected the model for the account |
 
-This is a harness regression, not model selection performed by Commonplace. The [review system](./README-REVIEW-SYSTEM.md) uses `model_partition` as review identity and freshness scope; selecting a partition does not cause the harness to dispatch that model.
+This is a harness regression, not model selection performed by Commonplace. The review system of the time used `model_partition` as review identity and freshness scope; selecting a partition did not cause the harness to dispatch that model. The current [review system](./README-REVIEW-SYSTEM.md) has no partitions and records the model each harness reports.
 
 ## Current collaboration surface (2026-08-23)
 
@@ -49,12 +49,13 @@ surface when the required model is available and the worker can run from a
 bounded fork. A full-history worker still inherits the parent model. In either
 case, a worker label, task name, requested partition, or intended model is not
 execution evidence. When a trace is available, `turn_context.payload.model` is
-the concrete execution record to compare with persisted `runner_model`.
+the concrete execution record; `commonplace-review` reads a codex worker's
+model from that record rather than from a parent-supplied string.
 
-The restored request field does not repair prior evidence. Jobs whose realized
-model differs from the required partition should remain unfinalized. Existing
-jobs 6677–6717 still require replacement by genuine Luna executions or explicit
-retirement of their misattributed Luna evidence.
+The restored request field does not repair prior evidence. Jobs 6677–6717 and
+their misattributed Luna evidence were in the review store that
+[ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) abandoned
+without migration, so no current result rests on them.
 
 ---
 

@@ -14,7 +14,7 @@ Two things follow from treating the KB as an instrument rather than as the produ
 
 ## Use tests composition
 
-The components must compose into sustained knowledge work — types, collection contracts, validators, review pairs, freshness baselines, and skills running against each other on a live corpus, not each demonstrated on its own bench. Where they fail to compose, the failure is evidence against the design theories that produced them, not merely a defect ticket.
+The components must compose into sustained knowledge work — types, collection contracts, validators, review pairs, their result files, and skills running against each other on a live corpus, not each demonstrated on its own bench. Where they fail to compose, the failure is evidence against the design theories that produced them, not merely a defect ticket.
 
 The traced instance is the `tag-readme` change. An `index` head grew too large to support its completeness claim; [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) split the type and made `complete` an enforced mark, carrying one decision into instruction, schema, validation, and rendering; the validator then rejected artifacts it had previously accepted, and the symbolic check caught a tagged member that the documented `rg` recipe had missed, forcing the natural-language recipe to be corrected. [The commit-by-commit trace](../theory/evidence/tag-readme-trace-observed-causal-connection.md) and [the improvement-loop reading](./tag-readme-trace-as-self-improving-loop.md) hold the detail; [the classification](../theory/evidence/commonplace-as-a-reflective-system.md) states what it establishes about reflectivity.
 

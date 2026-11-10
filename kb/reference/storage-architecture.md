@@ -7,9 +7,8 @@ tags: []
 # Storage
 
 This page answers which representation is authoritative and which may be
-reconstructed. It does not catalogue the installed directory tree or the
-SQLite schema. For those exact surfaces, see [Commonplace architecture](./architecture.md)
-and the former `commonplace.store` and `store-schema.sql`, both since deleted.
+reconstructed. It does not catalogue the installed directory tree; see
+[Commonplace architecture](./architecture.md).
 
 ## Storage roles
 
@@ -20,9 +19,9 @@ and the former `commonplace.store` and `store-schema.sql`, both since deleted.
 | Navigation and publishing views | Generated listings and the static site | Rebuilt from authored artifacts; not a second authority |
 | Regenerable reports | Ignored files under `kb/reports/cache/` | Operational views that may be rebuilt from authoritative inputs and current KB state |
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
-| Review evidence | Per-pair result files under `kb/reports/state/` | Judgment text not stored in SQLite; retained separately from canonical protocol state |
-| Stateful report packets | Full-pass report plus guarded captures under `kb/reports/state/` | Local non-regenerable disposition state; retained and resolved as one unit |
-| Freshness and review state | `kb/reports/state/commonplace-store.sqlite` | Canonical for accepted input baselines and review execution, not for authored knowledge |
+| Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
+| Stateful report packets | One current full-pass packet per note under `kb/reports/state/review/packets/` | Local non-regenerable disposition and resolution state; the pass's run directory keeps its start text |
+| Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay of answered calls within one run; not read across runs and not a format promise |
 
 The role decides whether a missing artifact can be rebuilt; the reports
 collection makes that role visible through `cache/`, `state/`, and `retained/`
@@ -39,11 +38,14 @@ contracts are described in
 described in [Commonplace architecture](./architecture.md).
 
 Version control is expected for diff review, rollback, attribution, and
-reconstruction of change episodes. It is not a correctness dependency.
-Commonplace commands do not invoke Git ([ADR 039](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md)),
-and freshness compares current filesystem content with database-owned snapshots
-rather than repository history ([ADR 032](./adr/032-review-freshness-uses-db-snapshots-not-git.md)).
-Commits, branches, and merges therefore carry no framework-wide semantic
+reconstruction of change episodes. File visibility and relocation do not
+invoke Git ([ADR 039](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md)),
+and review freshness compares hashes recorded in result files with current
+file content rather than repository history
+([ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md)).
+`commonplace-review` does need a Git working tree: it finds the repository
+root and reads `git status` for its checkout guard.
+Commits, branches, and merges carry no framework-wide semantic
 meaning. Plain-directory and archive installs remain valid. The Commonplace
 source checkout is the one exception: there git is the declared change-history
 layer, read through instruction-named paths when a decision is revised
@@ -74,40 +76,31 @@ under `kb/reports/cache/`, for example, may be ignored because their source
 artifact and the current KB can replace them
 ([ADR 007](./adr/007-reports-directory-for-generated-snapshots.md)). Generated
 and ignored do not imply disposable: per-pair review result files under
-`kb/reports/state/` retain judgment text that the database does not store.
-SQLite owns their protocol and freshness state; the files retain the evidence
-body. Exact report records whose value survives the run live under
+`kb/reports/state/review/results/` hold paid judgments and the hashes that
+make them current. Exact report records whose value survives the run live under
 `kb/reports/retained/` and are kept with the project.
 
-Full-pass packets are a separate stateful case. A `full-pass-report.md` owns
-disposition and resolution state together with immutable start-state captures.
-Cleanup must retain and resolve the packet as a unit while that state remains
-actionable. The packet is still local and ignored; portability across machines
-is not promised ([ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md)).
+Full-pass packets are a separate stateful case. A packet owns disposition
+and resolution state and records the hashes of the texts it guards; its run
+directory keeps the start text. Cleanup must retain the packet while a
+pending resolution remains actionable. The packet is still local and
+ignored; portability across machines is not promised
+([ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md),
+as amended by ADR 127).
 
-## Operational database boundary
+## No operational database
 
-The Commonplace SQLite store is canonical for general artifact freshness and
-review execution. It retains accepted input snapshots and baselines, plus the
-job, pair, and evidence relations needed to execute and finalize reviews.
-Review prompts, worker output, manifests, and rendered pair results have the
-narrower roles described by [review architecture](./review-architecture.md);
-they do not replace store state.
-
-This database is a scoped exception, not a general migration of the KB into
-SQLite. Notes, criteria, instructions, tracked source records, and local source
-materializations remain file-backed. [Freshness architecture](./freshness-architecture.md)
-and [review architecture](./review-architecture.md) explain the cross-component
-semantics. The executing store source and SQL resource own exact paths,
-environment overrides, migrations, tables, columns, indexes, views, and
-integrity checks.
+Commonplace keeps no database. Review state is the result files and packets
+above; each is a file a reader can open, and freshness is a pure function of
+them and the current files. [Review architecture](./review-architecture.md)
+explains the boundaries.
 
 ## Maintenance scope
 
 Review this page when authority or lifecycle moves between these roles: for
 example, when a derived view becomes canonical, a regenerable report begins to
-own state, or another class of operational state moves into the database.
-Directory additions, schema objects, store versions, command names, and build
+own state, or a class of operational state moves out of files.
+Directory additions, command names, and build
 flags do not by themselves require an edit; their live or focused owners remain
 the exact read paths.
 
@@ -115,6 +108,5 @@ the exact read paths.
 
 - [Commonplace architecture](./architecture.md) — installed project layout and surface by role
 - [Documentation site](./documentation-site.md) — generated publication and listing mechanics
-- [Freshness architecture](./freshness-architecture.md) — accepted-input state and transitions
-- [Review architecture](./review-architecture.md) — canonical review state and artifact roles
-- [ADR 052](./adr/052-general-freshness-store-review-first-migration.md) — outcome: the general operational store and first review adapter
+- [Review architecture](./review-architecture.md) — result files, freshness and run state
+- [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) — decided-by: review state as result files instead of a store

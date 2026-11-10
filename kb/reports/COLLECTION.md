@@ -25,7 +25,7 @@ Every report artifact lives in exactly one first-level policy area:
 | Area | Retention policy | Typical contents |
 |---|---|---|
 | `cache/` | Safe to delete and regenerate from authoritative inputs. Payloads are ignored. | Connect, critique, friction, premise-decomposition, and promotion-candidate views. |
-| `state/` | Local and ignored, but not disposable merely because it was generated. The owning workflow decides when it may be removed. | Review evidence and jobs, the operational store, fix dispositions, and full-pass packets. |
+| `state/` | Local and ignored, but not disposable merely because it was generated. The owning workflow decides when it may be removed. | Review result files, review runs and full-pass packets, and fix dispositions. |
 | `retained/` | Durable report records kept with the project. Payloads are tracked. | Evaluation corpora, experiment reports, measurements, and exact records cited by later work. |
 | `types/` | Collection-local structural contracts, not report payloads. | Optional project-authored report contracts; command-produced generic report types are global. |
 

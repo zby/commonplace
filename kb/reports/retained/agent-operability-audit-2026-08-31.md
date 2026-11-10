@@ -149,7 +149,7 @@ projection of those surfaces, not a different theory of navigation.
 Structural checks are code. Semantic review is snapshot-anchored and records
 its model partition, inputs, outcome, and freshness. This is substantially more
 trustworthy than treating any last model answer as current truth. The
-[freshness architecture](../../reference/freshness-architecture.md) and
+freshness architecture and
 [review architecture](../../reference/review-architecture.md) are reusable
 foundations for broader impact tracking.
 

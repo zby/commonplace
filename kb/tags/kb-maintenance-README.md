@@ -10,7 +10,7 @@ How an agent-operated knowledge base stays healthy as it grows: the checks that 
 
 ## Child areas
 
-- [review-system](./review-system-README.md) — the review pipeline: gates and criteria, verdicts and outcomes, freshness baselines, the review protocol, its cost evidence, and the proposals that would extend it
+- [review-system](./review-system-README.md) — review of notes against criteria: gates, verdicts and outcomes, result freshness, the review protocol, its cost evidence, and the proposals that would extend it
 - [claims-and-grounding](./claims-and-grounding-README.md) — claims as units and what supports them: title as claim, claim modality, quotes and source grounding, what creates ground truth, what a superseded belief keeps
 - [curation](./curation-README.md) — keeping the library navigable: indexes and tag heads, quality signals and scores, periodic hygiene, maintenance capacity, retirement
 

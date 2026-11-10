@@ -11,7 +11,3 @@ state/**
 !state/
 !state/README.md
 !state/.commonplace-validation-ignore
-!state/full-pass/
-!state/full-pass/README.md
-!state/reviews/
-!state/reviews/README.md

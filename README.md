@@ -71,7 +71,7 @@ kb/                       Knowledge base
 
 src/commonplace/          Packaged operational engine
   cli/                    commonplace-* commands
-  review/                 Review system
+  headless/               Workflows over headless harness launches
   lib/                    Shared runtime helpers
   docs/                   ProperDocs hooks and assets
 ```
@@ -82,7 +82,7 @@ src/commonplace/          Packaged operational engine
 
 **Structure is earned progressively.** A frontmatter-free file is valid `text`. Add a description and note type when the material deserves a durable claim; specialize it further only when the extra contract enables useful operations. See the [wikiwiki principle](./kb/theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
 
-**Authored knowledge remains file-backed.** Markdown and Git provide a universal interface, versioning, diffs, and rollback. Derived indexes handle scale without replacing authored files. Review execution state is the scoped exception and lives in SQLite; see [ADR 010](./kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) and [ADR 035](./kb/reference/adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md).
+**Authored knowledge remains file-backed.** Markdown and Git provide a universal interface, versioning, diffs, and rollback. Derived indexes handle scale without replacing authored files. Review state is files too: one result per reviewed (note, criterion) pair, carrying the hashes of the texts it judged; see [ADR 127](./kb/reference/adr/127-review-runs-as-workflows-over-result-files.md).
 
 **Local contracts stay revisable.** Different parts of the knowledge base support different kinds of work, so task-specific types and link conventions stay local to each part. Structures can also become obsolete as questions, evidence, or model capabilities change, so those local choices remain revisable. Shared rules are kept for constraints that hold across parts and over time. See why [task-fitted structure costs cross-task reuse](./kb/theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md).
 
@@ -107,7 +107,7 @@ commonplace-init --root .
 commonplace-github-snapshot https://github.com/owner/repo/issues/123
 ```
 
-The review system adds commands for selecting targets, queuing jobs, and finalizing outputs. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
+`commonplace-review` reviews notes against criteria with headless workers and runs the full improvement pass. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
 
 Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. They stay in the installed package; `commonplace-init` writes a small stub for each into a consuming project's skill directories that points the agent to the real skill.
 

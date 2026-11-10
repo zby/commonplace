@@ -6,7 +6,7 @@ complete: true
 
 # review-system
 
-Semantic review of KB artifacts by an LLM: what a review can catch that validation cannot, when a review verdict goes stale, what reviews cost, and proposed changes to the review pipeline. The shipped system is described in [the review system reference](../reference/README-REVIEW-SYSTEM.md), which defines its concepts: an assay applies a criterion to a note; a gate is a closed-ended, verdict-kind criterion whose outcome is pass, warn, or fail; a freshness baseline records when a verdict still applies. Deterministic structural checks (schemas, links, required sections) are not review; they belong to the validation side of [document-system](./document-system-README.md). A child of [kb-maintenance](./kb-maintenance-README.md).
+Semantic review of KB artifacts by an LLM: what a review can catch that validation cannot, when a review verdict goes stale, what reviews cost, and proposed changes to the review pipeline. The shipped system is described in [the review system reference](../reference/README-REVIEW-SYSTEM.md), which defines its concepts: a review judges a note against a criterion file; a gate is a closed-ended criterion whose outcome is pass, warn, or fail; a result file keeps the judgment with the hashes of both texts, and stays fresh while they are unchanged. Deterministic structural checks (schemas, links, required sections) are not review; they belong to the validation side of [document-system](./document-system-README.md). A child of [kb-maintenance](./kb-maintenance-README.md).
 
 ## What review checks and when verdicts go stale
 

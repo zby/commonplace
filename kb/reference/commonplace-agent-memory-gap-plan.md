@@ -19,7 +19,7 @@ Do not spend roadmap effort rebuilding areas that already work:
 - Discoverability through titles, descriptions, tags, directory indexes, generated indexes, key-index pointers, `rg`, file paths, and skill metadata.
 - Composability through claim titles, link prose, collection-owned link labels, definitions, and indexes.
 - Trust for authored artifacts through deterministic validation, semantic review gates, and review-state provenance.
-- Storage role separation for authored markdown, generated indexes, operational reports, and SQLite review state.
+- Storage role separation for authored markdown, generated indexes, operational reports, and review result files.
 - Always-loaded and on-invoke activation through `AGENTS.md`, skills, instructions, and explicit file reads.
 
 ## Gap closure sequence

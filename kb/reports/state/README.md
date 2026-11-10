@@ -6,16 +6,17 @@ producer owns authority, integrity, and cleanup rules.
 
 Current state includes:
 
-- `commonplace-store.sqlite` — canonical freshness and review execution state;
-- `review-jobs/`, `reviews/`, and `bundle-reviews/` — prompts, worker outputs,
-  and retained judgment bodies;
-- `review/` — `commonplace-review` result files, run directories, and each
-  note's current full-pass packet under `review/packets/`;
-- [`full-pass/`](./full-pass/README.md) — abandoned packets of the agent-run
-  full pass, which nothing reads;
+- `review/` — `commonplace-review` state: `results/` holds one result file per
+  reviewed (note, criterion) pair, `packets/` each note's current full-pass
+  packet, and `runs/` one directory per review run with its call records and
+  artifacts. See the [review system](../../reference/README-REVIEW-SYSTEM.md);
 - `fixes/` — warning dispositions;
 - `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
-- legacy review stores, backups, and revise-autoreason runs.
+- revise-autoreason runs.
+
+Abandoned review data that nothing reads and that may be deleted:
+`commonplace-store.sqlite` and its backups, `review-jobs/`, `reviews/`,
+`bundle-reviews/` and `full-pass/`.
 
 Do not delete this subtree as a cache. Follow the owning workflow's completion
 or retirement rule for each payload class.

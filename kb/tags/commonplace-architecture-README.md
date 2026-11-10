@@ -17,8 +17,8 @@ This is a child of [architecture](./architecture-README.md); members keep both t
 - [Control-plane goals](../reference/control-plane-goals.md) — how AGENTS.md, the scaffold template, and installation supply KB goals
 - [Instruction generation](../reference/instruction-generation.md) — the shipped build step and substitution points
 - [Scenario architecture](../reference/scenario-architecture.md) — how the shipped architecture meets the requirements derived from user scenarios
-- [Storage architecture](../reference/storage-architecture.md) — canonical files, derived indexes, and database-owned operational state
-- [Review state in SQLite](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — the authority decision that made review operational state database-owned
+- [Storage architecture](../reference/storage-architecture.md) — canonical files, derived indexes, and file-backed operational state
+- [Review runs as workflows over result files](../reference/adr/127-review-runs-as-workflows-over-result-files.md) — the decision that keeps review state as one file per reviewed pair and runs review as Python workflows
 
 ## Worked cases
 
