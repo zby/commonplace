@@ -5,7 +5,8 @@ launch, and answers from the table `ANSWERS` below. Words in the note's
 start text choose the scenario: REVISE makes the packet `revise`, RETITLE
 makes the editor's first attempt change the H1, REPAIR makes the first
 closing cycle `repair-needed`, HANDBACK makes closing `hand-back`, and TOUCH
-makes the copyeditor edit the note's file, as a concurrent operator would.
+makes the copyeditor edit the note's file, as a concurrent operator would,
+and TRAIT makes the editor add the trait that a third gate requires.
 A file `fail-<kind>` in the working directory makes that kind exit 1.
 """
 
@@ -27,7 +28,7 @@ from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.review_workflows import full_pass as full_pass_module
 from commonplace.lib.review_workflows.edits import Conflict, apply
 from commonplace.lib.review_workflows.full_pass import packet_file
-from commonplace.lib.review_workflows.results import read_result, result_path
+from commonplace.lib.review_workflows.results import freshness, read_result, result_path
 from commonplace.lib.validation import validate_note
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
@@ -79,6 +80,8 @@ def closing():
 
 def edit():
     text = note.replace("\n# Alpha\n", "\n# Beta\n") if "RETITLE" in note and not rejected else note
+    if "TRAIT" in note:
+        text = text.replace("type: types/note.md\n", "type: types/note.md\ntraits: [special]\n")
     return text.replace("user-verified: true\n", "") + "Edited.\n"
 
 
@@ -108,6 +111,8 @@ FILES = {
     "kb/instructions/review-profiles.yaml": PROFILES,
     "kb/instructions/review-gates/prose/body-gate.md": GATE.format(name="body-gate", watches="body"),
     "kb/instructions/review-gates/prose/title-gate.md": GATE.format(name="title-gate", watches="title"),
+    "kb/instructions/review-gates/prose/trait-gate.md": GATE.format(name="trait-gate", watches="body").replace(
+        "staleness: changed\n", "staleness: changed\nrequires_trait: [special]\n"),
     "kb/instructions/critique-note.md": "# Critique\n\nWrite a critique.\n",
     "kb/instructions/run-full-improvement-pass-on-note.md": INSTRUCTION,
     "kb/instructions/run-compression-bundle-on-note.md": "# Compression\n\nApply the criteria.\n",
@@ -314,3 +319,50 @@ def test_apply_writes_only_from_the_start_text(tmp_path):
     with pytest.raises(Conflict, match="proposed.md"):
         apply(tmp_path, "note.md", "start", "final", proposed)
     assert note.read_text() == "other"
+
+
+def gate_state(repo, gate: str = "prose/body-gate") -> str:
+    """The freshness of the note's result for one catalog gate against the files now."""
+    return freshness(repo[0], NOTE_PATH, f"kb/instructions/review-gates/{gate}.md").state
+
+
+def test_results_are_written_once_for_the_text_the_note_holds(repo, capsys):
+    start(repo, "REPAIR")
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 0 and report["applied"]
+    assert gate_state(repo) == "fresh", "the last closing cycle's verdict, for the final text"
+    result = read_result(result_path(repo[0], NOTE_PATH, "prose/body-gate"))
+    assert result.run == report["run-dir"]
+
+
+def test_a_hand_back_writes_the_initial_verdicts(repo, capsys):
+    start(repo, "HANDBACK")
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 0 and not report["applied"]
+    assert gate_state(repo) == "fresh", "the initial verdict, for the start text the note keeps"
+
+
+def test_a_stop_or_a_conflict_writes_no_result(repo, capsys):
+    start(repo, "REPAIR")
+    (repo[0] / "fail-repair").touch()
+    code, _, _ = full_pass(repo, capsys)
+    assert code == 1 and gate_state(repo) == "missing"
+    start(repo, "TOUCH")
+    code, _, _ = full_pass(repo, capsys)
+    assert code == 1 and gate_state(repo) == "missing"
+
+
+def test_a_fresh_result_does_not_skip_the_full_pass_ask(repo, capsys):
+    start(repo, "REVISE")
+    assert main(["run", "gates", NOTE_PATH, "--criteria", "prose", "--grouping", "bundle"], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    code, _, launches = full_pass(repo, capsys)
+    assert code == 0 and launches.count("review") == 1 + GATE_ASKS, "the gates and critique are asked"
+
+
+def test_gate_applicability_follows_the_text_under_review(repo, capsys):
+    start(repo, "TRAIT")
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 0 and report["applied"], report
+    assert "traits: [special]" in note_text(repo)
+    assert gate_state(repo, "prose/trait-gate") == "fresh", "the closing cycle asked the gate the edit made apply"

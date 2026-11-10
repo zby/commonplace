@@ -384,7 +384,9 @@ only output files. The command writes the note once, at the end, only when
 closing is `ready` and only from the start text. The note's current packet
 is kept at `kb/reports/state/review/packets/<note-path>`; a pending packet
 that still matches the note is returned instead of starting a new pass,
-unless `--direction` is given.
+unless `--direction` is given. Gates and critique are asked over each text
+even when a fresh result exists; the pass writes their result files once, at
+its end, for the text the note then holds.
 
 `run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...]` runs
 [revise an article or note](../instructions/simplification-passes/revise-an-article-or-note.md)

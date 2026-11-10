@@ -244,7 +244,9 @@ method reports, a packet, and for an accepted `keep` an edit, a copyedit and
 a closing cycle with at most one repair. Workers write outputs only. Each
 edited text stays in the run directory, and later steps work on that text.
 The note is written once, at the end, and only when closing is `ready`. A
-hand-back writes nothing. The note's
+hand-back writes nothing. Gates and critique are asked over each text even
+when a fresh result exists. The pass writes their result files once, at its
+end, for the text the note then holds. The note's
 current packet lives at `kb/reports/state/review/packets/<note-path>`;
 `commonplace-review packet` checks its recorded hashes against the files.
 Operate it with [run a full improvement pass](../instructions/run-full-improvement-pass-on-note.md)

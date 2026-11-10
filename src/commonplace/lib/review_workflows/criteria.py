@@ -75,9 +75,10 @@ def _is_collection_request(request: str) -> bool:
 
 # --- Catalog gates ---------------------------------------------------------------
 
-def _frontmatter(path: Path) -> dict[str, Any]:
+def _frontmatter(path: Path, text: str | None = None) -> dict[str, Any]:
+    """The frontmatter of `text`, or of the file at `path` when `text` is None; empty when it does not parse."""
     try:
-        parsed = frontmatter.parse(path.read_text(encoding="utf-8"))
+        parsed = frontmatter.parse(path.read_text(encoding="utf-8") if text is None else text)
     except (OSError, UnicodeDecodeError):
         return {}
     return parsed.data if parsed.ok else {}
@@ -182,21 +183,20 @@ def resolve_type_request(root: Path, request: str) -> str:
     return candidates[0].relative_to(root).as_posix()
 
 
-def note_type_spec(root: Path, note: Path) -> str | None:
+def note_type_spec(root: Path, note: Path, text: str | None = None) -> str | None:
     """The identity of the note's type spec, or None without a valid `type:` binding.
+
+    `text` is the note's text in place of the file's.
 
     Malformed frontmatter or a malformed `type:` value yields None: rejecting
     those is the validator's job. A type collision and a well-formed binding
     to a missing file raise.
     """
-    try:
-        parsed = frontmatter.parse(note.read_text(encoding="utf-8"))
-    except (OSError, UnicodeDecodeError):
-        return None
-    if not parsed.ok or not isinstance(parsed.data.get("type"), str):
+    declared = _frontmatter(note, text).get("type")
+    if not isinstance(declared, str):
         return None
     try:
-        canonical, resolved = validate_type_path(parsed.data["type"], repo_root=root, source_file=note)
+        canonical, resolved = validate_type_path(declared, repo_root=root, source_file=note)
     except TypeCollisionError:                # a binding error, not a malformed value
         raise
     except ValueError:
@@ -241,8 +241,13 @@ def critique_identity(root: Path) -> str:
     return artifact_identity(root, path)
 
 
-def select(root: Path, notes: list[str], requests: list[str] | None = None) -> list[tuple[str, Criterion]]:
-    """The applicable (note, criterion) pairs for repository-relative notes, in request order per note."""
+def select(root: Path, notes: list[str], requests: list[str] | None = None,
+           texts: dict[str, str] | None = None) -> list[tuple[str, Criterion]]:
+    """The applicable (note, criterion) pairs for repository-relative notes, in request order per note.
+
+    `texts` gives a note's text by path in place of the file's, so a
+    workflow selects for the text it reviews.
+    """
     root = root.resolve()
     resolved = resolve_requests(requests)
     lenses = {TYPE: [r for r in resolved if _is_type_request(r)],
@@ -256,11 +261,11 @@ def select(root: Path, notes: list[str], requests: list[str] | None = None) -> l
 
     found: list[tuple[str, Criterion]] = []
     for note in notes:
-        note_abs = root / note
+        note_abs, text = root / note, (texts or {}).get(note)
         chosen = [Criterion(gate_identities[gate_id], "gate")
-                  for gate_id in applicable_gates(_frontmatter(note_abs), catalog)]
+                  for gate_id in applicable_gates(_frontmatter(note_abs, text), catalog)]
         if lenses[TYPE]:
-            spec = note_type_spec(root, note_abs)
+            spec = note_type_spec(root, note_abs, text)
             if spec is not None and (TYPE in lenses[TYPE] or spec in type_specs):
                 chosen.append(Criterion(spec, TYPE))
         if lenses[COLLECTION]:

@@ -44,7 +44,8 @@ the proposed text stays in the run directory.
 `run full-pass` runs the full improvement pass over one note (see
 `commonplace.lib.review_workflows.full_pass` and the library's
 instructions/run-full-improvement-pass-on-note.md). It writes the note only
-for an accepted `keep` whose closing is `ready`, keeps the note's current
+for an accepted `keep` whose closing is `ready`, writes the gate result files
+once at its end for the text the note then holds, keeps the note's current
 packet under kb/reports/state/review/packets/, and returns a pending packet
 that still matches the note instead of starting. `--direction` hands the
 packet ask the operator's direction, such as the choice an undetermined

@@ -79,7 +79,9 @@ guard reports paths that changed while a run was open.
 `COLLECTION.md` and the critique instruction all enter as the `criterion`
 input. The workflow names the output contract, verdict or report.
 
-**The full pass keeps its packet.** The packet is markdown whose frontmatter
+**The full pass keeps its packet.** It asks the gates over each text it
+reviews and writes result files once, at its end, for the text the note then
+holds. The packet is markdown whose frontmatter
 code writes: the note, the start and final text hashes, the decision, the
 closing status and the resolution fields. Its start text lives in the run;
 `commonplace-review packet` compares the recorded hashes with the files.

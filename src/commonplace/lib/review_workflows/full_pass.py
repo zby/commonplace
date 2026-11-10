@@ -14,9 +14,9 @@ The run:
    `artifact/start.md`. Every ask is given a text, not the file.
 2. Asks the methods in parallel: the compression bundle, composition
    friction, premise decomposition and connect, one ask each with a
-   `report` output; and every applicable catalog gate plus critique through
-   the gate sweep (`gates.review`, bundle grouping), which writes ordinary
-   result files and reuses a result that is fresh for this exact text.
+   `report` output; and every catalog gate that applies to this text, plus
+   critique, through `gates.ask()` with bundle grouping. Gate verdicts come
+   from the answers; no result file is read.
 3. Asks for the packet with `decide()`: markdown whose frontmatter carries
    `disposition`, `update` and `merge-target`, and whose body holds the
    packet sections a reader of a hand-back needs.
@@ -33,14 +33,16 @@ The run:
 6. On `ready`, code writes the packet, then applies the final text to the
    note with `edits.apply()`. The note changes once, at the end. On a
    hand-back the note keeps its start text, so there is nothing to restore.
+7. Code writes the gate result files once, for the text the note then
+   holds: the last closing cycle's verdicts when the final text was
+   applied, the initial cycle's otherwise. A conflict or a stop writes none.
 
 The run directory is `edits.run_dir()`: it is derived from the note's path
 and the hash of its start text. Repeating the command on the same text
-continues the run, and every answered call replays. The reports of each
-finished method cycle are kept in `artifact/reports/`, keyed by cycle and
-text, and reused as they are, because the gate sweep reads result files that
-later cycles overwrite. The packet is written before the note, so a process
-that dies between the two writes finishes the write on a repeat.
+continues the run, and every answered call replays, so a repeat rebuilds
+each cycle's reports from replayed answers. The packet is written before the
+note, so a process that dies between the two writes finishes the write on a
+repeat.
 
 What outlives the run is the packet: `artifact/packet.md`, and the note's
 current packet at `kb/reports/state/review/packets/<note-path>`. Its
@@ -53,7 +55,6 @@ the note's text (`blocking()`); it returns that packet.
 
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -289,13 +290,12 @@ def _gate_requests() -> list[str]:
     return sorted(entry.name for entry in gates_dir().iterdir() if entry.is_dir()) + [CRITIQUE]
 
 
-def _methods(run: Run, root: Path, note: str, text: str, cycle: str, profile: Profile,
-             max_workers: int | None) -> dict[str, str]:
-    """Every method's report over `text`, by name: the four method asks, `critique` and `gates`.
+def _methods(run: Run, root: Path, note: str, text: str, cycle: str,
+             max_workers: int | None) -> tuple[dict[str, str], list[results.Result]]:
+    """Every method's report over `text`, by name (the four method asks, `critique` and `gates`), and the gate results.
 
-    The reports of a finished cycle are kept in the run's artifact and reused
-    on a rerun: the gate sweep reads result files, which later cycles
-    overwrite, so asking again would not give the same requests and inputs.
+    The results are not written: the caller publishes the ones for the text
+    the note holds when the pass ends.
     """
     def method(name: str) -> str:
         rel, support_dir = METHODS[name]
@@ -315,34 +315,28 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str, profile: Pr
             raise Stop(f"{cycle}/{name}: worker problem: {answer.problem}")
         return answer.outputs["report"]
 
-    def reviews() -> dict[str, str]:
-        wanted = gates.pairs(root, [note], _gate_requests())
-        reports, stopped = gates.review(run, root, wanted, profile, grouping="bundle", texts={note: text},
-                                        max_workers=max_workers)
+    def reviews() -> tuple[dict[str, str], list[results.Result]]:
+        wanted = gates.pairs(root, [note], _gate_requests(), texts={note: text})
+        reports, stopped = gates.ask(run, root, wanted, {note: text}, grouping="bundle", max_workers=max_workers)
         if stopped:
             raise Stop(stopped)
         failed = [f"{report.job}: {report.state}: {report.problem}" for report in reports
-                  if report.state not in ("fresh", "reviewed")]
+                  if report.state != "reviewed"]
         if failed:
             raise Stop("; ".join(failed))
         found, sections = {}, []
-        for pair in wanted:
-            result = results.read_result(results.result_path(root, pair.note, pair.criterion_id))
+        for pair, report in zip(wanted, reports, strict=True):
             if pair.kind == CRITIQUE:
-                found[CRITIQUE] = result.body
+                found[CRITIQUE] = report.result.body
             else:
-                sections.append(f"## {pair.criterion_id}: {result.outcome.upper()}\n\n{result.body.strip()}\n")
+                sections.append(f"## {pair.criterion_id}: {report.outcome.upper()}\n\n{report.result.body.strip()}\n")
         found["gates"] = "\n".join(sections) or "No catalog gate applies to this note.\n"
-        return found
+        return found, [report.result for report in reports]
 
-    record = f"reports/{cycle}-{sha256(text)[:16]}.json"
-    if (run.artifact / record).is_file():
-        return json.loads((run.artifact / record).read_text(encoding="utf-8"))
     names = list(METHODS)
     answers = gather(*(lambda name=name: method(name) for name in names), reviews)
-    found = {**dict(zip(names, answers[:-1], strict=True)), **answers[-1]}
-    run.accept(record, json.dumps(found, indent=2))
-    return found
+    found, verdicts = answers[-1]
+    return {**dict(zip(names, answers[:-1], strict=True)), **found}, verdicts
 
 
 def _packet_check(root: Path, note: str):
@@ -442,18 +436,19 @@ def _packet_text(root: Path, note: str, start: str, final: str, run_id: str, dec
     return text
 
 
-def _pass(run: Run, root: Path, note: str, start: str, profile: Profile, report: PassReport,
-          direction: str | None, max_workers: int | None) -> tuple[str, str | None]:
-    """Run the pass in `run` from `start`; return the packet text and the final text, None when nothing is applied.
+def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direction: str | None,
+          max_workers: int | None) -> tuple[str, str | None, list[results.Result]]:
+    """Run the pass in `run` from `start`.
 
-    Raises Stop.
+    Return the packet text, the final text (None when nothing is applied)
+    and the gate results for the text the note holds at the end. Raises Stop.
     """
     run.accept("start.md", start)
     instruction = _library_text(INSTRUCTION_REL)
     baseline = validation_fails(root, note, start)
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
 
-    reports = _methods(run, root, note, start, "initial", profile, max_workers)
+    reports, initial = _methods(run, root, note, start, "initial", max_workers)
     extra = {"direction": direction} if direction else {}
     prompt = PACKET_PROMPT.format(
         problem=PROBLEM_REF, note=note, note_input=input_ref("note"), criterion_input=input_ref("criterion"),
@@ -472,7 +467,7 @@ def _pass(run: Run, root: Path, note: str, start: str, profile: Profile, report:
         return _packet_text(root, note, start, final, run_id, decision, body, list(closings), status, report.repaired)
 
     if decision["disposition"] != "keep" or decision["update"] != "determined":
-        return finish(start), None
+        return finish(start), None, initial
 
     def keep(name: str, text: str) -> str:
         report.proposed = run.accept(f"texts/{name}.md", text).relative_to(root).as_posix()
@@ -485,13 +480,13 @@ def _pass(run: Run, root: Path, note: str, start: str, profile: Profile, report:
     closings: list[tuple[str, str]] = []
     cycle = "closing"
     while True:
-        closing_reports = _methods(run, root, note, final, cycle, profile, max_workers)
+        closing_reports, verdicts = _methods(run, root, note, final, cycle, max_workers)
         label = "initial" if cycle == "closing" else "recovery"
         status, record = _closing(run, note, start, final, packet, instruction, label, closing_reports)
         closings.append((label, record))
         if status["status"] == "ready":
             report.closing_status = "ready"
-            return finish(final, closings, "ready"), final
+            return finish(final, closings, "ready"), final, verdicts
         if status["status"] == "repair-needed" and not report.repaired:
             report.repaired = True
             defects = "".join(f"- {defect}\n" for defect in status["defects"])
@@ -502,7 +497,7 @@ def _pass(run: Run, root: Path, note: str, start: str, profile: Profile, report:
             cycle = "recovery"
             continue
         report.closing_status = "hand-back"           # hand-back, or a second repair-needed: nothing is applied
-        return finish(start, closings, "hand-back"), None
+        return finish(start, closings, "hand-back"), None, initial
 
 
 def blocking(root: Path, note: str) -> PassReport | None:
@@ -534,7 +529,7 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
     final = None
     try:
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
-            text, final = _pass(run, root, note, start, profile, report, direction, max_workers)
+            text, final, verdicts = _pass(run, root, note, start, report, direction, max_workers)
 
             if final is not None:
                 unchanged(root, note, start, root / report.proposed)
@@ -544,6 +539,8 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
             if final is not None:
                 apply(root, note, start, final, root / report.proposed)
                 report.applied = True
+            for result in verdicts:                       # for the text the note now holds
+                results.write_result(root, result)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited

@@ -18,7 +18,7 @@ Closure here means that the workflow has reassessed its output and preserved any
 2. For a `keep` with a determined update, an editor applies the packet's body edits and a separate copyeditor fixes flow and coherence; code checks the text and keeps it in the run.
 3. Run the same methods against the edited text, then choose a closing status: `ready` ends the pass and writes the final text to the note, `repair-needed` permits one repair and a new closing cycle, and `hand-back` ends the pass with the note at its start text. Each closing decision is appended to the packet.
 
-Catalog gates and critique run through the gate sweep, so a closing review writes a new result file for the final text in place of the initial one. The other methods are asked over each text, and the run keeps each cycle's reports under its `artifact/reports/`.
+Every method, including the catalog gates and critique, is asked over each text. When the pass ends, code writes review result files once, for the text the note then holds: the final text's closing verdicts after an applied edit, the initial verdicts otherwise.
 
 The closing cycle starts at most one further edit-and-review round, and only for defects the pass introduced. A second `repair-needed` ends the pass like a `hand-back`, with the note untouched. This is a stopping rule: it prevents an unbounded loop in which one repair reopens a different concern while still leaving the final state inspected.
 

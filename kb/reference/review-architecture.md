@@ -27,7 +27,7 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
 | `review_workflows.outcomes` | the strict result-line parser |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
-| `review_workflows.gates` | the gate sweep, call grouping, the worker prompt and the checkout guard |
+| `review_workflows.gates` | `ask()`, the gate calls for given texts returning unwritten results; the sweep, which skips fresh pairs and writes each result as it arrives; call grouping, the worker prompt and the checkout guard |
 | `review_workflows.edits` | the bounds an edited text must keep, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `review_workflows.full_pass` | the full improvement pass and its packet |
 | `review_workflows.revise` | the revision workflow over the simplification passes |
@@ -44,7 +44,10 @@ inputs as files Workjig writes for each launch, so it judges captured text,
 not the live file, and the result hashes exactly that text. A worker writes
 only its declared outputs, or a problem file when it cannot do the job. Code
 turns an accepted output into a result file, a packet or a write to the
-checkout.
+checkout. Asking and publishing are separate: `gates.ask()` returns each
+accepted review as a result without writing it. The sweep writes each result
+as its answer arrives. The full pass writes its results once, at its end,
+for the text the note then holds, and nothing after a stop or a conflict.
 
 An edit reaches the checkout only through code. Each edited text is checked
 first; for the full pass, frontmatter `title` and `type` and the H1 must be
