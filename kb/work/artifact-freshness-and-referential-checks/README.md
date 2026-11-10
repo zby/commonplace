@@ -8,7 +8,7 @@ No artifact class is intrinsically a source or a derivative. A source snapshot, 
 
 ## Current phase (v1 — shipped)
 
-v1 landed in [ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md) and [freshness architecture](../../reference/freshness-architecture.md). [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md) later withdrew the generic accept placeholder because v1 has no non-review target. This workshop may close after operators confirm migration on external copies.
+v1 landed in [ADR 052](../../reference/adr/052-general-freshness-store-review-first-migration.md) and freshness architecture (`kb/reference/freshness-architecture.md`). [ADR 065](../../reference/adr/065-publish-only-supported-freshness-transitions.md) later withdrew the generic accept placeholder because v1 has no non-review target. This workshop may close after operators confirm migration on external copies.
 
 Shipped scope — **review-first migration** onto a general operational store:
 
@@ -28,7 +28,7 @@ Referential-check class design (general cross-artifact prose validation, positio
 | [implementer-handoff.md](./implementer-handoff.md) | compressed entry point — verdict, milestones, traps |
 | [implementation-plan.md](./implementation-plan.md) | sequence, gates M1–M4, done-when |
 | [database-design.md](./database-design.md) | schema authority — migration map, DDL, transactions |
-| [status serializer](../../../src/commonplace/freshness/status.py) and ack/retire parsers | live status/ack/retire JSON authority; former reference copy retired 2026-08-24 |
+| status serializer (`src/commonplace/freshness/status.py`) and ack/retire parsers | live status/ack/retire JSON authority; former reference copy retired 2026-08-24 |
 | [future-work-collection-freshness.md](./future-work-collection-freshness.md) | deferred sketch → M4 proposal source |
 
 ## Implemented foundation

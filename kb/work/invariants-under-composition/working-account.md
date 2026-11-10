@@ -41,7 +41,7 @@ Enumeration with C before P gives exactly CEP (violation), CPE (approved A publi
 
 ## A different requirement: baseline transition eligibility
 
-The [freshness architecture](../../reference/freshness-architecture.md#queue-to-finalize-concurrency-invariant) describes revision/generation guards at review finalization. Reviewing captured bytes does not establish that a queued job may still replace the current baseline. An intervening baseline transition can invalidate that authority.
+The freshness architecture (`kb/reference/freshness-architecture.md#queue-to-finalize-concurrency-invariant`) describes revision/generation guards at review finalization. Reviewing captured bytes does not establish that a queued job may still replace the current baseline. An intervening baseline transition can invalidate that authority.
 
 The documented guard concerns baseline concurrency, not live-file currency. A capture can finalize after a later file edit if no competing baseline transition occurred; its evidence remains attached to the captured inputs. Conversely, a recent capture can lose the concurrency check. These are different properties from the publication invariant above.
 

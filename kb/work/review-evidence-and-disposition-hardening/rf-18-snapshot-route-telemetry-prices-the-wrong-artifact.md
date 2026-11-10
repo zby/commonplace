@@ -13,11 +13,11 @@ not describe the artifact actually consumed.
 
 ## Evidence
 
-- [`resolve_note_markdown_links()`](../../../src/commonplace/review/job_prompt.py)
+- `resolve_note_markdown_links()` (`src/commonplace/review/job_prompt.py`)
   intentionally prices the ingest while checking only snapshot availability.
-- [The prompt protocol](../../../src/commonplace/review/protocol/prompt.py) tells
+- The prompt protocol (`src/commonplace/review/protocol/prompt.py`) tells
   workers to report the ingest path for this route.
-- [The former V1 regression in `test_job_prompt.py`](../../../tests/commonplace/review/test_job_prompt.py)
+- The former V1 regression in `test_job_prompt.py` (`tests/commonplace/review/test_job_prompt.py`)
   fixed the mismatch as expected behavior before this repair.
 
 ## Why it matters

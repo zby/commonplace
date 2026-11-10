@@ -13,7 +13,7 @@ obsolete or misleading.
 
 ## Evidence
 
-- The former [`scan_reviews()`](../../../src/commonplace/review/warn_selector.py)
+- The former `scan_reviews()` (`src/commonplace/review/warn_selector.py`)
   loaded the baseline and checked only `baseline_criterion_hash` against the
   live criterion.
 - The general freshness selector already has the note comparison needed to

@@ -17,9 +17,9 @@ determined it changes.
 
 - [Review architecture](../../reference/review-architecture.md) deliberately
   limits a baseline to note and criterion and calls links reading context.
-- [`resolve_note_markdown_links()`](../../../src/commonplace/review/job_prompt.py)
+- `resolve_note_markdown_links()` (`src/commonplace/review/job_prompt.py`)
   records path and size, not content identity.
-- [The generated prompt](../../../src/commonplace/review/protocol/prompt.py)
+- The generated prompt (`src/commonplace/review/protocol/prompt.py`)
   tells grounding and consistency reviewers to follow those live paths.
 - The linked-content intervention in
   [the evidence boundary](./evidence-boundary.md) changed the source's meaning

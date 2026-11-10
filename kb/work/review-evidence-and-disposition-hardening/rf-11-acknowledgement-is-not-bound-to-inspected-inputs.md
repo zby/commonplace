@@ -13,9 +13,9 @@ can change between inspection and acknowledgement and still be accepted.
 
 ## Evidence
 
-- [`ack_pairs()`](../../../src/commonplace/review/acknowledgement.py) passes no
+- `ack_pairs()` (`src/commonplace/review/acknowledgement.py`) passes no
   selected input observations to the transition.
-- [`ack_target_inputs()`](../../../src/commonplace/freshness/transitions.py)
+- `ack_target_inputs()` (`src/commonplace/freshness/transitions.py`)
   already supports `selected_inputs` and rejects a live-hash mismatch when they
   are supplied.
 - [RF-10](./rf-10-joint-input-changes-are-compressed.md) shows how the preceding

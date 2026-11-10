@@ -14,8 +14,8 @@ learn what happened.
 
 ## Evidence
 
-- [`FinalizeReviewJobOutcome.to_payload()`](../../../src/commonplace/review/finalization.py) constructs only the job-level completion payload.
-- [`manifest_payload()`](../../../src/commonplace/review/artifacts.py) serializes pair status and paths without outcomes.
+- `FinalizeReviewJobOutcome.to_payload()` (`src/commonplace/review/finalization.py`) constructs only the job-level completion payload.
+- `manifest_payload()` (`src/commonplace/review/artifacts.py`) serializes pair status and paths without outcomes.
 - [The batch procedure](../../instructions/run-review-batches.md) verifies only that intended pairs are no longer stale.
 
 ## Why it matters

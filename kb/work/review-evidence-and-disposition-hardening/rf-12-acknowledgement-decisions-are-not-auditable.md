@@ -14,11 +14,11 @@ reason, or the inspected candidate hashes.
 
 ## Evidence
 
-- [`freshness_baselines` and `freshness_inputs`](../../../src/commonplace/store-schema.sql)
+- `freshness_baselines` and `freshness_inputs` (`src/commonplace/store-schema.sql`)
   retain only current state.
-- [`ack_target_inputs()`](../../../src/commonplace/freshness/transitions.py)
+- `ack_target_inputs()` (`src/commonplace/freshness/transitions.py`)
   replaces the accepted input state without writing an acknowledgement event.
-- [`ack_pairs()`](../../../src/commonplace/review/acknowledgement.py) accepts no
+- `ack_pairs()` (`src/commonplace/review/acknowledgement.py`) accepts no
   actor or rationale.
 
 ## Why it matters

@@ -13,7 +13,7 @@ review judgments. Concrete model and effort provenance may also be absent.
 
 ## Evidence
 
-- [`MODEL_PARTITION_REGISTRY`](../../../src/commonplace/review/review_model.py)
+- `MODEL_PARTITION_REGISTRY` (`src/commonplace/review/review_model.py`)
   groups several GPT-5 variants under `codex` and all listed Luna/Sol efforts
   under their family partition.
 - Finalization validates concrete model/effort only when the parent supplies it.

@@ -16,7 +16,7 @@ handling, but the operational route for the latter is missing.
 
 - [The review-system guide](../../reference/README-REVIEW-SYSTEM.md) says report
   completion has no outcome and freshness does not mean findings were handled.
-- [`finalize_review_job()`](../../../src/commonplace/review/finalization.py)
+- `finalize_review_job()` (`src/commonplace/review/finalization.py`)
   completes report pairs and advances their baselines.
 - The registered warning selector handles verdict findings, not report bodies.
 

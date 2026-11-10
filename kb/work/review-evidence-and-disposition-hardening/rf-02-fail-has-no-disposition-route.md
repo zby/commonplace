@@ -16,9 +16,9 @@ downstream disposition work promised by the gate contract.
 
 - [The gate contract](../../types/review-gate.md) calls FAIL an escalation signal
   and says verdicts generate fix, reject, or defer work.
-- [`record_and_finalize_job()`](../../../src/commonplace/review/finalization.py)
+- `record_and_finalize_job()` (`src/commonplace/review/finalization.py`)
   treats FAIL as successful verdict completion.
-- [`scan_reviews()`](../../../src/commonplace/review/warn_selector.py) is the
+- `scan_reviews()` (`src/commonplace/review/warn_selector.py`) is the
   standard fix queue and has no dedicated FAIL branch.
 - The intervention in [the evidence boundary](./evidence-boundary.md) observed a
   fresh, completed FAIL absent from both stale selection and warn selection.

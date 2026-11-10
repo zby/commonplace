@@ -14,9 +14,9 @@ control. A syntactically valid job can exceed the selected reviewer's context.
 
 ## Evidence
 
-- [`render_job_prompt()`](../../../src/commonplace/review/protocol/prompt.py)
+- `render_job_prompt()` (`src/commonplace/review/protocol/prompt.py`)
   appends complete note and criterion text.
-- [`create_review_jobs`](../../../src/commonplace/cli/review/create_review_jobs.py)
+- `create_review_jobs` (`src/commonplace/cli/review/create_review_jobs.py`)
   applies `--batch-size` only to criterion grouping.
 - Registered runtime has no tokenizer, byte cap, truncation rule, or pre-dispatch
   context-fit check.

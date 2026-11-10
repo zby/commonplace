@@ -4,7 +4,7 @@ First pass. Recaps what the shipped store already gives for free, then runs the 
 
 ## What's already there
 
-From [freshness-architecture.md](../../reference/freshness-architecture.md) and [storage-architecture.md](../../reference/storage-architecture.md):
+From `kb/reference/freshness-architecture.md` and [storage-architecture.md](../../reference/storage-architecture.md):
 
 | table | current role | what it gives a DB-native design for free |
 |---|---|---|

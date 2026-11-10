@@ -10,7 +10,7 @@
 **Start here.** Authority chain: this file →
 [implementation-plan.md](./implementation-plan.md) →
 [database-design.md](./database-design.md) → the live
-[status serializer](../../../src/commonplace/freshness/status.py) and
+status serializer (`src/commonplace/freshness/status.py`) and
 ack/retire parsers.
 
 **Verdict:** go. Build v1 review-first; end at M4 proposals. Do not implement `collection-text` or register non-review targets in this phase.

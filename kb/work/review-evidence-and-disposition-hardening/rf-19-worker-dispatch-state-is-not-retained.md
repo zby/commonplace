@@ -14,7 +14,7 @@ retained contract for that bookkeeping.
 
 ## Evidence
 
-- [`review_jobs`](../../../src/commonplace/store-schema.sql) admits only the three
+- `review_jobs` (`src/commonplace/store-schema.sql`) admits only the three
   terminal/queue states and no attempt table.
 - [The batch procedure](../../instructions/run-review-batches.md) assigns launch,
   lifecycle, and scheduling to the parent harness.

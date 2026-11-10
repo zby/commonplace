@@ -40,7 +40,7 @@ the two dates:
 Operating documents: the review README (240 lines),
 [run review batches](../../instructions/run-review-batches.md),
 [review architecture](../../reference/review-architecture.md),
-[freshness architecture](../../reference/freshness-architecture.md),
+the freshness architecture page (retired into review architecture),
 [FIX-SYSTEM](../../instructions/FIX-SYSTEM.md); the full pass instruction
 (305 lines) with the [full-pass-report type](../../types/full-pass-report.md),
 its guard command and [resolve a disposition](../../instructions/resolve-full-pass-disposition.md);

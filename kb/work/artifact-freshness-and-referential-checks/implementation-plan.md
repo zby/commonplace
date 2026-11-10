@@ -54,9 +54,9 @@ The mechanism records exact input snapshots against which a target was accepted,
 | retirement | `commonplace-freshness-retire` | — | cascade delete bridge |
 
 Schema authority: [database-design.md](./database-design.md). JSON authority:
-the live [status serializer](../../../src/commonplace/freshness/status.py),
-[ack parser](../../../src/commonplace/cli/freshness_ack.py), and
-[retire parser](../../../src/commonplace/cli/freshness_retire.py).
+the live status serializer (`src/commonplace/freshness/status.py`),
+ack parser (`src/commonplace/cli/freshness_ack.py`), and
+retire parser (`src/commonplace/cli/freshness_retire.py`).
 
 ## Implementation sequence
 
@@ -109,7 +109,7 @@ Do not proceed to step 5 until M2 passes.
 
 `commonplace-freshness-status` — all registered targets, deduped resolution,
 `--json`/`--diff`/`--all`/filters, exit 0/1/2 per the live
-[status implementation](../../../src/commonplace/freshness/status.py). Review
+status implementation (`src/commonplace/freshness/status.py`). Review
 selector keeps `missing-baseline` discovery.
 
 ### 6. Generic surfaces (M3)

@@ -15,7 +15,7 @@ checks output protocol, not the source invariant.
 
 - [The grounding gate](../../instructions/review-gates/semantic/grounding-alignment.md)
   states the exact hash and source requirements.
-- [`_target_size()` and snapshot resolution](../../../src/commonplace/review/job_prompt.py)
+- `_target_size()` and snapshot resolution (`src/commonplace/review/job_prompt.py`)
   perform only filesystem availability checks.
 - The invalid-snapshot intervention in
   [the evidence boundary](./evidence-boundary.md) still finalized and became

@@ -13,7 +13,7 @@ consumes WARN pairs.
 
 ## Evidence
 
-- [`extract_warns()`](../../../src/commonplace/review/warn_selector.py) returns
+- `extract_warns()` (`src/commonplace/review/warn_selector.py`) returns
   actionable findings before its `outcome != "warn"` guard.
 - [The fix procedure](../../instructions/fix-warnings/fix-review-warnings.md)
   specifies current baseline-backed WARN pairs.

@@ -13,7 +13,7 @@ registered subsystem files remained byte-equivalent at checkout revision
   the review/freshness CLIs, `src/commonplace/store.py`, and
   `src/commonplace/store-schema.sql`;
 - [review architecture](../../reference/review-architecture.md),
-  [freshness architecture](../../reference/freshness-architecture.md),
+  freshness architecture (`kb/reference/freshness-architecture.md`),
   [the review-system guide](../../reference/README-REVIEW-SYSTEM.md),
   [the batch procedure](../../instructions/run-review-batches.md), the
   [review-gate contract](../../types/review-gate.md), and the grounding and fix

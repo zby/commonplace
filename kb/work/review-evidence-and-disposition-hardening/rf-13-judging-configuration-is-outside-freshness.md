@@ -18,7 +18,7 @@ can be selected or verified.
 
 - [Review architecture](../../reference/review-architecture.md) excludes prompt
   scaffolding and says judgment-shifting changes require an operational rereview.
-- [`freshness.py`](../../../src/commonplace/review/freshness.py) documents the
+- `freshness.py` (`src/commonplace/review/freshness.py`) documents the
   exact two-input boundary.
 - [The calibration proposal](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md)
   names rendered prompt, system instructions, sampling, and repetition protocol

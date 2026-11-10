@@ -4,7 +4,7 @@
 
 If you were building a [reflective](../../theory/definitions/reflective-system.md), [self-improving](../../theory/definitions/self-improving-system.md) LLM-based system — structurally like Commonplace, but committed from day one to a database as the primary store for its *content*, not just its churning operational edge-state — what would the complete data model need to cover?
 
-The [freshness store](../../reference/freshness-architecture.md) is the closest thing Commonplace has to this already: it retains exact artifact text in `artifact_snapshots`, tracks accepted baselines and their inputs, and selects targets affected by change. It is the starting skeleton, not the answer — it was built to cache *just enough* file content to detect staleness for review pairs, not to be the canonical home for all KB content, structure, and behavior-determining organization. This workshop asks what has to be added to turn that skeleton into a complete substrate.
+The freshness store (`kb/reference/freshness-architecture.md`) is the closest thing Commonplace has to this already: it retains exact artifact text in `artifact_snapshots`, tracks accepted baselines and their inputs, and selects targets affected by change. It is the starting skeleton, not the answer — it was built to cache *just enough* file content to detect staleness for review pairs, not to be the canonical home for all KB content, structure, and behavior-determining organization. This workshop asks what has to be added to turn that skeleton into a complete substrate.
 
 ## Why this isn't re-litigating files-vs-database for Commonplace
 
@@ -38,7 +38,7 @@ Out of scope:
 |---|---|
 | [files defer schema commitment until invariants stabilize](../../theory/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) | the conditional default this workshop deliberately steps outside of, for a hypothetical system only |
 | [many-to-many-edge-state...](../../theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md) | supplies the structural predicate; this workshop asks what happens once *every* edge is treated this way, not just the churning ones |
-| [freshness-architecture.md](../../reference/freshness-architecture.md) / [storage-architecture.md](../../reference/storage-architecture.md) | the schema and physical-store facts this workshop starts from |
+| `kb/reference/freshness-architecture.md` / [storage-architecture.md](../../reference/storage-architecture.md) | the schema and physical-store facts this workshop starts from |
 | [artifact-freshness-and-referential-checks](../artifact-freshness-and-referential-checks/README.md) | shipped the v1 schema this workshop treats as a skeleton; that workshop's own closure does not depend on this one |
 | [lineage-mechanisms](../lineage-mechanisms/README.md) | owns Commonplace's actual storage-weight decisions; this workshop may borrow its in-artifact/event-surface/operational-store weight vocabulary for the hypothetical design |
 | [src-architecture-alternatives](../src-architecture-alternatives/README.md) | owns the review-store source-of-truth debate for Commonplace; its three candidate shapes (SQLite-as-store, pure-file, append-only-log+index) are evidence, not a decision to redo |

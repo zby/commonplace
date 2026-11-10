@@ -14,11 +14,11 @@ A process crash can produce the same cross-substrate split.
 
 ## Evidence
 
-- [`write_pair_result_files_to_derived_paths()`](../../../src/commonplace/review/artifacts.py)
+- `write_pair_result_files_to_derived_paths()` (`src/commonplace/review/artifacts.py`)
   writes each pending file directly in sequence.
-- [`finalize_review_job()`](../../../src/commonplace/review/finalization.py) writes
+- `finalize_review_job()` (`src/commonplace/review/finalization.py`) writes
   the files before `conn.commit()`.
-- [`_mark_failed()`](../../../src/commonplace/review/finalization.py) rolls back
+- `_mark_failed()` (`src/commonplace/review/finalization.py`) rolls back
   SQLite and refreshes the manifest but does not remove partial result files.
 
 ## Why it matters

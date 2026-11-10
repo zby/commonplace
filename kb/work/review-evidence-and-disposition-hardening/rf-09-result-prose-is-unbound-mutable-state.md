@@ -13,11 +13,11 @@ unreadable file.
 
 ## Evidence
 
-- [`store-schema.sql`](../../../src/commonplace/store-schema.sql) has no result
+- `store-schema.sql` (`src/commonplace/store-schema.sql`) has no result
   content or integrity field.
-- [`write_pair_result_files_to_derived_paths()`](../../../src/commonplace/review/artifacts.py)
+- `write_pair_result_files_to_derived_paths()` (`src/commonplace/review/artifacts.py`)
   writes plain files.
-- [`_load_review_text()`](../../../src/commonplace/review/warn_selector.py)
+- `_load_review_text()` (`src/commonplace/review/warn_selector.py`)
   reads those files and returns `None` on any `OSError`.
 - The tamper intervention in [the evidence boundary](./evidence-boundary.md)
   changed warning read-back while leaving the DB outcome unchanged.

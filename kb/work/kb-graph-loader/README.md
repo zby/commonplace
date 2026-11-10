@@ -13,7 +13,7 @@ Several modules independently walk files, parse frontmatter, strip bodies, extra
 - [index_directory.py](../../../src/commonplace/lib/index_directory.py) scans directories and parses frontmatter for generated directory listings.
 - [index_generated.py](../../../src/commonplace/lib/index_generated.py) scans collections for tag listings.
 - [properdocs_hooks.py](../../../src/commonplace/docs/properdocs_hooks.py) adds build-time indexes and repeats index metadata reads.
-- [review_target_selector.py](../../../src/commonplace/review/review_target_selector.py) has its own notion of reviewable notes and type-content filtering.
+- `src/commonplace/review/review_target_selector.py` has its own notion of reviewable notes and type-content filtering.
 
 The repeated scans are not just a performance smell. They are a consistency risk: each caller can drift on what counts as a note, an index, a type definition, or a reviewable current artifact.
 

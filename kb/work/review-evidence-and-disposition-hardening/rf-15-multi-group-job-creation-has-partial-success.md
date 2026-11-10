@@ -13,9 +13,9 @@ in SQLite while the caller receives no job IDs.
 
 ## Evidence
 
-- [`create_review_jobs.main()`](../../../src/commonplace/cli/review/create_review_jobs.py)
+- `create_review_jobs.main()` (`src/commonplace/cli/review/create_review_jobs.py`)
   loops over groups and prints its payload after the loop.
-- [`prepare_grouped_review_job()`](../../../src/commonplace/review/batch.py)
+- `prepare_grouped_review_job()` (`src/commonplace/review/batch.py`)
   commits each job before rendering and writing its artifacts.
 - The multi-group intervention in
   [the evidence boundary](./evidence-boundary.md) observed one queued and one

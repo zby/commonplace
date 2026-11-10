@@ -13,10 +13,10 @@ while the later acknowledgement transition accepts both live inputs.
 
 ## Evidence
 
-- [`resolve_review_targets()`](../../../src/commonplace/review/review_target_selector.py)
+- `resolve_review_targets()` (`src/commonplace/review/review_target_selector.py`)
   gives criterion change priority and emits a note diff only for
   `note-changed`.
-- [`ack_pairs()`](../../../src/commonplace/review/acknowledgement.py) repins both
+- `ack_pairs()` (`src/commonplace/review/acknowledgement.py`) repins both
   current inputs.
 
 ## Why it matters

@@ -14,7 +14,7 @@ system-channel contract is not wired.
 
 ## Evidence
 
-- [`REVIEW_RUNNER_SYSTEM_PROMPT`](../../../src/commonplace/review/protocol/prompt.py)
+- `REVIEW_RUNNER_SYSTEM_PROMPT` (`src/commonplace/review/protocol/prompt.py`)
   is defined with a comment saying it is used as the system prompt.
 - A tracked repository search finds only that declaration.
 - [The batch procedure](../../instructions/run-review-batches.md) instructs the
