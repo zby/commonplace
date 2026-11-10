@@ -480,7 +480,9 @@ def _passes(run: Run, root: Path, artifact: str, plan: dict, known: dict[str, Pa
         except OutOfAttempts as spent:
             state.state, state.reason = "problem", str(spent)
             continue
-        state.profile, state.model = answer.record["profile"], answer.record["model"]
+        used = answer.record["profile"]
+        state.profile = {"harness": used["harness"], "launch-model": used["launch_model"], "effort": used["effort"]}
+        state.model = answer.record["model"]
         if answer.problem is not None:
             state.state, state.reason = "problem", f"worker problem: {answer.problem}"
             continue

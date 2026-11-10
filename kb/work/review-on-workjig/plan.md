@@ -26,13 +26,13 @@ writes results.
 | Model partition | dropped; profile and model are provenance, and `status` can filter on them | README item 1 |
 | Both inputs changed | the state lists both, in the order note, criterion | no information is lost; the caller chooses what to show |
 | Deleted note | its results are reported as `orphaned`, and removing them is deleting files | replaces `freshness-retire` |
-| Reuse of the old package | the new code imports pure helpers from `commonplace.review` (criterion resolution, applicability, conformance pairs, the outcome parser, note-part extraction) and nothing that opens the store | the helpers survive; phase 4 moves them when it deletes the rest |
+| Old package | the surviving pure helpers moved into `lib/review_workflows/` when the old package was deleted | no code path reaches a store |
 | Review profiles | `kb/instructions/review-profiles.yaml`, same entry shape as `kb/tasks/profiles.yaml`, without edit or commit grants on the checkout | a task profile may commit; a review worker may not |
 
-Not decided here: installed projects, where gates resolve through the
-installed library root. Phase 1 runs in this checkout only. The
-identities must not foreclose the library form, and phase 4 settles it
-before the old commands are deleted.
+Installed projects: a criterion is named by its artifact identity, a
+repository path or `commonplace:<path>` for a library file. A catalog
+gate's id is `<lens>/<name>` in both layouts, and another library
+criterion's id is `commonplace/<path>`.
 
 ## Phase 1, the gate sweep
 
@@ -85,7 +85,7 @@ live pair has run through `commonplace-review run gates` with a real
 profile. The planning session runs the live pair after review, not the
 worker.
 
-### Step 1.3, the first sweep (operator)
+### Step 1.3, the first sweep (operator, still open)
 
 One collection with one profile. It costs real launches, so the operator
 chooses the collection and profile and starts it. It decides:
@@ -98,79 +98,160 @@ chooses the collection and profile and starts it. It decides:
   `kb/messages/20261030T085047Z-economics-workshop-unattended-workflows-cost-per-yield-records.md`.
   The reply is written then.
 
-## Later phases
+## Phases 2 to 4, as built
 
-**Phase 2, the full pass** (README item 6). It starts when step 1.3 has
-kept or changed the result file. Its first step is the `decide()` helper
-with the packet schema. It returns to planning before any code if the
-gate sweep shows that a launch's fixed cost makes six parallel method
-asks per note too expensive.
+On 2026-11-09 the operator directed the planner to finish the work
+without stopping: no backwards compatibility, no data migration, one
+commit per larger step. Phases 2 to 4 were therefore built before step
+1.3 ran. Opus workers implemented each step and the planning session
+reviewed, corrected and committed.
 
-**Phase 3, one revision** (README item 7). It needs `ask` to accept a
-profile, which changes `headless/jobs.py` and therefore requires the
-`headless/` and `agentic_analysis/` suites. That change waits for this
-phase, because no earlier workflow needs it. The operator's judgment of
-the stop-and-rerun shape decides whether the workflow replaces the
-interactive skill.
+**Retirement of the old code** came first, so the later phases built on
+one package. It moved the surviving pure helpers into
+`lib/review_workflows/` (`criteria.py`, `outcomes.py`), made criteria
+work as library identities in installed projects, and deleted the SQLite
+store, the review and freshness packages, 12 commands and their tests:
+78 files and about 14,400 lines. `commonplace-status --review` reads
+result files. Relocation never rekeyed the store in code, so only its
+tests changed.
 
-**Phase 4, retirement.** It starts when the operator has kept or reverted
-one result from each workflow. The latest safe point to settle the
-installed-project identities and the fate of `commonplace-status`'s
-review section is before the first deletion.
+**Phase 2, the full pass.** `gates.py` gained bundle grouping, the
+headless runtime gained `decide()`, and `full_pass.py` runs the pass as
+`commonplace-review run full-pass`. The packet lives at
+`kb/reports/state/review/packets/<note-path>`; `commonplace-review
+packet` checks its hashes. The guard command, `lib/full_pass.py` and the
+validation rule for the old report are deleted, and the type is cut to
+the packet. The directory-type question of README item 8 is answered no
+for now: the run's `artifact/` and the packet schema carry what code
+needs.
+
+**Phase 3, the revision.** `Run.ask`, `checked` and `decide` take a
+profile per call. `revise.py` runs `commonplace-review run revise` with
+the assessment stop, the operator-edited `plan.yaml`, a strike stop for
+`plain-wording` and `abstractions`, and profiles chosen by each pass's
+`effort`. `narrow-overclaims` runs only with a non-empty defend list and
+`split-out-a-treatment` never runs headless. The six ordered pass files
+gained a `depth` field so code can check plan order.
+
+**Phase 4, documents.** [ADR 127](../../reference/adr/127-review-runs-as-workflows-over-result-files.md)
+supersedes ADR 010, 029, 032, 035, 036, 043, 052, 065 and 067 and amends
+038, 039, 041, 051 and 080. The review README and review architecture
+are rewritten; the freshness architecture page, review triage and the
+semantics-preserving gate migration are retired; the fix, batch and
+retire instructions operate the new command. Sixteen proposals and seven
+theory notes were corrected where they stated the store as present
+fact, and two proposals were archived.
 
 ## Execution record
 
-| Step | State | Commit |
+| Step | State | Commits |
 |---|---|---|
-| README update, phase 0 | done 2026-11-09 | with this plan |
-| 1.1 results and status | done 2026-11-09, Opus worker, accepted unchanged | `7d2af63dd` |
-| 1.2 gates workflow and command | done 2026-11-09, Opus worker in a worktree; the planner made criteria explicit for a sweep | `5ce47edc3`, `0bc400508`, `4e03cbcff` |
-| 1.2 live pair | done 2026-11-09, see below | |
+| README update, phase 0 | done 2026-11-09 | `f85f19537` |
+| 1.1 results and status | done, accepted unchanged | `7d2af63dd` |
+| 1.2 gates workflow and command | done; the planner made criteria explicit for a sweep | `5ce47edc3`, `0bc400508`, `4e03cbcff` |
+| retire the old code | done 2026-11-10 | `1e2027899`, `3562ca982` |
+| 2 bundle grouping, `decide()`, full pass | done 2026-11-10 | `1b27a9b40`, `84fdda681`, `27d6ba9af`, `ef7b5a07c` |
+| 3 profile per ask, revision | done 2026-11-10 | `07e2f984b`, `4422a531c` |
+| 4 ADR and documents | done 2026-11-10 | `2fe4c0585` and the six commits after it |
 | 1.3 first sweep | waits for the operator | |
 
-## Live pair, 2026-11-09
+## Live runs
 
-`commonplace-review run gates kb/theory/definitions/storage-substrate.md
---criteria prose/source-residue` with the default `sonnet` profile wrote a
-`pass` result on the first attempt. The rerun launched nothing and
-`status` showed the pair fresh.
+All on `kb/theory/definitions/storage-substrate.md` with the `sonnet`
+profile, each a single observation.
 
-| Measure | Value |
-|---|---|
-| wall time | 13 s |
-| harness-reported cost | $0.095 |
-| turns | 5 (three reads, one write) |
-| context read from cache | 95,525 tokens over the turns |
-| context written to cache | 18,399 tokens |
-| output | 1,201 tokens |
-| permission denials | 0 |
+| Run | Launches | Cost | Result |
+|---|---|---|---|
+| one gate, pair grouping (2026-11-09) | 1 | $0.095 | `pass`; 13 s; the rerun launched nothing |
+| the `prose` bundle, bundle grouping | 1 | $0.172 | nine stale pairs reviewed, one fresh pair skipped; 31 s |
+| full pass | 27 | $4.47 | `keep`, edited, closing `hand-back`, start text restored, packet pending |
+| revision: assessment, then one operator-added pass | 2 | $0.235 | the assessor planned no pass; `readability-and-flow` returned no change |
 
-The cost is almost all fixed context: the note and criterion are about
-2,000 tokens together, and each turn rereads roughly 30,000 tokens of
-harness and project context. At this rate all 43 gates on one note cost
-about $4 as 43 calls. This is one observation, and it points the
-granularity decision of README item 3 toward one call per note and
-bundle; step 1.3 measures a bundle call on the same note before deciding.
+The single-gate cost is almost all fixed context: the note and criterion
+are about 2,000 tokens, and each of five turns reread roughly 30,000
+tokens of harness and project context. Nine gates in one bundle call
+cost about a fifth of nine pair calls. Whether one worker judges nine
+gates as independently as nine workers is not measured, so the default
+grouping stays `pair` until step 1.3 compares verdicts.
 
-What the live pair did not show:
+The full pass handed back because its closing premise check defeated a
+sentence the pass had added, and the closing decision judged the repair
+a claim-level choice for the author. The guard reported three files,
+all edited by a worker building phase 3 in the same checkout at the
+time.
 
-- that the profile denies a write outside the run directory. The worker
-  did not try one. The guard is the only verified control.
-- the `opus` and `codex` profiles. The codex profile can write the
-  checkout at the sandbox level, which its comment states.
+No permission denial occurred in any run. No worker tried to write
+outside its run directory, so the profiles' write restriction is still
+unverified.
 
-## Open after step 1.2
+## Open
 
-- **The guard fails a sweep when another session edits the checkout.**
-  It reports every path that changed while the run was open and cannot
-  tell whose change it was. In this checkout other sessions commit
-  several times an hour, so a long sweep will usually exit nonzero with
-  paths to inspect. Step 1.3 shows whether that is useful or noise.
-- **A sweep with nothing stale still creates a run directory.**
-- **`retry` of an answer needs `--force` on the rerun**, because the
-  written result makes the pair fresh.
-- **The prompt is part of each call's identity.** Editing
-  `gates.PROMPT` relaunches calls on `--resume`; it does not stale
-  results, which hash only the note and the criterion.
-- **Directory expansion is reimplemented** in `gates.note_paths`,
-  because the old selector module imports the store.
+For the operator:
+
+- **Step 1.3.** One collection, one profile, both groupings on the same
+  notes. It decides the default grouping and whether the watched-parts
+  hash is kept.
+- **Keep or revert one result from each workflow**, which the README
+  names as a closing condition. The full pass has run live only on its
+  hand-back path; an accepted edit, a bounded repair and a non-keep
+  packet are covered by fake-harness tests alone. The revision has not
+  applied a change or stopped on a strike list live.
+- **Delete the abandoned local data** in the main checkout:
+  `kb/reports/state/commonplace-store.sqlite`, the
+  `review-store.sqlite*` files, `review-store-backups/`, `review-jobs/`,
+  `reviews/`, `bundle-reviews/` and `full-pass/`. Nothing reads them.
+  The planning session did not delete untracked data.
+- **Reinstall the user-level tool** so `commonplace-review` exists as a
+  command and the 12 deleted launchers go away.
+- **Read the paragraph added to**
+  `kb/theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md`.
+  It records the return to files as evidence bearing on the note's
+  claim.
+- **Workshops whose subject was deleted**, proposed for closing:
+  `review-evidence-and-disposition-hardening`,
+  `artifact-freshness-and-referential-checks`,
+  `freshness-module-review`, `review-bundle-packing`,
+  `full-pass-instruction-coherence-audit`, and the review-storage thread
+  of `src-architecture-alternatives`.
+- **`collection-as-artifact-freshness`** is a proposal whose planned
+  mechanism, the generic freshness store, no longer exists.
+- **The mailbox message** on cost-per-yield records is unanswered. The
+  result file carries no cost field; the launch records hold the
+  harness's usage evidence.
+
+Known limits of the code:
+
+- The guard cannot tell a worker's change from another session's, so a
+  long sweep in a busy checkout exits nonzero with paths to inspect.
+- The codex profile can write the checkout at the sandbox level.
+- A sweep with nothing stale still creates a run directory.
+- `retry` of an answered pair needs `--force` on the rerun.
+- A revision plan edited after a pass has written needs a new run with
+  `--plan`.
+- Gate applicability in a closing cycle reads the note's frontmatter
+  from disk, not from the captured text.
+- The review profiles deny Bash, so `audit-a-prior-pass` cannot read a
+  diff and one step of `place-external-systems` cannot run.
+
+Behaviour of the agent-run full pass that the workflow dropped or
+changed:
+
+- An undetermined update is not asked of the user mid-pass. The packet
+  is pending, and the operator answers by resuming with `--direction`.
+- The copyedit is accepted or rejected whole; code cannot apply only its
+  in-bounds edits.
+- The editor no longer rereads the friction and premise attention lines
+  against the edited text. The closing cycle reruns both methods.
+- A rejected packet no longer binds the next packet decision, and a
+  changed pending packet is replaced by a new pass without a superseding
+  step.
+- A hand-back or undetermined packet is `pending` and blocks a new pass
+  until it is resolved or the note changes.
+- A worker problem or a spent call in any method stops the pass.
+- Gate and critique results that are fresh for the same text are reused.
+- The packet has no "Proposed revision shape" section and keeps the
+  merge target's hash without a capture file.
+
+Interactive revision behaviour the workflow does not cover is listed in
+the "Run it as a workflow" section of
+[revise an article or note](../../instructions/simplification-passes/revise-an-article-or-note.md).

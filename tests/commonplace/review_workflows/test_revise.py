@@ -183,7 +183,7 @@ def test_an_unedited_resume_runs_the_passes_in_order_on_their_effort_profiles(re
                         "pass opening-and-title big"]
     assert states(resumed) == [("readability-and-flow", "applied"), ("place-external-systems", "applied"),
                                ("opening-and-title", "applied")]
-    assert [state["profile"]["launch_model"] for state in resumed["passes"]] == ["big", "small", "big"]
+    assert [state["profile"]["launch-model"] for state in resumed["passes"]] == ["big", "small", "big"]
     text = note_text(repo)
     assert text.endswith("readability-and-flow (all).\nplace-external-systems (all).\nopening-and-title (all).\n")
     assert "user-verified" not in text and resumed["guard"]["clean"], "the artifact write is expected"
