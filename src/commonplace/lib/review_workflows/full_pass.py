@@ -519,7 +519,8 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
 
     The note's current text is the start text. `direction` is the operator's
     answer to an undetermined update, or any direction the packet must
-    follow; it is an input of the packet ask. The caller checks `blocking()`.
+    follow; it is an input of the packet ask, and the command records it with
+    the run's options. The caller checks `blocking()`.
     """
     root = root.resolve()
     report = PassReport(run_dir.resolve().relative_to(root).as_posix(), note)

@@ -101,16 +101,20 @@ run directory is derived from the artifact's path and the hash of its text.
 It stops with a file wherever this procedure waits for the operator, and
 repeating the same command continues the run with the edited file as input.
 A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
-give them again. Each stop prints a JSON report whose `waiting-for` names the
-file and the command.
+give them again. Each stop prints a JSON report whose `waiting-for` gives
+what to do, the file and the command to repeat. An edited file is your
+answer, and an unedited one is your answer too.
 
 1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
-   writes `assessment.md` and `plan.yaml` under the run directory's
-   `artifact/` and stops. The plan holds `purpose`, `defend`, `passes` in run
+   writes `assessment.md` and proposes `plan.yaml` under the run directory's
+   `artifact/` and stops. `--plan FILE` puts your plan there first, and then
+   no assessment runs. The plan holds `purpose`, `defend`, `passes` in run
    order (each a `pass` name and an optional `scope`) and `stop`. Read the
    assessment and edit the plan in place; a plan with `stop` set ends the run.
    The command rejects a plan that names an unknown pass, misses a field or
-   breaks the depth order the pass files declare.
+   breaks the depth order the pass files declare. You may edit the plan again
+   at any later stop: the passes whose inputs did not change replay, and the
+   others run again.
 2. Step 2 runs each listed pass as one worker, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
    the revised text (frontmatter, title and H1 kept; no new validation
@@ -119,9 +123,10 @@ file and the command.
    or `skipped`. After a `problem` pass, or while the run waits, nothing is
    written, and `not-applied` names the run file holding the proposed text.
    It does not commit.
-3. Plain-wording and abstractions stop with `artifact/<pass>-list.md`.
+3. Plain-wording and abstractions stop with `artifact/<pass>-list-<key>.md`.
    Delete each entry you strike, with its indented lines, and repeat the
-   command; the worker applies only the entries left.
+   command; the worker applies only the entries left. A list made again for
+   another text gets a new file and stops again.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.

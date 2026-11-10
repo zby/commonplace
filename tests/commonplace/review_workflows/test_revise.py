@@ -168,11 +168,11 @@ def states(report: dict) -> list[tuple[str, str]]:
 
 def test_assessment_stops_with_both_files(repo, capsys):
     report = assess(repo, capsys)
-    assert report["waiting-for"]["what"] == "plan" and not report["complete"]
+    assert report["waiting-for"]["what"].startswith("Read assessment.md") and not report["complete"]
     run = report["run-dir"]
     assert run == f"kb/reports/state/review/runs/revise/kb/notes/alpha/{sha256(NOTE.format(words=''))[:12]}"
-    assert report["waiting-for"]["files"] == [f"{run}/artifact/assessment.md", f"{run}/artifact/plan.yaml"]
-    assert report["waiting-for"]["next"].endswith(f"commonplace-review run revise {NOTE_PATH}")
+    assert report["waiting-for"]["file"] == f"{run}/artifact/plan.yaml"
+    assert report["waiting-for"]["command"] == f"commonplace-review run revise {NOTE_PATH}"
     assert artifact_file(repo, report, "assessment.md").read_text().startswith("# Assessment")
     plan = yaml.safe_load(artifact_file(repo, report, "plan.yaml").read_text())
     assert [entry["pass"] for entry in plan["passes"]] == ["readability-and-flow", "place-external-systems",
@@ -236,7 +236,7 @@ def test_a_malformed_assessor_plan_costs_one_attempt(repo, capsys):
     start(repo, "BADPLAN")
     code, report, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches == ["assess - big"] * 2
-    assert report["waiting-for"]["what"] == "plan"
+    assert report["waiting-for"]["file"].endswith("/artifact/plan.yaml")
 
 
 def test_a_stop_plan_ends_cleanly_with_the_assessment(repo, capsys):
@@ -253,13 +253,13 @@ def test_plain_wording_stops_with_its_list_and_applies_only_unstruck_entries(rep
     start_text = note_text(repo)
     code, waiting, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches == ["pass readability-and-flow big", "list plain-wording small"]
-    assert waiting["waiting-for"]["what"] == "strikes" and "Delete each entry" in waiting["waiting-for"]["next"]
+    assert "plain-wording list" in waiting["waiting-for"]["what"]
     assert states(waiting)[1:] == [("plain-wording", "waiting"), ("place-external-systems", "pending"),
                                    ("opening-and-title", "pending")]
     assert note_text(repo) == start_text and not waiting["applied"]
     assert waiting["proposed"] in waiting["not-applied"] and "waits for the operator" in waiting["not-applied"]
-    listed = repo[0] / waiting["waiting-for"]["files"][0]
-    assert listed.name == "plain-wording-list.md"
+    listed = repo[0] / waiting["waiting-for"]["file"]
+    assert listed.name.startswith("plain-wording-list-")
     listed.write_text(listed.read_text().replace("- beta: word; replace\n", ""))
     code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and done["complete"] and done["run-dir"] == report["run-dir"], done
@@ -372,3 +372,35 @@ def test_a_repeat_reuses_recorded_options_and_replaces_given_ones(repo, capsys):
     assert code == 0 and launches[0] == "pass readability-and-flow small"
     options = json.loads((repo[0] / report["run-dir"] / "sweep.json").read_text())
     assert (options["purpose"], options["profiles"]["judgment"]["launch_model"]) == ("p", "small")
+
+
+def test_the_plan_and_the_strikes_are_answers_and_an_edited_plan_replays_what_did_not_change(repo, capsys):
+    report = assess(repo, capsys, "PLAIN")
+    start_text = note_text(repo)
+    plan_file = artifact_file(repo, report, "plan.yaml")
+    plan = yaml.safe_load(plan_file.read_text())
+    plan["passes"][0]["scope"] = "§1"
+    plan_file.write_text(yaml.safe_dump(plan))
+    code, waiting, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches == ["pass readability-and-flow big", "list plain-wording small"]
+    first_list = waiting["waiting-for"]["file"]
+
+    # Edit a pass after the strike stop: the list, unedited, is the answer; the passes before replay.
+    plan["passes"] = plan["passes"][:2] + [{"pass": "opening-and-title", "scope": "the TL;DR"}]
+    plan_file.write_text(yaml.safe_dump(plan))
+    (repo[0] / "fail-opening-and-title").touch()
+    code, _, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and launches == ["apply plain-wording small"] + ["pass opening-and-title big"] * 3
+    (repo[0] / "fail-opening-and-title").unlink()
+
+    # Edit the first pass: it and the list are asked again, and the new list waits for its own strikes.
+    plan["passes"][0]["scope"] = "§2"
+    plan_file.write_text(yaml.safe_dump(plan))
+    code, waiting, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches == ["pass readability-and-flow big", "list plain-wording small"]
+    assert waiting["waiting-for"]["file"] != first_list and note_text(repo) == start_text
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["applied"] and done["conflict"] is None, done
+    assert launches == ["apply plain-wording small", "pass opening-and-title big"]
+    assert note_text(repo).endswith("readability-and-flow (§2).\nplain-wording applied alpha beta gamma.\n"
+                                    "opening-and-title (the TL;DR).\n")

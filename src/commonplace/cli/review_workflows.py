@@ -35,8 +35,9 @@ kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12
 hex of the note's SHA-256>/. Repeating the command on the same note text
 continues that run: answered calls replay. An edited note has another hash,
 so the same command opens a new run. A repeat reuses the options the run
-recorded (full pass: `--profile`; revise: `--purpose`, `--defend` and the
-effort profiles); an option given on a repeat replaces the recorded value.
+recorded (full pass: `--profile` and `--direction`; revise: `--purpose`,
+`--defend` and the effort profiles); an option given on a repeat replaces
+the recorded value.
 Each workflow writes the note at most once, at its end, and only from the
 text the run started from; a note changed during the run is a conflict, and
 the proposed text stays in the run directory.
@@ -65,9 +66,10 @@ repeat the command: it runs the plan's passes in order, each on the text the
 one before left. `--plan FILE` copies another plan file into the run as its
 plan; a repeat without it keeps that plan, and on a new run it skips the
 assessment. A pass whose list the operator strikes (plain-wording,
-abstractions) stops with `artifact/<pass>-list.md`: delete the entries you
-strike and repeat the command. A stop for the operator is a normal end: the
-JSON report's `waiting-for` names the file and the command to repeat. The
+abstractions) stops with `artifact/<pass>-list-<key>.md`: delete the entries
+you strike and repeat the command. A stop for the operator is a normal end:
+the JSON report's `waiting-for` gives what to do, the file and the command to
+repeat. The
 artifact is written once, when every pass of the plan ended `applied`,
 `no-change` or `skipped`; otherwise `not-applied` names the file that holds
 the proposed text. Each pass's `effort` picks its profile from the profile
@@ -132,7 +134,8 @@ def _parser() -> argparse.ArgumentParser:
     sweep.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
     full = workflows.add_parser("full-pass", help="run the full improvement pass over one note")
     full.add_argument("note")
-    full.add_argument("--direction", help="the operator's direction for the packet, which prevails")
+    full.add_argument("--direction", help="the operator's direction for the packet, which prevails; "
+                      "recorded with the run, and a pending packet does not block it")
     full.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL}")
     full.add_argument("--max-workers", type=int, default=4, help="workers running at once")
     full.add_argument("--timeout", type=float, help="seconds a launch may take")
@@ -272,10 +275,10 @@ def _full_pass(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     run_dir = edits.run_dir(root, "full-pass", note)
     named = arguments.profile is not None or not (run_dir / SWEEP).is_file()
     options = _options(run_dir, {"profile": asdict(load_profile(root, arguments.profile, gates.profiles()))
-                                 if named else None})
+                                 if named else None, "direction": arguments.direction})
     report = full_pass.full_pass(root, note, Profile(**options["profile"]), run_dir,
                                  max_workers=arguments.max_workers, timeout=arguments.timeout,
-                                 direction=arguments.direction, harnesses=harnesses)
+                                 direction=options.get("direction"), harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
@@ -296,13 +299,12 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
     options = _options(run_dir, {"purpose": arguments.purpose, "defend": arguments.defend or None,
                                  "profiles": profiles})
-    kept = run_dir / "artifact" / revise.PLAN
-    if named_plan is not None:                             # the run's plan from now on
+    if named_plan is not None:                             # the operator's answer in the plan's slot
+        kept = run_dir / "artifact" / revise.PLAN
         kept.parent.mkdir(parents=True, exist_ok=True)
         kept.write_text(named_plan, encoding="utf-8")
-    plan = revise.read_plan(kept.read_text(encoding="utf-8")) if kept.is_file() else None
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
-                           purpose=options.get("purpose"), defend=options.get("defend", []), plan=plan,
+                           purpose=options.get("purpose"), defend=options.get("defend", []),
                            timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1

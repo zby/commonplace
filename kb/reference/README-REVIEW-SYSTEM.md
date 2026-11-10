@@ -256,20 +256,24 @@ the closing cycle.
 
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
-one artifact. An assessment writes a report and a plan file, and the run
-stops; the operator edits the plan and repeats the command, which runs each
+one artifact. An assessment writes a report and proposes a plan file, and
+the run stops; the operator edits the plan and repeats the command, which runs each
 listed pass as one worker call in order, each on the text the one before
 left. The artifact is written once, at the end, and only when every pass
-ended `applied`, `no-change` or `skipped`. A pass's `effort` selects the
-profile. No revision has been measured yet.
+ended `applied`, `no-change` or `skipped`. A strike pass stops with its
+list in a file the same way. A pass's `effort` selects the profile. No revision has been measured yet.
 
 **Runs of the two workflows.** Their run directory is derived from the
 inputs: `kb/reports/state/review/runs/<workflow>/<note path without
 .md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
 the same note text continues that run, and answered calls replay. An edited
 note, including one the workflow itself wrote, has another hash, so the same
-command opens a new run. A repeat reuses the options the run recorded; an
-option given on the repeat replaces the recorded value. If the note changed
+command opens a new run. A repeat reuses the options the run recorded,
+including the full pass's `--direction`; an option given on the repeat
+replaces the recorded value. A stop for the operator proposes a file in the
+run directory, and the report's `waiting-for` gives what to do, the file and
+the command to repeat. On the repeat, the file, edited or not, is the
+operator's answer. If the note changed
 during a run, the run writes nothing and reports a conflict that names the
 file holding the proposed text.
 

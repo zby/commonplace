@@ -397,9 +397,11 @@ profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
 writes the artifact once, when every pass ended `applied`, `no-change` or
-`skipped`. Plain-wording and abstractions stop with `artifact/<pass>-list.md`
-for the operator to delete the struck entries. A stop for the operator exits
-0 with `waiting-for` in the JSON report. `--plan FILE` copies another plan
+`skipped`. Plain-wording and abstractions stop with
+`artifact/<pass>-list-<key>.md` for the operator to delete the struck
+entries. A stop for the operator exits 0 with `waiting-for` in the JSON
+report: what to do, the file and the command to repeat; the file, edited or
+not, is the answer. `--plan FILE` copies another plan
 into the run; a repeat without it keeps that plan, and on a new run it skips
 the assessment. An invalid plan is a command error.
 
@@ -407,8 +409,9 @@ Both workflows derive their run directory from the inputs:
 `kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the command on the same note text
 continues the run and replays answered calls; an edited note opens a new
-run. A repeat reuses the recorded options; an option given on the repeat
-replaces the recorded value.
+run. A repeat reuses the recorded options (full pass: `--profile` and
+`--direction`; revise: `--purpose`, `--defend` and the effort profiles); an
+option given on the repeat replaces the recorded value.
 
 `packet NOTE_OR_PACKET` prints whether a packet's recorded hashes still match
 the note and any merge target, and exits 0 only when every input matches;

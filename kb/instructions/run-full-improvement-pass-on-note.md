@@ -30,7 +30,7 @@ The command prints a JSON report: run directory, disposition, closing status, th
 
 - After a launch failure or usage limit, repeat the same command. While the note is unchanged, the run continues and answered calls replay. An edited note opens a new run.
 - After a worker problem, read it in the report, then `commonplace-review retry RUN JOB` and repeat the command.
-- When the packet's update is `UNDETERMINED`, the packet lists the competing readings. Answer by repeating the command with `--direction "<the chosen reading>"`; the pending packet does not block it, and the packet is decided again over the same method reports.
+- When the packet's update is `UNDETERMINED`, the packet lists the competing readings. Answer by repeating the command with `--direction "<the chosen reading>"`; the pending packet does not block it, and the packet is decided again over the same method reports. The run records the direction, so a later repeat without `--direction` keeps it.
 
 ## Why this order
 

@@ -23,6 +23,7 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 |---|---|
 | `headless.jobs` | `ask()`, one agent call with named inputs and outputs; `checked()`, retry with a deterministic check; `gather()`, parallel calls; `Run`, a run directory with a lock, durable launch records and replay; `dismiss()` and `acknowledge_stopped()` |
 | `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
+| `headless.operator` | `answer()`, a file under the run's `artifact/` that the workflow proposes and the operator answers, edited or not, on the repeat; `waiting()`, the report entry for that stop |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
 | `review_workflows.outcomes` | the strict result-line parser |

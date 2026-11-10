@@ -8,20 +8,23 @@ Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
 The run directory is `edits.run_dir()`, derived from the artifact's path and
-the hash of its text when the command runs. The run stops with a file
-wherever the interactive procedure waits for the operator, and repeating the
-command continues the run with the operator's answer as an input:
+the hash of its text when the command runs. Wherever the interactive
+procedure waits for the operator, the run proposes a file through
+`headless.operator.answer()` and stops; the report's `waiting-for` names the
+file and the command to repeat. Repeating the command continues the run with
+the file, edited or not, as the operator's answer:
 
 1. **Assessment.** One `decide()` ask, on the judgment profile, with two
    outputs: `assessment` for the operator and `plan` for code. Code hands the
    assessor the closed list of passes with their `effort` and `depth`
    (`catalog()`), and `plan_problems()` rejects unknown passes, missing
    fields and an order against the depth the pass files declare. The run
-   writes `artifact/assessment.md` and `artifact/plan.yaml` and stops,
-   waiting for the plan. A plan whose `stop` is set ends the run there.
+   keeps `artifact/assessment.md`, proposes `artifact/plan.yaml` and stops.
+   A plan whose `stop` is set ends the run there. With `--plan`, the
+   operator's plan is in place first and no assessment is asked.
 2. **Passes.** A repeat reads the plan, which the operator may have edited
-   in place or named with `--plan`; an invalid operator plan is a command
-   error, not a worker retry. The artifact's text is kept as
+   in place; an invalid operator plan raises ValueError, a command error,
+   not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one `checked()` ask on the
    profile its `effort` selects, with the current text, the pass file, the
    purpose, the defend list and the scope as inputs, and the revised
@@ -33,10 +36,10 @@ command continues the run with the operator's answer as an input:
    out of attempts is `problem`, and the run goes on with the next pass.
 3. **Strikes.** A pass in `STRIKE` has the operator strike its list before
    any entry is applied: a list ask, a stop with
-   `artifact/<pass>-list.md`, and on the repeat an apply ask given the
-   proposed list and the list the operator left. A struck entry is deleted
-   from the file. A list made again for other text replaces the file and
-   stops again.
+   `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat an apply
+   ask given the proposed list and the list the operator left. A struck
+   entry is deleted from the file. A list made again for other text has
+   another key, so it gets a new file and stops again.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
    `defend` list carries that evidence explicitly (is non-empty), and is
@@ -56,13 +59,13 @@ whose inputs changed (a pass after a changed one gets a changed text).
 
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 import yaml
 
+from commonplace.headless import operator
 from commonplace.headless.decisions import decide, parse, violations
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import (
@@ -363,9 +366,9 @@ def _rel(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
-def _assess(run: Run, root: Path, artifact: str, purpose: str | None, defend: list[str], known: dict[str, Pass],
-            profile: Profile, report: ReviseReport) -> None:
-    text = (root / artifact).read_text(encoding="utf-8")
+def _assess(run: Run, artifact: str, text: str, purpose: str | None, defend: list[str], known: dict[str, Pass],
+            profile: Profile) -> str:
+    """Ask for the assessment and the plan over `text`; keep the assessment and return the proposed plan."""
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
               "passes": catalog(known)}
     if purpose:
@@ -384,15 +387,8 @@ def _assess(run: Run, root: Path, artifact: str, purpose: str | None, defend: li
                           profile=profile)
     if data is None:
         raise Stop(f"assessment: worker problem: {answer.problem}")
-    files = [run.accept(ASSESSMENT, answer.outputs["assessment"]), run.accept(PLAN, answer.outputs["plan"])]
-    report.plan = read_plan(answer.outputs["plan"], known)
-    if data["stop"]:
-        report.stop = data["stop"]
-        return
-    report.waiting_for = {
-        "what": "plan", "files": [_rel(root, path) for path in files],
-        "next": (f"Read {ASSESSMENT}; edit {PLAN} in place (or name another file with --plan), then run: "
-                 + REPEAT.format(artifact=artifact))}
+    run.accept(ASSESSMENT, answer.outputs["assessment"])
+    return answer.outputs["plan"]
 
 
 def _ask(run: Run, job: str, template: str, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
@@ -422,18 +418,14 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
     if proposed.strip() == NO_CANDIDATES:
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
-    name, record = f"{current.name}-list.md", run.artifact / f"{current.name}-list.json"
-    if not record.is_file() or json.loads(record.read_text(encoding="utf-8"))["key"] != listed.key:
-        path = run.accept(name, proposed)               # a new list: the operator strikes it first
-        run.accept(record.name, json.dumps({"key": listed.key, "entries": entries(proposed)}))
+    name = f"{current.name}-list-{listed.key[:12]}.md"      # a list made for another text waits again
+    approved = operator.answer(run, name, lambda: proposed)
+    if approved is None:
         state.state = "waiting"
-        report.waiting_for = {
-            "what": "strikes", "pass": current.name, "files": [_rel(root, path)],
-            "next": ("Delete each entry you strike from the list: its `- ` line and the lines indented "
-                     "under it. Leave the entries you approve as they are. Then run: "
-                     + REPEAT.format(artifact=artifact))}
+        report.waiting_for = operator.waiting(
+            run, root, name, f"Strike entries of the {current.name} list: delete each entry's `- ` line and the "
+            "lines indented under it, and leave the entries you approve.", REPEAT.format(artifact=artifact))
         return None
-    approved = (run.artifact / name).read_text(encoding="utf-8")
     if not entries(approved):
         state.state, state.reason = "no-change", "the operator struck every entry"
         return None
@@ -497,28 +489,36 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
 
 
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
-           defend: list[str] = (), plan: dict | None = None, timeout: float | None = None,
-           harnesses=HARNESSES) -> ReviseReport:
+           defend: list[str] = (), timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
-    The artifact's current text is the start text. Without `plan` the run
-    assesses and stops for the operator's plan; with it (as `read_plan`
-    returns it) the run executes the plan's passes and applies the final
-    text when every pass ended well. `profiles` maps each effort to its
-    profile; the assessment is a judgment ask.
+    The artifact's current text is the start text. Without `artifact/plan.yaml`
+    in the run, the run assesses, proposes the plan there and waits. With it,
+    the run executes the plan's passes and applies the final text when every
+    pass ended well. An invalid plan raises ValueError. `profiles` maps each
+    effort to its profile; the assessment is a judgment ask.
     """
     root = root.resolve()
-    report = ReviseReport(_rel(root, run_dir.resolve()), artifact, plan=plan)
+    report = ReviseReport(_rel(root, run_dir.resolve()), artifact)
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
     final = None
     try:
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
-            if plan is None:
-                _assess(run, root, artifact, purpose, list(defend), known, profiles["judgment"], report)
-            elif plan["stop"]:
+            proposed: list[str] = []
+
+            def propose() -> str:
+                proposed.append(_assess(run, artifact, start, purpose, list(defend), known, profiles["judgment"]))
+                return proposed[0]
+            given = operator.answer(run, PLAN, propose)
+            plan = report.plan = read_plan(proposed[0] if given is None else given, known)
+            if plan["stop"]:
                 report.stop = plan["stop"]
+            elif given is None:
+                report.waiting_for = operator.waiting(
+                    run, root, PLAN, f"Read {ASSESSMENT} beside the plan, then edit the plan in place, or name "
+                    "another plan file with --plan.", REPEAT.format(artifact=artifact))
             else:
                 final = _passes(run, root, artifact, start, plan, known, profiles, report)
                 problems = [state.name for state in report.passes if state.state == "problem"]

@@ -366,3 +366,20 @@ def test_gate_applicability_follows_the_text_under_review(repo, capsys):
     assert code == 0 and report["applied"], report
     assert "traits: [special]" in note_text(repo)
     assert gate_state(repo, "prose/trait-gate") == "fresh", "the closing cycle asked the gate the edit made apply"
+
+
+def test_direction_is_a_recorded_option_of_the_run(repo, capsys):
+    start(repo, "REVISE")
+    (repo[0] / "fail-packet").touch()
+    code, report, _ = full_pass(repo, capsys, "--direction", "Keep the claim.")
+    assert code == 1 and "packet" in report["stopped"]
+    (repo[0] / "fail-packet").unlink()
+    code, _, launches = full_pass(repo, capsys)
+    assert code == 0 and launches == ["packet"], "the methods replay; the packet is asked with the recorded direction"
+    options = json.loads((repo[0] / report["run-dir"] / "sweep.json").read_text())
+    assert options["direction"] == "Keep the claim."
+    code, again, launches = full_pass(repo, capsys, "--direction", "Keep the claim.")
+    assert (code, again["blocked"], launches) == (0, False, []), "the same direction replays its packet"
+    _, _, launches = full_pass(repo, capsys, "--direction", "Narrow the claim.")
+    assert launches == ["packet"]
+    assert json.loads((repo[0] / report["run-dir"] / "sweep.json").read_text())["direction"] == "Narrow the claim."

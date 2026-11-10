@@ -65,7 +65,10 @@ and `run revise` (the simplification passes), with `status`, `packet`,
 `--resume` continues it and replays answered calls. A full pass or revision
 derives its directory from the workflow, the note's path and the hash of the
 note's text, so repeating the command continues the run by replay, and an
-edited note opens a new run.
+edited note opens a new run. Where a workflow needs the operator, it
+proposes a file in the run and stops; on the repeat, that file, edited or
+not, is the answer. Options such as the profile and the full pass's
+direction are recorded with the run.
 
 **Workers never write the checkout.** A worker receives captured inputs and
 writes only its output files. Code checks each output (the strict result
