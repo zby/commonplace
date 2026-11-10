@@ -21,6 +21,8 @@ crash, an edit or a stop replays what is already answered:
 - a usage-limited launch is neither an answer nor an attempt; it propagates
   the same way, and a rerun after the reset approves continuing past that
   recorded stop;
+- a call may name its own profile in place of the run's, which then
+  belongs to the call's identity;
 - every answer keeps its provenance: profile, the model the harness
   recorded, input digests and the Workjig call and launches it came from.
 
@@ -235,7 +237,7 @@ class Run:
             return self.records.call(request, resume_usage_stop=resume)
 
     def ask(self, job: str, prompt: str, outputs: list[str], optional: list[str] = (),
-            inputs: dict[str, str] | None = None, attempts: int = 1) -> Answer:
+            inputs: dict[str, str] | None = None, attempts: int = 1, profile: Profile | None = None) -> Answer:
         """Ask a worker for named output files; return them, replayed if answered.
 
         `prompt` names inputs and outputs with `input_ref` and `output_ref`.
@@ -247,8 +249,14 @@ class Run:
         A nonzero exit is relaunched at most twice in a row, then raises
         `LaunchFailed`; a usage limit raises `UsageLimited`. A rerun after
         the repair continues the same call, approving a recorded usage stop.
+
+        `profile`, when given, launches this call with that profile's worker
+        in place of the run's; the worker is part of the request, so the
+        profile enters the call's identity and the answer's provenance.
         """
         inputs = dict(inputs or {})
+        profile = profile or self.profile
+        worker = self.worker if profile is self.profile else self.harnesses[profile.harness].worker(profile)
         names = list(outputs) + list(optional)
         spent, failure = 0, None
         for identity in itertools.count():
@@ -260,7 +268,7 @@ class Run:
                     inputs={name + SUFFIX: text for name, text in inputs.items()},
                     required_outputs=tuple(name + SUFFIX for name in outputs),
                     optional_outputs=tuple(name + SUFFIX for name in optional),
-                    worker=self.worker, timeout_seconds=self.timeout, max_launches=ceiling, retry=RETRY)
+                    worker=worker, timeout_seconds=self.timeout, max_launches=ceiling, retry=RETRY)
                 result = self._call(request, resume)
                 key, last, fresh = result.request_hash, result.launches[-1], not result.reused
                 if fresh:
@@ -278,8 +286,8 @@ class Run:
                     record = {
                         "job": job, "key": key, "call": call_id, "prompt": prompt,
                         "inputs": {name: digest(text) for name, text in inputs.items()},
-                        "outputs": produced, PROBLEM: problem, "profile": asdict(self.profile),
-                        "model": model_used(self.profile, last, self.harnesses),
+                        "outputs": produced, PROBLEM: problem, "profile": asdict(profile),
+                        "model": model_used(profile, last, self.harnesses),
                         "launches": [launch.launch_dir for launch in result.launches],
                     }
                     if fresh:
@@ -304,7 +312,7 @@ class Run:
         raise AssertionError("unreachable")
 
     def checked(self, job: str, build_prompt, check, outputs: list[str], optional: list[str] = (),
-                attempts: int = 3, inputs=None) -> Answer:
+                attempts: int = 3, inputs=None, profile: Profile | None = None) -> Answer:
         """Ask, check, and ask again with the problems found, up to `attempts` attempts.
 
         `build_prompt(problems)` returns the prompt; `problems` lists earlier
@@ -319,7 +327,7 @@ class Run:
         Counting: each answered ask is one attempt, and so is each result of
         those asks that was not an answer, including ones from earlier runs
         of the script. An environment failure or a usage limit propagates
-        and consumes no attempt.
+        and consumes no attempt. `profile` is `ask`'s.
         """
         problems: list = []
         used = 0
@@ -331,7 +339,7 @@ class Run:
             if used >= attempts:
                 raise OutOfAttempts(job, problems, failure)
             try:
-                answer = self.ask(job, prompt, outputs, optional, given, attempts=attempts - used)
+                answer = self.ask(job, prompt, outputs, optional, given, attempts=attempts - used, profile=profile)
             except Exhausted as exhausted:
                 raise OutOfAttempts(job, problems, exhausted.failure) from None
             used += answer.attempts

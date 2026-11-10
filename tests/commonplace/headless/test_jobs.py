@@ -236,6 +236,25 @@ def test_inputs_keyed_by_content_and_named_by_reference(run):
     assert run.scratch("runtime").is_dir() and run.scratch("runtime") == run.scratch("runtime")
 
 
+def test_a_call_may_name_its_own_profile(tmp_path, script):
+    """A per-call profile launches its own worker, keys the call apart and is its answer's provenance."""
+    other = Harness(sys.executable, {"_subcommand": [str(script)], "_env": {"WHO": "other"}}, lambda profile: {},
+                    model_used=lambda launch: "other-model")
+    with Run(tmp_path / "run", tmp_path, Profile("fake", "m", "low"), sleep=lambda s: None,
+             harnesses={"fake": fake_harness(script), "other": other}) as run:
+        plain = run.ask("draft", "Write GOOD things.", ["report"])
+        same = run.ask("draft", "Write GOOD things.", ["report"], profile=run.profile)
+        assert same.key == plain.key and same.record["launches"] == plain.record["launches"]
+        named = run.checked("draft", lambda problems: "Write GOOD things.", check, ["report"],
+                            profile=Profile("other", "big", "high"))
+        assert named.key != plain.key, "the profile is part of the call's identity"
+        assert named.record["profile"] == {"harness": "other", "launch_model": "big", "effort": "high", "flags": {}}
+        assert (named.record["model"], plain.record["model"]) == ("other-model", "fake-model-1")
+        again = run.ask("draft", "Write GOOD things.", ["report"], profile=Profile("other", "big", "high"))
+        assert again.record["launches"] == named.record["launches"], "a named profile replays too"
+    assert launch_count(tmp_path / "run") == 2
+
+
 def test_usage_limit_is_neither_relaunched_nor_counted(run, sleeps):
     with pytest.raises(UsageLimited) as e:
         run.ask("draft", "USAGE.", ["report"])
