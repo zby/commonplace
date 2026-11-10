@@ -89,12 +89,15 @@ def closing():
 
 
 def edit():
+    if "NOCHANGE" in note:
+        return note
     text = note.replace("\n# Alpha\n", "\n# Beta\n") if "RETITLE" in note and not rejected else note
     if "TRAIT" in note:
         text = text.replace("type: types/note.md\n", "type: types/note.md\ntraits: [special]\n")
     if "DROPBRIEF" in note and not rejected:
         text = text.replace("brief: alpha.brief.md\n", "")
-    return text.replace("user-verified: true\n", "") + "Edited.\n"
+    intermediate = "Intermediate variant.\n" if "Use intermediate variant." in frame else ""
+    return text.replace("user-verified: true\n", "") + intermediate + "Edited.\n"
 
 
 def copyedit():
@@ -103,7 +106,7 @@ def copyedit():
         path.write_text(path.read_text() + "Changed while the worker ran.\n")
     if "TOUCH" in note:
         Path("kb/notes/alpha.md").write_text(note + "The operator's sentence.\n")
-    return note.replace("Edited.", "Copyedited.")
+    return note.replace("Edited.", "Copyedited.").replace("Intermediate variant.\n", "")
 
 
 ANSWERS = {
@@ -173,12 +176,25 @@ def start(repo, words: str = "") -> str:
     return text
 
 
-def full_pass(repo, capsys, *args: str) -> tuple[int, dict, list[str]]:
-    """Run the full pass; return the exit code, the report and this run's launches by kind."""
+def full_pass(repo, capsys, *args: str, approve: bool = True) -> tuple[int, dict, list[str]]:
+    """Run with explicit approval by default; count both preparation and replay launches."""
     _, harnesses, log = repo
     before = log.read_text().splitlines()
     code = main(["run", "full-pass", NOTE_PATH, "--timeout", "30", *args], harnesses=harnesses)
-    return code, json.loads(capsys.readouterr().out), log.read_text().splitlines()[len(before):]
+    report = json.loads(capsys.readouterr().out)
+    if approve and report.get("waiting-for"):
+        approve_publication(repo, report)
+        code = main(["run", "full-pass", NOTE_PATH, "--timeout", "30", *args], harnesses=harnesses)
+        report = json.loads(capsys.readouterr().out)
+    return code, report, log.read_text().splitlines()[len(before):]
+
+
+def approve_publication(repo, report):
+    from commonplace.headless.operator import approve
+    waiting = report["waiting-for"]
+    run = repo[0] / report["run-dir"]
+    name = (repo[0] / waiting["file"]).relative_to(run / "artifact").as_posix()
+    return approve(run, name, waiting["key"])
 
 
 def note_text(repo) -> str:
@@ -331,8 +347,9 @@ def test_an_editor_text_that_changes_the_title_costs_one_attempt(repo, capsys):
     code, report, launches = full_pass(repo, capsys)
     assert code == 0 and launches.count("edit") == 2
     events = [json.loads(line) for line in (repo[0] / report["run-dir"] / "log.jsonl").read_text().splitlines()]
-    [rejected] = [event for event in events if event["event"] == "rejected"]
-    assert rejected["job"] == "edit" and "the H1 changed; keep `# Alpha`" in rejected["problems"]
+    rejected = [event for event in events if event["event"] == "rejected"]
+    assert rejected and all(event["job"] == "edit" and "the H1 changed; keep `# Alpha`" in event["problems"]
+                            for event in rejected), "approval replay rechecks the rejected cached attempt"
     assert "\n# Alpha\n" in note_text(repo)
 
 
@@ -379,6 +396,145 @@ def test_a_repeat_after_the_packet_and_before_the_note_finishes_the_write(repo, 
     code, repeated, launches = full_pass(repo, capsys)
     assert (code, launches, repeated["run-dir"], repeated["applied"]) == (0, [], report["run-dir"], True)
     assert note_text(repo) == final
+
+
+def test_unchanged_final_publishes_packet_without_approval_or_rewriting_note(repo, capsys, monkeypatch):
+    original = start(repo, "NOCHANGE")
+    before = (repo[0] / NOTE_PATH).stat()
+
+    def unexpected(*args, **kwargs):
+        pytest.fail("An unchanged note must not reach approval or apply")
+
+    monkeypatch.setattr(full_pass_module, "apply", unexpected)
+    monkeypatch.setattr(full_pass_module.edits, "publication", unexpected)
+    code, report, _ = full_pass(repo, capsys, approve=False)
+    assert code == 0 and report["complete"] and report["waiting-for"] is None
+    assert not report["applied"] and report["packet"]
+    after = (repo[0] / NOTE_PATH).stat()
+    assert (after.st_ino, after.st_mtime_ns) == (before.st_ino, before.st_mtime_ns)
+    assert note_text(repo) == original and gate_state(repo) == "fresh"
+
+
+@pytest.mark.parametrize("prompt", ["METHOD_PROMPT", "PACKET_PROMPT", "EDIT_PROMPT",
+                                   "COPYEDIT_PROMPT", "CLOSING_PROMPT", "REPAIR_TASK"])
+def test_changed_call_identity_invalidates_approval_with_identical_outputs(repo, capsys, monkeypatch, prompt):
+    start(repo, "REPAIR")
+    _, first, _ = full_pass(repo, capsys, approve=False)
+    candidate = (repo[0] / first["proposed"]).read_text()
+    approve_publication(repo, first)
+    monkeypatch.setattr(full_pass_module, prompt, getattr(full_pass_module, prompt) + "\nRetain the same meaning.\n")
+    code, waiting, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and not waiting["complete"] and not waiting["applied"]
+    assert launches and waiting["waiting-for"]["key"] != first["waiting-for"]["key"]
+    assert (repo[0] / waiting["proposed"]).read_text() == candidate
+    assert not packet_file(repo[0], NOTE_PATH).exists() and gate_state(repo) == "missing"
+
+
+def test_changed_intermediate_converging_to_same_final_invalidates_approval(repo, capsys, monkeypatch):
+    original = start(repo)
+    _, first, _ = full_pass(repo, capsys, approve=False)
+    candidate = (repo[0] / first["proposed"]).read_text()
+    approve_publication(repo, first)
+    monkeypatch.setattr(full_pass_module, "EDIT_PROMPT", full_pass_module.EDIT_PROMPT + "\nUse intermediate variant.\n")
+    code, waiting, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and not waiting["complete"] and not waiting["applied"]
+    assert launches == ["edit", "copyedit"], "closing calls replay when the final text converges"
+    assert waiting["waiting-for"]["key"] != first["waiting-for"]["key"]
+    assert (repo[0] / waiting["proposed"]).read_text() == candidate
+    intermediate = repo[0] / waiting["run-dir"] / "artifact/texts/edit.md"
+    assert "Intermediate variant." in intermediate.read_text()
+    assert note_text(repo) == original and gate_state(repo) == "missing"
+
+
+def test_preparation_waits_without_publishing_and_approval_replays_without_workers(repo, capsys):
+    original = start(repo)
+    code, waiting, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and waiting["ok"] and not waiting["complete"]
+    assert launches and not waiting["applied"] and waiting["packet"] is None
+    assert note_text(repo) == original and not packet_file(repo[0], NOTE_PATH).exists()
+    assert gate_state(repo) == "missing"
+    assert "Copyedited." in (repo[0] / waiting["waiting-for"]["diff"]).read_text()
+    code, repeated, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and launches == [] and repeated["waiting-for"] == waiting["waiting-for"]
+    approve_publication(repo, repeated)
+    code, done, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and done["complete"] and done["applied"] and launches == []
+    assert done["waiting-for"] is None and gate_state(repo) == "fresh"
+    assert packet(repo)[0]["final-sha256"] == sha256(note_text(repo))
+
+
+@pytest.mark.parametrize("change", ["brief", "instruction", "method", "profile", "direction", "findings"])
+def test_approval_is_invalidated_by_context_even_when_final_text_is_identical(repo, capsys, monkeypatch, change):
+    start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    _, first, _ = full_pass(repo, capsys, approve=False)
+    approve_publication(repo, first)
+    original = note_text(repo)
+    candidate = (repo[0] / first["proposed"]).read_text()
+    args = []
+    if change == "direction":
+        args = ["--direction", "Preserve the distinction."]
+    elif change == "findings":
+        methods = full_pass_module._methods
+
+        def changed(*args, **kwargs):
+            reports, verdicts = methods(*args, **kwargs)
+            return {**reports, "compression": reports["compression"] + "Another finding.\n"}, verdicts
+
+        monkeypatch.setattr(full_pass_module, "_methods", changed)
+    else:
+        path = {"brief": brief,
+                "instruction": repo[0] / "kb/instructions/run-full-improvement-pass-on-note.md",
+                "method": repo[0] / "kb/instructions/run-compression-bundle-on-note.md",
+                "profile": repo[0] / "kb/instructions/review-profiles.yaml"}[change]
+        text = path.read_text()
+        path.write_text(text.replace("effort: low", "effort: high") if change == "profile" else text + "\nNew constraint.\n")
+    code, waiting, _ = full_pass(repo, capsys, *args, approve=False)
+    assert code == 0 and not waiting["complete"] and not waiting["applied"], waiting
+    assert waiting["waiting-for"]["key"] != first["waiting-for"]["key"]
+    assert (repo[0] / waiting["proposed"]).read_text() == candidate
+    assert note_text(repo) == original and gate_state(repo) == "missing"
+    assert not packet_file(repo[0], NOTE_PATH).exists()
+
+
+def test_tampered_manifest_cannot_publish_and_candidate_is_not_an_edit_input(repo, capsys):
+    original = start(repo)
+    _, waiting, _ = full_pass(repo, capsys, approve=False)
+    manifest = repo[0] / waiting["waiting-for"]["file"]
+    generated = manifest.read_text()
+    manifest.write_text('{}\n')
+    approve_publication(repo, waiting)
+    candidate = repo[0] / waiting["waiting-for"]["proposed"]
+    candidate.write_text("Unauthorized replacement.\n")
+    code, blocked, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and launches == [] and not blocked["applied"]
+    assert note_text(repo) == original and gate_state(repo) == "missing"
+    assert manifest.read_text() == generated and candidate.read_text().endswith("Copyedited.\n")
+    approve_publication(repo, blocked)
+    code, done, launches = full_pass(repo, capsys, approve=False)
+    assert code == 0 and done["complete"] and launches == []
+    assert note_text(repo) == candidate.read_text()
+
+
+def test_brief_is_rechecked_after_publication_approval(repo, capsys, monkeypatch):
+    original = start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    original = note_text(repo)
+    _, waiting, _ = full_pass(repo, capsys, approve=False)
+    approve_publication(repo, waiting)
+    publication = full_pass_module.edits.publication
+
+    def drift(*args, **kwargs):
+        result = publication(*args, **kwargs)
+        assert result is None
+        brief.write_text(brief.read_text() + "\nConcurrent change.\n")
+        return result
+
+    monkeypatch.setattr(full_pass_module.edits, "publication", drift)
+    code, report, launches = full_pass(repo, capsys, approve=False)
+    assert code == 1 and "write brief" in report["conflict"] and launches == []
+    assert note_text(repo) == original and gate_state(repo) == "missing"
+    assert not packet_file(repo[0], NOTE_PATH).exists()
 
 
 def test_apply_writes_only_from_the_start_text(tmp_path):

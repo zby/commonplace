@@ -101,51 +101,72 @@ run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
 Repeating alone never approves the proposal or starts its dependent work.
 A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
-give them again. Each stop prints a JSON report whose `waiting-for` gives
+give them again. Each approval stop prints a JSON report whose `waiting-for` gives
 what to do, the file, proposal key, `approve-command` and command to repeat.
-Read and optionally edit the proposal, run its `approve-command`, then
-repeat the workflow command. Approval captures that text; later edits have
-no effect until approved again, and the report lists each file edited after
-its approval under `unapproved-edits`. Changed proposal inputs require fresh
-approval. An agent may approve only on the operator's stated word for that
-specific proposal; it must not infer approval from a request to retry.
+Assessment, planning and settled intermediate passes are preauthorized;
+never wait for routine plan approval. Selection proposals may be edited
+before their `approve-command`; final publication manifests must remain
+exactly as generated. Then repeat the workflow command. Approval captures
+that text; later selection edits require approval again and are listed under
+`unapproved-edits`. Changed proposal inputs require fresh approval. An agent
+may approve only on the operator's stated word for that specific proposal;
+it must not infer approval from a request to retry. This instruction and the
+pass files own judgment; worker prompts name inputs, not additional criteria.
 
 1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
-   writes `assessment.md` and proposes `plan.yaml` under the run directory's
-   `artifact/` and stops. `--plan FILE` puts your plan there first, and then
-   no assessment runs, but explicit approval is still required. The plan holds `purpose`, `defend`, `passes` in run
-   order (each a `pass` name and an optional `scope`) and `stop`. Read the
-   assessment, edit the plan in place and approve it. A proposed or approved
-   plan with `stop` set ends the run without editing the artifact. To run
-   passes anyway, clear `stop` and list the passes in the plan, run the
-   `approve-command` in the report's `override`, then repeat.
+   retains `assessment.md` and `plan.yaml` under the run directory's
+   `artifact/` for inspection and proceeds with the validated plan.
+   `--plan FILE` supplies an explicit input or override without assessment
+   or approval, including replacement of a stopped plan. The plan holds
+   `purpose`, `defend`, `passes` in run order (each a `pass` name and an
+   optional `scope`) and `stop`. A plan with `stop` set ends the run without
+   editing the artifact. To run passes instead, supply a replacement with
+   `stop` cleared and the desired passes through `--plan`; editing the
+   retained `artifact/plan.yaml` alone is not an override.
    The command rejects a plan that names an unknown pass, misses a field or
-   breaks the depth order the pass files declare. You may edit and reapprove
-   the plan at any later stop: the passes whose inputs did not change replay, and the
-   others run again.
+   breaks the depth order the pass files declare. A replacement supplied
+   with `--plan` reuses calls whose inputs did not change and reruns the others.
 2. Step 2 runs each listed pass as one worker, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
    the revised text (title, type, brief declaration and H1 kept; no new validation
-   failure), and the next pass works on that text. The artifact is written
-   once, at the end, and only when every pass ended `applied`, `no-change`
-   or `skipped`. After a `problem` pass, or while the run waits, nothing is
-   written, and `not-applied` names the run file holding the proposed text.
-   It does not commit.
+   failure), and the next pass works on that text. Every pass must end
+   `applied`, `no-change` or `skipped` before final publication is offered.
+   After a `problem` pass, or while the run waits, the original artifact is
+   untouched, and `not-applied` names the run file holding the proposed text.
+   The workflow does not commit.
 3. Plain-wording and abstractions stop with `artifact/<pass>-list-<key>.md`.
    Delete each entry you strike, with its indented lines, run the stop's
    approval command, then repeat; the worker applies only the approved entries. A list made again for
-   another text gets a new file and stops again.
+   another text gets a new file and stops again. These are temporary
+   procedure-development points for unsettled selection rules. Retain the
+   proposed, accepted and rejected choices with their reasons. Use them to
+   revise selection rules and checks, then evaluate those changes on retained
+   and fresh examples before seeking separate authorization to remove a
+   selection stop. This requires no new automatic learning infrastructure;
+   fewer proposals alone do not establish reliability.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
-5. An artifact edited between invocations has another hash, so the command
+5. For a changed final artifact, inspect `artifact/final.md` and
+   `artifact/final.diff`, then approve the exact generated
+   `artifact/publication.json` using the report's
+   `commonplace-review approve RUN FILE --key KEY` command. Repeat to
+   publish. The command writes the original once, only after this approval
+   and only if the original and captured brief are unchanged. Repeating
+   never approves. Do not edit the manifest or candidate to revise the text:
+   supply `--plan`, change workflow inputs, or start a new run. An edited
+   manifest cannot authorize publication; the generated manifest must match
+   the captured approval exactly.
+6. An artifact edited between invocations has another hash, so the command
    opens a new run and assesses again; `--plan FILE` names a plan and skips
    the assessment. An artifact changed during a run is a conflict: nothing
    is written, and the report names the run file holding the proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are
-under `artifact/reports/` and `artifact/texts/`; read each diff, undo in the
-artifact what a report does not account for, and commit. Use this procedure in a
+under `artifact/reports/` and `artifact/texts/`; read each diff before final
+approval. If a report does not account for an edit, revise through workflow
+inputs or `--plan`, not by editing the generated candidate. Commit only after
+approved publication. Use this procedure in a
 conversation instead when the passes are chosen as the conversation goes,
 when a pass needs the conversation as evidence, or when each pass should be
 integrated and committed before the next one runs.
@@ -161,14 +182,14 @@ interactive dispatch procedure.
 Treat the supplied brief as binding retained intent. Keep its must-keep,
 must-exclude and reserved decisions in both the plan and the edited text.
 Do not amend the brief or remove or change the artifact's `brief:` field.
-If the purpose, defended claims, approved plan, approved candidate list or
+If the purpose, defended claims, validated plan, approved candidate list or
 pass instruction conflicts with it, report the conflict through the
-worker-problem output and stop. Approval of a plan or list does not authorise
+worker-problem output and stop. Selection or publication approval does not authorise
 amending the brief. The operator must resolve the commission change outside
 this workflow before continuing.
 
 Use the captured input, not a reread of the live brief. A brief change between
-invocations invalidates affected calls and plan approval; a change during an
+invocations invalidates affected calls and dependent approvals; a change during an
 invocation blocks publication. A missing or invalid declared brief stops the
 run before workers launch. Supplying it does not mechanically verify that
 an edit respects its meaning; the worker must identify conflicts.
@@ -188,7 +209,9 @@ an edit respects its meaning; the worker must identify conflicts.
 - Every applied change traces to a recommended pass.
 - Every passage a diff weakened is accounted for by that pass's report.
 - No claim, evidence, or qualification changed unless the operator asked.
-- Each pass has its own commit and validation passed before it.
+- Conversational execution validates and commits each integrated pass. The
+  headless workflow instead retains per-pass reports and checked texts, then
+  permits one final write only after publication approval.
 - Operator reverts have been recorded as thresholds.
 
 ---

@@ -243,8 +243,11 @@ has not been compared, which is why `pair` stays the default.
 method reports, a packet, and for an accepted `keep` an edit, a copyedit and
 a closing cycle with at most one repair. Workers write outputs only. Each
 edited text stays in the run directory, and later steps work on that text.
-The note is written once, at the end, and only when closing is `ready`. A
-hand-back writes nothing. Gates and critique are asked over each text even
+The note is written once, only when closing is `ready` and the exact final
+publication manifest has been approved. Until then, the candidate packet,
+results and note remain unpublished. A hand-back leaves the note untouched;
+no-edit dispositions may publish their report, packet and results automatically.
+Gates and critique are asked over each text even
 when a fresh result exists. The pass writes their result files once, at its
 end, for the text the note then holds. The note's
 current packet lives at `kb/reports/state/review/packets/<note-path>`;
@@ -256,13 +259,22 @@ the closing cycle.
 
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
-one artifact. An assessment writes a report and proposes a plan file, and
-the run stops; the operator edits and explicitly approves the plan, then
-repeats the command, which runs each
-listed pass as one worker call in order, each on the text the one before
-left. The artifact is written once, at the end, and only when every pass
-ended `applied`, `no-change` or `skipped`. A strike pass stops with its
-list in a file the same way. A pass's `effort` selects the profile. No revision has been measured yet.
+one artifact. Assessment, planning and settled intermediate passes are
+preauthorized. The assessment report and generated plan stay in the run for
+inspection; the validated plan runs without routine approval. `--plan FILE`
+supplies a validated explicit input or override, including a stopped plan,
+without approval. Editing the retained plan alone is not an override.
+Each listed pass runs in order on the preceding text; its `effort` selects
+the profile. Every pass must end `applied`, `no-change` or `skipped` before
+changed final text is offered for publication approval. No revision has been
+measured yet.
+
+Plain-wording and abstractions still stop for explicit approval of each
+selection proposal. These are temporary procedure-development points:
+retain proposed, accepted and rejected choices with reasons, evolve the
+selection rules and checks, and evaluate retained and fresh examples before
+separately authorizing removal. This is not new automatic learning
+infrastructure, and fewer proposals do not establish reliability.
 
 **Runs of the two workflows.** Their run directory is derived from the
 inputs: `kb/reports/state/review/runs/<workflow>/<note path without
@@ -274,14 +286,21 @@ including the full pass's `--direction`; an option given on the repeat
 replaces the recorded value. A stop for the operator proposes a file in the
 run directory, and the report's `waiting-for` gives what to do, the file,
 the approval command and the command to repeat. Approval captures the file's
-current text; repeating alone never approves it. Later edits require another
-approval, and the report lists a file edited after its approval under
-`unapproved-edits`. Changed proposal inputs require fresh approval. A plan
-that stops ends the run, and the report's `override` gives the approval
-command for replacing it. An agent may
-approve only on the operator's stated word for that proposal. If the note changed
-during a run, the run writes nothing and reports a conflict that names the
-file holding the proposed text.
+current text; repeating alone never approves it. Selection-list edits after
+approval require another approval and appear under `unapproved-edits`.
+Changed proposal inputs require fresh approval. A plan with `stop` set ends
+the run; replace it explicitly with `--plan`, not an approval command. An
+agent may approve only on the operator's stated word for that proposal.
+
+For changed final text in either workflow, inspect `artifact/final.md` and
+`artifact/final.diff`, then approve the exact generated
+`artifact/publication.json` with `commonplace-review approve RUN FILE --key KEY`
+and repeat. The manifest is not editable approval input: publication requires
+an exact match. To revise, use `--plan` for revision, change workflow inputs,
+or start a new run; do not edit the manifest or candidate. Publication also
+requires the original artifact and captured brief to remain unchanged.
+A conflict leaves the original untouched and names the proposed text.
+Instructions remain the judgment authority; prompts name inputs only.
 
 ## Interpreting results
 

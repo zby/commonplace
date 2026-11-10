@@ -61,10 +61,24 @@ def answer(run: Run, name: str, proposal: str, *, key: str) -> str | None:
 
 
 def edited(run: Run, name: str) -> bool:
-    """Whether the editable file differs from its approved answer, so the edit is not in use."""
+    """Whether the editable file changed or disappeared after approval; it is not the approved input."""
     path, record = _paths(run.root, name)
     data = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else {}
-    return "answer" in data and path.is_file() and path.read_text(encoding="utf-8") != data["answer"]
+    return "answer" in data and (not path.is_file() or path.read_text(encoding="utf-8") != data["answer"])
+
+
+def invalidate(run: Run, name: str) -> None:
+    """Withdraw an answer under the caller's run lock without granting new authority.
+
+    Publication uses this when its inspection files were changed after being
+    generated. Editable selection proposals keep their ordinary semantics.
+    """
+    _, record = _paths(run.root, name)
+    if record.is_file():
+        data = json.loads(record.read_text(encoding="utf-8"))
+        if "answer" in data:
+            del data["answer"]
+            _write(record, data)
 
 
 def approve(root: Path, name: str, key: str) -> dict:

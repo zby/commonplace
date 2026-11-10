@@ -30,8 +30,9 @@ The run:
    (once per pass) asks the editor for those defects only and runs the
    closing cycle again over the repaired text; `hand-back`, or a second
    `repair-needed`, ends the run with nothing applied.
-6. On `ready`, code writes the packet, then applies the final text to the
-   note with `edits.apply()`. The note changes once, at the end. On a
+6. On `ready`, code prepares the final text and diff in the run and waits
+   for explicit publication approval. Only then does it write the current
+   packet and apply the final text with `edits.apply()`. The note changes once. On a
    hand-back the note keeps its start text, so there is nothing to restore.
 7. Code writes the gate result files once, for the text the note then
    holds: the last closing cycle's verdicts when the final text was
@@ -56,6 +57,7 @@ the note's text (`blocking()`); it returns that packet.
 from __future__ import annotations
 
 import re
+import shlex
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -75,7 +77,7 @@ from commonplace.headless.jobs import (
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.library import library_root
-from commonplace.lib.review_workflows import gates, results
+from commonplace.lib.review_workflows import edits, gates, results
 from commonplace.lib.review_workflows.criteria import CRITIQUE, gates_dir
 from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
@@ -123,6 +125,7 @@ class PassReport:
     repaired: bool = False
     proposed: str | None = None       # repository path of the final edited text in the run directory
     applied: bool = False             # the final text was written to the note
+    waiting_for: dict | None = None
     packet: str | None = None
     blocked: bool = False             # a pending packet that still matches the note was returned
     stopped: str | None = None
@@ -132,11 +135,17 @@ class PassReport:
     @property
     def ok(self) -> bool:
         """An accepted edit or a hand-back packet, and no unexpected change in the checkout."""
-        return self.stopped is None and self.conflict is None and not self.changed and self.packet is not None
+        return (self.stopped is None and self.conflict is None and not self.changed
+                and (self.packet is not None or self.waiting_for is not None))
+
+    @property
+    def complete(self) -> bool:
+        return self.ok and self.waiting_for is None
 
     def to_dict(self) -> dict:
         data = {key.replace("_", "-"): value for key, value in asdict(self).items() if key != "changed"}
-        return {"ok": self.ok, **data, "guard": {"clean": not self.changed, "changed": self.changed}}
+        return {"ok": self.ok, "complete": self.complete, **data,
+                "guard": {"clean": not self.changed, "changed": self.changed}}
 
 
 # --- Prompts: mechanical only ---------------------------------------------------------
@@ -293,7 +302,7 @@ def _gate_requests() -> list[str]:
 
 
 def _methods(run: Run, root: Path, note: str, text: str, cycle: str,
-             max_workers: int | None) -> tuple[dict[str, str], list[results.Result]]:
+             max_workers: int | None, context: dict) -> tuple[dict[str, str], list[results.Result]]:
     """Every method's report over `text`, by name (the four method asks, `critique` and `gates`), and the gate results.
 
     The results are not written: the caller publishes the ones for the text
@@ -315,6 +324,7 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str,
                              ["report"], attempts=ATTEMPTS, inputs=inputs)
         if answer.problem is not None:
             raise Stop(f"{cycle}/{name}: worker problem: {answer.problem}")
+        context[f"{cycle}/{name}"] = {"key": answer.key, "outputs": answer.outputs}
         return answer.outputs["report"]
 
     def reviews() -> tuple[dict[str, str], list[results.Result]]:
@@ -333,6 +343,12 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str,
             else:
                 sections.append(f"## {pair.criterion_id}: {report.outcome.upper()}\n\n{report.result.body.strip()}\n")
         found["gates"] = "\n".join(sections) or "No catalog gate applies to this note.\n"
+        # gates.ask stamps completed_at on reconstruction, including replay. Bind
+        # the captured hashes, output and launch provenance, not that fresh clock.
+        context[f"{cycle}/reviews"] = [
+            {key: value for key, value in asdict(report.result).items() if key != "completed_at"}
+            for report in reports
+        ]
         return found, [report.result for report in reports]
 
     names = list(METHODS)
@@ -359,7 +375,7 @@ def _packet_check(root: Path, note: str):
 
 
 def _edit(run: Run, job: str, root: Path, note: str, start: str, text: str, baseline: set[str], task: str,
-          inputs: dict[str, str]) -> str:
+          inputs: dict[str, str], context: dict) -> str:
     """An editor's text for `task`, checked against the pass's bounds."""
     prompt = EDIT_PROMPT.format(problem=PROBLEM_REF, note=note, note_input=input_ref("note"),
                                 criterion_input=input_ref("criterion"), task=task, output=output_ref("note"),
@@ -370,11 +386,12 @@ def _edit(run: Run, job: str, root: Path, note: str, start: str, text: str, base
                          attempts=ATTEMPTS, inputs={"note": text, **inputs})
     if answer.problem is not None:
         raise Stop(f"{job}: worker problem: {answer.problem}")
+    context[job] = {"key": answer.key, "outputs": answer.outputs}
     return answer.outputs["note"]
 
 
 def _copyedit(run: Run, root: Path, note: str, start: str, edited: str, baseline: set[str],
-              instruction: str, brief: dict[str, str]) -> str:
+              instruction: str, brief: dict[str, str], context: dict) -> str:
     before = frontmatter.parse(edited).data
 
     def check(answer) -> list[str]:
@@ -390,11 +407,12 @@ def _copyedit(run: Run, root: Path, note: str, start: str, edited: str, baseline
                          attempts=ATTEMPTS, inputs={"note": edited, "task": copyedit_task(instruction), **brief})
     if answer.problem is not None:
         raise Stop(f"copyedit: worker problem: {answer.problem}")
+    context["copyedit"] = {"key": answer.key, "outputs": answer.outputs}
     return answer.outputs["note"]
 
 
 def _closing(run: Run, note: str, start: str, text: str, packet: str, instruction: str, cycle: str,
-             reports: dict[str, str]) -> tuple[dict, str]:
+             reports: dict[str, str], context: dict) -> tuple[dict, str]:
     def check(data: dict, text: str) -> list[str]:
         problems = []
         if data["status"] != "hand-back" and data["update"] not in ("strengthened", "preserved"):
@@ -414,6 +432,7 @@ def _closing(run: Run, note: str, start: str, text: str, packet: str, instructio
                                                      "criterion": instruction, **reports})
     if data is None:
         raise Stop(f"{cycle}/status: worker problem: {answer.problem}")
+    context[f"{cycle}/status"] = {"key": answer.key, "outputs": answer.outputs}
     return data, frontmatter.strip(answer.outputs["closing"]).strip()
 
 
@@ -441,7 +460,8 @@ def _packet_text(root: Path, note: str, start: str, final: str, run_id: str, dec
 
 
 def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direction: str | None,
-          max_workers: int | None, brief: dict[str, str]) -> tuple[str, str | None, list[results.Result]]:
+          max_workers: int | None, brief: dict[str, str],
+          context: dict) -> tuple[str, str | None, list[results.Result]]:
     """Run the pass in `run` from `start`.
 
     Return the packet text, the final text (None when nothing is applied)
@@ -449,10 +469,14 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
     """
     run.accept("start.md", start)
     instruction = _library_text(INSTRUCTION_REL)
+    # Each helper records its actual accepted call identity and outputs. Concurrent
+    # methods own disjoint cycle/name keys; no second read of their criteria is needed.
     baseline = validation_fails(root, note, start)
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
 
-    reports, initial = _methods(run, root, note, start, "initial", max_workers)
+    reports, initial = _methods(run, root, note, start, "initial", max_workers, context)
+    context["initial-reports"] = reports
+    context["closings"] = []
     extra = {**brief, **({"direction": direction} if direction else {})}
     prompt = PACKET_PROMPT.format(
         problem=PROBLEM_REF, note=note, note_input=input_ref("note"), criterion_input=input_ref("criterion"),
@@ -465,6 +489,8 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
     if decision is None:
         raise Stop(f"packet: worker problem: {answer.problem}")
     packet = answer.outputs["packet"]
+    context["packet-decision"] = decision
+    context["packet"] = {"key": answer.key, "outputs": answer.outputs}
     body = frontmatter.strip(packet)
     report.disposition, report.update = decision["disposition"], decision["update"]
 
@@ -475,20 +501,23 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
         return finish(start), None, initial
 
     def keep(name: str, text: str) -> str:
+        context[f"accepted/{name}"] = text
         report.proposed = run.accept(f"texts/{name}.md", text).relative_to(root).as_posix()
         return text
 
     edited = keep("edit", _edit(run, "edit", root, note, start, start, baseline,
                                 APPLY_TASK.format(packet_input=input_ref("packet")),
-                                {"criterion": instruction, "packet": packet, **brief}))
-    final = keep("copyedit", _copyedit(run, root, note, start, edited, baseline, instruction, brief))
+                                {"criterion": instruction, "packet": packet, **brief}, context))
+    final = keep("copyedit", _copyedit(run, root, note, start, edited, baseline, instruction, brief, context))
     closings: list[tuple[str, str]] = []
     cycle = "closing"
     while True:
-        closing_reports, verdicts = _methods(run, root, note, final, cycle, max_workers)
+        closing_reports, verdicts = _methods(run, root, note, final, cycle, max_workers, context)
         label = "initial" if cycle == "closing" else "recovery"
-        status, record = _closing(run, note, start, final, packet, instruction, label, closing_reports)
+        status, record = _closing(run, note, start, final, packet, instruction, label, closing_reports, context)
         closings.append((label, record))
+        context["closings"].append({"cycle": cycle, "reports": closing_reports,
+                                    "decision": status, "record": record})
         if status["status"] == "ready":
             report.closing_status = "ready"
             return finish(final, closings, "ready"), final, verdicts
@@ -498,7 +527,8 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
             final = keep("repair", _edit(run, "repair", root, note, start, final, baseline,
                                          REPAIR_TASK.format(defects_input=input_ref("defects"),
                                                             packet_input=input_ref("packet")),
-                                         {"criterion": instruction, "packet": packet, "defects": defects, **brief}))
+                                         {"criterion": instruction, "packet": packet, "defects": defects, **brief},
+                                         context))
             cycle = "recovery"
             continue
         report.closing_status = "hand-back"           # hand-back, or a second repair-needed: nothing is applied
@@ -536,19 +566,35 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
     try:
         brief = capture_brief(root, note, start)
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
-            text, final, verdicts = _pass(run, root, note, start, report, direction, max_workers, brief)
+            profiles = root / "kb/instructions/review-profiles.yaml"
+            context = {"brief": brief, "direction": direction, "profile": asdict(profile),
+                       "profile-config": profiles.read_text(encoding="utf-8") if profiles.is_file() else None}
+            text, final, verdicts = _pass(run, root, note, start, report, direction, max_workers, brief, context)
 
             unchanged_brief(root, note, start, brief)
             if final is not None:
                 unchanged(root, note, start, root / report.proposed)
             run.accept("packet.md", text)
-            write_text(packet_path, text)                 # before the note, so a repeat after a death continues
-            report.packet = packet_path.relative_to(root).as_posix()
-            if final is not None:
-                apply(root, note, start, final, root / report.proposed)
-                report.applied = True
-            for result in verdicts:                       # for the text the note now holds
-                results.write_result(root, result)
+            if final is not None and final != start:
+                report.waiting_for = edits.publication(
+                    run, root, note, start, final, inputs=context,
+                    command=shlex.join(["commonplace-review", "run", "full-pass", note]))
+                if report.waiting_for is not None:
+                    report.waiting_for.update({
+                        "proposed": (run.root / "artifact/final.md").relative_to(root).as_posix(),
+                        "diff": (run.root / "artifact/final.diff").relative_to(root).as_posix(),
+                    })
+            if report.waiting_for is None:
+                # Recheck after the approval gate, before publishing any current state.
+                unchanged_brief(root, note, start, brief)
+                write_text(packet_path, text)             # before the note, for crash recovery
+                report.packet = packet_path.relative_to(root).as_posix()
+                if final is not None and final != start:
+                    unchanged_brief(root, note, start, brief)
+                    apply(root, note, start, final, root / report.proposed)
+                    report.applied = True
+                for result in verdicts:                   # for the text the note now holds
+                    results.write_result(root, result)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited

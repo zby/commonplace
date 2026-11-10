@@ -14,7 +14,10 @@ shared-layer architecture is a future direction, not an execution phase.
 
 As of 2026-11-10. The code described in phases 1 to 5 is built and
 committed; phase 5 has reached live assessment stops but has not completed
-its editing trial. Explicit approval and its fake-harness tests are implemented. The stop-plan override and
+its editing trial. The operator has now moved routine approval to final
+publication, superseding the plan-approval design described in earlier phase
+records below. The [publication-boundary change](./publication-boundary-change.md)
+records this commission and its consumer checks. The earlier stop-plan override and
 unapproved-edit warning are committed as `e93284673`; that follow-up passed
 701 selected fast tests and 17 slow analysis consumer tests.
 
@@ -40,10 +43,12 @@ that plan. Directory-type changes are not prerequisites.
 On the operator's direction, finish review before testing the same
 publication boundary in ingest, then decide what is worth sharing:
 
-1. Run the phase-5 live revision trial with explicit approval, including a
-   strike-list stop. The operator selected older artifacts and Sol; the two
-   assessed candidates below now need proposal-specific approval. If the artifact has a brief, inspect whether the worker
-   respects it as well as whether the approval interface is usable.
+1. Continue the two selected Sol revision trials automatically through
+   settled passes to final candidate and diff. Do not publish: the operator
+   commissioned preparation only. Inspect brief compliance and final changes.
+   Keep wording/abstraction selection stops when those passes are warranted;
+   do not force one into these plans merely for coverage. Their live selection
+   and subsequent final publication remain separate unfinished checks.
 2. Implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
    the individual review-result type, with pair and bundle readers and writers
    converted together. Stop and assess the deletion ledger before later types.
@@ -85,10 +90,12 @@ stopped for approval without editing the target. Repeating each invocation
 kept the same approval key and launched zero additional workers. Both
 checkout guards remained clean, including on repeat.
 
-Neither assessor recommended a strike-list pass. Do not add unnecessary
-editing to manufacture trial coverage. Approval, editing, publication and
-the strike-list interaction remain untested live; these assessment stops do
-not close phase 5 or release the result-type implementation prerequisite.
+Neither assessor recommended a strike-list pass. These first assessment
+stops ran under the now-superseded plan-approval policy. The operator then
+authorized automatic preparation up to the final publication gate; see the
+[publication-boundary change](./publication-boundary-change.md) for the
+continuation. Selection-stop and publication coverage remain distinct from
+successful candidate preparation.
 
 ## Choices this plan makes
 

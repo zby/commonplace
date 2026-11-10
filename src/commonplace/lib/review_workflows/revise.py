@@ -8,9 +8,9 @@ Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
 The run directory is `edits.run_dir()`, derived from the artifact's path and
-the hash of its text when the command runs. Wherever the interactive
-procedure waits for the operator, the run proposes a file through
-`headless.operator.answer()` and stops; the report's `waiting-for` names the
+the hash of its text when the command runs. Assessment and settled edits
+run automatically. Strike selections and final publication propose a file
+through `headless.operator.answer()` and stop; the report's `waiting-for` names the
 file, the explicit approval command and the command to repeat. Repeating
 never approves: only the recorded approved text becomes the operator's answer:
 
@@ -19,16 +19,12 @@ never approves: only the recorded approved text becomes the operator's answer:
    assessor the closed list of passes with their `effort` and `depth`
    (`catalog()`), and `plan_problems()` rejects unknown passes, missing
    fields and an order against the depth the pass files declare. The run
-   keeps `artifact/assessment.md`, proposes `artifact/plan.yaml` and stops.
-   A plan whose `stop` is set ends the run there; the report's `override`
-   names the same file and approval command, so the operator can approve
-   another plan in its place. With `--plan`, the operator's plan is in
-   place first and no assessment is asked.
-2. **Passes.** After explicit approval, a repeat reads the captured plan;
-   later draft edits have no effect until approved again, and the report
-   lists each such file under `unapproved-edits`. An invalid approved
-   plan raises ValueError, a command error,
-   not a worker retry. The artifact's text is kept as
+   keeps `artifact/assessment.md` and `artifact/plan.yaml`, then proceeds.
+   A plan whose `stop` is set ends the run there. To replace a stopped or
+   generated plan, supply `--plan`; editing the captured plan is not an
+   override. A named plan bypasses assessment but still requires validation.
+2. **Passes.** Validated plans run automatically. An invalid named plan
+   raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one `checked()` ask on the
    profile its `effort` selects, with the current text, the pass file, the
    purpose, the defend list and the scope as inputs, and the revised
@@ -51,20 +47,22 @@ never approves: only the recorded approved text becomes the operator's answer:
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
    skipped pass is reported as left for the interactive path.
-5. **Apply.** The final text is written to the artifact, through
-   `edits.apply()`, only when the run reaches the end of the plan with every
-   pass `applied`, `no-change` or `skipped`. After a `problem` pass, or while
-   the run waits for the operator, nothing is written, and the report names
-   the file that holds the proposed text.
+5. **Publication.** When every pass is `applied`, `no-change` or `skipped`,
+   changed final text is materialized as `artifact/final.md`, with a diff
+   and publication manifest. Only explicit approval of that exact manifest
+   permits `edits.apply()` to write the checkout. Approval binds the start,
+   candidate and execution context; brief and live-text conflicts block the
+   write. No-change runs complete without approval. Problems and genuine
+   operator stops never write the artifact merely because the command repeats.
 
 Because the plan and the operator's list are inputs, an unedited repeat
-replays every answered call, and an edited and reapproved plan re-asks only the passes
-whose inputs changed (a pass after a changed one gets a changed text).
+replays every answered call. A replacement supplied with `--plan` re-asks
+only passes whose inputs changed. Strike-list edits after approval are
+reported as unapproved and never silently used.
 """
 
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -80,7 +78,6 @@ from commonplace.headless.jobs import (
     LaunchFailed,
     OutOfAttempts,
     Run,
-    digest,
     input_ref,
     output_ref,
 )
@@ -95,6 +92,7 @@ from commonplace.lib.review_workflows.edits import (
     bounds,
     capture_brief,
     guarded_changes,
+    publication,
     rejection,
     unchanged_brief,
     validation_fails,
@@ -248,7 +246,7 @@ class ReviseReport:
     not_applied: str | None = None    # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
     stop: str | None = None           # the plan's stop: the assessment is the result
-    override: dict | None = None      # for a stop plan: the file, approval command and repeat that replace it
+    override: dict | None = None      # advice for explicitly replacing a stopped plan with --plan
     unapproved_edits: list[dict] = field(default_factory=list)   # drafts edited after approval; not in use
     stopped: str | None = None
     conflict: str | None = None
@@ -278,7 +276,7 @@ write {problem} instead of guessing.
 The artifact is `{artifact}` in this repository; its text is {artifact_input}. \
 Judge this input text; the file on disk may differ. The instruction is \
 {criterion_input}: do its step 1, the assessment, and nothing after it. The \
-operator reads the assessment and edits the plan before any pass runs. \
+plan is validated and ordinary passes run automatically. \
 {purpose}{defend}{brief}The passes you may recommend are listed in {passes_input}; \
 choose only from them, by name.
 
@@ -382,7 +380,7 @@ def _rel(root: Path, path: Path) -> str:
 
 def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
                         known: dict[str, Pass], brief: dict[str, str]) -> tuple[str, dict[str, str]]:
-    """The captured request, also used to invalidate an obsolete plan approval."""
+    """The captured request, also bound into the final publication approval."""
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
               "passes": catalog(known), **brief}
     if purpose:
@@ -421,7 +419,8 @@ def _ask(run: Run, job: str, template: str, frame: str, root: Path, artifact: st
 
 
 def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
-            inputs: dict[str, str], profile: Profile, state: PassState, report: ReviseReport) -> Answer | None:
+            inputs: dict[str, str], profile: Profile, state: PassState, report: ReviseReport,
+            context: dict) -> Answer | None:
     """The apply answer of a strike pass; None when it stops for the operator or has nothing to apply."""
     prompt = LIST_PROMPT.format(problem=PROBLEM_REF, frame=frame, list_output=output_ref("list"),
                                 none=NO_CANDIDATES, no_writes=NO_WRITES)
@@ -435,11 +434,14 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
     if listed.problem is not None:
         return listed
     proposed = listed.outputs["list"]
+    selection = {"pass": current.name, "key": listed.key, "proposed": proposed, "approved": None}
+    context["selections"].append(selection)
     if proposed.strip() == NO_CANDIDATES:
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
     name = f"{current.name}-list-{listed.key[:12]}.md"      # a list made for another text waits again
     approved = operator.answer(run, name, proposed, key=listed.key)
+    selection["approved"] = approved
     if approved is None:
         state.state = "waiting"
         report.waiting_for = operator.waiting(
@@ -457,7 +459,8 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
 
 
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
-            profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], instruction: str) -> str:
+            profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], instruction: str,
+            context: dict) -> str:
     """Run the plan's passes from `start`; return the text the last accepted pass left."""
     run.accept(START, start)
     baseline = validation_fails(root, artifact, start)
@@ -487,7 +490,8 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         profile = profiles[current.effort]
         try:
             if current.name in STRIKE:
-                answer = _strike(run, current, frame, root, artifact, start, baseline, inputs, profile, state, report)
+                answer = _strike(run, current, frame, root, artifact, start, baseline, inputs, profile, state, report,
+                                 context)
                 if answer is None:
                     if state.state == "waiting":
                         return text
@@ -497,6 +501,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         except OutOfAttempts as spent:
             state.state, state.reason = "problem", str(spent)
             continue
+        context["pass-answers"].append({"pass": current.name, "key": answer.key, "outputs": answer.outputs})
         used = answer.record["profile"]
         state.profile = {"harness": used["harness"], "launch-model": used["launch_model"], "effort": used["effort"]}
         state.model = answer.record["model"]
@@ -518,11 +523,11 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
            timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
-    The artifact's current text is the start text. The run proposes a plan
-    and waits for explicit approval. `named_plan` supplies the proposal without
-    an assessment, but still requires approval. Only the stored approved answer
-    runs passes. An invalid approved plan raises ValueError. `profiles` maps
-    each effort to its profile; the assessment is a judgment ask.
+    The artifact's current text is the start text. Validated plans run
+    automatically; `named_plan` bypasses assessment and explicitly replaces its
+    plan. Editing the captured plan is not an override. Strike selections and
+    final publication require explicit approval. `profiles` maps each effort
+    to its profile; the assessment is a judgment ask.
     """
     root = root.resolve()
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact)
@@ -534,40 +539,44 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
         brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
             prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
+            context = {"assessment": inputs, "assessment-prompt": prompt,
+                       "profiles": {name: asdict(profile) for name, profile in profiles.items()},
+                       "passes": {name: asdict(current) for name, current in known.items()},
+                       "pass-answers": [], "selections": []}
             if named_plan is None:
                 assessed = _assess(run, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]
-                # Include outputs: a deliberately retried request may return a new proposal.
-                key = digest(json.dumps([assessed.key, assessed.outputs], sort_keys=True))
+                context["assessment-answer"] = {"key": assessed.key, "outputs": assessed.outputs}
             else:
                 proposed = named_plan
-                key = digest(json.dumps({"prompt": prompt, "inputs": inputs,
-                                         "profile": asdict(profiles["judgment"]), "named-plan": named_plan},
-                                        sort_keys=True))
-            given = operator.answer(run, PLAN, proposed, key=key)
-            # Display the original proposal, not unapproved edits to the draft.
-            plan = report.plan = read_plan(given if given is not None else proposed, known)
-            if given is not None and operator.edited(run, PLAN):
-                report.unapproved_edits.append(
-                    operator.waiting(run, root, PLAN, UNAPPROVED, REPEAT.format(artifact=artifact)))
+            plan = report.plan = read_plan(proposed, known)
+            context["plan"] = plan
+            run.accept(PLAN, proposed)
             if plan["stop"]:
                 report.stop = plan["stop"]
-                report.override = operator.waiting(
-                    run, root, PLAN, "The plan stops, so no pass runs and nothing more is needed. To run passes "
-                    "instead, clear `stop` and list the passes in the plan, approve it, then repeat.",
-                    REPEAT.format(artifact=artifact))
-            elif given is None:
-                read = f"Read {ASSESSMENT} beside the plan" if named_plan is None else "Read the supplied plan"
-                report.waiting_for = operator.waiting(
-                    run, root, PLAN, f"{read}, then edit the plan in place, or name another plan file with --plan. "
-                    "Approve it explicitly before repeating.", REPEAT.format(artifact=artifact))
+                report.override = {
+                    "what": "The plan stops. To run passes instead, supply a validated replacement with --plan; "
+                            "editing artifact/plan.yaml alone does not override the plan.",
+                    "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
+                }
             else:
-                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, inputs["criterion"])
+                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, inputs["criterion"],
+                                context)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
                     unchanged_brief(root, artifact, start, brief)
-                    apply(root, artifact, start, final, root / report.proposed)
-                    report.applied = True
+                    report.proposed = _rel(root, run.artifact / "final.md")
+                    report.waiting_for = publication(
+                        run, root, artifact, start, final,
+                        inputs=context,
+                        command=REPEAT.format(artifact=artifact))
+                    if report.waiting_for is None:
+                        unchanged_brief(root, artifact, start, brief)
+                        apply(root, artifact, start, final, root / report.proposed)
+                        report.applied = True
+                    else:
+                        report.not_applied = (f"The proposed text is {report.proposed}; it is not applied: "
+                                              "final publication needs explicit approval.")
                 elif final != start:
                     why = ("the run waits for the operator" if report.waiting_for is not None
                            else f"{', '.join(problems)} ended with a problem")

@@ -19,9 +19,13 @@ final text the run applied.
 
 from __future__ import annotations
 
+import difflib
+import json
 import uuid
 from pathlib import Path
 
+from commonplace.headless import operator
+from commonplace.headless.jobs import Run, digest
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
@@ -129,6 +133,52 @@ def apply(root: Path, note: str, start: str, final: str, proposed: Path) -> None
     """Write `final` to the note, atomically and only over `start`; any other text is a Conflict."""
     unchanged(root, note, start, proposed)
     write_text(root / note, final)
+
+
+def publication(run: Run, root: Path, note: str, start: str, final: str, *,
+                inputs: dict, command: str) -> dict | None:
+    """Require approval of the exact checked candidate, never of an editable replacement.
+
+    Callers supply the decision context and recheck the brief before applying.
+    This gate publishes no checkout artifact. Candidate and diff are derived
+    from checked workflow outputs again on repeat, not read as new edit inputs.
+    """
+    root = root.resolve()
+    name = "publication.json"
+    existed = (run.artifact / name).is_file()
+    diff_lines = difflib.unified_diff(start.splitlines(keepends=True), final.splitlines(keepends=True),
+                                     fromfile=note, tofile=f"{note} (candidate)")
+    diff = "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n"
+                   for line in diff_lines)
+    # Check before answer() restores a missing manifest from its operator record.
+    changed = operator.edited(run, name)
+    for filename, expected in (("final.md", final), ("final.diff", diff)):
+        path = (run.artifact / filename).resolve()
+        if not path.is_relative_to(run.artifact.resolve()):
+            raise ValueError(f"publication file outside run artifacts: {filename}")
+        changed |= (path.read_text(encoding="utf-8") != expected if path.is_file() else existed)
+    candidate = run.accept("final.md", final)
+    unchanged(root, note, start, candidate)
+    diff_path = run.accept("final.diff", diff)
+    proposal = json.dumps({"artifact": note, "start-sha256": sha256(start), "final-sha256": sha256(final),
+                           "context-sha256": digest(json.dumps(inputs, sort_keys=True)),
+                           "candidate": candidate.relative_to(root).as_posix(),
+                           "diff": diff_path.relative_to(root).as_posix()}, indent=2) + "\n"
+    approved = operator.answer(run, name, proposal, key=digest(proposal))
+    instruction = ("Inspect final.md and final.diff beside this publication manifest. Approve the unchanged "
+                   "manifest to authorize publication, then repeat. To revise the candidate, change the "
+                   "workflow inputs or supply --plan for revision; editing final.md is not a workflow input.")
+    if changed or (run.artifact / name).read_text(encoding="utf-8") != proposal or (
+            approved is not None and approved != proposal):
+        operator.invalidate(run, name)
+        run.accept(name, proposal)
+        return operator.waiting(run, root, name,
+                                "The publication files changed; the generated candidate, diff and manifest "
+                                "have been restored and any approval withdrawn. Inspect and approve again. "
+                                "No artifact was written. " + instruction, command)
+    if approved is None:
+        return operator.waiting(run, root, name, instruction, command)
+    return None
 
 
 def run_dir(root: Path, workflow: str, note: str) -> Path:

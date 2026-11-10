@@ -7,7 +7,10 @@ Python. Following Fable's assessment, the operator approved this order:
 commit the approval fix, capture binding write briefs, trial revision live,
 then implement the individual review-result slice before the first collection
 sweep. The operator selected older artifacts and Sol; two assessments now
-await proposal-specific approval, recorded in the implementation plan's
+continue under the subsequently agreed publication boundary: settled
+intermediate work is preauthorized; exact final publication and unsettled
+selection decisions require approval. See the
+[boundary change](./publication-boundary-change.md) and the
 [live assessment record](./plan.md#live-sol-assessments-2026-11-10).
 Later type slices remain proposals; directory typing is a separate decision.
 
@@ -39,7 +42,7 @@ files. Do not adopt a directory type in the first sequence.
 | One gate, type-conformance, collection-conformance or critique result | **New `types/review-result.md`** and schema | Outcome, anchored findings and review body, plus code-owned target/criterion identity, hashes and executor provenance in the stored result. Verdict and report-kind results share the type. |
 | Worker's full-pass disposition proposal | **New `types/full-pass-decision.md`** and schema | `disposition`, `update`, `merge-target`, and the warranted-contribution, disposition and routed-attention sections. |
 | Worker's closing judgment | **New `types/full-pass-closing.md`** and schema | `closing-status`, update assessment, defects and explanatory body. Its status allows `repair-needed`, unlike the final packet's reduced `closing-status` field. |
-| Operator-editable revision plan | **New `types/revision-plan.md`** and schema | Purpose, defended claims, ordered pass entries, optional scopes and stop reason. |
+| Revision plan, editable through explicit `--plan` input | **New `types/revision-plan.md`** and schema | Purpose, defended claims, ordered pass entries, optional scopes and stop reason. |
 | Published full-pass packet | **Reuse `types/full-pass-report.md`** | Already typed. Make runtime reads and publication use its schema; extend it only for missing structural rules. |
 | Connect output inside the full pass | **Reuse `types/connect-report.md`** | Already has a schema and required sections; the workflow currently checks only that the output is nonempty. |
 
@@ -154,8 +157,10 @@ separate operator-interface choice, not needed to adopt the type.
 
 This lets ordinary Markdown type validation work without adding a general
 raw-YAML artifact system. Update `--plan`, approval messages, recorded option
-handling, fixtures and operating instructions together. Preserve stop-plan
-overrides and warnings about unapproved edits in the current implementation.
+handling, fixtures and operating instructions together. Preserve explicit
+`--plan` overrides of stopped plans, selection approvals and unapproved-list
+warnings, and exact final-publication approval. Do not reintroduce routine
+approval of generated or explicitly supplied plans.
 Do not keep the old extension while quietly changing its content grammar.
 
 If keeping raw YAML is a consumer requirement, return that choice before
@@ -254,8 +259,9 @@ an **expected** type and intended artifact path. It must:
    unchecked old answer. Audit schema-loader caching between invocations;
    do not add a registry or replay subsystem.
 6. Feed actionable validation findings into the existing `checked()` retry.
-   Recheck operator-edited plans after approval without making validation an
-   approval action. An invalid approved plan remains an operator error.
+   Validate explicitly supplied plans without making validation an approval
+   action. An invalid supplied plan remains an operator error. Publication
+   approval binds the checked candidate and context, not an editable plan.
 
 Record intentional contract tightening, including duplicate-key rejection
 and any newly closed field sets. A failed old fixture may expose a previously
@@ -344,7 +350,8 @@ consumers; review adoption must not silently redefine `verifies` for them.
 The approval-interface follow-up is committed as `e93284673`. Binding briefs
 are implemented in `4a29b1bf5` for planning and editing workers without changing judge
 inputs or result freshness. Complete the authorized live revision trial
-before step 2; do not infer plan approval from the artifact/profile selection.
+before step 2. Ordinary plan execution needs no approval; do not infer final
+publication authority from permission to prepare a candidate.
 
 1. **Inventory and contract cutover.** Freeze the worker/stored-field split,
    audit footer consumers, and write the multi-consumer change packet. Choose

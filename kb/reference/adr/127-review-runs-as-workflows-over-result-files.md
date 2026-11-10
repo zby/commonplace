@@ -68,17 +68,40 @@ note's text, so repeating the command continues the run by replay, and an
 edited note opens a new run. Where a workflow needs the operator, it
 proposes a file in the run and stops. Explicit approval captures the edited
 or unedited file as an answer, bound to that stop, proposal and its inputs.
-Repeating never approves; an edit after approval has no effect until
-approved again. Changed proposal inputs invalidate the approval. Options
+Repeating never approves; selection-list edits require approval again.
+Changed proposal inputs invalidate the approval. Options
 such as the profile and the full pass's
 direction are recorded with the run.
+
+**Approval protects unsettled selection and final publication, not routine planning.**
+Assessment, planning and settled intermediate passes are preauthorized.
+Revision retains the generated plan for inspection and executes it after
+validation. `--plan` is an explicit validated input or override, including
+replacement of a stopped plan; neither route requires plan approval.
+Editing the retained plan alone is not an override.
+
+Plain-wording and abstractions retain explicit approval per selection
+proposal as temporary procedure-development points. Retain proposed,
+accepted and rejected choices with reasons, revise selection rules and
+checks, and evaluate them on retained and fresh examples before separately
+authorizing removal. This calls for procedure development, not new automatic
+learning infrastructure. Fewer proposals alone do not establish reliability.
+
+For changed final text, both workflows generate `artifact/final.md`,
+`artifact/final.diff` and `artifact/publication.json`. The operator inspects
+the text and diff and approves the exact generated manifest through
+`commonplace-review approve RUN FILE --key KEY`. An edited manifest cannot
+authorize publication. The candidate and manifest are outputs, not revision
+inputs: use `--plan` for revision, change workflow inputs or start a new run.
+Instructions own judgment; prompts name inputs only.
 
 **Workers never write the checkout.** A worker receives captured inputs and
 writes only its output files. Code checks each output (the strict result
 line, a decision schema, the bounds an edit must keep). A workflow that edits
 a note carries each edited text forward in memory and in the run directory,
-and writes the note once, at its last step, only from the start text. A note
-changed during the run is a conflict, and nothing is written. A checkout
+and writes the note once, at its last step, only after exact final approval
+and with the original note and captured brief unchanged. A change to either
+during the run is a conflict, and nothing is written. A checkout
 guard reports paths that changed while a run was open.
 
 **A criterion is any markdown file.** Catalog gates, a type spec, a
@@ -87,7 +110,10 @@ input. The workflow names the output contract, verdict or report.
 
 **The full pass keeps its packet.** It asks the gates over each text it
 reviews and writes result files once, at its end, for the text the note then
-holds. The packet is markdown whose frontmatter
+holds. When the final text is edited, the pass stops before publishing the
+candidate packet, results or note until exact final approval. No-edit
+dispositions may publish their report, packet and results automatically.
+The packet is markdown whose frontmatter
 code writes: the note, the start and final text hashes, the decision, the
 closing status and the resolution fields. Its start text lives in the run;
 `commonplace-review packet` compares the recorded hashes with the files.
@@ -109,6 +135,17 @@ not make an operator decision. A separate approval command captures the
 answer; a stale proposal key is refused. The command does not authenticate
 the human: operating instructions permit an agent to approve only on the
 operator's stated word for that proposal.
+
+**Routine plan approval.** Rejected: assessment, planning and settled
+intermediate work are already authorized. Retaining the plan for inspection
+and accepting a validated `--plan` override preserves operator control
+without a routine stop. This does not authorize unsettled selections or
+publication of changed final text.
+
+**Editable final approval payload.** Rejected: approving a replacement
+manifest would detach consent from the checked candidate. Final approval
+must match the generated manifest exactly; revisions enter through workflow
+inputs instead.
 
 **Keeping acknowledgement.** Dropped. It covered 37 of 9,217 baselines, and
 the watched-parts hash absorbs its commonest case. A changed pair is

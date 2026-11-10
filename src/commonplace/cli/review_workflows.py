@@ -46,26 +46,27 @@ the proposed text stays in the run directory.
 `run full-pass` runs the full improvement pass over one note (see
 `commonplace.lib.review_workflows.full_pass` and the library's
 instructions/run-full-improvement-pass-on-note.md). It writes the note only
-for an accepted `keep` whose closing is `ready`, writes the gate result files
+for an accepted `keep` whose closing is `ready` and whose final publication
+manifest has explicit approval, writes the gate result files
 once at its end for the text the note then holds, keeps the note's current
 packet under kb/reports/state/review/packets/, and returns a pending packet
 that still matches the note instead of starting. `--direction` hands the
 packet ask the operator's direction, such as the choice an undetermined
 update asks for; with it, a pending packet does not block, and the packet is
 decided again over the same method reports. It prints a JSON report and
-exits 0 for an accepted edit or a hand-back packet with a clean guard, and
-for a returned pending packet; 1 for a stop, a conflict or a guard change;
+exits 0 for an accepted edit, a publication-approval stop or a hand-back packet
+with a clean guard, and for a returned pending packet; 1 for a stop, a conflict or a guard change;
 and 2 when the command failed. `packet` exits 0 when every recorded hash
 matches, 1 otherwise.
 
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
 instructions/simplification-passes/revise-an-article-or-note.md). The first
-invocation assesses and stops, writing `artifact/assessment.md` and
-`artifact/plan.yaml` in the run directory. Edit the plan in place, explicitly
-approve it with the report's `approve-command`, then repeat: it runs the
-approved plan's passes in order. `--plan FILE` supplies a proposal without
-assessment; it still needs approval, and a repeat without it keeps it.
+invocation assesses and runs the plan's settled passes automatically, retaining
+`artifact/assessment.md` and `artifact/plan.yaml` for inspection. `--plan FILE`
+supplies an explicit plan without assessment, including an override of a stopped
+plan; a repeat without the option keeps that supplied plan. Editing the retained
+plan alone does not change workflow inputs.
 A pass whose list the operator strikes (plain-wording, abstractions) stops
 with `artifact/<pass>-list-<key>.md`: delete the entries you strike, approve,
 then repeat. A stop for the operator is a normal end. The JSON report's
@@ -73,14 +74,18 @@ then repeat. A stop for the operator is a normal end. The JSON report's
 command to repeat. A repeat never approves and launches nothing at an
 unchanged unapproved stop. Approval captures the file's text: later edits
 have no effect until approved again, and the report lists such a file under
-`unapproved-edits`. A plan with `stop` set ends the run; the report's
-`override` gives the file and approval command that replace it. Changed
-proposal inputs require fresh
+`unapproved-edits`. A plan with `stop` set ends the run; override it by explicitly
+supplying a revised plan with `--plan`. Changed selection inputs require fresh
 approval, and an old approval key is refused. Only the operator, or an agent
 on the operator's stated word for that proposal, may approve. The
-artifact is written once, when every pass of the plan ended `applied`,
-`no-change` or `skipped`; otherwise `not-applied` names the file that holds
-the proposed text. Each pass's `effort` picks its profile from the profile
+artifact is written once, only after every pass ended `applied`, `no-change` or
+`skipped` and final publication is approved. Otherwise `not-applied` explains
+why the candidate remains private. Both editing workflows retain `final.md`,
+`final.diff` and `publication.json` under the run's `artifact/`. Inspect the
+candidate and diff, approve the unchanged publication manifest, then repeat.
+The manifest binds the original, candidate and decision context; an edited
+manifest cannot authorize replacement text. Candidate files are outputs, not
+editable workflow inputs. A no-change result needs no publication approval. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
@@ -153,7 +158,7 @@ def _parser() -> argparse.ArgumentParser:
     rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
     rev.add_argument("--defend", action="append", default=[], metavar="CLAIM",
                      help="a claim the passes may not narrow; repeat for each")
-    rev.add_argument("--plan", type=Path, help="supply a plan proposal without assessment; still needs approval")
+    rev.add_argument("--plan", type=Path, help="use this validated plan without assessment or plan approval; final publication still needs approval")
     for effort in revise.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")

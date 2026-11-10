@@ -381,7 +381,11 @@ Criteria are catalog gate ids, bundle names, and the `type`, `collection` and
 over one note as a workflow: the method asks in parallel, a packet, and for
 an accepted `keep` an edit, a copyedit and the closing cycle. Workers write
 only output files. The command writes the note once, at the end, only when
-closing is `ready` and only from the start text. The note's current packet
+closing is `ready`, the exact final publication manifest is approved, and
+the original note and captured brief are unchanged. Before that approval,
+the candidate packet and results also remain unpublished. No-edit dispositions
+may publish their report, packet and results automatically. The note's
+current packet
 is kept at `kb/reports/state/review/packets/<note-path>`; a pending packet
 that still matches the note is returned instead of starting a new pass,
 unless `--direction` is given. Gates and critique are asked over each text
@@ -390,32 +394,47 @@ its end, for the text the note then holds.
 
 `run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...]` runs
 [revise an article or note](../instructions/simplification-passes/revise-an-article-or-note.md)
-over one markdown artifact. The first invocation assesses and stops with
-`artifact/assessment.md` and `artifact/plan.yaml` in the run directory.
-After explicit approval, repeating runs the approved plan's passes in order, each on the
+over one markdown artifact. Assessment and planning are preauthorized; the
+first invocation retains `artifact/assessment.md` and `artifact/plan.yaml`
+for inspection and runs the validated plan without routine approval.
+Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
-writes the artifact once, when every pass ended `applied`, `no-change` or
-`skipped`. Plain-wording and abstractions stop with
+writes the artifact once, after every pass ended `applied`, `no-change` or
+`skipped` and exact final publication approval is captured. Plain-wording
+and abstractions stop with
 `artifact/<pass>-list-<key>.md` for the operator to delete the struck
 entries. A stop for the operator exits 0 with `waiting-for` in the JSON
 report: what to do, the file, proposal key, approval command and command to
-repeat. `--plan FILE` supplies a proposal without assessment, but still needs
-approval; a repeat without it keeps that proposal. An invalid approved plan
-is a command error. A plan with `stop` set ends the run; the report's
-`override` gives the file and approval command for approving another plan in
-its place.
+repeat. These selection stops remain explicit per-proposal approvals;
+the [revision instruction](../instructions/simplification-passes/revise-an-article-or-note.md)
+governs their temporary procedure-development role and the evidence needed
+before separately authorizing removal. `--plan FILE` supplies an explicit
+validated input or override without assessment or approval; it also replaces
+a stopped plan. An invalid plan is a command error. A plan with `stop` set
+ends the run; replace it through `--plan`. Editing the retained plan alone
+is not an override.
 
 `approve RUN FILE --key KEY` captures the proposal file's current text as
 its answer, under the run lock, without launching workers. Use the
-`waiting-for` report's `approve-command` after inspecting and optionally
-editing the file. Only the operator, or an agent on the operator's stated
-word for that proposal, may approve. Repeating a workflow never approves.
-Edits after approval have no effect until approved again; the report lists
+`waiting-for` report's `approve-command`. Selection lists may be edited;
+a final publication manifest must remain exactly as generated. Only the
+operator, or an agent on the operator's stated word for that proposal, may
+approve. Repeating a workflow never approves.
+Selection-list edits require approval again; the report lists
 each such file under `unapproved-edits`. Changed proposal
 inputs require fresh approval; an old key cannot approve a replacement
 proposal at the same path.
+
+Both editing workflows retain `artifact/final.md` and `artifact/final.diff`
+for inspection and require approval of the exact generated
+`artifact/publication.json` before publishing changed text. Approve that
+manifest, then repeat; approval must match it exactly. Do not edit the
+manifest or candidate to revise the text. Supply `--plan` for revision,
+change workflow inputs, or start a new run. The original artifact and
+captured brief must still be unchanged before the write. Instructions own
+judgment; prompts name inputs only.
 
 Both workflows derive their run directory from the inputs:
 `kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12

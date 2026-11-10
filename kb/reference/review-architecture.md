@@ -55,7 +55,8 @@ first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
 added. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
-final text once, atomically, and only over the start text. Any other text
+final text once, atomically, only over the start text and after approval of
+the exact generated publication manifest. Any other text
 is a change made outside the run: the run writes nothing and reports a
 conflict that names the file holding the proposed text.
 
@@ -64,12 +65,32 @@ derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
 note opens a new run. The directory is not a complete input identity: changed
 instructions, profiles, write briefs or approved answers can produce new calls inside it.
-An operator stop requires explicit approval of its proposal. Repeating never
-approves; later draft edits have no effect until approved again.
+Assessment, planning and settled intermediate passes are preauthorized.
+Revision retains its generated plan for inspection and runs it after
+validation; `--plan` supplies an explicit validated input or override,
+including replacement of a stopped plan, without approval. Editing the
+retained plan alone is not an override.
+
+Unsettled plain-wording and abstraction selections require explicit approval
+per proposal. These temporary procedure-development points retain proposed,
+accepted and rejected choices and reasons. Removal needs separate authorization
+after selection rules and checks have been revised and evaluated on retained
+and fresh examples. This is not automatic learning infrastructure; a lower
+proposal count does not establish reliability.
+
+Changed final text in both workflows requires approval through
+`commonplace-review approve RUN FILE --key KEY` of the exact generated
+`artifact/publication.json`. `artifact/final.md` and `artifact/final.diff`
+provide inspection views. Repeating never approves. The manifest and candidate
+are generated outputs, not revision inputs: use `--plan` for revision, change
+workflow inputs or start a new run. An edited manifest cannot authorize
+publication. Full-pass also withholds candidate packets and results at this
+boundary; no-edit dispositions may publish reports, packets and results
+automatically. Judgment stays in instructions; prompts name inputs only.
 
 A declared [write brief](../types/write-brief.md) is captured for full-pass
 planning and editing and for revision assessment and every pass. Its bytes
-participate in those calls' identities and in revision plan approval. A
+participate in those calls' identities and in final publication approval. A
 worker reports a brief conflict as a problem, stopping the run. Code prevents
 changing the declaration and checks that the captured brief is still current
 before publication; it cannot verify semantic obedience. An amendment to the
