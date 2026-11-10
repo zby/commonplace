@@ -6,7 +6,7 @@ import pytest
 
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run, RunLocked
-from commonplace.headless.operator import answer, approve, waiting
+from commonplace.headless.operator import answer, approve, edited, waiting
 
 
 @pytest.fixture
@@ -23,6 +23,7 @@ def test_repeat_never_approves_even_an_existing_edited_file(run, tmp_path):
     assert answer(run, "plan.yaml", "proposed\n", key="inputs") is None
     (run.artifact / "plan.yaml").write_text("edited\n")
     assert answer(run, "plan.yaml", "proposed\n", key="inputs") is None
+    assert not edited(run, "plan.yaml"), "an edit before any approval is the draft, not an ignored edit"
     stop = waiting(run, tmp_path, "plan.yaml", "Edit the plan.", "repeat it")
     assert stop["file"] == "run/artifact/plan.yaml" and stop["command"] == "repeat it"
     assert "--key " + stop["key"] in stop["approve-command"]
@@ -38,8 +39,11 @@ def test_approval_captures_text_and_replacement_invalidates_old_command(run, tmp
     root, cwd, profile, harnesses = run.root, run.cwd, run.profile, run.harnesses
     run.close()
     approve(root, "plan.yaml", stop["key"])
+    with Run(root, cwd, profile, harnesses=harnesses) as resumed:
+        assert not edited(resumed, "plan.yaml")
     (root / "artifact/plan.yaml").write_text("not approved\n")
     with Run(root, cwd, profile, harnesses=harnesses) as resumed:
+        assert edited(resumed, "plan.yaml")
         assert answer(resumed, "plan.yaml", "proposed\n", key="inputs") == "proposed\n"
         assert answer(resumed, "plan.yaml", "new proposal", key="changed inputs") is None
     with pytest.raises(ValueError, match="proposal changed"):

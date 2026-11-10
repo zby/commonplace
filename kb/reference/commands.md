@@ -403,14 +403,17 @@ entries. A stop for the operator exits 0 with `waiting-for` in the JSON
 report: what to do, the file, proposal key, approval command and command to
 repeat. `--plan FILE` supplies a proposal without assessment, but still needs
 approval; a repeat without it keeps that proposal. An invalid approved plan
-is a command error.
+is a command error. A plan with `stop` set ends the run; the report's
+`override` gives the file and approval command for approving another plan in
+its place.
 
 `approve RUN FILE --key KEY` captures the proposal file's current text as
 its answer, under the run lock, without launching workers. Use the
 `waiting-for` report's `approve-command` after inspecting and optionally
 editing the file. Only the operator, or an agent on the operator's stated
 word for that proposal, may approve. Repeating a workflow never approves.
-Edits after approval have no effect until approved again. Changed proposal
+Edits after approval have no effect until approved again; the report lists
+each such file under `unapproved-edits`. Changed proposal
 inputs require fresh approval; an old key cannot approve a replacement
 proposal at the same path.
 

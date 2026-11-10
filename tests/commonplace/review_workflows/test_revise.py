@@ -309,6 +309,35 @@ def test_a_stop_plan_ends_cleanly_with_the_assessment(repo, capsys):
     assert (code, again["stop"], launches) == (0, report["stop"], [])
 
 
+def test_the_operator_overrides_a_stop_plan_from_the_report(repo, capsys):
+    start(repo, "STOP")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--purpose", "p")
+    override = report["override"]
+    assert override["file"].endswith("/artifact/plan.yaml") and override["key"] in override["approve-command"]
+    path = artifact_file(repo, report, "plan.yaml")
+    path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None,
+                                    "passes": [{"pass": "readability-and-flow", "scope": None}]}))
+    code, unapproved, launches = revise(repo, capsys, NOTE_PATH)
+    assert (code, unapproved["stop"], launches) == (0, report["stop"], []), "an edit alone overrides nothing"
+    approve(repo, capsys, {"run-dir": report["run-dir"], "waiting-for": override})
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["applied"] and done["stop"] is None and done["override"] is None
+    assert done["unapproved-edits"] == []
+    assert launches == ["pass readability-and-flow big"]
+
+
+def test_an_edit_after_approval_is_reported_as_unapproved(repo, capsys):
+    report = assess(repo, capsys)
+    path = artifact_file(repo, report, "plan.yaml")
+    plan = yaml.safe_load(path.read_text())
+    plan["passes"] = plan["passes"][:1]
+    path.write_text(yaml.safe_dump(plan))
+    code, done, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["applied"] and len(done["passes"]) == 3, "the run used the approved plan"
+    [edit] = done["unapproved-edits"]
+    assert edit["file"] == report["waiting-for"]["file"] and edit["key"] == report["waiting-for"]["key"]
+
+
 def test_plain_wording_stops_with_its_list_and_applies_only_unstruck_entries(repo, capsys):
     report = assess(repo, capsys, "PLAIN")
     start_text = note_text(repo)

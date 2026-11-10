@@ -275,7 +275,10 @@ replaces the recorded value. A stop for the operator proposes a file in the
 run directory, and the report's `waiting-for` gives what to do, the file,
 the approval command and the command to repeat. Approval captures the file's
 current text; repeating alone never approves it. Later edits require another
-approval, and changed proposal inputs require fresh approval. An agent may
+approval, and the report lists a file edited after its approval under
+`unapproved-edits`. Changed proposal inputs require fresh approval. A plan
+that stops ends the run, and the report's `override` gives the approval
+command for replacing it. An agent may
 approve only on the operator's stated word for that proposal. If the note changed
 during a run, the run writes nothing and reports a conflict that names the
 file holding the proposed text.

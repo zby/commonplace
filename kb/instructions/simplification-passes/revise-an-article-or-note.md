@@ -105,7 +105,8 @@ give them again. Each stop prints a JSON report whose `waiting-for` gives
 what to do, the file, proposal key, `approve-command` and command to repeat.
 Read and optionally edit the proposal, run its `approve-command`, then
 repeat the workflow command. Approval captures that text; later edits have
-no effect until approved again. Changed proposal inputs require fresh
+no effect until approved again, and the report lists each file edited after
+its approval under `unapproved-edits`. Changed proposal inputs require fresh
 approval. An agent may approve only on the operator's stated word for that
 specific proposal; it must not infer approval from a request to retry.
 
@@ -115,7 +116,9 @@ specific proposal; it must not infer approval from a request to retry.
    no assessment runs, but explicit approval is still required. The plan holds `purpose`, `defend`, `passes` in run
    order (each a `pass` name and an optional `scope`) and `stop`. Read the
    assessment, edit the plan in place and approve it. A proposed or approved
-   plan with `stop` set ends the run without editing the artifact.
+   plan with `stop` set ends the run without editing the artifact. To run
+   passes anyway, clear `stop` and list the passes in the plan, run the
+   `approve-command` in the report's `override`, then repeat.
    The command rejects a plan that names an unknown pass, misses a field or
    breaks the depth order the pass files declare. You may edit and reapprove
    the plan at any later stop: the passes whose inputs did not change replay, and the

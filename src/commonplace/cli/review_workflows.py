@@ -72,7 +72,10 @@ then repeat. A stop for the operator is a normal end. The JSON report's
 `waiting-for` gives what to do, the file, proposal key, approval command and
 command to repeat. A repeat never approves and launches nothing at an
 unchanged unapproved stop. Approval captures the file's text: later edits
-have no effect until approved again. Changed proposal inputs require fresh
+have no effect until approved again, and the report lists such a file under
+`unapproved-edits`. A plan with `stop` set ends the run; the report's
+`override` gives the file and approval command that replace it. Changed
+proposal inputs require fresh
 approval, and an old approval key is refused. Only the operator, or an agent
 on the operator's stated word for that proposal, may approve. The
 artifact is written once, when every pass of the plan ended `applied`,

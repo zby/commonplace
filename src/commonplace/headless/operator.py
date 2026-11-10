@@ -4,6 +4,8 @@
 records its text. Repeating a workflow never approves. Callers supply a key
 covering the inputs that produce the proposal; changed inputs replace the
 proposal and invalidate its approval. Approval holds the same lock as Run.
+`edited()` tells a workflow that the file was changed after its approval, so
+it can report an edit that has no effect yet.
 """
 
 from __future__ import annotations
@@ -56,6 +58,13 @@ def answer(run: Run, name: str, proposal: str, *, key: str) -> str | None:
     elif not path.is_file():
         run.accept(name, data["proposal"])
     return data.get("answer")
+
+
+def edited(run: Run, name: str) -> bool:
+    """Whether the editable file differs from its approved answer, so the edit is not in use."""
+    path, record = _paths(run.root, name)
+    data = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else {}
+    return "answer" in data and path.is_file() and path.read_text(encoding="utf-8") != data["answer"]
 
 
 def approve(root: Path, name: str, key: str) -> dict:

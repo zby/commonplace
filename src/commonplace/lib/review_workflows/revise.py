@@ -20,10 +20,13 @@ never approves: only the recorded approved text becomes the operator's answer:
    (`catalog()`), and `plan_problems()` rejects unknown passes, missing
    fields and an order against the depth the pass files declare. The run
    keeps `artifact/assessment.md`, proposes `artifact/plan.yaml` and stops.
-   A plan whose `stop` is set ends the run there. With `--plan`, the
-   operator's plan is in place first and no assessment is asked.
+   A plan whose `stop` is set ends the run there; the report's `override`
+   names the same file and approval command, so the operator can approve
+   another plan in its place. With `--plan`, the operator's plan is in
+   place first and no assessment is asked.
 2. **Passes.** After explicit approval, a repeat reads the captured plan;
-   later draft edits have no effect until approved again. An invalid approved
+   later draft edits have no effect until approved again, and the report
+   lists each such file under `unapproved-edits`. An invalid approved
    plan raises ValueError, a command error,
    not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one `checked()` ask on the
@@ -110,6 +113,8 @@ PLAN_SCHEMA = {"purpose": str, "defend": list, "passes": list, "stop": (str, typ
 ASSESSMENT, PLAN, START = "assessment.md", "plan.yaml", "start.md"
 NO_CANDIDATES = "No candidates."
 REPEAT = "commonplace-review run revise {artifact}"
+UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
+              "Approve the file and repeat to use it.")
 
 
 @dataclass(frozen=True)
@@ -240,6 +245,8 @@ class ReviseReport:
     not_applied: str | None = None    # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
     stop: str | None = None           # the plan's stop: the assessment is the result
+    override: dict | None = None      # for a stop plan: the file, approval command and repeat that replace it
+    unapproved_edits: list[dict] = field(default_factory=list)   # drafts edited after approval; not in use
     stopped: str | None = None
     conflict: str | None = None
     changed: list[str] = field(default_factory=list)
@@ -434,6 +441,8 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
             run, root, name, f"Strike entries of the {current.name} list: delete each entry's `- ` line and the "
             "lines indented under it, and leave the entries you approve.", REPEAT.format(artifact=artifact))
         return None
+    if operator.edited(run, name):
+        report.unapproved_edits.append(operator.waiting(run, root, name, UNAPPROVED, REPEAT.format(artifact=artifact)))
     if not entries(approved):
         state.state, state.reason = "no-change", "the operator struck every entry"
         return None
@@ -529,8 +538,15 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             given = operator.answer(run, PLAN, proposed, key=key)
             # Display the original proposal, not unapproved edits to the draft.
             plan = report.plan = read_plan(given if given is not None else proposed, known)
+            if given is not None and operator.edited(run, PLAN):
+                report.unapproved_edits.append(
+                    operator.waiting(run, root, PLAN, UNAPPROVED, REPEAT.format(artifact=artifact)))
             if plan["stop"]:
                 report.stop = plan["stop"]
+                report.override = operator.waiting(
+                    run, root, PLAN, "The plan stops, so no pass runs and nothing more is needed. To run passes "
+                    "instead, clear `stop` and list the passes in the plan, approve it, then repeat.",
+                    REPEAT.format(artifact=artifact))
             elif given is None:
                 read = f"Read {ASSESSMENT} beside the plan" if named_plan is None else "Read the supplied plan"
                 report.waiting_for = operator.waiting(
