@@ -76,5 +76,5 @@ Adopt this when the in-code alias registry or runner-default mapping becomes ope
 
 Relevant Notes:
 
-- [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: establishes `model_partition` as an opaque freshness partition rather than observed telemetry identity
-- [Review architecture](../review-architecture.md) — part-of: review-state architecture that would host the registry if adopted
+- [032-review freshness uses DB snapshots, not Git](../../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: establishes `model_partition` as an opaque freshness partition rather than observed telemetry identity
+- [Review architecture](../../review-architecture.md) — part-of: review-state architecture that would host the registry if adopted

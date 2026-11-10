@@ -10,7 +10,7 @@ The review subsystem's assumptions about project shape are hardcoded as module-l
 
 ## Current state (as of 2026-07-13)
 
-General freshness and review execution share one operational store ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/state/commonplace-store.sqlite`; `COMMONPLACE_STORE`). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
+General freshness and review execution share one operational store ([ADR 052](../../adr/052-general-freshness-store-review-first-migration.md)). Store path resolution lives in `commonplace.store` (`kb/reports/state/commonplace-store.sqlite`; `COMMONPLACE_STORE`). Review modules re-export `DEFAULT_DB_PATH` and `resolve_db_path` from there. A `ReviewConfig` would still be review-owned, but its `db_path` field should align with `commonplace.store` rather than reintroducing a review-only default.
 
 Project-shape constants partition cleanly by owner:
 
@@ -55,7 +55,7 @@ Adopt when a consuming project (or this repo) actually needs a non-default revie
 
 Relevant Notes:
 
-- [052-general freshness store, review-first migration](../adr/052-general-freshness-store-review-first-migration.md) — see-also: operational store path now owned by `commonplace.store`, not review-only tables
-- [review architecture](../review-architecture.md) — see-also: the result-file design that replaced the shared store this proposal configured
-- [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the same adaptability direction at the execution seam; this proposal addresses the review subsystem's project-shape seam
-- [collection](../definitions/collection.md) — see-also: the unit a consuming project would reshape; one free choice derives scan roots from collection contracts
+- [052-general freshness store, review-first migration](../../adr/052-general-freshness-store-review-first-migration.md) — see-also: operational store path now owned by `commonplace.store`, not review-only tables
+- [review architecture](../../review-architecture.md) — see-also: the result-file design that replaced the shared store this proposal configured
+- [030-harness-facing seams: batch endpoints and runner adapters](../../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the same adaptability direction at the execution seam; this proposal addresses the review subsystem's project-shape seam
+- [collection](../../definitions/collection.md) — see-also: the unit a consuming project would reshape; one free choice derives scan roots from collection contracts

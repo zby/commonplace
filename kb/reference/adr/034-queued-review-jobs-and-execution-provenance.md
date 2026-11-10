@@ -104,4 +104,4 @@ Relevant Notes:
 - [032-Review freshness uses DB snapshots, not Git](./032-review-freshness-uses-db-snapshots-not-git.md) - extends: keeps `model_partition` as the frozen freshness key and does not re-key from telemetry.
 - [033-Honest review-run state behind a versioned migration substrate](./033-honest-review-run-state.md) - superseded historical chain: kept honest queued/running/completed/failed state while dropping in-place schema transformation.
 - [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) - supersedes: removes claim/running state, persisted artifact paths, partial salvage, and permissive live parsing.
-- [model partition registry](../proposals/model-partition-registry.md) - deferred: future aliases, defaults, effort constraints, and hard constraints.
+- [model partition registry](../proposals/archive/model-partition-registry.md) - deferred: future aliases, defaults, effort constraints, and hard constraints.

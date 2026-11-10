@@ -108,5 +108,5 @@ This workshop closes when:
 - [Review system](../../reference/README-REVIEW-SYSTEM.md) — model partition as freshness identity rather than execution preference.
 - [Skills are instructions plus routing and execution policy](../../theory/skills-are-instructions-plus-routing-and-execution-policy.md) — the retained account of execution policy and its platform-specific boundaries.
 - [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — existing runner-specific per-call model surface.
-- [Model partition registry proposal](../../reference/proposals/model-partition-registry.md) — adjacent design that must not be conflated with portable role routing.
+- [Model partition registry proposal](../../reference/proposals/archive/model-partition-registry.md) — adjacent design that must not be conflated with portable role routing.
 - [ADR 118](../../reference/adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) and [ADR 119](../../reference/adr/119-analysis-workers-launch-through-workjig.md) — the shipped headless launch route and its per-run worker profile.
