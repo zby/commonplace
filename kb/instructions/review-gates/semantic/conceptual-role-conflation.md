@@ -36,7 +36,7 @@ Inspect passages that define, import, compare, extend, or apply a concept.
 
 For each WARN, quote the smallest useful passage, name the conflated roles, give the competing assignments, and state the authorial relation that must be decided or made explicit. Report at most three highest-impact findings. Do not choose the relation for the author and do not present a rewrite as settled.
 
-Return PASS when no finding clears the materiality threshold. A plausible but immaterial blur may be noted as INFO while the final verdict remains PASS. Return ERROR only when the target cannot be inspected.
+Return PASS when no finding clears the materiality threshold. A plausible but immaterial blur may be noted as INFO while the final verdict remains PASS. When the target cannot be inspected, return no decision and report that the pair cannot be judged.
 
 Do not flag adjacent problems here:
 

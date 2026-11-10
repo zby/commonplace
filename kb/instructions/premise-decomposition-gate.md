@@ -5,7 +5,7 @@ type: types/instruction.md
 
 # Decompose a note into premises and counterexample each
 
-Experimental, run by hand. This method tests the **nodes** of a note's argument — the premises its central commitment takes as given — not the edges between them. It assumes every stated inference is valid and asks a different question: is each premise the commitment rests on *itself* true, or does a concrete counterexample defeat it? This is the "explanation as a falsification surface" move — a commitment is only as strong as the weakest premise it silently assumes. It is **not a review-system gate or snapshot-anchored assay**: it writes no evidence or freshness-baseline state and is not wired into the review system. Write the report; do not touch the note.
+Experimental, run by hand. This method tests the **nodes** of a note's argument — the premises its central commitment takes as given — not the edges between them. It assumes every stated inference is valid and asks a different question: is each premise the commitment rests on *itself* true, or does a concrete counterexample defeat it? This is the "explanation as a falsification surface" move — a commitment is only as strong as the weakest premise it silently assumes. It is **not a review-system gate**: it writes no review result file and is not in the gate catalog. Write the report; do not touch the note.
 
 Unlike [reconstruct a note's composition friction](./composition-friction-gate.md), which tests whether each *inference* holds (the edges), this tests whether each *premise* holds (the nodes). The two are complementary: an argument can have valid inferences resting on a false premise, which the friction check passes and this check catches. Run both when a commitment must be load-bearing.
 

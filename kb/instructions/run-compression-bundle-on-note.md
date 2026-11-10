@@ -5,9 +5,9 @@ type: types/instruction.md
 
 # Run the compression bundle on one note
 
-Review a specific note against the compression criteria without using the review database.
+Review a specific note against the compression criteria without writing review result files.
 
-This is deliberately separate from the snapshot-anchored assay pipeline in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, acquire a persisted result kind, or write freshness-baseline state. Use them when the goal is a disposable report rather than fresh review evidence.
+This is deliberately separate from the gate sweep in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates` or write review result files. Use them when the goal is a disposable report rather than fresh review evidence.
 
 Inputs:
 
@@ -25,7 +25,7 @@ Use these criterion files, in this order:
 
 After the four criteria, apply [high-impact-simplification-synthesis.md](./compression-bundle/high-impact-simplification-synthesis.md) to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
 
-Do not route these criteria through selectors or review jobs. Do not write review DB state or invoke acknowledgement or ingestion commands.
+Do not request these criteria from `commonplace-review run gates`, and do not write under `kb/reports/state/review/results/`.
 
 ## Dispatch
 
@@ -92,7 +92,7 @@ PASS|INFO|WARN
 
 Omit per-gate finding sections when a gate has no findings beyond a concise PASS summary. Do not emit PASS-per-paragraph output. Report zero to three high-impact opportunities; write `None` when no opportunity clears the synthesis threshold.
 
-`PASS`, `INFO`, and `WARN` here are local report labels. They are not review-system decisions, and the report has no `REPORT` completion marker because it is not finalized into the review store.
+`PASS`, `INFO`, and `WARN` here are local report labels. They are not review-system decisions, and the report has no `## Result: REPORT` line because it is not written as a review result.
 
 ## Reviewer Bias
 
@@ -103,6 +103,6 @@ The final synthesis is selective rather than exhaustive. It may combine several 
 ## Do Not
 
 - Do not mutate the target note.
-- Do not create or finalize review jobs for these criteria.
-- Do not write review DB state.
+- Do not request these criteria from `commonplace-review run gates`.
+- Do not write review result files.
 - Do not skip any gate in the bundle.

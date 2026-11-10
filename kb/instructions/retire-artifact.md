@@ -1,5 +1,5 @@
 ---
-description: Retire a committed KB artifact — destination lookup, extraction gate, inbound handling, published redirect, and freshness-baseline retirement
+description: Retire a committed KB artifact — destination lookup, extraction gate, inbound handling, published redirect, and deletion of its review results
 type: types/instruction.md
 ---
 
@@ -7,14 +7,14 @@ type: types/instruction.md
 
 **Target: $ARTIFACT_PATH**
 
-Removes a committed artifact from the frontier — the set of files a reader or agent sweeps to find what is live — and leaves nothing dangling behind it: no broken inbound link, no claim delegated to a file that no longer exists, no dead public URL, no freshness baseline pointing at a missing input.
+Removes a committed artifact from the frontier — the set of files a reader or agent sweeps to find what is live — and leaves nothing dangling behind it: no broken inbound link, no claim delegated to a file that no longer exists, no dead public URL, no review result naming a missing note.
 
 Two destinations. **Delete** is the default. **Archive** moves the file into a sink directory that nothing outside it links into, and is used where the artifact is a design object worth keeping after the decision it fed has shipped. Step 1 tells you which one applies; only steps 6 and 7 differ between them.
 
 ## When this does not apply
 
-- **Renaming or moving.** Use `commonplace-relocate-note` or `commonplace-relocate-directory`, which rewrite inbound links for you. Step 9's baseline retirement still applies afterwards: relocation does not re-key or retire baselines, so a rename orphans them exactly as a deletion does.
-- **Closing a workshop.** Use the closure protocol in `kb/work/COLLECTION.md` — extract, delete the directory, remove the `kb/work/README.md` entry. Steps 5 and 6 have nothing to act on, since no library artifact links into a workshop, and step 8 is a deliberate non-goal there: workshops are published but their URLs are not durable addresses, so closure leaves them dead on purpose. Step 9 still applies if a workshop file ever carried a baseline, though none has so far.
+- **Renaming or moving.** Use `commonplace-relocate-note` or `commonplace-relocate-directory`, which rewrite inbound links for you. Step 9 still applies afterwards: relocation does not rekey review results or the full-pass packet, so a rename orphans them exactly as a deletion does.
+- **Closing a workshop.** Use the closure protocol in `kb/work/COLLECTION.md` — extract, delete the directory, remove the `kb/work/README.md` entry. Steps 5 and 6 have nothing to act on, since no library artifact links into a workshop, and step 8 is a deliberate non-goal there: workshops are published but their URLs are not durable addresses, so closure leaves them dead on purpose. Step 9 still applies if a workshop file was ever reviewed.
 - **Retiring a term** from the project vocabulary. That is an ADR-scale change affecting every occurrence across the corpus, not a single-artifact operation.
 
 ## Steps
@@ -97,38 +97,22 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
    Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `commonplace-validate redirects` enforces all three conditions.
 
-9. **Retire its baselines.** Both destinations orphan them — the store keys on path, which archiving changes and deletion removes.
-
-   ```bash
-   commonplace-freshness-status --missing
-   ```
-
-   An artifact that was never reviewed has no baselines and the report will not name it — nothing further to do. If it is named, every pair listed for that path needs retirement, one manifest per target key.
-
-   **Scope the retirement to the retired path.** The report covers the whole store, and this repository already carries orphaned baselines from earlier retirements; retiring everything it lists would destroy unrelated ones. Filter by artifact path:
+9. **Delete its review state.** Both destinations orphan it: review results and the full-pass packet are keyed by the note's path, which archiving changes and deletion removes. Results are not rekeyed when a note moves. The state is untracked, so this step changes nothing in Git.
 
    ```bash
    RETIRED=kb/theory/<artifact>.md
-   commonplace-freshness-status --missing --json \
-     | python3 -c '
-   import json, sys
-   target = sys.argv[1]
-   for t in json.load(sys.stdin)["targets"]:
-       if any(i["artifact_path"] == target and i["status"] == "input-missing" for i in t["changed_inputs"]):
-           print(json.dumps({"schema": "commonplace-freshness-retire/1",
-                             "target_kind": t["target_kind"], "target_key": t["target_key"]}))
-   ' "$RETIRED" \
-     | while IFS= read -r manifest; do printf '%s' "$manifest" | commonplace-freshness-retire --input -; done
+   commonplace-review status --json \
+     | python3 -c 'import json, sys; [print(p) for p in json.load(sys.stdin)["orphaned"] if p.startswith("kb/reports/state/review/results/" + sys.argv[1] + "/")]' "$RETIRED"
    ```
 
-   Each call prints `retired` or `already-absent`; the operation is idempotent, so a re-run is safe.
+   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Delete `kb/reports/state/review/packets/<artifact-path>` if it exists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
 
 ## Verify
 
 - `commonplace-validate` on each touched artifact — clean, link health in particular.
 - `commonplace-validate kb/theory` — no new orphan.
 - `commonplace-validate kb/tags` — no weight-gate warning on a curated head that absorbed routing.
-- `commonplace-freshness-status --missing` — does not name the retired path.
+- `commonplace-review status --json` — its `orphaned` list names nothing under `kb/reports/state/review/results/<artifact-path>/`.
 - `rg -l '<artifact-slug>' -g '*.md' kb/` — for delete, nothing outside gitignored reports; for archive, nothing outside the archive directory and `kb/work/`.
 - `uv run pytest` — only when the retirement touched code, tests, test fixtures or test inputs, or `properdocs.yml` (whose redirects tests check). A retirement confined to Markdown KB data relies on the validator checks above, as `AGENTS.md` requires.
 
@@ -136,7 +120,6 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 Relevant Notes:
 
-- [Freshness architecture](../reference/freshness-architecture.md) — operates-on: the baseline store step 9 mutates
-- [Commands](../reference/commands.md) — operates-on: the relocation and freshness command surfaces this procedure calls
+- [Commands](../reference/commands.md) — operates-on: the relocation and `commonplace-review` command surfaces this procedure calls
 - [Design proposal](../reference/types/design-proposal.md) — operates-on: the type stating which proposals are eligible to archive and what must hold afterwards
 - [Indexes lower recall when they suppress retrieval that would find more](../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a misleading pointer can suppress the fallback that a missing pointer would trigger, which is what steps 3, 6, and 8 guard against

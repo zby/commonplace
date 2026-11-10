@@ -1,5 +1,5 @@
 ---
-description: Fix actionable findings from baseline-backed warn reviews whose live inputs still match, then classify and report the fixes
+description: Fix actionable findings from fresh warn and fail review results on one note, re-review the edited note, then classify and report the fixes
 type: types/instruction.md
 ---
 
@@ -11,24 +11,25 @@ If target is empty, ask which note to fix. If target is a name without path, sea
 
 ## What this is
 
-An editing pass that fixes actionable findings from prose and/or semantic
-reviews whose outcome is `warn` and whose live inputs match their freshness
-baseline. The reviews already contain specific recommendations. This
-instruction constrains how to apply them and gives the fixes an auditable report
-format.
+An editing pass that fixes actionable findings from review results whose
+outcome is `warn` or `fail` and which are fresh: the hashes they record still
+match the note and the criterion. The reviews already contain specific
+recommendations. This instruction constrains how to apply them and gives the
+fixes an auditable report format.
 
 ## Prerequisites
 
-1. Run `commonplace-warn-selector --json {note-path}`. The selector returns
-   actionable findings whose live inputs match their baseline and collapses
-   model partitions to one current review per `(note, gate)`. Only note entries
-   with `warns` are actionable. A trailing `stale_pairs` entry is advisory:
-   report that those pairs need re-review and do not fix from their retained
-   text. If there are no actionable note entries, report "no current warn
-   findings" and stop.
-2. Read the target note in full.
-3. Read the corresponding review pair text from the warn_selector output. The DB-backed review text in the output is the authoritative source.
-4. Read the [fix strategy taxonomy](./fix-strategy-taxonomy.md) for the named fix strategies.
+1. Run `commonplace-review status {note-path} --fresh --outcome warn fail --json`.
+   Each row in `pairs` is one current warning: its `criterion-id`, `outcome`
+   and `result`, the path of its result file. If `pairs` is empty, report "no
+   current warn findings" and stop. Do not fix from a stale result: a `warn`
+   or `fail` that `--fresh` drops needs re-review, not a fix.
+2. If `kb/reports/state/fixes/{note-stem}.fix-report.md` exists, read it. A
+   finding it records as rejected or deferred stays a fresh warning until the
+   note or criterion changes; do not work it again unless its evidence changed.
+3. Read the target note in full.
+4. Read each row's result file. Its `### Findings` items (`- <severity>: <finding>`) are the findings; when it has none, use `### Summary`. The result file is the authoritative review text.
+5. Read the [fix strategy taxonomy](./fix-strategy-taxonomy.md) for the named fix strategies.
 
 ## Procedure
 
@@ -47,6 +48,13 @@ After all fixes:
 5. Re-read edited sections to verify flow and cohesion. Fixes should read as if they were always there.
 6. If any fix was applied and the note carries `user-verified`, remove that field: a fix that changes framing or accuracy is a substantive edit, and only a human may restore verification (see the [note type](../../types/note.md)).
 7. Produce the fix report (format below).
+8. If any fix was applied, re-review the note. The edit stales exactly the pairs whose watched parts it changed, and the sweep asks only those:
+
+   ```bash
+   commonplace-review run gates {note-path} --criteria {requests...}
+   ```
+
+   Give the catalog gate ids from the rows' `criterion-id` (`prose/source-residue`). A row whose `criterion-id` is a type spec path (`kb/types/note`) takes `type`, a `COLLECTION` path takes `collection`, and the critique instruction's path takes `critique`. Read the report as [run review batches](../run-review-batches.md) describes, and add each re-reviewed pair's new outcome to the fix report. Skip this step when the user asked only for fixes, and say that the edited pairs are stale.
 
 ## Constraints
 
@@ -55,7 +63,7 @@ After all fixes:
 - **Description edits need their own procedure.** If you encounter description issues (from `commonplace-validate` or as a side effect), use [fix-descriptions.md](./fix-descriptions.md) rather than improvising a rewrite.
 - **Don't change arguments.** Fixes change framing, accuracy, and attribution — not the note's claims or structure.
 - **Don't remove examples.** Frame them ("In [domain], for instance...") instead of replacing with abstractions.
-- **Don't update stored reviews.** Review pairs are regenerated or re-recorded separately through the DB-backed review flow.
+- **Don't edit result files.** A result is regenerated only by rerunning the gate sweep.
 - **Verify before assuming staleness.** If a warning claims a path/field/mechanism is stale, check whether it actually exists before removing or updating it.
 
 ## Fix report format

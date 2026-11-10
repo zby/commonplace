@@ -42,8 +42,8 @@ clear formulations is not a finding.
 
 Return WARN for one or more local instances. Return FAIL only when the pattern
 is pervasive enough to obstruct a direct reading of the note. Return PASS when
-no phrase meets the test. Return ERROR only when the target text cannot be
-inspected.
+no phrase meets the test. When the target text cannot be inspected, return
+no decision and report that the pair cannot be judged.
 
 Do not duplicate a finding that is wholly owned by a more specific gate. A
 model cognition claim belongs to `prose/anthropomorphic-framing`; an unmapped

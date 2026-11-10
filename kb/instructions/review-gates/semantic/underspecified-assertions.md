@@ -29,7 +29,7 @@ For each potentially underspecified assertion:
 4. Check nearby context. If the paragraph defines the term, identifies the causal route, supplies the comparison, or states the consequence, the assertion passes even if its first clause is compressed or metaphorical.
 5. Report WARN only when the assertion is load-bearing, at least two reasonable readings remain, and their difference passes the materiality test. Quote the assertion, give the competing readings, name the unresolved choice, and state what changes between them.
 
-Return PASS when no such assertion remains. A possible ambiguity that the reviewer cannot show to be material may be mentioned as INFO while the final verdict remains PASS. Return ERROR only when the target text is unavailable or cannot be inspected.
+Return PASS when no such assertion remains. A possible ambiguity that the reviewer cannot show to be material may be mentioned as INFO while the final verdict remains PASS. When the target text is unavailable or cannot be inspected, return no decision and report that the pair cannot be judged.
 
 This gate reports the unresolved choice; it does not repair it. Do not invent a number, mechanism, threshold, definition, source, or timeframe. Do not recommend generic hedges or defensive qualifiers such as "may", "often", or "in some cases" as substitutes for resolving the choice. The author may later clarify, narrow, support, or remove the assertion.
 

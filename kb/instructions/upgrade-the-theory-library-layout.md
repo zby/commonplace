@@ -24,9 +24,9 @@ or change to captured evidence.
   changed. There is no library alias from the old name.
 - Do not edit installed library files, exact captures, source quotes or hash
   pins. Reconcile captured references through their owning workflow if needed.
-- Old review/freshness records are not migrated by this upgrade. Whether a
+- Review result files are not migrated by this upgrade. Whether a
   particular consumer needs continuity is its operator's decision; do not
-  silently transfer or acknowledge reviews.
+  edit or move result files to carry reviews across.
 
 ## Reconcile the upgrade
 
@@ -51,7 +51,7 @@ or change to captured evidence.
    ```
 
    Search ignored local state separately if an active workflow uses it; do not
-   rewrite a captured input, queued job or packet in bulk. Classify each hit as
+   rewrite a captured input, run record or packet in bulk. Classify each hit as
    an authored library reference, a project-owned path, or historical evidence.
    Update only the authored library references and their displayed current
    paths. Keep source wording and observations of the former layout intact.
@@ -77,21 +77,21 @@ or change to captured evidence.
    commonplace-validate recent --collection kb/notes
    commonplace-status --collection kb/notes
    commonplace-promotion-candidates kb/notes
-   commonplace-review-target-selector --note kb/notes/<artifact>.md collection
+   commonplace-review status kb/notes/<artifact>.md --criteria collection
    ```
 
    Here `kb/notes` is the scaffold example; substitute the project's actual
    collection. Date validation and status require `--collection`; promotion
-   takes the collection as a positional argument. Review selection and trivial
-   acknowledgement require explicit `--note` targets; `--user-verified` only
-   filters that scope. The status JSON field remains `notes_validation`, with
+   takes the collection as a positional argument. `commonplace-review status`
+   takes notes as positional arguments and needs them when `--criteria` is
+   given. The status JSON field remains `notes_validation`, with
    `scope`; it is not renamed to `theory_validation`. Check each command's
    `--help` when reconciling a script.
 7. Validate changed artifacts explicitly and run `commonplace-validate landings`.
    Confirm the library's `theory/README.md` and any referenced local type specs
    exist at the new addresses. Rescan the authored reference set and account
    for remaining historical matches. Do not make review status green by
-   rewriting state or acknowledging uncaptured evidence.
+   editing result files.
 
 ## Optional project-owned rename
 

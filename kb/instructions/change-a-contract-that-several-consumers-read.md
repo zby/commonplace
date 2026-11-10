@@ -35,7 +35,7 @@ Use it for a change to something several kinds of consumer read: a frontmatter f
    - reference pages and accepted ADRs that state the old form in the present tense;
    - tests and fixtures;
    - published views: the site build, redirects, generated indexes.
-4. **Byte-pinned consumers.** Every checksum or recorded hash over an artifact the change rewrites, such as `snapshot_sha256`, `analysis-result-sha256`, and review freshness baselines. Rewriting pinned bytes breaks the pin silently. For each pin, decide how it is re-pinned and how the re-pin is verified.
+4. **Byte-pinned consumers.** Every checksum or recorded hash over an artifact the change rewrites, such as `snapshot_sha256`, `analysis-result-sha256`, and the note and criterion hashes in review result files. Rewriting pinned bytes breaks the pin silently. For each pin, decide how it is re-pinned and how the re-pin is verified.
 5. **Spellings of the old value.** Every form the old value takes in real files: quoted and unquoted YAML, JSON-style frontmatter, relative and repository-relative paths, list items, derived copies. Search for each spelling separately.
 6. **Generated and projected forms.** Build outputs, the installed library, init-written stubs and routing files, generated indexes.
 7. **Fresh install.** What `commonplace-init` creates under the new contract, and whether the result validates.

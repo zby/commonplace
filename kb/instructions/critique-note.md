@@ -21,7 +21,7 @@ Constructing that attack has two honest outcomes. Usually the strongest objectio
 
 ## Report shape
 
-The caller supplies the output destination and owns any surrounding protocol markers. When run through a review job, write only the caller's `job-output.md`; when run by hand, name a report path explicitly before dispatch. Mutate nothing else.
+The caller supplies the output destination and owns any surrounding protocol markers. When run through `commonplace-review`, write only the output file the run names; when run by hand, name a report path explicitly before dispatch. Mutate nothing else.
 
 ```markdown
 # Critique: <note title>
