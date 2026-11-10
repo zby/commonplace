@@ -66,5 +66,44 @@ Implementation verification passed before the live continuations:
   Historical workshop records and captured requests remain untouched.
 
 The two trial targets and original assessment evidence are in the
-[implementation plan](./plan.md#live-sol-assessments-2026-11-10). Live continuation
-results will be recorded here. Publication remains outside this commission.
+[implementation plan](./plan.md#live-sol-assessments-2026-11-10). Implementation
+was committed as `44092ab76`, after the assessment checkpoint `7ecfa769c`.
+
+### Sol continuations stopped at publication
+
+Both continuations used `codex` / `gpt-6.1-sol`, medium effort, for both effort
+roles. The changed instruction triggered a new assessment for each target.
+Each assessment selected one scoped `readability-and-flow` pass, which ran
+automatically. There were four new worker launches in total: two assessments
+and two editing passes, without correction retries.
+
+| Target | Prepared change | Run directory |
+|---|---|---|
+| `kb/articles/what-an-automated-reviewer-should-measure.md` | Clarifies one introductory paragraph: the reviewer assessment and its two validation experiments have different roles; both claims remain to be tested. | `kb/reports/state/review/runs/revise/kb/articles/what-an-automated-reviewer-should-measure/1bac5e289ba8` |
+| `kb/theory/position-and-proportion-set-what-a-reader-retains.md` | Separates the test comparison, prediction/limits and reader-specific measures; moves distinct evidence qualifications from Scope beside the corresponding claims. | `kb/reports/state/review/runs/revise/kb/theory/position-and-proportion-set-what-a-reader-retains/0090306470d3` |
+
+Each directory now contains `artifact/final.md`, `artifact/final.diff` and
+`artifact/publication.json`. Both reports return `ok: true`,
+`complete: false`, `applied: false`, and a final-publication waiting record.
+The per-pass `applied` state means applied to the private candidate, not to
+the original artifact. Neither publication approval command was executed.
+
+Both candidates also passed explicit in-memory validation at their intended
+original paths, with zero failures and warnings. Direct inspection of the
+diffs found the described local changes; this is not a new independent
+source-grounding review. The note's brief remains captured and unchanged.
+
+Repeating each workflow after preparation launched zero additional workers
+and retained the same publication key. Both checkout guards were clean.
+Raw SHA-256 comparison confirmed that both originals and the note's brief
+remain byte-identical to their pretrial contents.
+
+Candidate hashes, for identifying these particular prepared outputs:
+
+- Article: `94e5f75c0b57547b659df4cd5d241277f80c30d49e2112ed326a51ae37758bd2`.
+- Note: `6868ff186dc6156751afd0b6774407a031745781b0863698ed9096f08394cc7f`.
+
+No strike-list pass was recommended. Live selection approval and actual
+publication therefore remain unexercised; fake-harness coverage is not a
+substitute. The commissioned stopping point is reached for both trials.
+Publication remains outside this commission.

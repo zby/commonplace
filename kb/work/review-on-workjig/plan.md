@@ -13,8 +13,9 @@ shared-layer architecture is a future direction, not an execution phase.
 ## Current state and next work
 
 As of 2026-11-10. The code described in phases 1 to 5 is built and
-committed; phase 5 has reached live assessment stops but has not completed
-its editing trial. The operator has now moved routine approval to final
+committed; phase 5 has prepared two live final candidates, both waiting for
+publication approval with their originals unchanged. Live strike-list
+selection and publication remain unexercised. The operator has moved routine approval to final
 publication, superseding the plan-approval design described in earlier phase
 records below. The [publication-boundary change](./publication-boundary-change.md)
 records this commission and its consumer checks. The earlier stop-plan override and
@@ -43,9 +44,12 @@ that plan. Directory-type changes are not prerequisites.
 On the operator's direction, finish review before testing the same
 publication boundary in ingest, then decide what is worth sharing:
 
-1. Continue the two selected Sol revision trials automatically through
-   settled passes to final candidate and diff. Do not publish: the operator
-   commissioned preparation only. Inspect brief compliance and final changes.
+1. **Preparation done:** both selected Sol revision trials ran automatically
+   through assessment and one settled pass to final candidate and diff.
+   Originals and the brief remain byte-identical; candidates validate, guards
+   are clean, and unapproved repeats launch nothing. See the
+   [continuation record](./publication-boundary-change.md#sol-continuations-stopped-at-publication).
+   Do not publish: the operator commissioned preparation only.
    Keep wording/abstraction selection stops when those passes are warranted;
    do not force one into these plans merely for coverage. Their live selection
    and subsequent final publication remain separate unfinished checks.

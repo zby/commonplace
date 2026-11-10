@@ -1,5 +1,10 @@
 # Explicit approval contract change
 
+Historical implementation record. The later
+[publication-boundary change](./publication-boundary-change.md) removes routine
+plan approval while retaining explicit selection and final-publication approval.
+The probes below describe the earlier contract, not current operation.
+
 Implement the phase-5 correction without treating a retry as an operator
 choice. No paid model calls, ingest implementation or data migration are
 part of this change.
