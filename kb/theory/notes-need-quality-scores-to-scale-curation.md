@@ -19,7 +19,7 @@ The fix is a quality score per note that lets /connect filter and rank candidate
 
 **Inbound link count** is a social proof signal. A note that many other notes link to has been repeatedly judged worth connecting to. This is the graph-topology version of citation count. But it must be weighted by [link strength](./link-strength-is-encoded-in-position-and-prose.md) — ten footer "related" links count less than three inline "since [X]" premise links.
 
-**Review vetting** is a use-shaped signal that did not exist when this note was first written: the review store now holds thousands of gate verdicts, so "does this note have fresh baselines, and what is its pass/warn mix" is a quality dimension that costs no authoring at all — it is a byproduct of review operation.
+**Review vetting** is a use-shaped signal that did not exist when this note was first written: review result files now record gate verdicts per note and criterion, so "does this note have fresh results, and what is its pass/warn mix" is a quality dimension that costs no authoring at all — it is a byproduct of review operation.
 
 **Recency** matters differently per content type. A source snapshot from yesterday is more relevant than one from six months ago. A design principle note doesn't decay — older often means more refined. Type-dependent recency decay captures this: different content types age at different rates.
 

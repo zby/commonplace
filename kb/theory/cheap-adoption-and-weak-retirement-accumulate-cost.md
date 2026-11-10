@@ -27,7 +27,7 @@ Retirement needs more than a delete operation. A usable path must connect a sign
 
 Named owners, deprecation or supersession state, dependency checks, and scheduled audits can interrupt the asymmetry only when they feed that path. A warning nobody must resolve, a deprecated mark no router reads, or a dependency list with no migration decision leaves retirement weak. Strong retirement need not make removal automatic or as cheap as adoption; it makes recurring evidence capable of reaching a decision and completing its consequences.
 
-Once a committed artifact already has a chosen disposition, [Retire an artifact](../instructions/retire-artifact.md) supplies a concrete extraction, inbound-reference, redirect, and freshness-retirement procedure. That procedure starts with a named target. It does not supply the earlier signal, decision owner, or rule that makes accumulated structure enter retirement review.
+Once a committed artifact already has a chosen disposition, [Retire an artifact](../instructions/retire-artifact.md) supplies a concrete extraction, inbound-reference, redirect, and review-result cleanup procedure. That procedure starts with a named target. It does not supply the earlier signal, decision owner, or rule that makes accumulated structure enter retirement review.
 
 ## Bounded observation from agent-memory systems
 

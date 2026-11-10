@@ -50,7 +50,7 @@ Soundness needs the trigger and the operation. Revalidating everything on every 
 - The requirement is conditional on retention plus consumption. A system that re-derives its self-description each time it needs one has no artifact to synchronize; it pays elsewhere, in re-derivation cost and variance.
 - Claims about immutable aspects are exempt, so the load scales with the mutable surface rather than with the system's size. A protected kernel is describable once.
 - The self-concealment mechanism needs the description to be *consulted* by the detecting process. A self-description retained purely for external audit, never read by the system, degrades like ordinary documentation.
-- Commonplace's snapshot-pinned [freshness baselines](../reference/freshness-architecture.md) are one witness to the three-part path, not evidence that this decomposition is the only one.
+- Commonplace's hash-pinned [review results](../reference/review-architecture.md) are one witness to the three-part path, not evidence that this decomposition is the only one.
 
 ## Open Questions
 
