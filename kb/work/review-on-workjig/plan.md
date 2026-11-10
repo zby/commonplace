@@ -14,20 +14,44 @@ shared-layer architecture is a future direction, not an execution phase.
 
 As of 2026-11-10. The code described in phases 1 to 5 is built and
 committed; phase 5 has not run with a live worker. Explicit approval and
-its fake-harness tests are now implemented. Core and
-broader consumer suites, including slow analysis tests, passed. Live
-validation remains open.
-Phase 6 has not started.
+its fake-harness tests are now implemented. The stop-plan override and
+unapproved-edit warning are committed as `e93284673`; that follow-up passed
+701 selected fast tests and 17 slow analysis consumer tests.
+
+Binding write briefs are now captured for planning and editing workers
+(`4a29b1bf5`). They affect call identity and revision plan approval, not judge
+inputs or result freshness. Conflicts stop work, and a brief changed during
+the invocation blocks publication. The final general, headless and review
+selection passed 217 tests, including 18 new brief cases. This establishes
+capture and control flow, not semantic obedience by a live worker.
+
+Live validation remains open. Phase 6 has not started.
+
+The operator requested a further design plan for typed review outputs:
+[use declared types for review outputs](./types-plan.md). It inventories
+new and existing types, the checks they would replace, and the limits of
+directory typing. The operator accepted Fable's sequencing: the approval
+follow-up and brief fix precede a live revision trial; the individual result
+type follows that trial and precedes the first collection sweep. No type
+schema has changed yet. Checkable finding anchors, verdict-order calibration
+and explicit validation beneath the state ignore marker are addressed in
+that plan. Directory-type changes are not prerequisites.
 
 On the operator's direction, finish review before testing the same
 publication boundary in ingest, then decide what is worth sharing:
 
-1. Run the phase-5 live revision and full-pass trials with explicit
-   approval. Paid launches wait for the operator to start them.
-2. Complete step 1.3, the first collection sweep. It is independent of
-   the approval correction and may run separately; paid launches still
-   require the operator's direction.
-3. Once review is validated, take up phase 6's bounded ingest experiment
+1. Run the phase-5 live revision trial with explicit approval, including a
+   strike-list stop. The operator must select the artifact and profile before
+   paid launches. If the artifact has a brief, inspect whether the worker
+   respects it as well as whether the approval interface is usable.
+2. Implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
+   the individual review-result type, with pair and bundle readers and writers
+   converted together. Stop and assess the deletion ledger before later types.
+   Agree the scope of any paid old/new-format comparison separately.
+3. Complete step 1.3, the first collection sweep, after that type cutover.
+   Complete the outstanding phase-5 full-pass trials too. Paid launches still
+   require the operator's direction; fake-harness coverage does not close them.
+4. Once review is validated, take up phase 6's bounded ingest experiment
    under a follow-on commission. Compare implementations before
    extracting shared commands.
 
