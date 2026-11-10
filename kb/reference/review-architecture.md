@@ -51,7 +51,7 @@ as its answer arrives. The full pass writes its results once, at its end,
 for the text the note then holds, and nothing after a stop or a conflict.
 
 An edit reaches the checkout only through code. Each edited text is checked
-first; for the full pass, frontmatter `title` and `type` and the H1 must be
+first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
 added. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
@@ -63,9 +63,18 @@ A full pass or revision reuses answers by each call's inputs. Its run directory 
 derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
 note opens a new run. The directory is not a complete input identity: changed
-instructions, profiles or approved answers can produce new calls inside it.
+instructions, profiles, write briefs or approved answers can produce new calls inside it.
 An operator stop requires explicit approval of its proposal. Repeating never
 approves; later draft edits have no effect until approved again.
+
+A declared [write brief](../types/write-brief.md) is captured for full-pass
+planning and editing and for revision assessment and every pass. Its bytes
+participate in those calls' identities and in revision plan approval. A
+worker reports a brief conflict as a problem, stopping the run. Code prevents
+changing the declaration and checks that the captured brief is still current
+before publication; it cannot verify semantic obedience. An amendment to the
+commission must happen outside the run. Method and closing judges do not
+receive this input, and brief changes do not stale gate results.
 
 ## Durable state and run state
 

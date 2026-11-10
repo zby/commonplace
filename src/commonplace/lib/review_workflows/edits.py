@@ -24,10 +24,11 @@ from pathlib import Path
 
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
+from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.validation import ValidationRun
 
-PRESERVED = ("title", "type")
+PRESERVED = ("title", "type", "brief")
 """Frontmatter fields no edit may change."""
 NO_WRITES = ("Write nothing else: create, edit or delete no file in the repository, and run no "
              "command that changes it or its git state. Do not delegate or start another agent.")
@@ -39,6 +40,37 @@ class Stop(Exception):
 
 class Conflict(Stop):
     """The file on disk is not the text the workflow expected; nothing was written."""
+
+
+def capture_brief(root: Path, note: str, text: str) -> dict[str, str]:
+    """Capture the declared sibling brief once; a broken declaration stops before workers launch."""
+    data = frontmatter.parse(text).data
+    if "brief" not in data:
+        return {}
+    expected = write_brief_name_for(Path(note))
+    if data["brief"] != expected:
+        raise Stop(f"write brief: {note} must name its own sibling {expected}")
+    path = root / Path(note).parent / expected
+    if not path.resolve().is_relative_to(root.resolve()):
+        raise Stop(f"write brief is outside the repository: {path}")
+    try:
+        brief = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as error:
+        raise Stop(f"write brief cannot be read: {path}: {error}") from error
+    parsed = frontmatter.parse(brief)
+    if not parsed.ok or parsed.data.get("type") != WRITE_BRIEF_TYPE:
+        raise Stop(f"write brief must declare {WRITE_BRIEF_TYPE}: {path}")
+    return {"brief": brief}
+
+
+def unchanged_brief(root: Path, note: str, start: str, captured: dict[str, str]) -> None:
+    """Refuse publication if the captured writing commission changed during this invocation."""
+    try:
+        current = capture_brief(root, note, start)
+    except Stop as error:
+        raise Conflict(f"write brief changed during the run; nothing was written: {error}") from error
+    if current != captured:
+        raise Conflict(f"write brief for {note} changed during the run; nothing was written")
 
 
 def rejection(problems: list[list[str]]) -> str:
@@ -58,7 +90,7 @@ def validation_fails(root: Path, note: str, text: str) -> set[str]:
 def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> list[str]:
     """The hard bounds an edited note breaks; empty when it keeps them.
 
-    The frontmatter title and type and the H1 are the start text's;
+    The frontmatter title, type and brief declaration and the H1 are the start text's;
     `user-verified` is gone when the body changed; and the validator finds
     no failure that the start text did not have (`baseline`).
     """

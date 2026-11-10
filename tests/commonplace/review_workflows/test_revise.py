@@ -27,10 +27,11 @@ from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.review_workflows import revise as revise_module
+from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
 FAKE = r"""
-import os, re, sys
+import json, os, re, sys
 from pathlib import Path
 frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
 files, section = {}, None
@@ -56,6 +57,12 @@ if Path(f"fail-{name}").exists():
     sys.exit(1)
 text = inputs["artifact"].read_text()
 rejected = "was rejected" in frame
+with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+    log.write(json.dumps({"kind": kind, "pass": name,
+                          "inputs": {key: path.read_text() for key, path in inputs.items()}}) + "\n")
+if "brief" in inputs and Path(f"brief-problem-{kind}").exists():
+    files["Optional outputs"]["problem"].write_text("The requested pass conflicts with the write brief.")
+    sys.exit(0)
 
 
 def plan():
@@ -77,6 +84,9 @@ def revised():
         return text + f"{name} applied {' '.join(kept)}.\n"
     if name == "readability-and-flow" and ("RETITLE" in text and not rejected or "BADPASS" in text):
         return text.replace("\n# Alpha\n", "\n# Beta\n")
+    if "BRIEFDRIFT" in text and name == "opening-and-title":
+        path = Path("kb/notes/alpha.brief.md")
+        path.write_text(path.read_text() + "Changed while the worker ran.\n")
     if "TOUCH" in text and name == "opening-and-title":
         Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
     scope = inputs["scope"].read_text() if "scope" in inputs else "all"
@@ -178,6 +188,87 @@ def note_text(repo) -> str:
 
 def states(report: dict) -> list[tuple[str, str]]:
     return [(state["name"], state["state"]) for state in report["passes"]]
+
+
+def test_revision_captures_brief_for_assessment_passes_lists_and_apply(repo, capsys):
+    start(repo, "PLAIN")
+    brief = add_brief(repo[0], NOTE_PATH)
+    code, report, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and report["waiting-for"]
+    approve(repo, capsys, report)
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH)
+    approve(repo, capsys, waiting)
+    code, done, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["applied"], done
+    calls = captured_inputs(repo[2])
+    assert {call["kind"] for call in calls} == {"assess", "pass", "list", "apply"}
+    assert all(call["inputs"]["brief"] == brief.read_text() for call in calls)
+    assert all("## Headless write briefs" in call["inputs"]["workflow"]
+               for call in calls if call["kind"] != "assess")
+
+
+@pytest.mark.parametrize("kind", ["assess", "pass", "list", "apply"])
+def test_a_revision_worker_brief_conflict_stops_before_later_passes(repo, capsys, kind):
+    start(repo, "PLAIN")
+    add_brief(repo[0], NOTE_PATH)
+    original = note_text(repo)
+    if kind != "assess":
+        _, report, _ = revise(repo, capsys, NOTE_PATH)
+        approve(repo, capsys, report)
+    if kind == "apply":
+        _, waiting, _ = revise(repo, capsys, NOTE_PATH)
+        approve(repo, capsys, waiting)
+    (repo[0] / f"brief-problem-{kind}").touch()
+    code, report, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and "write brief" in report["stopped"] and not report["applied"], report
+    assert note_text(repo) == original
+    assert launches[-1].startswith(kind + " ")
+    assert not any("place-external-systems" in line for line in launches)
+
+
+@pytest.mark.parametrize("named", [False, True])
+def test_changed_brief_invalidates_revision_plan_approval(repo, capsys, tmp_path, named):
+    start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    args = []
+    if named:
+        plan = tmp_path / "plan.yaml"
+        plan.write_text("purpose: p\ndefend: []\npasses: []\nstop: null\n")
+        args = ["--plan", str(plan)]
+    _, report, _ = revise(repo, capsys, NOTE_PATH, *args)
+    approve(repo, capsys, report)
+    brief.write_text(brief.read_text() + "\nKeep another passage.\n")
+    code, again, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and again["waiting-for"] and not again["applied"]
+    assert again["run-dir"] == report["run-dir"]
+    assert again["waiting-for"]["key"] != report["waiting-for"]["key"]
+    assert launches == ([] if named else ["assess - big"])
+
+
+def test_brief_changed_during_revision_blocks_the_write(repo, capsys):
+    start(repo, "BRIEFDRIFT")
+    add_brief(repo[0], NOTE_PATH)
+    original = note_text(repo)
+    _, report, _ = revise(repo, capsys, NOTE_PATH)
+    approve(repo, capsys, report)
+    code, report, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and "write brief" in report["conflict"] and not report["applied"]
+    assert note_text(repo) == original
+
+
+@pytest.mark.parametrize("damage", ["missing", "wrong-type", "wrong-name"])
+def test_invalid_brief_stops_before_any_revision_worker(repo, capsys, damage):
+    start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    if damage == "missing":
+        brief.unlink()
+    elif damage == "wrong-type":
+        brief.write_text(brief.read_text().replace("types/write-brief.md", "types/note.md"))
+    else:
+        path = repo[0] / NOTE_PATH
+        path.write_text(path.read_text().replace("brief: alpha.brief.md", "brief: ../escape.brief.md"))
+    code, report, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and "brief" in report["stopped"] and launches == []
 
 
 def test_assessment_stops_with_both_files(repo, capsys):

@@ -83,9 +83,11 @@ from commonplace.lib.review_workflows.edits import (
     Stop,
     apply,
     bounds,
+    capture_brief,
     guarded_changes,
     rejection,
     unchanged,
+    unchanged_brief,
     validation_fails,
     write_text,
 )
@@ -163,7 +165,7 @@ questions. If you cannot, write {problem} instead of guessing.
 The note is `{note}` in this repository; its text at the start of the pass is \
 {note_input}. The pass's instruction is {criterion_input}: write the packet as \
 it directs, from these method reports over that text:
-{reports}{direction}
+{reports}{direction}{brief}
 Output:
 - Write the packet to {packet}: YAML frontmatter holding exactly the decision \
 fields below, then the packet's body sections from `## Warranted contribution` \
@@ -178,7 +180,7 @@ questions. If you cannot do it within the instruction's bounds, write \
 
 The note is `{note}` in this repository; the text to edit is {note_input}. The \
 note's file in the checkout may hold an older text: edit this input, not the \
-file. The pass's instruction is {criterion_input}. {task}
+file. The pass's instruction is {criterion_input}. {task} {brief}
 
 Output:
 - Write the complete edited note, frontmatter included, to {output}. Do not \
@@ -194,7 +196,7 @@ COPYEDIT_PROMPT = """\
 Copyedit one note. Nobody will answer questions. If you cannot, write \
 {problem} instead of guessing.
 
-The note's text is {note_input}. The task is {task_input}. Read no other file.
+The note's text is {note_input}. The task is {task_input}. {brief} Read no other file.
 
 Output:
 - Write the complete copyedited note, frontmatter included, to {output}. {no_writes}
@@ -361,6 +363,7 @@ def _edit(run: Run, job: str, root: Path, note: str, start: str, text: str, base
     """An editor's text for `task`, checked against the pass's bounds."""
     prompt = EDIT_PROMPT.format(problem=PROBLEM_REF, note=note, note_input=input_ref("note"),
                                 criterion_input=input_ref("criterion"), task=task, output=output_ref("note"),
+                                brief=f"The write brief is {input_ref('brief')}." if "brief" in inputs else "",
                                 no_writes=NO_WRITES)
     answer = run.checked(job, lambda problems: prompt + rejection(problems),
                          lambda answer: bounds(root, note, start, answer.outputs["note"], baseline), ["note"],
@@ -371,7 +374,7 @@ def _edit(run: Run, job: str, root: Path, note: str, start: str, text: str, base
 
 
 def _copyedit(run: Run, root: Path, note: str, start: str, edited: str, baseline: set[str],
-              instruction: str) -> str:
+              instruction: str, brief: dict[str, str]) -> str:
     before = frontmatter.parse(edited).data
 
     def check(answer) -> list[str]:
@@ -381,9 +384,10 @@ def _copyedit(run: Run, root: Path, note: str, start: str, edited: str, baseline
             problems.append("the frontmatter changed; copy it unchanged")
         return problems
     prompt = COPYEDIT_PROMPT.format(problem=PROBLEM_REF, note_input=input_ref("note"), task_input=input_ref("task"),
+                                    brief=f"The write brief is {input_ref('brief')}." if brief else "",
                                     output=output_ref("note"), no_writes=NO_WRITES)
     answer = run.checked("copyedit", lambda problems: prompt + rejection(problems), check, ["note"],
-                         attempts=ATTEMPTS, inputs={"note": edited, "task": copyedit_task(instruction)})
+                         attempts=ATTEMPTS, inputs={"note": edited, "task": copyedit_task(instruction), **brief})
     if answer.problem is not None:
         raise Stop(f"copyedit: worker problem: {answer.problem}")
     return answer.outputs["note"]
@@ -437,7 +441,7 @@ def _packet_text(root: Path, note: str, start: str, final: str, run_id: str, dec
 
 
 def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direction: str | None,
-          max_workers: int | None) -> tuple[str, str | None, list[results.Result]]:
+          max_workers: int | None, brief: dict[str, str]) -> tuple[str, str | None, list[results.Result]]:
     """Run the pass in `run` from `start`.
 
     Return the packet text, the final text (None when nothing is applied)
@@ -449,11 +453,12 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
 
     reports, initial = _methods(run, root, note, start, "initial", max_workers)
-    extra = {"direction": direction} if direction else {}
+    extra = {**brief, **({"direction": direction} if direction else {})}
     prompt = PACKET_PROMPT.format(
         problem=PROBLEM_REF, note=note, note_input=input_ref("note"), criterion_input=input_ref("criterion"),
         reports=_report_lines(reports), packet=output_ref("packet"), no_writes=NO_WRITES,
-        direction=f"- the operator's direction, which prevails: {input_ref('direction')}\n" if direction else "")
+        brief=f"- the write brief: {input_ref('brief')}\n" if brief else "",
+        direction=f"- the operator's direction: {input_ref('direction')}\n" if direction else "")
     decision, answer = decide(run, "packet", prompt, PACKET_SCHEMA, output="packet",
                               check=_packet_check(root, note),
                               attempts=ATTEMPTS, inputs={"note": start, "criterion": instruction, **reports, **extra})
@@ -475,8 +480,8 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
 
     edited = keep("edit", _edit(run, "edit", root, note, start, start, baseline,
                                 APPLY_TASK.format(packet_input=input_ref("packet")),
-                                {"criterion": instruction, "packet": packet}))
-    final = keep("copyedit", _copyedit(run, root, note, start, edited, baseline, instruction))
+                                {"criterion": instruction, "packet": packet, **brief}))
+    final = keep("copyedit", _copyedit(run, root, note, start, edited, baseline, instruction, brief))
     closings: list[tuple[str, str]] = []
     cycle = "closing"
     while True:
@@ -493,7 +498,7 @@ def _pass(run: Run, root: Path, note: str, start: str, report: PassReport, direc
             final = keep("repair", _edit(run, "repair", root, note, start, final, baseline,
                                          REPAIR_TASK.format(defects_input=input_ref("defects"),
                                                             packet_input=input_ref("packet")),
-                                         {"criterion": instruction, "packet": packet, "defects": defects}))
+                                         {"criterion": instruction, "packet": packet, "defects": defects, **brief}))
             cycle = "recovery"
             continue
         report.closing_status = "hand-back"           # hand-back, or a second repair-needed: nothing is applied
@@ -529,9 +534,11 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
     start = (root / note).read_text(encoding="utf-8")
     final = None
     try:
+        brief = capture_brief(root, note, start)
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
-            text, final, verdicts = _pass(run, root, note, start, report, direction, max_workers)
+            text, final, verdicts = _pass(run, root, note, start, report, direction, max_workers, brief)
 
+            unchanged_brief(root, note, start, brief)
             if final is not None:
                 unchanged(root, note, start, root / report.proposed)
             run.accept("packet.md", text)

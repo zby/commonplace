@@ -30,6 +30,11 @@ from commonplace.lib.review_workflows.edits import Conflict, apply
 from commonplace.lib.review_workflows.full_pass import packet_file
 from commonplace.lib.review_workflows.results import freshness, read_result, result_path
 from commonplace.lib.validation import validate_note
+from tests.commonplace.review_workflows.brief_helpers import (
+    add_brief,
+    captured_inputs,
+    use_full_instruction,
+)
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
 FAKE = r"""
@@ -59,6 +64,11 @@ if Path(f"fail-{kind}").exists():
 note = inputs["note"].read_text()
 start = inputs["start"].read_text() if "start" in inputs else note
 rejected = "was rejected" in frame
+with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+    log.write(json.dumps({"kind": kind, "inputs": {name: path.read_text() for name, path in inputs.items()}}) + "\n")
+if "brief" in inputs and Path(f"brief-problem-{kind}").exists():
+    files["Optional outputs"]["problem"].write_text("The requested edit conflicts with the write brief.")
+    sys.exit(0)
 
 
 def packet():
@@ -82,10 +92,15 @@ def edit():
     text = note.replace("\n# Alpha\n", "\n# Beta\n") if "RETITLE" in note and not rejected else note
     if "TRAIT" in note:
         text = text.replace("type: types/note.md\n", "type: types/note.md\ntraits: [special]\n")
+    if "DROPBRIEF" in note and not rejected:
+        text = text.replace("brief: alpha.brief.md\n", "")
     return text.replace("user-verified: true\n", "") + "Edited.\n"
 
 
 def copyedit():
+    if "BRIEFDRIFT" in note:
+        path = Path("kb/notes/alpha.brief.md")
+        path.write_text(path.read_text() + "Changed while the worker ran.\n")
     if "TOUCH" in note:
         Path("kb/notes/alpha.md").write_text(note + "The operator's sentence.\n")
     return note.replace("Edited.", "Copyedited.")
@@ -179,6 +194,62 @@ def packet(repo) -> tuple[dict, str]:
 def assert_valid_packet(repo) -> None:
     result = validate_note(packet_file(repo[0], NOTE_PATH), repo_root=repo[0])
     assert not result.fails, result.fails
+
+
+def test_brief_reaches_planners_and_all_editors_but_not_judges(repo, capsys):
+    start(repo, "REPAIR DROPBRIEF")
+    brief = add_brief(repo[0], NOTE_PATH)
+    use_full_instruction(repo[0])
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 0 and report["applied"] and report["repaired"], report
+    calls = captured_inputs(repo[2])
+    writers = [call for call in calls if call["kind"] in ("packet", "edit", "copyedit", "repair")]
+    assert {call["kind"] for call in writers} == {"packet", "edit", "copyedit", "repair"}
+    assert all(call["inputs"]["brief"] == brief.read_text() for call in writers)
+    assert all("brief" not in call["inputs"] for call in calls if call not in writers)
+    copy = next(call for call in writers if call["kind"] == "copyedit")
+    assert "binding write brief" in copy["inputs"]["task"], "copyeditor receives only its instruction section"
+    assert len([call for call in writers if call["kind"] == "edit"]) == 2, "removing brief: is rejected"
+    assert "brief: alpha.brief.md" in note_text(repo)
+
+
+@pytest.mark.parametrize("kind", ["packet", "edit", "copyedit", "repair"])
+def test_brief_conflict_reported_by_a_full_pass_worker_stops_publication(repo, capsys, kind):
+    start(repo, "REPAIR")
+    add_brief(repo[0], NOTE_PATH)
+    use_full_instruction(repo[0])
+    original = note_text(repo)
+    (repo[0] / f"brief-problem-{kind}").touch()
+    code, report, launches = full_pass(repo, capsys)
+    assert code == 1 and "write brief" in report["stopped"], report
+    assert not report["applied"] and note_text(repo) == original
+    assert launches[-1] == kind
+    assert not packet_file(repo[0], NOTE_PATH).exists()
+
+
+def test_changed_brief_reasks_edit_work_without_reasking_initial_judges(repo, capsys):
+    start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    use_full_instruction(repo[0])
+    (repo[0] / "fail-copyedit").touch()
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 1 and not report["applied"]
+    (repo[0] / "fail-copyedit").unlink()
+    brief.write_text(brief.read_text() + "\nKeep the second distinction too.\n")
+    code, done, launches = full_pass(repo, capsys)
+    assert code == 0 and done["applied"], done
+    assert launches[:3] == ["packet", "edit", "copyedit"], "the initial method/review calls replay"
+    assert done["run-dir"] == report["run-dir"]
+
+
+def test_brief_changed_during_full_pass_blocks_packet_and_note_publication(repo, capsys):
+    start(repo, "BRIEFDRIFT")
+    add_brief(repo[0], NOTE_PATH)
+    use_full_instruction(repo[0])
+    original = note_text(repo)
+    code, report, _ = full_pass(repo, capsys)
+    assert code == 1 and "write brief" in report["conflict"] and not report["applied"], report
+    assert note_text(repo) == original and not packet_file(repo[0], NOTE_PATH).exists()
 
 
 def test_keep_applies_the_copyedited_text_once_and_closes_ready(repo, capsys):

@@ -19,7 +19,7 @@ The command runs the pass as a workflow in the run directory `kb/reports/state/r
 
 - **Methods.** The compression bundle, friction, premises and connect each write one report. The catalog bundles and `critique-note` are asked over the text under review, one worker per bundle; a stored result does not replace the ask. The selector skips gates that do not apply to the `type:` or `traits:` of the text under review; a skipped gate is not a passed gate. When the pass ends, the command writes review result files once, for the text the note then holds: the last closing cycle's verdicts after an applied edit, the initial verdicts otherwise. A stop or a conflict writes none.
 - **Packet.** One worker answers the decision table below from the method reports and writes the packet.
-- **Edit.** For `keep` with a determined update, an editor writes the edited note and a copyeditor copyedits it. The command rejects a text that changes the frontmatter `title` or `type` or the H1, keeps `user-verified` after a body change, or adds a validation failure; the worker writes it again with those problems.
+- **Edit.** For `keep` with a determined update, an editor writes the edited note and a copyeditor copyedits it. The command rejects a text that changes the frontmatter `title`, `type` or `brief` or the H1, keeps `user-verified` after a body change, or adds a validation failure; the worker writes it again with those problems.
 - **Closing.** The methods run again over the edited text, and one worker chooses the closing status. The command applies it: `ready` ends the pass, `repair-needed` allows one repair and a new closing cycle over the repaired text, and `hand-back` ends the pass with the note untouched.
 
 On `ready`, the command writes the packet and then the final text to the note. It writes the note only when the file still holds the start text. If the note changed during the pass, the command writes nothing and reports a conflict that names the run file holding the proposed text. Each accepted edited text stays in the run's `artifact/texts/`.
@@ -32,6 +32,26 @@ The command prints a JSON report: run directory, disposition, closing status, th
 - After a worker problem, read it in the report, then `commonplace-review retry RUN JOB` and repeat the command.
 - When the packet's update is `UNDETERMINED`, the packet lists the competing readings. Answer by repeating the command with `--direction "<the chosen reading>"`; the pending packet does not block it, and the packet is decided again over the same method reports. The run records the direction, so a later repeat without `--direction` keeps it.
 
+## Write briefs
+
+When the note declares a [write brief](../types/write-brief.md), the packet worker, editor, copyeditor
+and repair editor receive its captured text as `brief`. It is retained
+intent for this note, not a diagnostic reconstruction. Plan and apply only
+changes consistent with its must-keep, must-exclude and reserved decisions.
+Do not edit the brief or remove or change the note's `brief:` declaration.
+
+If the requested direction, a method finding or an edit conflicts with the
+brief, report the conflict through the worker-problem output and stop. The
+headless workflow cannot amend the brief alongside the note. The operator
+must resolve that commission change outside the run before continuing;
+`--direction` alone does not authorise a brief amendment. Use the captured
+brief, not a reread of its live file. A changed brief invalidates the affected
+worker calls, and a change during the invocation blocks publication.
+
+The method and closing judges do not receive the brief. Their criteria and
+review freshness remain unchanged. Supplying the brief to writers does not
+mechanically prove that their edits respect its meaning.
+
 ## Why this order
 
 - **Compression bundle first.** Across early validation cases it matched or exceeded standalone prune and split/rehome instructions and additionally covers core-claim-obscured and detail-overhang. It is the most reliable single source of edit-strategy signal.
@@ -39,13 +59,13 @@ The command prints a JSON report: run directory, disposition, closing status, th
 - **Friction and premise decomposition**, adversarial, in separate workers: friction checks the inferential joints, premise decomposition attacks the premises (routing each failure `LOCAL` or `GLOBAL`) and annotates each non-`HOLDS` premise's counterexample shape (`instance`, `prevalence`, `priced-exception`). An argument can carry valid inferences on a false premise — friction passes that, the premise gate catches it.
 - **All catalog bundles.** Case 02 showed `semantic` and compression diverge: a qualifier can be necessary for truth and still fail to earn its space. Keep complementary findings rather than letting one bundle veto another.
 - **`cp-skill-connect` over the same text**, so its candidates reflect the same reading of the note that produced the other findings.
-- **Contribution selection belongs in the packet**, because it needs the artifact-supported intent, the warrant findings, compression's buried-versus-undetermined distinction, and connect's account of what the KB already supplies together. The packet's brief is a diagnostic reconstruction from the incumbent, not a record of the original commission — which is why a claim-level repair is handed back rather than made here.
+- **Contribution selection belongs in the packet**, because it needs the artifact-supported intent, the warrant findings, compression's buried-versus-undetermined distinction, and connect's account of what the KB already supplies together. The packet's revision brief is a diagnostic reconstruction from the incumbent, not a record of the original commission. A supplied write brief is that retained commission and bounds the planned edits; a claim-level repair is still handed back rather than made here.
 - **Copyedit after body edits**, because compressing and cutting break the transitions the original prose relied on.
 - **Several orthogonal checks, reconciled rather than voted.** Each method tests a structurally independent property; disagreement between them is signal to preserve.
 
 ## Decision table
 
-Answer the four questions in order and record each answer in the packet. Derive every answer only from the artifact, the repository and collection contracts, the method reports, explicit operator direction, and retained intent that identifies its source, subject, scope, and role. Operator direction given to the packet prevails. Do not add an ad hoc history search; do not treat model familiarity as evidence a contribution is old, or model surprise as evidence it matters.
+Answer the four questions in order and record each answer in the packet. Derive every answer only from the artifact, the repository and collection contracts, the method reports, explicit operator direction, and retained intent that identifies its source, subject, scope, and role. Operator direction given to the packet prevails within the supplied write brief's bounds; a direction that would amend the brief requires the stop described above. Do not add an ad hoc history search; do not treat model familiarity as evidence a contribution is old, or model surprise as evidence it matters.
 
 **1. Warranted contribution.** Use an intended reader stated in the artifact when present; otherwise the consuming audience in the repository's KB purpose, narrowed by the collection contract. Answer: relative to that reader and the existing KB, what does this artifact warrant the reader to understand, infer, believe, or do that a generic treatment would not? Use connect to inform what the KB already supplies (it is candidate discovery, not an exhaustive ownership proof), critique and semantic findings to assess warrant, and compression to distinguish a buried contribution from an undetermined one. Set `Update` to one artifact-supported sentence, `UNDETERMINED`, or `NONE`. `UNDETERMINED` means materially different readings remain and no authorized input selects one; state the competing readings as one focused question for the operator in Open items. `NONE` means no distinct contribution remains after excluding a distinct definition, record, reference, or audience-specific expository function; repairable warrant belongs in the Warrant field, not in `NONE`.
 
@@ -143,6 +163,13 @@ A **repair** applies only the corrections of the closing defects it is given, un
 ## Copyedit
 
 Copyedit the note text you are given for flow, coherence, logic, and readability. You may reflow, reorder within a section, and tighten wording. Preserve the title, the thesis, every claim, the evidence, the sources, the frontmatter exactly, and every cut the text already reflects; add no material and restore nothing. If a useful change would be substantive, leave that passage as it is.
+
+A supplied `brief` is the note's binding write brief. Preserve its must-keep,
+must-exclude and reserved decisions. Do not amend it or change the `brief:`
+declaration. If the copyedit task or an earlier cut conflicts with the brief,
+report the conflict through the worker-problem output and stop; do not
+restore or cut a passage to resolve it yourself. Use the captured input, not
+a reread of the live brief.
 
 ## Closing cycle
 

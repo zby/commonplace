@@ -125,7 +125,7 @@ specific proposal; it must not infer approval from a request to retry.
    others run again.
 2. Step 2 runs each listed pass as one worker, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
-   the revised text (frontmatter, title and H1 kept; no new validation
+   the revised text (title, type, brief declaration and H1 kept; no new validation
    failure), and the next pass works on that text. The artifact is written
    once, at the end, and only when every pass ended `applied`, `no-change`
    or `skipped`. After a `problem` pass, or while the run waits, nothing is
@@ -149,6 +149,29 @@ artifact what a report does not account for, and commit. Use this procedure in a
 conversation instead when the passes are chosen as the conversation goes,
 when a pass needs the conversation as evidence, or when each pass should be
 integrated and committed before the next one runs.
+
+## Headless write briefs
+
+When the artifact declares a [write brief](../../types/write-brief.md), the assessment and every pass
+(including candidate-list and apply workers) receive its captured text as
+`brief`. Pass workers also receive this revision instruction as `workflow`;
+apply its constraints to the assigned pass, not additional passes or the
+interactive dispatch procedure.
+
+Treat the supplied brief as binding retained intent. Keep its must-keep,
+must-exclude and reserved decisions in both the plan and the edited text.
+Do not amend the brief or remove or change the artifact's `brief:` field.
+If the purpose, defended claims, approved plan, approved candidate list or
+pass instruction conflicts with it, report the conflict through the
+worker-problem output and stop. Approval of a plan or list does not authorise
+amending the brief. The operator must resolve the commission change outside
+this workflow before continuing.
+
+Use the captured input, not a reread of the live brief. A brief change between
+invocations invalidates affected calls and plan approval; a change during an
+invocation blocks publication. A missing or invalid declared brief stops the
+run before workers launch. Supplying it does not mechanically verify that
+an edit respects its meaning; the worker must identify conflicts.
 
 ## Budget
 

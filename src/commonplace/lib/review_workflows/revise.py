@@ -36,8 +36,9 @@ never approves: only the recorded approved text becomes the operator's answer:
    (`artifact_bounds()`), and the next pass works on it. Each
    pass's report and the text it left are kept under `artifact/reports/` and
    `artifact/texts/`, so the operator can read each pass's diff. A pass
-   whose text comes back unchanged is `no-change`; a worker problem or a pass
-   out of attempts is `problem`, and the run goes on with the next pass.
+   whose text comes back unchanged is `no-change`. A worker-reported problem
+   stops the run; a pass out of correction attempts is `problem`, and the run
+   can collect the remaining pass outputs but applies none of them.
 3. **Strikes.** A pass in `STRIKE` has the operator strike its list before
    any entry is applied: a list ask, a stop with
    `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat an apply
@@ -92,8 +93,10 @@ from commonplace.lib.review_workflows.edits import (
     Stop,
     apply,
     bounds,
+    capture_brief,
     guarded_changes,
     rejection,
+    unchanged_brief,
     validation_fails,
 )
 from commonplace.lib.tasks import load_profile
@@ -276,7 +279,7 @@ The artifact is `{artifact}` in this repository; its text is {artifact_input}. \
 Judge this input text; the file on disk may differ. The instruction is \
 {criterion_input}: do its step 1, the assessment, and nothing after it. The \
 operator reads the assessment and edits the plan before any pass runs. \
-{purpose}{defend}The passes you may recommend are listed in {passes_input}; \
+{purpose}{defend}{brief}The passes you may recommend are listed in {passes_input}; \
 choose only from them, by name.
 
 Output:
@@ -294,7 +297,8 @@ FRAME = """\
 The artifact is `{artifact}` in this repository; the text under revision is \
 {artifact_input}. The artifact's file in the checkout may hold an older text: \
 work on this input, not the file. The pass is `{pass_rel}`; its text is \
-{criterion_input}. The purpose is {purpose_input}. {defend} {scope}
+{criterion_input}. The revision instruction is {workflow_input}. \
+The purpose is {purpose_input}. {defend} {scope} {brief}
 """
 
 PASS_PROMPT = """\
@@ -354,7 +358,7 @@ def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: 
     """The hard bounds a revised artifact breaks; empty when it keeps them.
 
     An artifact with frontmatter keeps the note bounds of `edits.bounds`:
-    frontmatter title and type, the H1, `user-verified` dropped on a body
+    frontmatter title, type and brief declaration, the H1, `user-verified` dropped on a body
     change, no new validation failure. No pass may change the title: the one
     that judges titles proposes them in its report. An artifact without
     frontmatter gains none, keeps its first H1 and adds no validation failure.
@@ -377,10 +381,10 @@ def _rel(root: Path, path: Path) -> str:
 
 
 def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
-                        known: dict[str, Pass]) -> tuple[str, dict[str, str]]:
+                        known: dict[str, Pass], brief: dict[str, str]) -> tuple[str, dict[str, str]]:
     """The captured request, also used to invalidate an obsolete plan approval."""
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
-              "passes": catalog(known)}
+              "passes": catalog(known), **brief}
     if purpose:
         inputs["purpose"] = purpose
     if defend:
@@ -391,6 +395,7 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, defend: l
         purpose=(f"The operator's purpose is {input_ref('purpose')}. " if purpose
                  else "The operator named no purpose: propose one as the instruction directs. "),
         defend=f"The operator marks these claims as defended: {input_ref('defend')}. " if defend else "",
+        brief=f"The write brief is {input_ref('brief')}. " if brief else "",
         assessment=output_ref("assessment"), plan=output_ref("plan"), no_writes=NO_WRITES)
     return prompt, inputs
 
@@ -452,7 +457,7 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
 
 
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
-            profiles: dict[str, Profile], report: ReviseReport) -> str:
+            profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], instruction: str) -> str:
     """Run the plan's passes from `start`; return the text the last accepted pass left."""
     run.accept(START, start)
     baseline = validation_fails(root, artifact, start)
@@ -468,10 +473,13 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                                               "`defend` list is empty"))
             continue
         inputs = {"artifact": text, "criterion": current.text, "purpose": plan["purpose"],
+                  "workflow": instruction, **brief,
                   **({"defend": defend} if defend else {}), **({"scope": state.scope} if state.scope else {})}
         frame = FRAME.format(
             artifact=artifact, artifact_input=input_ref("artifact"), pass_rel=current.rel,
             criterion_input=input_ref("criterion"), purpose_input=input_ref("purpose"),
+            workflow_input=input_ref("workflow"),
+            brief=f"The write brief is {input_ref('brief')}." if brief else "",
             defend=(f"Defend these claims; the pass may not narrow them: {input_ref('defend')}." if defend
                     else "No claim is marked as defended."),
             scope=(f"Apply the pass only to this part of the artifact: {input_ref('scope')}." if state.scope
@@ -494,7 +502,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         state.model = answer.record["model"]
         if answer.problem is not None:
             state.state, state.reason = "problem", f"worker problem: {answer.problem}"
-            continue
+            raise Stop(f"{current.name}: {state.reason}")
         state.report = _rel(root, run.accept(f"reports/{current.name}.md", answer.outputs["report"]))
         revised = answer.outputs["artifact"]
         if revised == text:
@@ -523,8 +531,9 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     start = (root / artifact).read_text(encoding="utf-8")
     final = None
     try:
+        brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
-            prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known)
+            prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
             if named_plan is None:
                 assessed = _assess(run, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]
@@ -553,9 +562,10 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     run, root, PLAN, f"{read}, then edit the plan in place, or name another plan file with --plan. "
                     "Approve it explicitly before repeating.", REPEAT.format(artifact=artifact))
             else:
-                final = _passes(run, root, artifact, start, plan, known, profiles, report)
+                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, inputs["criterion"])
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
+                    unchanged_brief(root, artifact, start, brief)
                     apply(root, artifact, start, final, root / report.proposed)
                     report.applied = True
                 elif final != start:
