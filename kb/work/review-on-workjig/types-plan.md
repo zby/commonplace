@@ -6,7 +6,9 @@ Use Commonplace artifact types instead of contracts duplicated in workflow
 Python. Following Fable's assessment, the operator approved this order:
 commit the approval fix, capture binding write briefs, trial revision live,
 then implement the individual review-result slice before the first collection
-sweep. The live trial still needs an operator-selected artifact and profile.
+sweep. The operator selected older artifacts and Sol; two assessments now
+await proposal-specific approval, recorded in the implementation plan's
+[live assessment record](./plan.md#live-sol-assessments-2026-11-10).
 Later type slices remain proposals; directory typing is a separate decision.
 
 The intended result is one declared contract per output: the worker reads
@@ -342,7 +344,7 @@ consumers; review adoption must not silently redefine `verifies` for them.
 The approval-interface follow-up is committed as `e93284673`. Binding briefs
 are implemented in `4a29b1bf5` for planning and editing workers without changing judge
 inputs or result freshness. Complete the authorized live revision trial
-before step 2; do not launch it without the artifact and profile selection.
+before step 2; do not infer plan approval from the artifact/profile selection.
 
 1. **Inventory and contract cutover.** Freeze the worker/stored-field split,
    audit footer consumers, and write the multi-consumer change packet. Choose

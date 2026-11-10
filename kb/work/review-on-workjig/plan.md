@@ -13,8 +13,8 @@ shared-layer architecture is a future direction, not an execution phase.
 ## Current state and next work
 
 As of 2026-11-10. The code described in phases 1 to 5 is built and
-committed; phase 5 has not run with a live worker. Explicit approval and
-its fake-harness tests are now implemented. The stop-plan override and
+committed; phase 5 has reached live assessment stops but has not completed
+its editing trial. Explicit approval and its fake-harness tests are implemented. The stop-plan override and
 unapproved-edit warning are committed as `e93284673`; that follow-up passed
 701 selected fast tests and 17 slow analysis consumer tests.
 
@@ -41,8 +41,8 @@ On the operator's direction, finish review before testing the same
 publication boundary in ingest, then decide what is worth sharing:
 
 1. Run the phase-5 live revision trial with explicit approval, including a
-   strike-list stop. The operator must select the artifact and profile before
-   paid launches. If the artifact has a brief, inspect whether the worker
+   strike-list stop. The operator selected older artifacts and Sol; the two
+   assessed candidates below now need proposal-specific approval. If the artifact has a brief, inspect whether the worker
    respects it as well as whether the approval interface is usable.
 2. Implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
    the individual review-result type, with pair and bundle readers and writers
@@ -59,6 +59,36 @@ This workshop closes against the review conditions in the README.
 Ingest and shared-layer work do not add closing conditions. Before
 closing, move any still-held follow-on direction to its own workshop;
 do not keep this migration open to house the architecture work.
+
+### Live Sol assessments, 2026-11-10
+
+The operator authorized older untouched artifacts with Sol. Both effort roles
+used profile `codex`, configured for `gpt-6.1-sol` at medium effort. Two
+assessment workers completed, one per artifact, without correction retries.
+
+- `kb/articles/what-an-automated-reviewer-should-measure.md`: last file change
+  October 23 was relocation; earlier history is September. Sol recommends
+  only `readability-and-flow`, scoped to the opening and the introduction to
+  “Testing the two claims,” to distinguish the textual assessment from its
+  two experimental tests. Run:
+  `kb/reports/state/review/runs/revise/kb/articles/what-an-automated-reviewer-should-measure/1bac5e289ba8`.
+- `kb/theory/position-and-proportion-set-what-a-reader-retains.md`: unchanged
+  since October 26 and has a write brief. The captured request includes that
+  brief, and the assessment explicitly preserves its reserved conjecture.
+  Sol recommends only `readability-and-flow` over the two paragraphs setting
+  out the proportion experiment. Its separate question about qualifying the
+  opening is not included in the edit plan. Run:
+  `kb/reports/state/review/runs/revise/kb/theory/position-and-proportion-set-what-a-reader-retains/0090306470d3`.
+
+Each run retains `artifact/assessment.md` and `artifact/plan.yaml`. Both
+stopped for approval without editing the target. Repeating each invocation
+kept the same approval key and launched zero additional workers. Both
+checkout guards remained clean, including on repeat.
+
+Neither assessor recommended a strike-list pass. Do not add unnecessary
+editing to manufacture trial coverage. Approval, editing, publication and
+the strike-list interaction remain untested live; these assessment stops do
+not close phase 5 or release the result-type implementation prerequisite.
 
 ## Choices this plan makes
 
