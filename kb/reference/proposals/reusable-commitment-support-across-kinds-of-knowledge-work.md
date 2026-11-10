@@ -17,7 +17,7 @@ tags: [self-improving-systems, learning-theory]
   is paid once and reused. No artifact states the step from that program to
   other kinds of knowledge work, or what would show the step is uneconomical.
 - The machinery that exists serves theory building in a KB: types and
-  collection contracts, validators, review gates, freshness baselines,
+  collection contracts, validators, review gates, hash-pinned review results,
   connect and ingest skills, the search-control and commitment notes, and
   the draft refinement interface (derive, compare, locate, revise,
   evaluate, apply) in the

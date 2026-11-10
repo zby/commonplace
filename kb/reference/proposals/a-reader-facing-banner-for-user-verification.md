@@ -13,7 +13,7 @@ tags: [kb-maintenance]
 - The base note schema permits only `user-verified: true`; false is represented by absence. The [note type](../../types/note.md) owns the exact semantics.
 - Creation, conversion, validation, and review never grant verification. A substantive edit removes it; only explicit human authorization may preserve it across a mechanical change.
 - ProperDocs already renders `**User verified:** yes` in generated page metadata when the field is present. Raw Markdown consumers still have to notice and interpret frontmatter; there is no body-level signal.
-- Review evidence remains local, criterion-specific, and model-partitioned in SQLite. It is deliberately not an input to user verification and cannot produce a universal reviewed/unreviewed banner.
+- Review evidence remains local and criterion-specific, in untracked result files under `kb/reports/state/review/results/`. It is deliberately not an input to user verification and cannot produce a universal reviewed/unreviewed banner.
 - No validator checks a body banner against `user-verified`, because no standardized banner exists.
 
 ## Problem

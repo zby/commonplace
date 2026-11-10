@@ -6,10 +6,11 @@ tags: [kb-maintenance, observability, review-system]
 
 # Collection-as-artifact freshness
 
-Epistack maintenance must detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. Shipped v1 freshness registers only `file-text` inputs on `review-pair` targets in `commonplace-store.sqlite` ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)). Per-file registration cannot see new members until something explicitly accepts them.
+Epistack maintenance must detect when a source collection gains, loses, or changes a member without a pre-existing per-file dependency edge. Until November 2026, v1 freshness registered only `file-text` inputs on `review-pair` targets in `commonplace-store.sqlite` ([ADR 052](../adr/052-general-freshness-store-review-first-migration.md)); its successor tracks only (note, criterion) review pairs. Per-file registration cannot see new members until something explicitly accepts them.
 
 ## Current state (as of 2026-08-19)
 
+- (2026-11-10) [ADR 127](../adr/127-review-runs-as-workflows-over-result-files.md) deleted the store, its freshness tables and the `commonplace-freshness-{status,ack,retire}` commands, and dropped the generic freshness store for non-review targets without replacement. Review freshness is now one result file per (note, criterion) pair that records both inputs' hashes. The planned approach below has no substrate to register on; the remaining bullets describe the state before that decision.
 - General freshness substrate is shipped: `artifact_snapshots`, `freshness_baselines`, `freshness_inputs`, and `commonplace-freshness-{status,ack,retire}` over registered targets.
 - v1 admits `file-text` only and `review-pair` targets only. Generic initial acceptance is deliberately absent because review finalization owns registration of the only supported target kind ([ADR 065](../adr/065-publish-only-supported-freshness-transitions.md)).
 - Review parity (selector discovery, capture finalization, observation ack, pruning) is an adapter over the generic tables.

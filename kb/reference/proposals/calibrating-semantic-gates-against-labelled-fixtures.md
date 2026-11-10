@@ -19,7 +19,7 @@ Shipped:
 
 - Semantic gates are individual markdown files at `kb/instructions/review-gates/{lens}/{name}.md`, with type `review-gate` (the `semantic` lens lives under `.../semantic/`). Each carries a `## Failure mode` and a `## Test` that selects PASS / WARN / FAIL / ERROR.
 - Most gates carry inline `## Example (pass)` and `## Example (fail)` blocks. These are **illustrative, singular, and never executed** — they orient a reviewer inside the prompt; nothing runs the gate against them or checks that it decides them correctly.
-- Reviews are partitioned by model: a review or freshness baseline under one `--model-partition` does not satisfy freshness for another (see [review system](../README-REVIEW-SYSTEM.md#concepts)).
+- (2026-11-10) Reviews are not partitioned by model. [ADR 127](../adr/127-review-runs-as-workflows-over-result-files.md) keeps one result file per (note, criterion) pair; the worker profile and the model the harness recorded are provenance in it, so a review by one model satisfies freshness for any other ([review system](../README-REVIEW-SYSTEM.md)).
 
 Precedent (sibling repo `epistack-casebooks`, `kb/work/post-commonplace-upgrade/track-a/`): a collection-conformance criterion was authored, shipped, and trusted for three days even though its central limb had a zero firing rate against known positives. It was ruled MET in 12/12 blind reviews, including reviews of both known-drifted notes, and produced articulate output throughout. In one afternoon, a four-note labelled sample (two drifted, two clean, three blind reviewers each) exposed both inert limbs. The rewritten criterion separated perfectly on the same sample: drifted WARN 3/3 and clean PASS 3/3 — an in-sample number, per that track's `calibration/REPORT.md`. Two distinct failure mechanisms surfaced: a reviewer accepting a violation's locally available excuse, and a reviewer silently substituting a computable proxy for a criterion it could not evaluate from one artifact. Nothing readable in the twelve reviews distinguished the inert limbs from working ones.
 
@@ -27,7 +27,7 @@ Not shipped:
 
 - Any executable labelled fixture set for a gate, known-case regression result, or field estimate of per-gate detection and false-alarm rates.
 - Any gate lifecycle state beyond existence — no notion of a gate that is authored but not yet trusted.
-- Any regression signal when a gate's text, or its model partition, changes.
+- Any regression signal when a gate's text, or the model judging it, changes.
 
 The inline pass/fail examples are the germ of a known-case suite. The first step promotes them from illustrations to an executed smoke test; independently labelled fixtures then turn that smoke test into a regression suite. Neither step alone produces a field-calibrated gate.
 
@@ -71,9 +71,9 @@ Those safeguards are shapes, not portable constants. Fixed strata support compar
 
 ## Judging-configuration dependence
 
-A regression or calibration result belongs to the judging configuration that produced it. At minimum, that configuration includes the gate snapshot, fixture or field-sample snapshot, model partition, rendered prompt and system instructions, sampling settings, and repetition protocol. A result under one model partition does not transfer to another, just as a review under one partition does not satisfy freshness for another.
+A regression or calibration result belongs to the judging configuration that produced it. At minimum, that configuration includes the gate snapshot, fixture or field-sample snapshot, judging model, rendered prompt and system instructions, sampling settings, and repetition protocol. A result under one model does not transfer to another.
 
-Editing the gate or changing partitions must rerun the known-case suite; changes to other recorded configuration components must invalidate the result when they can change verdict behavior. This is the regression trigger the current system lacks: today a gate edit stales the notes it reviews, but nothing re-checks that the edited gate still detects its own positives. The general invalidation rule follows [criteria edits invalidate verdicts; process edits invalidate artifacts](../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
+Editing the gate or changing the judging model must rerun the known-case suite; changes to other recorded configuration components must invalidate the result when they can change verdict behavior. This is the regression trigger the current system lacks: today a gate edit stales the notes it reviews, but nothing re-checks that the edited gate still detects its own positives. The general invalidation rule follows [criteria edits invalidate verdicts; process edits invalidate artifacts](../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md).
 
 ## Free choices (deliberately unresolved)
 
@@ -81,10 +81,10 @@ Editing the gate or changing partitions must rerun the known-case suite; changes
 - **Regression threshold.** Must the gate flag 100% of known positives and pass 100% of known negatives, or clear a rate bar across repeated runs? A hard rule is simple but brittle; a rate bar needs a cutoff and uncertainty treatment.
 - **Field sampling.** Should a monitoring sample follow deployment prevalence, hold gate-outcome strata fixed for comparability, or deliberately weight a shift-sensitive slice? A stratified sample must state whether its metrics describe that monitoring cohort or are reweighted to the deployment population.
 - **Field threshold.** What sample sizes, interval bounds, and relative costs of false negatives and false positives justify a trust decision? A human-disagreement-relative alert band is one option, but its formula and rater count need local validation. This cannot be reduced to the regression threshold.
-- **Blocking vs advisory.** Does known-case failure prevent a gate from writing trusted freshness baselines, or only annotate them? Passing remains necessary but not sufficient; activation may require field evidence or an explicit human risk decision. Either route demands the `candidate → active` distinction that [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) also needs.
+- **Blocking vs advisory.** Does known-case failure prevent a gate from writing trusted review results, or only annotate them? Passing remains necessary but not sufficient; activation may require field evidence or an explicit human risk decision. Either route demands the `candidate → active` distinction that [gate learning from accepted edits](./gate-learning-from-accepted-edits.md) also needs.
 - **Recovery and rollback.** If regression or field monitoring triggers a gate rewrite, what must pass before the replacement can become active? The candidate path is to rerun non-leaking regression, stage the replacement for human promotion, and retain the previous judging configuration for rollback. The operator, rollback trigger, and retention period remain open.
 - **Corpus scope.** One fixture set per gate, or a shared cross-gate corpus each gate is scored against? Per-gate is simpler; a shared corpus surfaces gates that fire on each other's positives (double-flagging).
-- **Repetition budget.** How many runs per fixture, and at what partition, are needed before the rate is trusted? This is a cost knob traded against confidence in the measured gap.
+- **Repetition budget.** How many runs per fixture, and with which models, are needed before the rate is trusted? This is a cost knob traded against confidence in the measured gap.
 - **Virtual criteria.** Type- and collection-conformance assays use a spec or `COLLECTION.md` as their criterion side rather than an authored gate file; their applicability and fixture scope may require a different substrate.
 
 ## Adoption criteria
@@ -99,7 +99,7 @@ Treat a recovery branch as demonstrated only after a deliberate rehearsal or liv
 
 - **Fixture overfitting.** A gate tuned until it passes its own fixtures may only detect those fixtures. Untouched holdouts or prospective cases guard the regression claim; only sampled field cases support population claims.
 - **Label drift.** The human label is the oracle; if the failure mode is genuinely contested, the fixtures encode one reading and calibration measures conformance to it, not correctness.
-- **Cost.** Repeated LLM runs per fixture, partition, and gate edit are not free; without a repetition budget and trigger discipline, calibration can cost more tokens than the reviews it protects.
+- **Cost.** Repeated LLM runs per fixture, model, and gate edit are not free; without a repetition budget and trigger discipline, calibration can cost more tokens than the reviews it protects.
 - **False confidence.** A gate that clears a small known set can still miss the failure mode on absent note shapes. The lifecycle must not let a green regression result masquerade as field calibration.
 - **Replication is not a substitute.** Running more blind reviewers per note guards against reviewer variance, not against a defective criterion: replicas of a criterion that asks the wrong question converge on the same wrong answer. In the precedent incident, three independent reviewers each located the offending sentence and excused it in near-identical words. Only a labelled positive distinguishes consensus from correctness.
 
@@ -117,4 +117,4 @@ Relevant Notes:
 - [trajectory-aware evaluation of transforming agent workflows](./trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: a sibling labelled and repeated evaluator design at workflow-trajectory scope
 - [The Lifecycle of LLM-as-a-Judge for Large-Scale Recommendation Explanations](../../sources/lifecycle-llm-judge-recommendation-explanations.ingest.md) — evidenced-by: production analogue for class-balanced boundary fixtures, fixed-stratum field monitoring, human-relative alerts, and a manual recovery path whose drift trigger remains unexercised
 - [Improving AI Skills with autoresearch & evals-skills](../../sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md) — evidenced-by: practitioner use of a hand-scored mini set to check a judge before automated optimization
-- [review system](../README-REVIEW-SYSTEM.md) — part-of: the assay/gate model and model-partition rule this design extends
+- [review system](../README-REVIEW-SYSTEM.md) — part-of: the gate model and result-file freshness this design extends

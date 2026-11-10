@@ -12,7 +12,7 @@ This proposal asks whether Commonplace should introduce an `artifact_function` d
 
 ## Current state (as of 2026-08-22)
 
-- Frontmatter `type:` identifies the artifact's type contract. Types carry structural and semantic expectations; explicit traits add independently checkable review expectations. The review selector can currently narrow a catalog gate by type or trait, but not by a separate artifact-function axis.
+- Frontmatter `type:` identifies the artifact's type contract. Types carry structural and semantic expectations; explicit traits add independently checkable review expectations. Review criterion selection can currently narrow a catalog gate by type or trait, but not by a separate artifact-function axis.
 - A type spec wholly owns the semantics of its frontmatter fields. A collection supplies purpose, intended contribution, quality goal, title and description conventions, lifecycle, and link grammar; it cannot redefine what the same field value means in different directories.
 - Specialized types already imply some whole-artifact jobs. An ADR records a decision, an instruction directs behavior, a definition pins a term, and a design proposal preserves an undecided design surface. The general `note` type does not determine one function.
 - Collection placement is informative but not decisive. `kb/notes/` defaults toward composable theory claims while admitting synthesis notes; `kb/reference/` contains both bounded system accounts and composite architecture descriptions; `kb/articles/` admits self-standing, multi-claim exposition.
@@ -75,15 +75,15 @@ Any persisted field must have one global, type-owned meaning. A collection may s
 
 A shared preflight derives the function from type, collection, traits, local framing, artifact text, and current user direction. It records a value and provenance for the current operation but persists no new field.
 
-**Operativity path:** no resolver currently exists; one must be built or specified in each consuming procedure. The generalized full pass would use the result to select artifact-level adapters. Catalog review would need either its own deterministic mapping or function-specific gates would remain outside selector routing.
+**Operativity path:** no resolver currently exists; one must be built or specified in each consuming procedure. The generalized full pass would use the result to select artifact-level adapters. Catalog review would need either its own deterministic mapping or function-specific gates would remain outside criterion selection.
 
 This avoids metadata drift and redundant declarations. Repeated judgment can produce different classifications for identical bytes, and an inferred value has no durable authorial force.
 
 ### 2. Encode function through existing types or traits
 
-Specialized types continue to imply functions, while generic artifacts gain function-specific types or traits. The review selector can route trait- or type-specific gates through its existing applicability fields.
+Specialized types continue to imply functions, while generic artifacts gain function-specific types or traits. Review criterion selection can route trait- or type-specific gates through its existing applicability fields.
 
-**Operativity path:** type specs or the trait vocabulary become the binding declarations; validation and conformance review inspect them; writing and full-pass procedures map them to their artifact-level methods. Existing selector support makes catalog-gate routing partly operative, but no current mapping governs the direct compression, critique, connection, and disposition stages.
+**Operativity path:** type specs or the trait vocabulary become the binding declarations; validation and conformance review inspect them; writing and full-pass procedures map them to their artifact-level methods. Existing criterion-selection support makes catalog-gate routing partly operative, but no current mapping governs the direct compression, critique, connection, and disposition stages.
 
 This reuses shipped machinery. New types would violate the structural boundary where function changes no required shape, while traits would mix a primary classification axis with independently composable review expectations and would not by themselves define conflict or fallback behavior.
 

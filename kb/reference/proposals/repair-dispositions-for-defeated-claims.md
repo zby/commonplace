@@ -1,5 +1,5 @@
 ---
-description: "Proposal: the undecided remainder of repair-policy design after ADR 066 — declaring repair policy in an installation's local collection contract, and freshness-store drift tracking for idealization pricing attestations"
+description: "Proposal: the undecided remainder of repair-policy design after ADR 066 — declaring repair policy in an installation's local collection contract, and review-freshness drift tracking for idealization pricing attestations"
 type: reference/types/design-proposal.md
 tags: [document-system]
 ---

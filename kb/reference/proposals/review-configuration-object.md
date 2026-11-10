@@ -56,6 +56,6 @@ Adopt when a consuming project (or this repo) actually needs a non-default revie
 Relevant Notes:
 
 - [052-general freshness store, review-first migration](../adr/052-general-freshness-store-review-first-migration.md) — see-also: operational store path now owned by `commonplace.store`, not review-only tables
-- [freshness architecture](../freshness-architecture.md) — see-also: shared store boundary review config must not fork
+- [review architecture](../review-architecture.md) — see-also: the result-file design that replaced the shared store this proposal configured
 - [030-harness-facing seams: batch endpoints and runner adapters](../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the same adaptability direction at the execution seam; this proposal addresses the review subsystem's project-shape seam
 - [collection](../definitions/collection.md) — see-also: the unit a consuming project would reshape; one free choice derives scan roots from collection contracts

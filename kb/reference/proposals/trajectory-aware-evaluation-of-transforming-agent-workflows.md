@@ -100,7 +100,7 @@ Final-artifact quality is not the gold label for process compliance. A good outp
 
 ## Adoption criteria
 
-Do not add trajectory judging to the full-improvement-pass instruction or review store merely because the trajectory arm finds more issues. Adopt a workflow-level audit only if the preregistered comparison shows:
+Do not add trajectory judging to the full-improvement-pass instruction or review results merely because the trajectory arm finds more issues. Adopt a workflow-level audit only if the preregistered comparison shows:
 
 1. confirmed process failures that the output-only arm systematically misses;
 2. an acceptable unsupported-finding share and indeterminate rate under blinded adjudication, plus an independent audit of apparent passes sufficient to assess missed failures; union-only adjudication cannot satisfy this criterion;

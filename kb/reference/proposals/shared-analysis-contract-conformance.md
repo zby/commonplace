@@ -22,16 +22,20 @@ contains the whole contract.
   it as a criterion, so a change reopens the affected jobs and blocks
   publication against an earlier method commit.
 - Generic type-conformance reviews capture the target artifact and its
-  type-spec criterion. `src/commonplace/review/freshness.py` captures and
-  compares those two texts, without the type's shared dependencies.
-- `src/commonplace/review/protocol/prompt.py` embeds the type-spec text but
-  permits link following only from target notes, with one limited exception
-  for an exact path derived from such a link. It neither embeds nor
-  authorizes general traversal of the criterion's shared-contract links.
-- The store can represent arbitrary criterion identities, but the current
-  selector and path resolver do not admit these reference documents as
-  generic conformance criteria. Storage support alone does not provide the
-  missing delivery and selection path.
+  type-spec criterion. Since [ADR 127](../adr/127-review-runs-as-workflows-over-result-files.md)
+  (2026-11-10), `src/commonplace/lib/review_workflows/results.py` hashes
+  those two texts into the pair's result file, without the type's shared
+  dependencies.
+- The gate-sweep prompt in `src/commonplace/lib/review_workflows/gates.py`
+  hands the reviewer the type-spec text but permits link following only from
+  the target note, with one limited exception for an exact path the
+  criterion tells the reviewer to derive from such a link. It neither embeds
+  nor authorizes general traversal of the criterion's shared-contract links.
+- A result file can name any criterion identity, but criterion selection
+  admits only catalog gates, the `type` and `collection` lenses and the
+  critique, so these reference documents cannot be requested as generic
+  conformance criteria. Result storage alone does not provide the missing
+  delivery and selection path.
 - This boundary affects generic type-conformance assays. The analysis
   workflow's own verification receives the shared contracts already.
 
@@ -45,7 +49,7 @@ ordinary two-input freshness tracks it. A full conformance claim requires
 the relevant pairs together. This follows the existing
 [factored-pairs direction](./factored-dependency-pairs-for-review-freshness.md).
 
-Operativity: the selector admits the shared criteria for the member types
+Operativity: criterion selection admits the shared criteria for the member types
 that inherit them; the renderer makes their assessment scope explicit;
 consumers distinguish member-specific conformance from full conformance.
 This requires implementation. Its oracle is the retained contract's

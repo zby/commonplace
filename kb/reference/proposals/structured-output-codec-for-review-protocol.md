@@ -10,10 +10,9 @@ The review protocol's output side is one encoding: sentinel-delimited markdown b
 
 ## Current state (as of 2026-07-01)
 
-- One encoding: `=== PAIR REVIEW START: {note} :: {criterion} ===` blocks ([ADR 029](../adr/029-review-execution-unified-on-note-gate-pairs.md)). `protocol/parser.py` extracts blocks into `ParsedJobOutput`; `protocol/outcomes.py` requires exactly one final marker allowed by the pair's persisted result kind: `PASS|WARN|FAIL` for verdict pairs or `REPORT` for report pairs; `ERROR` fails the job without producing a pair result.
-- The codec is contained in `protocol/` plus finalization/artifact rendering.
-- Consumers downstream of parsing are mostly encoding-independent already: `review_pairs.outcome` stores the parsed enum, a derived result artifact path points to the retained markdown review body, and `warn_selector` extracts findings from a `### Findings` section convention in that artifact.
-- External executors receive the contract through rendered prompts created from selector JSON (`commonplace-create-review-jobs --input ... --grouping {note,criterion}`), write job-owned output files, and return control to finalization.
+- (2026-11-10) [ADR 127](../adr/127-review-runs-as-workflows-over-result-files.md) replaced the sentinel-block protocol described in the rest of this proposal. `commonplace-review run gates` launches headless workers; each review is its own output file, so no sentinel blocks or job-output parser remain. `src/commonplace/lib/review_workflows/outcomes.py` requires exactly one final line, `## Result: PASS|WARN|FAIL` for a verdict criterion or `## Result: REPORT` for the critique, and rejects aliases and extra result-like lines. A review that fails the check is a rejected attempt whose problem goes into the next prompt, up to three attempts. A worker that cannot judge writes a problem file instead of an `ERROR` outcome.
+- The output contract lives in the prompt and check of `src/commonplace/lib/review_workflows/gates.py`. An accepted review is written as the pair's result file with the parsed outcome in its frontmatter and the reviewer's markdown as its body; the fix procedure reads findings from that body's `### Findings` section.
+- The headless runtime also offers `decide()`, an ask whose answer is parsed and checked against a schema and closed choices; the full improvement pass uses it for its packet. Gate reviews do not use it.
 - Trigger not yet met: schema-validated sub-agent output ships in one harness's workflow scripts; the subprocess CLIs (`claude -p`, `codex exec`) and the live-agent file-artifact path have no equivalent surface the review system could consume today.
 
 ## The design
