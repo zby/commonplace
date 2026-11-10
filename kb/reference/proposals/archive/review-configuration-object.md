@@ -1,10 +1,12 @@
 ---
 description: "Proposal: give commonplace.review a ReviewConfig for review scan roots, gate and artifact locations, and database path with project overrides, without introducing a global ProjectConfig"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance, review-system]
+tags: [kb-maintenance]
 ---
 
 # Review configuration object
+
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 127](../../adr/127-review-runs-as-workflows-over-result-files.md): the modules this object would have configured are deleted. `commonplace-review` takes any file or directory as its notes and keeps no database path.
 
 The review subsystem's assumptions about project shape are hardcoded as module-level constants, so a consuming project with a different layout — reviewable notes outside `kb/notes/` and `kb/reference/` — cannot extend review scope without editing installed package code. This proposal consolidates those constants into one configuration object **owned by the review subsystem**, not a global `ProjectConfig`: review execution and freshness are experimental surfaces with a faster change cadence than `commonplace.lib`, and a package-wide config object would couple the stable core to them. Configuration is per subsystem; a subsystem earns a config object when its constants need to vary.
 

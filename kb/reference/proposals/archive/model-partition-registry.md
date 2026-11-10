@@ -1,10 +1,12 @@
 ---
 description: "Proposal: introduce a model partition registry for review validation, aliases, and runner defaults without making the registry the review identity"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance, review-system]
+tags: [kb-maintenance]
 ---
 
 # Model partition registry
+
+> **Archived** (see [archive README](./README.md)). Retired by [ADR 127](../../adr/127-review-runs-as-workflows-over-result-files.md): review results no longer have a model partition, so there is nothing for a registry to validate. The profile and the recorded model are provenance in each result file.
 
 Commonplace review identity is `(note_path, criterion_path, model_partition)`. `model_partition` should stay the opaque freshness partition that ADR 032 defines; the registry proposed here would only move alias, validation, and runner-default metadata out of Python code and into review configuration/state.
 

@@ -36,8 +36,6 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 
 ## Proposals: review machinery
 
-- [Model partition registry](../reference/proposals/archive/model-partition-registry.md) — proposal for a registry of model partitions for validation, aliases, and runner defaults, without making it the review identity
-- [Review configuration object](../reference/proposals/archive/review-configuration-object.md) — proposal for a ReviewConfig holding scan roots, gate and artifact locations, and database path, with project overrides
 - [Structured-output codec for the review protocol](../reference/proposals/structured-output-codec-for-review-protocol.md) — proposal to make review output a pluggable codec: sentinel markdown now, schema-validated structured output when harnesses support it
 
 ## Related Tags
