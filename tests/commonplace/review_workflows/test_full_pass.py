@@ -272,3 +272,28 @@ def test_resume_after_a_launch_failure_does_not_reapply_the_edit(repo, capsys):
     assert note_text(repo) == written + "Repaired.\n"
     writes = json.loads((repo[0] / report["run-dir"] / "artifact" / "writes.json").read_text())
     assert len(writes) == 2 and resumed["written"] == report["written"] + [writes[1]["to"]]
+
+
+def test_resume_refuses_a_note_edited_after_the_run_wrote_it(repo, capsys):
+    start(repo, "REPAIR")
+    (repo[0] / "fail-repair").touch()
+    _, report, _ = full_pass(repo, capsys)
+    (repo[0] / "fail-repair").unlink()
+    edited = note_text(repo) + "The operator's sentence.\n"
+    (repo[0] / NOTE_PATH).write_text(edited, encoding="utf-8")
+    code, resumed, launches = full_pass(repo, capsys, "--resume", report["run-dir"])
+    assert code == 1 and "not the text this run left" in resumed["conflict"]
+    assert launches == [] and resumed["packet"] is None and note_text(repo) == edited
+
+
+def test_resume_finishes_a_write_that_was_recorded_and_not_made(repo, capsys):
+    text = start(repo, "REPAIR")
+    (repo[0] / "fail-repair").touch()
+    _, report, _ = full_pass(repo, capsys)
+    written = note_text(repo)
+    (repo[0] / "fail-repair").unlink()
+    (repo[0] / NOTE_PATH).write_text(text, encoding="utf-8")       # the state a death after the record leaves
+    code, resumed, _ = full_pass(repo, capsys, "--resume", report["run-dir"])
+    assert code == 0, resumed
+    assert note_text(repo) == written + "Repaired.\n"
+

@@ -293,8 +293,8 @@ def test_an_operator_edit_between_passes_is_a_conflict(repo, capsys):
     edited = note_text(repo) + "The operator's sentence.\n"
     (repo[0] / NOTE_PATH).write_text(edited, encoding="utf-8")
     code, conflict, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 1 and "changed during the pass" in conflict["conflict"]
-    assert launches == ["apply plain-wording small"] and conflict["passes"][1]["state"] == "pending"
+    assert code == 1 and "not the text this run left" in conflict["conflict"]
+    assert launches == [], "no worker runs on a text the run did not leave"
     assert note_text(repo) == edited, "the operator's text stays"
 
 
@@ -332,3 +332,26 @@ def test_an_artifact_without_frontmatter_keeps_its_h1(repo, capsys):
     code, done, _ = revise(repo, capsys, "--resume", report["run-dir"])
     assert code == 0 and done["complete"], done
     assert (repo[0] / path).read_text().startswith("# Draft\n\nA draft body.\nreadability-and-flow (all).\n")
+
+
+def test_a_finished_run_resumed_after_an_edit_is_a_conflict(repo, capsys):
+    report = assess(repo, capsys)
+    code, done, _ = revise(repo, capsys, "--resume", report["run-dir"])
+    assert code == 0 and done["complete"]
+    (repo[0] / NOTE_PATH).write_text(note_text(repo) + "The operator's sentence.\n", encoding="utf-8")
+    code, again, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    assert code == 1 and launches == [] and "not the text this run left" in again["conflict"]
+
+
+def test_a_named_plan_is_the_runs_plan_on_a_plain_resume(repo, capsys, tmp_path):
+    report = assess(repo, capsys, "PLAIN")
+    named = tmp_path / "custom.yaml"
+    named.write_text(artifact_file(repo, report, "plan.yaml").read_text(), encoding="utf-8")
+    code, waiting, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(named))
+    assert code == 0 and waiting["waiting-for"] and "assess" not in " ".join(launches)
+    code, _, launches = revise(repo, capsys, "--resume", waiting["run-dir"])
+    assert code == 0 and "assess" not in " ".join(launches), launches
+    assert launches[0] == "apply plain-wording small"
+    code, _, launches = revise(repo, capsys, "--resume", waiting["run-dir"], "--plan", str(tmp_path / "none.yaml"))
+    assert code == 2 and launches == []
+

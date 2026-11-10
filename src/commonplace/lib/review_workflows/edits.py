@@ -6,10 +6,14 @@ applies an accepted text to the file only from the text it expects to find
 there, recording each change in `artifact/writes.json` as the hashes of the
 text it replaced and the text it wrote, in order. A rerun replays the
 workflow's decisions, and each write the record already holds is skipped, so
-an edit is never applied twice. A write not yet recorded happens only when
-the file on disk is the text it expects (or already the text it would write,
-after a crash between the write and the record); any other text is a
-concurrent change, and `Conflict` stops the run without writing.
+an edit is never applied twice. A new write is recorded first and happens
+only when the file on disk is the text it expects.
+
+A run opens only on the text it left. That is the start text before its
+first write and the text of its last recorded write after it. The text that
+write replaced is also accepted: the process died between the record and the
+file, and the replay finishes that write. Any other text was changed outside
+the run, and `Conflict` stops the run before it launches a worker.
 
 `guarded_changes()` is the checkout guard's finding minus the workflow's own
 write: the file is dropped from the changed paths when it holds exactly the
@@ -90,28 +94,36 @@ def write_text(path: Path, text: str) -> None:
 class Writes:
     """The file changes this run made, in order, recorded in `artifact/writes.json`."""
 
-    def __init__(self, run: Run, root: Path, note: str):
+    def __init__(self, run: Run, root: Path, note: str, start: str):
+        """Open the log; raise Conflict unless the file holds the text the run left (`start` before any write)."""
         self.run, self.path = run, root / note
         record = run.artifact / WRITES
         self.log: list[dict] = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else []
         self.step = 0
+        current = sha256(self.path.read_text(encoding="utf-8")) if self.path.is_file() else None
+        left = self.log[-1]["to"] if self.log else sha256(start)
+        self.interrupted = bool(self.log) and current != left and current == self.log[-1]["from"]
+        if current != left and not self.interrupted:
+            raise Conflict(f"{self.path.name} is not the text this run left in it; nothing was written")
 
     def move(self, old: str, new: str) -> None:
-        """Change the file from `old` to `new`, once across reruns; raise Conflict if it holds neither."""
+        """Change the file from `old` to `new`, once across reruns; raise Conflict if it does not hold `old`."""
         entry = {"from": sha256(old), "to": sha256(new)}
         if self.step < len(self.log):
             if self.log[self.step] != entry:
                 raise Conflict(f"write {self.step + 1} differs from the one this run recorded; "
                                "an answer was dismissed or an input changed after the run wrote the note")
             self.step += 1
+            if self.interrupted and self.step == len(self.log):
+                write_text(self.path, new)                # the write a dead process recorded and did not make
+                self.interrupted = False
             return
         current = self.path.read_text(encoding="utf-8") if self.path.is_file() else None
-        if current != new:
-            if current != old:
-                raise Conflict(f"{self.path.name} changed during the pass; nothing was written")
-            write_text(self.path, new)
+        if current != old:
+            raise Conflict(f"{self.path.name} changed during the pass; nothing was written")
         self.log.append(entry)
         self.run.accept(WRITES, json.dumps(self.log, indent=2))
+        write_text(self.path, new)
         self.step += 1
 
 

@@ -50,8 +50,8 @@ instructions/simplification-passes/revise-an-article-or-note.md). The first
 invocation assesses and stops, writing `artifact/assessment.md` and
 `artifact/plan.yaml` in the run directory. Edit the plan in place, then
 continue with `--resume RUN_DIR`, which runs the plan's passes in order and
-writes the artifact after each accepted pass; `--plan FILE` takes another plan
-file, and on a new run skips the assessment. A pass whose list the operator
+writes the artifact after each accepted pass; `--plan FILE` copies another plan
+file into the run as its plan, and on a new run skips the assessment. A pass whose list the operator
 strikes (plain-wording, abstractions) stops with `artifact/<pass>-list.md`:
 delete the entries you strike and resume. A stop for the operator is a normal
 end: the JSON report's `waiting-for` names the file and the command that
@@ -258,6 +258,14 @@ def _full_pass(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     return 0 if report.ok else 1
 
 
+def _keep_plan(named: Path, kept: Path) -> None:
+    """Make the plan file the operator named the run's plan, so a later plain --resume executes it."""
+    text = named.read_text(encoding="utf-8")              # a missing file is an error, not a new assessment
+    revise.read_plan(text)
+    kept.parent.mkdir(parents=True, exist_ok=True)
+    kept.write_text(text, encoding="utf-8")
+
+
 def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     resumed = arguments.resume is not None
     names = {effort: getattr(arguments, f"profile_{effort}") for effort in revise.EFFORTS}
@@ -275,7 +283,9 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         for effort, name in names.items():
             if name is not None and load_profile(root, name, gates.profiles()) != profiles[effort]:
                 raise ValueError(f"the run was opened with another {effort} profile: {profiles[effort]}")
-        plan_file = arguments.plan or run_dir / "artifact" / revise.PLAN
+        plan_file = run_dir / "artifact" / revise.PLAN
+        if arguments.plan:
+            _keep_plan(arguments.plan, plan_file)
         plan = revise.read_plan(plan_file.read_text(encoding="utf-8")) if plan_file.is_file() else None
     else:
         if not arguments.artifact:
@@ -286,6 +296,8 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         plan = revise.read_plan(arguments.plan.read_text(encoding="utf-8")) if arguments.plan else None
         profiles = revise.effort_profiles(root, names)
         run_dir = _run_dir(root, None)
+        if arguments.plan:
+            _keep_plan(arguments.plan, run_dir / "artifact" / revise.PLAN)
         (run_dir / SWEEP).write_text(json.dumps(
             {"workflow": "revise", "artifact": artifact, "purpose": arguments.purpose, "defend": arguments.defend,
              "profiles": {effort: asdict(profile) for effort, profile in profiles.items()}}, indent=2),

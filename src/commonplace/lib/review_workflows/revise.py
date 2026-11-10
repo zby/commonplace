@@ -446,7 +446,7 @@ def _passes(run: Run, root: Path, artifact: str, plan: dict, known: dict[str, Pa
         start = (root / artifact).read_text(encoding="utf-8")
         run.accept(START, start)
     baseline = validation_fails(root, artifact, start)
-    writes = Writes(run, root, artifact)
+    writes = Writes(run, root, artifact, start)
     text = start
     report.passes = [PassState(entry["pass"], entry["scope"], known[entry["pass"]].effort) for entry in plan["passes"]]
     defend = "".join(f"- {claim}\n" for claim in plan["defend"])

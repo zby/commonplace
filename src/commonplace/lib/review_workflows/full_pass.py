@@ -42,12 +42,12 @@ and records each change in `artifact/writes.json` as the hashes of the text
 it replaced and the text it wrote, in order. A rerun replays the workflow's
 decisions, and each write step that the record already holds is skipped, so
 an edit is never applied twice. A step not yet recorded writes only when the
-note on disk is the text it expects (or already the text it would write,
-after a crash between the write and the record); any other text is a
-concurrent change, and the run stops without writing. The text the pass last
-left in the note is the last recorded `to`, or the start text before any
-write. A hand-back restores the start text under the same rule, so it never
-restores over an operator's change.
+note on disk is the text it expects; any other text is a concurrent change,
+and the run stops without writing. The text the pass last left in the note
+is the last recorded `to`, or the start text before any write. A resumed run
+opens only on that text, so it never reports on a note the operator changed
+between invocations. A hand-back restores the start text under the same
+rule, so it never restores over an operator's change.
 
 What outlives the run is the packet: `artifact/packet.md`, and the note's
 current packet at `kb/reports/state/review/packets/<note-path>`. Its
@@ -456,7 +456,7 @@ def _pass(run: Run, root: Path, note: str, profile: Profile, report: PassReport,
         run.accept("start.md", start)
     instruction = _library_text(INSTRUCTION_REL)
     baseline = validation_fails(root, note, start)
-    writes = Writes(run, root, note)
+    writes = Writes(run, root, note, start)
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
 
     reports = _methods(run, root, note, start, "initial", profile, max_workers)
