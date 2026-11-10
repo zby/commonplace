@@ -183,6 +183,315 @@ the evidence is one live run.
 
 None of phase 5 has run with a live worker.
 
+## Phase 6, shared operations under two orchestrators
+
+Recorded 2026-11-10 from a design conversation between the operator and
+Claude (claude-fable-5-2). This phase is an architecture and a list of
+candidates. Nothing in it is built. Statements marked "operator's
+direction" were decided in that conversation; the rest is proposed.
+
+The architecture has four parts:
+
+1. **Operations.** Every step is a report, an edit or a write.
+2. **A shared layer.** Instruction files, checks, the write and the file
+   formats, reachable as commands over files.
+3. **Two orchestrators.** Workjig sequences operations in Python. An
+   agent sequences them in a conversation with ordinary sub-agents.
+4. **One operator interface.** A worker proposes a file, and the
+   operator's edited or unedited file is the answer.
+
+Staging, by the operator's direction:
+
+- **Remote goal: unification.** The two kinds of workflow share one
+  layer, so a task can move between them by rewriting only its
+  sequence. Nothing is built toward this yet, and the sections below
+  describe it as the direction, not as the next work.
+- **First step: similar, not necessarily identical.** Agent-run
+  workflows take the same shape as the Workjig ones. They need not
+  share code or exact file formats.
+- **First step: try editing a report as the operator interface.** It
+  is new and has not been tried beyond one simple case.
+
+"Similar" is proposed to mean four things: the steps are named as
+reports, edits and writes; a worker drafts into a working directory and
+never into the library; code makes the one write, after code checks;
+and an operator decision is a proposed file the operator may edit.
+
+### Operations
+
+The operator's observation: review has two kinds of operation,
+generating reports and applying them to the note, and the full pass
+combines them. Before phase 5 each intermediate text was saved in the
+note. Since phase 5 they are saved in the run directory, and the note
+changes once, after the pass ends. That separated a third, mechanical
+operation from applying.
+
+| Operation | Inputs | Output | Who | Changes the note |
+|---|---|---|---|---|
+| report | a text, an instruction, possibly other reports | a report file | worker | no |
+| edit | a text, reports, an instruction | the next text, in a working directory | worker | no |
+| write | the final text, the start text | the note | code | once, only over the start text |
+
+On terms: "edit" here is the worker's step of applying reports to a
+text. The code's `edits.apply()` is the write.
+
+**Report.** A gate review, a critique, a method report, a connect report,
+a packet, a closing status and a revision plan are all reports. They
+differ in the contract code checks on the output: a strict result line,
+a closed schema, or a report type's schema. A packet is a report whose
+inputs include other reports. Reports never change a text, so they can
+run in parallel and be repeated.
+
+**Edit.** Each edit consumes the previous text, so edits run in order.
+An edit also makes every report about the earlier text out of date.
+That is why the full pass has a closing cycle. Code checks each edited
+text against bounds that depend on the task.
+
+**Write.** Code writes the final text once, only when the note still
+holds the start text.
+
+The current workflows as sequences:
+
+- **Gate sweep:** reports over many notes.
+- **Full pass:** reports on the start text; the packet; two edits (the
+  editor, then the copyeditor); reports on the result; the closing
+  status; at most one repair edit with its reports; write.
+- **Revision:** one report (the plan), one edit per listed pass, write.
+
+Two consequences:
+
+- **A report belongs to a text, not to a file.** A result records the
+  hash of the text the worker read. That text may be the note on disk or
+  a text in a working directory. The full pass relies on this when it
+  publishes its closing verdicts as fresh for the note it then writes.
+- **The run's `artifact/texts/` is a private version chain.** Each text
+  has the reports made about it. Only the final text reaches Git, so
+  the per-step diffs are local to one machine.
+
+### The shared layer
+
+This section describes the remote goal. Operator's direction: the two
+kinds of workflow become compatible in most details, so a task can move
+between them. A task moves to Workjig when its bookkeeping grows, and
+to an agent orchestrator when it needs flexibility.
+
+A task can move only if everything except its sequence is the same on
+both sides:
+
+| Shared | Form | Today |
+|---|---|---|
+| the judgment | an instruction file that names its inputs and outputs and not who runs it | exists: the gates, `draft-ingest-report.md`, the connect skill used as an instruction in the full pass |
+| the checks | code that takes an output and returns problems | Python only: the result-line parser, `decide()` schemas, `bounds()` |
+| the write | one compare and write over the start text | Python only: `edits.apply()` |
+| the files | result files, reports, candidate texts, the working-directory layout | review only |
+
+An agent orchestrator can only call commands. So each check and the
+write need a command in front of the function. A Python workflow calls
+the function and an agent calls the command. Moving a task then means
+rewriting its sequence, from prose to Python or back.
+
+The first step does not need this. A similar agent-run workflow may
+have its own commands and its own file layout. What it learns decides
+which parts are worth sharing.
+
+### The two orchestrators
+
+What stays different:
+
+- **Launching.** Workjig gives captured inputs, a restricted profile,
+  launch records and replay. A sub-agent reads live files with the
+  session's tools.
+- **Pinning.** A Workjig worker reads a captured copy, so the recorded
+  hash is exact. For a sub-agent, code hashes the inputs before dispatch
+  and verifies them after, as ingest does with the snapshot checksum.
+- **Provenance.** A result file records profile, launch and the model
+  the harness recorded. A result from a sub-agent needs a truthful
+  executor value.
+- **Enforcement.** Python cannot skip a check. An agent can. The write
+  command can refuse an unchecked candidate, but an agent can still
+  write the file directly.
+
+Three proposed conditions. The first applies from the first step; the
+other two apply once tasks can move:
+
+1. **The agent side gets only stateless commands**: functions over
+   files, such as "check this output" and "write this text". ADR 127
+   removed an agent orchestrator with a command per transition over a
+   store. Commands that track jobs, attempts or locks would rebuild it.
+2. **Run state is the signal to move.** A task that needs replay after
+   a usage limit, attempt counting or many parallel calls moves to
+   Workjig. A task that needs questions to the user, a choice of the
+   next step, or tools the profiles deny moves to the agent.
+3. **One orchestrator per task at a time.** A task is moved, not kept
+   in a prose version and a Python version.
+
+Where the tasks sit:
+
+| Task | Orchestrator | Basis |
+|---|---|---|
+| gate sweep, full pass | Workjig | many calls; code decides the branches |
+| ingest | agent | operator's direction: it does not move to Workjig, and it takes the similar shape |
+| connect | agent as a skill; one plain call inside the full pass | one operation, so either side can ask it |
+| revision | Workjig, unchanged for now | operator's direction; `readability-and-flow` may move out later |
+
+On the revision: its passes differ in what they need.
+`readability-and-flow` needs only the text and the purpose.
+`narrow-overclaims` needs evidence that normally comes from the
+conversation. `plain-wording` and `abstractions` need the operator to
+strike a list. `split-out-a-treatment` never runs headless.
+`audit-a-prior-pass` and one step of `place-external-systems` need
+Bash, which the profiles deny. The workflow's bounds keep the title and
+the H1, so it can apply only the TL;DR half of `opening-and-title`. A
+split along this line was discussed and deferred.
+
+### The operator interface
+
+`headless.operator.answer()` from phase 5: the workflow proposes a file
+and stops; the file, edited or not, is the answer on the repeat. The
+revision plan and the strike lists use it. The operator wants this
+interface tried. One live revision has used it, in its simplest case: a
+pass added to an empty plan.
+
+Its place in the architecture:
+
+- **It turns a decision into an input.** The edited file has a hash
+  like any other input, so a run stays a function of its inputs and
+  replay still works.
+- **It is a report the operator may amend**, so it needs no fourth
+  operation.
+- **It works on both sides.** On the agent side the operator can state
+  the change in conversation and the agent edits the same file.
+- **It lets an agent drive a Workjig run**: start it, bring the
+  proposal to the operator, write the answer, repeat the command. The
+  file does not record who edited it or on whose word, so an
+  instruction that allows this must state that the agent does not
+  decide for the operator.
+
+What a trial should show:
+
+- whether a file in a git-ignored, hash-derived run directory is
+  practical to find and edit;
+- whether the assessment gives enough to judge the plan without
+  reading the whole note;
+- what "unedited is an answer" does to approvals made without reading;
+- whether the error for an invalid edit is enough to fix the file;
+- whether the operator mostly removes passes, adds them or changes
+  scope.
+
+Decisions that could later take this form: the full-pass hand-back
+(now a pending packet, a resolve instruction and `--direction`), the
+choice of connect candidates to author, and the choice of warnings to
+fix. None is converted before the trial.
+
+### Connect and ingest
+
+**Connect is a report with one difference**: its input includes the
+corpus at the time of the search, which no hash of the note and the
+instruction covers. It can carry no freshness claim, and its reports
+stay regenerable under `kb/reports/cache/connect/`. Code can check two
+things the skill now asks of the worker: the report matches
+`kb/types/connect-report.schema.yaml`, and every candidate path exists.
+Whether a label is authorised cannot be checked in code, because the
+authorised set is prose in `COLLECTION.md`. Reverse-edge candidates
+change other notes, and a write is one compare of one file, so they
+stay report-only.
+
+**Ingest keeps its sub-agents and takes the similar shape.** Its parent
+agent now performs the deterministic parts by hand. With commands of
+its own:
+
+| Step | Who | What |
+|---|---|---|
+| prepare | code | resolve the target, hash the snapshot, extract the retained Quotes block, create a working directory keyed by slug and snapshot hash |
+| report | sub-agent | connect on the snapshot |
+| edit | sub-agent | draft into the working directory, not into `kb/sources/` |
+| check | code | the handoff checks (snapshot checksum, Quotes block byte-equal, capture metadata, forbidden fields and links) and `commonplace-validate`; the failures feed one repair attempt |
+| write | code | write the ingest once, only if the output path holds what prepare saw |
+| report | sub-agent | connect on the accepted ingest |
+
+The worker never writes `kb/sources/`, so the backup and the restore go
+away, as the restore did in phase 5.
+
+**Ingest reads external texts.** The snapshot is read and never
+changed; the ingest is written. In the model the snapshot is an input
+to the edit, as a criterion is in review, and the ingest's
+`snapshot_sha256` pins it as a result file's hashes do. Review
+freshness never depended on Git, so a text Git does not track needs no
+new machinery. Four differences from review:
+
+- Fetching is not a function of its inputs, because a URL can return
+  other bytes later. Capture stays outside the run, which starts from a
+  snapshot path.
+- A changed snapshot is a new observation with a new ingest. It is not
+  a stale ingest to regenerate.
+- The checkout guard ignores git-ignored files, so it cannot see a
+  snapshot change. The checksum comparison before and after the draft
+  covers this.
+- External text is untrusted and may address the reader. The drafting
+  sub-agent has Write, Bash, Skill and Task. A restricted profile would
+  be a safer reader; this is a known cost of keeping ingest on the
+  agent side.
+
+An ingest is a report in content and an edit plus a write in handling:
+it lands in the tracked library, must pass checks and may replace an
+incumbent. The model classifies it by handling.
+
+### Candidates
+
+None is decided unless marked. Each needs the operator's direction.
+
+**First step.**
+
+| Candidate | Reason | What holds it |
+|---|---|---|
+| Try the edited report on a live revision | the interface is untried; the revision already has it for the plan and the strike lists | costs paid launches, so the operator starts it |
+| Ingest takes the similar shape: prepare, check and write commands of its own | the worker drafts into a working directory, code checks and writes once; removes the hand-performed checks and the backup | nothing; it need not reuse review's code |
+| An edited report in one agent-run workflow | tries the interface on the agent side, for example striking connect candidates | wait for the revision trial |
+
+**After the trial of the interface.**
+
+| Candidate | Reason | What holds it |
+|---|---|---|
+| The full-pass hand-back as a proposed file | three mechanisms now serve one decision | the trial's result |
+
+**Simplifications that do not depend on the staging.**
+
+| Candidate | Reason | What holds it |
+|---|---|---|
+| Check the connect report in code | schema and path existence are deterministic | nothing |
+| Drop `--resume`, `retry` and `acknowledge` from `run gates` | a rerun already skips fresh pairs, so replay only helps under `--force` | nothing; independent of live evidence |
+| Keep one of `pair` and `bundle` | two groupings for one job | the verdict comparison of step 1.3 |
+| Stop the guard from setting the exit code, or isolate workers in a worktree | no workflow writes mid-run now, and the guard cannot attribute a change | a worktree shows linked files at `HEAD` and hides ignored snapshots |
+
+**Remote goal.**
+
+| Candidate | Reason | What holds it |
+|---|---|---|
+| One set of commands in front of review's checks and write | both sides would call the same code | the first step shows which parts are worth sharing |
+| An executor value in result files | a sub-agent's result must not claim a launch | no agent-side producer of results exists yet |
+| Look up a report by text hash and criterion hash | a sweep and a full pass would share reports without reading each other's state | needs a rule for discarding reports about texts that exist nowhere |
+| Merge the full pass and the revision | the full pass's editing step and a revision are both chains of edits | the revision stays as it is for now |
+
+### Trials
+
+For the first step:
+
+- **One live revision with an operator-edited plan and at least one
+  strike-list pass**, on the phase 5 code. It is the trial of the
+  operator interface. It also gives the kept or reverted revision
+  result the README asks for.
+- **One live full pass on the phase 5 code**, which has not run with a
+  live worker.
+
+For the remote goal, when it is taken up:
+
+- **Agent side to shared layer.** Have ingest call review's check and
+  write. If they serve it unchanged, the layer is general.
+- **Workjig side to agent.** Have an agent run one gate review and
+  record it through a command. If `commonplace-review status` cannot
+  tell that result from a sweep's, apart from the executor value, the
+  file format is shared.
+
 ## Execution record
 
 | Step | State | Commits |
@@ -198,6 +507,7 @@ None of phase 5 has run with a live worker.
 | 5 one write, input-derived runs | done 2026-11-10 | `13ed322bf`, `563f4076b` |
 | 5 gate results published once | done 2026-11-10 | `32c281ddd` |
 | 5 one operator-input mechanism | done 2026-11-10 | `f9779b18f` |
+| 6 two orchestrators: similar first, unified later | recorded 2026-11-10; nothing built | |
 | 1.3 first sweep | waits for the operator | |
 
 ## Live runs

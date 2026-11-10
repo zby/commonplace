@@ -7,7 +7,10 @@ and what remains for the operator: the first collection sweep, keeping or
 reverting one result from each workflow, and deleting the abandoned
 local data. Phase 5 of the plan then removed mid-run writes and
 `--resume`: a run writes the note once, at its end, and repeating a
-command continues its run. The sections below are the framing and design as posed;
+command continues its run. Phase 6 records a direction, none of it built: Workjig workflows and
+agent-run workflows take a similar shape of three operations (report, edit,
+write), and an edited report is tried as the operator interface. Unifying
+the two is a remote goal. The sections below are the framing and design as posed;
 where they describe the store-based system as present, read them as the
 starting state.
 
