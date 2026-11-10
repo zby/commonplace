@@ -392,7 +392,7 @@ its end, for the text the note then holds.
 [revise an article or note](../instructions/simplification-passes/revise-an-article-or-note.md)
 over one markdown artifact. The first invocation assesses and stops with
 `artifact/assessment.md` and `artifact/plan.yaml` in the run directory.
-Repeating the command runs the edited plan's passes in order, each on the
+After explicit approval, repeating runs the approved plan's passes in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
@@ -400,10 +400,19 @@ writes the artifact once, when every pass ended `applied`, `no-change` or
 `skipped`. Plain-wording and abstractions stop with
 `artifact/<pass>-list-<key>.md` for the operator to delete the struck
 entries. A stop for the operator exits 0 with `waiting-for` in the JSON
-report: what to do, the file and the command to repeat; the file, edited or
-not, is the answer. `--plan FILE` copies another plan
-into the run; a repeat without it keeps that plan, and on a new run it skips
-the assessment. An invalid plan is a command error.
+report: what to do, the file, proposal key, approval command and command to
+repeat. `--plan FILE` supplies a proposal without assessment, but still needs
+approval; a repeat without it keeps that proposal. An invalid approved plan
+is a command error.
+
+`approve RUN FILE --key KEY` captures the proposal file's current text as
+its answer, under the run lock, without launching workers. Use the
+`waiting-for` report's `approve-command` after inspecting and optionally
+editing the file. Only the operator, or an agent on the operator's stated
+word for that proposal, may approve. Repeating a workflow never approves.
+Edits after approval have no effect until approved again. Changed proposal
+inputs require fresh approval; an old key cannot approve a replacement
+proposal at the same path.
 
 Both workflows derive their run directory from the inputs:
 `kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12

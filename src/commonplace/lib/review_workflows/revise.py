@@ -11,8 +11,8 @@ The run directory is `edits.run_dir()`, derived from the artifact's path and
 the hash of its text when the command runs. Wherever the interactive
 procedure waits for the operator, the run proposes a file through
 `headless.operator.answer()` and stops; the report's `waiting-for` names the
-file and the command to repeat. Repeating the command continues the run with
-the file, edited or not, as the operator's answer:
+file, the explicit approval command and the command to repeat. Repeating
+never approves: only the recorded approved text becomes the operator's answer:
 
 1. **Assessment.** One `decide()` ask, on the judgment profile, with two
    outputs: `assessment` for the operator and `plan` for code. Code hands the
@@ -22,8 +22,9 @@ the file, edited or not, as the operator's answer:
    keeps `artifact/assessment.md`, proposes `artifact/plan.yaml` and stops.
    A plan whose `stop` is set ends the run there. With `--plan`, the
    operator's plan is in place first and no assessment is asked.
-2. **Passes.** A repeat reads the plan, which the operator may have edited
-   in place; an invalid operator plan raises ValueError, a command error,
+2. **Passes.** After explicit approval, a repeat reads the captured plan;
+   later draft edits have no effect until approved again. An invalid approved
+   plan raises ValueError, a command error,
    not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one `checked()` ask on the
    profile its `effort` selects, with the current text, the pass file, the
@@ -37,7 +38,7 @@ the file, edited or not, as the operator's answer:
 3. **Strikes.** A pass in `STRIKE` has the operator strike its list before
    any entry is applied: a list ask, a stop with
    `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat an apply
-   ask given the proposed list and the list the operator left. A struck
+   ask given the proposed list and the list the operator explicitly approved. A struck
    entry is deleted from the file. A list made again for other text has
    another key, so it gets a new file and stops again.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
@@ -53,12 +54,13 @@ the file, edited or not, as the operator's answer:
    the file that holds the proposed text.
 
 Because the plan and the operator's list are inputs, an unedited repeat
-replays every answered call, and an edited plan re-asks only the passes
+replays every answered call, and an edited and reapproved plan re-asks only the passes
 whose inputs changed (a pass after a changed one gets a changed text).
 """
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -74,6 +76,7 @@ from commonplace.headless.jobs import (
     LaunchFailed,
     OutOfAttempts,
     Run,
+    digest,
     input_ref,
     output_ref,
 )
@@ -366,9 +369,9 @@ def _rel(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
-def _assess(run: Run, artifact: str, text: str, purpose: str | None, defend: list[str], known: dict[str, Pass],
-            profile: Profile) -> str:
-    """Ask for the assessment and the plan over `text`; keep the assessment and return the proposed plan."""
+def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
+                        known: dict[str, Pass]) -> tuple[str, dict[str, str]]:
+    """The captured request, also used to invalidate an obsolete plan approval."""
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
               "passes": catalog(known)}
     if purpose:
@@ -382,13 +385,18 @@ def _assess(run: Run, artifact: str, text: str, purpose: str | None, defend: lis
                  else "The operator named no purpose: propose one as the instruction directs. "),
         defend=f"The operator marks these claims as defended: {input_ref('defend')}. " if defend else "",
         assessment=output_ref("assessment"), plan=output_ref("plan"), no_writes=NO_WRITES)
+    return prompt, inputs
+
+
+def _assess(run: Run, prompt: str, inputs: dict[str, str], known: dict[str, Pass], profile: Profile) -> Answer:
+    """Ask or replay the assessment and plan; keep the assessment and return its answer identity."""
     data, answer = decide(run, "assessment", prompt, PLAN_SCHEMA, output="plan", also=["assessment"],
                           check=lambda data, _text: plan_checks(data, known), attempts=ATTEMPTS, inputs=inputs,
                           profile=profile)
     if data is None:
         raise Stop(f"assessment: worker problem: {answer.problem}")
     run.accept(ASSESSMENT, answer.outputs["assessment"])
-    return answer.outputs["plan"]
+    return answer
 
 
 def _ask(run: Run, job: str, template: str, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
@@ -419,7 +427,7 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
     name = f"{current.name}-list-{listed.key[:12]}.md"      # a list made for another text waits again
-    approved = operator.answer(run, name, lambda: proposed)
+    approved = operator.answer(run, name, proposed, key=listed.key)
     if approved is None:
         state.state = "waiting"
         report.waiting_for = operator.waiting(
@@ -489,14 +497,15 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
 
 
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
-           defend: list[str] = (), timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
+           defend: list[str] = (), named_plan: str | None = None,
+           timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
-    The artifact's current text is the start text. Without `artifact/plan.yaml`
-    in the run, the run assesses, proposes the plan there and waits. With it,
-    the run executes the plan's passes and applies the final text when every
-    pass ended well. An invalid plan raises ValueError. `profiles` maps each
-    effort to its profile; the assessment is a judgment ask.
+    The artifact's current text is the start text. The run proposes a plan
+    and waits for explicit approval. `named_plan` supplies the proposal without
+    an assessment, but still requires approval. Only the stored approved answer
+    runs passes. An invalid approved plan raises ValueError. `profiles` maps
+    each effort to its profile; the assessment is a judgment ask.
     """
     root = root.resolve()
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact)
@@ -506,19 +515,27 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     final = None
     try:
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
-            proposed: list[str] = []
-
-            def propose() -> str:
-                proposed.append(_assess(run, artifact, start, purpose, list(defend), known, profiles["judgment"]))
-                return proposed[0]
-            given = operator.answer(run, PLAN, propose)
-            plan = report.plan = read_plan(proposed[0] if given is None else given, known)
+            prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known)
+            if named_plan is None:
+                assessed = _assess(run, prompt, inputs, known, profiles["judgment"])
+                proposed = assessed.outputs["plan"]
+                # Include outputs: a deliberately retried request may return a new proposal.
+                key = digest(json.dumps([assessed.key, assessed.outputs], sort_keys=True))
+            else:
+                proposed = named_plan
+                key = digest(json.dumps({"prompt": prompt, "inputs": inputs,
+                                         "profile": asdict(profiles["judgment"]), "named-plan": named_plan},
+                                        sort_keys=True))
+            given = operator.answer(run, PLAN, proposed, key=key)
+            # Display the original proposal, not unapproved edits to the draft.
+            plan = report.plan = read_plan(given if given is not None else proposed, known)
             if plan["stop"]:
                 report.stop = plan["stop"]
             elif given is None:
+                read = f"Read {ASSESSMENT} beside the plan" if named_plan is None else "Read the supplied plan"
                 report.waiting_for = operator.waiting(
-                    run, root, PLAN, f"Read {ASSESSMENT} beside the plan, then edit the plan in place, or name "
-                    "another plan file with --plan.", REPEAT.format(artifact=artifact))
+                    run, root, PLAN, f"{read}, then edit the plan in place, or name another plan file with --plan. "
+                    "Approve it explicitly before repeating.", REPEAT.format(artifact=artifact))
             else:
                 final = _passes(run, root, artifact, start, plan, known, profiles, report)
                 problems = [state.name for state in report.passes if state.state == "problem"]

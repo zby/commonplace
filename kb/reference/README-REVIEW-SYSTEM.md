@@ -257,7 +257,8 @@ the closing cycle.
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
 one artifact. An assessment writes a report and proposes a plan file, and
-the run stops; the operator edits the plan and repeats the command, which runs each
+the run stops; the operator edits and explicitly approves the plan, then
+repeats the command, which runs each
 listed pass as one worker call in order, each on the text the one before
 left. The artifact is written once, at the end, and only when every pass
 ended `applied`, `no-change` or `skipped`. A strike pass stops with its
@@ -271,9 +272,11 @@ note, including one the workflow itself wrote, has another hash, so the same
 command opens a new run. A repeat reuses the options the run recorded,
 including the full pass's `--direction`; an option given on the repeat
 replaces the recorded value. A stop for the operator proposes a file in the
-run directory, and the report's `waiting-for` gives what to do, the file and
-the command to repeat. On the repeat, the file, edited or not, is the
-operator's answer. If the note changed
+run directory, and the report's `waiting-for` gives what to do, the file,
+the approval command and the command to repeat. Approval captures the file's
+current text; repeating alone never approves it. Later edits require another
+approval, and changed proposal inputs require fresh approval. An agent may
+approve only on the operator's stated word for that proposal. If the note changed
 during a run, the run writes nothing and reports a conflict that names the
 file holding the proposed text.
 

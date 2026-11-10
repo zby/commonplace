@@ -59,15 +59,18 @@ acknowledgement of edits outside the watched parts.
 **Review is workflows, under one command.** `commonplace-review` runs
 `run gates` (the gate sweep), `run full-pass` (the full improvement pass)
 and `run revise` (the simplification passes), with `status`, `packet`,
-`retry` and `acknowledge`. A workflow is a Python function over `ask`,
+`retry` and `acknowledge`, plus `approve` for operator answers. A workflow is a Python function over `ask`,
 `checked`, `gather` and `decide`. Each run has one directory under
 `kb/reports/state/review/runs/`. A sweep opens a new directory, and
 `--resume` continues it and replays answered calls. A full pass or revision
 derives its directory from the workflow, the note's path and the hash of the
 note's text, so repeating the command continues the run by replay, and an
 edited note opens a new run. Where a workflow needs the operator, it
-proposes a file in the run and stops; on the repeat, that file, edited or
-not, is the answer. Options such as the profile and the full pass's
+proposes a file in the run and stops. Explicit approval captures the edited
+or unedited file as an answer, bound to that stop, proposal and its inputs.
+Repeating never approves; an edit after approval has no effect until
+approved again. Changed proposal inputs invalidate the approval. Options
+such as the profile and the full pass's
 direction are recorded with the run.
 
 **Workers never write the checkout.** A worker receives captured inputs and
@@ -100,6 +103,12 @@ carrying freshness across runs.
 stored reviews were outdated. The new system started empty; the first sweeps
 produce its results. The store and its job directories are abandoned local
 data.
+
+**Implicit approval on repeat.** Rejected: retrying after interruption must
+not make an operator decision. A separate approval command captures the
+answer; a stale proposal key is refused. The command does not authenticate
+the human: operating instructions permit an agent to approve only on the
+operator's stated word for that proposal.
 
 **Keeping acknowledgement.** Dropped. It covered 37 of 9,217 baselines, and
 the watched-parts hash absorbs its commonest case. A changed pair is

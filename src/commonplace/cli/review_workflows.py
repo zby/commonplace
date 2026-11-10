@@ -8,6 +8,7 @@
                                      [--timeout SECONDS]
     commonplace-review run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...] [--plan FILE]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
+    commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
@@ -61,15 +62,19 @@ matches, 1 otherwise.
 passes (see `commonplace.lib.review_workflows.revise` and the library's
 instructions/simplification-passes/revise-an-article-or-note.md). The first
 invocation assesses and stops, writing `artifact/assessment.md` and
-`artifact/plan.yaml` in the run directory. Edit the plan in place, then
-repeat the command: it runs the plan's passes in order, each on the text the
-one before left. `--plan FILE` copies another plan file into the run as its
-plan; a repeat without it keeps that plan, and on a new run it skips the
-assessment. A pass whose list the operator strikes (plain-wording,
-abstractions) stops with `artifact/<pass>-list-<key>.md`: delete the entries
-you strike and repeat the command. A stop for the operator is a normal end:
-the JSON report's `waiting-for` gives what to do, the file and the command to
-repeat. The
+`artifact/plan.yaml` in the run directory. Edit the plan in place, explicitly
+approve it with the report's `approve-command`, then repeat: it runs the
+approved plan's passes in order. `--plan FILE` supplies a proposal without
+assessment; it still needs approval, and a repeat without it keeps it.
+A pass whose list the operator strikes (plain-wording, abstractions) stops
+with `artifact/<pass>-list-<key>.md`: delete the entries you strike, approve,
+then repeat. A stop for the operator is a normal end. The JSON report's
+`waiting-for` gives what to do, the file, proposal key, approval command and
+command to repeat. A repeat never approves and launches nothing at an
+unchanged unapproved stop. Approval captures the file's text: later edits
+have no effect until approved again. Changed proposal inputs require fresh
+approval, and an old approval key is refused. Only the operator, or an agent
+on the operator's stated word for that proposal, may approve. The
 artifact is written once, when every pass of the plan ended `applied`,
 `no-change` or `skipped`; otherwise `not-applied` names the file that holds
 the proposed text. Each pass's `effort` picks its profile from the profile
@@ -96,6 +101,7 @@ import time
 from dataclasses import asdict
 from pathlib import Path
 
+from commonplace.headless import operator
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss
 from commonplace.lib.review_workflows import edits, full_pass, gates, results, revise
@@ -144,11 +150,15 @@ def _parser() -> argparse.ArgumentParser:
     rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
     rev.add_argument("--defend", action="append", default=[], metavar="CLAIM",
                      help="a claim the passes may not narrow; repeat for each")
-    rev.add_argument("--plan", type=Path, help="the plan to run (default: the run's artifact/plan.yaml)")
+    rev.add_argument("--plan", type=Path, help="supply a plan proposal without assessment; still needs approval")
     for effort in revise.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
     rev.add_argument("--timeout", type=float, help="seconds a launch may take")
+    approve = commands.add_parser("approve", help="explicitly approve an operator proposal; launches nothing")
+    approve.add_argument("run", type=Path)
+    approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
+    approve.add_argument("--key", required=True, help="proposal key from the waiting-for report")
     packet = commands.add_parser("packet", help="check a full-pass packet's recorded hashes against the files")
     packet.add_argument("target", help="a note, or its packet under kb/reports/state/review/packets/")
     retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
@@ -298,14 +308,10 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                                             for effort, profile in revise.effort_profiles(root, names).items()}
     profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
     options = _options(run_dir, {"purpose": arguments.purpose, "defend": arguments.defend or None,
-                                 "profiles": profiles})
-    if named_plan is not None:                             # the operator's answer in the plan's slot
-        kept = run_dir / "artifact" / revise.PLAN
-        kept.parent.mkdir(parents=True, exist_ok=True)
-        kept.write_text(named_plan, encoding="utf-8")
+                                 "profiles": profiles, "plan": named_plan})
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
                            purpose=options.get("purpose"), defend=options.get("defend", []),
-                           timeout=arguments.timeout, harnesses=harnesses)
+                           named_plan=options.get("plan"), timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
@@ -340,7 +346,14 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
         if arguments.command == "packet":
             return _packet(root, arguments)
         run_dir = (root / arguments.run).resolve()
-        if arguments.command == "retry":
+        if arguments.command == "approve":
+            path = (root / arguments.file).resolve()
+            artifact = (run_dir / "artifact").resolve()
+            if not path.is_relative_to(artifact):
+                raise ValueError("proposal is outside the run's artifact directory")
+            print(json.dumps(operator.approve(run_dir, path.relative_to(artifact).as_posix(), arguments.key),
+                             indent=2))
+        elif arguments.command == "retry":
             print(json.dumps(dismiss(run_dir, arguments.job, arguments.key), indent=2))
         else:
             acknowledge_stopped(run_dir, root, arguments.launch)

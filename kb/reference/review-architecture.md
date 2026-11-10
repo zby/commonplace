@@ -23,7 +23,7 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 |---|---|
 | `headless.jobs` | `ask()`, one agent call with named inputs and outputs; `checked()`, retry with a deterministic check; `gather()`, parallel calls; `Run`, a run directory with a lock, durable launch records and replay; `dismiss()` and `acknowledge_stopped()` |
 | `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
-| `headless.operator` | `answer()`, a file under the run's `artifact/` that the workflow proposes and the operator answers, edited or not, on the repeat; `waiting()`, the report entry for that stop |
+| `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
 | `review_workflows.outcomes` | the strict result-line parser |
@@ -59,10 +59,13 @@ final text once, atomically, and only over the start text. Any other text
 is a change made outside the run: the run writes nothing and reports a
 conflict that names the file holding the proposed text.
 
-A full pass or revision is a function of its inputs. Its run directory is
+A full pass or revision reuses answers by each call's inputs. Its run directory is
 derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
-note opens a new run.
+note opens a new run. The directory is not a complete input identity: changed
+instructions, profiles or approved answers can produce new calls inside it.
+An operator stop requires explicit approval of its proposal. Repeating never
+approves; later draft edits have no effect until approved again.
 
 ## Durable state and run state
 
@@ -73,7 +76,8 @@ note opens a new run.
 | run directory | `kb/reports/state/review/runs/<stamp>/` for a sweep; `runs/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
 
 A run directory holds Workjig's records under `calls/`, the profile and
-options it opened with in `sweep.json`, and accepted per-run artifacts under `artifact/`
+options it opened with in `sweep.json`, operator proposals and approved answers
+under `operator/`, and accepted per-run artifacts under `artifact/`
 (the start text, method reports, each accepted edited text and the packet copy). Its
 records exist for replay inside the run and promise no format stability
 across versions. Freshness across runs never reads them.

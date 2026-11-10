@@ -98,22 +98,27 @@ recommends.
 `commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
 runs these steps with headless workers, which never write the checkout. Its
 run directory is derived from the artifact's path and the hash of its text.
-It stops with a file wherever this procedure waits for the operator, and
-repeating the same command continues the run with the edited file as input.
+It stops with a proposal wherever this procedure waits for the operator.
+Repeating alone never approves the proposal or starts its dependent work.
 A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
 give them again. Each stop prints a JSON report whose `waiting-for` gives
-what to do, the file and the command to repeat. An edited file is your
-answer, and an unedited one is your answer too.
+what to do, the file, proposal key, `approve-command` and command to repeat.
+Read and optionally edit the proposal, run its `approve-command`, then
+repeat the workflow command. Approval captures that text; later edits have
+no effect until approved again. Changed proposal inputs require fresh
+approval. An agent may approve only on the operator's stated word for that
+specific proposal; it must not infer approval from a request to retry.
 
 1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
    writes `assessment.md` and proposes `plan.yaml` under the run directory's
    `artifact/` and stops. `--plan FILE` puts your plan there first, and then
-   no assessment runs. The plan holds `purpose`, `defend`, `passes` in run
+   no assessment runs, but explicit approval is still required. The plan holds `purpose`, `defend`, `passes` in run
    order (each a `pass` name and an optional `scope`) and `stop`. Read the
-   assessment and edit the plan in place; a plan with `stop` set ends the run.
+   assessment, edit the plan in place and approve it. A proposed or approved
+   plan with `stop` set ends the run without editing the artifact.
    The command rejects a plan that names an unknown pass, misses a field or
-   breaks the depth order the pass files declare. You may edit the plan again
-   at any later stop: the passes whose inputs did not change replay, and the
+   breaks the depth order the pass files declare. You may edit and reapprove
+   the plan at any later stop: the passes whose inputs did not change replay, and the
    others run again.
 2. Step 2 runs each listed pass as one worker, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
@@ -124,8 +129,8 @@ answer, and an unedited one is your answer too.
    written, and `not-applied` names the run file holding the proposed text.
    It does not commit.
 3. Plain-wording and abstractions stop with `artifact/<pass>-list-<key>.md`.
-   Delete each entry you strike, with its indented lines, and repeat the
-   command; the worker applies only the entries left. A list made again for
+   Delete each entry you strike, with its indented lines, run the stop's
+   approval command, then repeat; the worker applies only the approved entries. A list made again for
    another text gets a new file and stops again.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left

@@ -6,32 +6,35 @@ and start building. The [README](./README.md) holds the goal, the design
 direction and what closes the workshop; this file holds the build order,
 the choices the design left open, and the state of each step.
 
-The plan details phase 1 and keeps phases 2 to 4 coarse. Each coarse phase
-names what returns it to a decision.
+Phases 1 to 5 record the review implementation and its remaining
+validation. Phase 6 is a bounded follow-on experiment in ingest. The
+shared-layer architecture is a future direction, not an execution phase.
 
 ## Current state and next work
 
-As of 2026-11-10. Phases 1 to 5 are built and committed; phase 5 has not
-run with a live worker. Phase 6 is a direction with nothing built. An
-outside review of phases 5 and 6 (Astra) is recorded at the end of
-phase 6.
+As of 2026-11-10. The code described in phases 1 to 5 is built and
+committed; phase 5 has not run with a live worker. Explicit approval and
+its fake-harness tests are now implemented. Core and
+broader consumer suites, including slow analysis tests, passed. Live
+validation remains open.
+Phase 6 has not started.
 
-Next work, in order. Items 1 and 2 cost paid launches and wait for the
-operator to start them. Item 3 is directed; items 4 and 5 are proposed.
+On the operator's direction, finish review before testing the same
+publication boundary in ingest, then decide what is worth sharing:
 
-1. Run a live revision and a live full pass on the phase 5 code. The
-   revision includes an operator stop, an edited plan and a strike-list
-   pass. At least one of the two ends with a changed note.
-2. Run step 1.3, the first collection sweep.
-3. Build the approval command, so that repeating a run never approves
-   a proposal (operator's direction; phase 6, the operator interface).
-4. Add fake-harness tests for a changed instruction, a changed profile
-   and a changed operator answer on the same start text.
-5. Build ingest's own prepare, check and write commands. Compare them
-   with review's before extracting anything shared.
+1. Run the phase-5 live revision and full-pass trials with explicit
+   approval. Paid launches wait for the operator to start them.
+2. Complete step 1.3, the first collection sweep. It is independent of
+   the approval correction and may run separately; paid launches still
+   require the operator's direction.
+3. Once review is validated, take up phase 6's bounded ingest experiment
+   under a follow-on commission. Compare implementations before
+   extracting shared commands.
 
-Not next: the shared layer and anything else under phase 6's remote
-goal.
+This workshop closes against the review conditions in the README.
+Ingest and shared-layer work do not add closing conditions. Before
+closing, move any still-held follow-on direction to its own workshop;
+do not keep this migration open to house the architecture work.
 
 ## Choices this plan makes
 
@@ -207,12 +210,148 @@ the evidence is one live run.
 
 None of phase 5 has run with a live worker.
 
-## Phase 6, shared operations under two orchestrators
+### Remaining work and completion
+
+Finish the existing review workflows before using them as the basis for
+a shared layer. The required result is checked publication and explicit
+operator approval, exercised through both tests and live use.
+
+1. **Implemented:** the approval command described below.
+2. **Implemented:** fake-harness tests for changed instructions, profiles
+   and operator answers on the same start text; obsolete approval keys;
+   unapproved repeats that launch nothing; and edits made after approval.
+   Existing conflict, edited-note, edited-plan and recorded-option tests
+   now use explicit approval. Strike-list tests cover changed criterion
+   text and profiles as well as changed incoming text.
+3. After those tests pass, run one live revision with an operator-edited
+   plan and at least one strike-list pass, using explicit approval.
+4. Run one live full pass. At least one of the two trials must end with
+   a changed note so publication is observed live. The operator keeps or
+   reverts the results under the README's closing conditions.
+
+Exercise a changed answer during continuation, and record whether the
+approved answer or the unapproved edit is consumed. Test note conflicts
+deterministically; if exercised live, use an operator-chosen disposable
+target. A failed or incomplete trial leaves that behavior unverified;
+fix it or retain the limit before closing, rather than treating a
+successful launch as completion.
+
+Step 1.3 remains separate gate-sweep validation. It is required before
+workshop closure, but does not block this approval correction.
+
+### Explicit approval
+
+The original phase-5 `headless.operator.answer()` proposed a file and
+read it as the answer on the repeat. The revision plan and strike lists
+used it. One live revision used that earlier interface in its simplest
+case: a pass added to an empty plan. The corrected interface below is
+implemented but has not run with a live worker.
+
+Its place in the architecture:
+
+- **It turns a decision into an input.** The edited file has a hash
+  like any other input, so a run stays a function of its inputs and
+  replay still works.
+- **It is a report the operator may amend**, so it needs no fourth
+  operation.
+- **It works on both sides.** On the agent side the operator can state
+  the change in conversation and the agent edits the same file.
+- **With explicit approval, it lets an agent drive a Workjig run**:
+  start it, bring the proposal to the operator, edit and approve the
+  answer only on the operator's stated word, then repeat the command.
+  An instruction that allows this must state that the agent does not
+  decide for the operator.
+
+**An unchanged proposal is not yet an approval.** The original `answer()`
+read any existing file as the answer, so repeating approved the proposal.
+An agent repeating only to continue after an interruption could approve
+it without the operator. The rule the trial
+must hold to (from Astra's review): continuing past an operator stop
+requires an intentional approval of the current proposal, and retrying
+execution must not supply it.
+
+Operator's direction: a repeated run stays a repeated run, and approval
+is a separate command. This is remaining phase-5 work, not a dependency
+on shared orchestration. Implemented behavior:
+
+- **Repeating never approves.** A repeat of a run that waits for an
+  answer reports the same stop again and launches nothing. Any agent or
+  script may therefore repeat any run safely.
+- **An approval command records the answer.** It takes the run and the
+  proposed file and stores that file's current text, edited or not, as
+  the answer. The workflow reads only the stored answer.
+- **Approval binds to the stop, proposal and answer text.** Record which
+  operator stop and proposal the answer approves, including the inputs
+  that produced the proposal. A changed proposal or changed inputs to
+  that stop require fresh approval, even if the file path is reused.
+  An edit made after approval has no effect until approved again.
+- **The next repeat continues**, with the stored answer as an input.
+
+Approval is stored as an explicit input in the run, rather than inferred
+from a repeat invocation. The command is a distinct act, so an instruction can
+say who may run it: the operator, or an agent on the operator's stated
+word for that proposal. The report supplies
+`commonplace-review approve RUN FILE --key KEY` as `approve-command`.
+`--plan FILE` supplies a proposal without assessment, not an approval.
+The command captures the answer under the run lock. An old key cannot
+approve a replacement proposal at the same path.
+
+Implementation and consumer checks are recorded in
+[the approval contract change](./approval-contract-change.md).
+
+What a trial should show:
+
+- whether a file in a git-ignored, hash-derived run directory is
+  practical to find and edit;
+- whether the assessment gives enough to judge the plan without
+  reading the whole note;
+- whether the separate approval action makes clear which proposal is
+  being accepted, including when the operator leaves it unedited;
+- whether the error for an invalid edit is enough to fix the file;
+- whether the operator mostly removes passes, adds them or changes
+  scope.
+
+Decisions that could later take this form: the full-pass hand-back
+(now a pending packet, a resolve instruction and `--direction`), the
+choice of connect candidates to author, and the choice of warnings to
+fix. None is converted before the trial.
+
+## Phase 6, try the publication boundary in ingest
+
+This is a bounded follow-on experiment, not implementation of a shared
+framework. Nothing is built. Its purpose is to learn whether agent-run
+ingest benefits from worker drafts followed by one checked publication,
+and which parts genuinely match review.
+
+Under a follow-on commission:
+
+1. Build ingest's own prepare, check and write commands, using the
+   sequence under "Connect and ingest" below. Keep its sub-agents.
+2. Exercise checked publication on real ingest work, including refusal
+   to overwrite an incumbent changed since preparation.
+3. If the selected workflow has a genuine operator decision, try the
+   edited-file approval interface there. Do not add a stop merely to
+   make the workflows look alike.
+4. Compare the implementations and record which checks, publication
+   rules and formats could be shared unchanged, which differ for a
+   reason, and whether sharing would remove enough duplication to matter.
+
+Completion means the transferable boundaries and important differences
+are known, not that a common layer exists. If the experiment fails to
+show useful commonality, keep the commands separate. Shared-layer work
+returns to decision only after this comparison.
+
+The experiment does not block closing the review workshop. Move this
+direction to a follow-on workshop before that closure if it remains
+wanted; this plan revision does not launch ingest implementation.
+
+## Future direction — shared operations under two orchestrators
 
 Recorded 2026-11-10 from a design conversation between the operator and
-Claude (claude-fable-5-2). This phase is an architecture and a list of
-candidates. Nothing in it is built. Statements marked "operator's
-direction" were decided in that conversation; the rest is proposed.
+Claude (claude-fable-5-2), then separated from the execution phases on
+the operator's direction. Nothing here is built. Statements marked
+"operator's direction" retain the design direction, not authorization
+to build the shared layer now; the rest is proposed.
 
 The architecture has four parts:
 
@@ -222,7 +361,7 @@ The architecture has four parts:
 3. **Two orchestrators.** Workjig sequences operations in Python. An
    agent sequences them in a conversation with ordinary sub-agents.
 4. **One operator interface.** A worker proposes a file, and the
-   operator's edited or unedited file is the answer.
+   operator explicitly approves its edited or unedited text as the answer.
 
 Staging, by the operator's direction:
 
@@ -374,72 +513,6 @@ Bash, which the profiles deny. The workflow's bounds keep the title and
 the H1, so it can apply only the TL;DR half of `opening-and-title`. A
 split along this line was discussed and deferred.
 
-### The operator interface
-
-`headless.operator.answer()` from phase 5: the workflow proposes a file
-and stops; the file, edited or not, is the answer on the repeat. The
-revision plan and the strike lists use it. The operator wants this
-interface tried. One live revision has used it, in its simplest case: a
-pass added to an empty plan.
-
-Its place in the architecture:
-
-- **It turns a decision into an input.** The edited file has a hash
-  like any other input, so a run stays a function of its inputs and
-  replay still works.
-- **It is a report the operator may amend**, so it needs no fourth
-  operation.
-- **It works on both sides.** On the agent side the operator can state
-  the change in conversation and the agent edits the same file.
-- **It lets an agent drive a Workjig run**: start it, bring the
-  proposal to the operator, write the answer, repeat the command. The
-  file does not record who edited it or on whose word, so an
-  instruction that allows this must state that the agent does not
-  decide for the operator.
-
-**An unchanged proposal is not yet an approval.** As built, `answer()`
-reads any existing file as the answer, so repeating the command approves
-the proposal. An agent that repeats a command only to continue after an
-interruption would approve it without the operator. The rule the trial
-must hold to (from Astra's review): continuing past an operator stop
-requires an intentional approval of the current proposal, and retrying
-execution must not supply it.
-
-Operator's direction: a repeated run stays a repeated run, and approval
-is a separate command. Not built. The proposed shape:
-
-- **Repeating never approves.** A repeat of a run that waits for an
-  answer reports the same stop again and launches nothing. Any agent or
-  script may therefore repeat any run safely.
-- **An approval command records the answer.** It takes the run and the
-  proposed file and stores that file's current text, edited or not, as
-  the answer. The workflow reads only the stored answer.
-- **Approval binds to the text.** An edit made after approval has no
-  effect until the file is approved again.
-- **The next repeat continues**, with the stored answer as an input.
-
-This keeps the workflow free of run state: the approval is one more
-file in the run. The command is a distinct act, so an instruction can
-say who may run it: the operator, or an agent on the operator's stated
-word for that proposal. Until it is built, only the operator repeats a
-command that stopped for an answer.
-
-What a trial should show:
-
-- whether a file in a git-ignored, hash-derived run directory is
-  practical to find and edit;
-- whether the assessment gives enough to judge the plan without
-  reading the whole note;
-- what "unedited is an answer" does to approvals made without reading;
-- whether the error for an invalid edit is enough to fix the file;
-- whether the operator mostly removes passes, adds them or changes
-  scope.
-
-Decisions that could later take this form: the full-pass hand-back
-(now a pending packet, a resolve instruction and `--direction`), the
-choice of connect candidates to author, and the choice of warnings to
-fix. None is converted before the trial.
-
 ### Connect and ingest
 
 **Connect is a report with one difference**: its input includes the
@@ -497,13 +570,9 @@ incumbent. The model classifies it by handling.
 
 None is decided unless marked. Each needs the operator's direction.
 
-**First step.**
-
-| Candidate | Reason | What holds it |
-|---|---|---|
-| Try the edited report on a live revision | the interface is untried; the revision already has it for the plan and the strike lists | costs paid launches, so the operator starts it |
-| Ingest takes the similar shape: prepare, check and write commands of its own | the worker drafts into a working directory, code checks and writes once; removes the hand-performed checks and the backup | nothing; it need not reuse review's code |
-| An edited report in one agent-run workflow | tries the interface on the agent side, for example striking connect candidates | wait for the revision trial |
+The live review trials now belong to phase 5. Ingest's commands and any
+agent-side interface trial belong to the bounded phase-6 experiment.
+Neither requires the shared layer.
 
 **After the trial of the interface.**
 
@@ -529,25 +598,7 @@ None is decided unless marked. Each needs the operator's direction.
 | Look up a report by text hash and criterion hash | a sweep and a full pass would share reports without reading each other's state | needs a rule for discarding reports about texts that exist nowhere |
 | Merge the full pass and the revision | the full pass's editing step and a revision are both chains of edits | the revision stays as it is for now |
 
-### Trials
-
-For the first step:
-
-- **One live revision with an operator-edited plan and at least one
-  strike-list pass**, on the phase 5 code. It is the trial of the
-  operator interface. It also gives the kept or reverted revision
-  result the README asks for.
-- **One live full pass on the phase 5 code**, which has not run with a
-  live worker.
-- **A changed note.** At least one of the two runs ends with the note
-  written, so the one write is seen live.
-- **A conflicting edit and a changed answer during a continuation**:
-  edit the note while a run is open, and change an answer file between
-  two repeats.
-- **Fake-harness tests** for a changed instruction, a changed profile
-  and a changed operator answer on the same start text. Judged by test
-  names, an edited plan, recorded options, an edited note and a conflict
-  are covered; a changed instruction and a changed profile are not.
+### Future compatibility trials
 
 For the remote goal, when it is taken up:
 
@@ -558,7 +609,7 @@ For the remote goal, when it is taken up:
   tell that result from a sweep's, apart from the executor value, the
   file format is shared.
 
-### Outside review of phases 5 and 6
+### Outside review of phase 5 and the shared-layer direction
 
 Astra reviewed `plan.md`, the workshop README and ADR 127 on 2026-11-10,
 as a design assessment without verifying the implementation. Its
@@ -569,10 +620,10 @@ layer yet. That matches the staging above.
 
 | Point | Disposition |
 |---|---|
-| An unchanged proposal is not operator approval | accepted; confirmed in `headless/operator.py`; the operator directed a separate approval command, described under the operator interface |
+| An unchanged proposal is not operator approval | accepted; confirmed in `headless/operator.py`; the operator directed a separate approval command, now part of phase 5's remaining work |
 | A hash-derived directory is not complete input identity | accepted; see below |
 | One write at the end does not replace worker containment | accepted; the candidate to stop the guard setting the exit code is withdrawn |
-| Four absolute statements in phase 6 were too strong | accepted; narrowed in place (parallel reports, reports made stale by an edit, hashing live inputs, enforcement) |
+| Four absolute statements in the original phase 6 were too strong | accepted; narrowed in place (parallel reports, reports made stale by an edit, hashing live inputs, enforcement) |
 | A section at the top naming the current decision and next work | added |
 
 **Where a run is found, and what makes an answer reusable.** These are
@@ -600,7 +651,9 @@ made under several versions of an instruction.
 | 5 one write, input-derived runs | done 2026-11-10 | `13ed322bf`, `563f4076b` |
 | 5 gate results published once | done 2026-11-10 | `32c281ddd` |
 | 5 one operator-input mechanism | done 2026-11-10 | `f9779b18f` |
-| 6 two orchestrators: similar first, unified later | recorded 2026-11-10; nothing built | |
+| 5 explicit approval and validation | approval implemented; core and broader consumer suites pass; live trials remain open | approval correction (this commit) |
+| 6 ingest publication experiment | follow-on direction; nothing built; does not block review closure | |
+| shared operations under two orchestrators | future direction; revisit after phase 6's comparison | |
 | 1.3 first sweep | waits for the operator | |
 
 ## Live runs
@@ -649,8 +702,9 @@ For the operator:
   `review-store.sqlite*` files, `review-store-backups/`, `review-jobs/`,
   `reviews/`, `bundle-reviews/` and `full-pass/`. Nothing reads them.
   The planning session did not delete untracked data.
-- **Reinstall the user-level tool** so `commonplace-review` exists as a
-  command and the 12 deleted launchers go away.
+- **User-level tool reinstalled** during the approval implementation:
+  `commonplace-review` now resolves by bare name, and uv removed the
+  retired launchers. The editable tool still points to this checkout.
 - **Read the paragraph added to**
   `kb/theory/many-to-many-edge-state-is-where-files-yield-to-a-database.md`.
   It records the return to files as evidence bearing on the note's

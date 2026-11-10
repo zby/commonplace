@@ -1,37 +1,89 @@
-"""Operator input: a file the workflow proposes and the operator answers, by editing it or not.
+"""Explicit operator answers, bound to a stop's proposal and its inputs.
 
-A workflow that needs the operator calls `answer()` with a file name under
-the run's `artifact/` directory and a proposal. When the file exists, its
-text is the operator's answer, edited or not, and the workflow goes on.
-Otherwise the proposal is written there and `answer()` returns None: the
-workflow reports `waiting()` and ends. Repeating the command continues the
-run by replay and reads the file.
-
-The proposal is a callable, so a workflow asks for it only when the file is
-missing: a file the operator put in place first needs no proposal. A
-workflow whose proposal can change between invocations names the file after
-the proposal (for example by the answer key of the ask that made it), so a
-new proposal waits again instead of reading an answer to an old one.
+`answer()` materializes an editable proposal and waits until `approve()`
+records its text. Repeating a workflow never approves. Callers supply a key
+covering the inputs that produce the proposal; changed inputs replace the
+proposal and invalidate its approval. Approval holds the same lock as Run.
 """
 
 from __future__ import annotations
 
-from collections.abc import Callable
+import json
+import shlex
+import uuid
 from pathlib import Path
 
-from commonplace.headless.jobs import Run
+from commonplace.headless.jobs import Run, digest, run_lock
 
 
-def answer(run: Run, name: str, propose: Callable[[], str]) -> str | None:
-    """The text of `artifact/<name>`; when it is missing, write `propose()` there and return None."""
-    path = run.artifact / name
-    if path.is_file():
-        return path.read_text(encoding="utf-8")
-    run.accept(name, propose())
-    return None
+def _paths(root: Path, name: str) -> tuple[Path, Path]:
+    artifact = (root / "artifact").resolve()
+    path = (artifact / name).resolve()
+    if Path(name).is_absolute() or not path.is_relative_to(artifact) or path == artifact:
+        raise ValueError(f"proposal is outside the run's artifact directory: {name}")
+    name = path.relative_to(artifact).as_posix()
+    records = root / "operator"
+    record = records / f"{digest(name)}.json"
+    if not record.resolve().is_relative_to(root.resolve()):
+        raise ValueError("operator records are outside the run")
+    return path, record
+
+
+def _write(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    try:
+        temporary.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def answer(run: Run, name: str, proposal: str, *, key: str) -> str | None:
+    """Return only an approved answer; otherwise materialize the proposal and wait.
+
+    `key` covers the proposal's inputs, including its instruction and profile.
+    The editable file is never itself an answer. A pre-existing file without
+    a matching record is replaced, not implicitly approved.
+    """
+    path, record = _paths(run.root, name)
+    data = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else None
+    if data is None or data["input-key"] != key or data["proposal"] != proposal:
+        data = {"name": name, "input-key": key, "proposal": proposal,
+                "key": digest(json.dumps([name, key, proposal]))}
+        run.accept(name, proposal)
+        _write(record, data)
+    elif not path.is_file():
+        run.accept(name, data["proposal"])
+    return data.get("answer")
+
+
+def approve(root: Path, name: str, key: str) -> dict:
+    """Capture this proposal's current text as its answer, without launching work.
+
+    `key` is the proposal identity reported at the stop. An old approval
+    command cannot approve a replacement proposal at the same path.
+    """
+    if not root.is_dir():
+        raise ValueError(f"not a run directory: {root}")
+    with run_lock(root):
+        path, record = _paths(root, name)
+        if not record.is_file():
+            raise ValueError(f"no operator proposal: {name}")
+        data = json.loads(record.read_text(encoding="utf-8"))
+        if key != data["key"]:
+            raise ValueError(f"proposal changed: {name}; repeat the workflow and inspect its current stop")
+        data["answer"] = path.read_text(encoding="utf-8")
+        _write(record, data)
+        return {"file": str(path), "key": key, "answer-sha256": digest(data["answer"])}
 
 
 def waiting(run: Run, root: Path, name: str, what: str, command: str) -> dict:
-    """The report entry for a stop at `artifact/<name>`: what the operator does, the file and the command to repeat."""
-    return {"what": what, "file": (run.artifact / name).resolve().relative_to(root.resolve()).as_posix(),
+    """Report the editable file, explicit approval command and command to repeat."""
+    path, record = _paths(run.root, name)
+    data = json.loads(record.read_text(encoding="utf-8"))
+    file = path.relative_to(root.resolve()).as_posix()
+    run_dir = run.root.resolve().relative_to(root.resolve()).as_posix()
+    return {"what": what, "file": file, "key": data["key"],
+            "approve-command": shlex.join(["commonplace-review", "approve", run_dir, file, "--key", data["key"]]),
             "command": command}
