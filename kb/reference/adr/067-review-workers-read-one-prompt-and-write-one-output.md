@@ -1,13 +1,13 @@
 ---
-description: "Review workers receive only a generated prompt path, write one transport output, and may label an optional self-reported model without conversational bookkeeping"
+description: "Superseded historical decision: Review workers receive only a generated prompt path, write one transport output, and may label an optional self-reported model without conversational bookkeeping"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 067-Review workers read one prompt and write one output
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): a reviewer is a headless worker given captured inputs that writes only its output files; the model comes from the harness's record, and the self-reported model and the shared transport output are gone.
 **Date:** 2026-08-20
 
 ## Context

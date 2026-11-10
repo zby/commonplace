@@ -1,13 +1,13 @@
 ---
-description: Accepts SQLite as the canonical store for review state once review artifacts are removed from git and start carrying selector and ack metadata rather than just human-readable prose
+description: "Superseded historical decision: Accepts SQLite as the canonical store for review state once review artifacts are removed from git and start carrying selector and ack metadata rather than just human-readable prose"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 010-review state should move to sqlite once reviews leave git and accumulate operational metadata
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): review state lives in one result file per (note, criterion) pair under `kb/reports/state/review/results/`, not in SQLite.
 **Date:** 2026-04-01
 
 ## Context

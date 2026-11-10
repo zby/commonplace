@@ -1,13 +1,13 @@
 ---
-description: "Review execution is unified on note-gate pairs; note and gate packing share one protocol, while partial salvage was later removed"
+description: "Superseded historical decision: Review execution is unified on note-gate pairs; note and gate packing share one protocol, while partial salvage was later removed"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 029-Review execution unified on (note, gate) pairs
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): one worker call reviews one pair or one bundle of catalog gates on one note, and code checks each review; the shared packing protocol and its parser are gone.
 **Date:** 2026-06-12
 
 ## Context

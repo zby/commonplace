@@ -1,13 +1,13 @@
 ---
-description: "General artifact freshness lives in commonplace-store.sqlite; review is the first target adapter over file-text inputs and review-pair targets"
+description: "Superseded historical decision: General artifact freshness lives in commonplace-store.sqlite; review is the first target adapter over file-text inputs and review-pair targets"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 052-General freshness store, review-first migration
 
-**Status:** accepted  
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the general freshness store, its review adapter and its commands are deleted; review freshness is a hash comparison over result files, and no freshness exists for non-review targets.  
 **Date:** 2026-07-13  
 **Supersedes in part:** [ADR 032](./032-review-freshness-uses-db-snapshots-not-git.md), [ADR 051](./051-full-pass-packets-own-guarded-captures-and-resolutions.md)
 

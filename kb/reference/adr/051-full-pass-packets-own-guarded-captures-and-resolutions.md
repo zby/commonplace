@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted — amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): `revise` joins the pending dispositions, the packet carries `phase` and a final capture, and the guard compares each path with its latest capture
 **Date:** 2026-07-13
+**Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): packets still own disposition and resolution, and pending hand-backs are resolved under the same instruction. The `.txt` captures and `commonplace-guard-full-pass-report` are gone: the start text lives in the run directory, the packet records `start-sha256`, `final-sha256` and `merge-target-sha256`, and `commonplace-review packet` compares them with the files. One current packet per note lives under `kb/reports/state/review/packets/`.
 
 ## Context
 

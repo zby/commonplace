@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-08-26
+**Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the five dispositions, the revise brief, routed attention and the bounded closing (one repair, otherwise restore the start text) stay. `phase` and the final capture are gone; code writes each accepted edit only from the text it expects and records it in the run, and `repaired` records the spent repair. The copyeditor's candidate is an output that code checks and writes.
 
 ## Context
 

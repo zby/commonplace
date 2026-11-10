@@ -1,13 +1,13 @@
 ---
-description: "Generic freshness acceptance is withdrawn until a concrete non-review target supplies identity, input semantics, and an end-to-end registration path"
+description: "Superseded historical decision: Generic freshness acceptance is withdrawn until a concrete non-review target supplies identity, input semantics, and an end-to-end registration path"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 065-Publish only supported freshness transitions
 
-**Status:** accepted  
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the store and every transition it published are deleted.  
 **Date:** 2026-08-19  
 **Amends:** [ADR 052](./052-general-freshness-store-review-first-migration.md)
 
@@ -75,5 +75,5 @@ complete dependency set and acknowledging a displayed change.
 
 Relevant Notes:
 
-- [Freshness architecture](../freshness-architecture.md) — implemented-by: the retained transition and command surfaces
+- Freshness architecture, retired with the store by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) — implemented-by: the retained transition and command surfaces
 - [Collection-as-artifact freshness](../proposals/collection-as-artifact-freshness.md) — future-work: a possible first non-review target

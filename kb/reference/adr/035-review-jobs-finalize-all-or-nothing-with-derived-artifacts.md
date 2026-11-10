@@ -1,13 +1,13 @@
 ---
-description: "Review jobs use derived artifact paths, finalization-time provenance, strict per-kind result parsing, and all-or-nothing acceptance"
+description: "Superseded historical decision: Review jobs use derived artifact paths, finalization-time provenance, strict per-kind result parsing, and all-or-nothing acceptance"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 035-Review jobs finalize all-or-nothing with derived artifacts
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): jobs, finalization and derived job artifacts are gone; a worker call's reviews are checked together, and only an accepted call writes result files.
 **Date:** 2026-07-01
 
 ## Context

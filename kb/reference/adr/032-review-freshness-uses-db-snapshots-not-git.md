@@ -1,13 +1,13 @@
 ---
-description: "Review freshness is based on SQLite-owned note and gate snapshots, separated from Git and from review execution; the model-side review key is a frozen model_partition"
+description: "Superseded historical decision: Review freshness is based on SQLite-owned note and gate snapshots, separated from Git and from review execution; the model-side review key is a frozen model_partition"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 032-Review freshness uses DB snapshots, not Git
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): freshness is still independent of Git, but it compares hashes recorded in each result file with the current files; SQLite snapshots and the model partition are gone.
 **Date:** 2026-06-24
 
 ## Context

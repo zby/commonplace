@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-07-08
+**Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the `COLLECTION.md` stays the criterion and the `collection`/`collection/<path>` lens, the wrapper and its boundary against the type pair stay. The criterion identity is a result file's `criterion`, not a store key; model partitions and acknowledgement are gone, so a contract edit re-reviews its collection.
 
 ## Context
 

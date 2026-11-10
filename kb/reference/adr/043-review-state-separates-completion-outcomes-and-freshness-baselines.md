@@ -1,13 +1,13 @@
 ---
-description: "Review schema v7 separates job grouping, pair completion, verdict outcomes, execution failure, and snapshot-pinned freshness baselines under one cross-surface vocabulary"
+description: "Superseded historical decision: Review schema v7 separates job grouping, pair completion, verdict outcomes, execution failure, and snapshot-pinned freshness baselines under one cross-surface vocabulary"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 043-Review state separates completion, outcomes, and freshness baselines
 
-**Status:** accepted  
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): completion, outcome and baseline rows are gone; a result file carries the outcome (`pass`, `warn`, `fail` or `report`) and the hashes freshness compares; a worker that cannot judge writes a problem file instead of `ERROR`.  
 **Date:** 2026-07-11  
 **Supersedes in part:** [ADR-035](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md), [ADR-036](./036-review-acceptance-is-current-state-not-append-only-history.md)
 

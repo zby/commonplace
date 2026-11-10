@@ -1,13 +1,13 @@
 ---
-description: Review acceptance stores only the current accepted baseline per note/gate/model key and prunes superseded review evidence inline
+description: "Superseded historical decision: Review acceptance stores only the current accepted baseline per note/gate/model key and prunes superseded review evidence inline"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 036-Review acceptance is current state, not append-only history
 
-**Status:** accepted
+**Status:** superseded by [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): a result file is the current state of its pair and a new review replaces it; the acceptance rows and inline pruning are gone.
 **Date:** 2026-07-01
 
 ## Context

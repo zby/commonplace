@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — in an installed project a library type spec's persisted criterion identity is `commonplace:types/<name>.md`; the repository path stays the identity in the source checkout.
 **Date:** 2026-07-04
+**Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the type spec stays the criterion and the `type`/`type/<name>` lens, the mechanical wrapper and the `## Review` section stay. The criterion identity is a result file's `criterion`, not a store key; model partitions and acknowledgement of trivial type edits are gone, so a type-spec edit re-reviews its cohort. The worker reads the spec from a captured input, which closes the creation-to-review window this ADR accepted.
 
 ## Context
 
