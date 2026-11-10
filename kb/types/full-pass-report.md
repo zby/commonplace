@@ -17,12 +17,12 @@ packet; the run directory keeps the earlier one.
 
 Code writes the frontmatter. `note` is the repository path the pass ran on.
 `start-sha256` hashes the note's text when the pass started, and
-`final-sha256` the text the pass left: the accepted edit after `ready`, the
-start text otherwise. `run` names the run directory. `disposition`,
+`final-sha256` the text the note holds when the pass ends: the accepted edit
+after `ready`, the start text otherwise. `run` names the run directory. `disposition`,
 `update` and `merge-target` are the packet worker's decision;
 `merge-target-sha256` hashes the merge target's text when the packet was
-written. `closing-status` is `ready`, `hand-back` (the start text was
-restored) or null when the pass stopped at the packet. `repaired` records
+written. `closing-status` is `ready`, `hand-back` (the note keeps its start
+text) or null when the pass stopped at the packet. `repaired` records
 whether the one bounded repair was spent. Hashes are SHA-256 of the UTF-8
 text, as review result files use.
 

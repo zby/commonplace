@@ -5,32 +5,32 @@ type: types/instruction.md
 
 # Run a full improvement pass on one note
 
-The pass runs six method families over one note: the compression bundle, `critique-note`, `composition-friction-gate` with its node-check companion `premise-decomposition-gate`, every catalog review bundle under [review-gates/](./review-gates/), and `cp-skill-connect`. A packet reconciles their output into the note's warranted contribution and its disposition. Where the note keeps its claim, an editor applies the packet's body edits, a copyeditor fixes flow and coherence, and a closing cycle reviews the final text. Closing either accepts that text, permits one bounded repair of defects the pass introduced, or restores the pass-start text and hands the result back to the author. Where the findings require changing the note's claim, or removing or moving the note, the pass stops after the packet and hands it back: a claim-level repair belongs to the author, who holds what the note is for. The pass does not replace the individual methods; it orders them, settles their disagreements, and carries the result to an accepted edited note or an explicit hand-back.
+The pass runs six method families over one note: the compression bundle, `critique-note`, `composition-friction-gate` with its node-check companion `premise-decomposition-gate`, every catalog review bundle under [review-gates/](./review-gates/), and `cp-skill-connect`. A packet reconciles their output into the note's warranted contribution and its disposition. Where the note keeps its claim, an editor applies the packet's body edits, a copyeditor fixes flow and coherence, and a closing cycle reviews the final text. Closing either accepts that text, permits one bounded repair of defects the pass introduced, or leaves the note at its pass-start text and hands the result back to the author. Where the findings require changing the note's claim, or removing or moving the note, the pass stops after the packet and hands it back: a claim-level repair belongs to the author, who holds what the note is for. The pass does not replace the individual methods; it orders them, settles their disagreements, and carries the result to an accepted edited note or an explicit hand-back.
 
 `composition-friction-gate` and `premise-decomposition-gate` never resolve to a verdict: their product is routed attention for a human. The packet carries their output verbatim and uses it in exactly one way — as evidence in the decision table's objection question, which can only route the note to a pending hand-back, never to an applied edit. That is the boundary: a checker result may stop the pass and hand the note to a person; it may not change the note.
 
 ## Running the pass
 
 ```bash
-commonplace-review run full-pass <note-path> [--direction TEXT] [--profile NAME] [--resume RUN_DIR]
+commonplace-review run full-pass <note-path> [--direction TEXT] [--profile NAME]
 ```
 
-The command runs the pass as a workflow in a run directory under `kb/reports/state/review/runs/`. Each method, the packet, the editor, the copyeditor and each closing status is one headless worker ask. Workers write only their output files; the command alone writes the note, and only after its checks. Every worker receives the note text captured when the pass started (or the text the pass wrote), not the live file.
+The command runs the pass as a workflow in the run directory `kb/reports/state/review/runs/full-pass/<note path without .md>/<first 12 hex of the note's SHA-256>/`. Each method, the packet, the editor, the copyeditor and each closing status is one headless worker ask. Workers write only their output files. Every worker receives the text under review as an input: the start text, or the edited text the pass carries forward. The note's file in the checkout may hold an older text. The command alone writes the note, once, at the end of the pass.
 
 - **Methods.** The compression bundle, friction, premises and connect each write one report. The catalog bundles and `critique-note` run through the gate sweep, which writes ordinary review result files and reuses a result that is fresh for the same text. The selector skips gates that do not apply to the note's `type:` or `traits:`; a skipped gate is not a passed gate.
 - **Packet.** One worker answers the decision table below from the method reports and writes the packet.
 - **Edit.** For `keep` with a determined update, an editor writes the edited note and a copyeditor copyedits it. The command rejects a text that changes the frontmatter `title` or `type` or the H1, keeps `user-verified` after a body change, or adds a validation failure; the worker writes it again with those problems.
-- **Closing.** The methods run again over the written text, and one worker chooses the closing status. The command applies it: `ready` ends the pass, `repair-needed` allows one repair and a new closing cycle, and `hand-back` restores the start text.
+- **Closing.** The methods run again over the edited text, and one worker chooses the closing status. The command applies it: `ready` ends the pass, `repair-needed` allows one repair and a new closing cycle over the repaired text, and `hand-back` ends the pass with the note untouched.
 
-The command writes the note only when the file still holds the text the pass expects: the start text, or the text it last wrote. Otherwise it stops and reports the conflict without writing.
+On `ready`, the command writes the packet and then the final text to the note. It writes the note only when the file still holds the start text. If the note changed during the pass, the command writes nothing and reports a conflict that names the run file holding the proposed text. Each accepted edited text stays in the run's `artifact/texts/`.
 
 The note's current packet is kept at `kb/reports/state/review/packets/<note-path>`, with a copy in the run's `artifact/packet.md`. A pass does not start while the note's current packet is `pending` and still matches the note; the command returns that packet instead. Resolve it under [resolve a full-pass disposition](./resolve-full-pass-disposition.md), or change the note.
 
-The command prints a JSON report: run directory, disposition, closing status, the hashes of the texts it wrote, whether it restored the start text, the packet path, and a checkout guard that ignores the pass's own write. It exits 0 for an accepted edit or a hand-back packet, 1 for a stop or a conflict, and 2 when the command failed.
+The command prints a JSON report: run directory, disposition, closing status, the run file holding the proposed text, whether the note was written, the packet path, and a checkout guard that ignores the pass's own write. It exits 0 for an accepted edit or a hand-back packet, 1 for a stop or a conflict, and 2 when the command failed.
 
-- After a launch failure or usage limit, rerun with `--resume RUN_DIR`. Answered calls replay, and a write already recorded in the run is not applied again.
-- After a worker problem, read it in the report, then `commonplace-review retry RUN JOB` and resume.
-- When the packet's update is `UNDETERMINED`, the packet lists the competing readings. Answer by resuming with `--direction "<the chosen reading>"`; the packet is decided again over the same method reports.
+- After a launch failure or usage limit, repeat the same command. While the note is unchanged, the run continues and answered calls replay. An edited note opens a new run.
+- After a worker problem, read it in the report, then `commonplace-review retry RUN JOB` and repeat the command.
+- When the packet's update is `UNDETERMINED`, the packet lists the competing readings. Answer by repeating the command with `--direction "<the chosen reading>"`; the pending packet does not block it, and the packet is decided again over the same method reports.
 
 ## Why this order
 
@@ -150,7 +150,7 @@ The closing worker reads every closing report against the final text. Repeat que
 
 - **`ready`** — the selected update is strengthened or preserved; closing finds no title-, thesis-, scope-, modality-, or category-level mismatch; and no defect introduced by the edit or copyedit remains. Pre-existing residuals and non-blocking new attention go to the record's residual column.
 - **`repair-needed`** — the selected update remains strengthened or preserved and every pass-introduced defect is local: it can be corrected without changing the title, thesis, selected update, evidence, or another author-owned decision. List the exact defects and their closing evidence. Only the initial closing cycle may choose it; after the repair, the recovery cycle reruns every method, because a changed final text invalidates every earlier closing result.
-- **`hand-back`** — the selected update is weakened, changed, or undetermined; closing requires a title, thesis, scope, modality, category, or evidential decision; a newly introduced angle appears; or any pass-introduced defect remains after the one repair. Record the exact author decision or exhausted defect. The command restores the pass-start text and keeps every closing record in the packet as evidence.
+- **`hand-back`** — the selected update is weakened, changed, or undetermined; closing requires a title, thesis, scope, modality, category, or evidential decision; a newly introduced angle appears; or any pass-introduced defect remains after the one repair. Record the exact author decision or exhausted defect. The command leaves the note at its pass-start text and keeps every closing record in the packet as evidence.
 
 When a closing cycle finds both a local introduced defect and a claim-level failure, `hand-back` takes precedence. Do not spend the repair making local prose cleaner around an author-owned decision. A finding is pass-introduced only when the difference between the start and final texts or the closing evidence locates it in the edit or copyedit; a merely stochastic disagreement with an initial reviewer is not enough.
 

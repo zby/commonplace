@@ -1,5 +1,5 @@
 ---
-description: "How Commonplace review is built: workflows over the headless runtime, result files as the only durable review state, the two-input freshness hash with watched parts, write safety and the checkout guard"
+description: "How Commonplace review is built: workflows over the headless runtime, result files as the only durable review state, the two-input freshness hash with watched parts, the single write and the checkout guard"
 type: types/note.md
 tags: []
 ---
@@ -28,7 +28,7 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 | `review_workflows.outcomes` | the strict result-line parser |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | the gate sweep, call grouping, the worker prompt and the checkout guard |
-| `review_workflows.edits` | the bounds an edited text must keep, the write-once log and the guard minus a workflow's own write |
+| `review_workflows.edits` | the bounds an edited text must keep, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `review_workflows.full_pass` | the full improvement pass and its packet |
 | `review_workflows.revise` | the revision workflow over the simplification passes |
 
@@ -46,15 +46,20 @@ only its declared outputs, or a problem file when it cannot do the job. Code
 turns an accepted output into a result file, a packet or a write to the
 checkout.
 
-An edit reaches the checkout only through code. The edited text is checked
+An edit reaches the checkout only through code. Each edited text is checked
 first; for the full pass, frontmatter `title` and `type` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
-added. It is then written
-only when the file holds the text the workflow expects: the start text or
-the text the run last wrote. Each write is recorded in the run as the hashes
-of the replaced and written text, so a resumed run never applies a write
-twice. Any other text on disk is a concurrent change, and the run stops
-without writing.
+added. An accepted text stays in memory and in the run's `artifact/`
+directory, and the next step works on it. The workflow's last step writes the
+final text once. If the file already holds the final text, nothing is
+written. If it holds the start text, the final text is written atomically.
+Any other text is a change made outside the run: the run writes nothing and
+reports a conflict that names the file holding the proposed text.
+
+A full pass or revision is a function of its inputs. Its run directory is
+derived from the workflow, the note's path and the hash of the note's start
+text, so repeating the command continues the run by replay, and an edited
+note opens a new run.
 
 ## Durable state and run state
 
@@ -62,11 +67,11 @@ without writing.
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | current full-pass packet | `kb/reports/state/review/packets/<note-path>` | until a later pass replaces it; holds the resolution of a pending hand-back |
-| run directory | `kb/reports/state/review/runs/<stamp>/` | one invocation and its resumes |
+| run directory | `kb/reports/state/review/runs/<stamp>/` for a sweep; `runs/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
 
 A run directory holds Workjig's records under `calls/`, the profile and
 options it opened with in `sweep.json`, and accepted per-run artifacts under `artifact/`
-(the full pass's start text, method reports, write log and packet copy). Its
+(the start text, method reports, each accepted edited text and the packet copy). Its
 records exist for replay inside the run and promise no format stability
 across versions. Freshness across runs never reads them.
 
@@ -113,8 +118,8 @@ layouts store results the same way.
 `gates.checkout_state()` records `HEAD` and, for each path `git status` lists
 (including untracked files) outside `kb/reports/state/review/`, its status
 code and content digest. A run compares the record before and after; a
-workflow that writes the checkout drops the file it wrote when that file
-holds exactly its last recorded text. The guard can say that a path changed while the run was
+workflow that writes the checkout drops its note when the note holds exactly
+the final text the run applied. The guard can say that a path changed while the run was
 open. It cannot attribute the change, and it misses ignored files and changes
 undone before the run ended. It reverts nothing.
 

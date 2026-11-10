@@ -199,7 +199,9 @@ One process at a time may hold a run; a second exits 2.
 
 A run records `git status` (with untracked files), the content digest of
 every listed path and `HEAD`, before and after, ignoring
-`kb/reports/state/review/`. The report lists every path that differs.
+`kb/reports/state/review/`. The report lists every path that differs. A full
+pass or revision leaves out its note only when the note holds the final text
+the run applied.
 
 What it can claim: these paths changed while the run was open. What it
 cannot claim: that a worker changed them. Other sessions editing or
@@ -212,7 +214,7 @@ an ignored file and a change undone before the run ended.
 Profiles live in the library's `instructions/review-profiles.yaml`, with the
 entry shape of task profiles: harness, launch model, effort and harness
 flags. `--profile NAME` picks one; the file's `default` applies otherwise. A
-resumed run keeps the profile it opened with.
+resumed sweep keeps the profile it opened with.
 
 - `sonnet` (the default) and `opus` run Claude Code with read tools, edit
   rights only under `kb/reports/state/review/runs/`, and Bash denied. That
@@ -239,8 +241,10 @@ has not been compared, which is why `pair` stays the default.
 
 **Full improvement pass.** `commonplace-review run full-pass NOTE` runs the
 method reports, a packet, and for an accepted `keep` an edit, a copyedit and
-a closing cycle with at most one repair. Workers write outputs only; code
-writes the note, and only from the text it expects to find. The note's
+a closing cycle with at most one repair. Workers write outputs only. Each
+edited text stays in the run directory, and later steps work on that text.
+The note is written once, at the end, and only when closing is `ready`. A
+hand-back writes nothing. The note's
 current packet lives at `kb/reports/state/review/packets/<note-path>`;
 `commonplace-review packet` checks its recorded hashes against the files.
 Operate it with [run a full improvement pass](../instructions/run-full-improvement-pass-on-note.md)
@@ -251,10 +255,21 @@ the closing cycle.
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
 one artifact. An assessment writes a report and a plan file, and the run
-stops; the operator edits the plan, and the next invocation runs each listed
-pass as one worker call in order, with code checking and writing each
-result. A pass's `effort` selects the profile. No revision has been measured
-yet.
+stops; the operator edits the plan and repeats the command, which runs each
+listed pass as one worker call in order, each on the text the one before
+left. The artifact is written once, at the end, and only when every pass
+ended `applied`, `no-change` or `skipped`. A pass's `effort` selects the
+profile. No revision has been measured yet.
+
+**Runs of the two workflows.** Their run directory is derived from the
+inputs: `kb/reports/state/review/runs/<workflow>/<note path without
+.md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
+the same note text continues that run, and answered calls replay. An edited
+note, including one the workflow itself wrote, has another hash, so the same
+command opens a new run. A repeat reuses the options the run recorded; an
+option given on the repeat replaces the recorded value. If the note changed
+during a run, the run writes nothing and reports a conflict that names the
+file holding the proposed text.
 
 ## Interpreting results
 

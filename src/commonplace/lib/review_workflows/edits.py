@@ -1,38 +1,33 @@
-"""Writing one checkout file from workflow outputs: bounds, the write-once log and the guard.
+"""Writing one checkout file from workflow outputs: bounds, the single write and the guard.
 
 A workflow never lets a worker write the checkout. A worker's edited text is
-an output; code checks it against hard bounds (`bounds()`), and `Writes`
-applies an accepted text to the file only from the text it expects to find
-there, recording each change in `artifact/writes.json` as the hashes of the
-text it replaced and the text it wrote, in order. A rerun replays the
-workflow's decisions, and each write the record already holds is skipped, so
-an edit is never applied twice. A new write is recorded first and happens
-only when the file on disk is the text it expects.
+an output; code checks it against hard bounds (`bounds()`) and keeps the
+accepted text in memory and in the run's `artifact/` directory. The next
+step works on that text, not on the file. Only the workflow's last step
+writes the file, once, through `apply()`: from the start text to the final
+text, or not at all when the file already holds the final text. Any other
+text is a change made outside the run, and `Conflict` stops the write.
 
-A run opens only on the text it left. That is the start text before its
-first write and the text of its last recorded write after it. The text that
-write replaced is also accepted: the process died between the record and the
-file, and the replay finishes that write. Any other text was changed outside
-the run, and `Conflict` stops the run before it launches a worker.
+A run is a function of its inputs. `run_dir()` derives its directory from
+the workflow, the note's path and the hash of the note's current text, so
+repeating a command continues its run by replay, and an edited note opens a
+new run.
 
 `guarded_changes()` is the checkout guard's finding minus the workflow's own
 write: the file is dropped from the changed paths when it holds exactly the
-text the log says the run last wrote.
+final text the run applied.
 """
 
 from __future__ import annotations
 
-import json
 import uuid
 from pathlib import Path
 
-from commonplace.headless.jobs import Run
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.validation import ValidationRun
 
-WRITES = "writes.json"
 PRESERVED = ("title", "type")
 """Frontmatter fields no edit may change."""
 NO_WRITES = ("Write nothing else: create, edit or delete no file in the repository, and run no "
@@ -91,48 +86,42 @@ def write_text(path: Path, text: str) -> None:
     tmp.replace(path)
 
 
-class Writes:
-    """The file changes this run made, in order, recorded in `artifact/writes.json`."""
+def apply(root: Path, note: str, start: str, final: str, proposed: Path, first=None) -> bool:
+    """Make the note hold `final`; return whether this call wrote it.
 
-    def __init__(self, run: Run, root: Path, note: str, start: str):
-        """Open the log; raise Conflict unless the file holds the text the run left (`start` before any write)."""
-        self.run, self.path = run, root / note
-        record = run.artifact / WRITES
-        self.log: list[dict] = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else []
-        self.step = 0
-        current = sha256(self.path.read_text(encoding="utf-8")) if self.path.is_file() else None
-        left = self.log[-1]["to"] if self.log else sha256(start)
-        self.interrupted = bool(self.log) and current != left and current == self.log[-1]["from"]
-        if current != left and not self.interrupted:
-            raise Conflict(f"{self.path.name} is not the text this run left in it; nothing was written")
-
-    def move(self, old: str, new: str) -> None:
-        """Change the file from `old` to `new`, once across reruns; raise Conflict if it does not hold `old`."""
-        entry = {"from": sha256(old), "to": sha256(new)}
-        if self.step < len(self.log):
-            if self.log[self.step] != entry:
-                raise Conflict(f"write {self.step + 1} differs from the one this run recorded; "
-                               "an answer was dismissed or an input changed after the run wrote the note")
-            self.step += 1
-            if self.interrupted and self.step == len(self.log):
-                write_text(self.path, new)                # the write a dead process recorded and did not make
-                self.interrupted = False
-            return
-        current = self.path.read_text(encoding="utf-8") if self.path.is_file() else None
-        if current != old:
-            raise Conflict(f"{self.path.name} changed during the pass; nothing was written")
-        self.log.append(entry)
-        self.run.accept(WRITES, json.dumps(self.log, indent=2))
-        write_text(self.path, new)
-        self.step += 1
-
-
-def guarded_changes(root: Path, before: dict[str, str], run_dir: Path, note: str) -> list[str]:
-    """The paths the checkout guard saw change since `before`, less `note` when it holds the run's last write."""
-    changed = gates.changed_paths(before, gates.checkout_state(root))
-    record = run_dir / "artifact" / WRITES
-    left = json.loads(record.read_text(encoding="utf-8"))[-1]["to"] if record.is_file() else None
+    The note holds `final` already: nothing is written. It holds `start`:
+    `final` is written atomically. Any other text was changed outside the
+    run, and `Conflict` names `proposed`, the artifact file that holds the
+    final text. `first`, when given, runs after the check and before the
+    write, so a record it writes precedes the note.
+    """
     path = root / note
-    if left is not None and path.is_file() and sha256(path.read_text(encoding="utf-8")) == left:
+    current = path.read_text(encoding="utf-8") if path.is_file() else None
+    if current not in (start, final):
+        raise Conflict(f"{note} changed during the run; nothing was written. "
+                       f"The proposed text is {proposed.relative_to(root).as_posix()}")
+    if first is not None:
+        first()
+    if current == final:
+        return False
+    write_text(path, final)
+    return True
+
+
+def run_dir(root: Path, workflow: str, note: str) -> Path:
+    """The run of `workflow` over the note's current text: `runs/<workflow>/<note without .md>/<hash prefix>`.
+
+    The same command on the same text finds the same run and continues it by
+    replay; another text opens another run.
+    """
+    text = (root / note).read_text(encoding="utf-8")
+    return root / gates.RUNS / workflow / note.removesuffix(".md") / sha256(text)[:12]
+
+
+def guarded_changes(root: Path, before: dict[str, str], note: str, final: str | None) -> list[str]:
+    """The paths the checkout guard saw change since `before`, less `note` when it holds the applied `final`."""
+    changed = gates.changed_paths(before, gates.checkout_state(root))
+    path = root / note
+    if final is not None and path.is_file() and path.read_text(encoding="utf-8") == final:
         changed = [rel for rel in changed if rel != note]    # the workflow's own write
     return changed

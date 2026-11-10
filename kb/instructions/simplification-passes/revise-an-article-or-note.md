@@ -96,10 +96,12 @@ recommends.
 ## Run it as a workflow
 
 `commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
-runs these steps with headless workers, which never write the checkout. It
-stops with a file wherever this procedure waits for the operator, and
-`commonplace-review run revise --resume RUN_DIR` continues with the edited
-file as input. Each stop prints a JSON report whose `waiting-for` names the
+runs these steps with headless workers, which never write the checkout. Its
+run directory is derived from the artifact's path and the hash of its text.
+It stops with a file wherever this procedure waits for the operator, and
+repeating the same command continues the run with the edited file as input.
+A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
+give them again. Each stop prints a JSON report whose `waiting-for` names the
 file and the command.
 
 1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
@@ -112,21 +114,25 @@ file and the command.
 2. Step 2 runs each listed pass as one worker, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
    the revised text (frontmatter, title and H1 kept; no new validation
-   failure) and writes the artifact after each pass. It does not commit.
+   failure), and the next pass works on that text. The artifact is written
+   once, at the end, and only when every pass ended `applied`, `no-change`
+   or `skipped`. After a `problem` pass, or while the run waits, nothing is
+   written, and `not-applied` names the run file holding the proposed text.
+   It does not commit.
 3. Plain-wording and abstractions stop with `artifact/<pass>-list.md`.
-   Delete each entry you strike, with its indented lines, and resume; the
-   worker applies only the entries left.
+   Delete each entry you strike, with its indented lines, and repeat the
+   command; the worker applies only the entries left.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
-5. A change to the artifact made since the run's last write stops the run
-   with a conflict. Re-plan in a new run with
-   `commonplace-review run revise ARTIFACT --plan FILE`, which skips the
-   assessment.
+5. An artifact edited between invocations has another hash, so the command
+   opens a new run and assesses again; `--plan FILE` names a plan and skips
+   the assessment. An artifact changed during a run is a conflict: nothing
+   is written, and the report names the run file holding the proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are
-under `artifact/reports/` and `artifact/texts/`; read each diff, restore what
-a report does not account for, and commit. Use this procedure in a
+under `artifact/reports/` and `artifact/texts/`; read each diff, undo in the
+artifact what a report does not account for, and commit. Use this procedure in a
 conversation instead when the passes are chosen as the conversation goes,
 when a pass needs the conversation as evidence, or when each pass should be
 integrated and committed before the next one runs.

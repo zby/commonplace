@@ -6,13 +6,12 @@ worker as the `criterion` input: the pass instruction
 editor and the closing status, its `## Copyedit` section alone for the
 copyeditor, and each method's own instruction for the methods. Prompts here
 say only how to read inputs and write outputs. Code owns the order, the
-branches, the bounds it can check and every write to the checkout.
+branches, the bounds it can check and the one write to the checkout.
 
 The run:
 
-1. Captures the note's text once, as `artifact/start.md`. Every ask is
-   given that text, not the file, so a rerun asks the same requests and
-   replays them.
+1. Reads the note's text once, as the start text, and keeps it as
+   `artifact/start.md`. Every ask is given a text, not the file.
 2. Asks the methods in parallel: the compression bundle, composition
    friction, premise decomposition and connect, one ask each with a
    `report` output; and every applicable catalog gate plus critique through
@@ -25,37 +24,31 @@ The run:
    `determined`, ends the run: the note is untouched and the packet is the
    hand-back. Otherwise an editor applies the packet's body edits and a
    copyeditor copyedits the result, each as an output that code checks
-   (`bounds()`); code then writes the accepted text to the note.
-5. The closing cycle asks the same methods over the written text, then the
+   (`bounds()`) and keeps under `artifact/texts/`.
+5. The closing cycle asks the same methods over the edited text, then the
    closing status with `decide()`: `ready` ends the run; `repair-needed`
-   (once per pass) asks the editor for those defects only, writes the
-   result and runs the closing cycle again; `hand-back`, or a second
-   `repair-needed`, restores the start text.
+   (once per pass) asks the editor for those defects only and runs the
+   closing cycle again over the repaired text; `hand-back`, or a second
+   `repair-needed`, ends the run with nothing applied.
+6. On `ready`, code writes the packet, then applies the final text to the
+   note with `edits.apply()`. The note changes once, at the end. On a
+   hand-back the note keeps its start text, so there is nothing to restore.
 
-Restart: a rerun with the same run directory replays every answered call.
-The reports of each finished method cycle are kept in
-`artifact/reports/`, keyed by cycle and text, and reused as they are,
-because the gate sweep reads result files that later cycles overwrite.
-
-Write safety: code changes the note only from the text it expects to find,
-and records each change in `artifact/writes.json` as the hashes of the text
-it replaced and the text it wrote, in order. A rerun replays the workflow's
-decisions, and each write step that the record already holds is skipped, so
-an edit is never applied twice. A step not yet recorded writes only when the
-note on disk is the text it expects; any other text is a concurrent change,
-and the run stops without writing. The text the pass last left in the note
-is the last recorded `to`, or the start text before any write. A resumed run
-opens only on that text, so it never reports on a note the operator changed
-between invocations. A hand-back restores the start text under the same
-rule, so it never restores over an operator's change.
+The run directory is `edits.run_dir()`: it is derived from the note's path
+and the hash of its start text. Repeating the command on the same text
+continues the run, and every answered call replays. The reports of each
+finished method cycle are kept in `artifact/reports/`, keyed by cycle and
+text, and reused as they are, because the gate sweep reads result files that
+later cycles overwrite. The packet is written before the note, so a process
+that dies between the two writes finishes the write on a repeat.
 
 What outlives the run is the packet: `artifact/packet.md`, and the note's
 current packet at `kb/reports/state/review/packets/<note-path>`. Its
 frontmatter records the note, the start and final text hashes, the decision,
 the closing status and the resolution fields that
-`instructions/resolve-full-pass-disposition.md` fills. A pass on a note
-whose current packet is `pending` and still matches the note's text does not
-start; it returns that packet.
+`instructions/resolve-full-pass-disposition.md` fills. A caller does not
+start a pass on a note whose current packet is `pending` and still matches
+the note's text (`blocking()`); it returns that packet.
 """
 
 from __future__ import annotations
@@ -87,7 +80,7 @@ from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
     Conflict,
     Stop,
-    Writes,
+    apply,
     bounds,
     guarded_changes,
     rejection,
@@ -124,8 +117,8 @@ class PassReport:
     update: str | None = None
     closing_status: str | None = None
     repaired: bool = False
-    written: list[str] = field(default_factory=list)     # SHA-256 of each text the pass wrote, in order
-    restored: bool = False
+    proposed: str | None = None       # repository path of the final edited text in the run directory
+    applied: bool = False             # the final text was written to the note
     packet: str | None = None
     blocked: bool = False             # a pending packet that still matches the note was returned
     stopped: str | None = None
@@ -148,8 +141,8 @@ METHOD_PROMPT = """\
 Apply one method to one note. Nobody will answer questions. If you cannot \
 apply it, write {problem} instead of guessing.
 
-The note is `{note}` in this repository; its text is {note_input}. Judge this \
-input text; the file on disk may differ. The method is `{method}`; its text is \
+The note is `{note}` in this repository; the text under review is {note_input}. \
+Judge this input text; the note's file in the checkout may hold an older text. The method is `{method}`; its text is \
 {criterion_input}.{support}
 
 Do the method's work yourself in this session, as its fresh, single-use \
@@ -181,12 +174,14 @@ Edit one note as a full improvement pass directs. Nobody will answer \
 questions. If you cannot do it within the instruction's bounds, write \
 {problem} instead of guessing.
 
-The note is `{note}` in this repository; its current text is {note_input}. The \
-pass's instruction is {criterion_input}. {task}
+The note is `{note}` in this repository; the text to edit is {note_input}. The \
+note's file in the checkout may hold an older text: edit this input, not the \
+file. The pass's instruction is {criterion_input}. {task}
 
 Output:
 - Write the complete edited note, frontmatter included, to {output}. Do not \
-edit the note's file: code checks your text and writes it. {no_writes}
+edit the note's file: code checks your text and writes the note when the pass \
+ends. {no_writes}
 """
 
 APPLY_TASK = "Apply the body edits of the packet, {packet_input}, as the instruction directs for `keep`."
@@ -208,8 +203,9 @@ Decide the closing status of a full improvement pass over one note. Nobody \
 will answer questions. If you cannot, write {problem} instead of guessing.
 
 The note is `{note}` in this repository. Its text at the start of the pass is \
-{start_input}; the text the pass left, which the reports below assessed, is \
-{note_input}. The pass's packet is {packet_input} and its instruction is \
+{start_input}; the edited text under review, which the reports below assessed, \
+is {note_input}. The note's file in the checkout may hold an older text: judge \
+this input. The pass's packet is {packet_input} and its instruction is \
 {criterion_input}: read the closing reports against the final text and choose \
 the closing status as the instruction directs. This is the {cycle} closing cycle.
 Closing reports:
@@ -445,18 +441,15 @@ def _packet_text(root: Path, note: str, start: str, final: str, run_id: str, dec
     return text
 
 
-def _pass(run: Run, root: Path, note: str, profile: Profile, report: PassReport, direction: str | None,
-          max_workers: int | None) -> str:
-    """Run the pass in `run`; return the packet text. Raises Stop."""
-    start_file = run.artifact / "start.md"
-    if start_file.is_file():
-        start = start_file.read_text(encoding="utf-8")
-    else:
-        start = (root / note).read_text(encoding="utf-8")
-        run.accept("start.md", start)
+def _pass(run: Run, root: Path, note: str, start: str, profile: Profile, report: PassReport,
+          direction: str | None, max_workers: int | None) -> tuple[str, str | None]:
+    """Run the pass in `run` from `start`; return the packet text and the final text, None when nothing is applied.
+
+    Raises Stop.
+    """
+    run.accept("start.md", start)
     instruction = _library_text(INSTRUCTION_REL)
     baseline = validation_fails(root, note, start)
-    writes = Writes(run, root, note, start)
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
 
     reports = _methods(run, root, note, start, "initial", profile, max_workers)
@@ -478,13 +471,16 @@ def _pass(run: Run, root: Path, note: str, profile: Profile, report: PassReport,
         return _packet_text(root, note, start, final, run_id, decision, body, list(closings), status, report.repaired)
 
     if decision["disposition"] != "keep" or decision["update"] != "determined":
-        return finish(start)
+        return finish(start), None
 
-    edited = _edit(run, "edit", root, note, start, start, baseline, APPLY_TASK.format(packet_input=input_ref("packet")),
-                   {"criterion": instruction, "packet": packet})
-    final = _copyedit(run, root, note, start, edited, baseline, instruction)
-    writes.move(start, final)
-    report.written.append(sha256(final))
+    def keep(name: str, text: str) -> str:
+        report.proposed = run.accept(f"texts/{name}.md", text).relative_to(root).as_posix()
+        return text
+
+    edited = keep("edit", _edit(run, "edit", root, note, start, start, baseline,
+                                APPLY_TASK.format(packet_input=input_ref("packet")),
+                                {"criterion": instruction, "packet": packet}))
+    final = keep("copyedit", _copyedit(run, root, note, start, edited, baseline, instruction))
     closings: list[tuple[str, str]] = []
     cycle = "closing"
     while True:
@@ -494,32 +490,27 @@ def _pass(run: Run, root: Path, note: str, profile: Profile, report: PassReport,
         closings.append((label, record))
         if status["status"] == "ready":
             report.closing_status = "ready"
-            return finish(final, closings, "ready")
+            return finish(final, closings, "ready"), final
         if status["status"] == "repair-needed" and not report.repaired:
             report.repaired = True
             defects = "".join(f"- {defect}\n" for defect in status["defects"])
-            repaired = _edit(run, "repair", root, note, start, final, baseline,
-                             REPAIR_TASK.format(defects_input=input_ref("defects"), packet_input=input_ref("packet")),
-                             {"criterion": instruction, "packet": packet, "defects": defects})
-            writes.move(final, repaired)
-            report.written.append(sha256(repaired))
-            final, cycle = repaired, "recovery"
+            final = keep("repair", _edit(run, "repair", root, note, start, final, baseline,
+                                         REPAIR_TASK.format(defects_input=input_ref("defects"),
+                                                            packet_input=input_ref("packet")),
+                                         {"criterion": instruction, "packet": packet, "defects": defects}))
+            cycle = "recovery"
             continue
-        writes.move(final, start)                     # hand-back, or a second repair-needed
-        report.restored, report.closing_status = True, "hand-back"
-        return finish(start, closings, "hand-back")
+        report.closing_status = "hand-back"           # hand-back, or a second repair-needed: nothing is applied
+        return finish(start, closings, "hand-back"), None
 
 
-def blocking(root: Path, note: str, run_id: str | None = None) -> PassReport | None:
-    """The report returning the note's current packet when it is pending and still matches the note.
-
-    A packet written by the run `run_id` does not block it, so a resumed run continues.
-    """
+def blocking(root: Path, note: str) -> PassReport | None:
+    """The report returning the note's current packet when it is pending and still matches the note."""
     path = packet_file(root, note)
     if not path.is_file():
         return None
     current = read_packet(path)
-    if (current.get("resolution") != "pending" or current.get("run") == run_id
+    if (current.get("resolution") != "pending"
             or current.get("final-sha256") != sha256((root / note).read_text(encoding="utf-8"))):
         return None
     return PassReport(current.get("run"), note, current.get("disposition"), current.get("update"),
@@ -528,28 +519,33 @@ def blocking(root: Path, note: str, run_id: str | None = None) -> PassReport | N
 
 def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_workers: int | None = None,
               timeout: float | None = None, direction: str | None = None, harnesses=HARNESSES) -> PassReport:
-    """Run the full pass over the repository-relative `note` in the run at `run_dir`, new or resumed.
+    """Run the full pass over the repository-relative `note` in the run at `run_dir`, new or continued.
 
-    `direction` is the operator's answer to an undetermined update, or any
-    direction the packet must follow; it is an input of the packet ask.
+    The note's current text is the start text. `direction` is the operator's
+    answer to an undetermined update, or any direction the packet must
+    follow; it is an input of the packet ask. The caller checks `blocking()`.
     """
     root = root.resolve()
-    run_id = run_dir.resolve().relative_to(root).as_posix()
-    blocked = blocking(root, note, run_id)
-    if blocked is not None:
-        return blocked
-    report = PassReport(run_id, note)
+    report = PassReport(run_dir.resolve().relative_to(root).as_posix(), note)
     packet_path = packet_file(root, note)
     before = gates.checkout_state(root)
+    start = (root / note).read_text(encoding="utf-8")
+    final = None
     try:
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
-            text = _pass(run, root, note, profile, report, direction, max_workers)
-            run.accept("packet.md", text)
-            write_text(packet_path, text)
-            report.packet = packet_path.relative_to(root).as_posix()
+            text, final = _pass(run, root, note, start, profile, report, direction, max_workers)
+
+            def record() -> None:
+                run.accept("packet.md", text)
+                write_text(packet_path, text)
+                report.packet = packet_path.relative_to(root).as_posix()
+            if final is None:
+                record()
+            else:
+                report.applied = apply(root, note, start, final, root / report.proposed, first=record)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, run_dir, note)
+    report.changed = guarded_changes(root, before, note, final if report.packet else None)
     return report

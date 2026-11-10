@@ -60,15 +60,20 @@ acknowledgement of edits outside the watched parts.
 `run gates` (the gate sweep), `run full-pass` (the full improvement pass)
 and `run revise` (the simplification passes), with `status`, `packet`,
 `retry` and `acknowledge`. A workflow is a Python function over `ask`,
-`checked`, `gather` and `decide`. Each workflow run opens one directory
-under `kb/reports/state/review/runs/`; `--resume` continues it and replays
-answered calls.
+`checked`, `gather` and `decide`. Each run has one directory under
+`kb/reports/state/review/runs/`. A sweep opens a new directory, and
+`--resume` continues it and replays answered calls. A full pass or revision
+derives its directory from the workflow, the note's path and the hash of the
+note's text, so repeating the command continues the run by replay, and an
+edited note opens a new run.
 
 **Workers never write the checkout.** A worker receives captured inputs and
 writes only its output files. Code checks each output (the strict result
-line, a decision schema, the bounds an edit must keep) and writes the
-checkout itself, only from the text it expects to find. A checkout guard
-reports paths that changed while a run was open.
+line, a decision schema, the bounds an edit must keep). A workflow that edits
+a note carries each edited text forward in memory and in the run directory,
+and writes the note once, at its last step, only from the start text. A note
+changed during the run is a conflict, and nothing is written. A checkout
+guard reports paths that changed while a run was open.
 
 **A criterion is any markdown file.** Catalog gates, a type spec, a
 `COLLECTION.md` and the critique instruction all enter as the `criterion`
@@ -132,8 +137,10 @@ pairs, so gate authors set staleness.
 
 Easier: adding a workflow is one Python function plus its criterion files. A
 stopped run continues where it stopped without repeating a paid answer.
-Freshness is inspectable as files. The full pass applies an edit only through
-code that checks it, and never applies one twice.
+Freshness is inspectable as files. The full pass and the revision apply an
+edit only through code that checks it, and change the note at most once per
+run. A hand-back or an unfinished run leaves the note untouched, so nothing
+needs restoring.
 
 Harder: every changed pair is re-reviewed, and a type-spec or `COLLECTION.md`
 edit re-reviews its whole cohort. A wrong `watches:` declaration leaves pairs
@@ -163,11 +170,11 @@ Open:
 
 Limits: decided and run in this checkout, with the `sonnet` profile for the
 live runs. One full pass on a short note took 27 launches and $4.47 and ended
-in a hand-back with the start text restored; that is one observation, not an
+in a hand-back; that is one observation, not an
 estimate of pass cost or outcome. The `opus` and `codex` profiles and the
 revision workflow have no live measurement here. The prompt around the inputs
-is outside the freshness hashes, so a prompt change re-asks calls on resume
-but stales no result; judgment belongs in criterion files.
+is outside the freshness hashes, so a prompt change re-asks calls on a
+resume or repeat but stales no result; judgment belongs in criterion files.
 
 ---
 

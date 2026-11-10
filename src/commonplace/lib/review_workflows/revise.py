@@ -4,11 +4,13 @@ The judgment lives in the library's instruction files, each handed to its
 worker as the `criterion` input: `revise-an-article-or-note.md` for the
 assessment, and each pass file under `instructions/simplification-passes/`
 for its pass. Prompts here say only how to read inputs and write outputs.
-Code owns the plan's check, the order, the bounds it can check and every
+Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
-The run stops with a file wherever the interactive procedure waits for the
-operator, and a rerun continues with the operator's answer as an input:
+The run directory is `edits.run_dir()`, derived from the artifact's path and
+the hash of its text when the command runs. The run stops with a file
+wherever the interactive procedure waits for the operator, and repeating the
+command continues the run with the operator's answer as an input:
 
 1. **Assessment.** One `decide()` ask, on the judgment profile, with two
    outputs: `assessment` for the operator and `plan` for code. Code hands the
@@ -17,23 +19,21 @@ operator, and a rerun continues with the operator's answer as an input:
    fields and an order against the depth the pass files declare. The run
    writes `artifact/assessment.md` and `artifact/plan.yaml` and stops,
    waiting for the plan. A plan whose `stop` is set ends the run there.
-2. **Passes.** A rerun reads the plan, which the operator may have edited
+2. **Passes.** A repeat reads the plan, which the operator may have edited
    in place or named with `--plan`; an invalid operator plan is a command
-   error, not a worker retry. The artifact's text when the passes start is
-   captured as `artifact/start.md`. Each listed pass is one `checked()` ask
-   on the profile its `effort` selects, with the current text, the pass file,
-   the purpose, the defend list and the scope as inputs, and the revised
+   error, not a worker retry. The artifact's text is kept as
+   `artifact/start.md`. Each listed pass is one `checked()` ask on the
+   profile its `effort` selects, with the current text, the pass file, the
+   purpose, the defend list and the scope as inputs, and the revised
    artifact and a pass report as outputs. Code checks the revised text
-   (`artifact_bounds()`) and writes it through the shared write-once log, so
-   a rerun never applies a pass twice and never writes over a change made
-   since the run's last write (a `Conflict`: re-plan in a new run). Each
+   (`artifact_bounds()`), and the next pass works on it. Each
    pass's report and the text it left are kept under `artifact/reports/` and
    `artifact/texts/`, so the operator can read each pass's diff. A pass
    whose text comes back unchanged is `no-change`; a worker problem or a pass
    out of attempts is `problem`, and the run goes on with the next pass.
 3. **Strikes.** A pass in `STRIKE` has the operator strike its list before
    any entry is applied: a list ask, a stop with
-   `artifact/<pass>-list.md`, and on the rerun an apply ask given the
+   `artifact/<pass>-list.md`, and on the repeat an apply ask given the
    proposed list and the list the operator left. A struck entry is deleted
    from the file. A list made again for other text replaces the file and
    stops again.
@@ -43,8 +43,13 @@ operator, and a rerun continues with the operator's answer as an input:
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
    skipped pass is reported as left for the interactive path.
+5. **Apply.** The final text is written to the artifact, through
+   `edits.apply()`, only when the run reaches the end of the plan with every
+   pass `applied`, `no-change` or `skipped`. After a `problem` pass, or while
+   the run waits for the operator, nothing is written, and the report names
+   the file that holds the proposed text.
 
-Because the plan and the operator's list are inputs, an unedited rerun
+Because the plan and the operator's list are inputs, an unedited repeat
 replays every answered call, and an edited plan re-asks only the passes
 whose inputs changed (a pass after a changed one gets a changed text).
 """
@@ -70,14 +75,13 @@ from commonplace.headless.jobs import (
     output_ref,
 )
 from commonplace.lib import frontmatter
-from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
     Conflict,
     Stop,
-    Writes,
+    apply,
     bounds,
     guarded_changes,
     rejection,
@@ -99,7 +103,7 @@ INTERACTIVE = {"split-out-a-treatment": "it writes a second file and the collect
 PLAN_SCHEMA = {"purpose": str, "defend": list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN, START = "assessment.md", "plan.yaml", "start.md"
 NO_CANDIDATES = "No candidates."
-CONTINUE = "commonplace-review run revise --resume {run}"
+REPEAT = "commonplace-review run revise {artifact}"
 
 
 @dataclass(frozen=True)
@@ -215,7 +219,6 @@ class PassState:
     reason: str | None = None
     profile: dict | None = None       # the answering call's profile and recorded model
     model: str | None = None
-    written: str | None = None        # SHA-256 of the text the pass wrote
     report: str | None = None         # repository path of the pass's report
     text: str | None = None           # repository path of the text the pass left, to diff against the one before
 
@@ -226,7 +229,9 @@ class ReviseReport:
     artifact: str
     plan: dict | None = None
     passes: list[PassState] = field(default_factory=list)
-    written: list[str] = field(default_factory=list)
+    proposed: str | None = None       # repository path of the final revised text in the run directory
+    applied: bool = False             # the final text was written to the artifact
+    not_applied: str | None = None    # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
     stop: str | None = None           # the plan's stop: the assessment is the result
     stopped: str | None = None
@@ -273,10 +278,10 @@ report a rewrite and stop. {no_writes}
 """
 
 FRAME = """\
-The artifact is `{artifact}` in this repository; its current text is \
-{artifact_input}. Work on this input text; the file on disk may differ. The \
-pass is `{pass_rel}`; its text is {criterion_input}. The purpose is \
-{purpose_input}. {defend} {scope}
+The artifact is `{artifact}` in this repository; the text under revision is \
+{artifact_input}. The artifact's file in the checkout may hold an older text: \
+work on this input, not the file. The pass is `{pass_rel}`; its text is \
+{criterion_input}. The purpose is {purpose_input}. {defend} {scope}
 """
 
 PASS_PROMPT = """\
@@ -286,7 +291,7 @@ you cannot run it within the pass's bounds, write {problem} instead of guessing.
 {frame}
 Output:
 - Write the complete revised artifact, frontmatter included, to {artifact_output}. \
-Do not edit the artifact's file: code checks your text and writes it. If the \
+Do not edit the artifact's file: code checks your text. If the \
 pass changes nothing, write the text unchanged.
 - Write the pass's report to {report}, as the pass describes it, followed by \
 the items you noticed but did not apply. {no_writes}
@@ -319,7 +324,7 @@ entry and no new one.
 
 Output:
 - Write the complete revised artifact, frontmatter included, to {artifact_output}. \
-Do not edit the artifact's file: code checks your text and writes it.
+Do not edit the artifact's file: code checks your text.
 - Write the pass's report to {report}, as the pass describes it, followed by \
 the entries the operator struck, one line each. {no_writes}
 """
@@ -387,7 +392,7 @@ def _assess(run: Run, root: Path, artifact: str, purpose: str | None, defend: li
     report.waiting_for = {
         "what": "plan", "files": [_rel(root, path) for path in files],
         "next": (f"Read {ASSESSMENT}; edit {PLAN} in place (or name another file with --plan), then run: "
-                 + CONTINUE.format(run=report.run_dir))}
+                 + REPEAT.format(artifact=artifact))}
 
 
 def _ask(run: Run, job: str, template: str, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
@@ -426,7 +431,7 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
             "what": "strikes", "pass": current.name, "files": [_rel(root, path)],
             "next": ("Delete each entry you strike from the list: its `- ` line and the lines indented "
                      "under it. Leave the entries you approve as they are. Then run: "
-                     + CONTINUE.format(run=report.run_dir))}
+                     + REPEAT.format(artifact=artifact))}
         return None
     approved = (run.artifact / name).read_text(encoding="utf-8")
     if not entries(approved):
@@ -437,16 +442,11 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
                 proposed_input=input_ref("proposed"), approved_input=input_ref("approved"))
 
 
-def _passes(run: Run, root: Path, artifact: str, plan: dict, known: dict[str, Pass],
-            profiles: dict[str, Profile], report: ReviseReport) -> None:
-    start_file = run.artifact / START
-    if start_file.is_file():
-        start = start_file.read_text(encoding="utf-8")
-    else:
-        start = (root / artifact).read_text(encoding="utf-8")
-        run.accept(START, start)
+def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
+            profiles: dict[str, Profile], report: ReviseReport) -> str:
+    """Run the plan's passes from `start`; return the text the last accepted pass left."""
+    run.accept(START, start)
     baseline = validation_fails(root, artifact, start)
-    writes = Writes(run, root, artifact, start)
     text = start
     report.passes = [PassState(entry["pass"], entry["scope"], known[entry["pass"]].effort) for entry in plan["passes"]]
     defend = "".join(f"- {claim}\n" for claim in plan["defend"])
@@ -473,7 +473,7 @@ def _passes(run: Run, root: Path, artifact: str, plan: dict, known: dict[str, Pa
                 answer = _strike(run, current, frame, root, artifact, start, baseline, inputs, profile, state, report)
                 if answer is None:
                     if state.state == "waiting":
-                        return
+                        return text
                     continue
             else:
                 answer = _ask(run, current.name, PASS_PROMPT, frame, root, artifact, start, baseline, inputs, profile)
@@ -491,25 +491,28 @@ def _passes(run: Run, root: Path, artifact: str, plan: dict, known: dict[str, Pa
         if revised == text:
             state.state = "no-change"
             continue
-        state.text = _rel(root, run.accept(f"texts/{current.name}.md", revised))   # for the per-pass diff
-        writes.move(text, revised)
-        state.state, state.written, text = "applied", sha256(revised), revised
-        report.written.append(state.written)
+        state.text = report.proposed = _rel(root, run.accept(f"texts/{current.name}.md", revised))
+        state.state, text = "applied", revised
+    return text
 
 
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
            defend: list[str] = (), plan: dict | None = None, timeout: float | None = None,
            harnesses=HARNESSES) -> ReviseReport:
-    """Revise the repository-relative `artifact` in the run at `run_dir`, new or resumed.
+    """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
-    Without `plan` the run assesses and stops for the operator's plan; with
-    it (as `read_plan` returns it) the run executes the plan's passes.
-    `profiles` maps each effort to its profile; the assessment is a judgment ask.
+    The artifact's current text is the start text. Without `plan` the run
+    assesses and stops for the operator's plan; with it (as `read_plan`
+    returns it) the run executes the plan's passes and applies the final
+    text when every pass ended well. `profiles` maps each effort to its
+    profile; the assessment is a judgment ask.
     """
     root = root.resolve()
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact, plan=plan)
     known = passes()
     before = gates.checkout_state(root)
+    start = (root / artifact).read_text(encoding="utf-8")
+    final = None
     try:
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
             if plan is None:
@@ -517,11 +520,17 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             elif plan["stop"]:
                 report.stop = plan["stop"]
             else:
-                _passes(run, root, artifact, plan, known, profiles, report)
+                final = _passes(run, root, artifact, start, plan, known, profiles, report)
+                problems = [state.name for state in report.passes if state.state == "problem"]
+                if final != start and report.waiting_for is None and not problems:
+                    report.applied = apply(root, artifact, start, final, root / report.proposed)
+                elif final != start:
+                    why = ("the run waits for the operator" if report.waiting_for is not None
+                           else f"{', '.join(problems)} ended with a problem")
+                    report.not_applied = f"The proposed text is {report.proposed}; it is not applied: {why}."
     except Conflict as conflict:
-        report.conflict = (f"{conflict}. The artifact changed since this run's last write: re-plan in a new run, "
-                           f"`commonplace-review run revise {artifact} --plan <plan file>`")
+        report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, run_dir, artifact)
+    report.changed = guarded_changes(root, before, artifact, final if report.applied else None)
     return report

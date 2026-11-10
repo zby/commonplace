@@ -5,8 +5,9 @@ pass path the task names; it logs `<kind> <pass> <launch model>` per launch
 and answers from the table below. Words in the artifact's text choose the
 scenario: STOP makes the plan stop, BADPLAN makes the first plan name an
 unknown pass, PLAIN adds plain-wording to the plan, OVERCLAIM adds
-narrow-overclaims, RETITLE makes the first readability attempt change the H1.
-A file `fail-<pass>` in the working directory makes that pass's launches exit 1.
+narrow-overclaims, RETITLE makes the first readability attempt change the H1,
+BADPASS makes every readability attempt change it, and TOUCH makes the last
+pass edit the artifact's file, as a concurrent operator would. A file `fail-<pass>` in the working directory makes that pass's launches exit 1.
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run
 from commonplace.lib import library
+from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.review_workflows import revise as revise_module
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
@@ -73,8 +75,10 @@ def revised():
     if kind == "apply":
         kept = re.findall(r"^- (\w+)", inputs["approved"].read_text(), re.MULTILINE)
         return text + f"{name} applied {' '.join(kept)}.\n"
-    if "RETITLE" in text and name == "readability-and-flow" and not rejected:
+    if name == "readability-and-flow" and ("RETITLE" in text and not rejected or "BADPASS" in text):
         return text.replace("\n# Alpha\n", "\n# Beta\n")
+    if "TOUCH" in text and name == "opening-and-title":
+        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
     scope = inputs["scope"].read_text() if "scope" in inputs else "all"
     return text.replace("user-verified: true\n", "") + f"{name} ({scope}).\n"
 
@@ -166,8 +170,9 @@ def test_assessment_stops_with_both_files(repo, capsys):
     report = assess(repo, capsys)
     assert report["waiting-for"]["what"] == "plan" and not report["complete"]
     run = report["run-dir"]
+    assert run == f"kb/reports/state/review/runs/revise/kb/notes/alpha/{sha256(NOTE.format(words=''))[:12]}"
     assert report["waiting-for"]["files"] == [f"{run}/artifact/assessment.md", f"{run}/artifact/plan.yaml"]
-    assert f"--resume {run}" in report["waiting-for"]["next"]
+    assert report["waiting-for"]["next"].endswith(f"commonplace-review run revise {NOTE_PATH}")
     assert artifact_file(repo, report, "assessment.md").read_text().startswith("# Assessment")
     plan = yaml.safe_load(artifact_file(repo, report, "plan.yaml").read_text())
     assert [entry["pass"] for entry in plan["passes"]] == ["readability-and-flow", "place-external-systems",
@@ -175,50 +180,40 @@ def test_assessment_stops_with_both_files(repo, capsys):
     assert report["guard"]["clean"] and note_text(repo) == NOTE.format(words="")
 
 
-def test_an_unedited_resume_runs_the_passes_in_order_on_their_effort_profiles(repo, capsys):
+def test_a_repeat_runs_the_passes_in_order_on_their_effort_profiles_and_applies_once(repo, capsys):
     report = assess(repo, capsys)
-    code, resumed, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0 and resumed["complete"], resumed
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["complete"] and done["run-dir"] == report["run-dir"], done
     assert launches == ["pass readability-and-flow big", "pass place-external-systems small",
                         "pass opening-and-title big"]
-    assert states(resumed) == [("readability-and-flow", "applied"), ("place-external-systems", "applied"),
-                               ("opening-and-title", "applied")]
-    assert [state["profile"]["launch-model"] for state in resumed["passes"]] == ["big", "small", "big"]
+    assert states(done) == [("readability-and-flow", "applied"), ("place-external-systems", "applied"),
+                            ("opening-and-title", "applied")]
+    assert [state["profile"]["launch-model"] for state in done["passes"]] == ["big", "small", "big"]
     text = note_text(repo)
     assert text.endswith("readability-and-flow (all).\nplace-external-systems (all).\nopening-and-title (all).\n")
-    assert "user-verified" not in text and resumed["guard"]["clean"], "the artifact write is expected"
-    writes = json.loads(artifact_file(repo, report, "writes.json").read_text())
-    assert [entry["to"] for entry in writes] == resumed["written"]
-    code, again, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert (code, launches, again["written"], note_text(repo)) == (0, [], resumed["written"], text)
+    assert "user-verified" not in text and done["guard"]["clean"], "the artifact write is expected"
+    assert done["applied"] and (repo[0] / done["proposed"]).read_text() == text
+    code, again, launches = revise(repo, capsys, NOTE_PATH)
+    assert again["run-dir"] != report["run-dir"] and launches == ["assess - big"], "the revised text is a new run"
+    assert note_text(repo) == text
 
 
 def test_an_edited_plan_is_honoured_and_replays_what_did_not_change(repo, capsys):
     report = assess(repo, capsys)
-    revise(repo, capsys, "--resume", report["run-dir"])
-    # Re-plan in a new run from the start text: drop one pass and scope another.
-    (repo[0] / NOTE_PATH).write_text(NOTE.format(words=""), encoding="utf-8")
     plan_file = artifact_file(repo, report, "plan.yaml")
     plan = yaml.safe_load(plan_file.read_text())
-    plan["passes"] = [plan["passes"][0], {"pass": "opening-and-title", "scope": "the TL;DR"}]
+    plan["passes"] = [plan["passes"][0], {"pass": "place-external-systems", "scope": "the TL;DR"}]
     plan_file.write_text(yaml.safe_dump(plan))
-    code, fresh, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(plan_file))
-    assert code == 0 and fresh["run-dir"] != report["run-dir"]
-    assert launches == ["pass readability-and-flow big", "pass opening-and-title big"], "no assessment"
-    assert note_text(repo).endswith("readability-and-flow (all).\nopening-and-title (the TL;DR).\n")
-    # In the run itself: an edit made before any pass ran is honoured; unchanged passes replay.
-    second = assess(repo, capsys)
-    plan_file = artifact_file(repo, second, "plan.yaml")
-    plan = yaml.safe_load(plan_file.read_text())
-    plan["passes"] = [plan["passes"][0], plan["passes"][1]]
-    plan_file.write_text(yaml.safe_dump(plan))
-    code, resumed, launches = revise(repo, capsys, "--resume", second["run-dir"])
-    assert code == 0 and states(resumed) == [("readability-and-flow", "applied"), ("place-external-systems", "applied")]
+    (repo[0] / "fail-place-external-systems").touch()
+    code, _, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and launches == ["pass readability-and-flow big"] + ["pass place-external-systems small"] * 3
+    assert note_text(repo) == NOTE.format(words=""), "nothing is written before the end"
+    (repo[0] / "fail-place-external-systems").unlink()
     plan["passes"][1]["scope"] = "§2"
     plan_file.write_text(yaml.safe_dump(plan))
-    code, rescoped, launches = revise(repo, capsys, "--resume", second["run-dir"])
-    assert launches == ["pass place-external-systems small"], "the first pass replays"
-    assert code == 1 and "re-plan in a new run" in rescoped["conflict"], "its write stands in the artifact"
+    code, _, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches == ["pass place-external-systems small"], "the first pass replays"
+    assert note_text(repo).endswith("readability-and-flow (all).\nplace-external-systems (§2).\n")
 
 
 def test_an_invalid_operator_plan_is_a_command_error(repo, capsys):
@@ -226,12 +221,12 @@ def test_an_invalid_operator_plan_is_a_command_error(repo, capsys):
     plan_file = artifact_file(repo, report, "plan.yaml")
     plan_file.write_text("purpose: p\ndefend: []\npasses:\n  - pass: opening-and-title\n"
                          "  - pass: readability-and-flow\n  - pass: polish\n")
-    code, error, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    code, error, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 2 and launches == []
     assert "`stop` is missing" in error
     plan_file.write_text("purpose: p\ndefend: []\nstop: null\npasses:\n  - pass: opening-and-title\n"
                          "  - pass: readability-and-flow\n  - pass: polish\n")
-    code, error, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    code, error, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 2 and launches == []
     assert "`readability-and-flow` (depth 4) must run before `opening-and-title` (depth 6)" in error
     assert "unknown pass `polish`" in error
@@ -249,75 +244,95 @@ def test_a_stop_plan_ends_cleanly_with_the_assessment(repo, capsys):
     code, report, _ = revise(repo, capsys, NOTE_PATH, "--purpose", "p")
     assert code == 0 and report["complete"] and report["stop"].startswith("rewrite-needed")
     assert report["waiting-for"] is None and artifact_file(repo, report, "assessment.md").is_file()
-    code, again, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    code, again, launches = revise(repo, capsys, NOTE_PATH)
     assert (code, again["stop"], launches) == (0, report["stop"], [])
 
 
 def test_plain_wording_stops_with_its_list_and_applies_only_unstruck_entries(repo, capsys):
     report = assess(repo, capsys, "PLAIN")
-    code, waiting, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    start_text = note_text(repo)
+    code, waiting, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches == ["pass readability-and-flow big", "list plain-wording small"]
     assert waiting["waiting-for"]["what"] == "strikes" and "Delete each entry" in waiting["waiting-for"]["next"]
     assert states(waiting)[1:] == [("plain-wording", "waiting"), ("place-external-systems", "pending"),
                                    ("opening-and-title", "pending")]
+    assert note_text(repo) == start_text and not waiting["applied"]
+    assert waiting["proposed"] in waiting["not-applied"] and "waits for the operator" in waiting["not-applied"]
     listed = repo[0] / waiting["waiting-for"]["files"][0]
     assert listed.name == "plain-wording-list.md"
     listed.write_text(listed.read_text().replace("- beta: word; replace\n", ""))
-    code, done, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0 and done["complete"], done
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["complete"] and done["run-dir"] == report["run-dir"], done
     assert launches == ["apply plain-wording small", "pass place-external-systems small",
                         "pass opening-and-title big"], "the list replays"
     assert "plain-wording applied alpha gamma.\n" in note_text(repo)
 
 
 def test_narrow_overclaims_runs_only_with_a_defend_list(repo, capsys):
-    report = assess(repo, capsys, "OVERCLAIM")
-    code, resumed, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    assess(repo, capsys, "OVERCLAIM")
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and "pass narrow-overclaims big" not in launches
-    assert resumed["passes"][0]["state"] == "skipped" and "interactive path" in resumed["passes"][0]["reason"]
-    assert states(resumed)[1:] == [(name, "applied") for name in
-                                   ("readability-and-flow", "place-external-systems", "opening-and-title")]
-    second = assess(repo, capsys, "OVERCLAIM")
+    assert done["passes"][0]["state"] == "skipped" and "interactive path" in done["passes"][0]["reason"]
+    assert states(done)[1:] == [(name, "applied") for name in
+                                ("readability-and-flow", "place-external-systems", "opening-and-title")]
+    assert done["applied"], "a skipped pass does not hold the text back"
+    second = assess(repo, capsys, "OVERCLAIM again")
     plan_file = artifact_file(repo, second, "plan.yaml")
     plan = yaml.safe_load(plan_file.read_text())
     plan["defend"] = ["Alpha body holds."]
     plan_file.write_text(yaml.safe_dump(plan))
-    code, resumed, launches = revise(repo, capsys, "--resume", second["run-dir"])
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches[0] == "pass narrow-overclaims big"
-    assert resumed["passes"][0]["state"] == "applied"
+    assert done["passes"][0]["state"] == "applied"
 
 
-def test_an_operator_edit_between_passes_is_a_conflict(repo, capsys):
+def test_an_edited_note_opens_a_new_run(repo, capsys):
     report = assess(repo, capsys, "PLAIN")
-    revise(repo, capsys, "--resume", report["run-dir"])                      # stops for the strikes
+    revise(repo, capsys, NOTE_PATH)                                           # stops for the strikes
     edited = note_text(repo) + "The operator's sentence.\n"
     (repo[0] / NOTE_PATH).write_text(edited, encoding="utf-8")
-    code, conflict, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 1 and "not the text this run left" in conflict["conflict"]
-    assert launches == [], "no worker runs on a text the run did not leave"
-    assert note_text(repo) == edited, "the operator's text stays"
+    code, fresh, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and fresh["run-dir"] != report["run-dir"] and launches == ["assess - big"]
+    assert note_text(repo) == edited
 
 
-def test_resume_after_an_interrupted_pass_does_not_reapply(repo, capsys):
+def test_an_operator_edit_during_the_run_is_a_conflict(repo, capsys):
+    assess(repo, capsys, "TOUCH")
+    code, report, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 1 and "changed during the run" in report["conflict"] and report["proposed"] in report["conflict"]
+    assert note_text(repo).endswith("The operator's sentence.\n") and not report["applied"]
+    assert report["guard"]["changed"] == [NOTE_PATH]
+
+
+def test_a_problem_pass_applies_nothing(repo, capsys):
+    report = assess(repo, capsys, "BADPASS")
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches.count("pass readability-and-flow big") == 2, "the third attempt replays"
+    assert states(done) == [("readability-and-flow", "problem"), ("place-external-systems", "applied"),
+                            ("opening-and-title", "applied")]
+    assert note_text(repo) == NOTE.format(words="BADPASS") and not done["applied"]
+    assert done["not-applied"] == (f"The proposed text is {report['run-dir']}/artifact/texts/opening-and-title.md; "
+                                   "it is not applied: readability-and-flow ended with a problem.")
+
+
+def test_a_repeat_after_a_launch_failure_does_not_ask_again(repo, capsys):
     report = assess(repo, capsys)
     (repo[0] / "fail-place-external-systems").touch()
-    code, stopped, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    code, stopped, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 1 and "place-external-systems" in stopped["stopped"]
     assert launches == ["pass readability-and-flow big"] + ["pass place-external-systems small"] * 3
-    written = note_text(repo)
     (repo[0] / "fail-place-external-systems").unlink()
-    code, resumed, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0 and launches == ["pass place-external-systems small", "pass opening-and-title big"]
-    assert resumed["written"][0] == stopped["written"][0]
-    assert note_text(repo).count("readability-and-flow (all).") == 1 and note_text(repo).startswith(written[:40])
-    assert len(json.loads(artifact_file(repo, report, "writes.json").read_text())) == 3
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["run-dir"] == report["run-dir"]
+    assert launches == ["pass place-external-systems small", "pass opening-and-title big"]
+    assert note_text(repo).count("readability-and-flow (all).") == 1
 
 
 def test_a_pass_output_that_breaks_a_bound_costs_one_attempt(repo, capsys):
     report = assess(repo, capsys, "RETITLE")
-    code, resumed, launches = revise(repo, capsys, "--resume", report["run-dir"])
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches.count("pass readability-and-flow big") == 2
-    assert resumed["passes"][0]["state"] == "applied"
+    assert done["passes"][0]["state"] == "applied"
     events = [json.loads(line) for line in (repo[0] / report["run-dir"] / "log.jsonl").read_text().splitlines()]
     [rejected] = [event for event in events if event["event"] == "rejected"]
     assert "the H1 changed; keep `# Alpha`" in rejected["problems"]
@@ -329,29 +344,31 @@ def test_an_artifact_without_frontmatter_keeps_its_h1(repo, capsys):
     start(repo, text="# Draft\n\nA draft body.\n", path=path)
     code, report, _ = revise(repo, capsys, path, "--purpose", "p")
     assert code == 0, report
-    code, done, _ = revise(repo, capsys, "--resume", report["run-dir"])
+    code, done, _ = revise(repo, capsys, path)
     assert code == 0 and done["complete"], done
     assert (repo[0] / path).read_text().startswith("# Draft\n\nA draft body.\nreadability-and-flow (all).\n")
 
 
-def test_a_finished_run_resumed_after_an_edit_is_a_conflict(repo, capsys):
-    report = assess(repo, capsys)
-    code, done, _ = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0 and done["complete"]
-    (repo[0] / NOTE_PATH).write_text(note_text(repo) + "The operator's sentence.\n", encoding="utf-8")
-    code, again, launches = revise(repo, capsys, "--resume", report["run-dir"])
-    assert code == 1 and launches == [] and "not the text this run left" in again["conflict"]
-
-
-def test_a_named_plan_is_the_runs_plan_on_a_plain_resume(repo, capsys, tmp_path):
-    report = assess(repo, capsys, "PLAIN")
+def test_a_named_plan_is_the_runs_plan_on_a_repeat(repo, capsys, tmp_path):
+    start(repo, "PLAIN")
     named = tmp_path / "custom.yaml"
-    named.write_text(artifact_file(repo, report, "plan.yaml").read_text(), encoding="utf-8")
+    named.write_text("purpose: p\ndefend: []\nstop: null\npasses:\n  - pass: readability-and-flow\n"
+                     "  - pass: plain-wording\n", encoding="utf-8")
     code, waiting, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(named))
-    assert code == 0 and waiting["waiting-for"] and "assess" not in " ".join(launches)
-    code, _, launches = revise(repo, capsys, "--resume", waiting["run-dir"])
-    assert code == 0 and "assess" not in " ".join(launches), launches
-    assert launches[0] == "apply plain-wording small"
-    code, _, launches = revise(repo, capsys, "--resume", waiting["run-dir"], "--plan", str(tmp_path / "none.yaml"))
+    assert code == 0 and waiting["waiting-for"], waiting
+    assert launches == ["pass readability-and-flow big", "list plain-wording small"], "no assessment"
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["applied"] and done["run-dir"] == waiting["run-dir"], done
+    assert launches == ["apply plain-wording small"]
+    code, _, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(tmp_path / "none.yaml"))
     assert code == 2 and launches == []
 
+
+def test_a_repeat_reuses_recorded_options_and_replaces_given_ones(repo, capsys):
+    report = assess(repo, capsys)
+    options = json.loads((repo[0] / report["run-dir"] / "sweep.json").read_text())
+    assert (options["purpose"], options["profiles"]["judgment"]["launch_model"]) == ("p", "big")
+    code, _, launches = revise(repo, capsys, NOTE_PATH, "--profile-judgment", "s")
+    assert code == 0 and launches[0] == "pass readability-and-flow small"
+    options = json.loads((repo[0] / report["run-dir"] / "sweep.json").read_text())
+    assert (options["purpose"], options["profiles"]["judgment"]["launch_model"]) == ("p", "small")

@@ -23,7 +23,9 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run
 from commonplace.lib import library
+from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.review_workflows import full_pass as full_pass_module
+from commonplace.lib.review_workflows.edits import Conflict, apply
 from commonplace.lib.review_workflows.full_pass import packet_file
 from commonplace.lib.review_workflows.results import read_result, result_path
 from commonplace.lib.validation import validate_note
@@ -174,21 +176,23 @@ def assert_valid_packet(repo) -> None:
     assert not result.fails, result.fails
 
 
-def test_keep_writes_the_copyedited_text_and_closes_ready(repo, capsys):
+def test_keep_applies_the_copyedited_text_once_and_closes_ready(repo, capsys):
     text = start(repo)
     code, report, launches = full_pass(repo, capsys)
     assert code == 0, (report["stopped"], report["conflict"])
-    assert (report["disposition"], report["closing-status"], report["restored"]) == ("keep", "ready", False)
+    assert (report["disposition"], report["closing-status"], report["applied"]) == ("keep", "ready", True)
     assert report["guard"] == {"clean": True, "changed": []}, "the pass's own write is expected"
+    assert report["run-dir"] == f"kb/reports/state/review/runs/full-pass/kb/notes/alpha/{sha256(text)[:12]}"
     final = note_text(repo)
     assert final.endswith("Copyedited.\n") and "user-verified" not in final
+    assert (repo[0] / report["proposed"]).read_text() == final
     assert sorted(launches) == sorted(["method"] * 4 * 2 + ["review"] * (2 + 2 * GATE_ASKS)
                                       + ["packet", "edit", "copyedit", "closing"])
     data, body = packet(repo)
-    assert (data["resolution"], data["final-sha256"] != data["start-sha256"]) == ("not-required", True)
+    assert (data["resolution"], data["final-sha256"]) == ("not-required", sha256(final))
     assert body.count("## Closing cycle: initial") == 1
     assert_valid_packet(repo)
-    # The gate results are ordinary result files, hashed over the written text.
+    # The gate results are ordinary result files, hashed over the final text.
     gate = read_result(result_path(repo[0], NOTE_PATH, "prose/body-gate"))
     assert gate.run == report["run-dir"] and text != final
 
@@ -197,28 +201,32 @@ def test_one_bounded_repair_then_ready(repo, capsys):
     start(repo, "REPAIR")
     code, report, launches = full_pass(repo, capsys)
     assert code == 0, report
-    assert (report["closing-status"], report["repaired"], len(report["written"])) == ("ready", True, 2)
+    assert (report["closing-status"], report["repaired"], report["applied"]) == ("ready", True, True)
+    assert report["proposed"].endswith("/artifact/texts/repair.md")
     assert note_text(repo).endswith("Copyedited.\nRepaired.\n")
     assert launches.count("repair") == 1 and launches.count("closing") == 2
     assert "## Closing cycle: recovery" in packet(repo)[1]
 
 
-def test_hand_back_restores_the_start_text_and_blocks_until_the_note_changes(repo, capsys):
+def test_hand_back_leaves_the_note_untouched_and_blocks_until_the_note_changes(repo, capsys):
     text = start(repo, "HANDBACK")
     code, report, _ = full_pass(repo, capsys)
     assert code == 0, report
-    assert (report["closing-status"], report["restored"]) == ("hand-back", True)
+    assert (report["closing-status"], report["applied"]) == ("hand-back", False)
     assert note_text(repo) == text and report["guard"]["clean"]
+    assert (repo[0] / report["proposed"]).read_text().endswith("Copyedited.\n"), "the edit stays in the run"
     data, _ = packet(repo)
     assert (data["resolution"], data["final-sha256"]) == ("pending", data["start-sha256"])
     assert_valid_packet(repo)
+    code, again, launches = full_pass(repo, capsys)
+    assert (code, again["blocked"], launches) == (0, True, [])
 
 
 def test_pending_disposition_survives_the_run_and_blocks_a_second_pass(repo, capsys):
     text = start(repo, "REVISE")
     code, report, launches = full_pass(repo, capsys)
     assert code == 0, report
-    assert (report["disposition"], report["closing-status"], report["written"]) == ("revise", None, [])
+    assert (report["disposition"], report["closing-status"], report["applied"]) == ("revise", None, False)
     assert note_text(repo) == text and "edit" not in launches
     data, _ = packet(repo)
     assert (data["disposition"], data["resolution"], data["run"]) == ("revise", "pending", report["run-dir"])
@@ -227,16 +235,19 @@ def test_pending_disposition_survives_the_run_and_blocks_a_second_pass(repo, cap
 
     assert main(["packet", NOTE_PATH], harnesses=repo[1]) == 0
     assert json.loads(capsys.readouterr().out)["matching"]
-    runs = sorted((repo[0] / report["run-dir"]).parent.iterdir())
     code, again, launches = full_pass(repo, capsys)
     assert (code, again["blocked"], again["packet"], launches) == (0, True, report["packet"], [])
-    assert again["run-dir"] == report["run-dir"] and sorted((repo[0] / report["run-dir"]).parent.iterdir()) == runs
+    assert again["run-dir"] == report["run-dir"]
+
+    code, directed, launches = full_pass(repo, capsys, "--direction", "Keep the claim.")
+    assert not directed["blocked"] and directed["run-dir"] == report["run-dir"]
+    assert launches == ["packet"], "a direction asks the packet again over the same reports"
 
     (repo[0] / NOTE_PATH).write_text(text + "An author's edit.\n", encoding="utf-8")
     assert main(["packet", NOTE_PATH], harnesses=repo[1]) == 1
     assert json.loads(capsys.readouterr().out)["inputs"][0]["state"] == "changed"
     code, third, launches = full_pass(repo, capsys)
-    assert not third["blocked"] and "packet" in launches
+    assert not third["blocked"] and "packet" in launches and third["run-dir"] != report["run-dir"]
 
 
 def test_an_editor_text_that_changes_the_title_costs_one_attempt(repo, capsys):
@@ -249,51 +260,58 @@ def test_an_editor_text_that_changes_the_title_costs_one_attempt(repo, capsys):
     assert "\n# Alpha\n" in note_text(repo)
 
 
-def test_a_concurrent_edit_stops_the_write(repo, capsys):
+def test_an_operator_edit_during_the_run_is_a_conflict(repo, capsys):
     start(repo, "TOUCH")
     code, report, _ = full_pass(repo, capsys)
-    assert code == 1 and "changed during the pass" in report["conflict"]
+    assert code == 1 and "changed during the run" in report["conflict"]
+    assert report["proposed"] in report["conflict"], "the conflict names the proposed text"
     assert note_text(repo).endswith("The operator's sentence.\n"), "the operator's text stays"
-    assert report["written"] == [] and report["guard"]["changed"] == [NOTE_PATH]
+    assert (report["applied"], report["packet"]) == (False, None)
+    assert report["guard"]["changed"] == [NOTE_PATH]
 
 
-def test_resume_after_a_launch_failure_does_not_reapply_the_edit(repo, capsys):
-    start(repo, "REPAIR")
+def test_a_repeat_after_a_launch_failure_continues_the_run(repo, capsys):
+    text = start(repo, "REPAIR")
     (repo[0] / "fail-repair").touch()
     code, report, launches = full_pass(repo, capsys)
     assert code == 1 and "repair" in report["stopped"] and launches.count("repair") == 3
-    written = note_text(repo)
-    assert written.endswith("Copyedited.\n"), "the first write happened before the stop"
+    assert note_text(repo) == text and not report["applied"], "nothing is written before the end"
 
     (repo[0] / "fail-repair").unlink()
-    code, resumed, launches = full_pass(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0, resumed
+    code, repeated, launches = full_pass(repo, capsys)
+    assert code == 0 and repeated["run-dir"] == report["run-dir"], repeated
     assert sorted(launches) == sorted(["repair", "closing"] + ["method"] * 4 + ["review"] * (1 + GATE_ASKS))
-    assert note_text(repo) == written + "Repaired.\n"
-    writes = json.loads((repo[0] / report["run-dir"] / "artifact" / "writes.json").read_text())
-    assert len(writes) == 2 and resumed["written"] == report["written"] + [writes[1]["to"]]
+    assert note_text(repo).endswith("Copyedited.\nRepaired.\n") and repeated["applied"]
 
 
-def test_resume_refuses_a_note_edited_after_the_run_wrote_it(repo, capsys):
-    start(repo, "REPAIR")
-    (repo[0] / "fail-repair").touch()
-    _, report, _ = full_pass(repo, capsys)
-    (repo[0] / "fail-repair").unlink()
-    edited = note_text(repo) + "The operator's sentence.\n"
-    (repo[0] / NOTE_PATH).write_text(edited, encoding="utf-8")
-    code, resumed, launches = full_pass(repo, capsys, "--resume", report["run-dir"])
-    assert code == 1 and "not the text this run left" in resumed["conflict"]
-    assert launches == [] and resumed["packet"] is None and note_text(repo) == edited
-
-
-def test_resume_finishes_a_write_that_was_recorded_and_not_made(repo, capsys):
+def test_an_edited_note_opens_a_new_run(repo, capsys):
     text = start(repo, "REPAIR")
     (repo[0] / "fail-repair").touch()
     _, report, _ = full_pass(repo, capsys)
-    written = note_text(repo)
     (repo[0] / "fail-repair").unlink()
-    (repo[0] / NOTE_PATH).write_text(text, encoding="utf-8")       # the state a death after the record leaves
-    code, resumed, _ = full_pass(repo, capsys, "--resume", report["run-dir"])
-    assert code == 0, resumed
-    assert note_text(repo) == written + "Repaired.\n"
+    (repo[0] / NOTE_PATH).write_text(text + "The operator's sentence.\n", encoding="utf-8")
+    code, fresh, launches = full_pass(repo, capsys)
+    assert code == 0 and fresh["run-dir"] != report["run-dir"]
+    assert "packet" in launches and "edit" in launches, "the new run asks again"
 
+
+def test_a_repeat_after_the_packet_and_before_the_note_finishes_the_write(repo, capsys):
+    text = start(repo)
+    _, report, _ = full_pass(repo, capsys)
+    final = note_text(repo)
+    (repo[0] / NOTE_PATH).write_text(text, encoding="utf-8")        # the state a death between the writes leaves
+    code, repeated, launches = full_pass(repo, capsys)
+    assert (code, launches, repeated["run-dir"], repeated["applied"]) == (0, [], report["run-dir"], True)
+    assert note_text(repo) == final
+
+
+def test_apply_writes_only_from_the_start_text(tmp_path):
+    note, proposed = tmp_path / "note.md", tmp_path / "proposed.md"
+    note.write_text("final")
+    assert apply(tmp_path, "note.md", "start", "final", proposed) is False
+    note.write_text("start")
+    assert apply(tmp_path, "note.md", "start", "final", proposed) is True and note.read_text() == "final"
+    note.write_text("other")
+    with pytest.raises(Conflict, match="proposed.md"):
+        apply(tmp_path, "note.md", "start", "final", proposed)
+    assert note.read_text() == "other"
