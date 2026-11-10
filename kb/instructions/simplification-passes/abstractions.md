@@ -2,6 +2,7 @@
 description: "Use when an artifact uses a coined or registered abstraction (retained adaptation) where the ordinary word (learning) would carry the sentence, or mixes the abstraction and the ordinary word for one thing"
 type: types/instruction.md
 effort: judgment
+depth: 3
 ---
 
 # Abstractions

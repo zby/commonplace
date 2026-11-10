@@ -17,7 +17,7 @@ of the attempt before.
 
 from __future__ import annotations
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Sequence
 from typing import Any
 
 import yaml
@@ -86,8 +86,12 @@ def violations(data: Mapping, schema: Schema) -> list[str]:
 
 def decide(run: Run, job: str, prompt: str, schema: Schema, *, output: str = "decision",
            inputs: dict[str, str] | Callable | None = None, check: Callable[[dict, str], list[str]] | None = None,
-           attempts: int = 3, profile: Profile | None = None) -> tuple[dict | None, Answer]:
+           attempts: int = 3, profile: Profile | None = None,
+           also: Sequence[str] = ()) -> tuple[dict | None, Answer]:
     """Ask for the decision output, check it, and return the parsed mapping with the answer.
+
+    `also` names further required outputs, such as a report for a reader
+    beside the decision; the answer carries them unchecked.
 
     A worker problem returns `(None, answer)` unchecked, as `checked()` does.
     Out of attempts raises `OutOfAttempts` with the last violations.
@@ -113,5 +117,5 @@ def decide(run: Run, job: str, prompt: str, schema: Schema, *, output: str = "de
         problems = violations(data, schema)
         return problems or (list(check(data, text)) if check else [])
 
-    answer = run.checked(job, build, found, [output], attempts=attempts, inputs=inputs, profile=profile)
+    answer = run.checked(job, build, found, [output, *also], attempts=attempts, inputs=inputs, profile=profile)
     return (None if answer.problem is not None else parse(answer.outputs[output])), answer

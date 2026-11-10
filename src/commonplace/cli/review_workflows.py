@@ -6,6 +6,9 @@
                                  [--resume RUN_DIR]
     commonplace-review run full-pass NOTE [--direction TEXT] [--profile NAME] [--max-workers N]
                                      [--timeout SECONDS] [--resume RUN_DIR]
+    commonplace-review run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...] [--plan FILE]
+                                  [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
+    commonplace-review run revise --resume RUN_DIR [--plan FILE]
     commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
@@ -41,6 +44,23 @@ with a clean guard, and for a returned pending packet; 1 for a stop, a
 conflict or a guard change; and 2 when the command failed. `packet` exits 0 when every recorded hash
 matches, 1 otherwise.
 
+`run revise` revises one markdown artifact through the simplification
+passes (see `commonplace.lib.review_workflows.revise` and the library's
+instructions/simplification-passes/revise-an-article-or-note.md). The first
+invocation assesses and stops, writing `artifact/assessment.md` and
+`artifact/plan.yaml` in the run directory. Edit the plan in place, then
+continue with `--resume RUN_DIR`, which runs the plan's passes in order and
+writes the artifact after each accepted pass; `--plan FILE` takes another plan
+file, and on a new run skips the assessment. A pass whose list the operator
+strikes (plain-wording, abstractions) stops with `artifact/<pass>-list.md`:
+delete the entries you strike and resume. A stop for the operator is a normal
+end: the JSON report's `waiting-for` names the file and the command that
+continues. Each pass's `effort` picks its profile from the profile file's
+`effort` mapping; `--profile-simple` and `--profile-judgment` override it
+when the run opens. An invalid plan is a command error (exit 2); the run
+exits 0 when it completes or waits with a clean guard, and 1 for a stop, a
+conflict or a guard change.
+
 `run gates` opens a new run under kb/reports/state/review/runs/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
@@ -61,7 +81,7 @@ from pathlib import Path
 
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss
-from commonplace.lib.review_workflows import full_pass, gates, results
+from commonplace.lib.review_workflows import full_pass, gates, results, revise
 from commonplace.lib.tasks import load_profile
 
 SWEEP = "sweep.json"
@@ -102,6 +122,17 @@ def _parser() -> argparse.ArgumentParser:
     full.add_argument("--max-workers", type=int, default=4, help="workers running at once")
     full.add_argument("--timeout", type=float, help="seconds a launch may take")
     full.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
+    rev = workflows.add_parser("revise", help="revise one markdown artifact through the simplification passes")
+    rev.add_argument("artifact", nargs="?", help="the artifact; a resumed run knows it")
+    rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
+    rev.add_argument("--defend", action="append", default=[], metavar="CLAIM",
+                     help="a claim the passes may not narrow; repeat for each")
+    rev.add_argument("--plan", type=Path, help="the plan to run (default on --resume: the run's artifact/plan.yaml)")
+    for effort in revise.EFFORTS:
+        rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
+                         f"`effort` mapping)")
+    rev.add_argument("--timeout", type=float, help="seconds a launch may take")
+    rev.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
     packet = commands.add_parser("packet", help="check a full-pass packet's recorded hashes against the files")
     packet.add_argument("target", help="a note, or its packet under kb/reports/state/review/packets/")
     retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
@@ -180,6 +211,8 @@ def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool, **opene
     """The run's profile, recorded when it opens with what else must not change on resume (`opened`)."""
     if resumed:
         recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
+        if "profile" not in recorded:
+            raise ValueError(f"the run was opened by the {recorded.get('workflow')} workflow")
         profile = Profile(**recorded["profile"])
         if name is not None and load_profile(root, name, gates.profiles()) != profile:
             raise ValueError(f"the run was opened with another profile: {profile}")
@@ -225,6 +258,45 @@ def _full_pass(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     return 0 if report.ok else 1
 
 
+def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
+    resumed = arguments.resume is not None
+    names = {effort: getattr(arguments, f"profile_{effort}") for effort in revise.EFFORTS}
+    if resumed:
+        if arguments.purpose or arguments.defend:
+            raise ValueError("--purpose and --defend open a run; on --resume, edit the plan's fields")
+        run_dir = _run_dir(root, arguments.resume)
+        recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
+        if recorded.get("workflow") != "revise":
+            raise ValueError(f"not a revise run: {arguments.resume}")
+        artifact = recorded["artifact"]
+        if arguments.artifact and _note(root, arguments.artifact) != artifact:
+            raise ValueError(f"the run revises {artifact}")
+        profiles = {effort: Profile(**entry) for effort, entry in recorded["profiles"].items()}
+        for effort, name in names.items():
+            if name is not None and load_profile(root, name, gates.profiles()) != profiles[effort]:
+                raise ValueError(f"the run was opened with another {effort} profile: {profiles[effort]}")
+        plan_file = arguments.plan or run_dir / "artifact" / revise.PLAN
+        plan = revise.read_plan(plan_file.read_text(encoding="utf-8")) if plan_file.is_file() else None
+    else:
+        if not arguments.artifact:
+            raise ValueError("name the ARTIFACT, or --resume a run")
+        artifact = _note(root, arguments.artifact)
+        if not artifact.endswith(".md"):
+            raise ValueError(f"not a markdown artifact: {artifact}")
+        plan = revise.read_plan(arguments.plan.read_text(encoding="utf-8")) if arguments.plan else None
+        profiles = revise.effort_profiles(root, names)
+        run_dir = _run_dir(root, None)
+        (run_dir / SWEEP).write_text(json.dumps(
+            {"workflow": "revise", "artifact": artifact, "purpose": arguments.purpose, "defend": arguments.defend,
+             "profiles": {effort: asdict(profile) for effort, profile in profiles.items()}}, indent=2),
+            encoding="utf-8")
+    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
+    report = revise.revise(root, artifact, profiles, run_dir, purpose=recorded["purpose"],
+                           defend=recorded["defend"], plan=plan, timeout=arguments.timeout, harnesses=harnesses)
+    print(json.dumps(report.to_dict(), indent=2))
+    return 0 if report.ok else 1
+
+
 def _packet(root: Path, arguments: argparse.Namespace) -> int:
     path = (root / arguments.target).resolve()
     packets = (root / full_pass.PACKETS).resolve()
@@ -249,6 +321,8 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
         if arguments.command == "run":
             if arguments.workflow == "full-pass":
                 return _full_pass(root, arguments, harnesses)
+            if arguments.workflow == "revise":
+                return _revise(root, arguments, harnesses)
             return _gates(root, arguments, harnesses)
         if arguments.command == "packet":
             return _packet(root, arguments)

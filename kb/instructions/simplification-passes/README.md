@@ -17,7 +17,9 @@ pass did.
 
 Each pass declares `effort: simple` or `effort: judgment` in its frontmatter.
 Simple passes run in a fresh worker on a cheaper model or lower effort;
-judgment passes stay on the session model.
+judgment passes stay on the session model. The six passes in the depth order
+of the orchestrating procedure also declare `depth` (1 runs first); a pass
+without `depth` may run at any point.
 
 - [audit-a-prior-pass](./audit-a-prior-pass.md) (simple) — trace each passage an automated pass weakened to the finding that caused it, and restore what the finding did not justify.
 - [narrow-overclaims](./narrow-overclaims.md) (judgment) — move claims from what cannot be observed to what can, and mark gaps instead of inventing precision.
@@ -27,6 +29,15 @@ judgment passes stay on the session model.
 - [abstractions](./abstractions.md) (judgment) — per term, either keep a coined or registered abstraction everywhere because one sentence needs its distinction, or replace it with the ordinary word everywhere.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.
+
+## Running the revision as a workflow
+
+`commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
+runs the orchestrating procedure with headless workers. Its "Run it as a
+workflow" section says what stops, which files to edit and how to continue.
+The procedure in a conversation remains, and is the right tool when the
+passes are chosen as the conversation goes or a pass needs the conversation
+as evidence.
 
 ---
 

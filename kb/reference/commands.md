@@ -386,6 +386,19 @@ expects to find there. The note's current packet is kept at
 matches the note is returned instead of starting a new pass. `--resume
 RUN_DIR` continues a stopped run without applying an edit twice.
 
+`run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...]` runs
+[revise an article or note](../instructions/simplification-passes/revise-an-article-or-note.md)
+over one markdown artifact. The first invocation assesses and stops with
+`artifact/assessment.md` and `artifact/plan.yaml` in the run directory;
+`--resume RUN_DIR` runs the edited plan's passes in order, each on the profile
+its `effort` selects through the `effort` mapping of
+`instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
+override it when the run opens). Code checks and writes the artifact after each
+pass. Plain-wording and abstractions stop with `artifact/<pass>-list.md` for
+the operator to delete the struck entries. A stop for the operator exits 0
+with `waiting-for` in the JSON report. `--plan FILE` names another plan;
+on a new run it skips the assessment. An invalid plan is a command error.
+
 `packet NOTE_OR_PACKET` prints whether a packet's recorded hashes still match
 the note and any merge target, and exits 0 only when every input matches;
 [resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)

@@ -93,6 +93,44 @@ recommends.
    changed. Items you assessed but did not recommend, and the not-applied
    items the workers returned, are listed once, not run.
 
+## Run it as a workflow
+
+`commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
+runs these steps with headless workers, which never write the checkout. It
+stops with a file wherever this procedure waits for the operator, and
+`commonplace-review run revise --resume RUN_DIR` continues with the edited
+file as input. Each stop prints a JSON report whose `waiting-for` names the
+file and the command.
+
+1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
+   writes `assessment.md` and `plan.yaml` under the run directory's
+   `artifact/` and stops. The plan holds `purpose`, `defend`, `passes` in run
+   order (each a `pass` name and an optional `scope`) and `stop`. Read the
+   assessment and edit the plan in place; a plan with `stop` set ends the run.
+   The command rejects a plan that names an unknown pass, misses a field or
+   breaks the depth order the pass files declare.
+2. Step 2 runs each listed pass as one worker, on the profile from
+   `instructions/review-profiles.yaml` that its `effort` selects. Code checks
+   the revised text (frontmatter, title and H1 kept; no new validation
+   failure) and writes the artifact after each pass. It does not commit.
+3. Plain-wording and abstractions stop with `artifact/<pass>-list.md`.
+   Delete each entry you strike, with its indented lines, and resume; the
+   worker applies only the entries left.
+4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
+   Split-out-a-treatment does not run. Both are reported as skipped, left
+   for this procedure in a conversation.
+5. A change to the artifact made since the run's last write stops the run
+   with a conflict. Re-plan in a new run with
+   `commonplace-review run revise ARTIFACT --plan FILE`, which skips the
+   assessment.
+
+Step 3 stays with the operator: each pass's report and the text it left are
+under `artifact/reports/` and `artifact/texts/`; read each diff, restore what
+a report does not account for, and commit. Use this procedure in a
+conversation instead when the passes are chosen as the conversation goes,
+when a pass needs the conversation as evidence, or when each pass should be
+integrated and committed before the next one runs.
+
 ## Budget
 
 - The assessment is one full read. Each pass is one more. Do not re-read

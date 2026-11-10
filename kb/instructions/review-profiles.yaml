@@ -5,6 +5,12 @@
 # edit grant on repository files and no git commit. The workflow's checkout
 # guard reports any change the run saw, whatever the flags allowed.
 default: sonnet
+# `run revise` picks each simplification pass's profile by the pass's
+# `effort`; the assessment is a judgment ask. `gates` and `full-pass` use
+# `default`.
+effort:
+  simple: sonnet
+  judgment: opus
 profiles:
   sonnet:
     harness: claude-code

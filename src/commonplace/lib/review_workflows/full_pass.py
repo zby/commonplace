@@ -62,7 +62,6 @@ from __future__ import annotations
 
 import json
 import re
-import uuid
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -84,7 +83,17 @@ from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.review_workflows.criteria import CRITIQUE, gates_dir
-from commonplace.lib.validation import ValidationRun
+from commonplace.lib.review_workflows.edits import (
+    NO_WRITES,
+    Conflict,
+    Stop,
+    Writes,
+    bounds,
+    guarded_changes,
+    rejection,
+    validation_fails,
+    write_text,
+)
 
 PACKETS = gates.STATE / "packets"
 PACKET_TYPE = "types/full-pass-report.md"
@@ -105,16 +114,6 @@ CLOSING_SCHEMA = {"status": ("ready", "repair-needed", "hand-back"),
                   "defects": list}
 PACKET_SECTIONS = ("## Warranted contribution", "## Disposition", "## Routed attention")
 """Sections a packet never omits."""
-PRESERVED = ("title", "type")
-"""Frontmatter fields no edit in the pass may change."""
-
-
-class Stop(Exception):
-    """The run cannot go on without the operator: a worker problem, a spent call or a launch failure."""
-
-
-class Conflict(Stop):
-    """The note on disk is not the text the pass expected; nothing was written."""
 
 
 @dataclass
@@ -144,9 +143,6 @@ class PassReport:
 
 
 # --- Prompts: mechanical only ---------------------------------------------------------
-
-NO_WRITES = ("Write nothing else: create, edit or delete no file in the repository, and run no "
-             "command that changes it or its git state. Do not delegate or start another agent.")
 
 METHOD_PROMPT = """\
 Apply one method to one note. Nobody will answer questions. If you cannot \
@@ -249,33 +245,6 @@ def copyedit_task(instruction: str) -> str:
     return match.group(0).strip() + "\n"
 
 
-def validation_fails(root: Path, note: str, text: str) -> set[str]:
-    """The deterministic validator's failures for `text` as the note at `note`, without writing it."""
-    path = (root / note).resolve()
-    return set(ValidationRun(repo_root=root, paths=(path,), content_overrides={path: text}).validate(path).fails)
-
-
-def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> list[str]:
-    """The pass's hard bounds an edited text breaks; empty when it keeps them.
-
-    The frontmatter title and type and the H1 are the start text's;
-    `user-verified` is gone when the body changed; and the validator finds
-    no failure that the start text did not have (`baseline`).
-    """
-    parsed, before = frontmatter.parse(text), frontmatter.parse(start)
-    if not frontmatter.opens_frontmatter(text) or not parsed.ok:
-        return ["the edited note's frontmatter does not parse; keep the note's frontmatter"]
-    problems = [f"frontmatter `{key}` changed; keep it as it was" for key in PRESERVED
-                if parsed.data.get(key) != before.data.get(key)]
-    parts, start_parts = results.note_parts(text), results.note_parts(start)
-    if start_parts is not None and parts["title"] != start_parts["title"]:
-        problems.append(f"the H1 changed; keep `# {start_parts['title']}`")
-    if (start_parts is None or parts["body"] != start_parts["body"]) and "user-verified" in parsed.data:
-        problems.append("the body changed, so remove `user-verified` from the frontmatter")
-    problems += [f"validation: {fail}" for fail in sorted(validation_fails(root, note, text) - baseline)]
-    return problems
-
-
 def _headings(text: str, required) -> list[str]:
     body = frontmatter.strip(text)
     return [f"the body has no `{heading}` section" for heading in required
@@ -317,48 +286,6 @@ def check_packet(root: Path, path: Path) -> dict:
             "matching": all(check["state"] == "matching" for check in checks), "inputs": checks}
 
 
-def _write(path: Path, text: str) -> None:
-    """Write exactly `text` atomically: readers see the old bytes or the new ones."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex[:6]}.tmp")
-    with tmp.open("w", encoding="utf-8", newline="") as handle:
-        handle.write(text)
-    tmp.replace(path)
-
-
-# --- Writes to the note -------------------------------------------------------------------
-
-WRITES = "writes.json"
-
-
-class Writes:
-    """The note changes this run made, in order, recorded in `artifact/writes.json`."""
-
-    def __init__(self, run: Run, root: Path, note: str):
-        self.run, self.path = run, root / note
-        record = run.artifact / WRITES
-        self.log: list[dict] = json.loads(record.read_text(encoding="utf-8")) if record.is_file() else []
-        self.step = 0
-
-    def move(self, old: str, new: str) -> None:
-        """Change the note from `old` to `new`, once across reruns; raise Conflict if it holds neither."""
-        entry = {"from": sha256(old), "to": sha256(new)}
-        if self.step < len(self.log):
-            if self.log[self.step] != entry:
-                raise Conflict(f"write {self.step + 1} differs from the one this run recorded; "
-                               "an answer was dismissed or an input changed after the run wrote the note")
-            self.step += 1
-            return
-        current = self.path.read_text(encoding="utf-8") if self.path.is_file() else None
-        if current != new:
-            if current != old:
-                raise Conflict(f"{self.path.name} changed during the pass; nothing was written")
-            _write(self.path, new)
-        self.log.append(entry)
-        self.run.accept(WRITES, json.dumps(self.log, indent=2))
-        self.step += 1
-
-
 # --- The workflow ---------------------------------------------------------------------------
 
 def _gate_requests() -> list[str]:
@@ -384,7 +311,7 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str, profile: Pr
             problem=PROBLEM_REF, note=note, note_input=input_ref("note"), method=rel,
             criterion_input=input_ref("criterion"), report=output_ref("report"), no_writes=NO_WRITES,
             support=f" The supporting files its links name are inputs:{lines}" if lines else "")
-        answer = run.checked(f"{cycle}/{name}", lambda problems: task + _rejection(problems),
+        answer = run.checked(f"{cycle}/{name}", lambda problems: task + rejection(problems),
                              lambda answer: [] if answer.outputs["report"].strip() else ["the report is empty"],
                              ["report"], attempts=ATTEMPTS, inputs=inputs)
         if answer.problem is not None:
@@ -421,13 +348,6 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str, profile: Pr
     return found
 
 
-def _rejection(problems: list[list[str]]) -> str:
-    if not problems:
-        return ""
-    return "\nAn earlier answer was rejected. Write it again, correcting:\n" + "".join(
-        f"- {problem}\n" for problem in problems[-1])
-
-
 def _packet_check(root: Path, note: str):
     def check(data: dict, text: str) -> list[str]:
         target, disposition = data["merge-target"], data["disposition"]
@@ -451,7 +371,7 @@ def _edit(run: Run, job: str, root: Path, note: str, start: str, text: str, base
     prompt = EDIT_PROMPT.format(problem=PROBLEM_REF, note=note, note_input=input_ref("note"),
                                 criterion_input=input_ref("criterion"), task=task, output=output_ref("note"),
                                 no_writes=NO_WRITES)
-    answer = run.checked(job, lambda problems: prompt + _rejection(problems),
+    answer = run.checked(job, lambda problems: prompt + rejection(problems),
                          lambda answer: bounds(root, note, start, answer.outputs["note"], baseline), ["note"],
                          attempts=ATTEMPTS, inputs={"note": text, **inputs})
     if answer.problem is not None:
@@ -471,7 +391,7 @@ def _copyedit(run: Run, root: Path, note: str, start: str, edited: str, baseline
         return problems
     prompt = COPYEDIT_PROMPT.format(problem=PROBLEM_REF, note_input=input_ref("note"), task_input=input_ref("task"),
                                     output=output_ref("note"), no_writes=NO_WRITES)
-    answer = run.checked("copyedit", lambda problems: prompt + _rejection(problems), check, ["note"],
+    answer = run.checked("copyedit", lambda problems: prompt + rejection(problems), check, ["note"],
                          attempts=ATTEMPTS, inputs={"note": edited, "task": copyedit_task(instruction)})
     if answer.problem is not None:
         raise Stop(f"copyedit: worker problem: {answer.problem}")
@@ -625,17 +545,11 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
             text = _pass(run, root, note, profile, report, direction, max_workers)
             run.accept("packet.md", text)
-            _write(packet_path, text)
+            write_text(packet_path, text)
             report.packet = packet_path.relative_to(root).as_posix()
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    changed = gates.changed_paths(before, gates.checkout_state(root))
-    record = run_dir / "artifact" / WRITES
-    left = json.loads(record.read_text(encoding="utf-8"))[-1]["to"] if record.is_file() else None
-    note_file = root / note
-    if left is not None and note_file.is_file() and sha256(note_file.read_text(encoding="utf-8")) == left:
-        changed = [path for path in changed if path != note]  # the pass's own write
-    report.changed = changed
+    report.changed = guarded_changes(root, before, run_dir, note)
     return report

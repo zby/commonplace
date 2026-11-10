@@ -2,6 +2,7 @@
 description: "Use when an artifact's TL;DR uses terms it never defines, ends on jargon, or its title carries a metaphor or bare term that reads wrongly before the body explains it"
 type: types/instruction.md
 effort: judgment
+depth: 6
 ---
 
 # Opening and title

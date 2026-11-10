@@ -2,6 +2,7 @@
 description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat, or its sentences need a second reading; structural and sentence-level edits with no change of claim"
 type: types/instruction.md
 effort: judgment
+depth: 4
 ---
 
 # Readability and flow
