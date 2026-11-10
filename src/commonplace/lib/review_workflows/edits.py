@@ -4,9 +4,8 @@ A workflow never lets a worker write the checkout. A worker's edited text is
 an output; code checks it against hard bounds (`bounds()`) and keeps the
 accepted text in memory and in the run's `artifact/` directory. The next
 step works on that text, not on the file. Only the workflow's last step
-writes the file, once, through `apply()`: from the start text to the final
-text, or not at all when the file already holds the final text. Any other
-text is a change made outside the run, and `Conflict` stops the write.
+writes the file, once, through `apply()`, and only over the start text. Any
+other text is a change made outside the run, and `Conflict` stops the write.
 
 A run is a function of its inputs. `run_dir()` derives its directory from
 the workflow, the note's path and the hash of the note's current text, so
@@ -86,26 +85,18 @@ def write_text(path: Path, text: str) -> None:
     tmp.replace(path)
 
 
-def apply(root: Path, note: str, start: str, final: str, proposed: Path, first=None) -> bool:
-    """Make the note hold `final`; return whether this call wrote it.
-
-    The note holds `final` already: nothing is written. It holds `start`:
-    `final` is written atomically. Any other text was changed outside the
-    run, and `Conflict` names `proposed`, the artifact file that holds the
-    final text. `first`, when given, runs after the check and before the
-    write, so a record it writes precedes the note.
-    """
+def unchanged(root: Path, note: str, start: str, proposed: Path) -> None:
+    """Raise Conflict, naming the artifact file `proposed`, unless the note still holds `start`."""
     path = root / note
-    current = path.read_text(encoding="utf-8") if path.is_file() else None
-    if current not in (start, final):
+    if not path.is_file() or path.read_text(encoding="utf-8") != start:
         raise Conflict(f"{note} changed during the run; nothing was written. "
                        f"The proposed text is {proposed.relative_to(root).as_posix()}")
-    if first is not None:
-        first()
-    if current == final:
-        return False
-    write_text(path, final)
-    return True
+
+
+def apply(root: Path, note: str, start: str, final: str, proposed: Path) -> None:
+    """Write `final` to the note, atomically and only over `start`; any other text is a Conflict."""
+    unchanged(root, note, start, proposed)
+    write_text(root / note, final)
 
 
 def run_dir(root: Path, workflow: str, note: str) -> Path:

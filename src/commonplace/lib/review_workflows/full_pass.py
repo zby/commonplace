@@ -84,6 +84,7 @@ from commonplace.lib.review_workflows.edits import (
     bounds,
     guarded_changes,
     rejection,
+    unchanged,
     validation_fails,
     write_text,
 )
@@ -535,17 +536,17 @@ def full_pass(root: Path, note: str, profile: Profile, run_dir: Path, *, max_wor
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
             text, final = _pass(run, root, note, start, profile, report, direction, max_workers)
 
-            def record() -> None:
-                run.accept("packet.md", text)
-                write_text(packet_path, text)
-                report.packet = packet_path.relative_to(root).as_posix()
-            if final is None:
-                record()
-            else:
-                report.applied = apply(root, note, start, final, root / report.proposed, first=record)
+            if final is not None:
+                unchanged(root, note, start, root / report.proposed)
+            run.accept("packet.md", text)
+            write_text(packet_path, text)                 # before the note, so a repeat after a death continues
+            report.packet = packet_path.relative_to(root).as_posix()
+            if final is not None:
+                apply(root, note, start, final, root / report.proposed)
+                report.applied = True
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, note, final if report.packet else None)
+    report.changed = guarded_changes(root, before, note, final if report.applied else None)
     return report

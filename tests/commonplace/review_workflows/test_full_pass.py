@@ -307,10 +307,9 @@ def test_a_repeat_after_the_packet_and_before_the_note_finishes_the_write(repo, 
 
 def test_apply_writes_only_from_the_start_text(tmp_path):
     note, proposed = tmp_path / "note.md", tmp_path / "proposed.md"
-    note.write_text("final")
-    assert apply(tmp_path, "note.md", "start", "final", proposed) is False
     note.write_text("start")
-    assert apply(tmp_path, "note.md", "start", "final", proposed) is True and note.read_text() == "final"
+    apply(tmp_path, "note.md", "start", "final", proposed)
+    assert note.read_text() == "final"
     note.write_text("other")
     with pytest.raises(Conflict, match="proposed.md"):
         apply(tmp_path, "note.md", "start", "final", proposed)

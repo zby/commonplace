@@ -51,10 +51,9 @@ first; for the full pass, frontmatter `title` and `type` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
 added. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
-final text once. If the file already holds the final text, nothing is
-written. If it holds the start text, the final text is written atomically.
-Any other text is a change made outside the run: the run writes nothing and
-reports a conflict that names the file holding the proposed text.
+final text once, atomically, and only over the start text. Any other text
+is a change made outside the run: the run writes nothing and reports a
+conflict that names the file holding the proposed text.
 
 A full pass or revision is a function of its inputs. Its run directory is
 derived from the workflow, the note's path and the hash of the note's start

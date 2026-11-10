@@ -523,7 +523,8 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 final = _passes(run, root, artifact, start, plan, known, profiles, report)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
-                    report.applied = apply(root, artifact, start, final, root / report.proposed)
+                    apply(root, artifact, start, final, root / report.proposed)
+                    report.applied = True
                 elif final != start:
                     why = ("the run waits for the operator" if report.waiting_for is not None
                            else f"{', '.join(problems)} ended with a problem")
