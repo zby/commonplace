@@ -1,0 +1,22 @@
+---
+description: "A staged example distinguishing retained knowledge from the context selected for one task; illustrates structural checks and title–body alignment."
+type: types/note.md
+traits: [title-as-claim]
+---
+
+# More stored knowledge does not mean more should be loaded
+
+Retaining a note and loading it into a model’s context are different operations. A wiki can keep material for future work without supplying all of it to every task.
+
+When a task needs only part of the retained material, selecting that part leaves room for the task instructions and other relevant information. This explains why building a larger wiki does not require loading a larger context on every request.
+
+## Scope
+
+This argument does not establish that each added note improves answer quality. Notes may be irrelevant, inaccurate, or redundant. It also does not establish that a particular selection method retrieves the right notes.
+
+---
+
+Relevant Notes:
+
+- [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: task instructions and retrieved knowledge compete for a finite context window.
+- [Instruction specificity should match loading frequency](../../theory/instruction-specificity-should-match-loading-frequency.md) — extends: develops a related context-design question about how frequently instructions are loaded.
