@@ -63,6 +63,30 @@ contracts.
 Raw captures are neither tracked nor published. The tracked source analyses
 that cite them remain ordinary authored artifacts.
 
+### An ingest whose snapshot is on another machine
+
+The checksum travels with the tracked ingest and the snapshot stays where it
+was captured. An ingest can therefore arrive on a machine that never held the
+pinned bytes. On that machine:
+
+- validation reports the ingest's quotes as unverified, not as failures;
+- `commonplace-ingest-handoff prepare` refuses to re-draft the ingest with
+  "snapshot not available on this machine";
+- `cp-skill-ground` cannot retain new quotes from the source.
+
+Do not recapture to fill the gap. A new capture is a new observation: if its
+bytes differ, the pinned checksum names nothing that machine can read. A
+snapshot is reconstructable only while its source is unchanged. If the
+capturing machine loses the file after the source changed, the pinned bytes
+are gone.
+
+The only remedy is to move the exact bytes. The operator's snapshots are kept
+in a private repository checked out at `kb/sources/.snapshots/`; it is private
+because snapshots are copies of other people's text. A collaborator without
+access works in the degraded mode above. A snapshot that a collaborator
+captures does not reach that repository unless it is handed over, and no
+handover procedure exists yet.
+
 ## Derived and stateful local artifacts
 
 Complete directory and tag listings and the ProperDocs site are derived views

@@ -154,7 +154,9 @@ def prepare_handoff(
     if not snapshot.is_file():
         raise HandoffError(
             f"snapshot not available on this machine: expected {snapshot}. "
-            "Do not recapture; a new capture cannot reproduce the pinned bytes."
+            "Do not recapture; a new capture cannot reproduce the pinned bytes. "
+            "See kb/reference/storage-architecture.md, section "
+            "'An ingest whose snapshot is on another machine'."
         )
     checksum = snapshot_sha256(snapshot)
 
