@@ -22,9 +22,12 @@ input map. They do not rely on workshop links or inherited instructions. The
 output report path is a capture destination for the caller; workers return
 text rather than writing files. Harness stdout/stderr, exit status, elapsed
 time, full prompt, model identity and final response are retained per invocation.
-Raw harness logs and rendered packets are local state under
-`kb/reports/state/meta-analyser-pilot-20261021/`; preserve them until the pilot
-has been adjudicated and needed evidence extracted. They may contain private
+Raw harness logs and rendered packets were local state under
+`kb/reports/state/meta-analyser-pilot-20261021/`, preserved until the pilot
+had been adjudicated and needed evidence extracted. ADR 121 recorded the
+adjudication, and on 2026-11-11 the logs (14 MB) moved out of the checkout
+to `../commonplace-archive/kb/reports/state/`; they copy MIT-licensed
+OpenResearch source without its notice and are not publishable as they are. They may contain private
 source/trace material. This report will retain exact prompts and final reports
 needed to interpret the judgments; it does not promise to retain full input
 traces after the source worktree is removed.

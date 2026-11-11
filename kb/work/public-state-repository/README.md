@@ -199,8 +199,11 @@ Publishing cannot be undone, so each of these comes before the first push.
    approximate 500 MB inventory above was not a complete size accounting.
    Later the same day, `agentic-system-analysis/` followed: its source
    extractions were deleted and the 21 MB of run records moved to the same
-   archive path. The live tree is now 18 MB in 281 files; 42 files mention
-   `/home/zby` and 10 match the key pattern (both counts with `rg --no-ignore`,
+   archive path. After the x-likes relocation and the pilot archive the live tree is
+   3.4 MB in 250 files; 18 files mention `/home/zby` and 9 match the loose key
+   pattern, all false positives: 8 tag-placement files with note slugs
+   containing `sk-`, and one review launch log with the Claude Code
+   `apiKeySource` metadata field (both counts with `rg --no-ignore`,
    which any count over this ignored tree needs).
    Items 2 to 6, the links question and the cross-machine question were
    audited on 2026-11-11 over the remaining tree; results, commands and
@@ -209,8 +212,8 @@ Publishing cannot be undone, so each of these comes before the first push.
    absolute paths; `x-likes/` held personal data and third-party posts and
    can never be published, so on 2026-11-11 its state, its rendered cache under
    `kb/reports/cache/x-likes/` and the September literature batch moved to
-   `x-likes/` in the private snapshots repository and the script now writes there; the meta-analyser pilot traces copy MIT-licensed
-   source without its notice; no copied snapshots remain; the state README
+   `x-likes/` in the private snapshots repository and the script now writes there; the meta-analyser pilot traces copied MIT-licensed
+   source without its notice and moved to the archive on 2026-11-11; no copied snapshots remain; the state README
    needs rewriting; this checkout holds no review results, only two revision
    runs, and the 37 results on this machine sit in an agent worktree.
 2. Read the 42 key-pattern files. Remove or exclude any real secret.
