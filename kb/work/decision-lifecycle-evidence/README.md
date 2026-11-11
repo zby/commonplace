@@ -20,7 +20,13 @@ work earn Git retention when session traces already supply a process record?
 Possible future usefulness, including debugging, is not sufficient by itself.
 Compare the additional value of Git admission with trace recovery, working
 storage, regeneration and incorporation into a maintained result. This is an
-open design analysis, not an adopted retention policy.
+open design analysis with operator-set boundaries, not a complete retention
+policy. Work with the available harnesses and their existing trace rules. Trust
+traces as complete and temporarily available; do not create duplicate primary
+records. Consider mining and extraction-saving caches. Material whose lasting
+value warrants durable retention must serve its intended uses without access
+to traces the harness may delete. The [binding boundaries](./admission-to-the-main-record.md#binding-investigation-boundaries)
+state this scope in full.
 
 ## Intent and constraints
 
@@ -42,9 +48,16 @@ The following constraints remain:
 
 - Essential evidence must survive session loss. Retained Git history can satisfy
   this requirement; the evidence need not be duplicated in current artifacts.
-- Session logs and source snapshots may be long-lived and indexed without being
-  permanent. Volume, privacy and copyright limit retention. External access does
-  not guarantee recovery of an old observation.
+- Session traces exist under harness control. For this investigation, trust
+  their completeness and temporary availability; changing harnesses or their
+  capture and retention rules is out of scope. Do not duplicate the primary
+  process record. Source snapshots also may be long-lived without being
+  permanent; external access does not guarantee recovery of an old observation.
+- Additional caches must justify the work they save in extraction. Lasting,
+  sufficiently valuable material should be considered for durable retention,
+  not kept indefinitely merely under the name of a cache. Retained artifacts
+  must carry or durably reference what their intended uses require without
+  depending on access to harness-managed traces.
 - Adoption is an authorized choice, not corroboration of its rationale.
   Implementation and observed benefit require separate evidence.
 - Preserve original expectations, consequential operator contributions, deciding
@@ -99,9 +112,11 @@ Checked on 2026-11-07 against source-checkout HEAD `91810b276`:
    expectations, rejected alternatives, qualifications and failures? Shorter
    text alone is not compression progress.
 6. What earns admission to the main record beyond existing session traces and
-   working outputs? Compare remaining expected uses after consumption, recovery
-   and access costs, capture gaps, durability and the costs of selection. Coordinate
-   any class-level retention policy with the lineage-mechanisms workshop.
+   working outputs? Compare remaining expected uses after consumption, extraction
+   and access costs, durability and the costs of selection. Decide what makes a
+   retained artifact useful without its trace, not whether to duplicate harness
+   capture. Coordinate any class-level retention policy with the lineage-mechanisms
+   workshop.
 
 ## Evaluation
 

@@ -40,9 +40,14 @@ make this comparison explicit. A possible future debugging use does not by
 itself justify a second record when the trace already captures the information.
 The additional value may instead be cheaper access, clearer interpretation,
 direct reuse or durability beyond trace retention. An intermediate's primary
-value may also be consumed by its committed result. Trace completeness and
-availability must be checked rather than assumed; no retention threshold has
-been adopted.
+value may also be consumed by its committed result. The operator subsequently
+fixed [investigation boundaries](./admission-to-the-main-record.md#binding-investigation-boundaries):
+trust the available harness traces as complete and temporarily available; do
+not change their rules or duplicate the primary process record. Mining and
+extraction-saving caches remain in scope. Lasting, sufficiently valuable
+extractions should be considered for retained artifacts that serve their
+intended uses without the traces. No economic retention threshold has been
+adopted.
 
 ## Git as a framework substrate
 
