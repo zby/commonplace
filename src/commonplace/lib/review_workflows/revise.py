@@ -3,7 +3,9 @@
 The judgment lives in the library's instruction files, each handed to its
 worker as the `criterion` input: `revise-an-article-or-note.md` for the
 assessment, and each pass file under `instructions/simplification-passes/`
-for its pass. Prompts here say only how to read inputs and write outputs.
+for its pass. Editors receive `execute-a-revision-pass.md`, not the planning
+instruction. Fixed-plan execution does not construct an assessment request.
+Prompts here say only how to read inputs and write outputs.
 Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
@@ -101,6 +103,7 @@ from commonplace.lib.tasks import load_profile
 
 PASSES_DIR = "instructions/simplification-passes"
 INSTRUCTION_REL = f"{PASSES_DIR}/revise-an-article-or-note.md"
+EXECUTION_REL = f"{PASSES_DIR}/execute-a-revision-pass.md"
 EFFORTS = ("simple", "judgment")
 ATTEMPTS = 3
 STRIKE = ("plain-wording", "abstractions")
@@ -239,6 +242,7 @@ class PassState:
 class ReviseReport:
     run_dir: str
     artifact: str
+    mode: str = "fixed-plan"
     plan: dict | None = None
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
@@ -530,7 +534,8 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     to its profile; the assessment is a judgment ask.
     """
     root = root.resolve()
-    report = ReviseReport(_rel(root, run_dir.resolve()), artifact)
+    report = ReviseReport(_rel(root, run_dir.resolve()), artifact,
+                          mode="fixed-plan" if named_plan is not None else "assess")
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
@@ -538,12 +543,12 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     try:
         brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
-            prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
-            context = {"assessment": inputs, "assessment-prompt": prompt,
-                       "profiles": {name: asdict(profile) for name, profile in profiles.items()},
-                       "passes": {name: asdict(current) for name, current in known.items()},
+            instruction = (library_root() / EXECUTION_REL).read_text(encoding="utf-8")
+            context = {"mode": report.mode, "execution": instruction, **brief,
                        "pass-answers": [], "selections": []}
             if named_plan is None:
+                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
+                context.update({"assessment": inputs, "assessment-prompt": prompt})
                 assessed = _assess(run, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]
                 context["assessment-answer"] = {"key": assessed.key, "outputs": assessed.outputs}
@@ -551,6 +556,10 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 proposed = named_plan
             plan = report.plan = read_plan(proposed, known)
             context["plan"] = plan
+            relevant = known if named_plan is None else {entry["pass"]: known[entry["pass"]] for entry in plan["passes"]}
+            efforts = set(profiles) if named_plan is None else {current.effort for current in relevant.values()}
+            context["passes"] = {name: asdict(current) for name, current in relevant.items()}
+            context["profiles"] = {name: asdict(profiles[name]) for name in sorted(efforts)}
             run.accept(PLAN, proposed)
             if plan["stop"]:
                 report.stop = plan["stop"]
@@ -560,7 +569,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
                 }
             else:
-                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, inputs["criterion"],
+                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, instruction,
                                 context)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:

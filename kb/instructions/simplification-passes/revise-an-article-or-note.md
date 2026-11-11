@@ -7,7 +7,10 @@ type: types/instruction.md
 
 Make the artifact serve the operator's stated purpose without changing what it
 claims, by assessing first and then running only the passes the assessment
-recommends.
+recommends. This is a planning-containing procedure. When the purpose, scope
+and pass are already fixed, use the fixed-plan route in the
+[simplification-pass guide](./README.md#fixed-plan-execution-the-simple-baseline)
+instead of assessing again.
 
 ## Prerequisites
 
@@ -95,7 +98,7 @@ recommends.
 
 ## Run it as a workflow
 
-`commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
+`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
 runs these steps with headless workers, which never write the checkout. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
@@ -158,8 +161,8 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    manifest cannot authorize publication; the generated manifest must match
    the captured approval exactly.
 6. An artifact edited between invocations has another hash, so the command
-   opens a new run and assesses again; `--plan FILE` names a plan and skips
-   the assessment. An artifact changed during a run is a conflict: nothing
+   opens a new run. Choose `--assess` again to commission planning, or
+   `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run is a conflict: nothing
    is written, and the report names the run file holding the proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are
@@ -175,9 +178,9 @@ integrated and committed before the next one runs.
 
 When the artifact declares a [write brief](../../types/write-brief.md), the assessment and every pass
 (including candidate-list and apply workers) receive its captured text as
-`brief`. Pass workers also receive this revision instruction as `workflow`;
-apply its constraints to the assigned pass, not additional passes or the
-interactive dispatch procedure.
+`brief`. Pass workers receive [execute a revision pass](./execute-a-revision-pass.md)
+as `workflow`, not this planning procedure. That execution instruction carries
+the pass bounds and brief constraints without commissioning assessment or dispatch.
 
 Treat the supplied brief as binding retained intent. Keep its must-keep,
 must-exclude and reserved decisions in both the plan and the edited text.

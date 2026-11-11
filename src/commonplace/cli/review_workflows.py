@@ -6,7 +6,7 @@
                                  [--resume RUN_DIR]
     commonplace-review run full-pass NOTE [--direction TEXT] [--profile NAME] [--max-workers N]
                                      [--timeout SECONDS]
-    commonplace-review run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...] [--plan FILE]
+    commonplace-review run revise ARTIFACT [--plan FILE | --assess] [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
@@ -62,11 +62,16 @@ matches, 1 otherwise.
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
 instructions/simplification-passes/revise-an-article-or-note.md). The first
-invocation assesses and runs the plan's settled passes automatically, retaining
-`artifact/assessment.md` and `artifact/plan.yaml` for inspection. `--plan FILE`
-supplies an explicit plan without assessment, including an override of a stopped
-plan; a repeat without the option keeps that supplied plan. Editing the retained
-plan alone does not change workflow inputs.
+invocation requires `--plan FILE` for fixed-plan execution or `--assess` to
+choose the work through assessment. Only `--assess` uses `--purpose` and
+`--defend`; a fixed plan carries those fields itself. Assessment runs the
+plan's settled passes automatically, retaining `artifact/assessment.md` and
+`artifact/plan.yaml` for inspection. A repeat keeps the recorded mode and plan.
+`--plan FILE` also overrides a stopped plan. Editing the retained plan alone
+does not change workflow inputs. Changed artifact text starts a new run and
+requires the mode again; runs recorded without a mode also require an explicit
+choice before continuing. `run gates NOTE --criteria GATE-ID --grouping pair`
+is the report-only, single-criterion baseline; `run full-pass` includes planning.
 A pass whose list the operator strikes (plain-wording, abstractions) stops
 with `artifact/<pass>-list-<key>.md`: delete the entries you strike, approve,
 then repeat. A stop for the operator is a normal end. The JSON report's
@@ -158,7 +163,10 @@ def _parser() -> argparse.ArgumentParser:
     rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
     rev.add_argument("--defend", action="append", default=[], metavar="CLAIM",
                      help="a claim the passes may not narrow; repeat for each")
-    rev.add_argument("--plan", type=Path, help="use this validated plan without assessment or plan approval; final publication still needs approval")
+    mode = rev.add_mutually_exclusive_group()
+    mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment; final publication needs approval")
+    mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection; "
+                      "new runs require --plan or --assess, repeats keep the recorded mode")
     for effort in revise.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
@@ -312,14 +320,23 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     run_dir = edits.run_dir(root, "revise", artifact)
     names = {effort: getattr(arguments, f"profile_{effort}") for effort in revise.EFFORTS}
     recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
+    mode = "fixed-plan" if named_plan is not None else "assess" if arguments.assess else recorded.get("mode")
+    if mode not in {"fixed-plan", "assess"}:
+        raise ValueError("choose --plan FILE for fixed-plan execution or --assess for planning; "
+                         "a new run never chooses work implicitly")
+    if mode == "fixed-plan" and not isinstance(named_plan if named_plan is not None else recorded.get("plan"), str):
+        raise ValueError("fixed-plan run has no captured plan; supply --plan FILE")
+    if mode == "fixed-plan" and (arguments.purpose is not None or arguments.defend):
+        raise ValueError("fixed-plan execution takes purpose and defend from the plan; edit the --plan input instead")
     profiles = recorded.get("profiles") or {effort: asdict(profile)
                                             for effort, profile in revise.effort_profiles(root, names).items()}
     profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
-    options = _options(run_dir, {"purpose": arguments.purpose, "defend": arguments.defend or None,
+    options = _options(run_dir, {"mode": mode, "purpose": arguments.purpose, "defend": arguments.defend or None,
                                  "profiles": profiles, "plan": named_plan})
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
                            purpose=options.get("purpose"), defend=options.get("defend", []),
-                           named_plan=options.get("plan"), timeout=arguments.timeout, harnesses=harnesses)
+                           named_plan=options["plan"] if mode == "fixed-plan" else None,
+                           timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 

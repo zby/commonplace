@@ -392,11 +392,17 @@ unless `--direction` is given. Gates and critique are asked over each text
 even when a fresh result exists; the pass writes their result files once, at
 its end, for the text the note then holds.
 
-`run revise ARTIFACT [--purpose TEXT] [--defend CLAIM ...]` runs
-[revise an article or note](../instructions/simplification-passes/revise-an-article-or-note.md)
-over one markdown artifact. Assessment and planning are preauthorized; the
-first invocation retains `artifact/assessment.md` and `artifact/plan.yaml`
-for inspection and runs the validated plan without routine approval.
+`run revise ARTIFACT --plan FILE` executes fixed work without assessment.
+The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
+`scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
+Do not also supply `--purpose` or `--defend`: the plan owns those fields.
+`run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
+commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
+It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
+validated plan without routine approval. A new run requires one of these
+modes. A repeat retains its mode and captured plan; changed artifact text
+requires the choice again. Older runs without a recorded mode also require
+an explicit choice. The JSON report names the mode as `fixed-plan` or `assess`.
 Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`

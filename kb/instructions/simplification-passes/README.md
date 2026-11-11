@@ -1,11 +1,12 @@
 # Simplification passes
 
 Passes that simplify one article or note whose claims are settled but whose
-text is not; an assessment recommends the passes and they run without a
-selection step. Each pass is a short worker packet: it states
+text is not. The caller can fix the work in advance, or explicitly commission
+an assessment to choose it. Ordinary passes run without a selection stop;
+plain-wording and abstractions retain their selection-approval stops. Each pass is a short worker packet: it states
 what the pass exists to make true, what it must preserve, and what it returns.
-The orchestrating procedure is
-[revise an article or note](./revise-an-article-or-note.md).
+Workers follow [execute a revision pass](./execute-a-revision-pass.md).
+The planning procedure is [revise an article or note](./revise-an-article-or-note.md).
 
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. For a full automated review pass,
@@ -30,14 +31,71 @@ without `depth` may run at any point.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.
 
-## Running the revision as a workflow
+## Fixed-plan execution: the simple baseline
 
-`commonplace-review run revise ARTIFACT --purpose TEXT [--defend CLAIM ...]`
-runs the orchestrating procedure with headless workers. Its "Run it as a
-workflow" section says what stops, which files to edit and how to continue.
-The procedure in a conversation remains, and is the right tool when the
-passes are chosen as the conversation goes or a pass needs the conversation
-as evidence.
+Use one pass to evaluate an editing operation independently of planning.
+Supply a YAML plan whose purpose, scope and protected claims are settled:
+
+```yaml
+purpose: "Make the experiment description easier for KB maintainers to follow."
+defend:
+  - "The proposed experiment is a prediction, not an established result."
+passes:
+  - pass: readability-and-flow
+    scope: "The experiment-design section only; preserve its predictions and measures."
+stop: null
+```
+
+Replace these example values with the actual commission, save the plan outside
+the run's generated `artifact/` directory, and run:
+
+```bash
+commonplace-review run revise ARTIFACT --plan PLAN.yaml
+```
+
+This route makes no assessment call and does not choose or add passes. The
+worker still exercises judgment within the assigned operation. The plan owns
+`purpose` and `defend`; do not also supply their CLI options. Multiple fixed
+passes are supported, but do not treat their composition as evidence that an
+individual pass is reliable. A missing scope covers the whole artifact; use
+an explicit scope for a bounded trial. An empty `defend` list does not license
+changing claims.
+
+Inspect the returned report, `artifact/final.md` and `artifact/final.diff`.
+The original remains unchanged until the operator approves the exact
+`artifact/publication.json` with the report's `approve-command`. Repeat the
+reported command to publish from captured inputs. Repeating alone never
+approves. Candidate and manifest files are outputs, not editable inputs.
+Use `--plan` for a changed commission. No-change runs need no publication
+approval. Wording-selection passes stop earlier for their own approvals.
+
+An unchanged repeat retains the mode and captured plan, even if the supplied
+plan file is later removed. Changed artifact text starts a new run: choose
+`--plan` or `--assess` again. Older runs without a recorded mode also require
+that explicit choice; their retained files are not migrated or deleted.
+
+For an independent report-only operation, use one artifact and one gate id:
+
+```bash
+commonplace-review run gates ARTIFACT --criteria GATE-ID --grouping pair
+```
+
+Use a gate id, not a bundle name or `--all-gates`. A finding does not trigger
+an edit or choose more review work. Fresh pairs are skipped; use `--force`
+only when deliberately requesting a new judgment. Artifact validation belongs
+in these note workflows; Python tests belong to development of the machinery.
+
+## Planning-containing workflows
+
+`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
+commissions assessment and pass selection, then runs the validated plan without
+a routine plan-approval stop. The planning instruction's "Run it as a workflow"
+section describes its additional behavior. `run full-pass` also contains
+planning and disposition choices. Evaluate those choices separately from
+individual review and editing operations before relying on their composition.
+
+The procedure in a conversation remains the right tool when passes are chosen
+as the conversation goes or a pass needs the conversation as evidence.
 
 ---
 

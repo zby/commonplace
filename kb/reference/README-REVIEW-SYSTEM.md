@@ -237,6 +237,23 @@ A launch's fixed context dominates its cost. Single observations with the
 Bundle grouping shares the fixed context. Whether it changes verdict quality
 has not been compared, which is why `pair` stays the default.
 
+## Planning-free baseline
+
+Evaluate one operation before composing it with planning or other operations:
+
+- **One review:** `commonplace-review run gates NOTE --criteria GATE-ID --grouping pair`.
+  Supply one gate id, not a bundle. The result is report-only; even a failure
+  does not select more work or edit the note. Fresh pairs are skipped.
+- **One editing pass:** `commonplace-review run revise ARTIFACT --plan FILE`.
+  The supplied YAML plan fixes purpose, protected claims, pass and scope. No
+  assessment request is constructed. Editors receive execution instructions,
+  not the planning procedure. See the [fixed-plan example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
+
+These operations still use judgment inside their fixed tasks. Planning means
+choosing work, not merely using a model. Assessment-led revision and full-pass
+composition need separate evaluation; reliable replay does not establish
+reliable selection or editing judgment.
+
 ## Workflows beyond the sweep
 
 **Full improvement pass.** `commonplace-review run full-pass NOTE` runs the
@@ -259,15 +276,16 @@ the closing cycle.
 
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
-one artifact. Assessment, planning and settled intermediate passes are
-preauthorized. The assessment report and generated plan stay in the run for
-inspection; the validated plan runs without routine approval. `--plan FILE`
-supplies a validated explicit input or override, including a stopped plan,
-without approval. Editing the retained plan alone is not an override.
+one artifact. A new run requires `--plan FILE` for fixed work or `--assess`
+for assessment and automatic pass selection. Within the chosen mode, ordinary
+intermediate work is preauthorized. The assessment report and generated plan
+stay in the run for inspection; the validated plan runs without routine
+approval. `--plan FILE` also supplies a validated override of a stopped plan.
+Editing the retained plan alone is not an override.
 Each listed pass runs in order on the preceding text; its `effort` selects
 the profile. Every pass must end `applied`, `no-change` or `skipped` before
-changed final text is offered for publication approval. No revision has been
-measured yet.
+changed final text is offered for publication approval. Control-flow checks
+do not establish the quality of the selected edits.
 
 Plain-wording and abstractions still stop for explicit approval of each
 selection proposal. These are temporary procedure-development points:
@@ -281,7 +299,9 @@ inputs: `kb/reports/state/review/runs/<workflow>/<note path without
 .md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
 the same note text continues that run, and answered calls replay. An edited
 note, including one the workflow itself wrote, has another hash, so the same
-command opens a new run. A repeat reuses the options the run recorded,
+command opens a new run. Revision then requires a new `--plan` or `--assess`
+choice rather than silently assessing again. Older revision runs without a
+recorded mode require an explicit choice too. A repeat reuses the options the run recorded,
 including the full pass's `--direction`; an option given on the repeat
 replaces the recorded value. A stop for the operator proposes a file in the
 run directory, and the report's `waiting-for` gives what to do, the file,

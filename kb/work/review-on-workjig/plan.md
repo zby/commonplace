@@ -29,7 +29,15 @@ the invocation blocks publication. The final general, headless and review
 selection passed 217 tests, including 18 new brief cases. This establishes
 capture and control flow, not semantic obedience by a live worker.
 
-Live validation remains open. Phase 6 has not started.
+Live validation remains open. Phase 6 has not started in this workshop.
+
+The operator's subsequent direction is **simple operations before planning
+and composition**. The [planning-free baseline change](./planning-free-baseline.md)
+separates one report-only criterion from one fixed editing pass. New revisions
+explicitly choose `--plan` or `--assess`; fixed-plan workers receive execution
+instructions without an assessment request. This establishes a runnable and
+regression-tested boundary, not editing quality or planning stability. No new
+paid trial is included in this change.
 
 The operator requested a further design plan for typed review outputs:
 [use declared types for review outputs](./types-plan.md). It inventories
@@ -52,14 +60,20 @@ publication boundary in ingest, then decide what is worth sharing:
    Keep wording/abstraction selection stops when those passes are warranted;
    do not force one into these plans merely for coverage. A live run through
    selection approval and subsequent publication remains a separate unfinished check.
-2. Implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
+2. Evaluate single-criterion review and fixed single-pass editing separately
+   on operator-selected tasks, retaining each operation's failures before
+   combining them. Planning and disposition stability need a separate, longer
+   evaluation. Keep selection and final-publication approvals. The command,
+   instruction and regression-test separation is implemented; paid quality
+   evaluation remains separately commissioned.
+3. Then implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
    the individual review-result type, with pair and bundle readers and writers
    converted together. Stop and assess the deletion ledger before later types.
    Agree the scope of any paid old/new-format comparison separately.
-3. Complete step 1.3, the first collection sweep, after that type cutover.
+4. Complete step 1.3, the first collection sweep, after that type cutover.
    Complete the outstanding phase-5 full-pass trials too. Paid launches still
    require the operator's direction; fake-harness coverage does not close them.
-4. Once review is validated, take up phase 6's bounded ingest experiment
+5. Once review is validated, take up phase 6's bounded ingest experiment
    under a follow-on commission. Compare implementations before
    extracting shared commands.
 

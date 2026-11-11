@@ -65,11 +65,20 @@ derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
 note opens a new run. The directory is not a complete input identity: changed
 instructions, profiles, write briefs or approved answers can produce new calls inside it.
-Assessment, planning and settled intermediate passes are preauthorized.
+A new revision run explicitly chooses `--plan` for fixed work or `--assess`
+for planning. Repeats retain that mode; changed artifact text requires a new
+choice. Within the selected mode, ordinary intermediate work is preauthorized.
 Revision retains its generated plan for inspection and runs it after
-validation; `--plan` supplies an explicit validated input or override,
-including replacement of a stopped plan, without approval. Editing the
-retained plan alone is not an override.
+validation; `--plan` also supplies a validated override of a stopped plan,
+without approval. Editing the retained plan alone is not an override.
+
+Fixed-plan execution constructs no assessment request. Editors in both modes
+receive the execution instruction and the assigned pass, not the planning
+procedure. Fixed-plan publication binds those inputs, the supplied plan and
+the profiles used by its passes; assessment-only instructions, unselected
+passes and unused effort profiles do not invalidate it. Assessment-led runs
+also bind the assessment request, answer and full pass catalog. A single
+criterion through `run gates` is report-only and never selects subsequent work.
 
 Unsettled plain-wording and abstraction selections require explicit approval
 per proposal. These temporary procedure-development points retain proposed,

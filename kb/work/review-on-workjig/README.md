@@ -8,8 +8,14 @@ reverting one result from each workflow, and deleting the abandoned
 local data. Phase 5 of the plan then removed mid-run writes and
 `--resume`: a run writes the note once, at its end, and repeating a
 command continues its run. Its explicit-approval correction is now
-implemented: repeating no longer approves a proposed
-plan or strike list. Live phase-5 trials remain open. Phase 6 is a bounded
+implemented: repeating never approves a strike selection or final publication;
+routine plan approval has been removed. Both selected ordinary revisions
+completed through operator-approved publication. Live selection and full-pass
+trials remain open. The [planning-free baseline](./planning-free-baseline.md)
+now separates fixed single-pass execution and single-criterion review from
+explicit assessment and composition. Evaluate those operations independently
+before broader automation; fake-worker checks establish control flow, not
+judgment quality. Phase 6 is a bounded
 follow-on ingest experiment, not built; shared operations across Workjig
 and agent orchestration remain a future direction. Neither extends this
 review workshop's closing conditions. The sections below are the framing and design as posed;

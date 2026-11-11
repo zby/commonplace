@@ -73,8 +73,17 @@ Changed proposal inputs invalidate the approval. Options
 such as the profile and the full pass's
 direction are recorded with the run.
 
+**Planning is an explicit mode, not the default for editing.** A new revision
+run requires `--plan FILE` for fixed work or `--assess` to choose work through
+assessment. Repeats retain their mode; changed artifact text requires a new
+choice. Fixed-plan execution constructs no assessment request. Editors receive
+an execution instruction, not the planning procedure. Its publication context
+excludes unused planner inputs. One fixed pass and one report-only criterion
+are the independent evaluation baselines; assessment-led revision and full-pass
+composition need separate evaluation.
+
 **Approval protects unsettled selection and final publication, not routine planning.**
-Assessment, planning and settled intermediate passes are preauthorized.
+Within the explicitly chosen mode, ordinary intermediate work is preauthorized.
 Revision retains the generated plan for inspection and executes it after
 validation. `--plan` is an explicit validated input or override, including
 replacement of a stopped plan; neither route requires plan approval.

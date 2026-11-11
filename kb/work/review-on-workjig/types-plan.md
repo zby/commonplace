@@ -350,7 +350,10 @@ consumers; review adoption must not silently redefine `verifies` for them.
 The approval-interface follow-up is committed as `e93284673`. Binding briefs
 are implemented in `4a29b1bf5` for planning and editing workers without changing judge
 inputs or result freshness. The two ordinary live revision trials completed
-through publication, so step 2 is next. Ordinary plan execution needs no
+through publication. The operator subsequently prioritized the
+[planning-free baseline](./planning-free-baseline.md) and independent operation
+evaluation before this type cutover. Step 2 remains the first type implementation,
+not permission to combine workflows or launch paid calibration. Ordinary plan execution needs no
 approval; do not infer final publication authority from permission to prepare
 a candidate. Live strike selection and full-pass validation remain separate
 unfinished checks.

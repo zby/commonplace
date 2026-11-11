@@ -164,9 +164,83 @@ def publish(repo, capsys, report, path=NOTE_PATH):
     return done
 
 
+def test_new_run_requires_explicit_mode_and_fixed_plan_rejects_ignored_constraints(repo, capsys, tmp_path):
+    original = start(repo)
+    code, error, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 2 and "choose --plan FILE" in error and launches == []
+    path = named_plan(tmp_path)
+    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path), "--defend", "Keep alpha")
+    assert code == 2 and "takes purpose and defend from the plan" in error and launches == []
+    assert note_text(repo) == original
+
+
+def test_fixed_single_pass_has_no_planner_dependency_and_replays_to_publication(repo, capsys, tmp_path, monkeypatch):
+    original = start(repo)
+    path = named_plan(tmp_path, purpose="Improve the body for its reader", defend=["Alpha body holds."])
+    plan = yaml.safe_load(path.read_text())
+    plan["passes"][0]["scope"] = "body only"
+    path.write_text(yaml.safe_dump(plan))
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("fixed-plan execution constructed an assessment request")
+
+    monkeypatch.setattr(revise_module, "_assessment_request", forbidden)
+    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert ready["mode"] == "fixed-plan" and launches == [ORDINARY[0]]
+    assert not artifact_file(repo, ready, "assessment.md").exists()
+    assert note_text(repo) == original and ready["guard"]["clean"]
+    [call] = captured_inputs(repo[2])
+    assert call["inputs"]["purpose"] == "Improve the body for its reader"
+    assert call["inputs"]["scope"] == "body only"
+    assert call["inputs"]["defend"] == "- Alpha body holds.\n"
+    assert call["inputs"]["workflow"] == (repo[0] / "kb" / revise_module.EXECUTION_REL).read_text()
+    assert "passes" not in call["inputs"]
+    path.unlink()  # repeats use captured inputs, not the now-missing source plan
+    (repo[0] / "kb" / revise_module.INSTRUCTION_REL).unlink()
+    unused = repo[0] / "kb/instructions/simplification-passes/plain-wording.md"
+    unused.write_text(unused.read_text() + "\nUnrelated pass change.\n")
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH, "--profile-simple", "j")
+    assert launches == [] and repeated["waiting-for"] == ready["waiting-for"]
+    publish(repo, capsys, repeated)
+    assert note_text(repo).endswith("readability-and-flow (body only).\n")
+    # Published text has a different hash; a bare command must not turn into planning.
+    code, error, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 2 and "choose --plan FILE" in error and launches == []
+
+
+@pytest.mark.parametrize("missing", ["mode", "plan"])
+def test_incomplete_recorded_options_never_fall_back_to_assessment(repo, capsys, tmp_path, missing):
+    original = start(repo)
+    path = named_plan(tmp_path)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    options_path = repo[0] / ready["run-dir"] / "sweep.json"
+    options = json.loads(options_path.read_text())
+    del options[missing]
+    options_path.write_text(json.dumps(options))
+    code, error, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 2 and "--plan FILE" in error and launches == []
+    assert note_text(repo) == original
+    _, resumed, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert resumed["mode"] == "fixed-plan" and launches == []
+    assert resumed["waiting-for"] == ready["waiting-for"]
+
+
+def test_mode_switch_is_explicit_and_remembered(repo, capsys, tmp_path):
+    start(repo)
+    path = named_plan(tmp_path)
+    _, fixed, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert fixed["mode"] == "fixed-plan" and launches == [ORDINARY[0]]
+    _, assessed, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert assessed["mode"] == "assess" and launches == ["assess - big", *ORDINARY[1:]]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert repeated["mode"] == "assess" and launches == []
+    _, fixed_again, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert fixed_again["mode"] == "fixed-plan" and launches == []
+
+
 def test_automatic_preparation_waits_for_publication_and_replays_after_approval(repo, capsys):
     original = start(repo)
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--purpose", "p")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess", "--purpose", "p")
     assert code == 0 and launches == ["assess - big", *ORDINARY]
     assert not report["complete"] and not report["applied"] and report["not-applied"]
     assert note_text(repo) == original and report["guard"]["clean"]
@@ -182,7 +256,7 @@ def test_automatic_preparation_waits_for_publication_and_replays_after_approval(
     assert "user-verified" not in note_text(repo)
 
 
-@pytest.mark.parametrize("change", ["instruction", "profile", "brief", "plan", "unused-pass"])
+@pytest.mark.parametrize("change", ["instruction", "profile", "brief", "plan"])
 def test_changed_context_invalidates_publication_even_with_identical_final(repo, capsys, tmp_path, change):
     start(repo)
     brief = add_brief(repo[0], NOTE_PATH)
@@ -192,13 +266,10 @@ def test_changed_context_invalidates_publication_even_with_identical_final(repo,
     approve(repo, capsys, report)
     args = []
     if change == "instruction":
-        target = repo[0] / "kb" / revise_module.INSTRUCTION_REL
-        target.write_text(target.read_text() + "\nChanged instruction.\n")
-    elif change == "unused-pass":
-        target = repo[0] / "kb/instructions/simplification-passes/plain-wording.md"
+        target = repo[0] / "kb" / revise_module.EXECUTION_REL
         target.write_text(target.read_text() + "\nChanged instruction.\n")
     elif change == "profile":
-        args = ["--profile-simple", "j"]
+        args = ["--profile-judgment", "s"]
     elif change == "brief":
         brief.write_text(brief.read_text() + "\nKeep another passage.\n")
     else:
@@ -216,7 +287,7 @@ def test_changed_context_invalidates_publication_even_with_identical_final(repo,
 @pytest.mark.parametrize("stopped", [False, True])
 def test_captured_plan_edits_are_not_overrides_use_plan_option(repo, capsys, tmp_path, stopped):
     original = start(repo, "STOP" if stopped else "")
-    _, report, _ = revise(repo, capsys, NOTE_PATH)
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     replacement = named_plan(tmp_path)
     artifact_file(repo, report, "plan.yaml").write_text(replacement.read_text())
     code, again, launches = revise(repo, capsys, NOTE_PATH)
@@ -285,7 +356,7 @@ def test_striking_every_entry_completes_without_publication(repo, capsys, tmp_pa
 @pytest.mark.parametrize("change", ["criterion", "profile", "retry"])
 def test_changed_strike_request_or_retried_proposal_requires_new_selection(repo, capsys, change):
     original = start(repo, "PLAIN")
-    _, waiting, _ = revise(repo, capsys, NOTE_PATH)
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     approve(repo, capsys, waiting)
     args = []
     if change == "criterion":
@@ -308,7 +379,7 @@ def test_changed_strike_request_or_retried_proposal_requires_new_selection(repo,
 def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     start(repo, "PLAIN")
     brief = add_brief(repo[0], NOTE_PATH)
-    _, waiting, _ = revise(repo, capsys, NOTE_PATH)
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     approve(repo, capsys, waiting)
     _, ready, _ = revise(repo, capsys, NOTE_PATH)
     calls = captured_inputs(repo[2])
@@ -324,10 +395,10 @@ def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     add_brief(repo[0], NOTE_PATH)
     original = note_text(repo)
     if kind == "apply":
-        _, waiting, _ = revise(repo, capsys, NOTE_PATH)
+        _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
         approve(repo, capsys, waiting)
     (repo[0] / f"brief-problem-{kind}").touch()
-    code, report, launches = revise(repo, capsys, NOTE_PATH)
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 1 and "write brief" in report["stopped"] and not report["applied"]
     assert note_text(repo) == original and launches[-1].startswith(kind + " ")
     assert not any("place-external-systems" in line for line in launches)
@@ -344,7 +415,7 @@ def test_invalid_brief_stops_before_workers(repo, capsys, damage):
     else:
         path = repo[0] / NOTE_PATH
         path.write_text(path.read_text().replace("brief: alpha.brief.md", "brief: ../escape.brief.md"))
-    code, report, launches = revise(repo, capsys, NOTE_PATH)
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 1 and "brief" in report["stopped"] and launches == []
 
 
@@ -353,7 +424,7 @@ def test_concurrent_edits_block_publication(repo, capsys, words):
     start(repo, words)
     add_brief(repo[0], NOTE_PATH)
     original = note_text(repo)
-    code, report, _ = revise(repo, capsys, NOTE_PATH)
+    code, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 1 and report["conflict"] and not report["applied"]
     if words == "BRIEFDRIFT":
         assert "write brief" in report["conflict"] and note_text(repo) == original
@@ -365,7 +436,7 @@ def test_concurrent_edits_block_publication(repo, capsys, words):
 @pytest.mark.parametrize("words", ["BADPLAN", "RETITLE", "BADPASS"])
 def test_correction_attempts_keep_safety_bounds(repo, capsys, words):
     original = start(repo, words)
-    code, report, launches = revise(repo, capsys, NOTE_PATH)
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 0 and note_text(repo) == original
     if words == "BADPLAN":
         assert launches.count("assess - big") == 2
@@ -403,7 +474,7 @@ def test_launch_failure_can_resume_without_changing_the_plan(repo, capsys):
     original = start(repo)
     failure = repo[0] / "fail-place-external-systems"
     failure.touch()
-    code, stopped, launches = revise(repo, capsys, NOTE_PATH)
+    code, stopped, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 1 and stopped["stopped"]
     assert launches == ["assess - big", ORDINARY[0], *([ORDINARY[1]] * 3)]
     assert note_text(repo) == original
@@ -416,7 +487,7 @@ def test_launch_failure_can_resume_without_changing_the_plan(repo, capsys):
 
 def test_retried_assessment_changes_plan_and_invalidates_publication(repo, capsys):
     original = start(repo)
-    _, ready, _ = revise(repo, capsys, NOTE_PATH)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     candidate = artifact_file(repo, ready, "final.md").read_text()
     approve(repo, capsys, ready)
     calls = recorded_calls(repo[0] / ready["run-dir"])
@@ -434,7 +505,7 @@ def test_retried_assessment_changes_plan_and_invalidates_publication(repo, capsy
 
 def test_candidate_file_edits_are_not_an_override(repo, capsys):
     original = start(repo)
-    _, ready, _ = revise(repo, capsys, NOTE_PATH)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     candidate = artifact_file(repo, ready, "final.md")
     checked = candidate.read_text()
     candidate.write_text("Unchecked replacement.\n")
@@ -479,7 +550,7 @@ def test_conversation_and_interactive_passes(repo, capsys, tmp_path, defend):
 def test_plain_markdown_keeps_h1_and_waits_for_publication(repo, capsys):
     path = "kb/work/draft/notes.md"
     original = start(repo, path=path, text="# Draft\n\nA draft body.\n")
-    _, ready, _ = revise(repo, capsys, path)
+    _, ready, _ = revise(repo, capsys, path, "--assess")
     assert (repo[0] / path).read_text() == original
     publish(repo, capsys, ready, path)
     assert (repo[0] / path).read_text().startswith(original + "readability-and-flow")
@@ -487,10 +558,10 @@ def test_plain_markdown_keeps_h1_and_waits_for_publication(repo, capsys):
 
 def test_edited_artifact_starts_new_run_without_reusing_publication(repo, capsys):
     start(repo)
-    _, ready, _ = revise(repo, capsys, NOTE_PATH)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     approve(repo, capsys, ready)
     edited = note_text(repo) + "The operator's sentence.\n"
     (repo[0] / NOTE_PATH).write_text(edited)
-    code, fresh, launches = revise(repo, capsys, NOTE_PATH)
+    code, fresh, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 0 and fresh["run-dir"] != ready["run-dir"] and launches == ["assess - big", *ORDINARY]
     assert not fresh["applied"] and note_text(repo) == edited

@@ -130,6 +130,22 @@ def write(root: Path, rel: str, text: str) -> None:
     (root / rel).write_text(text, encoding="utf-8")
 
 
+def test_single_criterion_reports_failure_without_selecting_or_editing_work(repo, capsys):
+    root = repo[0]
+    target = root / "kb/notes/beta.md"
+    original = target.read_bytes()
+    code, report, launches = review(repo, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate",
+                                    "--grouping", "pair")
+    assert code == 0 and launches == [f"kb/notes/beta.md::{BODY_GATE}"]
+    [pair] = report["pairs"]
+    assert pair["outcome"] == "fail" and report["guard"]["clean"]
+    assert target.read_bytes() == original
+    assert read_result(result_path(root, "kb/notes/beta.md", "prose/body-gate")).outcome == "fail"
+    _, repeated, launches = review(repo, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate")
+    assert launches == [] and repeated["counts"] == {"fresh": 1}
+    assert target.read_bytes() == original
+
+
 def test_sweep_writes_one_result_per_pair_and_a_rerun_launches_nothing(repo, capsys):
     root = repo[0]
     code, report, launches = review(repo, capsys, "kb/notes", "--criteria", "prose", "type", "collection",
