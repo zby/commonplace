@@ -26,7 +26,11 @@ from commonplace.lib.ingest_handoff import (
     verify_handoff,
 )
 from commonplace.lib.snapshot import snapshot_sha256
-from commonplace.lib.validation import CheckResults, validate_ingest_contract
+from commonplace.lib.validation import (
+    CheckResults,
+    validate_ingest_contract,
+    validate_snapshot_links,
+)
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
@@ -349,6 +353,31 @@ def test_quote_attributions_may_name_the_snapshot(pair: tuple[Path, Path, str]) 
     ingest, _snapshot, checksum = pair
     ingest.write_text(_ingest(checksum, quotes=_populated_quotes(checksum)), encoding="utf-8")
     assert _contract_warnings(ingest) == []
+
+
+def test_a_link_into_snapshots_warns_outside_ingests(pair: tuple[Path, Path, str]) -> None:
+    ingest, snapshot, _checksum = pair
+    note = ingest.parents[1] / "theory" / "a-note.md"
+    linked = "See [the copy](../sources/.snapshots/paper.md) and `kb/sources/.snapshots/paper.md`.\n"
+
+    results = CheckResults(note_type="note")
+    validate_snapshot_links(results, linked, note)
+    assert results.warns == [
+        (
+            "snapshot link: links into .snapshots/, which Git ignores; "
+            "link the paired .ingest.md instead: ../sources/.snapshots/paper.md"
+        )
+    ]
+
+    # A path in a code span is a mention, and an ingest has its own check.
+    for content, path in (
+        ("The file `kb/sources/.snapshots/paper.md` is pinned.\n", note),
+        (linked, ingest),
+        (linked, snapshot),
+    ):
+        results = CheckResults(note_type="note")
+        validate_snapshot_links(results, content, path)
+        assert results.warns == []
 
 
 def test_contract_warns_on_quotes_position_and_uncopied_capture_metadata(

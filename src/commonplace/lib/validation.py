@@ -1105,6 +1105,25 @@ def validate_ingest_quotes(results: CheckResults, content: str, path: Path) -> N
 
 
 # Snapshot fields the ingest sets from its own reading, or may not carry at all.
+def validate_snapshot_links(results: CheckResults, content: str, path: Path) -> None:
+    """Warn when a file other than an ingest links into a snapshot directory.
+
+    Snapshots are ignored by Git, so such a link resolves only on the machine
+    that holds the snapshot and link health cannot see that it is broken
+    elsewhere. An ingest's own check is ``validate_ingest_contract``.
+    """
+    if path.name.endswith(".ingest.md") or ".snapshots" in path.parts:
+        return
+    targets = sorted(
+        {link for link in find_markdown_links(frontmatter.strip(content)) if ".snapshots/" in link}
+    )
+    if targets:
+        results.warns.append(
+            "snapshot link: links into .snapshots/, which Git ignores; "
+            f"link the paired .ingest.md instead: {', '.join(targets)}"
+        )
+
+
 UNCOPIED_SNAPSHOT_FIELDS = frozenset(
     {"type", "description", "genre", "tags", "original_snapshot"}
 )
@@ -1704,6 +1723,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
     )
     validate_ingest_quotes(base, parsed.content, parsed.path)
     validate_ingest_contract(base, parsed.content, parsed.path)
+    validate_snapshot_links(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
     collection_results = CheckResults(note_type=parsed.note_type)
