@@ -101,7 +101,7 @@ re_ingest_request:
        when Quotes is empty. A changed observation gets a new date-named
        capture and a new ingest (re-ingest's **New observation**); re-ingest
        never changes the incumbent observation.
-   - If `$ARGUMENTS` is empty, list recent
+   - If no target was given, list recent
      `kb/sources/.snapshots/*.md` files, then ask which one to ingest.
    - For an ordinary `arxivb.org/abs/<paper-id>` URL, resolve the paper before
      searching for an existing ingest. arXivBangers is a discovery site with
@@ -219,11 +219,11 @@ re_ingest_request:
    parent's interpretations to the worker.
 
 4. **Draft through one primary fresh worker.**
-   Launch one newly isolated sub-agent or worker with only the dispatch below
-   as task context. Use a clean-context launch; do not fork or attach the
-   parent's conversation history. If the harness cannot provide that
-   isolation, follow the fail-closed rule in the contract. Use the harness
-   worker mechanism only.
+   Start one new sub-agent or worker that receives only the dispatch below.
+   Do not use a launch mode that copies the parent's conversation into the
+   worker, such as a fork. If the harness has no launch mode without that
+   copy, follow the fail-closed rule in the contract. Use the harness worker
+   mechanism only.
 
    Give the worker this dispatch with every placeholder filled in. The warning
    against orchestration skills is load-bearing: skill discovery can re-fire in
@@ -235,6 +235,9 @@ re_ingest_request:
    Do not invoke or follow any auto-loaded skill, including cp-skill-ingest,
    cp-skill-connect, or cp-skill-snapshot-web. Their orchestration work is
    already complete. Do not spawn another agent.
+
+   Work from the repository root, {repo_root}. Every path below is relative
+   to it, and commands run from there.
 
    Fixed inputs:
    - mode: create
@@ -251,8 +254,9 @@ re_ingest_request:
    ```
 
 5. **Verify the drafting handoff.**
-   Wait for the primary worker to finish, collect its response, then close,
-   terminate, or release it before continuing. Run the handoff check:
+   Wait for the primary worker to finish and collect its response. If the
+   harness keeps a finished worker open, end it before continuing; a worker
+   that ended on its own needs no action. Run the handoff check:
 
    ```bash
    commonplace-validate <candidate_path> --handoff <handoff_record>
@@ -275,14 +279,14 @@ re_ingest_request:
    passes.
 
    If the primary worker did not produce a clean report, launch at most one new
-   fresh replacement worker with the same clean-context boundary. Dispatch the
+   fresh replacement worker under the same launch rule. Dispatch the
    same standalone instruction and fixed inputs, including the same
    `candidate_path` and `handoff_record`, but set `mode: repair` and supply
    the command's failure lines, plus any code-grounding content failure, in
    `validation_failures`. Leave the failed primary candidate at
    `candidate_path` for that repair worker. Do not add parent interpretations
    or a rewritten analysis brief. Wait for the replacement, collect its
-   response, close, terminate, or release it, then repeat the handoff check.
+   response, end it if the harness keeps it open, then repeat the handoff check.
    Do not retain either single-use worker for another task.
 
 6. **Publish or close.**
@@ -309,9 +313,10 @@ re_ingest_request:
    keep its report at
    `kb/reports/cache/connect/sources/<snapshot-slug>.ingest.connect.md`.
    Require a non-empty report whose `source` is `output_path` and run
-   `commonplace-validate` on that report. Read its `Bidirectional Candidates`
-   and `Reverse-edge Candidates`, including an explicit `None` when there
-   are no candidates. Each proposed inbound link must independently serve a
+   `commonplace-validate` on that report; the command takes one path per
+   run. Read its `Bidirectional Candidates` and `Reverse-edge Candidates` in
+   the report file itself, including an explicit `None` when there are no
+   candidates. The connect run's summary does not replace that read. Each proposed inbound link must independently serve a
    reader need under the linking artifact's collection contract; an outbound
    ingest link alone does not justify a return link.
 

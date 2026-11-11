@@ -127,7 +127,7 @@ Snapshots in `kb/sources/` are immutable; their authored connection surface is n
 
 ## Output
 
-Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. Use the loaded `connect-report` template (`type: types/connect-report.md`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
+Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. `<artifact-name>` is the target's filename without its final `.md` and nothing else: `foo.md` gives `foo.connect.md`, and `foo.ingest.md` gives `foo.ingest.connect.md`. Dropping an inner suffix would overwrite another artifact's report. Use the loaded `connect-report` template (`type: types/connect-report.md`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 
