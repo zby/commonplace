@@ -1,5 +1,9 @@
 """Sync a disposable Markdown reading inbox from X likes.
 
+State and inbox live in the private snapshots repository checked out at
+kb/sources/.snapshots/, because they hold other people's posts and the
+account's like history; they must never enter a public tree.
+
 Run: uv run python scripts/sync_x_likes.py
 See scripts/README.md for retention, credentials, and API limitations.
 """
@@ -22,6 +26,7 @@ from urllib.request import Request, urlopen
 from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parents[1]
+X_LIKES_DIR = Path('kb/sources/.snapshots/x-likes')
 
 
 @contextmanager
@@ -171,8 +176,8 @@ def render(record: dict) -> str:
 
 
 def sync(root: Path, client, handle: str, max_pages: int, now: datetime):
-    state_path = root / 'kb/reports/state/x-likes' / handle / 'sync.json'
-    cache = root / 'kb/reports/cache/x-likes' / handle
+    state_path = root / X_LIKES_DIR / handle / 'sync.json'
+    cache = root / X_LIKES_DIR / handle / 'inbox'
     state = json.loads(state_path.read_text(encoding='utf-8')) if state_path.exists() else {
         'version': 1, 'seen': {}, 'active': {}}
     if state.get('version') != 1:
@@ -217,7 +222,7 @@ def main():
         parser.error('Need a valid handle and positive --max-pages')
     root = args.root.resolve()
     # One lock for all handles: token rotation also shares .env.
-    lock_path = root / 'kb/reports/state/x-likes/.sync.lock'
+    lock_path = root / X_LIKES_DIR / '.sync.lock'
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
         with sync_lock(lock_path):

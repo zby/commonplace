@@ -176,14 +176,14 @@ without publishing history or changing cached files. Network errors and partial
 API responses also leave the previous cache and history intact. No schedule is
 installed; run the command whenever the reading inbox needs refreshing.
 
-Each post becomes `kb/reports/cache/x-likes/<handle>/<post-id>.md`, with author,
+Each post becomes `kb/sources/.snapshots/x-likes/<handle>/inbox/<post-id>.md`, with author,
 source URL, available full post text, expanded links, article title when supplied,
 publication time, and first-observed time. Article bodies, threads, and linked
 pages are not fetched; use the source ingestion workflow for selected items.
 Cache files expire 21 days after first observation, during successful syncs.
 A seven-day reading selection means first observed within seven days.
 
-`kb/reports/state/x-likes/<handle>/sync.json` retains seen IDs and first-observed
+`kb/sources/.snapshots/x-likes/<handle>/sync.json` retains seen IDs and first-observed
 times, plus the payloads for the active three-week inbox. Those active payloads
 allow deleted cache files to be regenerated without API refetches. Expired
 payloads are removed, but seen IDs and dates remain to prevent reimporting old
@@ -191,6 +191,12 @@ likes. Preserve this state while using the inbox; deleting it deliberately
 restarts the 100-like bootstrap. It is local operational state, not disposable
 cache. A shared Linux file lock prevents concurrent syncs and token refreshes.
 If publishing cache files is interrupted, rerun: committed state rebuilds them.
+
+Both live under the private snapshots repository checked out at
+`kb/sources/.snapshots/`, not under `kb/reports/`, because the inbox is other
+people's posts and the state is the account's like history. Neither may enter
+a public tree. The `x-likes/` subdirectory is the one mutable area of that
+repository; see its README.
 
 Limits: X does not supply the time a post was liked, so first observation is
 not a historical like timestamp. The initial page is not necessarily one week's

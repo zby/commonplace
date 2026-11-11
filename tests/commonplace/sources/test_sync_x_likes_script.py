@@ -47,11 +47,11 @@ def run(root, client, now=NOW, max_pages=10):
 
 
 def state_path(root):
-    return root / 'kb/reports/state/x-likes/zby/sync.json'
+    return root / 'kb/sources/.snapshots/x-likes/zby/sync.json'
 
 
 def cache(root):
-    return root / 'kb/reports/cache/x-likes/zby'
+    return root / 'kb/sources/.snapshots/x-likes/zby/inbox'
 
 
 def test_bootstrap_ignores_publication_age_then_catches_up(tmp_path):

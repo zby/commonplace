@@ -202,6 +202,17 @@ Publishing cannot be undone, so each of these comes before the first push.
    archive path. The live tree is now 18 MB in 281 files; 42 files mention
    `/home/zby` and 10 match the key pattern (both counts with `rg --no-ignore`,
    which any count over this ignored tree needs).
+   Items 2 to 6, the links question and the cross-machine question were
+   audited on 2026-11-11 over the remaining tree; results, commands and
+   verdicts are in [pre-publication checks](./pre-publication-checks.md).
+   In short: no real secret; two review run records carry operational
+   absolute paths; `x-likes/` held personal data and third-party posts and
+   can never be published, so on 2026-11-11 its state, its rendered cache under
+   `kb/reports/cache/x-likes/` and the September literature batch moved to
+   `x-likes/` in the private snapshots repository and the script now writes there; the meta-analyser pilot traces copy MIT-licensed
+   source without its notice; no copied snapshots remain; the state README
+   needs rewriting; this checkout holds no review results, only two revision
+   runs, and the 37 results on this machine sit in an agent worktree.
 2. Read the 42 key-pattern files. Remove or exclude any real secret.
 3. Audit paths consumed by commands for cross-machine use. Distinguish
    operational references from historical path mentions; do not globally
