@@ -186,6 +186,73 @@ repository's ownership of retained reports and navigation. Do not treat
 `kb/reports/` wholesale as an ignored nested checkout without resolving that
 boundary.
 
+## Preparation tasks for the directory merge
+
+The operator added these tasks. Counts and consumer locations below are
+operator-supplied leads to verify during execution, not completed audit
+findings. The first cleanup outcome is recorded below; the remaining tasks
+are pending.
+
+1. **Classify the September one-off cache investigations.** Inspect
+   `agentic-memory-refresh/`, `agentic-analysis-reliability/`,
+   `agentic-analysis-output-documents/`, `tag-placement/` and
+   `tag-head-placement/` under `kb/reports/cache/`, plus the three loose
+   Markdown files there. The operator identifies these as finished-investigation
+   evidence like the abandoned state archived earlier. For each, determine
+   whether a tracked retained report already holds what matters. Record that
+   report's path and any unique evidence left behind before deciding whether
+   to archive the cache copy. Identify the three loose files explicitly in
+   the classification record.
+2. **Consolidate the secondary state tree.** Archive the eight runs under
+   `kb/agentic-systems/reports/state/`, preserving their layout outside the
+   publication tree. Verify the archive before retiring that directory's
+   README and its ignore rule. This leaves one state tree for the merge to
+   absorb rather than two. Check for consumers before removing the old
+   directory's supporting files.
+3. **Enumerate migration consumers.** Produce an explicit path-consumer list
+   for the merge. The initial inventory names two code files that contain
+   cache paths: the scaffold manifest and the validator. Instruction consumers
+   include connect, snapshot-web, the friction and premise-decomposition gates,
+   and the compression bundle, with about fifteen references reported. Also
+   inspect the reports ignore file, collection contract, both landing READMEs
+   and installed-project templates. Verify this inventory rather than treating
+   it as exhaustive; include state-path consumers and distinguish operational
+   references from historical mentions. Enumeration does not itself authorize
+   path replacement.
+
+### First cache cleanup outcome
+
+On the operator's approval, moved four directories and two loose files from
+`kb/reports/cache/` to `../commonplace-archive/kb/reports/cache/`, preserving
+names and internal layout. All 279 files were SHA-256 checked before and
+after the move; all six source entries were confirmed absent:
+
+- `agentic-analysis-reliability/` (82 files): the tracked
+  [reliability trial](../../reports/retained/agentic-analysis-reliability-20260927/README.md)
+  explicitly retains sufficient trial evidence without this cache.
+- `agentic-analysis-output-documents/` (37 files): the tracked
+  [output-documents closure](../../reports/retained/agentic-analysis-output-documents-20261002/README.md)
+  retains closure and captured trials, but duplication of every detailed audit
+  was not established.
+- `agentic-memory-refresh/` (157 files): retained output-documents evidence
+  covers some refresh work, not demonstrably this entire set of pilot bundles,
+  reruns, quote checks and traces.
+- `tag-head-placement/` (1 file): completed head-review judgments; no matching
+  retained report was found in the scoped search.
+- `agentic-analysis-machinery-improvements.md`: completed implementation
+  tracker that names code, tests and commits as authoritative.
+- `software-factory-note-inventory.md`: lexical inventory plus advisory
+  migration judgments, including deferred work. Archival preserves those
+  judgments; it does not assert that the migration work is complete.
+
+Deleted `promotion-candidates.md`, the stale deterministic listing, on the
+same approval. Left `tag-placement/` untouched: its 67 possible mismatches,
+one uncertain assignment, 13 parent-child conflicts and suggestions for 206
+notes require a resolution or explicit abandonment check before cleanup.
+The classification was bounded inspection, not proof of byte-for-byte
+retained duplication. No secondary-state archival or migration-consumer work
+was performed in this step.
+
 ## Before anything is published
 
 Publishing cannot be undone, so each of these comes before the first push.
