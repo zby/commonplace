@@ -1,289 +1,172 @@
-# Admission to the main record: economic considerations
+# Admission to the main record: a bounded design-space map
 
-## Origin, purpose and status
+## Purpose and status
 
-The operator asked to retain these considerations after discussing candidate
-outputs from connect, revision and the ongoing ingest refactoring. This is a
-selective account of that discussion and a design checklist for continuing it,
-not a complete retention policy or a claim that the relevant costs have been
-measured. The operator subsequently fixed the investigation boundaries below;
-those boundaries govern this work, while economic thresholds remain open. It extends the [Git and retained-artifact exploration](./git-and-retained-artifacts.md)
-with the question that precedes carrier selection: what information earns
-admission to the main record at all?
+Understand what particular retention commitments buy and oblige us to do, so
+we can choose reasonably for concrete work and reconsider the choice later.
+This is a preliminary map, not an optimal policy, an exhaustive enumeration or
+a measured cost model. The [workshop framing](./README.md) fixes the commission
+and completion conditions.
 
-Here, **main record** means the project's deliberately retained Git-backed
-record, including versioned files and commit messages. This is the local
-arrangement under discussion, not a decision to require Git in every
-Commonplace KB. Being committed does not by itself make a claim true, a
-proposal adopted, or an instruction operative.
+Here, the **main record** is the deliberately retained Git-backed project record:
+versioned files and commit messages. Current files and Git history are not
+independent stores. Untracked material can remain useful for some time; tracked
+material need not remain in the current tree forever.
 
 ## Binding investigation boundaries
 
-1. **Session traces are supplied and governed by the harnesses.** Work with the
-   harnesses currently available. Do not redesign their capture, retention or
-   deletion rules, or make choosing a different harness part of this task.
-   Harness choice may be reconsidered separately later.
-2. **Trust the traces as the complete process record for this investigation.**
-   Assume they contain the session information and remain available for some
-   time. This is the operator's working premise, not a newly measured guarantee
-   or a promise of indefinite availability. Do not reopen capture completeness
-   as a prerequisite to this design work.
-3. **Do not build a duplicate primary record.** Once a trace exists, possible
-   debugging or reconstruction needs do not justify keeping a second exhaustive
-   account under Commonplace's control. Mining traces for material worth durable
-   retention remains in scope.
-4. **Additional working information must earn its extraction-saving role.** A
-   cache may hold an expensive extraction or auxiliary information that would
-   take substantial work to recover from the trace. It may be prepared during
-   the work or extracted later. Its purpose is to reduce expected future work,
-   not to become an alternative primary archive.
-5. **High-value, lasting use points toward a retained artifact, not a permanent
-   cache.** Duration alone is insufficient, but sufficiently valuable use over
-   time is a reason to retain the material deliberately. The threshold is still
-   to be worked out; a cache is not a required intermediate step.
-6. **Retained artifacts must serve their intended uses without session traces.**
-   Harnesses may delete those traces. Extract the context, evidence, reasons and
-   qualifications that the retained artifact's use requires. It can depend on
-   other durably retained material; it need not reproduce everything inline.
-   Trace links may supply optional provenance, but must not be indispensable to
-   understanding or using the retained result for its stated purpose.
+The [framing's fixed boundaries](./README.md#fixed-boundaries) govern every option
+below. Harness traces are trusted as complete and temporarily available; their
+rules are not ours to change. We do not build duplicate primary process records.
+Additional caches must justify the extraction work they save. Retained artifacts
+must serve their intended uses after trace deletion, although they can depend on
+other durably retained material. These are working premises, not findings this
+map must establish.
 
-The same economic questions would remain if Commonplace later moved away from
-these harnesses: a process record, the cost of extracting useful information,
-optional caches and independently useful retained artifacts would still need
-appropriate roles. That possibility does not expand the current commission.
+## The economic question
 
-## What the discussion established
+> What additional value would admitting this material to the main record provide,
+> compared with using the trace, keeping a working copy, recreating a useful
+> product, or retaining only the contribution its use produces?
 
-The operator corrected three inadequate distinctions:
+Three corrections from the operator govern this comparison:
 
-1. **Workspace isolation is not the main question.** A candidate file or
-   directory lets an automated process work without immediately changing
-   maintained artifacts. The larger question is which products and accounts
-   of that work should enter the main record.
-2. **Duration of possible usefulness does not decide retention.** Something
-   may remain potentially useful for years without being valuable enough to
-   commit. Something else may be useful for one operation, have its useful
-   contribution incorporated into a committed result, and then have little
-   remaining value as a separate artifact.
-3. **Possible debugging value is not a discriminating criterion.** Practically
-   every intermediate could help some future investigation. Moreover, session
-   traces already supply a general process record. The comparison must not
-   assume that declining to commit an intermediate necessarily loses its
-   information.
+- **Possible usefulness does not distinguish what to retain.** Almost anything
+  might help a future debugging investigation. Naming that possibility does not
+  justify a second record when the trace already contains the information.
+- **Duration alone is insufficient.** Low-value material can remain potentially
+  useful for years without earning Git admission. High-value lasting use can
+  justify a retained artifact rather than an indefinitely maintained cache.
+- **Use can consume an intermediate's value.** A report may earn its production
+  cost by helping produce a committed result, without earning separate retention.
+  Assess its remaining uses after that contribution has been incorporated.
 
-The resulting question is comparative:
+Conversely, incorporation does not prove that every important use is covered.
+The result may omit a rejected alternative, original expectation, constraint or
+reason. Ask whether that information warrants durable extraction, not whether
+one can imagine any use for it. A rare but consequential use can justify
+retention; frequency alone is not the test.
 
-> What additional value does placing this material in the main record provide,
-> relative to leaving it in traces or working storage, recovering it when
-> needed, or retaining only a selected account of what its use produced?
+## Commitments and consequences
 
-No numeric threshold, retention period or mandatory record format follows yet.
+Rows describe choices that can be combined, not exclusive boxes into which every
+file must fit. Their value depends on the particular use and available access
+routes.
 
-## The actual alternatives
+| Commitment | Potential benefit | Cost, obligation or accepted loss | Interaction and reversibility |
+|---|---|---|---|
+| Leave the information only in the trace | No additional recording or curation work | Later discovery and extraction; accept loss of the recovery option when the harness deletes it | Extraction remains possible while the trace exists; deletion can make the decision irreversible |
+| Keep a working file or cache | Avoid repeated extraction; provide a directly usable product | Preparation, checking, finding the cache, staleness and disposal | No duty of trace-independent durability by default; promotion later may require more than copying the file |
+| Incorporate the contribution into a maintained artifact | Preserve the useful result without a separate intermediate | Determine which remaining uses the result does not support | The intermediate can still be recovered from the trace during its availability; its final contribution need not preserve all reasoning |
+| Retain a selected account in Git | Durable, clearer or cheaper access to worthwhile knowledge | Extraction and checking; enough retained context and evidence to support the intended use without traces | Selection can omit material needed by a later, different use; some losses become irreversible after trace deletion |
+| Retain the whole intermediate as a bounded artifact | Preserve detail and reduce selective extraction | Explain its purpose, status and context; pay discovery and interpretation costs | It still must be useful without the trace; keeping an intermediate is not permission for a parallel exhaustive process archive |
+| Retain an account in a commit message or only in history | Associate it with change or preserve it without a permanent current file | A usable route to the right commit, references and later updates | Depends on retained history; squashing may preserve the final tree but lose the needed account |
+| Recreate a product when needed | Avoid carrying a separate product between uses | New production and checking cost; changed models, methods or sources may yield another answer | Appropriate when a useful replacement suffices, not when the exact historical result is needed |
 
-These are possible treatments, not a required sequence or mutually exclusive
-stores:
+A cache can remain dependent on the trace if that fits its declared function.
+A retained artifact cannot leave an indispensable reason or observation solely
+behind a trace link. Promotion therefore creates an information obligation,
+not just a path or Git-status change. Optional trace provenance can remain.
 
-| Treatment | What it preserves or makes available | What still needs accounting |
+Keeping the whole intermediate and retaining a selected account are both
+legitimate candidates. Neither completeness nor brevity is automatically
+cheaper for the intended reader.
+
+## When to extract is a separate choice
+
+| Commitment | What it offers | What it costs or risks |
 |---|---|---|
-| Leave information in session traces | The process record, trusted complete under the working premise | Discovery and extraction costs during harness-controlled availability |
-| Keep a working file or local cache | A directly usable product without reconstructing it from a trace | Local availability, collisions, staleness and eventual cleanup |
-| Commit the whole artifact | The artifact and its recorded versions | Admission effort, discovery, interpretation and any maintenance obligations |
-| Commit selected findings, evidence or rationale | The parts expected to support future work without the traces | Extraction cost, sufficient retained context and losses introduced by selection |
-| Incorporate its contribution into another artifact | Links, an ingest, a revision or another maintained result | Whether a future task still needs the intermediate or its reasoning |
-| Record an account in a commit message | Reasons and evidence associated with a change or a larger decision | How readers find the relevant commit and resolve its references |
-| Recreate or reacquire later | A new result when a future need justifies the work | Reproduction cost and whether an equivalent observation remains possible |
-| Delete the working copy | Avoids retaining a separate file after its use | What remains in traces or Git, and which recovery options are actually lost |
+| Extract when a concrete need appears | Avoid processing material nobody uses | Expensive or delayed recovery; the trace may already have expired |
+| Prepare selected auxiliary information during work | Use available context to reduce later extraction effort | Adds work before future demand is known; must not turn into mandatory duplicate session accounts |
+| Mine selected traces proactively | Recover potentially valuable information before deletion or before a reader knows to ask | Selection, processing and checking costs, including runs that yield nothing worth retaining |
+| Mine routinely across a broad class of sessions | More systematic opportunity to find useful material | Recurring cost and weak-signal volume; requires a sufficiently valuable use and a proportionate selection method |
 
-Untracked does not mean immediately deleted, short-lived or cheap to regenerate.
-Tracked does not mean permanently present in the current tree: selected material
-can remain in history. Current files and their Git history are not independent
-stores. Nor does deleting a working copy delete the account already in a trace.
+Routine mining is not entailed by durable retention, and mining need not produce
+a cache before producing a retained artifact. No mining schedule or programme
+is selected. Different tasks may warrant different timing.
 
-## Considerations for the economic comparison
+## What belongs in the comparison
 
-### 1. Future use, not conceivable use
+### Intended use and additional value
 
-Name the future operation the material could support: ordinary reading,
-implementation, revision, debugging, audit, comparison or reconsideration.
-Distinguish a recurring or evidenced need from a merely possible one. Consider
-both the likelihood of the need and the consequence of being unable to meet it.
-A rare investigation can matter greatly; frequency alone is not the test.
+Name the consumer and future operation: ordinary reading, implementation,
+revision, debugging, audit or reconsideration. Ask what additional Git admission
+supplies over the trace and available working copy: cheaper access, clearer
+interpretation, portability, direct use, a stable reference or longer retention.
+A committed file nobody can find may add little. A well-indexed trace may suffice
+for one use while a selected account materially improves another.
 
-A hypothetical debugging scenario must not become an automatic exemption from
-selection. Equally, low measured reuse over a short period does not establish
-that rare recovery evidence is worthless. The relevant horizon and acceptable
-loss remain choices to make explicitly when consequential.
+### Costs under our control
 
-### 2. The marginal benefit of Git admission
+Take harness capture and deletion rules as given. Count the costs of extraction,
+checking, description, storage and transfer; discovery, reading and reconstruction;
+maintenance, references and cleanup; regeneration and failed recovery; and
+misleading duplicates or stale accounts. Respect privacy, licensing and access
+restrictions when extracting into a more widely available record.
 
-Ask what committing adds over the available trace and working copy. Possible
-benefits include easier retrieval, less reconstruction, a clearer explanation,
-portability to another clone or operator, direct machine use, a stable reference,
-and preservation beyond local trace retention.
+Do not charge every cost to every option. A historical record need not be
+maintained like a current instruction. Material only in history need not clutter
+ordinary file search. Traces are not free to search just because capture already
+happens. Production cost already incurred is not itself a reason to retain an
+output; the prospective cost of producing a needed replacement can matter.
 
-These are possibilities to check, not benefits every commit automatically
-supplies. A committed file nobody can find may add little. A well-indexed trace
-may already answer the intended question cheaply. Conversely, reconstructing
-an answer from a large trace may cost much more than reading a selected account.
+### What may be lost
 
-### 3. Value before and after consumption
+Recovery from a trace and regeneration are different. A new model run may not
+reproduce an old candidate. Current access to an external source may not recover
+a prior observation. Establish whether the intended use needs historical evidence,
+a functionally equivalent product or a current answer.
 
-An intermediate can earn its production cost through the current task without
-earning durable retention. A connect report can guide link authoring; a
-candidate can support inspection before replacement. Once used, assess its
-remaining contribution, not the value it had at production time.
+Selection can lose expectations, contrary outcomes or consequential operator
+contributions. Preserve these when the retained use requires them. Do not replace
+contemporaneous evidence with a retrospective explanation presented as the
+original reason. Equally, do not preserve everything merely to avoid specifying
+the retained artifact's intended use.
 
-Do not infer that the final result preserves everything important. It may omit
-rejected alternatives, original expectations, operator constraints, failures or
-reasons for a choice. But those omissions do not automatically require a separate
-committed intermediate: the trace may already retain them adequately, or a small
-selected account may suffice.
+### Authority and status
 
-### 4. Trace extraction, caches and independent retention
+Producing, applying and retaining a result need not have the same authority.
+A rejected candidate can earn retention as evidence; an adopted edit can leave
+its intermediates outside Git. A commitment to retention must make the artifact's
+status intelligible, not imply truth, adoption, implementation or observed benefit
+merely from its presence. Authority can be granted conditionally in advance; the
+map does not introduce a fresh human gate for every operation.
 
-Treat trace capture and harness-controlled lifetime as given. The variable here
-is the work needed to find, extract and interpret relevant information while
-it is available. A complete record can still be expensive to use.
+### Decision cost and uncertainty
 
-Consider caching when preparing an auxiliary index, structured account or
-extraction would avoid enough future work to justify its own cost. This is not
-permission to duplicate every session in another format. Count the cost of
-producing and checking the cache, its expected reuse and its eventual disposal.
-A cache need not support use after the trace disappears unless that is part of
-its declared function.
+Per-item deliberation can cost more than it saves. Narrow class-level defaults
+may reduce that cost, but need reasons and exceptions rather than hypothetical
+future-use arguments for every file. Repeated expensive reconstruction, unused
+retained outputs or investigations blocked after expiry can motivate revision.
+Collecting such evidence also costs work; no telemetry system is implied.
 
-When the material warrants durable retention, prepare an artifact that remains
-useful after trace deletion. Retain what its intended use requires rather than
-leaving a crucial reason or observation only behind a trace link. This is scoped
-independence, not exhaustive preservation: a record may serve a bounded decision
-or explanatory purpose without supporting every imaginable future investigation.
-Mining can produce such an artifact directly; it need not first produce a cache.
+Use qualitative judgments when evidence does not support estimates. State
+consequential uncertainty and acceptable losses. A reasonable local choice does
+not need to dominate every plausible alternative or generalize to every workflow.
 
-### 5. Recovery and regeneration are different
+## Concrete starting cases
 
-Recovering an old candidate from its trace is not the same as generating another
-candidate from the same prompt. A later run can use another model, changed
-instructions or changed sources, and need not reproduce the earlier output.
-Likewise, current external access may not recover the observation available at
-the time. Determine whether the future use needs exact historical evidence, a
-functionally equivalent product, or merely a current answer.
+| Case | Choice to examine | Boundary on the conclusion |
+|---|---|---|
+| Connect report after link authoring | Keep as cache, extract an independently useful finding, or leave the process account in its trace | Authored links may consume the report's primary value; that does not settle every later research use |
+| Revision candidate after publication | Whether the candidate/report/diff has an independent retained use beyond the final text and trace | Inspection and publication roles do not alone justify Git retention afterward |
+| Ingest candidate during the refactoring | What, if anything, to retain beyond the tracked ingest and trace | Candidate checking and guarded replacement do not decide retention of intermediate material |
+| Decision worth reconsidering later | What account must survive, then which existing file or Git route serves it | See the [carrier comparison](./git-and-retained-artifacts.md); equivalent content is required for a fair comparison |
 
-### 6. Total cost of each treatment
+These are unexecuted design comparisons, not observed optimal arrangements.
+Agentic-system analysis remains outside the starting set because its worktree
+and automatic merge have a different integration model.
 
-Count the costs of the alternatives we control, taking harness capture and
-retention rules as fixed. Trace access and extraction still cost work; changing
-harness rules or building a duplicate primary archive is not an alternative in
-this comparison:
+## How much resolution is enough?
 
-- capture, extraction, checking and description;
-- storage, transfer and retention administration;
-- indexing, searching, reading and reconstructing;
-- keeping maintained accounts applicable and distinguishing them from history;
-- reference upkeep and the cost of later cleanup;
-- duplicated or stale material that misleads readers or consumes attention;
-- privacy, confidentiality, licensing and access restrictions;
-- regeneration, failed recovery and the consequences of missing evidence.
+For a selected case, record the use, plausible alternatives, consequential
+benefits and obligations, assumptions, reversibility and remaining uncertainty.
+A justified provisional choice—or keeping the current arrangement—is enough
+when further investigation is not worth its expected decision value. State what
+would warrant reopening it.
 
-Raw storage may be cheap. A historical artifact need not incur the maintenance
-cost of a current instruction. Material only in Git history need not clutter
-ordinary file search. These differences depend on the actual arrangement; do
-not charge every possible cost to every retained item.
-
-Production cost is already incurred when deciding what to retain. It is not by
-itself a reason to commit the output. It matters prospectively when losing the
-output would require paying again for a use that is worth serving.
-
-### 7. Selection and compression have costs and failure modes
-
-A shorter retained account may make future work easier, but authoring and checking
-it cost effort. Selection can erase the expectation that a later outcome refuted,
-a consequential operator contribution, or an alternative needed for
-reconsideration. A summary should not silently replace contemporaneous evidence
-with hindsight.
-
-Compare the benefit of the selected account with using the original trace while
-it remains available. State what the selection deliberately leaves there, but
-do not leave anything required for the retained artifact's intended use solely
-in the trace. Do not assume that every run needs a hand-written summary or that
-a complete transcript is a usable substitute for an explanation.
-
-### 8. Adoption and retention remain different decisions
-
-An accepted change may be committed while its disposable intermediate reports
-remain outside Git. A rejected candidate or failed experiment may nevertheless
-earn retention as evidence. Retention does not establish endorsement; adoption
-does not establish that the rationale was corroborated.
-
-The authority to produce, apply and commit must be clear for each workflow.
-It may be granted conditionally in advance; this discussion does not impose a
-fresh human-approval gate everywhere. A file's location alone supplies neither
-publication authority nor a sandbox.
-
-### 9. Policies may be cheaper than repeated item-level decisions
-
-It would be costly and unreliable to make an agent invent a future-use argument
-for every generated file. Class-level defaults may be preferable, with exceptions
-for identified evidence needs. That is a design possibility, not a selected
-classification or threshold.
-
-Defaults should be revisable from actual experience: investigations blocked by
-missing material, repeated expensive reconstruction, unused retained outputs,
-and misleading duplicates. Retaining measurements about retention also costs
-something; this does not commission a new telemetry system.
-
-## Current workflow examples and limits
-
-- **Connect:** a report supports later authoring. Once useful connections have
-  been incorporated, ask what additional use justifies retaining the report
-  beyond its cache and session trace. Applying connections is not copying the
-  report into the library.
-- **Revision:** a candidate, report and diff support inspection and controlled
-  publication. Their production and approval roles do not by themselves decide
-  whether they belong in Git after publication.
-- **Ingest:** the ongoing refactoring separates a working candidate from the
-  tracked ingest. Its checks and publication mechanism govern replacement;
-  they do not alone settle retention of intermediate material.
-- **Agentic-system analysis:** set aside as the operator requested. Its worktree
-  and currently automatic merge have a different integration model; do not use
-  it to imply a universal manual approval boundary.
-
-These examples motivate the questions; they are not measured demonstrations of
-an optimal retention policy. The trace-completeness premise above applies to
-this investigation without a separate audit of these workflows.
-
-## Relationship to existing workshop work
-
-The [workshop framing](./README.md) asks how decision accounts survive sessions,
-are discovered and remain applicable across ADRs and Git commits. This account
-adds the upstream admission question. The existing requirement to compare
-carriers with equivalent content still holds: first decide what is worth
-retaining, then compare the means of retaining and accessing it.
-
-[Lineage mechanisms](../lineage-mechanisms/README.md) already owns general
-derived-artifact retention and merge-back provenance. Coordinate any policy
-proposal there rather than building a competing taxonomy here. No common
-workflow engine, new record type or Git-required framework policy is adopted.
-
-## Questions left open
-
-1. For actual debugging and reconsideration tasks, what does finding and
-   extracting the relevant information from existing traces cost? Which mining
-   operations would produce material worth retaining?
-2. Which classes of intermediate have their primary value consumed by their
-   committed results, and which repeatedly support a separate later use?
-3. What additional value justifies a current file, an account in a commit,
-   retention only in history, or no additional Git record?
-4. When does caching an expensive extraction pay for itself, and when do the
-   value and duration of its expected uses warrant a retained artifact instead?
-   Harness trace lifetime is given, not a policy to choose here.
-5. What context, evidence and explanation must an extraction retain to remain
-   useful for its intended purpose without the session traces? What can it omit
-   without defeating that purpose?
-6. Which class-level defaults would reduce decision cost without turning either
-   possible debugging value or automatic cleanup into an indiscriminate rule?
-
-Continue with concrete uses and comparisons only when they can discriminate
-between these choices. This record commissions no paid trial, implementation,
-cleanup or deletion of existing evidence.
+The open work is to apply this map to real choices, not expand it indefinitely.
+Before any new experiment, identify a consequential question that ordinary-use
+evidence or mechanism inspection cannot settle. General retention policy remains
+coordinated with the lineage-mechanisms workshop; no policy or implementation is
+adopted by this map.
