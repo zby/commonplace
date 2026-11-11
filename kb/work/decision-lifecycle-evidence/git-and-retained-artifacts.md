@@ -35,6 +35,15 @@ retained Git history. It is not a demand to copy every essential fact into an AD
 or another currently visible file. The combined retained system must make the
 facts discoverable and sufficient for their intended use.
 
+The subsequent [economic considerations for admission](./admission-to-the-main-record.md)
+make this comparison explicit. A possible future debugging use does not by
+itself justify a second record when the trace already captures the information.
+The additional value may instead be cheaper access, clearer interpretation,
+direct reuse or durability beyond trace retention. An intermediate's primary
+value may also be consumed by its committed result. Trace completeness and
+availability must be checked rather than assumed; no retention threshold has
+been adopted.
+
 ## Git as a framework substrate
 
 The operator proposed examining the assumption that all Commonplace KBs use Git.

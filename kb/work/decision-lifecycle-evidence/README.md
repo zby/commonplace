@@ -14,6 +14,14 @@ retaining; compare access and maintenance arrangements with that content held
 constant. The [Git and retained-artifact exploration](./git-and-retained-artifacts.md)
 records the operator discussion and the unresolved division of labour.
 
+The subsequent [admission-to-the-main-record discussion](./admission-to-the-main-record.md)
+adds the upstream economic question: which products and accounts of automated
+work earn Git retention when session traces already supply a process record?
+Possible future usefulness, including debugging, is not sufficient by itself.
+Compare the additional value of Git admission with trace recovery, working
+storage, regeneration and incorporation into a maintained result. This is an
+open design analysis, not an adopted retention policy.
+
 ## Intent and constraints
 
 The operator opened this investigation on 2026-09-25 after an accepted ADR was
@@ -90,6 +98,10 @@ Checked on 2026-11-07 against source-checkout HEAD `91810b276`:
 5. How can a revised account improve understanding without hiding original
    expectations, rejected alternatives, qualifications and failures? Shorter
    text alone is not compression progress.
+6. What earns admission to the main record beyond existing session traces and
+   working outputs? Compare remaining expected uses after consumption, recovery
+   and access costs, capture gaps, durability and the costs of selection. Coordinate
+   any class-level retention policy with the lineage-mechanisms workshop.
 
 ## Evaluation
 
