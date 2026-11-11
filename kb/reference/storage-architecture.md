@@ -23,10 +23,10 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Stateful report packets | One current full-pass packet per note under `kb/reports/state/review/packets/` | Local non-regenerable disposition and resolution state; the pass's run directory keeps its start text |
 | Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay of answered calls within one run; not read across runs and not a format promise |
 
-The role decides whether a missing artifact can be rebuilt; the reports
-collection makes that role visible through `cache/`, `state/`, and `retained/`
-policy areas. A move between them changes the retention contract rather than
-merely organizing files.
+The reports collection separates ignored operational outputs in `state/`
+from tracked records in `retained/`. Rebuildability and cleanup depend on the
+producing workflow, not the directory class. Promotion into `retained/` is a
+separate retention decision.
 
 ## Authored files and version control
 

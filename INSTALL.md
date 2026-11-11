@@ -220,7 +220,7 @@ The Commonplace library — framework notes, reference, instructions, review gat
 
 On a new project it creates the project's own files once:
 
-- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, instructions, tags, sources, work, and reports each receive a starter `COLLECTION.md` contract and `README.md` landing. Source snapshots are ignored locally; reports also receive `cache/`, `state/`, and `retained/` policy areas with their own ignore and validation boundaries.
+- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, instructions, tags, sources, work, and reports each receive a starter `COLLECTION.md` contract and `README.md` landing. Source snapshots are ignored locally; reports also receive `state/` and `retained/` policy areas with their own ignore and validation boundaries.
 - **`AGENTS.md.template` and `CLAUDE.md.template`** — control-plane templates with the project name filled in (step 4).
 
 On every run it also writes its pointers into the library for this machine:

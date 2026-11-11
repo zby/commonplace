@@ -22,7 +22,7 @@ from commonplace.lib.project_paths import VALIDATION_IGNORE_MARKER
 
 # Across the KB, validation-ignore markers also exclude subtrees from the
 # site: exact captures and trial bundles are data, not vouched-for pages.
-# properdocs.yml separately excludes local state/ and cache/ areas.
+# properdocs.yml separately excludes the operational state/ area.
 
 # Published collections left out of the main menu; their pages still build.
 HIDDEN_FROM_NAV = frozenset({"agent-memory-systems", "types"})

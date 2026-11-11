@@ -52,7 +52,9 @@ The operativity path: producers write to the paths named in their commands
 and skills; the validator excludes the tree through the tracked marker at
 `state/`; the documentation site excludes it by configuration; installed
 projects receive the layout from the scaffold manifest with no compatibility
-shim, so they move in one step.
+shim. New projects start with this layout. Init preserves existing project
+files; existing projects need a separate migration of old payloads and policy
+files, not merely a rerun of init.
 
 ## Considered alternatives
 

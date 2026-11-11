@@ -61,6 +61,10 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
         encoding="utf-8"
     )
     assert "state/**" in reports_ignore
+    assert "!state/README.md" not in reports_ignore
+    assert "!state/.commonplace-validation-ignore" in reports_ignore
+    assert (tmp_path / "kb/reports/state/README.md").is_file()
+    assert not (tmp_path / "kb/reports/cache").exists()
     assert (tmp_path / "kb" / "log.md").is_file()
 
     rerun = init_project(tmp_path)

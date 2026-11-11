@@ -38,7 +38,7 @@ These outputs belong to the project. Init creates each one only when it is missi
 - `kb/sources/`, `kb/sources/types/` — user's tracked source records, and a place for project-authored source types
 - `kb/tasks/` — user's unattended task runbooks and their logs, flat
 - `kb/work/` — user's workshop surface
-- `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
+- `kb/reports/`, its `state/` and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
 
 There are no scaffold trees: the source, snapshot, and report types that Commonplace commands and procedures produce are global library types, read in place like the rest of the library.
 
@@ -59,7 +59,7 @@ There are no scaffold trees: the source, snapshot, and report types that Commonp
 - `kb/work/COLLECTION.md` — workshop-layer contract: structure, closing, and loose linking
 - `kb/work/README.md` — active-workshops landing
 
-The notes, reference, and instructions `COLLECTION.md` templates are ready-to-use defaults with no placeholders; a practitioner customizes them only when the project needs different conventions, and the library's own `COLLECTION.md` files serve as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies cache, state, retained, and local-type policies. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
+The notes, reference, and instructions `COLLECTION.md` templates are ready-to-use defaults with no placeholders; a practitioner customizes them only when the project needs different conventions, and the library's own `COLLECTION.md` files serve as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies operational-state, retained-record, and local-type policies. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
 
 **Resolved templates** — read, substituted, written:
 
@@ -101,7 +101,15 @@ The project's own files are never overwritten. Existing files are classified int
 
 The pointers into the library are rewritten whenever they differ from what init would write now, and reported as refreshed. `commonplace-init --check` compares them without writing, and every `commonplace-*` command runs the same comparison and warns when they are stale.
 
-Init creates missing scaffold files and refreshes its own library pointers. Existing KB content, snapshots, ingest checksums, and review results stay unchanged. Converting data from an older layout is a separate maintenance task.
+Init creates missing scaffold files and refreshes its own library pointers. Existing KB content, snapshots, ingest checksums, and review results stay unchanged. Converting data from an older layout is a separate maintenance task. In particular,
+init does not move former `kb/reports/cache/` payloads into `state/` or remove
+obsolete project-owned policy files.
+
+Installed projects ignore the state README along with workflow outputs;
+only the validation marker in that tree belongs to the main repository.
+Init creates the README but does not create a nested repository or arrange
+backup. A project must choose separate state storage explicitly. Existing
+projects must update their project-owned ignore rules to adopt this boundary.
 
 `.envrc` is outside the current manifest, so re-running init neither inspects nor changes it.
 

@@ -61,8 +61,8 @@ Force decides the destination among retained kinds:
 - [`types/adr.md`](./types/adr.md) — the ADR retention rule; rows 3–5, 13.
 - `AGENTS.md` `## Git` — the commit-message convention; rows 10–11.
 - `kb/reports/COLLECTION.md` — policy for exact outputs after this table has
-  selected a report as the consumed artifact; `cache/` and `state/` remain
-  operational lifecycles rather than retained-content destinations.
+  selected a report as the consumed artifact; `state/` holds operational
+  outputs with workflow-owned cleanup rather than admission to the tracked record.
 - [Design rationale management](./design-rationale-management.md) — the same
   surfaces organized by lifecycle state of a rationale rather than by content
   kind; the two tables agree on every shared cell.

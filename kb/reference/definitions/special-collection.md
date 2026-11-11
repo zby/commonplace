@@ -21,7 +21,7 @@ name grants it no privilege.
 |---|---|
 | [`tags`](../../tags/COLLECTION.md) | The KB's single tag namespace: tag heads, and the `participating:` list that says which collections' `tags:` lines count. Required in every KB, even when empty. |
 | [`sources`](../../sources/COLLECTION.md) | Tracked source ingests and their local snapshots; source recognition, snapshot handling and grounding checks read this location. |
-| [`reports`](../../reports/COLLECTION.md) | Fixed output and state locations: commands write `cache/` and `state/` here (including review results and packets), and the site leaves both out. |
+| [`reports`](../../reports/COLLECTION.md) | Fixed operational-output locations: commands write under `state/` here (including review results and packets), and the site leaves that tree out. |
 | [`work`](../../work/COLLECTION.md) | The workshop layer: validation allows collection-local types from other collections here, and lifecycle checks scan it. |
 | [`types`](../../types/COLLECTION.md) | The global type layer: a `type:` value such as `types/note.md` resolves into it on the library search path. |
 | [`agentic-system-analyses`](../../agentic-system-analyses/COLLECTION.md) | The analysis workflow's fixed roots: runs are written under `state/`, and current and archived analyses are read from `retained/` and `retained-archive/`. |

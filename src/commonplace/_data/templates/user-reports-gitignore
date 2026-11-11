@@ -1,5 +1,5 @@
-# Operational workflow outputs. Policy documents and validation markers stay tracked.
+# Operational workflow outputs, including their workflow-owned README.
+# Only the validation marker belongs to the main repository.
 state/**
 !state/
-!state/README.md
 !state/.commonplace-validation-ignore

@@ -172,7 +172,7 @@ For ambiguous content placement, read [content routing](./kb/reference/content-r
 | `kb/agentic-systems/` | Authored external-system reviews and comparisons |
 | `kb/agentic-system-analyses/` | Workflow analyses and their method via `analyse-agentic-system` |
 | `kb/sources/` | Tracked ingests; ignored snapshots in `.snapshots/` |
-| `kb/reports/` | Explicit retention: `cache/`, local `state/`, durable `retained/` |
+| `kb/reports/` | Workflow-owned operational outputs in `state/`; tracked records in `retained/` |
 | `kb/articles/` | Self-standing technical articles for external readers |
 | `kb/work/` | In-flight workshops, drafts and migration plans |
 | `kb/types/` | Shared type specs |
