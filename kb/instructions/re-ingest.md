@@ -73,10 +73,10 @@ same-checksum refresh retains the incumbent Quotes section exactly.
 
 The ingest skill runs connection discovery, delegates fresh analysis, and
 accepts an overwrite only after exact Quotes preservation, handoff checks, and
-full validation. Before any worker sees an existing output, it creates and
-verifies an exact-byte backup outside `kb/`. If the primary and single repair
-attempt both fail, it restores and verifies the incumbent bytes before
-reporting failure.
+full validation. The worker drafts a candidate in an ignored working
+directory, and the incumbent is replaced only when the candidate is published.
+If the primary and single repair attempt both fail, the incumbent was never
+changed.
 
 After accepting the replacement, the skill runs connection discovery on the
 durable ingest and reports inbound-link candidates separately. If that discovery

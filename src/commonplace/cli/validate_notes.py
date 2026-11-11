@@ -13,6 +13,12 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
+from commonplace.lib.ingest_handoff import (
+    HandoffError,
+    check_handoff,
+    load_record,
+    print_handoff_result,
+)
 from commonplace.lib.library import checks_library
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
@@ -637,6 +643,16 @@ def check_role_draft(
     return int(refused)
 
 
+def check_ingest_handoff(target: Path, *, record_path: Path, repo_root: Path) -> int:
+    """Print the acceptance verdict for an ingest candidate against its handoff record."""
+    record = load_record(record_path, repo_root=repo_root)
+    if target.resolve() != record.candidate.resolve():
+        raise HandoffError(f"the record's candidate is {record.candidate}, not {target.resolve()}")
+    result = check_handoff(record, repo_root=repo_root)
+    print_handoff_result(record, result, repo_root=repo_root)
+    return 1 if result.failures else 0
+
+
 @checks_library
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -665,6 +681,13 @@ def main(argv: list[str] | None = None) -> int:
         help="Role the positional draft is intended for; its path comes from the type (requires --artifact; writes nothing).",
     )
     parser.add_argument(
+        "--handoff", type=Path, metavar="RECORD",
+        help=(
+            "Ingest handoff record from commonplace-ingest-handoff prepare; check the target "
+            "candidate as if it were at its ingest path, against that drafting run."
+        ),
+    )
+    parser.add_argument(
         "target",
         help=(
             "directory, note path or name, types, landings, redirects, "
@@ -685,7 +708,17 @@ def main(argv: list[str] | None = None) -> int:
     if args.output is not None and not args.json:
         parser.error("--output requires --json")
 
+    if args.handoff is not None and (args.role or args.json or args.full or args.collection):
+        parser.error("--handoff takes only the candidate path")
+
     repo_root = Path.cwd().resolve()
+
+    if args.handoff is not None:
+        try:
+            return check_ingest_handoff(Path(args.target), record_path=args.handoff, repo_root=repo_root)
+        except HandoffError as exc:
+            print(f"handoff validation: {exc}", file=sys.stderr)
+            return 2
 
     if args.role is not None:
         try:

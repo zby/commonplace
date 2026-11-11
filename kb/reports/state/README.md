@@ -11,6 +11,7 @@ Current state includes:
   packet, and `runs/` one directory per review run with its call records and
   artifacts. See the [review system](../../reference/README-REVIEW-SYSTEM.md);
 - `fixes/` — warning dispositions;
+- `ingest/` — one working directory per ingest, holding its last drafting run: the handoff record with every handoff check and the run's outcome, and the candidate of an open or closed run. A record without an outcome marks a run that stopped midway. `commonplace-ingest-handoff prune` deletes published runs;
 - `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
 - revise-autoreason runs.
 

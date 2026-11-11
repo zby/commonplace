@@ -7,6 +7,7 @@ import re
 import subprocess
 from collections.abc import Callable, Collection, Mapping
 from dataclasses import dataclass, field
+from datetime import date, datetime
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -39,6 +40,7 @@ from commonplace.lib.naming import (
 )
 from commonplace.lib.note_parser import (
     ParsedDocument,
+    find_markdown_links,
     find_markdown_links_with_text,
     parse_document,
 )
@@ -899,7 +901,7 @@ ORIGINAL_SNAPSHOT_SHA256_RE = re.compile(
 )
 
 
-def _name_paired_snapshot(path: Path) -> Path:
+def name_paired_snapshot(path: Path) -> Path:
     slug = path.name[: -len(".ingest.md")]
     return path.parent / ".snapshots" / f"{slug}.md"
 
@@ -996,7 +998,7 @@ def validate_ingest_snapshot_pairing(
     if not path.name.endswith(".ingest.md") or recorded is None:
         return
 
-    expected = _name_paired_snapshot(path)
+    expected = name_paired_snapshot(path)
     if snapshots is None:
         snapshots = SnapshotDirectory(expected.parent)
     source = _http_source_from_content(content)
@@ -1086,7 +1088,7 @@ def validate_ingest_quotes(results: CheckResults, content: str, path: Path) -> N
     if recorded is None:
         results.fails.append("source quotes: source error: missing snapshot_sha256")
         return
-    snapshot = _name_paired_snapshot(path)
+    snapshot = name_paired_snapshot(path)
     # Attribution paths are repository-relative, as in analysis results. Compare
     # against the exact name-paired path even when no local snapshot is retained.
     expected_path = (Path("kb/sources/.snapshots") / snapshot.name).as_posix()
@@ -1100,6 +1102,88 @@ def validate_ingest_quotes(results: CheckResults, content: str, path: Path) -> N
         results.infos.append(f"source quotes: {len(unverified)} extracts unverified, {unverified[0].detail}")
     elif all(resolution.status == "match" for resolution in resolutions):
         results.passes.append(f"source quotes: {len(citations)} resolve against the pinned snapshot")
+
+
+# Snapshot fields the ingest sets from its own reading, or may not carry at all.
+UNCOPIED_SNAPSHOT_FIELDS = frozenset(
+    {"type", "description", "genre", "tags", "original_snapshot"}
+)
+INGEST_CONTRACT_LABEL = "ingest contract"
+
+
+def _comparable_metadata(value: object) -> object:
+    """Compare a YAML date with its quoted spelling as one value."""
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, str):
+        text = value.strip()
+        for parse in (date.fromisoformat, datetime.fromisoformat):
+            try:
+                return parse(text).isoformat()
+            except ValueError:
+                continue
+        return text
+    return value
+
+
+def _snapshot_metadata(snapshot: Path) -> dict[str, object]:
+    try:
+        with snapshot.open("rb") as handle:
+            head = handle.read(16384)
+            parsed = frontmatter.parse(head.decode("utf-8", errors="replace"))
+            if not parsed.ok:
+                parsed = frontmatter.parse((head + handle.read()).decode("utf-8", errors="replace"))
+    except OSError:
+        return {}
+    return parsed.data
+
+
+def validate_ingest_contract(results: CheckResults, content: str, path: Path) -> None:
+    """Warn when an ingest breaks a rule that holds for it at any time.
+
+    These rules do not depend on the run that drafted the ingest: where Quotes
+    sits, which local-only locations the report may name, and which snapshot
+    fields it carries. An ingest handoff treats the same findings as failures.
+    """
+    if not path.name.endswith(".ingest.md"):
+        return
+
+    def warn(message: str) -> None:
+        results.warns.append(f"{INGEST_CONTRACT_LABEL}: {message}")
+
+    heading = INGEST_QUOTES_HEADING_RE.search(content)
+    if heading is not None:
+        following = NEXT_H2_RE.search(content, heading.end())
+        next_line = "" if following is None else content[following.start() :].split("\n", 1)[0]
+        if next_line.rstrip() != "## Connections Found":
+            warn("the Quotes block is not immediately before '## Connections Found'")
+
+    metadata = frontmatter.parse(content).data
+    # Quote attributions name the pinned snapshot; only the analysis is checked.
+    outside_quotes = _content_outside_ingest_quotes(content)
+    if any(".snapshots/" in link for link in find_markdown_links(frontmatter.strip(outside_quotes))):
+        warn("the report links into .snapshots/")
+    if any(isinstance(value, str) and ".snapshots/" in value for value in metadata.values()):
+        warn("frontmatter names a .snapshots/ path")
+    if "related-systems/" in outside_quotes:
+        warn("the report cites a related-systems/ checkout")
+    if ".connect.md" in outside_quotes or "reports/cache/connect" in outside_quotes:
+        warn("the report names the generated connect report")
+
+    snapshot = name_paired_snapshot(path)
+    if not snapshot.is_file():
+        return
+    for key, value in _snapshot_metadata(snapshot).items():
+        if key in UNCOPIED_SNAPSHOT_FIELDS:
+            continue
+        # An ingest source is an http(s) URL; a urn: or file: snapshot source
+        # names the reading copy's origin and has no ingest counterpart.
+        if key == "source" and not str(value).startswith(("http://", "https://")):
+            continue
+        if key not in metadata:
+            warn(f"snapshot field '{key}' was not copied")
+        elif _comparable_metadata(metadata[key]) != _comparable_metadata(value):
+            warn(f"'{key}' is {metadata[key]!r}, but the snapshot has {value!r}")
 
 
 def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
@@ -1619,6 +1703,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         base, parsed.content, parsed.path, snapshots=snapshots
     )
     validate_ingest_quotes(base, parsed.content, parsed.path)
+    validate_ingest_contract(base, parsed.content, parsed.path)
     _merge_labelled(results, base, "base")
 
     collection_results = CheckResults(note_type=parsed.note_type)
@@ -1810,7 +1895,7 @@ def validate_source_snapshot_cache(
             continue
         checksum = recorded.group("checksum")
         checksum_owners.setdefault(checksum, []).append(ingest)
-        expected = _name_paired_snapshot(ingest)
+        expected = name_paired_snapshot(ingest)
         if expected.is_file() and snapshots.read(expected).sha256 == checksum:
             valid_pairs.add(ingest)
 

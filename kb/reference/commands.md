@@ -78,6 +78,18 @@ neither claim support nor analytical correctness. Member mode's default and
 Unverified evidence is reported as information but refuses this content check,
 as it does acceptance.
 
+Check an ingest candidate against its drafting run with
+`commonplace-validate <candidate> --handoff <record>`, where the record comes
+from `commonplace-ingest-handoff prepare`. The candidate is validated as if it
+were at its ingest path. This mode also requires the snapshot to hash to the
+checksum pinned at dispatch, the Quotes block to equal the incumbent's byte for
+byte, and `occasion` and code grounding to match what the run supplied.
+Ordinary validation reports an ingest's contract findings (Quotes position,
+local-only references, uncopied capture metadata) and dead links as warnings;
+this mode fails on them. It prints `HANDOFF CLEAN` or `HANDOFF FAILED` with one
+line per failure and appends the verdict to the handoff record. It writes
+nothing else.
+
 Run deterministic validation on one artifact, collection, type surface,
 collection-landing set, redirect map, or the bounded workshop-and-task
 lifecycle surface. The default result contains counts and every warning or
@@ -134,6 +146,26 @@ Capture a GitHub issue or pull request under the ignored
 `kb/sources/.snapshots/` reading cache. An existing capture of the same source
 is reported rather than replaced; `--reobserve` captures it again as a new
 observation under a basename ending in the capture date.
+
+### commonplace-ingest-handoff
+
+Open, publish and close the drafting handoff of one ingest. The drafting
+worker writes a candidate under the ignored `kb/reports/state/ingest/<slug>/`;
+the ingest in `kb/sources/` is not written until the candidate is accepted.
+`prepare <ingest>` requires the name-paired snapshot, refuses an incumbent
+whose `snapshot_sha256` differs from the snapshot, refuses a second run for a
+source whose earlier run is still open, and writes the handoff record:
+the pinned checksum, the incumbent's hash and the supplied occasion.
+`publish <record>` repeats the handoff check and copies a clean candidate to
+the ingest path only if the incumbent is unchanged since `prepare`.
+`close <record>` ends the run without publishing and keeps the candidate.
+
+The working directory stays after the run. Its record lists every handoff
+check with its failure lines, and the outcome: `published`, `closed`, or none
+for a run that stopped midway. Only the last run of an ingest is kept: `prepare`
+replaces a finished run and refuses an open one. `prune [--days N]` deletes
+the directories of runs published at least N days ago (default 30; `0`
+deletes every published run). It keeps open and closed runs.
 
 ### commonplace-x-snapshot
 

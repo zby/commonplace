@@ -36,6 +36,7 @@ Repository = "https://github.com/zby/commonplace"
 
 [project.scripts]
 commonplace-github-snapshot = "commonplace.cli.github_snapshot:main"
+commonplace-ingest-handoff = "commonplace.cli.ingest_handoff:main"
 commonplace-init = "commonplace.cli.init_project:main"
 commonplace-promotion-candidates = "commonplace.cli.promotion_candidates:main"
 commonplace-relocate-directory = "commonplace.cli.relocate_directory:main"

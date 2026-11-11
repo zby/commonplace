@@ -23,16 +23,20 @@ Markdown snapshot under `kb/sources/.snapshots/`.
 **Target:** `$ARGUMENTS`
 
 The direct output is the `.ingest.md` report in `kb/sources/`, with the local
-snapshot's slug. URL snapshotting and connection discovery may write their own
-local or generated artifacts. The parent may also shorten an unpaired local
+snapshot's slug. It is drafted as a candidate in an ignored working directory,
+`kb/reports/state/ingest/<slug>/`, and copied to `kb/sources/` only after it
+passes the handoff check; until then an existing ingest stays unchanged. URL
+snapshotting and connection discovery may write their own local or generated
+artifacts. The parent may also shorten an unpaired local
 snapshot's filename under Step 1 without changing its bytes. Do not directly
 write any other library artifacts.
 
 The parent agent owns target resolution, snapshotting, checksum guards,
 connection discovery, drafting-worker dispatch, handoff verification, final
 validation, and user reporting. One primary fresh drafting worker owns the
-ingest analysis and writes the `.ingest.md` report; at most one fresh
-replacement worker may repair that report after a failed handoff. Use only a
+ingest analysis and writes the candidate; at most one fresh replacement
+worker may repair that candidate after a failed handoff. The parent publishes
+the accepted candidate. Use only a
 harness-provided sub-agent or worker mechanism; never launch `codex`, `codex
 exec`, `claude`, or another agent CLI from the shell. If the harness cannot
 launch a fresh worker without carrying the parent's conversation history, stop
@@ -87,30 +91,16 @@ re_ingest_request:
      not search for a snapshot by checksum. Read the ingest's `source` and
      `snapshot_sha256`, reject the retired `source_snapshot` and
      `code_revisions` fields, and require the snapshot's frontmatter `source`
-     to equal the ingest's canonical `source`. Compute lowercase SHA-256 from
-     the exact snapshot bytes.
-     - Require zero or one incumbent Quotes block; stop before mutation if more
-       than one exists. The block starts at the exact `## Quotes` heading and
-       includes every byte through the byte immediately before the next
-       level-two heading. If the section is absent, use the canonical empty
-       Quotes block; do not infer quotes from any other section. Treat Quotes as
-       empty only when the section is absent or is exactly the canonical empty
-       block. Any other present Quotes block is populated.
-     - If the snapshot checksum equals the incumbent `snapshot_sha256`, set
-       `retained_quotes` to the extracted block and continue. Do not rewrite,
-       normalize, or reformat it.
-     - If the checksums differ, stop before connection discovery, backup
-       creation, worker dispatch, or output mutation. Report both checksums,
-       both paired paths, and the canonical source. An ingest's
-       `snapshot_sha256` is immutable because a note marked `(snapshot
-       required)` may depend on those exact bytes even when Quotes is empty. A
-       changed observation gets a new date-named capture and a new ingest
-       (re-ingest's **New observation**); re-ingest never changes the
-       incumbent observation.
+     to equal the ingest's canonical `source`.
      - Set `occasion` to the request's value when supplied, else to the
        incumbent's frontmatter `occasion` verbatim, else `none`.
-     - Set `output_path` to the supplied `ingest_path`, retain whether it existed
-       at the start of the run, and skip the remaining Step 1 bullets.
+     - Set `output_path` to the supplied `ingest_path` and skip to the final
+       Step 1 bullet, which opens the handoff. Its guards enforce the checksum
+       and Quotes rules: an ingest's `snapshot_sha256` is immutable because a
+       note marked `(snapshot required)` may depend on those exact bytes even
+       when Quotes is empty. A changed observation gets a new date-named
+       capture and a new ingest (re-ingest's **New observation**); re-ingest
+       never changes the incumbent observation.
    - If `$ARGUMENTS` is empty, list recent
      `kb/sources/.snapshots/*.md` files, then ask which one to ingest.
    - For an ordinary `arxivb.org/abs/<paper-id>` URL, resolve the paper before
@@ -153,8 +143,6 @@ re_ingest_request:
      optional `capture_scope` and `doi`, and flat capture-adapter fields such
      as `status_id`, `conversation_id`, `post_count`, or `api_url`. Do not
      copy snapshot `type`, `description`, or `tags`.
-   - Compute lowercase SHA-256 from the exact Markdown file bytes after capture
-     completes. Do not hash a JSON, PDF, image, or other companion.
    - Derive `kb/sources/<slug>.ingest.md`. Before connection discovery, require
      the snapshot basename to be at most 63 characters and the derived path's
      stem (`<slug>.ingest`) to be at most 70 characters. If either is overlong
@@ -166,19 +154,34 @@ re_ingest_request:
      asking the user. Do not stop merely because the initial name is overlong.
      Never rename an existing ingest or its paired snapshot through this
      recovery; report overlong existing pairs for explicit relocation. If URL
-     resolution already found an ingest, require this derived path to equal it. For every
-     existing output, require the snapshot to be its exact name-paired path,
-     require exact frontmatter `source` equality, and require its
-     `snapshot_sha256` to equal the snapshot checksum. On a mismatch, stop and
-     report the permanent `re-ingest.md` route; an ordinary target never
-     authorizes a changed observation. Extract `retained_quotes` exactly as
-     defined above, using the canonical empty block when the incumbent section
-     is absent. For a new output, set `retained_quotes` to the canonical empty
-     block.
+     resolution already found an ingest, require this derived path to equal it.
+   - Open the handoff once `output_path` is final and capture has completed:
 
-     On an ordinary-target checksum mismatch, report one permanent route with
-     the exact ingest path filled in: `Read and execute the Commonplace library
-     instruction re-ingest with Target: <path>.`
+     ```bash
+     commonplace-ingest-handoff prepare <output_path>
+     ```
+
+     Add `--occasion '<occasion>'` when an occasion was supplied,
+     `--code-grounded` when the paper-with-code branch returned context, and
+     `--created-snapshot` when this run created the source snapshot.
+
+     The command requires the name-paired snapshot and hashes its exact
+     Markdown bytes. For an existing output it also requires the snapshot's
+     `source` to equal the ingest's, the ingest's `snapshot_sha256` to equal
+     the snapshot checksum, and zero or one Quotes block. It then creates the
+     working directory and writes the handoff record there. It does not write
+     to `kb/sources/`. Do not compute or extract any of this by hand.
+
+     If the command refuses, nothing was written. Stop before connection
+     discovery and report its message, both paired paths, and the canonical
+     source. A checksum refusal names the permanent `re-ingest` route with the
+     exact ingest path; an ordinary target never authorizes a changed
+     observation. A refusal for an unfinished run means an earlier ingest of
+     this source stopped midway: report the working directory and let the
+     user decide before closing it.
+
+     On success, retain the printed `handoff_record`, `candidate_path`,
+     `retained_quotes_path`, and `snapshot_sha256`.
 
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
@@ -195,9 +198,13 @@ re_ingest_request:
      skill's real location, so the worker can open it
    - `snapshot_path`: the Markdown snapshot from Step 1
    - `connect_report_path`: the generated report from Step 2
-   - `output_path`: `kb/sources/<snapshot-slug>.ingest.md`
-   - `snapshot_sha256`: the checksum already computed from `snapshot_path`
-   - `retained_quotes`: the complete Quotes block resolved in Step 1
+   - `output_path`: `kb/sources/<snapshot-slug>.ingest.md`, where the report
+     will be published; the worker does not write it
+   - `candidate_path`: the file printed in Step 1, which the worker writes
+   - `snapshot_sha256`: the checksum printed when Step 1 opened the handoff
+   - `retained_quotes_path`: the file printed in Step 1, which holds the exact
+     Quotes block the report must contain
+   - `handoff_record`: the record printed in Step 1
    - `code_grounding_context`: only when returned by the paper-with-code branch;
      include its secondary-source commit URLs, claim classifications, pinned
      citations, evidence boundaries, and execution status; retain paper version,
@@ -206,20 +213,10 @@ re_ingest_request:
      for a re-ingest, the value resolved in Step 1
 
    Require the instruction, snapshot, and connect report to exist and be
-   non-empty. Recompute the snapshot checksum immediately before dispatch and
-   require it to equal `snapshot_sha256`. Do not pass the parent conversation,
-   any part of an existing ingest other than `retained_quotes`, the backup path,
-   or the parent's interpretations to the worker.
-
-   If `output_path` existed when Step 1 began, create a unique backup in the
-   platform's temporary directory, outside `kb/`, before dispatch. Hash the
-   incumbent's exact bytes, copy it with the platform's native byte-copy
-   operation (for example, `cp` on POSIX or `Copy-Item -LiteralPath` in
-   PowerShell), and require the backup's SHA-256 to equal that incumbent hash.
-   Do not use a text read/write cycle. Stop before dispatch if creating,
-   hashing, or verifying the backup fails. Retain the verified backup path and
-   incumbent hash in the parent through the primary attempt and the one
-   permitted repair attempt.
+   non-empty. The worker checks the snapshot against `snapshot_sha256` before
+   analysis, and Step 5 checks it again. Do not pass the parent conversation,
+   any part of an existing ingest other than the retained Quotes file, or the
+   parent's interpretations to the worker.
 
 4. **Draft through one primary fresh worker.**
    Launch one newly isolated sub-agent or worker with only the dispatch below
@@ -230,8 +227,7 @@ re_ingest_request:
 
    Give the worker this dispatch with every placeholder filled in. The warning
    against orchestration skills is load-bearing: skill discovery can re-fire in
-   a worker context and would otherwise recurse. Substitute `retained_quotes`
-   as an unquoted, unindented multiline value without changing any of its bytes.
+   a worker context and would otherwise recurse.
 
    ```text
    Execute {draft_instruction_path} as the delegated ingest-report drafting
@@ -245,8 +241,10 @@ re_ingest_request:
    - snapshot_path: {snapshot_path}
    - connect_report_path: {connect_report_path}
    - output_path: {output_path}
+   - candidate_path: {candidate_path}
    - snapshot_sha256: {snapshot_sha256}
-   - retained_quotes: {retained_quotes_exact_multiline_value}
+   - retained_quotes_path: {retained_quotes_path}
+   - handoff_record: {handoff_record}
    - code_grounding_context: {code_grounding_context_or_none}
    - occasion: {occasion_or_none}
    - validation_failures: none
@@ -254,55 +252,55 @@ re_ingest_request:
 
 5. **Verify the drafting handoff.**
    Wait for the primary worker to finish, collect its response, then close,
-   terminate, or release it before continuing. Require `output_path` to exist
-   and be non-empty. Recompute the snapshot checksum and require it still to
-   equal both the pre-dispatch checksum and the ingest's `snapshot_sha256`.
-   Require exactly one Quotes block, immediately before `## Connections Found`,
-   whose bytes equal `retained_quotes`. Verify that the ingest retained the
-   snapshot's capture metadata, including `capture_scope` and `doi` when present,
-   contains no `source_snapshot` or `code_revisions`, and does not link to
-   `.snapshots/`, cite a `related-systems/` checkout, or name the generated
-   connect report. For a code-grounded ingest, verify its `secondary_sources`
-   and `Code Grounding` section against the supplied context. When an occasion
-   was supplied, require frontmatter `occasion` to equal it; when none was,
-   require the field to be absent. Run full validation:
+   terminate, or release it before continuing. Run the handoff check:
 
    ```bash
-   commonplace-validate kb/sources/some-article.ingest.md
+   commonplace-validate <candidate_path> --handoff <handoff_record>
    ```
 
-   If this run created the source snapshot, validate that snapshot explicitly.
-   A candidate is clean only when the checksum check, exact Quotes comparison,
-   every other handoff check, and full validation all pass.
+   It validates the candidate as if it were already at `output_path`, so its
+   links and snapshot pairing resolve from there, and checks it against the
+   record and the unchanged incumbent: the snapshot still hashes to the pinned
+   checksum and the candidate records that checksum; exactly one Quotes block
+   equals the incumbent's block, or the canonical empty block, byte for byte;
+   `occasion` and code grounding match what the run supplied; and full
+   validation passes, with dead links and ingest-contract warnings (Quotes
+   position, local-only references, uncopied capture metadata) counted as
+   failures. Do not repeat these checks by hand.
+
+   For a code-grounded ingest, also verify the content of `secondary_sources`
+   and the `Code Grounding` section against the supplied context; the command
+   checks only that both are present. A candidate is clean only when the
+   command prints `HANDOFF CLEAN` and, where it applies, this content check
+   passes.
 
    If the primary worker did not produce a clean report, launch at most one new
    fresh replacement worker with the same clean-context boundary. Dispatch the
-   same standalone instruction and fixed inputs, including the identical
-   `retained_quotes`, but set `mode: repair` and supply the exact handoff or
-   validation failures in `validation_failures`. Leave the failed primary
-   candidate at `output_path` for that repair worker. Do not add parent
-   interpretations or a rewritten analysis brief. Wait for the replacement,
-   collect its response, close, terminate, or release it, then repeat every
-   checksum, Quotes, handoff, and full-validation check. Do not retain either
-   single-use worker for another task.
+   same standalone instruction and fixed inputs, including the same
+   `candidate_path` and `handoff_record`, but set `mode: repair` and supply
+   the command's failure lines, plus any code-grounding content failure, in
+   `validation_failures`. Leave the failed primary candidate at
+   `candidate_path` for that repair worker. Do not add parent interpretations
+   or a rewritten analysis brief. Wait for the replacement, collect its
+   response, close, terminate, or release it, then repeat the handoff check.
+   Do not retain either single-use worker for another task.
 
-6. **Accept or restore.**
-   Any handled failure after the backup is verified and before acceptance,
-   including a worker-launch failure, follows the existing-output restoration
-   branch below.
+6. **Publish or close.**
+   - After a clean primary or repair candidate, publish it:
 
-   - After a clean primary or repair candidate, accept the replacement. If a
-     verified backup exists, delete it only now. Report any backup-cleanup
-     failure and retain its path without changing the validated ingest.
-   - After handled final failure for an existing output, copy the verified
-     backup over `output_path` with the same platform-native byte-copy operation.
-     Hash the restored file and require it to equal the retained incumbent hash.
-     After successful verification, delete the backup and report both the failed
-     refresh and successful restoration. If restoration or its verification
-     fails, retain the backup and report its path and both failures.
-   - After handled final failure for a new output, stop and report the blocker;
-     there is no incumbent to restore. Never draft or repair the analysis in the
-     parent context.
+     ```bash
+     commonplace-ingest-handoff publish <handoff_record>
+     ```
+
+     The command repeats the handoff check, copies the candidate to
+     `output_path` only if the incumbent is still the one the handoff opened
+     with, and records the run as published. If it refuses, `output_path` is
+     unchanged; report its message.
+   - After handled final failure, including a worker-launch failure, run
+     `commonplace-ingest-handoff close <handoff_record>` and report the
+     blocker. The command records the run as closed and keeps the failed
+     candidate for inspection. An existing ingest was never changed, so there
+     is nothing to restore. Never draft or repair the analysis in the parent context.
 
 7. **Discover connections for the accepted ingest.**
    Run this step only after Step 6 accepts a clean primary or repair candidate,
@@ -320,7 +318,7 @@ re_ingest_request:
    Do not author these candidates into the ingest or other library artifacts.
    If discovery or report validation fails, keep the accepted ingest, report
    connection discovery as incomplete, and give `cp-skill-connect <output_path>`
-   as the retry. Do not restore an incumbent or repeat drafting for this failure.
+   as the retry. Do not repeat drafting for this failure.
 
 8. **Report the result.**
    - On success, tell the user where the ingest report was saved, that drafting
@@ -331,11 +329,9 @@ re_ingest_request:
      summarize its inbound-link candidates, or state that none were found.
      Distinguish a validated ingest from incomplete connection discovery when
      Step 7 fails; do not report that links were authored.
-   - On handled final failure for an existing output, report that the refresh
-     failed and the incumbent was restored with its verified SHA-256. Do not
-     present the failed candidate as saved output.
-   - On a restore failure or a failed new ingest, report the blocker and any
-     retained backup path exactly as required by Step 6.
+   - On handled final failure, report the blocker and, for an existing output,
+     that the refresh failed and the ingest is unchanged. Do not present the
+     failed candidate as saved output.
 
 ## Constraints
 
@@ -345,14 +341,18 @@ re_ingest_request:
   Never pass the parent's full orchestration context.
 - Do not draft locally when worker delegation is unavailable unless the user
   explicitly authorizes that fallback for the current run.
-- The drafting worker writes only the `.ingest.md` report. Outside an explicitly
+- The drafting worker writes only the candidate. Outside an explicitly
   authorized local-fallback run, the parent owns no substantive report drafting
   or repair.
-- Write only the `.ingest.md` report directly.
+- Write `kb/sources/` only through `commonplace-ingest-handoff publish`.
 - Accept exactly one URL-backed primary source; reject directory primaries.
 - Pair an ingest only with its name-derived snapshot. A checksum verifies that
   named file; it never discovers a substitute.
 - Never update an existing ingest's `snapshot_sha256`. Changed source bytes are
   a new observation with a distinct snapshot basename and ingest path.
-- Do not add staging, atomic rename, locks, compare-and-swap, crash recovery, or
-  concurrent-writer coordination. This procedure covers handled failures only.
+- The working directory and the publish guard are the only staging. Do not add
+  atomic rename, locks, crash recovery, or concurrent-writer coordination. A
+  run that stops without `publish` or `close` stays open; the next `prepare`
+  for that source refuses until it is closed.
+- Do not delete a working directory. It stays after the run as the record of
+  its handoff checks; the next `prepare` for the same source replaces it.

@@ -24,16 +24,19 @@ Require the caller to supply these values in the task:
 - `mode`: `create` or `repair`
 - `snapshot_path`: one Markdown source snapshot
 - `connect_report_path`: its completed, non-empty connect report
-- `output_path`: the `.ingest.md` report to write
+- `output_path`: where the accepted report will be published; do not write it
+- `candidate_path`: the file to write, in an ignored working directory
 - `snapshot_sha256`: the expected lowercase SHA-256 of the exact snapshot bytes
-- `retained_quotes`: the complete Quotes section to place in the report
+- `retained_quotes_path`: a file holding the complete Quotes section to place
+  in the report
+- `handoff_record`: the handoff record the finished report is checked against
 - `code_grounding_context`: `none` or the prepared paper-with-code context
 - `occasion`: `none` or the caller's question or job that brought the source
   in, stated before the source was read
 - `validation_failures`: `none` in `create` mode; a non-empty list of exact
   failures in `repair` mode
 
-For a fresh output, the caller supplies this exact `retained_quotes` value:
+For a fresh output, the file at `retained_quotes_path` holds this block:
 
 ```markdown
 ## Quotes
@@ -41,14 +44,15 @@ For a fresh output, the caller supplies this exact `retained_quotes` value:
 No source quotes have been retained yet.
 ```
 
-For a same-checksum refresh, the caller supplies the incumbent Quotes block
-unchanged. In both cases, treat the supplied block as opaque retained text.
+For a same-checksum refresh, it holds the incumbent Quotes block unchanged. In
+both cases, treat the file's content as opaque retained text. Read the handoff
+record only through the check in step 7; do not edit it or the Quotes file.
 
 Stop without writing if a required value or input file is missing, unreadable,
 inconsistent, or invalid for the selected mode. In `create` mode, do not read
-or reuse an existing `output_path`; replace it only after the checksum check
-passes. In `repair` mode, read any existing output only after the authoritative
-inputs below. Use the supplied failures as a repair target, then check the
+or reuse an existing `output_path` or `candidate_path`; write the candidate
+only after the checksum check passes. In `repair` mode, read the existing
+candidate only after the authoritative inputs below. Use the supplied failures as a repair target, then check the
 whole artifact rather than assuming the listed failures are exhaustive.
 
 The snapshot and connect report are the complete source and discovery inputs.
@@ -71,19 +75,20 @@ durable report.
    4. `connect_report_path`
 
    The ingest-report type spec wins if it conflicts with this instruction, but
-   it never authorizes changing `retained_quotes`. If the report cannot satisfy
+   it never authorizes changing the retained Quotes. If the report cannot satisfy
    both, stop and return that conflict.
 
 2. Compute SHA-256 from the exact bytes of `snapshot_path`. Require it to equal
    `snapshot_sha256` before analysis. Do not hash a companion PDF, JSON, image,
    or extracted text file.
 
-   In `repair` mode, read the existing `output_path` only after this check. If
-   it does not exist, draft it from the authoritative inputs. Treat an existing
-   draft as a repair candidate, not as source evidence.
+   In `repair` mode, read the existing `candidate_path` only after this check.
+   If it does not exist, draft it from the authoritative inputs. Treat an
+   existing draft as a repair candidate, not as source evidence.
 
-   `retained_quotes` is authoritative retained text, not an analysis input. Do
-   not derive it from the snapshot, connect report, or repair candidate.
+   The retained Quotes block is authoritative retained text, not an analysis
+   input. Do not derive it from the snapshot, connect report, or repair
+   candidate.
 
 3. Analyze the source under the ingest-report contract and the installed KB's
    goals and local collection contracts. In the Commonplace source repository,
@@ -132,35 +137,39 @@ durable report.
    Otherwise skip this step and omit the `Learning Claims (our opinion)`
    section.
 
-6. Write only `output_path` under the ingest-report contract. Do not create a
-   `capture_metadata` field or cite a machine-local checkout such as
+6. Write only `candidate_path` under the ingest-report contract. The report
+   will be published at `output_path`, so write every relative link as it
+   must read from `output_path`'s directory, not from the candidate's. Do not
+   create a `capture_metadata` field or cite a machine-local checkout such as
    `related-systems/`.
 
-   Place `retained_quotes` immediately before `## Connections Found`, verbatim.
-   Preserve every character, line ending, blank line, heading, and entry in the
-   supplied block. Do not interpret, normalize, merge, re-indent, or rewrite it,
-   and do not write another Quotes section. In `repair` mode, replace any Quotes
-   block in the repair candidate with the supplied value rather than using the
-   candidate's version.
+   Place the content of `retained_quotes_path` immediately before
+   `## Connections Found`, verbatim: the file ends with the blank line that
+   separates the block from that heading. Preserve every character, line
+   ending, blank line, heading, and entry. Do not interpret, normalize, merge,
+   re-indent, or rewrite it, and do not write another Quotes section. In
+   `repair` mode, replace any Quotes block in the repair candidate with the
+   file's content rather than using the candidate's version.
 
    When `code_grounding_context` is `none`, omit `secondary_sources` and the
    `Code Grounding` section. Otherwise apply its pinned commit URLs, claim
    classifications, source citations, and evidence boundaries. State what code
    was executed. Do not turn static inspection into a reproduction claim.
 
-7. Recompute the snapshot checksum after writing and require it still to equal
-   `snapshot_sha256`. Run:
+7. Run the handoff check:
 
    ```bash
-   commonplace-validate {output_path}
+   commonplace-validate {candidate_path} --handoff {handoff_record}
    ```
 
-   Fix only `output_path` and rerun validation until it passes cleanly. Confirm
-   that every `Extractable Value` item has an effort tag and that
-   `Recommended Next Action` contains one action. Recheck that the Quotes block
-   is byte-for-byte equal to `retained_quotes` and immediately precedes
-   `## Connections Found`. If validation cannot pass without changing that
-   block, return the failure without changing it. Do not edit the snapshot,
+   It validates the candidate as if it were at `output_path` and also requires the snapshot still to hash to
+   `snapshot_sha256`, the Quotes block to equal the retained block byte for
+   byte immediately before `## Connections Found`, and the occasion and
+   code-grounding presence to match the run. Fix only `candidate_path` and rerun
+   until it prints `HANDOFF CLEAN`. Confirm that every `Extractable Value`
+   item has an effort tag and that `Recommended Next Action` contains one
+   action. If the check cannot pass without changing the Quotes block, return
+   the failure without changing it. Do not edit the snapshot,
    connect report, a connected artifact, an index, a collection file, or any
    other library artifact.
 
