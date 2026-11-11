@@ -55,6 +55,8 @@ current harnesses. That possibility does not expand this commission.
 | [Admission to the main record](./admission-to-the-main-record.md) | Main design-space map: choices, benefits, costs, dependencies, reversibility and open questions. |
 | [Git and retained artifacts](./git-and-retained-artifacts.md) | Bounded carrier comparison for decision accounts: ADR files, commit messages and access routes, with equivalent content. |
 | [ADR 089 premature placement](./adr-089-premature-placement.md) | Historical evidence that committing a decision account can communicate more than the implementation supports; not a current defect or a measured error rate. |
+| [Review storage carrier jump](./review-storage-carrier-jump.md) | Historical evidence that leaving Git and choosing a database were decided as one choice, without comparing an untracked file layout; read from the retained ADRs, not from the original session. |
+| [Cache and state hold the same kind of record](./cache-and-state-hold-the-same-kind-of-record.md) | Inventory of untracked report storage and comparison of how review results and connect reports are read; connect freshness is parked as sensible but hard, so the boundary between the two areas stays undefined. |
 
 The map is preliminary. No new retention threshold, mining schedule, cache
 lifetime, marker, index or record type has been selected. The workflow examples
@@ -99,6 +101,9 @@ work, state it and stop rather than expanding the investigation indefinitely.
   lasting value warrant independent retained content?
 - For a decision worth retaining, what must survive trace deletion, and which
   existing file or Git access route makes it usable at acceptable cost?
+- What separates untracked records that may be deleted from those that may
+  not? Regeneration does not: most cache entries are paid judgments, like
+  review results. See [cache and state](./cache-and-state-hold-the-same-kind-of-record.md).
 - When would on-demand extraction be insufficient compared with selective
   proactive mining? No recurring mining programme is preselected.
 
