@@ -46,7 +46,11 @@ only preserving old runs, is the intended use.
 - **A plain nested checkout, not a submodule**, is the working assumption. An
   ignored directory stays ignored after `git init` inside it, and the validator
   runs its Git calls from the main repository root.
-- **Caches stay out.** `kb/reports/cache/` is regenerable by definition.
+- **Unify the cache and state directories.** This is the chosen design
+  direction, not an executed migration. Record differences in deletion
+  consequences and cleanup rules without separate storage classes. The
+  destination path and migration plan remain open; public inclusion remains
+  subject to checks.
 
 ## What the directory holds
 
@@ -100,10 +104,82 @@ Start simply, as directed by the operator in this discussion:
   building a merge mechanism now. The existing
   [isolation analysis](../review-on-workjig/isolation-after-the-store.md)
   records the same decision to defer cross-run coordination.
-- Initially prune only the explicitly abandoned data above. Broader pruning
-  must preserve review coverage and unresolved findings. Git history may
-  eventually be pruned while preserving current state; no history rewrite
-  or pruning automation is commissioned now.
+- Initially prune only the explicitly abandoned data above. Broader cleanup
+  must preserve review coverage, unresolved findings and runs needed for
+  continuation. Once state is tracked, remove obsolete files through ordinary
+  commits. Deleted material remains in Git history; repository growth is
+  accepted for now. History pruning, its collaborator coordination procedures
+  and pruning automation are deferred.
+
+## Storage direction: unify outputs, document cleanup rules
+
+The operator reports that earlier checks found perhaps one pure cache case;
+most outputs currently called cache are not deterministically reproducible.
+Those findings need locating and verification before changing the storage
+contracts. A report being read once does not establish that it is disposable.
+
+Review results and connect reports both retain model-dependent judgments.
+Reviews have freshness machinery that checks whether an existing result still
+applies. Connect reports could benefit from such machinery, but defining it
+sensibly is deferred. That implementation difference does not by itself
+justify separate storage classes.
+
+The chosen direction is one operational-output directory tree, organized by
+workflow rather than by cache/state class. Preservation does not imply
+endorsement. The destination path and migration plan remain open; this
+choice does not authorize migrating paths or publishing the current cache
+tree.
+
+Instead of a numeric measure of how cache-like an output is, describe what
+its deletion would cost:
+
+- **Reproducibility:** can retained inputs reconstruct the same content?
+- **Replacement cost:** how expensive is an adequate replacement, even if it
+  is not the same output?
+- **Operational dependency:** does freshness, continuation or unresolved work
+  rely on this particular output?
+- **Historical value:** is the output needed to explain a decision or compare
+  runs?
+
+A possible minimal policy vocabulary is:
+
+- **Rebuild:** deletion loses no unique information; reconstruct from retained
+  inputs.
+- **Rerun:** deletion loses this output, but generating a new one is an
+  acceptable replacement when needed.
+- **Preserve:** deletion loses something currently needed, such as review
+  coverage, unresolved work or decision evidence.
+
+These labels are optional, not a required classification scheme or intrinsic
+artifact types. Start with a table in the unified directory's README, with
+one row per workflow output stating what deletion loses and its cleanup
+rule. No numeric score or new per-file metadata is needed. An individual
+output may need an exception when its use changes: a connect report used to
+justify a decision is no longer merely an unused suggestion.
+
+Initial rules to verify against consumers before migration:
+
+| Output | What deletion loses | Initial cleanup rule |
+|---|---|---|
+| Review results | Judgments and review coverage | Preserve current results |
+| Review packets | Disposition and unresolved findings | Preserve while work remains unresolved |
+| Review runs | Replay and continuation context | Check dependencies before removal |
+| Connect reports | Previous suggestions and analysis | Remove only when no ongoing work or decision depends on them |
+| Confirmed deterministic cache | Only reconstruction time | Safe to rebuild from available inputs |
+
+A genuinely rebuildable, cheap cache could remain ignored. Connect reports
+might permit rerunning when no ongoing work or decision depends on them.
+Current review results require preservation because removing them loses
+coverage. These examples need checking against actual consumers before
+assigning policies.
+
+Open design work: locate the earlier cache audit, inventory consumers and
+choose the destination path and migration plan. Start with plain
+workflow-specific cleanup rules; add classification only if it improves
+actual cleanup decisions. Any unified layout must also preserve the main
+repository's ownership of retained reports and navigation. Do not treat
+`kb/reports/` wholesale as an ignored nested checkout without resolving that
+boundary.
 
 ## Before anything is published
 
@@ -128,6 +204,8 @@ Publishing cannot be undone, so each of these comes before the first push.
 
 The secret and redistribution checks also apply to later pushes. A clean
 initial import does not establish that future workflow output is publishable.
+Deleting material after publication does not substitute for these checks;
+ordinary deletion commits leave it in Git history.
 
 ## Open questions
 
@@ -141,10 +219,9 @@ initial import does not establish that future workflow output is publishable.
   after the publication boundary and actual collaboration needs are clear.
 - **Links.** Library files must not depend on state. Does anything tracked
   link into `kb/reports/state/` today?
-- **Pruning beyond abandoned data.** Establish cleanup rules by payload
-  class before deleting live state. Removing files from the current checkout
-  does not reclaim their Git history; reclaiming history later requires
-  coordination with collaborators.
+- **Cleanup beyond abandoned data.** Establish cleanup rules by payload
+  class before deleting live state. This concerns the current tree only;
+  Git-history pruning is deferred.
 - **Effect on retention choices already made.** The
   [ingest working directory case](../decision-lifecycle-evidence/ingest-working-directory.md)
   ends by deleting run records once one decision is made. A durable state
