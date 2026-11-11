@@ -32,11 +32,12 @@ what assumptions does it need? We propose assessing *explanatory reach* and
 *explanatory economy* as evidence of compression progress—capturing more of
 a domain's structure, or capturing the same structure more simply.
 
-The three assessments have different roles. Reach and economy provide
-practical evidence that the reader gains a more compact, reusable account.
-Predictive coding could test whether that judgment corresponds to actual
-compression savings. Task gain asks whether the change helps the reader
-do useful work. These are two claims to test: whether the proxy tracks
+The reviewer's assessment and the two validation experiments have different
+roles. Reach and economy provide practical evidence that the reader gains
+a more compact, reusable account. Predictive coding could test whether that
+judgment corresponds to actual compression savings. Task experiments could
+test whether compression progress helps the reader do useful work. The two
+claims remain to be tested: whether the reach-and-economy assessment tracks
 compression progress, and whether that progress pays off on relevant tasks.
 
 The proposal concerns explanatory articles, especially theory revisions.
