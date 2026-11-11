@@ -12,11 +12,20 @@ An agent-operated wiki can have explicit rules for what knowledge is worth keepi
 
 Show the machinery working on one deliberately constructed note. Label the example as staged; it is neither a naturally occurring failure nor evidence of improved learning or retrieval performance.
 
+## Development commitments
+
+Added by the operator on 2026-11-11:
+
+1. **Work through subscriptions so people can experiment.** People should be able to try Commonplace through supported agent subscriptions they already have, rather than needing a separately metered model API as the only route. This is a development commitment, not a promise of unlimited or free use: provider terms, plan capabilities, usage limits, and additional charges still apply.
+2. **Support more than one agent harness.** A harness is the application that runs the model and gives it tools, such as Claude Code or Codex. Making experimentation accessible through people's subscriptions means we should not tie Commonplace to a single provider's harness. Keep knowledge and methods portable, and accommodate harness differences in execution. Support for multiple harnesses does not mean every feature works identically in all of them; name tested routes and limits.
+
+Spoken version, while opening the demo: “We want people to experiment using subscriptions they already have. That means supporting more than one agent app, rather than requiring everyone to use ours.” This replaces part of the opening narration; it does not add another demo segment. Do not imply that this single-harness demonstration establishes cross-harness compatibility.
+
 ## Five-minute run-through
 
 | Time | Action | Point to say |
 |---|---|---|
-| 0:00–0:30 | Open the wiki and explain the task | Commonplace helps an agent retain and develop knowledge beyond a chat; the research hypothesis is optional for users. |
+| 0:00–0:30 | Open the wiki and explain the task | Commonplace retains knowledge beyond a chat. We develop it for experimentation through existing subscriptions and more than one agent app; the research hypothesis is optional. |
 | 0:30–1:15 | Open the corrected demo note and its two labelled links | A claim title exposes the argument before opening the file. Links distinguish a premise from a further development, rather than merely saying “related.” |
 | 1:15–2:00 | Load the missing-description state; validate; restore the description | A type has exact requirements that code can check. |
 | 2:00–3:30 | Show the structurally valid but overclaiming state; show one semantic review; correct the title | Passing structural validation does not mean the title's claim is supported. Semantic review requires model judgment. |
@@ -69,7 +78,7 @@ commonplace-review run gates kb/work/sniadanie-ai-demo/demo.md --criteria frontm
 
 The [criterion](../../instructions/review-gates/frontmatter/title-body-alignment.md) asks whether the body supports the H1's claim and scope. Intended finding: the body discusses selecting relevant context, not a guarantee that every additional note improves every answer.
 
-This command is a real model call and may cost money. It has not been run as part of saving this plan. Rehearse before relying on it; do not promise a particular verdict. Save the actual result path and elapsed time below. Do not invent output or quietly substitute an unrelated review. Prefer showing the prepared review during delivery; a live call is optional only after timing it. An unchanged pair may reuse a fresh result rather than launch a new call; disclose that if relevant.
+This command is a real model call and consumes the configured route's usage allowance or incurs charges. One test caught the mismatch in 13.043 seconds; the actual result, profile, and paths are recorded in [checks.md](./checks.md). That single run does not guarantee future detection or latency. Do not invent output or quietly substitute an unrelated review. Prefer showing the prepared review during delivery; a live call is optional only after timing it. An unchanged pair may reuse a fresh result rather than launch a new call; disclose that if relevant.
 
 Restore the corrected title:
 
@@ -101,7 +110,7 @@ The [theory collection contract](../../theory/COLLECTION.md) supplies the local 
 - [ ] Restore `demo.md` to the corrected state after every rehearsal, including interrupted runs.
 - [ ] Check the final diff; no adopted theory, runtime, or earlier talk materials should be changed.
 
-Rehearsal record: deterministic checks recorded in `checks.md`; semantic result, timing, spoken-language script, and delivery outcome remain pending.
+Rehearsal record: deterministic checks and one successful semantic detection with timing are recorded in [checks.md](./checks.md). Full timed rehearsal, spoken-language script, and delivery outcome remain pending.
 
 ## Scope of further work
 
