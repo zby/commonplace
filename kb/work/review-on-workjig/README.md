@@ -297,6 +297,11 @@ records the choices it had to make where an item was silent.
 
 ## Future work
 
+**Isolation between concurrent runs.** [What review lost in isolation when the store went](./isolation-after-the-store.md)
+records, at the operator's request on 2026-11-11, which of the store's
+concurrency protections result files keep and which they drop. Nothing is
+built until overlapping runs become routine.
+
 **Bounded gates on decision models.** The current system bundled gates to
 amortize one worker's context cost. The operator's direction (2026-10-24)
 is not to chase that saving by routing easy gates to cheaper chat models
