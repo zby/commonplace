@@ -47,3 +47,11 @@ Both original examples and fresh variants of the same failure mechanism matter: 
 The comparison predicts shorter persistence for failures meeting all three conditions. No difference, or longer persistence, would count against that prediction in the selected cohort. A fuller protocol would need to fix the classification rules and the failure-rate threshold used to count a failure as resolved before inspecting results.
 
 Unavailable historical models would limit the comparison; missing versions must not count as successes. Improvement after publication would show reduced persistence, not that publication caused it. Even a bounded result could test whether this heuristic improves workaround decisions; a negative result would weaken the case for discounting them on these grounds.
+
+---
+
+Relevant Notes:
+
+- [Promote Only When Future Value Exceeds Maintenance Cost](./agent-memory-requirements/promote-only-when-value-exceeds-cost.md) — grounds: supplies the general cost criterion that the upstream-fix forecast specializes by shortening a workaround's expected benefit horizon.
+- [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) — contrasts: removing a workaround for a fixed failure does not imply that deployments tackling harder tasks need fewer external controls overall.
+- [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: explains why the proposed study must separate model and harness changes and cannot infer that publication caused a later improvement.
