@@ -15,6 +15,29 @@ No delivered result was shown defective. The findings are masking mechanisms,
 an unmet audit requirement, a scanner precision defect and a gap in the
 instruction itself.
 
+## Current status — 2026-11-09
+
+Repository-state refresh, not a new transcript review. The retained review and
+B diagnosis remain unchanged; prior test and trial results below were not rerun.
+
+- **A and B closed:** scanner precision and Claude Code advisory auditing shipped.
+- **D resolved:** the current instruction supports each harness through its own
+  scanner, but requires a separate review in each executing harness. The obsolete
+  mapping draft has been removed.
+- **G integration resolved:** the parcha analysis is on main. The stopped ingest's
+  two leftover files still exist; their keep-or-delete decision remains open.
+- **C open:** reproduce the historical prerequisite search without its cap before
+  deciding whether the prioritisation conclusion was defective.
+- **E watch only:** retain the recurrence trigger; this refresh did not search
+  new sessions for another incident.
+- **F closed:** both process episodes are retained under Historical observations
+  in `kb/log.md`, with original trace locators and repair evidence.
+
+Next work is C's bounded historical check, not another audit implementation.
+C needs the exact search expression from the cited Claude Code call: the retained report abbreviates it as `grep ...`. Obtain that through
+an authorized Claude Code review rather than inventing an equivalent query.
+The workshop stays open for C and G's cleanup decision.
+
 ## Items
 
 Each item states the finding, the fix candidate, what closes it and the
@@ -59,8 +82,9 @@ scanner reads persisted session JSONL. The first observation is to read
 `calls/run.json` in the parcha run directory for the worker's recorded output
 protocol and check whether a session file or stream copy sits in the launch
 tree. That evidence is in worktree `.commonplace/worktrees/parcha-recall-d5ad184aa4af`,
-outside the review's authorized directory; reading it needs the operator's
-authorization, which this workshop records as pending.
+outside the original review's authorized directory; authorization was pending
+at framing. The diagnosis and implementation records below supersede that
+initial blocker.
 
 Closes with: a diagnosis record here and either an ADR-backed change to the
 audit or a recorded decision to keep Pi-only auditing with the gap stated in
@@ -131,26 +155,49 @@ count is at most 40, close as no defect. If it exceeds 40, check whether any
 extra line records a semantics-to-machine dependency and record the outcome
 here.
 
+Status 2026-11-09: still open. Repository history is available at `cbf2389b5`,
+but the retained review omits the original grep expression and does not name
+the five machine-side READMEs. A keyword search of the historical tree does not
+recover either fact reliably; it cannot establish the original uncapped count.
+No fresh transcript inspection or finding of no defect is claimed.
+
+Bounded handoff for an operator-invoked Claude Code agent: inspect only session
+`25868e95-d6c5-4168-af25-ff2b1fac1682.jsonl` under
+`~/.claude/projects/-home-zby-llm-commonplace/`, calls L206–L207, result L215 and
+conclusion L229, plus L161 if needed to interpret the prioritisation question.
+Return the exact search command, its path selection and ordering, and the five
+README paths. Do not blindly replay transcript commands or widen the session
+review. Reconstruct only the read-only search over the historical blobs.
+Then reproduce the search against repository blobs at `cbf2389b5` without
+`head` or character truncation, record the full count, and inspect omitted
+matches and the five complete READMEs for the stated dependency. If the command
+or historical working-tree state cannot be recovered, report that limit rather
+than substituting a query and claiming reproduction. Keep any coverage failure
+separate from a demonstrated wrong prioritisation conclusion.
+
 Candidate durable output: an entry in the
 [unattended-processing failure modes](../unattended-processing-failure-modes/README.md)
 catalogue, "coverage claim over capped output", with a countermeasure such as
 reporting the cap or the count alongside any exhaustiveness claim. That
 workshop owns catalogue entries; this one supplies the instance.
 
-### D. The review instruction is Pi-only
+### D. Review instruction coverage — resolved
 
-Finding: the instruction names Pi session directories, the Pi parser and the
-Pi branch model. Running it on Claude Code required an ad hoc mapping in the
-worker brief, which is retained as [claude-code-mapping.md](./claude-code-mapping.md).
-The scan tools README already covers three harnesses.
+Original finding: the review needed an ad hoc Claude Code mapping because the
+instruction used Pi session directories, parser and branch model.
 
-Fix candidate: generalize the instruction to execution logs with a
-harness-specific section per supported scanner, or keep it Pi-named and add a
-sibling for Claude Code. Preference not fixed; the retained mapping is the
-draft either way. Read the instruction type before editing.
+Status 2026-11-09: resolved by the shipped
+[review instruction](../../instructions/review-recent-logs-for-hidden-failures.md).
+Commit `c86e04b05` added harness-independent scanner selection and evidence
+handling; `4c183c724` restricted each invocation to the executing harness's logs.
+The operator invokes separate agents for cross-harness coverage. The procedure
+now distinguishes native sessions from streams and directs readers to
+`scripts/scan_tools/README.md` for supported formats rather than duplicating
+parser details.
 
-Closes with: the instruction change validated and committed, and the mapping
-file deleted from here.
+The obsolete mapping draft was deleted in this refresh. Its claims that no
+stream variant or `--format` flag exists were superseded by B's scanner work.
+The current instruction was validated during this refresh.
 
 ### E. Silent no-op scripted edit under a concurrent writer (I1)
 
@@ -171,24 +218,32 @@ suites passed, but that run preceded the last scanner edit; only the scanner's
 own tests ran afterwards. I7: the scanner exit code reported to the operator
 was inferred through `xargs`, not observed. Both are compliance lapses against
 rules already in `AGENTS.md`. Action: item A reruns the suites; the xargs note
-goes into the README. Record both in `kb/log.md` at closure as episodes, not
-as new rules.
+goes into the README.
+
+Status 2026-11-09: closed. Both episodes are retained under Historical
+observations in `kb/log.md`, citing I6/I7, their original session locators and
+repair commit `91810b276`. No new rule was added and no fresh test run is claimed.
 
 ### G. Operator decisions, not fixes (I3, I4)
 
 - The stopped parcha ingest left `kb/sources/.snapshots/parcha-skills-recall.md`
   and `kb/reports/cache/connect/sources/parcha-skills-recall.connect.md`.
-  Keep or delete is the operator's call; the ingest file itself was never written.
-- The parcha-recall analysis is still not integrated; its worktree sits at
-  detached `cbf2389b5`. Integration is a separate commission.
+  Both still exist on 2026-11-09. Keep or delete remains the operator's call;
+  this refresh did not remove either file.
+- Integration is resolved: merge `330ea995a` integrated publication `b71e3abed`.
+  The [retained parcha analysis](../../agentic-system-analyses/retained/parcha-ai--parcha-skills/overview.md)
+  is present on main. The worktree now points to `b71e3abed` on its analysis
+  branch, not detached `cbf2389b5`. No integration or worktree cleanup is needed
+  as a repair of I4.
 
 ## Boundary and bookkeeping
 
 - Evidence is the retained review plus the session files it cites. Do not
   copy trace contents here; cite locators.
-- Items A and D are implementable within existing authority. Item B needs
-  authorization to read the parcha worktree traces. Items C and E are
-  observation-first. Items F and G need no implementation.
+- Items A, B and D are resolved. Do not reopen their implementation or trial
+  launches merely to refresh this workshop. C is observation-first; E waits
+  for recurrence. F is retained in the log. G's remaining file cleanup needs
+  the operator's decision.
 - One commit per item. Cite this workshop in the trailer
   `Workshop: kb/work/hidden-failures-review-fixes`.
 
