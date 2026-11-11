@@ -1,31 +1,61 @@
 # Report state
 
-Local operational evidence and state. Payloads in this directory are ignored
-because they are machine-local, not because they are safe to discard. Each
-producer owns authority, integrity, and cleanup rules.
+Operational state of Commonplace workflows. The main repository ignores every
+payload here to keep it out of the library's record: a failed candidate would
+look like an ingest to search, presence in the main tree would read as
+endorsement, and every run would dirty the tree and mix with library history.
+Being ignored does not make the material disposable or local to one machine.
+Each producing workflow owns authority, integrity and cleanup for its
+directory; Git ignore status never licenses deletion. The
+[reports collection](../COLLECTION.md) sets the class rules.
 
-Current state includes:
+## What a reader should assume
 
-- `review/` — `commonplace-review` state: `results/` holds one result file per
-  reviewed (note, criterion) pair, `packets/` each note's current full-pass
-  packet, and `runs/` one directory per review run with its call records and
-  artifacts. See the [review system](../../reference/README-REVIEW-SYSTEM.md);
-- `fixes/` — warning dispositions;
-- `ingest/` — one working directory per ingest, holding its last drafting run: the handoff record with every handoff check and the run's outcome, and the candidate of an open or closed run. A record without an outcome marks a run that stopped midway. `commonplace-ingest-handoff prune` deletes published runs. Keeping finished runs is provisional: the records exist to decide whether the ingest skill keeps its repair round, and are dropped after that decision (see the [workshop case](../../work/decision-lifecycle-evidence/ingest-working-directory.md));
-- `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
-- revise-autoreason runs.
+Everything here is unreviewed model output or workflow bookkeeping, kept so
+that work can continue and be inspected. Presence does not endorse content.
+Expect failed candidates, stopped runs and records from methods that have
+since changed. No library file in the main repository depends on anything
+here, and nothing here records which main-repository commit it belongs to.
 
-Abandoned review data that nothing reads and that may be deleted:
-`commonplace-store.sqlite` and its backups, `review-jobs/`, `reviews/`,
-`bundle-reviews/` and `full-pass/`.
+## Directories
 
-Do not delete this subtree as a cache. Follow the owning workflow's completion
-or retirement rule for each payload class.
+| Directory | Owner | Holds | Lifetime |
+|---|---|---|---|
+| `review/results/` | `commonplace-review` | one result per reviewed (note, criterion) pair: the judgment and the hashes of the exact texts judged | until a later review of the pair replaces it or it is removed as orphaned; deleting one makes the pair eligible for review again |
+| `review/packets/` | `commonplace-review` | each note's current full-pass packet with its disposition and the resolution of a pending hand-back | until a later pass replaces it; preserve while work is unresolved |
+| `review/runs/` | `commonplace-review` | one directory per sweep (`<UTC stamp>/`) or per full pass and revision (`<workflow>/<note path>/<start-hash prefix>/`): call records, operator answers and accepted artifacts | replay inside the run; a run continues only from a checkout at the path its records name. Freshness never reads runs, so check continuation needs before removing one |
+| `fixes/` | the [fix system](../../instructions/FIX-SYSTEM.md) | one `<note-stem>.fix-report.md` per fixed note, mapping each warning to its disposition | until the fix system retires the report |
+| `ingest/` | `commonplace-ingest-handoff` | one working directory per open ingest: the handoff record and the candidate of its last drafting run; a record without an outcome marks a run that stopped midway | `prune` deletes published runs; keeping finished runs is provisional, see the [workshop case](../../work/decision-lifecycle-evidence/ingest-working-directory.md) |
 
-Agentic analysis now owns working runs under
-`kb/agentic-systems/reports/state/`. The 96 run directories of the retired
-method (`agentic-system-analysis/`, 2026-09-03 to 2026-10-01) were moved out of
-the checkout on 2026-11-11 to `../commonplace-archive/kb/reports/state/`, after
-deleting the source extractions three runs had made into their scratch
-directories. Their outputs are in the tracked retained-archive; the runs were
-never resumable under the current method.
+Details of the review state and its freshness rules are in the
+[review architecture](../../reference/review-architecture.md) and the
+[review system](../../reference/README-REVIEW-SYSTEM.md).
+
+## Leftovers without a current producer
+
+- `revise-autoreason/`: two runs from 2026-04-13. The skill now works under
+  `kb/work/revise-autoreason/` and removes its runs.
+- `tag-placement/`: one tag-placement sweep from 2026-09-26 by a pipeline that
+  no longer exists.
+
+Neither is read by current code. They stay until the operator removes them;
+removal loses only those runs' records.
+
+## Material moved out of this directory
+
+On 2026-11-11 the following went to `../commonplace-archive/kb/reports/state/`,
+outside the checkout, keeping their names: the SQLite review stores and their
+backups with `review-jobs/`, `reviews/`, `bundle-reviews/` and `full-pass/`
+(the system ADR 127 replaced); the 96 run directories of the retired
+agentic-analysis method (`agentic-system-analysis/`, minus the source
+extractions three runs had made, which were deleted); and the meta-analyser
+pilot traces (`meta-analyser-pilot-20261021/`), whose adjudication ADR 121
+records. The X likes inbox and its sync state moved to the private snapshots
+repository under `kb/sources/.snapshots/x-likes/`, because they hold other
+people's posts.
+
+Agentic-system analysis does not use this directory. Each analysis runs in a
+dedicated worktree and keeps its state there; accepted results integrate into
+tracked `retained/` sets. The eight runs under
+`kb/agentic-systems/reports/state/` are from an earlier layout and cannot
+resume under the current method.
