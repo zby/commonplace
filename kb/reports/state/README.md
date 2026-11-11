@@ -23,6 +23,9 @@ Do not delete this subtree as a cache. Follow the owning workflow's completion
 or retirement rule for each payload class.
 
 Agentic analysis now owns working runs under
-`kb/agentic-systems/reports/state/`. Old ignored `agentic-system-analysis/`
-directories remain recovery evidence under their original method; the layout
-migration does not delete them or make unfinished runs resumable.
+`kb/agentic-systems/reports/state/`. The 96 run directories of the retired
+method (`agentic-system-analysis/`, 2026-09-03 to 2026-10-01) were moved out of
+the checkout on 2026-11-11 to `../commonplace-archive/kb/reports/state/`, after
+deleting the source extractions three runs had made into their scratch
+directories. Their outputs are in the tracked retained-archive; the runs were
+never resumable under the current method.

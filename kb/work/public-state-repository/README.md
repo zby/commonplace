@@ -60,8 +60,13 @@ Measured on 2026-11-11, before archiving retired review state: 964 MB in
 - About 500 MB is abandoned review data: the retired SQLite stores, their
   backups, and directories the [state README](../../reports/state/README.md)
   already permits deleting. These are not the current review state.
-- 231 MB is old agentic-system analysis runs under `agentic-system-analysis/`.
-  They examine external repositories and may quote their code.
+- 231 MB was old agentic-system analysis runs under `agentic-system-analysis/`,
+  96 runs of the retired method. 210 MB of it was verbatim source extractions
+  that three runs' workers had made into their scratch directories under the
+  old rule forbidding reads from the worktree (two PageIndex runs with an
+  18 MB example PDF per copy, and a 22-repository arsumbris text bundle).
+  Those extractions were deleted on 2026-11-11 and the remaining 21 MB of run
+  records moved to the archive; see item 1 below.
 - 563 files contain `/home/zby` paths.
 - 42 files match an API-key pattern. These may only be analyses that discuss
   key handling in other systems; none has been read.
@@ -192,6 +197,11 @@ Publishing cannot be undone, so each of these comes before the first push.
    `review-jobs/`, `reviews/`, `bundle-reviews/` and `full-pass/`. Current
    `review/` and other workflows' state were left untouched. The earlier
    approximate 500 MB inventory above was not a complete size accounting.
+   Later the same day, `agentic-system-analysis/` followed: its source
+   extractions were deleted and the 21 MB of run records moved to the same
+   archive path. The live tree is now 18 MB in 281 files; 42 files mention
+   `/home/zby` and 10 match the key pattern (both counts with `rg --no-ignore`,
+   which any count over this ignored tree needs).
 2. Read the 42 key-pattern files. Remove or exclude any real secret.
 3. Audit paths consumed by commands for cross-machine use. Distinguish
    operational references from historical path mentions; do not globally
