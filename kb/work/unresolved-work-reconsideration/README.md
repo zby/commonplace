@@ -137,8 +137,14 @@ tractability can change even when question text does not. The [2026-11-08 scan r
 retains its first batch trial: four recommendations from twelve assessed work
 packages, with version limits and deferred items. The operator then requested
 one-by-one reconsideration, starting with whether the first note carries too
-much local-system detail. No recommended library change has been executed.
-Its initial candidate-discovery scope is `kb/theory/` and `kb/reference/` only,
+much local-system detail. Subsequent separately authorized work retired that
+note and revised the instruction-testing note. The link-label question moved
+to its own experimental workshop; the proposed naming-time vocabulary screen
+was declined in favor of investigating checks during revision. The scan record's
+[disposition update](./scan-results-2026-11-08.md#disposition-update--2026-11-09)
+retains the outcomes and remaining work without rewriting the initial assessment.
+
+The batch draft's initial candidate-discovery scope is `kb/theory/` and `kb/reference/` only,
 as directed by the operator; other collections will be covered later. Targeted
 reads elsewhere may verify an in-scope candidate but may not expand discovery.
 It records scan evidence but does not integrate with the freshness store or
@@ -146,6 +152,14 @@ adopt a classification schema. A trial defaults to assessing up to twenty
 candidates, selecting up to ten next steps and returning its record in the
 response. The caller may override the budget, authorize persistent output or
 narrow the two-collection scope; no configuration is required to start.
+
+The next decision is whether these selection and reassessment cases warrant
+adopting or revising the procedure, or whether another bounded selection-only
+pilot is needed. Recurring-work selection and discovery across the other
+frontier surfaces remain untested. The follow-up corrections show that selected
+items can lead to useful work, but do not establish comparative search quality,
+autonomous execution, or acceptable operating cost. No further pilot or task
+execution is commissioned by this status update.
 
 The existing single-task baseline is invoked as follows:
 

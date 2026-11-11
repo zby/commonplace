@@ -129,4 +129,27 @@ In this note:
 
 A plausible theoretical residue remains: grouping execution-oriented procedures by reading mode may make procedure maintenance easier and reduce routing ambiguity, provided that grouping does not obscure ownership or produce an excessively heterogeneous directory. That is a conjecture to formulate and test, not a conclusion established by the existing local example.
 
-Revised recommendation: do not merely update local paths or add more current placement rules to the theory note. First separate the general grouping mechanism and its limits from Commonplace's placement policy and migration history. Compare the residue with existing notes before deciding whether to rewrite, merge or retire this artifact. No library change or disposition has yet been authorized or executed.
+Revised recommendation: do not merely update local paths or add more current placement rules to the theory note. First separate the general grouping mechanism and its limits from Commonplace's placement policy and migration history. Compare the residue with existing notes before deciding whether to rewrite, merge or retire this artifact. At that reassessment, no library change or disposition had yet been authorized or executed.
+
+## Disposition update — 2026-11-09
+
+This update records later work separately from the scan and its first-item
+reassessment. It does not rerun candidate discovery or treat all four initial
+recommendations as straightforward execution successes.
+
+| Initial recommendation | Current disposition | Evidence and remaining work |
+|---|---|---|
+| 1. Reconcile the directory-placement note | Retired, rather than locally corrected | `dafbdeb07` deletes the note and two redirects, retaining historical references in this workshop. The initial edit recommendation did not survive reconsideration. No replacement placement policy was adopted. |
+| 2. Update instruction-testing examples | Completed through a broader rewrite | `883b0dd2b` revises [the instruction-testing note](../../theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md), removing local search-stack details and unsupported prescriptions. It retains a generic discovery-only example and the limits of mock fidelity. No test runtime was built. |
+| 3. Test thin-draft claim reconstruction | Transferred; experiment not run | The [link-label workshop](../link-label-premise-contribution/README.md) now owns evidence recovery, assessment calibration and protocol design. The unsupported predecessor note was deleted. The initial one-draft recommendation understated the design work needed; a replacement claim or gate is not presumed. |
+| 4. Try a naming-time collision screen | Declined in that form; revision-time alternative under investigation | The [vocabulary workshop](../vocabulary-governance/README.md#operator-direction-investigate-vocabulary-checks-during-revision) records the operator's decision to leave the writing path unchanged. Recognizing implicit technical meanings is not a nearly cost-free string search. `0b16017ad` drafts a revision-time gate; `a47d8515d` separates collision verdicts from incidental unification findings. The draft is uncalibrated and not in the live catalog. |
+
+The scan exposed useful candidates, but subsequent judgment changed their scope,
+method or disposition. This is evidence for retaining a recommendation's basis
+and returning consequential choices to decision, not evidence that the scanner
+can authorize or reliably execute the work it finds.
+
+The workshop remains open. Decide whether to adopt, revise or further test the
+selection procedure. Broader frontier coverage, recurring-work selection,
+comparative search quality and operating cost remain unestablished; the current
+records do not justify a scheduler, ranking model or new backlog.
