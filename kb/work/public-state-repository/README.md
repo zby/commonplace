@@ -214,8 +214,11 @@ Publishing cannot be undone, so each of these comes before the first push.
    `kb/reports/cache/x-likes/` and the September literature batch moved to
    `x-likes/` in the private snapshots repository and the script now writes there; the meta-analyser pilot traces copied MIT-licensed
    source without its notice and moved to the archive on 2026-11-11; no copied snapshots remain; the state README
-   needs rewriting; this checkout holds no review results, only two revision
-   runs, and the 37 results on this machine sit in an agent worktree.
+   needs rewriting; this checkout holds no review results beyond today's demo run. The
+   37 results and packet from the 2026-11-09 storage-substrate full pass,
+   produced in the review workshop's agent worktree, were archived on
+   2026-11-11 under `../commonplace-archive/worktree-review-state/`; the
+   operator chose to rerun that pass rather than import it.
 2. Read the 42 key-pattern files. Remove or exclude any real secret.
 3. Audit paths consumed by commands for cross-machine use. Distinguish
    operational references from historical path mentions; do not globally
