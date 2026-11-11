@@ -130,6 +130,10 @@ pending entries do not supersede the definitions.
   [editable installation](./INSTALL.md#2-install-commonplace-as-a-user-level-tool).
   For checkout skill discovery problems, follow
   [skill setup](./INSTALL.md#5-check-the-skills-for-every-agent-that-will-work-on-the-project).
+- Keep full external-source copies in private snapshots or local untracked
+  source checkouts such as `related-systems/`. In published KB content and
+  operational state, use only bounded, attributed quotations, respecting
+  applicable licence requirements.
 - Downloads: use `curl -fsSL -o <destination> [options] '<URL>'` in a standalone
   shell call with literal paths; keep setup and extraction separate. If sandbox
   networking blocks it, request escalation for the download alone when available.
