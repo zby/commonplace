@@ -360,7 +360,7 @@ def test_on_files_leaves_marked_subtrees_off_the_site(tmp_path: Path, collection
     write(trial / "captures/.commonplace-validation-ignore", "")
     note = write(docs_dir / "notes/n.md", "# N\n")
     write(docs_dir / collection / "COLLECTION.md", "# Collection\n")
-    copied = docs_dir / "reports/cache/bundle/kb/notes"
+    copied = docs_dir / "reports/state/bundle/kb/notes"
     write(copied / "COLLECTION.md", "# Copied notes\n")
     write(copied / "README.md", "# Copied notes\n")
     class Config(dict):

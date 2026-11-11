@@ -98,4 +98,4 @@ When the workshop's question is answered, extract the durable conclusions into t
 - Anything stable enough to be referenced from the library → promote to the right durable collection
 - External source captures → `kb/sources/`
 - Durable external agentic-system and harness analyses → `kb/agentic-systems/reviews/`
-- Report outputs → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
+- Report outputs → choose `kb/reports/state/` or `retained/` from the reports collection contract

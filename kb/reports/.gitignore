@@ -1,13 +1,6 @@
-# Replaceable outputs. Policy documents and validation markers stay tracked.
-cache/**
-!cache/
-!cache/README.md
-!cache/.commonplace-validation-ignore
-!cache/critique/
-!cache/critique/README.md
-
-# Local operational evidence and state. Cleanup belongs to the owning workflow.
+# Operational workflow outputs. Policy documents and validation markers stay tracked.
+# The state README belongs to the state repository checked out here; the
+# validation marker belongs to this repository.
 state/**
 !state/
-!state/README.md
 !state/.commonplace-validation-ignore

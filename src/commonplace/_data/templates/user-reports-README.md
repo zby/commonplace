@@ -6,7 +6,6 @@ directory is its retention contract.
 
 | Area | Meaning |
 |---|---|
-| [`cache/`](./cache/README.md) | Ignored outputs safe to delete and regenerate. |
-| [`state/`](./state/README.md) | Ignored operational evidence and state with workflow-owned cleanup. |
+| [`state/`](./state/README.md) | Ignored workflow outputs, one directory per workflow, with workflow-owned cleanup. |
 | [`retained/`](./retained/README.md) | Durable report records kept with the project. |
 | [`types/`](./types/) | Collection-local report type contracts. |

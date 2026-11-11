@@ -105,14 +105,14 @@ def test_redirect_map_accepts_actual_generated_directory_addresses(
 
 @pytest.mark.parametrize("target", [
     "claims/types/dir-index.md", "claims/missing/dir-index.md",
-    "reports/cache/copied/dir-index.md", "instructions/skill/dir-index.md",
+    "reports/state/copied/dir-index.md", "instructions/skill/dir-index.md",
 ])
 def test_redirect_map_rejects_addresses_the_hook_does_not_generate(
     tmp_path: Path, target: str,
 ) -> None:
-    for collection in ("claims", "reports/cache/copied", "instructions"):
+    for collection in ("claims", "reports/state/copied", "instructions"):
         write_page(tmp_path, f"{collection}/COLLECTION.md")
-    for page in ("claims/types/spec.md", "reports/cache/copied/n.md", "instructions/skill/SKILL.md"):
+    for page in ("claims/types/spec.md", "reports/state/copied/n.md", "instructions/skill/SKILL.md"):
         write_page(tmp_path, page)
     write_config(tmp_path, {"old/list.md": target})
     enable_shipped_hook(tmp_path)

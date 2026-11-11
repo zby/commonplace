@@ -50,7 +50,6 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
         Path("kb/instructions"),
         Path("kb/tags"),
         Path("kb/reports"),
-        Path("kb/reports/cache"),
         Path("kb/reports/state"),
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
@@ -61,7 +60,6 @@ def test_init_project_creates_core_layout_and_is_idempotent(tmp_path: Path) -> N
     reports_ignore = (tmp_path / "kb" / "reports" / ".gitignore").read_text(
         encoding="utf-8"
     )
-    assert "cache/**" in reports_ignore
     assert "state/**" in reports_ignore
     assert (tmp_path / "kb" / "log.md").is_file()
 

@@ -17,7 +17,7 @@ def test_promotion_candidates_uses_shared_markdown_parsing(
     capsys,
 ) -> None:
     notes_root = tmp_path / "kb" / "notes"
-    reports_root = tmp_path / "kb" / "reports" / "cache"
+    reports_root = tmp_path / "kb" / "reports" / "state"
     write(notes_root / "COLLECTION.md", "# Notes collection\n")
 
     write(
@@ -106,7 +106,7 @@ description: Missing closing delimiter
     assert "1 unstructured text files, 2 invalid frontmatter files" in captured.out
 
     report = (
-        tmp_path / "kb" / "reports" / "cache" / "promotion-candidates/notes/report.md"
+        tmp_path / "kb" / "reports" / "state" / "promotion-candidates/notes/report.md"
     ).read_text(encoding="utf-8")
     assert "Unstructured text files: 1" in report
     assert "- [Raw](../../../../notes/raw.md)" in report

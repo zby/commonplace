@@ -1186,7 +1186,7 @@ def validate_ingest_contract(results: CheckResults, content: str, path: Path) ->
         warn("frontmatter names a .snapshots/ path")
     if "related-systems/" in outside_quotes:
         warn("the report cites a related-systems/ checkout")
-    if ".connect.md" in outside_quotes or "reports/cache/connect" in outside_quotes:
+    if ".connect.md" in outside_quotes or "reports/state/connect" in outside_quotes:
         warn("the report names the generated connect report")
 
     snapshot = name_paired_snapshot(path)

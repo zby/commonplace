@@ -146,4 +146,4 @@ Scan `kb/theory/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syst
 - External agent-memory system reviews → `kb/agent-memory-systems/`
 - External agentic-system and harness analyses → `kb/agentic-systems/`
 - Work-in-progress on a source → `kb/work/`
-- Report outputs → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
+- Report outputs → choose `kb/reports/state/` or `retained/` from the reports collection contract

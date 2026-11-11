@@ -55,7 +55,7 @@ this through `kb/sources/.gitignore`. If the directory is not ignored, stop
 before writing and report the missing rule.
 
 For PDF and ordinary web captures, keep temporary downloads, extracted bodies,
-and assembly files in a unique directory under `kb/reports/cache/snapshot-web/`. Verify
+and assembly files in a unique directory under `kb/reports/state/snapshot-web/`. Verify
 that payloads there are ignored before writing; stop and report a missing
 ignore rule. The final snapshot still belongs in `kb/sources/.snapshots/`.
 
@@ -131,8 +131,8 @@ Create the temporary directory and retain the printed path as `{snapshot_tmp}`:
 
 ```bash
 set -e
-mkdir -p kb/reports/cache/snapshot-web
-snapshot_tmp=$(mktemp -d kb/reports/cache/snapshot-web/capture.XXXXXX)
+mkdir -p kb/reports/state/snapshot-web
+snapshot_tmp=$(mktemp -d kb/reports/state/snapshot-web/capture.XXXXXX)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
 ```
 
@@ -181,8 +181,8 @@ Create a temporary directory and retain the printed path as `{snapshot_tmp}`:
 
 ```bash
 set -e
-mkdir -p kb/reports/cache/snapshot-web
-snapshot_tmp=$(mktemp -d kb/reports/cache/snapshot-web/capture.XXXXXX)
+mkdir -p kb/reports/state/snapshot-web
+snapshot_tmp=$(mktemp -d kb/reports/state/snapshot-web/capture.XXXXXX)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
 ```
 
@@ -369,7 +369,7 @@ alternative capture method used.
 - Re-emit a complete extracted body through Write or Edit
 - Make model-mediated cleanup a prerequisite for saving a snapshot
 - Save final snapshots outside `kb/sources/.snapshots/` or temporary
-  download/extraction files outside `kb/reports/cache/snapshot-web/`
+  download/extraction files outside `kb/reports/state/snapshot-web/`
 - Install software or bypass access controls — use available permitted means or report the blocker
 
 **Always:**

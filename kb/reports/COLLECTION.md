@@ -24,13 +24,11 @@ Every report artifact lives in exactly one first-level policy area:
 
 | Area | Retention policy | Typical contents |
 |---|---|---|
-| `cache/` | Safe to delete and regenerate from authoritative inputs. Payloads are ignored. | Connect, critique, friction, premise-decomposition, and promotion-candidate views. |
-| `state/` | Local and ignored, but not disposable merely because it was generated. The owning workflow decides when it may be removed. | Review result files, review runs and full-pass packets, and fix dispositions. |
+| `state/` | Ignored, one directory per producing workflow. Not disposable merely because it was generated: the owning workflow decides when an output may be removed, and the [state README](./state/README.md) states per workflow what deletion loses. | Review results, packets and runs; fix dispositions; ingest working directories; connect, critique, friction, premise-decomposition and promotion-candidate reports. |
 | `retained/` | Durable report records kept with the project. Payloads are tracked. | Evaluation corpora, experiment reports, measurements, and exact records cited by later work. |
 | `types/` | Collection-local structural contracts, not report payloads. | Optional project-authored report contracts; command-produced generic report types are global. |
 
-The published site includes `retained/` and leaves out `state/` and
-`cache/`. Inside `retained/`, a subtree carrying a
+The published site includes `retained/` and leaves out `state/`. Inside `retained/`, a subtree carrying a
 `.commonplace-validation-ignore` marker is left out of the site as well as
 validation; mark exact captures and trial bundles so, keeping the report that
 interprets them published.
@@ -48,8 +46,8 @@ or reproduce the output. Record the model and prompt or instruction identity
 when an LLM judgment is part of the evidence and the producing workflow does
 not already retain them.
 
-`cache/` may optimize for cheap regeneration. `state/` must satisfy the owning
-workflow's authority, integrity, and cleanup rules. `retained/` must remain
+`state/` must satisfy the owning workflow's authority, integrity, and cleanup
+rules. `retained/` must remain
 understandable from a clean checkout without relying on ignored files.
 
 ## Titles, descriptions, and exact records
@@ -66,10 +64,10 @@ understandable from a clean checkout without relying on ignored files.
 
 ## Maintenance semantics
 
-- A cache producer names or makes discoverable the inputs and operation needed
-  to replace its output. Deleting a cache entry must lose no unique evidence,
-  decision, or unresolved state.
-- A state producer owns cleanup. Generated state may contain non-reproducible
+- A state producer owns cleanup and states, in the state README, what deleting
+  its output loses: nothing unique (rebuild from retained inputs), one paid
+  judgment (rerun when needed) or current coverage, an unresolved disposition
+  or decision evidence (preserve). Generated state may contain non-reproducible
   judgments or the only current disposition, so Git ignore status never
   licenses deletion.
 - A retained report is changed according to its declared role. Correct a
@@ -102,19 +100,18 @@ small authorized set:
 
 The destination collection separately decides whether it may author a
 reciprocal edge. A formal edge into this collection targets `retained/`;
-`cache/` and `state/` may be mentioned inline only as local operational
-context.
+`state/` may be mentioned inline only as local operational context.
 
-Tracked library artifacts must not depend on an ignored `cache/` or `state/`
-file being present. Summarize the needed evidence in the tracked artifact or
+Tracked library artifacts must not depend on an ignored `state/` file being
+present. Summarize the needed evidence in the tracked artifact or
 promote the exact report to `retained/` first. Tracked artifacts may cite a
 `retained/` report when the exact record is useful to their reader.
 
 ## Validation markers
 
-The tracked `.commonplace-validation-ignore` markers at `cache/` and `state/`
-exclude their data-bearing subtrees from collection-scoped validation. The
-markers do not hide files from ordinary discovery, and explicit validation of
+The tracked `.commonplace-validation-ignore` marker at `state/` excludes its
+data-bearing subtree from collection-scoped validation. The marker does not
+hide files from ordinary discovery, and explicit validation of
 one typed report still applies its type contract.
 
 ## What does not belong here

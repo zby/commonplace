@@ -132,7 +132,7 @@ The command dry-runs unless `--apply` is supplied.
 ### commonplace-promotion-candidates
 
 Rank unstructured note files in the required `NAME_OR_PATH` collection argument
-by incoming links. Write `kb/reports/cache/promotion-candidates/<collection>/report.md`,
+by incoming links. Write `kb/reports/state/promotion-candidates/<collection>/report.md`,
 where `<collection>` is the collection's path relative to `kb/`, including any
 namespace directories. Reports for distinct collections do not overwrite one
 another. Invalid frontmatter is separate from text candidates; validation-ignored

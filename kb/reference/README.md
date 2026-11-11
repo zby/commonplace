@@ -84,7 +84,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (curated indexes, scoped `rg` description listings, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
 
-*What you get.* A report at `kb/reports/cache/connect/<collection>/<note-name>.connect.md` (gitignored) listing candidate outbound edges, bidirectional candidates, reverse-edge candidates (notes that should link *to* this target under their own COLLECTION.md rules), off-authorisation candidates (articulated but outside the authorised label set), index memberships, synthesis opportunities, and a discovery trace. Review the candidates and apply the ones worth keeping — connect never mutates the source, so applying the suggestions is a separate step.
+*What you get.* A report at `kb/reports/state/connect/<collection>/<note-name>.connect.md` (gitignored) listing candidate outbound edges, bidirectional candidates, reverse-edge candidates (notes that should link *to* this target under their own COLLECTION.md rules), off-authorisation candidates (articulated but outside the authorised label set), index memberships, synthesis opportunities, and a discovery trace. Review the candidates and apply the ones worth keeping — connect never mutates the source, so applying the suggestions is a separate step.
 
 *Limitations.* Relationship labels are judgment calls and sometimes need correction. Connection is often underdone at write time, so running connect explicitly on new notes is a reasonable habit.
 
@@ -253,6 +253,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-059: external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — extends collection-owned authorization to external targets without making the open web a connect-search surface
 - [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle under the historical theoretical-default grouping
+- [ADR-128: one ignored operational tree under kb/reports/state](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md) — the `cache/` area is gone; ignored workflow outputs live under `state/`, one directory per workflow, with the state README stating per workflow what deletion loses
 - [ADR-127: review runs as workflows over result files](./adr/127-review-runs-as-workflows-over-result-files.md) — the current review decision: one command, result files with input hashes, no store; supersedes ADRs 035 and 043
 
 ## Collection boundary

@@ -1,6 +1,6 @@
 ---
 name: cp-skill-connect
-description: Discover connections for a single artifact. Writes a connect-report under kb/reports/cache/connect/<collection>/ without mutating library artifacts or indexes. Use with an artifact path or artifact name.
+description: Discover connections for a single artifact. Writes a connect-report under kb/reports/state/connect/<collection>/ without mutating library artifacts or indexes. Use with an artifact path or artifact name.
 type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
@@ -10,7 +10,7 @@ model: opus
 
 # Connect — Discovery Only
 
-Find candidate connections for a single artifact and write them to a **discovery report** at `kb/reports/cache/connect/<collection>/<artifact-name>.connect.md`. The report is the only direct write this skill performs. Do not edit the source artifact, other artifacts, indexes, collection files, or logs.
+Find candidate connections for a single artifact and write them to a **discovery report** at `kb/reports/state/connect/<collection>/<artifact-name>.connect.md`. The report is the only direct write this skill performs. Do not edit the source artifact, other artifacts, indexes, collection files, or logs.
 
 Connect reports are gitignored; they are immediate downstream context and can be regenerated from the source artifact plus current KB state.
 
@@ -127,7 +127,7 @@ Snapshots in `kb/sources/` are immutable; their authored connection surface is n
 
 ## Output
 
-Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. `<artifact-name>` is the target's filename without its final `.md` and nothing else: `foo.md` gives `foo.connect.md`, and `foo.ingest.md` gives `foo.ingest.connect.md`. Dropping an inner suffix would overwrite another artifact's report. Use the loaded `connect-report` template (`type: types/connect-report.md`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
+Save the report to `kb/reports/state/connect/<source-collection>/<artifact-name>.connect.md`. `<artifact-name>` is the target's filename without its final `.md` and nothing else: `foo.md` gives `foo.connect.md`, and `foo.ingest.md` gives `foo.ingest.connect.md`. Dropping an inner suffix would overwrite another artifact's report. Use the loaded `connect-report` template (`type: types/connect-report.md`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 

@@ -28,8 +28,7 @@ Every report payload lives in exactly one first-level policy area:
 
 | Area | Retention policy |
 |---|---|
-| `cache/` | Ignored outputs that are safe to delete and regenerate from authoritative inputs. |
-| `state/` | Ignored local evidence or state whose owning workflow controls cleanup. |
+| `state/` | Ignored workflow outputs, one directory per producing workflow, whose owning workflow controls cleanup. Its README states per workflow what deletion loses. |
 | `retained/` | Durable report records kept with the project. |
 | `types/` | Collection-local structural contracts, not report payloads. |
 
@@ -44,8 +43,7 @@ state, method, result, and material limits to the degree needed to interpret
 or reproduce the output. Record model and instruction provenance when an LLM
 judgment is part of the evidence and the workflow does not retain it elsewhere.
 
-`cache/` may optimize for cheap regeneration. `state/` follows the producing
-workflow's integrity and cleanup rules. `retained/` must be understandable
+`state/` follows the producing workflow's integrity and cleanup rules. `retained/` must be understandable
 from a clean checkout without ignored files.
 
 ## Titles and descriptions
@@ -61,10 +59,9 @@ from a clean checkout without ignored files.
 
 ## Maintenance semantics
 
-- Deleting a cache entry must lose no unique evidence, decision, or unresolved
-  state. Its authoritative inputs and producing operation remain discoverable.
 - Git ignore status never licenses deletion from `state/`; follow the owning
-  workflow's completion or retirement rule.
+  workflow's completion or retirement rule, and record in the state README
+  what deleting each workflow's output loses.
 - Correct a living retained report in place. Preserve a dated or frozen
   observation as an exact record and create a new observation when its measured
   state changes.
@@ -86,16 +83,14 @@ procedural context. Footer-shaped formal edges use this authorized set:
 
 The destination collection separately decides whether it may author a
 reciprocal edge. A formal edge into this collection targets `retained/`;
-`cache/` and `state/` may be mentioned inline only as local operational
-context.
+`state/` may be mentioned inline only as local operational context.
 
-Tracked library artifacts must not depend on an ignored `cache/` or `state/`
-file being present. Summarize the evidence in the tracked artifact or promote
+Tracked library artifacts must not depend on an ignored `state/` file being
+present. Summarize the evidence in the tracked artifact or promote
 the exact report to `retained/` first.
 
 ## Validation markers
 
-The `.commonplace-validation-ignore` markers under `cache/` and `state/`
-exclude those data-bearing subtrees from collection-scoped validation. They do
-not hide files from ordinary discovery, and explicit file validation still
+The `.commonplace-validation-ignore` marker under `state/` excludes that
+data-bearing subtree from collection-scoped validation. It does not hide files from ordinary discovery, and explicit file validation still
 applies a typed report's contract.

@@ -186,7 +186,7 @@ re_ingest_request:
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
    For a source snapshot, require the completed report at
-   `kb/reports/cache/connect/sources/<snapshot-name>.connect.md`. Verify that it
+   `kb/reports/state/connect/sources/<snapshot-name>.connect.md`. Verify that it
    exists and is non-empty. The parent does not extract connections, classify
    the source, or begin value judgments; those belong to the fresh drafting
    worker.
@@ -311,7 +311,7 @@ re_ingest_request:
    including a same-checksum refresh. Invoke `cp-skill-connect` on `output_path`
    and wait for completion. This is a separate pass from snapshot discovery;
    keep its report at
-   `kb/reports/cache/connect/sources/<snapshot-slug>.ingest.connect.md`.
+   `kb/reports/state/connect/sources/<snapshot-slug>.ingest.connect.md`.
    Require a non-empty report whose `source` is `output_path` and run
    `commonplace-validate` on that report; the command takes one path per
    run. Read its `Bidirectional Candidates` and `Reverse-edge Candidates` in

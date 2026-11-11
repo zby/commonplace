@@ -33,7 +33,7 @@ mark, the generated listing on the site, and the head requirement range over
 exactly those collections, through one collector. Tags on artifacts elsewhere
 (`work`, `sources`, `types`, and the proposal archive under
 `reference/proposals/archive/`) are not read by membership consumers, nor are tags inside a
-validation-ignored subtree, such as `reports/state/`, `reports/cache/` and
+validation-ignored subtree, such as `reports/state/` and
 exact captures under `reports/retained/`. Nothing is inferred from the
 directory tree: a collection joins the tag space by being listed here.
 

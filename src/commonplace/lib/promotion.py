@@ -45,7 +45,7 @@ def write_promotion_candidates_report(
     root = root.resolve()
     notes_dir = resolve_collection(collection, root)
     output = (
-        kb_root(root) / "reports" / "cache" / "promotion-candidates"
+        kb_root(root) / "reports" / "state" / "promotion-candidates"
         / notes_dir.relative_to(kb_root(root)) / "report.md"
     )
 

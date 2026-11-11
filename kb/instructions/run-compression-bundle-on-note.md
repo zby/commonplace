@@ -12,7 +12,7 @@ This is deliberately separate from the gate sweep in [run-review-batches.md](./r
 Inputs:
 
 - first argument: `{note-path}` — repository-relative note path, for example `kb/theory/linking-theory.md`
-- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it to the replaceable report cache as `kb/reports/cache/compression-bundle/<note-name>.md`.
+- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it to the report state tree as `kb/reports/state/compression-bundle/<note-name>.md`.
 
 ## Compression criteria
 

@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-03-24
 **Amended:** 2026-08-29 — collection boundary and retention-policy areas
+**Amended:** 2026-11-11 — [ADR 128](./128-one-ignored-operational-tree-under-kb-reports-state.md) removes the `cache/` area; every ignored workflow output lives under `state/`
 
 ## Context
 

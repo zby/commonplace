@@ -17,7 +17,7 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Authored KB artifacts | Tracked Markdown | Canonical retained knowledge, contracts, instructions, and decisions; edited and reviewed as source |
 | Source reading copies | Ignored files under `.snapshots/` | Reconstructable local materializations; the tracked ingest owns source identity and capture provenance |
 | Navigation and publishing views | Generated listings and the static site | Rebuilt from authored artifacts; not a second authority |
-| Regenerable reports | Ignored files under `kb/reports/cache/` | Operational views that may be rebuilt from authoritative inputs and current KB state |
+| Workflow outputs | Ignored files under `kb/reports/state/`, one directory per workflow | Kept under the producing workflow's cleanup rule; the state README states per workflow what deletion loses ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)) |
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
 | Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
 | Stateful report packets | One current full-pass packet per note under `kb/reports/state/review/packets/` | Local non-regenerable disposition and resolution state; the pass's run directory keeps its start text |
@@ -95,10 +95,10 @@ the site generates reader-oriented listings at build time. The exact build and
 exclusion rules belong to [documentation site](./documentation-site.md) and
 its configuration.
 
-Some generated reports are reconstructable operational views. Connect reports
-under `kb/reports/cache/`, for example, may be ignored because their source
-artifact and the current KB can replace them
-([ADR 007](./adr/007-reports-directory-for-generated-snapshots.md)). Generated
+Generated reports are ignored to keep them out of the library's record, not
+because they can be rebuilt: a connect report under
+`kb/reports/state/connect/` is a paid judgment with no freshness accounting
+([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)). Generated
 and ignored do not imply disposable: per-pair review result files under
 `kb/reports/state/review/results/` hold paid judgments and the hashes that
 make them current. Exact report records whose value survives the run live under

@@ -46,8 +46,12 @@ only preserving old runs, is the intended use.
 - **A plain nested checkout, not a submodule**, is the working assumption. An
   ignored directory stays ignored after `git init` inside it, and the validator
   runs its Git calls from the main repository root.
-- **Unify the cache and state directories.** This is the chosen design
-  direction, not an executed migration. Record differences in deletion
+- **File ownership inside the checkout.** The validation marker is main's;
+  the state README is the state repository's, and main ignores it (decided
+  2026-11-11, applied to the ignore rules the same day).
+- **Unify the cache and state directories.** Executed on 2026-11-11 as
+  [ADR 128](../../reference/adr/128-one-ignored-operational-tree-under-kb-reports-state.md):
+  `kb/reports/state/` is the one ignored tree and `kb/reports/cache/` is gone. Record differences in deletion
   consequences and cleanup rules without separate storage classes. The
   destination path and migration plan remain open; public inclusion remains
   subject to checks.
@@ -252,6 +256,53 @@ notes require a resolution or explicit abandonment check before cleanup.
 The classification was bounded inspection, not proof of byte-for-byte
 retained duplication. No secondary-state archival or migration-consumer work
 was performed in this step.
+
+### Secondary state tree archival outcome
+
+On the operator's approval, moved the entire
+`kb/agentic-systems/reports/state/` directory to
+`../commonplace-archive/kb/agentic-systems/reports/state/`. All 463 files,
+including the README and validation-ignore marker, were SHA-256 checked before
+and after the move. The source directory is absent. Retired its tracked README,
+validation-ignore marker and `kb/agentic-systems/reports/.gitignore`, whose only
+rules governed this state tree.
+
+The archive holds eight Instinctual Memory runs from October 1–2, approximately
+4.5 MB. Four run-state records report publication completed (October 1: `01`
+and `07`; October 2: `01` and `02`). Four still record `running` (October 1:
+`02`; October 2: `03`, `04` and `05`); that historical label does not establish
+an active process or a completed outcome. Archival preserves intermediate
+reports, corrections and workflow records without rewriting their status.
+
+A scoped reference search found historical publication and layout-migration
+records using the old path, but no current source-code reference to that exact
+path. Historical evidence was left unchanged. The broader migration-consumer
+inventory remains pending.
+
+## Merge executed
+
+On the operator's decisions of 2026-11-11: the unified tree is
+`kb/reports/state/`, chosen because every path the review code depends on was
+already there, so only the cache producers moved. Moved in: `connect/`,
+`critique/`, `friction/`, `premise-decomposition/`, `snapshot-web/`, the
+reachability evidence remnant and the two tag-placement summaries. The
+legacy `cache/agentic-system-analysis/` went to the archive. Removed: the
+cache landing README, the critique README, the cache validation marker, the
+cache ignore block and the two scaffold templates for them. Updated: the
+reports contract, landing and state README; the installed-project templates
+and scaffold manifest; the promotion command's output path; the validator's
+connect-report check; the site exclusion; five tests; eight instructions and
+five collection contracts; the reference landing, commands and storage
+architecture pages; ADR 007's amendment line. Historical records that name
+`kb/reports/cache/` (retained reports, workshop prose, ingest footers that
+the ingest contract already warns about) were left as written.
+
+The second state tree, `kb/agentic-systems/reports/state/`, was archived the
+same day, so one ignored tree remains. The two files main tracked inside the
+future nested checkout are split: the validation marker stays tracked in
+main, because main's validator reads it, and the state README is now ignored
+by main and will be tracked by the state repository as its landing page. A
+main checkout without the nested repository therefore has no state README.
 
 ## Before anything is published
 
