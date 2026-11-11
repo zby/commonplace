@@ -30,7 +30,10 @@ It would be a class-level default: keep the material without curating it and
 without claiming it is useful. Promotion into the main record stays a separate,
 deliberate decision.
 
-The operator wants this repository public.
+The operator wants this repository public so collaborators can participate in
+running automated reports, including reviews. The operator also wants to
+continue that work when switching computers. Sharing operational state, not
+only preserving old runs, is the intended use.
 
 ## Settled
 
@@ -47,11 +50,12 @@ The operator wants this repository public.
 
 ## What the directory holds
 
-Measured on 2026-11-11: 964 MB in 24,099 files.
+Measured on 2026-11-11, before archiving retired review state: 964 MB in
+24,099 files.
 
-- About 500 MB is review data: SQLite stores, their backups, and directories
-  the [state README](../../reports/state/README.md) lists as abandoned and
-  deletable.
+- About 500 MB is abandoned review data: the retired SQLite stores, their
+  backups, and directories the [state README](../../reports/state/README.md)
+  already permits deleting. These are not the current review state.
 - 231 MB is old agentic-system analysis runs under `agentic-system-analysis/`.
   They examine external repositories and may quote their code.
 - 563 files contain `/home/zby` paths.
@@ -60,31 +64,87 @@ Measured on 2026-11-11: 964 MB in 24,099 files.
 - 2 files carry snapshot frontmatter and may be copied snapshots. 152 files
   mention a snapshot path without copying one.
 
+## Current implementation and initial policy
+
+[ADR 127](../../reference/adr/127-review-runs-as-workflows-over-result-files.md)
+replaced the SQLite review and freshness system. Commit `3562ca982` deleted
+its code, commands and tests without compatibility or data migration;
+`61bdb0802` updated the reference pages. The old files remain only as
+abandoned local data. Inspection of `src/`, `pyproject.toml` and `uv.lock`
+found no SQLite implementation or declared SQLite dependency. The remaining
+`sqlite` value in `systems_matrix.py` classifies external systems.
+
+Current review state is files:
+
+- `review/results/`: one result per (note, criterion) pair, holding the
+  judgment and input hashes. Deleting a result makes the pair missing and
+  eligible for review again. Preserve these results when pruning.
+- `review/packets/`: current full-pass disposition and resolution state.
+  Preserve packets needed for unresolved work.
+- `review/runs/`: replay records and run artifacts. Freshness does not read
+  these, but continuation and packet inspection can need them; do not infer
+  that all runs are disposable.
+
+See [review architecture](../../reference/review-architecture.md) for the
+current ownership and lifetimes. Result note paths are repository-relative;
+criterion identities are repository-relative or installed-library identities.
+That does not establish portability of run records or packets.
+
+Start simply, as directed by the operator in this discussion:
+
+- Commit and sync manually, inspecting what will become public.
+- Do not combine conflicting reviews. Choose one complete result, keeping
+  its judgment and hashes together; accept discarded work or a rerun. Keep
+  review updates separate from unrelated changes so they can be reverted.
+- Add coordination rules when actual conflicts show the need, rather than
+  building a merge mechanism now. The existing
+  [isolation analysis](../review-on-workjig/isolation-after-the-store.md)
+  records the same decision to defer cross-run coordination.
+- Initially prune only the explicitly abandoned data above. Broader pruning
+  must preserve review coverage and unresolved findings. Git history may
+  eventually be pruned while preserving current state; no history rewrite
+  or pruning automation is commissioned now.
+
 ## Before anything is published
 
 Publishing cannot be undone, so each of these comes before the first push.
 
-1. Delete the abandoned review data the state README already permits deleting.
+1. Remove the abandoned review data from the publication tree. Done on the
+   operator's direction: 15 top-level entries (716 MB reported by `du`) moved
+   to `../commonplace-archive/kb/reports/state/`, preserving their names.
+   These comprise the old SQLite databases and backups, `review-store-backups/`,
+   `review-jobs/`, `reviews/`, `bundle-reviews/` and `full-pass/`. Current
+   `review/` and other workflows' state were left untouched. The earlier
+   approximate 500 MB inventory above was not a complete size accounting.
 2. Read the 42 key-pattern files. Remove or exclude any real secret.
-3. Decide what to do about local paths: accept, rewrite or exclude.
+3. Audit paths consumed by commands for cross-machine use. Distinguish
+   operational references from historical path mentions; do not globally
+   rewrite logs. Check machine-specific paths beyond `/home/zby`.
 4. Check what the analysis runs quote from external repositories and under
    which licences. Exclude what cannot be redistributed.
 5. Check the 2 files that look like copied snapshots.
 6. Decide what a public reader is told about status: unreviewed model output,
    failed candidates and abandoned runs are in there.
 
+The secret and redistribution checks also apply to later pushes. A clean
+initial import does not establish that future workflow output is publishable.
+
 ## Open questions
 
-- **Who reads a public state repository, and for what?** Durability and sync
-  need only a private one. Name the use that public access serves before
-  paying the publication checks above.
+- **Cross-machine operation.** Verify which files a collaborator needs to
+  run reports and reuse existing review results. Continuing an unfinished
+  run is a separate portability question; it is not established by copying
+  the results.
 - **Pairing with the main repository.** A state commit does not say which main
   commit it belongs to. Record the main commit hash, or accept the loss.
-- **Sync.** Something must commit and push. The simplest rule is at the end of
-  each workflow; the private snapshot repository starts with manual commits.
+- **Sync.** Start with manual commits and pushes. Reconsider automation only
+  after the publication boundary and actual collaboration needs are clear.
 - **Links.** Library files must not depend on state. Does anything tracked
   link into `kb/reports/state/` today?
-- **Binary stores.** SQLite files diff badly in Git. Keep, export or exclude?
+- **Pruning beyond abandoned data.** Establish cleanup rules by payload
+  class before deleting live state. Removing files from the current checkout
+  does not reclaim their Git history; reclaiming history later requires
+  coordination with collaborators.
 - **Effect on retention choices already made.** The
   [ingest working directory case](../decision-lifecycle-evidence/ingest-working-directory.md)
   ends by deleting run records once one decision is made. A durable state
