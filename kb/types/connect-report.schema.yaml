@@ -35,6 +35,8 @@ allOf:
           - contains:
               const: "## Discovery Trace"
           - contains:
+              const: "### Candidate origins"
+          - contains:
               const: "## Connections Found"
           - contains:
               const: "## Bidirectional Candidates"

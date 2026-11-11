@@ -25,6 +25,9 @@ A connect report records evidence for future KB authoring; it is not itself a du
 - Capture actual query strings, scores when available, and the evaluated or rejected candidates in `Discovery Trace`.
 - The trace must say which indexes were read, which searches were run, which candidates were followed, and why candidates were kept or rejected.
 - A trace that only lists keywords without query strings, scores when available, or candidate evaluations is insufficient.
+- End the trace with a `### Candidate origins` subsection. It has one line per candidate kept in `Connections Found`, `Bidirectional Candidates` or `Reverse-edge Candidates`: `- {repo-root target path} — {surfaces}`. List the discovery surfaces that exposed the candidate in the order they exposed it; the first is its origin. Write `None` when no candidate was kept.
+- Name surfaces only with these identifiers: `known` (user-supplied, already linked from the source, or already in loaded context), `curated-head`, `titles`, `descriptions`, `body-search`, `link-following`.
+- Origins are measurement data about discovery surfaces, not connection content. Keep them out of the connection sections, so a writer acting on the report can ignore them.
 
 ## Connection Standards
 
@@ -76,7 +79,7 @@ Downstream connection consumers may ignore this section. A later explicit mainte
 
 ## Quality Gates
 
-- Verify every candidate path exists before including it as a connection.
+- Every candidate link must resolve. `commonplace-validate` checks this, along with the required sections and frontmatter fields.
 - Remove any connection that cannot complete the sentence: "[A] connects to [B] because [specific reason]."
 - Do not propose regular note connections to raw text files; route them to `Raw Text Candidates`.
 - Do not create synthesis notes, edit indexes, mutate library artifacts, or write side files from a connect report.
@@ -111,6 +114,11 @@ depth: standard
 **Link following:**
 - {candidate neighborhoods traversed and what they revealed}
 
+### Candidate origins
+
+- kb/theory/target.md — titles, body-search
+- kb/theory/other-source.md — link-following
+
 ## Connections Found
 
 - [target](../../../../theory/target.md) -- **extends**: {specific reason why this connection exists}
@@ -121,7 +129,7 @@ depth: standard
 
 ## Reverse-edge Candidates
 
-- [other-source](../../../../theory/other-source.md) → source -- **evidence**: {note that should author a link TO this target under its own COLLECTION.md rules}
+- [other-source](../../../../theory/other-source.md) → source -- **evidenced-by**: {note that should author a link TO this target under its own COLLECTION.md rules}
 
 ## Off-authorisation Candidates
 

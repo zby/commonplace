@@ -45,6 +45,8 @@ Active depth: **standard** (quick: index-only single pass; deep: full discovery,
 
 Capture discovery trace throughout — indexes read, actual query strings, candidate evaluations, and links followed. A trace with only keywords is insufficient.
 
+When a candidate first appears, note which discovery surface exposed it, and note any later surface that exposes it again. The report's `Candidate origins` subsection records these per kept candidate; origins reconstructed after discovery are unreliable.
+
 For **each local destination collection** authorised by the source's outbound section:
 
 ### 1. Decide breadth from the source COLLECTION.md's guidance
@@ -62,7 +64,13 @@ In order of cost:
 - **Full titles listing.** Generate the complete claim-title surface for the destination collection once, fresh (nothing is stored, so nothing can go stale) — titles are claims in this KB, so this is the cheapest complete recall surface for candidate discovery, roughly a quarter of the description listing's size:
 
   ```bash
-  rg -N --no-heading -m1 '^# ' kb/<destination>/ --glob '*.md'
+  rg -N --no-filename -m1 '^# (.*)' -r '$1' kb/<destination>/ --glob '*.md' --glob '!*.brief.md'
+  ```
+
+  The listing omits paths: a filename repeats its title, so paths double the listing. Resolve a path only for a title worth pursuing:
+
+  ```bash
+  rg -l -F -x '# <title>' kb/<destination>/
   ```
 
 - **Scoped `rg` description listing.** Enumerate candidates at path + description resolution without loading a complete index:
@@ -123,7 +131,7 @@ Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 
-- Verify every candidate path exists before including it.
+- After saving, run `commonplace-validate <report path>` and fix any failure. It checks the required sections and that every link resolves.
 - Write `None` for empty sections.
 - Put traversal issues and durable follow-up signals in the report's `Maintenance Observations` section, not in a side file.
 
@@ -133,7 +141,7 @@ Every section describes **candidate** signal for a future writer to act on. The 
 
 **Never** add "related" connections without specific reasoning. **Never** force connections — if no genuine connections exist, say so honestly. **Never** propose a label outside the destination's authorised set; route those to Off-authorisation Candidates.
 
-**Always** capture discovery trace per destination. **Always** verify candidate paths exist before including them. **Always** read the source `COLLECTION.md`'s outbound-linking section before prospecting — it is the only authoritative linking-rules surface, regardless of how that section is internally structured.
+**Always** capture discovery trace per destination. **Always** validate the saved report. **Always** read the source `COLLECTION.md`'s outbound-linking section before prospecting — it is the only authoritative linking-rules surface, regardless of how that section is internally structured.
 
 ## Maintenance observations
 
