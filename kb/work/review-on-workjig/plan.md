@@ -13,9 +13,9 @@ shared-layer architecture is a future direction, not an execution phase.
 ## Current state and next work
 
 As of 2026-11-10. The code described in phases 1 to 5 is built and
-committed; phase 5 has prepared two live final candidates, both waiting for
-publication approval with their originals unchanged. Live strike-list
-selection and publication remain unexercised. The operator has moved routine approval to final
+committed; phase 5 has completed two live revisions through operator-approved
+publication, with zero new workers on the publication repeats. Live
+strike-list selection and a live full pass remain unexercised. The operator has moved routine approval to final
 publication, superseding the plan-approval design described in earlier phase
 records below. The [publication-boundary change](./publication-boundary-change.md)
 records this commission and its consumer checks. The earlier stop-plan override and
@@ -44,15 +44,14 @@ that plan. Directory-type changes are not prerequisites.
 On the operator's direction, finish review before testing the same
 publication boundary in ingest, then decide what is worth sharing:
 
-1. **Preparation done:** both selected Sol revision trials ran automatically
-   through assessment and one settled pass to final candidate and diff.
-   Originals and the brief remain byte-identical; candidates validate, guards
-   are clean, and unapproved repeats launch nothing. See the
-   [continuation record](./publication-boundary-change.md#sol-continuations-stopped-at-publication).
-   Do not publish: the operator commissioned preparation only.
+1. **Ordinary revision trial done:** both selected Sol trials ran automatically
+   through assessment and one settled pass, stopped at publication, and then
+   published the exact candidates after explicit operator approval. Validation
+   and checkout guards passed; publication launched no new workers. See the
+   [publication record](./publication-boundary-change.md#operator-approved-publication).
    Keep wording/abstraction selection stops when those passes are warranted;
-   do not force one into these plans merely for coverage. Their live selection
-   and subsequent final publication remain separate unfinished checks.
+   do not force one into these plans merely for coverage. A live run through
+   selection approval and subsequent publication remains a separate unfinished check.
 2. Implement step 2 of the [types plan](./types-plan.md#implementation-sequence-and-acceptance):
    the individual review-result type, with pair and bundle readers and writers
    converted together. Stop and assess the deletion ledger before later types.

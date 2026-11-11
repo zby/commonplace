@@ -103,7 +103,26 @@ Candidate hashes, for identifying these particular prepared outputs:
 - Article: `94e5f75c0b57547b659df4cd5d241277f80c30d49e2112ed326a51ae37758bd2`.
 - Note: `6868ff186dc6156751afd0b6774407a031745781b0863698ed9096f08394cc7f`.
 
-No strike-list pass was recommended. Live selection approval and actual
-publication therefore remain unexercised; fake-harness coverage is not a
-substitute. The commissioned stopping point is reached for both trials.
-Publication remains outside this commission.
+No strike-list pass was recommended. At the preparation stop, live selection
+approval and publication were still unexercised. The commissioned stopping
+point was reached for both trials. Publication was outside that commission;
+the subsequent operator approval below authorized it.
+
+### Operator-approved publication
+
+The operator subsequently approved both prepared candidates. Their manifest
+hashes and current originals were checked against the retained trial values
+before the two approval commands were executed. Both workflows then completed
+with `applied: true`, `complete: true` and clean checkout guards. They launched
+zero new workers and published exactly the previously inspected candidate
+bytes; the write brief remained unchanged.
+
+Both published artifacts validated without failures or warnings. The approved
+changes were committed separately:
+
+- `2b98bdf6c`: article opening clarification.
+- `290f9370d`: proportion test organization and evidence-limit placement.
+
+This exercises the ordinary live revision path through final publication.
+The live strike-list selection path and a live full pass remain unfinished;
+these two revision runs do not establish those behaviors.

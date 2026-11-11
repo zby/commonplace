@@ -6,11 +6,10 @@ Use Commonplace artifact types instead of contracts duplicated in workflow
 Python. Following Fable's assessment, the operator approved this order:
 commit the approval fix, capture binding write briefs, trial revision live,
 then implement the individual review-result slice before the first collection
-sweep. The operator selected older artifacts and Sol; both trials now have
-validated final candidates waiting under the subsequently agreed publication
-boundary. Settled intermediate work is preauthorized; exact final publication
-and unsettled selection decisions require approval. Neither original was
-changed. See the
+sweep. The operator selected older artifacts and Sol; both ordinary revision
+trials have now completed through explicit final-publication approval. Settled
+intermediate work is preauthorized; exact final publication and unsettled
+selection decisions require approval. See the
 [boundary change](./publication-boundary-change.md) and the
 [live assessment record](./plan.md#live-sol-assessments-2026-11-10).
 Later type slices remain proposals; directory typing is a separate decision.
@@ -350,9 +349,11 @@ consumers; review adoption must not silently redefine `verifies` for them.
 
 The approval-interface follow-up is committed as `e93284673`. Binding briefs
 are implemented in `4a29b1bf5` for planning and editing workers without changing judge
-inputs or result freshness. Complete the authorized live revision trial
-before step 2. Ordinary plan execution needs no approval; do not infer final
-publication authority from permission to prepare a candidate.
+inputs or result freshness. The two ordinary live revision trials completed
+through publication, so step 2 is next. Ordinary plan execution needs no
+approval; do not infer final publication authority from permission to prepare
+a candidate. Live strike selection and full-pass validation remain separate
+unfinished checks.
 
 1. **Inventory and contract cutover.** Freeze the worker/stored-field split,
    audit footer consumers, and write the multi-consumer change packet. Choose
