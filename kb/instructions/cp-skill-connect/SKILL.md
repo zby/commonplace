@@ -131,7 +131,7 @@ Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 
-- After saving, run `commonplace-validate <report path>` and fix any failure. It checks the required sections and that every link resolves.
+- After saving, run `commonplace-validate <report path>` and fix every failure and warning. A missing section is a failure; a link that does not resolve is a warning.
 - Write `None` for empty sections.
 - Put traversal issues and durable follow-up signals in the report's `Maintenance Observations` section, not in a side file.
 
