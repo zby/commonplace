@@ -10,7 +10,7 @@ The type system serves seven distinct roles. Each is developed in its own note o
 
 ## Navigation
 
-Agents are stateless and context is finite. [Types give agents structural hints before opening documents](./types-give-agents-structural-hints-before-opening-documents.md) — a `spec` says "you can implement from this," a `structured-claim` says "there's a developed argument with evidence," an `index` says "follow links from here." The type plus description let an agent narrow from hundreds of files to the few it needs without opening any of them.
+Agents are stateless and context is finite. Title and description let an agent decide what to read before opening it; placement and type add only a coarse prior about what kind of document a hit is. The routing value of a type is therefore indirect: it is the contract that makes a discriminating description exist.
 
 ## Metadata enforcement
 
@@ -69,7 +69,6 @@ Relevant Notes:
 - [collections and types](../reference/collections-and-types.md) — the current path-valued type model and examples
 - [directory-scoped-types-are-cheaper-than-global-types](./directory-scoped-types-are-cheaper-than-global-types.md) — the economic argument for thin global types and local extension
 - [Artifact classification separates content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md) — explains the region- and path-level questions that collection and type contracts do not answer
-- [types-give-agents-structural-hints-before-opening-documents](./types-give-agents-structural-hints-before-opening-documents.md) — develops: the navigation role of types
 - [type-system-enforces-metadata-that-navigation-depends-on](./type-system-enforces-metadata-that-navigation-depends-on.md) — develops: the enforcement role that makes navigation reliable
 - [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](./human-writing-structures-transfer-to-llms-because-failure-modes.md) — develops: the failure-mode transfer argument for output quality
 - [Structured-prompt gains do not establish training-distribution selection](./structured-prompt-gains-do-not-establish-distribution-selection.md) — contrasts: limits what prompt-performance evidence establishes about the mechanism behind output quality

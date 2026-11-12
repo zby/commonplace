@@ -79,6 +79,16 @@ kept after their workflow ends. The agentic-system analysis process record is
 the recorded exception until integration copies it into the state tree.
 Version capture, commit cadence and pruning remain open.
 
+The same day two review exercises on long-untouched theory notes supplied
+decision-lifecycle evidence. The two-context-boundaries note went through two
+gate sweeps and two fix passes: 44 pairs stayed at 36 pass and 8 warn across
+both, because the remaining warnings were claim-level and the fix procedure
+only scopes; the note was generalized and retitled by operator decision. The
+structural-hints note went through one full improvement pass
+(`commonplace-review run full-pass`, 13 launches), which handed back `revise`
+without editing; the operator judged the residue owned by its neighbours and
+deleted the note, recorded on the packet as `alternative-applied`.
+
 ## Working map
 
 | File | Role |

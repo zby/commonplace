@@ -823,7 +823,6 @@ plugins:
         'notes/type-system-enforces-metadata-that-navigation-depends-on.md': 'theory/type-system-enforces-metadata-that-navigation-depends-on.md'
         'notes/type-system-index.md': 'tags/type-system-README.md'
         'notes/type-system-README.md': 'tags/type-system-README.md'
-        'notes/types-give-agents-structural-hints-before-opening-documents.md': 'theory/types-give-agents-structural-hints-before-opening-documents.md'
         'notes/types/structured-claim.md': 'theory/types/structured-claim.md'
         'notes/types/theory-proposal.md': 'theory/types/theory-proposal.md'
         'notes/unattended-work-needs-the-functions-that-interaction-supplied.md': 'theory/unattended-work-needs-the-functions-that-interaction-supplied.md'

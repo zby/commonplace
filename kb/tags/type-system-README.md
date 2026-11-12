@@ -14,7 +14,6 @@ Why documents have types, what type contracts require, and how typed or structur
 
 ## Type Roles
 
-- [types-give-agents-structural-hints-before-opening-documents](../theory/types-give-agents-structural-hints-before-opening-documents.md) — navigation: type + description let agents route without loading full documents
 - [type-system-enforces-metadata-that-navigation-depends-on](../theory/type-system-enforces-metadata-that-navigation-depends-on.md) — enforcement: descriptions exist because the note base type requires them; without enforcement, navigation degrades
 - [document-types-should-be-verifiable](../theory/document-types-should-be-verifiable.md) — verification: types assert structural properties, not subject matter; verification gradient from deterministic to corpus-level
 - [directory-scoped-types-are-cheaper-than-global-types](../theory/directory-scoped-types-are-cheaper-than-global-types.md) — extensibility: global types tax every session; local types load only when working in that directory
