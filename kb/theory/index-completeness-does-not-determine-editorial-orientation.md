@@ -40,6 +40,6 @@ Relevant Notes:
 
 - [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — foundation: establishes the fallback-suppression risk that curated sections must manage
 - [title-as-claim exposes commitments, enabling Popperian maintenance](./title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — extends: claim titles add orientation even in generated listings, but curation adds relational structure that titles alone cannot carry
-- [two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md) — foundation: the index boundary defines the regime where curated orientation becomes operationally necessary
+- [two context boundaries govern collection operations](./two-context-boundaries-govern-operations-on-read-together-note-sets.md) — foundation: the index boundary defines the regime where curated orientation becomes operationally necessary
 - [004-replace-areas-with-tags](../reference/adr/004-replace-areas-with-tags.md) — evidenced-by: the generated-tail design architecturally separates the two kinds of index value this note distinguishes
 - [notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: quality scores address which notes to connect, while curation addresses how to present connected notes for navigation

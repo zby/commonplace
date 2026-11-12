@@ -56,7 +56,7 @@ The /connect discovery identified 7 KB notes and 1 sibling source with genuine c
 
 - [Information value is observer-relative](../theory/information-value-is-observer-relative.md) — RAG improves accuracy only under MECW; above it, added retrieved content actively degrades performance. Its value therefore depends on the consumer's effective processing capacity, not only on relevance.
 
-- [two-context-boundaries-govern-collection-operations](../theory/two-context-boundaries-govern-collection-operations.md) — The full-text boundary should be calibrated to MECW, not MCW. The note's claim that "the full-text boundary may not [grow with context windows], because complexity costs limit how many note bodies an agent can usefully reason about" is directly supported.
+- [two-context-boundaries-govern-collection-operations](../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md) — The full-text boundary should be calibrated to MECW, not MCW. The note's claim that "the full-text boundary may not [grow with context windows], because complexity costs limit how many note bodies an agent can usefully reason about" is directly supported.
 
 - [in-context-learning-presupposes-context-engineering](../theory/in-context-learning-presupposes-context-engineering.md) — Paulsen quantifies something stronger: even when knowledge IS in the window, it fails if the window exceeds MECW. Context engineering must enforce size limits, not just select the right knowledge.
 

@@ -479,7 +479,7 @@ the library currently holds both without choosing.
    multi-step process, pays for coordination machinery and handoff loss.
    The library holds the mechanism
    ([context is scarce for feasibility before cost](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md);
-   [two boundaries, three regimes](../../theory/two-context-boundaries-govern-collection-operations.md);
+   [two boundaries, three regimes](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md);
    [a scheduler inside a conversation degrades](../../theory/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md);
    [crossing contexts needs coordination guarantees](../../theory/agent-orchestration-needs-coordination-guarantees-not-just.md))
    and ADR 113/118 priced one crossing. A record should therefore state

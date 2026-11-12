@@ -43,7 +43,7 @@ benefits from broader coverage that keeps candidate notes visible. A curated
 narrative can support the first, while a complete manifest can support the
 second. Systems may keep those as separate views or combine both layers. [Two
 context boundaries govern
-collection operations](./two-context-boundaries-govern-collection-operations.md)
+collection operations](./two-context-boundaries-govern-operations-on-read-together-note-sets.md)
 develops that distinction.
 
 When one area serves both operations, the two reinforce each other.
@@ -140,7 +140,7 @@ Relevant Notes:
 
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: finite usable attention creates the capacity side of the cohort boundary
 - [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: explains why omission becomes harmful when an apparently complete set closes broader discovery
-- [Two context boundaries govern collection operations](./two-context-boundaries-govern-collection-operations.md) — extends: separates full-body comparison from title-and-description orientation and derives the resulting operating regimes
+- [Two context boundaries govern collection operations](./two-context-boundaries-govern-operations-on-read-together-note-sets.md) — extends: separates full-body comparison from title-and-description orientation and derives the resulting operating regimes
 - [A knowledge base should support fluid resolution-switching](./a-knowledge-base-should-support-fluid-resolution-switching.md) — extends: places read-together cohorts among the resolution levels a consumer must move between
 - [Quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: treats comparative-reading yield as a possible signal for evaluating cohort construction
 - [004-Replace areas with tags](../reference/adr/004-replace-areas-with-tags.md) — evidenced-by: records one system separating high-recall navigation tags from future purpose-built comparative scope

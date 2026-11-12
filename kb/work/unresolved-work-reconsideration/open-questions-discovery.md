@@ -159,7 +159,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md](../../theory/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md) — line 56: `## Open Questions`
 - [theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md](../../theory/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — line 58: `## Open Questions`
 - [theory/traditional-software-can-bracket-executor-conformance-llm-systems.md](../../theory/traditional-software-can-bracket-executor-conformance-llm-systems.md) — line 67: `## Open Questions`
-- [theory/two-context-boundaries-govern-collection-operations.md](../../theory/two-context-boundaries-govern-collection-operations.md) — line 59: `## Open questions`
+- [theory/two-context-boundaries-govern-collection-operations.md](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md) — line 59: `## Open questions`
 - [theory/unattended-work-needs-the-functions-that-interaction-supplied.md](../../theory/unattended-work-needs-the-functions-that-interaction-supplied.md) — line 42: `## Open Questions`
 - [theory/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md](../../theory/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md) — line 44: `## Open Questions`
 - [theory/unified-calling-conventions-enable-bidirectional-refactoring.md](../../theory/unified-calling-conventions-enable-bidirectional-refactoring.md) — line 55: `## Open Questions`

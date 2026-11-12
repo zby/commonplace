@@ -62,7 +62,7 @@ Deferred (mechanism, not direction):
 
 - [003-connect-skill-discovery-strategy](./003-connect-skill-discovery-strategy.md) — supersedes: this replaces 003's index-first primary discovery while retaining its curated-focused-index surface
 - [context-efficiency-is-the-central-design-concern-in-agent-systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the per-fork cost of a whole-index read is what makes retiring it worthwhile
-- [two-context-boundaries-govern-collection-operations](../../theory/two-context-boundaries-govern-collection-operations.md) — rests-on: per-fork load is the boundary this decision optimizes
+- [two-context-boundaries-govern-collection-operations](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md) — rests-on: per-fork load is the boundary this decision optimizes
 - [feasibility-is-the-heaviest-forks-net-load](../../theory/feasibility-is-the-heaviest-forks-net-load.md) — rests-on: feasibility is set by the heaviest fork's net load, which the complete-index read inflates
 - [index completeness does not determine editorial orientation](../../theory/index-completeness-does-not-determine-editorial-orientation.md) — rests-on: why curated heads stay committed while generated listings move to build time
 - [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) — procedure: the discovery skill whose standard read path this decision rewrites

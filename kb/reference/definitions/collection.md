@@ -68,6 +68,6 @@ Relevant Notes:
 - [Collections and types](../collections-and-types.md) — extends: describes path-valued type resolution and how collection-local type specs remain separate from collection authoring contracts
 - [Directory placement is total, frontmatter classification is partial](../../theory/directory-placement-is-total-frontmatter-classification-is-partial.md) — rests-on: explains why path placement selects one complete local contract
 - [Artifact classification separates content kind, lineage, and authority](../../theory/artifact-classification-separates-content-kind-lineage-and-authority.md) — see-also: separates the text contract's whole-artifact authoring role from region- and path-level classifications
-- [two-context-boundaries-govern-collection-operations](../../theory/two-context-boundaries-govern-collection-operations.md) — example: one operational role that collection boundaries can play for note collections
+- [two-context-boundaries-govern-collection-operations](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md) — example: one operational role that collection boundaries can play for note collections
 - [a functioning KB needs a workshop layer not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — contrasts: library collections vs workshop directories
 - [why directories despite their costs](../../theory/why-directories-despite-their-costs.md) — rests-on: the general argument for directory-based organisation that collections make load-bearing
