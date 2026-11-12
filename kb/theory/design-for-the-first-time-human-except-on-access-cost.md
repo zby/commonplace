@@ -69,7 +69,7 @@ difference.
 Relevant Notes:
 
 - [Context efficiency is the central design concern in agent systems](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — grounds: whole-artifact agent access consumes bounded context, which makes the access-path exception matter
-- [Two context boundaries govern collection operations](./two-context-boundaries-govern-operations-on-read-together-note-sets.md) — extends: applies the selected-slice/whole-artifact distinction to full-text and index-level collection operations
+- [Two context boundaries govern operations on read-together note sets](./two-context-boundaries-govern-operations-on-read-together-note-sets.md) — extends: applies the selected-slice/whole-artifact distinction to full-text and index-level collection operations
 - [Under sub-agent decomposition, feasibility is the heaviest fork's net load](./feasibility-is-the-heaviest-forks-net-load.md) — mechanism: a scoped query reduces the material loaded by the fork whose net load determines feasibility
 - [Human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — extends: sharpens one row of the broader comparison into an access-path boundary and a per-consumer materialization response
 - [Agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md) — mechanism: a pointer or query can select a target before the whole artifact enters context
