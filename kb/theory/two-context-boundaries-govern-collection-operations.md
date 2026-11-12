@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: []
 ---
 
-# Two context boundaries govern collection operations
+# Two context boundaries govern operations on read-together note sets
 
 [Areas exist because useful operations require reading notes together](./areas-exist-because-useful-operations-require-reading-notes-together.md) identifies two operations that justify areas (read-together note sets): orientation (reconstructing what is known about a topic) and comparative reading (detecting redundancy, contradiction, tension, and gaps across notes). It also observes that comparative reading usually needs more of each note than orientation does, so the two operations need different representations. This note develops that difference into its consequence for context limits. Comparative reading needs full note bodies — you can't reliably detect redundancy between two notes from their descriptions alone. Orientation can work at either resolution — full text or descriptions. This means the two operations hit different context limits, which creates distinct operational regimes.
 
