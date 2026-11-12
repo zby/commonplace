@@ -48,13 +48,13 @@ After all fixes:
 5. Re-read edited sections to verify flow and cohesion. Fixes should read as if they were always there.
 6. If any fix was applied and the note carries `user-verified`, remove that field: a fix that changes framing or accuracy is a substantive edit, and only a human may restore verification (see the [note type](../../types/note.md)).
 7. Produce the fix report (format below).
-8. If any fix was applied, re-review the note. The edit stales exactly the pairs whose watched parts it changed, and the sweep asks only those:
+8. If any fix was applied, re-review the note. The edit stales every pair whose watched parts it changed, including pairs that passed before the edit, so ask for all gates and let freshness select the pairs; the sweep skips fresh results without `--force`:
 
    ```bash
-   commonplace-review run gates {note-path} --criteria {requests...}
+   commonplace-review run gates {note-path} --all-gates
    ```
 
-   Give the catalog gate ids from the rows' `criterion-id` (`prose/source-residue`). A row whose `criterion-id` is a type spec path (`kb/types/note`) takes `type`, a `COLLECTION` path takes `collection`, and the critique instruction's path takes `critique`. Read the report as [run review batches](../run-review-batches.md) describes, and add each re-reviewed pair's new outcome to the fix report. Skip this step when the user asked only for fixes, and say that the edited pairs are stale.
+   Do not restrict the sweep to the worked rows with `--criteria`: a body edit stales most catalog gates, and a pass recorded against the pre-edit text is not a pass of the edited note. Read the report as [run review batches](../run-review-batches.md) describes, and add each re-reviewed pair's new outcome to the fix report, listing separately any previously passing pair that now warns. Skip this step when the user asked only for fixes, and say that the stale pairs, worked or not, await re-review.
 
 ## Constraints
 

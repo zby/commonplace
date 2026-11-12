@@ -50,16 +50,14 @@ workers are single-use and receive no follow-up task.
 
 ### 3. Re-review the edited notes
 
-Run one gate sweep over every note that changed, with the criteria whose
-warnings were worked (catalog gate ids from `criterion-id`; `type`,
-`collection` or `critique` for those lenses):
+Run one gate sweep over every note that changed, asking for all gates:
 
 ```bash
-commonplace-review run gates {edited-notes...} --criteria {requests...} --grouping bundle
+commonplace-review run gates {edited-notes...} --all-gates --grouping bundle
 ```
 
-The edits stale exactly the pairs whose watched parts changed, and the sweep
-asks only those. Read its report as [run review batches](../run-review-batches.md)
+The edits stale every pair whose watched parts changed, including pairs that
+passed before, and the sweep asks exactly those, skipping fresh results. Read its report as [run review batches](../run-review-batches.md)
 describes.
 
 ### 4. Report

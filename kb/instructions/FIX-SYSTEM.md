@@ -64,7 +64,7 @@ Instruction: [fix-review-warnings.md](./fix-warnings/fix-review-warnings.md)
 3. For each finding: read the recommendation and context, then decide whether to fix, reject, or defer it
 4. Apply minimal edits to fixed findings and record evidence for rejected findings
 5. Write fix report to `kb/reports/state/fixes/{note-stem}.fix-report.md`
-6. If the note changed, rerun the gate sweep on it for the criteria whose warnings were worked; it asks only the pairs the edit staled
+6. If the note changed, rerun the gate sweep on it with `--all-gates`; freshness selects the pairs, so it asks every pair the edit staled, including ones that passed before
 
 ### Fix descriptions
 
