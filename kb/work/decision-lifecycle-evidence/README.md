@@ -27,15 +27,19 @@ first test:
   session information and remain available for some time. Trust that record;
   do not audit its completeness or redesign its capture, retention or deletion
   rules. A future harness change is a separate decision.
-- **Do not create duplicate primary process records.** Mining traces for useful
-  material is in scope; maintaining a parallel exhaustive archive is not.
-- **Caches must earn the extraction work they save.** They may hold costly
-  extractions or auxiliary information prepared during execution. They are not
-  automatically a required stage or a second durable archive.
-- **Lasting, sufficiently valuable material is a candidate for deliberate
-  retention rather than indefinite caching.** Duration or possible debugging
-  usefulness alone does not justify admission to Git.
-- **Retained artifacts must serve their intended uses without session traces.**
+- **Preserve intermediate artifacts by default in the second repository.**
+  The operator set this provisional direction on 2026-11-11 for debugging and
+  inspection, without per-file justification. Reconsider workflows with
+  substantial churn or repository growth. This does not by itself implement
+  capture, synchronization or permission to publish sensitive material.
+- **Do not create duplicate primary process records.** Preserve workflow files
+  already produced; this does not require copying the harness's entire session
+  archive or generating new accounts. Extra production must still earn its cost.
+- **Preservation is not main-record admission.** Operational files may be kept
+  durably without curated extraction, endorsement or inclusion in the main
+  repository. Lasting value may warrant separate extraction; debugging value
+  already supplies the accepted class-level reason for operational preservation.
+- **Artifacts admitted to the main record must serve their intended uses without session traces.**
   Preserve the necessary context, evidence, reasons and qualifications, directly
   or through other durably retained material. Trace links can be optional
   provenance, not indispensable dependencies. This does not require preserving
@@ -48,6 +52,25 @@ first test:
 These distinctions would still matter under a future arrangement without the
 current harnesses. That possibility does not expand this commission.
 
+## Current state — 2026-11-11
+
+Two concrete arrangements now have dispositions. The ingest working directory
+is kept provisionally for one decision about the repair round, with a recorded
+end condition. The cache/state investigation led to
+[ADR 128](../../reference/adr/128-one-ignored-operational-tree-under-kb-reports-state.md),
+implemented in `9a854f3d0`: ignored report outputs share `state/`, and cleanup
+is decided per workflow. This resolves the directory split, not admission to
+the tracked record or connect freshness.
+
+The ADR-versus-commit comparison remains a design comparison without a selected
+carrier policy. The operator has now commissioned a
+[workflow intermediate files ledger](./workflow-intermediate-files-ledger.md)
+to show current handling against the preservation default. The first pass
+identifies deletion, replacement and location gaps; it does not implement
+producer changes. Complete its stated coverage gaps before claiming all
+workflows are covered. The second repository's publication and setup remain
+with the public-state-repository workshop.
+
 ## Working map
 
 | File | Role |
@@ -56,13 +79,17 @@ current harnesses. That possibility does not expand this commission.
 | [Git and retained artifacts](./git-and-retained-artifacts.md) | Bounded carrier comparison for decision accounts: ADR files, commit messages and access routes, with equivalent content. |
 | [ADR 089 premature placement](./adr-089-premature-placement.md) | Historical evidence that committing a decision account can communicate more than the implementation supports; not a current defect or a measured error rate. |
 | [Review storage carrier jump](./review-storage-carrier-jump.md) | Historical evidence that leaving Git and choosing a database were decided as one choice, without comparing an untracked file layout; read from the retained ADRs, not from the original session. |
-| [Cache and state hold the same kind of record](./cache-and-state-hold-the-same-kind-of-record.md) | Inventory of untracked report storage and comparison of how review results and connect reports are read; connect freshness is parked as sensible but hard, so the boundary between the two areas stays undefined. |
+| [Cache and state hold the same kind of record](./cache-and-state-hold-the-same-kind-of-record.md) | Dated inventory and reader comparison, followed by ADR 128's implemented removal of the directory split; connect freshness remains deferred. |
+| [Ingest working directory](./ingest-working-directory.md) | Current handoff retention and the repair-round observation trigger; later debugging-retention direction requires reconsidering its original deletion end condition. |
+| [Workflow intermediate files ledger](./workflow-intermediate-files-ledger.md) | Current paths, overwrites, deletions and retention gaps across workflow families; explicit remaining coverage, with no producer changes. |
 
-The map is preliminary. No new retention threshold, mining schedule, cache
-lifetime, marker, index or record type has been selected. The workflow examples
+The general map remains preliminary. The two bounded dispositions above do
+not select a universal retention threshold, mining schedule, cache lifetime,
+marker, index or record type. The workflow examples
 are starting cases, not an obligation to test every combination. Agentic-system
-analysis is set aside: its worktree and automatic merge have a different
-integration model.
+analysis remains outside the original carrier comparison, but its intermediate
+files are included in the ledger because worktree integration does not preserve
+all local debugging evidence.
 
 ## How to advance the work
 
@@ -95,15 +122,25 @@ work, state it and stop rather than expanding the investigation indefinitely.
 
 ## Current choices worth examining
 
-- For a consumed connect report or revision candidate, what future use still
-  benefits from a separate artifact beyond its committed contribution and trace?
-- When does saving an expensive extraction warrant a cache, and when does its
-  lasting value warrant independent retained content?
+- Which workflows delete or overwrite intermediates before the second
+  repository could preserve them? Complete the ledger's coverage, then select
+  separately authorized implementation changes.
+- Which operational material deserves curated extraction into the main record,
+  beyond preservation in the second repository?
+- Which workflows, if any, produce enough churn to justify an exception?
+  No measured exception or numerical threshold is adopted.
 - For a decision worth retaining, what must survive trace deletion, and which
   existing file or Git access route makes it usable at acceptable cost?
-- What separates untracked records that may be deleted from those that may
-  not? Regeneration does not: most cache entries are paid judgments, like
-  review results. See [cache and state](./cache-and-state-hold-the-same-kind-of-record.md).
+- Do the per-workflow cleanup rules adopted by ADR 128 identify acceptable
+  losses in actual use? The cache/state split no longer supplies that policy;
+  [the investigation](./cache-and-state-hold-the-same-kind-of-record.md) records why.
+- What does the [ingest case](./ingest-working-directory.md) show about the
+  repair round, and which extra record-producing machinery still earns its
+  cost? Historical preservation now has an accepted debugging use beyond that
+  decision; it no longer follows that all records should be deleted afterwards. At this update,
+  this machine has no `handoff.yaml` records under `kb/reports/state/ingest/`;
+  that local count establishes neither activity on other machines nor failure
+  of the arrangement. Trace recovery remains the stated fallback.
 - When would on-demand extraction be insufficient compared with selective
   proactive mining? No recurring mining programme is preselected.
 

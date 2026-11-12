@@ -87,11 +87,29 @@ the same day:
   connect reports is a missing feature, not a property of the record kind.
   The difference between the two classes therefore remains not well defined.
 
-Nothing is built or changed in the reports contract. The cache and state
-areas keep their present contents and wording. The undefined boundary is an
-open question for this workshop, not a defect to repair now.
+At that point, nothing had been built or changed in the reports contract.
+The cache and state areas kept their contents and wording. The undefined
+boundary remained an open question, not a defect to repair immediately.
+The later disposition below supersedes that storage status, not the decision
+to defer connect freshness.
 
-## What a unification would have to settle
+## Later disposition — 2026-11-11
+
+[ADR 128](../../reference/adr/128-one-ignored-operational-tree-under-kb-reports-state.md),
+implemented in `9a854f3d0`, removes the cache/state split. Ignored workflow
+outputs now belong under `kb/reports/state/`; tracked report records remain
+under `retained/`. The producing workflow decides cleanup and states what
+deletion loses. The investigation's finding that the old location did not
+reliably determine deletion cost informed this change.
+
+The change does not implement connect freshness, establish a general Git
+admission threshold, or measure whether the new arrangement improves use.
+A separate operational-state repository remains with the
+[public-state-repository workshop](../public-state-repository/README.md).
+The inventory and reader expectations above describe the pre-migration
+observation; they are not a fresh count or a complete guarantee about readers.
+
+## Questions raised before the layout decision
 
 - **The inputs of a connect report.** A review's inputs are one note and one
   criterion. Connect searches every destination collection that the source's
@@ -108,9 +126,10 @@ open question for this workshop, not a defect to repair now.
   longer exists. A second attempt should say what differs this time. One
   candidate difference: a result file needs no registration, only hashes in
   its own frontmatter.
-- **What decides retention once the kinds are one.** Candidates are the
-  expected number of further reads and the cost of replacement. Neither is
-  measured.
+- **What decides retention once the kinds are one.** ADR 128 now assigns
+  cleanup to workflows rather than the directory class. Expected further
+  reads and replacement cost may inform those rules; neither is measured
+  here. The separate question of admission to Git remains open.
 - **Spent evidence.** The one-off evidence directories fit neither area. Their
   choice is to delete or to retain. That is this workshop's existing question
   about consumed outputs.

@@ -62,7 +62,7 @@ parent's. That is an inference.
 The first run under the new skill, on 2026-11-11, published on its first
 check. It ran before the record existed and left no data.
 
-## End condition
+## Original end condition
 
 Revisit when about 20 ingest runs have records, or earlier if the skill is
 revised for another reason. Then decide the repair round from the records.
@@ -72,4 +72,23 @@ appeared, `publish` and `close` return to deleting the working directory, and
 `prune` and the kept-run handling in `prepare` are removed.
 
 If the records are lost or too few when the question is asked, fall back to
-the trace. That loss is acceptable.
+the trace. That loss was accepted for this original use.
+
+## Later direction — preserve intermediates for debugging
+
+On 2026-11-11 the operator set a provisional default to keep intermediate
+workflow artifacts in the second repository for debugging and inspection,
+reconsidering cases with substantial churn. That supplies another accepted
+consumer after the repair-round decision. The original argument that these
+records have no later consumer no longer settles their disposal.
+
+The repair-round observation trigger remains useful. Separately reconsider
+continued record production, current-working-directory cleanup and historical
+preservation. Ending extra production need not erase existing records, and
+removing a current file need not erase its committed history. The current code
+still replaces a finished directory on the next prepare, deletes the published
+candidate and supports pruning published runs; this workshop update changes
+none of that behavior. See W04 in the
+[workflow ledger](./workflow-intermediate-files-ledger.md) for the resulting
+capture gaps. Repository creation, public inclusion and producer changes remain
+separate commissions.
