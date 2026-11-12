@@ -76,6 +76,15 @@ artifact. This is accepted because the run is process material and the
 promoted artifact is the durable product. The `kb/work/` collection contract
 no longer carries carve-outs for multistage or AutoReason run directories.
 
+The bundles keep the type freedom they had under `kb/work/`. A candidate or
+staged article declares its destination collection's local type, and
+`kb/work/` accepts any valid type spec. Type eligibility therefore treats
+`kb/reports/state/` the same way: a file there may declare any valid type
+spec, while the spec stays in the owning collection's `types/` directory.
+Owner-partitioned or per-collection state was considered and not taken: the
+two-repository arrangement is still an experiment, so the layout stays one
+tree.
+
 The agentic-system analysis process record is the one ignored operational
 tree outside ADR 128's rule. It stays in the run's worktree until
 integration copies it into `kb/reports/state/` in the origin checkout. That

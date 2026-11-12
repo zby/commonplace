@@ -324,9 +324,11 @@ def validate_type_eligibility(
     """Reject collection-local types used outside their owning collection.
 
     Global types in the library are eligible everywhere. A collection may
-    also use specs under its own ``types/`` directory. The ``kb/work/``
-    lifecycle subtree may use any valid type spec. Files that are not inside a
-    declared collection retain the referential-only behavior.
+    also use specs under its own ``types/`` directory. Two lifecycle subtrees
+    may use any valid type spec, because both hold work staged for other
+    collections: ``kb/work/`` and the workflow state tree
+    ``kb/reports/state/``. Files that are not inside a declared collection
+    retain the referential-only behavior.
     """
     workspace_root = repo_root.resolve()
     boundary = kb_root(workspace_root).resolve()
@@ -338,7 +340,7 @@ def validate_type_eligibility(
     except ValueError:
         return
 
-    if artifact_rel.parts and artifact_rel.parts[0] == "work":
+    if artifact_rel.parts[:1] == ("work",) or artifact_rel.parts[:2] == ("reports", "state"):
         return
 
     try:

@@ -114,6 +114,12 @@ data-bearing subtree from collection-scoped validation. The marker does not
 hide files from ordinary discovery, and explicit validation of
 one typed report still applies its type contract.
 
+A file under `state/` may declare any valid type spec, including another
+collection's local type. Workflows stage candidates there for other
+collections, and a candidate must validate against its destination's contract.
+The type spec itself stays in the owning collection's `types/` directory.
+`retained/` does not share this exception.
+
 ## What does not belong here
 
 - A generated explanation or synthesis whose claim should survive the run →
