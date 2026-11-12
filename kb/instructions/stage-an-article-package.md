@@ -25,12 +25,15 @@ is where it is requested.
   `type: articles/types/article.md`, and `commonplace-validate kb/articles/{slug}.md`
   reports no failures.
 - `python3 scripts/article_dependency_inventory.py` exists in the checkout.
-- The working tree is clean for `kb/articles/` and `kb/work/staging/{slug}/`.
+- The working tree is clean for `kb/articles/`.
 
 ## Package layout
 
-All output goes to `kb/work/staging/{slug}/`. If the directory exists, delete
-it first: a package is regenerated from the current article, never patched.
+All output goes to a new package directory
+`kb/reports/state/staging/{slug}/{YYYYMMDD-HHMMSS}/` in the ignored operational
+tree; below, `{package}` names it. Never patch or delete an earlier package:
+restaging regenerates from the current article into a new stamped directory
+beside it.
 
 | File | Content |
 |---|---|
@@ -45,7 +48,7 @@ it first: a package is regenerated from the current article, never patched.
 
 Appendix and reference files carry frontmatter `type: articles/types/article.md`,
 the article's `status` and `byline`, and a `description` naming the paper they
-belong to. File names are final: publication moves them into `kb/articles/`
+belong to. File names are final: publication copies them into `kb/articles/`
 unchanged.
 
 ## Steps
@@ -55,7 +58,7 @@ unchanged.
    below uses this commit.
 
 2. **Inventory.** Run
-   `python3 scripts/article_dependency_inventory.py kb/articles/{slug}.md > kb/work/staging/{slug}/inventory.md`.
+   `python3 scripts/article_dependency_inventory.py kb/articles/{slug}.md > {package}/inventory.md`.
    The inventory lists every outbound link with its target kind and carrying
    sentence, every term the body introduces in emphasis, and every KB
    definition-note title the body uses without a link.
@@ -147,7 +150,8 @@ unchanged.
       `free`. Rerun the reading once after fixes; report anything still
       returned.
    3. Placeholders: no `TODO`, `TBD`, `{`, or empty section in any package
-      file; no link from an appendix or reference file into `kb/work/`.
+      file; no link from an appendix or reference file into `kb/work/` or
+      `kb/reports/state/`.
    4. Provenance: every Appendix A and B entry ends with a provenance line
       naming the source commit.
    5. `commonplace-validate` on each package file reports no failures. The
@@ -157,9 +161,8 @@ unchanged.
     `Closure: reached` or `Closure: not reached`. Under it, one row per free
     variable with the decision it needs: narrow the claim, write the missing
     definition note, stage the companion, supply a primary source, or resolve
-    the inline gloss. Copy the status line into `README.md`. Commit the
-    package directory alone, subject "Stage the {slug} package", body naming
-    the source commit and the closure status.
+    the inline gloss. Copy the status line into `README.md`. Do not commit
+    the package; report its path, the source commit, and the closure status.
 
 ## Scope
 
@@ -173,16 +176,16 @@ unchanged.
 
 ## Verify
 
-- `kb/work/staging/{slug}/` contains every file in the layout that applies,
-  and nothing else.
+- `{package}` contains every file in the layout that applies, and nothing
+  else.
 - `inventory.md` has no empty `binding` cell.
 - `closure-check.md` opens with the status line, and every `free` row in the
   inventory appears under it with a decision.
-- The package is committed on its own.
+- No earlier package directory for the slug was changed or deleted.
 
 ## At publication
 
 Publication of the article ([Publish an article](./publish-an-article.md))
-consumes a package whose status is `Closure: reached`: it moves the appendix
-and reference files into `kb/articles/`, applies `link-map.md` to the body,
-and deletes the staging directory.
+consumes a package whose status is `Closure: reached`: it copies the appendix
+and reference files into `kb/articles/` and applies `link-map.md` to the body.
+The package stays in place.

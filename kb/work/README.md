@@ -110,7 +110,3 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [auditable-llm-editing](./auditable-llm-editing/README.md) — testing whether sparse, anchored writing state prevents accidental claim drift across repeated LLM editing passes
 - [lifecycle-management](./lifecycle-management/README.md) — mapping the full artifact life-cycle (intake, promotion, maturation, retirement); the `agent-memory-design` test case landed as a `note + synthesis` trait in `kb/theory/designing-agent-memory-systems.md`; the proposal disposal half shipped 2026-07-25 as ADR 056 (extract, then archive out of the frontier as a link sink), leaving note and source-snapshot retirement as the blocking gaps
 - [condensation-faithfulness-experiment](./condensation-faithfulness-experiment/README.md) — designing an experiment to test whether our condensation methodology (write conventions + gate suite) produces more behaviorally faithful memory than naive auto-summary, using the Faithful Self-Evolvers perturbation protocol
-
-## Workflow Namespaces
-
-- [multistage](./multistage/README.md) — grouping namespace for skill-managed multistage writing runs; active runs are listed individually above

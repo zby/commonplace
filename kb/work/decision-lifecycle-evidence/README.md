@@ -71,6 +71,14 @@ producer changes. Complete its stated coverage gaps before claiming all
 workflows are covered. The second repository's publication and setup remain
 with the public-state-repository workshop.
 
+On 2026-11-12 four families from the ledger moved under
+[ADR 129](../../reference/adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md):
+multistage runs, AutoReason bundles, article staging packages and the
+memory-landscape synthesis scratch now live under `kb/reports/state/` and are
+kept after their workflow ends. The agentic-system analysis process record is
+the recorded exception until integration copies it into the state tree.
+Version capture, commit cadence and pruning remain open.
+
 ## Working map
 
 | File | Role |

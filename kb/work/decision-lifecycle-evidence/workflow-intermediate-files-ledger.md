@@ -165,25 +165,74 @@ not candidates for indiscriminate migration. This is enough to refute universal
 state placement, but not to certify that every workflow or output branch has
 been inventoried. No migration or retention implementation was performed.
 
+## Disposition — 2026-11-12
+
+[ADR 129](../../reference/adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md)
+records the operator's decision for the location exceptions found above. The
+inventory rows above stay as dated evidence of handling before the change.
+Paths below are relative to `kb/reports/state/`.
+
+Moved and kept after the workflow finishes:
+
+| Row | New location | Keep rule |
+|---|---|---|
+| W12 | `multistage/multistage-write-<short-topic>-<YYYYMMDD>/` | Closure no longer removes the run. Runs leave main's tracked history; the promoted artifact is the durable product. |
+| W13 | the W12 run it reuses | As W12. |
+| W14 | `revise-autoreason/<source basename>.<YYYYMMDD-HHMMSS>/` | Apply and decline no longer delete the bundle. |
+| W16 | `agent-memory-landscape/<YYYYMMDD-HHMMSS>/` for matrix, working query ledger and draft | Kept; no longer a caller-chosen temporary path. |
+| W20 | `staging/<slug>/<YYYYMMDD-HHMMSS>/` | Restaging adds a package beside the old one; publication copies appendix and reference files into `kb/articles/` and leaves the package. |
+
+Overwrites inside a bundle, such as a repair, still replace the earlier file.
+No version capture was added.
+
+**W15 is the recorded exception.** Integration already admits the analysis
+workflow's durable outputs to main under `kb/agentic-system-analyses/retained/`.
+Its process record stays in the run's worktree under
+`kb/agentic-system-analyses/state/<run-id>/`, which is a checkout of main. The
+exception lifts when integration copies that record into the origin's
+`kb/reports/state/`, a separate code change. The workflow does not delete the
+record, so waiting loses nothing.
+
+Still open:
+
+- W18, W19 and W22 produce no separate file by default. The preservation
+  default does not authorize new production, so nothing moved.
+- W25 remains uncovered; its file-writing branches are uninspected.
+- Version capture inside a bundle, commit cadence, history pruning and churn
+  exceptions are undecided. Commit cadence and pruning stay with the
+  [public-state-repository workshop](../public-state-repository/README.md).
+- Deletion and replacement inside the state tree (W04, W05, W09 and the
+  current-result paths) are unchanged by this disposition.
+
 ## Current gaps against the operator's default
 
 1. **Deletion before capture:** snapshot scratch, AutoReason cleanup, multistage
    closure and article staging can delete intermediate files before the second
    repository sees them.
+   *2026-11-12:* AutoReason, multistage and staging deletion is removed by
+   ADR 129; snapshot scratch deletion is unchanged.
 2. **Replacement before capture:** ingest prepare/repair, same-target discovery
    reports and current-result files can lose earlier versions between commits.
+   *2026-11-12:* unresolved; ADR 129 adds no version capture, and overwrites
+   inside the moved bundles also remain.
 3. **Files outside the publication tree:** workshop bundles and analysis
    controllers/worktrees are not included merely by versioning `state/`.
+   *2026-11-12:* resolved for W12–W14, W16 and W20 by ADR 129; the analysis
+   process record (W15) is the recorded exception until integration copies it.
 4. **No separately produced report:** response-only work has only its normal
    session record unless the caller requests a file. Decide whether any family
    needs a new output; retention alone does not authorize extra production.
+   *2026-11-12:* unchanged; ADR 129 adds no new output for W18, W19 or W22.
 5. **Publication boundary:** raw captures, source checkouts, traces and report
    bodies can include material unsuitable for public redistribution. The
    [public-state-repository workshop](../public-state-repository/README.md)
    owns publication checks and repository setup; this ledger grants neither.
+   *2026-11-12:* unchanged; ADR 129 keeps source snapshots and checkouts out
+   of the state tree and makes nothing in it safe to publish.
 6. **Current files versus history:** keeping historical intermediates need not
    keep every file in the active working set. No commit cadence, all-versions
    capture mechanism, history-pruning rule or automatic sync has been selected.
+   *2026-11-12:* unchanged; ADR 129 decides location and the keep rule only.
 
 These are implementation questions, not instructions to bypass current cleanup
 or change producers during unrelated work. The operator permits reconsidering

@@ -10,6 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-11-11
 **Amends:** [ADR 007](./007-reports-directory-for-generated-snapshots.md): the collection and its `retained/` area stay; the `cache/` area and the regenerability criterion that separated it from `state/` go.
+**Amended:** 2026-11-12 — [ADR 129](./129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md) moves multistage, AutoReason, article-staging and memory-landscape run bundles under `state/` and keeps them; the analysis process record stays outside until integration copies it
 
 ## Context
 

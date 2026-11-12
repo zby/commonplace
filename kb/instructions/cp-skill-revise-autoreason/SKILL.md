@@ -33,11 +33,11 @@ Before running the loop, report the call budget: up to 5 passes. A normal pass u
 
 ## Step 1: Initialize
 
-Use a workshop directory so the original note remains untouched:
+Use a run directory in the ignored operational tree so the original note remains untouched. The run bundle is kept after the run; do not commit it:
 
 ```bash
 repo_root="$(pwd)"
-run_dir="$repo_root/kb/work/revise-autoreason/$(basename "${source_file}").$(date +%Y%m%d-%H%M%S)"
+run_dir="$repo_root/kb/reports/state/revise-autoreason/$(basename "${source_file}").$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$run_dir"
 cp "$source_file" "$run_dir/original.md"
 cp "$source_file" "$run_dir/current_a.md"
@@ -89,7 +89,7 @@ When triggered:
 3. Append a line to `$pass_dir/result.md`: `Escalation: claim revision needed`.
 4. Set `claim_revision_needed=true`.
 5. Stop the AutoReason loop and finalize with `last_good` unchanged.
-6. In Step 3, report the sidecar artifact path and ask whether to keep the run bundle for review. Do not ask to apply `last_good` if it is identical to the original.
+6. In Step 3, report the sidecar artifact path and the run bundle path for review. Do not ask to apply `last_good` if it is identical to the original.
 
 Substantive-revision prompt:
 
@@ -397,16 +397,16 @@ The best version is `last_good`.
 
 1. Show a diff summary between the original file and `last_good`; list the key changes across all accepted passes.
 2. Report the AutoReason trajectory: pass winners, Borda scores or skip reasons, and final pass count.
-3. If `claim_revision_needed=true`, report the reason from `$claim_revision_file` and the sidecar artifact path from `$claim_revision_artifact` if present. Leave the original untouched and ask whether to keep the run bundle for substantive-revision review. Do not apply AutoReason changes automatically. Skip the remaining apply/decline steps.
+3. If `claim_revision_needed=true`, report the reason from `$claim_revision_file` and the sidecar artifact path from `$claim_revision_artifact` if present. Leave the original untouched and report the run bundle path for substantive-revision review. Do not apply AutoReason changes automatically. Skip the remaining apply/decline steps.
 4. If the title or description changed, report it explicitly with before/after values.
-5. Ask the user: "Apply these changes to `${source_file}`? (The AutoReason run bundle will be cleaned up unless you ask to keep it.)"
+5. Ask the user: "Apply these changes to `${source_file}`?"
 6. If the user approves:
    - Copy `last_good` over the original file.
    - If the title changed and the new title implies a different filename, rename with `commonplace-relocate-note <file> "<new title>"`: dry-run first, then `--apply`. It rewrites every backlink and adds the published-site redirect; never rename with `git mv` or hand-edited links. Commit the relocation alone, separate from the content change.
-   - Delete the run bundle unless the user asked to keep it.
+   - Report the run bundle path.
 7. If the user declines:
    - Leave the original untouched.
-   - Delete the run bundle unless the user asked to keep it.
+   - Report the run bundle path.
 
 ## Constraints
 

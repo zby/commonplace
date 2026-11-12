@@ -57,18 +57,17 @@ A change of identity, mode, collection, or type restarts setup. A retitle,
 replacement, fold, merge, retirement, or artifact-set change requires explicit
 user authority; never infer it from a worker recommendation.
 
-The run parent is exactly `kb/work/multistage/`; the general
-`kb/work/<workshop-name>/` convention does not apply to this workflow. Before
+The run parent is exactly `kb/reports/state/multistage/`, in the ignored
+operational tree; a run is not a workshop. Before
 creating or writing any run artifact, resolve the proposed repo-relative run
-path and require its direct parent to be `kb/work/multistage/`, its basename to
-match `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical path to
-remain inside that parent. A run directly under `kb/work/`, the grouping
-directory itself, or any unresolved or escaping path is a setup blocker.
+path and require its direct parent to be `kb/reports/state/multistage/`, its
+basename to match `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical
+path to remain inside that parent. A run directly under `kb/reports/state/`, the
+grouping directory itself, or any unresolved or escaping path is a setup blocker.
 
 Create or resume one valid run at that path. An ambiguous or malformed
-matching run is a recovery stop, not a reason to create another. Maintain its
-exact nested path in the `kb/work/README.md` entry without overwriting unrelated
-edits.
+matching run is a recovery stop, not a reason to create another. The run is
+kept after closure; do not commit it or list it in `kb/work/README.md`.
 
 Keep only durable run state:
 
@@ -199,7 +198,7 @@ validator repair, or rebase. Return missing evidence to reconstruction,
 missing authority to the user and disposition, and a supported finding within
 settled claims to the author. Rerun grounding and use a different fresh
 reviewer. A second `block` or any further required byte change stops with the
-workshop retained.
+run retained.
 
 When new evidence invalidates reconstruction after the author has seen the
 incumbent, rerun reconstruction in a fresh source-only context and repeat both
@@ -221,9 +220,8 @@ Invalidate only what the changed premise affects:
 After final acceptance, read and execute
 `references/promotion.md` beside this skill. It owns live-drift checks,
 conditional retitle, atomic promotion, rollback, validation, lineage, the
-closing account, and cleanup. Do not improvise a shorter mutation path.
+closing account, and run retention. Do not improvise a shorter mutation path.
 
 Report the exact run path, target or blocker, final candidate and review
-digests, validation, any source mutation, whether repair or recovery ran, and
-whether the workshop was removed or retained. Suggest `cp-skill-connect` only
+digests, validation, any source mutation, and whether repair or recovery ran. Suggest `cp-skill-connect` only
 as optional follow-up; do not launch sibling work automatically.

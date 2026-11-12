@@ -69,12 +69,15 @@ hand-patched to make a comparison pass.
    worktree: `git status --porcelain -- <those paths>` prints nothing. Record
    `git rev-parse HEAD` as the inputs commit. A dirty input blocks the
    synthesis: commit it under its own authority or drop it from the selection
-   with a new commit; never read an uncommitted finding. Build the matrix
-   from the same selection into a temporary path, never over the public
+   with a new commit; never read an uncommitted finding. By default, keep the
+   matrix, the working query ledger, and the draft in one run directory,
+   `kb/reports/state/agent-memory-landscape/<YYYYMMDD-HHMMSS>/`, in the ignored
+   operational tree; keep it after publication and do not commit it. Build the
+   matrix from the same selection into that directory, never over the public
    comparison files:
 
    ```bash
-   uv run python scripts/build_systems_matrix.py --review <current-overview-path> --output <temporary-matrix.csv>
+   uv run python scripts/build_systems_matrix.py --review <current-overview-path> --output <run-dir>/matrix.csv
    ```
 
    Repeat `--review` as needed. Require exit status zero and record the
@@ -172,7 +175,7 @@ must remain auditable without ignored local run state.
 
 ## Report
 
-Return the output path or response-only disposition; current or historical
+Return the output path or response-only disposition; the run directory; current or historical
 status; selection rule and source-tier population; cutoffs; the inputs commit
 and matrix hash; query verification and semantic verification mode; the final
 commit and worktree recheck; validation; and withheld claims.

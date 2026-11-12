@@ -6,11 +6,11 @@ its current SHA-256. The parent executes every mutation and recovery step.
 ## Preflight and drift
 
 Resolve the active run path before any live mutation. Require its direct parent
-to be exactly `kb/work/multistage/`, its basename to conform to
+to be exactly `kb/reports/state/multistage/`, its basename to conform to
 `multistage-write-<short-topic>-<YYYYMMDD>`, and its canonical path to remain
-inside that parent. A path directly under `kb/work/`, the grouping directory
-itself, or an unresolved or escaping path is a setup blocker: do not promote,
-edit `kb/work/README.md`, or remove anything.
+inside that parent. A path directly under `kb/reports/state/`, the grouping
+directory itself, or an unresolved or escaping path is a setup blocker: do not
+promote or remove anything.
 
 Require no blocker, completed grounding, candidate bytes matching the accepted
 digest, and destination-relative frontmatter, required sections, and links
@@ -64,7 +64,7 @@ commonplace-validate <target>
 
 On failure, restore `original.md` or `relocated-original.md` byte for byte; for
 a new artifact, remove only the newly created target. Verify recovery, retain
-the workshop, and report the validation failure. Never patch live bytes after
+the run, and report the validation failure. Never patch live bytes after
 acceptance. A repair can return to the main workflow only if its one
 post-review allowance remains unused.
 
@@ -80,25 +80,25 @@ pre-promotion substantive bytes and verify them. A prior address relocation is
 separate and remains in place; do not claim that substantive rollback reversed
 it.
 
-## Account and clean up
+## Account and close
 
-Before cleanup, record in the final report:
+Before closing, record in the final report:
 
 - the commission and user-owned decisions;
 - replacement, fold, merge, retirement, retitle, and artifact-set choices;
 - grounding results, including exact text returned as `quotes added`;
 - final candidate and review paths and digests;
 - validation, promotion, relocation, lineage, and recovery outcomes;
-- removed or retained paths, unresolved blockers, and bounded handoffs.
+- the retained run path, unresolved blockers, and bounded handoffs.
 
 Extra artifacts or sibling changes converge only through explicit decline,
 user acceptance, or separate completion. A composition mismatch blocks
 promotion.
 
-Immediately before cleanup, resolve the run path again and require the same
-`kb/work/multistage/` parent and basename constraints. On any mismatch, retain
-the run and README entry and report the blocker. Otherwise, remove only this
-exact run directory and its exact `kb/work/README.md` line after the target and
-lineage validate, the closing account is complete, no authorized decision
-remains unexecuted, and no retention reason remains. Retain blocked, failed,
-inspection, and experiment runs and report the pending state.
+Immediately before closing, resolve the run path again and require the same
+`kb/reports/state/multistage/` parent and basename constraints. On any mismatch,
+report the blocker. Close only after the target and lineage validate, the
+closing account is complete, and no authorized decision remains unexecuted.
+Leave the run directory in place and report its path; do not remove or commit
+it. Report blocked, failed, inspection, and experiment runs with their pending
+state.

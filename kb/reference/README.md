@@ -254,6 +254,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
 - [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle under the historical theoretical-default grouping
 - [ADR-128: one ignored operational tree under kb/reports/state](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md) — the `cache/` area is gone; ignored workflow outputs live under `state/`, one directory per workflow, with the state README stating per workflow what deletion loses
+- [ADR-129: workflow run bundles live under the state tree and are kept](./adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md) — multistage runs, AutoReason bundles, article staging packages and memory-landscape synthesis scratch move under `kb/reports/state/` and survive their workflow's end; the agentic-system analysis process record is the recorded exception until integration copies it
 - [ADR-127: review runs as workflows over result files](./adr/127-review-runs-as-workflows-over-result-files.md) — the current review decision: one command, result files with input hashes, no store; supersedes ADRs 035 and 043
 
 ## Collection boundary

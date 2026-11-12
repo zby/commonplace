@@ -55,6 +55,13 @@ only preserving old runs, is the intended use.
   consequences and cleanup rules without separate storage classes. The
   destination path and migration plan remain open; public inclusion remains
   subject to checks.
+- **Workflow run bundles are in scope.** Since 2026-11-12 multistage runs,
+  AutoReason bundles, article staging packages and memory-landscape synthesis
+  scratch live under `kb/reports/state/` and are kept
+  ([ADR 129](../../reference/adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md)),
+  so the state repository's scope includes them. The agentic-system analysis
+  process record stays in its run worktree and is excluded until integration
+  copies it into the tree.
 
 ## What the directory holds
 
