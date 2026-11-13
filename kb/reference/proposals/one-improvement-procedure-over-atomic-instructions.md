@@ -69,7 +69,7 @@ The procedure has two layers. The atoms are the stable layer. The composition is
 
 **A variant is an instruction that composes atoms.** It states its entry evidence, the review operations it runs, how it selects edit operations from their findings, the order, how far it re-reviews after editing, where it stops for the operator, and which checks it runs on what it produced. `commonplace-validate` is the default check; a cheap variant runs little more and an expensive one runs more. An agent follows the variant in a session, delegating atoms to workers where isolation matters. The operator answers in the session, and the commit is the publication. Variants are expected to change often and to coexist, each retained with the runs it was tried on.
 
-**A run is a typed directory.** Each run of a variant leaves one directory in the state tree, a directory artifact whose type declares its roles: the start text, the findings the variant acted on, the operator's answers with their reasons, the candidate text and the report. `commonplace-validate` on the directory checks that the required members exist, that they name the same note, and that the answers satisfy their schema, such as a reason on every strike, rejection and deferral. This is where strictness lives. The rules are schema and layout, so tightening or loosening one is an edit to a type, not to a workflow. The schemas are part of what is being designed and will change with the variants.
+**A run is a typed directory.** Each run of a variant leaves one directory in the state tree, a directory artifact whose type declares its roles: a report that carries the run's identity and ending, the findings the variant read, the edit chain, and the operator's answers with their reasons. The start text and the candidate are not members, because a directory member must be a Markdown file of one declared type: the start text is a commit and a hash, the candidate is the note in the working tree, and intermediate texts are stored by hash beside the members. `commonplace-validate` on the directory checks that the required members exist, that they name the same note and start text, and that the answers satisfy their schema, such as a reason on every strike, rejection and deferral. This is where strictness lives. The rules are schema and layout, so tightening or loosening one is an edit to a type, not to a workflow. The schemas are part of what is being designed and will change with the variants.
 
 An output is filed by what it is about, never by who asked for it. The two kinds of operation differ here. A review operation is a function of the note's text, so its result goes to the shared result store, keyed by note and atom, at the same path whether a standalone batch or an improvement run produced it; the run names itself in the result as provenance. The run's findings member cites the results it acted on, with their hashes, and does not hold them. An edit operation is a function of a text chain: its output is a candidate that means something only relative to the text it was given. It always lives in a run. Running one edit operation alone is therefore not a special case with its own directory but a run of a one-atom variant, which is also how an edit operation is unit-tested.
 
@@ -79,7 +79,7 @@ The record follows from the run type. Decisions key to the atom, never to the va
 
 Variants differ, but one ordering rule holds for the default one, set by the operator on 2026-11-13: higher-order concerns before lower-order concerns. The wording is the composition field's. A higher-order concern is about what the note is: its claim, its boundary, whether it should exist, where it belongs. A lower-order concern is about how the note says it: framing, flow, wording. Work on a lower-order concern is wasted when a higher-order one is unsettled, because the text it improves may not survive. The simplification passes already order themselves this way through their `depth` field; the rule here extends that order upward to the note's existence and boundary.
 
-1. **Check higher-order concerns first.** Some review operations can propose a change to what the note is: a split, a merge, a rehome, a rejection, a different claim. These checks always run before any edit. The expected result, in most runs, is that they propose nothing and the run goes on. A proposal carries a force:
+1. **Check higher-order concerns first.** Some review operations can propose a change to what the note is: a split, a merge, a rehome, a rejection, a different claim. These checks always run before any edit. The expected result, in most runs, is that they propose nothing and the run goes on. That rarity is a working assumption the design rests on, not a measured fact: the [higher-order check evaluation workshop](../../work/higher-order-check-evaluation/README.md) exists to test it and to keep the check calibrated, and it is expected to stay open, since the check will be recalibrated many times as wordings, models and the collection change. If the check proves to propose often, the default composition is what has to change. A proposal carries a force:
    - **Strong:** the run stops there and puts the proposal before the operator. Lower-order edits are not run, because they would be spent on text that may not survive.
    - **Weak:** the change might be beneficial but the note stands as it is. The run records the proposal as a pending item and goes on to the edits.
 2. **Otherwise apply what is automated.** Edit operations that need no operator decision run and are applied, up to the exceptions their atoms name. They normally run first among the edits, since nothing waits on them.
@@ -91,7 +91,7 @@ What this gives up is stated plainly. Code no longer refuses a text that changed
 
 ## Options
 
-**A. Run as a directory type.** As described above: roles for start text, findings, answers, candidate and report, validated as one unit.
+**A. Run as a directory type.** As described above: roles for report, findings, edit chain and answers, validated as one unit. A [workshop draft](../../work/decision-lifecycle-evidence/improvement-run-type.md) gives the layout and what validation can and cannot check.
 Operativity: the variant's agent writes the members; `commonplace-validate` and the decisions command consume them. Force against: directory types are experimental, and a second workflow will find their rough edges.
 
 **B. Run as one typed file.** A single run report whose frontmatter holds the decision list, schema-checked like the full-pass packet; the texts stay in git.
@@ -107,7 +107,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 - How results from different wordings of one review operation are kept apart during calibration: the store keeps one result per note and criterion, so a rerun overwrites.
 - The edit-operation type's fields, and whether fix strategies and method families are rewritten to their types or wrapped.
 - Whether a variant has a type of its own, so the validator can check that every atom it names exists.
-- The run type's roles, which are required, and whether membership is open or closed.
+- Whether the run type keeps four member types or folds the findings and the edit chain into the report.
 - The answers schema: its fields, and which decisions require a reason.
 - Where variants and atoms live under `kb/instructions/`, and how a variant is named and retired.
 - Which review operations are the higher-order checks, and how each states the force of what it proposes. They always run first, so their cost is paid on every run; the full pass's method families cost far more than a gate sweep, which argues for a small dedicated check over the whole method suite.
@@ -118,7 +118,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 
 ## Adoption criteria
 
-- **Before the first build relies on it:** the higher-order check is evaluated alone in the [higher-order check evaluation workshop](../../work/higher-order-check-evaluation/README.md).
+- **The higher-order check:** the build does not wait on it. The procedure is built on the assumption that higher-order proposals are rare, and the standing [higher-order check evaluation workshop](../../work/higher-order-check-evaluation/README.md) reports when the assumption fails.
 - **First build:** the operator commissions the run type, the edit-operation type and the first variant. The fix case is the candidate first variant, since the fix procedure is the one with no run record today. Its first run on a note with fresh warnings is the first retained example.
 - **Retirement of an editing path:** a variant has run that path's cases on retained examples and the operator accepts the results.
 - **Fallback to option B:** the first run type needs validator changes that the run structure does not justify.

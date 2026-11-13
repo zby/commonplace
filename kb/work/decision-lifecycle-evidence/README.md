@@ -89,6 +89,35 @@ structural-hints note went through one full improvement pass
 without editing; the operator judged the residue owned by its neighbours and
 deleted the note, recorded on the packet as `alternative-applied`.
 
+### 2026-11-13: operator decisions and the improvement procedure
+
+The review exercises above opened a second line of work here: what the
+operator decides during note improvement is evidence, and the three
+improvement procedures recorded it in three incompatible ways. What exists
+now:
+
+- **Shipped.** The operator-decision record is the read-only
+  `commonplace-review decisions` query over the state tree
+  ([ADR 130](../../reference/adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
+  A strike in a strike list keeps its entry and carries the operator's
+  required reason, collected in a session under
+  [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md).
+- **Proposed, not adopted.** [One improvement procedure over atomic instructions](../../reference/proposals/one-improvement-procedure-over-atomic-instructions.md)
+  replaces the full pass, the fix procedure and the simplification passes
+  with one instructed procedure whose variants compose the same atoms, with
+  each run a typed directory. [Authority grades and learning from operator decisions](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md)
+  covers what the resulting records are used for.
+- **In draft here.** The types the first proposal needs, starting with the
+  [improvement run type](./improvement-run-type.md). The answers schema, the
+  edit-operation type and the first variant follow.
+- **Moved out.** Calibration of the higher-order check is the standing
+  [higher-order check evaluation workshop](../higher-order-check-evaluation/README.md).
+  The literature on ordering concerns in revision is the
+  [order of concerns workshop](../order-of-concerns-in-revision/README.md).
+  Where operator answers sit in a published state repository is a question
+  of the [public state repository workshop](../public-state-repository/README.md).
+  Reading occasions are deferred to the work on the unresolved frontier.
+
 ## Working map
 
 | File | Role |
@@ -100,6 +129,7 @@ deleted the note, recorded on the packet as `alternative-applied`.
 | [Cache and state hold the same kind of record](./cache-and-state-hold-the-same-kind-of-record.md) | Dated inventory and reader comparison, followed by ADR 128's implemented removal of the directory split; connect freshness remains deferred. |
 | [Ingest working directory](./ingest-working-directory.md) | Current handoff retention and the repair-round observation trigger; later debugging-retention direction requires reconsidering its original deletion end condition. |
 | [Workflow intermediate files ledger](./workflow-intermediate-files-ledger.md) | Current paths, overwrites, deletions and retention gaps across workflow families; explicit remaining coverage, with no producer changes. |
+| [Improvement run type](./improvement-run-type.md) | Draft directory type for one run of the improvement procedure: layout, members, what validation checks and open choices. Not registered; no instance exists. |
 
 The general map remains preliminary. The two bounded dispositions above do
 not select a universal retention threshold, mining schedule, cache lifetime,
@@ -161,6 +191,9 @@ work, state it and stop rather than expanding the investigation indefinitely.
   of the arrangement. Trace recovery remains the stated fallback.
 - When would on-demand extraction be insufficient compared with selective
   proactive mining? No recurring mining programme is preselected.
+- Does a typed run directory hold an improvement run's decisions and edit
+  chain at acceptable cost? The [run type draft](./improvement-run-type.md)
+  lists its open choices; the first run of a first variant is the test.
 
 Choose among these from actual work. No fixed order, required case count or
 claim of broad representativeness is imposed.
@@ -168,8 +201,10 @@ claim of broad representativeness is imposed.
 ## Scope and coordination
 
 This commission permits design work in this workshop and its active-list entry.
-It does not authorize paid workers, implementation, evidence deletion, harness
-changes, history rewriting or framework-wide policy adoption.
+It does not by itself authorize paid workers, implementation, evidence
+deletion, harness changes, history rewriting or framework-wide policy
+adoption. The operator has commissioned implementation case by case, as with
+ADR 128, ADR 129 and ADR 130; each such step needs its own instruction.
 
 Start from the shipped [storage contract](../../reference/storage-architecture.md),
 [Git history convention](../../reference/adr/074-git-is-the-change-history-layer.md),
