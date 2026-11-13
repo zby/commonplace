@@ -1,12 +1,14 @@
 """Operator approval integrity and locking; no worker is launched."""
 
+import json
+import re
 import sys
 
 import pytest
 
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run, RunLocked
-from commonplace.headless.operator import answer, approve, edited, waiting
+from commonplace.headless.operator import answer, approve, edited, invalidate, waiting
 
 
 @pytest.fixture
@@ -48,6 +50,21 @@ def test_approval_captures_text_and_replacement_invalidates_old_command(run, tmp
         assert answer(resumed, "plan.yaml", "new proposal", key="changed inputs") is None
     with pytest.raises(ValueError, match="proposal changed"):
         approve(root, "plan.yaml", stop["key"])
+
+
+def test_approval_records_when_it_was_answered(run, tmp_path):
+    answer(run, "plan.yaml", "proposed\n", key="inputs")
+    stop = waiting(run, tmp_path, "plan.yaml", "Edit.", "repeat")
+    root, cwd, profile, harnesses = run.root, run.cwd, run.profile, run.harnesses
+    run.close()
+    approve(root, "plan.yaml", stop["key"])
+    [record] = (root / "operator").glob("*.json")
+    data = json.loads(record.read_text())
+    assert data["answer"] == "proposed\n"
+    assert re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", data["answered-at"])
+    with Run(root, cwd, profile, harnesses=harnesses) as resumed:
+        invalidate(resumed, "plan.yaml")
+    assert not {"answer", "answered-at"} & set(json.loads(record.read_text()))
 
 
 @pytest.mark.parametrize("name", ["../escape", "/tmp/escape"])

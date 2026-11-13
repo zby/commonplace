@@ -1,7 +1,7 @@
 """Explicit operator answers, bound to a stop's proposal and its inputs.
 
 `answer()` materializes an editable proposal and waits until `approve()`
-records its text. Repeating a workflow never approves. Callers supply a key
+records its text and `answered-at` (UTC). Repeating a workflow never approves. Callers supply a key
 covering the inputs that produce the proposal; changed inputs replace the
 proposal and invalidate its approval. Approval holds the same lock as Run.
 `edited()` tells a workflow that the file was changed after its approval, so
@@ -13,6 +13,7 @@ from __future__ import annotations
 import json
 import shlex
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 
 from commonplace.headless.jobs import Run, digest, run_lock
@@ -78,6 +79,7 @@ def invalidate(run: Run, name: str) -> None:
         data = json.loads(record.read_text(encoding="utf-8"))
         if "answer" in data:
             del data["answer"]
+            data.pop("answered-at", None)
             _write(record, data)
 
 
@@ -97,6 +99,7 @@ def approve(root: Path, name: str, key: str) -> dict:
         if key != data["key"]:
             raise ValueError(f"proposal changed: {name}; repeat the workflow and inspect its current stop")
         data["answer"] = path.read_text(encoding="utf-8")
+        data["answered-at"] = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         _write(record, data)
         return {"file": str(path), "key": key, "answer-sha256": digest(data["answer"])}
 

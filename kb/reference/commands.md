@@ -487,3 +487,21 @@ option given on the repeat replaces the recorded value.
 the note and any merge target, and exits 0 only when every input matches;
 [resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)
 runs it before acting on a packet.
+
+`decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
+decisions and launches nothing. It is read-only: it reads the operator
+records in revise and full-pass run directories, the full-pass packets and
+the fix reports under `kb/reports/state/fixes/`, and writes no state. Each
+entry says who proposed and who decided (`operator`, `agent`,
+`version-guard`, or `pending` for an unanswered stop), the action class
+(the pass name of a strike list, `publication`, `packet` or `fix-report`),
+and whether the decision covered one `item` or a `bundle`. An answered
+strike list gives one entry per proposed entry, with the strike reason; a
+publication approval is one bundle entry for the final text, not one per
+edit. A packet gives its disposition as an agent entry and, once resolved,
+its resolution. A fix report is listed once, by path, since its format is
+free. Entries are grouped by note and ordered by `answered-at` or
+`resolved-at`; untimed entries come last. `--note` and `--class` filter;
+`--json` gives the entries as JSON. The command computes no statistics. A
+malformed record exits 2 with its path. This is the
+[operator-decision record](./proposals/one-improvement-pipeline-with-graded-authority.md#the-operator-decision-record).

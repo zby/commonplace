@@ -12,6 +12,7 @@
     commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
+    commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
 
 NOTES are files or directories (a directory means its reviewable notes, not
 recursively). C are gate ids, bundle names or the lenses `type`, `collection`
@@ -117,7 +118,14 @@ from pathlib import Path
 from commonplace.headless import operator
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss
-from commonplace.lib.review_workflows import edits, full_pass, gates, results, revise
+from commonplace.lib.review_workflows import (
+    decisions,
+    edits,
+    full_pass,
+    gates,
+    results,
+    revise,
+)
 from commonplace.lib.tasks import load_profile
 
 SWEEP = "sweep.json"
@@ -186,6 +194,12 @@ def _parser() -> argparse.ArgumentParser:
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
     acknowledge.add_argument("run", type=Path)
     acknowledge.add_argument("launch")
+    listed = commands.add_parser("decisions", help="list operator and agent decisions from run operator records, "
+                                 "packets and fix reports; read-only, computes no statistic")
+    listed.add_argument("--note", help="only this artifact path, such as kb/theory/foo.md")
+    listed.add_argument("--class", dest="cls", metavar="NAME",
+                        help="only this action class: a pass name, publication, packet or fix-report")
+    listed.add_argument("--json", action="store_true")
     return parser
 
 
@@ -355,6 +369,16 @@ def _packet(root: Path, arguments: argparse.Namespace) -> int:
     return 0 if checked["matching"] else 1
 
 
+def _decisions(root: Path, arguments: argparse.Namespace) -> int:
+    found = [entry for entry in decisions.entries(root)
+             if arguments.note in (None, entry["note"]) and arguments.cls in (None, entry["class"])]
+    if arguments.json:
+        print(json.dumps(found, indent=2, ensure_ascii=False))
+    else:
+        print(decisions.text(found), end="")
+    return 0
+
+
 def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
     """Run the command; `harnesses` lets tests substitute a fake worker."""
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
@@ -370,6 +394,8 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
             return _gates(root, arguments, harnesses)
         if arguments.command == "packet":
             return _packet(root, arguments)
+        if arguments.command == "decisions":
+            return _decisions(root, arguments)
         run_dir = (root / arguments.run).resolve()
         if arguments.command == "approve":
             path = (root / arguments.file).resolve()

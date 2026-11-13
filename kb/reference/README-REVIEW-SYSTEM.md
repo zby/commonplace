@@ -322,6 +322,14 @@ requires the original artifact and captured brief to remain unchanged.
 A conflict leaves the original untouched and names the proposed text.
 Instructions remain the judgment authority; prompts name inputs only.
 
+**Decisions.** `commonplace-review decisions` is the one path to the
+[operator-decision record](./proposals/one-improvement-pipeline-with-graded-authority.md#the-operator-decision-record).
+It reads, without writing, the operator records in both workflows' run
+directories, the packets and the fix reports, and lists each decision with
+who proposed it, who decided it and whether it covered one item or a bundle.
+It computes no statistics; `--note`, `--class` and `--json` narrow and
+format the listing.
+
 ## Interpreting results
 
 A `pass` records that one gate found nothing to flag; it is not
