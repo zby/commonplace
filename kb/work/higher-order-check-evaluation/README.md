@@ -62,6 +62,24 @@ Two practical matters to settle early and write down here:
   decide how the old text is supplied (a worktree at the earlier commit, or
   copies under this workshop) and keep the outcome out of the worker's view,
   including the note's later path, its redirect and any log entry about it.
+
+  *Decision (2026-11-13).* Each historical text is judged in a detached
+  `git worktree` at the commit that holds it, created outside the
+  repository under the session's scratch directory with a neutral name
+  (`w02`, `k03`). The worker's working directory is that worktree, so it
+  sees the note at its own path among the neighbours of that date. Before
+  the run, `kb/work/`, `kb/reports/`, `kb/log.md`, `kb/messages/` and
+  `scripts/cloud-session-setup.sh` are deleted from the worktree. The first
+  four can describe reviews in progress, and the last is a session hook.
+  Kept notes are judged the same way, at the commit before the review that
+  kept them, so both sets see the same kind of tree. The worktree's own
+  review state holds the results; it is copied out before the worktree is
+  removed (see `first-results.md` for where). Leaks not closed: the library
+  at that commit may contain a citer's sentence about the note that a
+  later change answered; the worktree path and its `.git` file name the
+  main checkout, which a worker could read by absolute path although the
+  prompt confines it to linked files; the worker has Read, Grep and Glob, so
+  nothing but the prompt stops it from reading those files.
 - **Spend.** Run one note, then the labelled set, before the collection.
   State the profile and the cost of each run, and ask the operator before a
   run over all of `kb/theory/`.
@@ -127,13 +145,39 @@ finding for the procedure proposal's atom type.
 5. Revise the wording and repeat on fresh notes, keeping every wording and
    its results.
 
+## Current state — 2026-11-13
+
+Stage one ran steps 1 to 3 on the labelled set only:
+[labelled-set.md](./labelled-set.md) holds 16 positives and 14 kept notes,
+and [first-results.md](./first-results.md) the outcomes of two wordings,
+[direct](./wordings/direct.md) and
+[claim-ownership](./wordings/claim-ownership.md). Both wordings proposed
+almost nothing on kept notes and missed most positives: 3 of 16 and 2 of 16.
+The check as worded is quiet, not calibrated.
+
+The operator stated on 2026-11-13 that these checks are to be run on
+`opus`: `sonnet` is not enough for them. Stage one ran `sonnet` on all 30
+notes and `opus` only for the `direct` wording on 14 of them, so the
+`sonnet` rows are not calibration evidence. The `opus` subset proposed
+nothing on 10 positives and 4 kept notes, which points the same way but
+covers one wording and under half the set. Every later round uses `opus`.
+ The misses were mostly value
+judgments the operator made about a note's worth, which neither wording
+asks for. The whole-collection run has not been made and needs the
+operator's approval; the first-results file recommends revising the
+wordings first.
+
 ## Completion
 
-Close when one of these holds:
+This is a standing workshop. The operator stated on 2026-11-13 that the
+check will be recalibrated many times, as wordings, models and the
+collection change, so no single result closes it. Each calibration round
+leaves its wording, labelled set and results here. Two events change the
+workshop's status without ending the work:
 
-- a wording of the check finds the known cases, proposes nothing on most of
-  the collection, and has an operator-judged sample of its strong proposals;
-  it is then extracted as an atom under `kb/instructions/` with its
-  evaluation recorded;
+- a wording finds the known cases, proposes nothing on most of the
+  collection, and has an operator-judged sample of its strong proposals; it
+  is then extracted as an atom under `kb/instructions/` with its evaluation
+  recorded, and later rounds calibrate that atom;
 - the evidence shows no wording at acceptable cost can do this, and the
   procedure proposal is revised to say what runs first instead.
