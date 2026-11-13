@@ -115,7 +115,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 
 ## Adoption criteria
 
-- **Before the first build relies on it:** the higher-order check is evaluated alone in the [big-change check evaluation workshop](../../work/higher-order-check-evaluation/README.md).
+- **Before the first build relies on it:** the higher-order check is evaluated alone in the [higher-order check evaluation workshop](../../work/higher-order-check-evaluation/README.md).
 - **First build:** the operator commissions the run type, the edit-operation type and the first variant. The fix case is the candidate first variant, since the fix procedure is the one with no run record today. Its first run on a note with fresh warnings is the first retained example.
 - **Retirement of an editing path:** a variant has run that path's cases on retained examples and the operator accepts the results.
 - **Fallback to option B:** the first run type needs validator changes that the run structure does not justify.
