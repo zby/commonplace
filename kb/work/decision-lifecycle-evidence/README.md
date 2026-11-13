@@ -241,7 +241,7 @@ The two lines close separately, and neither holds the other open.
 
 **Improvement run and operator-decision evidence.** This line is done here
 when the type drafts have been tried on a first run and either registered
-under `kb/types/` or dropped, with the reason recorded. Later changes to
+under `kb/reports/types/` or dropped, with the reason recorded. Later changes to
 the types belong to the procedure proposal, not to this workshop.
 
 **Retention, capture and admission.** Close when the selected concrete choices have sufficiently understood

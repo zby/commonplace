@@ -49,6 +49,7 @@ the "bundle" unit disappears, because no stop approves a whole text any more.
 | `decided-by` | `operator`, or `rule` when the procedure expired the item. Absent while pending. |
 | `decided-at` | Timestamp of the decision. Absent while pending. |
 | `applied-in` | The directory path of the run whose edit chain applied an approved item, this run's or a later one's. Null until then. A higher-order change is not made by an improvement run; there the field holds the commit that made it. |
+| `repeats` | Optional: the earlier rejected item this proposal returns to, in the same reference form. Set whenever the same atom proposes the same `change` on a note where the operator rejected it before. |
 | `supersedes` | Optional: the earlier run's item this one re-proposes, as `<run directory path>#<id>`. The edit chain's `item` uses the same form, so one reference names an item from any run. |
 
 The body is free prose. A session may use it to show the operator longer
@@ -83,11 +84,23 @@ other two are the variant's, because a schema cannot see other runs.
    yet applied gets one more test: if the passage it names is unchanged,
    the new run applies it and cites it; otherwise it expires like the rest.
 
-Rule 2 does not yet settle one case. A weak proposal the operator rejected
-can be proposed again by the same check after the text changes. Showing the
-earlier rejection and its reason beside the new item is the candidate
-answer; suppressing the repeat would hide a proposal that the changed text
-may now justify.
+### Undecided: a proposal that returns after a rejection
+
+The operator rejects a weak proposal. The text changes, the same check runs
+again and makes the same kind of proposal. Whether to ask again, show the
+earlier rejection beside the new item, or suppress the repeat is not
+decided. The operator's direction on 2026-11-13 is to decide from examples
+once they exist, so the draft only makes the examples easy to find.
+
+A returning proposal carries `repeats`, naming the earlier rejected item.
+The variant sets it: before recording a higher-order item it reads the
+note's earlier decisions and looks for a rejected item from the same atom
+with the same `change`. Every example is then one search away: the items
+that have `repeats`, each pointing at the rejection and its reason. Until
+the rule is decided, a returning proposal is recorded and asked like any
+other. This is an item of the
+[unresolved frontier](../../reference/definitions/unresolved-frontier.md),
+held here until the types are registered.
 
 ## The schema
 
@@ -99,7 +112,7 @@ type: object
 required: [type, note, items]
 properties:
   type:
-    const: types/improvement-run-answers.md
+    const: reports/types/improvement-run-answers.md
   note:
     type: string
     pattern: '^[^/].*\.md$'
@@ -125,6 +138,7 @@ properties:
         decided-at: {type: string, minLength: 1}
         applied-in: {type: [string, "null"]}
         supersedes: {type: string, pattern: '#.+$'}
+        repeats: {type: string, pattern: '#.+$'}
       allOf:
         - if: {properties: {kind: {const: higher-order}}}
           then: {required: [force, change]}
@@ -154,7 +168,7 @@ A partly applied run: one weak split proposal left pending, one replacement
 approved and applied in the run, one rejected, one deferred.
 
 ```yaml
-type: types/improvement-run-answers.md
+type: reports/types/improvement-run-answers.md
 note: kb/theory/example-note.md
 items:
   - id: "1"

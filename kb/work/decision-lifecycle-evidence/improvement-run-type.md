@@ -48,20 +48,20 @@ layout:
   roles:
     report:
       path: report.md
-      type: types/improvement-run-report.md
+      type: reports/types/improvement-run-report.md
     findings:
       path: findings.md
-      type: types/improvement-run-findings.md
+      type: reports/types/improvement-run-findings.md
       identity:
         - {from: report, fields: [note, start-sha256]}
     changes:
       path: changes.md
-      type: types/improvement-run-changes.md
+      type: reports/types/improvement-run-changes.md
       identity:
         - {from: report, fields: [note, start-sha256, final-sha256]}
     answers:
       path: answers.md
-      type: types/improvement-run-answers.md
+      type: reports/types/improvement-run-answers.md
       identity:
         - {from: report, fields: [note]}
   required:
@@ -232,8 +232,14 @@ changes after the run ends. The state repository's commit is the freeze.
 3. **Run identifier.** A timestamp, as the run bundles of
    [ADR 129](../../reference/adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md)
    use, since no code computes a digest for an instructed run.
-4. **Home of the types.** `kb/types/`, beside the full-pass report type,
-   once the drafts leave the workshop.
+4. **Home of the types.** Settled by the operator on 2026-11-13: local to
+   the reports collection, under `kb/reports/types/`, which its contract
+   reserves for project-authored report contracts. The directory does not
+   exist yet. One consequence to revisit: the collection contract keeps
+   command-produced generic report types global, because they ship with
+   the framework. If the improvement procedure is later shipped to
+   consuming KBs, its run types must move to the shared types or be
+   installed with it.
 5. **Extension of stored texts.** `.txt` keeps them out of Markdown
    validation. `.md` would make them readable in a viewer but a validation
    target with broken relative links.
