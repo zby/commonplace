@@ -504,4 +504,4 @@ free. Entries are grouped by note and ordered by `answered-at` or
 `resolved-at`; untimed entries come last. `--note` and `--class` filter;
 `--json` gives the entries as JSON. The command computes no statistics. A
 malformed record exits 2 with its path. This is the
-[operator-decision record](./proposals/one-improvement-pipeline-with-graded-authority.md#the-operator-decision-record).
+operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
