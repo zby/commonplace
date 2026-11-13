@@ -369,6 +369,30 @@ ordinary deletion commits leave it in Git history.
   commit it belongs to. Record the main commit hash, or accept the loss.
 - **Sync.** Start with manual commits and pushes. Reconsider automation only
   after the publication boundary and actual collaboration needs are clear.
+  One candidate rule, noted 2026-11-13: commit the state repository whenever
+  a workflow finishes or the operator answers a stop (approval, strike,
+  packet resolution), from the command that takes the answer, instead of on
+  a cadence. The approve command is the natural place for the commit.
+- **Operator answers inside the tree.** The tree holds the operator's
+  answers next to what the workflows produced: packet resolutions,
+  publication approvals, strike lists, and the operator-decision record that
+  [one improvement pipeline with graded authority](../../reference/proposals/one-improvement-pipeline-with-graded-authority.md)
+  places there (settled 2026-11-13). The class-level default above, kept
+  without curating and without claiming usefulness, fits run bundles and does
+  not fit those answers, which are the strongest evidence the review system
+  gets and cannot be made again. The mix is in the tree, not in the
+  repository count; a single repository would hold it too. The candidate
+  framing is that this repository is the operational record: what workflows
+  produced and what the operator decided while operating them, against the
+  main repository's claims and decisions about the system. Review results
+  fit that framing as well, since a result is one model's reading on one
+  day, not a computation that reruns to the same answer. What stays awkward
+  under any framing: two commit flows, with the answer-taking commands
+  writing into a nested repository; tooling that sees one tree over two
+  histories; and promotion into the main record remaining a deliberate act.
+  Answers stay bound to the run that asked; copying them into the main
+  repository would cut that binding and bring back the costs listed under
+  the idea.
 - **Links.** Library files must not depend on state. Does anything tracked
   link into `kb/reports/state/` today?
 - **Cleanup beyond abandoned data.** Establish cleanup rules by payload
