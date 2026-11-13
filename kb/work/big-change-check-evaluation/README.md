@@ -10,7 +10,10 @@ calibrated check, or the finding that no cheap check can do this job.
 
 The operator opened this workshop on 2026-11-13. The procedure's default
 composition stops on a strong proposal and proceeds past a weak one or none,
-so this one judgment decides whether cosmetic edits run at all. It is also the
+so this one judgment decides whether lower-order edits run at all. The
+proposal names the rule higher-order concerns before lower-order concerns;
+"big change" in this workshop's name means a proposal on a higher-order
+concern. It is also the
 hardest judgment in the procedure: on 2026-11-12 the full improvement pass,
 at several dollars for one short note, proposed three narrower claims where
 the operator's answer was deletion.

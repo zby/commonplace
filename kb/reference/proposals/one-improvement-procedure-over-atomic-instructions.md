@@ -75,10 +75,10 @@ The record follows from the run type. Decisions key to the atom, never to the va
 
 ### The default composition
 
-Variants differ, but one ordering rule holds for the default one, set by the operator on 2026-11-13.
+Variants differ, but one ordering rule holds for the default one, set by the operator on 2026-11-13: higher-order concerns before lower-order concerns. The wording is the composition field's. A higher-order concern is about what the note is: its claim, its boundary, whether it should exist, where it belongs. A lower-order concern is about how the note says it: framing, flow, wording. Work on a lower-order concern is wasted when a higher-order one is unsettled, because the text it improves may not survive. The simplification passes already order themselves this way through their `depth` field; the rule here extends that order upward to the note's existence and boundary.
 
-1. **Check for big changes first.** Some review operations can propose a change to what the note is: a split, a merge, a rehome, a rejection, a different claim. These checks always run before any edit. The expected result, in most runs, is that they propose nothing and the run goes on. A proposal carries a force:
-   - **Strong:** the run stops there and puts the proposal before the operator. Wording and framing edits are not run, because they would be spent on text that may not survive.
+1. **Check higher-order concerns first.** Some review operations can propose a change to what the note is: a split, a merge, a rehome, a rejection, a different claim. These checks always run before any edit. The expected result, in most runs, is that they propose nothing and the run goes on. A proposal carries a force:
+   - **Strong:** the run stops there and puts the proposal before the operator. Lower-order edits are not run, because they would be spent on text that may not survive.
    - **Weak:** the change might be beneficial but the note stands as it is. The run records the proposal as a pending item and goes on to the edits.
 2. **Otherwise apply what is automated.** Edit operations that need no operator decision run and are applied, up to the exceptions their atoms name. They normally run first among the edits, since nothing waits on them.
 3. **Save the rest for the operator.** Edits that need a decision are not applied and do not block step 2. They are written to the run's answers member as pending items, each with its context, and the run ends with some changes applied and some pending.
@@ -107,7 +107,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 - The run type's roles, which are required, and whether membership is open or closed.
 - The answers schema: its fields, and which decisions require a reason.
 - Where variants and atoms live under `kb/instructions/`, and how a variant is named and retired.
-- Which review operations are the big-change checks, and how each states the force of what it proposes. They always run first, so their cost is paid on every run; the full pass's method families cost far more than a gate sweep, which argues for a small dedicated check over the whole method suite.
+- Which review operations are the higher-order checks, and how each states the force of what it proposes. They always run first, so their cost is paid on every run; the full pass's method families cost far more than a gate sweep, which argues for a small dedicated check over the whole method suite.
 - What makes a proposal strong: the check's own judgment, a stated criterion such as the note having no claim its neighbours do not own, or the operator's threshold recorded from earlier answers.
 - Whether pending items expire when the note's text changes under them, as review results go stale.
 - Which checks a variant names beyond `commonplace-validate`.
@@ -115,7 +115,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 
 ## Adoption criteria
 
-- **Before the first build relies on it:** the big-change check is evaluated alone in the [big-change check evaluation workshop](../../work/big-change-check-evaluation/README.md).
+- **Before the first build relies on it:** the higher-order check is evaluated alone in the [big-change check evaluation workshop](../../work/big-change-check-evaluation/README.md).
 - **First build:** the operator commissions the run type, the edit-operation type and the first variant. The fix case is the candidate first variant, since the fix procedure is the one with no run record today. Its first run on a note with fresh warnings is the first retained example.
 - **Retirement of an editing path:** a variant has run that path's cases on retained examples and the operator accepts the results.
 - **Fallback to option B:** the first run type needs validator changes that the run structure does not justify.
