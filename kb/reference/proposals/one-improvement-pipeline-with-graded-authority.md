@@ -10,7 +10,7 @@ Commonplace has three ways to improve one note after review: the full improvemen
 
 This proposal has two parts. The first is a shared authority vocabulary: each class of action carries a grade that says how far the pipeline may go before an operator decides. The second is one operator-decision record that keeps every decision taken at those grades, as the evidence a later grade change needs. The title names what every option below gives: one pipeline in vocabulary and record. Whether it is also one pipeline in code is the choice the options leave open. Three small changes that answer an observed drift stand apart from that choice and have their own adoption criterion.
 
-## Current state (as of 2026-11-12)
+## Current state (as of 2026-11-13)
 
 | | Full pass | Fix procedure | Simplification passes |
 |---|---|---|---|
@@ -19,12 +19,12 @@ This proposal has two parts. The first is a shared authority vocabulary: each cl
 | Edit bound | body edits that keep the claim; copyedit | framing, accuracy and attribution; no argument change | per-pass preserve rules; `defend` claims |
 | Review after editing | closing cycle; at most one repair | re-run the gate sweep | none beyond code checks on each text |
 | Operator stops | hand-back dispositions; `--direction` for an undetermined update; exact publication approval | `deferred` items | strike lists for plain-wording and abstractions; exact publication approval |
-| Where the operator's answer is kept | packet resolution fields with rationale, under [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | the agent's own `rejected` and `deferred` statuses in the fix report; nothing consumes deferred items | the proposed and approved strike list inside the run directory, with no reason |
+| Where the operator's answer is kept | packet resolution fields with rationale, under [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | the agent's own `rejected` and `deferred` statuses in the fix report; nothing consumes deferred items | the proposed list and each strike with the operator's required reason, inside the run directory; nothing reads them across runs |
 
 Shipped constraints this proposal must respect:
 
 - [ADR 080](../adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) keeps every claim-level change with the author. The pass never changes a title, thesis or title-as-claim.
-- The strike-list stops are declared temporary procedure-development points. The planning instruction asks the operator to retain proposed, accepted and rejected choices with their reasons, and to evaluate rule changes on retained and fresh examples before a stop is removed. The operator strikes by deleting entries, and the code keeps the proposed list, which carries the worker's reason per candidate, and the approved list per run. No strike reason is captured anywhere, and nothing aggregates across runs. This is a present defect in the declared development path. It is logged, and it resolves with the record in option C below rather than with a separate per-run capture.
+- The strike-list stops are declared temporary procedure-development points. The planning instruction asks the operator to retain proposed, accepted and rejected choices with their reasons, and to evaluate rule changes on retained and fresh examples before a stop is removed. Since 2026-11-13 the revise workflow requires a reason with every strike and blocks deleted, edited or added entries, so each run holds its proposed list and its strikes with reasons. Nothing aggregates them across runs; that reading is the record's job below.
 - [Full improvement pass closure](../full-improvement-pass-closure.md) states as policy: do not build trust-dial automation or reduced audit sampling from the closing calibration.
 - The [review system](../README-REVIEW-SYSTEM.md) asks that each operation be evaluated alone before its composition is trusted. Reliable replay does not establish reliable selection or editing judgment.
 - One full pass on one short note cost 27 launches and $4.47. A fix on one warning is a single agent edit.
@@ -117,7 +117,8 @@ Oracle warrant for a lowered grade: the operator's decision, backed by a discrim
 
 - The unit of an action class: a pass, a fix strategy, a gate, a finding kind, or a combination.
 - The grade set on the per-item axis: the three above, fewer, or a split of apply between per-edit and per-run approval.
-- Whether reasons are optional. A required reason on every strike raises the cost per operator decision that this design is meant to lower.
+- Whether reasons are required at every stop. For strikes the operator decided on 2026-11-13 that they are, accepting the cost per decision for the most learning input. Whether packet resolutions and publication approvals carry the same requirement is open.
+- The interface for operator answers: direct edits to the proposed file, or a session in which an agent presents each item in context, asks the operator, and records the answer in the same file, approving on the operator's word. The strike list has the session procedure ([resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md)); the packet resolution and the publication approval could take the same shape, since each is a proposed file and an answer.
 - The shape of the record within the state tree: entries kept in each run directory and aggregated by a query, or one append-only file. Its location is settled: the operator decided on 2026-11-13 that the record stays under `kb/reports/state/`, where [ADR 128](../adr/128-one-ignored-operational-tree-under-kb-reports-state.md) sets the publication boundary of the state repository and [ADR 129](../adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md) keeps run bundles by default. The record is then as durable as that repository's commit cadence, which the [public state repository workshop](../../work/public-state-repository/README.md) still owns; the fix procedure, which has no run directory, needs a place in that tree to write. One force remains open against that default: operator answers, unlike run bundles, cannot be regenerated by rerunning a workflow, so their retention bar is higher than the tree's. Whether a reading occasion promotes read entries into the tracked record, and when the record is read at all, is deferred to the work on the [unresolved frontier](../definitions/unresolved-frontier.md), where reading occasions are one surface among several.
 - Whether declining a finding is a graded action or stays with the procedure that met it. Recording the decline is not free: without it the record is censored to what reached the operator.
 - Whether the fix procedure becomes a workflow command under option B or stays agent-run under option A.
@@ -125,7 +126,7 @@ Oracle warrant for a lowered grade: the operator's decision, backed by a discrim
 ## Adoption criteria
 
 - **Drift changes:** the next revise hand-back or fix pass on a note that already carries one pass's qualifiers; the brief, taxonomy and reflection changes cost one instruction edit each and need no other trigger.
-- **Option C:** the operator names a reading occasion for the record, such as the next decision to remove a strike-list stop, since the planning instruction already requires the evidence the record would hold. Adopting C settles the strike-reason gap one way or the other: the record captures the operator's reason for each strike, or the planning instruction stops asking for one. If the proposal is withdrawn, the instruction change is the fallback.
+- **Option C:** the operator names a reading occasion for the record, such as the next decision to remove a strike-list stop, since the planning instruction already requires the evidence the record would hold. Strike reasons are already captured per run; adopting C adds the reading of them across runs that the stop's removal needs.
 - **Option A:** a strike-list stop is to be removed, or a logged case in `kb/log.md` shows the same finding kind handled inconsistently across two procedures.
 - **Option B:** one of the three procedures needs its editing, review or publication path rebuilt, or the fix procedure is to become headless. Build on a shared path then rather than adding a fourth.
 - **Learning loop:** one class has enough recorded decisions that a discriminating check or narrowed definition can be stated and tested on fresh examples, and a decision has revisited the closure policy's trust-dial clause.

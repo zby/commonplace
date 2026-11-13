@@ -36,8 +36,8 @@ draws is a claim question, and the decision is per term, not per occurrence.
      training sense next to retained adaptation of a process). Both stay;
      each occurrence gets the word for the thing it names. Report the pair
      and the sentence that separates them.
-4. Return the proposals. The operator strikes items. Apply only what
-   survives.
+4. Return the proposals. The operator strikes items, each with a reason.
+   Apply only what survives.
 
 Report: per term, the decision, the deciding occurrence when the term is
 kept, and the count of replacements.

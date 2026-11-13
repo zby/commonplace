@@ -442,8 +442,9 @@ override it). Each pass works on the text the one before left. The command
 writes the artifact once, after every pass ended `applied`, `no-change` or
 `skipped` and exact final publication approval is captured. Plain-wording
 and abstractions stop with
-`artifact/<pass>-list-<key>.md` for the operator to delete the struck
-entries. A stop for the operator exits 0 with `waiting-for` in the JSON
+`artifact/<pass>-list-<key>.md` for the operator to mark each struck entry
+with an indented `struck: <reason>` line; the reason is required, and a
+deleted, edited or added entry stops the run again. A stop for the operator exits 0 with `waiting-for` in the JSON
 report: what to do, the file, proposal key, approval command and command to
 repeat. These selection stops remain explicit per-proposal approvals;
 the [revision instruction](../instructions/simplification-passes/revise-an-article-or-note.md)

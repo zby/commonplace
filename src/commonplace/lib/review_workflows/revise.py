@@ -41,7 +41,11 @@ never approves: only the recorded approved text becomes the operator's answer:
    any entry is applied: a list ask, a stop with
    `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat an apply
    ask given the proposed list and the list the operator explicitly approved. A struck
-   entry is deleted from the file. A list made again for other text has
+   entry stays in the file under an indented `struck: <reason>` line; the
+   reason is required, and a deleted, edited or added entry blocks the pass
+   until the operator approves a corrected file. The reasons are the
+   evidence the selection stop's removal needs, and they bind publication
+   through the selection context. A list made again for other text has
    another key, so it gets a new file and stops again.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
@@ -119,6 +123,9 @@ NO_CANDIDATES = "No candidates."
 REPEAT = "commonplace-review run revise {artifact}"
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
+STRIKE_HOW = ("Strike entries of the {name} list: under each entry you strike, add an indented line "
+              "`struck: <your reason>`; delete nothing, change no entry, and leave the entries you approve as they are. "
+              f"In a session, follow {PASSES_DIR}/resolve-a-strike-list.md.")
 
 
 @dataclass(frozen=True)
@@ -336,22 +343,67 @@ Apply the operator-approved list of one simplification pass to one artifact. \
 Nobody will answer questions. If you cannot, write {problem} instead of guessing.
 
 {frame}
-The pass's list for this text was {proposed_input}. The operator struck \
-entries by deleting them; the list they left is {approved_input}. Apply only \
-the entries left there marked replace, as the pass directs; apply no struck \
-entry and no new one.
+The pass's list for this text was {proposed_input}. The entries the operator \
+approved are {approved_input}; the entries they struck, each with the \
+operator's reason, are {struck_input}. Apply only the approved entries \
+marked replace, as the pass directs; apply no struck entry and no new one.
 
 Output:
 - Write the complete revised artifact, frontmatter included, to {artifact_output}. \
 Do not edit the artifact's file: code checks your text.
 - Write the pass's report to {report}, as the pass describes it, followed by \
-the entries the operator struck, one line each. {no_writes}
+the struck entries with their reasons, one line each. {no_writes}
 """
 
 
 def entries(listed: str) -> int:
     """The number of top-level `- ` items in a strike list."""
     return len(re.findall(r"^- ", listed, re.MULTILINE))
+
+
+STRUCK = re.compile(r"^\s+struck:\s*(.*?)\s*$")
+"""The operator's mark under a struck entry; the group is the required reason."""
+NO_STRIKES = "No entry was struck.\n"
+
+
+def items(listed: str) -> list[list[str]]:
+    """The top-level `- ` items of a strike list, each as its lines with the indented lines under it."""
+    found: list[list[str]] = []
+    for line in listed.splitlines():
+        if line.startswith("- "):
+            found.append([line.rstrip()])
+        elif found and line.strip():
+            found[-1].append(line.rstrip())
+    return found
+
+
+def strikes(proposed: str, approved: str) -> tuple[list[str], list[dict], list[str]]:
+    """Split the operator's answer into kept entries, struck entries with reasons, and what blocks it.
+
+    The answer is a strike of the proposed list: every proposed entry is
+    present, unchanged, either as it was or with an indented `struck: <reason>`
+    line under it. Deleting, editing or adding an entry blocks the pass, as
+    does a strike without a reason. Entries are returned as their text.
+    """
+    remaining = ["\n".join(item) for item in items(proposed)]
+    kept, struck, problems = [], [], []
+    for item in items(approved):
+        marks = [STRUCK.match(line) for line in item]
+        entry = "\n".join(line for line, mark in zip(item, marks) if mark is None)
+        head = item[0][:60]
+        if entry not in remaining:
+            problems.append(f"not in the proposed list as proposed: `{head}`")
+            continue
+        remaining.remove(entry)
+        reasons = [mark.group(1) for mark in marks if mark is not None]
+        if not reasons:
+            kept.append(entry)
+        elif not reasons[0]:
+            problems.append(f"struck without a reason: `{head}`")
+        else:
+            struck.append({"entry": entry, "reason": reasons[0]})
+    problems.extend(f"deleted instead of struck: `{item.splitlines()[0][:60]}`" for item in remaining)
+    return kept, struck, problems
 
 
 # --- Checking texts --------------------------------------------------------------------------
@@ -448,18 +500,29 @@ def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, star
     selection["approved"] = approved
     if approved is None:
         state.state = "waiting"
-        report.waiting_for = operator.waiting(
-            run, root, name, f"Strike entries of the {current.name} list: delete each entry's `- ` line and the "
-            "lines indented under it, and leave the entries you approve.", REPEAT.format(artifact=artifact))
+        report.waiting_for = operator.waiting(run, root, name, STRIKE_HOW.format(name=current.name),
+                                              REPEAT.format(artifact=artifact))
         return None
     if operator.edited(run, name):
         report.unapproved_edits.append(operator.waiting(run, root, name, UNAPPROVED, REPEAT.format(artifact=artifact)))
-    if not entries(approved):
+    kept, struck, problems = strikes(proposed, approved)
+    selection["struck"] = struck
+    if problems:
+        state.state = "waiting"
+        state.reason = "the approved list is not a strike of the proposed list: " + "; ".join(problems)
+        report.waiting_for = operator.waiting(
+            run, root, name, f"{state.reason}. {STRIKE_HOW.format(name=current.name)} Then approve the file again.",
+            REPEAT.format(artifact=artifact))
+        return None
+    if not kept:
         state.state, state.reason = "no-change", "the operator struck every entry"
         return None
+    struck_text = "".join(f"{entry['entry']}\n  struck: {entry['reason']}\n" for entry in struck) or NO_STRIKES
     return _ask(run, f"{current.name}/apply", APPLY_PROMPT, frame, root, artifact, start, baseline,
-                {**inputs, "proposed": proposed, "approved": approved}, profile,
-                proposed_input=input_ref("proposed"), approved_input=input_ref("approved"))
+                {**inputs, "proposed": proposed, "approved": "".join(f"{entry}\n" for entry in kept),
+                 "struck": struck_text}, profile,
+                proposed_input=input_ref("proposed"), approved_input=input_ref("approved"),
+                struck_input=input_ref("struck"))
 
 
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],

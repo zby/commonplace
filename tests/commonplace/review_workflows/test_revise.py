@@ -155,6 +155,21 @@ def named_plan(tmp_path, passes=("readability-and-flow",), **fields):
     return path
 
 
+def strike(listed, entry, reason):
+    """Mark one entry of a proposed list struck, after its continuation lines, as the operator would."""
+    lines, out, pending = listed.splitlines(keepends=True), [], False
+    for line in lines:
+        if line.startswith("- ") and pending:
+            out.append(f"  struck: {reason}\n")
+            pending = False
+        out.append(line)
+        if line.startswith(f"- {entry}"):
+            pending = True
+    if pending:
+        out.append(f"  struck: {reason}\n")
+    return "".join(out)
+
+
 def publish(repo, capsys, report, path=NOTE_PATH):
     assert report["waiting-for"]["file"].endswith("/publication.json")
     approve(repo, capsys, report)
@@ -313,26 +328,56 @@ def test_strike_selections_still_stop_and_unapproved_edits_are_not_used(repo, ca
     _, again, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and again["waiting-for"] == waiting["waiting-for"]
     listed = repo[0] / waiting["waiting-for"]["file"]
-    listed.write_text(listed.read_text().replace("- beta: word; replace\n", ""))
+    listed.write_text(strike(listed.read_text(), "beta", "a registered word"))
     approve(repo, capsys, waiting)
     listed.write_text("- unauthorized: replace\n")
     _, ready, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [f"apply {pass_name} {model}"]
     assert ready["unapproved-edits"] and note_text(repo) == original
     assert f"{pass_name} applied alpha gamma." in artifact_file(repo, ready, "final.md").read_text()
+    [applied] = [c for c in captured_inputs(repo[2]) if c["kind"] == "apply"]
+    assert applied["inputs"]["struck"] == "- beta: word; replace\n  struck: a registered word\n"
+    assert "beta" not in applied["inputs"]["approved"]
     publish(repo, capsys, ready)
+
+
+@pytest.mark.parametrize("damage, problem", [
+    (lambda text: text.replace("- beta: word; replace\n", ""), "deleted instead of struck: `- beta"),
+    (lambda text: strike(text, "beta", ""), "struck without a reason: `- beta"),
+    (lambda text: text.replace("why: decorative", "why: ambiguous"), "not in the proposed list as proposed: `- alpha"),
+    (lambda text: text + "- epsilon: replace\n", "not in the proposed list as proposed: `- epsilon"),
+])
+def test_strike_without_reason_or_edited_list_waits_for_a_corrected_file(repo, capsys, tmp_path, damage, problem):
+    original = start(repo)
+    path = named_plan(tmp_path, passes=("plain-wording",))
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    listed = repo[0] / waiting["waiting-for"]["file"]
+    listed.write_text(damage(listed.read_text()))
+    approve(repo, capsys, waiting)
+    code, blocked, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches == [] and not blocked["applied"] and note_text(repo) == original
+    assert blocked["passes"][0]["state"] == "waiting" and problem in blocked["passes"][0]["reason"]
+    assert blocked["waiting-for"]["key"] == waiting["waiting-for"]["key"] and problem in blocked["waiting-for"]["what"]
+    listed.write_text(strike(listed.read_text().split("- epsilon")[0].replace("why: ambiguous", "why: decorative")
+                             .replace("  struck: \n", ""), "gamma", "keep it"))
+    if "beta" not in listed.read_text():
+        listed.write_text(listed.read_text().replace("- gamma: keep\n", "- beta: word; replace\n- gamma: keep\n"))
+    approve(repo, capsys, blocked)
+    _, ready, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == ["apply plain-wording small"] and ready["waiting-for"]["file"].endswith("publication.json")
 
 
 def test_changed_selection_invalidates_publication_even_if_candidate_is_identical(repo, capsys, tmp_path):
     original = start(repo)
     path = named_plan(tmp_path, passes=("plain-wording",))
     _, selection, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    listed = repo[0] / selection["waiting-for"]["file"]
+    listed.write_text(strike(listed.read_text(), "gamma", "first reason"))
     approve(repo, capsys, selection)
     _, ready, _ = revise(repo, capsys, NOTE_PATH)
     candidate = artifact_file(repo, ready, "final.md").read_text()
     approve(repo, capsys, ready)
-    listed = repo[0] / selection["waiting-for"]["file"]
-    listed.write_text(listed.read_text().replace("why: decorative", "why: ambiguous"))
+    listed.write_text(listed.read_text().replace("struck: first reason", "struck: the reason now differs"))
     approve(repo, capsys, selection)
     code, fresh, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and fresh["waiting-for"] and not fresh["applied"]
@@ -346,10 +391,15 @@ def test_striking_every_entry_completes_without_publication(repo, capsys, tmp_pa
     original = start(repo)
     path = named_plan(tmp_path, passes=("plain-wording",))
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    (repo[0] / waiting["waiting-for"]["file"]).write_text("")
+    listed = repo[0] / waiting["waiting-for"]["file"]
+    text = listed.read_text()
+    for entry in ("alpha", "beta", "gamma"):
+        text = strike(text, entry, f"{entry} stays")
+    listed.write_text(text)
     approve(repo, capsys, waiting)
     code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and done["complete"] and not done["applied"] and launches == []
+    assert done["passes"][0]["reason"] == "the operator struck every entry"
     assert note_text(repo) == original
 
 

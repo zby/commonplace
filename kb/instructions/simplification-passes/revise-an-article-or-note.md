@@ -138,13 +138,20 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    untouched, and `not-applied` names the run file holding the proposed text.
    The workflow does not commit.
 3. Plain-wording and abstractions stop with `artifact/<pass>-list-<key>.md`.
-   Delete each entry you strike, with its indented lines, run the stop's
-   approval command, then repeat; the worker applies only the approved entries. A list made again for
-   another text gets a new file and stops again. These are temporary
-   procedure-development points for unsettled selection rules. Retain the
-   proposed, accepted and rejected choices with their reasons. Use them to
-   revise selection rules and checks, then evaluate those changes on retained
-   and fresh examples before seeking separate authorization to remove a
+   Under each entry you strike, after its indented lines, add one indented
+   line `struck: <reason>`; delete nothing and change no entry. Run the
+   stop's approval command, then repeat; the worker applies only the
+   unmarked entries. A deleted, edited or added entry, or a strike without a
+   reason, stops the run again naming the entry: correct the file and
+   approve it again. In a session, follow
+   [resolve a strike list](./resolve-a-strike-list.md): the agent presents
+   each candidate in context, asks, and records the operator's answer. A
+   list made again for another text gets a new file and stops again. These
+   are temporary procedure-development points for unsettled selection
+   rules. The run retains the proposed list and each strike with the
+   operator's reason (required since 2026-11-13). Use them to revise
+   selection rules and checks, then evaluate those changes on retained and
+   fresh examples before seeking separate authorization to remove a
    selection stop. This requires no new automatic learning infrastructure;
    fewer proposals alone do not establish reliability.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.

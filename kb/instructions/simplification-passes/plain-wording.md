@@ -54,13 +54,14 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
    evidential misuse. Keep any distinct limitation, such as which comparison
    remains untested; do not replace the redundant denial with another hedge.
 5. Return the list marked keep or replace, with the reason in a few words.
-   The operator strikes items. Apply only what survives.
+   The operator strikes items, each with a reason. Apply only what survives.
 6. When the literal phrase needs a referent the figure did not name (who is
    charged, what is at fault), do not choose one. Report the phrase as a
    question with the candidate referents.
 
-Report: the applied replacements, one line each. The operator's strikes are
-recorded as the threshold for the next run.
+Report: the applied replacements, one line each, then the struck entries
+with the operator's reasons. The strikes and reasons are the threshold for
+the next run.
 
 Preserve: technical terms that look figurative or unusual but are the field's
 or the KB's registered words (seed, holding a theory, gradient descent,

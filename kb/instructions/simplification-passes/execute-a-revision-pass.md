@@ -28,8 +28,9 @@ Keep the title, type, brief declaration and H1. Propose title changes only in
 the report. Remove `user-verified` after a substantive body change.
 
 For a candidate-list request, propose selections without applying them. For
-an approved-list request, apply only entries left in the approved list and
-marked replace; do not restore struck entries or introduce new ones.
+an approved-list request, apply only the approved entries marked replace and
+list the struck entries with the operator's reasons in the report; do not
+restore struck entries or introduce new ones.
 Selection approval does not widen the pass or scope.
 
 ## Headless write briefs

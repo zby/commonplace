@@ -81,8 +81,9 @@ also bind the assessment request, answer and full pass catalog. A single
 criterion through `run gates` is report-only and never selects subsequent work.
 
 Unsettled plain-wording and abstraction selections require explicit approval
-per proposal. These temporary procedure-development points retain proposed,
-accepted and rejected choices and reasons. Removal needs separate authorization
+per proposal. These temporary procedure-development points retain the
+proposed list and each strike with the operator's required reason, in the
+run's operator record and the selection context that binds publication. Removal needs separate authorization
 after selection rules and checks have been revised and evaluated on retained
 and fresh examples. This is not automatic learning infrastructure; a lower
 proposal count does not establish reliability.
