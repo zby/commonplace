@@ -71,6 +71,8 @@ The procedure has two layers. The atoms are the stable layer. The composition is
 
 **A run is a typed directory.** Each run of a variant leaves one directory in the state tree, a directory artifact whose type declares its roles: the start text, the findings the variant acted on, the operator's answers with their reasons, the candidate text and the report. `commonplace-validate` on the directory checks that the required members exist, that they name the same note, and that the answers satisfy their schema, such as a reason on every strike, rejection and deferral. This is where strictness lives. The rules are schema and layout, so tightening or loosening one is an edit to a type, not to a workflow. The schemas are part of what is being designed and will change with the variants.
 
+An output is filed by what it is about, never by who asked for it. The two kinds of operation differ here. A review operation is a function of the note's text, so its result goes to the shared result store, keyed by note and atom, at the same path whether a standalone batch or an improvement run produced it; the run names itself in the result as provenance. The run's findings member cites the results it acted on, with their hashes, and does not hold them. An edit operation is a function of a text chain: its output is a candidate that means something only relative to the text it was given. It always lives in a run. Running one edit operation alone is therefore not a special case with its own directory but a run of a one-atom variant, which is also how an edit operation is unit-tested.
+
 The record follows from the run type. Decisions key to the atom, never to the variant, so evidence about an atom survives recomposition, and the variant's name on the run says which composition produced it. The decisions command reads the answers member of each run and should be thin enough that a schema revision is not a code change.
 
 ### The default composition
@@ -101,7 +103,8 @@ The retired code is the same under both: the revise workflow and the full pass's
 
 ## Free choices
 
-- How an edit operation is unit-tested, since the batch machinery today runs review operations only: a fixed plan of one operation on one note is the nearest thing.
+- How many notes a one-atom variant can be run over at once, since the batch machinery today runs review operations only.
+- How results from different wordings of one review operation are kept apart during calibration: the store keeps one result per note and criterion, so a rerun overwrites.
 - The edit-operation type's fields, and whether fix strategies and method families are rewritten to their types or wrapped.
 - Whether a variant has a type of its own, so the validator can check that every atom it names exists.
 - The run type's roles, which are required, and whether membership is open or closed.

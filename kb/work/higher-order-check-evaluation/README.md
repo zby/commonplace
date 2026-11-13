@@ -17,6 +17,55 @@ hardest judgment in the procedure: on 2026-11-12 the full improvement pass,
 at several dollars for one short note, proposed three narrower claims where
 the operator's answer was deletion.
 
+## Start here
+
+This workshop stands alone. It needs no decision from any other workshop
+or proposal, and nothing below waits on the improvement procedure being
+built. The one design rule it works under is atomicity:
+
+- The check is one operation on one note. Its inputs are files: the note,
+  and whatever fixed context the check's own text names. It reads no
+  conversation, no other operation's unrecorded output and no run state.
+- Its output is one stored result per note that a batch run can keep and a
+  later reader can interpret without the session that produced it.
+- It can therefore be run by itself on one note, on a labelled set, or on a
+  whole collection, and rerun after its wording changes.
+
+A check that only works inside a composed improvement run fails this rule,
+and that is a finding to report, not something to work around.
+
+The existing shape fits without new code. A review gate is a criterion file
+under `kb/instructions/review-gates/` with the fields the
+[review-gate type](../../types/review-gate.md) lists, run with
+`commonplace-review run gates <notes> --criteria <gate id>`, with results,
+freshness, profiles and cost as the
+[review system](../../reference/README-REVIEW-SYSTEM.md) describes. Its
+three outcomes map onto what this check returns: `pass` for no proposal,
+`warn` for a weak proposal, `fail` for a strong one, with the kind and the
+grounds in the findings. Start with that mapping and report where it
+strains. Draft wordings can live in this workshop until one is worth
+placing in the catalog; say how you ran a draft that is not yet there.
+
+Where state goes: the check's results are ordinary review results in the
+shared store under `kb/reports/state/review/results/`, keyed by note and
+criterion, exactly as they would be if an improvement run had asked for
+them. Nothing is filed under this workshop's name there. The store keeps
+one result per note and criterion, so give each wording of the check its
+own criterion id; otherwise a rerun overwrites the wording it is to be
+compared with. Labels, operator judgments and comparisons are this
+workshop's own and stay in this directory.
+
+Two practical matters to settle early and write down here:
+
+- **Historical texts.** A labelled positive must be judged on its text from
+  before the change. The batch command reviews files in the checkout, so
+  decide how the old text is supplied (a worktree at the earlier commit, or
+  copies under this workshop) and keep the outcome out of the worker's view,
+  including the note's later path, its redirect and any log entry about it.
+- **Spend.** Run one note, then the labelled set, before the collection.
+  State the profile and the cost of each run, and ask the operator before a
+  run over all of `kb/theory/`.
+
 ## What is being tested
 
 One atomic review operation, written as an instruction that a batch run can
