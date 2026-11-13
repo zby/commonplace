@@ -37,7 +37,7 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 ## Proposals: review machinery
 
 - [Structured-output codec for the review protocol](../reference/proposals/structured-output-codec-for-review-protocol.md) — proposal to make review output a pluggable codec: sentinel markdown now, schema-validated structured output when harnesses support it
-- [One improvement pipeline with graded authority](../reference/proposals/one-improvement-pipeline-with-graded-authority.md) — proposal to give the full pass, fix procedure and simplification passes graded operator authority, moved on evidence from the shipped operator-decision record
+- [One improvement pipeline with graded authority](../reference/proposals/one-improvement-procedure-over-atomic-instructions.md) — proposal to give the full pass, fix procedure and simplification passes graded operator authority, moved on evidence from the shipped operator-decision record
 
 ## Related Tags
 

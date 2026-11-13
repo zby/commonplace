@@ -27,7 +27,7 @@ procedure's deferred items. So no one could see which kinds of edit the
 operator reliably accepts, or see one note accumulate repairs across runs.
 
 The design proposal
-[one improvement pipeline with graded authority](../proposals/one-improvement-pipeline-with-graded-authority.md)
+[one improvement pipeline with graded authority](../proposals/one-improvement-procedure-over-atomic-instructions.md)
 weighed three options. A and B add a shared authority vocabulary. C builds
 only the record, as evidence for a later decision to move a stop. A review on
 2026-11-12 proposed C first, as a bounded evidence-gathering step.

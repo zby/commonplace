@@ -376,7 +376,7 @@ ordinary deletion commits leave it in Git history.
 - **Operator answers inside the tree.** The tree holds the operator's
   answers next to what the workflows produced: packet resolutions,
   publication approvals, strike lists, and the operator-decision record that
-  [one improvement pipeline with graded authority](../../reference/proposals/one-improvement-pipeline-with-graded-authority.md)
+  [one improvement pipeline with graded authority](../../reference/proposals/one-improvement-procedure-over-atomic-instructions.md)
   places there (settled 2026-11-13). The class-level default above, kept
   without curating and without claiming usefulness, fits run bundles and does
   not fit those answers, which are the strongest evidence the review system
