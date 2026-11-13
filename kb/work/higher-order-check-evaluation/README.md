@@ -167,6 +167,22 @@ asks for. The whole-collection run has not been made and needs the
 operator's approval; the first-results file recommends revising the
 wordings first.
 
+Round two ran three revised wordings on `opus` against the same labelled
+set: [second-results.md](./second-results.md). The revised direct wording,
+[direct-value](./wordings/direct-value.md), adds a value test, treats a
+parent's `extends` link as neutral, and reads the collection contract. It
+found 5 of 16 positives (2 strong, 3 weak) and proposed nothing on 14 kept
+notes. Its variant without the base-rate sentence gave identical outcomes
+on all 30 notes, so that sentence was not what kept the check quiet. The
+revised claim wording, [claim-need](./wordings/claim-need.md), found 4 of
+16 and proposed nothing on the 7 kept notes it was run on. The round used
+83 launches and $33.09. Most positives are still missed, chiefly merges the
+operator judged not worth a separate note and retitles after a body
+rewrite. The next round should revise `direct-value` along the four
+changes listed in second-results.md and run each wording twice. The
+whole-collection run still waits for the operator; at about $0.38 per note
+it would cost about $145 for `direct-value` alone.
+
 ## Completion
 
 This is a standing workshop. The operator stated on 2026-11-13 that the
