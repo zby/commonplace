@@ -1,5 +1,14 @@
 # Ingest working directory: a provisional cache with an end condition
 
+## Current disposition — 2026-11-13
+
+The working directory is kept. The repair-round observation is still the
+named use. The original end condition below, deletion once that decision is
+made, is no longer operative by itself: the operator's later direction to
+preserve intermediates for debugging supplies a second reason to keep the
+records, and the [last section](#later-direction-preserve-intermediates-for-debugging)
+says what must be reconsidered before anything is deleted.
+
 ## The bounded question
 
 After an ingest drafting run ends, what should remain beyond the tracked

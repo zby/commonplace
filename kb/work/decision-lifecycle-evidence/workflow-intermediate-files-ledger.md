@@ -1,5 +1,26 @@
 # Workflow intermediate files ledger
 
+## Current disposition — 2026-11-13
+
+Read this before the tables. The tables record handling as inventoried on
+2026-11-11, and some rows describe locations and deletions that no longer
+hold.
+
+- Multistage runs, AutoReason bundles, article staging packages and the
+  memory-landscape scratch now live under `kb/reports/state/` and are kept
+  after their workflow ends
+  ([ADR 129](../../reference/adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md)).
+  Their rows give the former paths first; the
+  [2026-11-12 disposition](#disposition-2026-11-12) gives the current ones.
+- Still open: capture of versions overwritten inside a kept directory,
+  commit cadence, pruning, and the analysis process record's copy into the
+  state tree. The [gaps section](#current-gaps-against-the-operators-default)
+  carries the dated status of each.
+- One overwrite has a known recovery route: a replaced review result is
+  recoverable from the launch output its review run kept. The
+  [run type draft](./improvement-run-type.md#the-evidence-contract) records
+  the check.
+
 ## Purpose and authority
 
 Show how Commonplace workflows handle intermediate files now, so we can apply

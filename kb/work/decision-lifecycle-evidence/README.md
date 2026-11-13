@@ -52,7 +52,15 @@ first test:
 These distinctions would still matter under a future arrangement without the
 current harnesses. That possibility does not expand this commission.
 
-## Current state — 2026-11-11
+## Current state
+
+The workshop holds two lines of work with separate completion conditions:
+retention, capture and admission, described first, and the improvement
+run and operator-decision evidence, described under 2026-11-13. The
+entries are dated and in order; where a later entry changes an earlier
+one, the later entry says so.
+
+### 2026-11-11 and 2026-11-12: retention, capture and admission
 
 Two concrete arrangements now have dispositions. The ingest working directory
 is kept provisionally for one decision about the repair round, with a recorded
@@ -108,8 +116,9 @@ now:
   each run a typed directory. [Authority grades and learning from operator decisions](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md)
   covers what the resulting records are used for.
 - **In draft here.** The types the first proposal needs, starting with the
-  [improvement run type](./improvement-run-type.md). The answers schema, the
-  edit-operation type and the first variant follow.
+  [improvement run type](./improvement-run-type.md) and its
+  [answers schema](./improvement-run-answers-schema.md). The edit-operation
+  type and the first variant follow.
 - **Moved out.** Calibration of the higher-order check is the standing
   [higher-order check evaluation workshop](../higher-order-check-evaluation/README.md).
   The literature on ordering concerns in revision is the
@@ -130,6 +139,7 @@ now:
 | [Ingest working directory](./ingest-working-directory.md) | Current handoff retention and the repair-round observation trigger; later debugging-retention direction requires reconsidering its original deletion end condition. |
 | [Workflow intermediate files ledger](./workflow-intermediate-files-ledger.md) | Current paths, overwrites, deletions and retention gaps across workflow families; explicit remaining coverage, with no producer changes. |
 | [Improvement run type](./improvement-run-type.md) | Draft directory type for one run of the improvement procedure: layout, members, what validation checks and open choices. Not registered; no instance exists. |
+| [Improvement run answers schema](./improvement-run-answers-schema.md) | Draft schema for the run's operator decisions: one item per decision, required reasons, and the rules that close pending items. Tested against one example; not registered. |
 
 The general map remains preliminary. The two bounded dispositions above do
 not select a universal retention threshold, mining schedule, cache lifetime,
@@ -227,7 +237,14 @@ alternatives does not change it.
 
 ## Completion
 
-Close when the selected concrete choices have sufficiently understood
+The two lines close separately, and neither holds the other open.
+
+**Improvement run and operator-decision evidence.** This line is done here
+when the type drafts have been tried on a first run and either registered
+under `kb/types/` or dropped, with the reason recorded. Later changes to
+the types belong to the procedure proposal, not to this workshop.
+
+**Retention, capture and admission.** Close when the selected concrete choices have sufficiently understood
 consequences and justified provisional dispositions, including keeping current
 practice where appropriate. State where each conclusion applies, its evidence
 limits and what would warrant reconsideration. Unresolved broader questions can
