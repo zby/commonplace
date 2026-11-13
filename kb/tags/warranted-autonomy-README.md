@@ -28,7 +28,7 @@ Notes on handing decisions from humans to a computational actor: which decisions
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](../theory/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — easy-to-warrant decisions move first, so the human residue gets harder per decision
 - [Increasing computational autonomy relocates human effort to the frontier](../theory/increasing-computational-autonomy-relocates-human-effort.md) — human hours need not fall; count improvements per human judgment
 - [A method's ceiling bounds the method, not the transfer it already made](../theory/a-method-ceiling-bounds-the-method-not-the-transfer-already-made.md) — a responsibility that left the human residue stays transferred when the method stops improving
-- [One improvement procedure over atomic instructions](../reference/proposals/one-improvement-procedure-over-atomic-instructions.md) — proposal applying this allocation to note improvement: authority grades on each atomic instruction, moved only on discriminating evidence from the operator-decision record, with claim changes handed back in every variant
+- [Authority grades and learning from operator decisions](../reference/proposals/authority-grades-and-learning-from-operator-decisions.md) — proposal applying this allocation to note improvement: authority grades on each atomic instruction, moved only on discriminating evidence from the operator-decision record, with claim changes handed back in every variant
 
 ## Measuring autonomy and its evidence
 
