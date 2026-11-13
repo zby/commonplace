@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [big-change-check-evaluation](./big-change-check-evaluation/README.md) — posed 2026-11-13: evaluate alone the check that an improvement run makes first, whether a note needs a split, merge, rehome, rejection or different claim and with what force, on labelled cases from history and across all of `kb/theory/`
+
 - [sniadanie-ai-demo](./sniadanie-ai-demo/README.md) — preparing a five-minute Commonplace demonstration with staged structural and semantic failures, theory-collection methods, and a latency-safe rehearsal plan
 
 - [informed-direction-and-autonomous-judgment](./informed-direction-and-autonomous-judgment/README.md) — posed 2026-11-08: parked hypothesis that agents assume informed operator acceptance while operators rely on their advice; await local cases distinguishing missed objections, unreported difficulties, and knowingly exploratory work
