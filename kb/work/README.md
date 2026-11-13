@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [order-of-concerns-in-revision](./order-of-concerns-in-revision/README.md) — posed 2026-11-13: ground the rule "higher-order concerns before lower-order concerns" in checked literature on revision, editing and planning, settle how it relates to ordering by degrees of freedom, and decide whether to amend existing theory notes or add one
+
 - [higher-order-check-evaluation](./higher-order-check-evaluation/README.md) — posed 2026-11-13: evaluate alone the check that an improvement run makes first, whether a note needs a split, merge, rehome, rejection or different claim and with what force, on labelled cases from history and across all of `kb/theory/`
 
 - [sniadanie-ai-demo](./sniadanie-ai-demo/README.md) — preparing a five-minute Commonplace demonstration with staged structural and semantic failures, theory-collection methods, and a latency-safe rehearsal plan
