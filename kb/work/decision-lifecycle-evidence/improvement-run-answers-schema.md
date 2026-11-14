@@ -36,7 +36,7 @@ the "bundle" unit disappears, because no stop approves a whole text any more.
 | Field | Meaning |
 |---|---|
 | `id` | Stable within the run. The edit chain cites it when an approved item is applied. |
-| `atom` | Path of the instruction that produced the proposal. Decisions key to the atom, never to the variant. |
+| `atom` | Path of the instruction that produced the proposal, with an anchor where one file holds several, as the fix strategies do. Decisions key to the atom, never to the variant. |
 | `kind` | `higher-order` for a proposal about what the note is; `edit` for a proposed change to how it says it. |
 | `force` | `strong` or `weak`. Required for a higher-order item and absent on an edit. |
 | `change` | `split`, `merge`, `rehome`, `reject` or `claim`. Required for a higher-order item and absent on an edit. The first calibration round found the kind carried only by a convention in the finding text. |
@@ -124,7 +124,7 @@ properties:
       additionalProperties: false
       properties:
         id: {type: string, minLength: 1}
-        atom: {type: string, pattern: '\.md$'}
+        atom: {type: string, pattern: '\.md(#.+)?$'}
         kind: {enum: [higher-order, edit]}
         force: {enum: [strong, weak]}
         change: {enum: [split, merge, rehome, reject, claim]}

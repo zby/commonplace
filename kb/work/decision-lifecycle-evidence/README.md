@@ -117,8 +117,8 @@ now:
   covers what the resulting records are used for.
 - **In draft here.** The types the first proposal needs, starting with the
   [improvement run type](./improvement-run-type.md) and its
-  [answers schema](./improvement-run-answers-schema.md). The edit-operation
-  type and the first variant follow.
+  [answers schema](./improvement-run-answers-schema.md), and the
+  [edit-operation type](./edit-operation-type.md). The first variant follows.
 - **Moved out.** Calibration of the higher-order check is the standing
   [higher-order check evaluation workshop](../higher-order-check-evaluation/README.md).
   The literature on ordering concerns in revision is the
@@ -140,6 +140,7 @@ now:
 | [Workflow intermediate files ledger](./workflow-intermediate-files-ledger.md) | Current paths, overwrites, deletions and retention gaps across workflow families; explicit remaining coverage, with no producer changes. |
 | [Improvement run type](./improvement-run-type.md) | Draft directory type for one run of the improvement procedure: layout, members, what validation checks and open choices. Not registered; no instance exists. |
 | [Improvement run answers schema](./improvement-run-answers-schema.md) | Draft schema for the run's operator decisions: one item per decision, required reasons, and the rules that close pending items. Tested against one example; not registered. |
+| [Edit-operation type](./edit-operation-type.md) | Draft type for edit operations: the shared contract, what an instance declares, and how the passes and fix strategies fit. Not registered. |
 
 The general map remains preliminary. The two bounded dispositions above do
 not select a universal retention threshold, mining schedule, cache lifetime,
