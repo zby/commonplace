@@ -61,6 +61,13 @@ collection directory relative to `kb/` (`collection/theory`). The wrapper
 asks only for what the contract adds beyond the type spec, so the two
 conformance pairs do not flag the same thing twice.
 
+Both wrappers also leave four properties to the frontmatter gates that own
+them: whether a claim title is a proposition, whether it is contestable,
+whether it composes as a linkable phrase, and whether the description
+discriminates the note. A conformance pair judges a title or description
+only against a convention its own document adds
+([ADR 131](./adr/131-conformance-reviews-leave-titles-and-descriptions-to-their-gates.md)).
+
 **Critique.** The `critique` lens applies the critique instruction as a
 report criterion: the worker writes an open-ended report, and the outcome is
 `report`. Critique is opt-in; `--all-gates` and the default status set leave

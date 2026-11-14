@@ -279,6 +279,13 @@ delete no file in the repository, and run no command that changes it or its git 
 {contract}
 """
 
+TITLE_AND_DESCRIPTION = (
+    "Catalog gates judge four properties for every note: whether a claim title is a proposition, whether it is"
+    " contestable, whether it composes as a linkable phrase, and whether the description discriminates the note."
+    " Leave those to their gates; judge a title or description here only against a convention this document adds."
+)
+"""The boundary against the frontmatter gates, shared by both conformance wrappers (ADR 131)."""
+
 TYPE_WRAPPER = (
     "This is a type-conformance gate. The gate is the note's type spec:",
     "authoring instructions and a template, not a Failure mode / Test procedure.",
@@ -289,6 +296,7 @@ TYPE_WRAPPER = (
     "- WARN: the note conforms overall, but specific instructions go unmet; name each unmet instruction as a finding.",
     "- FAIL: the note does not do what the authoring instructions ask.",
     "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
+    TITLE_AND_DESCRIPTION,
 )
 """Mechanical only: how to apply a type spec as a gate. What a good note of the type is belongs in the spec."""
 
@@ -298,13 +306,15 @@ COLLECTION_WRAPPER = (
     "rules, not a Failure mode / Test procedure.",
     "The embedded contract below is the authoritative gate text for this pair.",
     "Judge whether the note follows the collection's authoring conventions:",
-    "placement, title and description conventions, quality goal, and outbound linking rules.",
+    "placement, quality goal, outbound linking rules, and the title and description conventions",
+    "that are specific to this collection.",
     "If the COLLECTION.md carries a `## Review` section, treat it as the operative test.",
     "- PASS: the note follows the collection's conventions.",
     "- WARN: the note conforms overall, but specific conventions go unmet; name each unmet convention as a finding.",
     "- FAIL: the note does not follow the collection's conventions: wrong placement, or its conventions are systematically unmet.",
     "Structural checks (frontmatter fields, schema conformance) are the deterministic validator's job; do not re-check them here.",
     "The note's conformance to its type spec is the type-conformance pair's job; judge only what the collection contract asks beyond the type contract.",
+    TITLE_AND_DESCRIPTION,
 )
 """Mechanical only: how to apply a collection contract as a gate; its criteria belong in the contract."""
 

@@ -1,7 +1,7 @@
 ---
 gate_id: semantic/epistemic-status-blur
 name: Epistemic status blur
-description: 'Claims of different epistemic status — observation, derivation, proposed mechanism, conjecture — read with uniform confidence, or support for one claim is presented as covering another.'
+description: 'Claims of different epistemic status — observation, derivation, proposed mechanism, conjecture — read with uniform confidence, support for one claim is presented as covering another, or a well-supported finding is hedged as if it were speculative.'
 type: types/review-gate.md
 lens: semantic
 watches: [title, description, body]
@@ -10,7 +10,7 @@ staleness: changed
 
 ## Failure mode
 
-The note mixes claims with different support — reported observations, consequences derived from stated premises, proposed mechanisms, conjectures — but the prose presents them with uniform confidence, so a reader cannot recover which claim carries what support. A variant of the same failure is spread: evidence that attaches to one claim is presented, by wording or placement, as if it licensed a neighbouring claim it does not support. One document may legitimately combine all of these statuses; the failure is collapsing them, not mixing them.
+The note mixes claims with different support — reported observations, consequences derived from stated premises, proposed mechanisms, conjectures — but the prose presents them with uniform confidence, so a reader cannot recover which claim carries what support. A variant of the same failure is spread: evidence that attaches to one claim is presented, by wording or placement, as if it licensed a neighbouring claim it does not support. One document may legitimately combine all of these statuses; the failure is collapsing them, not mixing them. The reverse miscalibration also counts: a finding the note supports well is worded tentatively, so the reader discounts support the note has.
 
 ## Test
 
@@ -18,9 +18,11 @@ The note mixes claims with different support — reported observations, conseque
 2. Classify each claim as the note presents it: reported observation or result; consequence derived from stated premises; proposed mechanism or explanation; conjecture or hypothesis.
 3. Check recoverability: can a reader assign each load-bearing claim its status from the text? Formal labels are not required — a "may", "we conjecture", a working-hypothesis phrase, a Scope entry, or an Open Questions entry suffices, as does placement in a clearly named hypotheses section. Conjectural force stated once in the title, description, or opening covers the claim it governs.
 4. Check spread: for each cited or reported piece of support, identify which claim it supports. Flag places where wording or adjacency presents that support as establishing a different claim — a proposed mechanism inheriting the confidence of the observations it was proposed to explain is the canonical case.
-5. Do not repair. Judge the presentation on the page, not a relabelling that would fix it.
+5. Check the note's own constructions. A framework, taxonomy or causal model that the note builds itself, without evidence it presents or cites, is a proposal. Wording such as `requires`, `consists of` or `the stages are` asserts it; `a plausible decomposition` or `one way to model this` proposes it. A qualitative decomposition needs only light proposing language, such as "at least" or "one useful way"; do not flag it merely because it is the note's own. Flag quantitative or empirical-sounding claims made without evidence. Do not treat outside plausibility or your agreement with the conclusion as grounding for stronger wording.
+6. Check the reverse: a finding the note supports well but words tentatively.
+7. Do not repair. Judge the presentation on the page, not a relabelling that would fix it.
 
-WARN when a load-bearing proposed mechanism or conjecture reads as established, or when support that attaches to one claim is presented as covering another. INFO when statuses are recoverable but only through effortful reading — markers exist but are distant from the claims they govern.
+WARN when a load-bearing proposed mechanism or conjecture reads as established, or when support that attaches to one claim is presented as covering another. WARN also when the note's own construction is asserted as established. INFO when statuses are recoverable but only through effortful reading — markers exist but are distant from the claims they govern — or when a well-supported finding is hedged without reason.
 
 Do not flag here: an honestly-presented claim whose scope exceeds its support (`semantic/unwarranted-scope` — a status can be accurate while the scope overreaches); a claim ambiguous between materially different readings (`semantic/underspecified-assertions`); a citation that does not say what the note claims (`semantic/grounding-alignment`); hedging language added to dodge counterexamples without improving the explanation (`semantic/explanatory-reach`, ad-hoc accommodation).
 

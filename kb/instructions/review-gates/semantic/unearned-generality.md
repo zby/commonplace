@@ -30,7 +30,7 @@ Identify the central claim from the title, description, and opening argument. Fo
 
 WARN when a non-load-bearing abstraction widens the central claim or the filename-level title, or when abstraction is distributed with no load-bearing site. INFO when the abstraction is probably unearned but the note gestures at a second instance class without developing it.
 
-Do not flag here: notation or formal decomposition that adds no precision (`prose/pseudo-formalism`); qualifications and escape hatches added to protect a claim from counterexamples (`semantic/explanatory-reach`, ad-hoc accommodation); a KB term defined once and then reused opaquely (`accessibility/jargon-persistence`). This gate is about vocabulary altitude in the claim itself.
+Do not flag here: notation or formal decomposition that adds no precision (`complexity/framework-decoration`); qualifications and escape hatches added to protect a claim from counterexamples (`semantic/explanatory-reach`, ad-hoc accommodation); a KB term defined once and then reused opaquely (`accessibility/jargon-persistence`). This gate is about vocabulary altitude in the claim itself.
 
 Judge the abstraction present in the artifact. Do not repair the claim while reviewing.
 
