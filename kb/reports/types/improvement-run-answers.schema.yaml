@@ -1,0 +1,180 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+allOf:
+- $ref: ../../types/note.schema.yaml
+- type: object
+  properties:
+    frontmatter:
+      type: object
+      required:
+      - description
+      - type
+      - note
+      - items
+      properties:
+        type:
+          const: reports/types/improvement-run-answers.md
+        note:
+          type: string
+          pattern: ^[^/].*\.md$
+        items:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - atom
+            - kind
+            - proposal
+            - text-sha256
+            - state
+            - applied-in
+            additionalProperties: false
+            properties:
+              id:
+                type: string
+                minLength: 1
+              atom:
+                type: string
+                pattern: \.md(#.+)?$
+              kind:
+                enum:
+                - higher-order
+                - edit
+              force:
+                enum:
+                - strong
+                - weak
+              change:
+                enum:
+                - split
+                - merge
+                - rehome
+                - reject
+                - claim
+              proposal:
+                type: string
+                minLength: 1
+              where:
+                type: string
+                minLength: 1
+              agent-note:
+                type: string
+                minLength: 1
+              text-sha256:
+                type: string
+                pattern: ^[0-9a-f]{64}$
+              state:
+                enum:
+                - pending
+                - approved
+                - rejected
+                - deferred
+                - expired
+              reason:
+                type: string
+                minLength: 1
+              revisit:
+                type: string
+                minLength: 1
+              decided-by:
+                anyOf:
+                - enum:
+                  - operator
+                  - rule
+                - type: string
+                  pattern: \.md(#.+)?$
+              decided-at:
+                type: string
+                minLength: 1
+              applied-in:
+                type:
+                - string
+                - 'null'
+              supersedes:
+                type: string
+                pattern: '#.+$'
+              repeats:
+                type: string
+                pattern: '#.+$'
+            allOf:
+            - if:
+                properties:
+                  kind:
+                    const: higher-order
+              then:
+                required:
+                - force
+                - change
+              else:
+                not:
+                  anyOf:
+                  - required:
+                    - force
+                  - required:
+                    - change
+            - if:
+                properties:
+                  state:
+                    const: pending
+              then:
+                not:
+                  anyOf:
+                  - required:
+                    - decided-by
+                  - required:
+                    - decided-at
+              else:
+                required:
+                - decided-by
+                - decided-at
+            - if:
+                properties:
+                  state:
+                    enum:
+                    - rejected
+                    - deferred
+                    - expired
+              then:
+                required:
+                - reason
+            - if:
+                properties:
+                  state:
+                    const: deferred
+              then:
+                required:
+                - revisit
+            - if:
+                properties:
+                  state:
+                    const: expired
+              then:
+                properties:
+                  decided-by:
+                    const: rule
+              else:
+                properties:
+                  decided-by:
+                    not:
+                      const: rule
+            - if:
+                required:
+                - decided-by
+                properties:
+                  decided-by:
+                    pattern: \.md(#.+)?$
+              then:
+                required:
+                - reason
+            - if:
+                properties:
+                  state:
+                    enum:
+                    - pending
+                    - rejected
+                    - deferred
+                    - expired
+              then:
+                properties:
+                  applied-in:
+                    type: 'null'

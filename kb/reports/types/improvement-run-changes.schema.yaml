@@ -1,0 +1,26 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required: [description, type, note, start-sha256, final-sha256, edits]
+        properties:
+          type:
+            const: reports/types/improvement-run-changes.md
+          note: {type: string, pattern: '^[^/].*\.md$'}
+          start-sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
+          final-sha256:
+            anyOf: [{type: "null"}, {type: string, pattern: '^[0-9a-f]{64}$'}]
+          edits:
+            type: array
+            items:
+              type: object
+              required: [atom, from-sha256, to-sha256]
+              additionalProperties: false
+              properties:
+                atom: {type: string, pattern: '\.md(#.+)?$'}
+                from-sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
+                to-sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
+                item: {type: string, pattern: '#.+$'}

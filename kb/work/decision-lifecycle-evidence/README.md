@@ -119,7 +119,9 @@ now:
   [improvement run type](./improvement-run-type.md) and its
   [answers schema](./improvement-run-answers-schema.md), and the
   [edit-operation type](./edit-operation-type.md). The
-  [first variant](./first-variant-fix-findings.md) is drafted and not run.
+  [first variant](./first-variant-fix-findings.md) has had its
+  [first run](./first-run.md), with the run types registered
+  experimentally under `kb/reports/types/`.
 - **Moved out.** Calibration of the higher-order check is the standing
   [higher-order check evaluation workshop](../higher-order-check-evaluation/README.md).
   The literature on ordering concerns in revision is the
@@ -142,7 +144,9 @@ now:
 | [Improvement run type](./improvement-run-type.md) | Draft directory type for one run of the improvement procedure: layout, members, what validation checks and open choices. Not registered; no instance exists. |
 | [Improvement run answers schema](./improvement-run-answers-schema.md) | Draft schema for the run's operator decisions: one item per decision, required reasons, and the rules that close pending items. Tested against one example; not registered. |
 | [Edit-operation type](./edit-operation-type.md) | Draft type for edit operations: the shared contract, what an instance declares, and how the passes and fix strategies fit. Not registered. |
-| [First variant, fix findings](./first-variant-fix-findings.md) | Draft of the fix procedure recomposed over the drafted types, with the three gaps it exposed in them and the preconditions of a first run. Not run. |
+| [First variant, fix findings](./first-variant-fix-findings.md) | Draft of the fix procedure recomposed over the drafted types, with the three gaps it exposed in them and the preconditions of a first run. |
+| [First run](./first-run.md) | Record of the one run made on 2026-11-14: result, what the types enforced, and nine observations about the design. |
+| [Overlaps among the review operations](./review-operation-overlaps.md) | Map of where gates, the type and collection checks, the compression bundle, the report methods and the higher-order check ask the same question; a reading of texts, with nothing changed. |
 
 The general map remains preliminary. The two bounded dispositions above do
 not select a universal retention threshold, mining schedule, cache lifetime,

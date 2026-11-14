@@ -1,0 +1,11 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required: [manifest]
+properties:
+  manifest:
+    type: object
+    required: [type]
+    properties:
+      type:
+        const: reports/types/improvement-run.md
+    additionalProperties: false
