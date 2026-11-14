@@ -183,6 +183,20 @@ changes listed in second-results.md and run each wording twice. The
 whole-collection run still waits for the operator; at about $0.38 per note
 it would cost about $145 for `direct-value` alone.
 
+Round three ran one revised wording, [direct-tests](./wordings/direct-tests.md),
+twice on `opus` against the same 30 notes:
+[third-results.md](./third-results.md). It adds a parent-loss test, a
+title-against-body test and a policy-or-claim place test. It found 5 of 16
+positives in one run and 6 in the other, 4 in both. Neither run proposed
+anything on the 14 kept notes. The two runs agreed on 26 of 30 notes in
+outcome and kind. The three outcome flips were all between no proposal and
+a weak proposal. The policy-or-claim test reached the wrong-place case P11
+in both runs. The title-against-body test reached none of the four
+different-claim positives. The round used 60 launches and $24.25. The
+wording was written after seeing which notes earlier rounds missed, so this
+set no longer tests generalization. The reserve cases in labelled-set.md
+are held back unrun, as the test set for the next wording.
+
 ## Completion
 
 This is a standing workshop. The operator stated on 2026-11-13 that the
