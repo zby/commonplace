@@ -6,6 +6,10 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Unify the review operations](./review-operation-unification/README.md) — posed 2026-11-14: bring every review operation (catalog gates, conformance checks, compression bundle, report methods, higher-order check) under one atom contract so each can be run, stored and tested alone; decide one result form or two
+
+- [From live operation to controlled testing and debugging](./stochastic-operation-testing/README.md) — posed 2026-11-14: design workflows and provenance to turn affordable live observations into controlled, retained fixtures; freshness consumes provenance, and stochastic execution adds repeated-trial evaluation
+
 - [order-of-concerns-in-revision](./order-of-concerns-in-revision/README.md) — posed 2026-11-13: ground the rule "higher-order concerns before lower-order concerns" in checked literature on revision, editing and planning, settle how it relates to ordering by degrees of freedom, and decide whether to amend existing theory notes or add one
 
 - [higher-order-check-evaluation](./higher-order-check-evaluation/README.md) — posed 2026-11-13: evaluate alone the check that an improvement run makes first, whether a note needs a split, merge, rehome, rejection or different claim and with what force, on labelled cases from history and across all of `kb/theory/`

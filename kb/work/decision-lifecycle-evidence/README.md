@@ -130,6 +130,38 @@ now:
   of the [public state repository workshop](../public-state-repository/README.md).
   Reading occasions are deferred to the work on the unresolved frontier.
 
+### 2026-11-14: atoms before procedures
+
+The operator redirected this line on 2026-11-14: leave the full procedures
+for later and fix the atomic procedures first. Work here now covers every
+atom of the procedure proposal, the review operations, edit operations and
+stops, and brings each to the proposal's atom contract: a typed
+instruction file, inputs that are files, a typed stored result, and a way
+to run and test it alone.
+
+The operator then narrowed the first step: unify the review operations
+first, in their own workshop,
+[unify the review operations](../review-operation-unification/README.md).
+The edit-operation type and the stops stay drafts here until that
+workshop has a result.
+
+This changes the entry above in three ways:
+
+- The [first variant](./first-variant-fix-findings.md) is shelved as
+  drafted. Its [first run](./first-run.md) stays as evidence about the
+  types. No second run is planned, so the change that run needed in
+  `commonplace-review decisions` is deferred with it.
+- The run types stay in scope only as the test harness for an edit
+  operation, which is tested as a one-atom run.
+- The procedure proposal's first-build criterion, which names the first
+  variant, no longer describes the order of work. The proposal is not yet
+  edited to say so.
+
+Stability of review verdicts is assumed reachable, by operator direction
+the same day; the
+[gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability.md)
+measures the present gap.
+
 ## Working map
 
 | File | Role |
