@@ -197,6 +197,28 @@ wording was written after seeing which notes earlier rounds missed, so this
 set no longer tests generalization. The reserve cases in labelled-set.md
 are held back unrun, as the test set for the next wording.
 
+A fourth wording, [theory-claim](./wordings/theory-claim.md), was drafted
+on 2026-11-14 and has not been run. Against the third-round wording it
+makes two changes. It drops the title-against-body test, which found none
+of the different-claim cases and duplicates the catalog's title-body
+alignment gate. It declares its scope: the check is written for and tested
+on theory notes only, and says nothing yet about other collections.
+
+A general-claim test was drafted for it the same day and withdrawn. Its
+questions are already asked by `frontmatter/claim-strength` and
+`semantic/unwarranted-scope`, as the
+[overlap map](../decision-lifecycle-evidence/review-operation-overlaps.md)
+records. Both gates had run on the note that prompted the test, and both
+had written the general claim out and judged it derived, not asserted. So
+a requirement to write the claim down would not have changed their
+verdicts. What that note shows is a different gap: its general claim is
+real but thin, and most of its text is an account of local decisions. Only
+`prose/proportion-mismatch` warned about that, and nothing read the
+warning as a sign that the note might be misplaced or need a split.
+
+The wording is to be judged on the reserve cases, not on the 30 notes the
+earlier wordings were tuned on.
+
 ## Completion
 
 This is a standing workshop. The operator stated on 2026-11-13 that the
