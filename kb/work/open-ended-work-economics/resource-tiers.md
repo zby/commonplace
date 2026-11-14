@@ -67,7 +67,7 @@ Only inside a tier, and in choosing which frontier move to invest in:
    ([search allocated before evaluation](../../theory/open-ended-improvement-allocates-search-before-evaluation.md);
    [a controller is tested by what it brings to stronger evaluation](../../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md)).
    The context bound gives tier 2 its own internal cost structure
-   ([two context boundaries, three regimes](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md)),
+   (two context boundaries, three regimes (retired 2026-11-14)),
    which is the step-shaped cost measure the reconciliation adopted.
 2. **Between frontier moves.** Which bookkeeping to codify first; which
    operator judgment to delegate first. Priced by stake, odds and exposure,

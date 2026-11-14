@@ -4,11 +4,17 @@
 
 On 2026-11-14 the [fix-findings variant](./first-variant-fix-findings.md)
 was run once, by the session agent, on
-[two context boundaries govern operations on read-together note sets](../../theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md).
+two context boundaries govern operations on read-together note sets (retired 2026-11-14).
 It was the only note with fresh warnings that no other session was
 editing. The five run types were first registered under
 `kb/reports/types/`, since the run directory cannot be validated without
 them.
+
+The note was retired the same day by operator decision, without
+replacement. Stated generally, its claim is arithmetic: each form a set
+can be loaded in has its own size limit. Everything beyond that was a fact
+about Commonplace. The run's four edits and five open items went with it.
+No gate and no wording of the higher-order check proposed this.
 
 The run directory is
 `kb/reports/state/improve/kb/theory/two-context-boundaries-govern-operations-on-read-together-note-sets/20261114-072641/`.
