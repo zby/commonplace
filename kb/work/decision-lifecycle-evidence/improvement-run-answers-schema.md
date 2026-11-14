@@ -6,28 +6,57 @@ Drafted on 2026-11-13 as the second type draft for the
 [one improvement procedure proposal](../../reference/proposals/one-improvement-procedure-over-atomic-instructions.md),
 after the [run type](./improvement-run-type.md). It is a workshop draft:
 nothing is registered and no instance exists. The schema below was run
-against the example in this file and against nine invalid variants of it;
+against the example in this file and against eleven invalid variants of it;
 it accepted the first and refused the others. It is a starting point, not
 a contract.
 
 ## What the member is for
 
-`answers.md` holds every point where a run needed the operator. It serves
+`answers.md` holds every point a run left undecided, and what was later
+decided there. It serves
 three readers:
 
-- **The operator**, in the session that resolves items: each item must be
+- **Whoever decides the item**, in a session or a later workflow: each item must be
   understandable from the file and the note alone.
 - **The decisions command**, which lists decisions and what is still open
   per note. It should need no knowledge of the variant.
 - **Later calibration** of an atom: which of its proposals the operator
   accepted or rejected, and why.
 
-An edit that needs no operator decision creates no item. It appears only in
+Open items are part of the
+[unresolved frontier](../../reference/definitions/unresolved-frontier.md).
+A run does not wait for them: it records each one and closes, and the item
+stays findable per note until it is decided or expires.
+
+An edit that needs no decision creates no item. It appears only in
 the run's edit chain.
+
+## Who decides
+
+Today the operator decides every item. The operator stated on 2026-11-14
+that later automatic workflows will make some of these decisions, so the
+schema does not assume the operator. `decided-by` names the decider:
+`operator`, the path of the instruction a deciding workflow followed, or
+`rule` for an expiry. A workflow's decision always carries its reason, an
+approval included, because nobody was asked. The operator's decisions and
+a workflow's decisions sit in the same items and stay distinguishable.
+
+The operator's framing on 2026-11-14: this is work on the margin. Nobody
+designs in advance which items a workflow will decide. The open items
+accumulate in one form, and at any time the question is which of them can
+currently be decided better or more cheaply than by asking. A workflow is
+added for that class when the examples show one. The schema's job is
+therefore only to keep every item, decided or not, in a form such a
+workflow could read and write.
+
+Which workflow may decide which kind of item, and on what evidence, is the
+question of the
+[authority grades proposal](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md).
+This schema only makes sure the answer can be recorded.
 
 ## One item per decision
 
-The unit is the smallest thing the operator can accept or reject by itself.
+The unit is the smallest thing that can be accepted or rejected by itself.
 A strike list with twenty candidate replacements is twenty items, not one.
 A split proposal is one item. This is the "item" unit of
 [ADR 130](../../reference/adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md);
@@ -40,13 +69,14 @@ the "bundle" unit disappears, because no stop approves a whole text any more.
 | `kind` | `higher-order` for a proposal about what the note is; `edit` for a proposed change to how it says it. |
 | `force` | `strong` or `weak`. Required for a higher-order item and absent on an edit. |
 | `change` | `split`, `merge`, `rehome`, `reject` or `claim`. Required for a higher-order item and absent on an edit. The first calibration round found the kind carried only by a convention in the finding text. |
-| `proposal` | What would change, in words the operator can judge. |
+| `proposal` | What would change, in words a decider can judge. |
 | `where` | Optional: the passage or section the proposal applies to. |
+| `agent-note` | Optional: what the proposing agent thinks of the item and how sure it is, including a view that the underlying finding is mistaken. It is the agent's opinion, never a decision. |
 | `text-sha256` | The note text the proposal was made against. |
 | `state` | `pending`, `approved`, `rejected`, `deferred` or `expired`. |
-| `reason` | Why. Required for `rejected`, `deferred` and `expired`; optional for `approved`. |
+| `reason` | Why. Required for `rejected`, `deferred` and `expired`, and for every decision a workflow made. Optional when the operator approves. |
 | `revisit` | Required for `deferred`: the condition under which the item is taken up again. |
-| `decided-by` | `operator`, or `rule` when the procedure expired the item. Absent while pending. |
+| `decided-by` | `operator`; the path of the instruction a deciding workflow followed; or `rule` when the procedure expired the item. Absent while pending. |
 | `decided-at` | Timestamp of the decision. Absent while pending. |
 | `applied-in` | The directory path of the run whose edit chain applied an approved item, this run's or a later one's. Null until then. A higher-order change is not made by an improvement run; there the field holds the commit that made it. |
 | `repeats` | Optional: the earlier rejected item this proposal returns to, in the same reference form. Set whenever the same atom proposes the same `change` on a note where the operator rejected it before. |
@@ -130,11 +160,15 @@ properties:
         change: {enum: [split, merge, rehome, reject, claim]}
         proposal: {type: string, minLength: 1}
         where: {type: string, minLength: 1}
+        agent-note: {type: string, minLength: 1}
         text-sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
         state: {enum: [pending, approved, rejected, deferred, expired]}
         reason: {type: string, minLength: 1}
         revisit: {type: string, minLength: 1}
-        decided-by: {enum: [operator, rule]}
+        decided-by:
+          anyOf:
+            - {enum: [operator, rule]}
+            - {type: string, pattern: '\.md(#.+)?$'}
         decided-at: {type: string, minLength: 1}
         applied-in: {type: [string, "null"]}
         supersedes: {type: string, pattern: '#.+$'}
@@ -153,7 +187,11 @@ properties:
           then: {required: [revisit]}
         - if: {properties: {state: {const: expired}}}
           then: {properties: {decided-by: {const: rule}}}
-          else: {properties: {decided-by: {const: operator}}}
+          else: {properties: {decided-by: {not: {const: rule}}}}
+        - if:
+            required: [decided-by]
+            properties: {decided-by: {pattern: '\.md(#.+)?$'}}
+          then: {required: [reason]}
         - if: {properties: {state: {enum: [pending, rejected, deferred, expired]}}}
           then: {properties: {applied-in: {type: "null"}}}
 ```

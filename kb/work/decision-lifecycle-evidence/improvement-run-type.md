@@ -81,9 +81,9 @@ A run directory then looks like this:
 kb/reports/state/improve/<note path without .md>/<YYYYMMDD-HHMMSS>/
   ARTIFACT.yaml      type only
   report.md          identity, ending, prose report
-  findings.md        review results the run read, cited by review run and launch
+  findings.md        each finding the run read, its citation and its disposition
   changes.md         the edit chain, one entry per applied edit operation
-  answers.md         operator decisions and pending items
+  answers.md         open items and the decisions made on them
   texts/<sha256>.txt the start text and every text an edit produced
 ```
 
@@ -97,9 +97,9 @@ close. An open run requires the report alone.
 | Role | Frontmatter it carries | Written |
 |---|---|---|
 | `report` | `note`, `variant`, `start-commit`, `start-sha256`, `started-at`, `ending`, `final-sha256`, `ended-at`. The body is the prose report. | Created at the start with `ending: open`; completed at the end. |
-| `findings` | `note`, `start-sha256`, and `results`: one entry per review result read, with `atom`, `run`, `launch`, `output-sha256`, `text-sha256` and `outcome`. | After each review step, including a re-review after edits. |
+| `findings` | `note`, `start-sha256`, and `findings`: one entry per finding read, or one per result that has none. Each carries the citation (`atom`, `run`, `launch`, `output-sha256`, `text-sha256`, `outcome`), the finding's text, and a disposition: `fixed` with the strategy, `open` with the item, or `none`. | After each review step, including a re-review after edits. |
 | `changes` | `note`, `start-sha256`, `final-sha256`, and `edits`: one entry per applied edit operation, in order, with `atom`, `from-sha256`, `to-sha256` and, where an operator item authorised it, `item`. | Appended after each edit; the final hash is set at the end. |
-| `answers` | `note`, and `items`: one entry per decision the run needed, with its atom, proposal, state and reason. | At each stop, and again whenever the operator answers. |
+| `answers` | `note`, and `items`: one entry per decision the run needed, with its atom, proposal, state and reason. | At each stop, and again whenever an item is decided. |
 
 Three choices need their reason stated.
 
@@ -130,7 +130,7 @@ the draft names where the bytes are and what that location depends on.
 |---|---|---|
 | The exact finding acted on | The review run's launch output, `<run>/calls/launches/<launch>/outputs/review.md`, cited by `run`, `launch` and `output-sha256` | Review run directories being kept, which is their current rule |
 | The text before, between and after edits | `texts/<sha256>.txt` in the run directory: the start text, and each text an edit operation produced. The last one is the final text. | Nothing outside the run |
-| The operator's decision and reason | The item in `answers.md` | Nothing outside the run |
+| The decision, its reason and who made it | The item in `answers.md` | Nothing outside the run |
 | The instruction versions used | The variant and each atom, at `start-commit` | The run starting with those instructions committed |
 | The link from authorization to application | The edit's `item`, and the item's `applied-in` | Both written; see below |
 
@@ -163,7 +163,7 @@ report says so. Review results additionally carry the criterion's hash.
 `<run directory path>#<id>`. An edit's `item` uses that form, whether the
 item is in the same run or an earlier one. The item's `applied-in` holds
 the path of the run whose edit chain applied it. The reader's question,
-what was proposed, what the operator authorized and which change
+what was proposed, what was authorized and by whom, and which change
 implemented it, is answered by following those two fields. `supersedes` in
 the answers schema uses the same form.
 
