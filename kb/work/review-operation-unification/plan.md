@@ -43,13 +43,13 @@ From the [stochastic-operation-testing workshop](../stochastic-operation-testing
 
 ## What you cannot find out yourself
 
-**The first pilot.** The [gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability-results.md) ran four sweeps of one note on unchanged text on 2026-11-14. It covers one note, chosen because it looked unstable, so treat these as constraints on design and not as rates.
+**The first pilot.** The [gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability-results.md) ran four sweeps of one note on unchanged text on 2026-11-14, on the `sonnet` profile, which was then the default. The operator made `opus` the default the same day, so these figures describe the profile being left; an Opus rerun is not yet done. It covers one note, chosen because it looked unstable, so treat these as constraints on design and not as rates.
 
 - 33 of 44 pairs kept one outcome across four trials; 11 changed, 5 of them warning only once.
 - Whether a gate warned varied more than what it flagged when it warned.
 - Severity labels inside results vary between runs of one gate (`warn`, `WARN`, `low`, `minor`, `medium`), so a warning-level finding cannot be identified mechanically today.
 - An earlier sweep with byte-identical inputs was still not comparable: the profile and model differed, and the prompt wrapper for the conformance pairs had changed in code. The wrapper is outside the hashed inputs.
-- One full sweep of one note is 44 launches and about 5.2 USD.
+- One full sweep of one note is 44 launches: about 5.2 USD on `sonnet`, and 11.08 USD in the one `opus` sweep on record (2026-11-12).
 
 **Where the evidence is,** as of 2026-11-14:
 

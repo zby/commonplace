@@ -223,7 +223,7 @@ entry shape of task profiles: harness, launch model, effort and harness
 flags. `--profile NAME` picks one; the file's `default` applies otherwise. A
 resumed sweep keeps the profile it opened with.
 
-- `sonnet` (the default) and `opus` run Claude Code with read tools, edit
+- `opus` (the default) and `sonnet` run Claude Code with read tools, edit
   rights only under `kb/reports/state/review/runs/`, and Bash denied. That
   this denial refuses a write has not been observed; the guard is the
   verified control.
