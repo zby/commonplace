@@ -7,7 +7,7 @@ tags: [computational-model]
 
 # Solve low-degree-of-freedom subproblems first to avoid blocking better designs
 
-When a design problem has interdependent subproblems, the highest-leverage ordering is to commit the least flexible decision first. Christopher Alexander's kitchen example illustrates the mechanism: window placement has very few viable positions, table placement depends on the window's light, and stove placement is comparatively flexible. If you place the stove first, you can accidentally consume the only strong position for the window or table.
+When a flexible design choice could consume the few viable options for another subproblem, committing the least flexible decision first can preserve those options. Christopher Alexander's kitchen example illustrates the mechanism: window placement has very few viable positions, table placement depends on the window's light, and stove placement is comparatively flexible. If you place the stove first, you can accidentally consume the only strong position for the window or table.
 
 This is not domain-specific advice about kitchens; it is a general sequencing rule for constrained search:
 
@@ -27,6 +27,12 @@ SAT solving shows what replaces the rule when option counts cannot rank candidat
 In agent workflows, low-degree-of-freedom choices usually correspond to hard constraints: required output schema, tool contracts, file locations, deterministic validation requirements, or precedence rules. High-degree choices are often rhetorical or representational: phrasing, narrative order, or which equivalent summary format to use. This matches [decomposition rules for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md): selection and constraint-setting happen first; expensive synthesis calls happen after the constrained frame is established.
 
 The rule also applies when commitments are split across an authoring/execution divide — an orchestrator and its subagents, or a plan and the agent that runs it. Role can assign a decision to another actor, while later evidence can defer its timing; those choices may coincide, but they are independent. [An author should fix what the executor can't determine, not what it will](./fix-what-the-executor-cant-determine-not-what-it-will.md) applies that distinction to which facts and choices belong upstream or at execution.
+
+## Scope
+
+Designing a new artifact and revising an existing one have different starting points. New design selects choices to build around; revision also asks which existing commitments warrant reopening. This rule orders choices that are open, not whether every existing commitment should be reopened. Option preservation can matter in either situation, just as new design can accumulate drafts or prototypes exposed to later rework.
+
+This rule orders choices by their remaining options to avoid blocking feasible designs. It does not rank choices by how much completed work their resolution could discard; [unresolved revision choices put dependent polish at risk of rework](./resolve-revision-choices-before-polishing-text-that-depends-on-them.md) develops that separate mechanism. In revision, a claim with many viable revisions can still require discarding much prose that depends on it. Conversely, a required metadata value can have only one valid answer without requiring any prose to be discarded. These are local reasoning examples: option count and the amount of dependent work at risk are distinct considerations. The option-preservation argument alone does not establish which ordering best avoids discarded revision work.
 
 ## Open Questions
 

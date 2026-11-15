@@ -15,6 +15,12 @@ higher-order than another when settling it differently would discard work
 done on the other. The wording was recalled from writing instruction and
 cites nothing yet.
 
+## Current result
+
+The bounded library change is implemented. [Unresolved revision choices put dependent polish at risk of rework](../../theory/resolve-revision-choices-before-polishing-text-that-depends-on-them.md) owns the discarded-work mechanism. The low-degree-of-freedom note now distinguishes it from option preservation, and the procedure proposal cites the new note and grounded Purdue guidance. The [vocabulary collision ledger](../../reference/vocabulary-collision-ledger.md) keeps higher-order concerns separate from second-order lessons without registering a shared hierarchy.
+
+The literature acquisition remains partial. [Composition research](./composition-research.md) records the accepted Purdue ingest and blocked Faigley–Witte/Sommers acquisitions; [editing and planning research](./editing-planning-research.md) records the accepted JPL ingest and blocked Sacerdoti acquisition. JPL's levels commission services rather than prescribe an execution order. Historical terminology priority and a checked planning precedent remain unresolved. The new note makes no historical-priority claim and leaves broader design transfer conjectural. The workshop remains open for those source gaps, not for another theory rewrite by default.
+
 ## What the library already holds
 
 - [Solve low-degree-of-freedom subproblems first to avoid blocking better designs](../../theory/solve-low-degree-of-freedom-subproblems-first-to-avoid-blocking.md)
