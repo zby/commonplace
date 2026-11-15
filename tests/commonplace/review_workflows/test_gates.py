@@ -71,6 +71,7 @@ FILES = {
     "kb/instructions/critique-note.md": "# Critique\n\nWrite a critique.\n",
     "kb/types/note.md": "# Note type\n\nWrite one claim.\n",
     "kb/notes/COLLECTION.md": "# Notes\n\nOne claim per note.\n",
+    "kb/reports/COLLECTION.md": "---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n# Reports\n\nRetained operational evidence.\n",
     "kb/notes/alpha.md": note("Alpha", "Alpha body."),
     "kb/notes/beta.md": note("Beta", "Beta body FAILME."),
 }

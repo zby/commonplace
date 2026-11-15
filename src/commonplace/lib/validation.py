@@ -1389,9 +1389,14 @@ def validate_unquoted_sources(
     `(snapshot required)` counts even when a quote resolves, because the claim
     it carries needs the snapshot rather than the retained extract.
     """
-    if is_collection_metadata(parsed.path):
+    review_result = (canonical_type_identity(parsed.profile) == "types/review-result.md"
+                     and parsed.path.resolve().is_relative_to(run.repo_root / "kb/reports/state/review"))
+    if is_collection_metadata(parsed.path) and not review_result:
         return
-    limit = run.unquoted_source_limit(parsed.path)
+    # Review results can be named COLLECTION.md after their criterion, but are
+    # not collection declarations. Use the state tree's governing contract.
+    limit = run.unquoted_source_limit(
+        run.repo_root / "kb/reports/state/review/review.md" if review_result else parsed.path)
     if limit is None:
         return
     repo_root = run.repo_root.resolve()

@@ -67,6 +67,7 @@ from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import (
     PROBLEM_REF,
     LaunchFailed,
+    NoProgress,
     OutOfAttempts,
     Run,
     gather,
@@ -406,7 +407,10 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
     profile = {"harness": run.profile.harness, "launch-model": run.profile.launch_model, "effort": run.profile.effort}
     criterion_texts = captured_criteria if captured_criteria is not None else {
         pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8") for pair in wanted}
-    contracts = contracts if contracts is not None else result_contract.capture_contract()
+    contracts = contracts if contracts is not None else result_contract.capture_contract(root)
+    result_contract.preflight(root, contracts)
+    # Prepare once, before parallel assessments; fixture trials set library_root.
+    observations.prepare(run)
     operational_inputs = operational_inputs or {}
     reports = {pair: PairReport(pair.note, pair.criterion, pair.job, "not-run") for pair in wanted}
     stop = threading.Event()
@@ -442,9 +446,9 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
             raw_path = launch / "outputs" / f"{output}.md"
             raw = raw_path.read_bytes()
             if (launch / "inputs/note.md").read_bytes() != note_text.encode("utf-8"):
-                raise ValueError("launch target bytes differ from retained capture")
+                raise result_contract.ControllerError("launch target bytes differ from retained capture")
             if (launch / "inputs" / f"{given}.md").read_bytes() != inputs[given].encode("utf-8"):
-                raise ValueError("launch criterion bytes differ from retained capture")
+                raise result_contract.ControllerError("launch criterion bytes differ from retained capture")
             directory, _ = records[pair]
             saved = directory / "results" / launch.name / f"{output}.md"
             completed_at = observations.timestamp()
@@ -475,6 +479,8 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                     candidates[pair] = candidate(answer, pair, given, output)
                 except ValueError as error:
                     problems.append(f"{output}: {error}")
+                except OSError as error:
+                    raise result_contract.ControllerError(f"missing launch evidence: {error}") from error
             return problems
         state = "interrupted"
         try:
@@ -489,7 +495,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 checked, saved = candidates[pair]
                 saved.parent.mkdir(parents=True, exist_ok=True)
                 if saved.exists() and saved.read_bytes() != checked.text.encode("utf-8"):
-                    raise ValueError(f"retained result changed on replay: {saved}")
+                    raise result_contract.ControllerError(f"retained result changed on replay: {saved}")
                 saved.write_bytes(checked.text.encode("utf-8"))
                 result = results.from_candidate(checked)
                 directory, record = records[pair]
@@ -505,6 +511,17 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 report = reports[pair]
                 report.state, report.outcome, report.result = "reviewed", result.outcome, result
             state = "completed"
+        except result_contract.ControllerError as error:
+            state = "controller-error"
+            stop.set()
+            stopped.append(str(error))
+            run.log(event="controller-error", job=call.job, problem=str(error))
+            for pair in call.pairs:
+                reports[pair].state, reports[pair].problem = state, str(error)
+        except NoProgress as spent:
+            state = "no-progress"
+            for pair in call.pairs:
+                reports[pair].state, reports[pair].problem = state, str(spent)
         except OutOfAttempts as spent:
             state = "out-of-attempts"
             for pair in call.pairs:
@@ -542,13 +559,13 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
             texts, criterion_texts = snapshot["targets"], snapshot["criteria"]
             operational_inputs = snapshot["operational-inputs"]
             contracts = {name: value.encode("utf-8") for name, value in snapshot["contracts"].items()}
-            if result_contract.fingerprint(result_contract.capture_contract()) != result_contract.fingerprint(contracts):
+            if result_contract.fingerprint(result_contract.capture_contract(root)) != result_contract.fingerprint(contracts):
                 raise ValueError("output contract changed; start a new run instead of resuming")
         else:
             texts = {pair.note: (root / pair.note).read_bytes().decode("utf-8") for pair in wanted}
             criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8")
                                for pair in wanted}
-            contracts = result_contract.capture_contract()
+            contracts = result_contract.capture_contract(root)
             snapshot = {"version": observations.VERSION, "pairs": selection, "grouping": grouping,
                         "timeout": run.timeout, "max-workers": max_workers,
                         "operational-inputs": operational_inputs or {},

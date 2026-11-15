@@ -183,7 +183,9 @@ def full_pass(repo, capsys, *args: str, approve: bool = True) -> tuple[int, dict
     _, harnesses, log = repo
     before = log.read_text().splitlines()
     code = main(["run", "full-pass", NOTE_PATH, "--timeout", "30", *args], harnesses=harnesses)
-    report = json.loads(capsys.readouterr().out)
+    output = capsys.readouterr()
+    assert output.out, output.err
+    report = json.loads(output.out)
     if approve and report.get("waiting-for"):
         approve_publication(repo, report)
         code = main(["run", "full-pass", NOTE_PATH, "--timeout", "30", *args], harnesses=harnesses)

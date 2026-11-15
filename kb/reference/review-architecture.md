@@ -1,5 +1,5 @@
 ---
-description: "How Commonplace review is built: workflows over the headless runtime, result files as the only durable review state, the two-input freshness hash with watched parts, the single write and the checkout guard"
+description: "How review separates Workjig execution, retained observations, replaceable current results, captured validation contracts, freshness and isolated single-assessment fixtures"
 type: types/note.md
 tags: []
 ---
@@ -27,7 +27,7 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 | `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
-| `review_workflows.result_contract` | captured type/schema closure, worker/controller field ownership and typed acceptance |
+| `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance |
 | `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
 | `review_workflows.fixtures` | retained single-assessment baselines and isolated trials through the same gate implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
@@ -137,6 +137,9 @@ two runs over the same pair both write, and the later write stands.
 ## Freshness hash boundary
 
 Freshness compares the note, criterion and captured output-contract fingerprint.
+The latter includes the library type/schema closure and the project collection
+contract governing review results. Validation context is checked before workers
+start; missing dependencies are controller failures, not requests for model correction.
 Exact target byte hashes are separate from normalized freshness hashes. The criterion
 hash covers the criterion file's whole text. The note hash covers the parts
 the criterion declares in `watches:` (title, description, body) under the

@@ -318,7 +318,7 @@ def _freshness(root: Path, result: Result, texts: dict[Path, str]) -> Freshness:
     changed = tuple(name for name, same in (
         ("note", note_sha256(text(root / result.note), criterion_text) == result.note_sha256),
         ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256),
-        ("output-contract", result.contract_sha256 == result_contract.fingerprint(result_contract.capture_contract()))) if not same)
+        ("output-contract", result.contract_sha256 == result_contract.fingerprint(result_contract.capture_contract(root)))) if not same)
     return Freshness("stale", changed) if changed else Freshness("fresh")
 
 

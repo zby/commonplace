@@ -122,6 +122,14 @@ class OutOfAttempts(Exception):
         self.failure = failure        # the last timed-out, incomplete or malformed result's reason
 
 
+class NoProgress(OutOfAttempts):
+    """A correction would replay an already rejected request without changing it."""
+
+    def __init__(self, job: str, problems: list):
+        super().__init__(job, problems)
+        self.args = (f"{job}: correction made no progress; identical rejected request; last problems: {problems[-1]}",)
+
+
 class Exhausted(Exception):
     """An ask spent its allowed attempts on results that were not answers."""
 
@@ -333,11 +341,17 @@ class Run:
         used = 0
         failure: str | None = None
         last: Answer | None = None
+        seen_requests = set()
         while True:
             given = inputs(problems, last) if callable(inputs) else inputs   # before the prompt: it may depend on them
             prompt = build_prompt(problems)
             if used >= attempts:
                 raise OutOfAttempts(job, problems, failure)
+            identity = (prompt, tuple(sorted((given or {}).items())))
+            if identity in seen_requests:
+                self.log(event="no-progress", job=job, key=last.key if last else None, problems=problems[-1])
+                raise NoProgress(job, problems)
+            seen_requests.add(identity)
             try:
                 answer = self.ask(job, prompt, outputs, optional, given, attempts=attempts - used, profile=profile)
             except Exhausted as exhausted:

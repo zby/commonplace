@@ -205,6 +205,24 @@ def test_checked_retries_with_problems_and_reports_attempts(run):
     assert len(rejected) == 1, rejected
 
 
+def test_checked_stops_identical_rejected_request_without_replaying_it(run):
+    from commonplace.headless.jobs import NoProgress
+
+    def invoke():
+        return run.checked("no-progress", lambda problems: "GOOD correction" if problems else "GOOD first",
+                           lambda answer: ["same output defect"], ["report"], attempts=3)
+
+    with pytest.raises(NoProgress, match="identical rejected request"):
+        invoke()
+    first = events(run.root)
+    assert len([e for e in first if e["event"] == "launch"]) == 2
+    assert len([e for e in first if e["event"] == "rejected"]) == 2
+    assert len([e for e in first if e["event"] == "no-progress"]) == 1
+    with pytest.raises(NoProgress):
+        invoke()
+    assert len([e for e in events(run.root) if e["event"] == "launch"]) == 2
+
+
 def test_gather_runs_asks_in_parallel(run):
     results = gather(*(lambda r=role: run.ask(r, f"GOOD {r}", ["report"])
                        for role in ("memory", "epistemic", "workflow")))

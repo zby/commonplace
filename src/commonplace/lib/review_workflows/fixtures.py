@@ -158,7 +158,7 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) 
     fixture, data = load(root, fixture_name)
     if data["profile"]["harness"] not in harnesses:
         raise ValueError("fixture harness is unavailable")
-    if harnesses is HARNESSES and data["profile"]["harness"] != "claude":
+    if harnesses is HARNESSES and data["profile"]["harness"] != "claude-code":
         raise ValueError("fixture trials currently support the Claude Code adapter only")
     tree = run_dir / "tree"
     receipt = run_dir / "trial.json"
@@ -193,7 +193,8 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) 
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(observations.safe_path(fixture, item["path"]).read_bytes())
             elif item["role"] == "contract":
-                target = observations.safe_path(tree / data["library"], item["origin"])
+                base = tree / ("kb" if Path(item["origin"]).name == "COLLECTION.md" else data["library"])
+                target = observations.safe_path(base, item["origin"])
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes(observations.safe_path(fixture, item["path"]).read_bytes())
         _command(tree, "git", "init", "-q")

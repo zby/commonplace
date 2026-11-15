@@ -79,8 +79,10 @@ supplies `attack-outcome`. Verdict findings have `info`, `warn` or `fail`
 levels. Passage quotations must match one span of the captured target, and only one;
 matching ignores line wraps and quote-mark style, so a quotation identifies a
 passage without being a byte-exact copy. Document findings use no quotations. Code supplies provenance and validates
-the completed artifact against the captured type/schema. Invalid outputs
-receive specific retry diagnostics. Terminal result footers are unsupported.
+the completed artifact against the captured library type/schema and project
+collection contract. Invalid worker output receives specific retry diagnostics;
+missing controller inputs or corrupt evidence stop the sweep instead.
+Terminal result footers are unsupported.
 
 **Watches.** A gate may declare `watches:` with any of `title`,
 `description` and `body`. The note side of its freshness then hashes only
@@ -221,6 +223,13 @@ runs do not automatically establish environment equivalence or calibration.
   already written stay. Repair the environment or wait for the reset, then
   rerun with `--resume RUN_DIR` and the same notes and criteria. Answered
   calls replay without a launch.
+- **Controller failure.** Missing validation dependencies or corrupt evidence do
+  not request model correction. Repair the controller or its inputs before
+  trying again; incomplete captures are not silently backfilled on resume.
+- **No progress.** Correction stops before repeating an already rejected
+  prompt/input combination. Inspect the diagnostics rather than spending more
+  calls on identical feedback. An explicit answer dismissal remains available
+  when another attempt is warranted.
 - **Worker problem.** Read it in the report. When the cause is fixed,
   `commonplace-review retry RUN JOB` dismisses it and a resumed run asks
   again. A pair's job is `<note>::<criterion-id>`; a bundle call's is

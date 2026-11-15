@@ -119,6 +119,22 @@ def executor(run) -> dict:
             "effective-configuration": "unassessed", "gaps": ["automatically loaded context and provider internals not verified"]}
 
 
+def prepare(run) -> dict:
+    """Hash the library once per open Run, before concurrent assessments.
+
+    Reopening a run recomputes this baseline: there is no cross-process cache
+    that could conceal changed library content or executable versions.
+    """
+    if not hasattr(run, "_review_provenance"):
+        selected = getattr(run, "library_root", None) or library_root()
+        run._review_provenance = {
+            "library-root": str(selected),
+            "library-sha256": sha(json.dumps(library_files(selected), sort_keys=True).encode()),
+            "executor": executor(run),
+        }
+    return run._review_provenance
+
+
 def load(directory: Path) -> dict:
     data = json.loads((directory / "observation.json").read_text())
     try:
@@ -168,10 +184,9 @@ def begin(run, root: Path, pair, note: str, criterion: str, contracts: dict[str,
         entries.append({"role": role, "origin": origin, "path": name, "sha256": sha(value), "bytes": len(value)})
     data = {"version": VERSION, "id": identity, "request": request, "kb-commit": git_head(root),
             "content-state": content_state(root),
-            "library-root": str(getattr(run, "library_root", None) or library_root()),
-            "library-sha256": sha(json.dumps(library_files(getattr(run, "library_root", None)), sort_keys=True).encode()),
-            "context": "live authored KB; operational inputs confined to this run", "inputs": entries,
-            "executor": executor(run), "state": "prepared", "completed-results": [], "completed-result-sha256": {}}
+            **prepare(run),
+            "context": "live authored KB; operational inputs confined to this run; library baseline at controller start",
+            "inputs": entries, "state": "prepared", "completed-results": [], "completed-result-sha256": {}}
     atomic_json(record, data)
     return directory, data
 
@@ -192,7 +207,8 @@ def refresh(run, directory: Path, data: dict, *, state: str) -> None:
     if log.exists():
         for line in log.read_text().splitlines():
             event = json.loads(line)
-            if event.get("key") in keys and event.get("event") in ("rejected", "failed", "stopped-call"):
+            if ((event.get("key") in keys and event.get("event") in ("rejected", "failed", "stopped-call", "no-progress"))
+                    or (event.get("job") == data["request"]["call-job"] and event.get("event") == "controller-error")):
                 events.append(event)
     data["diagnostics"] = events
     data["launch-evidence"] = []

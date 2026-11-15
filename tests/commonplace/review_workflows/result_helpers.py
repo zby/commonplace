@@ -21,7 +21,7 @@ def evidence(root: Path, target: str = "Fixture target", raw: str = "Fixture raw
     (base / "target.md").write_bytes(target.encode())
     (base / "review.md").write_bytes(raw.encode())
     return {"target_sha256": digest, "target_capture": (base / "target.md").relative_to(root).as_posix(),
-            "observation": (base / "observation.json").relative_to(root).as_posix(), "contract_sha256": result_contract.fingerprint(result_contract.capture_contract()),
+            "observation": (base / "observation.json").relative_to(root).as_posix(), "contract_sha256": result_contract.fingerprint(result_contract.capture_contract(root)),
             "raw_output": (base / "review.md").relative_to(root).as_posix(),
             "raw_output_sha256": hashlib.sha256(raw.encode()).hexdigest()}
 

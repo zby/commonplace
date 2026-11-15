@@ -26,8 +26,9 @@ def complete(tmp_path, text, target="A unique passage.", **kwargs):
     from tests.commonplace.review_workflows.result_helpers import evidence
     given = kwargs.get("metadata", metadata())
     given.update({key.replace("_", "-"): value for key, value in evidence(tmp_path, target, text).items()})
-    return contract.complete(tmp_path, path, text, metadata=given, target=target,
-                             contracts=kwargs.get("contracts", contract.capture_contract()))
+    captured = kwargs.get("contracts", contract.capture_contract(tmp_path))
+    given["contract-sha256"] = contract.fingerprint(captured)
+    return contract.complete(tmp_path, path, text, metadata=given, target=target, contracts=captured)
 
 
 def test_complete_and_saved_validate_identically(tmp_path):

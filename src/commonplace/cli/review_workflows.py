@@ -520,7 +520,7 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
     except RunLocked as held:
         print(f"commonplace-review: another process runs this review: {held}", file=sys.stderr)
         return 2
-    except (ValueError, OSError, subprocess.CalledProcessError) as error:
+    except (ValueError, OSError, subprocess.CalledProcessError, result_contract.ControllerError) as error:
         print(f"commonplace-review: {error}", file=sys.stderr)
         return 2
     return 0
