@@ -14,6 +14,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
+from commonplace.lib.review_workflows import observations
 from commonplace.lib.review_workflows import revise as revise_module
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
@@ -92,8 +93,9 @@ elif kind == "list":
         result("proposed", proposals=proposals)
 else:
     if kind == "apply":
-        kept = [m.group(1) for m in re.finditer(r"^- quote: .*\n  change: (\w+)\n  reason: .*\n(?!  struck:)",
-                                                 inputs["answers"].read_text(), re.MULTILINE)]
+        import yaml
+        answers = yaml.safe_load(inputs["answers"].read_text().split("---\n")[1])
+        kept = [item["proposal"]["change"] for item in answers["items"] if item["state"] == "approved"]
         revised = text.replace("user-verified: true\n", "") + f"{name} applied {' '.join(kept)}.\n"
     else:
         scope = inputs["scope"].read_text() if "scope" in inputs else "all"
@@ -116,7 +118,8 @@ NOTE = ("---\ndescription: A note about alpha that is long enough to describe wh
         "type: types/note.md\nuser-verified: true\n---\n\n# Alpha\n\nAlpha body {words}.\n")
 NOTE_PATH = "kb/notes/alpha.md"
 PASSES = REPO_ROOT / "kb/instructions/simplification-passes"
-EDIT_TYPES = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml")
+EDIT_TYPES = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", "kb/types/answers.md",
+              "kb/types/answers.schema.yaml")
 ORDINARY = ["pass readability-and-flow big", "pass place-external-systems small", "pass opening-and-title big"]
 
 
@@ -181,15 +184,45 @@ def named_plan(tmp_path, passes=("readability-and-flow",), **fields):
     return path
 
 
-def strike(listed, entry, reason):
-    """Mark the entry whose change is `entry` struck, under its last line, as the operator would."""
-    item = re.search(rf"^- quote: .*\n  change: {entry}\n  reason: .*\n", listed, re.MULTILINE).group(0)
-    return listed.replace(item, item + f"  struck: {reason}\n", 1)
+def decide(text, decisions, default=None):
+    """Record the operator's decisions in an answers file's text, as the decide-items stop does.
+
+    `decisions` maps an item's proposed `change`, or `text` for a text
+    approval, to its state fields; `default` applies to every other item.
+    """
+    head, body = text.split("---\n")[1:]
+    data = yaml.safe_load(head)
+    for item in data["items"]:
+        chosen = decisions.get(item["proposal"].get("change", item["id"]), default)
+        if chosen is not None:
+            item.update(chosen)
+            if item["state"] != "pending":
+                item.setdefault("decided-by", "operator")
+                item.setdefault("decided-at", "2026-11-15T12:00:00Z")
+    return "---\n" + yaml.safe_dump(data, sort_keys=False, allow_unicode=True) + "---\n" + body
+
+
+APPROVED = {"state": "approved"}
+
+
+def rejected(reason):
+    return {"state": "rejected", "reason": reason}
+
+
+def answer(repo, report, decisions, default=APPROVED):
+    """Decide the items of the answers file the report waits for; approving it is a separate step."""
+    path = repo[0] / report["waiting-for"]["file"]
+    path.write_text(decide(path.read_text(), decisions, default))
+
+
+def approve_publication(repo, capsys, report, decision=APPROVED):
+    assert report["waiting-for"]["file"].endswith("/publication-answers.md")
+    answer(repo, report, {"text": decision})
+    approve(repo, capsys, report)
 
 
 def publish(repo, capsys, report, path=NOTE_PATH):
-    assert report["waiting-for"]["file"].endswith("/publication.json")
-    approve(repo, capsys, report)
+    approve_publication(repo, capsys, report)
     code, done, launches = revise(repo, capsys, path)
     assert code == 0 and done["complete"] and done["applied"], done
     assert launches == [], "approved publication replays all workers"
@@ -276,7 +309,7 @@ def test_automatic_preparation_waits_for_publication_and_replays_after_approval(
     assert code == 0 and launches == ["assess - big", *ORDINARY]
     assert not report["complete"] and not report["applied"] and report["not-applied"]
     assert note_text(repo) == original and report["guard"]["clean"]
-    for name in ("assessment.md", "plan.yaml", "final.md", "final.diff", "publication.json"):
+    for name in ("assessment.md", "plan.yaml", "final.md", "final.diff", "publication-answers.md"):
         assert artifact_file(repo, report, name).is_file()
     assert report["proposed"].endswith("/final.md")
     assert [p["profile"]["launch-model"] for p in report["passes"]] == ["big", "small", "big"]
@@ -295,7 +328,7 @@ def test_changed_context_invalidates_publication_even_with_identical_final(repo,
     path = named_plan(tmp_path)
     _, report, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
     candidate = artifact_file(repo, report, "final.md").read_text()
-    approve(repo, capsys, report)
+    approve_publication(repo, capsys, report)
     args = []
     if change == "instruction":
         target = repo[0] / "kb" / revise_module.EXECUTION_REL
@@ -335,72 +368,78 @@ def test_captured_plan_edits_are_not_overrides_use_plan_option(repo, capsys, tmp
 
 
 @pytest.mark.parametrize("pass_name", ["plain-wording", "abstractions"])
-def test_strike_selections_still_stop_and_unapproved_edits_are_not_used(repo, capsys, tmp_path, pass_name):
+def test_per_item_passes_stop_for_answers_and_unapproved_edits_are_not_used(repo, capsys, tmp_path, pass_name):
     original = start(repo)
     path = named_plan(tmp_path, passes=(pass_name,))
     _, waiting, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
     model = "small" if pass_name == "plain-wording" else "big"
     assert launches == [f"list {pass_name} {model}"]
-    assert waiting["waiting-for"]["file"].endswith(".md")
+    assert re.search(rf"/artifact/{pass_name}-answers-[0-9a-f]{{12}}\.md$", waiting["waiting-for"]["file"])
+    pending = yaml.safe_load((repo[0] / waiting["waiting-for"]["file"]).read_text().split("---\n")[1])
+    assert pending["type"] == "types/answers.md" and pending["question"].endswith("/result.md")
+    assert [item["state"] for item in pending["items"]] == ["pending"] * 3
     _, again, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and again["waiting-for"] == waiting["waiting-for"]
-    listed = repo[0] / waiting["waiting-for"]["file"]
-    listed.write_text(strike(listed.read_text(), "beta", "a registered word"))
+    answers = repo[0] / waiting["waiting-for"]["file"]
+    answer(repo, waiting, {"beta": rejected("a registered word"),
+                           "gamma": {"state": "deferred", "reason": "the term may be registered",
+                                     "revisit": "when the vocabulary ledger decides"}})
     approve(repo, capsys, waiting)
-    listed.write_text("- quote: unauthorized\n  change: replace\n  reason: none\n")
+    answers.write_text("unauthorized\n")
     _, ready, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [f"apply {pass_name} {model}"]
     assert ready["unapproved-edits"] and note_text(repo) == original
-    assert f"{pass_name} applied alpha gamma." in artifact_file(repo, ready, "final.md").read_text()
+    assert f"{pass_name} applied alpha." in artifact_file(repo, ready, "final.md").read_text()
     [applied] = [c for c in captured_inputs(repo[2]) if c["kind"] == "apply"]
-    assert "  change: beta\n  reason: word\n  struck: a registered word\n" in applied["inputs"]["answers"]
+    assert "reason: a registered word" in applied["inputs"]["answers"]
     assert "unauthorized" not in applied["inputs"]["answers"]
     publish(repo, capsys, ready)
 
 
-BETA = "- quote: A note about\n  change: beta\n  reason: word\n"
+def _drop(text):
+    data = yaml.safe_load(text.split("---\n")[1])
+    del data["items"][1]
+    return "---\n" + yaml.safe_dump(data, sort_keys=False) + "---\n"
 
 
 @pytest.mark.parametrize("damage, problem", [
-    (lambda text: text.replace(BETA, ""), "deleted instead of struck: `- quote: A note about"),
-    (lambda text: strike(text, "beta", ""), "struck without a reason: `- quote: A note about"),
-    (lambda text: text.replace("reason: decorative", "reason: ambiguous"),
-     "not in the proposed list as proposed: `- quote: Alpha body"),
-    (lambda text: text + "- quote: epsilon\n  change: epsilon\n  reason: new\n",
-     "not in the proposed list as proposed: `- quote: epsilon"),
+    (_drop, "item 2: missing"),
+    (lambda text: decide(text, {"beta": {"state": "rejected"}}), "'reason' is a required property"),
+    (lambda text: text.replace("reason: decorative", "reason: ambiguous"), "item 1: its proposal differs"),
+    (lambda text: decide(text, {"beta": {"state": "rejected", "reason": "r", "decided-by": "agent"}}),
+     "'operator' was expected"),
+    (lambda text: decide(text, {"beta": {"state": "deferred", "reason": "r"}}), "'revisit' is a required property"),
 ])
-def test_strike_without_reason_or_edited_list_waits_for_a_corrected_file(repo, capsys, tmp_path, damage, problem):
+def test_invalid_answers_wait_for_a_corrected_file(repo, capsys, tmp_path, damage, problem):
     original = start(repo)
     path = named_plan(tmp_path, passes=("plain-wording",))
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    listed = repo[0] / waiting["waiting-for"]["file"]
-    listed.write_text(damage(listed.read_text()))
+    answers = repo[0] / waiting["waiting-for"]["file"]
+    pending = answers.read_text()
+    answers.write_text(damage(pending))
     approve(repo, capsys, waiting)
     code, blocked, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches == [] and not blocked["applied"] and note_text(repo) == original
     assert blocked["passes"][0]["state"] == "waiting" and problem in blocked["passes"][0]["reason"]
     assert blocked["waiting-for"]["key"] == waiting["waiting-for"]["key"] and problem in blocked["waiting-for"]["what"]
-    repaired = (listed.read_text().split("- quote: epsilon")[0].replace("reason: ambiguous", "reason: decorative")
-                .replace("  struck: \n", ""))
-    if "change: beta" not in repaired:
-        repaired = repaired.replace("- quote: long enough", BETA + "- quote: long enough")
-    listed.write_text(strike(repaired, "gamma", "keep it"))
+    answers.write_text(decide(pending, {"gamma": rejected("keep it")}, APPROVED))
     approve(repo, capsys, blocked)
     _, ready, launches = revise(repo, capsys, NOTE_PATH)
-    assert launches == ["apply plain-wording small"] and ready["waiting-for"]["file"].endswith("publication.json")
+    assert launches == ["apply plain-wording small"]
+    assert ready["waiting-for"]["file"].endswith("publication-answers.md")
 
 
-def test_changed_selection_invalidates_publication_even_if_candidate_is_identical(repo, capsys, tmp_path):
+def test_changed_answers_invalidate_publication_even_if_candidate_is_identical(repo, capsys, tmp_path):
     original = start(repo)
     path = named_plan(tmp_path, passes=("plain-wording",))
     _, selection, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    listed = repo[0] / selection["waiting-for"]["file"]
-    listed.write_text(strike(listed.read_text(), "gamma", "first reason"))
+    answers = repo[0] / selection["waiting-for"]["file"]
+    answer(repo, selection, {"gamma": rejected("first reason")})
     approve(repo, capsys, selection)
     _, ready, _ = revise(repo, capsys, NOTE_PATH)
     candidate = artifact_file(repo, ready, "final.md").read_text()
-    approve(repo, capsys, ready)
-    listed.write_text(listed.read_text().replace("struck: first reason", "struck: the reason now differs"))
+    approve_publication(repo, capsys, ready)
+    answers.write_text(answers.read_text().replace("first reason", "the reason now differs"))
     approve(repo, capsys, selection)
     code, fresh, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and fresh["waiting-for"] and not fresh["applied"]
@@ -410,26 +449,44 @@ def test_changed_selection_invalidates_publication_even_if_candidate_is_identica
     assert note_text(repo) == original
 
 
-def test_striking_every_entry_completes_without_publication(repo, capsys, tmp_path):
+def test_approving_no_item_completes_without_publication(repo, capsys, tmp_path):
     original = start(repo)
     path = named_plan(tmp_path, passes=("plain-wording",))
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    listed = repo[0] / waiting["waiting-for"]["file"]
-    text = listed.read_text()
-    for entry in ("alpha", "beta", "gamma"):
-        text = strike(text, entry, f"{entry} stays")
-    listed.write_text(text)
+    answer(repo, waiting, {"alpha": rejected("alpha stays"), "beta": rejected("beta stays")}, default=None)
     approve(repo, capsys, waiting)
     code, done, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and done["complete"] and not done["applied"] and launches == []
-    assert done["passes"][0]["reason"] == "the operator struck every entry"
+    assert done["passes"][0]["reason"] == "the operator approved no item"
     assert note_text(repo) == original
 
 
+def test_publication_refuses_answers_over_another_text_and_a_rejection(repo, capsys, tmp_path):
+    original = start(repo)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
+    file = repo[0] / ready["waiting-for"]["file"]
+    pending = file.read_text()
+    file.write_text(decide(pending.replace(observations.sha(artifact_file(repo, ready, "final.md").read_bytes()),
+                                           "0" * 64), {"text": APPROVED}))
+    approve(repo, capsys, ready)
+    code, refused, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and launches == [] and not refused["applied"] and note_text(repo) == original
+    assert "do not authorize publication" in refused["waiting-for"]["what"]
+    assert "question-sha256" in refused["waiting-for"]["what"]
+    assert "item text: its proposal differs" in refused["waiting-for"]["what"]
+    file.write_text(decide(pending, {"text": rejected("the closing reads worse")}))
+    approve(repo, capsys, refused)
+    code, declined, _ = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and not declined["applied"] and note_text(repo) == original
+    assert "the operator's answer is `rejected`: the closing reads worse" in declined["waiting-for"]["what"]
+    publish(repo, capsys, declined)
+
+
 @pytest.mark.parametrize("change", ["criterion", "profile", "retry"])
-def test_changed_strike_request_or_retried_proposal_requires_new_selection(repo, capsys, change):
+def test_changed_proposing_request_or_retried_proposal_requires_new_answers(repo, capsys, change):
     original = start(repo, "PLAIN")
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    answer(repo, waiting, {})
     approve(repo, capsys, waiting)
     args = []
     if change == "criterion":
@@ -439,7 +496,7 @@ def test_changed_strike_request_or_retried_proposal_requires_new_selection(repo,
         args = ["--profile-simple", "j"]
     else:
         calls = recorded_calls(repo[0] / waiting["run-dir"])
-        [call] = [c for c in calls if c["job"] == "plain-wording/list" and c["status"] == "delivered"]
+        [call] = [c for c in calls if c["job"] == "plain-wording/propose" and c["status"] == "delivered"]
         (repo[0] / "new-proposal").touch()
         assert main(["retry", waiting["run-dir"], call["job"], "--key", call["key"]], harnesses=repo[1]) == 0
         capsys.readouterr()
@@ -453,6 +510,7 @@ def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     start(repo, "PLAIN")
     brief = add_brief(repo[0], NOTE_PATH)
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    answer(repo, waiting, {})
     approve(repo, capsys, waiting)
     _, ready, _ = revise(repo, capsys, NOTE_PATH)
     calls = captured_inputs(repo[2])
@@ -469,6 +527,7 @@ def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     original = note_text(repo)
     if kind == "apply":
         _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+        answer(repo, waiting, {})
         approve(repo, capsys, waiting)
     (repo[0] / f"brief-problem-{kind}").touch()
     code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
@@ -562,7 +621,7 @@ def test_retried_assessment_changes_plan_and_invalidates_publication(repo, capsy
     original = start(repo)
     _, ready, _ = revise(repo, capsys, NOTE_PATH, "--assess")
     candidate = artifact_file(repo, ready, "final.md").read_text()
-    approve(repo, capsys, ready)
+    approve_publication(repo, capsys, ready)
     calls = recorded_calls(repo[0] / ready["run-dir"])
     [call] = [c for c in calls if c["job"] == "assessment" and c["status"] == "delivered"]
     (repo[0] / "new-proposal").touch()
@@ -632,7 +691,7 @@ def test_plain_markdown_keeps_h1_and_waits_for_publication(repo, capsys):
 def test_edited_artifact_starts_new_run_without_reusing_publication(repo, capsys):
     start(repo)
     _, ready, _ = revise(repo, capsys, NOTE_PATH, "--assess")
-    approve(repo, capsys, ready)
+    approve_publication(repo, capsys, ready)
     edited = note_text(repo) + "The operator's sentence.\n"
     (repo[0] / NOTE_PATH).write_text(edited)
     code, fresh, launches = revise(repo, capsys, NOTE_PATH, "--assess")
@@ -644,8 +703,7 @@ def test_every_pass_candidate_comes_from_the_edit_route(repo, capsys, tmp_path):
     start(repo)
     path = named_plan(tmp_path, passes=("readability-and-flow", "plain-wording"))
     _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    listed = repo[0] / waiting["waiting-for"]["file"]
-    listed.write_text(strike(listed.read_text(), "beta", "a registered word"))
+    answer(repo, waiting, {"beta": rejected("a registered word")})
     approve(repo, capsys, waiting)
     _, ready, _ = revise(repo, capsys, NOTE_PATH)
     held = {}
@@ -654,8 +712,26 @@ def test_every_pass_candidate_comes_from_the_edit_route(repo, capsys, tmp_path):
         [result] = [name for name in data["completed-results"] if name.endswith("/result.md")]
         held[data["request"]["call-job"]] = yaml.safe_load((record.parent / result).read_text().split("---\n")[1])
     assert {job: data["outcome"] for job, data in held.items()} == {
-        "readability-and-flow": "changed", "plain-wording/list": "proposed", "plain-wording/apply": "changed"}
-    assert held["plain-wording/list"]["profile"]["launch-model"] == "small"
+        "readability-and-flow": "changed", "plain-wording/propose": "proposed", "plain-wording/apply": "changed"}
+    assert held["plain-wording/propose"]["profile"]["launch-model"] == "small"
     for state in ready["passes"]:
         job = state["name"] if state["name"] == "readability-and-flow" else f"{state['name']}/apply"
         assert (repo[0] / held[job]["candidate"]).read_text() == (repo[0] / state["text"]).read_text()
+
+
+def test_decisions_command_lists_the_answers_of_a_revise_run(repo, capsys, tmp_path):
+    start(repo)
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    answer(repo, waiting, {"beta": rejected("a registered word")})
+    approve(repo, capsys, waiting)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH)
+    publish(repo, capsys, ready)
+    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    found = json.loads(capsys.readouterr().out)
+    listed = [(e["class"], e["unit"], e["decided-by"], e["decision"], e["item"], e["reason"]) for e in found]
+    final = f"{ready['run-dir']}/artifact/final.md"
+    assert sorted(listed) == [
+        ("plain-wording", "item", "operator", "approved", "Alpha body -> alpha", None),
+        ("plain-wording", "item", "operator", "approved", "long enough -> gamma", None),
+        ("plain-wording", "item", "operator", "rejected", "A note about -> beta", "a registered word"),
+        ("publication", "bundle", "operator", "approved", final if len(final) <= 80 else final[:79] + "…", None)]

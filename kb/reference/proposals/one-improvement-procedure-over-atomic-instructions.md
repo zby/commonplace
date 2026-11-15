@@ -33,8 +33,19 @@ alone through `commonplace-review run edit` and returns a typed
 [edit result](../../types/edit-result.md), retained with its exact inputs and
 rerunnable from a fixture. The revise workflow runs every pass through that
 route. This departs from the design below, which has a session agent run edit
-operations: a code route keeps the inputs needed to rerun one operation. The
-composition and stop-operation design remains unadopted.
+operations: a code route keeps the inputs needed to rerun one operation.
+
+**Adopted:** stops record the operator's answers in one typed file under
+[ADR 134](../adr/134-stops-record-the-operators-answers-in-one-typed-file.md).
+An [answers](../../types/answers.md) file holds one item per decision,
+`pending`, `approved`, `rejected` or `deferred`, and names its question by
+hash; the validator checks it against the question. Two stop instructions
+serve a session agent with the operator: [decide items](../../instructions/decide-items.md)
+for a list of proposals and [approve a text](../../instructions/approve-a-text.md)
+for publication. The per-item edit operations and both workflows' publication
+read answers; the strike-list format is gone. The full pass's hand-back
+disposition stays on its packet route. The composition design remains
+unadopted.
 
 The three procedures, as the operator meets them:
 
@@ -43,8 +54,8 @@ The three procedures, as the operator meets them:
 | Entry | `commonplace-review run full-pass` | agent follows [fix review warnings](../../instructions/fix-warnings/fix-review-warnings.md); no workflow command | `commonplace-review run revise` with `--assess` or `--plan` |
 | Review operations used | all six method families, before editing and again at closing | the gate catalog, as fresh `warn` and `fail` results, before and after | none; code checks on each text |
 | Edit operations used | the packet's body edits under `keep`, then a copyedit | the fix strategies, chosen per finding | the passes a plan names, in order |
-| Stops used | hand-back dispositions; `--direction` for an undetermined update; exact publication approval | `deferred` items; the agent edits the checkout directly, so no publication boundary | strike lists for plain-wording and abstractions; exact publication approval |
-| Where the operator's answer is kept | packet resolution fields with rationale, under [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | the agent's `rejected` and `deferred` statuses in the free-form fix report | the proposed list and each strike with the operator's required reason, in the run's operator record |
+| Stops used | hand-back dispositions; `--direction` for an undetermined update; exact publication approval | `pending` items, `deferred` only on the operator's word; the agent edits the checkout directly, so no publication boundary | per-item answers for plain-wording and abstractions; exact publication approval |
+| Where the operator's answer is kept | packet resolution fields with rationale, under [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md); the publication approval in an answers file | the `rejected`, `pending` and `deferred` statuses in the free-form fix report | answers files with each rejection's and deferral's reason, in the run's operator record |
 
 The atomic instructions, where they live and who uses them:
 
@@ -59,8 +70,8 @@ The atomic instructions, where they live and who uses them:
 | Edit | simplification passes, typed edit operations with `effort`, `decision` and preserve rules; split-out-a-treatment stays an instruction | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow, `run edit` |
 | Edit | fix strategies, keyed to finding kinds, as one typed edit operation | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure, `run edit` |
 | Edit | packet body edits and copyedit under `keep` | [run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) | full pass |
-| Stop | strike list, with the operator's reason per strike | [resolve a strike list](../../instructions/decide-items.md) | revise workflow |
-| Stop | exact publication approval | revise and full-pass workflows | both workflow commands |
+| Stop | decide items: the operator's answer per proposal, in an answers file | [decide items](../../instructions/decide-items.md) | revise workflow, `run edit` |
+| Stop | approve a text: exact publication approval, in an answers file | [approve a text](../../instructions/approve-a-text.md) | both workflow commands |
 | Stop | hand-back disposition with a packet | [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | full pass |
 | Stop | `deferred` item | [fix review warnings](../../instructions/fix-warnings/fix-review-warnings.md) | fix procedure |
 
@@ -69,9 +80,9 @@ Shipped constraints this proposal must respect:
 - [ADR 080](../adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) keeps every claim-level change with the author. No edit operation changes a title, thesis or title-as-claim.
 - The [review system](../README-REVIEW-SYSTEM.md) asks that each operation be evaluated alone before its composition is trusted.
 - The operator-decision record is `commonplace-review decisions` under [ADR 130](../adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md). It reads what runs leave in the state tree.
-- A strike carries the operator's required reason since 2026-11-13, enforced today by revise workflow code.
+- A rejection or deferral carries the operator's reason, and a deferral its revisit condition; the validator enforces both for every answers file.
 - Directory types ([ADR 111](../adr/111-directory-types-declare-their-layout.md), [directory artifact](../definitions/directory-artifact.md)) are shipped and still experimental; one workflow family uses them.
-- Revise and full-pass still fix composition in Python: the assessment and plan grammar, the order of passes, the strike stops, the method order and the closing cycle. Which passes stop for strikes now follows each operation's `decision`. Shared review and edit execution does not replace those procedures.
+- Revise and full-pass still fix composition in Python: the assessment and plan grammar, the order of passes, the per-item stops, the method order and the closing cycle. Which passes stop for answers follows each operation's `decision`. Shared review and edit execution does not replace those procedures.
 
 ## The problem
 

@@ -35,10 +35,11 @@ extends that boundary to edit operations. Exact behavior belongs to `commonplace
 | `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views; call grouping, the worker prompt and the checkout guard |
-| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance, its observation under `artifact/edits/`, and the `run edit` command's run |
-| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
+| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
+| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
+| `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
 | `review_workflows.full_pass` | the full improvement pass and its packet |
-| `review_workflows.revise` | the revision workflow over the simplification passes: plan, order, strike stops and publication; each pass runs through `edit_operations.ask()` |
+| `review_workflows.revise` | the revision workflow over the simplification passes: plan, order, per-item answers stops and publication; each pass runs through `edit_operations.ask()` |
 
 Workjig launches each worker in the checkout through the harness's headless
 mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
@@ -66,8 +67,8 @@ does not name as removed and every quoted span. Every revision pass candidate
 comes from `edit_operations.ask()`, which also serves `run edit`; the full
 pass's edit and copyedit are still its own steps. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
-final text once, atomically, only over the start text and after approval of
-the exact generated publication manifest. Any other text
+final text once, atomically, only over the start text and after approved
+answers that approve the exact candidate. Any other text
 is a change made outside the run: the run writes nothing and reports a
 conflict that names the file holding the proposed text.
 
@@ -91,21 +92,25 @@ passes and unused effort profiles do not invalidate it. Assessment-led runs
 also bind the assessment request, answer and full pass catalog. A single
 criterion through `run gates` is report-only and never selects subsequent work.
 
-Unsettled plain-wording and abstraction selections require explicit approval
-per proposal. These temporary procedure-development points retain the
-proposed list and each strike with the operator's required reason, in the
-run's operator record and the selection context that binds publication. Removal needs separate authorization
+Unsettled plain-wording and abstraction selections require the operator's
+answer per proposal, in an [answers](../types/answers.md) file whose
+question is the proposing run's edit result. These temporary
+procedure-development points retain each answer with the operator's reason
+for a rejection or deferral, in the run's operator record and the selection
+context that binds publication. Removal needs separate authorization
 after selection rules and checks have been revised and evaluated on retained
 and fresh examples. This is not automatic learning infrastructure; a lower
 proposal count does not establish reliability.
 
-Changed final text in both workflows requires approval through
-`commonplace-review approve RUN FILE --key KEY` of the exact generated
-`artifact/publication.json`. `artifact/final.md` and `artifact/final.diff`
-provide inspection views. Repeating never approves. The manifest and candidate
-are generated outputs, not revision inputs: use `--plan` for revision, change
-workflow inputs or start a new run. An edited manifest cannot authorize
-publication. Full-pass also withholds candidate packets and results at this
+Changed final text in both workflows requires an answers file,
+`artifact/publication-answers.md`, whose question is the candidate
+`artifact/final.md` and whose one item, naming the candidate's hash, the
+operator approved; `commonplace-review approve RUN FILE --key KEY` records
+it. `artifact/final.diff` is the inspection view. Repeating never approves.
+The proposal key binds the start text, the candidate and the decision
+context; a change in any of them withdraws the approval. The candidate is a
+generated output, not a revision input: use `--plan` for revision, change
+workflow inputs or start a new run. Full-pass also withholds candidate packets and results at this
 boundary; no-edit dispositions may publish reports, packets and results
 automatically. Judgment stays in instructions; prompts name inputs only.
 

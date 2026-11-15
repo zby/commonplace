@@ -107,11 +107,11 @@ A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
 give them again. Each approval stop prints a JSON report whose `waiting-for` gives
 what to do, the file, proposal key, `approve-command` and command to repeat.
 Assessment, planning and settled intermediate passes are preauthorized;
-never wait for routine plan approval. Selection proposals may be edited
-before their `approve-command`; final publication manifests must remain
-exactly as generated. Then repeat the workflow command. Approval captures
-that text; later selection edits require approval again and are listed under
-`unapproved-edits`. Changed proposal inputs require fresh approval. An agent
+never wait for routine plan approval. Each stop's file is a pending
+[answers](../../types/answers.md) file: record the operator's decision on its
+items before the `approve-command`, then repeat the workflow command.
+Approval captures that text; later edits require approval again and are
+listed under `unapproved-edits`. Changed proposal inputs require fresh approval. An agent
 may approve only on the operator's stated word for that specific proposal;
 it must not infer approval from a request to retry. This instruction and the
 pass files own judgment; worker prompts name inputs, not additional criteria.
@@ -141,21 +141,22 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    untouched, and `not-applied` names the run file holding the proposed text.
    The workflow does not commit.
 3. A pass whose `decision` is `per-item` (plain-wording, abstractions) first
-   returns proposals, and stops with them as `artifact/<pass>-list-<key>.md`:
-   one entry per proposal, holding its `quote`, `change` and `reason`.
-   Under each entry you strike, after its indented lines, add one indented
-   line `struck: <reason>`; delete nothing and change no entry. Run the
-   stop's approval command, then repeat; the same operation runs again with
-   the answered list as its `answers` input and applies only the unmarked
-   entries. Code refuses a candidate that changed a struck entry's passage. A deleted, edited or added entry, or a strike without a
-   reason, stops the run again naming the entry: correct the file and
-   approve it again. In a session, follow
-   [resolve a strike list](../decide-items.md): the agent presents
-   each candidate in context, asks, and records the operator's answer. A
-   list made again for another text gets a new file and stops again. These
-   are temporary procedure-development points for unsettled selection
-   rules. The run retains the proposed list and each strike with the
-   operator's reason (required since 2026-11-13). Use them to revise
+   returns proposals, and stops with the pending answers file
+   `artifact/<pass>-answers-<key>.md`: one item per proposal, holding its
+   `quote`, `change` and `reason`, every item `pending`. In a session, follow
+   [decide items](../decide-items.md): the agent presents each item in
+   context, asks, and records the operator's answer as `approved`,
+   `rejected` with a reason, or `deferred` with a reason and a revisit
+   condition. Run the stop's approval command, then repeat; the same
+   operation runs again with the answers file as its `answers` input and
+   applies only the `approved` items. Code refuses a candidate that changed
+   the passage of an item that is not approved. Answers the validator
+   refuses stop the run again naming the problem: correct the file and
+   approve it again. Answers that approve no item end the pass as
+   `no-change`. Proposals made again for another text get a new file and
+   stop again. These are temporary procedure-development points for
+   unsettled selection rules. The run retains the answers with each
+   rejection's and deferral's reason in the operator's words. Use them to revise
    selection rules and checks, then evaluate those changes on retained and
    fresh examples before seeking separate authorization to remove a
    selection stop. This requires no new automatic learning infrastructure;
@@ -163,16 +164,16 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
 4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
-5. For a changed final artifact, inspect `artifact/final.md` and
-   `artifact/final.diff`, then approve the exact generated
-   `artifact/publication.json` using the report's
+5. For a changed final artifact, follow [approve a text](../approve-a-text.md):
+   inspect `artifact/final.md` and `artifact/final.diff`, record the
+   operator's decision on the one item of `artifact/publication-answers.md`,
+   which names the candidate's hash, then run the report's
    `commonplace-review approve RUN FILE --key KEY` command. Repeat to
-   publish. The command writes the original once, only after this approval
-   and only if the original and captured brief are unchanged. Repeating
-   never approves. Do not edit the manifest or candidate to revise the text:
-   supply `--plan`, change workflow inputs, or start a new run. An edited
-   manifest cannot authorize publication; the generated manifest must match
-   the captured approval exactly.
+   publish. The command writes the original once, only when the approved
+   answers approve that exact candidate and the original and captured brief
+   are unchanged. Repeating never approves. Do not edit the candidate to
+   revise the text: supply `--plan`, change workflow inputs, or start a new
+   run.
 6. An artifact edited between invocations has another hash, so the command
    opens a new run. Choose `--assess` again to commission planning, or
    `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run is a conflict: nothing

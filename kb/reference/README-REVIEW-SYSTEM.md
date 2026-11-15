@@ -360,8 +360,8 @@ reliable selection or editing judgment.
 method reports, a packet, and for an accepted `keep` an edit, a copyedit and
 a closing cycle with at most one repair. Workers write outputs only. Each
 edited text stays in the run directory, and later steps work on that text.
-The note is written once, only when closing is `ready` and the exact final
-publication manifest has been approved. Until then, the candidate packet,
+The note is written once, only when closing is `ready` and the operator's
+publication answers approve the exact candidate. Until then, the candidate packet,
 results and note remain unpublished. A hand-back leaves the note untouched;
 no-edit dispositions may publish their report, packet and results automatically.
 Gates and critique are asked over each text even
@@ -390,12 +390,16 @@ execution. An edit result has no freshness state and no current-result file.
 ROLE=PATH` supplies the files an operation names, such as `findings`.
 
 A `per-item` operation (plain-wording, abstractions) runs twice. The first
-run returns `proposed`. The operator strikes entries of the listed
-proposals, each with a reason, and the second run takes that answered list
-as `--input answers=PATH` and returns `changed`. Code refuses a candidate
-that changed a struck entry's passage; it does not detect a change outside
-the list. Until a shared answers type exists, the answered list uses the
-revise workflow's strike-list format.
+run returns `proposed`; that result is the question of a stop.
+`commonplace-review answers create --from RESULT` writes the pending
+[answers](../types/answers.md) file, and the operator decides each item in a
+session that follows [decide items](../instructions/decide-items.md). The
+second run takes the answers as `--input answers=PATH`, applies the
+`approved` items and returns `changed`. Code accepts the answers only when
+the validator accepts them and their question is a result of the same
+operation on the same text. It refuses a candidate that changed the passage
+of an item that is not approved; it does not detect a change outside the
+items ([ADR 134](./adr/134-stops-record-the-operators-answers-in-one-typed-file.md)).
 
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
@@ -410,8 +414,9 @@ as `run edit`; its `effort` selects the profile. Every pass must end `applied`, 
 changed final text is offered for publication approval. Control-flow checks
 do not establish the quality of the selected edits.
 
-Plain-wording and abstractions, the `per-item` passes, still stop for
-explicit approval of each selection proposal. These are temporary procedure-development points:
+Plain-wording and abstractions, the `per-item` passes, still stop for the
+operator's answers on each proposal, in `artifact/<pass>-answers-<key>.md`.
+These are temporary procedure-development points:
 retain proposed, accepted and rejected choices with reasons, evolve the
 selection rules and checks, and evaluate retained and fresh examples before
 separately authorizing removal. This is not new automatic learning
@@ -429,19 +434,23 @@ including the full pass's `--direction`; an option given on the repeat
 replaces the recorded value. A stop for the operator proposes a file in the
 run directory, and the report's `waiting-for` gives what to do, the file,
 the approval command and the command to repeat. Approval captures the file's
-current text; repeating alone never approves it. Selection-list edits after
+current text; repeating alone never approves it. Answers edited after
 approval require another approval and appear under `unapproved-edits`.
 Changed proposal inputs require fresh approval. A plan with `stop` set ends
 the run; replace it explicitly with `--plan`, not an approval command. An
 agent may approve only on the operator's stated word for that proposal.
 
 For changed final text in either workflow, inspect `artifact/final.md` and
-`artifact/final.diff`, then approve the exact generated
-`artifact/publication.json` with `commonplace-review approve RUN FILE --key KEY`
-and repeat. The manifest is not editable approval input: publication requires
-an exact match. To revise, use `--plan` for revision, change workflow inputs,
-or start a new run; do not edit the manifest or candidate. Publication also
-requires the original artifact and captured brief to remain unchanged.
+`artifact/final.diff`, record the operator's decision on the one item of
+`artifact/publication-answers.md`, which names the candidate's hash, approve
+that file with `commonplace-review approve RUN FILE --key KEY` and repeat
+([approve a text](../instructions/approve-a-text.md)). Publication requires
+answers that pass the validator and approve that exact candidate. The
+proposal key binds the original, the candidate and the decision context, so
+a change in any of them withdraws the approval. To revise, use `--plan` for
+revision, change workflow inputs, or start a new run; do not edit the
+candidate. Publication also requires the original artifact and captured
+brief to remain unchanged.
 A conflict leaves the original untouched and names the proposed text.
 Instructions remain the judgment authority; prompts name inputs only.
 

@@ -42,9 +42,10 @@ the report. Remove `user-verified` after a substantive body change.
 A `per-item` operation first proposes: return `outcome: proposed` with the
 proposals and apply nothing. Each proposal's `quote` is a passage copied from
 the text that occurs there exactly once. Run again with an `answers` input,
-apply only the entries without a `struck:` line, list the struck entries with
-the operator's reasons in the report, and do not restore struck entries or
-introduce new ones. The operator's answers do not widen the operation or
+an answers file with one item per proposal, apply only the items whose
+`state` is `approved`. List the `rejected` and `deferred` items with the
+operator's reasons in the report. Apply no other item and introduce no new
+change. The operator's answers do not widen the operation or
 scope.
 
 ## Headless write briefs

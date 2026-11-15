@@ -20,7 +20,7 @@ An edit result has no freshness state. It names the hash of the text it was made
 | `proposed` | `proposals`, applied to nothing | each proposal's `quote` occurs exactly once in the input, by the shared prose quote matcher |
 | `problem` | what blocked the operation, as the worker's problem report | no changes, proposals or candidate are present |
 
-A `none` operation returns `changed` or `unchanged`. A `per-item` operation returns `proposed` or `unchanged` on its first run. Run again with an answered list as its `answers` input, it returns `changed`.
+A `none` operation returns `changed` or `unchanged`. A `per-item` operation returns `proposed` or `unchanged` on its first run. Run again with an [answers](./answers.md) file over that result as its `answers` input, it applies the `approved` items and returns `changed`.
 
 Each proposal holds `quote`, a passage of the input that identifies where the change applies; `change`, the proposed replacement or decision; and `reason`. A quote is matched after whitespace and typographic quote marks are normalized.
 
@@ -34,7 +34,7 @@ Code accepts a `changed` candidate only when:
 - every link target of the input is still in the candidate, or is named in `removed-links`;
 - every quoted span of the input is still in the candidate. A quoted span is a Markdown blockquote or a quotation the validator pairs with a `verbatim` citation.
 
-With an `answers` input, every entry the operator struck must still have its quoted passage in the candidate. Code does not detect a change outside the answered list.
+With an `answers` input, the validator must accept the answers file, its question must be a result of the same operation on the same input text, and every item that is not `approved` must still have its quoted passage in the candidate. Code does not detect a change outside the answered items.
 
 An operation's own `## Preserve` section binds the worker. Code checks only the bounds above.
 

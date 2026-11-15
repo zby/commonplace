@@ -19,18 +19,17 @@ reruns one such observation (`fixtures.trial()`). `ask()` writes nothing to
 the checkout. `commonplace-review run edit` runs one operation alone through
 `run()`; the revise workflow runs every pass through `ask()`.
 
-A `per-item` operation runs twice. The first run returns `proposed`. After the
-operator answers the list, the second run gets the answered list as its
-`answers` input and returns `changed`; code checks that every struck entry's
-passage is still in the candidate. Until a shared answers type exists, the
-answered list is the revise workflow's strike-list format: one top-level `- `
-entry per proposal, rendered by `strike_list()`, with an indented
-`struck: <reason>` line under each struck entry.
+A `per-item` operation runs twice. The first run returns `proposed`; that
+result is the question of a stop (`types/answers.md`). After the operator
+answers it, the second run gets the answers file as its `answers` input and
+returns `changed`. Code accepts the answers only when the validator accepts
+them and their question is an edit result of the same operation on the same
+input text (`decided()`). The worker applies the `approved` items; code
+checks that the passage of every other item is still in the candidate.
 """
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -76,8 +75,6 @@ EXECUTION_REL = "instructions/simplification-passes/execute-a-revision-pass.md"
 """The shared edit contract every worker receives as its `execution` input."""
 RESERVED = frozenset({"text", "operation", "execution"})
 ATTEMPTS = 3
-STRUCK = re.compile(r"^\s+struck:\s*(.*?)\s*$")
-"""The operator's mark under a struck entry; the group is the required reason."""
 ALLOWED = {"edit": ("changed", "unchanged"), "propose": ("proposed", "unchanged"), "apply": ("changed",)}
 """The outcomes a worker may return: by a `none` operation, a `per-item` first run, and a run with answers."""
 
@@ -147,60 +144,31 @@ def effort_profiles(root: Path, overrides: dict[str, str | None]) -> dict[str, P
     return {effort: load_profile(root, name, gates.profiles()) for effort, name in chosen.items()}
 
 
-# --- The answered list ------------------------------------------------------------------
+# --- The answers ---------------------------------------------------------------------------
 
-def items(listed: str) -> list[list[str]]:
-    """The top-level `- ` entries of a list, each as its lines with the indented lines under it."""
-    found: list[list[str]] = []
-    for line in listed.splitlines():
-        if line.startswith("- "):
-            found.append([line.rstrip()])
-        elif found and line.strip():
-            found[-1].append(line.rstrip())
-    return found
+def decided(root: Path, operation: Operation, note: str, text: str, answers: dict) -> tuple[list[dict], list[dict]]:
+    """The approved and the other items of an `answers` input, each as its proposal; ValueError when unusable.
 
-
-def strike_list(proposals: list[dict]) -> str:
-    """The proposals as the list the operator strikes: one `- ` entry each, `quote`, `change` and `reason`."""
-    return "".join(yaml.safe_dump([{key: proposal[key] for key in ("quote", "change", "reason")}],
-                                  sort_keys=False, allow_unicode=True, width=10**6)
-                   for proposal in proposals)
-
-
-def answered(listed: str) -> tuple[list[dict], list[dict], list[str]]:
-    """The approved and the struck entries of an answered list, each as its proposal, and what blocks it."""
-    approved, struck, problems = [], [], []
-    for index, item in enumerate(items(listed), 1):
-        marks = [STRUCK.match(line) for line in item]
-        entry = "\n".join(line for line, mark in zip(item, marks) if mark is None)
-        try:
-            data = yaml.safe_load(entry)
-        except yaml.YAMLError:
-            data = None
-        if not (isinstance(data, list) and len(data) == 1 and isinstance(data[0], dict)
-                and isinstance(data[0].get("quote"), str)):
-            problems.append(f"entry {index} is not a proposal with a `quote`")
-            continue
-        reasons = [mark.group(1) for mark in marks if mark is not None]
-        if not reasons:
-            approved.append(data[0])
-        elif not reasons[0]:
-            problems.append(f"entry {index} is struck without a reason")
-        else:
-            struck.append({**data[0], "struck": reasons[0]})
-    return approved, struck, problems
-
-
-def answer_problems(text: str, listed: str) -> tuple[list[dict], list[str]]:
-    """The struck entries of an answered list for `text`, and what makes the list unusable as an input."""
-    approved, struck, problems = answered(listed)
-    if not approved and not problems:
-        problems.append("the answered list approves no entry; there is nothing to apply")
-    for entry in approved + struck:
-        found = match_quote(entry["quote"], text, kind="prose")
-        if not found.matched:
-            problems.append(f"the quote `{entry['quote'][:60]}` occurs {found.count} times in the input text, not once")
-    return struck, problems
+    `answers` is the role's `{"origin", "text"}`. The validator must accept
+    the text at its origin, and the question must be an edit result of
+    `operation` on `note` made from exactly `text`.
+    """
+    data, problems = edits.answered(root, root / answers["origin"], answers["text"])
+    if not problems:
+        question = frontmatter.parse((root / data["question"]).read_text(encoding="utf-8")).data
+        if question.get("type") != RESULT_TYPE:
+            problems.append(f"the question {data['question']} is not an edit result")
+        elif question.get("operation") != operation.identity or question.get("note") != note:
+            problems.append(f"the question {data['question']} is a result of {question.get('operation')} "
+                            f"on {question.get('note')}, not of {operation.identity} on {note}")
+        elif question.get("input-sha256") != observations.sha(text.encode("utf-8")):
+            problems.append(f"the question {data['question']} was made from another text than this input")
+    if problems:
+        raise ValueError(f"{ANSWERS}: " + "; ".join(problems))
+    approved = [item["proposal"] for item in data["items"] if item["state"] == "approved"]
+    if not approved:
+        raise ValueError(f"{ANSWERS}: no item is approved; there is nothing to apply")
+    return approved, [item["proposal"] for item in data["items"] if item["state"] != "approved"]
 
 
 # --- The worker call ------------------------------------------------------------------------
@@ -225,9 +193,10 @@ outcome needs:
 TASKS = {
     "edit": "",
     "propose": "\nThis operation asks before it edits: list the changes you propose and apply none.\n",
-    "apply": ("\nThe operator answered this operation's proposals: {answers_input}. Apply each entry "
-              "that has no `struck:` line, as the operation directs. Apply no struck entry and make "
-              "no other change.\n"),
+    "apply": ("\nThe operator answered this operation's proposals in an answers file: {answers_input}. "
+              "Each item's `proposal` holds a `quote`, a `change` and a `reason`. Apply each item whose "
+              "`state` is `approved`, as the operation directs. Apply no other item and make no other "
+              "change.\n"),
 }
 
 OUTCOME_RULES = {
@@ -329,13 +298,11 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
     if clash:
         raise ValueError(f"input roles {', '.join(clash)} are reserved by the edit route")
     mode = _mode(operation, roles)
-    struck: list[dict] = []
+    withheld: list[dict] = []
     if mode == "apply":
         if operation.decision != "per-item":
             raise ValueError(f"{operation.identity}: only a per-item operation takes an `{ANSWERS}` input")
-        struck, problems = answer_problems(text, roles[ANSWERS]["text"])
-        if problems:
-            raise ValueError(f"{ANSWERS}: " + "; ".join(problems))
+        _, withheld = decided(root, operation, note, text, roles[ANSWERS])
     job = job or f"{note}::{operation.name}"
     if "#" in job:
         raise ValueError(f"{job}: '#' is reserved in job names by the runtime")
@@ -404,8 +371,9 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
                 problems += edits.artifact_bounds(root, note, text, candidate, baseline)
                 problems += edits.preserved(text, candidate, removed)
                 plain = normalize_text(candidate, "prose")
-                problems += [f"struck entry `{entry['quote'][:60]}` was applied; leave its passage as it was"
-                             for entry in struck if normalize_text(entry["quote"], "prose") not in plain]
+                problems += [f"the item `{item['quote'][:60]}` is not approved but was applied; "
+                             "leave its passage as it was"
+                             for item in withheld if normalize_text(item["quote"], "prose") not in plain]
         elif candidate is not None and candidate != text:
             problems.append(f"`outcome: {outcome}` writes no changed text; remove the candidate output")
         if outcome == "proposed" and isinstance(data.get("proposals"), list):

@@ -19,6 +19,7 @@ import sys
 from pathlib import Path
 
 import pytest
+import yaml
 
 from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
@@ -149,7 +150,8 @@ GATE_ASKS = 1        # both prose gates in one bundle call
 @pytest.fixture
 def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     root = tmp_path / "repo"
-    for rel in (*NOTE_TYPE_SPECS, "kb/types/full-pass-report.md", "kb/types/full-pass-report.schema.yaml"):
+    for rel in (*NOTE_TYPE_SPECS, "kb/types/full-pass-report.md", "kb/types/full-pass-report.schema.yaml",
+                "kb/types/answers.md", "kb/types/answers.schema.yaml"):
         FILES[rel] = (REPO_ROOT / rel).read_text(encoding="utf-8")
     for rel, text in FILES.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -194,11 +196,16 @@ def full_pass(repo, capsys, *args: str, approve: bool = True) -> tuple[int, dict
 
 
 def approve_publication(repo, report):
+    """Record the operator's approval of the candidate in the publication answers file, then approve the file."""
     from commonplace.headless.operator import approve
     waiting = report["waiting-for"]
     run = repo[0] / report["run-dir"]
-    name = (repo[0] / waiting["file"]).relative_to(run / "artifact").as_posix()
-    return approve(run, name, waiting["key"])
+    path = repo[0] / waiting["file"]
+    head, body = path.read_text().split("---\n")[1:]
+    data = yaml.safe_load(head)
+    data["items"][0].update({"state": "approved", "decided-by": "operator", "decided-at": "2026-11-15T12:00:00Z"})
+    path.write_text("---\n" + yaml.safe_dump(data, sort_keys=False) + "---\n" + body)
+    return approve(run, path.relative_to(run / "artifact").as_posix(), waiting["key"])
 
 
 def note_text(repo) -> str:
@@ -501,13 +508,13 @@ def test_approval_is_invalidated_by_context_even_when_final_text_is_identical(re
     assert not packet_file(repo[0], NOTE_PATH).exists()
 
 
-def test_tampered_manifest_cannot_publish_and_candidate_is_not_an_edit_input(repo, capsys):
+def test_tampered_answers_cannot_publish_and_candidate_is_not_an_edit_input(repo, capsys):
     original = start(repo)
     _, waiting, _ = full_pass(repo, capsys, approve=False)
     manifest = repo[0] / waiting["waiting-for"]["file"]
     generated = manifest.read_text()
-    manifest.write_text('{}\n')
     approve_publication(repo, waiting)
+    manifest.write_text('{}\n')
     candidate = repo[0] / waiting["waiting-for"]["proposed"]
     candidate.write_text("Unauthorized replacement.\n")
     code, blocked, launches = full_pass(repo, capsys, approve=False)

@@ -4,8 +4,9 @@ Nothing here writes state. Entries come from three places under
 kb/reports/state/:
 
 - operator records `operator/*.json` in the revise and full-pass run
-  directories: one entry per entry of an answered strike list, one bundle
-  entry per approved publication manifest, one `pending` entry per stop
+  directories: for an answers stop (`types/answers.md`), one entry per item
+  of the approved answers file with its state, decider and reason, the
+  publication approval as a bundle entry; one `pending` entry per stop
   without an answer;
 - full-pass packets: the disposition, which is the workflow's judgment, and
   the resolution once it is not `pending`;
@@ -24,15 +25,15 @@ import re
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.lib.review_workflows import edit_operations, full_pass, gates, revise
+from commonplace.lib.review_workflows import full_pass, gates
 
 WORKFLOWS = ("revise", "full-pass")
 """Run families whose run directories may hold operator records; dated sweep directories hold none."""
 FIXES = Path("kb/reports/state/fixes")
-PUBLICATION = "publication.json"
 ITEM_WIDTH = 80
 _RUN = re.compile(r"[0-9a-f]{12}")
-_LIST = re.compile(r"([a-z0-9-]+)-list-[0-9a-f]+\.md")
+_ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
+"""An answers stop: `<pass>-answers-<key>.md` of a per-item pass, or `publication-answers.md`."""
 _AUTHORITY = {"user": "operator", "version-guard": "version-guard"}
 
 
@@ -48,8 +49,15 @@ def _entry(note: str, workflow: str, run: str | None, record: str, cls: str, pro
             "item": item, "reason": reason, "key": key, "at": at}
 
 
-def _head(entry: str) -> str:
-    line = entry.splitlines()[0].removeprefix("- ").strip()
+def _head(proposal: object) -> str:
+    """One line naming an answered item: an edit proposal's quote and change, or the approved text's path."""
+    if isinstance(proposal, dict) and "quote" in proposal:
+        line = f"{proposal['quote']} -> {proposal.get('change')}"
+    elif isinstance(proposal, dict) and "text" in proposal:
+        line = str(proposal["text"])
+    else:
+        line = str(proposal)
+    line = " ".join(line.split())
     return line if len(line) <= ITEM_WIDTH else line[:ITEM_WIDTH - 1] + "…"
 
 
@@ -61,33 +69,35 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
         record = path.relative_to(root).as_posix()
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-            name, proposal, key = data["name"], data["proposal"], data["key"]
+            name, key = data["name"], data["key"]
+            if "proposal" not in data:
+                raise KeyError("proposal")
         except (json.JSONDecodeError, KeyError, TypeError) as error:
             raise MalformedRecord(f"malformed operator record: {record}: {error!r}") from error
         answer, at = data.get("answer"), data.get("answered-at")
         common = {"key": key, "at": at if answer is not None else None}
-        listed = _LIST.fullmatch(name)
-        if listed:
-            cls = listed.group(1)
+        stop = _ANSWERS.fullmatch(name)
+        if stop:
+            cls = stop.group(1)
+            proposer = "workflow" if cls == "publication" else "worker"
             if answer is None:
-                found.append(_entry(note, workflow, run, record, cls, "worker", "pending", "pending", "bundle",
+                found.append(_entry(note, workflow, run, record, cls, proposer, "pending", "pending", "bundle",
                                     **common))
                 continue
-            kept, struck, _ = revise.strikes(proposal, answer)
-            reasons = {entry["entry"]: entry["reason"] for entry in struck}
-            for entry in ("\n".join(lines) for lines in edit_operations.items(proposal)):
-                if entry in kept:
-                    decision, reason = "approve", None
-                elif entry in reasons:
-                    decision, reason = "strike", reasons[entry]
-                else:                       # deleted or edited: the current workflow blocks on such an answer
-                    decision, reason = "deleted", None
-                found.append(_entry(note, workflow, run, record, cls, "worker", "operator", decision, "item",
-                                    item=_head(entry), reason=reason, **common))
-        elif name == PUBLICATION:
-            found.append(_entry(note, workflow, run, record, "publication", "workflow",
-                                "pending" if answer is None else "operator",
-                                "pending" if answer is None else "approve-publication", "bundle", **common))
+            parsed = frontmatter.parse(answer)
+            items = parsed.data.get("items") if parsed.ok else None
+            if not isinstance(items, list) or not all(isinstance(item, dict) for item in items):
+                # The workflow refuses such an answer and waits; the record still shows it was given.
+                found.append(_entry(note, workflow, run, record, cls, proposer, "operator", "invalid", "bundle",
+                                    **common))
+                continue
+            for item in items:
+                state = str(item.get("state"))
+                found.append(_entry(note, workflow, run, record, cls, proposer,
+                                    "pending" if state == "pending" else str(item.get("decided-by")), state,
+                                    "bundle" if cls == "publication" else "item", item=_head(item.get("proposal")),
+                                    reason=item.get("reason"),
+                                    key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
         else:                               # a stop of an earlier workflow version, such as plan.yaml
             found.append(_entry(note, workflow, run, record, name, "workflow",
                                 "pending" if answer is None else "operator",

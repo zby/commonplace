@@ -43,9 +43,9 @@ draws is a claim question, and the decision is per term, not per occurrence.
    first occurrence, with enough of its sentence to occur once in the text,
    as its `quote`; the decision as its `change`; and the reason, naming the
    deciding occurrence. Report a term you keep unchanged. The operator
-   strikes proposals, each with a reason.
-5. Run again with the operator's `answers` input, apply only the entries
-   that carry no `struck:` line, each throughout the text.
+   decides each proposal; a rejection carries a reason.
+5. Run again with the operator's `answers` input, apply only the items
+   whose `state` is `approved`, each throughout the text.
 
 ## Report
 

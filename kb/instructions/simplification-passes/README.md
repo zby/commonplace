@@ -7,8 +7,9 @@ plain-wording and abstractions retain their selection-approval stops. Each pass 
 what the pass exists to make true, what it must preserve, and what it returns.
 Workers follow [execute a revision pass](./execute-a-revision-pass.md).
 The planning procedure is [revise an article or note](./revise-an-article-or-note.md);
-a stopped strike list is resolved in a session with
-[resolve a strike list](../decide-items.md).
+a stop on a per-item pass's answers file is resolved in a session with
+[decide items](../decide-items.md), and the stop for publication with
+[approve a text](../approve-a-text.md).
 
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. For a full automated review pass,
@@ -30,7 +31,8 @@ Each pass declares `effort: simple` or `effort: judgment` in its frontmatter.
 Simple passes run in a fresh worker on a cheaper model or lower effort;
 judgment passes run on the stronger profile. Each edit operation declares
 `decision`: `none` when it applies its changes, `per-item` when it first
-returns proposals for the operator to strike. The passes in the depth order
+returns proposals for the operator to decide in an
+[answers](../../types/answers.md) file. The passes in the depth order
 of the orchestrating procedure also declare `depth` (1 runs first); a pass
 without `depth` may run at any point.
 
@@ -74,10 +76,11 @@ an explicit scope for a bounded trial. An empty `defend` list does not license
 changing claims.
 
 Inspect the returned report, `artifact/final.md` and `artifact/final.diff`.
-The original remains unchanged until the operator approves the exact
-`artifact/publication.json` with the report's `approve-command`. Repeat the
+The original remains unchanged until the operator approves the candidate in
+`artifact/publication-answers.md`, whose one item names the candidate's hash,
+and the file is approved with the report's `approve-command`. Repeat the
 reported command to publish from captured inputs. Repeating alone never
-approves. Candidate and manifest files are outputs, not editable inputs.
+approves. Candidate files are outputs, not editable inputs.
 Use `--plan` for a changed commission. No-change runs need no publication
 approval. Wording-selection passes stop earlier for their own approvals.
 

@@ -428,8 +428,8 @@ continues that trial; it is not another observation. Fixture overrides are rejec
 over one note as a workflow: the method asks in parallel, a packet, and for
 an accepted `keep` an edit, a copyedit and the closing cycle. Workers write
 only output files. The command writes the note once, at the end, only when
-closing is `ready`, the exact final publication manifest is approved, and
-the original note and captured brief are unchanged. Before that approval,
+closing is `ready`, the operator's publication answers approve the exact
+candidate, and the original note and captured brief are unchanged. Before that approval,
 the candidate packet and results also remain unpublished. No-edit dispositions
 may publish their report, packet and results automatically. The note's
 current packet
@@ -449,9 +449,11 @@ candidate text in the run's observation under `artifact/edits/`; the JSON
 report names both. `--text PATH` supplies a repository file as the start text
 in place of the note's file. `--input ROLE=PATH` supplies a file the operation
 reads under that role, such as `findings` or `diff`. A `per-item` operation
-first returns `proposed`; run it again with `--input answers=PATH`, where PATH
-holds the proposals as listed by the revise workflow with an indented
-`struck: <reason>` line under each struck entry, and it returns `changed`. The
+first returns `proposed`. Create the pending answers file with `answers
+create`, record the operator's decision on each item, and run the operation
+again with `--input answers=PATH`: it applies the `approved` items and
+returns `changed`. The answers must pass the validator, and their question
+must be a result of the same operation on the same text. The
 profile defaults to the `effort` mapping for the operation's `effort`. It exits
 0 for an accepted `changed`, `unchanged` or `proposed` result with a clean
 guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
@@ -473,14 +475,14 @@ profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
 writes the artifact once, after every pass ended `applied`, `no-change` or
-`skipped` and exact final publication approval is captured. Each pass runs
-through the `run edit` route. A `per-item` pass (plain-wording, abstractions)
-stops with its proposals as
-`artifact/<pass>-list-<key>.md` for the operator to mark each struck entry
-with an indented `struck: <reason>` line; the reason is required, and a
-deleted, edited or added entry stops the run again. A stop for the operator exits 0 with `waiting-for` in the JSON
-report: what to do, the file, proposal key, approval command and command to
-repeat. These selection stops remain explicit per-proposal approvals;
+`skipped` and the operator's publication answers approve the exact
+candidate. Each pass runs through the `run edit` route. A `per-item` pass
+(plain-wording, abstractions) stops with the pending answers file for its
+proposals as `artifact/<pass>-answers-<key>.md`; the operator decides each
+item, and answers the validator refuses stop the run again. A stop for the
+operator exits 0 with `waiting-for` in the JSON report: what to do, the
+file, proposal key, approval command and command to repeat. These stops
+remain explicit per-proposal decisions;
 the [revision instruction](../instructions/simplification-passes/revise-an-article-or-note.md)
 governs their temporary procedure-development role and the evidence needed
 before separately authorizing removal. `--plan FILE` supplies an explicit
@@ -491,23 +493,32 @@ is not an override.
 
 `approve RUN FILE --key KEY` captures the proposal file's current text as
 its answer, under the run lock, without launching workers. Use the
-`waiting-for` report's `approve-command`. Selection lists may be edited;
-a final publication manifest must remain exactly as generated. Only the
-operator, or an agent on the operator's stated word for that proposal, may
-approve. Repeating a workflow never approves.
-Selection-list edits require approval again; the report lists
+`waiting-for` report's `approve-command`. Each stop's file is an
+[answers](../types/answers.md) file: record the operator's decisions in it
+first. Only the operator, or an agent on the operator's stated word for that
+proposal, may approve. Repeating a workflow never approves.
+Answers edited after approval require approval again; the report lists
 each such file under `unapproved-edits`. Changed proposal
 inputs require fresh approval; an old key cannot approve a replacement
 proposal at the same path.
 
+`answers create --from QUESTION [--to PATH]` writes the pending answers file
+for a question and launches nothing. A question is an edit result with
+outcome `proposed`, whose items are its proposals, or any other file, a text
+to approve, with one item naming its hash. The default PATH is
+`<question stem>-answers.md` beside the question; an existing file is never
+replaced. The command writes every hash, so nobody writes one by hand.
+`commonplace-validate PATH` checks a completed file against its question.
+
 Both editing workflows retain `artifact/final.md` and `artifact/final.diff`
-for inspection and require approval of the exact generated
-`artifact/publication.json` before publishing changed text. Approve that
-manifest, then repeat; approval must match it exactly. Do not edit the
-manifest or candidate to revise the text. Supply `--plan` for revision,
-change workflow inputs, or start a new run. The original artifact and
-captured brief must still be unchanged before the write. Instructions own
-judgment; prompts name inputs only.
+for inspection and stop on `artifact/publication-answers.md`, an answers file
+whose one item names the candidate's hash. Record the operator's decision,
+approve the file, then repeat; publication needs answers that pass the
+validator and approve that exact candidate. Do not edit the candidate to
+revise the text. Supply `--plan` for revision, change workflow inputs, or
+start a new run. The original artifact and captured brief must still be
+unchanged before the write. Instructions own judgment; prompts name inputs
+only.
 
 Both workflows derive their run directory from the inputs:
 `kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<first 12
@@ -528,9 +539,10 @@ records in revise and full-pass run directories, the full-pass packets and
 the fix reports under `kb/reports/state/fixes/`, and writes no state. Each
 entry says who proposed and who decided (`operator`, `agent`,
 `version-guard`, or `pending` for an unanswered stop), the action class
-(the pass name of a strike list, `publication`, `packet` or `fix-report`),
-and whether the decision covered one `item` or a `bundle`. An answered
-strike list gives one entry per proposed entry, with the strike reason; a
+(the pass name of a per-item stop, `publication`, `packet` or `fix-report`),
+and whether the decision covered one `item` or a `bundle`. An approved
+answers file gives one entry per item, with its state (`approved`,
+`rejected`, `deferred` or `pending`) and the operator's reason; a
 publication approval is one bundle entry for the final text, not one per
 edit. A packet gives its disposition as an agent entry and, once resolved,
 its resolution. A fix report is listed once, by path, since its format is

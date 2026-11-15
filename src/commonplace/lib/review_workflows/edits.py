@@ -27,7 +27,7 @@ from pathlib import Path
 
 from commonplace.headless import operator
 from commonplace.headless.jobs import Run, digest
-from commonplace.lib import frontmatter
+from commonplace.lib import answers, frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
 from commonplace.lib.note_parser import blank_fenced_code_blocks, find_markdown_links
@@ -36,6 +36,8 @@ from commonplace.lib.quote_verification import parse_prose_citations
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.validation import ValidationRun
 
+PUBLICATION = "publication-answers.md"
+"""The stop file of a publication: the operator's answers over the candidate `final.md`."""
 PRESERVED = ("title", "type", "brief")
 """Frontmatter fields no edit may change."""
 NO_WRITES = ("Write nothing else: create, edit or delete no file in the repository, and run no "
@@ -93,6 +95,19 @@ def validation_fails(root: Path, note: str, text: str) -> set[str]:
     """The deterministic validator's failures for `text` as the file at `note`, without writing it."""
     path = (root / note).resolve()
     return set(ValidationRun(repo_root=root, paths=(path,), content_overrides={path: text}).validate(path).fails)
+
+
+def answered(root: Path, path: Path, text: str) -> tuple[dict, list[str]]:
+    """The frontmatter of the answers file `text` at `path`, and what the validator refuses in it.
+
+    The validator compares the answers with the question they name on disk
+    (`types/answers.md`); `text` stands in for the file at `path`.
+    """
+    parsed = frontmatter.parse(text)
+    if not parsed.ok or parsed.data.get("type") != answers.TYPE:
+        return {}, [f"{path.name} is not an answers file; it must declare type: {answers.TYPE}"]
+    report = ValidationRun(repo_root=root, paths=(path,), content_overrides={path.resolve(): text}).validate(path)
+    return parsed.data, list(report.fails)
 
 
 def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> list[str]:
@@ -188,14 +203,20 @@ def apply(root: Path, note: str, start: str, final: str, proposed: Path) -> None
 
 def publication(run: Run, root: Path, note: str, start: str, final: str, *,
                 inputs: dict, command: str) -> dict | None:
-    """Require approval of the exact checked candidate, never of an editable replacement.
+    """Require the operator's approval of the exact checked candidate, never of an editable replacement.
 
-    Callers supply the decision context and recheck the brief before applying.
-    This gate publishes no checkout artifact. Candidate and diff are derived
-    from checked workflow outputs again on repeat, not read as new edit inputs.
+    The question is the candidate `final.md`; the stop's file is a pending
+    answers file over it (`types/answers.md`), whose one item names the
+    candidate's hash. Publication may proceed only when the recorded answers
+    pass the validator and approve that item. The proposal key binds the
+    start text, the candidate and the caller's decision context, so a change
+    in any of them withdraws the approval. Callers recheck the brief and the
+    note's start text before applying. This gate publishes no checkout
+    artifact. Candidate and diff are derived from checked workflow outputs
+    again on repeat, not read as new edit inputs.
     """
     root = root.resolve()
-    name = "publication.json"
+    name = PUBLICATION
     existed = (run.artifact / name).is_file()
     diff_lines = difflib.unified_diff(start.splitlines(keepends=True), final.splitlines(keepends=True),
                                      fromfile=note, tofile=f"{note} (candidate)")
@@ -210,25 +231,32 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
         changed |= (path.read_text(encoding="utf-8") != expected if path.is_file() else existed)
     candidate = run.accept("final.md", final)
     unchanged(root, note, start, candidate)
-    diff_path = run.accept("final.diff", diff)
-    proposal = json.dumps({"artifact": note, "start-sha256": sha256(start), "final-sha256": sha256(final),
-                           "context-sha256": digest(json.dumps(inputs, sort_keys=True)),
-                           "candidate": candidate.relative_to(root).as_posix(),
-                           "diff": diff_path.relative_to(root).as_posix()}, indent=2) + "\n"
-    approved = operator.answer(run, name, proposal, key=digest(proposal))
-    instruction = ("Inspect final.md and final.diff beside this publication manifest. Approve the unchanged "
-                   "manifest to authorize publication, then repeat. To revise the candidate, change the "
+    run.accept("final.diff", diff)
+    proposal = answers.pending(candidate.relative_to(root).as_posix(), final.encode("utf-8"))
+    key = digest(json.dumps({"artifact": note, "start-sha256": sha256(start), "final-sha256": sha256(final),
+                             "context-sha256": digest(json.dumps(inputs, sort_keys=True))}, sort_keys=True))
+    approved = operator.answer(run, name, proposal, key=key)
+    instruction = (f"Inspect final.md and final.diff. Record the operator's decision on the one item of {name}: "
+                   "`approved`, or `rejected` or `deferred` with the operator's reason, with `decided-by: operator` "
+                   "and `decided-at`. Approve that file, then repeat. To revise the candidate, change the "
                    "workflow inputs or supply --plan for revision; editing final.md is not a workflow input.")
-    if changed or (run.artifact / name).read_text(encoding="utf-8") != proposal or (
-            approved is not None and approved != proposal):
+    if changed:
         operator.invalidate(run, name)
         run.accept(name, proposal)
         return operator.waiting(run, root, name,
-                                "The publication files changed; the generated candidate, diff and manifest "
-                                "have been restored and any approval withdrawn. Inspect and approve again. "
+                                "The publication files changed; the generated candidate, diff and pending answers "
+                                "have been restored and any approval withdrawn. Inspect and answer again. "
                                 "No artifact was written. " + instruction, command)
     if approved is None:
         return operator.waiting(run, root, name, instruction, command)
+    data, problems = answered(root, run.artifact / name, approved)
+    if not problems and data["items"][0]["state"] != "approved":
+        item = data["items"][0]
+        problems = [f"the operator's answer is `{item['state']}`"
+                    + (f": {item['reason']}" if item.get("reason") else "")]
+    if problems:
+        return operator.waiting(run, root, name, "The approved answers do not authorize publication: "
+                                + "; ".join(problems) + ". No artifact was written. " + instruction, command)
     return None
 
 

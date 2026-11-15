@@ -12,7 +12,7 @@ Replace wording that costs the reader effort without carrying meaning: figures
 that display the writer, unusual words where a common word says the same
 thing, and exclusions that deny what the sentence has already ruled out.
 
-Effort: simple. Listing and marking against a recorded threshold; the operator strikes.
+Effort: simple. Listing and marking against a recorded threshold; the operator decides each proposal.
 
 ## Steps
 
@@ -59,19 +59,19 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
 5. Return each candidate you would replace as one proposal: the passage as
    its `quote`, the replacement as its `change`, and the reason in a few
    words. Name each candidate you keep in the report, with the reason. The
-   operator strikes proposals, each with a reason.
+   operator decides each proposal; a rejection carries a reason.
 6. When the literal phrase needs a referent the figure did not name (who is
    charged, what is at fault), do not choose one. Report the phrase as a
    question with the candidate referents.
-7. Run again with the operator's `answers` input, apply only the entries
-   that carry no `struck:` line, each as proposed.
+7. Run again with the operator's `answers` input, apply only the items
+   whose `state` is `approved`, each as proposed.
 
 ## Report
 
 On the proposing run: the kept candidates with their reasons, and the
 questions of step 6. On the applying run: the applied replacements, one line
-each, then the struck entries with the operator's reasons. The strikes and
-reasons are the threshold for the next run.
+each, then the rejected and deferred items with the operator's reasons. The
+rejections and their reasons are the threshold for the next run.
 
 ## Preserve
 

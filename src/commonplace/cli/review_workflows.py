@@ -11,6 +11,7 @@
     commonplace-review run edit --fixture PATH
     commonplace-review run revise ARTIFACT [--plan FILE | --assess] [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
+    commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
@@ -60,8 +61,8 @@ the proposed text stays in the run directory.
 `run full-pass` runs the full improvement pass over one note (see
 `commonplace.lib.review_workflows.full_pass` and the library's
 instructions/run-full-improvement-pass-on-note.md). It writes the note only
-for an accepted `keep` whose closing is `ready` and whose final publication
-manifest has explicit approval, writes the gate result files
+for an accepted `keep` whose closing is `ready` and whose publication answers
+approve the candidate, writes the gate result files
 once at its end for the text the note then holds, keeps the note's current
 packet under kb/reports/state/review/packets/, and returns a pending packet
 that still matches the note instead of starting. `--direction` hands the
@@ -78,8 +79,11 @@ writes nothing to the checkout (see `commonplace.lib.review_workflows.edit_opera
 Its typed edit result and candidate stay in the run's observation under
 artifact/edits/. `--text` edits a repository file's text in place of the
 note's; `--input ROLE=PATH` supplies a file the operation reads under ROLE. A
-`per-item` operation returns `proposed`; given `--input answers=PATH`, the
-answered strike list, it applies the unstruck entries and returns `changed`.
+`per-item` operation returns `proposed`. `answers create --from RESULT`
+writes the pending answers file (types/answers.md) for that result; after
+the operator decides its items, `--input answers=PATH` applies the
+`approved` items and returns `changed`. The validator must accept the answers,
+and their question must be a result of the same operation on the same text.
 It exits 0 for an accepted result other than `problem` with a clean guard,
 1 otherwise, and 2 when the command failed.
 
@@ -96,9 +100,9 @@ does not change workflow inputs. Changed artifact text starts a new run and
 requires the mode again; runs recorded without a mode also require an explicit
 choice before continuing. `run gates NOTE --criteria GATE-ID --grouping pair`
 is the report-only, single-criterion baseline; `run full-pass` includes planning.
-A `per-item` pass (plain-wording, abstractions) stops with its proposals in
-`artifact/<pass>-list-<key>.md`: mark each entry you strike with an indented
-`struck: <reason>` line, approve, then repeat. A stop for the operator is a normal end. The JSON report's
+A `per-item` pass (plain-wording, abstractions) stops with the pending answers
+file for its proposals in `artifact/<pass>-answers-<key>.md`: record the
+operator's decision on each item, approve, then repeat. A stop for the operator is a normal end. The JSON report's
 `waiting-for` gives what to do, the file, proposal key, approval command and
 command to repeat. A repeat never approves and launches nothing at an
 unchanged unapproved stop. Approval captures the file's text: later edits
@@ -110,10 +114,11 @@ on the operator's stated word for that proposal, may approve. The
 artifact is written once, only after every pass ended `applied`, `no-change` or
 `skipped` and final publication is approved. Otherwise `not-applied` explains
 why the candidate remains private. Both editing workflows retain `final.md`,
-`final.diff` and `publication.json` under the run's `artifact/`. Inspect the
-candidate and diff, approve the unchanged publication manifest, then repeat.
-The manifest binds the original, candidate and decision context; an edited
-manifest cannot authorize replacement text. Candidate files are outputs, not
+`final.diff` and `publication-answers.md` under the run's `artifact/`. Inspect
+the candidate and diff, record the operator's decision on the answers file's
+one item, which names the candidate's hash, approve the file, then repeat.
+The proposal key binds the original, candidate and decision context; answers
+over another text cannot authorize it. Candidate files are outputs, not
 editable workflow inputs. A no-change result needs no publication approval. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan is a command error (exit 2); the run exits 0
@@ -142,7 +147,7 @@ from pathlib import Path
 from commonplace.headless import operator
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss, run_lock
-from commonplace.lib import frontmatter
+from commonplace.lib import answers, frontmatter
 from commonplace.lib.review_workflows import (
     criteria,
     decisions,
@@ -252,6 +257,14 @@ def _parser() -> argparse.ArgumentParser:
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
     acknowledge.add_argument("run", type=Path)
     acknowledge.add_argument("launch")
+    answered = commands.add_parser("answers", help="create the pending answers file for a stop's question")
+    answer_commands = answered.add_subparsers(dest="answers_command", required=True)
+    create_answers = answer_commands.add_parser(
+        "create", help="write the answers file for a question, every item pending; launches nothing")
+    create_answers.add_argument("--from", dest="question", required=True,
+                                help="the question: an edit result with outcome proposed, or a text to approve")
+    create_answers.add_argument("--to", help="where to write it (default: <question stem>-answers.md beside "
+                                "the question); an existing file is never replaced")
     listed = commands.add_parser("decisions", help="list operator and agent decisions from run operator records, "
                                  "packets and fix reports; read-only, computes no statistic")
     listed.add_argument("--note", help="only this artifact path, such as kb/theory/foo.md")
@@ -517,6 +530,18 @@ def _packet(root: Path, arguments: argparse.Namespace) -> int:
     return 0 if checked["matching"] else 1
 
 
+def _answers(root: Path, arguments: argparse.Namespace) -> int:
+    question = observations.safe_path(root, arguments.question)
+    rel = question.relative_to(root).as_posix()
+    target = (observations.safe_path(root, arguments.to) if arguments.to
+              else question.with_name(f"{question.stem}-answers.md"))
+    if target.exists():
+        raise ValueError(f"answers file exists, not replaced: {target.relative_to(root).as_posix()}")
+    edits.write_text(target, answers.pending(rel, question.read_bytes()))
+    print(json.dumps({"answers": target.relative_to(root).as_posix(), "question": rel}, indent=2))
+    return 0
+
+
 def _decisions(root: Path, arguments: argparse.Namespace) -> int:
     found = [entry for entry in decisions.entries(root)
              if arguments.note in (None, entry["note"]) and arguments.cls in (None, entry["class"])]
@@ -594,6 +619,8 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
             return _packet(root, arguments)
         if arguments.command == "decisions":
             return _decisions(root, arguments)
+        if arguments.command == "answers":
+            return _answers(root, arguments)
         run_dir = _run_dir(root, arguments.run)
         if arguments.command == "approve":
             path = (root / arguments.file).resolve()

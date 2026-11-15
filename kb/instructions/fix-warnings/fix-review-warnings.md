@@ -25,7 +25,7 @@ fixes an auditable report format.
    current warn findings" and stop. Do not fix from a stale result: a `warn`
    or `fail` that `--fresh` drops needs re-review, not a fix.
 2. If `kb/reports/state/fixes/{note-stem}.fix-report.md` exists, read it. A
-   finding it records as rejected or deferred stays a fresh warning until the
+   finding it records as rejected, pending or deferred stays a fresh warning until the
    note or criterion changes; do not work it again unless its evidence changed.
 3. Read the target note in full.
 4. Read each row's result file. Its `### Findings` items (`- <severity>: <finding>`) are the findings; when it has none, use `### Summary`. The result file is the authoritative review text.
@@ -40,8 +40,8 @@ For each actionable finding returned in a note entry:
 3. **Decide** which disposition the evidence supports:
    - **Fixed** — the finding applies and can be resolved by changing framing or accuracy without changing the note's argument. Apply the smallest edit that resolves it.
    - **Rejected** — the finding is spurious, factually mistaken, or inapplicable to the passage. Leave the note unchanged and record the evidence or reasoning for rejection.
-   - **Deferred** — the finding may be valid, but resolving it would change the argument or requires a substantive human decision. Leave the note unchanged and record the exact claim, evidence, or source choice; the affected passage; the acceptable response choices; and why this pass cannot select among them.
-4. **Classify each applied fix** using a named strategy from the taxonomy. If no existing strategy fits, classify it as `new-pattern` and describe the pattern briefly. Use `—` for rejected or deferred findings because no fix strategy was applied.
+   - **Pending** — the finding may be valid, but resolving it would change the argument or requires a substantive human decision. Leave the note unchanged and record the exact claim, evidence, or source choice; the affected passage; the acceptable response choices; and why this pass cannot select among them. Put the choice to the operator when one is present. Record the item as **deferred** only on the operator's word, with the operator's reason and the condition under which it is taken up again. An agent never defers an item alone; without the operator's word it stays pending.
+4. **Classify each applied fix** using a named strategy from the taxonomy. If no existing strategy fits, classify it as `new-pattern` and describe the pattern briefly. Use `—` for rejected, pending or deferred findings because no fix strategy was applied.
 
 After all fixes:
 
@@ -78,7 +78,7 @@ Write the fix report to `kb/reports/state/fixes/{note-stem}.fix-report.md`.
 | 1 | Source residue | stale-paths | Updated `docs/sources/` → `kb/sources/` | fixed |
 | 2 | Confidence miscalibration | hedge-own-framework | Added "we propose" to taxonomy assertion | fixed |
 | 3 | Grounding | — | Source supports the existing scoped claim; warning overstates it | rejected |
-| 4 | Grounding | — | Claim vs source tension is substantive, not framing | deferred |
+| 4 | Grounding | — | Claim vs source tension is substantive, not framing | pending |
 
 ### Warning-to-fix mapping
 For each fix, quote or paraphrase the review warning that triggered it, so the fix can be audited against the original finding.
@@ -91,8 +91,8 @@ For each fix, quote or paraphrase the review warning that triggered it, so the f
 ### Rejected findings
 - **#3 (Grounding):** The cited passage explicitly supports the scoped claim; no note change is warranted.
 
-### Deferred items
-- **#4 (Grounding):** The affected passage uses source X for claim Y. Choose whether to narrow Y to Z or keep Y and replace the source; this pass lacks authority to select either response.
+### Pending and deferred items
+- **#4 (Grounding):** The affected passage uses source X for claim Y. Choose whether to narrow Y to Z or keep Y and replace the source; this pass lacks authority to select either response. Pending: the operator has not decided. (A deferred item adds the operator's reason and the condition for taking it up again.)
 
 ### New patterns
 - (none, or describe any fix that didn't fit an existing taxonomy strategy)

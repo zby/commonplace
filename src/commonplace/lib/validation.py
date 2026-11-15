@@ -14,7 +14,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 from jsonschema.exceptions import ValidationError
 
-from commonplace.lib import frontmatter
+from commonplace.lib import answers, frontmatter
 from commonplace.lib.directory_artifact import (
     MANIFEST_NAME,
     DirectoryArtifact,
@@ -1587,6 +1587,26 @@ def validate_review_result_evidence(results: CheckResults, parsed: ParsedNote, *
                     label = "absent" if matched.count == 0 else "ambiguous"
                     results.fails.append(f"finding {index}: {label} quote {quote!r}; "
                                          f"{matched.count} normalized matches in captured target")
+
+
+@type_rule(answers.TYPE)
+def validate_answers(results: CheckResults, parsed: ParsedNote, *, run: ValidationRun) -> None:
+    """Compare an answers file with the question it names: its hash and every item, once and unaltered."""
+    data = parsed.document.frontmatter or {}
+    name = data.get("question")
+    if not isinstance(name, str):
+        return  # The schema owns requiredness and field types.
+    rel = Path(name)
+    path = run.repo_root / rel
+    if rel.is_absolute() or ".." in rel.parts or not path.resolve().is_relative_to(run.repo_root.resolve()):
+        results.fails.append("question: path escapes the repository")
+        return
+    try:
+        content = run.read_bytes(path)
+    except OSError as error:
+        results.fails.append(f"question: cannot be read: {error}")
+        return
+    results.fails.extend(answers.problems(data, content))
 
 
 def validate_collection_contract_name(results: CheckResults, parsed: ParsedNote) -> None:

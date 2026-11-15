@@ -59,11 +59,13 @@ if "This operation asks before it edits" in frame:
     quotes = ["Nonexistent passage" if defect == "badquote" else "Alpha body", "Closing sentence"]
     result("proposed", proposals=[{"quote": quote, "change": quote.upper(), "reason": "plainer"} for quote in quotes])
 elif "The operator answered" in frame:
-    answers = inputs["answers"].read_text()
+    import yaml
+    answers = yaml.safe_load(inputs["answers"].read_text().split("---\n")[1])
     applied = text
-    for entry in re.findall(r"^- quote: (.*)\n  change: .*\n  reason: .*\n(  struck:)?", answers, re.MULTILINE):
-        if not entry[1] or defect == "applystruck":
-            applied = applied.replace(entry[0], entry[0].upper())
+    for item in answers["items"]:
+        if item["state"] == "approved" or defect == "applyother":
+            quote = item["proposal"]["quote"]
+            applied = applied.replace(quote, quote.upper())
     outputs["candidate"].write_text(applied)
     result("changed", changes=["applied the approved entries"])
 elif "UNCHANGED" in text:
@@ -94,7 +96,8 @@ NOTE = ("---\ndescription: A note about alpha that is long enough to describe wh
 NOTE_PATH = "kb/notes/alpha.md"
 NONE_OP = "instructions/simplification-passes/readability-and-flow.md"
 PER_ITEM_OP = "instructions/simplification-passes/plain-wording.md"
-LIBRARY = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", f"kb/{NONE_OP}", f"kb/{PER_ITEM_OP}",
+LIBRARY = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", "kb/types/answers.md",
+           "kb/types/answers.schema.yaml", f"kb/{NONE_OP}", f"kb/{PER_ITEM_OP}",
            f"kb/{edit_operations.EXECUTION_REL}")
 
 
@@ -207,14 +210,39 @@ def test_text_option_edits_a_saved_text_and_records_its_hash(repo, capsys):
 
 
 def test_reserved_roles_and_answers_for_a_none_operation_are_command_errors(repo, capsys):
-    (repo[0] / "kb/notes/answers.md").write_text("- quote: Alpha body\n  change: A\n  reason: r\n")
+    (repo[0] / "kb/notes/answers.md").write_text("---\ntype: types/answers.md\n---\n\n# Answers\n")
     code, error, launches = edit(repo, capsys, NONE_OP, NOTE_PATH, "--input", "text=kb/notes/beta.md")
     assert code == 2 and "reserved" in error and launches == []
     code, error, launches = edit(repo, capsys, NONE_OP, NOTE_PATH, "--input", "answers=kb/notes/answers.md")
     assert code == 2 and "only a per-item operation" in error and launches == []
 
 
-def test_per_item_operation_proposes_then_applies_only_approved_entries(repo, capsys):
+def propose(repo, capsys) -> tuple[dict, str]:
+    """Run the per-item operation's first run and create its pending answers; return the report and its path."""
+    code, proposed, _ = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH)
+    assert code == 0 and proposed["outcome"] == "proposed", proposed
+    assert main(["answers", "create", "--from", proposed["result"]]) == 0
+    created = json.loads(capsys.readouterr().out)
+    return proposed, created["answers"]
+
+
+def decide(repo, path: str, states: dict[str, dict]) -> str:
+    """Record the operator's decision on items of the answers file at `path`, as the decide-items stop does."""
+    file = repo[0] / path
+    head, body = file.read_text().split("---\n")[1:]
+    data = yaml.safe_load(head)
+    for item in data["items"]:
+        if item["id"] in states:
+            item.update(states[item["id"]])
+            if item["state"] != "pending":
+                item.setdefault("decided-by", "operator")
+                item.setdefault("decided-at", "2026-11-15T12:00:00Z")
+    text = "---\n" + yaml.safe_dump(data, sort_keys=False) + "---\n" + body
+    file.write_text(text)
+    return text
+
+
+def test_per_item_operation_proposes_then_applies_only_approved_items(repo, capsys):
     repo[3].write_text("badquote")
     code, proposed, launches = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH)
     assert code == 0 and proposed["outcome"] == "proposed" and len(launches) == 2, proposed
@@ -222,29 +250,61 @@ def test_per_item_operation_proposes_then_applies_only_approved_entries(repo, ca
     data = result(repo, proposed).data
     assert data["candidate"] is None and [p["quote"] for p in data["proposals"]] == ["Alpha body", "Closing sentence"]
     assert data["profile"]["launch-model"] == "small"                   # plain-wording is simple
-    listed = edit_operations.strike_list(data["proposals"])
-    assert yaml.safe_load(listed) == data["proposals"]
-    struck = "  change: CLOSING SENTENCE\n  reason: plainer\n"
-    answered = listed.replace(struck, struck + "  struck: keep the closing words\n")
-    (repo[0] / "kb/notes/answers.md").write_text(answered)
-    repo[3].write_text("applystruck")
-    code, applied, launches = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH, "--input", "answers=kb/notes/answers.md")
+    assert main(["answers", "create", "--from", proposed["result"]]) == 0
+    path = json.loads(capsys.readouterr().out)["answers"]
+    pending = frontmatter.parse((repo[0] / path).read_text()).data
+    assert pending["question"] == proposed["result"]
+    assert pending["question-sha256"] == observations.sha((repo[0] / proposed["result"]).read_bytes())
+    assert [(item["id"], item["proposal"], item["state"]) for item in pending["items"]] == [
+        ("1", data["proposals"][0], "pending"), ("2", data["proposals"][1], "pending")]
+    assert main(["answers", "create", "--from", proposed["result"]]) == 2
+    assert "not replaced" in capsys.readouterr().err
+    answered = decide(repo, path, {"1": {"state": "approved"},
+                                   "2": {"state": "rejected", "reason": "keep the closing words"}})
+    repo[3].write_text("applyother")
+    code, applied, launches = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH, "--input", f"answers={path}")
     assert code == 0 and applied["outcome"] == "changed" and len(launches) == 2, applied
-    assert any("struck entry `Closing sentence` was applied" in problem for problem in rejections(repo, applied))
+    assert any("the item `Closing sentence` is not approved but was applied" in problem
+               for problem in rejections(repo, applied))
     candidate = (repo[0] / result(repo, applied).data["candidate"]).read_text()
     assert "ALPHA BODY" in candidate and "Closing sentence." in candidate
     assert launches[-1]["inputs"]["answers"] == answered
 
 
-@pytest.mark.parametrize("answered, problem", [
-    ("- quote: Alpha body\n  change: A\n  reason: r\n  struck: no\n", "approves no entry"),
-    ("- quote: Absent passage\n  change: A\n  reason: r\n", "occurs 0 times"),
-    ("- quote: Alpha body\n  change: A\n  reason: r\n  struck:\n", "struck without a reason"),
+@pytest.mark.parametrize("states", [
+    {"2": {"state": "deferred", "reason": "the term may be registered", "revisit": "when the ledger decides"}},
+    {},
 ])
-def test_unusable_answers_stop_before_any_launch(repo, capsys, answered, problem):
-    (repo[0] / "kb/notes/answers.md").write_text(answered)
-    code, error, launches = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH, "--input", "answers=kb/notes/answers.md")
-    assert code == 2 and problem in error and launches == []
+def test_deferred_and_pending_items_are_not_applied(repo, capsys, states):
+    _, path = propose(repo, capsys)
+    decide(repo, path, {"1": {"state": "approved"}, **states})
+    code, applied, _ = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH, "--input", f"answers={path}")
+    assert code == 0 and applied["outcome"] == "changed", applied
+    candidate = (repo[0] / result(repo, applied).data["candidate"]).read_text()
+    assert "ALPHA BODY" in candidate and "Closing sentence." in candidate
+
+
+@pytest.mark.parametrize("change, problem", [
+    (lambda repo, path: decide(repo, path, {"1": {"state": "rejected", "reason": "no"}}), "no item is approved"),
+    (lambda repo, path: decide(repo, path, {"1": {"state": "rejected"}}), "reason"),
+    (lambda repo, path: set_note(repo, "Edited since."), "made from another text"),
+    (lambda repo, path: (repo[0] / path).write_text("- quote: Alpha body\n"), "not an answers file"),
+])
+def test_unusable_answers_stop_before_any_launch(repo, capsys, change, problem):
+    _, path = propose(repo, capsys)
+    decide(repo, path, {"1": {"state": "approved"}})
+    change(repo, path)
+    code, error, launches = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH, "--input", f"answers={path}")
+    assert code == 2 and problem in error and launches == [], error
+
+
+def test_answers_to_another_operation_are_refused(repo, capsys):
+    _, path = propose(repo, capsys)
+    decide(repo, path, {"1": {"state": "approved"}})
+    other = "instructions/simplification-passes/abstractions.md"
+    (repo[0] / "kb" / other).write_text((repo[0] / "kb" / PER_ITEM_OP).read_text())
+    code, error, launches = edit(repo, capsys, other, NOTE_PATH, "--input", f"answers={path}")
+    assert code == 2 and f"not of kb/{other}" in error and launches == [], error
 
 
 def test_edit_fixture_reruns_one_execution_and_show_validates_it(repo, capsys):

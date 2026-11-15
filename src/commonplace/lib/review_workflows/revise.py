@@ -11,7 +11,7 @@ write to the checkout.
 
 The run directory is `edits.run_dir()`, derived from the artifact's path and
 the hash of its text when the command runs. Assessment and settled edits
-run automatically. Strike selections and final publication propose a file
+run automatically. Per-item decisions and final publication propose a file
 through `headless.operator.answer()` and stop; the report's `waiting-for` names the
 file, the explicit approval command and the command to repeat. Repeating
 never approves: only the recorded approved text becomes the operator's answer:
@@ -38,18 +38,17 @@ never approves: only the recorded approved text becomes the operator's answer:
    whose result is `unchanged` is `no-change`. A worker-reported problem
    stops the run; a pass out of correction attempts is `problem`, and the run
    can collect the remaining pass outputs but applies none of them.
-3. **Strikes.** A pass whose `decision` is `per-item` has the operator strike
-   its proposals before any entry is applied: a proposing run, a stop with
-   the proposals listed (`edit_operations.strike_list()`) in
-   `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat the same
-   operation run again with the explicitly approved list as its `answers`
-   input. A struck
-   entry stays in the file under an indented `struck: <reason>` line; the
-   reason is required, and a deleted, edited or added entry blocks the pass
-   until the operator approves a corrected file. The reasons are the
-   evidence the selection stop's removal needs, and they bind publication
-   through the selection context. A list made again for other text has
-   another key, so it gets a new file and stops again.
+3. **Per-item decisions.** A pass whose `decision` is `per-item` has the
+   operator decide its proposals before any is applied: a proposing run whose
+   edit result is the question, a stop with the pending answers file
+   (`types/answers.md`, `answers.pending()`) in
+   `artifact/<pass>-answers-<answer key prefix>.md`, and on the repeat the
+   same operation run again with the explicitly approved answers file as its
+   `answers` input. Answers the validator refuses block the pass until the
+   operator approves a corrected file; answers that approve no item end the
+   pass as `no-change`. Only `approved` items are applied. The reasons bind
+   publication through the selection context. Proposals made again for other
+   text have another key, so they get a new file and stop again.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
    `defend` list carries that evidence explicitly (is non-empty), and is
@@ -58,15 +57,16 @@ never approves: only the recorded approved text becomes the operator's answer:
    skipped pass is reported as left for the interactive path.
 5. **Publication.** When every pass is `applied`, `no-change` or `skipped`,
    changed final text is materialized as `artifact/final.md`, with a diff
-   and publication manifest. Only explicit approval of that exact manifest
-   permits `edits.apply()` to write the checkout. Approval binds the start,
-   candidate and execution context; brief and live-text conflicts block the
-   write. No-change runs complete without approval. Problems and genuine
+   and a pending answers file `artifact/publication-answers.md` whose one
+   item names the candidate's hash (`edits.publication()`). Only approved
+   answers that approve that item permit `edits.apply()` to write the
+   checkout. Approval binds the start, candidate and execution context;
+   brief and live-text conflicts block the write. No-change runs complete without approval. Problems and genuine
    operator stops never write the artifact merely because the command repeats.
 
-Because the plan and the operator's list are inputs, an unedited repeat
+Because the plan and the operator's answers are inputs, an unedited repeat
 replays every answered call. A replacement supplied with `--plan` re-asks
-only passes whose inputs changed. Strike-list edits after approval are
+only passes whose inputs changed. Answers edited after approval are
 reported as unapproved and never silently used.
 """
 
@@ -87,11 +87,16 @@ from commonplace.headless.jobs import (
     input_ref,
     output_ref,
 )
-from commonplace.lib import frontmatter
+from commonplace.lib import answers, frontmatter
 from commonplace.lib.library import artifact_identity, library_root
 from commonplace.lib.naming import write_brief_name_for
-from commonplace.lib.review_workflows import edit_operations, gates, result_contract
-from commonplace.lib.review_workflows.edit_operations import EFFORTS, STRUCK, items
+from commonplace.lib.review_workflows import (
+    edit_operations,
+    edits,
+    gates,
+    result_contract,
+)
+from commonplace.lib.review_workflows.edit_operations import EFFORTS
 from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
     Conflict,
@@ -117,9 +122,11 @@ ASSESSMENT, PLAN, START = "assessment.md", "plan.yaml", "start.md"
 REPEAT = "commonplace-review run revise {artifact}"
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
-STRIKE_HOW = ("Strike entries of the {name} list: under each entry you strike, add an indented line "
-              "`struck: <your reason>`; delete nothing, change no entry, and leave the entries you approve as they are. "
-              f"In a session, follow {PASSES_DIR}/resolve-a-strike-list.md.")
+DECIDE_HOW = ("Record the operator's decision on each item of the {name} answers file: set `state` to `approved`, "
+              "`rejected` with a `reason`, or `deferred` with a `reason` and a `revisit` condition, and add "
+              "`decided-by: operator` and `decided-at` to each decided item; change no `id` or `proposal`. "
+              "Only approved items are applied. In a session, follow instructions/decide-items.md. Then approve "
+              "the file and repeat.")
 
 
 @dataclass(frozen=True)
@@ -156,7 +163,7 @@ def catalog(known: dict[str, Pass]) -> str:
             return " This workflow does not run it: it is left for the interactive path."
         if current.name == CONVERSATION:
             return " This workflow runs it only when `defend` is not empty."
-        return " The operator strikes its list before any entry is applied." if current.decision == "per-item" else ""
+        return " The operator decides its proposals before any is applied." if current.decision == "per-item" else ""
     lines = [f"- `{p.name}` (effort: {p.effort}; depth: {'any' if p.depth is None else p.depth}): "
              f"{p.description.rstrip('.')}.{note(p)}" for p in known.values()]
     return ("Passes, by name. Run passes with a depth in increasing depth; a pass with depth `any` "
@@ -287,35 +294,6 @@ naming that part; `stop` is null, or the reason when the instruction says to \
 report a rewrite and stop. {no_writes}
 """
 
-def strikes(proposed: str, approved: str) -> tuple[list[str], list[dict], list[str]]:
-    """Split the operator's answer into kept entries, struck entries with reasons, and what blocks it.
-
-    The answer is a strike of the proposed list: every proposed entry is
-    present, unchanged, either as it was or with an indented `struck: <reason>`
-    line under it. Deleting, editing or adding an entry blocks the pass, as
-    does a strike without a reason. Entries are returned as their text.
-    """
-    remaining = ["\n".join(item) for item in items(proposed)]
-    kept, struck, problems = [], [], []
-    for item in items(approved):
-        marks = [STRUCK.match(line) for line in item]
-        entry = "\n".join(line for line, mark in zip(item, marks) if mark is None)
-        head = item[0][:60]
-        if entry not in remaining:
-            problems.append(f"not in the proposed list as proposed: `{head}`")
-            continue
-        remaining.remove(entry)
-        reasons = [mark.group(1) for mark in marks if mark is not None]
-        if not reasons:
-            kept.append(entry)
-        elif not reasons[0]:
-            problems.append(f"struck without a reason: `{head}`")
-        else:
-            struck.append({"entry": entry, "reason": reasons[0]})
-    problems.extend(f"deleted instead of struck: `{item.splitlines()[0][:60]}`" for item in remaining)
-    return kept, struck, problems
-
-
 # --- The workflow ------------------------------------------------------------------------------
 
 def _rel(root: Path, path: Path) -> str:
@@ -353,50 +331,49 @@ def _assess(run: Run, prompt: str, inputs: dict[str, str], known: dict[str, Pass
     return answer
 
 
-def _strike(run: Run, root: Path, artifact: str, text: str, operation: edit_operations.Operation,
+def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_operations.Operation,
             roles: dict[str, dict], profile: Profile, state: PassState, report: ReviseReport, context: dict,
             **route) -> edit_operations.Edit | None:
     """The applying run of a `per-item` pass; None when it stops for the operator or has nothing to apply.
 
-    The first run returns the proposals, rendered as the list the operator
-    strikes. The second run is the same operation with the answered list as
-    its `answers` input.
+    The first run returns the proposals: the question of the stop, whose
+    pending answers file the operator decides. The second run is the same
+    operation with the approved answers file as its `answers` input.
     """
     name = state.name
-    listed = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{name}/list", profile=profile,
-                                 **route)
-    if listed.outcome == "problem":
-        return listed
-    selection = {"pass": name, "key": listed.answer.key, "proposed": None, "approved": None}
+    proposed = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{name}/propose",
+                                   profile=profile, **route)
+    if proposed.outcome == "problem":
+        return proposed
+    selection = {"pass": name, "key": proposed.answer.key, "question": None, "answers": None}
     context["selections"].append(selection)
-    if listed.outcome == "unchanged":
+    if proposed.outcome == "unchanged":
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
-    proposed = selection["proposed"] = edit_operations.strike_list(listed.data["proposals"])
-    file = f"{name}-list-{listed.answer.key[:12]}.md"      # a list made for another text waits again
-    approved = operator.answer(run, file, proposed, key=listed.answer.key)
-    selection["approved"] = approved
+    selection["question"] = proposed.text
+    pending = answers.pending(_rel(root, proposed.path), proposed.text.encode("utf-8"))
+    file = f"{name}-answers-{proposed.answer.key[:12]}.md"      # answers for another text wait again
+    approved = operator.answer(run, file, pending, key=proposed.answer.key)
+    selection["answers"] = approved
     if approved is None:
         state.state = "waiting"
-        report.waiting_for = operator.waiting(run, root, file, STRIKE_HOW.format(name=name),
+        report.waiting_for = operator.waiting(run, root, file, DECIDE_HOW.format(name=name),
                                               REPEAT.format(artifact=artifact))
         return None
     if operator.edited(run, file):
         report.unapproved_edits.append(operator.waiting(run, root, file, UNAPPROVED, REPEAT.format(artifact=artifact)))
-    kept, struck, problems = strikes(proposed, approved)
-    selection["struck"] = struck
+    data, problems = edits.answered(root, run.artifact / file, approved)
     if problems:
         state.state = "waiting"
-        state.reason = "the approved list is not a strike of the proposed list: " + "; ".join(problems)
+        state.reason = "the approved answers are not valid: " + "; ".join(problems)
         report.waiting_for = operator.waiting(
-            run, root, file, f"{state.reason}. {STRIKE_HOW.format(name=name)} Then approve the file again.",
-            REPEAT.format(artifact=artifact))
+            run, root, file, f"{state.reason}. {DECIDE_HOW.format(name=name)}", REPEAT.format(artifact=artifact))
         return None
-    if not kept:
-        state.state, state.reason = "no-change", "the operator struck every entry"
+    if not any(item["state"] == "approved" for item in data["items"]):
+        state.state, state.reason = "no-change", "the operator approved no item"
         return None
-    answers = {"origin": _rel(root, run.artifact / file), "text": approved}
-    return edit_operations.ask(run, root, operation, artifact, text, {**roles, edit_operations.ANSWERS: answers},
+    given = {"origin": _rel(root, run.artifact / file), "text": approved}
+    return edit_operations.ask(run, root, operation, artifact, text, {**roles, edit_operations.ANSWERS: given},
                                job=f"{name}/apply", profile=profile, **route)
 
 
@@ -424,7 +401,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         profile = profiles[current.effort]
         try:
             if operation.decision == "per-item":
-                edit = _strike(run, root, artifact, text, operation, roles, profile, state, report, context, **route)
+                edit = _decide(run, root, artifact, text, operation, roles, profile, state, report, context, **route)
                 if edit is None:
                     if state.state == "waiting":
                         return text
