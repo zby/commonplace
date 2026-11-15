@@ -29,8 +29,8 @@ the decision. Exact arguments are in `commonplace-review --help` and
 ## Concepts
 
 **Criterion.** The markdown file a note is judged against. It may be a
-catalog gate, the note's type spec, its collection's `COLLECTION.md` or the
-critique instruction. A criterion is named by its artifact identity: a
+catalog gate, a compression check, the note's type spec, its collection's
+`COLLECTION.md` or the critique instruction. A criterion is named by its artifact identity: a
 repository path, or `commonplace:<path>` for a library file outside the
 repository, as the gates are in an installed project.
 
@@ -72,6 +72,25 @@ only against a convention its own document adds
 report criterion: the worker writes an open-ended report, and the outcome is
 `report`. Critique is opt-in; `--all-gates` and the default status set leave
 it out.
+
+**Compression check.** One of the four checks in the library's
+`instructions/compression-bundle/`: `compression/core-claim-obscured`,
+`compression/branch-bloat`, `compression/detail-overhang` and
+`compression/marginal-value-redundancy`. Each is a verdict criterion,
+requested by its own id; a bare `compression` request is refused. A check
+reports PASS, INFO or WARN: INFO is a `pass` outcome with `info` findings, and
+no check uses `fail`. Each check is one launch even under `--grouping bundle`.
+The checks are opt-in like critique. The
+[compression bundle](../instructions/run-compression-bundle-on-note.md) and
+the full pass still run all four in one report of their own; that report is
+not a result file.
+
+**Operations outside this command.** Compression synthesis, composition
+friction, premise decomposition and connect keep their own routes. The first
+three are report forms. The review-result schema's report branch requires
+critique's `attack-outcome` and critique's sections, so admitting them needs a
+review-result type change. Connect writes a connect report, and its candidates
+depend on the whole corpus.
 
 **Outcome.** Reviews use [review-result](../types/review-result.md).
 Workers supply `type`, `findings`, `outcome` and the body; critique also
@@ -169,15 +188,15 @@ commonplace-review run gates kb/theory/example.md --criteria prose semantic/grou
 commonplace-review run gates kb/theory/ --all-gates --grouping bundle --profile sonnet
 ```
 
-`--criteria` takes gate ids, bundle names and the lenses; `--all-gates` means
-every bundle plus `type` and `collection`. The sweep skips pairs with a fresh
+`--criteria` takes gate ids, bundle names, compression check ids and the
+lenses; `--all-gates` means every bundle plus `type` and `collection`. The sweep skips pairs with a fresh
 result unless `--force` is given, and asks a worker for each other pair:
 
 - `--grouping pair` (the default) makes one call per pair;
 - `--grouping bundle` makes one call per note and bundle for that bundle's
   stale gates. Each gate is judged on its own and gets its own result. A
-  bundle with one stale gate, and every type, collection and critique pair,
-  is still one call per pair.
+  bundle with one stale gate, and every type, collection, compression and
+  critique pair, is still one call per pair.
 
 A call has three attempts; a rejected review and a launch that returned no
 answer each spend one. A worker that cannot judge writes a problem instead
@@ -300,7 +319,9 @@ Evaluate one operation before composing it with planning or other operations:
 
 - **One review:** `commonplace-review run gates NOTE --criteria GATE-ID --grouping pair`.
   Supply one gate id, not a bundle. The result is report-only; even a failure
-  does not select more work or edit the note. Fresh pairs are skipped.
+  does not select more work or edit the note. Fresh pairs are skipped. One
+  compression check runs the same way, for example with
+  `--criteria compression/detail-overhang`.
 - **One editing pass:** `commonplace-review run revise ARTIFACT --plan FILE`.
   The supplied YAML plan fixes purpose, protected claims, pass and scope. No
   assessment request is constructed. Editors receive execution instructions,

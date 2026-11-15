@@ -4,9 +4,10 @@
 (note, criterion) pairs through `criteria.select`: catalog gate ids and
 bundle names filtered by the gate's `requires_type` and `requires_trait`, the
 virtual `type` and `collection` lenses resolved from the note's frontmatter
-and location, and the `critique` assay. Omitted requests mean all gates:
-every bundle plus `type` and `collection`; critique stays opt-in. Each pair's
-result contract follows from its criterion: a report for the critique
+and location, the compression checks requested one id at a time, and the
+`critique` assay. Omitted requests mean all gates: every bundle plus `type`
+and `collection`; the compression checks and critique stay opt-in. Each
+pair's result contract follows from its criterion: a report for the critique
 instruction, a verdict otherwise. A criterion may be a library file outside
 the repository, as the gates are in an installed project; its text is read
 through the library.
@@ -22,8 +23,8 @@ file. It forms the calls in one of two groupings:
   `<note>::<bundle>/*`, with input `note`, one input `gate-<name>` and one
   output `review-<name>` per asked gate of that bundle. A launch's fixed
   context dominates its cost, so this shares it across the bundle. A bundle
-  with one asked gate, and every type, collection and critique pair, is a
-  pair call.
+  with one asked gate, and every type, collection, compression and critique
+  pair, is a pair call.
 
 Each review is checked by the strict outcome parser, so a malformed review is
 a rejected attempt whose problem goes into the next prompt (in a bundle call,
@@ -118,7 +119,7 @@ class Pair:
 
     @property
     def bundle(self) -> str | None:
-        """The catalog bundle of a gate pair; None for the type, collection and critique lenses."""
+        """The catalog bundle of a gate pair; None for every other kind."""
         return self.criterion_id.split("/", 1)[0] if self.kind == "gate" else None
 
 
@@ -323,6 +324,12 @@ COLLECTION_WRAPPER = (
 )
 """Mechanical only: how to apply a collection contract as a gate; its criteria belong in the contract."""
 
+COMPRESSION_WRAPPER = (
+    "This is one compression check. It reports PASS, INFO or WARN and has no FAIL.",
+    "Write PASS as outcome: pass; INFO as outcome: pass with info findings; WARN as outcome: warn.",
+)
+"""Mechanical only: how a compression check's PASS/INFO/WARN maps onto the verdict contract."""
+
 VERDICT_OUTPUT = """\
 - Write YAML frontmatter with type: types/review-result.md, findings, then outcome: pass | warn | fail.
 - Each finding has scope: passage | document, quotes (verbatim target spans that occur once, empty for document scope;
@@ -345,7 +352,8 @@ def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
     first = call.pairs[0]
     reading = READING.format(note_dir=Path(first.note).parent.as_posix())
     if len(call.pairs) == 1:
-        wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER}.get(first.kind, ())
+        wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER,
+                   criteria.COMPRESSION: COMPRESSION_WRAPPER}.get(first.kind, ())
         text = PROMPT.format(
             problem=PROBLEM_REF, note=first.note, note_input=input_ref("note"), criterion=first.criterion,
             criterion_input=input_ref("criterion"),

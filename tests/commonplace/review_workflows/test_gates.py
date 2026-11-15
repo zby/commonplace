@@ -375,3 +375,56 @@ def test_run_gates_refuses_to_default_to_all_gates(repo) -> None:
     with pytest.raises(SystemExit):
         main(["run", "gates", "kb/notes"], harnesses=harnesses)
     assert log.read_text() == ""
+
+
+def compression(name: str) -> str:
+    return (f"---\ngate_id: compression/{name}\nname: {name}\ntype: types/review-gate.md\nlens: compression\n"
+            f"watches: [body]\nstaleness: changed\n---\n\n## Failure mode\n\n{name} fails.\n")
+
+
+@pytest.mark.parametrize("layout", ["repo", "installed"])
+def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(layout, request, capsys):
+    from commonplace.lib.review_workflows import fixtures
+
+    project = request.getfixturevalue(layout)
+    root, harnesses, _ = project
+    checks = library.library_root() / "instructions/compression-bundle"
+    checks.mkdir(parents=True, exist_ok=True)
+    for name in ("detail-overhang", "core-claim-obscured"):
+        (checks / f"{name}.md").write_text(compression(name), encoding="utf-8")
+    prefix = "kb/" if layout == "repo" else "commonplace:"
+    identity = f"{prefix}instructions/compression-bundle/detail-overhang.md"
+    criterion_id = f"{'kb' if layout == 'repo' else 'commonplace'}/instructions/compression-bundle/detail-overhang"
+    requested = ("--criteria", "compression/detail-overhang", "compression/core-claim-obscured")
+
+    # Bundle grouping does not join the checks: each one is its own launch and its own result.
+    code, report, launches = review(project, capsys, "kb/notes/alpha.md", *requested, "--grouping", "bundle")
+    assert code == 0, report
+    assert sorted(launches) == sorted(f"kb/notes/alpha.md::{prefix}instructions/compression-bundle/{name}.md"
+                                      for name in ("detail-overhang", "core-claim-obscured"))
+    result = read_result(result_path(root, "kb/notes/alpha.md", criterion_id))
+    assert (result.criterion, result.contract, result.outcome) == (identity, "verdict", "pass")
+    prompt = (root / result.observation).parent / "inputs/prompt.txt"
+    assert "INFO as outcome: pass with info findings" in prompt.read_text()
+
+    # Freshness follows the check's `watches: [body]`.
+    assert review(project, capsys, "kb/notes/alpha.md", *requested)[2] == []
+    write(root, "kb/notes/alpha.md", note("Alpha", "Alpha body.", description="Alpha restated"))
+    assert review(project, capsys, "kb/notes/alpha.md", *requested)[2] == []
+    write(root, "kb/notes/alpha.md", note("Alpha", "Alpha body, edited.", description="Alpha restated"))
+    assert len(review(project, capsys, "kb/notes/alpha.md", *requested)[2]) == 2
+
+    # Neither the default status set nor a bare `compression` request reaches the checks.
+    assert main(["status", "kb/notes/alpha.md", "--json"], harnesses=harnesses) == 0
+    assert not any("compression-bundle" in row["criterion"] for row in json.loads(capsys.readouterr().out)["pairs"])
+    assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "compression"], harnesses=harnesses) == 2
+    assert "one at a time" in capsys.readouterr().err
+
+    if layout == "repo":
+        # One retained observation is a fixture baseline, and a trial re-runs that check alone.
+        observation = (root / result.observation).parent
+        fixture = fixtures.create(root, result.run, observation.name, substitute_executor=True)
+        assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
+        trial = json.loads(capsys.readouterr().out)
+        assert [item["state"] for item in trial["observations"]] == ["reviewed"]
+        assert trial["observations"][0]["criterion"] == identity

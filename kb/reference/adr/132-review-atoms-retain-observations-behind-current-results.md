@@ -18,7 +18,11 @@ Ordinary execution and controlled reconstruction have different retention costs.
 
 ## Decision
 
-**Admit a bounded subset through one existing execution route.** Catalog gates, type and collection conformance, and critique use `commonplace-review` over Workjig. Explicit draft gates use that same machinery without catalog publication. Sharing execution does not choose operation order, combine judgments or redesign full-pass/revise. Compression checks and synthesis, friction, premise decomposition and connect retain their existing routes; higher-order wordings remain experimental. Further admission needs explicit inputs, a result contract, deterministic acceptance and a justified freshness policy or an explicit unassessed state.
+**Admit a bounded subset through one existing execution route.** Catalog gates, type and collection conformance, critique and the four compression checks use `commonplace-review` over Workjig. Explicit draft gates use that same machinery without catalog publication. Sharing execution does not choose operation order, combine judgments or redesign full-pass/revise. Further admission needs explicit inputs, a result contract, deterministic acceptance and a justified freshness policy or an explicit unassessed state.
+
+Each compression check is a verdict criterion, requested by its own id, such as `compression/detail-overhang`. Its local INFO is a `pass` outcome with `info` findings. Its freshness follows its `watches: [body]` and `staleness: changed` declaration. No request selects the four checks together, and `--all-gates` leaves them out. The compression bundle and the full pass keep running the checks in their own single report.
+
+Compression synthesis, friction and premise decomposition retain their existing routes. They are report forms, but the review-result schema's report branch requires critique's attack outcome and sections. Admitting them needs a review-result type change first. Connect also retains its route: its product is a connect report, and its candidates depend on the corpus, not on the note and criterion alone. Higher-order wordings remain experimental.
 
 **Use one typed envelope without forcing one judgment.** The [review-result type](../../types/review-result.md) owns findings, verdict/report distinctions and the worker/controller field split. Workers supply assessment content; code supplies provenance and validates the completed artifact. Critique completion is not a favorable verdict. Structural acceptance does not endorse the judgment.
 

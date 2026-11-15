@@ -173,3 +173,30 @@ def test_installed_library_files_are_library_identities(tmp_path: Path, monkeypa
         ("kb/notes/claim.md", "commonplace:instructions/critique-note.md", "critique"),
     ]
     assert criteria.resolve_type_request(root, "type/note") == "commonplace:types/note.md"
+
+
+def compression_check(path: Path, extra: str = "") -> Path:
+    return gate(path, f"gate_id: compression/{path.stem}\ntype: types/review-gate.md\n{extra}")
+
+
+def test_compression_checks_are_requested_one_id_at_a_time_and_stay_out_of_defaults(checkout: Path) -> None:
+    checks = checkout / "kb/instructions/compression-bundle"
+    compression_check(checks / "detail-overhang.md")
+    compression_check(checks / "core-claim-obscured.md", "requires_type: types/definition.md\n")
+    write(checks / "high-impact-simplification-synthesis.md", "---\ntype: types/instruction.md\n---\n\n# S\n")
+    assert chosen(checkout, ["kb/notes/plain.md", "kb/notes/term.md"],
+                  ["compression/detail-overhang", "compression/core-claim-obscured"]) == [
+        ("kb/notes/plain.md", "kb/instructions/compression-bundle/detail-overhang.md", "compression"),
+        ("kb/notes/term.md", "kb/instructions/compression-bundle/detail-overhang.md", "compression"),
+        ("kb/notes/term.md", "kb/instructions/compression-bundle/core-claim-obscured.md", "compression"),
+    ]
+    assert Criterion("kb/instructions/compression-bundle/detail-overhang.md", "compression").contract == "verdict"
+    assert all(kind != "compression" for _, _, kind in chosen(checkout, ["kb/notes/plain.md"], None))
+    with pytest.raises(ValueError, match="one at a time"):
+        select(checkout, ["kb/notes/plain.md"], ["compression"])
+    with pytest.raises(ValueError, match="not a compression check"):
+        select(checkout, ["kb/notes/plain.md"], ["compression/high-impact-simplification-synthesis"])
+    with pytest.raises(FileNotFoundError):
+        select(checkout, ["kb/notes/plain.md"], ["compression/missing"])
+    with pytest.raises(ValueError):
+        select(checkout, ["kb/notes/plain.md"], ["compression/../review-gates/prose/residue"])

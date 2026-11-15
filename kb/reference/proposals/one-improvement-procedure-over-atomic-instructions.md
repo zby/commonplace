@@ -16,11 +16,15 @@ The goal is one procedure in their place. It is flexible because it is mostly LL
 
 ## Current state (as of 2026-11-15)
 
-**Adopted:** catalog gates, type/collection conformance and critique share typed
-results, retained observations and single-assessment fixtures under
+**Adopted:** catalog gates, type/collection conformance, critique and the four
+compression checks share typed results, retained observations and
+single-assessment fixtures under
 [ADR 132](../adr/132-review-atoms-retain-observations-behind-current-results.md).
-That bounded execution/result slice is shipped, not proposed below. The
-composition, edit-operation and stop-operation design remains unadopted.
+That bounded execution/result slice is shipped, not proposed below. Compression
+synthesis, composition friction and premise decomposition wait on a
+review-result type change for non-critique reports; connect keeps its own
+report. The composition, edit-operation and stop-operation design remains
+unadopted.
 
 The three procedures, as the operator meets them:
 
@@ -37,7 +41,7 @@ The atomic instructions, where they live and who uses them:
 | Kind | Atom | Lives at | Used by |
 |---|---|---|---|
 | Review | gate criteria, in seven bundles | [review-gates/](../../instructions/review-gates/) | full pass, fix procedure, gate sweeps |
-| Review | compression bundle | [compression-bundle/](../../instructions/compression-bundle/) | full pass |
+| Review | compression bundle | [compression-bundle/](../../instructions/compression-bundle/) | full pass, as one report; each of its four checks by its standalone `compression/<check>` selector |
 | Review | type and collection conformance | applicable type spec and collection contract | full pass, standalone `type` and `collection` selectors |
 | Review | critique | [critique-note](../../instructions/critique-note.md) | full pass, standalone `critique` selector |
 | Review | composition friction, with premise decomposition | [composition-friction-gate](../../instructions/composition-friction-gate.md), [premise-decomposition-gate](../../instructions/premise-decomposition-gate.md) | full pass |

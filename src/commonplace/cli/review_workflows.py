@@ -15,12 +15,15 @@
     commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
 
 NOTES are files or directories (a directory means its reviewable notes, not
-recursively). C are gate ids, bundle names or the lenses `type`, `collection`
-and `critique`. `status` without `--criteria` covers all gates (critique stays
+recursively). C are gate ids, bundle names, the lenses `type`, `collection`
+and `critique`, and compression check ids (`compression/core-claim-obscured`,
+`compression/branch-bloat`, `compression/detail-overhang`,
+`compression/marginal-value-redundancy`), one id per check. `status` without
+`--criteria` covers all gates (critique and the compression checks stay
 opt-in); `run gates` launches one worker per stale pair, so it takes all gates
 only when asked with `--all-gates`. `--grouping bundle` asks one worker per
 note and bundle of catalog gates for that bundle's stale gates, sharing one
-launch's fixed context; type, collection and critique pairs stay one call each.
+launch's fixed context; every other pair stays one call.
 
 `status` with NOTES shows each applicable pair, including pairs never
 reviewed (`missing`); without NOTES it shows every stored result whose note

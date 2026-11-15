@@ -17,7 +17,11 @@ A request is one of:
   spec, resolved from its frontmatter `type:`;
 - the virtual `collection` lens, or `collection/<path>` (the collection
   directory relative to kb/): the `COLLECTION.md` of the note's collection;
-- `critique`: the library's critique instruction, the one report criterion.
+- `critique`: the library's critique instruction, the one report criterion;
+- `compression/<check>`: one of the library's compression checks under
+  `instructions/compression-bundle/`, a verdict criterion. Each check is
+  requested by its own id; there is no compression bundle request. The checks
+  stay out of the default set.
 
 Everything here reads files and nothing writes.
 """
@@ -35,10 +39,12 @@ from commonplace.lib.type_resolver import TypeCollisionError, validate_type_path
 
 GATES_REL = "instructions/review-gates"
 CRITIQUE_REL = "instructions/critique-note.md"
+COMPRESSION_REL = "instructions/compression-bundle"
 TYPE = "type"
 COLLECTION = "collection"
 CRITIQUE = "critique"
-KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft")
+COMPRESSION = "compression"
+KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION)
 STALENESS = "changed"
 """The only `staleness:` a catalog gate may declare."""
 
@@ -71,6 +77,16 @@ def _is_type_request(request: str) -> bool:
 
 def _is_collection_request(request: str) -> bool:
     return request == COLLECTION or request.startswith(f"{COLLECTION}/")
+
+
+def _is_compression_request(request: str) -> bool:
+    return request.startswith(f"{COMPRESSION}/")
+
+
+def _is_lens_request(request: str) -> bool:
+    """A request resolved outside the gate catalog."""
+    return (_is_type_request(request) or _is_collection_request(request) or _is_compression_request(request)
+            or request == CRITIQUE)
 
 
 # --- Catalog gates ---------------------------------------------------------------
@@ -122,8 +138,10 @@ def resolve_requests(requests: list[str] | None) -> list[str]:
         bundles = sorted(entry.name for entry in gates.iterdir() if entry.is_dir())
         return _catalog_ids(bundles, gates) + [TYPE, COLLECTION]
     requests = [request.strip() for request in requests]
-    lenses = [request for request in requests
-              if _is_type_request(request) or _is_collection_request(request) or request == CRITIQUE]
+    if COMPRESSION in requests:
+        raise ValueError("compression checks are requested one at a time as compression/<check>, "
+                         "for example compression/detail-overhang")
+    lenses = [request for request in requests if _is_lens_request(request)]
     return _catalog_ids([request for request in requests if request not in lenses], gates) + lenses
 
 
@@ -138,19 +156,19 @@ def _matches(actual: set[str], required: Any) -> bool:
     return False
 
 
-def applicable_gates(note_meta: dict[str, Any], gate_ids: list[str]) -> list[str]:
-    """The gate ids whose `requires_type` and `requires_trait` the note's frontmatter satisfies."""
+def _applies(note_meta: dict[str, Any], gate_meta: dict[str, Any]) -> bool:
+    """Whether the note's frontmatter satisfies a gate's `requires_type` and `requires_trait`."""
     note_type = note_meta.get("type")
     types = {note_type} if isinstance(note_type, str) else set()
     traits = note_meta.get("traits", [])
     traits = set(traits) if isinstance(traits, list) else set()
+    return _matches(traits, gate_meta.get("requires_trait")) and _matches(types, gate_meta.get("requires_type"))
+
+
+def applicable_gates(note_meta: dict[str, Any], gate_ids: list[str]) -> list[str]:
+    """The gate ids whose `requires_type` and `requires_trait` the note's frontmatter satisfies."""
     gates = gates_dir()
-    applicable = []
-    for gate_id in gate_ids:
-        metadata = _gate_metadata(gates / f"{gate_id}.md")
-        if _matches(traits, metadata.get("requires_trait")) and _matches(types, metadata.get("requires_type")):
-            applicable.append(gate_id)
-    return applicable
+    return [gate_id for gate_id in gate_ids if _applies(note_meta, _gate_metadata(gates / f"{gate_id}.md"))]
 
 
 # --- The type lens ---------------------------------------------------------------
@@ -264,6 +282,23 @@ def critique_identity(root: Path) -> str:
     return artifact_identity(root, path)
 
 
+def compression_check(request: str) -> tuple[Path, dict[str, Any]]:
+    """The file and frontmatter of the compression check `compression/<check>` names.
+
+    The file must be a review gate whose `gate_id` is the request.
+    """
+    name = request.strip().removeprefix(f"{COMPRESSION}/").removesuffix(".md")
+    if not name or "/" in name or name in {".", ".."}:
+        raise ValueError(f"invalid compression check id: {request}")
+    path = library_root() / COMPRESSION_REL / f"{name}.md"
+    if not path.is_file():
+        raise FileNotFoundError(f"compression check not found: {request}")
+    metadata = _frontmatter(path)
+    if metadata.get("type") != "types/review-gate.md" or metadata.get("gate_id") != f"{COMPRESSION}/{name}":
+        raise ValueError(f"not a compression check: {request}")
+    return path, _gate_metadata(path)
+
+
 def select(root: Path, notes: list[str], requests: list[str] | None = None,
            texts: dict[str, str] | None = None) -> list[tuple[str, Criterion]]:
     """The applicable (note, criterion) pairs for repository-relative notes, in request order per note.
@@ -275,11 +310,13 @@ def select(root: Path, notes: list[str], requests: list[str] | None = None,
     resolved = resolve_requests(requests)
     lenses = {TYPE: [r for r in resolved if _is_type_request(r)],
               COLLECTION: [r for r in resolved if _is_collection_request(r)]}
-    catalog = [r for r in resolved if r not in lenses[TYPE] and r not in lenses[COLLECTION] and r != CRITIQUE]
+    catalog = [r for r in resolved if not _is_lens_request(r)]
     gates = gates_dir()
     gate_identities = {gate_id: artifact_identity(root, gates / f"{gate_id}.md") for gate_id in catalog}
     type_specs = {resolve_type_request(root, r) for r in lenses[TYPE] if r != TYPE}
     contracts = {resolve_collection_request(root, r) for r in lenses[COLLECTION] if r != COLLECTION}
+    checks = [(artifact_identity(root, path), metadata) for path, metadata in
+              (compression_check(r) for r in dict.fromkeys(r for r in resolved if _is_compression_request(r)))]
     critique = critique_identity(root) if CRITIQUE in resolved else None
 
     found: list[tuple[str, Criterion]] = []
@@ -295,6 +332,8 @@ def select(root: Path, notes: list[str], requests: list[str] | None = None,
             contract = note_collection_contract(root, note_abs)
             if contract is not None and (COLLECTION in lenses[COLLECTION] or contract in contracts):
                 chosen.append(Criterion(contract, COLLECTION))
+        chosen += [Criterion(identity, COMPRESSION) for identity, metadata in checks
+                   if _applies(_frontmatter(note_abs, text), metadata)]
         if critique is not None:
             chosen.append(Criterion(critique, CRITIQUE))
         seen: set[str] = set()
