@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Review a specific note against the compression criteria without writing review result files.
 
-This is deliberately separate from the gate sweep in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates` or write review result files. Use them when the goal is a disposable report rather than fresh review evidence.
+This is deliberately separate from the gate sweep in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, and this procedure writes no review result files. Use it when the goal is a disposable report rather than fresh review evidence. For a stored result from one check, run `commonplace-review run gates NOTE --criteria compression/<check>` instead.
 
 Inputs:
 

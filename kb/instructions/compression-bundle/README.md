@@ -1,6 +1,6 @@
 # Compression bundle
 
-A report-only review bundle for note-improvement passes, run via [run-compression-bundle-on-note.md](../run-compression-bundle-on-note.md). Deliberately kept outside the [review-gates](../review-gates/) catalog so it never gets swept into `--all-gates` or writes review result files.
+A report-only review bundle for note-improvement passes, run via [run-compression-bundle-on-note.md](../run-compression-bundle-on-note.md). Deliberately kept outside the [review-gates](../review-gates/) catalog so it never gets swept into `--all-gates`. The bundle run writes no review result files. Each of the four checks can also be run alone as `commonplace-review run gates NOTE --criteria compression/<check>`, which does write a review result ([review system](../../reference/README-REVIEW-SYSTEM.md)).
 
 Purpose: catch material that is true, coherent, or locally defensible but should still be compressed, folded, deleted, split, or rehomed because it does not earn its context cost.
 
