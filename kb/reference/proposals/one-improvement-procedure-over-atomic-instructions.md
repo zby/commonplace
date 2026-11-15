@@ -14,7 +14,13 @@ Commonplace has three ways to improve one note after review: the full improvemen
 
 The goal is one procedure in their place. It is flexible because it is mostly LLM instructions. It is held in shape by the infrastructure every other artifact already uses: types, schemas and `commonplace-validate`. Code stays only where batching needs it, in review.
 
-## Current state (as of 2026-11-13)
+## Current state (as of 2026-11-15)
+
+**Adopted:** catalog gates, type/collection conformance and critique share typed
+results, retained observations and single-assessment fixtures under
+[ADR 132](../adr/132-review-atoms-retain-observations-behind-current-results.md).
+That bounded execution/result slice is shipped, not proposed below. The
+composition, edit-operation and stop-operation design remains unadopted.
 
 The three procedures, as the operator meets them:
 
@@ -32,7 +38,8 @@ The atomic instructions, where they live and who uses them:
 |---|---|---|---|
 | Review | gate criteria, in seven bundles | [review-gates/](../../instructions/review-gates/) | full pass, fix procedure, gate sweeps |
 | Review | compression bundle | [compression-bundle/](../../instructions/compression-bundle/) | full pass |
-| Review | critique | [critique-note](../../instructions/critique-note.md) | full pass |
+| Review | type and collection conformance | applicable type spec and collection contract | full pass, standalone `type` and `collection` selectors |
+| Review | critique | [critique-note](../../instructions/critique-note.md) | full pass, standalone `critique` selector |
 | Review | composition friction, with premise decomposition | [composition-friction-gate](../../instructions/composition-friction-gate.md), [premise-decomposition-gate](../../instructions/premise-decomposition-gate.md) | full pass |
 | Review | connect | [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) | full pass |
 | Edit | simplification passes, each with `effort` and preserve rules | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow |
@@ -50,7 +57,7 @@ Shipped constraints this proposal must respect:
 - The operator-decision record is `commonplace-review decisions` under [ADR 130](../adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md). It reads what runs leave in the state tree.
 - A strike carries the operator's required reason since 2026-11-13, enforced today by revise workflow code.
 - Directory types ([ADR 111](../adr/111-directory-types-declare-their-layout.md), [directory artifact](../definitions/directory-artifact.md)) are shipped and still experimental; one workflow family uses them.
-- The revise workflow is 661 lines and the full pass 603. Both fix composition in Python: the assessment and plan grammar, which passes stop for strikes, the method order, the closing cycle.
+- Revise and full-pass still fix composition in Python: the assessment and plan grammar, which passes stop for strikes, the method order and the closing cycle. Shared review execution does not replace those procedures.
 
 ## The problem
 
@@ -65,7 +72,7 @@ One constraint is set, by the operator on 2026-11-13: review needs code, fixing 
 The procedure has two layers. The atoms are the stable layer. The composition is the variable layer and exists as variants. Structure comes from three typed artifacts.
 
 **An atom is a typed instruction file.** One review operation, edit operation or stop, with its contract: what it reads, what it may change, what it must preserve, what it returns. Review gates already have a type. Edit operations get one; the simplification passes nearly fit it already, and each fix strategy becomes a file of that type. 
-**Every atom is individually testable.** This is a design requirement, not a hope. An atom can be run by itself on one note, and a review operation can be run by itself across a whole collection through the batch machinery, so that it can be calibrated before any variant relies on it: the split check on every note in `kb/theory/`, for instance, with its rate of proposals, its hits on known cases and an operator-judged sample. An atom that only works inside a composition, because it needs the variant's context or another atom's unrecorded output, does not meet the contract. Its inputs are therefore files, and its output is a typed result the batch run can store.
+**Every remaining atom must be individually testable.** The admitted review subset already has standalone execution and fixtures; the requirement below remains open for the other review, edit and stop operations. An atom can be run by itself on one note, and a review operation can be run by itself across a whole collection through the batch machinery, so that it can be calibrated before any variant relies on it: the split check on every note in `kb/theory/`, for instance, with its rate of proposals, its hits on known cases and an operator-judged sample. An atom that only works inside a composition, because it needs the variant's context or another atom's unrecorded output, does not meet the contract. Its inputs are therefore files, and its output is a typed result the batch run can store.
 
 **A variant is an instruction that composes atoms.** It states its entry evidence, the review operations it runs, how it selects edit operations from their findings, the order, how far it re-reviews after editing, where it stops for the operator, and which checks it runs on what it produced. `commonplace-validate` is the default check; a cheap variant runs little more and an expensive one runs more. An agent follows the variant in a session, delegating atoms to workers where isolation matters. The operator answers in the session, and the commit is the publication. Variants are expected to change often and to coexist, each retained with the runs it was tried on.
 
@@ -108,7 +115,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 ## Free choices
 
 - How many notes a one-atom variant can be run over at once, since the batch machinery today runs review operations only.
-- How results from different wordings of one review operation are kept apart during calibration: the store keeps one result per note and criterion, so a rerun overwrites.
+- The comparison protocol for different wordings: admitted reviews already retain observations behind the replaceable current result, but selection, labels and interpretation of calibration trials remain open.
 - The edit-operation type's fields, and whether fix strategies and method families are rewritten to their types or wrapped.
 - Whether a variant has a type of its own, so the validator can check that every atom it names exists.
 - Whether the run type keeps four member types or folds the findings and the edit chain into the report.
