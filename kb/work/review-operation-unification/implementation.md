@@ -73,6 +73,16 @@ Each result and its retained evidence are still read and checked independently. 
 
 A local before/after check scanned the same four current results three times: contract captures fell from **24 to 3**, and elapsed time fell from **1.944 to 0.392 seconds**. This is a bounded local measurement, not a throughput guarantee. The original 12 result tests passed before and after; the affected general, review-workflow, relocation, validation and installation suites, including slow tests, passed **488 tests with one skipped**. Log: `/tmp/commonplace-review-read-cost-tests.log`. No model calls were used for this change.
 
+## Library inventory boundary
+
+The no-model fixture check found that the original library digest included 96 Git-ignored mailbox files and source assets. Exact historical dirty files were recoverable, but copying those ambient files would have expanded fixture inputs beyond the intended boundary. The diagnostic receipts are under `kb/reports/state/review/fixture-preparation/20261115T132933Z/`.
+
+The corrected inventory includes tracked and non-ignored untracked files in a Git library. A library installed without Git uses visible package files. Hidden paths and report state remain outside the library inventory. Ignored files can still be supplied as explicit operational inputs; fixture reconstruction retains those copies without adding them to the library or restoring their original ambient locations. Tracked files matching ignore patterns remain authored inputs.
+
+Observations and fixtures now record `library-policy: git-visible-or-installed-v1`. Fixture creation and loading refuse older policies rather than replacing historical digests. The four-kind live run remains unchanged evidence, but a fixture under the corrected policy needs a new source observation. The installed-library and checkout regression trials use fake processes, not models.
+
+The real-checkout check excluded all 96 identified files without reading their contents. Regression tests cover that boundary through fixture creation and trial execution, explicit ignored inputs, untracked authored files, tracked files matching ignore rules, captured-content restoration and rejection of old policies. General, review-workflow, relocation, validation, installation and documentation suites, including slow tests, passed **589 tests with one skipped**. Log: `/tmp/commonplace-review-library-boundary-tests.log`. No paid calls or historical-evidence rewrites were used for this repair.
+
 ## Completed cutover
 
 The preflight receipt is `kb/reports/state/review/cutover/20261115-preflight/inventory.json`. The completed cutover receipt is `kb/reports/state/review/cutover/20261115-v2/receipt.json`. Immediately before archival, all 4,725 historical file hashes still matched preflight, no review controller or recorded worker remained live, and all 153 run locks were acquired and held through the move and integrity check.

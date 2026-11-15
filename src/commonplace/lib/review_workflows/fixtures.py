@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import subprocess
 import tarfile
 import uuid
@@ -55,6 +56,9 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
     record = observations.load(directory)
     if record.get("version") != observations.VERSION:
         raise ValueError("fixture needs a supported retained observation")
+    if record.get("library-policy") != observations.LIBRARY_POLICY:
+        raise ValueError("observation uses an unsupported library inventory policy; start a new observation, "
+                         "do not reinterpret its historical library digest")
     request = record["request"]
     head = record.get("kb-commit")
     if not head:
@@ -98,12 +102,12 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
     if library_hash() != record["library-sha256"]:
         for origin, data in originals.items():
             relative = origin.removeprefix("commonplace:") if not local_library else origin.removeprefix("kb/")
-            if relative.startswith("reports/state/") or any(part.startswith(".") for part in Path(relative).parts):
+            if relative not in library_bytes:
                 continue
             if (origin.startswith("commonplace:") and not local_library) or (origin.startswith("kb/") and local_library):
                 library_bytes[relative] = data
         for name, data in overlays.items():
-            if local_library and name.startswith("kb/") and not any(part.startswith(".") for part in Path(name).parts):
+            if local_library and name.startswith("kb/") and name.removeprefix("kb/") in library_bytes:
                 library_bytes[name.removeprefix("kb/")] = data
         if library_hash() != record["library-sha256"]:
             raise ValueError("historical library content unavailable; restore the recorded library before fixture creation")
@@ -129,6 +133,7 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
             "kb-commit": head, "request": request, "inputs": record["inputs"], "code": code,
             "source-executor": record["executor"], "packages": observations.package_versions(),
             "content-state": record["content-state"], "library-sha256": record["library-sha256"],
+            "library-policy": observations.LIBRARY_POLICY,
             "library": "kb" if local_library else ".fixture-library",
             "profile": request["profile"], "substitutions": ["current executable", "pair grouping, one worker"],
             "gaps": ["dependency artifacts and user-level harness configuration not pinned",
@@ -146,6 +151,8 @@ def load(root: Path, name: str) -> tuple[Path, dict]:
     data = json.loads((fixture / "fixture.json").read_text())
     if data.get("version") != observations.VERSION:
         raise ValueError("unsupported fixture version")
+    if data.get("library-policy") != observations.LIBRARY_POLICY:
+        raise ValueError("unsupported fixture library inventory policy; create a new baseline")
     for path, digest in data["files"].items():
         if observations.sha(observations.safe_path(fixture, path).read_bytes()) != digest:
             raise ValueError(f"fixture content changed: {path}")
@@ -185,7 +192,8 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) 
                 path.symlink_to(state["target"])
         if (fixture / "library.tar").exists():
             _unpack(fixture / "library.tar", tree / data["library"])
-        if observations.sha(json.dumps(observations.library_files(tree / data["library"]), sort_keys=True).encode()) != data["library-sha256"]:
+        reconstructed = observations.library_files(tree / data["library"], use_git=False)
+        if observations.sha(json.dumps(reconstructed, sort_keys=True).encode()) != data["library-sha256"]:
             raise ValueError("reconstructed library differs from the recorded baseline")
         for item in data["inputs"]:
             if item["role"] == "target" or (item["role"] == "criterion" and not item["origin"].startswith("commonplace:")):
@@ -199,6 +207,13 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) 
                 target.write_bytes(observations.safe_path(fixture, item["path"]).read_bytes())
         _command(tree, "git", "init", "-q")
         _command(tree, "git", "-c", "user.name=Fixture", "-c", "user.email=fixture@localhost", "add", ".")
+        # A tracked library file may match an ignore rule; an installed library
+        # may itself live under a hidden directory. Preserve the exact selected
+        # inventory when this independent tree becomes a Git checkout.
+        if reconstructed:
+            subprocess.run(["git", "add", "-f", "--pathspec-from-file=-", "--pathspec-file-nul"], cwd=tree,
+                           input=b"".join(os.fsencode(str(Path(data["library"]) / name)) + b"\0"
+                                          for name in reconstructed), capture_output=True, check=True)
         _command(tree, "git", "-c", "user.name=Fixture", "-c", "user.email=fixture@localhost",
                  "-c", "commit.gpgsign=false", "-c", f"core.hooksPath={tree / '.git/no-hooks'}",
                  "commit", "-qm", "Fixture baseline")

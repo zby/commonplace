@@ -209,8 +209,15 @@ observation; a bundle launch does not provide independent trials.
 `fixture create --from RUN --observation ID --substitute-current-executor`
 retains a single-assessment baseline without calling a model. The flag
 explicitly substitutes the current executable; missing historical dirty
-content requires `--repair ORIGINAL=PATH` with matching bytes. Fixture trials
-currently use the Claude Code adapter, pair grouping and one worker.
+content requires `--repair ORIGINAL=PATH` with matching bytes. In a Git library,
+tracked and non-ignored untracked files enter the inventory; ignored files enter
+only as explicitly selected inputs. A library installed without Git uses its
+visible package files. Hidden paths and report state remain excluded from the
+library inventory. Observations and fixtures record this inventory policy;
+older policies are refused, not silently reinterpreted. Start a new observation
+to create a baseline under the current policy.
+
+Fixture trials currently use the Claude Code adapter, pair grouping and one worker.
 `run gates --fixture PATH` opens a fresh isolated trial with no live result
 publication or freshness skip; add `--resume TRIAL_RUN` only to continue that
 trial. Target/profile/configuration overrides are rejected. Effective tool

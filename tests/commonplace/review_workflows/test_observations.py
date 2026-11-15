@@ -1,11 +1,19 @@
 """Captured inputs, draft identity and independent fixture trials on a fake harness."""
 import json
+import tarfile
+from pathlib import Path
 
 import pytest
 
 from commonplace.cli.review_workflows import main
 from commonplace.lib.review_workflows import fixtures, observations
-from tests.commonplace.review_workflows.test_gates import _project, note, review, write
+from tests.commonplace.review_workflows.test_gates import (
+    _project,
+    git,
+    note,
+    review,
+    write,
+)
 
 
 @pytest.fixture
@@ -15,6 +23,82 @@ def repo(tmp_path, monkeypatch):
 
 def records(root, run):
     return sorted((root / run / "artifact/reviews").glob("*/observation.json"))
+
+
+@pytest.mark.parametrize("installed", [False, True])
+def test_fixture_excludes_ignored_ambient_files_but_retains_explicit_input(tmp_path, monkeypatch, capsys, installed):
+    repo = _project(tmp_path, monkeypatch, installed=installed)
+    root, harnesses, _ = repo
+    (root / "kb/messages").mkdir(parents=True)
+    (root / "kb/sources/cache").mkdir(parents=True)
+    write(root, ".gitignore", "kb/messages/\nkb/sources/cache/\n*.cache\n")
+    write(root, "kb/messages/private.md", "ambient mailbox")
+    write(root, "kb/sources/cache/private.txt", "ambient source snapshot")
+    write(root, "kb/sources/cache/selected.txt", "explicit operational evidence")
+    write(root, "kb/notes/retained.cache", "tracked despite ignore rule")
+    git(root, "add", "-f", "kb/notes/retained.cache")
+    git(root, "add", ".gitignore")
+    git(root, "commit", "-qm", "Declare ignored ambient data")
+    write(root, "kb/notes/draft.md", "Untracked authored text")
+    forbidden = {root / "kb/messages/private.md", root / "kb/sources/cache/private.txt"}
+    read_bytes = Path.read_bytes
+
+    def guarded_read(path):
+        assert path not in forbidden, "ambient data must not even be read for its hash"
+        return read_bytes(path)
+
+    monkeypatch.setattr(Path, "read_bytes", guarded_read)
+    code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate",
+                             "--input", "evidence=kb/sources/cache/selected.txt")
+    assert code == 0
+    [record_path] = records(root, report["run-dir"])
+    record = observations.load(record_path.parent)
+    assert record["library-policy"] == observations.LIBRARY_POLICY
+    # Exercise captured-content restoration without smuggling the explicit
+    # ignored input into the library inventory during that restoration.
+    write(root, "kb/notes/alpha.md", note("Alpha", "Changed after the observation."))
+    fixture = fixtures.create(root, report["run-dir"], record_path.parent.name, substitute_executor=True)
+    with tarfile.open(fixture / "library.tar") as archive:
+        names = archive.getnames()
+        assert not any(name.startswith(("messages/", "sources/cache/")) for name in names)
+        if not installed:
+            assert "notes/retained.cache" in names
+            assert "notes/draft.md" in names
+    with tarfile.open(fixture / "kb.tar") as archive:
+        assert not any(name.startswith(("kb/messages/", "kb/sources/cache/")) for name in archive.getnames())
+    explicit = next(item for item in record["inputs"] if item["role"] == "operational")
+    assert (fixture / explicit["path"]).read_text() == "explicit operational evidence"
+    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
+    trial = json.loads(capsys.readouterr().out)
+    tree = root / trial["evidence-root"]
+    assert not (tree / "kb/messages/private.md").exists()
+    assert not (tree / "kb/sources/cache/selected.txt").exists()
+    [held] = records(tree, "kb/reports/state/review/runs/v2/trial")
+    data = observations.load(held.parent)
+    assert data["library-sha256"] == record["library-sha256"]
+    assert any(item["role"] == "operational" for item in data["inputs"])
+
+
+def test_fixture_refuses_to_reinterpret_old_inventory_policy(repo, capsys):
+    root = repo[0]
+    code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate")
+    assert code == 0
+    [path] = records(root, report["run-dir"])
+    original = path.read_bytes()
+    data = json.loads(original)
+    del data["library-policy"]
+    path.write_text(json.dumps(data))
+    old = path.read_bytes()
+    with pytest.raises(ValueError, match="unsupported library inventory policy"):
+        fixtures.create(root, report["run-dir"], path.parent.name, substitute_executor=True)
+    assert path.read_bytes() == old
+    path.write_bytes(original)
+    fixture = fixtures.create(root, report["run-dir"], path.parent.name, substitute_executor=True)
+    data = json.loads((fixture / "fixture.json").read_text())
+    del data["library-policy"]
+    (fixture / "fixture.json").write_text(json.dumps(data))
+    with pytest.raises(ValueError, match="unsupported fixture library inventory policy"):
+        fixtures.load(root, fixture.relative_to(root).as_posix())
 
 
 def test_capture_exact_bytes_and_replay_retains_completion(repo, capsys):

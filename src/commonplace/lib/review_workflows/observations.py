@@ -18,6 +18,7 @@ from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows import result_contract
 
 VERSION = 2
+LIBRARY_POLICY = "git-visible-or-installed-v1"
 
 
 def sha(data: bytes) -> str:
@@ -46,20 +47,46 @@ def git_head(root: Path) -> str | None:
     return result.stdout.strip() if result.returncode == 0 else None
 
 
-def library_files(root: Path | None = None) -> dict[str, str]:
+def library_files(root: Path | None = None, *, use_git: bool = True) -> dict[str, str]:
+    """Inventory authored files, not ignored ambient data.
+
+    Git libraries include tracked and non-ignored untracked files. Installed
+    libraries without Git use visible package files. Hidden paths and report
+    state are excluded in both cases. Reconstruction checks disable Git because
+    the new tree may be inside its parent's ignored state directory.
+    """
     root = (root or library_root()).resolve()
+    eligible = None
+    parents = set()
+    if use_git:
+        probe = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"], cwd=root,
+                               capture_output=True, check=False)
+        if probe.returncode == 0 and probe.stdout.strip() == b"true":
+            listed = subprocess.run(["git", "ls-files", "-z", "--cached", "--others",
+                                     "--exclude-standard", "--", "."], cwd=root,
+                                    capture_output=True, check=True).stdout
+            eligible = {os.fsdecode(name) for name in listed.split(b"\0") if name}
+            parents = {parent.as_posix() for name in eligible for parent in Path(name).parents}
+        elif any(marker.is_file() or (marker.is_dir() and any(marker.iterdir()))
+                 for marker in (parent / ".git" for parent in (root, *root.parents))):
+            # Empty .git directories can be discovery barriers, not repositories.
+            # A real but unreadable/untrusted repository must not fall back to
+            # capturing ignored files as if this were an installed library.
+            raise ValueError(f"cannot determine Git library boundary: {root}")
     found = {}
     for parent, directories, files in os.walk(root):
         base = Path(parent)
         directories[:] = sorted(name for name in directories if not name.startswith(".")
-                                and (base / name).relative_to(root).parts != ("reports", "state"))
+                                and (base / name).relative_to(root).parts != ("reports", "state")
+                                and (eligible is None or (base / name).relative_to(root).as_posix() in parents
+                                     or (base / name).relative_to(root).as_posix() in eligible))
         for name in directories:
             if (base / name).is_symlink():
                 raise ValueError(f"library symlink requires explicit repair: {base / name}")
         for name in sorted(files):
-            if name.startswith("."):
-                continue
             path = base / name
+            if name.startswith(".") or (eligible is not None and path.relative_to(root).as_posix() not in eligible):
+                continue
             if path.is_symlink():
                 raise ValueError(f"library symlink requires explicit repair: {path}")
             found[path.relative_to(root).as_posix()] = sha(path.read_bytes())
@@ -129,6 +156,7 @@ def prepare(run) -> dict:
         selected = getattr(run, "library_root", None) or library_root()
         run._review_provenance = {
             "library-root": str(selected),
+            "library-policy": LIBRARY_POLICY,
             "library-sha256": sha(json.dumps(library_files(selected), sort_keys=True).encode()),
             "executor": executor(run),
         }
