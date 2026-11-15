@@ -16,7 +16,9 @@ and one current packet per note that had a full pass.
 For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
 [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
 the workflow decision; [ADR 132](./adr/132-review-atoms-retain-observations-behind-current-results.md)
-records the typed review, retained-observation and fixture boundary. Exact behavior belongs to `commonplace.lib.review_workflows`,
+records the typed review, retained-observation and fixture boundary;
+[ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)
+extends that boundary to edit operations. Exact behavior belongs to `commonplace.lib.review_workflows`,
 `commonplace.headless` and `commonplace.cli.review_workflows`.
 
 ## Components
@@ -28,14 +30,15 @@ records the typed review, retained-observation and fixture boundary. Exact behav
 | `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`) resolved into applicable pairs; reads only |
-| `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance |
+| `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance; it captures the edit-result contract the same way |
 | `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
-| `review_workflows.fixtures` | retained single-assessment baselines and isolated trials through the same gate implementation |
+| `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views; call grouping, the worker prompt and the checkout guard |
-| `review_workflows.edits` | the bounds an edited text must keep, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
+| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance, its observation under `artifact/edits/`, and the `run edit` command's run |
+| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `review_workflows.full_pass` | the full improvement pass and its packet |
-| `review_workflows.revise` | the revision workflow over the simplification passes |
+| `review_workflows.revise` | the revision workflow over the simplification passes: plan, order, strike stops and publication; each pass runs through `edit_operations.ask()` |
 
 Workjig launches each worker in the checkout through the harness's headless
 mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
@@ -58,7 +61,10 @@ for the text the note then holds, and nothing after a stop or a conflict.
 An edit reaches the checkout only through code. Each edited text is checked
 first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
-added. An accepted text stays in memory and in the run's `artifact/`
+added. A text from an edit operation also keeps every link target the result
+does not name as removed and every quoted span. Every revision pass candidate
+comes from `edit_operations.ask()`, which also serves `run edit`; the full
+pass's edit and copyedit are still its own steps. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
 final text once, atomically, only over the start text and after approval of
 the exact generated publication manifest. Any other text
@@ -119,7 +125,7 @@ receive this input, and brief changes do not stale gate results.
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | current full-pass packet | `kb/reports/state/review/packets/<note-path>` | until a later pass replaces it; holds the resolution of a pending hand-back |
 | run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
-| observation | a run's `artifact/reviews/<id>/` | one assessment, including retries and replay; exact inputs, completed results and their hashes remain citable |
+| observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; exact inputs, completed results, candidate texts and their hashes remain citable |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
@@ -176,7 +182,10 @@ explicitly selects the current executable as a substitute baseline. Dependency
 artifacts, user-level configuration and effective tool availability remain
 recorded gaps, not claims of environment equivalence. Every trial bypasses
 freshness skips and never publishes into the live result store. Resume stays
-within that trial; it is not an independent observation.
+within that trial; it is not an independent observation. An edit fixture
+reruns one edit execution from its captured operation, input text, supplied
+inputs and contract, through `run edit --fixture`; a review fixture runs
+through `run gates --fixture`, and each command refuses the other's fixture.
 
 The runtime accepts one result format and one active run namespace. Old
 results and runs must be archived rather than migrated or replayed. Before

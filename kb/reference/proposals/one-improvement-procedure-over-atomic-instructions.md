@@ -23,8 +23,18 @@ single-assessment fixtures under
 [ADR 132](../adr/132-review-atoms-retain-observations-behind-current-results.md).
 That bounded execution/result slice is shipped, not proposed below. The
 synthesis takes its findings as supplied files and keeps no current result.
-Connect keeps its own report. The composition, edit-operation and
-stop-operation design remains unadopted.
+Connect keeps its own report.
+
+**Adopted:** edit operations are typed atoms under
+[ADR 133](../adr/133-edit-operations-run-alone-through-one-typed-route.md).
+Six simplification passes and the fix strategies, wrapped as one operation,
+declare the [edit-operation type](../../types/edit-operation.md). Each runs
+alone through `commonplace-review run edit` and returns a typed
+[edit result](../../types/edit-result.md), retained with its exact inputs and
+rerunnable from a fixture. The revise workflow runs every pass through that
+route. This departs from the design below, which has a session agent run edit
+operations: a code route keeps the inputs needed to rerun one operation. The
+composition and stop-operation design remains unadopted.
 
 The three procedures, as the operator meets them:
 
@@ -46,8 +56,8 @@ The atomic instructions, where they live and who uses them:
 | Review | critique | [critique-note](../../instructions/critique-note.md) | full pass, standalone `critique` selector |
 | Review | composition friction, with premise decomposition | [composition-friction-gate](../../instructions/composition-friction-gate.md), [premise-decomposition-gate](../../instructions/premise-decomposition-gate.md) | full pass, standalone `friction` and `premises` selectors |
 | Review | connect | [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) | full pass |
-| Edit | simplification passes, each with `effort` and preserve rules | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow |
-| Edit | fix strategies, keyed to finding kinds | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure |
+| Edit | simplification passes, typed edit operations with `effort`, `decision` and preserve rules; split-out-a-treatment stays an instruction | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow, `run edit` |
+| Edit | fix strategies, keyed to finding kinds, as one typed edit operation | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure, `run edit` |
 | Edit | packet body edits and copyedit under `keep` | [run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) | full pass |
 | Stop | strike list, with the operator's reason per strike | [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md) | revise workflow |
 | Stop | exact publication approval | revise and full-pass workflows | both workflow commands |
@@ -61,7 +71,7 @@ Shipped constraints this proposal must respect:
 - The operator-decision record is `commonplace-review decisions` under [ADR 130](../adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md). It reads what runs leave in the state tree.
 - A strike carries the operator's required reason since 2026-11-13, enforced today by revise workflow code.
 - Directory types ([ADR 111](../adr/111-directory-types-declare-their-layout.md), [directory artifact](../definitions/directory-artifact.md)) are shipped and still experimental; one workflow family uses them.
-- Revise and full-pass still fix composition in Python: the assessment and plan grammar, which passes stop for strikes, the method order and the closing cycle. Shared review execution does not replace those procedures.
+- Revise and full-pass still fix composition in Python: the assessment and plan grammar, the order of passes, the strike stops, the method order and the closing cycle. Which passes stop for strikes now follows each operation's `decision`. Shared review and edit execution does not replace those procedures.
 
 ## The problem
 

@@ -374,6 +374,29 @@ and [resolve a full-pass disposition](../instructions/resolve-full-pass-disposit
 [full improvement pass closure](./full-improvement-pass-closure.md) explains
 the closing cycle.
 
+**One edit operation.** `commonplace-review run edit OPERATION NOTE` runs one
+[edit operation](../types/edit-operation.md) on one note and writes nothing
+to the checkout ([ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)).
+The worker returns an [edit result](../types/edit-result.md) and, for
+`changed`, a candidate text. Code completes the result with provenance and
+accepts it only within the bounds: title, H1, type, brief declaration and
+link targets kept, quoted spans unchanged, no new validation failure, and
+proposal quotes that occur once in the input. A rejected answer goes back to
+the worker; a worker problem becomes a `problem` result. The result and the
+candidate stay in the run's observation under `artifact/edits/`, beside the
+exact inputs, so `fixture create` and `run edit --fixture` rerun one
+execution. An edit result has no freshness state and no current-result file.
+`--text PATH` edits a saved text instead of the note's file; `--input
+ROLE=PATH` supplies the files an operation names, such as `findings`.
+
+A `per-item` operation (plain-wording, abstractions) runs twice. The first
+run returns `proposed`. The operator strikes entries of the listed
+proposals, each with a reason, and the second run takes that answered list
+as `--input answers=PATH` and returns `changed`. Code refuses a candidate
+that changed a struck entry's passage; it does not detect a change outside
+the list. Until a shared answers type exists, the answered list uses the
+revise workflow's strike-list format.
+
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
 one artifact. A new run requires `--plan FILE` for fixed work or `--assess`
@@ -382,13 +405,13 @@ intermediate work is preauthorized. The assessment report and generated plan
 stay in the run for inspection; the validated plan runs without routine
 approval. `--plan FILE` also supplies a validated override of a stopped plan.
 Editing the retained plan alone is not an override.
-Each listed pass runs in order on the preceding text; its `effort` selects
-the profile. Every pass must end `applied`, `no-change` or `skipped` before
+Each listed pass runs in order on the preceding text, through the same route
+as `run edit`; its `effort` selects the profile. Every pass must end `applied`, `no-change` or `skipped` before
 changed final text is offered for publication approval. Control-flow checks
 do not establish the quality of the selected edits.
 
-Plain-wording and abstractions still stop for explicit approval of each
-selection proposal. These are temporary procedure-development points:
+Plain-wording and abstractions, the `per-item` passes, still stop for
+explicit approval of each selection proposal. These are temporary procedure-development points:
 retain proposed, accepted and rejected choices with reasons, evolve the
 selection rules and checks, and evaluate retained and fresh examples before
 separately authorizing removal. This is not new automatic learning

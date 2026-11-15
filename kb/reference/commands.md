@@ -439,6 +439,24 @@ unless `--direction` is given. Gates and critique are asked over each text
 even when a fresh result exists; the pass writes their result files once, at
 its end, for the text the note then holds.
 
+`run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]`
+runs one [edit operation](../types/edit-operation.md), such as
+`instructions/simplification-passes/readability-and-flow.md`, on one note, in a
+new run under `kb/reports/state/review/runs/v2/`. It writes nothing to the
+checkout. The result is a typed [edit result](../types/edit-result.md) with
+outcome `changed`, `unchanged`, `proposed` or `problem`, retained with its
+candidate text in the run's observation under `artifact/edits/`; the JSON
+report names both. `--text PATH` supplies a repository file as the start text
+in place of the note's file. `--input ROLE=PATH` supplies a file the operation
+reads under that role, such as `findings` or `diff`. A `per-item` operation
+first returns `proposed`; run it again with `--input answers=PATH`, where PATH
+holds the proposals as listed by the revise workflow with an indented
+`struck: <reason>` line under each struck entry, and it returns `changed`. The
+profile defaults to the `effort` mapping for the operation's `effort`. It exits
+0 for an accepted `changed`, `unchanged` or `proposed` result with a clean
+guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
+a fixture created from an edit observation.
+
 `run revise ARTIFACT --plan FILE` executes fixed work without assessment.
 The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
@@ -455,8 +473,9 @@ profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
 writes the artifact once, after every pass ended `applied`, `no-change` or
-`skipped` and exact final publication approval is captured. Plain-wording
-and abstractions stop with
+`skipped` and exact final publication approval is captured. Each pass runs
+through the `run edit` route. A `per-item` pass (plain-wording, abstractions)
+stops with its proposals as
 `artifact/<pass>-list-<key>.md` for the operator to mark each struck entry
 with an indented `struck: <reason>` line; the reason is required, and a
 deleted, edited or added entry stops the run again. A stop for the operator exits 0 with `waiting-for` in the JSON
