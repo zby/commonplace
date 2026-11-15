@@ -49,6 +49,10 @@ Use existing records first. State which configuration dimensions match, delibera
 
 A proposed new trial must name its failure criterion, fixture, evaluator, trial count, budget, stopping rule and decision consequence. Do not launch it under this plan. No broad literature survey or fixed sample size is required; choose further investigation only where it can change a decision.
 
+## Current deliverables
+
+The operator authorized continuation after the [family/form recommendations](./decisions.md), with atomic procedures rather than compositions as the binding scope. The proposed [execution contract](./execution-contract.md) now specifies the remaining record decisions, first slice, compatibility boundary and acceptance tests. It reconciles the prior review-result type plan and Fable's consumer needs. Shipped implementation and paid evaluation remain separately commissioned.
+
 ## Return
 
 Lead with recommendations and blockers, then evidence and limits. Validate each written file with `commonplace-validate`, one file per call. After operator dispositions, a separate implementation commission can act on the first slice; this plan does not authorize implementation by reaching its final step.

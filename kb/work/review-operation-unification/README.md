@@ -16,8 +16,9 @@ The [improvement-procedure proposal](../../reference/proposals/one-improvement-p
 |---|---|
 | [Execution design](./execution-design.md) | Selected common behavior: Workjig, provenance, run-local inputs, freshness and fixtures |
 | [Plan](./plan.md) | Evidence investigation, remaining decisions, operator checkpoints and execution limits |
-| [Command sketch](./operation-command-sketch.md) | Proposed CLI and migration boundary; not shipped behavior |
-| [Decisions](./decisions.md) | Family/form recommendations and evidence, awaiting operator disposition; dependent contracts remain open |
+| [Command sketch](./operation-command-sketch.md) | Proposed additions to `commonplace-review`; not shipped behavior |
+| [Decisions](./decisions.md) | Family/form recommendations and consumer evidence; operator authorized design continuation after the atoms-only correction |
+| [Execution contract](./execution-contract.md) | Proposed record ownership, first implementation slice, cutover and acceptance tests; awaiting implementation authorization |
 
 ## Current candidate pool
 

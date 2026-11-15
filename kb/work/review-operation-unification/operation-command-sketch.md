@@ -1,46 +1,57 @@
-# Sketch: the unified review command
+# Sketch: extend the existing review command
 
-`commonplace-operation` is a provisional name, not an implemented command. This sketch specifies a possible interface for the [execution design](./execution-design.md), within the [review-only scope](./README.md). It does not register connect or any other candidate family before the form decision.
+Proposed interface for the [first-slice contract](./execution-contract.md). Only the ordinary examples below exist today; draft selection, inspection and fixtures are proposed additions. Keep `commonplace-review`: no inspected consumer needs the earlier provisional `commonplace-operation` name.
 
-## Ordinary execution
-
-```bash
-commonplace-operation list
-commonplace-operation run gates NOTE --criteria prose
-commonplace-operation run gates DIRECTORY --all-gates --profile opus
-commonplace-operation run critique NOTE
-commonplace-operation run connect NOTE
-commonplace-operation status NOTE --operation connect
-commonplace-operation show RUN
-commonplace-operation resume RUN
-```
-
-| Surface | Proposed behavior |
-|---|---|
-| `list` | Show admitted operations and their instruction, input/output, profile and freshness contracts. Use a small explicit registry, not automatic registration of every instruction. |
-| `run` | Start an invocation. Apply a supported freshness policy and report skips explicitly. Preserve `--force`, profile, grouping, worker-count and timeout controls where applicable. |
-| `status` | Show current results and freshness under the selected operation's policy. Use `unassessed` when no policy is defined; this is not `fresh`. |
-| `show` | Inspect a run's provenance, captured inputs, attempts, outputs and completion. |
-| `resume` | Continue the same invocation using existing Workjig recovery and answer replay. Do not count continuation as an independent trial. |
-
-`gates` keeps criterion selection and applicability. `--all-gates` does not expand to reports merely because they share the runner. Batch support for another operation must declare independent target execution and avoid output collisions; a directory argument alone does not establish that support.
-
-## Controlled execution
+## Ordinary execution — existing surface
 
 ```bash
-commonplace-operation fixture create --from RUN
-commonplace-operation run connect --fixture FIXTURE
-commonplace-operation run connect --fixture FIXTURE
+commonplace-review run gates NOTE --criteria prose/proportion-mismatch
+commonplace-review run gates NOTE --criteria critique
+commonplace-review run gates DIRECTORY --all-gates --profile opus
+commonplace-review status NOTE --criteria critique --json
+commonplace-review run gates NOTE --criteria critique --resume RUN
 ```
 
-`fixture create` reports which inputs were recovered, missing or explicitly substituted under the execution design. The interface for supplying missing content and selecting executable/configuration versions remains to be decided from the first supported case; do not introduce a general environment manager.
+Preserve current selection, applicability, `--force`, profile, grouping, worker-count and timeout controls. `--all-gates` does not acquire report operations merely because they share execution support. This workshop does not prescribe which atoms a caller selects together.
 
-With `--fixture`, the fixture supplies target paths, operation and execution configuration. The named operation must match. Each invocation makes an independent trial; `resume` continues one. Initially reject configuration overrides so a deliberate treatment change gets a separately identified fixture rather than masquerading as a replicate. Automated trial scheduling and statistical summaries are deferred.
+For new versioned standalone runs, `--resume` uses the recorded selection, captures and execution contract. Supplied arguments must match the recorded request; reject a mismatch rather than silently redefine that execution. A new run is the route for changed inputs. Existing full-pass/revise continuation remains their own workflow contract, not this standalone rule.
 
-## Transition from commonplace-review
+## Draft selection — proposed
 
-The current command also owns `full-pass`, `revise`, approval, packet and decision interfaces outside this subset. Keep those consumers working; replacing the review surface does not authorize removing them.
+```bash
+commonplace-review run gates NOTE --criterion-file kb/work/example/wording.md
+```
 
-Inventory review callers before choosing a cutover. Prefer migrating them to one implementation, not maintaining two execution paths. If an old review entry point is needed temporarily, name its consumer and removal condition. Existing runs need an explicit continuation or restart disposition; do not promise compatibility with changed Workjig record formats.
+Initially accept one repository-local draft review-gate file, mutually exclusive with `--criteria` and `--all-gates`. Validate and capture it without adding it to the catalog. Retain evidence without publishing over catalog current results. Repetition needs no alternate criterion id. A draft needing a broader reading scope than the supported operation must fail clearly; this option is not permission to bypass reading boundaries.
 
-The command name does not require moving the state tree. Reuse current layouts unless an actual result consumer requires a change. Complete retirement of `commonplace-review` waits for disposition of its non-review interfaces and is not this subset's completion condition.
+## Inspection — proposed
+
+```bash
+commonplace-review show RUN
+commonplace-review show RUN --observation OBSERVATION --json
+```
+
+Show captures, attempt history, validation state, completed results and configuration gaps. JSON exposes the outcome and structured findings, including levels where the result form defines them, plus exact target and raw-output citations. It never launches a worker or validates judgment quality.
+
+Existing `status` keeps the current-result view for the supported format. An old-format file in active state produces an actionable error requiring explicit archival or regeneration; no fallback parser interprets it. Historical observations do not inflate current-result summaries.
+
+## Fixtures — proposed
+
+```bash
+commonplace-review fixture create --from RUN --observation OBSERVATION
+commonplace-review run gates --fixture FIXTURE
+commonplace-review run gates --fixture FIXTURE
+commonplace-review run gates --fixture FIXTURE --resume TRIAL_RUN
+```
+
+Creation is a no-model-call preparation step. It selects one atom and target, retains a content baseline and reports missing recovery inputs. Store fixtures under `kb/reports/state/review/fixtures/`; give each trial its own run and working tree. No second state repository is required.
+
+The fixture supplies target, criterion, profile and execution configuration. Reject positional targets, criterion selectors and configuration overrides in fixture mode. A deliberate change requires a separately identified fixture baseline, with substitutions recorded. Missing-input repairs must explicitly name supplied files and roles; never discover operational dependencies recursively. The manifest is versioned execution data, not a new general environment-description language.
+
+Every invocation without `--resume` makes a fresh independent trial, bypassing current-result freshness and cross-trial answer replay. Resume continues one trial. The first slice uses one atom/target, pair grouping and one worker. A source bundled observation therefore yields a documented change of grouping, not a claim of exact replay.
+
+## Compatibility boundary
+
+Keep `full-pass`, `revise`, approval, packet, retry, launch acknowledgment and decision interfaces, updating their result consumers together. Reuse Workjig and the existing state tree. The operator requires one supported format and implementation path: no legacy adapter, fallback parser, dual writer or automatic migration layer. Retain old evidence as files without preserving executable support for its format.
+
+The operator selected archival and a fresh start at cutover. New runs use a versioned active namespace; cited old launch files can remain in place as historical evidence, outside active discovery. Archive old current results and pending views; carry no old answers or approvals into new runs. Refuse old-format resume. Settle active workers before cutover and record the inventory. See the [cutover decision](./execution-contract.md#5-freshness-and-legacy-state).

@@ -2,7 +2,7 @@
 
 ## Decision requested
 
-Approve the family/form recommendations below before finalizing their result contracts and acceptance tests. This is the first checkpoint in the [plan](./plan.md), not an implementation authorization. No paid calls, workers or shipped changes were made for this investigation.
+The operator authorized design continuation after the family/form checkpoint and its atoms-only correction. The recommendations and evidence below fed the proposed [execution contract and acceptance tests](./execution-contract.md). Implementation still requires separate authorization. No paid calls, workers or shipped changes were made for this investigation.
 
 **Recommendation:** unify the atomic review procedures through a common execution contract, without arranging them into larger units. Each atom has explicit file inputs, standalone execution, its own result form, provenance, freshness and independent testing. Begin implementation with existing gates, conformance and critique, then apply the same contract to the remaining admitted atoms. This is implementation sequencing, not a recommended review sequence. Keep the higher-order check experimental under its evaluation workshop. Extend `commonplace-review`; no inspected consumer requires a new command name.
 
@@ -148,9 +148,9 @@ These are reported costs and workarounds from actual use, received through the o
 
 Fable's observation/retry clarification in the plan was included in commit `de994f027`; it is no longer an outstanding uncommitted edit in this workshop. The promised pointer from the overlap map remains for Fable to add in that workshop.
 
-## Conditional next work, not finalized contracts
+## Contract design handoff
 
-If the operator accepts these forms:
+The operator's continuation authorized the following design work, now specified in the proposed [execution contract](./execution-contract.md):
 
 1. Specify the first slice around gates/conformance and critique, reusing the existing command and Workjig route. Do not make connect or the higher-order check a prerequisite.
 2. Reconcile target capture and launch citations with [improvement-run](../../reports/types/improvement-run.md) and [improvement-run-findings](../../reports/types/improvement-run-findings.md). These already retain full texts by hash and cite launch outputs by hash rather than the replaceable shared result. Preserve that identity chain; a copied input carries its original identity but must contain everything the worker needs. A citation is not permission to traverse another run.
@@ -160,4 +160,4 @@ If the operator accepts these forms:
 
 The command sketch remains provisional. No inspected consumer establishes a need for `commonplace-operation`; retaining `commonplace-review` avoids migrating its full-pass, revise and publication consumers solely for naming. The next design step must still inspect the complete caller surface before fixing a compatibility plan.
 
-**Stopped at the family/form checkpoint.** Approve, reject or amend the table and overlap dispositions before dependent result/test recommendations are finalized. No new experiment is needed to choose this conservative separation; evaluation of a proposed semantic merger would be a separate commission.
+**Design checkpoint passed for continuation; implementation not authorized.** The execution contract retains this conservative separation. Evaluation of a proposed semantic merger would be a separate commission; this workshop does not arrange atoms into larger units.
