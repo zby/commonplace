@@ -1,7 +1,8 @@
 ---
 description: "Use when an artifact's TL;DR uses terms it never defines, ends on jargon, or its title carries a metaphor or bare term that reads wrongly before the body explains it"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: judgment
+decision: none
 depth: 6
 ---
 
@@ -11,6 +12,8 @@ Make the TL;DR readable by someone who will read nothing else, and the title a
 literal statement of the artifact's central contrast.
 
 Effort: judgment. Title proposals need judgment; the TL;DR edits alone may run as simple.
+
+## Steps
 
 TL;DR:
 
@@ -39,8 +42,15 @@ Title:
 - Propose the title; do not apply it. A title change also changes the file
   slug, which is a separate pure relocation commit.
 
-Report: old and new TL;DR, proposed titles with one line each on what each
+## Report
+
+Old and new TL;DR, proposed titles with one line each on what each
 emphasizes, and the slug length.
+
+## Preserve
+
+The title, the H1 and the file slug: a title change is a proposal in the
+report, never an edit. A term the body relies on later.
 
 ---
 

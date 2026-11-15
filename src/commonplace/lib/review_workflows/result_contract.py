@@ -46,8 +46,8 @@ class ReviewSnapshot(CriterionSnapshot):
             raise ControllerError(str(error)) from error
 
 
-def capture_contract(repo: Path | None = None) -> dict[str, bytes]:
-    """Capture the library type/schema closure and project review collection contract.
+def capture_contract(repo: Path | None = None, type_path: str = TYPE) -> dict[str, bytes]:
+    """Capture the library type/schema closure of `type_path` and the project review collection contract.
 
     This walks only declared schema references, never operational evidence.
     External schemas and symlink escapes are refused.
@@ -63,10 +63,10 @@ def capture_contract(repo: Path | None = None) -> dict[str, bytes]:
         captured[name] = resolved.read_bytes()
         return name
 
-    spec = take(root / TYPE)
+    spec = take(root / type_path)
     parsed = frontmatter.parse(captured[spec].decode("utf-8"))
     if not parsed.ok or not isinstance(parsed.data.get("schema"), str):
-        raise ValueError("review-result must declare its schema")
+        raise ValueError(f"{type_path} must declare its schema")
 
     def schema(path: Path) -> None:
         name = path.resolve().relative_to(root).as_posix()
@@ -93,10 +93,10 @@ def capture_contract(repo: Path | None = None) -> dict[str, bytes]:
                     visit(child)
         visit(data)
 
-    schema(root / Path(TYPE).parent / parsed.data["schema"])
+    schema(root / Path(type_path).parent / parsed.data["schema"])
     # Exercise the same closed resolver used for acceptance before any launch.
     snapshot = CriterionSnapshot(root, captured)
-    snapshot.registry(root / Path(TYPE).parent / parsed.data["schema"])
+    snapshot.registry(root / Path(type_path).parent / parsed.data["schema"])
     if repo is not None:
         try:
             collection = collection_for_path(repo / "kb/reports/state/review/review.md", repo)
@@ -107,18 +107,18 @@ def capture_contract(repo: Path | None = None) -> dict[str, bytes]:
             if path.is_symlink() or not path.resolve().is_relative_to(kb_root(repo).resolve()):
                 raise ControllerError(f"review collection contract escapes repository: {path}")
             captured[path.relative_to(kb_root(repo)).as_posix()] = path.read_bytes()
-        preflight(repo, captured)
+        preflight(repo, captured, type_path)
     return captured
 
 
-def preflight(root: Path, contracts: dict[str, bytes]) -> ReviewSnapshot:
+def preflight(root: Path, contracts: dict[str, bytes], type_path: str = TYPE) -> ReviewSnapshot:
     """Check schema closure and project validation dependencies before any model call."""
     snapshot = ReviewSnapshot(kb_root(root), contracts)
     try:
-        spec = snapshot.frontmatter(snapshot.root / TYPE)
+        spec = snapshot.frontmatter(snapshot.root / type_path)
         if not spec.ok or not isinstance(spec.data.get("schema"), str):
-            raise ControllerError("invalid captured review-result type")
-        snapshot.registry(snapshot.root / Path(TYPE).parent / spec.data["schema"])
+            raise ControllerError(f"invalid captured result type: {type_path}")
+        snapshot.registry(snapshot.root / Path(type_path).parent / spec.data["schema"])
         anchor = root / "kb/reports/state/review/review.md"
         try:
             governing = collection_for_path(anchor, root) / "COLLECTION.md"

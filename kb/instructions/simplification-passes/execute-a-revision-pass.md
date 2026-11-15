@@ -1,37 +1,51 @@
 ---
-description: "Use for a headless revision worker whose artifact, pass, purpose, scope and protected claims are already fixed; return only the assigned candidate or selection list and report"
+description: "Use for a headless worker running one edit operation on one supplied text: the shared edit contract for its inputs, bounds and edit result"
 type: types/instruction.md
 ---
 
 # Execute a revision pass
 
-Improve the supplied text for the stated purpose within the assigned pass and
-scope, without choosing additional work or publishing the result.
+Improve the supplied text within the assigned edit operation and its inputs,
+without choosing additional work or publishing the result.
 
-The revision workflow supplies this instruction as `workflow` to every pass,
-candidate-list and approved-list application worker. It is binding execution
-context, whether the caller supplied a fixed plan or an assessment chose the
-plan. It does not commission assessment, planning, dispatch or publication.
+The edit route supplies this instruction as `execution` to every run of an
+[edit operation](../../types/edit-operation.md): `commonplace-review run edit`,
+and each pass of the revise workflow, including its proposing and applying
+runs. It is binding execution context. It does not commission assessment,
+planning, dispatch or publication.
 
 ## Inputs and bounds
 
-Use the captured artifact, pass instruction, purpose, scope, protected claims
-and write brief supplied by the worker request. An omitted scope means the
-whole artifact; an empty defended-claims list adds no specially protected
-claims but does not permit changing claims generally.
+Use the captured text, the operation and the inputs the request names by
+role. The revise workflow supplies these roles:
 
-Run only the assigned pass. Choose edits within its bounds, not new passes,
+- `purpose`: who the reader is and what they should notice or be able to do.
+- `scope`: the only part of the text the operation may change. Without it,
+  the whole text is in scope.
+- `defend`: claims the operation may not narrow. Without it, no claim is
+  specially protected, but claims still may not change generally.
+- `brief`: the note's write brief.
+- `answers`: the operator's answered list of this operation's proposals.
+
+An operation's own Steps section names any further role it reads, such as
+`diff` or `findings`. Use the supplied copies; do not read their origins.
+
+Run only the assigned operation. Choose edits within its bounds, not new passes,
 a different purpose or a wider scope. Do not add claims or remove evidence.
 Preserve qualifications, contrasts, examples and links unless the commission
 explicitly permits their change; account for permitted removals in the report.
-Keep the title, type, brief declaration and H1. Propose title changes only in
+Keep the title, type, brief declaration and H1. Keep every link target unless
+you name its removal under `removed-links`, and keep every quoted span: a
+blockquote, or a quotation cited as verbatim. Propose title changes only in
 the report. Remove `user-verified` after a substantive body change.
 
-For a candidate-list request, propose selections without applying them. For
-an approved-list request, apply only the approved entries marked replace and
-list the struck entries with the operator's reasons in the report; do not
-restore struck entries or introduce new ones.
-Selection approval does not widen the pass or scope.
+A `per-item` operation first proposes: return `outcome: proposed` with the
+proposals and apply nothing. Each proposal's `quote` is a passage copied from
+the text that occurs there exactly once. Run again with an `answers` input,
+apply only the entries without a `struck:` line, list the struck entries with
+the operator's reasons in the report, and do not restore struck entries or
+introduce new ones. The operator's answers do not widen the operation or
+scope.
 
 ## Headless write briefs
 
@@ -39,19 +53,19 @@ Treat the captured write brief as binding retained intent. Keep its must-keep,
 must-exclude and reserved decisions. Do not amend it or change the artifact's
 `brief:` field. Use the captured input rather than rereading the live brief.
 
-If the purpose, protected claims, scope, approved list or pass conflicts with
+If the purpose, protected claims, scope, answers or operation conflicts with
 the brief, use the worker-problem output and stop. Approval of a selection or
 publication does not authorize amending the brief. The operator must resolve
 that commission change outside the run.
 
 ## Return and verification
 
-Write only the outputs named by the request. Do not edit the checkout, commit,
-launch further work or approve proposals. For an editing request, return the
-complete candidate, or the unchanged text when no edit is warranted, and the
-pass report with items noticed but not applied. For a list request, return
-only the requested list. Report an unresolved prerequisite through the
-worker-problem output rather than guessing or broadening the task.
+Write only the outputs named by the request: the edit result and, for
+`outcome: changed`, the complete candidate text. Do not edit the checkout,
+commit, launch further work or approve proposals. Return `outcome: unchanged`
+when no edit is warranted. The report lists the changes and the items noticed
+but not applied. Report an unresolved prerequisite through the worker-problem
+output rather than guessing or broadening the task.
 
 Before returning a candidate, check that each change belongs to the assigned
 pass and scope and that each removed element is accounted for. The controller

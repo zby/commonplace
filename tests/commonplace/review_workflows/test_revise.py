@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import functools
 import json
+import re
 import subprocess
 import sys
 
@@ -31,10 +32,17 @@ for line in frame.splitlines():
         section[name.removesuffix(".md")] = Path(path)
     else:
         section = None
-inputs, outputs = files.get("Inputs", {}), files.get("Required outputs", {})
-KINDS = {"Assess one artifact": "assess", "Run one simplification": "pass",
-         "List the candidates": "list", "Apply the operator-approved": "apply"}
-kind = next(kind for start, kind in KINDS.items() if frame.removeprefix("Task:\n").startswith(start))
+inputs = files.get("Inputs", {})
+outputs = {**files.get("Required outputs", {}), **files.get("Optional outputs", {})}
+task = frame.removeprefix("Task:\n")
+if task.startswith("Assess one artifact"):
+    kind = "assess"
+elif "This operation asks before it edits" in task:
+    kind = "list"
+elif "The operator answered this operation's proposals" in task:
+    kind = "apply"
+else:
+    kind = "pass"
 found = re.search(r"simplification-passes/([a-z-]+)\.md`", frame)
 name = found.group(1) if found and kind != "assess" else "-"
 model = sys.argv[sys.argv.index("--model") + 1]
@@ -42,13 +50,21 @@ with open(os.environ["FAKE_LOG"], "a") as log:
     log.write(f"{kind} {name} {model}\n")
 if Path(f"fail-{name}").exists():
     sys.exit(1)
-text = inputs["artifact"].read_text()
+text = inputs["artifact" if kind == "assess" else "text"].read_text()
 with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
     log.write(json.dumps({"kind": kind, "pass": name,
         "inputs": {key: path.read_text() for key, path in inputs.items()}}) + "\n")
 if Path(f"brief-problem-{kind}").exists():
-    files["Optional outputs"]["problem"].write_text("The requested pass conflicts with the write brief.")
+    Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(json.dumps(
+        {"kind": "unable", "message": "The requested pass conflicts with the write brief."}))
     sys.exit(0)
+
+
+def result(outcome, **fields):
+    data = {"type": "types/edit-result.md", "outcome": outcome, **fields}
+    outputs["result"].write_text("---\n" + json.dumps(data) + "\n---\n\n# Report\n\nDone.\n")
+
+
 if kind == "assess":
     passes = ["readability-and-flow", "place-external-systems", "opening-and-title"]
     if "PLAIN" in text:
@@ -65,11 +81,19 @@ if kind == "assess":
     outputs["assessment"].write_text("# Assessment\n\nRanked changes.\n")
     outputs["plan"].write_text(plan)
 elif kind == "list":
-    listed = "- alpha: figure; replace\n  why: decorative\n- beta: word; replace\n- gamma: keep\n"
-    outputs["list"].write_text(listed.replace("alpha", "delta") if Path("new-proposal").exists() else listed)
+    proposals = [{"quote": "Alpha body", "change": "alpha", "reason": "decorative"},
+                 {"quote": "A note about", "change": "beta", "reason": "word"},
+                 {"quote": "long enough", "change": "gamma", "reason": "plain"}]
+    if Path("new-proposal").exists():
+        proposals[0]["change"] = "delta"
+    if Path("no-candidates").exists():
+        result("unchanged")
+    else:
+        result("proposed", proposals=proposals)
 else:
     if kind == "apply":
-        kept = re.findall(r"^- (\w+)", inputs["approved"].read_text(), re.MULTILINE)
+        kept = [m.group(1) for m in re.finditer(r"^- quote: .*\n  change: (\w+)\n  reason: .*\n(?!  struck:)",
+                                                 inputs["answers"].read_text(), re.MULTILINE)]
         revised = text.replace("user-verified: true\n", "") + f"{name} applied {' '.join(kept)}.\n"
     else:
         scope = inputs["scope"].read_text() if "scope" in inputs else "all"
@@ -82,8 +106,8 @@ else:
         path.write_text(path.read_text() + "Changed while the worker ran.\n")
     if "TOUCH" in text and name == "opening-and-title":
         Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
-    outputs["artifact"].write_text(revised)
-    outputs["report"].write_text(f"# {name}\n\nDone.\n")
+    outputs["candidate"].write_text(revised)
+    result("changed", changes=[f"{name} applied"])
 '''
 PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
             "  s: {harness: fake, launch-model: small, effort: low}\n"
@@ -92,6 +116,7 @@ NOTE = ("---\ndescription: A note about alpha that is long enough to describe wh
         "type: types/note.md\nuser-verified: true\n---\n\n# Alpha\n\nAlpha body {words}.\n")
 NOTE_PATH = "kb/notes/alpha.md"
 PASSES = REPO_ROOT / "kb/instructions/simplification-passes"
+EDIT_TYPES = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml")
 ORDINARY = ["pass readability-and-flow big", "pass place-external-systems small", "pass opening-and-title big"]
 
 
@@ -100,6 +125,7 @@ def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
     files = {rel: (REPO_ROOT / rel).read_text() for rel in NOTE_TYPE_SPECS}
     files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text() for p in PASSES.glob("*.md")}
+    files |= {rel: (REPO_ROOT / rel).read_text() for rel in EDIT_TYPES}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -156,18 +182,9 @@ def named_plan(tmp_path, passes=("readability-and-flow",), **fields):
 
 
 def strike(listed, entry, reason):
-    """Mark one entry of a proposed list struck, after its continuation lines, as the operator would."""
-    lines, out, pending = listed.splitlines(keepends=True), [], False
-    for line in lines:
-        if line.startswith("- ") and pending:
-            out.append(f"  struck: {reason}\n")
-            pending = False
-        out.append(line)
-        if line.startswith(f"- {entry}"):
-            pending = True
-    if pending:
-        out.append(f"  struck: {reason}\n")
-    return "".join(out)
+    """Mark the entry whose change is `entry` struck, under its last line, as the operator would."""
+    item = re.search(rf"^- quote: .*\n  change: {entry}\n  reason: .*\n", listed, re.MULTILINE).group(0)
+    return listed.replace(item, item + f"  struck: {reason}\n", 1)
 
 
 def publish(repo, capsys, report, path=NOTE_PATH):
@@ -208,7 +225,7 @@ def test_fixed_single_pass_has_no_planner_dependency_and_replays_to_publication(
     assert call["inputs"]["purpose"] == "Improve the body for its reader"
     assert call["inputs"]["scope"] == "body only"
     assert call["inputs"]["defend"] == "- Alpha body holds.\n"
-    assert call["inputs"]["workflow"] == (repo[0] / "kb" / revise_module.EXECUTION_REL).read_text()
+    assert call["inputs"]["execution"] == (repo[0] / "kb" / revise_module.EXECUTION_REL).read_text()
     assert "passes" not in call["inputs"]
     path.unlink()  # repeats use captured inputs, not the now-missing source plan
     (repo[0] / "kb" / revise_module.INSTRUCTION_REL).unlink()
@@ -330,22 +347,27 @@ def test_strike_selections_still_stop_and_unapproved_edits_are_not_used(repo, ca
     listed = repo[0] / waiting["waiting-for"]["file"]
     listed.write_text(strike(listed.read_text(), "beta", "a registered word"))
     approve(repo, capsys, waiting)
-    listed.write_text("- unauthorized: replace\n")
+    listed.write_text("- quote: unauthorized\n  change: replace\n  reason: none\n")
     _, ready, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [f"apply {pass_name} {model}"]
     assert ready["unapproved-edits"] and note_text(repo) == original
     assert f"{pass_name} applied alpha gamma." in artifact_file(repo, ready, "final.md").read_text()
     [applied] = [c for c in captured_inputs(repo[2]) if c["kind"] == "apply"]
-    assert applied["inputs"]["struck"] == "- beta: word; replace\n  struck: a registered word\n"
-    assert "beta" not in applied["inputs"]["approved"]
+    assert "  change: beta\n  reason: word\n  struck: a registered word\n" in applied["inputs"]["answers"]
+    assert "unauthorized" not in applied["inputs"]["answers"]
     publish(repo, capsys, ready)
 
 
+BETA = "- quote: A note about\n  change: beta\n  reason: word\n"
+
+
 @pytest.mark.parametrize("damage, problem", [
-    (lambda text: text.replace("- beta: word; replace\n", ""), "deleted instead of struck: `- beta"),
-    (lambda text: strike(text, "beta", ""), "struck without a reason: `- beta"),
-    (lambda text: text.replace("why: decorative", "why: ambiguous"), "not in the proposed list as proposed: `- alpha"),
-    (lambda text: text + "- epsilon: replace\n", "not in the proposed list as proposed: `- epsilon"),
+    (lambda text: text.replace(BETA, ""), "deleted instead of struck: `- quote: A note about"),
+    (lambda text: strike(text, "beta", ""), "struck without a reason: `- quote: A note about"),
+    (lambda text: text.replace("reason: decorative", "reason: ambiguous"),
+     "not in the proposed list as proposed: `- quote: Alpha body"),
+    (lambda text: text + "- quote: epsilon\n  change: epsilon\n  reason: new\n",
+     "not in the proposed list as proposed: `- quote: epsilon"),
 ])
 def test_strike_without_reason_or_edited_list_waits_for_a_corrected_file(repo, capsys, tmp_path, damage, problem):
     original = start(repo)
@@ -358,10 +380,11 @@ def test_strike_without_reason_or_edited_list_waits_for_a_corrected_file(repo, c
     assert code == 0 and launches == [] and not blocked["applied"] and note_text(repo) == original
     assert blocked["passes"][0]["state"] == "waiting" and problem in blocked["passes"][0]["reason"]
     assert blocked["waiting-for"]["key"] == waiting["waiting-for"]["key"] and problem in blocked["waiting-for"]["what"]
-    listed.write_text(strike(listed.read_text().split("- epsilon")[0].replace("why: ambiguous", "why: decorative")
-                             .replace("  struck: \n", ""), "gamma", "keep it"))
-    if "beta" not in listed.read_text():
-        listed.write_text(listed.read_text().replace("- gamma: keep\n", "- beta: word; replace\n- gamma: keep\n"))
+    repaired = (listed.read_text().split("- quote: epsilon")[0].replace("reason: ambiguous", "reason: decorative")
+                .replace("  struck: \n", ""))
+    if "change: beta" not in repaired:
+        repaired = repaired.replace("- quote: long enough", BETA + "- quote: long enough")
+    listed.write_text(strike(repaired, "gamma", "keep it"))
     approve(repo, capsys, blocked)
     _, ready, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == ["apply plain-wording small"] and ready["waiting-for"]["file"].endswith("publication.json")
@@ -435,7 +458,7 @@ def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     calls = captured_inputs(repo[2])
     assert {c["kind"] for c in calls} == {"assess", "pass", "list", "apply"}
     assert all(c["inputs"]["brief"] == brief.read_text() for c in calls)
-    assert all("## Headless write briefs" in c["inputs"]["workflow"] for c in calls if c["kind"] != "assess")
+    assert all("## Headless write briefs" in c["inputs"]["execution"] for c in calls if c["kind"] != "assess")
     publish(repo, capsys, ready)
 
 
@@ -615,3 +638,24 @@ def test_edited_artifact_starts_new_run_without_reusing_publication(repo, capsys
     code, fresh, launches = revise(repo, capsys, NOTE_PATH, "--assess")
     assert code == 0 and fresh["run-dir"] != ready["run-dir"] and launches == ["assess - big", *ORDINARY]
     assert not fresh["applied"] and note_text(repo) == edited
+
+
+def test_every_pass_candidate_comes_from_the_edit_route(repo, capsys, tmp_path):
+    start(repo)
+    path = named_plan(tmp_path, passes=("readability-and-flow", "plain-wording"))
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    listed = repo[0] / waiting["waiting-for"]["file"]
+    listed.write_text(strike(listed.read_text(), "beta", "a registered word"))
+    approve(repo, capsys, waiting)
+    _, ready, _ = revise(repo, capsys, NOTE_PATH)
+    held = {}
+    for record in sorted((repo[0] / ready["run-dir"] / "artifact/edits").glob("*/observation.json")):
+        data = json.loads(record.read_text())
+        [result] = [name for name in data["completed-results"] if name.endswith("/result.md")]
+        held[data["request"]["call-job"]] = yaml.safe_load((record.parent / result).read_text().split("---\n")[1])
+    assert {job: data["outcome"] for job, data in held.items()} == {
+        "readability-and-flow": "changed", "plain-wording/list": "proposed", "plain-wording/apply": "changed"}
+    assert held["plain-wording/list"]["profile"]["launch-model"] == "small"
+    for state in ready["passes"]:
+        job = state["name"] if state["name"] == "readability-and-flow" else f"{state['name']}/apply"
+        assert (repo[0] / held[job]["candidate"]).read_text() == (repo[0] / state["text"]).read_text()

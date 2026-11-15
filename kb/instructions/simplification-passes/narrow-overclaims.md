@@ -1,7 +1,8 @@
 ---
 description: "Use when a sentence about other systems, other people, or the artifact's own method asserts more than the available evidence shows, or when the operator says a sentence is too strong"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: judgment
+decision: none
 depth: 2
 ---
 
@@ -10,7 +11,9 @@ depth: 2
 Make every load-bearing sentence assert only what its evidence can show, and
 mark what it cannot as a gap rather than filling it.
 
-Effort: judgment. Deciding what the evidence bounds needs the session model, and the parent context, where the conversation that raised the overclaim is the evidence.
+Effort: judgment. Deciding what the evidence bounds needs the stronger model. When the conversation that raised the overclaim is the evidence, that evidence must be supplied as an input; the revise workflow runs this operation only with a `defend` input.
+
+## Steps
 
 Apply these moves, each to the sentence that needs it:
 
@@ -32,8 +35,12 @@ A flagged sentence whose evidence supports it as written stays as written.
 The assessment's flag is a claim to check, not a finding to satisfy; report
 the sentence with the evidence that holds it.
 
-Report each changed sentence as before and after, one line each, with the
-evidence that bounds it.
+## Report
 
-Preserve: claims the packet marks as defended. Narrow a defended claim's
-wording only if the operator confirms.
+Each changed sentence as before and after, one line each, with the evidence
+that bounds it.
+
+## Preserve
+
+The claims in the `defend` input. Narrow a defended claim's wording only if
+the operator confirms; report the proposed narrowing instead of applying it.

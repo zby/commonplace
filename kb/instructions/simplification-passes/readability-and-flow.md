@@ -1,7 +1,8 @@
 ---
 description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat, or its sentences need a second reading; structural and sentence-level edits with no change of claim"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: judgment
+decision: none
 depth: 4
 ---
 
@@ -12,7 +13,9 @@ once, in the place it does the most work.
 
 Effort: judgment. Structural moves need judgment; run tightening alone as simple when the assessment recommended nothing structural.
 
-Structural moves, each applied only where the whole read shows the need:
+## Steps
+
+Apply these structural moves, each only where the whole read shows the need:
 
 - **Surface the divergence.** The sentence a reader would repeat when
   recommending the artifact belongs in the opening or the claim section, not
@@ -38,11 +41,15 @@ Structural moves, each applied only where the whole read shows the need:
 Read the seams after each move. A relocated paragraph's first sentence must
 work in its new place.
 
-Report: each structural move in one line, and the count of sentence-level
-edits. Do not list tightening or parsing edits individually.
+## Report
 
-Preserve: every claim, example, link, and qualification. If a move would
-require choosing between two readings of a sentence, leave it and flag it.
+Each structural move in one line, and the count of sentence-level edits. Do
+not list tightening or parsing edits individually.
+
+## Preserve
+
+Every claim, example, link, and qualification. If a move would require
+choosing between two readings of a sentence, leave it and flag it.
 
 ---
 

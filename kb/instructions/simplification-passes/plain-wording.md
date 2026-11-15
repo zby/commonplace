@@ -1,7 +1,8 @@
 ---
 description: "Use when an artifact's wording should be simplified: decorative figures made literal, unusual words made common, and redundant exclusions cut, without stripping the metaphors that carry the argument or the terms the KB registers"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: simple
+decision: per-item
 depth: 5
 ---
 
@@ -13,7 +14,9 @@ thing, and exclusions that deny what the sentence has already ruled out.
 
 Effort: simple. Listing and marking against a recorded threshold; the operator strikes.
 
-1. List every candidate with a proposed replacement. Do not apply any. Four
+## Steps
+
+1. Find every candidate and its proposed replacement. Do not apply any. Four
    kinds of candidate:
    - A figurative phrase, with a literal statement.
    - An unusual word, with the common word that says the same thing. Unusual
@@ -53,17 +56,26 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
    added denial that it is evidence unless the denial identifies a separate
    evidential misuse. Keep any distinct limitation, such as which comparison
    remains untested; do not replace the redundant denial with another hedge.
-5. Return the list marked keep or replace, with the reason in a few words.
-   The operator strikes items, each with a reason. Apply only what survives.
+5. Return each candidate you would replace as one proposal: the passage as
+   its `quote`, the replacement as its `change`, and the reason in a few
+   words. Name each candidate you keep in the report, with the reason. The
+   operator strikes proposals, each with a reason.
 6. When the literal phrase needs a referent the figure did not name (who is
    charged, what is at fault), do not choose one. Report the phrase as a
    question with the candidate referents.
+7. Run again with the operator's `answers` input, apply only the entries
+   that carry no `struck:` line, each as proposed.
 
-Report: the applied replacements, one line each, then the struck entries
-with the operator's reasons. The strikes and reasons are the threshold for
-the next run.
+## Report
 
-Preserve: technical terms that look figurative or unusual but are the field's
+On the proposing run: the kept candidates with their reasons, and the
+questions of step 6. On the applying run: the applied replacements, one line
+each, then the struck entries with the operator's reasons. The strikes and
+reasons are the threshold for the next run.
+
+## Preserve
+
+Technical terms that look figurative or unusual but are the field's
 or the KB's registered words (seed, holding a theory, gradient descent,
 legible, ampliative); a term the artifact itself defines; and quoted text,
 which is never reworded. Whether a registered abstraction should give way

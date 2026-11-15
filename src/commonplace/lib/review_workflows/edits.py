@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import difflib
 import json
+import re
 import uuid
 from pathlib import Path
 
@@ -29,6 +30,9 @@ from commonplace.headless.jobs import Run, digest
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
 from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
+from commonplace.lib.note_parser import blank_fenced_code_blocks, find_markdown_links
+from commonplace.lib.quote_matching import normalize_text
+from commonplace.lib.quote_verification import parse_prose_citations
 from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.validation import ValidationRun
 
@@ -109,6 +113,53 @@ def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> 
     if (start_parts is None or parts["body"] != start_parts["body"]) and "user-verified" in parsed.data:
         problems.append("the body changed, so remove `user-verified` from the frontmatter")
     problems += [f"validation: {fail}" for fail in sorted(validation_fails(root, note, text) - baseline)]
+    return problems
+
+
+def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: set[str]) -> list[str]:
+    """The hard bounds a revised artifact breaks; empty when it keeps them.
+
+    An artifact with frontmatter keeps the note bounds of `bounds()`. An
+    artifact without frontmatter gains none, keeps its first H1 and adds no
+    validation failure. No edit may change the title: an operation that judges
+    titles proposes them in its report.
+    """
+    if not text.strip():
+        return ["the revised artifact is empty"]
+    if frontmatter.opens_frontmatter(start):
+        return bounds(root, artifact, start, text, baseline)
+    problems = ["the artifact has no frontmatter; add none"] if frontmatter.opens_frontmatter(text) else []
+    title, start_title = results.note_parts(text) or {}, results.note_parts(start) or {}
+    if title.get("title") != start_title.get("title"):
+        problems.append(f"the H1 changed; keep `# {start_title.get('title')}`")
+    return problems + [f"validation: {fail}" for fail in sorted(validation_fails(root, artifact, text) - baseline)]
+
+
+_QUOTE_MARK = re.compile(r"^[ \t]*>[ \t]?", re.MULTILINE)
+
+
+def quoted_spans(text: str) -> list[str]:
+    """The quoted spans of a text: each Markdown blockquote, and each quotation paired with a `verbatim` citation."""
+    spans, block = [], []
+    for line in blank_fenced_code_blocks(frontmatter.strip(text)).splitlines() + [""]:
+        if _QUOTE_MARK.match(line):
+            block.append(_QUOTE_MARK.sub("", line))
+        elif block:
+            spans.append("\n".join(block))
+            block = []
+    spans += [citation.quote for citation in parse_prose_citations(text) if citation.quote]
+    return [span for span in spans if span.strip()]
+
+
+def preserved(start: str, text: str, removed_links: list[str]) -> list[str]:
+    """What an edited text lost that it must keep: a link target not named as removed, or a quoted span."""
+    kept = set(find_markdown_links(frontmatter.strip(text)))
+    problems = [f"the link to `{target}` is gone; restore it, or name it under `removed-links`"
+                for target in dict.fromkeys(find_markdown_links(frontmatter.strip(start)))
+                if target not in kept and target not in removed_links]
+    plain = normalize_text(_QUOTE_MARK.sub("", text), "prose")
+    problems += [f"the quoted span `{span[:60]}` changed; quoted text is never reworded"
+                 for span in quoted_spans(start) if normalize_text(span, "prose") not in plain]
     return problems
 
 

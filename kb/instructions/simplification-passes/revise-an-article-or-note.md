@@ -129,19 +129,25 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    The command rejects a plan that names an unknown pass, misses a field or
    breaks the depth order the pass files declare. A replacement supplied
    with `--plan` reuses calls whose inputs did not change and reruns the others.
-2. Step 2 runs each listed pass as one worker, on the profile from
+2. Step 2 runs each listed pass as one run of the edit route, the same one
+   `commonplace-review run edit` uses, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
-   the revised text (title, type, brief declaration and H1 kept; no new validation
-   failure), and the next pass works on that text. Every pass must end
+   the edit result and the revised text (title, type, brief declaration and
+   H1 kept; no new validation failure; link targets and quoted spans kept),
+   and the next pass works on that text. Each run's result and candidate are
+   retained under `artifact/edits/`. Every pass must end
    `applied`, `no-change` or `skipped` before final publication is offered.
    After a `problem` pass, or while the run waits, the original artifact is
    untouched, and `not-applied` names the run file holding the proposed text.
    The workflow does not commit.
-3. Plain-wording and abstractions stop with `artifact/<pass>-list-<key>.md`.
+3. A pass whose `decision` is `per-item` (plain-wording, abstractions) first
+   returns proposals, and stops with them as `artifact/<pass>-list-<key>.md`:
+   one entry per proposal, holding its `quote`, `change` and `reason`.
    Under each entry you strike, after its indented lines, add one indented
    line `struck: <reason>`; delete nothing and change no entry. Run the
-   stop's approval command, then repeat; the worker applies only the
-   unmarked entries. A deleted, edited or added entry, or a strike without a
+   stop's approval command, then repeat; the same operation runs again with
+   the answered list as its `answers` input and applies only the unmarked
+   entries. Code refuses a candidate that changed a struck entry's passage. A deleted, edited or added entry, or a strike without a
    reason, stops the run again naming the entry: correct the file and
    approve it again. In a session, follow
    [resolve a strike list](./resolve-a-strike-list.md): the agent presents
@@ -186,7 +192,7 @@ integrated and committed before the next one runs.
 When the artifact declares a [write brief](../../types/write-brief.md), the assessment and every pass
 (including candidate-list and apply workers) receive its captured text as
 `brief`. Pass workers receive [execute a revision pass](./execute-a-revision-pass.md)
-as `workflow`, not this planning procedure. That execution instruction carries
+as `execution`, not this planning procedure. That execution instruction carries
 the pass bounds and brief constraints without commissioning assessment or dispatch.
 
 Treat the supplied brief as binding retained intent. Keep its must-keep,

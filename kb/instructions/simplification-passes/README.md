@@ -18,9 +18,19 @@ pass did.
 
 ## Passes
 
+Every pass except split-out-a-treatment is an
+[edit operation](../../types/edit-operation.md): it takes one text of the
+note and returns an [edit result](../../types/edit-result.md). Each runs
+alone with `commonplace-review run edit OPERATION NOTE`, which writes nothing
+to the checkout, and the revise workflow runs each pass through the same
+route. Split-out-a-treatment writes a second file, so it stays a plain
+instruction for a session.
+
 Each pass declares `effort: simple` or `effort: judgment` in its frontmatter.
 Simple passes run in a fresh worker on a cheaper model or lower effort;
-judgment passes stay on the session model. The six passes in the depth order
+judgment passes run on the stronger profile. Each edit operation declares
+`decision`: `none` when it applies its changes, `per-item` when it first
+returns proposals for the operator to strike. The passes in the depth order
 of the orchestrating procedure also declare `depth` (1 runs first); a pass
 without `depth` may run at any point.
 

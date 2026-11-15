@@ -48,7 +48,6 @@ def repo(tmp_path, monkeypatch):
     record(root, RUN, "b", "abstractions-list-0123456789ab.md", LIST)
     record(root, RUN, "c", "publication.json", '{"artifact": "kb/theory/foo.md"}\n',
            '{"artifact": "kb/theory/foo.md"}\n', "2026-11-12T11:00:00Z", "pub-key")
-    record(root, RUN, "d", "plain-wording-list-ffffffffffff.md", "No candidates.\n")
     write(root, "kb/reports/state/review/runs/20261112T073040Z/sweep.json", "{}")
     write(root, "kb/reports/state/review/runs/v2/revise/kb/theory/baz/bbbbbbbbbbbb/log.jsonl", "")
     write(root, "kb/reports/state/review/packets/kb/theory/bar.md",

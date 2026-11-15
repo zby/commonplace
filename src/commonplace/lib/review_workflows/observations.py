@@ -19,6 +19,8 @@ from commonplace.lib.review_workflows import result_contract
 
 VERSION = 2
 LIBRARY_POLICY = "git-visible-or-installed-v1"
+FAMILIES = ("reviews", "edits")
+"""The directories under a run's `artifact/` that hold observations: review and edit executions."""
 
 
 def sha(data: bytes) -> str:
@@ -181,16 +183,30 @@ def load(directory: Path) -> dict:
     return data
 
 
+def find(run_artifact: Path, observation: str) -> Path:
+    """The directory of a run's observation, whichever family holds it."""
+    for family in FAMILIES:
+        directory = safe_path(run_artifact / family, observation)
+        if (directory / "observation.json").is_file():
+            return directory
+    raise ValueError(f"no observation {observation} in {run_artifact}")
+
+
 def begin(run, root: Path, pair, note: str, criterion: str, contracts: dict[str, bytes], prompt: str, call_job: str,
-          call_inputs: dict[str, str], operational_inputs: dict[str, dict[str, str]]) -> tuple[Path, dict]:
+          call_inputs: dict[str, str], operational_inputs: dict[str, dict[str, str]],
+          family: str = "reviews", profile=None) -> tuple[Path, dict]:
+    """Capture one execution's exact inputs under `artifact/<family>/<identity>`, or find it on replay.
+
+    `profile` is the call's own profile when it differs from the run's.
+    """
     request = {"job": pair.job, "call-job": call_job, "note": pair.note, "criterion": pair.criterion, "contract": pair.contract,
                "kind": pair.kind, "criterion-id": pair.criterion_id,
                "target-sha256": sha(note.encode()), "criterion-bytes-sha256": sha(criterion.encode()),
                "contract-sha256": result_contract.fingerprint(contracts), "prompt-sha256": sha(prompt.encode()),
-               "profile": asdict(run.profile), "timeout": run.timeout,
+               "profile": asdict(profile or run.profile), "timeout": run.timeout,
                "call-inputs": {name + ".md": sha(value.encode()) for name, value in call_inputs.items()}}
     identity = sha(json.dumps(request, sort_keys=True).encode())[:24]
-    directory = run.artifact / "reviews" / identity
+    directory = run.artifact / family / identity
     record = directory / "observation.json"
     if record.exists():
         data = load(directory)

@@ -1,15 +1,49 @@
 ---
-description: Named strategies for classifying review-warning fixes and promoting recurring new patterns into a shared codebook.
-type: types/instruction.md
+description: "Use to fix one review finding on one note by the named strategy whose pattern it matches; also the codebook of named fix strategies that fix reports cite"
+type: types/edit-operation.md
+effort: judgment
+decision: none
+responds-to: [prose/source-residue, semantic/grounding-alignment, semantic/completeness-boundary-cases]
 ---
 
-# Fix Strategy Taxonomy
+# Fix a finding by a named strategy
 
-Each entry names a recurring pattern of review warning + appropriate fix. Agents cite strategy names in fix reports. When a fix doesn't fit any listed strategy, the agent reports it as `new-pattern` — recurring new patterns get added here.
+Resolve one review finding on the text with the strategy whose pattern it
+matches, changing only the passage the finding names.
 
-The strategies are organized by the review check they most commonly address, but a strategy can apply across checks.
+Each strategy below names a recurring pattern of review warning and its
+appropriate fix. The strategies are organized by the review check they most
+commonly address, but a strategy can apply across checks. Fix reports cite a
+strategy by its anchor, such as `fix-strategy-taxonomy.md#stale-paths`. When
+a fix fits no listed strategy, the report names it `new-pattern`; recurring
+new patterns are added here.
 
----
+## Steps
+
+The caller supplies the finding as the `finding` input: a review result file,
+or a file holding one finding with its criterion, its quoted passage and its
+reason. Fix only that finding.
+
+1. Find the finding's passage in the text. If the text no longer shows the
+   pattern the finding names, change nothing and say so in the report.
+2. Choose the strategy whose pattern matches the finding. Verify the pattern
+   against the text before acting, as the strategy's typical fix says.
+3. Apply the strategy's typical fix to that passage, with the lightest change
+   that resolves the finding.
+4. If no strategy fits, fix the passage as the finding asks and name the
+   strategy `new-pattern`, with one sentence describing the pattern.
+
+## Report
+
+One line per change: the strategy by anchor, or `new-pattern` with its
+description; the passage; and what changed. A finding the text no longer
+shows is reported as not applicable, with the passage that now stands there.
+
+## Preserve
+
+Every passage the finding does not name. The note's claims beyond the
+narrowing or attribution the strategy prescribes: a fix that would change
+what the note argues is reported, not applied.
 
 ## Source residue
 

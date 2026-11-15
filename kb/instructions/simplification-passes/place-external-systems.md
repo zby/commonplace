@@ -1,7 +1,8 @@
 ---
 description: "Use when an artifact should position named external systems against its own criteria or obligations, so readers can locate their systems on it, and the placements must survive the systems' authors reading them"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: simple
+decision: none
 ---
 
 # Place external systems
@@ -13,24 +14,30 @@ identified source ingest the KB already holds.
 Effort: simple. Lookup and summary from generated main-review files; the
 operator checks the contestable list.
 
-1. Select generated reviews directly under `kb/agentic-systems/reviews/` with
+## Steps
+
+The caller supplies the evidence as inputs: each generated main review from
+`kb/agentic-systems/reviews/` under a role beginning with `review`, such as
+`review-mem0`; each tracked `kb/sources/` ingest under a role beginning with
+`ingest`; and, where a compact review is not enough, the output of
+`commonplace-agentic-analysis-handoff <run-state-path>` for that review's
+exact result under a role beginning with `handoff`. Use only these files.
+
+1. Admit a supplied main review only when it has
    `generated-by: analyse-agentic-system`, `analysis-run`, `source-identity`,
    and `reviewed-revision`. Read the evidence basis and admit only findings
-   supported by inspected code at the named revision. Record each input path,
-   SHA-256, run ID, and source revision in the report. A `kb/sources/` ingest
-   may independently supply code-grounded findings; identify it as an ingest,
-   not a main review. Do not select a legacy memory review or use it to fill
-   gaps in a main review.
-2. Read the selected file directly. For each proposed placement, identify the
-   supporting section and sentence before drafting. If the compact review is
-   insufficient and its exact `result.md` is available, run
-   `commonplace-agentic-analysis-handoff <sibling-run-state-path>` from the
-   repository root. Require exit status zero, substantive result disposition
-   `complete`, and matching run, source revision, and generated-review path.
-   Read the exact result's relevant records and limitations and record its
-   SHA-256 and canonical record IDs. If the required support is still missing
-   or validation fails, omit that placement and report the gap. Do not acquire
-   new sources or infer a mechanism from the system's claims or from omission.
+   supported by inspected code at the named revision. Record each input's
+   origin path, run ID and source revision in the report. An ingest may
+   independently supply code-grounded findings; identify it as an ingest, not
+   a main review. Do not use a legacy memory review or use it to fill gaps in
+   a main review.
+2. For each proposed placement, identify the supporting section and sentence
+   before drafting. Use a handoff input only when it reports exit status zero,
+   substantive result disposition `complete`, and the run, source revision
+   and generated-review path of the review it supports; record its canonical
+   record IDs. If the required support is missing from the inputs, omit that
+   placement and report the gap. Do not acquire new sources or infer a
+   mechanism from the system's claims or from omission.
 3. For each supported placement, state in one or two sentences what the system
    retains, what admits a change, and which criteria the evidence supports or
    rules out within its inspected boundary. Mark uninspected criteria as
@@ -45,14 +52,16 @@ operator checks the contestable list.
    proposed placement and its retention or regeneration requirement in the
    report; do not insert it into the artifact or point to an insufficient
    compact review as though that file carried the evidence.
-6. Before returning or applying the paragraph, recheck the input hashes and
-   any completion check used in step 2. If an input changed or validation
-   fails, withhold the affected placement and report the changed input.
 
-Report: the paragraph; input identities and hashes; withheld placements and
-their missing support; and placements a system's author would contest, each
-with the supporting section and sentence for the operator to check.
+## Report
 
-Preserve: the artifact's criteria as stated. A system that does not fit them
+The paragraph; input identities; withheld placements and their missing
+support; and placements a system's author would contest, each with the
+supporting section and sentence for the operator to check. The route records
+each input's hash in its observation.
+
+## Preserve
+
+The artifact's criteria as stated. A system that does not fit them
 is evidence about the criteria for the operator, not a reason to adjust them
 in this pass.

@@ -1,7 +1,8 @@
 ---
 description: "Use when an artifact uses a coined or registered abstraction (retained adaptation) where the ordinary word (learning) would carry the sentence, or mixes the abstraction and the ordinary word for one thing"
-type: types/instruction.md
+type: types/edit-operation.md
 effort: judgment
+decision: per-item
 depth: 3
 ---
 
@@ -12,6 +13,8 @@ way to the ordinary word everywhere, so that one thing has one name.
 
 Effort: judgment. Whether any sentence needs the distinction the abstraction
 draws is a claim question, and the decision is per term, not per occurrence.
+
+## Steps
 
 1. List each abstraction the artifact uses with the ordinary word it stands in
    for: retained adaptation → learning, system-definition artifact →
@@ -36,13 +39,22 @@ draws is a claim question, and the decision is per term, not per occurrence.
      training sense next to retained adaptation of a process). Both stay;
      each occurrence gets the word for the thing it names. Report the pair
      and the sentence that separates them.
-4. Return the proposals. The operator strikes items, each with a reason.
-   Apply only what survives.
+4. Return one proposal per term whose decision changes the text: the term's
+   first occurrence, with enough of its sentence to occur once in the text,
+   as its `quote`; the decision as its `change`; and the reason, naming the
+   deciding occurrence. Report a term you keep unchanged. The operator
+   strikes proposals, each with a reason.
+5. Run again with the operator's `answers` input, apply only the entries
+   that carry no `struck:` line, each throughout the text.
 
-Report: per term, the decision, the deciding occurrence when the term is
-kept, and the count of replacements.
+## Report
 
-Preserve: quoted text; a term inside a link title, a filename, or a
+Per term, the decision, the deciding occurrence when the term is kept, and
+the count of replacements.
+
+## Preserve
+
+Quoted text; a term inside a link title, a filename, or a
 frontmatter field; the claim of every sentence. A replacement that would
 widen or narrow a claim is a sign the term is needed, not a reason to
 reword the claim.

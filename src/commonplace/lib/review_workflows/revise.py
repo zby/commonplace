@@ -1,10 +1,10 @@
 """Revise one markdown artifact through the simplification passes, as a workflow over headless workers.
 
-The judgment lives in the library's instruction files, each handed to its
-worker as the `criterion` input: `revise-an-article-or-note.md` for the
-assessment, and each pass file under `instructions/simplification-passes/`
-for its pass. Editors receive `execute-a-revision-pass.md`, not the planning
-instruction. Fixed-plan execution does not construct an assessment request.
+The judgment lives in the library's instruction files: `revise-an-article-or-note.md`
+is the assessment's `criterion` input, and each pass file under
+`instructions/simplification-passes/` is an edit operation that
+`edit_operations.ask()` runs. Editors receive `execute-a-revision-pass.md`
+as `execution`, not the planning instruction. Fixed-plan execution does not construct an assessment request.
 Prompts here say only how to read inputs and write outputs.
 Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
@@ -27,20 +27,23 @@ never approves: only the recorded approved text becomes the operator's answer:
    override. A named plan bypasses assessment but still requires validation.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
-   `artifact/start.md`. Each listed pass is one `checked()` ask on the
-   profile its `effort` selects, with the current text, the pass file, the
-   purpose, the defend list and the scope as inputs, and the revised
-   artifact and a pass report as outputs. Code checks the revised text
-   (`artifact_bounds()`), and the next pass works on it. Each
+   `artifact/start.md`. Each listed pass is one run of the edit route
+   (`edit_operations.ask()`) on the profile its `effort` selects, with the
+   current text and the roles `purpose`, `defend`, `scope` and `brief`. The
+   route checks the edit result and the candidate and retains both in its
+   observation under `artifact/edits/`; the next pass works on the
+   candidate. Each
    pass's report and the text it left are kept under `artifact/reports/` and
    `artifact/texts/`, so the operator can read each pass's diff. A pass
-   whose text comes back unchanged is `no-change`. A worker-reported problem
+   whose result is `unchanged` is `no-change`. A worker-reported problem
    stops the run; a pass out of correction attempts is `problem`, and the run
    can collect the remaining pass outputs but applies none of them.
-3. **Strikes.** A pass in `STRIKE` has the operator strike its list before
-   any entry is applied: a list ask, a stop with
-   `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat an apply
-   ask given the proposed list and the list the operator explicitly approved. A struck
+3. **Strikes.** A pass whose `decision` is `per-item` has the operator strike
+   its proposals before any entry is applied: a proposing run, a stop with
+   the proposals listed (`edit_operations.strike_list()`) in
+   `artifact/<pass>-list-<answer key prefix>.md`, and on the repeat the same
+   operation run again with the explicitly approved list as its `answers`
+   input. A struck
    entry stays in the file under an indented `struck: <reason>` line; the
    reason is required, and a deleted, edited or added entry blocks the pass
    until the operator approves a corrected file. The reasons are the
@@ -69,11 +72,8 @@ reported as unapproved and never silently used.
 
 from __future__ import annotations
 
-import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-
-import yaml
 
 from commonplace.headless import operator
 from commonplace.headless.decisions import decide, parse, violations
@@ -88,30 +88,25 @@ from commonplace.headless.jobs import (
     output_ref,
 )
 from commonplace.lib import frontmatter
-from commonplace.lib.library import library_root
-from commonplace.lib.review_workflows import gates, results
+from commonplace.lib.library import artifact_identity, library_root
+from commonplace.lib.naming import write_brief_name_for
+from commonplace.lib.review_workflows import edit_operations, gates, result_contract
+from commonplace.lib.review_workflows.edit_operations import EFFORTS, STRUCK, items
 from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
     Conflict,
     Stop,
     apply,
-    bounds,
     capture_brief,
     guarded_changes,
     publication,
-    rejection,
     unchanged_brief,
-    validation_fails,
 )
-from commonplace.lib.tasks import load_profile
 
 PASSES_DIR = "instructions/simplification-passes"
 INSTRUCTION_REL = f"{PASSES_DIR}/revise-an-article-or-note.md"
-EXECUTION_REL = f"{PASSES_DIR}/execute-a-revision-pass.md"
-EFFORTS = ("simple", "judgment")
+EXECUTION_REL = edit_operations.EXECUTION_REL
 ATTEMPTS = 3
-STRIKE = ("plain-wording", "abstractions")
-"""Passes whose file has the operator strike the proposed list before any entry is applied."""
 CONVERSATION = "narrow-overclaims"
 """The pass whose evidence is the conversation: it runs only with a non-empty defend list."""
 INTERACTIVE = {"split-out-a-treatment": "it writes a second file and the collection index from the "
@@ -119,7 +114,6 @@ INTERACTIVE = {"split-out-a-treatment": "it writes a second file and the collect
 """Passes the workflow never runs, with the reason."""
 PLAN_SCHEMA = {"purpose": str, "defend": list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN, START = "assessment.md", "plan.yaml", "start.md"
-NO_CANDIDATES = "No candidates."
 REPEAT = "commonplace-review run revise {artifact}"
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
@@ -136,6 +130,7 @@ class Pass:
     rel: str                          # library-relative path
     text: str
     description: str
+    decision: str | None = None       # the edit operation's `decision`; None for a pass that is not one
 
 
 def passes() -> dict[str, Pass]:
@@ -149,20 +144,21 @@ def passes() -> dict[str, Pass]:
         if data["effort"] not in EFFORTS or not isinstance(data.get("depth", 0), int):
             raise ValueError(f"{path.name}: `effort` must be one of {', '.join(EFFORTS)} and `depth` an integer")
         found[path.stem] = Pass(path.stem, data["effort"], data.get("depth"),
-                                path.relative_to(library_root()).as_posix(), text, data.get("description", ""))
+                                path.relative_to(library_root()).as_posix(), text, data.get("description", ""),
+                                data.get("decision"))
     return found
 
 
 def catalog(known: dict[str, Pass]) -> str:
     """The passes the assessor may choose from, one line each, for its `passes` input."""
-    def note(name: str) -> str:
-        if name in INTERACTIVE:
+    def note(current: Pass) -> str:
+        if current.name in INTERACTIVE:
             return " This workflow does not run it: it is left for the interactive path."
-        if name == CONVERSATION:
+        if current.name == CONVERSATION:
             return " This workflow runs it only when `defend` is not empty."
-        return " The operator strikes its list before any entry is applied." if name in STRIKE else ""
+        return " The operator strikes its list before any entry is applied." if current.decision == "per-item" else ""
     lines = [f"- `{p.name}` (effort: {p.effort}; depth: {'any' if p.depth is None else p.depth}): "
-             f"{p.description.rstrip('.')}.{note(p.name)}" for p in known.values()]
+             f"{p.description.rstrip('.')}.{note(p)}" for p in known.values()]
     return ("Passes, by name. Run passes with a depth in increasing depth; a pass with depth `any` "
             "may run at any point.\n\n" + "\n".join(lines) + "\n")
 
@@ -219,17 +215,6 @@ def read_plan(text: str, known: dict[str, Pass] | None = None) -> dict:
             "passes": [{"pass": entry["pass"], "scope": entry.get("scope")} for entry in data["passes"]]}
 
 
-def effort_profiles(root: Path, overrides: dict[str, str | None]) -> dict[str, Profile]:
-    """The profile per effort: the profile file's `effort` mapping, with the operator's names in its place."""
-    config = yaml.safe_load(gates.profiles().read_text(encoding="utf-8"))
-    mapping = config.get("effort") or {}
-    chosen = {effort: overrides.get(effort) or mapping.get(effort) for effort in EFFORTS}
-    missing = [effort for effort, name in chosen.items() if not name]
-    if missing:
-        raise ValueError(f"no profile for effort {', '.join(missing)} in {gates.PROFILES_REL}")
-    return {effort: load_profile(root, name, gates.profiles()) for effort, name in chosen.items()}
-
-
 # --- Reports --------------------------------------------------------------------------------
 
 @dataclass
@@ -278,7 +263,7 @@ class ReviseReport:
                 "guard": {"clean": not self.changed, "changed": self.changed}}
 
 
-# --- Prompts: mechanical only ------------------------------------------------------------
+# --- The assessment prompt: mechanical only ------------------------------------------------
 
 ASSESS_PROMPT = """\
 Assess one artifact for revision. Nobody will answer questions. If you cannot, \
@@ -301,81 +286,6 @@ name) and, when the pass should touch only part of the artifact, `scope` \
 naming that part; `stop` is null, or the reason when the instruction says to \
 report a rewrite and stop. {no_writes}
 """
-
-FRAME = """\
-The artifact is `{artifact}` in this repository; the text under revision is \
-{artifact_input}. The artifact's file in the checkout may hold an older text: \
-work on this input, not the file. The pass is `{pass_rel}`; its text is \
-{criterion_input}. The revision instruction is {workflow_input}. \
-The purpose is {purpose_input}. {defend} {scope} {brief}
-"""
-
-PASS_PROMPT = """\
-Run one simplification pass over one artifact. Nobody will answer questions. If \
-you cannot run it within the pass's bounds, write {problem} instead of guessing.
-
-{frame}
-Output:
-- Write the complete revised artifact, frontmatter included, to {artifact_output}. \
-Do not edit the artifact's file: code checks your text. If the \
-pass changes nothing, write the text unchanged.
-- Write the pass's report to {report}, as the pass describes it, followed by \
-the items you noticed but did not apply. {no_writes}
-"""
-
-LIST_PROMPT = """\
-List the candidates of one simplification pass over one artifact. Nobody will \
-answer questions. If you cannot, write {problem} instead of guessing.
-
-{frame}
-Do the pass up to the list it returns, marked keep or replace with the reason, \
-and apply nothing: the operator strikes entries before any is applied.
-
-Output:
-- Write the list to {list_output}: one top-level `- ` item per candidate, \
-holding the passage, the proposed replacement, keep or replace, and the \
-reason; continuation lines are indented under their item. With no candidate, \
-write the single line `{none}`. {no_writes}
-"""
-
-APPLY_PROMPT = """\
-Apply the operator-approved list of one simplification pass to one artifact. \
-Nobody will answer questions. If you cannot, write {problem} instead of guessing.
-
-{frame}
-The pass's list for this text was {proposed_input}. The entries the operator \
-approved are {approved_input}; the entries they struck, each with the \
-operator's reason, are {struck_input}. Apply only the approved entries \
-marked replace, as the pass directs; apply no struck entry and no new one.
-
-Output:
-- Write the complete revised artifact, frontmatter included, to {artifact_output}. \
-Do not edit the artifact's file: code checks your text.
-- Write the pass's report to {report}, as the pass describes it, followed by \
-the struck entries with their reasons, one line each. {no_writes}
-"""
-
-
-def entries(listed: str) -> int:
-    """The number of top-level `- ` items in a strike list."""
-    return len(re.findall(r"^- ", listed, re.MULTILINE))
-
-
-STRUCK = re.compile(r"^\s+struck:\s*(.*?)\s*$")
-"""The operator's mark under a struck entry; the group is the required reason."""
-NO_STRIKES = "No entry was struck.\n"
-
-
-def items(listed: str) -> list[list[str]]:
-    """The top-level `- ` items of a strike list, each as its lines with the indented lines under it."""
-    found: list[list[str]] = []
-    for line in listed.splitlines():
-        if line.startswith("- "):
-            found.append([line.rstrip()])
-        elif found and line.strip():
-            found[-1].append(line.rstrip())
-    return found
-
 
 def strikes(proposed: str, approved: str) -> tuple[list[str], list[dict], list[str]]:
     """Split the operator's answer into kept entries, struck entries with reasons, and what blocks it.
@@ -404,28 +314,6 @@ def strikes(proposed: str, approved: str) -> tuple[list[str], list[dict], list[s
             struck.append({"entry": entry, "reason": reasons[0]})
     problems.extend(f"deleted instead of struck: `{item.splitlines()[0][:60]}`" for item in remaining)
     return kept, struck, problems
-
-
-# --- Checking texts --------------------------------------------------------------------------
-
-def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: set[str]) -> list[str]:
-    """The hard bounds a revised artifact breaks; empty when it keeps them.
-
-    An artifact with frontmatter keeps the note bounds of `edits.bounds`:
-    frontmatter title, type and brief declaration, the H1, `user-verified` dropped on a body
-    change, no new validation failure. No pass may change the title: the one
-    that judges titles proposes them in its report. An artifact without
-    frontmatter gains none, keeps its first H1 and adds no validation failure.
-    """
-    if not text.strip():
-        return ["the revised artifact is empty"]
-    if frontmatter.opens_frontmatter(start):
-        return bounds(root, artifact, start, text, baseline)
-    problems = ["the artifact has no frontmatter; add none"] if frontmatter.opens_frontmatter(text) else []
-    title, start_title = results.note_parts(text) or {}, results.note_parts(start) or {}
-    if title.get("title") != start_title.get("title"):
-        problems.append(f"the H1 changed; keep `# {start_title.get('title')}`")
-    return problems + [f"validation: {fail}" for fail in sorted(validation_fails(root, artifact, text) - baseline)]
 
 
 # --- The workflow ------------------------------------------------------------------------------
@@ -465,75 +353,62 @@ def _assess(run: Run, prompt: str, inputs: dict[str, str], known: dict[str, Pass
     return answer
 
 
-def _ask(run: Run, job: str, template: str, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
-         inputs: dict[str, str], profile: Profile, **fields) -> Answer:
-    prompt = template.format(problem=PROBLEM_REF, frame=frame, artifact_output=output_ref("artifact"),
-                             report=output_ref("report"), no_writes=NO_WRITES, **fields)
-    return run.checked(job, lambda problems: prompt + rejection(problems),
-                       lambda answer: artifact_bounds(root, artifact, start, answer.outputs["artifact"], baseline),
-                       ["artifact", "report"], attempts=ATTEMPTS, inputs=inputs, profile=profile)
+def _strike(run: Run, root: Path, artifact: str, text: str, operation: edit_operations.Operation,
+            roles: dict[str, dict], profile: Profile, state: PassState, report: ReviseReport, context: dict,
+            **route) -> edit_operations.Edit | None:
+    """The applying run of a `per-item` pass; None when it stops for the operator or has nothing to apply.
 
-
-def _strike(run: Run, current: Pass, frame: str, root: Path, artifact: str, start: str, baseline: set[str],
-            inputs: dict[str, str], profile: Profile, state: PassState, report: ReviseReport,
-            context: dict) -> Answer | None:
-    """The apply answer of a strike pass; None when it stops for the operator or has nothing to apply."""
-    prompt = LIST_PROMPT.format(problem=PROBLEM_REF, frame=frame, list_output=output_ref("list"),
-                                none=NO_CANDIDATES, no_writes=NO_WRITES)
-
-    def check(answer: Answer) -> list[str]:
-        listed = answer.outputs["list"].strip()
-        return [] if listed == NO_CANDIDATES or entries(listed) else [
-            f"the list has no top-level `- ` item; with no candidate, write only `{NO_CANDIDATES}`"]
-    listed = run.checked(f"{current.name}/list", lambda problems: prompt + rejection(problems), check, ["list"],
-                         attempts=ATTEMPTS, inputs=inputs, profile=profile)
-    if listed.problem is not None:
+    The first run returns the proposals, rendered as the list the operator
+    strikes. The second run is the same operation with the answered list as
+    its `answers` input.
+    """
+    name = state.name
+    listed = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{name}/list", profile=profile,
+                                 **route)
+    if listed.outcome == "problem":
         return listed
-    proposed = listed.outputs["list"]
-    selection = {"pass": current.name, "key": listed.key, "proposed": proposed, "approved": None}
+    selection = {"pass": name, "key": listed.answer.key, "proposed": None, "approved": None}
     context["selections"].append(selection)
-    if proposed.strip() == NO_CANDIDATES:
+    if listed.outcome == "unchanged":
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
-    name = f"{current.name}-list-{listed.key[:12]}.md"      # a list made for another text waits again
-    approved = operator.answer(run, name, proposed, key=listed.key)
+    proposed = selection["proposed"] = edit_operations.strike_list(listed.data["proposals"])
+    file = f"{name}-list-{listed.answer.key[:12]}.md"      # a list made for another text waits again
+    approved = operator.answer(run, file, proposed, key=listed.answer.key)
     selection["approved"] = approved
     if approved is None:
         state.state = "waiting"
-        report.waiting_for = operator.waiting(run, root, name, STRIKE_HOW.format(name=current.name),
+        report.waiting_for = operator.waiting(run, root, file, STRIKE_HOW.format(name=name),
                                               REPEAT.format(artifact=artifact))
         return None
-    if operator.edited(run, name):
-        report.unapproved_edits.append(operator.waiting(run, root, name, UNAPPROVED, REPEAT.format(artifact=artifact)))
+    if operator.edited(run, file):
+        report.unapproved_edits.append(operator.waiting(run, root, file, UNAPPROVED, REPEAT.format(artifact=artifact)))
     kept, struck, problems = strikes(proposed, approved)
     selection["struck"] = struck
     if problems:
         state.state = "waiting"
         state.reason = "the approved list is not a strike of the proposed list: " + "; ".join(problems)
         report.waiting_for = operator.waiting(
-            run, root, name, f"{state.reason}. {STRIKE_HOW.format(name=current.name)} Then approve the file again.",
+            run, root, file, f"{state.reason}. {STRIKE_HOW.format(name=name)} Then approve the file again.",
             REPEAT.format(artifact=artifact))
         return None
     if not kept:
         state.state, state.reason = "no-change", "the operator struck every entry"
         return None
-    struck_text = "".join(f"{entry['entry']}\n  struck: {entry['reason']}\n" for entry in struck) or NO_STRIKES
-    return _ask(run, f"{current.name}/apply", APPLY_PROMPT, frame, root, artifact, start, baseline,
-                {**inputs, "proposed": proposed, "approved": "".join(f"{entry}\n" for entry in kept),
-                 "struck": struck_text}, profile,
-                proposed_input=input_ref("proposed"), approved_input=input_ref("approved"),
-                struck_input=input_ref("struck"))
+    answers = {"origin": _rel(root, run.artifact / file), "text": approved}
+    return edit_operations.ask(run, root, operation, artifact, text, {**roles, edit_operations.ANSWERS: answers},
+                               job=f"{name}/apply", profile=profile, **route)
 
 
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
-            profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], instruction: str,
-            context: dict) -> str:
-    """Run the plan's passes from `start`; return the text the last accepted pass left."""
+            profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
+            context: dict, contracts: dict[str, bytes]) -> str:
+    """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left."""
     run.accept(START, start)
-    baseline = validation_fails(root, artifact, start)
     text = start
     report.passes = [PassState(entry["pass"], entry["scope"], known[entry["pass"]].effort) for entry in plan["passes"]]
     defend = "".join(f"- {claim}\n" for claim in plan["defend"])
+    route = {"contracts": contracts, "execution": instruction}
     for state in report.passes:
         current = known[state.name]
         if current.name in INTERACTIVE or (current.name == CONVERSATION and not defend):
@@ -542,46 +417,36 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                             + INTERACTIVE.get(current.name, "its evidence is the conversation, and the plan's "
                                               "`defend` list is empty"))
             continue
-        inputs = {"artifact": text, "criterion": current.text, "purpose": plan["purpose"],
-                  "workflow": instruction, **brief,
-                  **({"defend": defend} if defend else {}), **({"scope": state.scope} if state.scope else {})}
-        frame = FRAME.format(
-            artifact=artifact, artifact_input=input_ref("artifact"), pass_rel=current.rel,
-            criterion_input=input_ref("criterion"), purpose_input=input_ref("purpose"),
-            workflow_input=input_ref("workflow"),
-            brief=f"The write brief is {input_ref('brief')}." if brief else "",
-            defend=(f"Defend these claims; the pass may not narrow them: {input_ref('defend')}." if defend
-                    else "No claim is marked as defended."),
-            scope=(f"Apply the pass only to this part of the artifact: {input_ref('scope')}." if state.scope
-                   else "Apply the pass to the whole artifact."))
+        operation = edit_operations.parse(artifact_identity(root, library_root() / current.rel), current.text)
+        roles = {"purpose": {"origin": "plan:purpose", "text": plan["purpose"]}, **brief,
+                 **({"defend": {"origin": "plan:defend", "text": defend}} if defend else {}),
+                 **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {})}
         profile = profiles[current.effort]
         try:
-            if current.name in STRIKE:
-                answer = _strike(run, current, frame, root, artifact, start, baseline, inputs, profile, state, report,
-                                 context)
-                if answer is None:
+            if operation.decision == "per-item":
+                edit = _strike(run, root, artifact, text, operation, roles, profile, state, report, context, **route)
+                if edit is None:
                     if state.state == "waiting":
                         return text
                     continue
             else:
-                answer = _ask(run, current.name, PASS_PROMPT, frame, root, artifact, start, baseline, inputs, profile)
+                edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=current.name,
+                                           profile=profile, **route)
         except OutOfAttempts as spent:
             state.state, state.reason = "problem", str(spent)
             continue
-        context["pass-answers"].append({"pass": current.name, "key": answer.key, "outputs": answer.outputs})
-        used = answer.record["profile"]
-        state.profile = {"harness": used["harness"], "launch-model": used["launch_model"], "effort": used["effort"]}
-        state.model = answer.record["model"]
-        if answer.problem is not None:
-            state.state, state.reason = "problem", f"worker problem: {answer.problem}"
+        context["pass-answers"].append({"pass": current.name, "key": edit.answer.key, "result": edit.text,
+                                        "candidate": edit.candidate})
+        state.profile, state.model = edit.data["profile"], edit.data["model"]
+        if edit.outcome == "problem":
+            state.state, state.reason = "problem", f"worker problem: {edit.answer.problem}"
             raise Stop(f"{current.name}: {state.reason}")
-        state.report = _rel(root, run.accept(f"reports/{current.name}.md", answer.outputs["report"]))
-        revised = answer.outputs["artifact"]
-        if revised == text:
+        state.report = _rel(root, run.accept(f"reports/{current.name}.md", edit.body))
+        if edit.outcome == "unchanged":
             state.state = "no-change"
             continue
-        state.text = report.proposed = _rel(root, run.accept(f"texts/{current.name}.md", revised))
-        state.state, text = "applied", revised
+        state.text = report.proposed = _rel(root, run.accept(f"texts/{current.name}.md", edit.candidate))
+        state.state, text = "applied", edit.candidate
     return text
 
 
@@ -607,7 +472,9 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
         brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
             instruction = (library_root() / EXECUTION_REL).read_text(encoding="utf-8")
+            contracts = result_contract.capture_contract(root, edit_operations.RESULT_TYPE)
             context = {"mode": report.mode, "execution": instruction, **brief,
+                       "contract-sha256": result_contract.fingerprint(contracts),
                        "pass-answers": [], "selections": []}
             if named_plan is None:
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
@@ -632,8 +499,10 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
                 }
             else:
-                final = _passes(run, root, artifact, start, plan, known, profiles, report, brief, instruction,
-                                context)
+                origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
+                final = _passes(run, root, artifact, start, plan, known, profiles, report,
+                                {name: {"origin": origin, "text": value} for name, value in brief.items()},
+                                instruction, context, contracts)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
                     unchanged_brief(root, artifact, start, brief)

@@ -24,7 +24,7 @@ import re
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.lib.review_workflows import full_pass, gates, revise
+from commonplace.lib.review_workflows import edit_operations, full_pass, gates, revise
 
 WORKFLOWS = ("revise", "full-pass")
 """Run families whose run directories may hold operator records; dated sweep directories hold none."""
@@ -32,7 +32,7 @@ FIXES = Path("kb/reports/state/fixes")
 PUBLICATION = "publication.json"
 ITEM_WIDTH = 80
 _RUN = re.compile(r"[0-9a-f]{12}")
-_LIST = re.compile(rf"({'|'.join(map(re.escape, revise.STRIKE))})-list-[0-9a-f]+\.md")
+_LIST = re.compile(r"([a-z0-9-]+)-list-[0-9a-f]+\.md")
 _AUTHORITY = {"user": "operator", "version-guard": "version-guard"}
 
 
@@ -69,15 +69,13 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
         listed = _LIST.fullmatch(name)
         if listed:
             cls = listed.group(1)
-            if proposal.strip() == revise.NO_CANDIDATES:
-                continue
             if answer is None:
                 found.append(_entry(note, workflow, run, record, cls, "worker", "pending", "pending", "bundle",
                                     **common))
                 continue
             kept, struck, _ = revise.strikes(proposal, answer)
             reasons = {entry["entry"]: entry["reason"] for entry in struck}
-            for entry in ("\n".join(lines) for lines in revise.items(proposal)):
+            for entry in ("\n".join(lines) for lines in edit_operations.items(proposal)):
                 if entry in kept:
                     decision, reason = "approve", None
                 elif entry in reasons:

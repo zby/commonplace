@@ -1,4 +1,9 @@
-"""Single-atom retained baselines and fresh trials, using the ordinary gate implementation."""
+"""Single-atom retained baselines and fresh trials, using the ordinary gate or edit implementation.
+
+A fixture holds one observation: a review of one pair, or one edit
+execution. A trial reruns it in an independent tree through the same code
+that produced it (`gates.ask()` or `edit_operations.ask()`).
+"""
 from __future__ import annotations
 
 import io
@@ -11,8 +16,14 @@ from dataclasses import asdict, replace
 from pathlib import Path
 
 from commonplace.headless.harness import HARNESSES, Profile
+from commonplace.headless.jobs import LaunchFailed, NoProgress, OutOfAttempts
 from commonplace.lib.library import library_root
-from commonplace.lib.review_workflows import gates, observations
+from commonplace.lib.review_workflows import (
+    edit_operations,
+    gates,
+    observations,
+    result_contract,
+)
 
 FIXTURES = gates.STATE / "fixtures"
 
@@ -52,7 +63,7 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
     if (run / "trial.json").exists():
         source_root = run / "tree"
         run = source_root / gates.RUNS / "trial"
-    directory = observations.safe_path(run / "artifact/reviews", observation)
+    directory = observations.find(run / "artifact", observation)
     record = observations.load(directory)
     if record.get("version") != observations.VERSION:
         raise ValueError("fixture needs a supported retained observation")
@@ -161,8 +172,13 @@ def load(root: Path, name: str) -> tuple[Path, dict]:
     return fixture, data
 
 
-def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) -> dict:
+def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES, family: str = "reviews") -> dict:
+    """Rerun the fixture's observation in a new tree; `family` names the command's kind, reviews or edits."""
     fixture, data = load(root, fixture_name)
+    if (data["request"]["kind"] == edit_operations.KIND) != (family == edit_operations.FAMILY):
+        raise ValueError("the fixture holds an edit execution; use `run edit --fixture`"
+                         if family != edit_operations.FAMILY else
+                         "the fixture holds a review; use `run gates --fixture`")
     if data["profile"]["harness"] not in harnesses:
         raise ValueError("fixture harness is unavailable")
     if harnesses is HARNESSES and data["profile"]["harness"] != "claude-code":
@@ -236,18 +252,54 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES) 
     before = gates.checkout_state(tree)
     if before != json.loads(receipt.read_text())["tree-state"]:
         raise ValueError("trial tree changed; restore its baseline before resuming, or start a new trial")
+    operational = {Path(item["path"]).stem: {
+        "origin": item["origin"], "text": observations.safe_path(fixture, item["path"]).read_bytes().decode("utf-8")}
+        for item in data["inputs"] if item["role"] == "operational"}
     with Run(trial_run, tree, profile, timeout=request["timeout"], harnesses=harnesses, max_workers=1) as run:
         run.library_root = tree / data["library"]
-        reports, stopped = gates.ask(run, tree, [pair], {pair.note: (tree / pair.note).read_bytes().decode("utf-8")},
-                                    max_workers=1, captured_criteria={pair.criterion: observations.safe_path(
-                                        fixture, criterion["path"]).read_bytes().decode("utf-8")}, contracts=contracts,
-                                    operational_inputs={Path(item["path"]).stem: {
-                                        "origin": item["origin"], "text": observations.safe_path(fixture, item["path"]).read_bytes().decode("utf-8")}
-                                        for item in data["inputs"] if item["role"] == "operational"})
+        if family == edit_operations.FAMILY:
+            reports, stopped = _edit(run, tree, data, fixture, criterion, contracts, operational)
+        else:
+            reports, stopped = _review(run, tree, pair, fixture, criterion, contracts, operational)
     result = {"run-dir": run_dir.relative_to(root).as_posix(), "fixture-sha256": identity,
               "evidence-root": tree.relative_to(root).as_posix(),
-              "stopped": stopped, "observations": [{**asdict(report), "result": None} for report in reports],
+              "stopped": stopped, "observations": reports,
               "changed": gates.changed_paths(before, gates.checkout_state(tree)),
               "gaps": data["gaps"], "effective-configuration": "unassessed"}
     observations.atomic_json(run_dir / "trial-result.json", result)
     return result
+
+
+def _review(run, tree: Path, pair, fixture: Path, criterion: dict, contracts: dict, operational: dict):
+    reports, stopped = gates.ask(run, tree, [pair], {pair.note: (tree / pair.note).read_bytes().decode("utf-8")},
+                                max_workers=1, captured_criteria={pair.criterion: observations.safe_path(
+                                    fixture, criterion["path"]).read_bytes().decode("utf-8")}, contracts=contracts,
+                                operational_inputs=operational)
+    return [{**asdict(report), "result": None} for report in reports], stopped
+
+
+def _edit(run, tree: Path, data: dict, fixture: Path, criterion: dict, contracts: dict, operational: dict):
+    """Rerun one edit execution from its captured operation, text, inputs and contract."""
+    request = data["request"]
+    target = next(item for item in data["inputs"] if item["role"] == "target")
+    operation = edit_operations.parse(
+        request["criterion"], observations.safe_path(fixture, criterion["path"]).read_bytes().decode("utf-8"))
+    execution = (tree / data["library"] / edit_operations.EXECUTION_REL).read_text(encoding="utf-8")
+    report = {"note": request["note"], "operation": request["criterion"], "job": request["call-job"],
+              "state": "not-run", "outcome": None, "problem": None}
+    stopped = None
+    try:
+        edit = edit_operations.ask(run, tree, operation, request["note"],
+                                   observations.safe_path(fixture, target["path"]).read_bytes().decode("utf-8"),
+                                   operational, job=request["call-job"], contracts=contracts, execution=execution)
+        report.update({"state": "edited", "outcome": edit.outcome})
+    except NoProgress as spent:
+        report.update({"state": "no-progress", "problem": str(spent)})
+    except OutOfAttempts as spent:
+        report.update({"state": "out-of-attempts", "problem": str(spent)})
+    except result_contract.ControllerError as error:
+        report.update({"state": "controller-error", "problem": str(error)})
+        stopped = str(error)
+    except LaunchFailed as failure:
+        report["state"], stopped = "stopped", str(failure)
+    return [report], stopped

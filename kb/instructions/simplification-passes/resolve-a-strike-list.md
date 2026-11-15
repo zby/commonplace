@@ -12,7 +12,7 @@ Consumption: an agent in a session with the operator, reached from the run repor
 Inputs:
 
 - the run's JSON report: `waiting-for` gives the file, its proposal key, the approval command and the command to repeat;
-- the proposed list in that file: one top-level `- ` item per candidate, with the passage, the proposed replacement, keep or replace, and the worker's reason;
+- the proposed list in that file: one top-level `- ` entry per proposal, with its `quote` (the passage), its `change` (the proposed replacement or decision) and the worker's `reason`;
 - the text the list was made for: the `text` of the last applied pass in the report, or `artifact/start.md` when none applied;
 - the pass instruction, for its preserve rules.
 
@@ -20,7 +20,7 @@ Authority: the strikes are the operator's. The agent presents, records and runs 
 
 ## Procedure
 
-1. Present each entry: the passage inside its sentence or paragraph, the proposed replacement, the worker's mark and reason, and any preserve rule of the pass that bears on it. Ask the operator: approve, or strike. For a strike, take the reason in the operator's words; do not suggest one and do not carry one over from another entry. One entry per question unless the operator asks for the whole list.
+1. Present each entry: the quoted passage inside its sentence or paragraph, the proposed change, the worker's reason, and any preserve rule of the pass that bears on it. Ask the operator: approve, or strike. For a strike, take the reason in the operator's words; do not suggest one and do not carry one over from another entry. One entry per question unless the operator asks for the whole list.
 2. Record in the file, exactly: under each struck entry, after its indented lines, one indented line `struck: <reason>`. Delete nothing, change no entry, add no entry. Approved entries stay as proposed.
 3. Show the operator the recorded strikes and reasons. On the operator's stated word for this exact file, run the reported approval command, then the repeat command.
 4. If the repeat stops on the same file again, its `what` names the blocking entry: deleted instead of struck, struck without a reason, or not as proposed. Correct the file as it says, confirm with the operator, approve again and repeat.

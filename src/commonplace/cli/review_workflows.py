@@ -6,6 +6,9 @@
                                  [--resume RUN_DIR]
     commonplace-review run full-pass NOTE [--direction TEXT] [--profile NAME] [--max-workers N]
                                      [--timeout SECONDS]
+    commonplace-review run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]
+                                [--timeout SECONDS]
+    commonplace-review run edit --fixture PATH
     commonplace-review run revise ARTIFACT [--plan FILE | --assess] [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
@@ -70,6 +73,16 @@ with a clean guard, and for a returned pending packet; 1 for a stop, a conflict 
 and 2 when the command failed. `packet` exits 0 when every recorded hash
 matches, 1 otherwise.
 
+`run edit` runs one edit operation (types/edit-operation.md) on one note and
+writes nothing to the checkout (see `commonplace.lib.review_workflows.edit_operations`).
+Its typed edit result and candidate stay in the run's observation under
+artifact/edits/. `--text` edits a repository file's text in place of the
+note's; `--input ROLE=PATH` supplies a file the operation reads under ROLE. A
+`per-item` operation returns `proposed`; given `--input answers=PATH`, the
+answered strike list, it applies the unstruck entries and returns `changed`.
+It exits 0 for an accepted result other than `problem` with a clean guard,
+1 otherwise, and 2 when the command failed.
+
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
 instructions/simplification-passes/revise-an-article-or-note.md). The first
@@ -83,9 +96,9 @@ does not change workflow inputs. Changed artifact text starts a new run and
 requires the mode again; runs recorded without a mode also require an explicit
 choice before continuing. `run gates NOTE --criteria GATE-ID --grouping pair`
 is the report-only, single-criterion baseline; `run full-pass` includes planning.
-A pass whose list the operator strikes (plain-wording, abstractions) stops
-with `artifact/<pass>-list-<key>.md`: delete the entries you strike, approve,
-then repeat. A stop for the operator is a normal end. The JSON report's
+A `per-item` pass (plain-wording, abstractions) stops with its proposals in
+`artifact/<pass>-list-<key>.md`: mark each entry you strike with an indented
+`struck: <reason>` line, approve, then repeat. A stop for the operator is a normal end. The JSON report's
 `waiting-for` gives what to do, the file, proposal key, approval command and
 command to repeat. A repeat never approves and launches nothing at an
 unchanged unapproved stop. Approval captures the file's text: later edits
@@ -133,6 +146,7 @@ from commonplace.lib import frontmatter
 from commonplace.lib.review_workflows import (
     criteria,
     decisions,
+    edit_operations,
     edits,
     fixtures,
     full_pass,
@@ -199,6 +213,17 @@ def _parser() -> argparse.ArgumentParser:
     full.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL}")
     full.add_argument("--max-workers", type=int, default=4, help="workers running at once")
     full.add_argument("--timeout", type=float, help="seconds a launch may take")
+    edit = workflows.add_parser("edit", help="run one edit operation on one note; writes nothing to the checkout")
+    edit.add_argument("operation", nargs="?", help="the operation: a repository or library path, "
+                      "such as instructions/simplification-passes/plain-wording.md")
+    edit.add_argument("note", nargs="?", help="the note the operation edits")
+    edit.add_argument("--input", action="append", default=[], metavar="ROLE=PATH",
+                      help="a file the operation reads under ROLE, such as findings or answers; repeat for each")
+    edit.add_argument("--text", help="a repository file holding the start text, in place of the note's file")
+    edit.add_argument("--profile", help="worker profile (default: the profile file's `effort` mapping "
+                      "for the operation's effort)")
+    edit.add_argument("--timeout", type=float, help="seconds a launch may take")
+    edit.add_argument("--fixture", help="retained single-edit fixture; every invocation is a new trial")
     rev = workflows.add_parser("revise", help="revise one markdown artifact through the simplification passes")
     rev.add_argument("artifact")
     rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
@@ -208,7 +233,7 @@ def _parser() -> argparse.ArgumentParser:
     mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment; final publication needs approval")
     mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection; "
                       "new runs require --plan or --assess, repeats keep the recorded mode")
-    for effort in revise.EFFORTS:
+    for effort in edit_operations.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
     rev.add_argument("--timeout", type=float, help="seconds a launch may take")
@@ -336,6 +361,25 @@ def _options(run_dir: Path, given: dict) -> dict:
     return options
 
 
+def _inputs(root: Path, given: list[str]) -> dict[str, dict[str, str]]:
+    """The `--input ROLE=PATH` files, each read once from the repository: role -> origin and text."""
+    supplied: dict[str, dict[str, str]] = {}
+    for item in given:
+        role, separator, name = item.partition("=")
+        if not separator or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", role) or role in supplied:
+            raise ValueError("--input needs unique ROLE=PATH entries (lowercase letters, digits and hyphens)")
+        path = observations.safe_path(root, name)
+        supplied[role] = {"origin": path.relative_to(root).as_posix(), "text": path.read_bytes().decode("utf-8")}
+    return supplied
+
+
+def _trial(root: Path, fixture: str, harnesses, family: str) -> dict:
+    run_dir = _run_dir(root, None)
+    observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": "trial"})
+    with run_lock(run_dir):
+        return fixtures.trial(root, fixture, run_dir, harnesses=harnesses, family=family)
+
+
 def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     if arguments.fixture:
         if (arguments.notes or arguments.profile or arguments.grouping != "pair" or arguments.force
@@ -345,7 +389,7 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         if not arguments.resume:
             observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": "trial"})
         with run_lock(run_dir):
-            report = fixtures.trial(root, arguments.fixture, run_dir, harnesses=harnesses)
+            report = fixtures.trial(root, arguments.fixture, run_dir, harnesses=harnesses, family="reviews")
         print(json.dumps(report, indent=2))
         return 0 if not report["stopped"] and not report["changed"] and all(
             item["state"] == "reviewed" for item in report["observations"]) else 1
@@ -364,12 +408,7 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         wanted = [gates.Pair(**pair) for pair in snapshot["pairs"]]
     else:
         wanted = _pairs(root, arguments)
-        for item in arguments.input:
-            role, separator, name = item.partition("=")
-            if not separator or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", role) or role in supplied:
-                raise ValueError("--input needs unique ROLE=PATH entries (lowercase letters, digits and hyphens)")
-            path = observations.safe_path(root, name)
-            supplied[role] = {"origin": path.relative_to(root).as_posix(), "text": path.read_bytes().decode("utf-8")}
+        supplied = _inputs(root, arguments.input)
         observations.atomic_json(run_dir / SWEEP, {**options, "selection": selection})
     report = gates.sweep(root, wanted, profile, run_dir, max_workers=arguments.max_workers or 4,
                          timeout=arguments.timeout, force=arguments.force or bool(arguments.criterion_file) or bool(arguments.input),
@@ -377,6 +416,35 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                          publish_results=not bool(arguments.criterion_file) and not bool(arguments.input), operational_inputs=supplied)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
+
+
+def _edit(root: Path, arguments: argparse.Namespace, harnesses) -> int:
+    if arguments.fixture:
+        if (arguments.operation or arguments.note or arguments.input or arguments.text or arguments.profile
+                or arguments.timeout is not None):
+            raise ValueError("fixture supplies its operation, note, inputs and profile; overrides are not supported")
+        report = _trial(root, arguments.fixture, harnesses, edit_operations.FAMILY)
+        print(json.dumps(report, indent=2))
+        return 0 if not report["stopped"] and not report["changed"] and all(
+            item["state"] == "edited" for item in report["observations"]) else 1
+    if not arguments.operation or not arguments.note:
+        raise ValueError("run edit needs OPERATION and NOTE, or --fixture")
+    operation = edit_operations.load(root, arguments.operation)
+    note = _note(root, arguments.note)
+    source = observations.safe_path(root, arguments.text) if arguments.text else root / note
+    text = source.read_bytes().decode("utf-8")
+    roles = _inputs(root, arguments.input)
+    profile = (load_profile(root, arguments.profile, gates.profiles()) if arguments.profile
+               else edit_operations.effort_profiles(root, {})[operation.effort])
+    run_dir = _run_dir(root, None)
+    observations.atomic_json(run_dir / SWEEP, {
+        "format": observations.VERSION, "workflow": "edit", "profile": asdict(profile),
+        "selection": {"operation": operation.identity, "note": note, "text": arguments.text,
+                      "inputs": arguments.input}})
+    report = edit_operations.run(root, operation, note, text, roles, profile, run_dir, timeout=arguments.timeout,
+                                 harnesses=harnesses)
+    print(json.dumps(report, indent=2))
+    return 0 if report["ok"] else 1
 
 
 def _note(root: Path, raw: str) -> str:
@@ -412,7 +480,7 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
         named_plan = arguments.plan.read_text(encoding="utf-8")   # a missing file is an error, not an assessment
         revise.read_plan(named_plan)
     run_dir = edits.run_dir(root, "revise", artifact)
-    names = {effort: getattr(arguments, f"profile_{effort}") for effort in revise.EFFORTS}
+    names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
     recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
     mode = "fixed-plan" if named_plan is not None else "assess" if arguments.assess else recorded.get("mode")
     if mode not in {"fixed-plan", "assess"}:
@@ -423,7 +491,7 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     if mode == "fixed-plan" and (arguments.purpose is not None or arguments.defend):
         raise ValueError("fixed-plan execution takes purpose and defend from the plan; edit the --plan input instead")
     profiles = recorded.get("profiles") or {effort: asdict(profile)
-                                            for effort, profile in revise.effort_profiles(root, names).items()}
+                                            for effort, profile in edit_operations.effort_profiles(root, names).items()}
     profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
     options = _options(run_dir, {"mode": mode, "purpose": arguments.purpose, "defend": arguments.defend or None,
                                  "profiles": profiles, "plan": named_plan})
@@ -463,22 +531,28 @@ def _show(root: Path, arguments: argparse.Namespace) -> int:
     run = _run_dir(root, arguments.run)
     records = []
     evidence_root = root
-    base = run / "artifact/reviews"
+    base = run / "artifact"
     if (run / "trial.json").exists():
         evidence_root = run / "tree"
-        base = evidence_root / gates.RUNS / "trial" / "artifact/reviews"
-    paths = ([observations.safe_path(base, arguments.observation) / "observation.json"]
-             if arguments.observation else sorted(base.glob("*/observation.json")))
+        base = evidence_root / gates.RUNS / "trial" / "artifact"
+    paths = ([observations.find(base, arguments.observation) / "observation.json"] if arguments.observation
+             else sorted(path for family in observations.FAMILIES for path in base.glob(f"{family}/*/observation.json")))
     for path in paths:
         data = observations.load(path.parent)
         contracts = {item["origin"]: observations.safe_path(path.parent, item["path"]).read_bytes()
                      for item in data["inputs"] if item["role"] == "contract"}
         completed = []
+        edit = data["request"]["kind"] == edit_operations.KIND
         for name in data["completed-results"]:
+            if edit and not name.endswith("/result.md"):
+                continue                                  # a retained candidate text, not a result
             text = observations.safe_path(path.parent, name).read_bytes().decode("utf-8")
-            result_contract.validate_saved(evidence_root, path.parent / name, text, contracts=contracts)
+            if edit:
+                edit_operations.validate_saved(evidence_root, path.parent / name, text, contracts)
+            else:
+                result_contract.validate_saved(evidence_root, path.parent / name, text, contracts=contracts)
             parsed = frontmatter.parse(text)
-            if not parsed.ok or parsed.data.get("type") != result_contract.TYPE:
+            if not parsed.ok or parsed.data.get("type") not in (result_contract.TYPE, edit_operations.RESULT_TYPE):
                 raise ValueError(f"invalid retained result: {name}")
             completed.append(parsed.data)
         records.append({**data, "results": completed})
@@ -513,6 +587,8 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
                 return _full_pass(root, arguments, harnesses)
             if arguments.workflow == "revise":
                 return _revise(root, arguments, harnesses)
+            if arguments.workflow == "edit":
+                return _edit(root, arguments, harnesses)
             return _gates(root, arguments, harnesses)
         if arguments.command == "packet":
             return _packet(root, arguments)
