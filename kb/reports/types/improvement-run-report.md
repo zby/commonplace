@@ -25,6 +25,10 @@ never changes after the close.
 The body states what was fixed, what was left open and why, what the
 re-review returned, and any step the run skipped.
 
+The body ends with an `## Observations` section for what the run noticed
+that no other record holds. It may be empty; write `None`. Do not restate
+times or cost, which the run and review records already hold.
+
 ## Template
 
 ````markdown
@@ -44,4 +48,8 @@ ended-at: null
 # {Title}
 
 {Prose.}
+
+## Observations
+
+{What the run noticed that no other record holds, or `None`.}
 ````

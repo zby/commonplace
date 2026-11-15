@@ -143,7 +143,24 @@ The operator then narrowed the first step: unify the review operations
 first, in their own workshop,
 [unify the review operations](../review-operation-unification/README.md).
 The edit-operation type and the stops stay drafts here until that
-workshop has a result.
+workshop has a result. The operator confirmed on 2026-11-15 that the two
+other groups follow once it is finished: the edit operations and the
+stops, each brought to the same atom contract without arranging atoms
+into larger units.
+
+Grouping is decided after all three groups are done. The operator's
+direction on 2026-11-15 is that there will be several procedures, not one:
+a full pass, a faster procedure for a quick pass, and a focused pass in
+which the operator names one defect and a single operation is applied.
+The full pass takes long, so the operator chooses by the time available
+and by what they see in the note.
+
+Several procedures need two declarations from each atom: what it responds
+to, so that a named defect leads to one operation, and its level, so that
+a procedure can put higher-order concerns first. Both start as best
+effort. The first runs are expected to show wrong or missing values, and
+the declarations are refined from those runs. No atom declares a cost in
+the first version; the operator sees how long a run takes.
 
 This changes the entry above in three ways:
 
