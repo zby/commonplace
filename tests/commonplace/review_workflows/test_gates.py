@@ -233,8 +233,48 @@ def test_status_reports_fresh_stale_missing_and_orphaned_results(repo, capsys):
         "kb/notes/beta.md": ("fresh", [], "fail", "fake-model-1"),
         "kb/notes/delta.md": ("missing", [], None, None),
     }
-    assert status["orphaned"] == [
+    assert status["orphaned"] == []
+
+    # Only a whole-store query reports results whose target has disappeared.
+    assert main(["status", "--json"], harnesses=harnesses) == 0
+    stored = json.loads(capsys.readouterr().out)
+    assert {row["note"] for row in stored["pairs"]} == {"kb/notes/alpha.md", "kb/notes/beta.md"}
+    assert stored["orphaned"] == [
         "kb/reports/state/review/results/kb/notes/gamma.md/prose/body-gate.md"]
+
+
+def test_named_note_status_reads_only_requested_pair_results(repo, capsys, monkeypatch):
+    root, harnesses, log = repo
+    assert review(repo, capsys, "kb/notes", "--criteria", "prose")[0] == 0
+    selected = result_path(root, "kb/notes/alpha.md", "prose/body-gate")
+    unselected = {
+        result_path(root, "kb/notes/alpha.md", "prose/description-gate"),
+        result_path(root, "kb/notes/beta.md", "prose/body-gate"),
+        result_path(root, "kb/notes/beta.md", "prose/description-gate"),
+    }
+    assert selected.is_file() and all(path.is_file() for path in unselected)
+    result_root = root / "kb/reports/state/review/results"
+    reads = []
+    read_bytes = Path.read_bytes
+
+    def guarded_read(path):
+        if path.is_relative_to(result_root):
+            reads.append(path)
+            if path in unselected:
+                raise PermissionError(f"unselected result is unreadable: {path}")
+        return read_bytes(path)
+
+    before = log.read_text()
+    monkeypatch.setattr(Path, "read_bytes", guarded_read)
+    assert main(["status", "kb/notes/alpha.md", "--criteria", "prose/body-gate", "--json"],
+                harnesses=harnesses) == 0
+    payload = json.loads(capsys.readouterr().out)
+    [row] = payload["pairs"]
+    assert (row["note"], row["criterion-id"], row["freshness"], row["outcome"], row["result"]) == (
+        "kb/notes/alpha.md", "prose/body-gate", "fresh", "pass", selected.relative_to(root).as_posix())
+    assert payload["orphaned"] == []
+    assert set(reads) == {selected}
+    assert log.read_text() == before
 
 
 def status_rows(repo, capsys, *args: str) -> list[tuple[str, str, str | None]]:

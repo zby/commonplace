@@ -248,7 +248,7 @@ def _keep(row: results.Row, arguments: argparse.Namespace) -> bool:
 def _status(root: Path, arguments: argparse.Namespace) -> int:
     if arguments.notes:
         rows = results.status(root, [(pair.note, pair.criterion) for pair in _pairs(root, arguments)])
-        orphans = results.orphaned(root)
+        orphans = []
     elif arguments.criteria:
         raise ValueError("--criteria needs NOTES")
     else:

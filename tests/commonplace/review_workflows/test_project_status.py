@@ -81,21 +81,24 @@ def test_status_review_summary_names_review_commands(tmp_path: Path, capsys, mon
     monkeypatch.setattr(library, "_library_root", lambda _override: (tmp_path / "kb").resolve())
     gate = write(tmp_path / "kb/instructions/review-gates/prose/residue.md", "---\nwatches: [body]\n---\n# R\n")
     other = write(tmp_path / "kb/instructions/review-gates/prose/hedging.md", "# Hedging\n")
+    removed = write(tmp_path / "kb/instructions/review-gates/prose/removed.md", "# Removed criterion\n")
     note = tmp_path / "kb/notes/example.md"
-    for criterion, outcome in ((gate, "warn"), (other, "fail")):
+    for criterion, outcome in ((gate, "warn"), (other, "fail"), (removed, "fail")):
         results.write_result(tmp_path, results.make_result(
             "kb/notes/example.md", note.read_text(), criterion.relative_to(tmp_path).as_posix(), criterion.read_text(),
             outcome=outcome, profile={}, model=None, run="r", launch="l", completed_at="2026-11-15T00:00:00Z", body="# Review\n",
             findings=findings(outcome), evidence=evidence(tmp_path)))
     write(other, "# Hedging, revised\n")
+    removed.unlink()  # The project summary must still inspect the whole result store for orphans.
 
     code, payload = status(tmp_path, capsys, "--review")
     assert code == 0
-    assert payload["review"] == {"results": 2, "fresh": 1, "stale": 1, "orphaned": 0, "warn": 1, "fail": 0,
+    assert payload["review"] == {"results": 3, "fresh": 1, "stale": 1, "orphaned": 1, "warn": 1, "fail": 0,
                                  "error": None}
     assert [(a["action_id"], a["command"]) for a in payload["actions"]] == [
         ("status.review.triage-warnings", "commonplace-review status --fresh --outcome warn"),
-        ("status.review.rerun-stale", "commonplace-review status --stale")]
+        ("status.review.rerun-stale", "commonplace-review status --stale"),
+        ("status.review.delete-orphans", "commonplace-review status")]
 
     next(tmp_path.joinpath(results.RESULTS).rglob("hedging.md")).write_text("not a result\n")
     code, payload = status(tmp_path, capsys, "--review")

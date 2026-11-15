@@ -149,10 +149,11 @@ commonplace-review status --json --fresh --outcome warn     # rows with each res
 
 With notes, status covers every applicable pair for the requested criteria
 (all gates when `--criteria` is omitted), including pairs never reviewed.
-Without notes, it covers every stored result whose note and criterion still
-exist. Each row shows the note, criterion id, state, outcome and model;
-orphaned results are listed apart. A directory means its direct
-frontmatter-bearing notes, not nested ones, and leaves out indexes, collection
+It reads only results for those pairs and does not scan for orphans; the JSON
+`orphaned` list is empty. Without notes, it covers every stored result whose
+note and criterion still exist and lists orphaned results separately.
+Each row shows the note, criterion id, state, outcome and model. A directory
+means its direct frontmatter-bearing notes, not nested ones, and leaves out indexes, collection
 contracts and type specs. Name the notes of a validation-ignored directory one
 by one.
 
