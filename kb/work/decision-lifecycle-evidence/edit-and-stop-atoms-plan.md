@@ -5,7 +5,8 @@
 Written on 2026-11-15 at the operator's request, after the first review
 slice shipped under
 [ADR 132](../../reference/adr/132-review-atoms-retain-observations-behind-current-results.md).
-It is a plan, not a design that has been run. It covers the two atom
+It was written as a plan. Its first two changes were built on 2026-11-15
+and 2026-11-16; see "What was built" at the end. It covers the two atom
 groups that follow the review operations: edit operations and stops. It
 does not arrange atoms into procedures; grouping is decided after all
 three groups are done.
@@ -293,3 +294,43 @@ pass can be decided with every atom runnable alone.
   told apart by strategy is untested.
 - The `depth` values on the passes were set for the revise workflow's
   order. Nothing shows they are right as a general order of concerns.
+
+## What was built
+
+The first two changes are on main, each from this plan.
+
+| Change | Decision record | Live check |
+|---|---|---|
+| Edit operations | [ADR 133](../../reference/adr/133-edit-operations-run-alone-through-one-typed-route.md) | one operation that edits directly and one that asks first, on one note; three launches, no rejection |
+| Stops | [ADR 134](../../reference/adr/134-stops-record-the-operators-answers-in-one-typed-file.md) | proposals, a typed answers file with one rejected, one deferred, one pending and seven approved items, then the apply run; only the approved passages changed |
+
+The remaining review operations were admitted in the same period under
+[ADR 132](../../reference/adr/132-review-atoms-retain-observations-behind-current-results.md):
+the four compression checks, their synthesis, composition friction and
+premise decomposition. Connect stays on its own route.
+
+Where the build departs from the plan:
+
+- **E6 is weaker.** Code checks that the passage of every item that is not
+  approved is unchanged. It does not detect a change outside the list,
+  because one operation replaces a term throughout the text.
+- **The full pass's hand-back disposition stays on its packet.** Its
+  states and its single resolution for the whole hand-back are not
+  answers states. Moving it means redesigning the packet, which is a
+  grouping question.
+- **The fix procedure keeps its free-form report.** Only its wording
+  changed: an undecided item is `pending`, and `deferred` needs the
+  operator's word.
+- **Publication changed for the full pass too,** because it shares the
+  publication code with the revise workflow.
+
+Not yet done:
+
+- **No operator session has used either stop.** The answers in the live
+  check were written by the agent as a mechanism test and marked as
+  such. "How a stop is tested" asks for one live session per stop.
+- **No revise run has gone through to publication** on the new route
+  outside the tests.
+- **The third change,** `depth` on review operations, is not built.
+- **Edit quality is unjudged.** The live checks show that real output is
+  accepted, not that the edits are good.

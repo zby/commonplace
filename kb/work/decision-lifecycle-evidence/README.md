@@ -165,8 +165,9 @@ the first version; the operator sees how long a run takes.
 
 The design for the two groups is planned in
 [edit operations and stops as atoms](./edit-and-stop-atoms-plan.md),
-written on 2026-11-15. It awaits the operator's choices and has not been
-run.
+written on 2026-11-15. Its first two changes are built: edit operations
+under ADR 133 and stops under ADR 134. The plan's last section records
+what was built, where it departs from the plan and what is not yet done.
 
 This changes the entry above in three ways:
 
