@@ -14,7 +14,7 @@ This system is experimental and opt-in, like the review system it depends on.
 
 **Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in the [fix strategy taxonomy](./fix-warnings/fix-strategy-taxonomy.md). Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
-**Fix report.** A per-note markdown file in `kb/reports/state/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from postponing a finding that may be valid.
+**Fix report.** A per-note markdown file in `kb/reports/state/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, `pending`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from leaving open a finding that may be valid. `Pending` means the operator has not decided; `deferred` is set only on the operator's word, with a reason and a revisit condition.
 
 ## Pipeline
 
@@ -79,7 +79,7 @@ Instruction: [fix-review-warnings-sweep.md](./fix-warnings/fix-review-warnings-s
 1. `commonplace-review status --fresh --outcome warn fail --json` — build the queue, grouped by note and ordered by warning count, descending
 2. Run locally unless several notes have disjoint note/report paths and a named fresh-context or parallel-capacity benefit; then give each single-use worker the exact note and report paths, the fix instruction, sole write ownership, validation/return requirements, and a substantive-decision stop, and verify each diff/report before closing the worker
 3. Rerun the gate sweep on the edited notes
-4. Report: fixed by strategy, rejected findings, deferred items, new patterns
+4. Report: fixed by strategy, rejected findings, pending and deferred items, new patterns
 5. If new patterns recur (3+ instances), propose adding to the taxonomy
 
 ## Constraints
@@ -97,6 +97,7 @@ Fix reports land in `kb/reports/state/fixes/`. Each report contains:
 - A table mapping each finding to a strategy, summary, and status
 - A warning-to-fix mapping for auditability
 - Rejected findings with the evidence or reasoning that made the warning inapplicable
-- Deferred items naming the exact claim/evidence/source decision, affected
-  passage, acceptable responses, and reason the fixer could not choose
+- Pending and deferred items naming the exact claim/evidence/source decision,
+  affected passage, acceptable responses, and reason the fixer could not
+  choose; a deferred item also carries the operator's reason and revisit condition
 - New patterns not yet in the taxonomy
