@@ -163,6 +163,11 @@ effort. The first runs are expected to show wrong or missing values, and
 the declarations are refined from those runs. No atom declares a cost in
 the first version; the operator sees how long a run takes.
 
+The design for the two groups is planned in
+[edit operations and stops as atoms](./edit-and-stop-atoms-plan.md),
+written on 2026-11-15. It awaits the operator's choices and has not been
+run.
+
 This changes the entry above in three ways:
 
 - The [first variant](./first-variant-fix-findings.md) is shelved as
