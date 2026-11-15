@@ -30,7 +30,8 @@ the decision. Exact arguments are in `commonplace-review --help` and
 
 **Criterion.** The markdown file a note is judged against. It may be a
 catalog gate, a compression check, the note's type spec, its collection's
-`COLLECTION.md` or the critique instruction. A criterion is named by its artifact identity: a
+`COLLECTION.md`, or a report instruction: critique, friction, premises or
+compression synthesis. A criterion is named by its artifact identity: a
 repository path, or `commonplace:<path>` for a library file outside the
 repository, as the gates are in an installed project.
 
@@ -85,17 +86,38 @@ The checks are opt-in like critique. The
 the full pass still run all four in one report of their own; that report is
 not a result file.
 
-**Operations outside this command.** Compression synthesis, composition
-friction, premise decomposition and connect keep their own routes. The first
-three are report forms. The review-result schema's report branch requires
-critique's `attack-outcome` and critique's sections, so admitting them needs a
-review-result type change. Connect writes a connect report, and its candidates
-depend on the whole corpus.
+**Friction and premises.** The `friction` and `premises` selectors apply the
+[composition-friction](../instructions/composition-friction-gate.md) and
+[premise-decomposition](../instructions/premise-decomposition-gate.md)
+instructions as report criteria. Neither gives an overall verdict. A friction
+finding is one ranked inferential joint whose reason begins `UNSUPPORTED`,
+`THIN` or `HOLDS`; the body adds the `SURVIVES` or `DISSOLVES` filter line. A
+premise finding is one premise whose reason begins `HOLDS`, `DOUBTFUL` or
+`DEFEATED` and routes a failure `LOCAL` or `GLOBAL`. Both use ordinary
+freshness: the whole note, since they declare no `watches:`, the instruction
+and the output contract. Files they consult that the note does not link,
+such as the modality section premises reads in `kb/theory/COLLECTION.md`, are
+reading context, not freshness inputs. Both are opt-in.
+
+**Compression synthesis.** The `compression-synthesis` selector applies the
+[synthesis instruction](../instructions/compression-bundle/high-impact-simplification-synthesis.md)
+to one note and the compression findings supplied as `--input ROLE=PATH`
+files, usually the four check results. It runs alone, on one note, and never
+runs a check. No freshness hash covers the supplied findings, so its freshness
+is unassessed: it writes no current result, is never skipped as fresh, and
+`status` refuses it. Its result stays in the run's observation; read it with
+`show RUN`.
+
+**Connect.** [Connect](../instructions/cp-skill-connect/SKILL.md) keeps its
+own route. It writes a connect report, not a review result, and its
+candidates depend on the whole corpus, which no note or criterion hash
+covers.
 
 **Outcome.** Reviews use [review-result](../types/review-result.md).
 Workers supply `type`, `findings`, `outcome` and the body; critique also
-supplies `attack-outcome`. Verdict findings have `info`, `warn` or `fail`
-levels. Passage quotations must match one span of the captured target, and only one;
+supplies `attack-outcome`, and no other report does. Verdict findings have
+`info`, `warn` or `fail` levels. Each report method has its own required
+sections, which the schema checks by the result's criterion. Passage quotations must match one span of the captured target, and only one;
 matching ignores line wraps and quote-mark style, so a quotation identifies a
 passage without being a byte-exact copy. Document findings use no quotations. Code supplies provenance and validates
 the completed artifact against the captured library type/schema and project
@@ -196,7 +218,7 @@ result unless `--force` is given, and asks a worker for each other pair:
 - `--grouping bundle` makes one call per note and bundle for that bundle's
   stale gates. Each gate is judged on its own and gets its own result. A
   bundle with one stale gate, and every type, collection, compression and
-  critique pair, is still one call per pair.
+  report pair, is still one call per pair.
 
 A call has three attempts; a rejected review and a launch that returned no
 answer each spend one. A worker that cannot judge writes a problem instead

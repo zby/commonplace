@@ -42,7 +42,7 @@ if "STRAY" in note:
 if "MALFORMED" in note and "was rejected" not in frame:
     result = "Verdict: fine"
 elif "outcome: report" in frame:
-    result = review_text("report")
+    result = review_text("report", pair)
 else:
     result = review_text("fail" if "FAILME" in note else "pass")
 for review in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
@@ -428,3 +428,74 @@ def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(la
         trial = json.loads(capsys.readouterr().out)
         assert [item["state"] for item in trial["observations"]] == ["reviewed"]
         assert trial["observations"][0]["criterion"] == identity
+
+
+REPORT_FILES = {"friction": "instructions/composition-friction-gate.md",
+                "premises": "instructions/premise-decomposition-gate.md",
+                "compression-synthesis": "instructions/compression-bundle/high-impact-simplification-synthesis.md"}
+
+
+@pytest.mark.parametrize("layout", ["repo", "installed"])
+def test_friction_and_premises_run_alone_as_fresh_reports(layout, request, capsys):
+    project = request.getfixturevalue(layout)
+    root, harnesses, _ = project
+    lib = library.library_root()
+    for rel in REPORT_FILES.values():
+        (lib / rel).parent.mkdir(parents=True, exist_ok=True)
+        (lib / rel).write_text("# Method\n\nReport.\n", encoding="utf-8")
+    prefix = "kb" if layout == "repo" else "commonplace"
+    code, report, launches = review(project, capsys, "kb/notes/alpha.md", "--criteria", "friction", "premises")
+    assert code == 0, report
+    assert len(launches) == 2 and {pair["outcome"] for pair in report["pairs"]} == {"report"}
+    friction = read_result(result_path(root, "kb/notes/alpha.md", f"{prefix}/{REPORT_FILES['friction'][:-3]}"))
+    premises = read_result(result_path(root, "kb/notes/alpha.md", f"{prefix}/{REPORT_FILES['premises'][:-3]}"))
+    assert (friction.contract, friction.attack_outcome) == ("report", None)
+    assert friction.findings[0]["reason"].startswith("THIN") and premises.findings[0]["reason"].startswith("DOUBTFUL")
+    prompt = ((root / friction.observation).parent / "inputs/prompt.txt").read_text()
+    assert "No attack-outcome" in prompt and "critique body" not in prompt
+    # Their freshness is the ordinary note, criterion and contract freshness.
+    assert review(project, capsys, "kb/notes/alpha.md", "--criteria", "friction", "premises")[2] == []
+    assert main(["status", "kb/notes/alpha.md", "--json"], harnesses=harnesses) == 0
+    assert not any("gate.md" in row["criterion"] and "review-gates" not in row["criterion"]
+                   for row in json.loads(capsys.readouterr().out)["pairs"])
+
+
+def test_synthesis_runs_alone_on_supplied_findings_and_publishes_nothing(repo, capsys):
+    root, harnesses, _ = repo
+    for rel in REPORT_FILES.values():
+        (root / "kb" / rel).parent.mkdir(parents=True, exist_ok=True)
+        write(root, f"kb/{rel}", "# Method\n\nReport.\n")
+    write(root, "kb/instructions/compression-bundle/detail-overhang.md", compression("detail-overhang"))
+    assert review(repo, capsys, "kb/notes/alpha.md", "--criteria", "compression/detail-overhang")[0] == 0
+    check = result_path(root, "kb/notes/alpha.md", "kb/instructions/compression-bundle/detail-overhang")
+    finding = f"detail-overhang={check.relative_to(root).as_posix()}"
+    synthesis = "kb/instructions/compression-bundle/high-impact-simplification-synthesis"
+
+    # Refused: without findings, beside another criterion, or over two notes; nothing launches.
+    for args, message in ((["kb/notes/alpha.md"], "needs its findings"),
+                          (["kb/notes/alpha.md", "--input", finding, "--criteria", "friction"], "runs alone"),
+                          (["kb/notes", "--input", finding], "runs alone")):
+        before = repo[2].read_text()
+        if "--criteria" in args:
+            args = [*args, "compression-synthesis"]
+        else:
+            args = [*args, "--criteria", "compression-synthesis"]
+        command = ["run", "gates", *args, "--timeout", "30"]
+        assert main(command, harnesses=harnesses) == 2
+        assert message in capsys.readouterr().err and repo[2].read_text() == before
+
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "compression-synthesis",
+                                    "--input", finding)
+    assert code == 0, report
+    assert launches == [f"kb/notes/alpha.md::{synthesis}.md"] and report["pairs"][0]["outcome"] == "report"
+    assert not result_path(root, "kb/notes/alpha.md", synthesis).exists()
+    [record] = (root / report["run-dir"] / "artifact/reviews").glob("*/observation.json")
+    data = json.loads(record.read_text())
+    assert [item["origin"] for item in data["inputs"] if item["role"] == "operational"] == [
+        check.relative_to(root).as_posix()]
+    assert data["completed-results"]
+    # Unassessed freshness: a repeat launches again, and status refuses the pair.
+    assert len(review(repo, capsys, "kb/notes/alpha.md", "--criteria", "compression-synthesis",
+                      "--input", finding)[2]) == 1
+    assert main(["status", "kb/notes/alpha.md", "--criteria", "compression-synthesis"], harnesses=harnesses) == 2
+    assert "unassessed" in capsys.readouterr().err

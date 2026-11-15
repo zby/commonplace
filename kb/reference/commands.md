@@ -403,10 +403,13 @@ review. `--grouping bundle` asks one worker per note and bundle of catalog
 gates for that bundle's stale gates instead of one per pair; each gate still
 gets its own result file. `--resume RUN_DIR` continues a run; `retry RUN JOB` and
 `acknowledge RUN LAUNCH` settle a worker problem or an unsettled launch.
-Criteria are catalog gate ids, bundle names, the `type`, `collection` and
-`critique` lenses, and compression check ids such as
-`compression/detail-overhang`, one id per check; worker profiles come from the library's
-`instructions/review-profiles.yaml`. Draft selection and `--input ROLE=PATH`
+Criteria are catalog gate ids, bundle names, the `type` and `collection`
+lenses, compression check ids such as `compression/detail-overhang`, one id
+per check, and the report instructions `critique`, `friction`, `premises` and
+`compression-synthesis`; worker profiles come from the library's
+`instructions/review-profiles.yaml`. `compression-synthesis` runs alone on one
+note with its findings as `--input ROLE=PATH` files; it publishes no current
+result, and `status` refuses it. Draft selection and `--input ROLE=PATH`
 retain run-local evidence without publishing a catalog result. Operational
 inputs must be self-contained; their provenance links grant no cross-run access.
 

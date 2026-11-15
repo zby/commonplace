@@ -1,11 +1,11 @@
 ---
-description: Experimental run-by-hand report method that decomposes a note's central commitment into the premises it rests on and hunts a counterexample for each, routing failures as local (revise a premise) or global (the commitment fails)
+description: Experimental report method that decomposes a note's central commitment into the premises it rests on and hunts a counterexample for each, routing failures as local (revise a premise) or global (the commitment fails)
 type: types/instruction.md
 ---
 
 # Decompose a note into premises and counterexample each
 
-Experimental, run by hand. This method tests the **nodes** of a note's argument — the premises its central commitment takes as given — not the edges between them. It assumes every stated inference is valid and asks a different question: is each premise the commitment rests on *itself* true, or does a concrete counterexample defeat it? This is the "explanation as a falsification surface" move — a commitment is only as strong as the weakest premise it silently assumes. It is **not a review-system gate**: it writes no review result file and is not in the gate catalog. Write the report; do not touch the note.
+Experimental. This method tests the **nodes** of a note's argument — the premises its central commitment takes as given — not the edges between them. It assumes every stated inference is valid and asks a different question: is each premise the commitment rests on *itself* true, or does a concrete counterexample defeat it? This is the "explanation as a falsification surface" move — a commitment is only as strong as the weakest premise it silently assumes. It is **not a catalog gate** and gives no verdict. It is a report criterion: run it alone with `commonplace-review run gates NOTE --criteria premises`, which writes its review result. Write the report; do not touch the note.
 
 Unlike [reconstruct a note's composition friction](./composition-friction-gate.md), which tests whether each *inference* holds (the edges), this tests whether each *premise* holds (the nodes). The two are complementary: an argument can have valid inferences resting on a false premise, which the friction check passes and this check catches. Run both when a commitment must be load-bearing.
 
@@ -60,18 +60,27 @@ A `GLOBAL` failure on a load-bearing premise is the strongest signal this method
 
 ## Output
 
-Write to `kb/reports/state/premise-decomposition/<note-name>.premises.md`. Mutate nothing else.
+The caller names the output file. Write only that file; mutate nothing else. The output is a [review result](../types/review-result.md) fragment with `outcome: report` and no `attack-outcome`.
+
+Each premise is one finding, global failures first. Give a premise the note states `scope: passage` with a quote that identifies one span; give an unstated premise `scope: document` with no quotes. Begin its `reason` with `HOLDS`, `DOUBTFUL` or `DEFEATED`, then state the premise at its stated modality and the counterexample or reason. A non-`HOLDS` reason also names `LOCAL` or `GLOBAL` and the shape `instance`, `prevalence` or `priced-exception`. The body explains the decomposition without repeating each finding.
 
 ```markdown
+---
+type: types/review-result.md
+findings:
+  - scope: document
+    quotes: []
+    reason: "DOUBTFUL — <premise, at its stated modality> — <the counterexample or reason> — LOCAL — instance"
+outcome: report
+---
+
 # Premise decomposition: <note title>
 
-**Note:** <path>
 **Register:** claim | definition | procedure
 **Central commitment (one sentence):** <...>
 
 ## Premises and counterexamples
-1. **<premise, stated as a proposition, at its stated modality>** — <HOLDS | DOUBTFUL | DEFEATED> — <the counterexample or reason> — <LOCAL | GLOBAL if not HOLDS> — <instance | prevalence | priced-exception if not HOLDS>
-2. ...
+<how the commitment decomposes and why these are the premises it consumes; the premises themselves are the findings>
 
 ## For the human
 <one line: the premise to look at first — the global defeater if any, else the load-bearing doubtful premise most worth the author's attention>

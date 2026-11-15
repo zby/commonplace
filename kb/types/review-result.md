@@ -1,19 +1,30 @@
 ---
 type: types/type-spec.md
 name: review-result
-description: "One completed gate, conformance or critique assessment with structured findings and controller-owned execution provenance"
+description: "One completed gate, conformance or report-method assessment with structured findings and controller-owned execution provenance"
 schema: ./review-result.schema.yaml
 ---
 
 # Review result
 
-A review result records one assessment of captured target text against a criterion. Completion means the output passed deterministic checks, not that its judgment is correct. A report outcome is not a favorable verdict. Use this type for individual gate, type-conformance, collection-conformance and critique results, not for combined improvement packets or connection discovery.
+A review result records one assessment of captured target text against a criterion. Completion means the output passed deterministic checks, not that its judgment is correct. A report outcome is not a favorable verdict. Use this type for individual gate, compression-check, type-conformance and collection-conformance verdicts, and for critique, composition-friction, premise-decomposition and compression-synthesis reports. Do not use it for combined improvement packets or connection discovery.
 
 ## Content
 
 Findings state what the assessed text establishes or fails to establish. Each passage finding quotes enough verbatim text to identify one contiguous span uniquely. A quote is matched after whitespace and typographic quote marks are normalized, so a line wrap in the target does not break it. A quote therefore identifies a passage and is not a byte-exact copy of it. A consumer that needs the exact span locates the quote in the captured target, which holds the exact bytes. A document-wide or absence finding explains the condition without inventing a quotation. Finding levels belong to verdict criteria; critique reports instead state whether the strongest attack lands and how the note engages it. An empty findings list is an honest completed result when no finding remains.
 
 The body explains the assessment without repeating every structured finding. A critique preserves its central commitment, critique mode, strongest case, the note's response and constructive findings, including why an attack does not survive. Low-confidence no-surviving-attack findings leave the need for a domain check visible.
+
+Each report method has its own shape, which the schema checks by the result's `criterion`:
+
+| Method | Findings | Required body |
+|---|---|---|
+| Critique | constructive findings | `attack-outcome` in frontmatter; `## Strongest case against it`, `## How the note engages it`, `## Constructive findings` |
+| Composition friction | the surfaced joints, thinnest first; each reason begins `UNSUPPORTED`, `THIN` or `HOLDS` | a `**Filter:** SURVIVES` or `DISSOLVES` line; `## Filter`, `## Thinnest joints`, `## For the human` |
+| Premise decomposition | one per premise; each reason begins `HOLDS`, `DOUBTFUL` or `DEFEATED`, and a non-`HOLDS` reason names `LOCAL` or `GLOBAL` and `instance`, `prevalence` or `priced-exception` | a `**Register:**` line; `## Premises and counterexamples`, `## For the human` |
+| Compression synthesis | zero to three opportunities | `## Opportunities` |
+
+Only critique supplies `attack-outcome`. Friction's filter line and the premise statuses route attention; they are not overall verdicts. A report criterion is named by its library instruction's identity, so moving one of these instructions requires a schema edit.
 
 ## Field ownership
 
@@ -52,4 +63,4 @@ outcome: warn
 The conclusion needs its missing condition.
 ```
 
-A critique fragment uses `outcome: report`, supplies `attack-outcome`, and omits finding levels. Its body retains the critique instruction's sections. Neither fragment uses a terminal `## Result:` line. Operational production and publication belong to the review command, not to this type.
+A critique fragment uses `outcome: report`, supplies `attack-outcome`, and omits finding levels. Its body retains the critique instruction's sections. Other report fragments use `outcome: report`, omit `attack-outcome` and finding levels, and follow their instruction's Output section. Neither fragment uses a terminal `## Result:` line. Operational production and publication belong to the review command, not to this type.

@@ -32,13 +32,24 @@ def findings(outcome):
 
 
 FAKE_RESULT = r'''
-def review_text(outcome):
+def review_text(outcome, criterion=""):
     import json
     findings = [] if outcome in ("pass", "report") else [
         {"scope": "document", "quotes": [], "reason": "A fixture finding", "level": outcome}]
     data = {"type": "types/review-result.md", "findings": findings, "outcome": outcome}
     body = "# Review\n\n## Summary\n\nReviewed.\n"
-    if outcome == "report":
+    if outcome == "report" and "composition-friction" in criterion:
+        data["findings"] = [{"scope": "document", "quotes": [], "reason": "THIN - the ground is asserted"}]
+        body = ("# Friction check\n\n## Filter\n**Filter:** SURVIVES\n\n## Thinnest joints\nOne joint.\n\n"
+                "## For the human\nLook at the joint.\n")
+    elif outcome == "report" and "premise-decomposition" in criterion:
+        data["findings"] = [{"scope": "document", "quotes": [],
+                             "reason": "DOUBTFUL - a premise - an edge case - LOCAL - instance"}]
+        body = ("# Premise decomposition\n\n**Register:** claim\n\n## Premises and counterexamples\nOne.\n\n"
+                "## For the human\nLook at the premise.\n")
+    elif outcome == "report" and "simplification-synthesis" in criterion:
+        body = "# Simplification synthesis\n\n## Opportunities\n\nNone\n"
+    elif outcome == "report":
         data["attack-outcome"] = "no surviving attack"
         body = ("# Critique\n\n**Central commitment:** Test.\n**Critique mode:** claim\n\n"
                 "## Strongest case against it\nAn attack.\n\n"

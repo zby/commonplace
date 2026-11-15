@@ -24,3 +24,46 @@ Return zero to three opportunities. For each one, give:
 - the meanings, implications, or structural choices the author must resolve or preserve.
 
 Do not present a rewrite as settled. A short candidate formulation may illustrate the opportunity, but label it as one possible resolution. Keep fact-checking, claim evaluation, and general completeness review outside this synthesis unless they are necessary to explain why the simplification cannot safely proceed.
+
+## Running it alone
+
+The [compression bundle](../run-compression-bundle-on-note.md) applies this synthesis after its four checks, under the bundle's own output contract. The inputs and output below apply when the synthesis runs alone.
+
+### Inputs
+
+The compression findings are explicit input files, one per check, such as the four check results under `kb/reports/state/review/results/<note-path>/`. Run the synthesis alone:
+
+```bash
+commonplace-review run gates NOTE --criteria compression-synthesis \
+  --input core-claim-obscured=PATH --input branch-bloat=PATH \
+  --input detail-overhang=PATH --input marginal-value-redundancy=PATH
+```
+
+Use only the supplied findings. Do not run a check, and do not look for other findings. The run keeps its result as a retained observation and writes no current result, because no freshness hash covers the supplied findings.
+
+### Output
+
+The caller names the output file. Write only that file; mutate nothing else. The output is a [review result](../../types/review-result.md) fragment with `outcome: report` and no `attack-outcome`. Each opportunity is one finding, zero to three in all. Give it `scope: passage` with its smallest useful quotation, or `scope: document` with no quotes for a section range or a cross-cutting change. Its `reason` states the reader problem and the direction.
+
+```markdown
+---
+type: types/review-result.md
+findings:
+  - scope: passage
+    quotes: ["<smallest useful quotation>"]
+    reason: "<reader problem>; <direction a revision could take>"
+outcome: report
+---
+
+# Simplification synthesis: <note title>
+
+## Opportunities
+
+### 1. <short opportunity name>
+
+- Location: <heading and quotation or section range>
+- Combines: <the compression findings, or "cross-cutting">
+- Preserve or decide: <meanings, implications or structural choices the author must resolve or preserve>
+```
+
+Write `None` under `## Opportunities` when no opportunity clears the threshold.

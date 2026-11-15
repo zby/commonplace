@@ -17,11 +17,14 @@ A request is one of:
   spec, resolved from its frontmatter `type:`;
 - the virtual `collection` lens, or `collection/<path>` (the collection
   directory relative to kb/): the `COLLECTION.md` of the note's collection;
-- `critique`: the library's critique instruction, the one report criterion;
 - `compression/<check>`: one of the library's compression checks under
   `instructions/compression-bundle/`, a verdict criterion. Each check is
-  requested by its own id; there is no compression bundle request. The checks
-  stay out of the default set.
+  requested by its own id; there is no compression bundle request;
+- `critique`, `friction`, `premises` and `compression-synthesis`: the
+  library's critique, composition-friction, premise-decomposition and
+  compression-synthesis instructions, the report criteria.
+
+The compression checks and the report criteria stay out of the default set.
 
 Everything here reads files and nothing writes.
 """
@@ -44,7 +47,15 @@ TYPE = "type"
 COLLECTION = "collection"
 CRITIQUE = "critique"
 COMPRESSION = "compression"
-KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION)
+FRICTION = "friction"
+PREMISES = "premises"
+SYNTHESIS = "compression-synthesis"
+REPORTS = {CRITIQUE: CRITIQUE_REL,
+           FRICTION: "instructions/composition-friction-gate.md",
+           PREMISES: "instructions/premise-decomposition-gate.md",
+           SYNTHESIS: f"{COMPRESSION_REL}/high-impact-simplification-synthesis.md"}
+"""Each report criterion's selector and library instruction."""
+KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION, FRICTION, PREMISES, SYNTHESIS)
 STALENESS = "changed"
 """The only `staleness:` a catalog gate may declare."""
 
@@ -56,8 +67,8 @@ class Criterion:
 
     @property
     def contract(self) -> str:
-        """`report` for the critique instruction, `verdict` (PASS, WARN or FAIL) otherwise."""
-        return "report" if self.kind == CRITIQUE else "verdict"
+        """`report` for a report instruction, `verdict` (PASS, WARN or FAIL) otherwise."""
+        return "report" if self.kind in REPORTS else "verdict"
 
 
 def gates_dir() -> Path:
@@ -86,7 +97,7 @@ def _is_compression_request(request: str) -> bool:
 def _is_lens_request(request: str) -> bool:
     """A request resolved outside the gate catalog."""
     return (_is_type_request(request) or _is_collection_request(request) or _is_compression_request(request)
-            or request == CRITIQUE)
+            or request in REPORTS)
 
 
 # --- Catalog gates ---------------------------------------------------------------
@@ -275,10 +286,11 @@ def draft(root: Path, notes: list[str], filename: str) -> list[tuple[str, Criter
             and _matches({_frontmatter(root / note).get("type")}, parsed.data.get("requires_type"))]
 
 
-def critique_identity(root: Path) -> str:
-    path = library_root() / CRITIQUE_REL
+def report_identity(root: Path, selector: str) -> str:
+    """The identity of the library instruction a report selector names."""
+    path = library_root() / REPORTS[selector]
     if not path.is_file():
-        raise FileNotFoundError(f"critique instruction not found: {path}")
+        raise FileNotFoundError(f"{selector} instruction not found: {path}")
     return artifact_identity(root, path)
 
 
@@ -317,7 +329,7 @@ def select(root: Path, notes: list[str], requests: list[str] | None = None,
     contracts = {resolve_collection_request(root, r) for r in lenses[COLLECTION] if r != COLLECTION}
     checks = [(artifact_identity(root, path), metadata) for path, metadata in
               (compression_check(r) for r in dict.fromkeys(r for r in resolved if _is_compression_request(r)))]
-    critique = critique_identity(root) if CRITIQUE in resolved else None
+    reports = [(selector, report_identity(root, selector)) for selector in REPORTS if selector in resolved]
 
     found: list[tuple[str, Criterion]] = []
     for note in notes:
@@ -334,8 +346,7 @@ def select(root: Path, notes: list[str], requests: list[str] | None = None,
                 chosen.append(Criterion(contract, COLLECTION))
         chosen += [Criterion(identity, COMPRESSION) for identity, metadata in checks
                    if _applies(_frontmatter(note_abs, text), metadata)]
-        if critique is not None:
-            chosen.append(Criterion(critique, CRITIQUE))
+        chosen += [Criterion(identity, selector) for selector, identity in reports]
         seen: set[str] = set()
         for criterion in chosen:
             if criterion.identity not in seen:

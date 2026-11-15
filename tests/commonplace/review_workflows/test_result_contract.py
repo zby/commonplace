@@ -79,7 +79,8 @@ def test_report_is_not_a_verdict(tmp_path):
                             "attack-outcome": "no surviving attack"},
                            "# Critique\n\n## Strongest case against it\nAn attack.\n\n"
                            "## How the note engages it\nAnswers it.\n\n## Constructive findings\nNone.\n")
-    candidate = complete(tmp_path, text, metadata={**metadata(), "contract": "report"})
+    candidate = complete(tmp_path, text, metadata={**metadata(), "contract": "report",
+                                                   "criterion": "kb/instructions/critique-note.md"})
     assert candidate.data["attack-outcome"] == "no surviving attack"
 
 
@@ -94,3 +95,57 @@ def test_captured_schema_not_process_cache(tmp_path):
     with pytest.raises(ValueError, match="impossible"):
         complete(tmp_path, fragment(), contracts=changed)
     complete(tmp_path, fragment(), contracts=captured)
+
+
+FRICTION = "kb/instructions/composition-friction-gate.md"
+PREMISES = "commonplace:instructions/premise-decomposition-gate.md"
+SYNTHESIS = "kb/instructions/compression-bundle/high-impact-simplification-synthesis.md"
+CRITIQUE_BODY = ("\n# Critique\n\n## Strongest case against it\nA.\n\n## How the note engages it\nB.\n\n"
+                 "## Constructive findings\nNone.\n")
+FRICTION_BODY = "\n# Friction\n\n## Filter\n**Filter:** SURVIVES\n\n## Thinnest joints\nA.\n\n## For the human\nB.\n"
+PREMISES_BODY = "\n# Premises\n\n**Register:** claim\n\n## Premises and counterexamples\nA.\n\n## For the human\nB.\n"
+SYNTHESIS_BODY = "\n# Synthesis\n\n## Opportunities\n\nNone\n"
+
+
+def report(criterion, body, reasons=(), **extra):
+    data = {"type": contract.TYPE, "outcome": "report", **extra,
+            "findings": [{"scope": "document", "quotes": [], "reason": reason} for reason in reasons]}
+    return contract.render(data, body), {**metadata(), "contract": "report", "criterion": criterion}
+
+
+@pytest.mark.parametrize("criterion,body,reasons,extra", [
+    ("kb/instructions/critique-note.md", CRITIQUE_BODY, ["A finding"], {"attack-outcome": "lands"}),
+    ("commonplace:instructions/critique-note.md", CRITIQUE_BODY, [], {"attack-outcome": "no surviving attack"}),
+    (FRICTION, FRICTION_BODY, ["UNSUPPORTED - no ground", "HOLDS - fine"], {}),
+    (PREMISES, PREMISES_BODY, ["HOLDS - p", "DEFEATED - q - GLOBAL - prevalence"], {}),
+    (SYNTHESIS, SYNTHESIS_BODY, ["Buried thesis; surface it"] * 3, {}),
+])
+def test_each_report_method_accepts_its_own_shape(tmp_path, criterion, body, reasons, extra):
+    text, given = report(criterion, body, reasons, **extra)
+    assert complete(tmp_path, text, metadata=given).data["outcome"] == "report"
+
+
+@pytest.mark.parametrize("criterion,body,reasons,extra", [
+    # Critique keeps attack-outcome and its sections; no other method may borrow them.
+    ("kb/instructions/critique-note.md", CRITIQUE_BODY, [], {}),
+    ("kb/instructions/critique-note.md", FRICTION_BODY, [], {"attack-outcome": "lands"}),
+    (FRICTION, CRITIQUE_BODY, [], {"attack-outcome": "lands"}),
+    (FRICTION, FRICTION_BODY, [], {"attack-outcome": "lands"}),
+    (FRICTION, FRICTION_BODY.replace("**Filter:** SURVIVES", "**Filter:** PASS"), [], {}),
+    (FRICTION, FRICTION_BODY, ["WEAK - unrated"], {}),
+    (PREMISES, PREMISES_BODY, ["DOUBTFUL - no routing"], {}),
+    (PREMISES, PREMISES_BODY.replace("## For the human", "## Summary"), [], {}),
+    (SYNTHESIS, SYNTHESIS_BODY, ["One"] * 4, {}),
+    (SYNTHESIS, "\n# Synthesis\n\nNo section.\n", [], {}),
+    # A report contract needs a report criterion.
+    ("kb/test.md", SYNTHESIS_BODY, [], {}),
+])
+def test_report_shapes_are_enforced_per_criterion(tmp_path, criterion, body, reasons, extra):
+    text, given = report(criterion, body, reasons, **extra)
+    with pytest.raises(ValueError, match="schema"):
+        complete(tmp_path, text, metadata=given)
+
+
+def test_a_verdict_cannot_name_a_report_criterion(tmp_path):
+    with pytest.raises(ValueError, match="schema"):
+        complete(tmp_path, fragment(), metadata={**metadata(), "criterion": FRICTION})

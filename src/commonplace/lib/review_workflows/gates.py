@@ -5,10 +5,11 @@
 bundle names filtered by the gate's `requires_type` and `requires_trait`, the
 virtual `type` and `collection` lenses resolved from the note's frontmatter
 and location, the compression checks requested one id at a time, and the
-`critique` assay. Omitted requests mean all gates: every bundle plus `type`
-and `collection`; the compression checks and critique stay opt-in. Each
-pair's result contract follows from its criterion: a report for the critique
-instruction, a verdict otherwise. A criterion may be a library file outside
+report instructions `critique`, `friction`, `premises` and
+`compression-synthesis`. Omitted requests mean all gates: every bundle plus
+`type` and `collection`; the compression checks and report instructions stay
+opt-in. Each pair's result contract follows from its criterion: a report for
+a report instruction, a verdict otherwise. A criterion may be a library file outside
 the repository, as the gates are in an installed project; its text is read
 through the library.
 
@@ -23,7 +24,7 @@ file. It forms the calls in one of two groupings:
   `<note>::<bundle>/*`, with input `note`, one input `gate-<name>` and one
   output `review-<name>` per asked gate of that bundle. A launch's fixed
   context dominates its cost, so this shares it across the bundle. A bundle
-  with one asked gate, and every type, collection, compression and critique
+  with one asked gate, and every type, collection, compression and report
   pair, is a pair call.
 
 Each review is checked by the strict outcome parser, so a malformed review is
@@ -40,6 +41,11 @@ pairs whose result file is fresh unless forced, runs `ask()` in its own run
 between two checkout snapshots, and writes each result file as its answer
 arrives, so results already written stay after a stop. The full pass uses
 `ask()` alone and writes its result files once, at its end.
+
+The compression synthesis judges findings supplied as operational inputs,
+which no freshness hash covers. `sweep()` therefore runs it only alone, on one
+note, with those inputs, and never publishes it: its freshness is unassessed,
+and its result stays a retained observation of its run.
 
 The prompt around the inputs is outside the freshness hashes: keep it
 mechanical (how to read the inputs and write the result). Judgment belongs
@@ -345,6 +351,20 @@ REPORT_OUTPUT = """\
 - Write the complete critique body, including its central commitment, mode and required sections.
 - Use the supplied review-result contract. Supply only worker-owned fields. No terminal Result footer."""
 
+METHOD_REPORT_OUTPUT = """\
+- Write YAML frontmatter with type: types/review-result.md, findings, then outcome: report. No attack-outcome.
+- Findings have scope, quotes and reason, but no severity level. The criterion's Output section says what each
+  finding holds and how its reason begins. An empty list is allowed.
+- Write the body the criterion's Output section describes, with its required sections.
+- Use the supplied review-result contract. Supply only worker-owned fields. No terminal Result footer."""
+"""Output rules for a report criterion other than critique; its shape belongs in its instruction."""
+
+
+def _output(pair: Pair) -> str:
+    if pair.contract == "verdict":
+        return VERDICT_OUTPUT
+    return REPORT_OUTPUT if pair.kind == criteria.CRITIQUE else METHOD_REPORT_OUTPUT
+
 
 def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
     """The reviewer's task for one call; `problems` are earlier attempts' rejections, oldest first."""
@@ -358,7 +378,7 @@ def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
             problem=PROBLEM_REF, note=first.note, note_input=input_ref("note"), criterion=first.criterion,
             criterion_input=input_ref("criterion"),
             wrapper="".join(f"\n{line}" for line in wrapper) + "\n" * bool(wrapper), reading=reading,
-            review=output_ref("review"), contract=VERDICT_OUTPUT if first.contract == "verdict" else REPORT_OUTPUT)
+            review=output_ref("review"), contract=_output(first))
     else:
         gates = "".join(f"- `{pair.criterion}`: its text is {input_ref(given)}; write its review to "
                         f"{output_ref(output)}.\n" for pair, given, output in call.names())
@@ -546,11 +566,26 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
     return list(reports.values()), stopped[0] if stopped else None
 
 
+def check_synthesis(wanted: list[Pair], operational_inputs: dict | None, publish_results: bool) -> None:
+    """Refuse a compression synthesis that is not alone, lacks supplied findings, or would publish."""
+    if not any(pair.kind == criteria.SYNTHESIS for pair in wanted):
+        return
+    if len(wanted) != 1:
+        raise ValueError("compression-synthesis runs alone, on one note, with no other criterion")
+    if not operational_inputs:
+        raise ValueError("compression-synthesis needs its findings as --input ROLE=PATH files; "
+                         "it never runs the compression checks itself")
+    if publish_results:
+        raise ValueError("compression-synthesis publishes no current result; its freshness is unassessed")
+
+
 def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
           timeout: float | None = None, force: bool = False, grouping: str = "pair",
           harnesses=HARNESSES, publish_results: bool = True,
           operational_inputs: dict[str, dict[str, str]] | None = None) -> SweepReport:
     """Review frozen request inputs. Resuming never silently substitutes live bytes."""
+    if not (run_dir / "review-request.json").exists():      # a resume replays an already checked request
+        check_synthesis(wanted, operational_inputs, publish_results)
     run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
     before = checkout_state(root)
     with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:

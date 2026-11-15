@@ -1,11 +1,11 @@
 ---
-description: Experimental run-by-hand report method that tests whether a note's central claim survives concretization and locates its least-supported inferential joints
+description: Experimental report method that tests whether a note's central claim survives concretization and locates its least-supported inferential joints
 type: types/instruction.md
 ---
 
 # Reconstruct a note's composition friction
 
-Experimental, run by hand. When an LLM denoises a rough idea into fluent prose, it returns the most plausible artifact it can and never marks whether that artifact is a full solution or the best it could manage with one constraint quietly dropped. The human writer's stall is that missing mark, and it does two jobs: the **filter** (a claim with no consistent single form has no witness, and dies at the keyboard) and the **signal** (the stall locates where understanding is thinnest). This method reconstructs both from outside the text. “Gate” is its historical method name; it is **not a review-system gate** — it writes no review result file and is not in the gate catalog. Write the report; do not touch the note.
+Experimental. When an LLM denoises a rough idea into fluent prose, it returns the most plausible artifact it can and never marks whether that artifact is a full solution or the best it could manage with one constraint quietly dropped. The human writer's stall is that missing mark, and it does two jobs: the **filter** (a claim with no consistent single form has no witness, and dies at the keyboard) and the **signal** (the stall locates where understanding is thinnest). This method reconstructs both from outside the text. “Gate” is its historical method name; it is **not a catalog gate** and gives no verdict. It is a report criterion: run it alone with `commonplace-review run gates NOTE --criteria friction`, which writes its review result. Write the report; do not touch the note.
 
 Run it in a **fresh sub-agent**, a different runner than wrote the note, so the checker has no sympathy for the note's framing. Separation is what gives the check teeth: the same generator that wrote smoothly over a gap will read smoothly over it too.
 
@@ -29,21 +29,30 @@ Do **not** emit an overall "consistent / not consistent" verdict, and do not pas
 
 ## Output
 
-Write to `kb/reports/state/friction/<note-name>.friction.md`. Mutate nothing else.
+The caller names the output file. Write only that file; mutate nothing else. The output is a [review result](../types/review-result.md) fragment with `outcome: report` and no `attack-outcome`.
+
+Each surfaced joint is one finding, thinnest first. Give it `scope: passage` and quote enough of the inference to identify one span of the note; use `scope: document` with no quotes only for a joint no single span carries. Begin its `reason` with its rating, `UNSUPPORTED`, `THIN` or `HOLDS`, then say what the reason fails to establish. The body explains the ranking without repeating each finding.
 
 ```markdown
+---
+type: types/review-result.md
+findings:
+  - scope: passage
+    quotes: ["<the connective or implicit inference, quoted>"]
+    reason: "UNSUPPORTED — <what the reason fails to establish>"
+outcome: report
+---
+
 # Friction check: <note title>
 
-**Note:** <path>
 **Central claim (one sentence):** <or "does not concretize to one claim">
 
 ## Filter
-**Verdict:** SURVIVES | DISSOLVES
+**Filter:** SURVIVES | DISSOLVES
 <if DISSOLVES: the properties that cannot coexist, and which trade-off the note ignores>
 
-## Signal — thinnest joints
-1. **<the connective or implicit inference, quoted>** — <UNSUPPORTED | THIN | HOLDS> — <what the reason fails to establish>
-2. ...
+## Thinnest joints
+<why the findings rank as they do; the joints themselves are the findings>
 
 ## For the human
 <one line: where to look first — the dissolved claim, or the joint that most needs the author's missing concretization>

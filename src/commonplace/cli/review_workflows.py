@@ -15,15 +15,22 @@
     commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
 
 NOTES are files or directories (a directory means its reviewable notes, not
-recursively). C are gate ids, bundle names, the lenses `type`, `collection`
-and `critique`, and compression check ids (`compression/core-claim-obscured`,
+recursively). C are gate ids, bundle names, the lenses `type` and
+`collection`, compression check ids (`compression/core-claim-obscured`,
 `compression/branch-bloat`, `compression/detail-overhang`,
-`compression/marginal-value-redundancy`), one id per check. `status` without
-`--criteria` covers all gates (critique and the compression checks stay
-opt-in); `run gates` launches one worker per stale pair, so it takes all gates
-only when asked with `--all-gates`. `--grouping bundle` asks one worker per
-note and bundle of catalog gates for that bundle's stale gates, sharing one
-launch's fixed context; every other pair stays one call.
+`compression/marginal-value-redundancy`), one id per check, and the report
+instructions `critique`, `friction`, `premises` and `compression-synthesis`.
+`status` without `--criteria` covers all gates (compression checks and report
+instructions stay opt-in); `run gates` launches one worker per stale pair, so
+it takes all gates only when asked with `--all-gates`. `--grouping bundle`
+asks one worker per note and bundle of catalog gates for that bundle's stale
+gates, sharing one launch's fixed context; every other pair stays one call.
+
+`compression-synthesis` runs alone on one note and takes the findings it
+synthesizes as `--input ROLE=PATH` files, such as the four compression check
+results; it never runs the checks. Like every run with `--input`, it writes no
+current result and is never skipped as fresh. Its freshness is unassessed, so
+`status` refuses it; inspect its retained observation with `show RUN`.
 
 `status` with NOTES shows each applicable pair, including pairs never
 reviewed (`missing`); without NOTES it shows every stored result whose note
@@ -250,7 +257,11 @@ def _keep(row: results.Row, arguments: argparse.Namespace) -> bool:
 
 def _status(root: Path, arguments: argparse.Namespace) -> int:
     if arguments.notes:
-        rows = results.status(root, [(pair.note, pair.criterion) for pair in _pairs(root, arguments)])
+        wanted = _pairs(root, arguments)
+        if any(pair.kind == criteria.SYNTHESIS for pair in wanted):
+            raise ValueError("compression-synthesis has no current result: its freshness is unassessed; "
+                             "inspect its run with `commonplace-review show RUN`")
+        rows = results.status(root, [(pair.note, pair.criterion) for pair in wanted])
         orphans = []
     elif arguments.criteria:
         raise ValueError("--criteria needs NOTES")

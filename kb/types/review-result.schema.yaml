@@ -53,12 +53,29 @@ properties:
           properties:
             outcome: {enum: [pass, warn, fail]}
             findings: {items: {required: [level]}}
-          not: {required: [attack-outcome]}
+            criterion: {not: {$ref: '#/$defs/report-criterion'}}
         else:
-          required: [attack-outcome]
           properties:
             outcome: {const: report}
             findings: {items: {not: {required: [level]}}}
+            criterion: {$ref: '#/$defs/report-criterion'}
+      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/critique'}}}
+        then: {required: [attack-outcome]}
+        else: {not: {required: [attack-outcome]}}
+      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/friction'}}}
+        then:
+          properties:
+            findings: {items: {properties: {reason: {pattern: '^(UNSUPPORTED|THIN|HOLDS)\b'}}}}
+      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/premises'}}}
+        then:
+          properties:
+            findings:
+              items:
+                properties:
+                  reason:
+                    pattern: '^(HOLDS\b|(DOUBTFUL|DEFEATED)\b(?=[\s\S]*\b(LOCAL|GLOBAL)\b)(?=[\s\S]*\b(instance|prevalence|priced-exception)\b))'
+      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/synthesis'}}}
+        then: {properties: {findings: {maxItems: 3}}}
       - if: {properties: {outcome: {enum: [warn, fail]}}}
         then: {properties: {findings: {minItems: 1}}}
       - if: {properties: {outcome: {const: pass}}}
@@ -68,7 +85,7 @@ properties:
     type: array
     contains: {pattern: '^# '}
 allOf:
-  - if: {properties: {frontmatter: {properties: {contract: {const: report}}}}}
+  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/critique'}}}}}
     then:
       properties:
         headings:
@@ -76,6 +93,38 @@ allOf:
             - contains: {const: '## Strongest case against it'}
             - contains: {const: '## How the note engages it'}
             - contains: {const: '## Constructive findings'}
+  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/friction'}}}}}
+    then:
+      properties:
+        body: {pattern: '(?m)^\*\*Filter:\*\* (SURVIVES|DISSOLVES)\b'}
+        headings:
+          allOf:
+            - contains: {const: '## Filter'}
+            - contains: {const: '## Thinnest joints'}
+            - contains: {const: '## For the human'}
+  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/premises'}}}}}
+    then:
+      properties:
+        body: {pattern: '(?m)^\*\*Register:\*\* (claim|definition|procedure)\b'}
+        headings:
+          allOf:
+            - contains: {const: '## Premises and counterexamples'}
+            - contains: {const: '## For the human'}
+  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/synthesis'}}}}}
+    then:
+      properties:
+        headings: {contains: {const: '## Opportunities'}}
 $defs:
+  # A report criterion is named by its library instruction: `kb/<path>` in a
+  # Commonplace checkout, `commonplace:<path>` in an installed project.
+  critique: {type: string, pattern: '^(kb/|commonplace:)instructions/critique-note\.md$'}
+  friction: {type: string, pattern: '^(kb/|commonplace:)instructions/composition-friction-gate\.md$'}
+  premises: {type: string, pattern: '^(kb/|commonplace:)instructions/premise-decomposition-gate\.md$'}
+  synthesis:
+    type: string
+    pattern: '^(kb/|commonplace:)instructions/compression-bundle/high-impact-simplification-synthesis\.md$'
+  report-criterion:
+    anyOf: [{$ref: '#/$defs/critique'}, {$ref: '#/$defs/friction'}, {$ref: '#/$defs/premises'},
+            {$ref: '#/$defs/synthesis'}]
   digest: {type: string, pattern: '^[0-9a-f]{64}$'}
   path: {type: string, minLength: 1, pattern: '^(?!/)(?!.*(?:^|/)\.\.(?:/|$))[^\\]+$'}
