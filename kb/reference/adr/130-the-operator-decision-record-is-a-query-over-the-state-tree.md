@@ -36,7 +36,7 @@ Two earlier decisions shaped C:
 
 - Strike reasons are required. Since 2026-11-13 the revise workflow takes a
   reason with every strike and blocks deleted, edited or added entries, with
-  [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md)
+  [resolve a strike list](../../instructions/decide-items.md)
   as the session procedure. Each run therefore holds its proposed list and
   its strikes with reasons.
 - The record is a surface of the

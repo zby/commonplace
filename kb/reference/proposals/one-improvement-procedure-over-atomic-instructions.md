@@ -59,7 +59,7 @@ The atomic instructions, where they live and who uses them:
 | Edit | simplification passes, typed edit operations with `effort`, `decision` and preserve rules; split-out-a-treatment stays an instruction | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow, `run edit` |
 | Edit | fix strategies, keyed to finding kinds, as one typed edit operation | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure, `run edit` |
 | Edit | packet body edits and copyedit under `keep` | [run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) | full pass |
-| Stop | strike list, with the operator's reason per strike | [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md) | revise workflow |
+| Stop | strike list, with the operator's reason per strike | [resolve a strike list](../../instructions/decide-items.md) | revise workflow |
 | Stop | exact publication approval | revise and full-pass workflows | both workflow commands |
 | Stop | hand-back disposition with a packet | [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | full pass |
 | Stop | `deferred` item | [fix review warnings](../../instructions/fix-warnings/fix-review-warnings.md) | fix procedure |
@@ -139,7 +139,7 @@ The retired code is the same under both: the revise workflow and the full pass's
 - What makes a proposal strong: the check's own judgment, a stated criterion such as the note having no claim its neighbours do not own, or the operator's threshold recorded from earlier answers.
 - Whether pending items expire when the note's text changes under them, as review results go stale.
 - Which checks a variant names beyond `commonplace-validate`.
-- The interface for operator answers. A session in which the agent presents each item in context, asks, and records the answer is the candidate; [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md) is that step for one stop.
+- The interface for operator answers. A session in which the agent presents each item in context, asks, and records the answer is the candidate; [resolve a strike list](../../instructions/decide-items.md) is that step for one stop.
 
 ## Adoption criteria
 

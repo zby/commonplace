@@ -150,7 +150,7 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    entries. Code refuses a candidate that changed a struck entry's passage. A deleted, edited or added entry, or a strike without a
    reason, stops the run again naming the entry: correct the file and
    approve it again. In a session, follow
-   [resolve a strike list](./resolve-a-strike-list.md): the agent presents
+   [resolve a strike list](../decide-items.md): the agent presents
    each candidate in context, asks, and records the operator's answer. A
    list made again for another text gets a new file and stops again. These
    are temporary procedure-development points for unsettled selection

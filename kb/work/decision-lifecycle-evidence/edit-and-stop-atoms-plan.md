@@ -183,7 +183,7 @@ decides nothing itself.
 
 - **Decide items.** The operator answers each item of a list. The strike
   list and the hand-back disposition are this stop over different item
-  kinds. [Resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md)
+  kinds. [Resolve a strike list](../../instructions/decide-items.md)
   is already this procedure and becomes its general form.
 - **Approve a text.** The operator approves one exact candidate text for
   publication.

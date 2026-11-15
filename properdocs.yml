@@ -205,6 +205,7 @@ plugins:
         'instructions/review-triage.md': 'instructions/run-review-batches.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'instructions/simplification-passes/figurative-phrasing.md': 'instructions/simplification-passes/plain-wording.md'
+        'instructions/simplification-passes/resolve-a-strike-list.md': 'instructions/decide-items.md'
         'instructions/simplify-prose-without-weakening-claims.md': 'instructions/simplify-prose-sentence-by-sentence.md'
         'instructions/synthesize-agent-memory-landscape/SKILL.md': 'agentic-systems/instructions/synthesize-agent-memory-landscape/SKILL.md'
         'instructions/verify-review-quote-grounding.md': 'agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md'

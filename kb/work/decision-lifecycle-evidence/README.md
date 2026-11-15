@@ -109,7 +109,7 @@ now:
   ([ADR 130](../../reference/adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
   A strike in a strike list keeps its entry and carries the operator's
   required reason, collected in a session under
-  [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md).
+  [resolve a strike list](../../instructions/decide-items.md).
 - **Proposed, not adopted.** [One improvement procedure over atomic instructions](../../reference/proposals/one-improvement-procedure-over-atomic-instructions.md)
   replaces the full pass, the fix procedure and the simplification passes
   with one instructed procedure whose variants compose the same atoms, with

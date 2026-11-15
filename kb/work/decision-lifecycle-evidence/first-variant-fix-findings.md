@@ -149,7 +149,7 @@ without a record.
 | 5 | The higher-order check | Review | No; in calibration |
 | 8 | Fix a finding by a named strategy | Edit, `decision: none` | As a taxonomy, not yet typed |
 | 10 | Record an open item | Stop | No; the answers schema is its form |
-| 11 | Present, ask and record, when the operator is present | Stop | Only for strike lists, as [resolve a strike list](../../instructions/simplification-passes/resolve-a-strike-list.md) |
+| 11 | Present, ask and record, when the operator is present | Stop | Only for strike lists, as [resolve a strike list](../../instructions/decide-items.md) |
 
 Step 6, the disposition of each finding, is the variant's own judgment and
 not an atom. It is where this variant differs most from the full pass,

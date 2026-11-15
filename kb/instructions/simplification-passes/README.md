@@ -8,7 +8,7 @@ what the pass exists to make true, what it must preserve, and what it returns.
 Workers follow [execute a revision pass](./execute-a-revision-pass.md).
 The planning procedure is [revise an article or note](./revise-an-article-or-note.md);
 a stopped strike list is resolved in a session with
-[resolve a strike list](./resolve-a-strike-list.md).
+[resolve a strike list](../decide-items.md).
 
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. For a full automated review pass,

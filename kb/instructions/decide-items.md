@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: the pass improves the text with only the replacements the operator wants, and each strike leaves the operator's reason in the run, so that the selection rules can later be revised from what the operator rejected and why.
 
-Consumption: an agent in a session with the operator, reached from the run report's `waiting-for` text, from [revise an article or note](./revise-an-article-or-note.md) step 3, or from the passes README. Nothing here is inherited from the worker instruction; the rules below are the whole procedure.
+Consumption: an agent in a session with the operator, reached from the run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, or from the passes README. Nothing here is inherited from the worker instruction; the rules below are the whole procedure.
 
 Inputs:
 
