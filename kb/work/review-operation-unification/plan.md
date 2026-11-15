@@ -1,81 +1,54 @@
-# Plan: unify the review operations
+# Plan: design the unified review subset
 
-Written 2026-11-14 for an agent in a later session. The [workshop framing](./README.md) holds the goal, the operator's premises, the shipped constraints and what closes the workshop. This file states the intent, the result wanted and the limits. The method is yours.
+Handoff dated 2026-11-14. Read the [framing](./README.md) for scope and premises and the [execution design](./execution-design.md) for selected requirements. The purpose is to turn those requirements into a bounded implementation recommendation, supported by actual operations and consumers.
 
-## Intent
+## Deliverable and checkpoints
 
-The operator wants to build one improvement procedure from atoms that are each sound alone, and has chosen the review operations as the first atoms to put in order. The purpose of this work is to let the operator decide, per review operation, how it comes to meet the atom contract or why it stays outside the pool.
+Write `decisions.md` here. For each decision below, state the recommendation, alternatives, evidence locators, sample selection, unknowns and affected consumers. Supporting files are optional. A precise unresolved question is preferable to an unsupported tidy scheme.
 
-A decision is useful to the operator only with its evidence and its unknowns. A tidy scheme that the records do not support is worse than an open question stated precisely.
+1. **Family membership and form.** Decide which operations enter the pool and what instruction/result contracts they need. Check whether compression is four atoms plus synthesis, whether critique/friction/premise decomposition remain distinct from each other and from the higher-order check (all four question a note's central commitment), whether connect belongs, and whether apparent duplicates operate at different scales. Inspect full tests and actual consumers, not just failure-mode descriptions. Uniform execution is not a reason to merge semantic tasks.
+2. **Shared record and execution requirements.** Choose ownership and fields for captured targets, self-contained operational inputs, provenance, completed results and trial history. Resolve uncommitted instruction/code identities and effective harness configuration. Specify each operation's freshness policy or explicit absence of one. State how a stored result records the number of trials behind it; the stability premise does not make one run sufficient. Reconcile target capture with the evidence contract of the improvement-run types under `kb/reports/types/`, which already store note texts and cite review launch outputs by hash, so that there is one provenance design and not two. Assess the [command sketch](./operation-command-sketch.md) against existing callers; do not design a second runtime. A new command name needs a consumer that extending `commonplace-review` cannot serve.
+3. **First slice and acceptance.** Choose a bounded implementation slice and tests; prefer the easier case first (critique already runs through the review command, while connect depends on the whole corpus and has the hardest freshness) unless the evidence favors another. The tests are those demonstrating the execution contract without claiming calibrated judgment. Include uncommitted-target reconstruction, missing-input handling, independent trials, interrupted/retried work, latest-result replacement and existing-consumer compatibility. Separately state the evidence each result form needs before a procedure relies on its judgments.
 
-## Result wanted
+**Checkpoint:** return the family/form recommendations and stop for the operator's disposition before finalizing dependent result contracts and tests. Shared provenance requirements can be investigated in parallel with that analysis; retain dependent alternatives as conditional. Workjig execution, the review-only scope and the run-local input boundary are already selected, not questions to reopen by default.
 
-`decisions.md` in this directory: one entry per question in the framing, each with a recommendation, the alternatives considered, the evidence, and what remains unknown. Supporting material goes in further files here as you see fit.
+## Authority and stop conditions
 
-The first seven framing questions reduce to three decisions, in this order of dependence:
+- Read the checkout, including ignored operational evidence. Write only in this workshop directory.
+- No shipped criteria, types, code, instructions or proposal edits; no paid runs or workers; no commit unless requested.
+- Leave other sessions' changes alone. Record inspected versions where concurrent changes could affect conclusions.
+- Return immediately if a necessary question requires a paid run, every viable option breaks an existing consumer, or evidence contradicts an operator premise. Record the blocker rather than silently changing the commission.
 
-1. **Form:** per family (compression bundle, the three adversarial reports, connect), whether it becomes a gate, gets a typed report form, or stays outside the pool. This includes whether the bundle is four atoms and a composing step, whether the adversarial reports stay three, and the open duplications.
-2. **Result:** what a stored result must carry.
-3. **Test:** what must exist before a procedure relies on an operation of each form.
+## Evidence to start from
 
-Report to the operator when the form decision is ready. The other two depend on the answer, and you may prepare them but not presume it.
+| Evidence | Use and limit |
+|---|---|
+| [Review operation overlaps](../decision-lifecycle-evidence/review-operation-overlaps.md) | Candidate duplications. Two proposed merges did not survive full test reading; do not treat the map as an adopted merger plan. |
+| [Compression bundle](../../instructions/compression-bundle/README.md) | Explains its deliberate exclusion from `--all-gates`; decide whether the reason still applies. |
+| [Higher-order check evaluation](../higher-order-check-evaluation/README.md) | Result requirements such as proposal kind and force; its workshop owns wording and calibration. |
+| [Verdict stability pilot results](../stochastic-operation-testing/pilot-gate-verdict-stability-results.md) | Four Sonnet sweeps on one selected note: 33/44 pairs unchanged, 11 changed; variable severity vocabulary and prompt-wrapper/model mismatches. Not population rates or an Opus calibration. The note was retired later that day (commit `278b35ae5`); its text is recoverable from the commit the pilot names. |
+| [First improvement run](../decision-lifecycle-evidence/first-run.md) | One case for the family decision: the run's target note was retired because its claim, stated generally, was trivial and the rest was local. No gate and no higher-order wording proposed that; no adversarial report had been run on it, so the case does not show whether one would have. |
+| [Provenance reconstruction results](../stochastic-operation-testing/provenance-reconstruction-results.md) | Two Opus calls on one gate, exact input reconstruction and differing advertised MCP tools. Not a repeated full-sweep stability study. |
 
-## Limits
+Operational evidence locations, inventoried on 2026-11-14; recount before making sampling claims:
 
-- Read anything in the checkout, including `kb/reports/state/`. Write only inside this directory.
-- No edits to shipped criteria, types, instructions, code or proposals. No paid review, sweep or worker. No commit unless the operator asks.
-- Other sessions edit this checkout. Leave their changes alone.
-- Return to the operator at once if a decision cannot be reached without a paid run, if every option you find would break an operation's current user, or if the evidence contradicts one of the operator's premises. Record it; do not act on it.
+| Operation | Locations |
+|---|---|
+| Gates and conformance | `kb/reports/state/review/results/` and `review/runs/` |
+| Critique | Shared review results/runs through the `critique` lens; also 13 standalone files under `kb/reports/state/critique/` |
+| Compression | Full-pass run directories |
+| Composition friction | 89 files under `kb/reports/state/friction/`; full-pass runs |
+| Premise decomposition | 67 files under `kb/reports/state/premise-decomposition/`; full-pass runs |
+| Connect | 808 files under `kb/reports/state/connect/`; full-pass runs |
 
-## Principles to work by
+Inspect `src/commonplace/lib/review_workflows/criteria.py`, `results.py` and `full_pass.py` for current behavior. Full-pass runs and packets are under `kb/reports/state/review/runs/full-pass/` and `kb/reports/state/review/packets/`. The typed-result gap in the framing must be checked against current code, not assumed solved because the criteria are typed.
 
-From the [stochastic-operation-testing workshop](../stochastic-operation-testing/README.md). A review operation is model-dependent and its output varies between runs, so these govern what the evidence here can show.
+## Evidence discipline
 
-- **Ordinary records first.** The state tree holds hundreds of retained outputs. A trial is warranted only by a question they cannot answer and whose answer changes a decision.
-- **Ordinary records carry qualified provenance.** They came from a changing checkout and are not controlled observations.
-- **Comparable means the whole configuration matches,** not only the input text.
-- **Judge tendencies, not single outputs.** Say so where you rest on one case.
-- **Keep apart** finding a case that exposes a failure, estimating how often it fails, and comparing a change with the incumbent. A case chosen because it failed gives no rate.
-- **Keep denominators,** including cases that showed nothing. Absence in a small sample leaves the question open.
-- **Your own reading is an evaluator too.** Record how you matched or classified, so the operator can check it.
-- **Consumers before schema.** The form of a result follows from what its readers used.
-- **A recommended trial states its terms:** failure criterion, fixture, evaluator, trial count, budget, stopping rule and the decision it serves.
+Use existing records first. State which configuration dimensions match, deliberately differ or remain unknown. Distinguish a failure-exposing case from a frequency estimate and from a repair comparison. Keep denominators, including empty findings, and describe your matching/classification method so the operator can inspect your evaluation. Single-case support stays single-case support.
 
-## What you cannot find out yourself
+A proposed new trial must name its failure criterion, fixture, evaluator, trial count, budget, stopping rule and decision consequence. Do not launch it under this plan. No broad literature survey or fixed sample size is required; choose further investigation only where it can change a decision.
 
-**The first pilot.** The [gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability-results.md) ran four sweeps of one note on unchanged text on 2026-11-14, on the `sonnet` profile, which was then the default. The operator made `opus` the default the same day, so these figures describe the profile being left; an Opus rerun is not yet done. It covers one note, chosen because it looked unstable, so treat these as constraints on design and not as rates.
+## Return
 
-- 33 of 44 pairs kept one outcome across four trials; 11 changed, 5 of them warning only once.
-- Whether a gate warned varied more than what it flagged when it warned.
-- Severity labels inside results vary between runs of one gate (`warn`, `WARN`, `low`, `minor`, `medium`), so a warning-level finding cannot be identified mechanically today.
-- An earlier sweep with byte-identical inputs was still not comparable: the profile and model differed, and the prompt wrapper for the conformance pairs had changed in code. The wrapper is outside the hashed inputs.
-- One full sweep of one note is 44 launches: about 5.2 USD on `sonnet`, and 11.08 USD in the one `opus` sweep on record (2026-11-12).
-
-**Where the evidence is,** as of 2026-11-14:
-
-| Operation | Instruction | Retained outputs |
-|---|---|---|
-| Catalog gates, conformance lenses | `kb/instructions/review-gates/` | `kb/reports/state/review/results/`, `runs/` |
-| Compression bundle | [compression-bundle/](../../instructions/compression-bundle/README.md) | Inside full-pass run directories |
-| Critique | [critique-note](../../instructions/critique-note.md) | 13 files in `kb/reports/state/critique/` |
-| Composition friction | [composition-friction-gate](../../instructions/composition-friction-gate.md) | 89 files in `kb/reports/state/friction/` |
-| Premise decomposition | [premise-decomposition-gate](../../instructions/premise-decomposition-gate.md) | 67 files in `kb/reports/state/premise-decomposition/` |
-| Connect | [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) | 808 files in `kb/reports/state/connect/` |
-| Higher-order check | `kb/work/higher-order-check-evaluation/wordings/` | That workshop's results files |
-
-The full pass is the main consumer of the non-gate methods: its code is `src/commonplace/lib/review_workflows/full_pass.py`, its runs are under `kb/reports/state/review/runs/full-pass/`, and its packets under `kb/reports/state/review/packets/`.
-
-**Known traps.**
-
-- The [overlap map](../decision-lifecycle-evidence/review-operation-overlaps.md) was read from failure modes only. Two of its proposed merges did not survive a full reading of the tests.
-- The compression bundle was kept out of the catalog on purpose. Its stated reason may or may not still hold.
-- The higher-order check's wording and calibration belong to [its own workshop](../higher-order-check-evaluation/README.md). Take what its result needs from there.
-- Freshness and provenance are different consumers of a result's identity. A field can record how a result was produced without making it stale.
-
-## Left to you
-
-How you inventory the operations, which records you sample and how many, how you compare reports, the layout of your files, and the order of work within each decision. Choose from the evidence as you find it, and state the samples behind any count.
-
-## Report
-
-Outcome first: the decisions you recommend, those you could not reach and why, the samples behind them, and anything in this plan or the framing that proved wrong. Validate each file you write with `commonplace-validate`, one file per call.
+Lead with recommendations and blockers, then evidence and limits. Validate each written file with `commonplace-validate`, one file per call. After operator dispositions, a separate implementation commission can act on the first slice; this plan does not authorize implementation by reaching its final step.
