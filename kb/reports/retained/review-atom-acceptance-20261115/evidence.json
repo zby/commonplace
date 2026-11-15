@@ -1,0 +1,322 @@
+{
+  "record-version": 1,
+  "date": "2026-11-15",
+  "consumer": "Future review/fixture changes and acceptance regression comparisons",
+  "decision": {
+    "parent-disposition": "accepted qualified machinery result",
+    "case-verdict": "qualified machinery acceptance",
+    "content-reconstruction": "hash-bound; verified",
+    "effective-environment": "different",
+    "judgment-calibration": "not assessed",
+    "focused-workshop": "closed; adopted decisions retained in ADR 132"
+  },
+  "baseline": {
+    "code-and-kb-commit": "490f0194bebd10dc62f63e71a614aa65700e4489",
+    "library-policy": "git-visible-or-installed-v1",
+    "library-sha256": "6e50cd8a2f9823b9018db4320dc3e0dab6816994bf4837f8c0aff7b18cc06f56",
+    "executor-files": 112,
+    "library-files": 6887,
+    "dirty-overlays": 5,
+    "cli-python-package-map-entries": 23,
+    "cli-python-package-map-equal": true,
+    "substitutions": [
+      "current executable",
+      "pair grouping, one worker"
+    ]
+  },
+  "prior-context": {
+    "admitted-kinds": [
+      "gate",
+      "type-conformance",
+      "collection-conformance",
+      "critique"
+    ],
+    "earlier-live-check": "A captured validation-contract defect was repaired offline before the repeated four-kind check; all four were then accepted on their first launch. This is machinery evidence, not calibration.",
+    "test-reports": [
+      {
+        "source": "Parent commit record 889cce5df3038c96c9e2f5a6e357924ba3a4eed4",
+        "coverage": "full suite, including slow tests",
+        "passed": 1516,
+        "skipped": 1,
+        "independently-rerun-for-this-report": false
+      },
+      {
+        "source": "Parent commit record 490f0194bebd10dc62f63e71a614aa65700e4489",
+        "coverage": [
+          "general",
+          "review_workflows",
+          "relocation",
+          "docs"
+        ],
+        "includes-slow": true,
+        "passed": 380,
+        "independently-rerun-for-this-report": false
+      },
+      {
+        "source": "Parent final closure verification, 2026-11-15",
+        "command": "uv run pytest tests/commonplace/general tests/commonplace/review_workflows tests/commonplace/relocation tests/commonplace/docs -m '' -q",
+        "passed": 382,
+        "includes-slow": true,
+        "elapsed-seconds": 216.29,
+        "new-cases": ["dispatch race with frozen inputs", "publication failure after retained-result creation"],
+        "independently-rerun-by-parent": true
+      }
+    ],
+    "inventory-policy-fix": {
+      "commit": "54e82a0c676ef3f6365686d179f5d4192c13d223",
+      "boundary": "Git-tracked and non-ignored authored files; hidden paths and report state excluded; explicit ignored operational inputs retained separately",
+      "older-policy-observations-and-fixtures": "refused rather than reinterpreted; a new ordinary observation supplied this fixture",
+      "historical-evidence": "not rewritten"
+    }
+  },
+  "selection": {
+    "target": "kb/theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md",
+    "criterion": "kb/instructions/review-gates/sentence/stock-phrases.md",
+    "criterion-id": "sentence/stock-phrases",
+    "kind": "gate",
+    "contract": "verdict",
+    "target-sha256": "e45d20f1aae9a37f7d05cc3f038b8c988ecf738fc0ddf506320b3b4c640420a8",
+    "criterion-sha256": "6e2bd9a71d2685b71fc1641640e684574da24f3115f005263a75367c0dc6c29c",
+    "output-contract-sha256": "9969d7db1b8228822ac807fdc50483981fc6d62c7effbe601a7de3fac2e131a0",
+    "canonical-prompt-sha256": "6345fd46a45243cd77e6e4a1ac81ea36a8c1cddfc1a91546a570539b3f392d1b",
+    "canonical-prompt-is-not-launch-invocation": true,
+    "requested-profile": {
+      "harness": "claude-code",
+      "model": "opus",
+      "effort": "medium",
+      "timeout-seconds": 600,
+      "grouping": "pair",
+      "workers": 1
+    }
+  },
+  "identity": {
+    "source-run": "20261115T200346Z",
+    "source-observation": "3870487350f9a4b6d7cbc816",
+    "fixture": "3870487350f9a4b6d7cbc816-6851bc80e3f6",
+    "fixture-manifest-sha256": "37854de058571b8ef68474dd30d76d6d44905813054d4fc250d343332d969e1a",
+    "outer-trial-run": "20261115T200508Z",
+    "nested-run": "tree/kb/reports/state/review/runs/v2/trial",
+    "trial-observation": "7ac430348fa150a4cc94c51a",
+    "trial-reconstructed-head": "1f06b492c111de35faf77e352c6184bccb77536e",
+    "observation-id-scope": "run-local, not globally unique"
+  },
+  "archives": {
+    "kb.tar": {
+      "sha256": "6d6150db439eb0070f125e8a33ef8ced9703624039ca8e242bff670c198ef854",
+      "members": 8051
+    },
+    "library.tar": {
+      "sha256": "53c4a4608b126d1693f12fc6dfad6aaf4d607f0c3ebcbc0e8af497fa13665ad3",
+      "members": 6887
+    },
+    "executor.tar": {
+      "sha256": "4917284309c4ebae3feb7940cedd2b14f37ac4730333510e5d0869a0dcbbfcfc",
+      "members": 112
+    }
+  },
+  "sequence": {
+    "actual-top-level-review-model-launches": 2,
+    "guarded-process-starts": 5,
+    "guard-blocked-starts": 3,
+    "budget-limit": 2,
+    "budget-used": 2,
+    "blocked-returncode": 78,
+    "blocked-stdout-empty": true,
+    "blocked-review-output-absent": true,
+    "guard-blocked-before-claude-exec": true,
+    "initial-trial-state": "stopped; observation not-run",
+    "parent-mistake": {
+      "explanation": "Pretrial verification used the development interpreter against a CLI-created fixture; after the package mismatch, the shell continued before the second budget slot was released.",
+      "evidence-status": "parent-reported cause; blocked process evidence independently audited, not a full shell-transcript reconstruction"
+    },
+    "recovery": "Verified with the CLI interpreter, released the second authorized slot and resumed the same outer trial; three blocked attempts retained.",
+    "final-replay": "same trial; zero new launches",
+    "budget-phase-caveat": "Blocked trial processes retain phase source because the slot/label had not yet been released/advanced."
+  },
+  "launches": [
+    {
+      "launch-id": "bd69886bc175419199cd16207d642e14",
+      "role": "ordinary",
+      "process-status": "delivered",
+      "returncode": 0,
+      "actual-model-launch": true,
+      "model": "claude-opus-5-5",
+      "stdout-sha256": "6abe7aeb9ad5ff78f4bb7adce6d302d127c4a79937e3e3a0384ecad264ea5994",
+      "stdout-bytes": 102862,
+      "jsonl-events": 26,
+      "tool-uses": {
+        "Read": 6,
+        "Write": 1
+      },
+      "failed-tool-results": 0,
+      "permission-denials": 0,
+      "spawned-subagents": 0,
+      "outcome": "pass",
+      "findings": {
+        "total": 0,
+        "info": 0
+      },
+      "raw-output-sha256": "2b14082539487eaef7a1f0bd64493d2ca16711ae605b63f346aab89e7dbde569",
+      "completed-result-sha256": "320b096e028fcd3ccb9a9f7ec9fd92640404a5f4bf6248a08b6a63af47560bba"
+    },
+    {
+      "launch-id": "64aaa152e713460786cf64e08a9cea6e",
+      "role": "trial",
+      "process-status": "process_error",
+      "returncode": 78,
+      "actual-model-launch": false
+    },
+    {
+      "launch-id": "b28641c238ab40a7a7ae9605ba940aa1",
+      "role": "trial",
+      "process-status": "process_error",
+      "returncode": 78,
+      "actual-model-launch": false
+    },
+    {
+      "launch-id": "e9fdac2456034441b81de7a4d621fd34",
+      "role": "trial",
+      "process-status": "process_error",
+      "returncode": 78,
+      "actual-model-launch": false
+    },
+    {
+      "launch-id": "d9d718b95b7746a5b039987907b6b9e4",
+      "role": "trial",
+      "process-status": "delivered",
+      "returncode": 0,
+      "actual-model-launch": true,
+      "model": "claude-opus-5-5",
+      "stdout-sha256": "823435ef878b1f968ec319c07ee100d3ea2a6c1df5ac87dd9867e8cf58053ba3",
+      "stdout-bytes": 110731,
+      "jsonl-events": 34,
+      "tool-uses": {
+        "Read": 6,
+        "Write": 1
+      },
+      "failed-tool-results": 0,
+      "permission-denials": 0,
+      "spawned-subagents": 0,
+      "outcome": "pass",
+      "findings": {
+        "total": 2,
+        "info": 2
+      },
+      "raw-output-sha256": "6e4315687101590939e87162ce3b992e1045bb4422cf3f404c804cc410087d8b",
+      "completed-result-sha256": "6da7468a89aa3c91a70a90381f3741fa1641613051bf0b3448d878310e3b6608"
+    }
+  ],
+  "replay": {
+    "new-launches": 0,
+    "launch-files-compared": 33,
+    "launch-files-unchanged": true,
+    "completed-results-compared": 1,
+    "completed-result-unchanged": true,
+    "budget-object-unchanged": true,
+    "recovery-and-resume-receipts-equal": true,
+    "comparison-limit": "Uses a local before snapshot, not an independently authenticated timing record."
+  },
+  "publication-and-preservation": {
+    "trial-published-live-result": false,
+    "live-results-equal-post-source-snapshot": 4,
+    "only-ordinary-source-view-replaced": true,
+    "live-source-result-sha256": "bffb95f5b752ff2317c1e74357aca3120b913e039c3b3a5cb4f0c57d7418537f",
+    "trial-current-result-files": 0,
+    "trial-authored-tree-clean": true,
+    "historical-v2-runs": [
+      {
+        "run": "20261115T123635Z",
+        "unchanged-files": 86
+      },
+      {
+        "run": "20261115T132933Z",
+        "unchanged-files": 74
+      }
+    ],
+    "unrelated-dirty-files-preserved": 5,
+    "fixture-files-unchanged": 15,
+    "timing": "Checks describe the completed audit before this retained report was added to the library."
+  },
+  "audit": {
+    "method": [
+      "independent byte hashes",
+      "tar member inspection without extraction",
+      "read-only Git archive comparison",
+      "complete raw JSONL parsing and tool-use/result matching",
+      "before/after replay evidence comparison"
+    ],
+    "core-checks-passed": 52,
+    "additional-checks-passed": 4,
+    "archive-safety": "No absolute/traversing or duplicate names, escaping symlinks, special/hardlink members, or members below symlinks.",
+    "kb-symlinks-reconstructed": 35,
+    "kb-archive-exact-recorded-git-archive": true,
+    "shared-report-state-payload-copied": false,
+    "tracked-state-marker-only": true,
+    "fixture-and-observation-captures-verified": true,
+    "worker-input-hashes-verified": true,
+    "completed-and-raw-result-hashes-verified": true,
+    "library-and-executor-inventories-verified": true,
+    "reconstructed-authored-files-verified": 7262,
+    "representative-completed-result-validation": {
+      "files": 2,
+      "failures": 0,
+      "warnings": 0,
+      "independent-bare-command-check": true
+    },
+    "audit-origin": {
+      "report-sha256": "bc9edc297a6f78edd6ebd91465141708e5c671496321bbb487a796ff622a92ce",
+      "core-check-record-sha256": "b6bf38c2c3a22c0beae29a183fb1688e44e6afa086308b7602f98a47b9830451",
+      "additional-check-record-sha256": "e2d3bf84b380a3d15a3f5c763eeb549ab78744ec00f4c9bbe8ea59d13ad1e780"
+    },
+    "not-exhaustive-test-case-verification": true
+  },
+  "reported-cost": {
+    "source-usd": "0.2997354",
+    "trial-usd": "0.352242",
+    "total-usd": "0.6519774",
+    "basis": "Terminal total_cost_usd, confirmed by per-model usage; reported list-price usage, not invoice/net subscription charge.",
+    "blocked-starts": "No model usage report; not model launches.",
+    "replay": "Not counted as another launch or charged again in this sum."
+  },
+  "environment-comparison": {
+    "result": "different",
+    "permission-mode-both": "default",
+    "claude-code-version-both": "2.1.325",
+    "reported-model-both": "claude-opus-5-5",
+    "source-advertised-tools": 71,
+    "trial-advertised-tools": 25,
+    "source-mcp": {
+      "connected": [
+        "scry",
+        "claude.ai Claude Docs"
+      ],
+      "needs-auth": [
+        "claude.ai Google Calendar",
+        "claude.ai Google Drive",
+        "claude.ai Gmail"
+      ]
+    },
+    "trial-mcp": [],
+    "trial-warning": {
+      "ignored-permissions-allow-entries": 4,
+      "settings": ".claude/settings.json",
+      "reason": "isolated workspace not trusted",
+      "is-tool-failure-or-permission-denial": false
+    },
+    "trial-environment-overrides": {
+      "COMMONPLACE_LIBRARY_ROOT": "isolated-tree/kb",
+      "CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0"
+    },
+    "working-directories-differ": true,
+    "requested-allowlist-is-not-tool-inventory-isolation": true,
+    "hook-results-both": "SessionStart started and succeeded, exit 0; empty hook stdout/stderr; configuration equivalence not established"
+  },
+  "limits": [
+    "One ordinary assessment and one recovered isolated trial; final replay is not an independent trial.",
+    "No judgment calibration, stability estimate, environment equivalence, OS-level containment or throughput claim.",
+    "Other fake-harness acceptance cases and implementation-wide tests were not independently rerun for this record.",
+    "Dependency artifacts, OS, user-level harness configuration, automatically loaded context and provider internals are not fully pinned.",
+    "Recovered tool failures still need explicit trace inspection; ordinary terminal success alone is insufficient.",
+    "This is a selected evidence summary, not a retained executable fixture or complete trace/inventory bundle."
+  ]
+}

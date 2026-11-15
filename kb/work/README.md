@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [Unify the review operations](./review-operation-unification/README.md) — posed 2026-11-14: bring every review operation (catalog gates, conformance checks, compression bundle, report methods, higher-order check) under one atom contract so each can be run, stored and tested alone; decide one result form or two
 
 - [From live operation to controlled testing and debugging](./stochastic-operation-testing/README.md) — posed 2026-11-14: design workflows and provenance to turn affordable live observations into controlled, retained fixtures; freshness consumes provenance, and stochastic execution adds repeated-trial evaluation
 

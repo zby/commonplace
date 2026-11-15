@@ -15,7 +15,8 @@ and one current packet per note that had a full pass.
 
 For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
 [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
-the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
+the workflow decision; [ADR 132](./adr/132-review-atoms-retain-observations-behind-current-results.md)
+records the typed review, retained-observation and fixture boundary. Exact behavior belongs to `commonplace.lib.review_workflows`,
 `commonplace.headless` and `commonplace.cli.review_workflows`.
 
 ## Components

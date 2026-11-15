@@ -139,11 +139,12 @@ stops, and brings each to the proposal's atom contract: a typed
 instruction file, inputs that are files, a typed stored result, and a way
 to run and test it alone.
 
-The operator then narrowed the first step: unify the review operations
-first, in their own workshop,
-[unify the review operations](../review-operation-unification/README.md).
-The edit-operation type and the stops stay drafts here until that
-workshop has a result. The operator confirmed on 2026-11-15 that the two
+The operator then narrowed the first step to review operations. The bounded
+first slice is now implemented under
+[ADR 132](../../reference/adr/132-review-atoms-retain-observations-behind-current-results.md),
+with a retained [acceptance record](../../reports/retained/review-atom-acceptance-20261115/README.md).
+That result completes the focused review workshop; it does not admit the
+remaining report methods or implement the edit-operation and stop drafts here. The operator confirmed on 2026-11-15 that the two
 other groups follow once it is finished: the edit operations and the
 stops, each brought to the same atom contract without arranging atoms
 into larger units.
