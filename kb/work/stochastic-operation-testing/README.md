@@ -111,6 +111,54 @@ For a later authorized trial, use independent initial state and output locations
 - [Higher-order check evaluation](../higher-order-check-evaluation/README.md) owns calibration of one review operation over repeated rounds. It is an existing consumer of fixtures, independent trial state and denominators. Take its practice as evidence before designing a parallel one.
 - [Authority grades and learning from operator decisions](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md) requires a discriminating check tested on retained and fresh examples before a grade moves. That matches the split in question 7 between diagnostic fixtures selected for failure and held-out evaluation cases. The proposal owns the grade decision; this workshop supplies the test method.
 
+## Evaluation cases requested after the focused writing-tool comparison
+
+The operator requested these additions after discussing the focused writing-tool
+comparison. They are requirements to carry into later test design, not measured
+benefits, changes to live procedures, or authorization for model trials.
+
+### Missing-fact and supplied-fact pairs
+
+Test whether an edit operation both avoids unsupported additions and uses evidence
+when it is available. Retain paired cases with the same finding and target passage:
+
+- **Necessary fact absent:** the authorized inputs cannot support the requested
+  specificity. The appropriate response identifies the missing fact and leaves
+  the substantive choice open, rather than inventing a mechanism or measurement.
+- **Necessary fact supplied:** the authorized inputs supply that fact and permit
+  a minimal repair. Repeating the question or declining the edit without another
+  reason is an avoidable deferral, not successful caution.
+
+Label the expected response under the operation's actual authority; supplied facts
+do not authorize a reserved claim change. Report unsupported additions and avoidable
+deferrals separately. Keep both members together when splitting cases and treating
+related cases as independent units for analysis: a fact twin is not another
+independent task. These cases test a specific behavior, not live failure prevalence.
+
+### Earned-use controls for detectors
+
+For each new or revised stylistic detector under evaluation, retain a clear failure,
+a legitimate use of the same construction, and a near-miss where the available
+context changes whether the construction is justified. A phrase or syntax match
+alone must not determine the expected finding. Record why the evidence earns the
+legitimate use and what the failure lacks.
+
+Examples embedded in the criterion are useful smoke tests, not independent
+calibration. Use separate cases to assess discrimination, and retain contested
+labels rather than treating the evaluator's verdict as ground truth. Coordinate
+with the existing [gate-calibration proposal](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md)
+instead of creating a parallel calibration policy.
+
+### Evaluate retained diagnostic probes
+
+The [review-operation design entry](../decision-lifecycle-evidence/review-operation-overlaps.md#agreed-direction-retain-diagnostic-probes-in-review-results)
+owns the agreed direction for recording concrete probe outputs in result bodies.
+This workshop owns their evaluation, not a duplicate retention specification.
+Assess separately whether the probe faithfully represents the passage and its
+context, and whether the resulting finding is correct. Include consequential
+cleared candidates when testing false-positive restraint. A recorded probe or
+valid result format alone does not establish judgment quality.
+
 ## Bookkeeping and next decisions
 
 Keep framing and research reasoning here. Keep full external copies in private source snapshots, not this workshop. Literature leads are not evidence until inspected and grounded. Future run outputs belong under `kb/reports/state/`; retained research evidence follows the reports collection contract. Record fixture identity, configuration changes and evaluation decisions with any authorized trial so failed attempts remain visible.

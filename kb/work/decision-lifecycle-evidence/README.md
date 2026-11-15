@@ -179,6 +179,34 @@ the same day; the
 [gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability.md)
 measures the present gap.
 
+## Candidate for the later edit-operation work: check a proposed fix
+
+In the follow-up to the focused writing-tool comparison, the operator asked to
+retain a pre-application fix check here. This is a candidate for the edit-operation
+work after review unification, not an adopted atom, a new review type, or a change
+to the current fix procedure.
+
+The intended result is to catch a defective replacement before applying it. Given
+the finding, the authorized evidence, the original passage and the proposed
+replacement, check whether the replacement:
+
+- reproduces the defect it was meant to resolve;
+- introduces an unsupported fact or relation;
+- drops a qualification or changes the claim;
+- requires an author-owned decision outside the operation's authority.
+
+A detected problem calls for a revised candidate or an explicit open item; the
+check must not invent the missing fact or select a reserved decision. A writer's
+self-check is not independent validation and does not replace closing review.
+
+When edit-operation design starts, decide whether this belongs inside each fix
+operation or is useful as a separately runnable check. Keep it deferred until
+there is a concrete input/output contract and a case that distinguishes a useful
+repair from a superficially compliant but defective one. Evaluation cases are
+owned by the [controlled-testing workshop](../stochastic-operation-testing/README.md#evaluation-cases-requested-after-the-focused-writing-tool-comparison),
+including paired missing/supplied facts and earned-use controls. No implementation
+or model trial is commissioned by this entry.
+
 ## Working map
 
 | File | Role |
@@ -195,7 +223,7 @@ measures the present gap.
 | [Edit-operation type](./edit-operation-type.md) | Draft type for edit operations: the shared contract, what an instance declares, and how the passes and fix strategies fit. Not registered. |
 | [First variant, fix findings](./first-variant-fix-findings.md) | Draft of the fix procedure recomposed over the drafted types, with the three gaps it exposed in them and the preconditions of a first run. |
 | [First run](./first-run.md) | Record of the one run made on 2026-11-14: result, what the types enforced, and nine observations about the design. |
-| [Overlaps among the review operations](./review-operation-overlaps.md) | Map of where gates, the type and collection checks, the compression bundle, the report methods and the higher-order check ask the same question; a reading of texts, with nothing changed. |
+| [Overlaps among the review operations](./review-operation-overlaps.md) | Historical overlap map and completed merges; [agreed direction for retaining diagnostic probes in result bodies](./review-operation-overlaps.md#agreed-direction-retain-diagnostic-probes-in-review-results), with instruction changes and evaluation pending. |
 
 The general map remains preliminary. The two bounded dispositions above do
 not select a universal retention threshold, mining schedule, cache lifetime,

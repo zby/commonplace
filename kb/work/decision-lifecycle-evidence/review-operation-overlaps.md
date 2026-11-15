@@ -126,6 +126,63 @@ as an INFO finding. Nothing read those as a sign that the note might be
 misplaced or need a split. The gap is in how a lower-order warning is
 interpreted, not in a missing question.
 
+## Agreed direction: retain diagnostic probes in review results
+
+In the follow-up to the focused writing-tool comparison, the operator agreed
+that review results should retain the concrete outputs of relevant diagnostic
+probes. The purpose is to make the assessment inspectable, including why a
+plausible finding was dismissed. This is an agreed design direction; criterion
+instruction changes and their evaluation remain pending. It does not introduce
+a new review type or change the live result schema.
+
+The three probes are:
+
+- **Flatten the rhetoric:** restate the passage's claim without its rhetorical
+  cadence, preserving its qualifications; identify what substantive content
+  remains and what the original form contributes.
+- **State the implied relation:** restate the connection between claims
+  explicitly, using a connective where appropriate. Identify whether the text
+  supports that relation or whether supplying it would invent a connection.
+- **Check both sides of a contrast:** identify the claims on each side and
+  the contextual support for each. Nearby explanation can earn a contrast;
+  support need not precede it. A supported contrast may still be replaceable
+  under a separate editorial policy.
+
+### What to retain
+
+Use the explanatory body of the existing [review result](../../types/review-result.md),
+not new schema fields. For each finding that relies on a probe, retain the
+identified passage, the concrete paraphrase or relation, the support present
+or missing, and the resulting assessment. A statement that the probe was
+performed is not a substitute for its output. Keep the structured finding
+focused on the passage and defect rather than duplicating the whole account.
+
+Also retain consequential candidates that the probe cleared when they explain
+an important boundary or a plausible false positive. Do not turn these into
+warning findings. Do not mechanically apply all three probes to every passage
+or record routine scanning. The owning criterion specifies which probes apply.
+
+These are diagnostic accounts, not controlled experiments or proof that the
+judgment is correct. Later evaluation must distinguish whether a probe faithfully
+represents the passage and its context from whether the resulting finding is
+correct. A persuasive account can fail either test.
+
+### Ownership and next step
+
+First assess these probes within the existing operations: literal paraphrase
+in `prose/mannered-prose`, implicit inference in composition friction, and
+materially unresolved meanings in `semantic/underspecified-assertions`. This
+is a placement proposal, not a broadening of their failure modes. A clear but
+unsupported inference is not semantic underspecification. Preserve composition
+friction's report-only role; recording a probe does not grant verdict authority.
+
+Read the current criteria and test retained cases before selecting instruction
+changes. Add a gate only if those cases establish a coherent failure without
+an existing owner. The [controlled-testing workshop](../stochastic-operation-testing/README.md)
+owns evaluation of diagnostic fidelity and finding correctness; this entry owns
+the agreed retention direction. No implementation or model trial is authorized
+by this record.
+
 ## Limits
 
 The map is a reading of failure modes, not of each gate's full test, and
