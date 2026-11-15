@@ -32,6 +32,7 @@ import re
 import uuid
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -280,15 +281,16 @@ def write_result(root: Path, result: Result) -> Path:
     return target
 
 
-def read_result(path: Path) -> Result:
+def read_result(path: Path, *, context: result_contract.ValidationContext | None = None) -> Result:
     """Read the single supported result format; old state must be archived."""
     text = path.read_bytes().decode("utf-8")
-    root = next((parent for parent in path.resolve().parents
-                 if path.resolve().is_relative_to(parent / RESULTS)), None)
-    if root is None:
+    resolved = path.resolve()
+    root = context.root if context is not None else next(
+        (parent for parent in resolved.parents if resolved.is_relative_to(parent / RESULTS)), None)
+    if root is None or not resolved.is_relative_to(root / RESULTS):
         raise ValueError(f"review result is outside the current result tree: {path}")
     try:
-        result_contract.validate_saved(root, path, text)
+        result_contract.validate_saved(root, path, text, context=context)
         data = frontmatter.parse(text).data
         return Result(**{field: data[key] for key, field in _KEYS.items()},
                       attack_outcome=data.get("attack-outcome"), body=frontmatter.strip(text))
@@ -296,20 +298,34 @@ def read_result(path: Path) -> Result:
         raise ValueError(f"unreadable review result {path}: {error}") from error
 
 
-def _check(root: Path, note: str | Path, criterion: str | Path) -> tuple[Freshness, Result | None, Path]:
+class _ReadContext:
+    """Scan-local inputs; creating an empty/missing-result scan does no schema work."""
+
+    def __init__(self, root: Path):
+        self.root = root
+        self.texts: dict[Path, str] = {}
+
+    @cached_property
+    def validation(self) -> result_contract.ValidationContext:
+        return result_contract.ValidationContext(self.root)
+
+
+def _check(root: Path, note: str | Path, criterion: str | Path,
+           context: _ReadContext) -> tuple[Freshness, Result | None, Path]:
     note, criterion = _posix(note, label="note"), _identity(criterion)
     path = result_path(root, note, criterion_id(root, criterion))
     if not path.is_file():
         return Freshness("missing"), None, path
-    result = read_result(path)
+    result = read_result(path, context=context.validation)
     if (result.note, result.criterion) != (note, criterion):
         raise ValueError(f"review result {path} records {result.note} and {result.criterion}, "
                          f"not {note} and {criterion}")
-    return _freshness(root, result, {}), result, path
+    return _freshness(root, result, context), result, path
 
 
-def _freshness(root: Path, result: Result, texts: dict[Path, str]) -> Freshness:
-    """Compare the result's hashes with the current files; `texts` caches file texts across results."""
+def _freshness(root: Path, result: Result, context: _ReadContext) -> Freshness:
+    """Compare against this scan's inputs and already validated contract."""
+    texts = context.texts
     def text(path: Path) -> str:
         if path not in texts:
             texts[path] = _read(path)
@@ -318,13 +334,13 @@ def _freshness(root: Path, result: Result, texts: dict[Path, str]) -> Freshness:
     changed = tuple(name for name, same in (
         ("note", note_sha256(text(root / result.note), criterion_text) == result.note_sha256),
         ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256),
-        ("output-contract", result.contract_sha256 == result_contract.fingerprint(result_contract.capture_contract(root)))) if not same)
+        ("output-contract", result.contract_sha256 == context.validation.fingerprint)) if not same)
     return Freshness("stale", changed) if changed else Freshness("fresh")
 
 
 def freshness(root: Path, note: str | Path, criterion: str | Path) -> Freshness:
     """Whether the stored result for the pair still matches the note and the criterion."""
-    return _check(root, note, criterion)[0]
+    return _check(root, note, criterion, _ReadContext(root))[0]
 
 
 def _row(result: Result, state: Freshness, path: Path) -> Row:
@@ -334,19 +350,20 @@ def _row(result: Result, state: Freshness, path: Path) -> Row:
 def status(root: Path, pairs: Iterable[tuple[str | Path, str | Path]]) -> list[Row]:
     """One row per (note, criterion) pair, with the stored outcome and executor when there is a result."""
     rows = []
+    context = _ReadContext(root)
     for note, criterion in pairs:
-        state, result, path = _check(root, note, criterion)
+        state, result, path = _check(root, note, criterion, context)
         rows.append(_row(result, state, path) if result is not None
                     else Row(_posix(note, label="note"), _identity(criterion), state))
     return rows
 
 
-def _stored_files(root: Path) -> Iterator[tuple[Path, Result]]:
+def _stored_files(root: Path, context: _ReadContext) -> Iterator[tuple[Path, Result]]:
     results = root / RESULTS
     if not results.is_dir():
         return
     for path in sorted(path for path in results.rglob("*.md") if path.is_file()):  # note dirs end in .md
-        yield path, read_result(path)
+        yield path, read_result(path, context=context.validation)
 
 
 def _is_orphan(root: Path, result: Result) -> bool:
@@ -358,7 +375,7 @@ def _is_orphan(root: Path, result: Result) -> bool:
 
 def orphaned(root: Path) -> list[Path]:
     """Stored result files whose note or criterion file no longer exists; removing one is deleting it."""
-    return [path for path, result in _stored_files(root) if _is_orphan(root, result)]
+    return [path for path, result in _stored_files(root, _ReadContext(root)) if _is_orphan(root, result)]
 
 
 def stored(root: Path) -> tuple[list[Row], list[Path]]:
@@ -366,12 +383,13 @@ def stored(root: Path) -> tuple[list[Row], list[Path]]:
 
     Each note and criterion file is read once however many results name it.
     """
-    rows, orphans, texts = [], [], {}
-    for path, result in _stored_files(root):
+    rows, orphans = [], []
+    context = _ReadContext(root)
+    for path, result in _stored_files(root, context):
         if _is_orphan(root, result):
             orphans.append(path)
         else:
-            rows.append(_row(result, _freshness(root, result, texts), path))
+            rows.append(_row(result, _freshness(root, result, context), path))
     return rows, orphans
 
 

@@ -574,14 +574,17 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
                         "kb-commit": observations.git_head(root)}
             observations.atomic_json(snapshot_path, snapshot)
         fresh = set()
+        read_context = None
         if not force:
             for pair in wanted:
                 path = results.result_path(root, pair.note, pair.criterion_id)
                 if path.exists():
-                    stored = results.read_result(path)
+                    if read_context is None:
+                        read_context = result_contract.ValidationContext(root, contracts)
+                    stored = results.read_result(path, context=read_context)
                     if (stored.note_sha256 == results.note_sha256(texts[pair.note], criterion_texts[pair.criterion])
                             and stored.criterion_sha256 == results.criterion_sha256(criterion_texts[pair.criterion])
-                            and stored.contract_sha256 == result_contract.fingerprint(contracts)):
+                            and stored.contract_sha256 == read_context.fingerprint):
                         fresh.add(pair)
         asked, stopped = ask(run, root, [pair for pair in wanted if pair not in fresh], texts, grouping=grouping,
                              max_workers=max_workers,

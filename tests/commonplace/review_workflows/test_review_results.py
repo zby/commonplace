@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
 from commonplace.lib import library
+from commonplace.lib.review_workflows import result_contract
 from commonplace.lib.review_workflows.results import (
     Freshness,
     Summary,
@@ -98,6 +100,52 @@ def test_written_result_reads_back_equal_at_its_pair_path(repo: Path) -> None:
     [row] = status(repo, [(NOTE, GATE)])
     assert (row.freshness, row.outcome, row.model) == (Freshness("fresh"), "warn", "claude-sonnet-x")
     assert row.profile["launch-model"] == "sonnet"
+
+
+@pytest.mark.parametrize("scan", [
+    lambda root: status(root, [(NOTE, GATE), (NOTE, OTHER_GATE)]),
+    stored, summarize, orphaned,
+])
+def test_scan_captures_contract_once_and_refreshes_next_operation(repo: Path, scan) -> None:
+    _review(repo, NOTE, GATE)
+    _review(repo, NOTE, OTHER_GATE)
+    with patch.object(result_contract, "capture_contract", wraps=result_contract.capture_contract) as capture:
+        scan(repo)
+        assert capture.call_count == 1
+        schema = repo / "kb/types/review-result.schema.yaml"
+        schema.write_bytes(schema.read_bytes() + b"\n# changed contract bytes\n")
+        scan(repo)
+        assert capture.call_count == 2
+    assert all(row.freshness == Freshness("stale", ("output-contract",))
+               for row in status(repo, [(NOTE, GATE), (NOTE, OTHER_GATE)]))
+
+
+@pytest.mark.parametrize("field", ["raw_output", "target_capture"])
+def test_shared_validation_context_does_not_cache_evidence(repo: Path, field) -> None:
+    result, path = _review(repo, NOTE, GATE)
+    context = result_contract.ValidationContext(repo)
+    assert read_result(path, context=context) == result
+    evidence_path = repo / getattr(result, field)
+    original = evidence_path.read_bytes()
+    evidence_path.write_bytes(original + b"tampered")
+    with pytest.raises(result_contract.ControllerError, match="hash mismatch"):
+        read_result(path, context=context)
+    evidence_path.write_bytes(original)
+    assert read_result(path, context=context) == result
+    other = repo / "another-project" / path.relative_to(repo)
+    other.parent.mkdir(parents=True)
+    other.write_bytes(path.read_bytes())
+    with pytest.raises(ValueError, match="outside the current result tree"):
+        read_result(other, context=context)
+    path.write_text("not a review result")
+    with pytest.raises(ValueError, match="unsupported review-result"):
+        read_result(path, context=context)
+
+
+def test_missing_result_scan_never_captures_contract(repo: Path) -> None:
+    with patch.object(result_contract, "capture_contract", side_effect=AssertionError("unnecessary capture")):
+        assert status(repo, [(NOTE, GATE)])[0].freshness == Freshness("missing")
+        assert stored(repo) == ([], [])
 
 
 def test_note_edit_stales_only_criteria_that_watch_the_edited_part(repo: Path) -> None:

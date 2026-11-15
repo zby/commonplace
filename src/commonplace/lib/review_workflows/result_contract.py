@@ -29,6 +29,16 @@ class ControllerError(RuntimeError):
 
 
 class ReviewSnapshot(CriterionSnapshot):
+    def __init__(self, root: Path, contents: dict[str, bytes]):
+        super().__init__(root, contents)
+        self._registries = {}
+
+    def registry(self, path: Path):
+        key = path.resolve()
+        if key not in self._registries:
+            self._registries[key] = super().registry(key)
+        return self._registries[key]
+
     def read(self, path: Path) -> bytes:
         try:
             return super().read(path)
@@ -140,13 +150,30 @@ class Candidate:
     warnings: tuple[str, ...]
 
 
-def validate_saved(root: Path, path: Path, text: str, *, contracts: dict[str, bytes] | None = None):
+class ValidationContext:
+    """One operation's pinned contract; never cache mutable result or evidence bytes.
+
+    Construct a new context for each scan/invocation so subsequent operations
+    observe changed project contracts, library selection and schemas.
+    """
+
+    def __init__(self, root: Path, contracts: dict[str, bytes] | None = None):
+        self.root = root.resolve()
+        contents = contracts if contracts is not None else capture_contract(root)
+        self.snapshot = preflight(root, contents)
+        self.fingerprint = fingerprint(contents)
+
+
+def validate_saved(root: Path, path: Path, text: str, *, contracts: dict[str, bytes] | None = None,
+                   context: ValidationContext | None = None):
     parsed = frontmatter.parse(text)
     if not parsed.ok:
         raise ValueError("; ".join(parsed.errors))
     if parsed.data.get("type") != TYPE or parsed.data.get("format") != FORMAT:
         raise ValueError("unsupported review-result format; archive old results and start a new review")
-    snapshot = preflight(root, contracts if contracts is not None else capture_contract(root))
+    if context is not None and (contracts is not None or context.root != root.resolve()):
+        raise ControllerError("validation context belongs to another root or duplicates supplied contracts")
+    context = context if context is not None else ValidationContext(root, contracts)
     captured = {path.resolve(): text}
     for key in ("target-capture", "raw-output"):
         name = parsed.data.get(key)
@@ -165,7 +192,7 @@ def validate_saved(root: Path, path: Path, text: str, *, contracts: dict[str, by
             raise ControllerError(f"{key}: retained evidence hash mismatch")
         captured[evidence.resolve()] = content
     report = ValidationRun(repo_root=root, paths=(path,), content_overrides=captured,
-                           criteria=snapshot).validate(path)
+                           criteria=context.snapshot).validate(path)
     if report.fails:
         raise ValueError("; ".join(report.fails))
     return report

@@ -65,6 +65,14 @@ Trace audit: `kb/reports/state/review/runs/v2/20261115T132933Z/artifact/controll
 - **Recovered tool errors remain hidden by ordinary success reporting.** The first run's critique correction had two failed Edit operations and recovered within the launch. Terminal success and empty stderr did not expose them. The repeat had none in its four inspected traces. A future reporting change must distinguish process success, tool failures and typed acceptance rather than treating them as one status.
 - **The tool surface remains broad.** Each repeat launch advertised 71 tools; Scry and Claude Docs connected, and three Google connectors needed authentication. No MCP tool was used. The installed CLI advertises `--strict-mcp-config`, but its effect on cloud connectors and other ambient context was not tested. The comparative run deliberately retained the original profile. Permission allowlists are not tool-inventory isolation; fixture environment equivalence remains unestablished.
 
+## Result-reading and freshness cost
+
+Before admitting more operations, the operator requested removal of repeated per-result setup. Result scans now pin one validation context and contract fingerprint per operation. Status, stored-result summaries and orphan scans share that context; sweep freshness selection reuses its already captured contracts. Schema registries are reused only inside that pinned context. Missing-result scans do not load the contract.
+
+Each result and its retained evidence are still read and checked independently. Only immutable contract setup and the scan's current note/criterion texts are shared. A subsequent scan creates a new context, so changed schema bytes, library selection and project contracts are not hidden by a process-wide cache. Tests also alter target and raw-output evidence between reads using the same context and require corruption to be detected.
+
+A local before/after check scanned the same four current results three times: contract captures fell from **24 to 3**, and elapsed time fell from **1.944 to 0.392 seconds**. This is a bounded local measurement, not a throughput guarantee. The original 12 result tests passed before and after; the affected general, review-workflow, relocation, validation and installation suites, including slow tests, passed **488 tests with one skipped**. Log: `/tmp/commonplace-review-read-cost-tests.log`. No model calls were used for this change.
+
 ## Completed cutover
 
 The preflight receipt is `kb/reports/state/review/cutover/20261115-preflight/inventory.json`. The completed cutover receipt is `kb/reports/state/review/cutover/20261115-v2/receipt.json`. Immediately before archival, all 4,725 historical file hashes still matched preflight, no review controller or recorded worker remained live, and all 153 run locks were acquired and held through the move and integrity check.
