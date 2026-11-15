@@ -8,7 +8,7 @@ from commonplace.cli import review_workflows as cli
 from commonplace.lib.review_workflows import decisions
 
 NOTE = "kb/theory/foo.md"
-RUN = "kb/reports/state/review/runs/revise/kb/theory/foo/0123456789ab"
+RUN = "kb/reports/state/review/runs/v2/revise/kb/theory/foo/0123456789ab"
 LIST = "- first entry, kept\n  detail line\n- second entry, struck\n"
 ANSWER = "- first entry, kept\n  detail line\n- second entry, struck\n  struck: changes the claim\n"
 
@@ -29,7 +29,7 @@ def record(root, run, file, name, proposal, answer=None, at=None, key="k"):
 
 PACKET = """---
 note: {note}
-run: kb/reports/state/review/runs/full-pass/kb/theory/bar/aaaaaaaaaaaa
+run: kb/reports/state/review/runs/v2/full-pass/kb/theory/bar/aaaaaaaaaaaa
 disposition: revise
 resolution: {resolution}
 resolution-authority: {authority}
@@ -50,7 +50,7 @@ def repo(tmp_path, monkeypatch):
            '{"artifact": "kb/theory/foo.md"}\n', "2026-11-12T11:00:00Z", "pub-key")
     record(root, RUN, "d", "plain-wording-list-ffffffffffff.md", "No candidates.\n")
     write(root, "kb/reports/state/review/runs/20261112T073040Z/sweep.json", "{}")
-    write(root, "kb/reports/state/review/runs/revise/kb/theory/baz/bbbbbbbbbbbb/log.jsonl", "")
+    write(root, "kb/reports/state/review/runs/v2/revise/kb/theory/baz/bbbbbbbbbbbb/log.jsonl", "")
     write(root, "kb/reports/state/review/packets/kb/theory/bar.md",
           PACKET.format(note="kb/theory/bar.md", resolution="rejected", authority="user",
                         at='"2026-11-12T16:15:19Z"', summary="The operator kept the note."))

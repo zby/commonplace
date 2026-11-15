@@ -12,7 +12,7 @@ Write `decisions.md` here. For each decision below, state the recommendation, al
 
 **Checkpoint:** return the family/form recommendations and stop for the operator's disposition before finalizing dependent result contracts and tests. Shared provenance requirements can be investigated in parallel with that analysis; retain dependent alternatives as conditional. Workjig execution, the review-only scope and the run-local input boundary are already selected, not questions to reopen by default.
 
-## Authority and stop conditions
+## Original design authority and stop conditions
 
 - Read the checkout, including ignored operational evidence. Write only in this workshop directory.
 - No shipped criteria, types, code, instructions or proposal edits; no paid runs or workers; no commit unless requested.
@@ -51,8 +51,8 @@ A proposed new trial must name its failure criterion, fixture, evaluator, trial 
 
 ## Current deliverables
 
-The operator authorized continuation after the [family/form recommendations](./decisions.md), with atomic procedures rather than compositions as the binding scope. The proposed [execution contract](./execution-contract.md) now specifies the remaining record decisions, first slice, compatibility boundary and acceptance tests. It reconciles the prior review-result type plan and Fable's consumer needs. Shipped implementation and paid evaluation remain separately commissioned.
+The operator authorized implementation on 2026-11-15 after the [family/form recommendations](./decisions.md) and [execution contract](./execution-contract.md). That later commission supersedes the original design-only write boundary above. It includes the result type, captures, consumer cutover, draft selector and fixtures together; paid evaluation remains separately commissioned. [Implementation status](./implementation.md) records acceptance, the operator's abandonment of unfinished historical sweep work and completed archival.
 
 ## Return
 
-Lead with recommendations and blockers, then evidence and limits. Validate each written file with `commonplace-validate`, one file per call. After operator dispositions, a separate implementation commission can act on the first slice; this plan does not authorize implementation by reaching its final step.
+Lead with recommendations and blockers, then evidence and limits. Validate each written file with `commonplace-validate`, one file per call. The implementation commission comes from the operator's explicit continuation, not from this plan reaching its final step.

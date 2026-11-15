@@ -26,6 +26,25 @@ class FrontmatterResult:
         return not self.errors
 
 
+class UniqueKeyLoader(getattr(yaml, "CSafeLoader", yaml.SafeLoader)):
+    """Reject ambiguous mappings instead of silently keeping the last value."""
+
+    def construct_mapping(self, node, deep=False):
+        self.flatten_mapping(node)
+        seen = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            try:
+                if key in seen:
+                    raise yaml.constructor.ConstructorError(
+                        None, None, f"duplicate key: {key!r}", key_node.start_mark)
+                seen.add(key)
+            except TypeError as exc:
+                raise yaml.constructor.ConstructorError(
+                    None, None, "unhashable mapping key", key_node.start_mark) from exc
+        return super().construct_mapping(node, deep=deep)
+
+
 # CRLF-tolerant: a note saved with Windows line endings must parse as
 # frontmatter, not silently fall through to the untyped-text path.
 _FM_RE = re.compile(r"^---\r?\n(.*?)\r?\n---\r?(?:\n|$)", re.DOTALL)
@@ -47,7 +66,7 @@ def parse(content: str) -> FrontmatterResult:
     raw = match.group(1)
     result = FrontmatterResult()
     try:
-        loaded = yaml.load(raw, Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
+        loaded = yaml.load(raw, Loader=UniqueKeyLoader)
     except yaml.YAMLError as exc:
         result.errors.append(str(exc))
         return result

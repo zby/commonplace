@@ -57,9 +57,9 @@ before the run ended.
 from __future__ import annotations
 
 import hashlib
+import json
 import subprocess
 import threading
-import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -78,11 +78,15 @@ from commonplace.lib.project_paths import (
     VALIDATION_IGNORE_MARKER,
     is_collection_metadata,
 )
-from commonplace.lib.review_workflows import criteria, results
-from commonplace.lib.review_workflows.outcomes import parse_report, parse_verdict
+from commonplace.lib.review_workflows import (
+    criteria,
+    observations,
+    result_contract,
+    results,
+)
 
 STATE = Path("kb/reports/state/review")
-RUNS = STATE / "runs"
+RUNS = STATE / "runs" / "v2"
 PROFILES_REL = "instructions/review-profiles.yaml"
 ATTEMPTS = 3
 """Attempts per call, counting rejected reviews and launches that returned no answer."""
@@ -242,7 +246,7 @@ consistency checks, read only files the note links to, except for one exact \
 local path that the criterion explicitly tells you to derive from such a link.
 - Ignore review backups, workshop copies and historical artifacts unless the \
 note links to them.
-- Do not delegate or start another agent.
+- Never browse shared operational state or other runs, even through a link. Operational inputs must be supplied copies.\n- Do not delegate or start another agent.
 """
 
 PROMPT = """\
@@ -275,7 +279,7 @@ failure mode and test, and let no finding or result under one gate decide anothe
 Output:
 - Write each gate's review to its output. Write nothing else: create, edit or \
 delete no file in the repository, and run no command that changes it or its git state.
-- Each review stands alone, with its own structure and result line:
+- Each review stands alone, with its own typed findings and outcome:
 {contract}
 """
 
@@ -319,16 +323,19 @@ COLLECTION_WRAPPER = (
 """Mechanical only: how to apply a collection contract as a gate; its criteria belong in the contract."""
 
 VERDICT_OUTPUT = """\
-- Structure the review as `### Summary` (a short paragraph), `### Findings` \
-(`- <severity>: <finding>` items) and, when needed, `### Suggested Revision`.
-- End with exactly one result line, the last non-empty line of the file: \
-`## Result: PASS`, `## Result: WARN` or `## Result: FAIL`. Do not use aliases \
-such as Verdict, Outcome, OK or UNKNOWN, and write no other result-like line."""
+- Write YAML frontmatter with type: types/review-result.md, findings, then outcome: pass | warn | fail.
+- Each finding has scope: passage | document, quotes (verbatim target spans that occur once, empty for document scope;
+  line wraps and quote-mark style are ignored when matching),
+  reason, and level: info | warn | fail. WARN/FAIL require findings; PASS may have INFO findings.
+- Follow with a # Review title and explanatory body. No terminal Result footer.
+- The supplied review-result type and schema define the output contract. Supply only worker-owned fields;
+  the controller supplies all provenance. Express findings once in frontmatter, not a second prose list."""
 
 REPORT_OUTPUT = """\
-- Write the complete report the criterion asks for.
-- End with exactly one result line, the last non-empty line of the file: \
-`## Result: REPORT`. Do not write PASS, WARN or FAIL."""
+- Write YAML frontmatter with type: types/review-result.md, findings, outcome: report, and attack-outcome.
+- Findings have scope, quotes and reason, but no severity level. An empty list is allowed.
+- Write the complete critique body, including its central commitment, mode and required sections.
+- Use the supplied review-result contract. Supply only worker-owned fields. No terminal Result footer."""
 
 
 def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
@@ -354,21 +361,6 @@ def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
         text += "".join(f"- {problem}\n" for problem in problems[-1])
     return text
 
-
-def check(pair: Pair, text: str) -> list[str]:
-    """The strict result-line check: empty when the review is acceptable."""
-    try:
-        if pair.contract == "verdict":
-            parse_verdict(text)
-        else:
-            parse_report(text)
-    except ValueError as error:
-        return [str(error)]
-    return []
-
-
-def outcome(pair: Pair, text: str) -> str:
-    return parse_verdict(text) if pair.contract == "verdict" else "report"
 
 
 # --- The checkout guard ------------------------------------------------------------
@@ -405,32 +397,17 @@ def changed_paths(before: dict[str, str], after: dict[str, str]) -> list[str]:
 
 # --- The sweep ---------------------------------------------------------------------
 
-def _now() -> str:
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-
-
-def _fresh(root: Path, pair: Pair, note_text: str) -> bool:
-    """Whether the pair's stored result was produced from exactly this note text and the current criterion."""
-    path = results.result_path(root, pair.note, pair.criterion_id)
-    if not path.is_file():
-        return False
-    criterion_text = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
-    stored = results.read_result(path)
-    return (stored.note_sha256 == results.note_sha256(note_text, criterion_text)
-            and stored.criterion_sha256 == results.criterion_sha256(criterion_text))
-
-
 def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grouping: str = "pair",
-        max_workers: int | None = None, publish=None) -> tuple[list[PairReport], str | None]:
-    """Ask the calls for `wanted` over the note texts `texts` in `run`; return the reports and what stopped.
-
-    A reviewed pair's report carries its result. `publish(result)`, when
-    given, is called with each result as its answer arrives.
-    """
+        max_workers: int | None = None, publish=None, captured_criteria: dict[str, str] | None = None,
+        contracts: dict[str, bytes] | None = None,
+        operational_inputs: dict[str, dict[str, str]] | None = None) -> tuple[list[PairReport], str | None]:
+    """Assess captured inputs, retain typed observations, and optionally publish current views."""
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
     profile = {"harness": run.profile.harness, "launch-model": run.profile.launch_model, "effort": run.profile.effort}
-    criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
-                       for pair in wanted}
+    criterion_texts = captured_criteria if captured_criteria is not None else {
+        pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8") for pair in wanted}
+    contracts = contracts if contracts is not None else result_contract.capture_contract()
+    operational_inputs = operational_inputs or {}
     reports = {pair: PairReport(pair.note, pair.criterion, pair.job, "not-run") for pair in wanted}
     stop = threading.Event()
     stopped: list[str] = []
@@ -440,38 +417,105 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
             return
         names = call.names()
         note_text = texts[call.pairs[0].note]
-        inputs = {"note": note_text, **{given: criterion_texts[pair.criterion] for pair, given, _ in names}}
+        inputs = {"note": note_text, **{given: criterion_texts[pair.criterion] for pair, given, _ in names},
+                  **{f"output-contract-{index}": value.decode("utf-8")
+                     for index, (_, value) in enumerate(sorted(contracts.items()))},
+                  **{f"supplied-{name}": item["text"] for name, item in operational_inputs.items()}}
+
+        def invocation(problems=()):
+            text = prompt(call, problems)
+            if operational_inputs:
+                text += "\nExplicit self-contained operational inputs (do not browse their origins):\n" + "\n".join(
+                    f"- {name}: `{item['origin']}` supplied as {input_ref('supplied-' + name)}"
+                    for name, item in operational_inputs.items())
+            return text
+
+        records = {}
+        for pair, given, _ in names:
+            directory, record = observations.begin(run, root, pair, note_text, inputs[given], contracts,
+                                                   invocation(), call.job, inputs, operational_inputs)
+            records[pair] = directory, record
+        candidates = {}
+
+        def candidate(answer, pair, given, output):
+            launch = Path(answer.record["launches"][-1])
+            raw_path = launch / "outputs" / f"{output}.md"
+            raw = raw_path.read_bytes()
+            if (launch / "inputs/note.md").read_bytes() != note_text.encode("utf-8"):
+                raise ValueError("launch target bytes differ from retained capture")
+            if (launch / "inputs" / f"{given}.md").read_bytes() != inputs[given].encode("utf-8"):
+                raise ValueError("launch criterion bytes differ from retained capture")
+            directory, _ = records[pair]
+            saved = directory / "results" / launch.name / f"{output}.md"
+            completed_at = observations.timestamp()
+            if saved.exists():
+                completed_at = results.frontmatter.parse(saved.read_bytes().decode("utf-8")).data["completed-at"]
+            metadata = {
+                "description": f"Retained {pair.contract} review of {pair.note} against {pair.criterion}",
+                "contract": pair.contract, "note": pair.note, "criterion": pair.criterion,
+                "note-sha256": results.note_sha256(note_text, inputs[given]),
+                "criterion-sha256": results.criterion_sha256(inputs[given]),
+                "target-sha256": observations.sha(note_text.encode()),
+                "target-capture": (directory / "inputs/target" / pair.note).relative_to(root).as_posix(),
+                "observation": (directory / "observation.json").relative_to(root).as_posix(),
+                "contract-sha256": result_contract.fingerprint(contracts), "profile": profile,
+                "model": answer.record["model"], "run": run_id, "launch": launch.name,
+                "completed-at": completed_at, "raw-output": raw_path.relative_to(root).as_posix(),
+                "raw-output-sha256": observations.sha(raw),
+            }
+            checked = result_contract.complete(root, results.result_path(root, pair.note, pair.criterion_id),
+                                               raw.decode("utf-8"), metadata=metadata,
+                                               target=note_text, contracts=contracts)
+            return checked, saved
 
         def found(answer) -> list[str]:
-            if len(names) == 1:
-                return check(call.pairs[0], answer.outputs["review"])
-            return [f"{output}: {problem}" for pair, _, output in names
-                    for problem in check(pair, answer.outputs[output])]
+            problems = []
+            for pair, given, output in names:
+                try:
+                    candidates[pair] = candidate(answer, pair, given, output)
+                except ValueError as error:
+                    problems.append(f"{output}: {error}")
+            return problems
+        state = "interrupted"
         try:
-            answer = run.checked(call.job, lambda problems: prompt(call, problems), found,
+            answer = run.checked(call.job, invocation, found,
                                  [output for _, _, output in names], attempts=ATTEMPTS, inputs=inputs)
+            if answer.problem is not None:
+                state = "problem"
+                for pair in call.pairs:
+                    reports[pair].state, reports[pair].problem = state, answer.problem
+                return
+            for pair, _, output in names:
+                checked, saved = candidates[pair]
+                saved.parent.mkdir(parents=True, exist_ok=True)
+                if saved.exists() and saved.read_bytes() != checked.text.encode("utf-8"):
+                    raise ValueError(f"retained result changed on replay: {saved}")
+                saved.write_bytes(checked.text.encode("utf-8"))
+                result = results.from_candidate(checked)
+                directory, record = records[pair]
+                relative = saved.relative_to(directory).as_posix()
+                if relative not in record["completed-results"]:
+                    record["completed-results"].append(relative)
+                    record["completed-result-sha256"][relative] = observations.sha(saved.read_bytes())
+                record["latest-result"] = relative
+                record["validation-warnings"] = list(checked.warnings)
+                observations.refresh(run, directory, record, state="completed")
+                if publish is not None:
+                    publish(result)
+                report = reports[pair]
+                report.state, report.outcome, report.result = "reviewed", result.outcome, result
+            state = "completed"
         except OutOfAttempts as spent:
+            state = "out-of-attempts"
             for pair in call.pairs:
-                reports[pair].state, reports[pair].problem = "out-of-attempts", str(spent)
-            return
-        except LaunchFailed as failure:              # and UsageLimited: the environment needs the operator
+                reports[pair].state, reports[pair].problem = state, str(spent)
+        except LaunchFailed as failure:
+            state = "stopped"
             stop.set()
             stopped.append(str(failure))
-            return
-        if answer.problem is not None:
-            for pair in call.pairs:
-                reports[pair].state, reports[pair].problem = "problem", answer.problem
-            return
-        for pair, given, output in names:
-            text = answer.outputs[output]
-            result = results.make_result(
-                pair.note, note_text, pair.criterion, inputs[given], outcome=outcome(pair, text), profile=profile,
-                model=answer.record["model"], run=run_id, launch=Path(answer.record["launches"][-1]).name,
-                completed_at=_now(), body=text)
-            if publish is not None:
-                publish(result)
-            report = reports[pair]
-            report.state, report.outcome, report.result = "reviewed", result.outcome, result
+        finally:
+            for directory, record in records.values():
+                observations.refresh(run, directory, record, state=state)
 
     gather(*(lambda call=call: one(call) for call in calls(wanted, grouping)), max_workers=max_workers)
     return list(reports.values()), stopped[0] if stopped else None
@@ -479,15 +523,53 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
 
 def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
           timeout: float | None = None, force: bool = False, grouping: str = "pair",
-          harnesses=HARNESSES) -> SweepReport:
-    """Review the pairs without a fresh result (all of them when `force`) in the run at `run_dir`."""
+          harnesses=HARNESSES, publish_results: bool = True,
+          operational_inputs: dict[str, dict[str, str]] | None = None) -> SweepReport:
+    """Review frozen request inputs. Resuming never silently substitutes live bytes."""
     run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
     before = checkout_state(root)
-    texts = {pair.note: (root / pair.note).read_text(encoding="utf-8") for pair in wanted}
-    fresh = {pair for pair in wanted if not force and _fresh(root, pair, texts[pair.note])}
     with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:
+        snapshot_path = run_dir / "review-request.json"
+        selection = [asdict(pair) for pair in wanted]
+        if snapshot_path.exists():
+            snapshot = json.loads(snapshot_path.read_text())
+            if (snapshot["pairs"] != selection or snapshot["grouping"] != grouping
+                    or snapshot["publish-results"] != publish_results):
+                raise ValueError("resume selection differs from the captured request; start a new run")
+            if timeout is not None and timeout != snapshot["timeout"]:
+                raise ValueError("resume timeout differs from the captured request")
+            run.timeout = snapshot["timeout"]
+            texts, criterion_texts = snapshot["targets"], snapshot["criteria"]
+            operational_inputs = snapshot["operational-inputs"]
+            contracts = {name: value.encode("utf-8") for name, value in snapshot["contracts"].items()}
+            if result_contract.fingerprint(result_contract.capture_contract()) != result_contract.fingerprint(contracts):
+                raise ValueError("output contract changed; start a new run instead of resuming")
+        else:
+            texts = {pair.note: (root / pair.note).read_bytes().decode("utf-8") for pair in wanted}
+            criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8")
+                               for pair in wanted}
+            contracts = result_contract.capture_contract()
+            snapshot = {"version": observations.VERSION, "pairs": selection, "grouping": grouping,
+                        "timeout": run.timeout, "max-workers": max_workers,
+                        "operational-inputs": operational_inputs or {},
+                        "publish-results": publish_results, "targets": texts, "criteria": criterion_texts,
+                        "contracts": {name: value.decode("utf-8") for name, value in contracts.items()},
+                        "kb-commit": observations.git_head(root)}
+            observations.atomic_json(snapshot_path, snapshot)
+        fresh = set()
+        if not force:
+            for pair in wanted:
+                path = results.result_path(root, pair.note, pair.criterion_id)
+                if path.exists():
+                    stored = results.read_result(path)
+                    if (stored.note_sha256 == results.note_sha256(texts[pair.note], criterion_texts[pair.criterion])
+                            and stored.criterion_sha256 == results.criterion_sha256(criterion_texts[pair.criterion])
+                            and stored.contract_sha256 == result_contract.fingerprint(contracts)):
+                        fresh.add(pair)
         asked, stopped = ask(run, root, [pair for pair in wanted if pair not in fresh], texts, grouping=grouping,
-                             max_workers=max_workers, publish=lambda result: results.write_result(root, result))
+                             max_workers=max_workers,
+                             publish=(lambda result: results.write_result(root, result)) if publish_results else None,
+                             captured_criteria=criterion_texts, contracts=contracts, operational_inputs=operational_inputs)
     found = {(report.note, report.criterion): report for report in asked}
     reports = [found.get((pair.note, pair.criterion)) or PairReport(pair.note, pair.criterion, pair.job, "fresh")
                for pair in wanted]

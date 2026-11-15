@@ -73,11 +73,14 @@ report criterion: the worker writes an open-ended report, and the outcome is
 `report`. Critique is opt-in; `--all-gates` and the default status set leave
 it out.
 
-**Outcome.** A verdict review ends with exactly one `## Result: PASS`,
-`## Result: WARN` or `## Result: FAIL` line as its last non-empty line; a
-report ends with `## Result: REPORT`. An alias, a second result line or any
-other result-like line rejects the review, and the worker is asked again
-with the problem.
+**Outcome.** Reviews use [review-result](../types/review-result.md).
+Workers supply `type`, `findings`, `outcome` and the body; critique also
+supplies `attack-outcome`. Verdict findings have `info`, `warn` or `fail`
+levels. Passage quotations must match one span of the captured target, and only one;
+matching ignores line wraps and quote-mark style, so a quotation identifies a
+passage without being a byte-exact copy. Document findings use no quotations. Code supplies provenance and validates
+the completed artifact against the captured type/schema. Invalid outputs
+receive specific retry diagnostics. Terminal result footers are unsupported.
 
 **Watches.** A gate may declare `watches:` with any of `title`,
 `description` and `body`. The note side of its freshness then hashes only
@@ -108,16 +111,19 @@ Each accepted review writes
 `kb/reports/state/review/results/<note-path>/<criterion-id>.md`. The
 criterion id is the gate id for a catalog gate, the repository path without
 `.md` for another repository criterion (`kb/types/note`), and `commonplace/`
-plus the library path for another library criterion. The frontmatter holds
-`note`, `note-sha256`, `criterion`, `criterion-sha256`, `outcome`, `profile`
-(harness, launch model, effort), `model` (what the harness recorded), `run`,
-`launch` and `completed-at`. The body is the worker's review, unchanged.
+plus the library path for another library criterion. The typed frontmatter
+holds structured findings, normalized freshness hashes and exact evidence
+references. The run owns the target capture, raw launch output and completed
+typed result; the current result is a replaceable view. Raw worker bytes and
+completed-result bytes have distinct hashes. Explicit draft reviews and
+reviews with supplied operational inputs retain evidence without replacing
+catalog results.
 
 A pair is in one of three states:
 
-- `fresh`: both hashes match the current files;
+- `fresh`: note, criterion and output-contract hashes match;
 - `missing`: no result exists;
-- `stale`: the note, the criterion, or both changed; status names which.
+- `stale`: a freshness input changed; status names which.
 
 A result whose note or criterion file no longer exists is **orphaned**. A
 moved note orphans its results too. Removing an orphan is deleting its file;
@@ -175,12 +181,39 @@ answer each spend one. A worker that cannot judge writes a problem instead
 of guessing, and no result is written for its pairs. `--max-workers`
 (default 4) bounds the launches running at once.
 
-Each sweep opens a run directory under `kb/reports/state/review/runs/<UTC
+Each sweep opens a run directory under `kb/reports/state/review/runs/v2/<UTC
 stamp>/` and prints a JSON report: per pair its state (`fresh`, `reviewed`,
 `problem`, `out-of-attempts` or `not-run`), the counts, what stopped the
 sweep and the guard's finding. It exits 0 only when every pair has a current
 result and the guard saw no change, 1 otherwise, and 2 when the command
 failed.
+
+### Drafts, evidence and fixtures
+
+Use `run gates NOTE --criterion-file PATH` for a repository-local, possibly
+untracked review-gate file. It must declare `reading-scope: linked-files`
+and conform to its type. Repeating the same wording creates a new observation
+without changing its `gate_id` or inserting it into the catalog.
+
+`--input ROLE=PATH` supplies a self-contained operational text copy. Workers
+must not browse its source run or recursively fetch provenance dependencies.
+Resume uses the captured inputs, not later edits at their original paths.
+
+`show RUN --observation ID --json` exposes findings, capture references,
+launch associations and rejection diagnostics. Omit the observation selector
+to inspect every observation in that run. Retries and replay stay within one
+observation; a bundle launch does not provide independent trials.
+
+`fixture create --from RUN --observation ID --substitute-current-executor`
+retains a single-assessment baseline without calling a model. The flag
+explicitly substitutes the current executable; missing historical dirty
+content requires `--repair ORIGINAL=PATH` with matching bytes. Fixture trials
+currently use the Claude Code adapter, pair grouping and one worker.
+`run gates --fixture PATH` opens a fresh isolated trial with no live result
+publication or freshness skip; add `--resume TRIAL_RUN` only to continue that
+trial. Target/profile/configuration overrides are rejected. Effective tool
+availability and user configuration remain unverified until inspected; these
+runs do not automatically establish environment equivalence or calibration.
 
 ### Stops, retry and resume
 
@@ -302,7 +335,7 @@ separately authorizing removal. This is not new automatic learning
 infrastructure, and fewer proposals do not establish reliability.
 
 **Runs of the two workflows.** Their run directory is derived from the
-inputs: `kb/reports/state/review/runs/<workflow>/<note path without
+inputs: `kb/reports/state/review/runs/v2/<workflow>/<note path without
 .md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
 the same note text continues that run, and answered calls replay. An edited
 note, including one the workflow itself wrote, has another hash, so the same

@@ -1,6 +1,6 @@
 # Unify the review operations
 
-Posed by the operator on 2026-11-14. This is the first, deliberately bounded application of the [live-operation-to-controlled-testing workshop](../stochastic-operation-testing/README.md). The commission is design work; changes to shipped instructions, types or code require separate authorization.
+Posed by the operator on 2026-11-14. This is the first, deliberately bounded application of the [live-operation-to-controlled-testing workshop](../stochastic-operation-testing/README.md). The operator authorized implementation on 2026-11-15 with “ok - commit - then go on”. The first slice includes fixtures; paid evaluation remains separately authorized. See [implementation status](./implementation.md) for verification and the completed cutover.
 
 ## Goal and scope
 
@@ -16,9 +16,10 @@ The [improvement-procedure proposal](../../reference/proposals/one-improvement-p
 |---|---|
 | [Execution design](./execution-design.md) | Selected common behavior: Workjig, provenance, run-local inputs, freshness and fixtures |
 | [Plan](./plan.md) | Evidence investigation, remaining decisions, operator checkpoints and execution limits |
-| [Command sketch](./operation-command-sketch.md) | Proposed additions to `commonplace-review`; not shipped behavior |
+| [Command sketch](./operation-command-sketch.md) | Design sketch; the CLI and reference now own the implemented interface |
 | [Decisions](./decisions.md) | Family/form recommendations and consumer evidence; operator authorized design continuation after the atoms-only correction |
-| [Execution contract](./execution-contract.md) | Proposed record ownership, first implementation slice, cutover and acceptance tests; awaiting implementation authorization |
+| [Execution contract](./execution-contract.md) | Authorized record ownership, first implementation slice, cutover and acceptance tests |
+| [Implementation status](./implementation.md) | Acceptance evidence, implementation limits and completed cutover |
 
 ## Current candidate pool
 
@@ -34,7 +35,7 @@ Baseline inspected on 2026-11-14. The [overlap map](../decision-lifecycle-eviden
 | [Connect](../../instructions/cp-skill-connect/SKILL.md) | Discovery skill with a typed connect report; also used by the full pass |
 | [Higher-order check](../higher-order-check-evaluation/README.md) | Experimental criterion wordings executed as gates; result needs include proposal kind and force |
 
-The current shared review result format is checked by Python, not by a registered `review-result` document type. Typed criteria do not establish typed-result conformance. Likewise, an existing report type does not establish that its operation already meets the shared execution contract.
+That baseline's shared result format was checked by Python, not a registered type. The implementation now uses [review-result](../../types/review-result.md); old current results and packets are archived, and historical runs remain citable in place. Typed criteria do not establish typed-result conformance. Likewise, an existing report type does not establish that its operation already meets the shared execution contract.
 
 ## Binding premises and compatibility
 

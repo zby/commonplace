@@ -2,6 +2,13 @@
 
 ## Intent and scope
 
+The individual review-result slice is now implemented under the operator-authorized
+[review-operation commission](../review-operation-unification/implementation.md),
+using the single [review-result type](../../types/review-result.md) planned here.
+That commission also owns observation capture, fixtures and the clean cutover;
+the operator authorized historical-sweep abandonment and archival is complete. Later type slices
+below remain proposals. Do not implement a second result adapter.
+
 Use Commonplace artifact types instead of contracts duplicated in workflow
 Python. Following Fable's assessment, the operator approved this order:
 commit the approval fix, capture binding write briefs, trial revision live,

@@ -38,7 +38,7 @@ CRITIQUE_REL = "instructions/critique-note.md"
 TYPE = "type"
 COLLECTION = "collection"
 CRITIQUE = "critique"
-KINDS = ("gate", TYPE, COLLECTION, CRITIQUE)
+KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft")
 STALENESS = "changed"
 """The only `staleness:` a catalog gate may declare."""
 
@@ -233,6 +233,29 @@ def note_collection_contract(root: Path, note: Path) -> str | None:
 
 
 # --- Selection -------------------------------------------------------------------
+
+def draft(root: Path, notes: list[str], filename: str) -> list[tuple[str, Criterion]]:
+    """An explicit untracked/local gate, never silently registered in the catalog."""
+    from commonplace.lib.validation import ValidationRun
+
+    path = root / filename
+    if (Path(filename).is_absolute() or ".." in Path(filename).parts
+            or path.is_symlink() or not path.resolve().is_relative_to(root.resolve())):
+        raise ValueError("draft criterion must be a confined repository-local file")
+    text = path.read_bytes().decode("utf-8")
+    parsed = frontmatter.parse(text)
+    if not parsed.ok or parsed.data.get("type") != "types/review-gate.md":
+        raise ValueError("draft must declare type: types/review-gate.md")
+    if parsed.data.get("reading-scope") != "linked-files":
+        raise ValueError("draft must declare supported reading-scope: linked-files; broader reading is not supported")
+    problems = ValidationRun(repo_root=root, paths=(path,)).validate(path).fails
+    if problems:
+        raise ValueError("; ".join(problems))
+    identity = path.relative_to(root).as_posix()
+    return [(note, Criterion(identity, "draft")) for note in notes
+            if _matches(set(_frontmatter(root / note).get("traits", [])), parsed.data.get("requires_trait"))
+            and _matches({_frontmatter(root / note).get("type")}, parsed.data.get("requires_type"))]
+
 
 def critique_identity(root: Path) -> str:
     path = library_root() / CRITIQUE_REL

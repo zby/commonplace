@@ -9,8 +9,9 @@ tags: []
 Review is a set of Python workflows over the headless runtime, behind one
 command, `commonplace-review`. Code owns the control flow, every check that
 can be checked and every write to the checkout. Workers only judge and write
-their output files. The only durable review state is files: one result per
-(note, criterion) pair and one current packet per note that had a full pass.
+their output files. Durable state consists of run-owned observations and
+captured evidence, replaceable current results per (note, criterion) pair,
+and one current packet per note that had a full pass.
 
 For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
 [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
@@ -26,9 +27,11 @@ the decision. Exact behavior belongs to `commonplace.lib.review_workflows`,
 | `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, `critique`) resolved into applicable pairs; reads only |
-| `review_workflows.outcomes` | the strict result-line parser |
+| `review_workflows.result_contract` | captured type/schema closure, worker/controller field ownership and typed acceptance |
+| `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
+| `review_workflows.fixtures` | retained single-assessment baselines and isolated trials through the same gate implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
-| `review_workflows.gates` | `ask()`, the gate calls for given texts returning unwritten results; the sweep, which skips fresh pairs and writes each result as it arrives; call grouping, the worker prompt and the checkout guard |
+| `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views; call grouping, the worker prompt and the checkout guard |
 | `review_workflows.edits` | the bounds an edited text must keep, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `review_workflows.full_pass` | the full improvement pass and its packet |
 | `review_workflows.revise` | the revision workflow over the simplification passes |
@@ -40,13 +43,14 @@ worker loads the project's normal configuration and the profile's flags.
 ## Ownership
 
 A workflow is ordinary Python that branches only on what code parsed: a
-verdict line, a decision schema, an edit's bounds. A worker receives its
+typed outcome, a decision schema, an edit's bounds. A worker receives its
 inputs as files Workjig writes for each launch, so it judges captured text,
 not the live file, and the result hashes exactly that text. A worker writes
 only its declared outputs, or a problem file when it cannot do the job. Code
 turns an accepted output into a result file, a packet or a write to the
 checkout. Asking and publishing are separate: `gates.ask()` returns each
-accepted review as a result without writing it. The sweep writes each result
+accepted review without publishing a current view; its captured inputs and
+completed typed artifact remain in the run. The sweep publishes each result
 as its answer arrives. The full pass writes its results once, at its end,
 for the text the note then holds, and nothing after a stop or a conflict.
 
@@ -113,21 +117,27 @@ receive this input, and brief changes do not stale gate results.
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | current full-pass packet | `kb/reports/state/review/packets/<note-path>` | until a later pass replaces it; holds the resolution of a pending hand-back |
-| run directory | `kb/reports/state/review/runs/<stamp>/` for a sweep; `runs/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
+| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
+| observation | a run's `artifact/reviews/<id>/` | one assessment, including retries and replay; exact inputs, completed results and their hashes remain citable |
+| fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
 options it opened with in `sweep.json`, operator proposals and approved answers
 under `operator/`, and accepted per-run artifacts under `artifact/`
 (the start text, method reports, each accepted edited text and the packet copy). Its
 records exist for replay inside the run and promise no format stability
-across versions. Freshness across runs never reads them.
+across versions. The current result references its observation, exact target
+capture and raw launch output. Historical run state is evidence, not an input
+pool: workers receive only explicitly selected, self-contained operational
+copies. Provenance links do not grant access to another run.
 
 Result files are written atomically. One run holds a lock on its directory;
 two runs over the same pair both write, and the later write stands.
 
 ## Freshness hash boundary
 
-A result pins exactly two inputs: the note and the criterion. The criterion
+Freshness compares the note, criterion and captured output-contract fingerprint.
+Exact target byte hashes are separate from normalized freshness hashes. The criterion
 hash covers the criterion file's whole text. The note hash covers the parts
 the criterion declares in `watches:` (title, description, body) under the
 criterion's current text, or the whole note without a valid declaration.
@@ -136,8 +146,9 @@ blank lines and trailing spaces, so a whitespace-only edit changes nothing.
 A criterion edit that changes `watches:` may therefore report both inputs
 changed.
 
-Everything else is outside the hashes: the prompt around the inputs, the
-type and collection wrappers, the output contract and the reading scope.
+The prompt, type and collection wrappers and reading scope remain outside
+freshness hashes; observation records identify the invocation and executable
+separately.
 Judgment-bearing text therefore belongs in criterion files, where the hash
 sees it ([ADRs 038](./adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)
 and [041](./adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md)
@@ -148,6 +159,23 @@ prompt change that shifts judgments needs a deliberate `--force` sweep.
 Linked files a worker reads, including the one path a criterion may derive
 from a link ([ADR 073](./adr/073-untracked-source-snapshots-require-ingest-grounding.md)),
 are reading context, not freshness inputs.
+
+## Controlled trials and historical state
+
+Fixtures reconstruct the committed tree, retained target and criterion,
+available dirty content and library, with hash checks. Missing historical
+dirty content requires exact repair; it is not silently replaced. Creation
+explicitly selects the current executable as a substitute baseline. Dependency
+artifacts, user-level configuration and effective tool availability remain
+recorded gaps, not claims of environment equivalence. Every trial bypasses
+freshness skips and never publishes into the live result store. Resume stays
+within that trial; it is not an independent observation.
+
+The runtime accepts one result format and one active run namespace. Old
+results and runs must be archived rather than migrated or replayed. Before
+cutover, settle active launches and obtain disposition of unfinished workflows;
+old approvals confer no authority on new runs. Cited launch bytes can remain
+at their historical paths outside active discovery.
 
 ## Criterion identity
 

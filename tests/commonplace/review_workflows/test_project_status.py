@@ -71,6 +71,12 @@ def test_status_omits_review_by_default_and_writes_nothing(tmp_path: Path, capsy
 
 
 def test_status_review_summary_names_review_commands(tmp_path: Path, capsys, monkeypatch) -> None:
+    from tests.commonplace.review_workflows.result_helpers import (
+        copy_contract,
+        evidence,
+        findings,
+    )
+    copy_contract(tmp_path / "kb")
     project(tmp_path)
     monkeypatch.setattr(library, "_library_root", lambda _override: (tmp_path / "kb").resolve())
     gate = write(tmp_path / "kb/instructions/review-gates/prose/residue.md", "---\nwatches: [body]\n---\n# R\n")
@@ -79,7 +85,8 @@ def test_status_review_summary_names_review_commands(tmp_path: Path, capsys, mon
     for criterion, outcome in ((gate, "warn"), (other, "fail")):
         results.write_result(tmp_path, results.make_result(
             "kb/notes/example.md", note.read_text(), criterion.relative_to(tmp_path).as_posix(), criterion.read_text(),
-            outcome=outcome, profile={}, model=None, run="r", launch="l", completed_at="t", body=""))
+            outcome=outcome, profile={}, model=None, run="r", launch="l", completed_at="2026-11-15T00:00:00Z", body="# Review\n",
+            findings=findings(outcome), evidence=evidence(tmp_path)))
     write(other, "# Hedging, revised\n")
 
     code, payload = status(tmp_path, capsys, "--review")

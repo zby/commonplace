@@ -33,7 +33,7 @@ one is deleting its file. `--json` gives each row's result file, so a fixer
 can read the finding.
 
 `run full-pass` and `run revise` keep their run under
-kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12
+kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<first 12
 hex of the note's SHA-256>/. Repeating the command on the same note text
 continues that run: answered calls replay. An edited note has another hash,
 so the same command opens a new run. A repeat reuses the options the run
@@ -97,7 +97,7 @@ override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
 or a guard change.
 
-`run gates` opens a new run under kb/reports/state/review/runs/<UTC stamp>/,
+`run gates` opens a new run under kb/reports/state/review/runs/v2/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
 exits 0 only when every pair has a current result and the checkout guard saw
@@ -109,6 +109,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 import time
@@ -117,12 +118,17 @@ from pathlib import Path
 
 from commonplace.headless import operator
 from commonplace.headless.harness import HARNESSES, Profile
-from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss
+from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss, run_lock
+from commonplace.lib import frontmatter
 from commonplace.lib.review_workflows import (
+    criteria,
     decisions,
     edits,
+    fixtures,
     full_pass,
     gates,
+    observations,
+    result_contract,
     results,
     revise,
 )
@@ -147,18 +153,35 @@ def _parser() -> argparse.ArgumentParser:
     run = commands.add_parser("run", help="run a review workflow")
     workflows = run.add_subparsers(dest="workflow", required=True)
     sweep = workflows.add_parser("gates", help="review each pair without a fresh result")
-    sweep.add_argument("notes", nargs="+")
+    sweep.add_argument("notes", nargs="*")
     chosen = sweep.add_mutually_exclusive_group(required=True)
     chosen.add_argument("--criteria", nargs="+")
+    chosen.add_argument("--criterion-file", help="explicit repository-local draft gate; evidence only")
+    chosen.add_argument("--fixture", help="retained single-atom fixture; every non-resume invocation is a new trial")
     chosen.add_argument("--all-gates", action="store_true", help="every bundle plus `type` and `collection`")
     sweep.add_argument("--grouping", choices=gates.GROUPINGS, default="pair",
                        help="one call per pair, or per note and bundle of catalog gates (default: pair)")
     sweep.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL} "
                        "(default: its `default`)")
-    sweep.add_argument("--max-workers", type=int, default=4, help="workers running at once")
+    sweep.add_argument("--max-workers", type=int, help="workers running at once (ordinary default: 4)")
     sweep.add_argument("--timeout", type=float, help="seconds a launch may take")
     sweep.add_argument("--force", action="store_true", help="review fresh pairs too")
     sweep.add_argument("--resume", type=Path, help="continue this run directory instead of opening a new one")
+    sweep.add_argument("--input", action="append", default=[], metavar="ROLE=PATH",
+                       help="explicit self-contained operational text input; copied, never recursively followed")
+    show = commands.add_parser("show", help="inspect retained observations, findings and attempt diagnostics")
+    show.add_argument("run", type=Path)
+    show.add_argument("--observation")
+    show.add_argument("--json", action="store_true")
+    fixture = commands.add_parser("fixture", help="prepare retained baselines without model calls")
+    fixture_commands = fixture.add_subparsers(dest="fixture_command", required=True)
+    create = fixture_commands.add_parser("create")
+    create.add_argument("--from", dest="source_run", required=True)
+    create.add_argument("--observation", required=True)
+    create.add_argument("--repair", action="append", default=[], metavar="ORIGINAL=PATH",
+                        help="supply missing historical dirty content; bytes must match its recorded hash")
+    create.add_argument("--substitute-current-executor", action="store_true",
+                        help="explicitly retain the current executable as a substitute baseline")
     full = workflows.add_parser("full-pass", help="run the full improvement pass over one note")
     full.add_argument("note")
     full.add_argument("--direction", help="the operator's direction for the packet, which prevails; "
@@ -209,7 +232,11 @@ def _root() -> Path:
 
 
 def _pairs(root: Path, arguments: argparse.Namespace) -> list[gates.Pair]:
-    return gates.pairs(root, gates.note_paths(root, arguments.notes), arguments.criteria)
+    notes = gates.note_paths(root, arguments.notes)
+    if getattr(arguments, "criterion_file", None):
+        return [gates.Pair(note, criterion.identity, criterion.kind, results.criterion_id(root, criterion.identity))
+                for note, criterion in criteria.draft(root, notes, arguments.criterion_file)]
+    return gates.pairs(root, notes, arguments.criteria)
 
 
 def _keep(row: results.Row, arguments: argparse.Namespace) -> bool:
@@ -251,6 +278,10 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
         run_dir = (root / resume).resolve()
         if not (run_dir / SWEEP).is_file():
             raise ValueError(f"not a review run: {resume}")
+        if json.loads((run_dir / SWEEP).read_text()).get("format") != observations.VERSION:
+            raise ValueError("old-format run cannot resume; retain it as evidence and start a new run")
+        if not run_dir.is_relative_to((root / gates.RUNS).resolve()):
+            raise ValueError("resume must name a run in the active review namespace")
         return run_dir
     stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     for suffix in ("", *(f"-{n}" for n in range(2, 100))):
@@ -274,7 +305,8 @@ def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Prof
             raise ValueError(f"the run was opened with another profile: {profile}")
         return profile
     profile = load_profile(root, name, gates.profiles())
-    (run_dir / SWEEP).write_text(json.dumps({"profile": asdict(profile)}, indent=2), encoding="utf-8")
+    (run_dir / SWEEP).write_text(json.dumps({"format": observations.VERSION, "profile": asdict(profile)}, indent=2),
+                                 encoding="utf-8")
     return profile
 
 
@@ -282,19 +314,53 @@ def _options(run_dir: Path, given: dict) -> dict:
     """The options this run recorded, with each option given now (not None) in place of its value; recorded again."""
     path = run_dir / SWEEP
     options = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
-    options |= {key: value for key, value in given.items() if value is not None}
+    if options and options.get("format") != observations.VERSION:
+        raise ValueError("old-format run is historical; start a new run")
+    options |= {"format": observations.VERSION, **{key: value for key, value in given.items() if value is not None}}
     run_dir.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(options, indent=2), encoding="utf-8")
     return options
 
 
 def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
-    wanted = _pairs(root, arguments)
+    if arguments.fixture:
+        if (arguments.notes or arguments.profile or arguments.grouping != "pair" or arguments.force
+                or arguments.timeout is not None or arguments.max_workers is not None or arguments.input):
+            raise ValueError("fixture supplies its target, profile and configuration; overrides are not supported")
+        run_dir = _run_dir(root, arguments.resume)
+        if not arguments.resume:
+            observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": "trial"})
+        with run_lock(run_dir):
+            report = fixtures.trial(root, arguments.fixture, run_dir, harnesses=harnesses)
+        print(json.dumps(report, indent=2))
+        return 0 if not report["stopped"] and not report["changed"] and all(
+            item["state"] == "reviewed" for item in report["observations"]) else 1
+    if not arguments.notes:
+        raise ValueError("ordinary reviews need at least one target")
     run_dir = _run_dir(root, arguments.resume)
     profile = _profile(root, run_dir, arguments.profile, arguments.resume is not None)
-    report = gates.sweep(root, wanted, profile, run_dir, max_workers=arguments.max_workers,
-                         timeout=arguments.timeout, force=arguments.force, grouping=arguments.grouping,
-                         harnesses=harnesses)
+    selection = {"notes": arguments.notes, "criteria": arguments.criteria,
+                 "criterion-file": arguments.criterion_file, "all-gates": arguments.all_gates, "inputs": arguments.input}
+    options = json.loads((run_dir / SWEEP).read_text())
+    supplied = {}
+    if arguments.resume:
+        if options.get("selection") != selection:
+            raise ValueError("resume selection differs; start a new run")
+        snapshot = json.loads((run_dir / "review-request.json").read_text())
+        wanted = [gates.Pair(**pair) for pair in snapshot["pairs"]]
+    else:
+        wanted = _pairs(root, arguments)
+        for item in arguments.input:
+            role, separator, name = item.partition("=")
+            if not separator or not re.fullmatch(r"[a-z0-9][a-z0-9-]*", role) or role in supplied:
+                raise ValueError("--input needs unique ROLE=PATH entries (lowercase letters, digits and hyphens)")
+            path = observations.safe_path(root, name)
+            supplied[role] = {"origin": path.relative_to(root).as_posix(), "text": path.read_bytes().decode("utf-8")}
+        observations.atomic_json(run_dir / SWEEP, {**options, "selection": selection})
+    report = gates.sweep(root, wanted, profile, run_dir, max_workers=arguments.max_workers or 4,
+                         timeout=arguments.timeout, force=arguments.force or bool(arguments.criterion_file) or bool(arguments.input),
+                         grouping=arguments.grouping, harnesses=harnesses,
+                         publish_results=not bool(arguments.criterion_file) and not bool(arguments.input), operational_inputs=supplied)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
@@ -379,11 +445,53 @@ def _decisions(root: Path, arguments: argparse.Namespace) -> int:
     return 0
 
 
+def _show(root: Path, arguments: argparse.Namespace) -> int:
+    run = _run_dir(root, arguments.run)
+    records = []
+    evidence_root = root
+    base = run / "artifact/reviews"
+    if (run / "trial.json").exists():
+        evidence_root = run / "tree"
+        base = evidence_root / gates.RUNS / "trial" / "artifact/reviews"
+    paths = ([observations.safe_path(base, arguments.observation) / "observation.json"]
+             if arguments.observation else sorted(base.glob("*/observation.json")))
+    for path in paths:
+        data = observations.load(path.parent)
+        contracts = {item["origin"]: observations.safe_path(path.parent, item["path"]).read_bytes()
+                     for item in data["inputs"] if item["role"] == "contract"}
+        completed = []
+        for name in data["completed-results"]:
+            text = observations.safe_path(path.parent, name).read_bytes().decode("utf-8")
+            result_contract.validate_saved(evidence_root, path.parent / name, text, contracts=contracts)
+            parsed = frontmatter.parse(text)
+            if not parsed.ok or parsed.data.get("type") != result_contract.TYPE:
+                raise ValueError(f"invalid retained result: {name}")
+            completed.append(parsed.data)
+        records.append({**data, "results": completed})
+    trial = json.loads((run / "trial-result.json").read_text()) if (run / "trial-result.json").exists() else None
+    print(json.dumps({"run": run.relative_to(root).as_posix(), "observations": records, "trial": trial},
+                     indent=2, ensure_ascii=False))
+    return 0
+
+
 def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
     """Run the command; `harnesses` lets tests substitute a fake worker."""
     arguments = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     try:
         root = _root().resolve()
+        if arguments.command == "show":
+            return _show(root, arguments)
+        if arguments.command == "fixture":
+            repairs = {}
+            for item in arguments.repair:
+                name, separator, source = item.partition("=")
+                if not separator or name in repairs:
+                    raise ValueError("--repair needs unique ORIGINAL=PATH entries")
+                repairs[name] = source
+            path = fixtures.create(root, arguments.source_run, arguments.observation,
+                                   substitute_executor=arguments.substitute_current_executor, repairs=repairs)
+            print(json.dumps({"fixture": path.relative_to(root).as_posix()}, indent=2))
+            return 0
         if arguments.command == "status":
             return _status(root, arguments)
         if arguments.command == "run":
@@ -396,7 +504,7 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
             return _packet(root, arguments)
         if arguments.command == "decisions":
             return _decisions(root, arguments)
-        run_dir = (root / arguments.run).resolve()
+        run_dir = _run_dir(root, arguments.run)
         if arguments.command == "approve":
             path = (root / arguments.file).resolve()
             artifact = (run_dir / "artifact").resolve()

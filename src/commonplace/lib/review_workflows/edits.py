@@ -182,7 +182,7 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
 
 
 def run_dir(root: Path, workflow: str, note: str) -> Path:
-    """The run of `workflow` over the note's current text: `runs/<workflow>/<note without .md>/<hash prefix>`.
+    """The run of `workflow` over the note's current text: `runs/v2/<workflow>/<note without .md>/<hash prefix>`.
 
     The same command on the same text finds the same run and continues it by
     replay; another text opens another run.

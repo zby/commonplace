@@ -6,6 +6,7 @@ import pytest
 
 from commonplace.lib import library
 from commonplace.lib.review_workflows import results
+from tests.commonplace.review_workflows.result_helpers import copy_contract, evidence
 
 GATE_ID = "prose/source-residue"
 GATE_PATH = "kb/instructions/review-gates/prose/source-residue.md"
@@ -53,11 +54,12 @@ Fixture gate.
 
 def seed_result(repo_root: Path, *, note_path: str) -> Path:
     """Write a review result for the note against the fixture gate; return its file."""
+    copy_contract(repo_root / "kb")
     result = results.make_result(
         note_path, (repo_root / note_path).read_text(encoding="utf-8"),
         GATE_PATH, (repo_root / GATE_PATH).read_text(encoding="utf-8"),
         outcome="pass", profile={"harness": "fake", "launch-model": "m", "effort": "low"}, model="m",
-        run="run", launch="launch", completed_at="2026-04-10T08:05:00Z", body="## Result: PASS\n")
+        run="run", launch="launch", completed_at="2026-04-10T08:05:00Z", body="# Review\n\nPass.\n", findings=[], evidence=evidence(repo_root))
     return results.write_result(repo_root, result)
 
 

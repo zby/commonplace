@@ -20,6 +20,11 @@ from commonplace.lib.review_workflows.results import (
     summarize,
     write_result,
 )
+from tests.commonplace.review_workflows.result_helpers import (
+    copy_contract,
+    evidence,
+    findings,
+)
 
 NOTE = "kb/notes/alpha.md"
 GATE = "kb/instructions/review-gates/prose/residue.md"
@@ -57,15 +62,16 @@ def _edit(root: Path, rel: str, old: str, new: str) -> None:
     path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
 
-def _review(root: Path, note: str, criterion: str, outcome: str = "pass", body: str = "## Result: PASS\n",
+def _review(root: Path, note: str, criterion: str, outcome: str = "pass", body: str = "## Summary\n\nNo finding.\n",
             criterion_text: str | None = None):
     if criterion_text is None:
         criterion_text = (root / criterion).read_text(encoding="utf-8")
+    copy_contract(library.library_root())
     result = make_result(
         note, (root / note).read_text(encoding="utf-8"), criterion, criterion_text,
         outcome=outcome, profile={"harness": "claude", "launch-model": "sonnet", "effort": "low"},
         model="claude-sonnet-x", run="20261109T000000Z", launch="L1", completed_at="2026-11-09T00:00:00Z",
-        body=body)
+        body="# Review\n\n" + body, findings=findings(outcome), evidence=evidence(root))
     return result, write_result(root, result)
 
 
@@ -86,7 +92,7 @@ def _states(root: Path, pairs) -> list[Freshness]:
 
 def test_written_result_reads_back_equal_at_its_pair_path(repo: Path) -> None:
     # The body keeps CRLF and frontmatter-like text: the reviewer's text must survive unchanged.
-    result, path = _review(repo, NOTE, GATE, outcome="warn", body="## Result: WARN\r\n---\nnot: frontmatter\n")
+    result, path = _review(repo, NOTE, GATE, outcome="warn", body="## Summary\r\n---\nnot: frontmatter\n")
     assert path == repo / "kb/reports/state/review/results/kb/notes/alpha.md/prose/residue.md"
     assert read_result(path) == result
     [row] = status(repo, [(NOTE, GATE)])
@@ -162,10 +168,10 @@ def test_orphaned_finds_results_whose_note_or_criterion_is_gone(repo: Path) -> N
 def test_summary_counts_each_stored_result_once(repo: Path) -> None:
     second = "kb/notes/beta.md"
     _write(repo, second, NOTE_TEXT.replace("Alpha", "Beta"))
-    _review(repo, NOTE, GATE, outcome="warn", body="## Result: WARN\n")
-    _review(repo, NOTE, OTHER_GATE, outcome="fail", body="## Result: FAIL\n")
+    _review(repo, NOTE, GATE, outcome="warn", body="A warning.\n")
+    _review(repo, NOTE, OTHER_GATE, outcome="fail", body="A failure.\n")
     _review(repo, NOTE, TYPE_SPEC)
-    _, gone = _review(repo, second, GATE, outcome="warn", body="## Result: WARN\n")
+    _, gone = _review(repo, second, GATE, outcome="warn", body="A warning.\n")
     _edit(repo, OTHER_GATE, "Flag", "Strictly flag")                       # the fail is no longer current
     (repo / second).unlink()
     rows, orphans = stored(repo)

@@ -4,8 +4,9 @@ A result is one reviewer's judgment of one note against one criterion, kept
 at `kb/reports/state/review/results/<note-path>/<criterion-id>.md`. Its
 frontmatter names both inputs with the SHA-256 of the text the judgment was
 produced from, the outcome and the executor; its body is the reviewer's text.
-A pair is fresh when both hashes match the current files, so freshness needs
-no store and no Git history.
+A pair is fresh when its normalized input hashes and output-contract fingerprint
+match the current files. Freshness requires no Git history; exact evidence
+hashes remain distinct.
 
 The note hash covers only the parts the criterion declares in `watches:`
 (title, description, body), so an edit outside them leaves the pair fresh;
@@ -34,8 +35,6 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-import yaml
-
 from commonplace.lib import frontmatter
 from commonplace.lib.library import (
     LIBRARY_IDENTITY_PREFIX,
@@ -43,6 +42,7 @@ from commonplace.lib.library import (
     artifact_identity,
     is_library_identity,
 )
+from commonplace.lib.review_workflows import result_contract
 from commonplace.lib.review_workflows.criteria import gates_dir
 
 RESULTS = Path("kb/reports/state/review/results")
@@ -66,13 +66,22 @@ class Result:
     run: str
     launch: str
     completed_at: str
-    body: str                         # the reviewer's text, unchanged
+    body: str                         # report prose; raw worker frontmatter remains in the launch
+    findings: list[dict]
+    contract: str
+    target_sha256: str
+    target_capture: str
+    observation: str
+    contract_sha256: str
+    raw_output: str
+    raw_output_sha256: str
+    attack_outcome: str | None = None
 
 
 @dataclass(frozen=True)
 class Freshness:
     state: str                        # "fresh", "missing" or "stale"
-    changed: tuple[str, ...] = ()     # when stale: "note", "criterion" or both, in that order
+    changed: tuple[str, ...] = ()     # stale inputs: note, criterion, output-contract
 
 
 @dataclass(frozen=True)
@@ -98,7 +107,10 @@ class Summary:
 
 _KEYS = {"note": "note", "note-sha256": "note_sha256", "criterion": "criterion",
          "criterion-sha256": "criterion_sha256", "outcome": "outcome", "profile": "profile",
-         "model": "model", "run": "run", "launch": "launch", "completed-at": "completed_at"}
+         "model": "model", "run": "run", "launch": "launch", "completed-at": "completed_at",
+         "findings": "findings", "contract": "contract", "target-sha256": "target_sha256",
+         "target-capture": "target_capture", "observation": "observation", "contract-sha256": "contract_sha256",
+         "raw-output": "raw_output", "raw-output-sha256": "raw_output_sha256"}
 
 
 def _posix(path: str | Path, *, label: str) -> str:
@@ -192,6 +204,7 @@ def note_sha256(note_text: str, criterion_text: str) -> str:
     or the note's frontmatter does not parse. The parts are JSON-encoded, so
     part content cannot forge a part boundary.
     """
+    note_text = note_text.replace("\r\n", "\n").replace("\r", "\n")
     watched = watches(criterion_text)
     parts = note_parts(note_text) if watched is not None else None
     if parts is None:
@@ -203,7 +216,7 @@ def note_sha256(note_text: str, criterion_text: str) -> str:
 
 
 def criterion_sha256(criterion_text: str) -> str:
-    return hashlib.sha256(criterion_text.encode("utf-8")).hexdigest()
+    return hashlib.sha256(criterion_text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")).hexdigest()
 
 
 def result_path(root: Path, note: str | Path, criterion_id: str) -> Path:
@@ -223,54 +236,64 @@ def _read(path: Path) -> str:
 
 def make_result(note: str | Path, note_text: str, criterion: str | Path, criterion_text: str, *, outcome: str,
                 profile: dict[str, Any], model: str | None, run: str, launch: str, completed_at: str,
-                body: str) -> Result:
-    """A result hashing the note and criterion texts the reviewer was given."""
+                body: str, findings: list[dict], evidence: dict[str, str],
+                contract: str = "verdict", attack_outcome: str | None = None) -> Result:
+    """Build one result; callers supply retained evidence, never synthesized provenance."""
     return Result(note=_posix(note, label="note"), note_sha256=note_sha256(note_text, criterion_text),
                   criterion=_identity(criterion), criterion_sha256=criterion_sha256(criterion_text),
                   outcome=outcome, profile=dict(profile), model=model, run=run, launch=launch,
-                  completed_at=completed_at, body=body)
+                  completed_at=completed_at, body=body, findings=findings, contract=contract,
+                  attack_outcome=attack_outcome, **evidence)
+
+
+def result_text(result: Result) -> str:
+    data = {"type": result_contract.TYPE, "format": result_contract.FORMAT,
+            "description": f"Retained {result.contract} review of {result.note} against {result.criterion}",
+            **{key: getattr(result, field) for key, field in _KEYS.items()}}
+    if result.attack_outcome is not None:
+        data["attack-outcome"] = result.attack_outcome
+    return result_contract.render(data, result.body)
+
+
+def assessment_text(result: Result) -> str:
+    """Self-contained judgment content for a consumer, without executable evidence references."""
+    data = {"type": result_contract.TYPE, "findings": result.findings, "outcome": result.outcome}
+    if result.attack_outcome is not None:
+        data["attack-outcome"] = result.attack_outcome
+    return result_contract.render(data, result.body)
+
+
+def from_candidate(candidate: result_contract.Candidate) -> Result:
+    return Result(**{field: candidate.data[key] for key, field in _KEYS.items()},
+                  attack_outcome=candidate.data.get("attack-outcome"), body=candidate.body)
 
 
 def write_result(root: Path, result: Result) -> Path:
-    """Write the result file atomically: readers see the old bytes or the new ones."""
-    if result.outcome not in OUTCOMES:
-        raise ValueError(f"outcome must be one of {', '.join(OUTCOMES)}: {result.outcome}")
+    """Validate and atomically publish the current view of a retained result."""
     target = result_path(root, result.note, criterion_id(root, result.criterion))
-    data = {key: getattr(result, field) for key, field in _KEYS.items()}
-    text = "---\n" + yaml.safe_dump(data, sort_keys=False, allow_unicode=True) + "---\n" + result.body
+    text = result_text(result)
+    result_contract.validate_saved(root, target, text)
     target.parent.mkdir(parents=True, exist_ok=True)
     tmp = target.with_name(f".{target.name}.{uuid.uuid4().hex[:6]}.tmp")
-    with tmp.open("w", encoding="utf-8", newline="") as handle:
-        handle.write(text)
+    tmp.write_bytes(text.encode("utf-8"))
     tmp.replace(target)
     return target
 
 
 def read_result(path: Path) -> Result:
-    """Parse a result file; a file that is not a valid result raises ValueError naming it."""
-    with path.open(encoding="utf-8", newline="") as handle:
-        text = handle.read()
-    parsed = frontmatter.parse(text)
-    problems = list(parsed.errors)
-    if not problems and not frontmatter.opens_frontmatter(text):
-        problems.append("no frontmatter")
-    data = parsed.data
-    if not problems:
-        missing = [key for key in _KEYS if key not in data]
-        if missing:
-            problems.append(f"missing {', '.join(missing)}")
-        for key in ("note", "note-sha256", "criterion", "criterion-sha256", "run", "launch", "completed-at"):
-            if key in data and not isinstance(data[key], str):
-                problems.append(f"{key} must be a string")
-        if data.get("outcome") not in OUTCOMES:
-            problems.append(f"outcome must be one of {', '.join(OUTCOMES)}")
-        if "profile" in data and not isinstance(data["profile"], dict):
-            problems.append("profile must be a mapping")
-        if data.get("model") is not None and not isinstance(data["model"], str):
-            problems.append("model must be a string or null")
-    if problems:
-        raise ValueError(f"unreadable review result {path}: {'; '.join(problems)}")
-    return Result(**{field: data[key] for key, field in _KEYS.items()}, body=frontmatter.strip(text))
+    """Read the single supported result format; old state must be archived."""
+    text = path.read_bytes().decode("utf-8")
+    root = next((parent for parent in path.resolve().parents
+                 if path.resolve().is_relative_to(parent / RESULTS)), None)
+    if root is None:
+        raise ValueError(f"review result is outside the current result tree: {path}")
+    try:
+        result_contract.validate_saved(root, path, text)
+        data = frontmatter.parse(text).data
+        return Result(**{field: data[key] for key, field in _KEYS.items()},
+                      attack_outcome=data.get("attack-outcome"), body=frontmatter.strip(text))
+    except ValueError as error:
+        raise ValueError(f"unreadable review result {path}: {error}") from error
 
 
 def _check(root: Path, note: str | Path, criterion: str | Path) -> tuple[Freshness, Result | None, Path]:
@@ -294,7 +317,8 @@ def _freshness(root: Path, result: Result, texts: dict[Path, str]) -> Freshness:
     criterion_text = text(criterion_file(root, result.criterion))
     changed = tuple(name for name, same in (
         ("note", note_sha256(text(root / result.note), criterion_text) == result.note_sha256),
-        ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256)) if not same)
+        ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256),
+        ("output-contract", result.contract_sha256 == result_contract.fingerprint(result_contract.capture_contract()))) if not same)
     return Freshness("stale", changed) if changed else Freshness("fresh")
 
 

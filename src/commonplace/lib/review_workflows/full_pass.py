@@ -339,16 +339,13 @@ def _methods(run: Run, root: Path, note: str, text: str, cycle: str,
         found, sections = {}, []
         for pair, report in zip(wanted, reports, strict=True):
             if pair.kind == CRITIQUE:
-                found[CRITIQUE] = report.result.body
+                found[CRITIQUE] = results.assessment_text(report.result)
             else:
-                sections.append(f"## {pair.criterion_id}: {report.outcome.upper()}\n\n{report.result.body.strip()}\n")
+                sections.append(f"## {pair.criterion_id}: {report.outcome.upper()}\n\n"
+                                f"{results.assessment_text(report.result).strip()}\n")
         found["gates"] = "\n".join(sections) or "No catalog gate applies to this note.\n"
-        # gates.ask stamps completed_at on reconstruction, including replay. Bind
-        # the captured hashes, output and launch provenance, not that fresh clock.
-        context[f"{cycle}/reviews"] = [
-            {key: value for key, value in asdict(report.result).items() if key != "completed_at"}
-            for report in reports
-        ]
+        # Retained completion metadata is stable across replay.
+        context[f"{cycle}/reviews"] = [asdict(report.result) for report in reports]
         return found, [report.result for report in reports]
 
     names = list(METHODS)

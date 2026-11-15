@@ -1,6 +1,6 @@
 # Sketch: extend the existing review command
 
-Proposed interface for the [first-slice contract](./execution-contract.md). Only the ordinary examples below exist today; draft selection, inspection and fixtures are proposed additions. Keep `commonplace-review`: no inspected consumer needs the earlier provisional `commonplace-operation` name.
+Design sketch for the [first-slice contract](./execution-contract.md). Its additions are now implemented; `commonplace-review --help` and the [command reference](../../reference/commands.md#commonplace-review) own the live interface. [Implementation status](./implementation.md) records verification and cutover. Keep `commonplace-review`: no inspected consumer needs the earlier provisional `commonplace-operation` name.
 
 ## Ordinary execution — existing surface
 
@@ -16,7 +16,7 @@ Preserve current selection, applicability, `--force`, profile, grouping, worker-
 
 For new versioned standalone runs, `--resume` uses the recorded selection, captures and execution contract. Supplied arguments must match the recorded request; reject a mismatch rather than silently redefine that execution. A new run is the route for changed inputs. Existing full-pass/revise continuation remains their own workflow contract, not this standalone rule.
 
-## Draft selection — proposed
+## Draft selection
 
 ```bash
 commonplace-review run gates NOTE --criterion-file kb/work/example/wording.md
@@ -24,7 +24,7 @@ commonplace-review run gates NOTE --criterion-file kb/work/example/wording.md
 
 Initially accept one repository-local draft review-gate file, mutually exclusive with `--criteria` and `--all-gates`. Validate and capture it without adding it to the catalog. Retain evidence without publishing over catalog current results. Repetition needs no alternate criterion id. A draft needing a broader reading scope than the supported operation must fail clearly; this option is not permission to bypass reading boundaries.
 
-## Inspection — proposed
+## Inspection
 
 ```bash
 commonplace-review show RUN
@@ -35,10 +35,10 @@ Show captures, attempt history, validation state, completed results and configur
 
 Existing `status` keeps the current-result view for the supported format. An old-format file in active state produces an actionable error requiring explicit archival or regeneration; no fallback parser interprets it. Historical observations do not inflate current-result summaries.
 
-## Fixtures — proposed
+## Fixtures
 
 ```bash
-commonplace-review fixture create --from RUN --observation OBSERVATION
+commonplace-review fixture create --from RUN --observation OBSERVATION --substitute-current-executor
 commonplace-review run gates --fixture FIXTURE
 commonplace-review run gates --fixture FIXTURE
 commonplace-review run gates --fixture FIXTURE --resume TRIAL_RUN

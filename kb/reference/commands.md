@@ -383,8 +383,7 @@ worktree, whose `.venv` installs its pinned source; see
 `commonplace-review` reviews notes against criteria with headless workers and
 keeps one result file per (note, criterion) pair under
 `kb/reports/state/review/results/`. A result is fresh while the hashes of the
-note (the parts the criterion watches) and of the criterion match the current
-files. The [review-system guide](./README-REVIEW-SYSTEM.md) covers operation
+note (the parts the criterion watches), criterion and output contract match. The [review-system guide](./README-REVIEW-SYSTEM.md) covers operation
 and [review architecture](./review-architecture.md) how it is built.
 
 ### commonplace-review
@@ -397,16 +396,28 @@ warnings, `--stale` what a sweep would ask; `--json` gives each row's result
 file. Orphaned results, whose note or criterion is gone, are listed apart;
 removing one is deleting its file.
 
-`run gates NOTES... (--criteria C... | --all-gates) [--profile NAME]` asks one
+`run gates NOTES... (--criteria C... | --all-gates | --criterion-file PATH) [--profile NAME]` asks one
 worker per pair without a fresh result, in a new run under
-`kb/reports/state/review/runs/`, and writes a result file for each accepted
+`kb/reports/state/review/runs/v2/`, and writes a typed result file for each accepted
 review. `--grouping bundle` asks one worker per note and bundle of catalog
 gates for that bundle's stale gates instead of one per pair; each gate still
 gets its own result file. `--resume RUN_DIR` continues a run; `retry RUN JOB` and
 `acknowledge RUN LAUNCH` settle a worker problem or an unsettled launch.
 Criteria are catalog gate ids, bundle names, and the `type`, `collection` and
 `critique` lenses; worker profiles come from the library's
-`instructions/review-profiles.yaml`.
+`instructions/review-profiles.yaml`. Draft selection and `--input ROLE=PATH`
+retain run-local evidence without publishing a catalog result. Operational
+inputs must be self-contained; their provenance links grant no cross-run access.
+
+`show RUN [--observation ID] --json` inspects retained findings, exact capture
+references and retry diagnostics. `fixture create --from RUN --observation ID
+--substitute-current-executor` retains a content baseline with an explicit
+executable substitution and recorded configuration gaps; `--repair ORIGINAL=PATH`
+can supply missing historical dirty bytes matching their recorded hashes.
+Creation launches nothing. `run gates --fixture PATH` runs one independent
+trial through the same implementation, currently with Claude Code, pair
+grouping and one worker. It never publishes live results. `--resume TRIAL_RUN`
+continues that trial; it is not another observation. Fixture overrides are rejected.
 
 `run full-pass NOTE [--direction TEXT]` runs the
 [full improvement pass](../instructions/run-full-improvement-pass-on-note.md)
@@ -433,8 +444,8 @@ commissions [assessment and pass selection](../instructions/simplification-passe
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text
-requires the choice again. Older runs without a recorded mode also require
-an explicit choice. The JSON report names the mode as `fixed-plan` or `assess`.
+requires the choice again. Old-format runs cannot resume; retain their evidence
+and start a new run. The JSON report names the mode as `fixed-plan` or `assess`.
 Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
@@ -476,7 +487,7 @@ captured brief must still be unchanged before the write. Instructions own
 judgment; prompts name inputs only.
 
 Both workflows derive their run directory from the inputs:
-`kb/reports/state/review/runs/<workflow>/<note path without .md>/<first 12
+`kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the command on the same note text
 continues the run and replays answered calls; an edited note opens a new
 run. A repeat reuses the recorded options (full pass: `--profile` and

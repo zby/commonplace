@@ -20,8 +20,9 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.lib import library
 from commonplace.lib.review_workflows.results import read_result, result_path
+from tests.commonplace.review_workflows.result_helpers import FAKE_RESULT, copy_contract
 
-FAKE = r"""
+FAKE = FAKE_RESULT + r"""
 import json, os, re, sys
 from pathlib import Path
 frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
@@ -40,12 +41,12 @@ if "STRAY" in note:
     Path("stray.md").write_text("written by a reviewer\n")
 if "MALFORMED" in note and "was rejected" not in frame:
     result = "Verdict: fine"
-elif "`## Result: REPORT`" in frame:
-    result = "## Result: REPORT"
+elif "outcome: report" in frame:
+    result = review_text("report")
 else:
-    result = "## Result: FAIL" if "FAILME" in note else "## Result: PASS"
+    result = review_text("fail" if "FAILME" in note else "pass")
 for review in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
-    Path(listed(review)).write_text(f"### Summary\n\nReviewed.\n\n{result}\n")
+    Path(listed(review)).write_text(result)
 """
 
 PROFILES = """default: fake
@@ -92,6 +93,7 @@ def _project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, *, installed: bool
         target = lib / rel.removeprefix("kb/") if installed and rel.startswith(LIBRARY_FILES) else root / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(text, encoding="utf-8")
+    copy_contract(lib)
     git(root, "init", "-q")
     git(root, "config", "user.email", "t@example.com")
     git(root, "config", "user.name", "t")
@@ -164,7 +166,7 @@ def test_sweep_writes_one_result_per_pair_and_a_rerun_launches_nothing(repo, cap
     assert (result.outcome, result.model, result.run) == ("fail", "fake-model-1", report["run-dir"])
     assert result.profile == {"harness": "fake", "launch-model": "m", "effort": "low"}
     assert (root / report["run-dir"] / "calls" / "launches" / result.launch).is_dir()
-    assert result.body.endswith("## Result: FAIL\n")
+    assert result.findings[0]["level"] == "fail"
 
     code, again, launches = review(repo, capsys, "kb/notes", "--criteria", "prose", "type", "collection",
                                    "critique")
@@ -190,7 +192,7 @@ def test_malformed_review_costs_one_corrected_attempt(repo, capsys):
     assert code == 0 and launches == [f"kb/notes/alpha.md::{BODY_GATE}"] * 2
     events = [json.loads(line) for line in (root / report["run-dir"] / "log.jsonl").read_text().splitlines()]
     assert [event["problems"] for event in events if event["event"] == "rejected"] == [
-        ["invalid result signal: Verdict: fine"]]
+        ["review: worker output must declare type: types/review-result.md"]]
     assert read_result(result_path(root, "kb/notes/alpha.md", "prose/body-gate")).outcome == "pass"
 
 
@@ -261,7 +263,7 @@ def test_status_filters_list_current_findings_and_what_a_sweep_would_ask(repo, c
     assert main(["status", "--fresh", "--outcome", "fail", "--json"], harnesses=repo[1]) == 0
     [row] = json.loads(capsys.readouterr().out)["pairs"]
     assert row["criterion-id"] == "prose/body-gate"
-    assert read_result(root / row["result"]).body.endswith("## Result: FAIL\n")
+    assert read_result(root / row["result"]).findings[0]["level"] == "fail"
     assert main(["status", "--criteria", "prose", "--json"], harnesses=repo[1]) == 2
 
 

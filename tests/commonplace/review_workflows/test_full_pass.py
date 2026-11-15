@@ -35,9 +35,10 @@ from tests.commonplace.review_workflows.brief_helpers import (
     captured_inputs,
     use_full_instruction,
 )
+from tests.commonplace.review_workflows.result_helpers import FAKE_RESULT, copy_contract
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
-FAKE = r"""
+FAKE = FAKE_RESULT + r"""
 import json, os, re, sys
 from pathlib import Path
 frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
@@ -110,13 +111,13 @@ def copyedit():
 
 
 ANSWERS = {
-    "review": lambda: "## Result: REPORT\n" if "`## Result: REPORT`" in frame else "## Result: PASS\n",
+    "review": lambda: review_text("report" if "outcome: report" in frame else "pass"),
     "method": lambda: "# Report\n\nNothing to add.\n",
     "packet": packet, "edit": edit, "copyedit": copyedit, "closing": closing,
     "repair": lambda: note + "Repaired.\n",
 }
 for path in outputs.values():
-    path.write_text("### Summary\n\nReviewed.\n\n" + ANSWERS[kind]() if kind == "review" else ANSWERS[kind]())
+    path.write_text(ANSWERS[kind]())
 """
 
 PROFILES = "default: fake\nprofiles:\n  fake: {harness: fake, launch-model: m, effort: low}\n"
@@ -153,6 +154,7 @@ def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     for rel, text in FILES.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         (root / rel).write_text(text, encoding="utf-8")
+    copy_contract(root / "kb")
     for args in (("init", "-q"), ("config", "user.email", "t@example.com"), ("config", "user.name", "t")):
         subprocess.run(["git", *args], cwd=root, check=True)
     monkeypatch.setattr(library, "_library_root", lambda _override: (root / "kb").resolve())
@@ -274,7 +276,7 @@ def test_keep_applies_the_copyedited_text_once_and_closes_ready(repo, capsys):
     assert code == 0, (report["stopped"], report["conflict"])
     assert (report["disposition"], report["closing-status"], report["applied"]) == ("keep", "ready", True)
     assert report["guard"] == {"clean": True, "changed": []}, "the pass's own write is expected"
-    assert report["run-dir"] == f"kb/reports/state/review/runs/full-pass/kb/notes/alpha/{sha256(text)[:12]}"
+    assert report["run-dir"] == f"kb/reports/state/review/runs/v2/full-pass/kb/notes/alpha/{sha256(text)[:12]}"
     final = note_text(repo)
     assert final.endswith("Copyedited.\n") and "user-verified" not in final
     assert (repo[0] / report["proposed"]).read_text() == final

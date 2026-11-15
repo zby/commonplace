@@ -54,6 +54,7 @@ from commonplace.lib.project_paths import (
 )
 from commonplace.lib.quote_grounding import SnapshotPin, resolve_citations
 from commonplace.lib.quote_matching import (
+    match_quote,
     parse_blockquotes,
 )
 from commonplace.lib.quote_verification import (
@@ -1542,11 +1543,57 @@ def _file_available(path: Path, run: ValidationRun) -> bool:
     return path.resolve() in run.content_overrides or path.is_file()
 
 
+@type_rule("types/review-result.md")
+def validate_review_result_evidence(results: CheckResults, parsed: ParsedNote, *, run: ValidationRun) -> None:
+    """Validate retained byte bindings and unique normalized anchors for explicit review artifacts."""
+    data = parsed.document.frontmatter or {}
+    if any(heading.startswith("## Result:") for heading in parsed.document.headings):
+        results.fails.append("terminal Result footer is unsupported; use outcome frontmatter only")
+    captured = None
+    for path_key, hash_key in (("target-capture", "target-sha256"), ("raw-output", "raw-output-sha256")):
+        name, expected = data.get(path_key), data.get(hash_key)
+        if not isinstance(name, str) or not isinstance(expected, str):
+            continue  # The schema owns requiredness and field types.
+        rel = Path(name)
+        path = run.repo_root / rel
+        if rel.is_absolute() or ".." in rel.parts or not path.resolve().is_relative_to(run.repo_root.resolve()):
+            results.fails.append(f"{path_key}: evidence path escapes repository")
+            continue
+        try:
+            content = run.read_bytes(path)
+        except OSError as error:
+            results.fails.append(f"{path_key}: missing retained evidence: {error}")
+            continue
+        if hashlib.sha256(content).hexdigest() != expected:
+            results.fails.append(f"{path_key}: retained evidence hash mismatch")
+        if path_key == "target-capture":
+            captured = content.decode("utf-8")
+    findings = data.get("findings")
+    if captured is not None and isinstance(findings, list):
+        for index, finding in enumerate(findings, 1):
+            if not isinstance(finding, dict) or not isinstance(finding.get("quotes"), list):
+                continue
+            for quote in finding["quotes"]:
+                if not isinstance(quote, str) or not quote:
+                    continue
+                # The shared prose matcher: line wraps and typographic quote marks do not break an anchor.
+                matched = match_quote(quote, captured, kind="prose")
+                if not matched.matched:
+                    label = "absent" if matched.count == 0 else "ambiguous"
+                    results.fails.append(f"finding {index}: {label} quote {quote!r}; "
+                                         f"{matched.count} normalized matches in captured target")
+
+
 def validate_collection_contract_name(results: CheckResults, parsed: ParsedNote) -> None:
     """A COLLECTION.md declares the collection-contract type, and only a
     COLLECTION.md does."""
     is_typed = parsed.document.frontmatter is not None
     type_identity = canonical_type_identity(parsed.profile) if is_typed else None
+    # Result paths preserve criterion names, including COLLECTION.md. They are
+    # assessments in the review state tree, not collection declarations.
+    if (type_identity == "types/review-result.md"
+            and "/kb/reports/state/review/" in parsed.path.as_posix()):
+        return
     if is_collection_metadata(parsed.path) and type_identity != COLLECTION_CONTRACT_TYPE:
         results.fails.append(
             f"collection contract: COLLECTION.md must declare `type: {COLLECTION_CONTRACT_TYPE}`"
