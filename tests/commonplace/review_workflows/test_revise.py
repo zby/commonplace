@@ -6,6 +6,7 @@ import functools
 import hashlib
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -791,6 +792,19 @@ def test_a_repeat_keeps_its_earlier_decisions_after_another_run_decides(repo, ca
     assert items(repo, repeated)["gamma"]["state"] == "pending"
 
 
+def test_earlier_decisions_are_read_from_rewrite_runs_too(repo, capsys, tmp_path):
+    first = first_decisions(repo, capsys, tmp_path)
+    run = repo[0] / first["run-dir"]
+    moved = repo[0] / first["run-dir"].replace("/v2/revise/", "/v2/rewrite/", 1)
+    for name in ("operator", "artifact"):
+        shutil.copytree(run / name, moved / name)
+    shutil.rmtree(run / "operator")                 # only the rewrite tree now holds the operator's records
+    found = decisions.earlier(repo[0], NOTE_PATH)
+    assert {decision["proposal"]["change"]: decision["state"] for decision in found} == {
+        "alpha": "approved", "beta": "rejected"}
+    assert all("/v2/rewrite/" in decision["answers-file"] for decision in found)
+
+
 # --- Focused plans and findings ------------------------------------------------------------
 
 GATE = "kb/instructions/review-gates/prose/residue.md"
@@ -1455,7 +1469,8 @@ def test_a_note_changed_since_the_start_blocks_a_revised_candidate(repo, capsys,
     run = repo[0] / report["run-dir"]
     profile = Profile(harness="fake", launch_model="big", effort="high")
     with Run(run, repo[0], profile, harnesses=repo[1]) as opened, pytest.raises(edits.Conflict):
-        edits.publication(opened, repo[0], NOTE_PATH, original, candidate, inputs={}, command="-", revised=revised)
+        edits.publication(opened, repo[0], NOTE_PATH, original, candidate, inputs={}, command="-",
+                          change=revise_module.CHANGE, revised=revised)
     assert note_text(repo) == edited
 
 

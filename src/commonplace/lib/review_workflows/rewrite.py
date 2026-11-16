@@ -42,12 +42,14 @@ on when a referenced source's bytes changed since capture.
    `RECONSTRUCTION_SECTIONS`.
 2. `claim-account`: commission, brief, reconstruction, contracts. Not the
    note. Output `claim-account`, one `## ` section per material commitment.
-3. `candidate`: all of the above but the sources, the claim account and the
-   note's start text. Outputs `candidate`, which must keep the candidate
-   bounds of `edits.artifact_bounds()`, and `report`, with the sections of
+3. `candidate`: all of the above but the sources, the claim account, the
+   note's start text, and `kb-role` and `earlier-decisions` when the run has
+   them (below). Outputs `candidate`, which must keep the candidate bounds of
+   `edits.artifact_bounds()`, and `report`, with the sections of
    `REPORT_SECTIONS`.
 4. `review`: candidate, its report, commission, brief, reconstruction, claim
-   account, start text and contracts. Output `review`: frontmatter naming
+   account, start text, contracts, `kb-role` and `earlier-decisions`. Output
+   `review`: frontmatter naming
    the candidate's SHA-256, findings with `Anchor:`, `Basis:` and `Required
    change:`, and a last line `accept` or `block` (`review_problems()`).
 5. On `block`, one repair: `candidate-repair` also receives the review and
@@ -56,7 +58,21 @@ on when a referenced source's bytes changed since capture.
 
 The reconstruct and claim-account workers are not given the note, and their
 prompt tells them not to open it; they can still read the checkout. The
-isolation is by supplied inputs and instruction, not by sandbox.
+isolation is by supplied inputs and instruction, not by sandbox. They also
+receive neither `kb-role` nor `earlier-decisions`: both describe the note's
+current text, and the claim selection must come from the sources alone.
+
+**What revise workers also receive.** Before the candidate call, the run
+obtains the note's role report once and keeps it in `ROLE_FILE`: a fresh one
+the full revise procedure kept for the same text (`revise.stored_role()`),
+which costs no launch, or else one call of the role report alone, on the
+review profile, in `ROLE_DIR` under the run (`revise.role_report()`). Its
+`## Role` section is the input `kb-role` of the candidate, repair and review
+calls. When the run starts, code collects the operator's earlier decisions
+on the note from the other revise and rewrite runs (`decisions.earlier()`)
+and keeps them in `EARLIER_FILE`; when there is at least one, the same calls
+receive them as `earlier-decisions`. A repeat reads both files; a restart
+obtains both again.
 
 **Publication.** After `accept`, a candidate equal to the start text ends the
 run with no change. Otherwise the run stops at the publication stop of
@@ -90,7 +106,14 @@ from commonplace.lib import frontmatter
 from commonplace.lib.library import artifact_file, library_root
 from commonplace.lib.naming import write_brief_name_for
 from commonplace.lib.note_parser import blank_fenced_code_blocks
-from commonplace.lib.review_workflows import criteria, edits, gates, observations
+from commonplace.lib.review_workflows import (
+    criteria,
+    decisions,
+    edits,
+    gates,
+    observations,
+    revise,
+)
 from commonplace.lib.review_workflows.edits import (
     NO_WRITES,
     START,
@@ -121,6 +144,15 @@ FINDING_FIELDS = ("Anchor", "Basis", "Required change")
 VERDICTS = ("accept", "block")
 ATTEMPTS = 3
 REPEAT = "commonplace-review run rewrite {artifact}"
+CHANGE = "change the commission and repeat with --commission FILE --restart"
+"""How the publication stop's waiting text tells the operator to change the rewrite's candidate otherwise."""
+KB_ROLE, EARLIER_DECISIONS = revise.KB_ROLE, revise.EARLIER_DECISIONS
+ROLE_FILE = "role.json"
+"""The role report the run used and its `## Role` section, obtained once: a repeat reads them here."""
+ROLE_DIR = "role"
+"""The run of the role report alone, under the rewrite run, when no fresh stored one exists."""
+EARLIER_FILE = revise.EARLIER_FILE
+"""The operator's earlier decisions the run used, captured once: a repeat reads them here."""
 STEP_FILES = ("reconstruction.md", "claim-account.md", "candidate-1.md", "candidate-1-report.md", "review-1.md",
               "candidate-2.md", "candidate-2-report.md", "review-2.md", *edits.PUBLICATION_FILES)
 """The files under `artifact/` a restart removes: every step's output and the publication files."""
@@ -305,6 +337,7 @@ class RewriteReport:
     commission: str | None = None     # the captured commission in the run, and where it came from
     origin: str | None = None
     brief: str | None = None          # the captured write brief in the run, when the note declares one
+    role: dict | None = None          # the role report the candidate and review calls used, and whether it was reused
     sources: list[dict] = field(default_factory=list)   # path, role, sha256, and mode: captured or referenced
     restarted: bool = False
     steps: list[dict] = field(default_factory=list)     # each answered call: job, key, model and its files
@@ -380,6 +413,8 @@ ROLES = {
     "blocked-candidate": "the candidate the review blocked",
     "candidate": "the candidate to review",
     "candidate-report": "the author's report reconciling the note's commitments",
+    KB_ROLE: "the note's role in the KB: the `## Role` section of its role report",
+    EARLIER_DECISIONS: "the operator's decisions in earlier runs on this note",
 }
 OUTPUTS = {
     "reconstruct": ("- Write the reconstruction to {reconstruction}: Markdown with the sections `## Support`, "
@@ -499,18 +534,21 @@ def _inputs(run_dir: Path, root: Path, artifact: str, start: str, brief: dict[st
         report.restarted = True
         for name in STEP_FILES:
             (run_dir / "artifact" / name).unlink(missing_ok=True)
-        (run_dir / edits.REVISED_RECORD).unlink(missing_ok=True)
+        for name in (edits.REVISED_RECORD, ROLE_FILE, EARLIER_FILE, f"{ROLE_DIR}/review-request.json"):
+            (run_dir / name).unlink(missing_ok=True)
     observations.atomic_json(path, captured)
     return captured
 
 
 def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commission: Path | None = None,
-            restart: bool = False, timeout: float | None = None, harnesses=HARNESSES) -> RewriteReport:
+            restart: bool = False, review: Profile | None = None, timeout: float | None = None,
+            harnesses=HARNESSES) -> RewriteReport:
     """Rewrite the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
     The note's current text is the start text. `commission` is the
     commission file: required for a new run and for `restart`, optional on a
-    repeat, where it must equal the capture.
+    repeat, where it must equal the capture. `review` is the profile of the
+    role report when it must run; without it, `profile`.
     """
     root = root.resolve()
     report = RewriteReport(_rel(root, run_dir.resolve()), artifact)
@@ -521,7 +559,10 @@ def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commi
         brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses) as run:
             captured = _inputs(run_dir, root, artifact, start, brief, commission, restart, report)
-            final = _steps(run, root, artifact, start, brief, captured, profile, report)
+            earlier = _earlier(run_dir, root, artifact)
+            final = _steps(run, root, artifact, start, brief, captured, profile, report, earlier,
+                           lambda: _role(run_dir, root, artifact, start, review or profile, timeout, harnesses,
+                                         report))
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
@@ -530,9 +571,47 @@ def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commi
     return report
 
 
+def _earlier(run_dir: Path, root: Path, artifact: str) -> list[dict]:
+    """The operator's earlier decisions on the note: read from `EARLIER_FILE`, or collected once and kept there."""
+    path = run_dir / EARLIER_FILE
+    if path.is_file():                                # a repeat: other runs may have decided more since
+        return json.loads(path.read_text(encoding="utf-8"))["decisions"]
+    found = decisions.earlier(root, artifact, run_dir)
+    observations.atomic_json(path, {"decisions": found})
+    return found
+
+
+def _role(run_dir: Path, root: Path, artifact: str, start: str, profile: Profile, timeout: float | None, harnesses,
+          report: RewriteReport) -> dict[str, str] | None:
+    """The `kb-role` input, origin and text, from the note's role report; None when it has no `## Role` section.
+
+    The report is read from `ROLE_FILE`, or obtained once and kept there: a
+    fresh stored one (`revise.stored_role()`), without a launch, or else
+    the role report run alone in `ROLE_DIR` (`revise.role_report()`).
+    """
+    path = run_dir / ROLE_FILE
+    if path.is_file():
+        found = json.loads(path.read_text(encoding="utf-8"))
+    else:
+        stored = revise.stored_role(root, artifact, start)
+        given = stored or revise.role_report(root, artifact, start, run_dir / ROLE_DIR, profile, timeout, harnesses,
+                                             WORKFLOW)
+        found = {"report": None if given is None else given.path, "reused": stored is not None,
+                 "section": None if given is None else revise.role_section(given.text)}
+        observations.atomic_json(path, found)
+    report.role = {"report": found["report"], "reused": found["reused"]}
+    return None if found["section"] is None else {"origin": found["report"], "text": found["section"]}
+
+
 def _steps(run: Run, root: Path, artifact: str, start: str, brief: dict[str, str], captured: dict,
-           profile: Profile, report: RewriteReport) -> str | None:
-    """Run or replay the calls to an accepted candidate, then stop at publication; return the text to publish."""
+           profile: Profile, report: RewriteReport, earlier: list[dict], role) -> str | None:
+    """Run or replay the calls to an accepted candidate, then stop at publication; return the text to publish.
+
+    `earlier` holds the operator's earlier decisions on the note; `role()`
+    gives the `kb-role` input. The candidate, repair and review calls
+    receive both, each when it has content; the first two calls receive
+    neither.
+    """
     sources = captured["sources"]
     report.origin = captured["commission"]["origin"]
     report.sources = [{key: source[key] for key in ("path", "role", "sha256", "mode")} for source in sources]
@@ -565,7 +644,10 @@ def _steps(run: Run, root: Path, artifact: str, start: str, brief: dict[str, str
     account = answer.outputs["claim-account"]
     steps.keep("claim-account.md", account)
 
-    common |= {"reconstruction": reconstruction, "claim-account": account, "note": start}
+    kb_role = role()
+    common |= {"reconstruction": reconstruction, "claim-account": account, "note": start,
+               **({KB_ROLE: kb_role["text"]} if kb_role else {}),
+               **({EARLIER_DECISIONS: decisions.earlier_text(earlier)} if earlier else {})}
     baseline = edits.validation_fails(root, artifact, start)
     answer = steps.ask("candidate", {"instruction": _instruction("candidate"), **common}, ["candidate", "report"],
                        _candidate_check(root, artifact, start, baseline, None))
@@ -590,7 +672,7 @@ def _steps(run: Run, root: Path, artifact: str, start: str, brief: dict[str, str
     context = {"workflow": WORKFLOW, "inputs": observations.sha(json.dumps(captured, sort_keys=True).encode()),
                "calls": steps.keys, "profile": asdict(profile)}
     return edits.publish(run, root, artifact, start, candidate, context, brief, REPEAT.format(artifact=artifact),
-                         report)
+                         report, change=CHANGE)
 
 
 def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, revised: str, source: Path, *,
@@ -602,7 +684,8 @@ def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, r
     root, run_dir = root.resolve(), run_dir.resolve()
     edits.revised_source(run_dir, source, artifact)
     with Run(run_dir, root, profile, harnesses=harnesses) as run:
-        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact))
+        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact),
+                                        change=CHANGE)
     return RewriteReport(_rel(root, run_dir), artifact, proposed=supplied["proposed"],
                          revised_candidate=supplied["revised-candidate"], new_warnings=supplied["new-warnings"],
                          not_applied=supplied["not-applied"], waiting_for=supplied["waiting-for"])

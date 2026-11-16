@@ -24,10 +24,10 @@ Each entry says who proposed and who decided, and whether the decision
 covered one item or a bundle. A publication approval is approval of the
 final text, never of each edit that produced it. No statistic is computed.
 
-`earlier()` reads the same operator records for the revise workflow: the
-operator's decided items on edit proposals and on review findings in the
-other runs on one note, which a new run carries over (`types/answers.md`,
-"Decisions carried over"). A decision on a finding comes from a triage stop,
+`earlier()` reads the same operator records for the revise and rewrite
+workflows: the operator's decided items on edit proposals and on review
+findings in the other revise and rewrite runs on one note, which a new run
+carries over (`types/answers.md`, "Decisions carried over"). A decision on a finding comes from a triage stop,
 `finding-answers-<key>.md`, whose question is a review result; the listing
 shows it with class `finding` and names its criterion. `review_inputs()`
 renders the rejected findings per criterion as the input a later review of
@@ -279,8 +279,8 @@ def text(found: list[dict]) -> str:
 
 # --- Earlier decisions -----------------------------------------------------------------------
 
-EARLIER_WORKFLOW = "revise"
-"""The run family whose decisions a new run on the same note carries over."""
+EARLIER_WORKFLOWS = ("revise", "rewrite")
+"""The run families whose decisions a new revise or rewrite run on the same note carries over."""
 
 
 def _moment(text: str) -> datetime | None:
@@ -297,12 +297,14 @@ def _when(decision: dict) -> tuple[datetime, str]:
 
 
 def earlier(root: Path, note: str, current: Path | None = None, *, findings_only: bool = False) -> list[dict]:
-    """The operator's decided items on edit proposals and findings in the revise runs on `note` other than `current`.
+    """The operator's decided items on edit proposals and findings in the runs on `note` other than `current`.
+
+    The runs are those of `EARLIER_WORKFLOWS`, revise and rewrite.
 
     `current` None reads every run. `findings_only` reads only the answers
     of triage stops, so only decisions on findings are returned.
 
-    Each run directory beside `current`, under the note's path, holds
+    Each run directory under the note's path in those run families holds
     operator records. For each answers stop with an approved capture that
     the validator accepts, every item that `answers.decision_key()`
     identifies and whose state is not `pending` is an earlier decision: an
@@ -319,13 +321,11 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
     whose answers hold this same decision, the first one and those it was
     carried over to. The list is ordered by `decided-at`.
     """
-    base = root / gates.RUNS / EARLIER_WORKFLOW / note.removesuffix(".md")
-    if not base.is_dir():
-        return []
+    bases = [root / gates.RUNS / workflow / note.removesuffix(".md") for workflow in EARLIER_WORKFLOWS]
     current = current.resolve() if current is not None else None
     latest: dict[tuple, dict] = {}
     answered: dict[tuple, list[tuple[str, str, str]]] = {}
-    for run_dir in sorted(base.iterdir()):
+    for run_dir in [path for base in bases if base.is_dir() for path in sorted(base.iterdir())]:
         if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
             continue
         for _, data in _records(root, run_dir):

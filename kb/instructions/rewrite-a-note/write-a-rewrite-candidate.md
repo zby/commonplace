@@ -34,6 +34,12 @@ else is inherited.
   input. It supplies no warrant for its own claims.
 - `type-contract` and `collection-contract`, when present: the contracts the
   note must meet.
+- `kb-role`, when present: the `## Role` section of the note's role report.
+  It says what the note is for in the KB and which of its terms and claims
+  other notes rely on.
+- `earlier-decisions`, when present: the operator's decisions in earlier
+  revise and rewrite runs on this note. Each entry gives the passage, the
+  change or finding, the decision and the operator's reason.
 - In the `candidate-repair` step also `review`, the review that blocked the
   earlier candidate, and `blocked-candidate`, that candidate.
 
@@ -44,6 +50,15 @@ else is inherited.
 - Do not make a decision the commission reserves for the operator. If the
   candidate cannot be written without one, write the problem file and name
   the decision.
+- Do not rename, redefine or drop a term or claim that `kb-role` lists as
+  relied on, unless the commission's current direction explicitly asks for
+  it. When it does, say so in the report. If the claim account leaves out
+  such a claim and the current direction does not ask for that, write the
+  problem file and name the claim and the dependents. A term or claim
+  `kb-role` lists as unused is not for that reason a candidate for cutting.
+- Do not reintroduce a change the operator rejected in `earlier-decisions`,
+  and keep a wording the operator approved there, unless the commission's
+  current direction says otherwise.
 - Do not change the frontmatter `title`, `type` or `brief` declaration, or
   the H1. A retitle is not part of this workflow.
 - Do not edit the note's file, its brief, the sources or any other file.

@@ -35,6 +35,12 @@ instead of assessing again.
    rewrite will replace is not worth a pass; recommend passes only over the
    parts the assessment expects to survive.
 
+   When the assessment finds that a claim itself is wrong or unsupported,
+   the passes cannot fix it: they do not change claims. Set the plan's
+   `stop`, name the claim, and name the rewrite route:
+   `commonplace-review run rewrite NOTE --commission FILE`, with the
+   commission prepared with `cp-skill-write-multistage`.
+
    Two things the passes cannot own belong in the assessment too. For each
    candidate overclaim, propose whether the sentence is support (may be
    narrowed) or divergence (must be kept); the divergence items become the

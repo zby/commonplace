@@ -9,17 +9,22 @@ import sys
 import pytest
 
 from commonplace.cli.review_workflows import main
-from commonplace.headless.harness import Harness
+from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, observations
+from commonplace.lib.review_workflows import decisions, edits, observations
+from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows import rewrite as rewrite_module
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
+from tests.commonplace.review_workflows.result_helpers import copy_contract
 from tests.commonplace.review_workflows.test_revise import (
     EDIT_TYPES,
     NOTE,
     NOTE_PATH,
     PROFILES,
+    REVIEW_FAKE,
+    REVIEW_FILES,
+    ROLE,
     approve_publication,
     artifact_file,
     note_text,
@@ -122,7 +127,9 @@ A retitle.
 
 Rewrite the body from the sources; the existing claim overreaches.
 """
-STEPS = ["reconstruct", "claim-account", "candidate", "review"]
+STEPS = ["reconstruct", "claim-account", ROLE, "candidate", "review"]
+ROLE_SECTION = "It supplies one term.\nRelied on: the term. Unused: none."
+ROLE_REL = "kb/instructions/role-in-the-kb-gate.md"
 
 
 @pytest.fixture
@@ -130,6 +137,7 @@ def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
     files = {rel: (REPO_ROOT / rel).read_text() for rel in (*NOTE_TYPE_SPECS, *EDIT_TYPES)}
     files |= {f"kb/{rewrite_module.INSTRUCTIONS_DIR}/{path.name}": path.read_text() for path in INSTRUCTIONS.glob("*.md")}
+    files |= {rel: REVIEW_FILES[rel] for rel in (ROLE_REL, "kb/reports/COLLECTION.md")}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n",
               SOURCE: "# Alpha ingest\n\nAlpha holds when the condition is met.\n",
               "kb/sources/.gitignore": ".snapshots/\n", SNAPSHOT: SNAPSHOT_TEXT,
@@ -137,6 +145,7 @@ def repo(tmp_path, monkeypatch):
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         (root / rel).write_text(text)
+    copy_contract(root / "kb")
     for args in (("init", "-q"), ("config", "user.email", "t@example.com"), ("config", "user.name", "t")):
         subprocess.run(["git", *args], cwd=root, check=True)
     subprocess.run(["git", "add", "."], cwd=root, check=True)
@@ -145,7 +154,7 @@ def repo(tmp_path, monkeypatch):
     monkeypatch.setattr(rewrite_module, "Run", functools.partial(Run, sleep=lambda seconds: None))
     monkeypatch.chdir(root)
     script, log = tmp_path / "fake.py", tmp_path / "launches.log"
-    script.write_text(FAKE)
+    script.write_text(REVIEW_FAKE + FAKE)
     log.touch()
     harness = Harness(sys.executable, {"_subcommand": [str(script)], "_env": {"FAKE_LOG": str(log)}},
                       lambda profile: {"model": profile.launch_model}, model_used=lambda launch: "fake-model-1")
@@ -174,7 +183,7 @@ def calls(repo):
     return {call["kind"]: call for call in captured_inputs(repo[2])}
 
 
-def test_a_rewrite_runs_its_four_calls_to_publication_and_writes_only_after_approval(repo, capsys):
+def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(repo, capsys):
     original = note_text(repo)
     brief = add_brief(repo[0], NOTE_PATH)
     subprocess.run(["git", "add", "."], cwd=repo[0], check=True)
@@ -195,9 +204,13 @@ def test_a_rewrite_runs_its_four_calls_to_publication_and_writes_only_after_appr
     shared = {"instruction", "commission", "brief", *contracts}
     assert set(found["reconstruct"]["inputs"]) == shared | {"sources", "source-1"}
     assert set(found["claim-account"]["inputs"]) == shared | {"reconstruction"}
-    assert set(found["candidate"]["inputs"]) == shared | {"reconstruction", "claim-account", "note"}
+    assert set(found["candidate"]["inputs"]) == shared | {"reconstruction", "claim-account", "note", "kb-role"}
     assert set(found["review"]["inputs"]) == shared | {"reconstruction", "claim-account", "note", "candidate",
-                                                       "candidate-report"}
+                                                       "candidate-report", "kb-role"}
+    assert found["candidate"]["inputs"]["kb-role"] == found["review"]["inputs"]["kb-role"] == ROLE_SECTION
+    assert report["role"] == {"report": f"{report['run-dir']}/role", "reused": False}
+    given = (run / "role").glob("artifact/reviews/*/inputs/operational/inbound.md")
+    assert [path.read_text().startswith(f"# Inbound contexts of `{NOTE_PATH}`") for path in given] == [True]
     for kind in ("reconstruct", "claim-account"):              # the note is withheld from the first two calls
         assert all(text != start and "Alpha body ." not in text for text in found[kind]["inputs"].values())
         assert f"do not open `{NOTE_PATH}`" in found[kind]["prompt"]
@@ -274,7 +287,7 @@ def test_a_candidate_that_breaks_the_bounds_is_refused(repo, capsys):
     (repo[0] / "bad-bounds").touch()
     code, report, launches = rewrite(repo, capsys)
     assert code == 1 and report["stopped"].startswith("candidate: ") and "the H1 changed" in report["stopped"]
-    assert launches[:3] == ["reconstruct", "claim-account", "candidate"] and set(launches[2:]) == {"candidate"}
+    assert launches[:4] == ["reconstruct", "claim-account", ROLE, "candidate"] and set(launches[3:]) == {"candidate"}
     assert note_text(repo) == original
 
 
@@ -311,12 +324,66 @@ def test_the_commission_is_required_checked_and_frozen_unless_restarted(repo, ca
     code, error, launches = rewrite(repo, capsys)
     assert code == 2 and "differs from the one this run captured" in error and launches == []
     code, restarted, launches = rewrite(repo, capsys, "--restart")
-    assert code == 0 and restarted["restarted"] and launches == STEPS
+    # The role report is obtained again; its inputs did not change, so its call replays without a launch.
+    assert code == 0 and restarted["restarted"] and launches == [step for step in STEPS if step != ROLE]
     assert restarted["run-dir"] == report["run-dir"]
     assert restarted["waiting-for"]["key"] != report["waiting-for"]["key"]
     assert "keep it short" in calls(repo)["reconstruct"]["inputs"]["commission"]
     code, error, _ = rewrite(repo, capsys, "--restart", commission=False)
     assert code == 2 and "--restart needs --commission FILE" in error
+
+
+DECIDED = {"proposal": {"quote": "Alpha body", "change": "alpha", "reason": "plain"}, "state": "rejected",
+           "reason": "a registered word", "revisit": None, "decided-by": "operator",
+           "decided-at": "2026-11-15T12:00:00Z",
+           "answers-file": "kb/reports/state/review/runs/v2/revise/kb/notes/alpha/0123456789ab/artifact/x.md"}
+
+
+def test_earlier_decisions_and_the_role_reach_only_the_candidate_repair_and_review_calls(repo, capsys, monkeypatch):
+    asked = []
+    def earlier(root, note, current=None, findings_only=False):    # the role review asks for findings only
+        return [] if findings_only else asked.append(current) or [DECIDED]
+    monkeypatch.setattr(decisions, "earlier", earlier)
+    (repo[0] / "block-1").touch()
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == [*STEPS, "candidate-repair", "review-repair"]
+    run = repo[0] / report["run-dir"]
+    assert asked == [run], "the run collects them once, excluding its own run"
+    found = calls(repo)
+    told = decisions.earlier_text([DECIDED])
+    for kind in ("candidate", "review", "candidate-repair", "review-repair"):
+        assert found[kind]["inputs"]["earlier-decisions"] == told and found[kind]["inputs"]["kb-role"] == ROLE_SECTION
+    for kind in ("reconstruct", "claim-account"):       # material about the note's text stays out of claim selection
+        assert not {"earlier-decisions", "kb-role"} & set(found[kind]["inputs"])
+    assert json.loads((run / rewrite_module.EARLIER_FILE).read_text()) == {"decisions": [DECIDED]}
+    monkeypatch.setattr(decisions, "earlier", lambda *args, **kwargs: pytest.fail("a repeat collects again"))
+    code, again, launches = rewrite(repo, capsys, commission=False)
+    assert code == 0 and launches == [] and again["waiting-for"] == report["waiting-for"]
+
+
+def test_a_fresh_role_report_of_the_full_revise_procedure_is_reused_without_a_launch(repo, capsys):
+    root, start = repo[0], note_text(repo)
+    revise_role = edits.run_dir(root, "revise", NOTE_PATH) / "role"
+    profile = Profile(harness="fake", launch_model="small", effort="low")
+    kept = revise_module.role_report(root, NOTE_PATH, start, revise_role, profile, 30, repo[1], "revise")
+    assert repo[2].read_text().splitlines() == [ROLE]
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == [step for step in STEPS if step != ROLE]
+    assert report["role"]["reused"] and report["role"]["report"].startswith(kept.path + "/artifact/reviews/")
+    assert calls(repo)["candidate"]["inputs"]["kb-role"] == ROLE_SECTION
+    (root / "kb/notes/beta.md").write_text(NOTE.format(words="beta") + "\nBeta cites [Alpha](./alpha.md).\n")
+    assert revise_module.stored_role(root, NOTE_PATH, start) is None, "new inbound contexts make it stale"
+
+
+def test_the_publication_stop_names_each_workflow_s_way_to_change_the_candidate(repo, capsys, tmp_path):
+    _, report, _ = rewrite(repo, capsys)
+    what = report["waiting-for"]["what"]
+    assert "change the commission and repeat with --commission FILE --restart" in what and "--plan" not in what
+    path = tmp_path / "revised.md"
+    path.write_text(artifact_file(repo, report, "final.md").read_text() + "The operator's sentence.\n")
+    _, supplied, _ = rewrite(repo, capsys, "--revised", str(path), commission=False)
+    assert "--restart" in supplied["waiting-for"]["what"] and "--plan" not in supplied["waiting-for"]["what"]
+    assert "supply --plan for revision" in edits.publication_instruction(False, change=revise_module.CHANGE)
 
 
 def test_the_brief_sections_of_a_commission_are_required_only_without_a_write_brief(repo, capsys):

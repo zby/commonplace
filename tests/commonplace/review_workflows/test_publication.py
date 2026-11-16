@@ -32,7 +32,7 @@ def gate(tmp_path, monkeypatch):
     def invoke(context="first"):
         with Run(run_dir, root, Profile("fake", "m", "low"), harnesses={"fake": harness}) as run:
             return publication(run, root, "note.md", "original\n", "candidate\n",
-                               inputs={"context": context}, command="repeat")
+                               inputs={"context": context}, command="repeat", change="change the inputs")
 
     return root, run_dir, invoke
 

@@ -147,7 +147,12 @@ decisions; with a brief they are optional and hold only what the rewrite
 adds to it. Fresh workers reconstruct the sources and
 account for the claims without the note, then write a candidate with the
 note's text, and a fresh reviewer accepts or blocks the exact candidate; one
-repair follows a block. The run keeps its files under
+repair follows a block. Before the candidate, the run obtains the note's role
+report: a fresh one kept by `run revise --full` on the same text, or one
+call of the role report alone on the profile file's `default` profile. Its
+`## Role` section reaches the candidate, repair and review calls as `kb-role`,
+with the operator's earlier decisions on the note as `earlier-decisions`
+when there are any. The run keeps its files under
 kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
 hex of the note's SHA-256>/ and stops at the same publication stop as `run
 revise`, including `--revised FILE`. A repeat continues from the captured
@@ -623,9 +628,11 @@ def _rewrite(root: Path, arguments: argparse.Namespace, harnesses) -> int:
             profile = Profile(**recorded["profile"])
         else:
             profile = edit_operations.effort_profiles(root, {})["judgment"]
-        _options(run_dir, {"workflow": rewrite.WORKFLOW, "profile": asdict(profile)})
+        review = recorded.get("review-profile") or asdict(load_profile(root, None, gates.profiles()))
+        _options(run_dir, {"workflow": rewrite.WORKFLOW, "profile": asdict(profile), "review-profile": review})
         report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission,
-                                 restart=arguments.restart, timeout=arguments.timeout, harnesses=harnesses)
+                                 restart=arguments.restart, review=Profile(**review), timeout=arguments.timeout,
+                                 harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 

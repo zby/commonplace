@@ -589,7 +589,14 @@ lies under a `.snapshots/` directory, or is not text, is referenced by path
 and SHA-256 and never copied into the run. Fresh workers then reconstruct
 the sources and account for the claims without the note, write a candidate
 with a reconciliation report, and review the exact candidate, ending
-`accept` or `block`. A `block` allows one repair and a second fresh review;
+`accept` or `block`. Before the candidate, the run obtains the note's role
+report: a fresh one kept by `run revise --full` on the same text, without a
+launch, or else one call of the role report alone on the profile file's
+`default` profile, in `role/` under the run. The candidate, repair and
+review calls receive its `## Role` section as `kb-role`, and the operator's
+earlier decisions on the note, from revise and rewrite runs, as
+`earlier-decisions` when there are any. The JSON report's `role` names the
+role report and whether it was reused. A `block` allows one repair and a second fresh review;
 a second `block` ends the run unpublished, with `blocked` in the JSON report.
 After `accept` the run stops at the same publication stop as `run revise`,
 and `run rewrite NOTE --revised FILE` accepts the candidate with a revision

@@ -62,6 +62,16 @@ The first two workers are not given the note, and their prompt forbids
 opening it. They can still read the checkout. The isolation is by supplied
 inputs and instruction, not by sandbox.
 
+The author and the reviewer also receive what the revise procedures give
+their workers. Before the candidate, the run obtains the note's role report:
+a fresh one kept by `commonplace-review run revise <note> --full` on the same
+text, without a launch, or else one role-report call. Its `## Role` section,
+which lists the terms and claims other notes rely on, reaches the author and
+the reviewer as `kb-role`. The operator's decisions in earlier revise and
+rewrite runs on the note reach them as `earlier-decisions`. The first two
+workers receive neither, so that claim selection comes from the sources
+alone.
+
 ### A1. Fix the commission with the user
 
 Read the note, its collection's `COLLECTION.md` and its type spec. When the
@@ -91,9 +101,10 @@ amended brief, and say in the commission which item was amended. A worker
 that finds a conflict between the commission and the brief reports a
 problem, and the run stops.
 
-A role report on the note, such as the one `commonplace-review run revise
-<note> --full` runs, states which of its terms and claims other notes rely
-on. When a role report lists relied-on terms or claims that the brief does
+A role report on the note states which of its terms and claims other notes
+rely on: the one `commonplace-review run revise <note> --full` runs, or the
+one a rewrite run obtains (its report's `role` names it). When a role report
+lists relied-on terms or claims that the brief does
 not keep, tell the user and offer to add them to the brief's Must keep, or to
 create the brief when the note has none. Never amend or create a brief
 without the user's word. No code writes a brief.
@@ -185,7 +196,10 @@ Read the JSON report and act on it:
   needs a user decision, settle it in the commission and restart the same way.
 - **`stopped` with a worker problem:** read it to the user. A conflict
   between the commission and the brief needs a changed commission or an
-  amended brief, then `--restart`. A transient problem can be dismissed with
+  amended brief, then `--restart`. A claim that dependents rely on and that
+  the claim account leaves out needs the user's decision: keep it, or drop
+  it and say so in the current direction, then `--restart`. Dependents a
+  change reaches are the user's separate work. A transient problem can be dismissed with
   `commonplace-review retry <run-dir> <job>`, then repeat.
 - **`stopped` because a referenced source changed:** confirm the new text is
   wanted, then repeat with `--commission <file> --restart`.

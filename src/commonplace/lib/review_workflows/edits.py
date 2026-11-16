@@ -265,10 +265,11 @@ def revised_problems(root: Path, note: str, start: str, revised: str) -> list[st
     return problems
 
 
-def publication_instruction(revised: bool, warnings: Sequence[str] = ()) -> str:
+def publication_instruction(revised: bool, warnings: Sequence[str] = (), *, change: str) -> str:
     """What the operator does at the publication stop, for the candidate or for a revised candidate.
 
     `warnings` are the text's new validation warnings (`new_warnings()`); the text names each one.
+    `change` is the workflow's way to change the candidate otherwise, such as revise's `--plan`.
     """
     warned = ("" if not warnings else
               "The text to publish has validation warnings the note did not have: " + "; ".join(warnings)
@@ -280,12 +281,13 @@ def publication_instruction(revised: bool, warnings: Sequence[str] = ()) -> str:
     return (f"{warned}{inspect}. Record the operator's decision on the one item of {PUBLICATION}: "
             "`approved`, or `rejected` or `deferred` with the operator's reason, with `decided-by: operator` "
             "and `decided-at`. Approve that file, then repeat. To accept the candidate with a revision, supply "
-            "the full revised text with --revised FILE; to revise it otherwise, change the workflow inputs or "
-            "supply --plan for revision. Editing the files under artifact/ is not a workflow input.")
+            f"the full revised text with --revised FILE; to revise it otherwise, {change}. Editing the files "
+            "under artifact/ is not a workflow input.")
 
 
 def publication(run: Run, root: Path, note: str, start: str, final: str, *,
-                inputs: dict, command: str, revised: str | None = None, warnings: Sequence[str] = ()) -> dict | None:
+                inputs: dict, command: str, change: str, revised: str | None = None,
+                warnings: Sequence[str] = ()) -> dict | None:
     """Require the operator's approval of the exact checked candidate, never of an editable replacement.
 
     The question is the candidate `final.md`; the stop's file is a pending
@@ -303,7 +305,8 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     and the key also binds the revised text (`revised_key()`).
 
     `warnings` are the new validation warnings of the text to publish; the
-    waiting text names them. They bind no key.
+    waiting text names them. They bind no key. `change` is the workflow's
+    way to change the candidate otherwise (`publication_instruction()`).
     """
     root = root.resolve()
     name = PUBLICATION
@@ -331,7 +334,7 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     if revised is not None:
         key = revised_key(key, revised)
     approved = operator.answer(run, name, proposal, key=key)
-    instruction = publication_instruction(revised is not None, warnings)
+    instruction = publication_instruction(revised is not None, warnings, change=change)
     if changed:
         operator.invalidate(run, name)
         run.accept(name, proposal)
@@ -406,7 +409,7 @@ def revision(run: Run, root: Path, note: str, start: str, final: str, context: d
 
 
 def publish(run: Run, root: Path, note: str, start: str, final: str, context: dict, brief: dict[str, str],
-            command: str, report) -> str:
+            command: str, report, *, change: str) -> str:
     """Stop at publication for the changed `final`, or write the approved text; return the text to publish.
 
     The text to publish is `final`, or the operator's revised candidate while
@@ -418,7 +421,7 @@ def publish(run: Run, root: Path, note: str, start: str, final: str, context: di
     published = final if revised is None else revised
     report.proposed = (run.artifact / (CANDIDATE if revised is None else REVISED)).relative_to(root).as_posix()
     report.new_warnings = new_warnings(root, note, start, published)
-    report.waiting_for = publication(run, root, note, start, final, inputs=context, command=command,
+    report.waiting_for = publication(run, root, note, start, final, inputs=context, command=command, change=change,
                                      revised=revised, warnings=report.new_warnings)
     if report.waiting_for is None:
         unchanged_brief(root, note, start, brief)
@@ -455,7 +458,7 @@ def revised_source(run_dir: Path, source: Path, note: str) -> None:
         raise ValueError(NOT_AT_PUBLICATION.format(artifact=note))
 
 
-def supply_revised(run: Run, root: Path, note: str, revised: str, command: str) -> dict:
+def supply_revised(run: Run, root: Path, note: str, revised: str, command: str, *, change: str) -> dict:
     """Capture the operator's revised candidate at the publication stop of `run`; launch nothing.
 
     Refuses (ValueError) unless the run of the note's current text waits at
@@ -502,8 +505,8 @@ def supply_revised(run: Run, root: Path, note: str, revised: str, command: str) 
     return {"proposed": proposed, "revised-candidate": revised_report_files(root, run), "new-warnings": warnings,
             "not-applied": (f"The proposed text is {proposed}, the operator's revised candidate; it is not "
                             "applied: final publication needs explicit approval."),
-            "waiting-for": operator.waiting(run, root, PUBLICATION, publication_instruction(True, warnings),
-                                            command)}
+            "waiting-for": operator.waiting(run, root, PUBLICATION,
+                                            publication_instruction(True, warnings, change=change), command)}
 
 
 def run_dir(root: Path, workflow: str, note: str) -> Path:
@@ -512,7 +515,11 @@ def run_dir(root: Path, workflow: str, note: str) -> Path:
     The same command on the same text finds the same run and continues it by
     replay; another text opens another run.
     """
-    text = (root / note).read_text(encoding="utf-8")
+    return run_dir_for(root, workflow, note, (root / note).read_text(encoding="utf-8"))
+
+
+def run_dir_for(root: Path, workflow: str, note: str, text: str) -> Path:
+    """The run of `workflow` over `text` as the note's text; `run_dir()` gives it for the current text."""
     return root / gates.RUNS / workflow / note.removesuffix(".md") / sha256(text)[:12]
 
 

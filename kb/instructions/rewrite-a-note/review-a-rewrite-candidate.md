@@ -36,6 +36,10 @@ Nothing else is inherited.
 - `note`: the note's text when the run started.
 - `type-contract` and `collection-contract`, when present: the contracts the
   note must meet.
+- `kb-role`, when present: the `## Role` section of the note's role report.
+  It says which of the note's terms and claims other notes rely on.
+- `earlier-decisions`, when present: the operator's decisions in earlier
+  revise and rewrite runs on this note, with the operator's reasons.
 
 ## What you must not do
 
@@ -55,10 +59,18 @@ Check, in this order:
    account does not give.
 2. The commission and the brief: the intended contribution, what must be
    kept and excluded, and no reserved decision taken.
-3. The contracts: the type and the collection.
-4. Evidence: each claim has the support or the inference the reconstruction
+3. The note's dependents and the operator's earlier decisions. Report as a
+   finding a term or claim `kb-role` lists as relied on that the candidate
+   renames, redefines or drops, unless the commission's current direction
+   asks for it and the report says so. Report as a finding a candidate that
+   reintroduces a change the operator rejected in `earlier-decisions`, or
+   drops a wording the operator approved there, unless the commission's
+   current direction says otherwise. Content `kb-role` lists as unused is
+   not for that reason a finding.
+4. The contracts: the type and the collection.
+5. Evidence: each claim has the support or the inference the reconstruction
    gives, with its scope and qualifiers.
-5. Specificity, relevance and prose.
+6. Specificity, relevance and prose.
 
 A finding blocks when the candidate cannot be published without the change.
 A finding about missing evidence says that the sources lack it; the session

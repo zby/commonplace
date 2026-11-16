@@ -582,10 +582,10 @@ selection rules and checks, and evaluate retained and fresh examples before
 separately authorizing removal. This is not new automatic learning
 infrastructure, and fewer proposals do not establish reliability.
 
-**Earlier decisions.** Decisions carry over between revise runs on the same
-note. When a
-revise run starts, code collects the operator's decided items from the
-approved answers of the other revise runs on the same note path. It takes
+**Earlier decisions.** Decisions carry over between revise and rewrite runs
+on the same note. When a revise or rewrite run starts, code collects the
+operator's decided items from the approved answers of the other revise and
+rewrite runs on the same note path. It takes
 items whose state is not `pending` and whose proposal is an edit proposal,
 with a `quote` and a `change`, or a finding of a triage, which it records
 with its criterion. It skips publication and plan-stop answers, and answers the
@@ -731,8 +731,8 @@ Code checks each output:
 |---|---|---|
 | `reconstruct` | instruction, commission, brief, source list, captured sources, contracts | `reconstruction`, with `## Support`, `## Inference`, `## Conflicts`, `## Scope` and `## Gaps` |
 | `claim-account` | instruction, commission, brief, reconstruction, contracts | `claim-account`, with at least one `## ` section |
-| `candidate` | the above without the sources, plus the claim account and the note's start text as `note` | `candidate`, which must pass the candidate checks of `edits.artifact_bounds()`, and `report`, with `## Kept`, `## Replaced` and `## Omitted` |
-| `review` | the candidate and its report, commission, brief, reconstruction, claim account, `note`, contracts | `review`: frontmatter `candidate-sha256` equal to the candidate's hash, each `## ` finding with `Anchor:`, `Basis:` and `Required change:`, and a last line `accept` or `block`; a `block` names a finding |
+| `candidate` | the above without the sources, plus the claim account, the note's start text as `note`, `kb-role` and `earlier-decisions` | `candidate`, which must pass the candidate checks of `edits.artifact_bounds()`, and `report`, with `## Kept`, `## Replaced` and `## Omitted` |
+| `review` | the candidate and its report, commission, brief, reconstruction, claim account, `note`, contracts, `kb-role`, `earlier-decisions` | `review`: frontmatter `candidate-sha256` equal to the candidate's hash, each `## ` finding with `Anchor:`, `Basis:` and `Required change:`, and a last line `accept` or `block`; a `block` names a finding |
 | `candidate-repair` | the candidate inputs, plus the blocking `review` and the `blocked-candidate` | as `candidate`, and different from the blocked candidate |
 | `review-repair` | as `review`, for the repaired candidate; no earlier review | as `review` |
 
@@ -744,11 +744,39 @@ the body changed, and validation finds no new failure. The per-pass bounds
 of edit operations do not apply. A review that names another candidate's
 hash is refused.
 
+**What revise workers also receive.** The candidate, repair and review
+calls receive the two inputs the revise procedures give their workers. Before
+the candidate call, the run obtains the note's role report once. When the
+full revise procedure kept a fresh role report for the same note text in its
+`role/` run, the rewrite reuses it without a launch: fresh means the same
+note text, criterion text, inbound contexts and output contract. Otherwise
+the run makes one call: the role report alone, on the inbound contexts it
+collects, on the profile file's `default` profile, in `role/` under the
+rewrite run. It publishes no result. The report's `## Role` section is the
+input `kb-role`. The workers may not rename, redefine or drop a term or claim
+it lists as relied on unless the commission's current direction asks for it,
+and the author then says so in its report. Content it lists as unused is not
+for that reason a candidate for cutting. When the run starts, code collects
+the operator's earlier decisions on the note from the other revise and
+rewrite runs (`decisions.earlier()`), as a revise run does. When there is at
+least one, the same calls receive them as `earlier-decisions`: the author
+does not reintroduce a change the operator rejected and keeps a wording the
+operator approved, unless the current direction says otherwise, and the
+reviewer reports a candidate that goes against an earlier decision. The run
+keeps both in `role.json` and `earlier-decisions.json`; a repeat reads them,
+and a restart obtains them again. A role report call whose inputs did not
+change replays without a launch. The report's `role` names the role report
+and whether it was reused. No option skips the role report: a note without
+dependents still costs that one call.
+
 **Isolation.** The reconstruct and claim-account workers do not receive the
 note, and their prompt forbids opening it, its brief file or its earlier
-texts. They can still read the checkout. The isolation is by supplied inputs
-and instruction, not by sandbox. Workers write only their outputs inside the
-run directory, under the same profile flags as review workers.
+texts. They also receive neither `kb-role` nor `earlier-decisions`: both
+describe the note's current text, and the claim selection must come from the
+sources alone. They can still read the checkout. The isolation is by
+supplied inputs and instruction, not by sandbox. Workers write only their
+outputs inside the run directory, under the same profile flags as review
+workers.
 
 **One author, two fresh calls.** Multistage writing gives the claim account
 and the candidate to one author, so that claim selection and prose stay one
@@ -767,12 +795,16 @@ revise`: `artifact/final.md`, `artifact/final.diff` and
 [approve a text](../instructions/approve-a-text.md), `--revised FILE`,
 `new-warnings`, and one write after approval, only over the start text. The
 proposal key binds the start text, the candidate, the capture and every
-call's key.
+call's key. The waiting text names each workflow's way to change the
+candidate otherwise: `--plan` for revise, a changed commission with
+`--restart` for the rewrite.
 
 **Run directory.** `kb/reports/state/review/runs/v2/rewrite/<note path
 without .md>/<first 12 hex of the note's SHA-256>/` holds `sweep.json` (the
-profile), `rewrite-inputs.json`, the Workjig records under `calls/`, the
-operator records under `operator/` and, under `artifact/`: `commission.md`,
+profile and the role report's profile), `rewrite-inputs.json`,
+`earlier-decisions.json`, `role.json`, the role report's run under `role/`
+when one ran, the Workjig records under `calls/`, the operator records under
+`operator/` and, under `artifact/`: `commission.md`,
 `brief.md` when there is a brief, `sources.md` (the source list),
 `start.md`, `reconstruction.md`, `claim-account.md`, `candidate-1.md`,
 `candidate-1-report.md`, `review-1.md`, after a repair `candidate-2.md`,

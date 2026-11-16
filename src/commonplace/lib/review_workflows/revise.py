@@ -78,7 +78,7 @@ never approves: only the recorded approved text becomes the operator's answer:
    publication through the selection context. Proposals made again for other
    text have another key, so they get a new file and stop again.
    When the run starts, code collects the operator's decided items from the
-   other revise runs on the same note (`decisions.earlier()`) and captures
+   other revise and rewrite runs on the same note (`decisions.earlier()`) and captures
    them once in `earlier-decisions.json`, so a repeat uses the same ones.
    Each per-item pass and each fix of a finding receives them as the input
    `earlier-decisions`. A proposal with the same `quote` and `change` as an
@@ -209,6 +209,8 @@ MUST_KEEP = "must-keep"
 PLAN_SCHEMA = {"purpose": str, MUST_KEEP: list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN = "assessment.md", "plan.yaml"
 REPEAT = "commonplace-review run revise {artifact}"
+CHANGE = "change the workflow inputs or supply --plan for revision"
+"""How the publication stop's waiting text tells the operator to change revise's candidate otherwise."""
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
 STOP_ANSWERS = "stop-answers.md"
@@ -835,7 +837,7 @@ def _supplied_inputs(root: Path, pair: gates.Pair, reviewed: list[gates.Pair]) -
 
 
 def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile, timeout: float | None,
-           harnesses, inputs: dict[str, dict[str, str]] | None = None) -> gates.SweepReport:
+           harnesses, inputs: dict[str, dict[str, str]] | None = None, workflow: str = "revise") -> gates.SweepReport:
     """Run `wanted` through the sweep in its own run, or continue that run; Stop unless every pair has a result.
 
     Without `inputs`, results are published to the shared store and fresh
@@ -847,7 +849,7 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
         wanted = [gates.Pair(**pair) for pair in json.loads(request.read_text(encoding="utf-8"))["pairs"]]
         timeout = None
     else:
-        observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": "revise",
+        observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": workflow,
                                                          "profile": asdict(profile)})
     swept = gates.sweep(root, wanted, profile, run_dir, max_workers=REVIEW_WORKERS, timeout=timeout,
                         force=inputs is not None, grouping="bundle", harnesses=harnesses,
@@ -884,6 +886,68 @@ def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profil
                           results.result_text(done.result))
                   for done in swept.pairs if done.result is not None]
     return found
+
+
+def role_pair(root: Path, artifact: str, text: str) -> gates.Pair | None:
+    """The pair of `artifact` and the role report (`criteria.ROLE`) for `text`; None when it does not apply."""
+    found = gates.pairs(root, [artifact], [criteria.ROLE], {artifact: text})
+    return found[0] if found else None
+
+
+def stored_role(root: Path, artifact: str, text: str) -> Finding | None:
+    """The role report of the full procedure's run on this same `text`, when it is fresh; otherwise None.
+
+    A role report publishes no result, so the shared store never holds one.
+    The full procedure keeps its role report in `role/` under the revise run
+    of the artifact's text (`edits.run_dir()`). That report is fresh when
+    its captured request holds the same pair, the same artifact text, the
+    same criterion text, the same inbound contexts as `inbound.collect()`
+    gives now and the same output contract, and the review completed.
+    """
+    directory = edits.run_dir_for(root, "revise", artifact, text) / SUPPLIED_DIRS[criteria.ROLE]
+    request = directory / "review-request.json"
+    if not request.is_file():
+        return None
+    data = json.loads(request.read_text(encoding="utf-8"))
+    pair = role_pair(root, artifact, text)
+    if pair is None:
+        return None
+    criterion = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
+    contracts = {name: value.encode("utf-8") for name, value in data["contracts"].items()}
+    if (data["pairs"] != [asdict(pair)] or data["targets"].get(artifact) != text
+            or data["criteria"].get(pair.criterion) != criterion
+            or data["operational-inputs"].get(inbound.INPUT, {}).get("text") != inbound.collect(root, artifact)
+            or result_contract.fingerprint(contracts)
+            != result_contract.fingerprint(result_contract.capture_contract(root))):
+        return None
+    for record in sorted((directory / "artifact" / "reviews").glob("*/observation.json")):
+        observation = json.loads(record.read_text(encoding="utf-8"))
+        if observation.get("state") == "completed" and observation.get("latest-result"):
+            path = record.parent / observation["latest-result"]
+            report = path.read_text(encoding="utf-8")
+            return Finding(_rel(root, path), pair.criterion, pair.criterion_id, criterion_depth(root, pair.criterion),
+                           frontmatter.parse(report).data.get("outcome"), report)
+    return None
+
+
+def role_report(root: Path, artifact: str, text: str, run_dir: Path, profile: Profile, timeout: float | None,
+                harnesses, workflow: str) -> Finding | None:
+    """Run the role report alone on `text` in the run at `run_dir`, or replay it; Stop unless it has a result.
+
+    A new run collects the inbound contexts (`inbound.collect()`); a repeat
+    replays the captured request. Nothing is published. None when the role
+    report does not apply to the artifact.
+    """
+    pair = role_pair(root, artifact, text)
+    if pair is None:
+        return None
+    resumed = (run_dir / "review-request.json").is_file()
+    inputs = {} if resumed else {inbound.INPUT: inbound.supplied(root, artifact)}
+    swept = _sweep(root, run_dir, [pair], profile, timeout, harnesses, inputs, workflow)
+    [done] = swept.pairs
+    return Finding(swept.run_dir, done.result.criterion, results.criterion_id(root, done.result.criterion),
+                   criterion_depth(root, done.result.criterion), done.result.outcome,
+                   results.result_text(done.result))
 
 
 def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
@@ -1032,7 +1096,7 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
     problems = [state.name for state in report.passes if state.state == "problem"]
     if final != start and report.waiting_for is None and not problems:
         return edits.publish(run, root, artifact, start, final, context, brief, REPEAT.format(artifact=artifact),
-                             report)
+                             report, change=CHANGE)
     if final != start:
         why = ("the run waits for the operator" if report.waiting_for is not None
                else f"{', '.join(problems)} ended with a problem")
@@ -1058,7 +1122,8 @@ def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, r
     root, run_dir = root.resolve(), run_dir.resolve()
     edits.revised_source(run_dir, source, artifact)
     with Run(run_dir, root, profile, harnesses=harnesses) as run:
-        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact))
+        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact),
+                                        change=CHANGE)
     return ReviseReport(_rel(root, run_dir), artifact, mode=mode, proposed=supplied["proposed"],
                         revised_candidate=supplied["revised-candidate"], new_warnings=supplied["new-warnings"],
                         not_applied=supplied["not-applied"], waiting_for=supplied["waiting-for"])
