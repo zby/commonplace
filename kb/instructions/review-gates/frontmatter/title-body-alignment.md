@@ -24,4 +24,4 @@ Look for two common patterns:
 - claim drift: the title asserts X but the body really establishes related claim Y
 - scope drift: the title names a narrower or broader scope than the body actually covers
 
-Report what the body now establishes so the title can be corrected precisely.
+In each finding's reason, state what the body now establishes, so the title can be corrected precisely.
