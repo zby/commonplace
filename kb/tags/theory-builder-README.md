@@ -23,9 +23,9 @@ Systems that apply Popper's conjecture and refutation to theories they state: th
 
 - [Disconnected theory-path witnesses](../theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — theory use, criticism, and later operation must connect
 - [Competing causal theories](../theory/competing-causal-theories-can-guide-distinguishing-experiments.md) — rivals guide discriminating experiments
-- [Warrant and theory fit](../theory/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — distinct questions require separate assessment
+- [Test record and theory fit](../theory/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — distinct questions require separate assessment
 - [System use selects theory fit without a fixed oracle](../theory/system-use-selects-theory-fit-without-a-fixed-oracle.md) — live use selects for fit where no oracle decides it
-- [System use provides evidence of theory fit, not independent warrant](../theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — the limit of that selection: warrant still needs independent evidence
+- [System use provides evidence of theory fit, not an independent test](../theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — the limit of that selection: warrant still needs independent evidence
 - [Faithful rationale](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — a legible but misleading dependency can misdirect repair
 - [A theory's prototype standing is its revision cost](../theory/prototype-standing-is-revision-cost-binding-plus-lost-investment.md) — external binding plus lost investment, independent of representational form
 - [Causal and proof obligations assess explanatory-reach formally](../theory/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — reach-assessment in symbolic systems

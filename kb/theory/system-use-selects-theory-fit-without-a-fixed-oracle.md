@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems
 
 # System use is an initial selection environment when theory fit lacks a fixed oracle
 
-A working theory may contain claims that are individually warranted yet still fit poorly together or fail to help the system reason, modify, or recover. [A claim's warrant does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md). When no complete fixed oracle decides that fit, using the theory in the live system supplies an initial selection environment: claims and formulations can earn provisional standing by changing consequential work and surviving the distributed consequences of that use.
+A working theory may contain claims that have each survived independent tests yet still fit poorly together or fail to help the system reason, modify, or recover. [A claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md). When no complete fixed oracle decides that fit, using the theory in the live system supplies an initial selection environment: claims and formulations can earn provisional standing by changing consequential work and surviving the distributed consequences of that use.
 
 For a narrow transformation, a test suite may give a compact acceptance criterion. Open-ended project theory is different. No current automatic evaluator fully decides whether a candidate claim belongs in the larger causal picture, which neighboring claims it should displace, whether its abstraction is useful, or whether it will still guide coherent modification when later demands expose consequences that were not locally visible.
 
@@ -34,7 +34,7 @@ The live system is therefore an **initial** selection environment, not a final a
 
 A system can reward its own misconceptions. Earlier design choices may already assume a claim, neighboring artifacts may encode the same error, or the current workload may never reach the claim's bad scope. Successful use can then make a mistaken claim appear indispensable.
 
-For that reason, [system use provides evidence of theory fit and causal usefulness, not independent warrant](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md). Rival formulations, withholding or perturbation, held-out demands, transfer, delayed outcomes, and independent factual or formal checks are ways to make the selection environment less self-sealing.
+For that reason, [system use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md). Rival formulations, withholding or perturbation, held-out demands, transfer, delayed outcomes, and independent factual or formal checks are ways to make the selection environment less self-sealing.
 
 The same limitation applies to blame assignment. A failed modification may reflect a false theory, a misapplied theory, a missing premise, a bad implementation, or a weak evaluator. System use exposes the failure but does not identify its cause automatically. The refinement path must retain enough structure for later read-back to assign credit or blame at the granularity the evidence supports.
 
@@ -46,7 +46,7 @@ Nor does the claim say that explicit theory-guided selection is the only route. 
 
 ## Scope
 
-- The claim concerns **theory fit**, not independent warrant. The distinction is developed in the linked notes above.
+- The claim concerns **theory fit**, not a claim's independent test record. The distinction is developed in the linked notes above.
 - "Initial" means a starting environment under incomplete evaluation, not a permanent architecture or a promise that human holistic judgment remains necessary.
 - No single scalar is assumed to capture theory fit. A portfolio of causal, predictive, operational, and transfer evidence may support selection.
 - The current absence of a complete fixed oracle is a statement about this research setting, not a proof that no general evaluator can exist.
@@ -63,8 +63,8 @@ Nor does the claim say that explicit theory-guided selection is the only route. 
 
 Relevant Notes:
 
-- [A claim's warrant does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — grounds: separates independent warrant from relational fit
-- [System use provides evidence of theory fit and causal usefulness, not independent warrant](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — extends: bounds the evidential meaning of successful system use
+- [A claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — grounds: separates a claim's independent test record from its fit
+- [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — extends: bounds the evidential meaning of successful system use
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: identifies the longitudinal consequences through which program-theory fit can become visible
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — grounds: bounds what one successful configuration can establish beyond its originating context
 - [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: explains why qualities with weak operative signals can disappear under selection despite sounding important
