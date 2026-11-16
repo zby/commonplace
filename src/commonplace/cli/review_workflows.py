@@ -21,8 +21,8 @@ recursively). C are gate ids, bundle names, the lenses `type` and
 `collection`, compression check ids (`compression/core-claim-obscured`,
 `compression/branch-bloat`, `compression/detail-overhang`,
 `compression/marginal-value-redundancy`), one id per check, and the report
-instructions `critique`, `friction`, `premises` and `compression-synthesis`.
-`status` without `--criteria` covers all gates (compression checks and report
+instructions `critique`, `friction`, `premises`, `compression-synthesis` and
+`role`. `status` without `--criteria` covers all gates (compression checks and report
 instructions stay opt-in); `run gates` launches one worker per stale pair, so
 it takes all gates only when asked with `--all-gates`. `--grouping bundle`
 asks one worker per note and bundle of catalog gates for that bundle's stale
@@ -30,9 +30,13 @@ gates, sharing one launch's fixed context; every other pair stays one call.
 
 `compression-synthesis` runs alone on one note and takes the findings it
 synthesizes as `--input ROLE=PATH` files, such as the four compression check
-results; it never runs the checks. Like every run with `--input`, it writes no
-current result and is never skipped as fresh. Its freshness is unassessed, so
-`status` refuses it; inspect its retained observation with `show RUN`.
+results; it never runs the checks. `role`, the role report, runs alone on one
+note and takes the note's inbound contexts as `--input inbound=PATH`; without
+`--input`, the command collects them itself (the passages under kb/ that link
+to the note, outside kb/reports/ and kb/work/). Like every run with `--input`,
+these write no current result and are never skipped as fresh. Their freshness
+is unassessed, so `status` refuses them; inspect a retained observation with
+`show RUN`.
 
 `status` with NOTES shows each applicable pair, including pairs never
 reviewed (`missing`); without NOTES it shows every stored result whose note
@@ -80,7 +84,7 @@ carries those fields itself. The assessor also receives the artifact's fresh
 stored `warn` and `fail` review results. `--full` first runs every review operation that declares a `depth` on the
 artifact, as `run gates` would on the profile file's `default` profile, in
 runs under the revise run directory; then the assessor also receives the
-depth 1 reports and the compression synthesis report, and may stop the plan on a proposal to change the artifact. Assessment runs the
+depth 1 reports, the compression synthesis report and the role report, and may stop the plan on a proposal to change the artifact. Assessment runs the
 plan's settled passes automatically, retaining `artifact/assessment.md` and
 `artifact/plan.yaml` for inspection. A repeat keeps the recorded mode and plan.
 `--plan FILE` also overrides a stopped plan. Editing the retained plan alone
@@ -143,6 +147,7 @@ from commonplace.lib.review_workflows import (
     edits,
     fixtures,
     gates,
+    inbound,
     observations,
     result_contract,
     results,
@@ -281,9 +286,10 @@ def _keep(row: results.Row, arguments: argparse.Namespace) -> bool:
 def _status(root: Path, arguments: argparse.Namespace) -> int:
     if arguments.notes:
         wanted = _pairs(root, arguments)
-        if any(pair.kind == criteria.SYNTHESIS for pair in wanted):
-            raise ValueError("compression-synthesis has no current result: its freshness is unassessed; "
-                             "inspect its run with `commonplace-review show RUN`")
+        for pair in wanted:
+            if pair.kind in criteria.SUPPLIED:
+                raise ValueError(f"{pair.kind} has no current result: its freshness is unassessed; "
+                                 "inspect its run with `commonplace-review show RUN`")
         rows = results.status(root, [(pair.note, pair.criterion) for pair in wanted])
         orphans = []
     elif arguments.criteria:
@@ -407,11 +413,16 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     else:
         wanted = _pairs(root, arguments)
         supplied = _inputs(root, arguments.input)
+        if not supplied and [pair.kind for pair in wanted] == [criteria.ROLE]:   # the role report collects its own
+            supplied = {inbound.INPUT: inbound.supplied(root, wanted[0].note)}
         observations.atomic_json(run_dir / SWEEP, {**options, "selection": selection})
+    operational = bool(arguments.input) or any(pair.kind in criteria.SUPPLIED for pair in wanted)
     report = gates.sweep(root, wanted, profile, run_dir, max_workers=arguments.max_workers or 4,
-                         timeout=arguments.timeout, force=arguments.force or bool(arguments.criterion_file) or bool(arguments.input),
+                         timeout=arguments.timeout,
+                         force=arguments.force or bool(arguments.criterion_file) or operational,
                          grouping=arguments.grouping, harnesses=harnesses,
-                         publish_results=not bool(arguments.criterion_file) and not bool(arguments.input), operational_inputs=supplied)
+                         publish_results=not bool(arguments.criterion_file) and not operational,
+                         operational_inputs=supplied)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 

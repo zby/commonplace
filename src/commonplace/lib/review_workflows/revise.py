@@ -34,10 +34,13 @@ never approves: only the recorded approved text becomes the operator's answer:
    (`--full`), the assessment is preceded by the review step: every review
    operation that declares `depth` (`review_pairs()`) runs through
    `gates.sweep()` in `reviews/` under the run directory, publishing results
-   and reusing fresh ones; the compression synthesis then runs alone in
-   `synthesis/` on the checks' results and publishes nothing. The assessor
-   also receives the depth 1 reports and the synthesis report, and its plan's `stop` is how a depth 1
-   proposal ends the run. A review without a result stops the run.
+   and reusing fresh ones. Then each review operation that judges
+   operational inputs (`criteria.SUPPLIED`) runs alone in its own run and
+   publishes nothing: the compression synthesis in `synthesis/` on the
+   checks' results, and the role report in `role/` on the artifact's inbound
+   contexts (`inbound.collect()`). The assessor also receives the depth 1
+   reports, the synthesis report and the role report, and its plan's `stop`
+   is how a depth 1 proposal ends the run. A review without a result stops the run.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
@@ -111,6 +114,7 @@ from commonplace.lib.review_workflows import (
     edit_operations,
     edits,
     gates,
+    inbound,
     observations,
     result_contract,
     results,
@@ -135,7 +139,8 @@ FINDING = "finding"
 """The plan field, and the input role, that names a review result file."""
 FINDING_OUTCOMES = ("warn", "fail")
 """The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
-REVIEWS, SYNTHESIS = "reviews", "synthesis"
+REVIEWS = "reviews"
+SUPPLIED_DIRS = {criteria.SYNTHESIS: "synthesis", criteria.ROLE: "role"}
 """The run directories of the full procedure's review step, under the revise run."""
 REVIEW_WORKERS = 4
 FOCUSED_PURPOSE ="Apply this one operation as its instruction directs; the operator named no other purpose."
@@ -428,8 +433,9 @@ instruction says to report a rewrite and stop. {no_writes}
 
 FINDINGS_INTRO = ("\nThe artifact's stored review results with outcome warn or fail are inputs. Each line gives "
                   "the result file's repository path, its criterion and the depth the criterion declares:\n")
-REPORTS_INTRO = ("\nThe depth 1 review reports on this text, and the compression synthesis when it ran, are "
-                 "inputs. Each line gives the result file's repository path, or for the synthesis its run "
+REPORTS_INTRO = ("\nThe depth 1 review reports on this text, the compression synthesis when it ran, and the "
+                 "role report are inputs. Each line gives the result file's repository path, or for the "
+                 "synthesis and the role report its run "
                  "directory, and its criterion:\n")
 FINDING_FIELD = (", and, for a pass that fixes a finding, `finding` naming that review result file's "
                  "repository path, as listed above")
@@ -594,22 +600,36 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
 # --- The review step of the full procedure ----------------------------------------------------
 
 def review_pairs(root: Path, artifact: str, text: str) -> tuple[list[gates.Pair], list[gates.Pair]]:
-    """The review operations that declare `depth` and apply to `text`, and the compression synthesis apart.
+    """The review operations that declare `depth` and apply to `text`, and apart those of `criteria.SUPPLIED`.
 
-    The synthesis is listed only when a compression check applies, since it
-    takes the checks' results as inputs.
+    The second list holds the compression synthesis, only when a compression
+    check applies, since it takes the checks' results as inputs, and the role
+    report.
     """
     bundles = sorted(entry.name for entry in criteria.gates_dir().iterdir() if entry.is_dir())
     requests = [*bundles, criteria.TYPE, criteria.COLLECTION, *criteria.compression_checks(),
-                *(selector for selector in criteria.REPORTS if selector != criteria.SYNTHESIS)]
+                *(selector for selector in criteria.REPORTS if selector not in criteria.SUPPLIED)]
     texts = {artifact: text}
     found = [pair for pair in gates.pairs(root, [artifact], requests, texts)
              if criterion_depth(root, pair.criterion) is not None]
-    synthesis = []
-    if any(pair.kind == criteria.COMPRESSION for pair in found):
-        synthesis = [pair for pair in gates.pairs(root, [artifact], [criteria.SYNTHESIS], texts)
-                     if criterion_depth(root, pair.criterion) is not None]
-    return found, synthesis
+    wanted = [selector for selector in criteria.SUPPLIED
+              if selector != criteria.SYNTHESIS or any(pair.kind == criteria.COMPRESSION for pair in found)]
+    supplied = [pair for pair in gates.pairs(root, [artifact], wanted, texts)
+                if criterion_depth(root, pair.criterion) is not None]
+    return found, supplied
+
+
+def _supplied_inputs(root: Path, pair: gates.Pair, reviewed: list[gates.Pair]) -> dict[str, dict[str, str]]:
+    """The operational inputs of a `criteria.SUPPLIED` pair: the compression checks' results, or the inbound contexts."""
+    if pair.kind == criteria.ROLE:
+        return {inbound.INPUT: inbound.supplied(root, pair.note)}
+    found = {}
+    for check in reviewed:
+        if check.kind == criteria.COMPRESSION:
+            path = results.result_path(root, check.note, check.criterion_id)
+            found[Path(check.criterion_id).name] = {           # the check's name, such as detail-overhang
+                "origin": _rel(root, path), "text": path.read_text(encoding="utf-8")}
+    return found
 
 
 def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile, timeout: float | None,
@@ -617,8 +637,8 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
     """Run `wanted` through the sweep in its own run, or continue that run; Stop unless every pair has a result.
 
     Without `inputs`, results are published to the shared store and fresh
-    ones are reused. With them (the compression synthesis), nothing is
-    published and the pair is always asked, as `run gates --input` does.
+    ones are reused. With them (a criterion of `criteria.SUPPLIED`), nothing
+    is published and the pair is always asked, as `run gates --input` does.
     """
     request = run_dir / "review-request.json"
     if request.is_file():                         # a repeat: replay the captured request
@@ -644,25 +664,24 @@ def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profil
             harnesses, report: ReviseReport) -> list[Finding]:
     """Run every review operation that declares `depth` on `text`, writing results as the sweep does.
 
-    Returns the compression synthesis report, which is not in the store, for the assessor.
+    Then runs each criterion of `criteria.SUPPLIED` alone, in its own run,
+    on its operational inputs, and returns those reports, which are not in
+    the store, for the assessor.
     """
-    wanted, synthesis = review_pairs(root, artifact, text)
+    wanted, supplied = review_pairs(root, artifact, text)
     report.reviews.append(_sweep(root, run_dir / REVIEWS, wanted, profile, timeout, harnesses).to_dict())
-    if synthesis:
-        checks = [pair for pair in wanted if pair.kind == criteria.COMPRESSION]
-        inputs = {}                               # a repeat replays the captured inputs
-        resumed = (run_dir / SYNTHESIS / "review-request.json").is_file()
-        for pair in [] if resumed else checks:
-            path = results.result_path(root, pair.note, pair.criterion_id)
-            inputs[Path(pair.criterion_id).name] = {           # the check's name, such as detail-overhang
-                "origin": _rel(root, path), "text": path.read_text(encoding="utf-8")}
-        swept = _sweep(root, run_dir / SYNTHESIS, synthesis, profile, timeout, harnesses, inputs)
+    found = []
+    for pair in supplied:
+        directory = run_dir / SUPPLIED_DIRS[pair.kind]
+        resumed = (directory / "review-request.json").is_file()   # a repeat replays the captured inputs
+        inputs = {} if resumed else _supplied_inputs(root, pair, wanted)
+        swept = _sweep(root, directory, [pair], profile, timeout, harnesses, inputs)
         report.reviews.append(swept.to_dict())
-        return [Finding(swept.run_dir, pair.result.criterion, results.criterion_id(root, pair.result.criterion),
-                        criterion_depth(root, pair.result.criterion), pair.result.outcome,
-                        results.result_text(pair.result))
-                for pair in swept.pairs if pair.result is not None]
-    return []
+        found += [Finding(swept.run_dir, done.result.criterion, results.criterion_id(root, done.result.criterion),
+                          criterion_depth(root, done.result.criterion), done.result.outcome,
+                          results.result_text(done.result))
+                  for done in swept.pairs if done.result is not None]
+    return found
 
 
 def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
@@ -705,8 +724,8 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             if named_plan is None:
                 reports = []
                 if review is not None:
-                    synthesis = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
-                    reports = [*depth_one_reports(root, artifact), *synthesis]
+                    supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
+                    reports = [*depth_one_reports(root, artifact), *supplied]
                 findings = current_findings(root, artifact)
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,

@@ -31,7 +31,8 @@ makes the revise workflow the one runner of the improvement procedures. Exact be
 | `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
 | `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
-| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`) resolved into applicable pairs; reads only |
+| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`, `role`) resolved into applicable pairs; reads only |
+| `review_workflows.inbound` | the role report's inbound contexts: the passages under `kb/` that link to one note, with each linking file's path, title and description, capped; reads only |
 | `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance; it captures the edit-result contract the same way |
 | `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
 | `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
@@ -149,7 +150,7 @@ two runs over the same pair both write, and the later write stands.
 
 Freshness compares the note, criterion and captured output-contract fingerprint.
 A review with supplied operational inputs, such as the compression synthesis
-over its findings, has no freshness: those inputs are outside every hash, so
+over its findings or the role report over the note's inbound contexts, has no freshness: those inputs are outside every hash, so
 it publishes no current result and is always asked again.
 The latter includes the library type/schema closure and the project collection
 contract governing review results. Validation context is checked before workers

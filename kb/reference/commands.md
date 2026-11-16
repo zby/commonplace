@@ -405,11 +405,14 @@ gets its own result file. `--resume RUN_DIR` continues a run; `retry RUN JOB` an
 `acknowledge RUN LAUNCH` settle a worker problem or an unsettled launch.
 Criteria are catalog gate ids, bundle names, the `type` and `collection`
 lenses, compression check ids such as `compression/detail-overhang`, one id
-per check, and the report instructions `critique`, `friction`, `premises` and
-`compression-synthesis`; worker profiles come from the library's
+per check, and the report instructions `critique`, `friction`, `premises`,
+`compression-synthesis` and `role`; worker profiles come from the library's
 `instructions/review-profiles.yaml`. `compression-synthesis` runs alone on one
-note with its findings as `--input ROLE=PATH` files; it publishes no current
-result, and `status` refuses it. Draft selection and `--input ROLE=PATH`
+note with its findings as `--input ROLE=PATH` files. `role`, the role report,
+runs alone on one note with its inbound contexts as `--input inbound=PATH`;
+without `--input`, the command collects them: the passages of Markdown files
+under `kb/` that link to the note, outside `kb/reports/` and `kb/work/`.
+Neither publishes a current result, and `status` refuses both. Draft selection and `--input ROLE=PATH`
 retain run-local evidence without publishing a catalog result. Operational
 inputs must be self-contained; their provenance links grant no cross-run access.
 
@@ -467,11 +470,13 @@ outcome `warn` or `fail`; no review is launched.
 every review operation that declares a `depth` on the artifact, with bundle
 grouping, on the profile file's `default` profile. Fresh results are reused;
 new results go to the shared store. The compression synthesis runs on the
-compression checks' results and publishes no result. The review runs live
-under the revise run directory, in `reviews/` and `synthesis/`; the JSON report
-lists them under `reviews`. A review without a result stops the run before
-assessment. The assessor then receives the `warn` and `fail` results and the
-depth 1 reports and the compression synthesis report, and may stop the plan on a depth 1 proposal.
+compression checks' results, and the role report on the artifact's inbound
+contexts; neither publishes a result. The review runs live under the revise
+run directory, in `reviews/`, `synthesis/` and `role/`; the JSON report lists
+them under `reviews`. A review without a result stops the run before
+assessment. The assessor then receives the `warn` and `fail` results, the
+depth 1 reports, the compression synthesis report and the role report, and
+may stop the plan on a depth 1 proposal, naming the dependents a change would reach.
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text

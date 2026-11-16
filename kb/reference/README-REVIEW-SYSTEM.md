@@ -30,8 +30,8 @@ the decision. Exact arguments are in `commonplace-review --help` and
 
 **Criterion.** The markdown file a note is judged against. It may be a
 catalog gate, a compression check, the note's type spec, its collection's
-`COLLECTION.md`, or a report instruction: critique, friction, premises or
-compression synthesis. A criterion is named by its artifact identity: a
+`COLLECTION.md`, or a report instruction: critique, friction, premises,
+compression synthesis or the role report. A criterion is named by its artifact identity: a
 repository path, or `commonplace:<path>` for a library file outside the
 repository, as the gates are in an installed project.
 
@@ -107,6 +107,21 @@ is unassessed: it writes no current result, is never skipped as fresh, and
 `status` refuses it. Its result stays in the run's observation; read it with
 `show RUN`.
 
+**Role report.** The `role` selector applies the
+[role-in-the-KB instruction](../instructions/role-in-the-kb-gate.md) to one
+note and its inbound contexts, supplied under the input role `inbound`. The
+inbound contexts are every Markdown file under `kb/` that links to the note,
+outside `kb/reports/`, `kb/work/` and hidden directories, with its path,
+title, description and each passage that holds the link. Code collects them
+(`review_workflows.inbound`) and caps the files and passage length it shows.
+The report opens with `## Role`, the note's role as its dependents use it;
+then it reports what each dependent needs, duplication, recommendations in
+linking sources the note has not taken up, and which dependents a change
+would reach. `run gates NOTE --criteria role` collects the inbound contexts
+itself; `--input inbound=PATH` supplies them instead. Like the synthesis, it
+runs alone, its freshness is unassessed because other notes' text is an
+input, it writes no current result, and `status` refuses it.
+
 **Connect.** [Connect](../instructions/cp-skill-connect/SKILL.md) keeps its
 own route. It writes a connect report, not a review result, and its
 candidates depend on the whole corpus, which no note or criterion hash
@@ -156,7 +171,7 @@ kinds, so a finding and the edit that answers it sit at the same depth.
 
 | Depth | Concern | Review operations | Edit operations |
 |---:|---|---|---|
-| 1 | whether the note's claim and scope should stand | critique, composition friction, premise decomposition | split out a treatment |
+| 1 | whether the note's claim and scope should stand | critique, composition friction, premise decomposition, the role report | split out a treatment |
 | 2 | what the note asserts and on what grounds | the semantic bundle, `frontmatter/claim-strength`, `prose/source-residue` | narrow overclaims |
 | 3 | terms and what a reader needs to know | the accessibility bundle, `prose/unbridged-cross-domain` | abstractions |
 | 4 | structure and proportion | the complexity bundle, the compression checks and their synthesis, three prose gates, `structural/general-before-specific` | readability and flow |
@@ -433,7 +448,7 @@ A new run requires one choice.
 |---|---|---|---|
 | focused | `--pass NAME`, `--finding RESULT`, `--plan FILE` | the operator | none |
 | quick | `--assess` | one assessor, from the artifact and its fresh stored `warn` and `fail` results | none |
-| full | `--full` | one assessor, from the artifact, the new findings and the depth 1 reports | every review operation that declares a `depth` |
+| full | `--full` | one assessor, from the artifact, the new findings, the depth 1 reports and the role report | every review operation that declares a `depth` |
 
 **Focused.** `--pass NAME` writes a one-entry plan for one edit operation on
 the whole artifact. `--finding RESULT` writes a one-entry plan that runs
@@ -449,11 +464,15 @@ alone.
 
 **Full.** `--full` first runs every review operation that declares a `depth`
 on the artifact, through the sweep's route. Fresh results are reused, new
-results go to the shared store, and the compression synthesis runs on the
-checks' results without publishing one. The assessor then also reads the
-depth 1 reports and the compression synthesis report. When one proposes
-changing what the artifact is, the plan's `stop` names the proposal and its
-report, and nothing is edited. A stopped plan leaves
+results go to the shared store. Then the compression synthesis runs on the
+checks' results, and the role report on the artifact's inbound contexts,
+each alone and without publishing a result. The assessor then also reads the
+depth 1 reports, the compression synthesis report and the role report. When
+one proposes changing what the artifact is, the plan's `stop` names the
+proposal and its report, and nothing is edited. Before it stops on or plans
+around a depth 1 proposal, the assessor checks against the role report
+whether the proposal's cause may be a term or claim that dependents rely on;
+when a change would reach dependents, the `stop` names them. A stopped plan leaves
 `artifact/stop-answers.md`, where the operator's decision on the proposal is
 recorded and, afterwards, what was done and where: the item's `resolution`
 and `refs` (commit hashes, paths). The run does not wait for that file.

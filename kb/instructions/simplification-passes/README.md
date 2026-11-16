@@ -64,11 +64,14 @@ order. The procedures differ only in how the plan is made.
   results, when any exist. It launches no review.
 - **Full.** `--full` first runs every review operation that declares a
   `depth` on the artifact: the catalog gates, the compression checks and
-  their synthesis, critique, composition friction and premise
-  decomposition. Fresh results are reused and new ones go to the shared
-  store. The assessor then reads the `warn` and `fail` results and the
-  depth 1 reports and the compression synthesis report. If a depth 1 report proposes changing what the artifact
-  is, the plan stops and nothing is edited. The edited text is not
+  their synthesis, critique, composition friction, premise
+  decomposition and the [role report](../role-in-the-kb-gate.md). Fresh
+  results are reused and new ones go to the shared store. The assessor
+  then reads the `warn` and `fail` results, the depth 1 reports, the
+  compression synthesis report and the role report. If a depth 1 report
+  proposes changing what the artifact is, the plan stops and nothing is
+  edited. The role report shows which dependents rely on the artifact's
+  terms and claims; the stop names those a change would reach. The edited text is not
   reviewed again.
 
 ## Fixed-plan execution: the simple baseline

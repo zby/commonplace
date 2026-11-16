@@ -137,6 +137,11 @@ def find_markdown_links(body: str) -> tuple[str, ...]:
     return tuple(match.group(2) for match in _iter_markdown_link_matches(body))
 
 
+def find_markdown_link_offsets(body: str) -> tuple[tuple[int, str], ...]:
+    """Each link `find_markdown_links` finds, as its start offset in `body` and its target."""
+    return tuple((match.start(), match.group(2).strip()) for match in _iter_markdown_link_matches(body))
+
+
 def replace_markdown_links(body: str, replace: Callable[[str], str]) -> str:
     """The body with each link target that `find_markdown_links` finds
     replaced by ``replace(target)``; everything else unchanged."""

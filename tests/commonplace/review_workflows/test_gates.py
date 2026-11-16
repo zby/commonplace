@@ -19,6 +19,7 @@ import pytest
 from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.lib import library
+from commonplace.lib.review_workflows import inbound
 from commonplace.lib.review_workflows.results import read_result, result_path
 from tests.commonplace.review_workflows.result_helpers import FAKE_RESULT, copy_contract
 
@@ -472,7 +473,7 @@ def test_synthesis_runs_alone_on_supplied_findings_and_publishes_nothing(repo, c
     synthesis = "kb/instructions/compression-bundle/high-impact-simplification-synthesis"
 
     # Refused: without findings, beside another criterion, or over two notes; nothing launches.
-    for args, message in ((["kb/notes/alpha.md"], "needs its findings"),
+    for args, message in ((["kb/notes/alpha.md"], "needs its operational inputs"),
                           (["kb/notes/alpha.md", "--input", finding, "--criteria", "friction"], "runs alone"),
                           (["kb/notes", "--input", finding], "runs alone")):
         before = repo[2].read_text()
@@ -499,3 +500,44 @@ def test_synthesis_runs_alone_on_supplied_findings_and_publishes_nothing(repo, c
                       "--input", finding)[2]) == 1
     assert main(["status", "kb/notes/alpha.md", "--criteria", "compression-synthesis"], harnesses=harnesses) == 2
     assert "unassessed" in capsys.readouterr().err
+
+
+def test_role_report_runs_alone_on_collected_or_supplied_inbound_contexts(repo, capsys):
+    root, harnesses, _ = repo
+    role = "kb/instructions/role-in-the-kb-gate.md"
+    write(root, role, "# Role\n\nReport the role.\n")
+    write(root, "kb/instructions/composition-friction-gate.md", "# Method\n\nReport.\n")
+    write(root, "kb/notes/gamma.md", note("Gamma", "- [Alpha](./alpha.md) supplies the term.\n- Other item."))
+    (root / "kb/work").mkdir()
+    write(root, "kb/work/draft.md", note("Draft", "See [Alpha](../notes/alpha.md)."))
+
+    def observation(report) -> dict:
+        [record] = (root / report["run-dir"] / "artifact/reviews").glob("*/observation.json")
+        return json.loads(record.read_text())
+
+    # Without --input, the command collects the inbound contexts; nothing is published.
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "role")
+    assert code == 0, report
+    assert launches == [f"kb/notes/alpha.md::{role}"] and report["pairs"][0]["outcome"] == "report"
+    assert not result_path(root, "kb/notes/alpha.md", role[:-3]).exists()
+    [given] = [item for item in observation(report)["inputs"] if item["role"] == "operational"]
+    assert given["origin"] == inbound.ORIGIN and given["path"] == "inputs/operational/inbound.md"
+    text = (root / report["run-dir"] / "artifact/reviews" / observation(report)["id"] / given["path"]).read_text()
+    assert "kb/notes/gamma.md" in text and "supplies the term" in text
+    assert "Other item" not in text and "kb/work/draft.md" not in text
+
+    # A supplied file replaces the collection; a repeat launches again.
+    write(root, "inbound.md", "# Inbound\n\nNothing links here.\n")
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "role",
+                                    "--input", "inbound=inbound.md")
+    assert code == 0 and len(launches) == 1
+    assert [item["origin"] for item in observation(report)["inputs"] if item["role"] == "operational"] == ["inbound.md"]
+
+    # Refused: another role name, beside another criterion; status refuses it.
+    for args, message in ((["--criteria", "role", "--input", "other=inbound.md"], "--input inbound=PATH"),
+                          (["--criteria", "role", "friction"], "runs alone")):
+        before = repo[2].read_text()
+        assert main(["run", "gates", "kb/notes/alpha.md", *args, "--timeout", "30"], harnesses=harnesses) == 2
+        assert message in capsys.readouterr().err and repo[2].read_text() == before
+    assert main(["status", "kb/notes/alpha.md", "--criteria", "role"], harnesses=harnesses) == 2
+    assert "role has no current result" in capsys.readouterr().err

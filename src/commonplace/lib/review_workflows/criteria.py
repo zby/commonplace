@@ -20,11 +20,13 @@ A request is one of:
 - `compression/<check>`: one of the library's compression checks under
   `instructions/compression-bundle/`, a verdict criterion. Each check is
   requested by its own id; there is no compression bundle request;
-- `critique`, `friction`, `premises` and `compression-synthesis`: the
-  library's critique, composition-friction, premise-decomposition and
-  compression-synthesis instructions, the report criteria.
+- `critique`, `friction`, `premises`, `compression-synthesis` and `role`:
+  the library's critique, composition-friction, premise-decomposition,
+  compression-synthesis and role-in-the-kb instructions, the report criteria.
 
 The compression checks and the report criteria stay out of the default set.
+The compression synthesis and the role report judge operational inputs
+(`SUPPLIED`), so each runs alone and publishes no current result.
 
 Everything here reads files and nothing writes.
 """
@@ -50,12 +52,20 @@ COMPRESSION = "compression"
 FRICTION = "friction"
 PREMISES = "premises"
 SYNTHESIS = "compression-synthesis"
+ROLE = "role"
 REPORTS = {CRITIQUE: CRITIQUE_REL,
            FRICTION: "instructions/composition-friction-gate.md",
            PREMISES: "instructions/premise-decomposition-gate.md",
-           SYNTHESIS: f"{COMPRESSION_REL}/high-impact-simplification-synthesis.md"}
+           SYNTHESIS: f"{COMPRESSION_REL}/high-impact-simplification-synthesis.md",
+           ROLE: "instructions/role-in-the-kb-gate.md"}
 """Each report criterion's selector and library instruction."""
-KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION, FRICTION, PREMISES, SYNTHESIS)
+SUPPLIED = {SYNTHESIS: None, ROLE: "inbound"}
+"""The report criteria that judge operational inputs, each with the input role it requires (None: any roles).
+
+No freshness hash covers those inputs, so each runs alone, on one note,
+always asked, and publishes no current result; `status` refuses it.
+"""
+KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION, FRICTION, PREMISES, SYNTHESIS, ROLE)
 STALENESS = "changed"
 """The only `staleness:` a catalog gate may declare."""
 

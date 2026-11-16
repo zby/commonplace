@@ -67,6 +67,19 @@ instead of assessing again.
    stop may recommend [split out a treatment](./split-out-a-treatment.md);
    no procedure runs it.
 
+   The [role report](../role-in-the-kb-gate.md) may come as well. It states
+   the artifact's role in the KB from the passages that link to it: what
+   each dependent needs from it, what it duplicates, and which
+   recommendations in linking sources it has not taken up. Read it before
+   you stop on a depth 1 proposal or plan around one. Check whether the
+   proposal's cause may be a term or claim that dependents rely on: a
+   contradiction inside the artifact can come from a term a dependent
+   uses in another sense. When the proposed change, or a pass you would
+   plan, changes a claim or term that dependents rely on, set `stop` and
+   name those dependents in it, with the role report's run directory: the
+   passes edit only the artifact, so the operator must decide the
+   dependents' change too.
+
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,
    since they share one write scope. Order them by depth, not by the
@@ -131,9 +144,10 @@ that fixes that review result of the artifact. The full procedure, `--full`,
 first runs every review operation that declares a `depth` on the artifact,
 through the same route as `commonplace-review run gates`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
-then runs on the compression checks' results and publishes no result. The
-assessment receives the fresh `warn` and `fail` results, the depth 1
-reports and the synthesis report. A review that ends without a result stops the run before the
+then runs on the compression checks' results, and the role report on the
+artifact's inbound contexts; neither publishes a result. The assessment
+receives the fresh `warn` and `fail` results, the depth 1 reports, the
+synthesis report and the role report. A review that ends without a result stops the run before the
 assessment. The full procedure does not review the edited text. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.

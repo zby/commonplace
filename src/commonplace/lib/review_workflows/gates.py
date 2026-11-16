@@ -5,8 +5,8 @@
 bundle names filtered by the gate's `requires_type` and `requires_trait`, the
 virtual `type` and `collection` lenses resolved from the note's frontmatter
 and location, the compression checks requested one id at a time, and the
-report instructions `critique`, `friction`, `premises` and
-`compression-synthesis`. Omitted requests mean all gates: every bundle plus
+report instructions `critique`, `friction`, `premises`,
+`compression-synthesis` and `role`. Omitted requests mean all gates: every bundle plus
 `type` and `collection`; the compression checks and report instructions stay
 opt-in. Each pair's result contract follows from its criterion: a report for
 a report instruction, a verdict otherwise. A criterion may be a library file outside
@@ -41,10 +41,12 @@ pairs whose result file is fresh unless forced, runs `ask()` in its own run
 between two checkout snapshots, and writes each result file as its answer
 arrives, so results already written stay after a stop.
 
-The compression synthesis judges findings supplied as operational inputs,
-which no freshness hash covers. `sweep()` therefore runs it only alone, on one
-note, with those inputs, and never publishes it: its freshness is unassessed,
-and its result stays a retained observation of its run.
+The compression synthesis and the role report (`criteria.SUPPLIED`) judge
+operational inputs: the synthesis the compression findings, the role report
+the note's inbound contexts (`inbound.collect()`). No freshness hash covers
+those inputs. `sweep()` therefore runs each only alone, on one note, with its
+inputs, and never publishes it: its freshness is unassessed, and its result
+stays a retained observation of its run.
 
 The prompt around the inputs is outside the freshness hashes: keep it
 mechanical (how to read the inputs and write the result). Judgment belongs
@@ -565,17 +567,20 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
     return list(reports.values()), stopped[0] if stopped else None
 
 
-def check_synthesis(wanted: list[Pair], operational_inputs: dict | None, publish_results: bool) -> None:
-    """Refuse a compression synthesis that is not alone, lacks supplied findings, or would publish."""
-    if not any(pair.kind == criteria.SYNTHESIS for pair in wanted):
+def check_supplied(wanted: list[Pair], operational_inputs: dict | None, publish_results: bool) -> None:
+    """Refuse a criterion of `criteria.SUPPLIED` that is not alone, lacks its inputs, or would publish."""
+    supplied = [pair for pair in wanted if pair.kind in criteria.SUPPLIED]
+    if not supplied:
         return
+    kind = supplied[0].kind
     if len(wanted) != 1:
-        raise ValueError("compression-synthesis runs alone, on one note, with no other criterion")
-    if not operational_inputs:
-        raise ValueError("compression-synthesis needs its findings as --input ROLE=PATH files; "
-                         "it never runs the compression checks itself")
+        raise ValueError(f"{kind} runs alone, on one note, with no other criterion")
+    required = criteria.SUPPLIED[kind]
+    if not operational_inputs or (required is not None and required not in operational_inputs):
+        raise ValueError(f"{kind} needs its operational inputs as --input "
+                         f"{'ROLE' if required is None else required}=PATH files")
     if publish_results:
-        raise ValueError("compression-synthesis publishes no current result; its freshness is unassessed")
+        raise ValueError(f"{kind} publishes no current result; its freshness is unassessed")
 
 
 def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
@@ -584,7 +589,7 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
           operational_inputs: dict[str, dict[str, str]] | None = None) -> SweepReport:
     """Review frozen request inputs. Resuming never silently substitutes live bytes."""
     if not (run_dir / "review-request.json").exists():      # a resume replays an already checked request
-        check_synthesis(wanted, operational_inputs, publish_results)
+        check_supplied(wanted, operational_inputs, publish_results)
     run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
     before = checkout_state(root)
     with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses, max_workers=max_workers) as run:

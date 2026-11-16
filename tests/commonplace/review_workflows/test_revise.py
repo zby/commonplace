@@ -907,12 +907,14 @@ REVIEW_FILES = {
     "kb/instructions/critique-note.md": review_operation(1),
     "kb/instructions/composition-friction-gate.md": review_operation(1),
     "kb/instructions/premise-decomposition-gate.md": review_operation(1),
+    "kb/instructions/role-in-the-kb-gate.md": review_operation(1),
     "kb/reports/COLLECTION.md": ("---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n"
                                  "# Reports\n\nRetained operational evidence.\n"),
 }
 REVIEWS = {"review residue,warned", "review packing", "review detail-overhang", "review critique-note",
            "review composition-friction-gate", "review premise-decomposition-gate"}
 SYNTHESIS = "review high-impact-simplification-synthesis"
+ROLE = "review role-in-the-kb-gate"
 
 
 @pytest.fixture
@@ -928,13 +930,19 @@ def reviewed(repo, tmp_path):
 
 def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed, capsys):
     repo = reviewed
+    (repo[0] / "kb/notes/beta.md").parent.mkdir(parents=True, exist_ok=True)
+    (repo[0] / "kb/notes/beta.md").write_text(NOTE.format(words="beta") + "\nBeta cites [Alpha](./alpha.md).\n")
     original = start(repo)
     code, report, launches = revise(repo, capsys, NOTE_PATH, "--full", "--purpose", "p")
     assert code == 0 and report["mode"] == "full" and note_text(repo) == original
-    assert set(launches[:6]) == REVIEWS and launches[6] == SYNTHESIS
-    assert launches[7:] == ["assess - big", *ORDINARY]
-    assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 7}, {"reviewed": 1}]
+    assert set(launches[:6]) == REVIEWS and launches[6:8] == [SYNTHESIS, ROLE]
+    assert launches[8:] == ["assess - big", *ORDINARY]
+    assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 7}, {"reviewed": 1}, {"reviewed": 1}]
     store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH
+    role = repo[0] / report["reviews"][2]["run-dir"]
+    assert role.name == "role" and not (store / "kb/instructions/role-in-the-kb-gate.md").exists()
+    [given] = role.glob("artifact/reviews/*/inputs/operational/inbound.md")
+    assert "kb/notes/beta.md" in given.read_text() and "Beta cites" in given.read_text()
     bundle = store / "kb/instructions/compression-bundle"
     assert (store / "prose/warned.md").is_file() and (bundle / "detail-overhang.md").is_file()
     assert not (bundle / "high-impact-simplification-synthesis.md").exists(), "the synthesis publishes no result"
@@ -943,8 +951,10 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     assert call["inputs"]["finding-1"] == (store / "prose/warned.md").read_text()
     assert "finding-2" not in call["inputs"]
     reports = sorted(text for name, text in call["inputs"].items() if name.startswith("report-"))
-    assert len(reports) == 4 and all("outcome" in text for text in reports), "three at depth 1 and the synthesis"
-    assert len(report["findings"]) == 5
+    assert len(reports) == 5 and all("outcome" in text for text in reports), \
+        "three at depth 1, the synthesis and the role report"
+    assert any("## Role" in text for text in reports) and "role report" in call["inputs"]["criterion"]
+    assert len(report["findings"]) == 6
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["mode"] == "full"
     assert repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
@@ -958,7 +968,7 @@ def test_full_reuses_fresh_review_results(reviewed, capsys):
     capsys.readouterr()
     _, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
     assert sorted(repo[2].read_text().splitlines()[:2]) == ["review residue", "review warned"]
-    assert set(launches[:5]) == REVIEWS - {"review residue,warned"} and launches[5] == SYNTHESIS
+    assert set(launches[:5]) == REVIEWS - {"review residue,warned"} and launches[5:7] == [SYNTHESIS, ROLE]
     assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 5}
 
 
@@ -967,7 +977,7 @@ def test_full_stops_on_a_depth_one_proposal_with_nothing_edited(reviewed, capsys
     original = start(repo, "STOP")
     code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
     assert code == 0 and report["stop"] == "rewrite-needed" and report["passes"] == []
-    assert launches[-1] == "assess - big" and len(launches) == 8
+    assert launches[-1] == "assess - big" and len(launches) == 9
     assert note_text(repo) == original and report["complete"] and not report["applied"]
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["stop"] == "rewrite-needed"
@@ -1000,6 +1010,7 @@ def test_full_stops_when_a_review_has_no_result(reviewed, capsys):
     code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
     assert code == 1 and "ended without a result" in report["stopped"] and "critique" in report["stopped"]
     assert not any(line.startswith("assess") for line in launches) and SYNTHESIS not in launches
+    assert ROLE not in launches
     assert note_text(repo) == original
     _, again, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and again["stopped"] == report["stopped"]
