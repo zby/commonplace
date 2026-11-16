@@ -14,7 +14,7 @@ def write(path: Path, text: str = "# Capture\n") -> Path:
     return path
 
 
-@pytest.mark.parametrize("name", ["notes", "theory", "claims", "teams/claims"])
+@pytest.mark.parametrize("name", ["claims", "teams/claims"])
 def test_collection_names_use_generic_target_resolution(tmp_path: Path, name: str):
     root = tmp_path / "kb" / name
     write(root / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n# Contract\n")

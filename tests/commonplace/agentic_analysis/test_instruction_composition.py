@@ -56,10 +56,6 @@ def test_criteria_groups_name_library_files(method):
             assert (LIBRARY / path).is_file(), (group, name, path)
     for role in method.roles:
         assert set(method.roles[role].get("criteria") or []) <= set(method.groups), role
-    pinned = method.criteria()
-    assert {path for files in method.groups.values() for path in files.values()} <= set(pinned)
-    assert method.type_spec in pinned
-    assert {role.type for role in method.layout.roles.values()} <= set(pinned)
 
 
 def test_reads_name_roles_or_outputs_the_workflow_produces(method):

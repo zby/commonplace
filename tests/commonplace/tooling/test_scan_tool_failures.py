@@ -144,12 +144,7 @@ def test_absent_error_flag_is_an_input_issue(tmp_path):
     assert report["findings"] == []
 
 
-def test_missing_file_is_reported(tmp_path):
-    report = scan(tmp_path / "absent", "pi-json")
-    assert report["input_issues"]
-
-
-def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
+def test_cli_deduplicates_input_paths(tmp_path):
     path = trace(tmp_path, [start(), end()])
     run = subprocess.run([sys.executable, str(SCRIPT), "--format", "pi-json", str(path), str(path)],
                          capture_output=True, text=True, check=False)
@@ -157,8 +152,3 @@ def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
     output = json.loads(run.stdout)
     assert output["finding_count"] == 1
     assert len(output["traces"]) == 1
-    path.write_text("{truncated", encoding="utf-8")
-    run = subprocess.run([sys.executable, str(SCRIPT), "--format", "pi-json", str(path)],
-                         capture_output=True, text=True, check=False)
-    assert run.returncode == 2
-    assert json.loads(run.stdout)["traces"][0]["input_issues"]

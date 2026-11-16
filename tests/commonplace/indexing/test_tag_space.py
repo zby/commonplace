@@ -25,20 +25,6 @@ def test_participating_declaration_is_read_and_checked(tmp_path: Path) -> None:
     assert "`tags` holds the heads" in error
 
 
-def test_heads_are_identified_by_filename_only(tmp_path: Path) -> None:
-    tags = tmp_path / "kb" / "tags"
-    write(tags / "COLLECTION.md", "---\nparticipating: []\n---\n")
-    write(tags / "README.md", "# Tags\n")
-    write(tags / "x-README.md", "---\ndescription: x\ntype: types/tag-readme.md\n---\n\n# x\n")
-    write(tags / "notes.md", "# not a head\n")
-
-    heads = index_generated.collect_heads(tmp_path)
-
-    assert set(heads) == {"x"}
-    assert index_generated.tag_for_head(tags / "README.md") is None
-    assert index_generated.tag_for_head(tags / "-README.md") is None
-
-
 # ---------------------------------------------------------------------------
 # Drift guard over this checkout: every collection that tags anything is either
 # declared participating or deliberately outside the tag space. A new

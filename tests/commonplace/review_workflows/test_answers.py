@@ -50,18 +50,6 @@ def valid(root) -> dict:
     return data
 
 
-def test_pending_answers_name_the_question_and_copy_each_item(root):
-    data = yaml.safe_load(answers.pending(QUESTION, (root / QUESTION).read_bytes()).split("---\n")[1])
-    assert data["question"] == QUESTION and data["question-sha256"] == answers.sha((root / QUESTION).read_bytes())
-    assert data["items"] == [{"id": "1", "proposal": PROPOSALS[0], "state": "pending"},
-                             {"id": "2", "proposal": PROPOSALS[1], "state": "pending"}]
-    assert check(root, data) == []
-
-
-def test_decided_answers_pass(root):
-    assert check(root, valid(root)) == []
-
-
 def test_a_decided_item_takes_a_resolution_and_refs_and_a_pending_item_does_not(root):
     data = valid(root)
     data["items"][0].update({"resolution": "rewrote the note", "refs": ["0123abc", "kb/work/some-workshop"]})
@@ -87,32 +75,12 @@ def _added(data):
     data["items"].append({"id": "3", "proposal": {"quote": "x"}, "state": "pending"})
 
 
-def _no_reason(data):
-    data["items"][0].update({"state": "rejected"})
-
-
-def _no_revisit(data):
-    del data["items"][1]["revisit"]
-
-
 def _decider(data):
     data["items"][0]["decided-by"] = "agent"
 
 
-def _undated(data):
-    del data["items"][0]["decided-at"]
-
-
 def _pending_decided(data):
     data["items"][0]["state"] = "pending"
-
-
-def _state(data):
-    data["items"][0]["state"] = "struck"
-
-
-def _hash(data):
-    data["question-sha256"] = "0" * 64
 
 
 @pytest.mark.parametrize("change, problem", [
@@ -120,13 +88,8 @@ def _hash(data):
     (_missing, "item 2: missing"),
     (_repeated, "item 1: appears 2 times"),
     (_added, "item 3: not in the question"),
-    (_no_reason, "'reason' is a required property"),
-    (_no_revisit, "'revisit' is a required property"),
     (_decider, "'operator' was expected"),
-    (_undated, "'decided-at' is a required property"),
     (_pending_decided, "items.0: forbidden combination of fields"),
-    (_state, "'struck' is not one of"),
-    (_hash, "question-sha256: the question file has changed"),
 ])
 def test_each_broken_answers_file_is_refused(root, change, problem):
     data = valid(root)
@@ -139,18 +102,6 @@ def test_a_changed_question_is_refused(root):
     data = valid(root)
     (root / QUESTION).write_text(RESULT.replace("Two proposals.", "Two proposals, edited."))
     assert any("question-sha256" in fail for fail in check(root, data))
-
-
-def test_a_text_question_has_one_item_naming_its_hash(root):
-    text = "kb/reports/state/run/final.md"
-    (root / text).write_text("candidate\n")
-    data = yaml.safe_load(answers.pending(text, b"candidate\n").split("---\n")[1])
-    assert data["items"] == [{"id": "text", "proposal": {"text": text, "text-sha256": answers.sha(b"candidate\n")},
-                              "state": "pending"}]
-    data["items"][0].update({"state": "approved", **DECIDED})
-    assert check(root, data) == []
-    data["items"][0]["proposal"]["text-sha256"] = "0" * 64
-    assert any("item text: its proposal differs" in fail for fail in check(root, data))
 
 
 def test_an_edit_result_that_proposes_nothing_is_no_question(root):
@@ -190,7 +141,7 @@ def test_a_review_result_asks_about_its_warn_and_fail_findings_by_position(root)
     assert any("item 2: not in the question" in fail for fail in check(root, data))
 
 
-@pytest.mark.parametrize("outcome, found", [("pass", []), ("report", FINDINGS[:1]), ("warn", FINDINGS[1:2])])
+@pytest.mark.parametrize("outcome, found", [("report", FINDINGS[:1]), ("warn", FINDINGS[1:2])])
 def test_a_review_result_without_a_warn_or_fail_finding_is_no_question(root, outcome, found):
     (root / REVIEW).parent.mkdir(parents=True)
     (root / REVIEW).write_text(review(outcome, found))

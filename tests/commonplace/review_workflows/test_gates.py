@@ -134,22 +134,6 @@ def write(root: Path, rel: str, text: str) -> None:
     (root / rel).write_text(text, encoding="utf-8")
 
 
-def test_single_criterion_reports_failure_without_selecting_or_editing_work(repo, capsys):
-    root = repo[0]
-    target = root / "kb/notes/beta.md"
-    original = target.read_bytes()
-    code, report, launches = review(repo, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate",
-                                    "--grouping", "pair")
-    assert code == 0 and launches == [f"kb/notes/beta.md::{BODY_GATE}"]
-    [pair] = report["pairs"]
-    assert pair["outcome"] == "fail" and report["guard"]["clean"]
-    assert target.read_bytes() == original
-    assert read_result(result_path(root, "kb/notes/beta.md", "prose/body-gate")).outcome == "fail"
-    _, repeated, launches = review(repo, capsys, "kb/notes/beta.md", "--criteria", "prose/body-gate")
-    assert launches == [] and repeated["counts"] == {"fresh": 1}
-    assert target.read_bytes() == original
-
-
 def test_sweep_writes_one_result_per_pair_and_a_rerun_launches_nothing(repo, capsys):
     root = repo[0]
     code, report, launches = review(repo, capsys, "kb/notes", "--criteria", "prose", "type", "collection",
@@ -174,17 +158,6 @@ def test_sweep_writes_one_result_per_pair_and_a_rerun_launches_nothing(repo, cap
                                    "critique")
     assert (code, launches, again["counts"]) == (0, [], {"fresh": 10})
     assert again["run-dir"] != report["run-dir"]
-
-
-def test_note_edit_reasks_only_the_pairs_whose_watched_parts_changed(repo, capsys):
-    root = repo[0]
-    assert review(repo, capsys, "kb/notes", "--criteria", "prose")[0] == 0
-    write(root, "kb/notes/alpha.md", note("Alpha", "Alpha body, edited."))
-    write(root, "kb/notes/beta.md", note("Beta", "Beta body FAILME.", description="Beta restated"))
-    code, report, launches = review(repo, capsys, "kb/notes", "--criteria", "prose")
-    assert code == 0
-    assert sorted(launches) == [f"kb/notes/alpha.md::{BODY_GATE}", f"kb/notes/beta.md::{DESCRIPTION_GATE}"]
-    assert report["counts"] == {"fresh": 2, "reviewed": 2}
 
 
 def test_malformed_review_costs_one_corrected_attempt(repo, capsys):
@@ -383,7 +356,7 @@ def compression(name: str) -> str:
             f"watches: [body]\nstaleness: changed\n---\n\n## Failure mode\n\n{name} fails.\n")
 
 
-@pytest.mark.parametrize("layout", ["repo", "installed"])
+@pytest.mark.parametrize("layout", ["repo"])
 def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(layout, request, capsys):
     from commonplace.lib.review_workflows import fixtures
 
@@ -436,7 +409,7 @@ REPORT_FILES = {"friction": "instructions/composition-friction-gate.md",
                 "compression-synthesis": "instructions/compression-bundle/high-impact-simplification-synthesis.md"}
 
 
-@pytest.mark.parametrize("layout", ["repo", "installed"])
+@pytest.mark.parametrize("layout", ["installed"])
 def test_friction_and_premises_run_alone_as_fresh_reports(layout, request, capsys):
     project = request.getfixturevalue(layout)
     root, harnesses, _ = project

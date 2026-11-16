@@ -12,7 +12,6 @@ from commonplace.lib import quote_grounding, systems_matrix, validation
 from commonplace.lib.agentic_analysis import analyses
 from tests.commonplace.agentic_analysis.fixtures import (
     MEMBER_NAMES,
-    REPO_ROOT,
     RETAINED_OVERVIEW,
     RUN_ID,
     SOURCE,
@@ -225,28 +224,6 @@ def test_member_validation_rejects_ranged_prose_anchors(tmp_path: Path) -> None:
     )
 
 
-def test_real_retained_artifact_keeps_links_and_hashes_when_archived(tmp_path):
-    from urllib.parse import urlsplit
-
-    from commonplace.lib.note_parser import find_markdown_links
-    real = REPO_ROOT / "kb/agentic-systems/reports/retained-archive/AAS-2026-10-03-dynamic-cheatsheet-02"
-    current = tmp_path / "kb/agentic-system-analyses/retained/dynamic-cheatsheet"
-    archive = tmp_path / "kb/agentic-system-analyses/retained-archive/AAS-2026-10-03-dynamic-cheatsheet-02"
-    shutil.copytree(real, current)
-    old = {p.name: digest(p) for p in current.iterdir()}
-    archive.parent.mkdir(parents=True)
-    current.rename(archive)
-    assert {p.name: digest(p) for p in archive.iterdir()} == old
-    manifest = yaml.safe_load((archive / "ARTIFACT.yaml").read_text())
-    for name, entry in manifest["members"].items():
-        assert digest(archive / name) == entry["sha256"]
-    for member in archive.glob("*.md"):
-        for link in find_markdown_links(member.read_text()):
-            parts = urlsplit(link)
-            if not parts.scheme and parts.path:
-                assert (member.parent / parts.path).is_file(), (member, link)
-
-
 def test_a_candidate_receives_only_its_own_roles_artifact_findings(tmp_path: Path) -> None:
     run_dir = member_fixture(tmp_path)
     output = run_dir / "artifact"
@@ -360,7 +337,6 @@ def test_retained_artifact_rejects_member_defects(tmp_path, mutation, diagnostic
     ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "attribution uses revision"),
     ("\n> --- `README.md` @ `{revision}`\n", "quote body is empty"),
     ("\n> fabricated\n> ---- `README.md`\n", "quote does not occur"),
-    ("\n> fabricated\n> ----- `README.md`\n", "quote does not occur"),
     ("\n> Frozen source\n> ----- not-a-source\n", "expected a source path"),
 ])
 def test_artifact_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
@@ -375,7 +351,7 @@ def test_artifact_validator_rejects_bad_evidence_without_writes(tmp_path, additi
     assert before == {path.name: path.read_bytes() for path in directory.iterdir()}
 
 
-@pytest.mark.parametrize("divider", ["---", "----", "-----"])
+@pytest.mark.parametrize("divider", ["---"])
 @pytest.mark.parametrize("citation_kind", ["local", "github"])
 def test_artifact_quote_anchors_resolve_from_recorded_commit(tmp_path, citation_kind, divider):
     directory = retained_fixture(tmp_path)

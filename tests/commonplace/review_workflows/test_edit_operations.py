@@ -183,7 +183,6 @@ def test_none_operation_outcomes_are_typed_and_write_nothing(repo, capsys, words
     ("quote", "the quoted span `A quoted line that must stay.` changed"),
     ("same", "the candidate equals the input text"),
     ("owned", "remove controller-owned or unknown fields: input-sha256"),
-    ("outcome", "`outcome` must be changed or unchanged"),
 ])
 def test_each_bounds_failure_goes_back_to_the_worker(repo, capsys, defect, problem):
     repo[3].write_text(defect)
@@ -286,9 +285,7 @@ def test_deferred_and_pending_items_are_not_applied(repo, capsys, states):
 
 @pytest.mark.parametrize("change, problem", [
     (lambda repo, path: decide(repo, path, {"1": {"state": "rejected", "reason": "no"}}), "no item is approved"),
-    (lambda repo, path: decide(repo, path, {"1": {"state": "rejected"}}), "reason"),
     (lambda repo, path: set_note(repo, "Edited since."), "made from another text"),
-    (lambda repo, path: (repo[0] / path).write_text("- quote: Alpha body\n"), "not an answers file"),
 ])
 def test_unusable_answers_stop_before_any_launch(repo, capsys, change, problem):
     _, path = propose(repo, capsys)

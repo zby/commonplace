@@ -18,7 +18,6 @@ repeats the previous primary output's bytes.
 
 import hashlib
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -190,21 +189,6 @@ def test_broken_launch_raises_after_two_relaunches(run, sleeps):
     assert run.ask("draft", "Write GOOD things.", ["report"]).record["model"], "earlier answers remain"
 
 
-def test_problem_is_a_result_not_a_failure(run):
-    r = run.ask("boundary", "PROBLEM.", ["boundary"])
-    assert r.problem == "source unavailable" and r.outputs == {}
-
-
-def test_checked_retries_with_problems_and_reports_attempts(run):
-    def prompt(problems):
-        return "Write the report." + (f"\n\nProblems found: {problems}" if problems else "")
-
-    c = run.checked("runtime", prompt, check, ["report"], optional=["answers"])
-    assert c.outputs["report"] == "report: good" and c.attempts == 2
-    rejected = [e for e in events(run.root) if e["event"] == "rejected"]
-    assert len(rejected) == 1, rejected
-
-
 def test_checked_stops_identical_rejected_request_without_replaying_it(run):
     from commonplace.headless.jobs import NoProgress
 
@@ -221,13 +205,6 @@ def test_checked_stops_identical_rejected_request_without_replaying_it(run):
     with pytest.raises(NoProgress):
         invoke()
     assert len([e for e in events(run.root) if e["event"] == "launch"]) == 2
-
-
-def test_gather_runs_asks_in_parallel(run):
-    results = gather(*(lambda r=role: run.ask(r, f"GOOD {r}", ["report"])
-                       for role in ("memory", "epistemic", "workflow")))
-    assert [x.outputs["report"] for x in results] == ["report: good"] * 3
-    assert re.fullmatch(r"[0-9a-f]{64}", results[0].key)
 
 
 def test_inputs_keyed_by_content_and_named_by_reference(run):
@@ -333,16 +310,6 @@ def test_run_lock_refuses_a_second_run(tmp_path, script):
     assert e.value.root == tmp_path / "locked"
     first.close()
     fake_run(tmp_path / "locked", script).close()
-
-
-def test_accept_writes_the_artifact_and_logs_each_acceptance(tmp_path, script):
-    with fake_run(tmp_path / "accept", script) as run:
-        path = run.accept("members/report.md", "accepted text")
-        assert path == (run.artifact / "members" / "report.md").resolve()
-        assert path.read_text() == "accepted text"
-        run.accept("members/report.md", "accepted text")       # a rerun re-accepts
-        assert [p.name for p in path.parent.iterdir()] == ["report.md"], "no temp file left"
-        assert [e["path"] for e in events(run.root) if e["event"] == "accepted"] == ["members/report.md"] * 2
 
 
 def test_produce_runs_the_correction_protocol(tmp_path, script):

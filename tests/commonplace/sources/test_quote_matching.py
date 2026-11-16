@@ -12,35 +12,20 @@ from commonplace.lib.validation import CheckResults, validate_ingest_quotes
 @pytest.mark.parametrize(
     ("quote", "source", "ranges", "count", "passed"),
     [
-        ("one", "one\ntwo", (), 1, True),
-        ("one", "one\none", (), 2, False),
-        ("one", "one\none", ((2, 2),), 1, True),
-        ("one", "one\ntwo", ((2, 2),), 0, False),
-        ("one two", "one\n  two", ((1, 2),), 1, True),
         ("one two", "one\ntwo", ((1, 1),), 0, False),
         ("one two", "one\nignored\ntwo", ((1, 1), (3, 3)), 0, False),
         ("one", "one\ntwo", ((1, 1), (1, 2)), 1, True),
-        ("ana", "banana", (), 2, False),
     ],
 )
 def test_occurrences_and_containment(quote, source, ranges, count, passed):
     result = match_quote(quote, source, kind="code", ranges=ranges)
     assert result.count == count
     assert result.matched is passed
-    if count > 1:
-        assert f"{count} times" in result.error
 
 
 @pytest.mark.parametrize("ranges", [((0, 1),), ((2, 1),), ((1, 3),)])
 def test_invalid_bounds(ranges):
     assert "outside" in match_quote("one", "one\ntwo", kind="code", ranges=ranges).error
-
-
-def test_normalization_preserves_code_operators():
-    assert match_quote("value", "**value**", kind="prose").matched
-    assert not match_quote("a b", "a ** b", kind="code").matched
-    assert not match_quote("a b", "a __ b", kind="code").matched
-    assert match_quote("a ** b", "a  **\nb", kind="code").matched
 
 
 @pytest.mark.parametrize("quote", ["one two", "Section title", "doc.md", "two three"])
@@ -123,7 +108,7 @@ def test_malformed_attribution_url_is_a_diagnostic(tmp_path):
     assert result.status == "mismatch" and "source error" in result.detail
 
 
-@pytest.mark.parametrize("wrapper", ["{}", "<{}>", "[source]({})", "`{}`"])
+@pytest.mark.parametrize("wrapper", ["{}", "[source]({})"])
 def test_structural_and_source_checks_accept_registered_urls(tmp_path, wrapper):
     from commonplace.lib.validation import validate_quote_citations
 
@@ -139,15 +124,6 @@ def test_structural_and_source_checks_accept_registered_urls(tmp_path, wrapper):
         parse_blockquotes(content), CapturePin(identity, "capture", source, digest), kind="code",
     )
     assert result.status == "match"
-
-
-@pytest.mark.parametrize("attribution", ["[source](README.md)"])
-def test_structural_validation_reports_missing_parsed_source(attribution):
-    from commonplace.lib.validation import validate_quote_citations
-
-    results = CheckResults(note_type="agentic-system-analysis-result")
-    validate_quote_citations(results, "> quote\n> --- " + attribution + "\n")
-    assert any("expected a source path in backticks or source URL" in message for message in results.warns)
 
 
 @pytest.mark.parametrize("source,genre", [

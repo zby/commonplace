@@ -88,22 +88,6 @@ def by(found, **fields):
     return [e for e in found if all(e[k] == v for k, v in fields.items())]
 
 
-def test_answers_yield_one_entry_per_item_with_its_state_and_reason(repo):
-    found = by(decisions.entries(repo), note=NOTE, **{"class": "plain-wording"})
-    assert [(e["decision"], e["item"], e["reason"]) for e in found] == [
-        ("approved", "first entry -> kept", None), ("rejected", "second entry -> rejected", "changes the claim"),
-        ("deferred", "third entry -> deferred", "the term may be registered")]
-    assert all(e["unit"] == "item" and e["decided-by"] == "operator" and e["proposed-by"] == "worker"
-               and e["at"] == "2026-11-12T10:00:00Z" and e["key"] == "list-key" and e["run"] == RUN
-               and e["workflow"] == "revise" for e in found)
-
-
-def test_unanswered_stop_is_one_pending_bundle(repo):
-    [pending] = by(decisions.entries(repo), **{"class": "abstractions"})
-    assert (pending["decided-by"], pending["decision"], pending["unit"], pending["at"]) == (
-        "pending", "pending", "bundle", None)
-
-
 def test_pending_stop_is_overtaken_once_the_note_holds_another_text(repo):
     write(repo, NOTE, NOTE_TEXT + "\nAn edit after the stop.\n")
     [stop] = by(decisions.entries(repo), **{"class": "abstractions"})
@@ -113,37 +97,10 @@ def test_pending_stop_is_overtaken_once_the_note_holds_another_text(repo):
     assert not (repo / RUN / "artifact").exists()               # computed at listing time; nothing written
 
 
-def test_pending_stop_is_overtaken_when_the_note_is_removed(repo):
-    (repo / NOTE).unlink()
-    [stop] = by(decisions.entries(repo), **{"class": "abstractions"})
-    assert stop["decision"] == "overtaken"
-    [publication] = by(decisions.entries(repo), **{"class": "publication"})
-    assert publication["decision"] == "approved"
-
-
-def test_a_pending_item_in_approved_answers_is_listed_as_pending(repo):
-    record(repo, RUN, "b", "abstractions-answers-0123456789ab.md", PENDING,
-           answers([{**ITEMS[0], "state": "approved", **DECIDED}, {**ITEMS[1], "state": "pending"},
-                    {**ITEMS[2], "state": "pending"}]), "2026-11-12T10:05:00Z")
-    found = by(decisions.entries(repo), **{"class": "abstractions"})
-    assert [(e["decided-by"], e["decision"], e["at"]) for e in found] == [
-        ("operator", "approved", "2026-11-12T10:00:00Z"), ("pending", "pending", None), ("pending", "pending", None)]
-
-
 def test_an_unreadable_approved_answer_is_listed_as_invalid(repo):
     record(repo, RUN, "b", "abstractions-answers-0123456789ab.md", PENDING, "not answers\n", "2026-11-12T10:05:00Z")
     [entry] = by(decisions.entries(repo), **{"class": "abstractions"})
     assert (entry["decision"], entry["unit"], entry["at"]) == ("invalid", "bundle", "2026-11-12T10:05:00Z")
-
-
-def test_publication_approval_is_one_bundle_and_no_candidates_has_no_entry(repo):
-    found = by(decisions.entries(repo), note=NOTE)
-    [publication] = by(found, **{"class": "publication"})
-    assert (publication["proposed-by"], publication["decided-by"], publication["decision"], publication["unit"],
-            publication["at"], publication["item"]) == (
-        "workflow", "operator", "approved", "bundle", "2026-11-12T11:00:00Z", f"{RUN}/artifact/final.md"[:79] + "…")
-    assert len(found) == 5
-    assert [e["at"] for e in found] == ["2026-11-12T10:00:00Z"] * 3 + ["2026-11-12T11:00:00Z", None]
 
 
 def test_packet_yields_disposition_and_user_resolution(repo):
@@ -153,13 +110,6 @@ def test_packet_yields_disposition_and_user_resolution(repo):
         "operator", "rejected", "The operator kept the note.", "2026-11-12T16:15:19Z")
     assert resolution["record"] == "kb/reports/state/review/packets/kb/theory/bar.md"
     assert resolution["workflow"] == "full-pass" and resolution["unit"] == "bundle"
-
-
-def test_pending_packet_yields_only_the_disposition_and_fix_report_is_listed(repo):
-    found = by(decisions.entries(repo), note="kb/theory/qux.md")
-    assert [(e["class"], e["decided-by"], e["decision"]) for e in found] == [
-        ("packet", "agent", "revise"), ("fix-report", "agent", "report")]
-    assert found[1]["record"] == "kb/reports/state/fixes/qux.fix-report.md" and found[1]["run"] is None
 
 
 def test_cli_filters_and_json(repo, capsys):

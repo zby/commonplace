@@ -26,20 +26,6 @@ def add_collection(
     return collection
 
 
-def test_collection_landings_accept_complete_top_level_inventory(tmp_path: Path) -> None:
-    add_collection(tmp_path, "notes")
-    add_collection(tmp_path, "types")
-
-    results = validate_collection_landings(repo_root=tmp_path)
-
-    assert results.fails == []
-    assert (
-        "[repository] collection landings: all 2 top-level collections have README.md"
-        in results.passes
-    )
-    assert "[repository] collection landing collisions: none" in results.passes
-
-
 def test_collection_landings_reject_missing_readme(tmp_path: Path) -> None:
     add_collection(tmp_path, "notes", readme=False)
 

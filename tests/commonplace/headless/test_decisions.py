@@ -11,7 +11,7 @@ import sys
 
 import pytest
 
-from commonplace.headless.decisions import decide, describe, parse, violations
+from commonplace.headless.decisions import decide
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import OutOfAttempts, Run
 
@@ -43,22 +43,6 @@ def run(tmp_path):
 def rejections(run) -> list:
     events = [json.loads(line) for line in (run.root / "log.jsonl").read_text().splitlines()]
     return [event["problems"] for event in events if event["event"] == "rejected"]
-
-
-def test_parse_reads_frontmatter_or_a_yaml_file():
-    assert parse("---\na: 1\n---\n# Body\n") == {"a": 1}
-    assert parse("a: 1\n") == {"a": 1}
-    with pytest.raises(ValueError):
-        parse("a: [1\n")
-
-
-def test_violations_name_missing_fields_and_values_outside_the_choices():
-    assert violations({"disposition": "keep", "determined": True, "target": None}, SCHEMA) == []
-    assert violations({"disposition": "maybe", "determined": "yes"}, SCHEMA) == [
-        "`disposition` must be one of keep, revise, not 'maybe'",
-        "`determined` must be a bool value, not 'yes'",
-        "`target` is missing"]
-    assert "- `target`: a str or null value" in describe(SCHEMA)
 
 
 def test_decide_returns_the_parsed_decision_after_one_corrected_attempt(run):

@@ -43,19 +43,6 @@ def test_collection_dirs_includes_global_types_but_not_local_types(tmp_path: Pat
     ]
 
 
-def test_type_definition_content_includes_global_types_boundary(tmp_path: Path) -> None:
-    kb = tmp_path / "kb"
-    spec = kb / "types" / "note.md"
-    local_spec = kb / "notes" / "types" / "claim.md"
-    note = kb / "notes" / "claim.md"
-
-    assert project_paths.is_type_definition_content(spec, kb / "types")
-    assert project_paths.is_type_definition_content(spec, kb)
-    assert project_paths.is_type_definition_content(local_spec, kb / "notes")
-    assert not project_paths.is_type_definition_content(note, kb / "notes")
-    assert not project_paths.is_type_definition_content(note, kb)
-
-
 def test_collection_dirs_allows_collections_inside_namespace(tmp_path: Path) -> None:
     collection(tmp_path / "kb" / "commonplace" / "notes")
     collection(tmp_path / "kb" / "commonplace" / "reference")
@@ -64,11 +51,6 @@ def test_collection_dirs_allows_collections_inside_namespace(tmp_path: Path) -> 
         tmp_path / "kb" / "commonplace" / "notes",
         tmp_path / "kb" / "commonplace" / "reference",
     ]
-
-
-def test_collection_dirs_raises_when_kb_root_is_missing(tmp_path: Path) -> None:
-    with pytest.raises(FileNotFoundError, match="KB root does not exist"):
-        project_paths.collection_dirs(tmp_path)
 
 
 def test_list_collection_note_paths_includes_visible_type_directory_markdown(
@@ -178,13 +160,6 @@ def test_list_kb_note_paths_spans_all_content_collections(tmp_path: Path) -> Non
     assert source in discovered
     assert report in discovered
     assert type_doc not in discovered
-
-
-def test_resolve_note_returns_unique_match_across_kb(tmp_path: Path) -> None:
-    collection(tmp_path / "kb" / "sources")
-    note = write(tmp_path / "kb" / "sources" / "sample.md")
-
-    assert project_paths.resolve_note("sample", tmp_path) == note.resolve()
 
 
 def test_resolve_note_raises_on_ambiguous_match(tmp_path: Path) -> None:

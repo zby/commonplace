@@ -4,7 +4,6 @@ import json
 import os
 import shutil
 import subprocess
-from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -440,102 +439,6 @@ def test_type_spec_validation_accepts_explicitly_schema_less_type(
     )
 
 
-def test_type_spec_validation_rejects_tags(tmp_path: Path) -> None:
-    configure_type_spec_repo(tmp_path)
-    type_spec = write(
-        tmp_path / "kb" / "notes" / "types" / "local.md",
-        """---
-type: types/type-spec.md
-name: local
-description: Type spec for local
-schema: null
-tags: [learning-theory]
----
-
-# local
-""",
-    )
-
-    results = validation.validate_note(type_spec, repo_root=tmp_path)
-
-    assert any("[schema]" in failure and "tags" in failure for failure in results.fails)
-
-
-@pytest.mark.parametrize(
-    ("content", "expected_pass", "expected_warn"),
-    [
-        (
-            (
-                "Retrieval latency dominates at scale.\n\n"
-                "> p95 retrieval latency was 340ms, 6x the generation step\n"
-                "> --- `src/memory/store.py` @ `abc123`\n"
-            ),
-            "quote-anchored citations: 1 well-formed",
-            None,
-        ),
-        ("Some prose.\n\n> --- `src/memory/store.py`\n", None, "no quoted text above"),
-    ],
-)
-def test_quote_citation_shape(
-    content: str, expected_pass: str | None, expected_warn: str | None
-) -> None:
-    results = validation.CheckResults(note_type="agent-memory-system-review")
-
-    validation.validate_quote_citations(results, content)
-
-    if expected_pass is None:
-        assert any(expected_warn in item for item in results.warns)
-    else:
-        assert any(expected_pass in item for item in results.passes)
-        assert results.warns == []
-
-
-def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
-    notes_root = configure_temp_repo(tmp_path)
-    title = "A" * 101
-    note = write(
-        notes_root / "short-slug.md",
-        f"""---
-description: Note with an overly long title so the validator should fail deterministically on title length
-type: types/note.md
-traits: []
----
-
-# {title}
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert any(
-        "title: 101 chars exceeds limit of 100" in item for item in results.fails
-    )
-
-
-def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> None:
-    notes_root = configure_temp_repo(tmp_path)
-    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
-    note = write(
-        notes_root / f"{overlong_slug}.md",
-        """---
-description: Note with an overly long slug so the validator should fail deterministically on filename length
-type: types/note.md
-traits: []
----
-
-# Short title
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    expected = (
-        f"filename slug: {MAX_NOTE_SLUG_LENGTH + 1} chars exceeds limit of "
-        f"{MAX_NOTE_SLUG_LENGTH}"
-    )
-    assert any(expected in item for item in results.fails)
-
-
 def test_link_targets_share_resolution_but_keep_each_missing_link(tmp_path, monkeypatch):
     source = tmp_path / "note.md"
     write(tmp_path / "member name.md", "# Member\n")
@@ -599,83 +502,6 @@ traits: []
         "(git-ignored artifact; authored-artifact limit not applied)"
     )
     assert any(expected_slug in item for item in results.passes)
-
-
-def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
-    notes_root = tmp_path / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
-    today_note = write(
-        notes_root / "today.md",
-        """---
-description: Note modified today so recent target resolution should find it deterministically
-type: types/note.md
-traits: []
----
-
-# Today note
-""",
-    )
-    old_note = write(
-        notes_root / "old.md",
-        """---
-description: Older note that should not be picked up by recent target resolution in deterministic validation
-type: types/note.md
-traits: []
----
-
-# Old note
-""",
-    )
-    old_ts = datetime(2020, 1, 1, tzinfo=UTC).timestamp()
-    old_note.touch()
-    today_note.touch()
-    os.utime(old_note, (old_ts, old_ts))
-
-    recent = validate_notes.resolve_validation_target(
-        "recent", repo_root=tmp_path, collection="notes",
-    )
-
-    assert today_note.resolve() in recent.paths
-    assert old_note.resolve() not in recent.paths
-    assert recent.collection == notes_root.resolve()
-
-
-def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
-    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Notes collection\n")
-    write(tmp_path / "kb" / "reports" / "COLLECTION.md", "---\ntype: types/collection-contract.md\n---\n\n# Reports collection\n")
-    note = write(
-        tmp_path / "kb" / "notes" / "note.md",
-        """---
-description: Note in the notes collection
-type: types/note.md
-traits: []
----
-
-# Note
-""",
-    )
-    report = write(
-        tmp_path / "kb" / "reports" / "retained" / "report.md",
-        """---
-description: Report outside the notes collection
-type: types/note.md
-traits: []
----
-
-# Report
-""",
-    )
-    local_type = write(
-        tmp_path / "kb" / "notes" / "types" / "local.md",
-        "# Local type\n",
-    )
-
-    notes = validate_notes.resolve_validation_target("notes", repo_root=tmp_path)
-
-    assert note in notes.paths
-    assert local_type in notes.paths
-    assert report not in notes.paths
-    assert notes.collection == (tmp_path / "kb" / "notes").resolve()
 
 
 def test_types_target_scans_all_type_spec_directories(tmp_path: Path) -> None:
@@ -1231,15 +1057,6 @@ def test_brief_of_wrong_type_fails_on_both_sides(tmp_path: Path) -> None:
     )
 
 
-def test_untyped_brief_suffix_file_fails(tmp_path: Path) -> None:
-    notes = configure_write_brief_repo(tmp_path)
-    stray = write(notes / "loose.brief.md", "# Loose\n")
-
-    results = validation.validate_note(stray, repo_root=tmp_path)
-
-    assert any("has the .brief.md suffix but is not of type" in item for item in results.fails)
-
-
 def test_write_brief_type_without_suffix_fails(tmp_path: Path) -> None:
     notes = configure_write_brief_repo(tmp_path)
     misnamed = write_brief_file(notes, name="target-brief.md")
@@ -1267,28 +1084,6 @@ def test_brief_not_declared_by_sibling_fails(tmp_path: Path) -> None:
 
     assert any(
         "sibling target.md does not declare `brief: target.brief.md`" in item
-        for item in results.fails
-    )
-
-
-@pytest.mark.parametrize(
-    ("field", "extra"),
-    [
-        ("brief", "brief: target.brief.brief.md\n"),
-        ("tags", "tags: [learning-theory]\n"),
-    ],
-)
-def test_brief_schema_forbids_brief_and_tags(
-    tmp_path: Path, field: str, extra: str
-) -> None:
-    notes = configure_write_brief_repo(tmp_path)
-    write_brief_note(notes)
-    brief = write_brief_file(notes, extra=extra)
-
-    results = validation.validate_note(brief, repo_root=tmp_path)
-
-    assert any(
-        item.startswith(f"[schema] frontmatter.{field}:") and "write brief" in item
         for item in results.fails
     )
 

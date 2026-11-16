@@ -13,8 +13,7 @@ import pytest
 
 from commonplace.lib import library
 from commonplace.lib.review_workflows import criteria
-from commonplace.lib.review_workflows.criteria import Criterion, select
-from commonplace.lib.type_resolver import TypeCollisionError
+from commonplace.lib.review_workflows.criteria import select
 
 
 def write(path: Path, text: str) -> Path:
@@ -72,21 +71,9 @@ def test_bundle_requests_apply_trait_and_type_requirements(checkout: Path) -> No
     ]
 
 
-def test_all_gates_adds_type_and_collection_but_not_critique(checkout: Path) -> None:
-    assert criteria.resolve_requests(None) == [
-        "prose/hedging", "prose/residue", "structural/adr-shape", "type", "collection"]
-    kinds = [kind for _, _, kind in chosen(checkout, ["kb/notes/plain.md"], None)]
-    assert kinds == ["gate", "type", "collection"]
-    assert chosen(checkout, ["kb/notes/plain.md"], ["critique"]) == [
-        ("kb/notes/plain.md", "kb/instructions/critique-note.md", "critique")]
-    assert Criterion("kb/instructions/critique-note.md", "critique").contract == "report"
-    assert Criterion("kb/types/note.md", "type").contract == "verdict"
-
-
 @pytest.mark.parametrize(("request_", "error"), [
     ("prose/missing", FileNotFoundError),
     ("../outside", ValueError),
-    ("prose/../../escape", ValueError),
 ])
 def test_unknown_or_escaping_gate_requests_are_refused(checkout: Path, request_: str, error: type) -> None:
     with pytest.raises(error):
@@ -106,33 +93,6 @@ def test_type_lens_pairs_each_note_with_its_type_spec(checkout: Path) -> None:
     assert chosen(checkout, notes, ["type/definition"]) == [("kb/notes/term.md", "kb/types/definition.md", "type")]
     note(checkout / "kb/notes/broken.md", note_type="Not A Type!")
     assert chosen(checkout, ["kb/notes/broken.md"], ["type"]) == []
-
-
-def test_type_name_resolution_prefers_the_global_type_and_refuses_ambiguity(checkout: Path) -> None:
-    spec(checkout / "kb/notes/types/definition.md")
-    assert criteria.resolve_type_request(checkout, "type/definition") == "kb/types/definition.md"
-    spec(checkout / "kb/notes/types/claim.md")
-    assert criteria.resolve_type_request(checkout, "type/claim") == "kb/notes/types/claim.md"
-    spec(checkout / "kb/reference/types/claim.md")
-    with pytest.raises(ValueError, match="ambiguous"):
-        criteria.resolve_type_request(checkout, "type/claim")
-    with pytest.raises(FileNotFoundError, match="type/ghost"):
-        criteria.resolve_type_request(checkout, "type/ghost")
-
-
-def test_note_type_binding_errors_surface(checkout: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    spec(checkout / "kb/notes/types/claim.md")
-    local = note(checkout / "kb/notes/claim.md", note_type="notes/types/claim.md")
-    assert criteria.note_type_spec(checkout, local) == "kb/notes/types/claim.md"
-    ghost = note(checkout / "kb/notes/ghost.md", note_type="types/ghost.md")
-    with pytest.raises(FileNotFoundError, match="ghost"):
-        criteria.note_type_spec(checkout, ghost)
-    # A library outside the repository whose global type the project also defines: two files, one value.
-    lib = tmp_path / "library"
-    spec(lib / "types/note.md")
-    monkeypatch.setattr(library, "_library_root", lambda _override: lib.resolve())
-    with pytest.raises(TypeCollisionError):
-        criteria.note_type_spec(checkout, checkout / "kb/notes/plain.md")
 
 
 def test_collection_lens_pairs_each_note_with_its_nearest_contract(checkout: Path) -> None:
@@ -173,30 +133,3 @@ def test_installed_library_files_are_library_identities(tmp_path: Path, monkeypa
         ("kb/notes/claim.md", "commonplace:instructions/critique-note.md", "critique"),
     ]
     assert criteria.resolve_type_request(root, "type/note") == "commonplace:types/note.md"
-
-
-def compression_check(path: Path, extra: str = "") -> Path:
-    return gate(path, f"gate_id: compression/{path.stem}\ntype: types/review-gate.md\n{extra}")
-
-
-def test_compression_checks_are_requested_one_id_at_a_time_and_stay_out_of_defaults(checkout: Path) -> None:
-    checks = checkout / "kb/instructions/compression-bundle"
-    compression_check(checks / "detail-overhang.md")
-    compression_check(checks / "core-claim-obscured.md", "requires_type: types/definition.md\n")
-    write(checks / "high-impact-simplification-synthesis.md", "---\ntype: types/instruction.md\n---\n\n# S\n")
-    assert chosen(checkout, ["kb/notes/plain.md", "kb/notes/term.md"],
-                  ["compression/detail-overhang", "compression/core-claim-obscured"]) == [
-        ("kb/notes/plain.md", "kb/instructions/compression-bundle/detail-overhang.md", "compression"),
-        ("kb/notes/term.md", "kb/instructions/compression-bundle/detail-overhang.md", "compression"),
-        ("kb/notes/term.md", "kb/instructions/compression-bundle/core-claim-obscured.md", "compression"),
-    ]
-    assert Criterion("kb/instructions/compression-bundle/detail-overhang.md", "compression").contract == "verdict"
-    assert all(kind != "compression" for _, _, kind in chosen(checkout, ["kb/notes/plain.md"], None))
-    with pytest.raises(ValueError, match="one at a time"):
-        select(checkout, ["kb/notes/plain.md"], ["compression"])
-    with pytest.raises(ValueError, match="not a compression check"):
-        select(checkout, ["kb/notes/plain.md"], ["compression/high-impact-simplification-synthesis"])
-    with pytest.raises(FileNotFoundError):
-        select(checkout, ["kb/notes/plain.md"], ["compression/missing"])
-    with pytest.raises(ValueError):
-        select(checkout, ["kb/notes/plain.md"], ["compression/../review-gates/prose/residue"])

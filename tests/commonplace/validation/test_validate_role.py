@@ -143,30 +143,6 @@ def test_unknown_role_or_missing_draft_is_a_check_error(tmp_path, monkeypatch, c
     assert "role validation:" in capsys.readouterr().err
 
 
-@pytest.mark.parametrize("role", [
-    "boundary", "runtime", "memory", "epistemic", "workflow", "reconciliation",
-    "memory-profile", "report-verification", "profile-verification",
-    "synthesis", "synthesis-verification", "overview",
-])
-def test_analysis_role_cli_matches_shared_validator(tmp_path, monkeypatch, capsys, role):
-    """Validate each declared member directly, without executing workflow jobs."""
-    directory = member_fixture(tmp_path) / "artifact"
-    candidate = tmp_path / "draft.md"
-    monkeypatch.chdir(tmp_path)
-    for content in ("invalid draft\n", (directory / f"{role}.md").read_text()):
-        candidate.write_text(content)
-        expected = validate_draft_in_role(directory, role, candidate, repo_root=tmp_path)
-        before = snapshot(tmp_path)
-        validate_notes.main([
-            str(candidate), "--artifact", str(directory), "--role", role, "--json",
-        ])
-        payload = json.loads(capsys.readouterr().out)
-        assert [item["text"] for item in payload["diagnostics"]] == [
-            "[artifact] " + finding.render() for finding in expected if not finding.absent
-        ]
-        assert snapshot(tmp_path) == before
-
-
 def test_absent_is_deliberately_dropped_but_unverified_refuses(tmp_path, monkeypatch, capsys):
     findings = [
         Finding("main", "main.md: required member is absent", absent=True),

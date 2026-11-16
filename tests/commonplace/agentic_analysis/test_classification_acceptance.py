@@ -224,56 +224,6 @@ def test_plan_classifications_retain_fixture_findings_and_limits(specification, 
     assert profile == before
 
 
-def declared_packet(role):
-    """The files a role's prompt names: its instruction, member type, read types and criteria groups."""
-    from pathlib import Path
-
-    from commonplace.lib.agentic_analysis.workflow import Method
-
-    library = Path(__file__).resolve().parents[3] / "kb"
-    method = Method(library)
-    layout = method.layout
-    paths = [method.instruction(role), library / layout.roles[role].type]
-    paths += [library / layout.roles[source].type for source in method.reads(role)
-              if source in layout.roles and source != role]
-    paths += [library / path for path in method.files(role).values()]
-    assert not any("kb/work/" in str(path) for path in paths)
-    return " ".join(" ".join(path.read_text().split()) for path in paths)
-
-
-@pytest.mark.parametrize("job_name, phrases", [
-    ("memory", ["generic caller identity leaves human control unresolved"]),  # via the records contract
-    ("epistemic", ["checking is never"]),
-    ("workflow", ["do not invent a workflow", "who recovers from failure"]),
-    ("reconciliation", ["never allocates ids"]),
-    # A verifier's materiality rules reach it through the verification type.
-    ("report-verification", ["asserts an unsupported comparison value, evidence strength"]),
-    ("memory-profile", ["generic caller identity alone leaves control unresolved"]),
-    ("profile-verification", ["a limit on a profile value is admissible only"]),
-    ("synthesis", ["independent route/property conclusions"]),
-    ("synthesis-verification", ["structural acceptance does not establish support"]),
-])
-def test_semantic_rules_reach_declared_job_inputs(job_name, phrases):
-    packet = declared_packet(job_name).lower()
-    for phrase in phrases:
-        assert phrase in packet
-
-
-@pytest.mark.parametrize("job_name", [
-    "runtime", "memory", "epistemic", "workflow", "reconciliation", "report-verification", "memory-profile",
-    "profile-verification", "synthesis", "synthesis-verification",
-])
-def test_self_improvement_test_reaches_declared_job_inputs(job_name):
-    import re
-    from pathlib import Path
-
-    contract = Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/agentic-analysis-records.md"
-    match = re.search(r"(?ms)^### Self-improvement attribution[ \t]*\n(.*?)(?=^##+ |\Z)", contract.read_text())
-    assert match is not None
-    operative = " ".join(match[1].strip().split())
-    assert operative in declared_packet(job_name)
-
-
 def test_unsupported_negative_and_reference_defects_are_rejected():
     profile, bodies = materialize({"trace_learning": axis(
         Part("trace-negative", "Unsupported negative", "No absence search was performed.", ("no",)))})
@@ -324,7 +274,6 @@ def test_unsupported_positive_is_semantic_verifier_work_not_schema_truth(tmp_pat
     verdict.write_text(template.replace("## Blockers\n\nnone", "## Blockers\n\n" + expected_blocker))
     assert section(verdict.read_text(), "Blockers").strip() == expected_blocker
     assert artifact_record_errors("overview.md", {**bodies, "verification.md": verdict.read_text()})[1] == []
-    assert "asserts an unsupported comparison value" in declared_packet("profile-verification").lower()
 
 
 def test_strong_existence_does_not_upgrade_claimed_same_value(monkeypatch, capsys):

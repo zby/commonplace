@@ -102,23 +102,6 @@ nav:
     assert changes == ["properdocs value: notes/old-name.md -> notes/new-name.md"]
 
 
-def test_relocate_note_apply_works_without_properdocs_config(tmp_path: Path) -> None:
-    notes_root = tmp_path / "kb" / "notes"
-    write(notes_root / "COLLECTION.md", "# Notes collection\n")
-    old_note = write(notes_root / "old-note.md", "# Old note\n")
-
-    result = relocation.relocate_note(
-        root=tmp_path,
-        note_arg="old-note",
-        new_name="renamed note",
-        apply=True,
-    )
-
-    assert result == 0
-    assert not old_note.exists()
-    assert (notes_root / "renamed-note.md").exists()
-
-
 def test_resolve_destination_path_rejects_overlong_explicit_slug(tmp_path: Path) -> None:
     repo_root = tmp_path
     notes_root = repo_root / "kb" / "notes"

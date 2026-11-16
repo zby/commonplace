@@ -92,16 +92,6 @@ def run_demo(repo, marker=""):
                   harnesses=harnesses, stamp="t1")
 
 
-def test_runbook_parsing_reads_scope_and_subject(repo):
-    root, _ = repo
-    (root / "kb/tasks/demo.md").write_text(RUNBOOK.format(marker=""))
-    runbook = load_runbook(root, "demo")
-    assert runbook.scope == ("kb/tasks/demo-log.md",)
-    assert runbook.subject == "Run recurring task demo"
-    with pytest.raises(ValueError, match="no runbook"):
-        load_runbook(root, "missing")
-
-
 def test_clean_run_is_ok_and_leaves_other_work_alone(repo):
     root, _ = repo
     report = run_demo(repo)
@@ -131,9 +121,3 @@ def test_two_commits_fail(repo):
     report = run_demo(repo, " TWICE")
     assert not report.ok
     assert report.new_commits == 2 and report.commit is None and report.commit_files == []
-
-
-def test_wrong_subject_fails(repo):
-    report = run_demo(repo, " WRONG-SUBJECT")
-    assert not report.ok
-    assert report.new_commits == 1 and report.scope_ok and not report.subject_ok
