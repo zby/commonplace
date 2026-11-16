@@ -117,6 +117,8 @@ else:
     if name == "readability-and-flow" and ("BADPASS" in text or
             "RETITLE" in text and "was rejected" not in frame):
         revised = text.replace("\n# Alpha\n", "\n# Beta\n")
+    if "LONGDESC" in text and name == "readability-and-flow":
+        revised = revised.replace("description: ", "description: " + "padding " * 32, 1)
     if "BRIEFDRIFT" in text and name == "opening-and-title":
         path = Path("kb/notes/alpha.brief.md")
         path.write_text(path.read_text() + "Changed while the worker ran.\n")
@@ -315,6 +317,7 @@ def test_automatic_preparation_waits_for_publication_and_replays_after_approval(
         assert artifact_file(repo, report, name).is_file()
     assert report["proposed"].endswith("/final.md")
     assert [p["profile"]["launch-model"] for p in report["passes"]] == ["big", "small", "big"]
+    assert report["new-warnings"] == [] and "validation warnings" not in report["waiting-for"]["what"]
     code, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 0 and launches == [] and repeated["waiting-for"] == report["waiting-for"]
     assert note_text(repo) == original
@@ -1454,3 +1457,44 @@ def test_a_run_stopped_at_publication_before_the_feature_accepts_a_revision_with
     assert note_text(repo) == revised != original
     assert [(call["job"], call["key"], len(call["launches"])) for call in recorded_calls(run)] == calls
     assert {name: artifact_file(repo, ready, name).read_bytes() for name in kept} == kept
+
+
+LONG = "padding " * 32
+
+
+def test_a_candidate_that_adds_a_validation_warning_names_it_and_still_publishes(repo, capsys, tmp_path):
+    original = start(repo, "LONGDESC")
+    plan = str(named_plan(tmp_path))
+    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    assert launches == [ORDINARY[0]] and note_text(repo) == original
+    [warning] = ready["new-warnings"]
+    assert "250" in warning
+    assert "validation warnings the note did not have: " + warning in ready["waiting-for"]["what"]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)     # the same captured texts, the same list
+    assert launches == [] and repeated["new-warnings"] == [warning]
+    assert repeated["waiting-for"] == ready["waiting-for"]
+    done = publish(repo, capsys, repeated)                       # a warning does not block approval
+    assert LONG in note_text(repo) and done["new-warnings"] == [warning]
+
+
+def test_a_warning_the_start_text_already_had_is_not_new(repo, capsys, tmp_path):
+    start(repo, "LONGDESC", text=NOTE.format(words="LONGDESC").replace("description: ", "description: " + LONG, 1))
+    assert edits.validation(repo[0], NOTE_PATH, note_text(repo)).warns
+    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
+    assert launches == [ORDINARY[0]] and ready["waiting-for"]["file"].endswith("/publication-answers.md")
+    assert ready["new-warnings"] == [] and "validation warnings" not in ready["waiting-for"]["what"]
+
+
+def test_a_revised_candidate_that_adds_a_validation_warning_names_it(repo, capsys, tmp_path):
+    original, ready, candidate = at_publication(repo, capsys, tmp_path)
+    assert ready["new-warnings"] == []
+    revised = candidate.replace("description: ", "description: " + LONG, 1)
+    code, report, launches = supply(repo, capsys, tmp_path, revised)
+    assert code == 0 and launches == [] and note_text(repo) == original
+    [warning] = report["new-warnings"]
+    assert "validation warnings the note did not have: " + warning in report["waiting-for"]["what"]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["new-warnings"] == [warning]
+    assert repeated["waiting-for"] == report["waiting-for"]
+    publish(repo, capsys, repeated)
+    assert note_text(repo) == revised

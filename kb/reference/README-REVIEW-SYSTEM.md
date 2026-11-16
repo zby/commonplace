@@ -612,7 +612,9 @@ proposal key binds the original, the candidate and the decision context, so
 a change in any of them withdraws the approval. To revise, use `--plan` for
 revision, change workflow inputs, or start a new run; do not edit the
 candidate. Publication also requires the original artifact and captured
-brief to remain unchanged.
+brief to remain unchanged. Validation warnings that the text to publish has
+and the original did not have do not block approval. The report lists them
+under `new-warnings`, and the `waiting-for` text names them.
 
 To accept the candidate with a revision, a session agent applies the
 operator's stated changes to a copy of the candidate outside the run's

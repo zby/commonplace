@@ -96,7 +96,9 @@ never approves: only the recorded approved text becomes the operator's answer:
    item names the candidate's hash (`edits.publication()`). Only approved
    answers that approve that item permit `edits.apply()` to write the
    checkout. Approval binds the start, candidate and execution context;
-   brief and live-text conflicts block the write. No-change runs complete without approval. Problems and genuine
+   brief and live-text conflicts block the write. Validation warnings the
+   text to publish adds (`edits.new_warnings()`) do not block; the report's
+   `new-warnings` and the waiting text name them. No-change runs complete without approval. Problems and genuine
    operator stops never write the artifact merely because the command repeats.
 6. **Revised candidate.** At the publication stop, the operator may accept
    the candidate with a revision: `supply_revised()` takes the full revised
@@ -465,6 +467,7 @@ class ReviseReport:
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
     revised_candidate: dict | None = None   # the operator's revised candidate and its files, or why it was withdrawn
+    new_warnings: list[str] = field(default_factory=list)   # validation warnings the text to publish adds
     applied: bool = False             # the final text was written to the artifact
     not_applied: str | None = None    # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
@@ -1030,8 +1033,10 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
         revised = _revision(run, root, artifact, start, final, context, report)
         published = final if revised is None else revised
         report.proposed = _rel(root, run.artifact / (edits.CANDIDATE if revised is None else edits.REVISED))
+        report.new_warnings = edits.new_warnings(root, artifact, start, published)
         report.waiting_for = publication(run, root, artifact, start, final, inputs=context,
-                                         command=REPEAT.format(artifact=artifact), revised=revised)
+                                         command=REPEAT.format(artifact=artifact), revised=revised,
+                                         warnings=report.new_warnings)
         if report.waiting_for is None:
             unchanged_brief(root, artifact, start, brief)
             apply(root, artifact, start, published, root / report.proposed)
@@ -1150,9 +1155,11 @@ def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, r
         operator.answer(run, edits.PUBLICATION, answers.pending(_rel(root, question), revised.encode("utf-8")),
                         key=edits.revised_key(key, revised))
         report = ReviseReport(_rel(root, run_dir), artifact, mode=mode, proposed=_rel(root, question),
-                              revised_candidate=_revised_files(root, run))
+                              revised_candidate=_revised_files(root, run),
+                              new_warnings=edits.new_warnings(root, artifact, start, revised))
         report.not_applied = (f"The proposed text is {report.proposed}, the operator's revised candidate; it is not "
                               "applied: final publication needs explicit approval.")
-        report.waiting_for = operator.waiting(run, root, edits.PUBLICATION, edits.publication_instruction(True),
+        report.waiting_for = operator.waiting(run, root, edits.PUBLICATION,
+                                              edits.publication_instruction(True, report.new_warnings),
                                               REPEAT.format(artifact=artifact))
     return report

@@ -23,6 +23,7 @@ import difflib
 import json
 import re
 import uuid
+from collections.abc import Sequence
 from pathlib import Path
 
 from commonplace.headless import operator
@@ -34,7 +35,7 @@ from commonplace.lib.note_parser import blank_fenced_code_blocks, find_markdown_
 from commonplace.lib.quote_matching import normalize_text
 from commonplace.lib.quote_verification import parse_prose_citations
 from commonplace.lib.review_workflows import gates, results
-from commonplace.lib.validation import ValidationRun
+from commonplace.lib.validation import CheckResults, ValidationRun
 
 PUBLICATION = "publication-answers.md"
 """The stop file of a publication: the operator's answers over the candidate `final.md`, or the revised candidate."""
@@ -98,10 +99,28 @@ def rejection(problems: list[list[str]]) -> str:
         f"- {problem}\n" for problem in problems[-1])
 
 
+def validation(root: Path, note: str, text: str) -> CheckResults:
+    """The deterministic validator's findings for `text` as the file at `note`, without writing it."""
+    path = (root / note).resolve()
+    return ValidationRun(repo_root=root, paths=(path,), content_overrides={path: text}).validate(path)
+
+
 def validation_fails(root: Path, note: str, text: str) -> set[str]:
     """The deterministic validator's failures for `text` as the file at `note`, without writing it."""
-    path = (root / note).resolve()
-    return set(ValidationRun(repo_root=root, paths=(path,), content_overrides={path: text}).validate(path).fails)
+    return set(validation(root, note, text).fails)
+
+
+def added(found: set[str], baseline: set[str]) -> list[str]:
+    """The validator findings of an edited text that the text it was edited from did not have, sorted."""
+    return sorted(set(found) - set(baseline))
+
+
+def new_warnings(root: Path, note: str, start: str, text: str) -> list[str]:
+    """The validator warnings `text` has and `start` did not have; they do not block, the operator is told.
+
+    The comparison is the one `bounds()` makes for failures (`added()`).
+    """
+    return added(set(validation(root, note, text).warns), set(validation(root, note, start).warns))
 
 
 def answered(root: Path, path: Path, text: str) -> tuple[dict, list[str]]:
@@ -134,7 +153,7 @@ def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> 
         problems.append(f"the H1 changed; keep `# {start_parts['title']}`")
     if (start_parts is None or parts["body"] != start_parts["body"]) and "user-verified" in parsed.data:
         problems.append("the body changed, so remove `user-verified` from the frontmatter")
-    problems += [f"validation: {fail}" for fail in sorted(validation_fails(root, note, text) - baseline)]
+    problems += [f"validation: {fail}" for fail in added(validation_fails(root, note, text), baseline)]
     return problems
 
 
@@ -154,7 +173,7 @@ def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: 
     title, start_title = results.note_parts(text) or {}, results.note_parts(start) or {}
     if title.get("title") != start_title.get("title"):
         problems.append(f"the H1 changed; keep `# {start_title.get('title')}`")
-    return problems + [f"validation: {fail}" for fail in sorted(validation_fails(root, artifact, text) - baseline)]
+    return problems + [f"validation: {fail}" for fail in added(validation_fails(root, artifact, text), baseline)]
 
 
 _QUOTE_MARK = re.compile(r"^[ \t]*>[ \t]?", re.MULTILINE)
@@ -244,12 +263,19 @@ def revised_problems(root: Path, note: str, start: str, revised: str) -> list[st
     return problems
 
 
-def publication_instruction(revised: bool) -> str:
-    """What the operator does at the publication stop, for the candidate or for a revised candidate."""
+def publication_instruction(revised: bool, warnings: Sequence[str] = ()) -> str:
+    """What the operator does at the publication stop, for the candidate or for a revised candidate.
+
+    `warnings` are the text's new validation warnings (`new_warnings()`); the text names each one.
+    """
+    warned = ("" if not warnings else
+              "The text to publish has validation warnings the note did not have: " + "; ".join(warnings)
+              + ". Tell the operator each one before asking for the decision; a warning does not block "
+              "approval. ")
     inspect = ("Inspect final.md and final.diff" if not revised else
                f"The candidate was revised. Inspect the revised candidate {REVISED}, {REVISION_DIFF} (from the "
                f"workflow's candidate final.md) and {REVISED_DIFF} (from the note)")
-    return (f"{inspect}. Record the operator's decision on the one item of {PUBLICATION}: "
+    return (f"{warned}{inspect}. Record the operator's decision on the one item of {PUBLICATION}: "
             "`approved`, or `rejected` or `deferred` with the operator's reason, with `decided-by: operator` "
             "and `decided-at`. Approve that file, then repeat. To accept the candidate with a revision, supply "
             "the full revised text with --revised FILE; to revise it otherwise, change the workflow inputs or "
@@ -257,7 +283,7 @@ def publication_instruction(revised: bool) -> str:
 
 
 def publication(run: Run, root: Path, note: str, start: str, final: str, *,
-                inputs: dict, command: str, revised: str | None = None) -> dict | None:
+                inputs: dict, command: str, revised: str | None = None, warnings: Sequence[str] = ()) -> dict | None:
     """Require the operator's approval of the exact checked candidate, never of an editable replacement.
 
     The question is the candidate `final.md`; the stop's file is a pending
@@ -273,6 +299,9 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     With `revised`, the operator's revised candidate captured by the run,
     `final.md` stays the workflow's candidate, the question is `revised.md`
     and the key also binds the revised text (`revised_key()`).
+
+    `warnings` are the new validation warnings of the text to publish; the
+    waiting text names them. They bind no key.
     """
     root = root.resolve()
     name = PUBLICATION
@@ -300,7 +329,7 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     if revised is not None:
         key = revised_key(key, revised)
     approved = operator.answer(run, name, proposal, key=key)
-    instruction = publication_instruction(revised is not None)
+    instruction = publication_instruction(revised is not None, warnings)
     if changed:
         operator.invalidate(run, name)
         run.accept(name, proposal)
