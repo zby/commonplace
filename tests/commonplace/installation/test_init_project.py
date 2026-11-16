@@ -304,7 +304,7 @@ def test_init_project_preserves_existing_kb_content_and_snapshot_pins(tmp_path: 
         "kb/notes/note.md": b"---\ntype: note\n---\n# Note\n",
         "kb/notes/types/custom.schema.yaml": b"properties:\n  type:\n    const: kb/notes/types/custom.md\n",
         "kb/reports/types/custom.schema.yaml": b'allOf:\n  - $ref: "../../types/note.schema.yaml"\n',
-        "kb/reports/state/report.md": b"---\ntype: kb/reports/types/full-pass-report.md\n---\n# Report\n",
+        "kb/reports/state/report.md": b"---\ntype: kb/reports/types/custom.md\n---\n# Report\n",
         "kb/reports/retained/report.md": b"---\ntype: note\n---\n# Retained report\n",
         "kb/sources/.snapshots/source.md": snapshot,
         "kb/sources/source.ingest.md": (
