@@ -11,8 +11,8 @@ published release explicitly when testing PyPI installation.
 This ports the task families from the existing context scenarios:
 [write a note](../write-a-note.md), [ingest a source](../ingest-a-source.md),
 [answer a question](../answer-a-question.md), and
-[respond to a change](../respond-to-a-change.md). It adds bootstrap and a
-fresh-session check after revision. Actual files and runtime behavior decide
+[respond to a change](../respond-to-a-change.md). It adds bootstrap, a
+source-backed policy note, and a fresh-session check after revision. Actual files and runtime behavior decide
 the execution path; the old fork tables are not an execution specification.
 
 ## Fixture and operator brief
@@ -32,7 +32,7 @@ Their `https://aster.example/` URLs identify fictional policy versions; do not
 fetch them. No HTTP server, browser, or capture dependency is needed.
 
 Immediately before stage 2, copy `fixtures/lending-v1.md` to the project's
-`kb/sources/.snapshots/lending-v1.md`. Immediately before stage 4, copy
+`kb/sources/.snapshots/lending-v1.md`. Immediately before stage 5, copy
 `lending-v2.md` to the corresponding path. Do not expose either before its
 stage. Resolve `{snapshot_v1}` and `{snapshot_v2}` to these project paths.
 Use the snapshot `type` declared by the installed contract; if it differs
@@ -54,7 +54,7 @@ The orchestrator follows the instruction above and owns stage progression and
 assessment. Launch each stage through a separate CLI agent selected and
 isolated under that instruction. Keep `inputs/` and `records/` outside
 `project/`; pass only the selected prompt and declared inputs to the worker. Enforce read-only
-project access for stages 3 and 5. Start each stage only after accepting its
+project access for stages 4 and 6. Start each stage only after accepting its
 prerequisites. A zero process exit code is not an acceptance verdict. If a
 suitable CLI or its isolation mechanism is unavailable, report the blocker
 without substituting an internal sub-agent.
@@ -107,13 +107,20 @@ record stage 1 as blocked. Do not launch an extra verification conversation.
 > can use it to answer lending-policy questions. Use the provided snapshot;
 > do not fetch its source URL. Do not commit or publish.
 
-### 3 — Answer from retained knowledge
+### 3 — Write a source-backed policy note
+
+> Write a staff reference note explaining the camera-kit and tripod loan
+> limits under version 1 of the ingested lending policy. Make the separate
+> equipment limits and policy version clear, cite the supporting material,
+> and finish the note using the wiki's conventions. Do not commit or publish.
+
+### 4 — Answer from retained knowledge
 
 > Using our wiki, can a member borrow a camera kit for 60 hours? Can they borrow
 > a tripod for 60 hours? What late-return fee should staff quote? Explain the
 > answers and cite the supporting material. This is a read-only question.
 
-### 4 — Respond to a policy change
+### 5 — Respond to a policy change
 
 > The policy in the supplied local snapshot {snapshot_v2} now supersedes the
 > earlier version. Use this snapshot without fetching its source URL.
@@ -122,7 +129,7 @@ record stage 1 as blocked. Do not launch an extra verification conversation.
 > earlier source as history, and leave unrelated guidance intact. Do not commit
 > or publish.
 
-### 5 — Answer after revision
+### 6 — Answer after revision
 
 > Using our wiki, can a member borrow a camera kit for 60 hours now? Can they
 > borrow a tripod for 60 hours? Is recording a returned camera kit sufficient
@@ -140,41 +147,41 @@ missing framework capability is a blocker, not a successful operation.
 | 0 | Trace shows the agent read INSTALL.md, installed from the supplied source through a non-editable build, and ran init. Commands resolve inside the isolated installation and work after source access is removed. Project instructions are created with purpose and scope filled in; library and skill pointers resolve to the isolated installation. The files contain the supplied scope and resolving procedure pointers; verify runtime loading in stage 1. A passing `init --check` alone is insufficient. |
 | 1 | The fresh session automatically loads the project instructions created in stage 0. A retained artifact distinguishes recording a return from inspecting equipment, preserves the supplied rationale and its status as a chosen procedure, and invents no measured result. It is reachable through the normal project search/navigation path. |
 | 2 | A tracked ingest exists under the installed contracts, identifies the supplied snapshot's source URL, preserves all three policy facts, and pins the supplied copy's exact checksum. The provided snapshot remains unchanged; the worker need not capture a source. Any required worker isolation occurred. A connection report can legitimately contain no candidates; do not require invented connections or authored backlinks. |
-| 3 | Camera kit: no, the limit is 48 hours. Tripod: yes, seven days exceeds 60 hours. Fee: unknown/not specified. Citations resolve and the cited retained material supports each policy answer. No KB content is changed. |
-| 4 | The supplied v2 snapshot has a distinct tracked ingest. Both supplied snapshots and the old ingest's pinned checksum remain unchanged. Current guidance clearly says 72 hours for camera kits and seven days for tripods, with supporting links; the old 48-hour rule is historical, not a competing current rule. Inspection guidance remains intact. |
-| 5 | Camera kit: yes, 60 is within 72 hours. Tripod: yes. Recording return alone is insufficient; inspection is still required. Fee remains unspecified. The camera answer cites the new policy/current grounded guidance; inspection cites supporting retained guidance or policy evidence. No KB content is changed. |
+| 3 | A staff reference note states version 1's 48-hour camera-kit limit and separate seven-day tripod limit without inventing an effective date or broader rules. Its source-dependent claims meet the installed writing and grounding contracts. Its citations resolve and sufficient source evidence supports the claims. The note is reachable through normal project search/navigation. |
+| 4 | Camera kit: no under version 1, the limit is 48 hours. Tripod: yes under version 1, seven days exceeds 60 hours. Fee: unknown/not specified. Citations resolve and the cited retained material supports each answer at its stated policy version and certainty. No KB content is changed. |
+| 5 | The supplied v2 snapshot has a distinct tracked ingest. Both supplied snapshots and the old ingest's pinned checksum remain unchanged. The staff reference note and any other current guidance clearly say 72 hours for camera kits and seven days for tripods, with supporting links; the old 48-hour rule is historical, not a competing current rule. Inspection guidance remains intact. |
+| 6 | Camera kit: yes, 60 is within 72 hours. Tripod: yes. Recording return alone is insufficient; inspection is still required. Fee remains unspecified. Citations identify the new policy or updated retained guidance for the camera limit and retained guidance or policy evidence for inspection. No KB content is changed. |
 
-Judge citations by whether the retained evidence supports the answer. The
-inspection answer may cite the procedure retained in stage 1, current guidance,
-or the supporting policy ingest under the evidence rules below. Preservation
-of the original inspection guidance is checked in stage 4; stage 5 does not
-require the answer to cite that particular artifact. Keep filename and
-navigation choices open as the prompts specify.
+Judge citations by reading the cited material, not just checking that a path
+resolves. The inspection answer may cite the procedure retained in stage 1,
+current guidance, or the supporting policy ingest. Preservation of the original
+inspection guidance is checked in stage 5; stage 6 need not cite that particular
+artifact. Keep filename and navigation choices open as the prompts specify.
 
-Assess policy fidelity by reading the supporting text, not by checking only
-that a citation resolves. For authored KB artifacts, apply the installed
-grounding conventions: ordinary ingest links require sufficient retained
-Quotes; snapshot-dependent uses must follow the installed grounding workflow
-and declare `(snapshot required)` in the link text.
+Stage 3 and the authored changes in stage 5 test the installed writing and
+grounding contracts. Ordinary ingest links require sufficient retained Quotes;
+snapshot-dependent uses must follow the installed grounding workflow and
+declare `(snapshot required)` in the link text. Inspect the execution trace and
+supporting source material to assess fidelity; structural validation alone does
+not establish that a source supports the authored claim. The evaluator runs
+`commonplace-validate` on authored artifacts and cited ingests to check quote
+matching, snapshot checksums, and source pairing. Require the named snapshot
+to remain present for a snapshot-dependent claim.
 
-For read-only answers in stages 3 and 5, accept citations to grounded retained
-guidance, sufficient retained source quotes, or an ingest whose pinned snapshot
-the agent read in that session. The evaluator runs the installed
-`commonplace-validate` on the cited artifacts; quote matching, snapshot
-checksums, and source pairing are the validator's responsibility. Do not
-require the answering agent to repeat those checks or narrate them in chat.
-For the snapshot route, require trace evidence that the agent read the exact
-name-paired snapshot, and assess whether its content supports the answer.
-Confirm that the snapshot is present: a clean validation with unavailable
-source bytes does not establish verified evidence. The response must identify
-the cited ingest; the exact `(snapshot required)` link-text marker is not
-required in chat. An empty Quotes section alone does not fail this route.
-An ingest paraphrase alone does not establish source support.
+Read-only answers in stages 4 and 6 test retrieval, correct interpretation,
+policy version and uncertainty, resolving citations, and nonmutation. Accept
+citations to retained notes, references, or source analyses whose actual text
+supports the answer as stated. An ingest summary can support a statement about
+what that version of the policy says; it does not by itself establish that the
+version remains current. Do not impose the durable-writing grounding procedure
+on chat: an empty Quotes section or the absence of a fresh snapshot read is not
+alone a failure. Run the installed validator on the cited artifacts, but do not
+require the answering agent to modify artifacts, retain quotes, repeat
+validation, or narrate those checks.
 
-Do not require quote appends or other KB changes to satisfy a read-only answer's
-citations. This answer criterion does not relax the grounding requirements for
-authored KB artifacts. The executor's assertion that it validated its work is
-not a substitute for evaluator checks.
+The chat-answer criteria do not relax the grounding requirements for authored
+KB artifacts. The executor's assertion that it validated its work is not a
+substitute for evaluator checks.
 
 Record whether each fresh session actually loaded project instructions and
 retrieved retained content. Previous answers in a shared conversation cannot
