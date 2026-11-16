@@ -148,6 +148,30 @@ the corpus.
 | `report` and a verdict | `report` says the report contract completed; it is not a fifth outcome. |
 | pass and absence of problems | A pass says one gate found nothing to flag. |
 
+## Order of concerns
+
+Review operations and edit operations declare an optional `depth`, an
+integer from 1. A lower depth is a higher-order concern: a procedure that
+orders operations handles depth 1 before depth 2. One scale covers both
+kinds, so a finding and the edit that answers it sit at the same depth.
+
+| Depth | Concern | Review operations | Edit operations |
+|---:|---|---|---|
+| 1 | whether the note's claim and scope should stand | critique, composition friction, premise decomposition | split out a treatment |
+| 2 | what the note asserts and on what grounds | the semantic bundle, `frontmatter/claim-strength`, `prose/source-residue` | narrow overclaims |
+| 3 | terms and what a reader needs to know | the accessibility bundle, `prose/unbridged-cross-domain` | abstractions |
+| 4 | structure and proportion | the complexity bundle, the compression checks and their synthesis, three prose gates, `structural/general-before-specific` | readability and flow |
+| 5 | wording | the sentence bundle, two prose gates, two structural gates | plain wording |
+| 6 | title, description and opening | the other frontmatter gates | opening and title |
+
+The values are best-effort declarations. Each file holds its own value;
+the table summarizes them and the file governs. No code orders review
+operations by depth yet: the revise workflow checks the depth order of
+its passes, and nothing else reads the field. The type and collection
+conformance reviews declare no depth, because their criterion is a type
+spec or a collection contract. Expect the first runs of an ordered
+procedure to show wrong values, and correct them in the files.
+
 ## Result files and freshness
 
 Each accepted review writes

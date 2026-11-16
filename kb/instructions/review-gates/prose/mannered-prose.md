@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: prose
 watches: [body]
 staleness: changed
+depth: 5
 ---
 
 ## Failure mode

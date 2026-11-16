@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: semantic
 watches: [title, description, body]
 staleness: changed
+depth: 2
 requires_trait: title-as-claim
 ---
 

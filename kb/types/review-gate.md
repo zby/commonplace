@@ -23,6 +23,7 @@ A review gate is a closed-ended, verdict-kind quality assay. Each gate is one ma
   values. This field is not a per-gate threshold or tuning surface.
 - `description` — the trigger condition: what kind of authoring problem this gate catches.
 - `type: types/review-gate.md`.
+- Optional `depth` — an integer from 1, the gate's place in the [order of concerns](../reference/README-REVIEW-SYSTEM.md#order-of-concerns); a lower depth is a higher-order concern. A best-effort declaration, corrected from runs.
 - Optional `requires_trait` or `requires_type` — narrow the gate to a subset of artifacts that carry the given trait or type. A `requires_type` value is written like a `type:` value, such as `types/definition.md`.
 
 ## Body

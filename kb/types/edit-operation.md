@@ -30,7 +30,7 @@ An instance does not edit the checkout, commit, launch other work or choose anot
 | `description` | Yes | The trigger condition: when the operation should be chosen. |
 | `effort` | Yes | `simple` when a fresh worker on a cheaper profile can run it; `judgment` when it needs the stronger profile. |
 | `decision` | Yes | `none` when the operation applies its changes. `per-item` when it first returns a list and the operator decides each entry; the second run applies the approved entries. |
-| `depth` | No | Integer from 1. The order of concerns among edit operations; 1 runs first. A best-effort declaration, corrected from runs. |
+| `depth` | No | Integer from 1. The operation's place in the [order of concerns](../reference/README-REVIEW-SYSTEM.md#order-of-concerns), on the scale review operations share; 1 runs first. A best-effort declaration, corrected from runs. |
 | `responds-to` | No | Review criteria or lenses whose findings select this operation. A best-effort declaration. Without it, a plan or the operator selects the operation. |
 
 `decision` records what the operation does. It does not grant authority to skip the operator's decision.

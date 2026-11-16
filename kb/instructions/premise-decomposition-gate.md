@@ -1,6 +1,7 @@
 ---
 description: Experimental report method that decomposes a note's central commitment into the premises it rests on and hunts a counterexample for each, routing failures as local (revise a premise) or global (the commitment fails)
 type: types/instruction.md
+depth: 1
 ---
 
 # Decompose a note into premises and counterexample each

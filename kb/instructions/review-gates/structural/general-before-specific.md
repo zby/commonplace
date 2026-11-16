@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: structural
 watches: [body]
 staleness: changed
+depth: 4
 ---
 
 ## Failure mode

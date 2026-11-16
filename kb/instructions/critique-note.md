@@ -1,6 +1,7 @@
 ---
 description: Build the strongest case that a note's central commitment is wrong, then check whether the note already answers it; use when a caller needs a report-only adversarial assay.
 type: types/instruction.md
+depth: 1
 ---
 
 # Critique a note

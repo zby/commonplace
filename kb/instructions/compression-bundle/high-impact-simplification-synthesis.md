@@ -1,6 +1,7 @@
 ---
 description: "Synthesize a compression review into at most three high-level simplifications that materially improve the artifact but still require authorial judgment"
 type: types/instruction.md
+depth: 4
 ---
 
 # Synthesize high-impact simplification opportunities

@@ -32,6 +32,9 @@ allOf:
               type: string
           staleness:
             const: changed
+          depth:
+            type: integer
+            minimum: 1
           requires_trait:
             anyOf:
               - type: string

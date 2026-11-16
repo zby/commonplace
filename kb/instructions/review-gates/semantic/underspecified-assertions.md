@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed
+depth: 2
 ---
 
 ## Failure mode

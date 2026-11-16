@@ -335,6 +335,12 @@ Not yet done:
   The session showed one gap: the operator will sometimes need more
   context than the sentence. The decide-items instruction now leaves the
   amount of context to the agent's judgment.
-- **The third change,** `depth` on review operations, is not built.
+- **The third change is built** (2026-11-16): every catalog gate, the
+  compression checks and their synthesis, critique, composition friction
+  and premise decomposition declare `depth` on the scale the edit
+  operations use. The scale is in the
+  [review guide](../../reference/README-REVIEW-SYSTEM.md#order-of-concerns).
+  The values are a first guess and no code orders review operations by
+  them yet.
 - **Edit quality is unjudged.** The live checks show that real output is
   accepted, not that the edits are good.

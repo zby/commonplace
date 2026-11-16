@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: frontmatter
 watches: [title, body]
 staleness: changed
+depth: 6
 ---
 
 ## Failure mode

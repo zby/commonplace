@@ -1,6 +1,7 @@
 ---
 description: Experimental report method that tests whether a note's central claim survives concretization and locates its least-supported inferential joints
 type: types/instruction.md
+depth: 1
 ---
 
 # Reconstruct a note's composition friction

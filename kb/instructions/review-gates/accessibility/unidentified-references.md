@@ -6,6 +6,7 @@ type: types/review-gate.md
 lens: accessibility
 watches: [body]
 staleness: changed
+depth: 3
 ---
 
 ## Failure mode
