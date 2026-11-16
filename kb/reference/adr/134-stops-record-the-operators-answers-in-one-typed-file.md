@@ -30,6 +30,20 @@ A stop differs from the other atoms in one way that matters for testing. The ope
 
 **The decision record reads answers.** `commonplace-review decisions` lists one entry per item of an approved answers file, with its state, decider and reason; the publication approval stays one bundle entry.
 
+## Amendments (2026-11-16)
+
+Made after the first operator sessions through the stops, at the operator's direction.
+
+**A decided item can record what followed.** Two optional fields on a decided item: `resolution` states what was done when it went beyond the proposal, and `refs` lists commit hashes, paths or a workshop directory. They are added after the decision and the file is approved again, because the decision record reads the approved capture. The case that prompted them: a reviewer's local contradiction led to a rewrite and two renames of the note, and the stop's record could not name them.
+
+**A stopped plan leaves an answers file.** When a plan sets `stop`, the run writes `artifact/stop-answers.md` with one item over the plan. The run does not wait for it. It exists so the operator's decision on the proposal, and what followed, has a record.
+
+**Decisions carry over to later runs on the same note.** A run collects the decided items of earlier runs on the note. Per-item operations and the fix operation receive them as the `earlier-decisions` input. A new proposal with the same `quote` and `change` as a decided item starts with that decision and `carried-from` naming the earlier answers file; the stop still waits for the operator's approval. Only an identical proposal is carried. The case that prompted it: an instruction change invalidated two runs after the operator had decided their items, and the decisions had to be applied by hand.
+
+**A pending stop whose note has changed is reported as overtaken.** The decision record computes this when it lists; no item changes state.
+
+Not changed: an approval stays bound to the exact candidate and the inputs that produced it. A candidate invalidated before publication is lost and asked again.
+
 ## Considered alternatives
 
 **Four typed stops.** Rejected with the operator. A strike list and a hand-back disposition are the same act over different item kinds, and `deferred` is a state, not a point where a procedure waits.
