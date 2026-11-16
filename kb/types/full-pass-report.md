@@ -28,7 +28,7 @@ text, as review result files use.
 
 `resolution` starts `not-required` for an accepted `keep` and `pending`
 otherwise. Only the resolution fields change after the run, under
-[resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md):
+resolve a full-pass disposition (retired by ADR 135):
 `accepted`, `rejected` or `alternative-applied` with `user` authority, or
 `superseded` with `version-guard` authority when `commonplace-review packet`
 finds a changed input. Quote `resolved-at` so YAML keeps it a string.

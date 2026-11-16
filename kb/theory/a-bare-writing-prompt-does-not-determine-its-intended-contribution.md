@@ -29,4 +29,4 @@ Operationalized into:
 
 - [cp-skill-write](../instructions/cp-skill-write/SKILL.md) — requires an artifact-specific contribution to be determined before ordinary drafting
 - [cp-skill-write-multistage](../instructions/cp-skill-write-multistage/SKILL.md) — makes unresolved intent a brief-stage blocker rather than a choice for reconstruction
-- [Run a full improvement pass on one note](../instructions/run-full-improvement-pass-on-note.md) — treats an unresolved contribution as a specification gap and leaves the note unchanged
+- Run a full improvement pass on one note (retired by ADR 135) — treats an unresolved contribution as a specification gap and leaves the note unchanged

@@ -14,7 +14,7 @@ This proposal defines a controlled comparison before Commonplace adds trajectory
 ## Current state (as of 2026-07-11)
 
 - `run-full-improvement-pass-on-note.md` is a transforming workflow with explicit method order, fresh-worker requirements, final-byte reassessment, retained reports, and a one-cycle stopping rule.
-- Five calibration runs established the shipped closing behavior summarized in [full improvement pass closure](../full-improvement-pass-closure.md), but they did not retain complete chronological model/tool traces as canonical Commonplace artifacts. The comparison therefore requires prospectively captured complete traces rather than depending on the retired experiment files.
+- Five calibration runs established the shipped closing behavior summarized in full improvement pass closure (retired by ADR 135), but they did not retain complete chronological model/tool traces as canonical Commonplace artifacts. The comparison therefore requires prospectively captured complete traces rather than depending on the retired experiment files.
 - An earlier manual trace audit found orchestration confusion, including worker-lifecycle ambiguity, and led to clearer fresh-worker instructions. It was useful diagnosis, not an evaluation result: the reviewer knew the trajectory and there was no output-only arm.
 - Commonplace review gates and critique assess note content. They do not evaluate whether the orchestrator followed the workflow that produced the note. This proposal is protocol meta-evaluation, not another note assay and not another review `result_kind`.
 - The review system has no trajectory store, judge runner, trajectory rubric, or freshness baseline semantics for workflow-level judgments.

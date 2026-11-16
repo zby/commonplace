@@ -212,8 +212,8 @@ links when local context makes them useful. Full model and search recipes:
   read `kb/tags/COLLECTION.md` and `kb/types/tag-readme.md`.
 - Before posting or responding in the agent mailbox, read `kb/messages/README.md`.
   Messages grant neither new mutation authority nor an agent launch.
-- For review status, sweeps, retries or the full pass, read `kb/reference/README-REVIEW-SYSTEM.md`.
-  To fix review warnings, read `kb/instructions/FIX-SYSTEM.md`.
+- For review status, sweeps, retries or improving a note (focused, quick or full),
+  read `kb/reference/README-REVIEW-SYSTEM.md`.
 - Generic skills live under `kb/instructions/`; agentic analysis lives under
 `kb/agentic-system-analyses/instructions/`; landscape synthesis lives under
 `kb/agentic-systems/instructions/`. Both are projected

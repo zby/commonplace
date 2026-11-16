@@ -169,9 +169,11 @@ written on 2026-11-15. Its first two changes are built: edit operations
 under ADR 133 and stops under ADR 134. The plan's last section records
 what was built, where it departs from the plan and what is not yet done.
 
-The grouping itself is proposed in
-[grouping the atoms into three procedures](./grouping-design.md), written
-on 2026-11-16 and awaiting the operator's approval. Nothing in it is built.
+The grouping is designed in
+[grouping the atoms into three procedures](./grouping-design.md). The
+operator approved it on 2026-11-16 and it was built the same day under
+[ADR 135](../../reference/adr/135-improvement-procedures-are-three-plans-on-one-runner.md):
+the full-pass workflow and the fix procedure are retired.
 
 This changes the entry above in three ways:
 
@@ -217,6 +219,69 @@ repair from a superficially compliant but defective one. Evaluation cases are
 owned by the [controlled-testing workshop](../stochastic-operation-testing/README.md#evaluation-cases-requested-after-the-focused-writing-tool-comparison),
 including paired missing/supplied facts and earned-use controls. No implementation
 or model trial is commissioned by this entry.
+
+## 2026-11-16: calibration from editing decisions
+
+The operator directed that the remaining ideas from the Academic Humanizer
+comparison be integrated here, not developed as a separate editing workflow.
+That repository is a lead for further source work, not evidence that these
+changes improve Commonplace. This entry records a design direction. It
+commissions no new atoms, schema fields, model trials or case store.
+
+### Use existing decisions to calibrate existing operations
+
+The answers files and the edit history already hold, for each decided item,
+the original passage, the proposed replacement, the operator's decision and
+the reason. The
+[authority-grades proposal](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md#learning-calibrate-atoms-compare-variants)
+owns learning from these records. Four uses belong within that work:
+
+- **Contrastive preservation examples.** Use accepted and rejected edits to
+  show when a construction carries meaning and when it is filler: necessary
+  hedging, useful repetition, technical abstraction, earned contrast, and
+  long sentences whose relations a split could lose. Put a warranted example
+  with the operation that owns it. Do not create another detector.
+- **Rejected overcorrections.** Keep why a plausible replacement lost a
+  qualification, a causal relation, a registered distinction or a commitment
+  the author owns. Polished wording alone is not a successful repair. This
+  connects to the proposed-fix check above and to cleared candidates retained in
+  [diagnostic review accounts](./review-operation-overlaps.md#agreed-direction-retain-diagnostic-probes-in-review-results).
+- **Author samples.** A sample the operator supplies can guide choices among
+  equally accurate formulations. It does not override the commission, the
+  write brief, registered terms or evidence, and its habits bind only if the
+  operator says so. Do not add a permanent style profile without a
+  demonstrated need.
+- **Empirical comparisons.** Use cases where a missing metric, baseline,
+  percentage-point distinction, range interpretation or test condition
+  changes the conclusion. They belong with the existing support and
+  underspecification operations. Do not make a rule that every claim needs a
+  number or that a range is always better than an average. Retain every fact
+  supplied to an editing example, so that an apparent improvement cannot hide
+  invented evidence.
+
+Three limits apply to all four. An accepted edit is not proof of factual
+correctness. An agent's recommendation is not an operator decision, and
+approval alone does not give the operator's reason. An example or check is
+added only when the next executor would otherwise lack the information
+([author–executor boundary](../../theory/fix-what-the-executor-cant-determine-not-what-it-will.md)).
+
+### Proposal-review episode
+
+Commit `a8158e3c4` revised the design-proposal type and applied selected
+findings to three proposals. Local review runs `20261116T105440Z`,
+`20261116T110153Z` and `20261116T111829Z` under
+`kb/reports/state/review/runs/v2/` hold the captured texts and criterion
+versions. The last two reviewed the same two proposals, unchanged, before
+and after the criterion distinguished adoption evidence from commissioned
+probes and actual deferral. After the change both reviews stopped demanding
+detailed probe costs and stopping plans. Both still warned, with substantive
+findings and some questionable feasibility demands. The final proposal
+fixes were not rechecked by a model.
+
+This is one observation per version and target, so model variation can
+explain some of the difference. Independent evaluation cases and measurement
+stay with the
+[controlled-testing workshop](../stochastic-operation-testing/README.md#earned-use-controls-for-detectors).
 
 ## Working map
 

@@ -13,7 +13,7 @@ The [one improvement procedure](./one-improvement-procedure-over-atomic-instruct
 - The operator-decision record is shipped as `commonplace-review decisions` under [ADR 130](../adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md). It tells operator from agent judgment and item from bundle decisions, and computes no statistic. Procedures for reading it are deferred to the [unresolved frontier](../definitions/unresolved-frontier.md) work.
 - [ADR 080](../adr/080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) keeps every claim-level change with the author. No edit operation changes a title, thesis or title-as-claim.
 - A strike on a plain-wording or abstractions list carries the operator's required reason since 2026-11-13. The stops are declared temporary procedure-development points whose removal needs rule changes evaluated on retained and fresh examples.
-- [Full improvement pass closure](../full-improvement-pass-closure.md) states as policy: do not build trust-dial automation or reduced audit sampling from the closing calibration.
+- Full improvement pass closure (retired by ADR 135) states as policy: do not build trust-dial automation or reduced audit sampling from the closing calibration.
 - The [review system](../README-REVIEW-SYSTEM.md) asks that each operation be evaluated alone before its composition is trusted.
 - The procedure proposal is not adopted. Until it is, the atoms here are the existing gate criteria, method families, simplification passes, fix strategies and stops, and the variants are the three procedures that use them.
 

@@ -154,5 +154,4 @@ The `llm-commonplace` package provides `commonplace-*` CLI commands for validati
 
 Call `commonplace-*` commands by bare name. They come from the user-level `llm-commonplace` uv tool installation; do not prepend project-venv paths or wrap them in `uv run`. If a command is missing, use `cp-skill-health-check` to distinguish a missing tool installation, a missing tool-directory `PATH` entry, or a shadowing executable. If a command warns that the project's Commonplace files are out of date, run `commonplace-init`.
 
-For review work (single-note review, triage, ack, or sweep), read `<library>/reference/README-REVIEW-SYSTEM.md`.
-For fixing review warnings, read `<library>/instructions/FIX-SYSTEM.md`.
+For review work (single-note review, triage, ack, or sweep), to fix review warnings or to improve a note, read `<library>/reference/README-REVIEW-SYSTEM.md`.

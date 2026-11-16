@@ -51,11 +51,11 @@ The three procedures, as the operator meets them:
 
 | | Full pass | Fix procedure | Simplification passes |
 |---|---|---|---|
-| Entry | `commonplace-review run full-pass` | agent follows [fix review warnings](../../instructions/fix-warnings/fix-review-warnings.md); no workflow command | `commonplace-review run revise` with `--assess` or `--plan` |
+| Entry | `commonplace-review run full-pass` | agent follows fix review warnings (retired by ADR 135); no workflow command | `commonplace-review run revise` with `--assess` or `--plan` |
 | Review operations used | all six method families, before editing and again at closing | the gate catalog, as fresh `warn` and `fail` results, before and after | none; code checks on each text |
 | Edit operations used | the packet's body edits under `keep`, then a copyedit | the fix strategies, chosen per finding | the passes a plan names, in order |
 | Stops used | hand-back dispositions; `--direction` for an undetermined update; exact publication approval | `pending` items, `deferred` only on the operator's word; the agent edits the checkout directly, so no publication boundary | per-item answers for plain-wording and abstractions; exact publication approval |
-| Where the operator's answer is kept | packet resolution fields with rationale, under [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md); the publication approval in an answers file | the `rejected`, `pending` and `deferred` statuses in the free-form fix report | answers files with each rejection's and deferral's reason, in the run's operator record |
+| Where the operator's answer is kept | packet resolution fields with rationale, under resolve a full-pass disposition (retired by ADR 135); the publication approval in an answers file | the `rejected`, `pending` and `deferred` statuses in the free-form fix report | answers files with each rejection's and deferral's reason, in the run's operator record |
 
 The atomic instructions, where they live and who uses them:
 
@@ -69,11 +69,11 @@ The atomic instructions, where they live and who uses them:
 | Review | connect | [cp-skill-connect](../../instructions/cp-skill-connect/SKILL.md) | full pass |
 | Edit | simplification passes, typed edit operations with `effort`, `decision` and preserve rules; split-out-a-treatment stays an instruction | [simplification-passes/](../../instructions/simplification-passes/README.md) | revise workflow, `run edit` |
 | Edit | fix strategies, keyed to finding kinds, as one typed edit operation | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure, `run edit` |
-| Edit | packet body edits and copyedit under `keep` | [run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) | full pass |
+| Edit | packet body edits and copyedit under `keep` | run a full improvement pass (retired by ADR 135) | full pass |
 | Stop | decide items: the operator's answer per proposal, in an answers file | [decide items](../../instructions/decide-items.md) | revise workflow, `run edit` |
 | Stop | approve a text: exact publication approval, in an answers file | [approve a text](../../instructions/approve-a-text.md) | both workflow commands |
-| Stop | hand-back disposition with a packet | [resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) | full pass |
-| Stop | `deferred` item | [fix review warnings](../../instructions/fix-warnings/fix-review-warnings.md) | fix procedure |
+| Stop | hand-back disposition with a packet | resolve a full-pass disposition (retired by ADR 135) | full pass |
+| Stop | `deferred` item | fix review warnings (retired by ADR 135) | fix procedure |
 
 Shipped constraints this proposal must respect:
 
@@ -167,8 +167,8 @@ Relevant Notes:
 
 - [Authority grades and learning from operator decisions](./authority-grades-and-learning-from-operator-decisions.md) — enables: the run records this procedure leaves are the evidence that proposal grades and learns from
 - [Review architecture](../review-architecture.md) — part-of: the review workflows that keep running the review operations
-- [Run a full improvement pass on one note](../../instructions/run-full-improvement-pass-on-note.md) — procedure: the variant that runs every review operation
-- [Fix system](../../instructions/FIX-SYSTEM.md) — procedure: the variant that edits per finding, and the candidate first case
+- Run a full improvement pass on one note (retired by ADR 135) — procedure: the variant that runs every review operation
+- Fix system (retired by ADR 135) — procedure: the variant that edits per finding, and the candidate first case
 - [Simplification passes](../../instructions/simplification-passes/README.md) — procedure: the variant that runs edit operations from a plan, and the smallest example of a composition separated from its atoms
 - [ADR 111](../adr/111-directory-types-declare-their-layout.md) — decided-by: directory types and their layouts, which the run type would use
 - [ADR 127](../adr/127-review-runs-as-workflows-over-result-files.md) — decided-by: review as workflows over result files, the part that stays in code

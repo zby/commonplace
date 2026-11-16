@@ -3,7 +3,8 @@
 ## Status
 
 Written on 2026-11-16 at the operator's request, as a design for approval.
-Nothing in it is built. It follows
+The operator approved it with its five recommended choices the same day,
+and it was built that day; see "What was built" at the end. It follows
 [edit operations and stops as atoms](./edit-and-stop-atoms-plan.md), whose
 three changes are on main: review operations (ADR 132), edit operations
 (ADR 133) and stops (ADR 134) each run alone, and review and edit
@@ -195,3 +196,36 @@ stop, then one live run of the procedure on one note.
   kinds of operation.
 - How long a full pass takes. No cost is declared; the operator sees it
   on the first run.
+
+## What was built
+
+All three build steps are on main, recorded in
+[ADR 135](../../reference/adr/135-improvement-procedures-are-three-plans-on-one-runner.md).
+
+Each form of the command had one live run on 2026-11-16, each on a
+different note in `kb/theory/`. No run was published.
+
+| Form | Result |
+|---|---|
+| `--full` | 46 review operations and the synthesis ran; the assessor received 8 result files and stopped the plan on a depth 1 proposal about the note's claim, with nothing edited |
+| `--finding` | one `underspecified-assertions` warning fixed; the candidate changes one paragraph; waiting for publication approval |
+| `--assess` | the assessor received 2 stored warnings and planned three passes; the first applied; waiting on 4 plain-wording items |
+| `--pass` | readability-and-flow applied; waiting for publication approval |
+
+Where the build departs from the design:
+
+- **The assessor also receives the compression synthesis report** in a
+  full run. The design named only the findings and the depth 1 reports.
+- **The full-pass report type is kept.** No workflow writes it and the
+  state tree holds no packet. Deleting it is left to the operator.
+- **`fix-descriptions.md` is kept.** It is a separate procedure for
+  description warnings and wrote no fix report.
+
+What the live runs showed and did not show:
+
+- In the quick run the assessor turned neither stored warning into a fix
+  entry. It chose whole-note passes scoped to the same passages. The fix
+  operation has so far run only through `--finding`.
+- The first full run stopped at depth 1. One run says nothing about how
+  often that happens.
+- Nobody has judged the quality of the four candidates.
