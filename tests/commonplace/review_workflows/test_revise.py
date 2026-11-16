@@ -18,7 +18,7 @@ from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import answers as answer_files
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, edits, results
+from commonplace.lib.review_workflows import decisions, edits, observations, results
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
