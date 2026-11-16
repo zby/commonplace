@@ -162,6 +162,16 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    editing the artifact. To run passes instead, supply a replacement with
    `stop` cleared and the desired passes through `--plan`; editing the
    retained `artifact/plan.yaml` alone is not an override.
+   A stopped plan also leaves `artifact/stop-answers.md`, an
+   [answers](../../types/answers.md) file with one item for the plan. The
+   run does not wait for it; its report names it under `stop-answers`.
+   Record the operator's decision on the proposal there: `approved` to act
+   on it as made, or `rejected` or `deferred` with the operator's reason.
+   When the work that followed is done, add `resolution` (what was done,
+   when it differs from or goes beyond the proposal) and `refs` (commit
+   hashes, paths, a workshop directory) to the item. Run the reported
+   approval command each time the file changes, so that
+   `commonplace-review decisions` lists the current text.
    The command rejects a plan that names an unknown pass, misses a field,
    names a `finding` that is not a review result of the artifact, or breaks
    the depth order the pass files and the findings' criteria declare. A replacement supplied

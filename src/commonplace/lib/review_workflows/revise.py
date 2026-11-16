@@ -153,6 +153,13 @@ ASSESSMENT, PLAN, START = "assessment.md", "plan.yaml", "start.md"
 REPEAT = "commonplace-review run revise {artifact}"
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
+STOP_ANSWERS = "stop-answers.md"
+"""The answers file for a plan that stops: one item, the plan. The run does not wait for it."""
+STOP_HOW = ("The plan stops with a proposal. Record the operator's decision on the one item of this answers file: "
+            "`approved` to act on the proposal as made, or `rejected` or `deferred` with the operator's reason, "
+            "with `decided-by: operator` and `decided-at`. When the work that followed is done, add `resolution` "
+            "and `refs` (commit hashes, paths) to the item. Approve the file each time it changes; the run does "
+            "not wait for it.")
 DECIDE_HOW = ("Record the operator's decision on each item of the {name} answers file: set `state` to `approved`, "
               "`rejected` with a `reason`, or `deferred` with a `reason` and a `revisit` condition, and add "
               "`decided-by: operator` and `decided-at` to each decided item; change no `id` or `proposal`. "
@@ -373,6 +380,7 @@ class ReviseReport:
     not_applied: str | None = None    # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
     stop: str | None = None           # the plan's stop: the assessment is the result
+    stop_answers: dict | None = None  # the answers file for the plan's stop, and how to approve it
     override: dict | None = None      # advice for explicitly replacing a stopped plan with --plan
     unapproved_edits: list[dict] = field(default_factory=list)   # drafts edited after approval; not in use
     stopped: str | None = None
@@ -718,6 +726,11 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             run.accept(PLAN, proposed)
             if plan["stop"]:
                 report.stop = plan["stop"]
+                question = run.artifact / PLAN
+                operator.answer(run, STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()),
+                                key=answers.sha(question.read_bytes()))
+                report.stop_answers = operator.waiting(run, root, STOP_ANSWERS, STOP_HOW,
+                                                       REPEAT.format(artifact=artifact))
                 report.override = {
                     "what": "The plan stops. To run passes instead, supply a validated replacement with --plan; "
                             "editing artifact/plan.yaml alone does not override the plan.",

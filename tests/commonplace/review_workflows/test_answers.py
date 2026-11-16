@@ -62,6 +62,15 @@ def test_decided_answers_pass(root):
     assert check(root, valid(root)) == []
 
 
+def test_a_decided_item_takes_a_resolution_and_refs_and_a_pending_item_does_not(root):
+    data = valid(root)
+    data["items"][0].update({"resolution": "rewrote the note", "refs": ["0123abc", "kb/work/some-workshop"]})
+    assert check(root, data) == []
+    data = yaml.safe_load(answers.pending(QUESTION, (root / QUESTION).read_bytes()).split("---\n")[1])
+    data["items"][0]["refs"] = ["0123abc"]
+    assert check(root, data)
+
+
 def _altered(data):
     data["items"][0]["proposal"]["change"] = "Alpha"
 

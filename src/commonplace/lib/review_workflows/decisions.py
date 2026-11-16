@@ -41,7 +41,7 @@ FIXES = Path("kb/reports/state/fixes")
 ITEM_WIDTH = 80
 _RUN = re.compile(r"[0-9a-f]{12}")
 _ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
-"""An answers stop: `<pass>-answers-<key>.md` of a per-item pass, or `publication-answers.md`."""
+"""An answers stop: `<pass>-answers-<key>.md` of a per-item pass, `publication-answers.md` or `stop-answers.md`."""
 _AUTHORITY = {"user": "operator", "version-guard": "version-guard"}
 
 
@@ -51,10 +51,11 @@ class MalformedRecord(ValueError):
 
 def _entry(note: str, workflow: str, run: str | None, record: str, cls: str, proposed_by: str,
            decided_by: str, decision: str, unit: str, *, item: str | None = None, reason: str | None = None,
-           key: str | None = None, at: str | None = None) -> dict:
+           key: str | None = None, at: str | None = None, resolution: str | None = None,
+           refs: list[str] | None = None) -> dict:
     return {"note": note, "workflow": workflow, "run": run, "record": record, "class": cls,
             "proposed-by": proposed_by, "decided-by": decided_by, "decision": decision, "unit": unit,
-            "item": item, "reason": reason, "key": key, "at": at}
+            "item": item, "reason": reason, "resolution": resolution, "refs": refs, "key": key, "at": at}
 
 
 def _head(proposal: object) -> str:
@@ -87,7 +88,7 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
         stop = _ANSWERS.fullmatch(name)
         if stop:
             cls = stop.group(1)
-            proposer = "workflow" if cls == "publication" else "worker"
+            proposer = "workflow" if cls == "publication" else "worker"   # a plan's `stop` is the assessor's
             if answer is None:
                 found.append(_entry(note, workflow, run, record, cls, proposer, "pending", "pending", "bundle",
                                     **common))
@@ -104,7 +105,8 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
                 found.append(_entry(note, workflow, run, record, cls, proposer,
                                     "pending" if state == "pending" else str(item.get("decided-by")), state,
                                     "bundle" if cls == "publication" else "item", item=_head(item.get("proposal")),
-                                    reason=item.get("reason"),
+                                    reason=item.get("reason"), resolution=item.get("resolution"),
+                                    refs=item.get("refs"),
                                     key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
         else:                               # a stop of an earlier workflow version, such as plan.yaml
             found.append(_entry(note, workflow, run, record, name, "workflow",
@@ -191,6 +193,10 @@ def text(found: list[dict]) -> str:
             fields.append(f"item: {entry['item']}")
         if entry["reason"]:
             fields.append(f"reason: {entry['reason']}")
+        if entry["resolution"]:
+            fields.append(f"resolution: {entry['resolution']}")
+        if entry["refs"]:
+            fields.append(f"refs: {', '.join(entry['refs'])}")
         fields.append(entry["record"])
         lines.append("  " + " | ".join(fields))
     return "\n".join(lines) + ("\n" if lines else "")

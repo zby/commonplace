@@ -14,7 +14,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
-from commonplace.lib.review_workflows import observations
+from commonplace.lib.review_workflows import decisions, observations
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
@@ -971,6 +971,27 @@ def test_full_stops_on_a_depth_one_proposal_with_nothing_edited(reviewed, capsys
     assert note_text(repo) == original and report["complete"] and not report["applied"]
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["stop"] == "rewrite-needed"
+
+
+def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(reviewed, capsys):
+    repo = reviewed
+    start(repo, "STOP")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--full")
+    stop = report["stop-answers"]
+    path = repo[0] / stop["file"]
+    assert path.name == "stop-answers.md" and report["waiting-for"] is None and report["complete"]
+    assert [e["decision"] for e in decisions.entries(repo[0]) if e["class"] == "stop"] == ["pending"]
+    path.write_text(decide(path.read_text(), {"text": {
+        "state": "rejected", "reason": "the note needs a rewrite", "resolution": "rewrote the note",
+        "refs": ["0123abc", "kb/work/some-workshop"]}}))
+    assert main(["approve", report["run-dir"], stop["file"], "--key", stop["key"]], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    [entry] = [e for e in decisions.entries(repo[0]) if e["class"] == "stop"]
+    assert (entry["decision"], entry["resolution"], entry["refs"], entry["proposed-by"]) == (
+        "rejected", "rewrote the note", ["0123abc", "kb/work/some-workshop"], "worker")
+    assert "refs: 0123abc, kb/work/some-workshop" in decisions.text([entry])
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["stop-answers"]["key"] == stop["key"] and not repeated["unapproved-edits"]
 
 
 def test_full_stops_when_a_review_has_no_result(reviewed, capsys):

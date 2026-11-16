@@ -26,10 +26,15 @@ properties:
             revisit: {type: string, minLength: 1}
             decided-by: {const: operator}
             decided-at: {type: string, format: date-time}
+            resolution: {type: string, minLength: 1}
+            refs:
+              type: array
+              minItems: 1
+              items: {type: string, minLength: 1}
           allOf:
             - if: {properties: {state: {const: pending}}}
               then:
-                not: {anyOf: [{required: [decided-by]}, {required: [decided-at]}]}
+                not: {anyOf: [{required: [decided-by]}, {required: [decided-at]}, {required: [resolution]}, {required: [refs]}]}
               else: {required: [decided-by, decided-at]}
             - if: {properties: {state: {enum: [rejected, deferred]}}}
               then: {required: [reason]}

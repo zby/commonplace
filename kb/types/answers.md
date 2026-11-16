@@ -31,8 +31,14 @@ An approval of a text is therefore an answers file with one item that names the 
 | `revisit` | The condition under which a `deferred` item is taken up again |
 | `decided-by` | `operator` on every decided item; absent while `pending` |
 | `decided-at` | The decision's timestamp; absent while `pending` |
+| `resolution` | Optional. What was done after the decision, when it differs from or goes beyond the proposal. A statement of fact, not a new decision |
+| `refs` | Optional. Where it was done: commit hashes, file paths, a workshop directory or URLs. Not checked |
 
 `deferred` means the operator has seen the item and has not decided it. Only the operator sets it. An agent that cannot decide an item leaves it `pending`.
+
+## What happened after the decision
+
+A decision can lead to work the proposal did not describe. A reviewer's proposal to reword one sentence may end in a rewrite of the note and of the notes that cite it. `resolution` and `refs` record that on the decided item, so the proposal, the decision and the outcome can be compared later. They are written after the work, on a decided item only. In a run directory, approve the file again after adding them: the decision record reads the approved text.
 
 ## Acceptance
 

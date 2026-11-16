@@ -453,7 +453,11 @@ results go to the shared store, and the compression synthesis runs on the
 checks' results without publishing one. The assessor then also reads the
 depth 1 reports and the compression synthesis report. When one proposes
 changing what the artifact is, the plan's `stop` names the proposal and its
-report, and nothing is edited. The full procedure does not review the
+report, and nothing is edited. A stopped plan leaves
+`artifact/stop-answers.md`, where the operator's decision on the proposal is
+recorded and, afterwards, what was done and where: the item's `resolution`
+and `refs` (commit hashes, paths). The run does not wait for that file.
+The full procedure does not review the
 candidate; the next sweep finds the stale results after publication. A
 review without a result stops the run before assessment; dismiss its problem
 with `retry` on the review run under the revise run directory, then repeat.
@@ -470,7 +474,7 @@ before changed final text is offered for publication approval. Control-flow
 checks do not establish the quality of the selected edits.
 
 No procedure checks that an edit fixed its finding, and none records a
-judgment over the whole note other than a plan's `stop`. A finding fixed by
+judgment over the whole note other than a plan's `stop` and its answers. A finding fixed by
 the focused procedure leaves an edit result and a publication decision; a
 finding the operator rejects as spurious leaves no record unless a stop asks.
 

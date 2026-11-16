@@ -28,7 +28,7 @@ def answers(items):
 
 
 PENDING = answers([{**item, "state": "pending"} for item in ITEMS])
-ANSWER = answers([{**item, **decision} for item, decision in zip(ITEMS, DECISIONS)])
+ANSWER = answers([{**item, **decision} for item, decision in zip(ITEMS, DECISIONS, strict=True)])
 
 
 def write(root, rel, text):
@@ -147,7 +147,7 @@ def test_cli_filters_and_json(repo, capsys):
     found = json.loads(capsys.readouterr().out)
     assert [e["decision"] for e in found] == ["approved", "rejected", "deferred"]
     assert set(found[0]) == {"note", "workflow", "run", "record", "class", "proposed-by", "decided-by",
-                             "decision", "unit", "item", "reason", "key", "at"}
+                             "decision", "unit", "item", "reason", "resolution", "refs", "key", "at"}
     assert cli.main(["decisions", "--class", "fix-report"]) == 0
     out = capsys.readouterr().out
     assert out.splitlines()[0] == "kb/theory/qux.md" and "fix-report" in out and NOTE not in out
