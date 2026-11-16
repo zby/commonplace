@@ -10,27 +10,18 @@ traits:
 
 # A software factory is family-scoped lifecycle production machinery
 
-Here, *software factory* refers to the family-specific production arrangement shared by Greenfield and Short's 2003 account and Greenfield's mature 2007 account. The stable idea is a configured environment carrying reusable production knowledge for a declared family of software products or solutions. The implementation and terminology are versioned: the 2003 account defines an extensible IDE configured with a software template, while the 2007 account explicitly defines a specialized development and runtime environment supplying integrated special-purpose assets.
+Here, *software factory* refers to the family-specific production arrangement described by Jack Greenfield and Keith Short in their 2003 paper and by Greenfield in his mature 2007 account. The stable idea is a configured environment carrying reusable production knowledge for a declared family of software products or solutions. The implementation and terminology are versioned: the 2003 account defines an extensible IDE configured with a software template, while the 2007 account explicitly defines a specialized development and runtime environment supplying integrated special-purpose assets.
 
 The [2003 paper](../sources/greenfield-short-software-factories-oopsla-2003.ingest.md) supplies the original `software schema`, `software template`, configured-IDE definition, developer roles, and factory-building example. The [2007 account](../sources/greenfield-mass-customizing-software-factories-2007.ingest.md) supplies the mature software-factory schema and template, lifecycle scope, two interacting development processes, factory specialization, factory composition, and feedback-supported revision. The available [2004 book preview](../sources/greenfield-short-software-factories-book-preview.ingest.md) confirms the book and its broad integration program but is too partial to ground its detailed ontology.
 
-The stable relation is:
-
-```text
-declared product or solution family
-  -> factory development organizes family production knowledge
-  -> schema plus packaged reusable assets
-  -> configured production environment
-  -> solution development creates and sustains family members
-  -> product-specific lifecycle work products express member state
-```
+Factory development organizes production knowledge for a declared family into a schema and reusable assets made available through a configured environment. Solution development uses that environment to create and sustain family members, whose state is expressed through product-specific lifecycle work products.
 
 ## Versioned ontology
 
 | Object | 2003 account | Mature 2007 account | Stable boundary |
 |---|---|---|---|
 | Product or solution family | A product family is defined through common features, known variation points, variants, constraints, and domain models that delimit prospective members. | Products or solutions vary in features and operational qualities within a family addressed by the factory. | Family scope is part of factory identity; membership is not whatever a tool happens to emit. |
-| Schema | A `software schema` is a graph of family viewpoints with associated domain-specific languages, constraints, and transformations. It describes the specifications needed to produce a member. | A `software factory schema` is a dynamic, family-specific architecture framework. Its viewpoints organize stakeholder concerns, artifacts, activities, supporting assets, and relationships across architecture and lifecycle. | The schema organizes family production knowledge. The later schema is richer and should not be projected backward as a mere rename. |
+| Schema | A `software schema` is a graph of family viewpoints—perspectives organized around stakeholder concerns—with associated domain-specific languages, constraints, and transformations. It describes the specifications needed to produce a member. | A `software factory schema` is a dynamic, family-specific architecture framework. Its viewpoints organize stakeholder concerns, artifacts, activities, supporting assets, and relationships across architecture and lifecycle. | The schema organizes family production knowledge. The later schema is richer and should not be projected backward as a mere rename. |
 | Template | The schema, the processes for capturing and using its information, and tools that automate those processes collectively form a `software template`. | A `software factory template` is a structured, installable package of customizable tools, processes, content, partial lifecycle artifacts, and implementation assets. | The template packages reusable machinery for installation; it is not itself the configured production environment. |
 | Configured factory | An extensible IDE configured with a software template for one product family becomes a software factory. | A software factory is a specialized development and runtime environment supplying an integrated set of special-purpose assets for a family. | The factory is the configured environment that makes family production machinery available in actual work. |
 | Reusable assets | Product-line developers build implementation assets such as architecture and components, plus process assets and tools. | Assets include guidance, processes, requirements and architecture prototypes, test suites, deployment and operational material, patterns, samples, templates, libraries, frameworks, models, configuration files, components, and tools. | Reusable assets carry or enact family-level production knowledge. |
@@ -41,11 +32,11 @@ declared product or solution family
 
 No retained Greenfield source puts all production knowledge in one model. It is distributed across:
 
-- family scope, commonality, variability, variants, and constraints;
-- schema viewpoints, concerns, relationships, languages, constraints, and transformations;
-- processes, activities, guidance, and expected work products;
-- tools, generators, frameworks, components, patterns, libraries, configuration files, and other implementation assets; and
-- reusable or prototypical lifecycle content such as requirements, architectures, tests, deployment topologies, operational facilities, maintenance plans, and migration pathways.
+- Family scope, commonality, variability, variants, and constraints;
+- Schema viewpoints, concerns, relationships, languages, constraints, and transformations;
+- Processes, activities, guidance, and expected work products;
+- Tools, generators, frameworks, components, patterns, libraries, configuration files, and other implementation assets; and
+- Reusable or prototypical lifecycle content such as requirements, architectures, tests, deployment topologies, operational facilities, maintenance plans, and migration pathways.
 
 Model-driven development is therefore one constituent technique rather than a synonym for the factory. Greenfield's program combines software product lines, model-driven development, guidance automation, and architecture frameworks. Product lines supply managed commonality and variability; models provide metadata for automation; guidance connects activities and assets; architecture frameworks organize viewpoints and lifecycle relationships.
 
@@ -79,7 +70,7 @@ The target and reuse scope distinguish operations that otherwise use similar ver
 - **Factory composition** combines production structures or viewpoints from multiple factories.
 - **Feedback-supported factory revision** changes reusable machinery across versions in response to defects, new demands, practices, technology, or variation not handled by the current asset base.
 
-Greenfield does not supply a closed algebra of these operations. In particular, changing a member-specific configured schema is not automatically factory specialization, and producing an artifact that happens to be another tool or factory does not automatically revise the producer.
+Greenfield does not give formal rules specifying how these operations combine and what their combinations produce. In particular, changing a member-specific configured schema is not automatically factory specialization, and producing an artifact that happens to be another tool or factory does not automatically revise the producer.
 
 ## The factory spans the lifecycle
 
@@ -91,14 +82,14 @@ This lifecycle scope is one reason a generic code generator or coding agent is n
 
 The Greenfield ontology does not by itself imply:
 
-- that the factory learns from production experience;
-- that its family scope or assets are acquired computationally;
-- that the configured environment acts without human developers;
-- that every useful production decision is inside one computational boundary;
-- that producing another factory is self-improvement; or
-- that one factory can handle previously unanticipated product families.
+- That the factory learns from production experience;
+- That its family scope or assets are acquired computationally;
+- That the configured environment acts without human developers;
+- That every useful production decision is inside one computational boundary;
+- That producing another factory is self-improvement; or
+- That one factory can handle previously unanticipated product families.
 
-Greenfield, Cook and Kent, and MDSoFa do provide real prior art for factories or tool factories producing other production machinery. The separate note [Factory construction is not evidence of production-knowledge acquisition](./factory-construction-does-not-establish-knowledge-acquisition.md) identifies the remaining distinction: constructing a producer from supplied family knowledge is not the same as acquiring or revising that knowledge from experience.
+Greenfield's factory-building example, Cook and Kent's Tool Factory proposal for generating language-development tools, and Langlois and Exertier's MDSoFa, a model-driven software-factory producer, provide real prior art for factories or tool factories producing other production machinery. The separate note [Factory construction is not evidence of production-knowledge acquisition](./factory-construction-does-not-establish-knowledge-acquisition.md) identifies the remaining distinction: constructing a producer from supplied family knowledge is not the same as acquiring or revising that knowledge from experience.
 
 ## Evidence limits
 
@@ -110,5 +101,4 @@ Relevant Notes:
 
 - [Software factory](./definitions/software-factory.md) — defined-in: supplies the compact term boundary derived from this reconstruction
 - [Factory development](./definitions/factory-development.md) — defined-in: isolates the process that constructs or revises reusable family machinery
-- [Factory construction is not evidence of production-knowledge acquisition](./factory-construction-does-not-establish-knowledge-acquisition.md) — extends: uses recursive-construction prior art to identify the acquisition boundary
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — compares: likewise treats behavior as determined by a configured arrangement of models, artifacts, tools, and runtime machinery
