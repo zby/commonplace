@@ -26,6 +26,11 @@ role. The revise workflow supplies these roles:
   specially protected, but claims still may not change generally.
 - `brief`: the note's write brief.
 - `answers`: the operator's answered list of this operation's proposals.
+- `kb-role`: what the note is for in the KB, and which of its terms and claims
+  other notes rely on. The full procedure supplies it from the note's role
+  report. Do not rename, redefine or drop a term or claim it lists as relied
+  on. When the operation would otherwise change one, leave it and say so in
+  the report. Terms and claims it lists as unused carry no such limit.
 
 An operation's own Steps section names any further role it reads, such as
 `diff` or `findings`. Use the supplied copies; do not read their origins.

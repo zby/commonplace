@@ -120,7 +120,10 @@ linking sources the note has not taken up, and which dependents a change
 would reach. `run gates NOTE --criteria role` collects the inbound contexts
 itself; `--input inbound=PATH` supplies them instead. Like the synthesis, it
 runs alone, its freshness is unassessed because other notes' text is an
-input, it writes no current result, and `status` refuses it.
+input, it writes no current result, and `status` refuses it. In a full run,
+each edit operation also receives the `## Role` section alone, as the input
+`kb-role`, and may not rename, redefine or drop a term or claim that section
+lists as relied on.
 
 **Connect.** [Connect](../instructions/cp-skill-connect/SKILL.md) keeps its
 own route. It writes a connect report, not a review result, and its

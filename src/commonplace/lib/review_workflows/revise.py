@@ -89,6 +89,7 @@ reported as unapproved and never silently used.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -542,10 +543,23 @@ def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_oper
                                job=f"{name}/apply", profile=profile, **route)
 
 
+KB_ROLE = "kb-role"
+"""The input role that hands an edit operation the `## Role` section of the note's role report."""
+
+
+def role_section(report: str) -> str | None:
+    """The `## Role` section of a role report's text, without its heading; None when it has none."""
+    found = re.search(r"^## Role[ \t]*\n(.*?)(?=^## |\Z)", report, re.MULTILINE | re.DOTALL)
+    return found.group(1).strip() or None if found else None
+
+
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
             profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
-            context: dict, contracts: dict[str, bytes]) -> str:
-    """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left."""
+            context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None = None) -> str:
+    """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left.
+
+    `kb_role` is the note's role in the KB, from the full procedure's role report; each pass receives it.
+    """
     run.accept(START, start)
     text = start
     findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
@@ -567,6 +581,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         roles = {"purpose": {"origin": "plan:purpose", "text": plan["purpose"]}, **brief,
                  **({"defend": {"origin": "plan:defend", "text": defend}} if defend else {}),
                  **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {}),
+                 **({KB_ROLE: kb_role} if kb_role else {}),
                  **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {})}
         profile = profiles[current.effort]
         try:
@@ -721,11 +736,16 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             context = {"mode": report.mode, "execution": instruction, **brief,
                        "contract-sha256": result_contract.fingerprint(contracts),
                        "pass-answers": [], "selections": []}
+            kb_role = None
             if named_plan is None:
                 reports = []
                 if review is not None:
                     supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
                     reports = [*depth_one_reports(root, artifact), *supplied]
+                    for given in supplied:
+                        section = role_section(given.text) if given.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None
+                        if section:
+                            kb_role = {"origin": given.path, "text": section}
                 findings = current_findings(root, artifact)
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,
@@ -759,7 +779,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
                 final = _passes(run, root, artifact, start, plan, known, profiles, report,
                                 {name: {"origin": origin, "text": value} for name, value in brief.items()},
-                                instruction, context, contracts)
+                                instruction, context, contracts, kb_role)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
                     unchanged_brief(root, artifact, start, brief)

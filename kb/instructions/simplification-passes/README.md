@@ -71,7 +71,9 @@ order. The procedures differ only in how the plan is made.
   compression synthesis report and the role report. If a depth 1 report
   proposes changing what the artifact is, the plan stops and nothing is
   edited. The role report shows which dependents rely on the artifact's
-  terms and claims; the stop names those a change would reach. The edited text is not
+  terms and claims; the stop names those a change would reach. Each pass
+  receives the report's `## Role` section as its `kb-role` input and leaves
+  the terms and claims it lists as relied on. The edited text is not
   reviewed again.
 
 ## Fixed-plan execution: the simple baseline

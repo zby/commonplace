@@ -955,6 +955,9 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
         "three at depth 1, the synthesis and the role report"
     assert any("## Role" in text for text in reports) and "role report" in call["inputs"]["criterion"]
     assert len(report["findings"]) == 6
+    passes = [c for c in captured_inputs(repo[2]) if c["kind"] not in ("assess", "review")]
+    assert passes and all(c["inputs"].get("kb-role") == "It supplies one term.\nRelied on: the term. Unused: none."
+                          for c in passes), "each pass receives the role section alone"
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["mode"] == "full"
     assert repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
