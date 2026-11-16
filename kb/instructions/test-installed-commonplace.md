@@ -97,7 +97,7 @@ launch mechanisms.
    baseline for final integrity checks. Probe command startup and library
    access in this later-session boundary. Each later stage gets only its
    prompt, the project, installed library, and that stage's permitted fixtures.
-   Stages 3 and 5 also mount the project read-only. The worker may use native
+   Stages 4 and 6 also mount the project read-only. The worker may use native
    sub-agents when an installed skill requires them.
 
 ## Run the scenarios
