@@ -16,7 +16,13 @@ from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
 from commonplace.lib.review_workflows import observations
 from commonplace.lib.review_workflows import revise as revise_module
+from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
+from tests.commonplace.review_workflows.result_helpers import (
+    copy_contract,
+    evidence,
+    findings,
+)
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
 FAKE = r'''
@@ -44,7 +50,7 @@ elif "The operator answered this operation's proposals" in task:
     kind = "apply"
 else:
     kind = "pass"
-found = re.search(r"simplification-passes/([a-z-]+)\.md`", frame)
+found = re.search(r"(?:simplification-passes|fix-warnings)/([a-z-]+)\.md`", frame)
 name = found.group(1) if found and kind != "assess" else "-"
 model = sys.argv[sys.argv.index("--model") + 1]
 with open(os.environ["FAKE_LOG"], "a") as log:
@@ -75,6 +81,9 @@ if kind == "assess":
     if "BADPLAN" in text and "was rejected" not in frame:
         passes.append("make-it-shine")
     plan = "purpose: p\ndefend: []\nstop: null\npasses:\n" + "".join(f"  - pass: {p}\n" for p in passes)
+    listed = re.findall(r"^- `([^`]+)` \(criterion `[^`]+`, depth", frame, re.MULTILINE)
+    if "FIXIT" in text and listed:
+        plan = plan.replace("passes:\n", f"passes:\n  - pass: fix-strategy-taxonomy\n    finding: {listed[0]}\n")
     if "STOP" in text:
         plan = "purpose: p\ndefend: []\npasses: []\nstop: rewrite-needed\n"
     if Path("new-proposal").exists():
@@ -120,6 +129,7 @@ NOTE_PATH = "kb/notes/alpha.md"
 PASSES = REPO_ROOT / "kb/instructions/simplification-passes"
 EDIT_TYPES = ("kb/types/edit-result.md", "kb/types/edit-result.schema.yaml", "kb/types/answers.md",
               "kb/types/answers.schema.yaml")
+FIX = "kb/instructions/fix-warnings/fix-strategy-taxonomy.md"
 ORDINARY = ["pass readability-and-flow big", "pass place-external-systems small", "pass opening-and-title big"]
 
 
@@ -128,7 +138,7 @@ def repo(tmp_path, monkeypatch):
     root = tmp_path / "repo"
     files = {rel: (REPO_ROOT / rel).read_text() for rel in NOTE_TYPE_SPECS}
     files |= {f"kb/instructions/simplification-passes/{p.name}": p.read_text() for p in PASSES.glob("*.md")}
-    files |= {rel: (REPO_ROOT / rel).read_text() for rel in EDIT_TYPES}
+    files |= {rel: (REPO_ROOT / rel).read_text() for rel in (*EDIT_TYPES, FIX)}
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -735,3 +745,123 @@ def test_decisions_command_lists_the_answers_of_a_revise_run(repo, capsys, tmp_p
         ("plain-wording", "item", "operator", "approved", "long enough -> gamma", None),
         ("plain-wording", "item", "operator", "rejected", "A note about -> beta", "a registered word"),
         ("publication", "bundle", "operator", "approved", final if len(final) <= 80 else final[:79] + "…", None)]
+
+
+# --- Focused plans and findings ------------------------------------------------------------
+
+GATE = "kb/instructions/review-gates/prose/residue.md"
+
+
+def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH):
+    """Write a current review result for `note` against `gate`; return its repository path.
+
+    `info` writes a `pass` result that holds one INFO-level finding.
+    """
+    root = repo[0]
+    path = root / gate
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"---\ndepth: {depth}\nwatches: [body]\n---\n\n# Residue\n\nFlag residue.\n")
+    copy_contract(root / "kb")
+    level = [{"scope": "document", "quotes": [], "reason": "A fixture note", "level": "info"}]
+    made = make_result(note, (root / note).read_text(), gate, path.read_text(),
+                       outcome="pass" if outcome == "info" else outcome,
+                       profile={"harness": "fake", "launch-model": "m", "effort": "low"}, model="fake-model-1",
+                       run="r", launch="L1", completed_at="2026-11-16T00:00:00Z", body="# Review\n\nFound it.\n",
+                       findings=level if outcome == "info" else findings(outcome), evidence=evidence(root))
+    return write_result(root, made).relative_to(root).as_posix()
+
+
+def test_pass_runs_a_one_entry_plan_and_repeats_replay_it(repo, capsys):
+    original = start(repo)
+    with pytest.raises(SystemExit):
+        main(["run", "revise", NOTE_PATH, "--pass", "readability-and-flow", "--assess"], harnesses=repo[1])
+    capsys.readouterr()
+    code, error, launches = revise(repo, capsys, NOTE_PATH, "--pass", "polish")
+    assert code == 2 and "unknown pass `polish`" in error and launches == []
+    code, ready, launches = revise(repo, capsys, NOTE_PATH, "--pass", "readability-and-flow", "--purpose", "Readers")
+    assert code == 0 and ready["mode"] == "fixed-plan" and launches == [ORDINARY[0]]
+    assert ready["plan"] == {"purpose": "Readers", "defend": [], "stop": None,
+                             "passes": [{"pass": "readability-and-flow", "scope": None}]}
+    assert not artifact_file(repo, ready, "assessment.md").exists() and note_text(repo) == original
+    code, error, _ = revise(repo, capsys, NOTE_PATH, "--purpose", "Others")
+    assert code == 2 and "takes purpose and defend from the plan" in error
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["waiting-for"] == ready["waiting-for"]
+    publish(repo, capsys, repeated)
+
+
+def test_pass_without_purpose_gets_the_focused_purpose(repo, capsys):
+    start(repo)
+    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--pass", "opening-and-title")
+    assert launches == [ORDINARY[2]] and ready["plan"]["purpose"] == revise_module.FOCUSED_PURPOSE
+    code, error, _ = revise(repo, capsys, NOTE_PATH, "--pass", revise_module.FIX)
+    assert code == 2 and "fixes one review finding" in error
+
+
+def test_finding_runs_the_fix_with_its_result_as_input(repo, capsys):
+    start(repo)
+    finding = stored(repo, "warn")
+    code, ready, launches = revise(repo, capsys, NOTE_PATH, "--finding", finding)
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big"]
+    assert ready["plan"]["passes"] == [{"pass": "fix-strategy-taxonomy", "scope": None, "finding": finding}]
+    [state] = ready["passes"]
+    assert state["name"] == "fix-strategy-taxonomy/prose/residue"
+    assert state["finding"] == finding and state["state"] == "applied"
+    [call] = captured_inputs(repo[2])
+    assert call["inputs"]["finding"] == (repo[0] / finding).read_text()
+    _, again, launches = revise(repo, capsys, NOTE_PATH, "--finding", str(repo[0] / finding))
+    assert launches == [] and again["waiting-for"] == ready["waiting-for"]
+    publish(repo, capsys, again)
+
+
+def test_finding_must_be_a_review_result_of_the_same_note(repo, capsys):
+    start(repo)
+    start(repo, path="kb/notes/beta.md", text=NOTE.format(words="beta"))
+    other = stored(repo, "warn", note="kb/notes/beta.md")
+    code, error, launches = revise(repo, capsys, NOTE_PATH, "--finding", other)
+    assert code == 2 and "not of kb/notes/alpha.md" in error and launches == []
+    code, error, _ = revise(repo, capsys, NOTE_PATH, "--finding", NOTE_PATH)
+    assert code == 2 and "is not a review result" in error
+
+
+def test_plan_entries_for_the_fix_carry_a_finding_at_its_criterion_depth(repo, capsys, tmp_path):
+    start(repo)
+    finding = stored(repo, "warn")
+    fix = {"pass": revise_module.FIX, "finding": finding}
+    path = tmp_path / "plan.yaml"
+    for entries, problem in (([{"pass": revise_module.FIX}], "fixes one review finding"),
+                             ([{"pass": "readability-and-flow", "finding": finding}], "takes no `finding`"),
+                             ([{"pass": "opening-and-title"}, fix], "must run before `opening-and-title`"),
+                             ([fix, fix], "is listed twice")):
+        path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None, "passes": entries}))
+        code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+        assert code == 2 and problem in error and launches == [], error
+    path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None,
+                                    "passes": [fix, {"pass": "readability-and-flow"}]}))
+    code, _, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big", ORDINARY[0]]
+
+
+def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
+    start(repo, "FIXIT")
+    _, plain, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    [call] = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"]
+    assert plain["findings"] == [] and not any(name.startswith("finding") for name in call["inputs"])
+    assert revise_module.FIX not in call["inputs"]["passes"]
+    warned = stored(repo, "warn")
+    stored(repo, "info", gate="kb/instructions/review-gates/prose/hedging.md")
+    failed = stored(repo, "fail", gate="kb/instructions/review-gates/sentence/packing.md", depth=5)
+    stale = stored(repo, "warn", gate="kb/instructions/review-gates/prose/stale.md")
+    gate = repo[0] / "kb/instructions/review-gates/prose/stale.md"
+    gate.write_text(gate.read_text() + "Changed criterion.\n")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert code == 0 and sorted(report["findings"]) == sorted([warned, failed]) and stale not in report["findings"]
+    assert launches == ["assess - big", "pass fix-strategy-taxonomy big", *ORDINARY]
+    call = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"][-1]
+    given = {name: text for name, text in call["inputs"].items() if name.startswith("finding")}
+    assert sorted(given.values()) == sorted((repo[0] / path).read_text() for path in (warned, failed))
+    assert revise_module.FIX in call["inputs"]["passes"]
+    assert report["passes"][0]["finding"] == report["plan"]["passes"][0]["finding"]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["waiting-for"]["key"] == report["waiting-for"]["key"]

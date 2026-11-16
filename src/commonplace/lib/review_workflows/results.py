@@ -393,6 +393,21 @@ def stored(root: Path) -> tuple[list[Row], list[Path]]:
     return rows, orphans
 
 
+def note_rows(root: Path, note: str | Path) -> list[Row]:
+    """A row for each stored result of one note whose criterion still exists, read from the note's result directory."""
+    note = _posix(note, label="note")
+    base = root / RESULTS / note
+    if not base.is_dir():
+        return []
+    rows = []
+    context = _ReadContext(root)
+    for path in sorted(path for path in base.rglob("*.md") if path.is_file()):
+        result = read_result(path, context=context.validation)
+        if result.note == note and not _is_orphan(root, result):
+            rows.append(_row(result, _freshness(root, result, context), path))
+    return rows
+
+
 def summarize(root: Path) -> Summary:
     """Counts over every stored result: fresh, stale and orphaned, and the fresh warn and fail outcomes."""
     rows, orphans = stored(root)

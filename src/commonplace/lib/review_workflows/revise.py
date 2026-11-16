@@ -25,6 +25,12 @@ never approves: only the recorded approved text becomes the operator's answer:
    A plan whose `stop` is set ends the run there. To replace a stopped or
    generated plan, supply `--plan`; editing the captured plan is not an
    override. A named plan bypasses assessment but still requires validation.
+   The assessor also receives the artifact's fresh stored review results
+   with outcome warn or fail (`current_findings()`); it launches no review.
+   A pass that declares `responds-to`, the fix of `FIX_REL`, takes one such
+   result as its `finding` input: its plan entry names the result file and
+   takes the depth of the result's criterion. `one_entry_plan()` writes the
+   plan of `--pass NAME` and `--finding RESULT`.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
@@ -75,6 +81,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+import yaml
+
 from commonplace.headless import operator
 from commonplace.headless.decisions import decide, parse, violations
 from commonplace.headless.harness import HARNESSES, Profile
@@ -94,7 +102,9 @@ from commonplace.lib.review_workflows import (
     edit_operations,
     edits,
     gates,
+    observations,
     result_contract,
+    results,
 )
 from commonplace.lib.review_workflows.edit_operations import EFFORTS
 from commonplace.lib.review_workflows.edits import (
@@ -109,6 +119,15 @@ from commonplace.lib.review_workflows.edits import (
 )
 
 PASSES_DIR = "instructions/simplification-passes"
+FIX_REL = "instructions/fix-warnings/fix-strategy-taxonomy.md"
+"""The edit operation that fixes one review finding; a plan entry for it names the finding."""
+FIX = Path(FIX_REL).stem
+FINDING = "finding"
+"""The plan field, and the input role, that names a review result file."""
+FINDING_OUTCOMES = ("warn", "fail")
+"""The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
+FOCUSED_PURPOSE = "Apply this one operation as its instruction directs; the operator named no other purpose."
+"""The purpose of a one-entry plan made with `--pass` or `--finding` when the operator gives none."""
 INSTRUCTION_REL = f"{PASSES_DIR}/revise-an-article-or-note.md"
 EXECUTION_REL = edit_operations.EXECUTION_REL
 ATTEMPTS = 3
@@ -138,12 +157,13 @@ class Pass:
     text: str
     description: str
     decision: str | None = None       # the edit operation's `decision`; None for a pass that is not one
+    responds_to: tuple[str, ...] = () # criteria whose findings it fixes; a pass declaring them takes a `finding`
 
 
 def passes() -> dict[str, Pass]:
-    """The library's simplification passes: each file of the directory whose frontmatter declares `effort`."""
+    """The operations a plan may name: each simplification pass whose frontmatter declares `effort`, and the fix."""
     found = {}
-    for path in sorted((library_root() / PASSES_DIR).glob("*.md")):
+    for path in [*sorted((library_root() / PASSES_DIR).glob("*.md")), library_root() / FIX_REL]:
         text = path.read_text(encoding="utf-8")
         data = frontmatter.parse(text).data
         if "effort" not in data:
@@ -152,8 +172,54 @@ def passes() -> dict[str, Pass]:
             raise ValueError(f"{path.name}: `effort` must be one of {', '.join(EFFORTS)} and `depth` an integer")
         found[path.stem] = Pass(path.stem, data["effort"], data.get("depth"),
                                 path.relative_to(library_root()).as_posix(), text, data.get("description", ""),
-                                data.get("decision"))
+                                data.get("decision"), tuple(data.get("responds-to") or ()))
     return found
+
+
+@dataclass(frozen=True)
+class Finding:
+    """A review result named as a plan entry's `finding`."""
+    path: str                         # repository path of the review result file
+    criterion: str                    # the criterion's identity
+    criterion_id: str
+    depth: int | None                 # the criterion file's `depth`; None when it declares none
+    outcome: str | None
+    text: str
+
+
+def criterion_depth(root: Path, criterion: str) -> int | None:
+    """The `depth` the criterion file declares; None when it declares none."""
+    data = frontmatter.parse(results.criterion_file(root, criterion).read_text(encoding="utf-8")).data
+    depth = data.get("depth")
+    return depth if isinstance(depth, int) and not isinstance(depth, bool) else None
+
+
+def read_finding(root: Path, artifact: str, raw: str) -> Finding:
+    """The review result at the repository path `raw`; ValueError unless it is a review result of `artifact`."""
+    path = observations.safe_path(root, raw)
+    if not path.is_file():
+        raise ValueError(f"finding not found: {raw}")
+    text = path.read_text(encoding="utf-8")
+    parsed = frontmatter.parse(text)
+    data = parsed.data if parsed.ok else {}
+    if data.get("type") != result_contract.TYPE or not isinstance(data.get("criterion"), str):
+        raise ValueError(f"finding {raw} is not a review result")
+    if data.get("note") != artifact:
+        raise ValueError(f"finding {raw} is a review result of {data.get('note')}, not of {artifact}")
+    criterion = data["criterion"]
+    try:
+        depth = criterion_depth(root, criterion)
+    except (OSError, ValueError) as error:
+        raise ValueError(f"finding {raw}: its criterion {criterion} cannot be read: {error}") from error
+    return Finding(path.relative_to(root).as_posix(), criterion, results.criterion_id(root, criterion), depth,
+                   data.get("outcome"), text)
+
+
+def current_findings(root: Path, artifact: str) -> list[Finding]:
+    """The artifact's fresh stored review results whose outcome is warn or fail."""
+    return [read_finding(root, artifact, row.path.relative_to(root).as_posix())
+            for row in results.note_rows(root, artifact)
+            if row.freshness.state == "fresh" and row.outcome in FINDING_OUTCOMES]
 
 
 def catalog(known: dict[str, Pass]) -> str:
@@ -163,8 +229,16 @@ def catalog(known: dict[str, Pass]) -> str:
             return " This workflow does not run it: it is left for the interactive path."
         if current.name == CONVERSATION:
             return " This workflow runs it only when `defend` is not empty."
+        if current.responds_to:
+            return (f" Each entry names one review result file as `{FINDING}` and takes the depth of that "
+                    "result's criterion; list one entry per finding.")
         return " The operator decides its proposals before any is applied." if current.decision == "per-item" else ""
-    lines = [f"- `{p.name}` (effort: {p.effort}; depth: {'any' if p.depth is None else p.depth}): "
+
+    def depth(current: Pass) -> str:
+        if current.responds_to:
+            return "the depth of its finding's criterion"
+        return "any" if current.depth is None else str(current.depth)
+    lines = [f"- `{p.name}` (effort: {p.effort}; depth: {depth(p)}): "
              f"{p.description.rstrip('.')}.{note(p)}" for p in known.values()]
     return ("Passes, by name. Run passes with a depth in increasing depth; a pass with depth `any` "
             "may run at any point.\n\n" + "\n".join(lines) + "\n")
@@ -172,63 +246,99 @@ def catalog(known: dict[str, Pass]) -> str:
 
 # --- The plan -------------------------------------------------------------------------
 
-def _order_problems(entries: list[dict], known: dict[str, Pass]) -> list[str]:
+def label(name: str, finding: Finding | None) -> str:
+    """An entry's name in jobs and run files: its pass, and for a finding also the finding's criterion id."""
+    return name if finding is None else f"{name}/{finding.criterion_id}"
+
+
+def _order_problems(entries: list[tuple[str, int | None]]) -> list[str]:
     problems, last = [], None
-    for entry in entries:
-        current = known[entry["pass"]]
-        if current.depth is None:
+    for name, depth in entries:
+        if depth is None:
             continue
-        if last is not None and current.depth < last.depth:
-            problems.append(f"`{current.name}` (depth {current.depth}) must run before `{last.name}` "
-                            f"(depth {last.depth}): list passes in increasing depth")
-        last = current if last is None or current.depth >= last.depth else last
+        if last is not None and depth < last[1]:
+            problems.append(f"`{name}` (depth {depth}) must run before `{last[0]}` "
+                            f"(depth {last[1]}): list passes in increasing depth")
+        last = (name, depth) if last is None or depth >= last[1] else last
     return problems
 
 
-def plan_checks(data: dict, known: dict[str, Pass]) -> list[str]:
-    """What a plan breaks beyond its schema: purpose, defend items, pass entries and depth order."""
+def plan_checks(data: dict, known: dict[str, Pass], root: Path, artifact: str) -> list[str]:
+    """What a plan breaks beyond its schema: purpose, defend items, pass entries, findings and depth order.
+
+    An entry for a pass that declares `responds-to` names one review result
+    of `artifact` as `finding` and takes the depth of that result's
+    criterion; no other entry names a finding.
+    """
     problems = [] if data["purpose"].strip() else ["`purpose` is empty"]
     if not all(isinstance(claim, str) and claim.strip() for claim in data["defend"]):
         problems.append("each `defend` item is a claim's text")
     entries, seen = [], set()
     for index, entry in enumerate(data["passes"], 1):
         if not isinstance(entry, dict) or not isinstance(entry.get("pass"), str):
-            problems.append(f"passes item {index} must be a mapping with `pass` and optional `scope`")
+            problems.append(f"passes item {index} must be a mapping with `pass`, optional `scope` "
+                            f"and, for a pass that fixes a finding, `{FINDING}`")
             continue
-        extra = sorted(set(entry) - {"pass", "scope"})
+        extra = sorted(set(entry) - {"pass", "scope", FINDING})
         if extra:
             problems.append(f"passes item {index} has unknown fields: {', '.join(extra)}")
-        if entry["pass"] not in known:
-            problems.append(f"unknown pass `{entry['pass']}`; choose from {', '.join(known)}")
-        elif entry["pass"] in seen:
-            problems.append(f"`{entry['pass']}` is listed twice")
-        else:
-            seen.add(entry["pass"])
-            entries.append(entry)
         if not isinstance(entry.get("scope"), (str, type(None))):
             problems.append(f"passes item {index}: `scope` must be text or null")
-    return problems + _order_problems(entries, known)
+        if entry["pass"] not in known:
+            problems.append(f"unknown pass `{entry['pass']}`; choose from {', '.join(known)}")
+            continue
+        current, finding = known[entry["pass"]], None
+        if current.responds_to:
+            if not isinstance(entry.get(FINDING), str):
+                problems.append(f"passes item {index}: `{current.name}` fixes one review finding; "
+                                f"name its result file as `{FINDING}`")
+                continue
+            try:
+                finding = read_finding(root, artifact, entry[FINDING])
+            except ValueError as error:
+                problems.append(f"passes item {index}: {error}")
+                continue
+        elif entry.get(FINDING) is not None:
+            problems.append(f"passes item {index}: `{current.name}` takes no `{FINDING}`")
+            continue
+        name = label(current.name, finding)
+        if name in seen:
+            problems.append(f"`{name}` is listed twice")
+            continue
+        seen.add(name)
+        entries.append((name, current.depth if finding is None else finding.depth))
+    return problems + _order_problems(entries)
 
 
-def read_plan(text: str, known: dict[str, Pass] | None = None) -> dict:
+def read_plan(text: str, root: Path, artifact: str, known: dict[str, Pass] | None = None) -> dict:
     """The plan in `text`, checked and normalized (`scope` present on each pass); ValueError lists its problems."""
     known = passes() if known is None else known
     data = parse(text)
     problems = (["the plan must be a YAML mapping"] if not isinstance(data, dict)
-                else violations(data, PLAN_SCHEMA) or plan_checks(data, known))
+                else violations(data, PLAN_SCHEMA) or plan_checks(data, known, root, artifact))
     if problems:
         raise ValueError("invalid plan: " + "; ".join(problems))
     return {"purpose": data["purpose"], "defend": list(data["defend"]), "stop": data["stop"],
-            "passes": [{"pass": entry["pass"], "scope": entry.get("scope")} for entry in data["passes"]]}
+            "passes": [{"pass": entry["pass"], "scope": entry.get("scope"),
+                        **({FINDING: entry[FINDING]} if entry.get(FINDING) is not None else {})}
+                       for entry in data["passes"]]}
+
+
+def one_entry_plan(name: str, finding: str | None, purpose: str | None, defend: list[str]) -> str:
+    """The plan of a focused run: one entry for the pass `name`, naming its finding when it takes one."""
+    entry = {"pass": name, **({FINDING: finding} if finding is not None else {})}
+    return yaml.safe_dump({"purpose": purpose or FOCUSED_PURPOSE, "defend": list(defend), "stop": None,
+                           "passes": [entry]}, sort_keys=False, allow_unicode=True)
 
 
 # --- Reports --------------------------------------------------------------------------------
 
 @dataclass
 class PassState:
-    name: str
+    name: str                         # the entry's label: its pass, and the finding's criterion id for a fix
     scope: str | None
     effort: str
+    finding: str | None = None        # repository path of the review result the entry fixes
     state: str = "pending"            # applied, no-change, skipped, problem, waiting or pending
     reason: str | None = None
     profile: dict | None = None       # the answering call's profile and recorded model
@@ -243,6 +353,7 @@ class ReviseReport:
     artifact: str
     mode: str = "fixed-plan"
     plan: dict | None = None
+    findings: list[str] = field(default_factory=list)   # review results the assessor received
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
     applied: bool = False             # the final text was written to the artifact
@@ -282,7 +393,7 @@ Judge this input text; the file on disk may differ. The instruction is \
 plan is validated and ordinary passes run automatically. \
 {purpose}{defend}{brief}The passes you may recommend are listed in {passes_input}; \
 choose only from them, by name.
-
+{findings}
 Output:
 - Write the assessment to {assessment}, as the instruction's step 1 describes.
 - Write the plan to {plan}: a YAML mapping holding exactly the decision fields \
@@ -290,9 +401,16 @@ below. `purpose` is the purpose the assessment works under; `defend` lists the \
 claims the assessment marks as divergence, each as the claim's text; `passes` \
 lists the recommended passes in run order, each a mapping with `pass` (its \
 name) and, when the pass should touch only part of the artifact, `scope` \
-naming that part; `stop` is null, or the reason when the instruction says to \
-report a rewrite and stop. {no_writes}
+naming that part{finding_field}; `stop` is null, or the reason when the \
+instruction says to report a rewrite and stop. {no_writes}
 """
+
+FINDINGS_INTRO = ("\nThe artifact's stored review results with outcome warn or fail are inputs. Each line gives "
+                  "the result file's repository path, its criterion and the depth the criterion declares:\n")
+REPORTS_INTRO = ("\nThe depth 1 review reports on this text are inputs. Each line gives the result file's "
+                 "repository path and its criterion:\n")
+FINDING_FIELD = (", and, for a pass that fixes a finding, `finding` naming that review result file's "
+                 "repository path, as listed above")
 
 # --- The workflow ------------------------------------------------------------------------------
 
@@ -301,14 +419,31 @@ def _rel(root: Path, path: Path) -> str:
 
 
 def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
-                        known: dict[str, Pass], brief: dict[str, str]) -> tuple[str, dict[str, str]]:
-    """The captured request, also bound into the final publication approval."""
+                        known: dict[str, Pass], brief: dict[str, str], findings: list[Finding] = (),
+                        reports: list[Finding] = ()) -> tuple[str, dict[str, str]]:
+    """The captured request, also bound into the final publication approval.
+
+    `findings` are the stored warn and fail results the assessor may turn
+    into plan entries; `reports` are review reports it reads. Without
+    findings, the passes that fix a finding are not offered.
+    """
+    offered = known if findings else {name: current for name, current in known.items() if not current.responds_to}
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
-              "passes": catalog(known), **brief}
+              "passes": catalog(offered), **brief}
     if purpose:
         inputs["purpose"] = purpose
     if defend:
         inputs["defend"] = "".join(f"- {claim}\n" for claim in defend)
+    listed = ""
+    for prefix, intro, given in (("finding", FINDINGS_INTRO, findings), ("report", REPORTS_INTRO, reports)):
+        if not given:
+            continue
+        listed += intro
+        for index, finding in enumerate(given, 1):
+            inputs[f"{prefix}-{index}"] = finding.text
+            depth = "" if prefix == "report" else f", depth {'none' if finding.depth is None else finding.depth}"
+            listed += (f"- `{finding.path}` (criterion `{finding.criterion_id}`{depth}, outcome "
+                       f"{finding.outcome}): {input_ref(f'{prefix}-{index}')}\n")
     prompt = ASSESS_PROMPT.format(
         problem=PROBLEM_REF, artifact=artifact, artifact_input=input_ref("artifact"),
         criterion_input=input_ref("criterion"), passes_input=input_ref("passes"),
@@ -316,15 +451,17 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, defend: l
                  else "The operator named no purpose: propose one as the instruction directs. "),
         defend=f"The operator marks these claims as defended: {input_ref('defend')}. " if defend else "",
         brief=f"The write brief is {input_ref('brief')}. " if brief else "",
+        findings=listed, finding_field=FINDING_FIELD if findings else "",
         assessment=output_ref("assessment"), plan=output_ref("plan"), no_writes=NO_WRITES)
     return prompt, inputs
 
 
-def _assess(run: Run, prompt: str, inputs: dict[str, str], known: dict[str, Pass], profile: Profile) -> Answer:
+def _assess(run: Run, root: Path, artifact: str, prompt: str, inputs: dict[str, str], known: dict[str, Pass],
+            profile: Profile) -> Answer:
     """Ask or replay the assessment and plan; keep the assessment and return its answer identity."""
     data, answer = decide(run, "assessment", prompt, PLAN_SCHEMA, output="plan", also=["assessment"],
-                          check=lambda data, _text: plan_checks(data, known), attempts=ATTEMPTS, inputs=inputs,
-                          profile=profile)
+                          check=lambda data, _text: plan_checks(data, known, root, artifact), attempts=ATTEMPTS,
+                          inputs=inputs, profile=profile)
     if data is None:
         raise Stop(f"assessment: worker problem: {answer.problem}")
     run.accept(ASSESSMENT, answer.outputs["assessment"])
@@ -383,11 +520,15 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left."""
     run.accept(START, start)
     text = start
-    report.passes = [PassState(entry["pass"], entry["scope"], known[entry["pass"]].effort) for entry in plan["passes"]]
+    findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
+                for entry in plan["passes"] if entry.get(FINDING)}
+    entries = [(known[entry["pass"]], findings.get(entry.get(FINDING))) for entry in plan["passes"]]
+    report.passes = [PassState(label(current.name, finding), entry["scope"], current.effort,
+                               finding.path if finding else None)
+                     for entry, (current, finding) in zip(plan["passes"], entries, strict=True)]
     defend = "".join(f"- {claim}\n" for claim in plan["defend"])
     route = {"contracts": contracts, "execution": instruction}
-    for state in report.passes:
-        current = known[state.name]
+    for state, (current, finding) in zip(report.passes, entries, strict=True):
         if current.name in INTERACTIVE or (current.name == CONVERSATION and not defend):
             state.state = "skipped"
             state.reason = ("left for the interactive path: "
@@ -397,7 +538,8 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
         operation = edit_operations.parse(artifact_identity(root, library_root() / current.rel), current.text)
         roles = {"purpose": {"origin": "plan:purpose", "text": plan["purpose"]}, **brief,
                  **({"defend": {"origin": "plan:defend", "text": defend}} if defend else {}),
-                 **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {})}
+                 **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {}),
+                 **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {})}
         profile = profiles[current.effort]
         try:
             if operation.decision == "per-item":
@@ -407,22 +549,22 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                         return text
                     continue
             else:
-                edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=current.name,
+                edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=state.name,
                                            profile=profile, **route)
         except OutOfAttempts as spent:
             state.state, state.reason = "problem", str(spent)
             continue
-        context["pass-answers"].append({"pass": current.name, "key": edit.answer.key, "result": edit.text,
+        context["pass-answers"].append({"pass": state.name, "key": edit.answer.key, "result": edit.text,
                                         "candidate": edit.candidate})
         state.profile, state.model = edit.data["profile"], edit.data["model"]
         if edit.outcome == "problem":
             state.state, state.reason = "problem", f"worker problem: {edit.answer.problem}"
-            raise Stop(f"{current.name}: {state.reason}")
-        state.report = _rel(root, run.accept(f"reports/{current.name}.md", edit.body))
+            raise Stop(f"{state.name}: {state.reason}")
+        state.report = _rel(root, run.accept(f"reports/{state.name}.md", edit.body))
         if edit.outcome == "unchanged":
             state.state = "no-change"
             continue
-        state.text = report.proposed = _rel(root, run.accept(f"texts/{current.name}.md", edit.candidate))
+        state.text = report.proposed = _rel(root, run.accept(f"texts/{state.name}.md", edit.candidate))
         state.state, text = "applied", edit.candidate
     return text
 
@@ -454,14 +596,16 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                        "contract-sha256": result_contract.fingerprint(contracts),
                        "pass-answers": [], "selections": []}
             if named_plan is None:
-                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief)
+                findings = current_findings(root, artifact)
+                report.findings = [finding.path for finding in findings]
+                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings)
                 context.update({"assessment": inputs, "assessment-prompt": prompt})
-                assessed = _assess(run, prompt, inputs, known, profiles["judgment"])
+                assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]
                 context["assessment-answer"] = {"key": assessed.key, "outputs": assessed.outputs}
             else:
                 proposed = named_plan
-            plan = report.plan = read_plan(proposed, known)
+            plan = report.plan = read_plan(proposed, root, artifact, known)
             context["plan"] = plan
             relevant = known if named_plan is None else {entry["pass"]: known[entry["pass"]] for entry in plan["passes"]}
             efforts = set(profiles) if named_plan is None else {current.effort for current in relevant.values()}

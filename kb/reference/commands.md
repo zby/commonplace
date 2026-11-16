@@ -463,8 +463,18 @@ a fixture created from an edit observation.
 The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
 Do not also supply `--purpose` or `--defend`: the plan owns those fields.
-`run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
+A plan entry for a pass that declares `responds-to` also names the review
+result it fixes as `finding`, and takes the depth of that result's criterion.
+`run revise ARTIFACT --pass NAME [--purpose TEXT] [--defend CLAIM ...]` writes
+and runs a one-entry plan for that pass. `run revise ARTIFACT --finding RESULT
+[--purpose TEXT] [--defend CLAIM ...]` writes and runs a one-entry plan for
+[fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
+with RESULT as its `finding`; RESULT must be a review result of ARTIFACT.
+Both are fixed-plan runs, and their purpose and defended claims go into the
+plan. `run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
+The assessor also receives the artifact's fresh stored review results with
+outcome `warn` or `fail`; no review is launched.
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text

@@ -45,6 +45,23 @@ without `depth` may run at any point.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.
 
+## Three ways to make a plan
+
+`commonplace-review run revise` runs a plan: a list of passes in depth
+order. The procedures differ only in how the plan is made.
+
+- **Focused.** The operator names one pass or one review finding.
+  `--pass NAME` runs a one-entry plan for that pass on the whole artifact.
+  `--finding RESULT` runs a one-entry plan for
+  [fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md),
+  with that review result of the artifact as its `finding` input. Nothing
+  is assessed and nothing is reviewed. `--purpose` and `--defend` go into
+  the plan; without `--purpose`, the plan states that the operator named
+  no other purpose. `--plan FILE` supplies any other fixed plan.
+- **Quick.** `--assess` asks one assessor to choose the passes. It reads the
+  artifact and the artifact's fresh stored `warn` and `fail` review
+  results, when any exist. It launches no review.
+
 ## Fixed-plan execution: the simple baseline
 
 Use one pass to evaluate an editing operation independently of planning.
@@ -66,6 +83,8 @@ the run's generated `artifact/` directory, and run:
 ```bash
 commonplace-review run revise ARTIFACT --plan PLAN.yaml
 ```
+
+For one pass with no scope, `--pass NAME` writes this plan for you.
 
 This route makes no assessment call and does not choose or add passes. The
 worker still exercises judgment within the assigned operation. The plan owns
@@ -104,7 +123,8 @@ in these note workflows; Python tests belong to development of the machinery.
 
 `commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
 commissions assessment and pass selection, then runs the validated plan without
-a routine plan-approval stop. The planning instruction's "Run it as a workflow"
+a routine plan-approval stop. The assessor also receives the artifact's fresh
+`warn` and `fail` review results. The planning instruction's "Run it as a workflow"
 section describes its additional behavior. `run full-pass` also contains
 planning and disposition choices. Evaluate those choices separately from
 individual review and editing operations before relying on their composition.

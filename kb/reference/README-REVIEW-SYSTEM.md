@@ -167,7 +167,9 @@ kinds, so a finding and the edit that answers it sit at the same depth.
 The values are best-effort declarations. Each file holds its own value;
 the table summarizes them and the file governs. No code orders review
 operations by depth yet: the revise workflow checks the depth order of
-its passes, and nothing else reads the field. The type and collection
+its passes, places a plan entry that fixes a finding at the depth of the
+finding's criterion, and shows the assessor each finding's depth. Nothing
+else reads the field. The type and collection
 conformance reviews declare no depth, because their criterion is a type
 spec or a collection contract. Expect the first runs of an ordered
 procedure to show wrong values, and correct them in the files.
@@ -427,8 +429,18 @@ items ([ADR 134](./adr/134-stops-record-the-operators-answers-in-one-typed-file.
 
 **Revision.** `commonplace-review run revise` applies the
 [simplification passes](../instructions/simplification-passes/README.md) to
-one artifact. A new run requires `--plan FILE` for fixed work or `--assess`
-for assessment and automatic pass selection. Within the chosen mode, ordinary
+one artifact. It runs a plan, and the procedures differ in how the plan is
+made ([three ways](../instructions/simplification-passes/README.md#three-ways-to-make-a-plan)).
+A new run requires one choice. The focused procedure is fixed work:
+`--pass NAME` writes a one-entry plan for one pass, `--finding RESULT` writes
+a one-entry plan that runs
+[fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
+with that review result of the artifact as its `finding` input, and
+`--plan FILE` supplies any other plan. The quick procedure is `--assess`:
+one assessor chooses the passes from the artifact and its fresh stored
+`warn` and `fail` review results, and no review is launched. A plan entry
+for a pass that declares `responds-to` names its `finding` and takes the
+depth of that finding's criterion. Within the chosen mode, ordinary
 intermediate work is preauthorized. The assessment report and generated plan
 stay in the run for inspection; the validated plan runs without routine
 approval. `--plan FILE` also supplies a validated override of a stopped plan.

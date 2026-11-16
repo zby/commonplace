@@ -45,6 +45,18 @@ instead of assessing again.
    claim questions for the operator, applied as their own commits after
    approval, not passes.
 
+   Review findings may come with the artifact. Each is a stored review
+   result with outcome `warn` or `fail`, and each names its criterion and
+   the depth that criterion declares. Read them with the artifact. By
+   default, a finding at depth *n* points at the pass at depth *n*. A
+   finding whose criterion is named in a pass's `responds-to` may instead
+   become a plan entry for that pass, with the result file as the entry's
+   `finding`. That entry takes the depth of the finding's criterion in the
+   order. [Fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md)
+   is such a pass: it changes only the passage the finding names. Recommend
+   the change a finding points at only when its value against the purpose
+   is clear. List the findings you do not act on once, each with its reason.
+
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,
    since they share one write scope. Order them by depth, not by the
@@ -99,7 +111,13 @@ instead of assessing again.
 ## Run it as a workflow
 
 `commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
-runs these steps with headless workers, which never write the checkout. Its
+runs these steps with headless workers, which never write the checkout. This
+is the quick procedure. The assessment also receives the artifact's fresh
+stored review results with outcome `warn` or `fail`, when any exist; the
+command launches no review. Results with only INFO-level findings are not
+given. The focused procedure makes no assessment: `--pass NAME` runs a
+one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
+that fixes that review result of the artifact. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
 Repeating alone never approves the proposal or starts its dependent work.
@@ -121,13 +139,15 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    `artifact/` for inspection and proceeds with the validated plan.
    `--plan FILE` supplies an explicit input or override without assessment
    or approval, including replacement of a stopped plan. The plan holds
-   `purpose`, `defend`, `passes` in run order (each a `pass` name and an
-   optional `scope`) and `stop`. A plan with `stop` set ends the run without
+   `purpose`, `defend`, `passes` in run order (each a `pass` name, an
+   optional `scope` and, for a pass that declares `responds-to`, the
+   `finding` it fixes) and `stop`. A plan with `stop` set ends the run without
    editing the artifact. To run passes instead, supply a replacement with
    `stop` cleared and the desired passes through `--plan`; editing the
    retained `artifact/plan.yaml` alone is not an override.
-   The command rejects a plan that names an unknown pass, misses a field or
-   breaks the depth order the pass files declare. A replacement supplied
+   The command rejects a plan that names an unknown pass, misses a field,
+   names a `finding` that is not a review result of the artifact, or breaks
+   the depth order the pass files and the findings' criteria declare. A replacement supplied
    with `--plan` reuses calls whose inputs did not change and reruns the others.
 2. Step 2 runs each listed pass as one run of the edit route, the same one
    `commonplace-review run edit` uses, on the profile from
