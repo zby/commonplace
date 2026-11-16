@@ -256,14 +256,6 @@ def result_text(result: Result) -> str:
     return result_contract.render(data, result.body)
 
 
-def assessment_text(result: Result) -> str:
-    """Self-contained judgment content for a consumer, without executable evidence references."""
-    data = {"type": result_contract.TYPE, "findings": result.findings, "outcome": result.outcome}
-    if result.attack_outcome is not None:
-        data["attack-outcome"] = result.attack_outcome
-    return result_contract.render(data, result.body)
-
-
 def from_candidate(candidate: result_contract.Candidate) -> Result:
     return Result(**{field: candidate.data[key] for key, field in _KEYS.items()},
                   attack_outcome=candidate.data.get("attack-outcome"), body=candidate.body)

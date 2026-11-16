@@ -13,7 +13,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 ## When this does not apply
 
-- **Renaming or moving.** Use `commonplace-relocate-note` or `commonplace-relocate-directory`, which rewrite inbound links for you. Step 9 still applies afterwards: relocation does not rekey review results or the full-pass packet, so a rename orphans them exactly as a deletion does.
+- **Renaming or moving.** Use `commonplace-relocate-note` or `commonplace-relocate-directory`, which rewrite inbound links for you. Step 9 still applies afterwards: relocation does not rekey review results, so a rename orphans them exactly as a deletion does.
 - **Closing a workshop.** Use the closure protocol in `kb/work/COLLECTION.md` — extract, delete the directory, remove the `kb/work/README.md` entry. Steps 5 and 6 have nothing to act on, since no library artifact links into a workshop, and step 8 is a deliberate non-goal there: workshops are published but their URLs are not durable addresses, so closure leaves them dead on purpose. Step 9 still applies if a workshop file was ever reviewed.
 - **Retiring a term** from the project vocabulary. That is an ADR-scale change affecting every occurrence across the corpus, not a single-artifact operation.
 
@@ -97,7 +97,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
    Skipping this breaks the artifact's public URL with no local symptom. Point at a page that exists, never at another redirect key — the plugin emits one hop per entry, so a chain lands on a page that only redirects again. If the successor is itself the target of older entries, repoint those to the new page in the same edit. `commonplace-validate redirects` enforces all three conditions.
 
-9. **Delete its review state.** Both destinations orphan it: review results and the full-pass packet are keyed by the note's path, which archiving changes and deletion removes. Results are not rekeyed when a note moves. The state is untracked, so this step changes nothing in Git.
+9. **Delete its review state.** Both destinations orphan it: review results are keyed by the note's path, which archiving changes and deletion removes. Results are not rekeyed when a note moves. The state is untracked, so this step changes nothing in Git.
 
    ```bash
    RETIRED=kb/theory/<artifact>.md
@@ -105,7 +105,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
      | python3 -c 'import json, sys; [print(p) for p in json.load(sys.stdin)["orphaned"] if p.startswith("kb/reports/state/review/results/" + sys.argv[1] + "/")]' "$RETIRED"
    ```
 
-   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Delete `kb/reports/state/review/packets/<artifact-path>` if it exists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
+   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Leave any full-pass packet under `kb/reports/state/review/packets/`: it records an operator decision of a retired procedure, which `commonplace-review decisions` still lists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
 
 ## Verify
 

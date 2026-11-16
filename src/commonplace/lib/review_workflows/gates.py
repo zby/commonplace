@@ -39,8 +39,7 @@ replay.
 `sweep()` is the `run gates` command. It reads the notes from disk, skips
 pairs whose result file is fresh unless forced, runs `ask()` in its own run
 between two checkout snapshots, and writes each result file as its answer
-arrives, so results already written stay after a stop. The full pass uses
-`ask()` alone and writes its result files once, at its end.
+arrives, so results already written stay after a stop.
 
 The compression synthesis judges findings supplied as operational inputs,
 which no freshness hash covers. `sweep()` therefore runs it only alone, on one

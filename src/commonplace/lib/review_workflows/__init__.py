@@ -3,12 +3,13 @@
 ``criteria`` resolves criterion requests (catalog gates, bundles and the
 ``type``, ``collection`` and ``critique`` lenses) into the applicable (note,
 criterion) pairs; a criterion is named by its artifact identity, so library
-files of an installed project work as this checkout's kb/ does. ``outcomes``
-is the strict result-line parser. ``results`` is the durable state: one file
-per reviewed pair carrying the hashes of the texts it was produced from, and
-the pure freshness, status and summary functions over those files. ``gates``
-is the gate sweep that asks workers for the stale pairs, one call per pair or
-per note and bundle, and writes those files. ``full_pass`` is the full
-improvement pass over one note: the methods, the gate sweep, a packet, and
-for an accepted ``keep`` the edit and closing cycle whose text code writes.
+files of an installed project work as this checkout's kb/ does. ``results``
+is the durable state: one file per reviewed pair carrying the hashes of the
+texts it was produced from, and the pure freshness, status and summary
+functions over those files. ``gates`` is the gate sweep that asks workers for
+the stale pairs, one call per pair or per note and bundle, and writes those
+files. ``edit_operations`` runs one edit operation on one text. ``revise`` is
+the one runner of the improvement procedures: it executes a plan of edit
+operations and publishes the approved final text once. ``decisions`` lists
+the operator decisions already on disk.
 """

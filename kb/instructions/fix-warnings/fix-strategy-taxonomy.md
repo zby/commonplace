@@ -1,5 +1,5 @@
 ---
-description: "Use to fix one review finding on one note by the named strategy whose pattern it matches; also the codebook of named fix strategies that fix reports cite"
+description: "Use to fix one review finding on one note by the named strategy whose pattern it matches; also the codebook of named fix strategies"
 type: types/edit-operation.md
 effort: judgment
 decision: none
@@ -13,7 +13,7 @@ matches, changing only the passage the finding names.
 
 Each strategy below names a recurring pattern of review warning and its
 appropriate fix. The strategies are organized by the review check they most
-commonly address, but a strategy can apply across checks. Fix reports cite a
+commonly address, but a strategy can apply across checks. The report names a
 strategy by its anchor, such as `fix-strategy-taxonomy.md#stale-paths`. When
 a fix fits no listed strategy, the report names it `new-pattern`; recurring
 new patterns are added here.
@@ -121,4 +121,4 @@ what the note argues is reported, not applied.
 
 ---
 
-*New strategies are added when `new-pattern` reports from fix sweeps show recurring patterns.*
+*New strategies are added when `new-pattern` reports show recurring patterns.*

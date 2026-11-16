@@ -16,8 +16,9 @@ Effort: simple. Search, classify, and restore against a recorded finding; the fi
 
 The caller supplies, beside the text: the pass's diff as the `diff` input,
 and the findings that motivated the pass as inputs whose role begins with
-`findings`, such as `findings` or `findings-semantic`. A full-pass packet's
-findings are its method reports, one input each. Use only these files.
+`findings`, such as `findings` or `findings-semantic`. When the pass was a
+full revise run, its findings are the review results and reports of the
+run's review step, one input each. Use only these files.
 
 1. List each passage the diff weakened: a mapping, contrast, example, price,
    or link that the old text had and the new text does not.

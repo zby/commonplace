@@ -4,8 +4,6 @@
     commonplace-review run gates NOTES... (--criteria C... | --all-gates) [--grouping {pair,bundle}]
                                  [--profile NAME] [--max-workers N] [--timeout SECONDS] [--force]
                                  [--resume RUN_DIR]
-    commonplace-review run full-pass NOTE [--direction TEXT] [--profile NAME] [--max-workers N]
-                                     [--timeout SECONDS]
     commonplace-review run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]
                                 [--timeout SECONDS]
     commonplace-review run edit --fixture PATH
@@ -14,7 +12,6 @@
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
-    commonplace-review packet NOTE_OR_PACKET       # whether a full-pass packet's hashes match the files now
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
     commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
@@ -47,33 +44,16 @@ note or criterion is gone, are listed apart and are not filtered; removing
 one is deleting its file. `--json` gives each row's result file, so a fixer
 can read the finding.
 
-`run full-pass` and `run revise` keep their run under
-kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<first 12
+`run revise` keeps its run under
+kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/. Repeating the command on the same note text
 continues that run: answered calls replay. An edited note has another hash,
 so the same command opens a new run. A repeat reuses the options the run
-recorded (full pass: `--profile` and `--direction`; revise: `--purpose`,
-`--defend` and the effort profiles); an option given on a repeat replaces
-the recorded value.
-Each workflow writes the note at most once, at its end, and only from the
+recorded (`--purpose`, `--defend` and the effort profiles); an option given
+on a repeat replaces the recorded value.
+The workflow writes the note at most once, at its end, and only from the
 text the run started from; a note changed during the run is a conflict, and
 the proposed text stays in the run directory.
-
-`run full-pass` runs the full improvement pass over one note (see
-`commonplace.lib.review_workflows.full_pass` and the library's
-instructions/run-full-improvement-pass-on-note.md). It writes the note only
-for an accepted `keep` whose closing is `ready` and whose publication answers
-approve the candidate, writes the gate result files
-once at its end for the text the note then holds, keeps the note's current
-packet under kb/reports/state/review/packets/, and returns a pending packet
-that still matches the note instead of starting. `--direction` hands the
-packet ask the operator's direction, such as the choice an undetermined
-update asks for; with it, a pending packet does not block, and the packet is
-decided again over the same method reports. It prints a JSON report and
-exits 0 for an accepted edit, a publication-approval stop or a hand-back packet
-with a clean guard, and for a returned pending packet; 1 for a stop, a conflict or a guard change;
-and 2 when the command failed. `packet` exits 0 when every recorded hash
-matches, 1 otherwise.
 
 `run edit` runs one edit operation (types/edit-operation.md) on one note and
 writes nothing to the checkout (see `commonplace.lib.review_workflows.edit_operations`).
@@ -90,14 +70,14 @@ It exits 0 for an accepted result other than `problem` with a clean guard,
 
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
-instructions/simplification-passes/revise-an-article-or-note.md). The first
-invocation requires a fixed plan or `--assess` to choose the work through
-assessment. A fixed plan is `--plan FILE`, `--pass NAME` (a one-entry plan for
-that pass) or `--finding RESULT` (a one-entry plan that fixes that review
-result of the artifact). `--assess` and the one-entry plans use `--purpose`
-and `--defend`; a plan file carries those fields itself. The assessor also
-receives the artifact's fresh stored `warn` and `fail` review results.
-`--full` first runs every review operation that declares a `depth` on the
+instructions/simplification-passes/revise-an-article-or-note.md). It runs a
+plan, and the first invocation chooses how the plan is made: focused (a fixed
+plan), quick (`--assess`) or full (`--full`). A fixed plan is `--plan FILE`,
+`--pass NAME` (a one-entry plan for that pass) or `--finding RESULT` (a
+one-entry plan that fixes that review result of the artifact). `--assess`,
+`--full` and the one-entry plans use `--purpose` and `--defend`; a plan file
+carries those fields itself. The assessor also receives the artifact's fresh
+stored `warn` and `fail` review results. `--full` first runs every review operation that declares a `depth` on the
 artifact, as `run gates` would on the profile file's `default` profile, in
 runs under the revise run directory; then the assessor also receives the
 depth 1 reports and the compression synthesis report, and may stop the plan on a proposal to change the artifact. Assessment runs the
@@ -107,7 +87,7 @@ plan's settled passes automatically, retaining `artifact/assessment.md` and
 does not change workflow inputs. Changed artifact text starts a new run and
 requires the mode again; runs recorded without a mode also require an explicit
 choice before continuing. `run gates NOTE --criteria GATE-ID --grouping pair`
-is the report-only, single-criterion baseline; `run full-pass` includes planning.
+is the report-only, single-criterion baseline.
 A `per-item` pass (plain-wording, abstractions) stops with the pending answers
 file for its proposals in `artifact/<pass>-answers-<key>.md`: record the
 operator's decision on each item, approve, then repeat. A stop for the operator is a normal end. The JSON report's
@@ -121,7 +101,7 @@ approval, and an old approval key is refused. Only the operator, or an agent
 on the operator's stated word for that proposal, may approve. The
 artifact is written once, only after every pass ended `applied`, `no-change` or
 `skipped` and final publication is approved. Otherwise `not-applied` explains
-why the candidate remains private. Both editing workflows retain `final.md`,
+why the candidate remains private. The workflow retains `final.md`,
 `final.diff` and `publication-answers.md` under the run's `artifact/`. Inspect
 the candidate and diff, record the operator's decision on the answers file's
 one item, which names the candidate's hash, approve the file, then repeat.
@@ -162,7 +142,6 @@ from commonplace.lib.review_workflows import (
     edit_operations,
     edits,
     fixtures,
-    full_pass,
     gates,
     observations,
     result_contract,
@@ -219,13 +198,6 @@ def _parser() -> argparse.ArgumentParser:
                         help="supply missing historical dirty content; bytes must match its recorded hash")
     create.add_argument("--substitute-current-executor", action="store_true",
                         help="explicitly retain the current executable as a substitute baseline")
-    full = workflows.add_parser("full-pass", help="run the full improvement pass over one note")
-    full.add_argument("note")
-    full.add_argument("--direction", help="the operator's direction for the packet, which prevails; "
-                      "recorded with the run, and a pending packet does not block it")
-    full.add_argument("--profile", help=f"worker profile from the library's {gates.PROFILES_REL}")
-    full.add_argument("--max-workers", type=int, default=4, help="workers running at once")
-    full.add_argument("--timeout", type=float, help="seconds a launch may take")
     edit = workflows.add_parser("edit", help="run one edit operation on one note; writes nothing to the checkout")
     edit.add_argument("operation", nargs="?", help="the operation: a repository or library path, "
                       "such as instructions/simplification-passes/plain-wording.md")
@@ -260,12 +232,10 @@ def _parser() -> argparse.ArgumentParser:
     approve.add_argument("run", type=Path)
     approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
     approve.add_argument("--key", required=True, help="proposal key from the waiting-for report")
-    packet = commands.add_parser("packet", help="check a full-pass packet's recorded hashes against the files")
-    packet.add_argument("target", help="a note, or its packet under kb/reports/state/review/packets/")
     retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
     retry.add_argument("run", type=Path)
-    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`, or a full-pass job "
-                       "such as `packet` or `initial/compression`")
+    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`, or a revise job "
+                       "such as `assessment`")
     retry.add_argument("--key", help="the answer to dismiss; otherwise the worker problems")
     acknowledge = commands.add_parser(
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
@@ -280,7 +250,8 @@ def _parser() -> argparse.ArgumentParser:
     create_answers.add_argument("--to", help="where to write it (default: <question stem>-answers.md beside "
                                 "the question); an existing file is never replaced")
     listed = commands.add_parser("decisions", help="list operator and agent decisions from run operator records, "
-                                 "packets and fix reports; read-only, computes no statistic")
+                                 "and from packets and fix reports of the retired procedures; read-only, "
+                                 "computes no statistic")
     listed.add_argument("--note", help="only this artifact path, such as kb/theory/foo.md")
     listed.add_argument("--class", dest="cls", metavar="NAME",
                         help="only this action class: a pass name, publication, packet or fix-report")
@@ -481,23 +452,6 @@ def _note(root: Path, raw: str) -> str:
     return path.relative_to(root).as_posix()
 
 
-def _full_pass(root: Path, arguments: argparse.Namespace, harnesses) -> int:
-    note = _note(root, arguments.note)
-    blocked = None if arguments.direction else full_pass.blocking(root, note)
-    if blocked is not None:                               # no run directory for a pass that does not start
-        print(json.dumps(blocked.to_dict(), indent=2))
-        return 0
-    run_dir = edits.run_dir(root, "full-pass", note)
-    named = arguments.profile is not None or not (run_dir / SWEEP).is_file()
-    options = _options(run_dir, {"profile": asdict(load_profile(root, arguments.profile, gates.profiles()))
-                                 if named else None, "direction": arguments.direction})
-    report = full_pass.full_pass(root, note, Profile(**options["profile"]), run_dir,
-                                 max_workers=arguments.max_workers, timeout=arguments.timeout,
-                                 direction=options.get("direction"), harnesses=harnesses)
-    print(json.dumps(report.to_dict(), indent=2))
-    return 0 if report.ok else 1
-
-
 def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     artifact = _note(root, arguments.artifact)
     if not artifact.endswith(".md"):
@@ -544,20 +498,6 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                            timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
-
-
-def _packet(root: Path, arguments: argparse.Namespace) -> int:
-    path = (root / arguments.target).resolve()
-    packets = (root / full_pass.PACKETS).resolve()
-    if not path.is_relative_to(packets):                  # a note, which a resolution may have removed
-        if not path.is_relative_to(root):
-            raise ValueError(f"not in the repository: {arguments.target}")
-        path = full_pass.packet_file(root, path.relative_to(root).as_posix())
-    if not path.is_file():
-        raise ValueError(f"no packet: {path.relative_to(root).as_posix()}")
-    checked = full_pass.check_packet(root, path)
-    print(json.dumps(checked, indent=2))
-    return 0 if checked["matching"] else 1
 
 
 def _answers(root: Path, arguments: argparse.Namespace) -> int:
@@ -638,15 +578,11 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
         if arguments.command == "status":
             return _status(root, arguments)
         if arguments.command == "run":
-            if arguments.workflow == "full-pass":
-                return _full_pass(root, arguments, harnesses)
             if arguments.workflow == "revise":
                 return _revise(root, arguments, harnesses)
             if arguments.workflow == "edit":
                 return _edit(root, arguments, harnesses)
             return _gates(root, arguments, harnesses)
-        if arguments.command == "packet":
-            return _packet(root, arguments)
         if arguments.command == "decisions":
             return _decisions(root, arguments)
         if arguments.command == "answers":

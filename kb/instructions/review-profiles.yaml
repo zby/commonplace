@@ -6,8 +6,8 @@
 # guard reports any change the run saw, whatever the flags allowed.
 default: opus
 # `run revise` picks each simplification pass's profile by the pass's
-# `effort`; the assessment is a judgment ask. `gates` and `full-pass` use
-# `default`.
+# `effort`; the assessment is a judgment ask. `gates`, and the review step of
+# `revise --full`, use `default`.
 effort:
   simple: sonnet
   judgment: opus

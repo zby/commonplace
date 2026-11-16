@@ -150,7 +150,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *Limitations.* Every launch is paid and a changed pair is always re-reviewed. Gate selection depends on note types and traits. The checkout guard cannot tell a worker's change from another session's.
 
-See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system and [review-architecture.md](./review-architecture.md) for how it is built; [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) covers the complementary fix system.
+See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system, including the three improvement procedures that edit notes, and [review-architecture.md](./review-architecture.md) for how it is built.
 
 ### Direct CLI commands
 
@@ -159,7 +159,6 @@ Most operations go through the agent, but a few CLI commands are reasonable to r
 | Command | Purpose |
 |---|---|
 | `commonplace-validate <target>` | Validate an artifact or collection, global type specs, collection landings, or the published redirect map |
-| `commonplace-review packet <note-or-packet>` | Check whether a full-pass packet's recorded hashes still match the note and any merge target |
 | `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
 | `commonplace-github-snapshot <url>` | Snapshot a GitHub issue or PR into local `kb/sources/.snapshots/` |
 | `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into local `kb/sources/.snapshots/` |
@@ -208,8 +207,6 @@ Imperative how-to procedures live in [kb/instructions/](../instructions/README.m
 
 - Each collection's `COLLECTION.md` — collection-specific writing conventions, quality goals, and placement rules
 - [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
-- [FIX-SYSTEM.md](../instructions/FIX-SYSTEM.md) — current fix-system workflow
-- [full-improvement-pass-closure.md](./full-improvement-pass-closure.md) — how the full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence
 - [harness-sub-agent-model-selection-regression.md](./harness-sub-agent-model-selection-regression.md) — the July harness regression that mis-attributed review executions, the August partial restoration of bounded-fork model overrides, and why a requested model is still not execution provenance
 
 ### The repository as a worked case
@@ -260,6 +257,7 @@ Commonplace runs on its own methodology, so this collection also documents *this
 - [ADR-132: review atoms retain observations behind current results](./adr/132-review-atoms-retain-observations-behind-current-results.md) — bounded typed review execution, retained evidence, output-contract freshness and single-assessment fixtures; content reconstruction does not establish environment equivalence
 - [ADR-133: edit operations run alone through one typed route](./adr/133-edit-operations-run-alone-through-one-typed-route.md) — typed edit operations and edit results, deterministic bounds, `run edit` with retained observations and fixtures; revise runs every pass through it; per-item operations run twice
 - [ADR-134: stops record the operator's answers in one typed file](./adr/134-stops-record-the-operators-answers-in-one-typed-file.md) — the `answers` type with validator acceptance against its hashed question; two stop instructions, decide items and approve a text; per-item edits and publication read answers; the strike-list format is gone
+- [ADR-135: improvement procedures are three plans on one runner](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md) — focused, quick and full improvement are ways to make the plan that `commonplace-review run revise` executes; the full-pass workflow and the fix procedure are retired, and `commonplace-review decisions` still reads their records
 - [ADR-127: review runs as workflows over result files](./adr/127-review-runs-as-workflows-over-result-files.md) — the current review decision: one command, result files with input hashes, no store; supersedes ADRs 035 and 043
 
 ## Collection boundary

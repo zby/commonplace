@@ -9,7 +9,12 @@ from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
 from commonplace.headless.operator import approve
 from commonplace.lib import library
-from commonplace.lib.review_workflows.edits import PUBLICATION, Conflict, publication
+from commonplace.lib.review_workflows.edits import (
+    PUBLICATION,
+    Conflict,
+    apply,
+    publication,
+)
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
 
 
@@ -126,3 +131,14 @@ def test_identical_candidate_with_changed_context_and_stale_original_cannot_publ
     with pytest.raises(Conflict):
         invoke("second")
     assert (root / "note.md").read_text() == "someone else's edit\n"
+
+
+def test_apply_writes_only_from_the_start_text(tmp_path):
+    note, proposed = tmp_path / "note.md", tmp_path / "proposed.md"
+    note.write_text("start")
+    apply(tmp_path, "note.md", "start", "final", proposed)
+    assert note.read_text() == "final"
+    note.write_text("other")
+    with pytest.raises(Conflict, match="proposed.md"):
+        apply(tmp_path, "note.md", "start", "final", proposed)
+    assert note.read_text() == "other"

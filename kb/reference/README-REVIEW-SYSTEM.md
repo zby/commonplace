@@ -1,5 +1,5 @@
 ---
-description: How to operate commonplace-review — criteria and pairs, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, and the full-pass and revision workflows
+description: How to operate commonplace-review — criteria and pairs, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, single edit operations and the three improvement procedures on one runner
 type: types/note.md
 tags: []
 ---
@@ -82,9 +82,8 @@ requested by its own id; a bare `compression` request is refused. A check
 reports PASS, INFO or WARN: INFO is a `pass` outcome with `info` findings, and
 no check uses `fail`. Each check is one launch even under `--grouping bundle`.
 The checks are opt-in like critique. The
-[compression bundle](../instructions/run-compression-bundle-on-note.md) and
-the full pass still run all four in one report of their own; that report is
-not a result file.
+[compression bundle](../instructions/run-compression-bundle-on-note.md) still
+runs all four in one report of its own; that report is not a result file.
 
 **Friction and premises.** The `friction` and `premises` selectors apply the
 [composition-friction](../instructions/composition-friction-gate.md) and
@@ -226,7 +225,9 @@ contracts and type specs. Name the notes of a validation-ignored directory one
 by one.
 
 The current warnings are the fixing queue: read each finding in the result
-file `--json` names, and fix under the [fix procedure](../instructions/FIX-SYSTEM.md).
+file `--json` names, and fix one with the focused procedure,
+`commonplace-review run revise NOTE --finding RESULT` (see
+[improvement procedures](#improvement-procedures)).
 `commonplace-status --review` adds counts of fresh, stale and orphaned
 results and of current `warn` and `fail` outcomes to the project status.
 
@@ -324,9 +325,9 @@ One process at a time may hold a run; a second exits 2.
 
 A run records `git status` (with untracked files), the content digest of
 every listed path and `HEAD`, before and after, ignoring
-`kb/reports/state/review/`. The report lists every path that differs. A full
-pass or revision leaves out its note only when the note holds the final text
-the run applied.
+`kb/reports/state/review/`. The report lists every path that differs. A
+revise run leaves out its note only when the note holds the final text the
+run applied.
 
 What it can claim: these paths changed while the run was open. What it
 cannot claim: that a worker changed them. Other sessions editing or
@@ -357,7 +358,6 @@ A launch's fixed context dominates its cost. Single observations with the
 |---|---|
 | one gate on one note, one launch | $0.095, 13 s, nearly all fixed context |
 | the ten `prose` gates on one short note, one bundle launch | nine pairs reviewed, $0.172, 31 s |
-| one full pass on one short note | 27 launches, $4.47, ended in a hand-back |
 
 Bundle grouping shares the fixed context. Whether it changes verdict quality
 has not been compared, which is why `pair` stays the default.
@@ -377,31 +377,18 @@ Evaluate one operation before composing it with planning or other operations:
   not the planning procedure. See the [fixed-plan example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
 
 These operations still use judgment inside their fixed tasks. Planning means
-choosing work, not merely using a model. Assessment-led revision and full-pass
-composition need separate evaluation; reliable replay does not establish
-reliable selection or editing judgment.
+choosing work, not merely using a model. The quick and full procedures
+choose work, and their choices need separate evaluation; reliable replay does
+not establish reliable selection or editing judgment.
 
 ## Workflows beyond the sweep
 
-**Full improvement pass.** `commonplace-review run full-pass NOTE` runs the
-method reports, a packet, and for an accepted `keep` an edit, a copyedit and
-a closing cycle with at most one repair. Workers write outputs only. Each
-edited text stays in the run directory, and later steps work on that text.
-The note is written once, only when closing is `ready` and the operator's
-publication answers approve the exact candidate. Until then, the candidate packet,
-results and note remain unpublished. A hand-back leaves the note untouched;
-no-edit dispositions may publish their report, packet and results automatically.
-Gates and critique are asked over each text even
-when a fresh result exists. The pass writes their result files once, at its
-end, for the text the note then holds. The note's
-current packet lives at `kb/reports/state/review/packets/<note-path>`;
-`commonplace-review packet` checks its recorded hashes against the files.
-Operate it with [run a full improvement pass](../instructions/run-full-improvement-pass-on-note.md)
-and [resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md);
-[full improvement pass closure](./full-improvement-pass-closure.md) explains
-the closing cycle.
+Beyond the sweep, `commonplace-review` runs one edit operation alone, runs
+the improvement procedures, and lists the operator's decisions.
 
-**One edit operation.** `commonplace-review run edit OPERATION NOTE` runs one
+### One edit operation
+
+`commonplace-review run edit OPERATION NOTE` runs one
 [edit operation](../types/edit-operation.md) on one note and writes nothing
 to the checkout ([ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)).
 The worker returns an [edit result](../types/edit-result.md) and, for
@@ -428,38 +415,64 @@ operation on the same text. It refuses a candidate that changed the passage
 of an item that is not approved; it does not detect a change outside the
 items ([ADR 134](./adr/134-stops-record-the-operators-answers-in-one-typed-file.md)).
 
-**Revision.** `commonplace-review run revise` applies the
-[simplification passes](../instructions/simplification-passes/README.md) to
-one artifact. It runs a plan, and the procedures differ in how the plan is
-made ([three ways](../instructions/simplification-passes/README.md#three-ways-to-make-a-plan)).
-A new run requires one choice. The focused procedure is fixed work:
-`--pass NAME` writes a one-entry plan for one pass, `--finding RESULT` writes
-a one-entry plan that runs
+### Improvement procedures
+
+`commonplace-review run revise ARTIFACT` is the one runner for improving a
+note or another markdown artifact. It executes a plan: a list of
+[edit operations](../types/edit-operation.md) from the
+[simplification passes](../instructions/simplification-passes/README.md) in
+increasing depth, each through the same route as `run edit`. It stops for
+the operator's answers on a per-item operation and for approval of the exact
+final text, and it writes the artifact once. Three procedures differ only in
+how the plan is made
+([three ways](../instructions/simplification-passes/README.md#three-ways-to-make-a-plan),
+[ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
+A new run requires one choice.
+
+| Procedure | Flags | What chooses the edits | New review launches |
+|---|---|---|---|
+| focused | `--pass NAME`, `--finding RESULT`, `--plan FILE` | the operator | none |
+| quick | `--assess` | one assessor, from the artifact and its fresh stored `warn` and `fail` results | none |
+| full | `--full` | one assessor, from the artifact, the new findings and the depth 1 reports | every review operation that declares a `depth` |
+
+**Focused.** `--pass NAME` writes a one-entry plan for one edit operation on
+the whole artifact. `--finding RESULT` writes a one-entry plan that runs
 [fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
-with that review result of the artifact as its `finding` input, and
-`--plan FILE` supplies any other plan. The quick procedure is `--assess`:
-one assessor chooses the passes from the artifact and its fresh stored
-`warn` and `fail` review results, and no review is launched. The full
-procedure is `--full`: it first runs every review operation that declares a
-`depth` on the artifact, through the sweep's route. Fresh results are reused,
-new results go to the shared store, and the compression synthesis runs on
-the checks' results without publishing one. The assessor then also reads the
-depth 1 reports and the compression synthesis report. When one proposes changing what the artifact is, the plan's
-`stop` names the proposal and its report, and nothing is edited. The full
-procedure does not review the candidate; the next sweep finds the stale
-results after publication. A review without a result stops the run before
-assessment; dismiss its problem with `retry` on the review run under the
-revise run directory, then repeat. A plan entry
-for a pass that declares `responds-to` names its `finding` and takes the
-depth of that finding's criterion. Within the chosen mode, ordinary
-intermediate work is preauthorized. The assessment report and generated plan
-stay in the run for inspection; the validated plan runs without routine
-approval. `--plan FILE` also supplies a validated override of a stopped plan.
-Editing the retained plan alone is not an override.
-Each listed pass runs in order on the preceding text, through the same route
-as `run edit`; its `effort` selects the profile. Every pass must end `applied`, `no-change` or `skipped` before
-changed final text is offered for publication approval. Control-flow checks
-do not establish the quality of the selected edits.
+with that review result of the artifact as its `finding` input; the
+operation changes only the passage the finding names. `--plan FILE` supplies
+any other plan.
+
+**Quick.** `--assess`: one assessor chooses the edit operations from the
+artifact and its fresh stored `warn` and `fail` review results. No review is
+launched, so an artifact that was never reviewed is assessed from its text
+alone.
+
+**Full.** `--full` first runs every review operation that declares a `depth`
+on the artifact, through the sweep's route. Fresh results are reused, new
+results go to the shared store, and the compression synthesis runs on the
+checks' results without publishing one. The assessor then also reads the
+depth 1 reports and the compression synthesis report. When one proposes
+changing what the artifact is, the plan's `stop` names the proposal and its
+report, and nothing is edited. The full procedure does not review the
+candidate; the next sweep finds the stale results after publication. A
+review without a result stops the run before assessment; dismiss its problem
+with `retry` on the review run under the revise run directory, then repeat.
+
+A plan entry for an operation that declares `responds-to` names its
+`finding` and takes the depth of that finding's criterion. Within the chosen
+procedure, ordinary intermediate work is preauthorized. The assessment report
+and generated plan stay in the run for inspection; the validated plan runs
+without routine approval. `--plan FILE` also supplies a validated override
+of a stopped plan. Editing the retained plan alone is not an override. Each
+listed operation runs in order on the preceding text; its `effort` selects
+the profile. Every operation must end `applied`, `no-change` or `skipped`
+before changed final text is offered for publication approval. Control-flow
+checks do not establish the quality of the selected edits.
+
+No procedure checks that an edit fixed its finding, and none records a
+judgment over the whole note other than a plan's `stop`. A finding fixed by
+the focused procedure leaves an edit result and a publication decision; a
+finding the operator rejects as spurious leaves no record unless a stop asks.
 
 Plain-wording and abstractions, the `per-item` passes, still stop for the
 operator's answers on each proposal, in `artifact/<pass>-answers-<key>.md`.
@@ -469,16 +482,15 @@ selection rules and checks, and evaluate retained and fresh examples before
 separately authorizing removal. This is not new automatic learning
 infrastructure, and fewer proposals do not establish reliability.
 
-**Runs of the two workflows.** Their run directory is derived from the
-inputs: `kb/reports/state/review/runs/v2/<workflow>/<note path without
-.md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
+**Revise runs.** The run directory is derived from the inputs:
+`kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
+hex of the note's SHA-256>/`. Repeating the same command on
 the same note text continues that run, and answered calls replay. An edited
 note, including one the workflow itself wrote, has another hash, so the same
-command opens a new run. Revision then requires a new mode choice
-choice rather than silently assessing again. Older revision runs without a
-recorded mode require an explicit choice too. A repeat reuses the options the run recorded,
-including the full pass's `--direction`; an option given on the repeat
-replaces the recorded value. A stop for the operator proposes a file in the
+command opens a new run. Revision then requires a new procedure choice
+rather than silently assessing again. Older revision runs without a recorded
+mode require an explicit choice too. A repeat reuses the options the run
+recorded; an option given on the repeat replaces the recorded value. A stop for the operator proposes a file in the
 run directory, and the report's `waiting-for` gives what to do, the file,
 the approval command and the command to repeat. Approval captures the file's
 current text; repeating alone never approves it. Answers edited after
@@ -487,7 +499,7 @@ Changed proposal inputs require fresh approval. A plan with `stop` set ends
 the run; replace it explicitly with `--plan`, not an approval command. An
 agent may approve only on the operator's stated word for that proposal.
 
-For changed final text in either workflow, inspect `artifact/final.md` and
+For changed final text, inspect `artifact/final.md` and
 `artifact/final.diff`, record the operator's decision on the one item of
 `artifact/publication-answers.md`, which names the candidate's hash, approve
 that file with `commonplace-review approve RUN FILE --key KEY` and repeat
@@ -501,11 +513,18 @@ brief to remain unchanged.
 A conflict leaves the original untouched and names the proposed text.
 Instructions remain the judgment authority; prompts name inputs only.
 
-**Decisions.** `commonplace-review decisions` is the one path to the
+### The operator-decision record
+
+`commonplace-review decisions` is the one path to the
 operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
-It reads, without writing, the operator records in both workflows' run
-directories, the packets and the fix reports, and lists each decision with
-who proposed it, who decided it and whether it covered one item or a bundle.
+It reads, without writing, the operator records in revise run directories,
+and lists each decision with who proposed it, who decided it and whether it
+covered one item or a bundle. So that decisions recorded before the cutover
+stay visible, it also reads the records of the two retired procedures
+([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)):
+operator records in full-pass run directories, full-pass packets under
+`kb/reports/state/review/packets/` and fix reports under
+`kb/reports/state/fixes/`.
 It computes no statistics; `--note`, `--class` and `--json` narrow and
 format the listing.
 

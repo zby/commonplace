@@ -1,5 +1,5 @@
 ---
-description: "Use when a settled article or note should be improved for a stated audience through the passes an assessment recommends, each run as a short intent packet, rather than a generic editorial rewrite or a full automated pass"
+description: "Use when a settled article or note should be improved for a stated audience through the passes an assessment recommends, each run as a short intent packet, rather than a generic editorial rewrite"
 type: types/instruction.md
 ---
 

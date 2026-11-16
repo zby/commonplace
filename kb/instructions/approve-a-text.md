@@ -1,5 +1,5 @@
 ---
-description: "Use when commonplace-review run revise or run full-pass stopped waiting on artifact/publication-answers.md: show the operator the exact candidate and its diff, record their decision, and continue on their word"
+description: "Use when commonplace-review run revise stopped waiting on artifact/publication-answers.md: show the operator the exact candidate and its diff, record their decision, and continue on their word"
 type: types/instruction.md
 ---
 

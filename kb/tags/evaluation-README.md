@@ -37,7 +37,6 @@ This tag gathers how claims, changes, and agent outputs are judged and tested: o
 
 ## Review evidence
 
-- [Full improvement pass closure](../reference/full-improvement-pass-closure.md) — how the shipped workflow reassays final note bytes and stops without claiming convergence
 - [A five-link cap missed four grounding findings in twelve reviews](../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — paired assay: fuller reading of linked artifacts surfaced findings the cap hid
 - [An independent pass tightened three of four Pirolli grounding verdicts](../theory/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — separating source reconstruction from claim judgment changed verdicts; a candidate control, not a proven cause
 - [Single-artifact review bundles still cut Claude costs substantially](../reports/retained/single-artifact-review-bundles-still-cut-claude-costs-substantially.md) — cache-weighted telemetry for the single-artifact bundle refactor

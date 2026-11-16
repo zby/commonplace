@@ -423,22 +423,6 @@ trial through the same implementation, currently with Claude Code, pair
 grouping and one worker. It never publishes live results. `--resume TRIAL_RUN`
 continues that trial; it is not another observation. Fixture overrides are rejected.
 
-`run full-pass NOTE [--direction TEXT]` runs the
-[full improvement pass](../instructions/run-full-improvement-pass-on-note.md)
-over one note as a workflow: the method asks in parallel, a packet, and for
-an accepted `keep` an edit, a copyedit and the closing cycle. Workers write
-only output files. The command writes the note once, at the end, only when
-closing is `ready`, the operator's publication answers approve the exact
-candidate, and the original note and captured brief are unchanged. Before that approval,
-the candidate packet and results also remain unpublished. No-edit dispositions
-may publish their report, packet and results automatically. The note's
-current packet
-is kept at `kb/reports/state/review/packets/<note-path>`; a pending packet
-that still matches the note is returned instead of starting a new pass,
-unless `--direction` is given. Gates and critique are asked over each text
-even when a fresh result exists; the pass writes their result files once, at
-its end, for the text the note then holds.
-
 `run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]`
 runs one [edit operation](../types/edit-operation.md), such as
 `instructions/simplification-passes/readability-and-flow.md`, on one note, in a
@@ -459,6 +443,10 @@ profile defaults to the `effort` mapping for the operation's `effort`. It exits
 guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
 a fixture created from an edit observation.
 
+`run revise ARTIFACT` is the one runner of the three improvement procedures:
+focused (`--plan`, `--pass`, `--finding`), quick (`--assess`) and full
+(`--full`). Each makes the plan the runner executes
+([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
 `run revise ARTIFACT --plan FILE` executes fixed work without assessment.
 The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
@@ -529,7 +517,7 @@ to approve, with one item naming its hash. The default PATH is
 replaced. The command writes every hash, so nobody writes one by hand.
 `commonplace-validate PATH` checks a completed file against its question.
 
-Both editing workflows retain `artifact/final.md` and `artifact/final.diff`
+`run revise` retains `artifact/final.md` and `artifact/final.diff`
 for inspection and stop on `artifact/publication-answers.md`, an answers file
 whose one item names the candidate's hash. Record the operator's decision,
 approve the file, then repeat; publication needs answers that pass the
@@ -539,23 +527,20 @@ start a new run. The original artifact and captured brief must still be
 unchanged before the write. Instructions own judgment; prompts name inputs
 only.
 
-Both workflows derive their run directory from the inputs:
-`kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<first 12
+`run revise` derives its run directory from the inputs:
+`kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the command on the same note text
 continues the run and replays answered calls; an edited note opens a new
-run. A repeat reuses the recorded options (full pass: `--profile` and
-`--direction`; revise: `--purpose`, `--defend` and the effort profiles); an
-option given on the repeat replaces the recorded value.
-
-`packet NOTE_OR_PACKET` prints whether a packet's recorded hashes still match
-the note and any merge target, and exits 0 only when every input matches;
-[resolve a full-pass disposition](../instructions/resolve-full-pass-disposition.md)
-runs it before acting on a packet.
+run. A repeat reuses the recorded options (`--purpose`, `--defend` and the
+effort profiles); an option given on the repeat replaces the recorded value.
 
 `decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
 decisions and launches nothing. It is read-only: it reads the operator
-records in revise and full-pass run directories, the full-pass packets and
-the fix reports under `kb/reports/state/fixes/`, and writes no state. Each
+records in revise run directories and writes no state. So that decisions
+recorded before ADR 135 stay visible, it also reads the records of the
+retired procedures: operator records in full-pass run directories, full-pass
+packets under `kb/reports/state/review/packets/` and fix reports under
+`kb/reports/state/fixes/`. Each
 entry says who proposed and who decided (`operator`, `agent`,
 `version-guard`, or `pending` for an unanswered stop), the action class
 (the pass name of a per-item stop, `publication`, `packet` or `fix-report`),

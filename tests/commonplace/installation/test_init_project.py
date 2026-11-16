@@ -239,7 +239,7 @@ def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path)
     root = library.library_root()
     legacy = tmp_path / "kb" / "commonplace" / "instructions"
     legacy.mkdir(parents=True)
-    shutil.copy2(root / "instructions" / "FIX-SYSTEM.md", legacy / "FIX-SYSTEM.md")
+    shutil.copy2(root / "instructions" / "decide-items.md", legacy / "decide-items.md")
     (legacy / "re-ingest.md").write_text("locally edited\n", encoding="utf-8")
     types = tmp_path / "kb" / "types"
     types.mkdir(parents=True)

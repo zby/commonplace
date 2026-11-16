@@ -1,9 +1,9 @@
-"""Mutable write-brief fixtures shared by the two review workflows."""
+"""Mutable write-brief fixtures for the revise workflow tests."""
 
 import json
 from pathlib import Path
 
-from tests.commonplace.validation_helpers import REPO_ROOT, copy_repo_files
+from tests.commonplace.validation_helpers import copy_repo_files
 
 
 def add_brief(root: Path, note: str) -> Path:
@@ -16,11 +16,6 @@ def add_brief(root: Path, note: str) -> Path:
                      "example and excluding a new claim\n---\n\n# Brief: Alpha\n\n"
                      "## Must keep\n\nKeep the Alpha body passage.\n")
     return brief
-
-
-def use_full_instruction(root: Path) -> None:
-    rel = "kb/instructions/run-full-improvement-pass-on-note.md"
-    (root / rel).write_text((REPO_ROOT / rel).read_text())
 
 
 def captured_inputs(log: Path) -> list[dict]:

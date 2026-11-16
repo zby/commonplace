@@ -12,10 +12,11 @@ a stop on a per-item pass's answers file is resolved in a session with
 [approve a text](../approve-a-text.md).
 
 For a generic editorial pass with no assessment, use
-[revise-note](../revise-note.md) instead. For a full automated review pass,
-use [run-full-improvement-pass-on-note](../run-full-improvement-pass-on-note.md);
-the [audit pass](./audit-a-prior-pass.md) here is for checking what such a
-pass did.
+[revise-note](../revise-note.md) instead. To review the artifact before the
+assessor plans, use the full procedure, `--full` (see
+[three ways to make a plan](#three-ways-to-make-a-plan)). The
+[audit pass](./audit-a-prior-pass.md) here is for checking what an earlier
+automated pass did.
 
 ## Passes
 
@@ -133,8 +134,8 @@ in these note workflows; Python tests belong to development of the machinery.
 commissions assessment and pass selection, then runs the validated plan without
 a routine plan-approval stop. The assessor also receives the artifact's fresh
 `warn` and `fail` review results. The planning instruction's "Run it as a workflow"
-section describes its additional behavior. `run full-pass` also contains
-planning and disposition choices. Evaluate those choices separately from
+section describes its additional behavior. `--full` adds a review step
+before the same assessment. Evaluate the assessor's choices separately from
 individual review and editing operations before relying on their composition.
 
 The procedure in a conversation remains the right tool when passes are chosen

@@ -10,15 +10,17 @@ Review is a set of Python workflows over the headless runtime, behind one
 command, `commonplace-review`. Code owns the control flow, every check that
 can be checked and every write to the checkout. Workers only judge and write
 their output files. Durable state consists of run-owned observations and
-captured evidence, replaceable current results per (note, criterion) pair,
-and one current packet per note that had a full pass.
+captured evidence and replaceable current results per (note, criterion)
+pair.
 
 For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
 [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
 the workflow decision; [ADR 132](./adr/132-review-atoms-retain-observations-behind-current-results.md)
 records the typed review, retained-observation and fixture boundary;
 [ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)
-extends that boundary to edit operations. Exact behavior belongs to `commonplace.lib.review_workflows`,
+extends that boundary to edit operations;
+[ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)
+makes the revise workflow the one runner of the improvement procedures. Exact behavior belongs to `commonplace.lib.review_workflows`,
 `commonplace.headless` and `commonplace.cli.review_workflows`.
 
 ## Components
@@ -38,8 +40,8 @@ extends that boundary to edit operations. Exact behavior belongs to `commonplace
 | `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
 | `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
-| `review_workflows.full_pass` | the full improvement pass and its packet |
-| `review_workflows.revise` | the revision workflow over the simplification passes: plan, order, per-item answers stops and publication; each pass runs through `edit_operations.ask()` |
+| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, per-item answers stops and publication; each operation runs through `edit_operations.ask()` |
+| `review_workflows.decisions` | the read-only operator-decision record over run operator records, and over the packets and fix reports of the retired procedures |
 
 Workjig launches each worker in the checkout through the harness's headless
 mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
@@ -52,33 +54,31 @@ typed outcome, a decision schema, an edit's bounds. A worker receives its
 inputs as files Workjig writes for each launch, so it judges captured text,
 not the live file, and the result hashes exactly that text. A worker writes
 only its declared outputs, or a problem file when it cannot do the job. Code
-turns an accepted output into a result file, a packet or a write to the
-checkout. Asking and publishing are separate: `gates.ask()` returns each
+turns an accepted output into a result file or a write to the checkout. Asking and publishing are separate: `gates.ask()` returns each
 accepted review without publishing a current view; its captured inputs and
 completed typed artifact remain in the run. The sweep publishes each result
-as its answer arrives. The full pass writes its results once, at its end,
-for the text the note then holds, and nothing after a stop or a conflict.
+as its answer arrives; so does the review step of the full procedure, which
+runs through the sweep.
 
 An edit reaches the checkout only through code. Each edited text is checked
 first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
 added. A text from an edit operation also keeps every link target the result
 does not name as removed and every quoted span. Every revision pass candidate
-comes from `edit_operations.ask()`, which also serves `run edit`; the full
-pass's edit and copyedit are still its own steps. An accepted text stays in memory and in the run's `artifact/`
+comes from `edit_operations.ask()`, which also serves `run edit`. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. The workflow's last step writes the
 final text once, atomically, only over the start text and after approved
 answers that approve the exact candidate. Any other text
 is a change made outside the run: the run writes nothing and reports a
 conflict that names the file holding the proposed text.
 
-A full pass or revision reuses answers by each call's inputs. Its run directory is
+A revise run reuses answers by each call's inputs. Its run directory is
 derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
 note opens a new run. The directory is not a complete input identity: changed
 instructions, profiles, write briefs or approved answers can produce new calls inside it.
-A new revision run explicitly chooses `--plan` for fixed work or `--assess`
-for planning. Repeats retain that mode; changed artifact text requires a new
+A new revision run explicitly chooses a fixed plan (`--plan`, `--pass` or
+`--finding`), `--assess` or `--full`. Repeats retain that mode; changed artifact text requires a new
 choice. Within the selected mode, ordinary intermediate work is preauthorized.
 Revision retains its generated plan for inspection and runs it after
 validation; `--plan` also supplies a validated override of a stopped plan,
@@ -89,7 +89,7 @@ receive the execution instruction and the assigned pass, not the planning
 procedure. Fixed-plan publication binds those inputs, the supplied plan and
 the profiles used by its passes; assessment-only instructions, unselected
 passes and unused effort profiles do not invalidate it. Assessment-led runs
-also bind the assessment request, answer and full pass catalog. A single
+also bind the assessment request, answer and the catalog of edit operations. A single
 criterion through `run gates` is report-only and never selects subsequent work.
 
 Unsettled plain-wording and abstraction selections require the operator's
@@ -102,7 +102,7 @@ after selection rules and checks have been revised and evaluated on retained
 and fresh examples. This is not automatic learning infrastructure; a lower
 proposal count does not establish reliability.
 
-Changed final text in both workflows requires an answers file,
+Changed final text requires an answers file,
 `artifact/publication-answers.md`, whose question is the candidate
 `artifact/final.md` and whose one item, naming the candidate's hash, the
 operator approved; `commonplace-review approve RUN FILE --key KEY` records
@@ -110,33 +110,32 @@ it. `artifact/final.diff` is the inspection view. Repeating never approves.
 The proposal key binds the start text, the candidate and the decision
 context; a change in any of them withdraws the approval. The candidate is a
 generated output, not a revision input: use `--plan` for revision, change
-workflow inputs or start a new run. Full-pass also withholds candidate packets and results at this
-boundary; no-edit dispositions may publish reports, packets and results
-automatically. Judgment stays in instructions; prompts name inputs only.
+workflow inputs or start a new run. Judgment stays in instructions; prompts name inputs only.
 
-A declared [write brief](../types/write-brief.md) is captured for full-pass
-planning and editing and for revision assessment and every pass. Its bytes
+A declared [write brief](../types/write-brief.md) is captured for revision
+assessment and every pass. Its bytes
 participate in those calls' identities and in final publication approval. A
 worker reports a brief conflict as a problem, stopping the run. Code prevents
 changing the declaration and checks that the captured brief is still current
 before publication; it cannot verify semantic obedience. An amendment to the
-commission must happen outside the run. Method and closing judges do not
-receive this input, and brief changes do not stale gate results.
+commission must happen outside the run. Review workers do not receive this
+input, and brief changes do not stale gate results.
 
 ## Durable state and run state
 
 | State | Location | Lifetime |
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
-| current full-pass packet | `kb/reports/state/review/packets/<note-path>` | until a later pass replaces it; holds the resolution of a pending hand-back |
-| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a full pass or revision | a sweep and its resumes; every repeat of a workflow command on the same note text |
+| full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-review decisions` still reads it |
+| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a revise run | a sweep and its resumes; every repeat of a workflow command on the same note text |
 | observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; exact inputs, completed results, candidate texts and their hashes remain citable |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
 options it opened with in `sweep.json`, operator proposals and approved answers
 under `operator/`, and accepted per-run artifacts under `artifact/`
-(the start text, method reports, each accepted edited text and the packet copy). Its
+(the start text, the assessment and plan, each accepted edited text and the
+publication candidate). Its
 records exist for replay inside the run and promise no format stability
 across versions. The current result references its observation, exact target
 capture and raw launch output. Historical run state is evidence, not an input
@@ -230,4 +229,3 @@ themselves require an edit; source and `--help` own them.
 
 - [ADR 118](./adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md) — decided-by: the headless workflow runtime review shares with the analysis workflow
 - [Storage architecture](./storage-architecture.md) — part-of: where review state sits among Commonplace's storage roles
-- [Full improvement pass closure](./full-improvement-pass-closure.md) — see-also: why the full pass reviews its final text once more

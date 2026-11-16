@@ -107,7 +107,7 @@ commonplace-init --root .
 commonplace-github-snapshot https://github.com/owner/repo/issues/123
 ```
 
-`commonplace-review` reviews notes against criteria with headless workers and runs the full improvement pass. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
+`commonplace-review` reviews notes against criteria with headless workers and runs the improvement procedures through `run revise`. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
 
 Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. They stay in the installed package; `commonplace-init` writes a small stub for each into a consuming project's skill directories that points the agent to the real skill.
 

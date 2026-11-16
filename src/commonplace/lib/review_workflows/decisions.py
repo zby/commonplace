@@ -3,15 +3,16 @@
 Nothing here writes state. Entries come from three places under
 kb/reports/state/:
 
-- operator records `operator/*.json` in the revise and full-pass run
-  directories: for an answers stop (`types/answers.md`), one entry per item
-  of the approved answers file with its state, decider and reason, the
-  publication approval as a bundle entry; one `pending` entry per stop
-  without an answer;
-- full-pass packets: the disposition, which is the workflow's judgment, and
-  the resolution once it is not `pending`;
-- fix reports, written by an agent without a run: one entry per report,
-  pointing at it, since their tables are free-form.
+- operator records `operator/*.json` in the revise run directories: for an
+  answers stop (`types/answers.md`), one entry per item of the approved
+  answers file with its state, decider and reason, the publication approval
+  as a bundle entry; one `pending` entry per stop without an answer;
+- records of the two retired procedures (ADR 135), kept so that recorded
+  operator decisions stay visible: operator records in full-pass run
+  directories; full-pass packets, with the disposition, which was the
+  workflow's judgment, and the resolution once it is not `pending`; and fix
+  reports, written by an agent without a run, one entry per report pointing
+  at it, since their tables are free-form.
 
 Each entry says who proposed and who decided, and whether the decision
 covered one item or a bundle. A publication approval is approval of the
@@ -25,11 +26,18 @@ import re
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.lib.review_workflows import full_pass, gates
+from commonplace.lib.review_workflows import gates
 
+# BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 WORKFLOWS = ("revise", "full-pass")
-"""Run families whose run directories may hold operator records; dated sweep directories hold none."""
+"""Run families whose run directories may hold operator records; dated sweep directories hold none.
+
+`full-pass` is the run family of the retired full-pass workflow (ADR 135)."""
+PACKETS = gates.STATE / "packets"
+"""Where the retired full-pass workflow kept one current packet per note."""
 FIXES = Path("kb/reports/state/fixes")
+"""Where the retired fix procedure wrote its fix reports."""
+
 ITEM_WIDTH = 80
 _RUN = re.compile(r"[0-9a-f]{12}")
 _ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
@@ -105,6 +113,7 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
     return found
 
 
+# BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 def _packet(root: Path, path: Path) -> list[dict]:
     record = path.relative_to(root).as_posix()
     parsed = frontmatter.parse(path.read_text(encoding="utf-8"))
@@ -123,6 +132,7 @@ def _packet(root: Path, path: Path) -> list[dict]:
     return found
 
 
+# BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 def _notes(root: Path) -> dict[str, list[str]]:
     """Note paths under kb/ by file stem, for fix reports that name their note only by stem."""
     found: dict[str, list[str]] = {}
@@ -133,6 +143,7 @@ def _notes(root: Path) -> dict[str, list[str]]:
     return found
 
 
+# BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 def _fix_report(root: Path, path: Path, notes: dict[str, list[str]]) -> dict:
     record = path.relative_to(root).as_posix()
     parsed = frontmatter.parse(path.read_text(encoding="utf-8"))
@@ -154,7 +165,7 @@ def entries(root: Path) -> list[dict]:
             for records in sorted(base.rglob("operator")):
                 if records.is_dir() and _RUN.fullmatch(records.parent.name):
                     found.extend(_operator(root, workflow, records.parent))
-    packets = root / full_pass.PACKETS
+    packets = root / PACKETS
     if packets.is_dir():
         for path in sorted(packets.rglob("*.md")):
             found.extend(_packet(root, path))

@@ -20,7 +20,7 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Workflow outputs | Ignored files under `kb/reports/state/`, one directory per workflow | Kept under the producing workflow's cleanup rule; the state README states per workflow what deletion loses ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)) |
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
 | Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
-| Stateful report packets | One current full-pass packet per note under `kb/reports/state/review/packets/` | Local non-regenerable disposition and resolution state; the pass's run directory keeps its start text |
+| Retired decision records | Full-pass packets under `kb/reports/state/review/packets/` and fix reports under `kb/reports/state/fixes/` | Written by the procedures ADR 135 retired; nothing writes them now. `commonplace-review decisions` reads them, so they hold recorded operator decisions |
 | Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay of answered calls within one run; not read across runs and not a format promise |
 
 The reports collection separates ignored operational outputs in `state/`
@@ -104,18 +104,17 @@ and ignored do not imply disposable: per-pair review result files under
 make them current. Exact report records whose value survives the run live under
 `kb/reports/retained/` and are kept with the project.
 
-Full-pass packets are a separate stateful case. A packet owns disposition
-and resolution state and records the hashes of the texts it guards; its run
-directory keeps the start text. Cleanup must retain the packet while a
-pending resolution remains actionable. The packet is still local and
-ignored; portability across machines is not promised
-([ADR 051](./adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md),
-as amended by ADR 127).
+Full-pass packets and fix reports are records of two retired procedures
+([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
+No workflow writes or resolves them now. They hold operator decisions that
+`commonplace-review decisions` lists, so keep them until the operator says
+the old records are dispensable. They are local and ignored; portability
+across machines is not promised.
 
 ## No operational database
 
-Commonplace keeps no database. Review state is the result files and packets
-above; each is a file a reader can open, and freshness is a pure function of
+Commonplace keeps no database. Review state is the result files and run
+records above; each is a file a reader can open, and freshness is a pure function of
 them and the current files. [Review architecture](./review-architecture.md)
 explains the boundaries.
 

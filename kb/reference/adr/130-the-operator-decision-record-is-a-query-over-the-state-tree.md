@@ -125,7 +125,7 @@ This decision does not:
 
 - move any stop or change any grade, and it automates nothing;
 - touch the policy in
-  [full improvement pass closure](../full-improvement-pass-closure.md)
+  full improvement pass closure (retired by ADR 135)
   against trust-dial automation and reduced audit sampling;
 - compute any statistic across runs;
 - record a grade or a procedure version per entry; entries carry the action
