@@ -48,9 +48,13 @@ whatever a definition leaves open. Proof-based self-improving machines, such
 as Jürgen Schmidhuber's Gödel machine, require the work to be formalized so
 that each change can be proved beneficial. Judgments that nobody has
 formalized, such as when a theory's premises should change, have been left
-to people. We argue that an LLM can make such judgments when the definitions
-it applies are precise enough, and we state what evidence would show that
-the resulting system learns.
+to people. The computer scientist Peter Naur argued in
+[Programming as Theory Building](https://doi.org/10.1016/0165-6074(85)90032-8)
+that they have to be: on his account the theory of a program cannot be
+reduced to formulated criteria, so it stays bound to the people who hold it.
+We argue against that conclusion. An LLM can make such judgments when the
+definitions it applies are precise enough, and we state what evidence would
+show that the resulting system learns.
 
 We propose a learning paradigm based on
 [Popper's cycle for the growth of knowledge](https://doi.org/10.1016/S0049-237X(08)71204-7):
@@ -134,7 +138,7 @@ Proving that a switch is beneficial under the current premises is one thing.
 Revising those premises because cases have gone against them is another, and
 the second is most of what open-ended learning consists of.
 
-We know of no formalization of that operation, and the computer scientist Peter Naur argued that
+We know of no formalization of that operation, and Naur argued that
 there cannot be one: the judgments that relate a program to the world cannot
 be reduced to formulated criteria, so the theory of a program is bound to the
 people who hold it. As the knowledge base
