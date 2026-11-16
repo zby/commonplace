@@ -34,7 +34,7 @@ Propose nothing about how to edit the note or its dependents. Do not rank edits,
 2. **Dependents.** For each linking file, say what it needs from the note: a term, a claim, a distinction, a premise, or only a citation. Say whether the note supplies it: `SUPPLIED`, `PARTLY SUPPLIED` or `NOT SUPPLIED`. A dependent that uses a term in another sense than the note's does not get what it needs.
 3. **Duplication.** Report where the note restates what a dependent's passage already states, or where a dependent restates the note. Say which states it better for the dependents' use, and why, when the passages show it.
 4. **Untaken recommendations.** A linking source can recommend a change to the note: an ingest's "recommended next action", a "revise" or "add this citation" passage. Compare each with the note's text. Report each recommendation the note has not taken up. Report one the note has taken up only when it is partly taken up.
-5. **Reach.** Name the claims and terms whose change would reach dependents, and name those dependents. A change to a claim or term that no dependent uses reaches no one; say so.
+5. **Reach.** Name the claims and terms whose change would reach dependents, and name those dependents. A change to a claim or term that no dependent uses reaches no one; say so. Do not recommend cutting content because no dependent uses it. The report says who uses the note, not whether its claims are good theory; a sound claim can precede its dependents.
 
 ## Output
 

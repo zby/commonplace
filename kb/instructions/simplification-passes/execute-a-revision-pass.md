@@ -30,7 +30,9 @@ role. The revise workflow supplies these roles:
   other notes rely on. The full procedure supplies it from the note's role
   report. Do not rename, redefine or drop a term or claim it lists as relied
   on. When the operation would otherwise change one, leave it and say so in
-  the report. Terms and claims it lists as unused carry no such limit.
+  the report. A term or claim it lists as unused is not relied on yet; that
+  is no reason to cut or weaken it. Treat it as any other content of the
+  note.
 - `earlier-decisions`: the operator's decisions on proposals made in
   earlier runs on other texts of this note. Each entry gives the passage,
   the change, the decision, the operator's reason and the answers file.

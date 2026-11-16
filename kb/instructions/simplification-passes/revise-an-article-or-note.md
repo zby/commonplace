@@ -70,7 +70,9 @@ instead of assessing again.
    The [role report](../role-in-the-kb-gate.md) may come as well. It states
    the artifact's role in the KB from the passages that link to it: what
    each dependent needs from it, what it duplicates, and which
-   recommendations in linking sources it has not taken up. Read it before
+   recommendations in linking sources it has not taken up. It does not
+   judge whether a claim is good theory: do not plan to cut content
+   because no dependent uses it. Read it before
    you stop on a depth 1 proposal or plan around one. Check whether the
    proposal's cause may be a term or claim that dependents rely on: a
    contradiction inside the artifact can come from a term a dependent
