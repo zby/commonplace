@@ -57,6 +57,13 @@ instead of assessing again.
    the change a finding points at only when its value against the purpose
    is clear. List the findings you do not act on once, each with its reason.
 
+   The operator's decisions on findings of the artifact may come as
+   `earlier-decisions`: findings the operator rejected or deferred at a
+   triage, each with the operator's reason. Plan no fix for a finding the
+   operator rejected unless the text changed in a way that answers the
+   operator's reason; say so when you plan one. Plan no fix for a deferred finding unless its
+   `revisit` condition is met.
+
    Depth 1 review reports may come with the artifact as well: critique,
    composition friction and premise decomposition. If one of them proposes
    changing what the artifact is (a split, a merge, a different claim or a
@@ -140,7 +147,9 @@ runs these steps with headless workers, which never write the checkout. This
 is the quick procedure. The assessment also receives the artifact's fresh
 stored review results with outcome `warn` or `fail`, when any exist; the
 command launches no review. Results with only INFO-level findings are not
-given. The focused procedure makes no assessment: `--pass NAME` runs a
+given. A finding the operator rejected at a triage of the same result is
+removed, and the operator's rejected and deferred findings of the artifact
+come as `earlier-decisions`. The focused procedure makes no assessment: `--pass NAME` runs a
 one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
 that fixes that review result of the artifact. The triage, `--triage`, makes
 no assessment either: it stops with one answers file per fresh `warn` or

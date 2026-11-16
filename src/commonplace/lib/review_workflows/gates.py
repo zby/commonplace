@@ -48,6 +48,13 @@ those inputs. `sweep()` therefore runs each only alone, on one note, with its
 inputs, and never publishes it: its freshness is unassessed, and its result
 stays a retained observation of its run.
 
+When the operator rejected a finding of a pair at a triage, `sweep()`
+captures those finding decisions (`decisions.review_inputs()`) in the
+request, asks the pair alone and supplies them as the input
+`finding-decisions`, whose text states the reviewer's rule for them. The
+pair's criterion hash covers them, so a new rejection stales that pair and
+no other. A pair without a rejection keeps its call, inputs and hashes.
+
 The prompt around the inputs is outside the freshness hashes: keep it
 mechanical (how to read the inputs and write the result). Judgment belongs
 in criterion files, where the hash sees it.
@@ -100,6 +107,16 @@ PROFILES_REL = "instructions/review-profiles.yaml"
 ATTEMPTS = 3
 """Attempts per call, counting rejected reviews and launches that returned no answer."""
 GROUPINGS = ("pair", "bundle")
+FINDING_DECISIONS = "finding-decisions"
+"""The supplied input that hands a review call the operator's rejected findings of its pair."""
+
+
+def finding_decisions(root: Path, wanted: list[Pair]) -> dict[str, str]:
+    """The review input of the operator's rejected findings, by pair job; pairs without a rejection are absent."""
+    # decisions reads answers files through edits, which imports this module.
+    from commonplace.lib.review_workflows import decisions
+    by_note = {note: decisions.review_inputs(root, note) for note in dict.fromkeys(pair.note for pair in wanted)}
+    return {pair.job: by_note[pair.note][pair.criterion] for pair in wanted if pair.criterion in by_note[pair.note]}
 
 
 def profiles() -> Path:
@@ -144,13 +161,17 @@ class Call:
                 for pair, name in ((pair, pair.criterion_id.split("/", 1)[1]) for pair in self.pairs)]
 
 
-def calls(pending: list[Pair], grouping: str = "pair") -> list[Call]:
-    """The worker calls for the pending pairs: one per pair, or one per note and bundle of gates."""
+def calls(pending: list[Pair], grouping: str = "pair", alone: frozenset[str] | set[str] = frozenset()) -> list[Call]:
+    """The worker calls for the pending pairs: one per pair, or one per note and bundle of gates.
+
+    A pair whose job is in `alone`, one with finding decisions, is always its own call.
+    """
     if grouping not in GROUPINGS:
         raise ValueError(f"grouping must be one of {', '.join(GROUPINGS)}: {grouping}")
     groups: dict[tuple[str, str], list[Pair]] = {}
     for pair in pending:
-        key = (pair.note, pair.bundle) if grouping == "bundle" and pair.bundle else (pair.job, "")
+        bundled = grouping == "bundle" and pair.bundle and pair.job not in alone
+        key = (pair.note, pair.bundle) if bundled else (pair.job, "")
         groups.setdefault(key, []).append(pair)
     return [Call(members[0].job if len(members) == 1 else f"{note}::{bundle}/*", tuple(members))
             for (note, bundle), members in groups.items()]
@@ -430,8 +451,16 @@ def changed_paths(before: dict[str, str], after: dict[str, str]) -> list[str]:
 def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grouping: str = "pair",
         max_workers: int | None = None, publish=None, captured_criteria: dict[str, str] | None = None,
         contracts: dict[str, bytes] | None = None,
-        operational_inputs: dict[str, dict[str, str]] | None = None) -> tuple[list[PairReport], str | None]:
-    """Assess captured inputs, retain typed observations, and optionally publish current views."""
+        operational_inputs: dict[str, dict[str, str]] | None = None,
+        decided: dict[str, str] | None = None) -> tuple[list[PairReport], str | None]:
+    """Assess captured inputs, retain typed observations, and optionally publish current views.
+
+    `decided` maps a pair's job to its finding decisions (`finding_decisions()`).
+    Such a pair is asked alone and receives them as the supplied input
+    `finding-decisions`; its criterion hash covers them. Every other pair's
+    call, inputs and hashes are as without them.
+    """
+    decided = decided or {}
     run_id = run.root.resolve().relative_to(root.resolve()).as_posix()
     profile = {"harness": run.profile.harness, "launch-model": run.profile.launch_model, "effort": run.profile.effort}
     criterion_texts = captured_criteria if captured_criteria is not None else {
@@ -449,24 +478,30 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
         if stop.is_set():
             return
         names = call.names()
-        note_text = texts[call.pairs[0].note]
+        first = call.pairs[0]
+        note_text = texts[first.note]
+        supplied = dict(operational_inputs)
+        if len(call.pairs) == 1 and first.job in decided:
+            supplied[FINDING_DECISIONS] = {
+                "origin": f"{RUNS.as_posix()}/revise/{first.note.removesuffix('.md')}", "text": decided[first.job]}
         inputs = {"note": note_text, **{given: criterion_texts[pair.criterion] for pair, given, _ in names},
                   **{f"output-contract-{index}": value.decode("utf-8")
                      for index, (_, value) in enumerate(sorted(contracts.items()))},
-                  **{f"supplied-{name}": item["text"] for name, item in operational_inputs.items()}}
+                  **{f"supplied-{name}": item["text"] for name, item in supplied.items()}}
+        decisions_text = supplied.get(FINDING_DECISIONS, {}).get("text")
 
         def invocation(problems=()):
             text = prompt(call, problems)
-            if operational_inputs:
+            if supplied:
                 text += "\nExplicit self-contained operational inputs (do not browse their origins):\n" + "\n".join(
                     f"- {name}: `{item['origin']}` supplied as {input_ref('supplied-' + name)}"
-                    for name, item in operational_inputs.items())
+                    for name, item in supplied.items())
             return text
 
         records = {}
         for pair, given, _ in names:
             directory, record = observations.begin(run, root, pair, note_text, inputs[given], contracts,
-                                                   invocation(), call.job, inputs, operational_inputs)
+                                                   invocation(), call.job, inputs, supplied)
             records[pair] = directory, record
         candidates = {}
 
@@ -487,7 +522,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 "description": f"Retained {pair.contract} review of {pair.note} against {pair.criterion}",
                 "contract": pair.contract, "note": pair.note, "criterion": pair.criterion,
                 "note-sha256": results.note_sha256(note_text, inputs[given]),
-                "criterion-sha256": results.criterion_sha256(inputs[given]),
+                "criterion-sha256": results.criterion_sha256(inputs[given], decisions_text),
                 "target-sha256": observations.sha(note_text.encode()),
                 "target-capture": (directory / "inputs/target" / pair.note).relative_to(root).as_posix(),
                 "observation": (directory / "observation.json").relative_to(root).as_posix(),
@@ -563,7 +598,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
             for directory, record in records.values():
                 observations.refresh(run, directory, record, state=state)
 
-    gather(*(lambda call=call: one(call) for call in calls(wanted, grouping)), max_workers=max_workers)
+    gather(*(lambda call=call: one(call) for call in calls(wanted, grouping, set(decided))), max_workers=max_workers)
     return list(reports.values()), stopped[0] if stopped else None
 
 
@@ -605,6 +640,8 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
             run.timeout = snapshot["timeout"]
             texts, criterion_texts = snapshot["targets"], snapshot["criteria"]
             operational_inputs = snapshot["operational-inputs"]
+            # BACKCOMPAT: review-request.json captured before finding decisions - remove after no such run is resumed
+            decided = snapshot.get(FINDING_DECISIONS, {})
             contracts = {name: value.encode("utf-8") for name, value in snapshot["contracts"].items()}
             if result_contract.fingerprint(result_contract.capture_contract(root)) != result_contract.fingerprint(contracts):
                 raise ValueError("output contract changed; start a new run instead of resuming")
@@ -613,9 +650,10 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
             criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8")
                                for pair in wanted}
             contracts = result_contract.capture_contract(root)
+            decided = finding_decisions(root, wanted)
             snapshot = {"version": observations.VERSION, "pairs": selection, "grouping": grouping,
                         "timeout": run.timeout, "max-workers": max_workers,
-                        "operational-inputs": operational_inputs or {},
+                        "operational-inputs": operational_inputs or {}, FINDING_DECISIONS: decided,
                         "publish-results": publish_results, "targets": texts, "criteria": criterion_texts,
                         "contracts": {name: value.decode("utf-8") for name, value in contracts.items()},
                         "kb-commit": observations.git_head(root)}
@@ -630,13 +668,15 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
                         read_context = result_contract.ValidationContext(root, contracts)
                     stored = results.read_result(path, context=read_context)
                     if (stored.note_sha256 == results.note_sha256(texts[pair.note], criterion_texts[pair.criterion])
-                            and stored.criterion_sha256 == results.criterion_sha256(criterion_texts[pair.criterion])
+                            and stored.criterion_sha256 == results.criterion_sha256(criterion_texts[pair.criterion],
+                                                                                    decided.get(pair.job))
                             and stored.contract_sha256 == read_context.fingerprint):
                         fresh.add(pair)
         asked, stopped = ask(run, root, [pair for pair in wanted if pair not in fresh], texts, grouping=grouping,
                              max_workers=max_workers,
                              publish=(lambda result: results.write_result(root, result)) if publish_results else None,
-                             captured_criteria=criterion_texts, contracts=contracts, operational_inputs=operational_inputs)
+                             captured_criteria=criterion_texts, contracts=contracts, operational_inputs=operational_inputs,
+                             decided=decided)
     found = {(report.note, report.criterion): report for report in asked}
     reports = [found.get((pair.note, pair.criterion)) or PairReport(pair.note, pair.criterion, pair.job, "fresh")
                for pair in wanted]

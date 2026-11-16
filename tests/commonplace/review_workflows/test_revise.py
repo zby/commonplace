@@ -1,11 +1,14 @@
 """Revision approval boundaries, exercised through the CLI with a fake worker."""
 from __future__ import annotations
 
+import dataclasses
 import functools
+import hashlib
 import json
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 import yaml
@@ -14,7 +17,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, edits, observations
+from commonplace.lib.review_workflows import decisions, edits, observations, results
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
@@ -875,11 +878,12 @@ def test_a_note_without_earlier_decisions_passes_none(repo, capsys, tmp_path):
 GATE = "kb/instructions/review-gates/prose/residue.md"
 
 
-def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH, found=None):
+def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH, found=None, decided=False):
     """Write a current review result for `note` against `gate`; return its repository path.
 
     `info` writes a `pass` result that holds one INFO-level finding. `found`
-    replaces the one fixture finding.
+    replaces the one fixture finding. `decided` writes the result as a review
+    that received the operator's current finding decisions on the pair.
     """
     root = repo[0]
     path = root / gate
@@ -894,6 +898,9 @@ def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH, found=None):
                        run="r", launch="L1", completed_at="2026-11-16T00:00:00Z", body="# Review\n\nFound it.\n",
                        findings=found if found is not None else level if outcome == "info" else findings(outcome),
                        evidence=evidence(root))
+    if decided:
+        made = dataclasses.replace(made, criterion_sha256=results.criterion_sha256(
+            path.read_text(), decisions.review_inputs(root, note)[gate]))
     return write_result(root, made).relative_to(root).as_posix()
 
 
@@ -1107,7 +1114,7 @@ def test_a_triage_carries_over_the_decision_on_an_identical_finding(repo, capsys
     _, first, _ = revise(repo, capsys, NOTE_PATH, "--triage")
     triaged(repo, capsys, first, {"prose/residue": {"1": rejected("wrong for this note only"), "2": APPROVED}})
     start(repo, "changed")                                   # another text: another run
-    stored(repo, "warn", found=[finding("same"), finding("other, reworded")])
+    stored(repo, "warn", found=[finding("same"), finding("other, reworded")], decided=True)
     _, second, launches = revise(repo, capsys, NOTE_PATH, "--triage")
     assert launches == [] and second["run-dir"] != first["run-dir"] and not second["complete"]
     head = yaml.safe_load((repo[0] / second["waiting-for"]["file"]).read_text().split("---\n")[1])
@@ -1118,6 +1125,66 @@ def test_a_triage_carries_over_the_decision_on_an_identical_finding(repo, capsys
     captured = json.loads((repo[0] / second["run-dir"] / revise_module.EARLIER_FILE).read_text())["decisions"]
     assert sorted((d["criterion"], d["proposal"]["reason"], d["state"]) for d in captured) == [
         (GATE, "other", "approved"), (GATE, "same", "rejected")]
+
+
+def frontmatter_only(text, tag):
+    """The note `text` with another frontmatter line: another run, and the same body the gate watches."""
+    return text.replace("type: types/note.md\n", f"type: types/note.md\ntags: [{tag}]\n")
+
+
+def assessed_inputs(repo):
+    return [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"][-1]["inputs"]
+
+
+def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo, capsys):
+    text = start(repo, "FIXIT")
+    stored(repo, "warn", found=[finding("same")])
+    _, first, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    triaged(repo, capsys, first, {"prose/residue": {"1": rejected("wrong for this note only")}})
+    assert results.freshness(repo[0], NOTE_PATH, GATE) == results.Freshness("stale", ("criterion",))
+
+    # A later review that received the rejection raises it again beside two new findings.
+    start(repo, text=frontmatter_only(text, "a"))
+    answered = stored(repo, "warn", found=[finding("same"), finding("later"), finding("approved")], decided=True)
+    assert results.freshness(repo[0], NOTE_PATH, GATE).state == "fresh"
+    _, second, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    head = yaml.safe_load((repo[0] / second["waiting-for"]["file"]).read_text().split("---\n")[1])
+    assert head["items"][0]["state"] == "rejected" and "carried-from" in head["items"][0]
+    triaged(repo, capsys, second, {"prose/residue": {
+        "2": {"state": "deferred", "reason": "after the rewrite", "revisit": "when the section is rewritten"},
+        "3": APPROVED}})
+    assert results.freshness(repo[0], NOTE_PATH, GATE).state == "fresh", "only a new rejection stales the pair"
+
+    start(repo, text=frontmatter_only(text, "b"))
+    revise(repo, capsys, NOTE_PATH, "--assess")
+    given = assessed_inputs(repo)
+    shown = yaml.safe_load(given["finding-1"].split("---\n")[1])
+    assert [f["reason"] for f in shown["findings"]] == ["later", "approved"]
+    assert shown["criterion-sha256"] == yaml.safe_load((repo[0] / answered).read_text().split("---\n")[1])[
+        "criterion-sha256"]
+    told = given["earlier-decisions"]
+    assert "Reviewer's reason: same" in told and "Operator's reason: wrong for this note only" in told
+    assert "Reviewer's reason: later" in told and "Revisit when: when the section is rewritten" in told
+    assert "Reviewer's reason: approved" not in told
+
+    # A new review replaces the answered result: the finding comes back, with the decision beside it.
+    replaced = stored(repo, "warn", found=[finding("same"), finding("other")], decided=True)
+    start(repo, text=frontmatter_only(text, "c"))
+    revise(repo, capsys, NOTE_PATH, "--assess")
+    given = assessed_inputs(repo)
+    assert given["finding-1"] == (repo[0] / replaced).read_text()
+    assert "Operator's reason: wrong for this note only" in given["earlier-decisions"]
+
+
+def test_a_result_whose_every_finding_was_rejected_is_not_given(repo):
+    start(repo)
+    path = stored(repo, "warn", found=[finding("same")])
+    found = revise_module.read_finding(repo[0], NOTE_PATH, path)
+    rejection = {"criterion": GATE, "state": "rejected", "proposal": finding("same"),
+                 "answered": [hashlib.sha256(found.text.encode()).hexdigest()]}
+    assert revise_module.without_rejected([found], [rejection]) == []
+    assert revise_module.without_rejected([found], [{**rejection, "answered": ["0" * 64]}]) == [found]
+    assert revise_module.without_rejected([found], [{**rejection, "state": "deferred"}]) == [found]
 
 
 def test_answers_create_takes_a_review_result_but_writes_outside_the_store(repo, capsys, tmp_path):
@@ -1238,6 +1305,45 @@ def test_full_reuses_fresh_review_results(reviewed, capsys):
     assert sorted(repo[2].read_text().splitlines()[:2]) == ["review residue", "review warned"]
     assert set(launches[:5]) == REVIEWS - {"review residue,warned"} and launches[5:7] == [SYNTHESIS, ROLE]
     assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 5}
+
+
+def gates_run(repo, capsys, *args):
+    code = main(["run", "gates", NOTE_PATH, "--criteria", "prose", *args, "--timeout", "30"], harnesses=repo[1])
+    report = json.loads(capsys.readouterr().out)
+    assert code == 0, report
+    return report
+
+
+def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys):
+    repo = reviewed
+    start(repo)
+    gates_run(repo, capsys, "--grouping", "bundle")
+    store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH / "prose"
+    residue, warned = (store / "residue.md").read_bytes(), (store / "warned.md").read_bytes()
+    criterion = (repo[0] / "kb/instructions/review-gates/prose/residue.md").read_text()
+    stored_hash = yaml.safe_load(residue.decode().split("---\n")[1])["criterion-sha256"]
+    assert stored_hash == hashlib.sha256(criterion.encode()).hexdigest() == results.criterion_sha256(criterion)
+
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    assert [s["criterion"] for s in report["triage"]["results"]] == ["prose/warned"]
+    triaged(repo, capsys, report, {"prose/warned": {"1": rejected("the criterion is too broad")}})
+    rows = {Path(row.criterion).stem: row.freshness for row in results.note_rows(repo[0], NOTE_PATH)}
+    assert rows["residue"].state == "fresh" and rows["warned"] == results.Freshness("stale", ("criterion",))
+
+    before = repo[2].read_text().splitlines()
+    swept = gates_run(repo, capsys, "--grouping", "bundle")
+    assert repo[2].read_text().splitlines()[len(before):] == ["review warned"], "only the pair with a rejection"
+    assert (store / "residue.md").read_bytes() == residue and (store / "warned.md").read_bytes() != warned
+    [given] = (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/inputs/operational/finding-decisions.md")
+    text = given.read_text()
+    assert decisions.REVIEW_RULE in text and "Operator's reason: the criterion is too broad" in text
+    assert "Reviewer's reason: A fixture finding" in text
+    request = json.loads((repo[0] / swept["run-dir"] / "review-request.json").read_text())
+    assert list(request["finding-decisions"]) == [f"{NOTE_PATH}::prose/warned"]
+    assert all(row.freshness.state == "fresh" for row in results.note_rows(repo[0], NOTE_PATH))
+    before = repo[2].read_text().splitlines()
+    gates_run(repo, capsys)
+    assert repo[2].read_text().splitlines()[len(before):] == []
 
 
 def test_full_stops_on_a_depth_one_proposal_with_nothing_edited(reviewed, capsys):

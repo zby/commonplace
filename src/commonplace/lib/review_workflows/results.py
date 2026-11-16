@@ -5,7 +5,10 @@ at `kb/reports/state/review/results/<note-path>/<criterion-id>.md`. Its
 frontmatter names both inputs with the SHA-256 of the text the judgment was
 produced from, the outcome and the executor; its body is the reviewer's text.
 A pair is fresh when its normalized input hashes and output-contract fingerprint
-match the current files. Freshness requires no Git history; exact evidence
+match the current files. When the operator rejected a finding of the pair at
+a triage, the criterion hash also covers those finding decisions, which the
+reviewer receives as an input; a new rejection therefore stales that pair
+alone, and status names it as a changed criterion. Freshness requires no Git history; exact evidence
 hashes remain distinct.
 
 The note hash covers only the parts the criterion declares in `watches:`
@@ -53,6 +56,8 @@ WATCHABLE = {"title", "description", "body"}
 OUTCOMES = ("pass", "warn", "fail", "report")
 PARTS_DOMAIN = "commonplace-review-watched-parts/1\n"
 """Prefix of a watched-parts hash input, so it never equals a whole note's text by design."""
+DECISIONS_DOMAIN = "commonplace-review-finding-decisions/1\n"
+"""Prefix of a criterion hash input that includes the operator's finding decisions on the pair."""
 
 
 @dataclass(frozen=True)
@@ -216,8 +221,21 @@ def note_sha256(note_text: str, criterion_text: str) -> str:
     return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
 
-def criterion_sha256(criterion_text: str) -> str:
-    return hashlib.sha256(criterion_text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")).hexdigest()
+def criterion_sha256(criterion_text: str, finding_decisions: str | None = None) -> str:
+    """SHA-256 of the criterion text, or, for a pair with finding decisions, of the text and those decisions.
+
+    `finding_decisions` is the review input of the operator's rejected
+    findings of the pair (`decisions.review_inputs()`). Without it the hash
+    is the plain hash of the criterion text, as it always was, so a pair the
+    operator rejected nothing on keeps its stored hash. With it, the inputs
+    are JSON-encoded behind a domain prefix, so the hash never equals a plain
+    criterion hash by design.
+    """
+    text = criterion_text.replace("\r\n", "\n").replace("\r", "\n")
+    if finding_decisions is None:
+        return hashlib.sha256(text.encode("utf-8")).hexdigest()
+    data = DECISIONS_DOMAIN + json.dumps([text, finding_decisions.replace("\r\n", "\n")], ensure_ascii=False)
+    return hashlib.sha256(data.encode("utf-8")).hexdigest()
 
 
 def result_path(root: Path, note: str | Path, criterion_id: str) -> Path:
@@ -296,10 +314,19 @@ class _ReadContext:
     def __init__(self, root: Path):
         self.root = root
         self.texts: dict[Path, str] = {}
+        self.decided: dict[str, dict[str, str]] = {}
 
     @cached_property
     def validation(self) -> result_contract.ValidationContext:
         return result_contract.ValidationContext(self.root)
+
+    def finding_decisions(self, note: str, criterion: str) -> str | None:
+        """The pair's review input of the operator's rejected findings; None without a rejection."""
+        if note not in self.decided:
+            # decisions reads answers files through edits, which imports this module.
+            from commonplace.lib.review_workflows import decisions
+            self.decided[note] = decisions.review_inputs(self.root, note)
+        return self.decided[note].get(criterion)
 
 
 def _check(root: Path, note: str | Path, criterion: str | Path,
@@ -325,7 +352,8 @@ def _freshness(root: Path, result: Result, context: _ReadContext) -> Freshness:
     criterion_text = text(criterion_file(root, result.criterion))
     changed = tuple(name for name, same in (
         ("note", note_sha256(text(root / result.note), criterion_text) == result.note_sha256),
-        ("criterion", criterion_sha256(criterion_text) == result.criterion_sha256),
+        ("criterion", criterion_sha256(criterion_text, context.finding_decisions(result.note, result.criterion))
+         == result.criterion_sha256),
         ("output-contract", result.contract_sha256 == context.validation.fingerprint)) if not same)
     return Freshness("stale", changed) if changed else Freshness("fresh")
 

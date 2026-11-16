@@ -27,7 +27,10 @@ operator's decided items on edit proposals and on review findings in the
 other runs on one note, which a new run carries over (`types/answers.md`,
 "Decisions carried over"). A decision on a finding comes from a triage stop,
 `finding-answers-<key>.md`, whose question is a review result; the listing
-shows it with class `finding` and names its criterion.
+shows it with class `finding` and names its criterion. `review_inputs()`
+renders the rejected findings per criterion as the input a later review of
+the note against that criterion receives; the input takes part in that
+result's freshness (`results.criterion_sha256()`).
 """
 
 from __future__ import annotations
@@ -277,8 +280,11 @@ def _when(decision: dict) -> tuple[datetime, str]:
     return _moment(decision["decided-at"]), decision["answers-file"]
 
 
-def earlier(root: Path, note: str, current: Path) -> list[dict]:
+def earlier(root: Path, note: str, current: Path | None = None, *, findings_only: bool = False) -> list[dict]:
     """The operator's decided items on edit proposals and findings in the revise runs on `note` other than `current`.
+
+    `current` None reads every run. `findings_only` reads only the answers
+    of triage stops, so only decisions on findings are returned.
 
     Each run directory beside `current`, under the note's path, holds
     operator records. For each answers stop with an approved capture that
@@ -293,20 +299,23 @@ def earlier(root: Path, note: str, current: Path) -> list[dict]:
     wins. Each decision holds `proposal`, `state`, `reason`, `revisit`,
     `decided-by`, `decided-at` and `answers-file`, the repository path of
     its answers file; a decision on a finding also holds `criterion`, the
-    criterion's identity, and `question-sha256`, the hash of the review
-    result it answered. The list is ordered by `decided-at`.
+    criterion's identity, and `answered`, the hashes of the review results
+    whose answers hold this same decision, the first one and those it was
+    carried over to. The list is ordered by `decided-at`.
     """
     base = root / gates.RUNS / EARLIER_WORKFLOW / note.removesuffix(".md")
     if not base.is_dir():
         return []
-    current = current.resolve()
+    current = current.resolve() if current is not None else None
     latest: dict[tuple, dict] = {}
+    answered: dict[tuple, list[tuple[str, str, str]]] = {}
     for run_dir in sorted(base.iterdir()):
         if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
             continue
         for _, data in _records(root, run_dir):
             answer = data.get("answer")
-            if answer is None or not _ANSWERS.fullmatch(data["name"]):
+            stop = _ANSWERS.fullmatch(data["name"])
+            if answer is None or not stop or (findings_only and stop.group(1) != FINDING):
                 continue
             path = run_dir / "artifact" / data["name"]
             parsed, problems = edits.answered(root, path, answer)
@@ -322,9 +331,15 @@ def earlier(root: Path, note: str, current: Path) -> list[dict]:
                             "revisit": item.get("revisit"), "decided-by": item["decided-by"],
                             "decided-at": item["decided-at"], "answers-file": path.relative_to(root).as_posix()}
                 if criterion is not None:
-                    decision |= {"criterion": criterion, "question-sha256": parsed["question-sha256"]}
+                    decision["criterion"] = criterion
+                    answered.setdefault(same, []).append(
+                        (decision["state"], decision["decided-at"], parsed["question-sha256"]))
                 if same not in latest or _when(decision) > _when(latest[same]):
                     latest[same] = decision
+    for same, decision in latest.items():
+        if same in answered:
+            decision["answered"] = sorted({question for state, at, question in answered[same]
+                                           if (state, at) == (decision["state"], decision["decided-at"])})
     return sorted(latest.values(), key=_when)
 
 
@@ -358,3 +373,53 @@ def earlier_text(found: list[dict]) -> str:
             lines.append(f"Revisit when: {decision['revisit']}")
         lines += [f"Decided at: {decision['decided-at']}", f"Answers file: `{decision['answers-file']}`", ""]
     return "\n".join(lines)
+
+
+# --- Finding decisions as an input of later work ---------------------------------------------
+
+REVIEW_RULE = (
+    "The operator rejected these findings of earlier reviews of this note against this criterion. "
+    "Do not raise the same finding again unless the note's text changed in a way that answers the "
+    "operator's reason, or you have an argument that the operator's reason does not address. When you "
+    "raise it again, state that argument or that change, and why the operator's reason no longer holds.")
+"""The reviewer's rule for the finding decisions it receives. It is part of the input, so its hash covers it."""
+
+
+def review_input(found: list[dict]) -> str:
+    """The operator's rejections of findings on one note and criterion, as the text a reviewer receives.
+
+    It holds each finding, the operator's reason and the decision's date,
+    and not the answers file, so a decision carried over unchanged into
+    another answers file gives the same text.
+    """
+    lines = ["# The operator's decisions on earlier findings", "", REVIEW_RULE, ""]
+    for index, decision in enumerate(found, 1):
+        lines += [f"## {index}. {decision['state']}", "", *_finding_lines(decision["proposal"]),
+                  f"Operator's reason: {decision['reason']}", f"Decided at: {decision['decided-at']}", ""]
+    return "\n".join(lines)
+
+
+def review_inputs(root: Path, note: str) -> dict[str, str]:
+    """The review input per criterion identity: the operator's rejected findings of `note` against it.
+
+    A criterion without a rejected finding has no entry, so its review
+    request and the freshness of its result stay as they were.
+    """
+    rejected: dict[str, list[dict]] = {}
+    for decision in earlier(root, note, findings_only=True):
+        if decision["state"] == "rejected":
+            rejected.setdefault(decision["criterion"], []).append(decision)
+    return {criterion: review_input(found) for criterion, found in rejected.items()}
+
+
+def planning_decisions(found: list[dict]) -> list[dict]:
+    """The decisions on findings an assessor receives: the rejected and the deferred ones."""
+    return [decision for decision in found
+            if decision.get("criterion") is not None and decision["state"] in ("rejected", "deferred")]
+
+
+def rejected_in(found: list[dict], criterion: str, question_sha256: str) -> list[dict]:
+    """The proposals the operator rejected in answers to exactly this review result (same criterion and hash)."""
+    return [decision["proposal"] for decision in found
+            if decision.get("criterion") == criterion and decision["state"] == "rejected"
+            and question_sha256 in decision.get("answered", ())]

@@ -27,6 +27,9 @@ never approves: only the recorded approved text becomes the operator's answer:
    override. A named plan bypasses assessment but still requires validation.
    The assessor also receives the artifact's fresh stored review results
    with outcome warn or fail (`current_findings()`); it launches no review.
+   A finding the operator rejected at a triage of that same result is
+   removed from it (`without_rejected()`), and the operator's rejected and
+   deferred findings of the note come as `earlier-decisions`.
    A pass that declares `responds-to`, the fix of `FIX_REL`, takes one such
    result as its `finding` input: its plan entry names the result file and
    takes the depth of the result's criterion. `one_entry_plan()` writes the
@@ -106,7 +109,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 
 import yaml
@@ -280,6 +283,30 @@ def current_findings(root: Path, artifact: str) -> list[Finding]:
     return [read_finding(root, artifact, row.path.relative_to(root).as_posix())
             for row in results.note_rows(root, artifact)
             if row.freshness.state == "fresh" and row.outcome in FINDING_OUTCOMES]
+
+
+def without_rejected(findings: list[Finding], earlier: list[dict]) -> list[Finding]:
+    """The findings with each finding the operator rejected in answers to that same result removed.
+
+    A rejection counts only when its answers' `question-sha256` is the hash
+    of the result's text: the operator answered this result, not an earlier
+    one. A result left with no warn or fail finding is dropped. A rejection
+    of an earlier result removes nothing; the assessor receives it among
+    the earlier decisions instead.
+    """
+    kept = []
+    for finding in findings:
+        rejected = decisions.rejected_in(earlier, finding.criterion, answers.sha(finding.text.encode("utf-8")))
+        if not rejected:
+            kept.append(finding)
+            continue
+        parsed = frontmatter.parse(finding.text)
+        data = dict(parsed.data)
+        data["findings"] = [given for given in data.get("findings") or []
+                            if {key: given[key] for key in answers.FINDING_FIELDS if key in given} not in rejected]
+        if any(given.get("level") in answers.FINDING_LEVELS for given in data["findings"]):
+            kept.append(replace(finding, text=result_contract.render(data, frontmatter.strip(finding.text))))
+    return kept
 
 
 def catalog(known: dict[str, Pass]) -> str:
@@ -474,6 +501,8 @@ REPORTS_INTRO = ("\nThe depth 1 review reports on this text, the compression syn
                  "role report are inputs. Each line gives the result file's repository path, or for the "
                  "synthesis and the role report its run "
                  "directory, and its criterion:\n")
+DECISIONS_INTRO = ("\nThe operator's decisions on findings of this note, the rejected and the deferred ones, are "
+                   "{decisions}.\n")
 FINDING_FIELD = (", and, for a pass that fixes a finding, `finding` naming that review result file's "
                  "repository path, as listed above")
 
@@ -485,12 +514,16 @@ def _rel(root: Path, path: Path) -> str:
 
 def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
                         known: dict[str, Pass], brief: dict[str, str], findings: list[Finding] = (),
-                        reports: list[Finding] = ()) -> tuple[str, dict[str, str]]:
+                        reports: list[Finding] = (), told: list[dict] = ()) -> tuple[str, dict[str, str]]:
     """The captured request, also bound into the final publication approval.
 
     `findings` are the stored warn and fail results the assessor may turn
     into plan entries; `reports` are review reports it reads. Without
-    findings, the passes that fix a finding are not offered.
+    findings, the passes that fix a finding are not offered. `told` holds
+    the operator's rejected and deferred findings of the note
+    (`decisions.planning_decisions()`); when there is one, the assessor
+    receives them as `earlier-decisions`, and the request is otherwise
+    unchanged.
     """
     offered = known if findings else {name: current for name, current in known.items() if not current.responds_to}
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
@@ -509,6 +542,9 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, defend: l
             depth = "" if prefix == "report" else f", depth {'none' if finding.depth is None else finding.depth}"
             listed += (f"- `{finding.path}` (criterion `{finding.criterion_id}`{depth}, outcome "
                        f"{finding.outcome}): {input_ref(f'{prefix}-{index}')}\n")
+    if told:
+        inputs[EARLIER_DECISIONS] = decisions.earlier_text(list(told))
+        listed += DECISIONS_INTRO.format(decisions=input_ref(EARLIER_DECISIONS))
     prompt = ASSESS_PROMPT.format(
         problem=PROBLEM_REF, artifact=artifact, artifact_input=input_ref("artifact"),
         criterion_input=input_ref("criterion"), passes_input=input_ref("passes"),
@@ -906,7 +942,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     if review is not None:
                         supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
                         reports = [*depth_one_reports(root, artifact), *supplied]
-                    findings = current_findings(root, artifact)
+                    findings = without_rejected(current_findings(root, artifact), earlier)
                     observations.atomic_json(captured, {
                         "findings": [asdict(given) for given in findings],
                         "reports": [asdict(given) for given in reports], "reviews": report.reviews})
@@ -917,7 +953,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                         kb_role = {"origin": given.path, "text": section}
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,
-                                                     reports)
+                                                     reports, decisions.planning_decisions(earlier))
                 context.update({"assessment": inputs, "assessment-prompt": prompt})
                 assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]

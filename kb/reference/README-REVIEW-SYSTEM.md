@@ -212,6 +212,20 @@ A pair is in one of three states:
 - `missing`: no result exists;
 - `stale`: a freshness input changed; status names which.
 
+**Finding decisions.** When the operator rejected a finding of a pair at a
+triage, the next review of that pair receives the rejections: each finding,
+the operator's reason and the date, as the supplied input
+`finding-decisions`. The input's text states the reviewer's rule: do not
+raise the same finding again unless the note's text changed in a way that
+answers the operator's reason, or the reviewer has an argument the reason
+does not address; a finding raised again states that argument or change.
+The criterion hash of such a pair covers the criterion text and these
+decisions, so a new rejection stales that pair and no other; status names
+the criterion as changed. A pair without a rejection keeps its plain
+criterion hash and its request. Under `--grouping bundle`, a pair with
+rejections is asked alone, outside its bundle call. Approved and deferred
+findings are not given to the reviewer.
+
 A result whose note or criterion file no longer exists is **orphaned**. A
 moved note orphans its results too. Removing an orphan is deleting its file;
 the moved note's pairs are reviewed again.
@@ -487,12 +501,23 @@ answers as `finding-answers` and fixes only the approved findings; its
 report lists the findings it did not touch. With no approved finding the
 plan is empty and nothing changes. With no fresh `warn` or `fail` result the
 run ends at once, and `triage.what` says so. Nothing is reviewed and nothing
-is assessed.
+is assessed. A rejection feeds later work: the next review of the pair
+receives it (see [finding decisions](#result-files-and-freshness)), and the
+assessor plans no fix for it. Because a new rejection stales its result,
+the quick procedure no longer receives that result until the pair is
+reviewed again.
 
 **Quick.** `--assess`: one assessor chooses the edit operations from the
 artifact and its fresh stored `warn` and `fail` review results. No review is
 launched, so an artifact that was never reviewed is assessed from its text
-alone.
+alone. A finding the operator rejected at a triage of that same result,
+whose answers name the result's current hash, is removed from what the
+assessor receives; a result left with no `warn` or `fail` finding is not
+given. The assessor also receives the operator's rejected and deferred
+findings of the note as `earlier-decisions`. By the planning instruction it
+plans no fix for a rejected finding unless the text changed in a way that
+answers the operator's reason, and no fix for a deferred one unless its
+`revisit` condition is met. The full procedure's assessor receives the same.
 
 **Full.** `--full` first runs every review operation that declares a `depth`
 on the artifact, through the sweep's route. Fresh results are reused, new

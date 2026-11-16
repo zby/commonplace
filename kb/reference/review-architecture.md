@@ -149,14 +149,23 @@ two runs over the same pair both write, and the later write stands.
 ## Freshness hash boundary
 
 Freshness compares the note, criterion and captured output-contract fingerprint.
-A review with supplied operational inputs, such as the compression synthesis
+Apart from the operator's finding decisions, described below, a review with
+supplied operational inputs, such as the compression synthesis
 over its findings or the role report over the note's inbound contexts, has no freshness: those inputs are outside every hash, so
 it publishes no current result and is always asked again.
 The latter includes the library type/schema closure and the project collection
 contract governing review results. Validation context is checked before workers
 start; missing dependencies are controller failures, not requests for model correction.
 Exact target byte hashes are separate from normalized freshness hashes. The criterion
-hash covers the criterion file's whole text. The note hash covers the parts
+hash covers the criterion file's whole text. When the operator rejected a
+finding of the pair at a triage, it also covers those finding decisions:
+the sweep captures them from the approved triage answers of the note's revise
+runs (`decisions.review_inputs()`), asks the pair alone and supplies them as
+the input `finding-decisions`, whose text states the reviewer's rule for
+them. A pair without a rejection keeps the plain criterion hash, its call
+and its inputs, so this input stales no other result. A new rejection, or a
+changed one, stales only its pair, and status names the criterion as
+changed. The note hash covers the parts
 the criterion declares in `watches:` (title, description, body) under the
 criterion's current text, or the whole note without a valid declaration.
 Parts are normalized: the title is the first `# ` heading, and the body drops
