@@ -7,9 +7,9 @@ tags: [agent-memory, context-engineering, learning-theory]
 
 # Import External Knowledge Into Internal Form
 
-Not all memory starts inside the current session. When authoritative or useful project knowledge already exists outside the memory system, the system should import external knowledge bases, documents, repositories, source snapshots, tickets, notes, or prior archives into its own internal form.
+Not all memory starts inside the current session. When authoritative or useful project knowledge already exists outside the memory system, the system should import it from external knowledge bases, documents, repositories, source snapshots, tickets, notes, or prior archives into its own internal form.
 
-Import is not copying. It is a condensing (directed context compression) and [constraining](../definitions/constraining.md) (narrowing interpretation space) step that converts external material into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
+Import is not copying. It is a condensing step (directed context compression) and a [constraining](../definitions/constraining.md) step (narrowing interpretation space): it converts external material into artifacts that obey the receiving system's types, links, quality requirements, provenance rules, and retrieval surfaces.
 
 ## Methods
 
