@@ -51,7 +51,7 @@ Harder:
 
 ## Links
 
-- [Full-pass report type](../../types/full-pass-report.md) — implemented-by: defines the packet's structured state contract
+- Full-pass report type (`kb/types/full-pass-report.md`, deleted after [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md) retired the full pass) — implemented-by: defines the packet's structured state contract
 - Run a full improvement pass (retired by ADR 135) — procedure: creates captures and typed packets and guards keep application
 - Resolve a full-pass disposition (retired by ADR 135) — procedure: inspects, guards, and records asynchronous outcomes
 - [Commonplace CLI commands](../commands.md) — implemented-by: documents the deterministic guard command

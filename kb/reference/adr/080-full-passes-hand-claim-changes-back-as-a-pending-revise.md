@@ -54,5 +54,5 @@ Limits: decided for `kb/notes/` passes on this installation's review machinery. 
 - [ADR 066 — Claims declare modality in text, and passes repair mode mismatch](./066-claims-declare-modality-in-text-and-passes-repair-mode-mismatch.md) — amends: decision 4; mode mismatch becomes a revise brief rather than an in-pass conversion
 - Run a full improvement pass (retired by ADR 135) — procedure: the decision table and state machine
 - Resolve a full-pass disposition (retired by ADR 135) — procedure: executes hand-backs
-- [Full-pass report type](../../types/full-pass-report.md) — implemented-by: packet fields
+- Full-pass report type (`kb/types/full-pass-report.md`, deleted after [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md) retired the full pass) — implemented-by: packet fields
 - [Narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the drift mechanism this decision removes from the pass
