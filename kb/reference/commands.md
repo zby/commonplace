@@ -548,7 +548,22 @@ approve the file, then repeat; publication needs answers that pass the
 validator and approve that exact candidate. Do not edit the candidate to
 revise the text. Supply `--plan` for revision, change workflow inputs, or
 start a new run. The original artifact and captured brief must still be
-unchanged before the write. Instructions own judgment; prompts name inputs
+unchanged before the write.
+
+`run revise ARTIFACT --revised FILE` accepts the candidate with a revision:
+FILE, outside the run's `artifact/`, holds the full revised text the
+operator approved in wording. It launches nothing and takes no workflow
+option. It is refused unless the run of the artifact's current text waits at
+its publication stop and the text passes the candidate checks (frontmatter,
+H1, `user-verified` and no new validation failure); a refusal keeps the
+candidate and its pending answers. The run captures `artifact/revised.md`,
+`artifact/revised-from-final.diff` (from `final.md`) and
+`artifact/revised.diff` (from the note), keeps `final.md`, and replaces the
+pending publication answers with one whose question is `revised.md`; any
+approval is withdrawn. Approve that file and repeat as for the candidate. A
+repeat keeps the revised candidate, another `--revised` replaces it, and a
+changed workflow candidate withdraws it. The report's `revised-candidate`
+names the files. Instructions own judgment; prompts name inputs
 only.
 
 `run revise` derives its run directory from the inputs:
@@ -575,7 +590,8 @@ and whether the decision covered one `item` or a `bundle`. An approved
 answers file gives one entry per item, with its state (`approved`,
 `rejected`, `deferred`, `pending` or `overtaken`) and the operator's reason; a
 publication approval is one bundle entry for the final text, not one per
-edit. A packet gives its disposition as an agent entry and, once resolved,
+edit. A publication entry whose question is the operator's revised
+candidate has `revised: true` in JSON and `revised candidate` in the text. A packet gives its disposition as an agent entry and, once resolved,
 its resolution. A fix report is listed once, by path, since its format is
 free. Entries are grouped by note and ordered by `answered-at` or
 `resolved-at`; untimed entries come last. `--note` and `--class` filter;

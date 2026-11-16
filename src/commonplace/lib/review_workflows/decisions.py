@@ -6,7 +6,9 @@ kb/reports/state/:
 - operator records `operator/*.json` in the revise run directories: for an
   answers stop (`types/answers.md`), one entry per item of the approved
   answers file with its state, decider and reason, the publication approval
-  as a bundle entry; one `pending` entry per stop without an answer. In a
+  as a bundle entry, marked `revised` when its question is the run's
+  revised candidate `revised.md` (`revise.supply_revised()`) and not the
+  workflow's candidate; one `pending` entry per stop without an answer. In a
   revise run, a pending entry is `overtaken` instead when the note no longer
   holds the text the run started from: the note is gone, or `edits.run_dir()`
   of its current text is another run directory. Such a run can never
@@ -70,11 +72,11 @@ class MalformedRecord(ValueError):
 def _entry(note: str, workflow: str, run: str | None, record: str, cls: str, proposed_by: str,
            decided_by: str, decision: str, unit: str, *, item: str | None = None, reason: str | None = None,
            key: str | None = None, at: str | None = None, resolution: str | None = None,
-           refs: list[str] | None = None, carried_from: str | None = None) -> dict:
+           refs: list[str] | None = None, carried_from: str | None = None, revised: bool = False) -> dict:
     return {"note": note, "workflow": workflow, "run": run, "record": record, "class": cls,
             "proposed-by": proposed_by, "decided-by": decided_by, "decision": decision, "unit": unit,
             "item": item, "reason": reason, "resolution": resolution, "refs": refs, "carried-from": carried_from,
-            "key": key, "at": at}
+            "revised": revised, "key": key, "at": at}
 
 
 def _head(proposal: object, criterion: str | None = None) -> str:
@@ -119,6 +121,13 @@ def _criterion(root: Path, question: object) -> str | None:
         return None
 
 
+def _revised(root: Path, run_dir: Path, proposal: str) -> bool:
+    """Whether a publication stop's question is the run's revised candidate, not the workflow's candidate."""
+    parsed = frontmatter.parse(proposal)
+    question = parsed.data.get("question") if parsed.ok else None
+    return question == (run_dir / "artifact" / edits.REVISED).relative_to(root).as_posix()
+
+
 def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
     """Whether a revise run can no longer continue: its note is gone or now holds another text.
 
@@ -143,16 +152,17 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
         if stop:
             cls = stop.group(1)
             proposer = "workflow" if cls == "publication" else "worker"   # a plan's `stop` is the assessor's
+            revised = cls == "publication" and _revised(root, run_dir, data["proposal"])
             if answer is None:
                 found.append(_entry(note, workflow, run, record, cls, proposer, waiting, waiting, "bundle",
-                                    **common))
+                                    revised=revised, **common))
                 continue
             parsed = frontmatter.parse(answer)
             items = parsed.data.get("items") if parsed.ok else None
             if not isinstance(items, list) or not all(isinstance(item, dict) for item in items):
                 # The workflow refuses such an answer and waits; the record still shows it was given.
                 found.append(_entry(note, workflow, run, record, cls, proposer, "operator", "invalid", "bundle",
-                                    **common))
+                                    revised=revised, **common))
                 continue
             criterion = _criterion(root, parsed.data.get("question")) if cls == FINDING else None
             for item in items:
@@ -164,7 +174,7 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
                                     item=_head(item.get("proposal"), criterion),
                                     reason=item.get("reason"), resolution=item.get("resolution"),
                                     refs=item.get("refs"), carried_from=item.get("carried-from"),
-                                    key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
+                                    revised=revised, key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
         else:                               # a stop of an earlier workflow version, such as plan.yaml
             found.append(_entry(note, workflow, run, record, name, "workflow",
                                 waiting if answer is None else "operator",
@@ -246,6 +256,8 @@ def text(found: list[dict]) -> str:
             lines.append(("\n" if lines else "") + note)
         fields = [entry["at"] or "-", entry["workflow"], entry["class"], entry["unit"],
                   f"{entry['proposed-by']}->{entry['decided-by']}", entry["decision"]]
+        if entry["revised"]:
+            fields.append("revised candidate")
         if entry["item"]:
             fields.append(f"item: {entry['item']}")
         if entry["reason"]:

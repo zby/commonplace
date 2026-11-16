@@ -613,6 +613,24 @@ a change in any of them withdraws the approval. To revise, use `--plan` for
 revision, change workflow inputs, or start a new run; do not edit the
 candidate. Publication also requires the original artifact and captured
 brief to remain unchanged.
+
+To accept the candidate with a revision, a session agent applies the
+operator's stated changes to a copy of the candidate outside the run's
+`artifact/` and supplies it with `run revise NOTE --revised FILE`. The
+command launches nothing. It is refused unless the run waits at its
+publication stop for the note's current text, and unless the revised
+candidate passes the candidate checks of `edits.artifact_bounds()`: the
+frontmatter parses and keeps `title`, `type` and `brief`, the H1 is kept,
+`user-verified` is gone when the body changed, and the validator finds no
+new failure. The per-pass bounds of edit operations do not apply. A refusal
+keeps the candidate and its pending answers. The run captures the revised
+candidate once, as `artifact/revised.md` with `artifact/revised-from-final.diff`
+and `artifact/revised.diff`, keeps `final.md` unchanged, and replaces the
+pending publication answers with one whose question is `revised.md`. Any
+approval is withdrawn. Repeats keep the revised candidate; another
+`--revised` replaces it; a changed workflow candidate withdraws it.
+Publication writes the revised candidate under the same conditions as the
+candidate. `decisions` marks such a publication entry `revised`.
 A conflict leaves the original untouched and names the proposed text.
 Instructions remain the judgment authority; prompts name inputs only.
 

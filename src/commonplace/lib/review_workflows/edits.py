@@ -37,7 +37,14 @@ from commonplace.lib.review_workflows import gates, results
 from commonplace.lib.validation import ValidationRun
 
 PUBLICATION = "publication-answers.md"
-"""The stop file of a publication: the operator's answers over the candidate `final.md`."""
+"""The stop file of a publication: the operator's answers over the candidate `final.md`, or the revised candidate."""
+CANDIDATE = "final.md"
+REVISED = "revised.md"
+"""The revised candidate: the operator's revision of `final.md`, supplied with `--revised`."""
+REVISED_DIFF = "revised.diff"
+"""The diff from the note to the revised candidate."""
+REVISION_DIFF = "revised-from-final.diff"
+"""The diff from the workflow's candidate `final.md` to the revised candidate."""
 PRESERVED = ("title", "type", "brief")
 """Frontmatter fields no edit may change."""
 NO_WRITES = ("Write nothing else: create, edit or delete no file in the repository, and run no "
@@ -201,8 +208,56 @@ def apply(root: Path, note: str, start: str, final: str, proposed: Path) -> None
     write_text(root / note, final)
 
 
+def diff(before: str, after: str, fromfile: str, tofile: str) -> str:
+    """The unified diff from `before` to `after`, marking a last line without a newline."""
+    lines = difflib.unified_diff(before.splitlines(keepends=True), after.splitlines(keepends=True),
+                                 fromfile=fromfile, tofile=tofile)
+    return "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n" for line in lines)
+
+
+def candidate_key(note: str, start: str, final: str, inputs: dict) -> str:
+    """The proposal key of the workflow's candidate: it binds the start text, the candidate and the context."""
+    return digest(json.dumps({"artifact": note, "start-sha256": sha256(start), "final-sha256": sha256(final),
+                              "context-sha256": digest(json.dumps(inputs, sort_keys=True))}, sort_keys=True))
+
+
+def revised_key(key: str, revised: str) -> str:
+    """The proposal key of a revised candidate: the workflow candidate's key and the revised text."""
+    return digest(json.dumps({"candidate-key": key, "revised-sha256": sha256(revised)}, sort_keys=True))
+
+
+def revised_files(note: str, start: str, final: str, revised: str) -> dict[str, str]:
+    """The run's `artifact/` files of a revised candidate: the text, its diff from the note and from `final`."""
+    return {REVISED: revised, REVISED_DIFF: diff(start, revised, note, f"{note} (revised candidate)"),
+            REVISION_DIFF: diff(final, revised, f"{note} (candidate)", f"{note} (revised candidate)")}
+
+
+def revised_problems(root: Path, note: str, start: str, revised: str) -> list[str]:
+    """What a revised candidate breaks: the candidate bounds of `artifact_bounds()`, and no text to publish.
+
+    The per-pass bounds of an edit operation (`preserved()`) do not apply:
+    the revision is the operator's.
+    """
+    problems = artifact_bounds(root, note, start, revised, validation_fails(root, note, start))
+    if revised == start:
+        problems.append("the revised candidate is the note's current text; reject the candidate instead")
+    return problems
+
+
+def publication_instruction(revised: bool) -> str:
+    """What the operator does at the publication stop, for the candidate or for a revised candidate."""
+    inspect = ("Inspect final.md and final.diff" if not revised else
+               f"The candidate was revised. Inspect the revised candidate {REVISED}, {REVISION_DIFF} (from the "
+               f"workflow's candidate final.md) and {REVISED_DIFF} (from the note)")
+    return (f"{inspect}. Record the operator's decision on the one item of {PUBLICATION}: "
+            "`approved`, or `rejected` or `deferred` with the operator's reason, with `decided-by: operator` "
+            "and `decided-at`. Approve that file, then repeat. To accept the candidate with a revision, supply "
+            "the full revised text with --revised FILE; to revise it otherwise, change the workflow inputs or "
+            "supply --plan for revision. Editing the files under artifact/ is not a workflow input.")
+
+
 def publication(run: Run, root: Path, note: str, start: str, final: str, *,
-                inputs: dict, command: str) -> dict | None:
+                inputs: dict, command: str, revised: str | None = None) -> dict | None:
     """Require the operator's approval of the exact checked candidate, never of an editable replacement.
 
     The question is the candidate `final.md`; the stop's file is a pending
@@ -214,32 +269,38 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     note's start text before applying. This gate publishes no checkout
     artifact. Candidate and diff are derived from checked workflow outputs
     again on repeat, not read as new edit inputs.
+
+    With `revised`, the operator's revised candidate captured by the run,
+    `final.md` stays the workflow's candidate, the question is `revised.md`
+    and the key also binds the revised text (`revised_key()`).
     """
     root = root.resolve()
     name = PUBLICATION
     existed = (run.artifact / name).is_file()
-    diff_lines = difflib.unified_diff(start.splitlines(keepends=True), final.splitlines(keepends=True),
-                                     fromfile=note, tofile=f"{note} (candidate)")
-    diff = "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n"
-                   for line in diff_lines)
+    expected = {CANDIDATE: final, "final.diff": diff(start, final, note, f"{note} (candidate)")}
+    if revised is not None:
+        expected |= revised_files(note, start, final, revised)
     # Check before answer() restores a missing manifest from its operator record.
     changed = operator.edited(run, name)
-    for filename, expected in (("final.md", final), ("final.diff", diff)):
+    for filename, text in expected.items():
         path = (run.artifact / filename).resolve()
         if not path.is_relative_to(run.artifact.resolve()):
             raise ValueError(f"publication file outside run artifacts: {filename}")
-        changed |= (path.read_text(encoding="utf-8") != expected if path.is_file() else existed)
-    candidate = run.accept("final.md", final)
-    unchanged(root, note, start, candidate)
-    run.accept("final.diff", diff)
-    proposal = answers.pending(candidate.relative_to(root).as_posix(), final.encode("utf-8"))
-    key = digest(json.dumps({"artifact": note, "start-sha256": sha256(start), "final-sha256": sha256(final),
-                             "context-sha256": digest(json.dumps(inputs, sort_keys=True))}, sort_keys=True))
+        changed |= (path.read_text(encoding="utf-8") != text if path.is_file() else existed)
+    question = run.accept(CANDIDATE, final)
+    if revised is not None:
+        question = run.accept(REVISED, revised)
+    unchanged(root, note, start, question)
+    for filename, text in expected.items():
+        if filename not in (CANDIDATE, REVISED):
+            run.accept(filename, text)
+    published = final if revised is None else revised
+    proposal = answers.pending(question.relative_to(root).as_posix(), published.encode("utf-8"))
+    key = candidate_key(note, start, final, inputs)
+    if revised is not None:
+        key = revised_key(key, revised)
     approved = operator.answer(run, name, proposal, key=key)
-    instruction = (f"Inspect final.md and final.diff. Record the operator's decision on the one item of {name}: "
-                   "`approved`, or `rejected` or `deferred` with the operator's reason, with `decided-by: operator` "
-                   "and `decided-at`. Approve that file, then repeat. To revise the candidate, change the "
-                   "workflow inputs or supply --plan for revision; editing final.md is not a workflow input.")
+    instruction = publication_instruction(revised is not None)
     if changed:
         operator.invalidate(run, name)
         run.accept(name, proposal)
@@ -250,6 +311,10 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     if approved is None:
         return operator.waiting(run, root, name, instruction, command)
     data, problems = answered(root, run.artifact / name, approved)
+    asked = question.relative_to(root).as_posix()
+    if not problems and ((data.get("question"), data.get("question-sha256"))
+                         != (asked, answers.sha(published.encode("utf-8")))):
+        problems = [f"the answers name the question {data.get('question')}, not the text to publish {asked}"]
     if not problems and data["items"][0]["state"] != "approved":
         item = data["items"][0]
         problems = [f"the operator's answer is `{item['state']}`"

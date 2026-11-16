@@ -11,6 +11,7 @@
                                             | --full]
                                   [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
+    commonplace-review run revise ARTIFACT --revised FILE  # at the publication stop; launches nothing
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
@@ -118,7 +119,16 @@ the candidate and diff, record the operator's decision on the answers file's
 one item, which names the candidate's hash, approve the file, then repeat.
 The proposal key binds the original, candidate and decision context; answers
 over another text cannot authorize it. Candidate files are outputs, not
-editable workflow inputs. A no-change result needs no publication approval. Each pass's `effort` picks its profile from the profile
+editable workflow inputs. To accept the candidate with a revision, supply
+the full revised text with `--revised FILE`, a file outside the run's
+`artifact/`. It is refused unless the run waits at its publication stop for
+the note's current text and the text passes the candidate checks (frontmatter,
+H1 and validation). It launches nothing. The run captures the revised
+candidate as `artifact/revised.md`, with `artifact/revised-from-final.diff`
+and `artifact/revised.diff`, keeps `final.md`, and replaces the pending
+publication answers with one over `revised.md`; any approval is withdrawn.
+Repeats keep the revised candidate; another `--revised` replaces it. A
+no-change result needs no publication approval. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
@@ -243,6 +253,10 @@ def _parser() -> argparse.ArgumentParser:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
     rev.add_argument("--timeout", type=float, help="seconds a launch may take")
+    rev.add_argument("--revised", type=Path, metavar="FILE",
+                     help="at the publication stop, replace the candidate with this revised candidate, the full "
+                     "text the operator approved in wording; launches nothing, takes no option but --timeout, "
+                     "which has no effect")
     approve = commands.add_parser("approve", help="explicitly approve an operator proposal; launches nothing")
     approve.add_argument("run", type=Path)
     approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
@@ -478,6 +492,8 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     artifact = _note(root, arguments.artifact)
     if not artifact.endswith(".md"):
         raise ValueError(f"not a markdown artifact: {artifact}")
+    if arguments.revised is not None:
+        return _revised(root, artifact, arguments, harnesses)
     named_plan, focused = None, arguments.pass_name is not None or arguments.finding is not None
     if arguments.plan:
         named_plan = arguments.plan.read_text(encoding="utf-8")   # a missing file is an error, not an assessment
@@ -519,6 +535,27 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                            named_plan=options["plan"] if mode == "fixed-plan" else None,
                            review=Profile(**review) if review else None, triage=mode == "triage",
                            timeout=arguments.timeout, harnesses=harnesses)
+    print(json.dumps(report.to_dict(), indent=2))
+    return 0 if report.ok else 1
+
+
+def _revised(root: Path, artifact: str, arguments: argparse.Namespace, harnesses) -> int:
+    """Supply the revised candidate to the run of the artifact's current text; launches nothing."""
+    given = [option for option, value in (
+        ("--plan", arguments.plan), ("--pass", arguments.pass_name), ("--finding", arguments.finding),
+        ("--assess", arguments.assess), ("--triage", arguments.triage), ("--full", arguments.full),
+        ("--purpose", arguments.purpose), ("--defend", arguments.defend),
+        *((f"--profile-{effort}", getattr(arguments, f"profile_{effort}")) for effort in edit_operations.EFFORTS))
+        if value not in (None, False, [])]
+    if given:
+        raise ValueError(f"--revised takes no workflow option: {', '.join(given)}")
+    run_dir = edits.run_dir(root, "revise", artifact)
+    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
+    if not recorded.get("profiles") or not recorded.get("mode"):
+        raise ValueError(revise.NOT_AT_PUBLICATION.format(artifact=artifact))
+    text = arguments.revised.read_text(encoding="utf-8")
+    report = revise.supply_revised(root, artifact, run_dir, Profile(**recorded["profiles"]["judgment"]), text,
+                                   arguments.revised, mode=recorded["mode"], harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 

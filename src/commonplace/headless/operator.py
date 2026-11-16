@@ -61,6 +61,12 @@ def answer(run: Run, name: str, proposal: str, *, key: str) -> str | None:
     return data.get("answer")
 
 
+def recorded(run: Run, name: str) -> dict | None:
+    """The record of the proposal at `name`: its proposal, input key and any answer; None when there is none."""
+    _, record = _paths(run.root, name)
+    return json.loads(record.read_text(encoding="utf-8")) if record.is_file() else None
+
+
 def edited(run: Run, name: str) -> bool:
     """Whether the editable file changed or disappeared after approval; it is not the approved input."""
     path, record = _paths(run.root, name)

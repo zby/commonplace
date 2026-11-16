@@ -123,7 +123,11 @@ The original remains unchanged until the operator approves the candidate in
 `artifact/publication-answers.md`, whose one item names the candidate's hash,
 and the file is approved with the report's `approve-command`. Repeat the
 reported command to publish from captured inputs. Repeating alone never
-approves. Candidate files are outputs, not editable inputs.
+approves. Candidate files are outputs, not editable inputs. To accept the
+candidate with a revision, supply the operator's revised candidate, a full
+text outside `artifact/`, with `--revised FILE`
+([approve a text](../approve-a-text.md)); the run captures it and asks for
+approval of that exact text.
 Use `--plan` for a changed commission. No-change runs need no publication
 approval. Wording-selection passes stop earlier for their own approvals.
 
