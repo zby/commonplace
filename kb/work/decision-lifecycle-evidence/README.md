@@ -192,6 +192,76 @@ the same day; the
 [gate verdict stability pilot](../stochastic-operation-testing/pilot-gate-verdict-stability.md)
 measures the present gap.
 
+### 2026-11-16: the procedures are built and this line is closed
+
+This entry replaces the "Proposed, not adopted" and "In draft here" items
+of the 2026-11-13 entry.
+
+**Built.** One runner, `commonplace-review run revise`, executes a plan of
+edit operations
+([ADR 135](../../reference/adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
+The plan is made in one of four ways: focused (`--pass`, `--finding`),
+quick (`--assess`), full (`--full`) and triage (`--triage`). The full-pass
+workflow and the fix procedure are retired. The same day added, at the
+operator's direction after the first operator sessions:
+
+- `resolution` and `refs` on a decided answers item, and an answers file
+  for a stopped plan (ADR 134, amended);
+- the role report, which a full run gives to the assessor and, as the
+  `kb-role` input, to each edit operation;
+- earlier decisions carried over to later runs on the same note;
+- triage of findings, with rejected findings passed to the assessor and to
+  the next review of the note against that criterion;
+- acceptance of a publication candidate with a revision;
+- pending stops listed as overtaken once the note holds another text.
+
+**Disposition of the drafts.** The completion condition for this line was
+that the type drafts be tried on a first run and then registered or
+dropped, with the reason recorded.
+
+- The five experimental run types under `kb/reports/types/`
+  (improvement run, answers, changes, findings, report) are dropped and
+  deleted. They had their [first run](./first-run.md). The revise run
+  directory is the run record, and the registered
+  [answers type](../../types/answers.md) records operator decisions, so
+  nothing writes them. The operator authorized the deletion on 2026-11-16.
+- The [improvement run type](./improvement-run-type.md) and
+  [answers schema](./improvement-run-answers-schema.md) drafts stay here
+  as the record of what was tried. They describe no shipped type.
+- The [edit-operation type](./edit-operation-type.md) draft is superseded
+  by the registered [edit-operation type](../../types/edit-operation.md).
+- The [first variant](./first-variant-fix-findings.md) stays shelved.
+  Triage and the focused procedure with a finding cover its use.
+
+**Run live.** Each of `--pass`, `--finding`, `--assess` and `--full` ran
+on a note. One full run went from review to a published note
+(`eeb3f8d8c`), with the candidate accepted with a revision.
+
+**Not run live.** Triage, the feed of rejected findings to the assessor
+and to reviewers, and the code path that carries an identical proposal
+into a new answers file. The one live carry-over case ended with the
+worker not proposing a rejected item again.
+
+**What the sessions showed.**
+
+- A reviewer's local contradiction led to a rewrite and a rename of a
+  note. The finding was right about the symptom and the proposed fix was
+  not the change needed.
+- The same fix operation, run twice on one finding, chose opposite
+  readings of an ambiguous phrase.
+- Changing an instruction invalidates every pending run that used it.
+  Decisions made at those stops were applied by hand; carry-over is the
+  response.
+- The role report says who uses a note. It does not say whether an
+  unused claim is good theory, and it must not be read as a reason to cut.
+
+**Known defects, not fixed.** The retry feedback to a reviewer names a
+level error when the fault is a missing outcome. The fix operation is
+limited to the approved findings by instruction only.
+
+Later changes belong to the procedures and their ADRs, not to this
+workshop. The candidates below stay recorded and uncommissioned.
+
 ## Candidate for the later edit-operation work: check a proposed fix
 
 In the follow-up to the focused writing-tool comparison, the operator asked to
