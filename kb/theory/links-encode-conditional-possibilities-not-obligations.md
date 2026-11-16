@@ -25,7 +25,7 @@ The theory applies identically to both link positions. **Inline prose connectors
 
 ## The label test: name the reader-need
 
-A label earns its place by naming a specific reader-need. Labels that describe document relationships instead of reader-needs are weaker — they describe the graph, not the follow-decision.
+A label earns its place by naming a specific reader-need. Labels that describe document relationships instead of reader-needs are weaker — they describe the graph and leave the follow decision unstated.
 
 Passes the test:
 - `grounds` — "reader might want to verify the premise"
@@ -74,14 +74,14 @@ We don't encode "assume loaded" in the vocabulary yet — too fragile, depends o
 **Inline content** when:
 - All reachable readers need the content.
 - The content is short enough that it doesn't distort the host document.
-- The content is tightly fused with the host claim — readers need it locally to understand the argument without opening another artifact.
+- The content is closely tied to the host claim — readers need it locally to understand the argument without opening another artifact.
 
 **Link** when:
 - Only some readers need the content (conditional on task, skill, prior knowledge).
 - The content stands as its own unit with its own explanatory-reach.
 - The host document remains understandable without loading the target, even when the target supplies load-bearing warrant.
 
-If the host cannot be understood without the target's content, state or gloss the needed part locally and optionally link the fuller treatment. This does not make every link non-load-bearing: an inline premise link can remain essential to the argument's warrant while the host prose carries enough of the premise to be understood without dereferencing it.
+If the host cannot be understood without the target's content, state or gloss the needed part locally and optionally link the fuller treatment. An inline premise link can remain essential to the argument's warrant while the host prose carries enough of the premise to be understood without dereferencing it.
 
 ## Implications for vocabulary design
 
@@ -89,7 +89,7 @@ If the host cannot be understood without the target's content, state or gloss th
 2. **Prefer labels that name epistemic or task states** (wants to verify, wants to understand how, wants to execute) over labels that name static document relations (is-a-part-of, cross-references).
 3. **Cross-collection labels name boundary-crossing needs.** A reader moving from a theory collection to a system-description collection has a different unmet need (evidence, instance) than one moving from description to theory (rationale). The vocabulary grows from differences between the source and destination [text contracts](../reference/definitions/collection.md#text-contract), not from three inherited content modes.
 4. **If a label's reader-need is almost-always-already-met** in the target reader class, cut the label. It's a link that doesn't pay off.
-5. **Weak catch-alls should be rare.** `see-also` is an explicit "I can't name what this reader needs, but something's here" — useful as an escape hatch, not as a default.
+5. **Weak catch-alls should be rare.** `see-also` is an explicit "I can't name what this reader needs, but something's here" — useful only as an escape hatch.
 
 ## Open questions
 
