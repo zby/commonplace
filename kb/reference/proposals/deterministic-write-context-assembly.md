@@ -6,7 +6,7 @@ tags: [context-engineering]
 
 # Deterministic write-context assembly
 
-Commonplace's ordinary writing procedure currently composes its authoring context itself. This is not one uniform operation: an edit has an incumbent artifact from which to resolve the target and recover evidence of its intended contribution, while a new write has neither. The skill therefore carries both filesystem mechanics and mode-specific instructions about what information to establish before drafting. A proposed per-artifact write brief would add another named input, but it is not the only reason to consider moving the deterministic part into code.
+Commonplace's ordinary writing procedure currently composes its authoring context itself. This is not one uniform operation: an edit has an incumbent artifact from which to resolve the target and recover evidence of its intended contribution, while a new write has neither. The skill therefore carries both filesystem mechanics and mode-specific instructions about what information to establish before drafting. The adopted per-artifact write brief is another named input, already read through its validated pointer; it does not require moving the deterministic part into code.
 
 The design question is whether a narrow tool should compile the authoring context already knowable for the particular mode, including additional initiation information for a completely new artifact, and whether doing so must also open an extensibility mechanism for future inputs.
 
@@ -40,7 +40,7 @@ The design therefore needs to distinguish a universal operation—resolve the kn
 
 ### 1. Keep composition in each writing procedure
 
-Each skill continues to resolve and read ordinary canonical files. A write brief, if ever adopted, would require an additional explicit read in every consuming procedure.
+Each skill continues to resolve and read ordinary canonical files. The ordinary writing skill already reads a declared write brief; another consuming procedure would need to implement that read explicitly.
 
 **Operativity path:** skill text remains the behavioral authority. Each changed skill affects the next agent invocation that loads it; no code or generated packet mediates the inputs.
 
@@ -48,7 +48,7 @@ This keeps the shipped file-native model and has no new runtime dependency. Its 
 
 ### 2. Factor target and contract resolution into code
 
-A narrow resolver identifies whether the operation is a new write or an edit, identifies the target collection and type, reports their canonical paths, and diagnoses missing or ambiguous inputs. In new-write mode it can report the valid type choices and facts that still need to be supplied; in edit mode it can report facts recovered from the incumbent. Writing procedures still read the returned files and explain how their scopes combine. A future brief relation could be resolved the same way without inserting its contents.
+A narrow resolver identifies whether the operation is a new write or an edit, identifies the target collection and type, reports their canonical paths, and diagnoses missing or ambiguous inputs. In new-write mode it can report the valid type choices and facts that still need to be supplied; in edit mode it can report facts recovered from the incumbent. Writing procedures still read the returned files and explain how their scopes combine. The adopted `brief:` relation could be resolved the same way without inserting the brief's contents.
 
 **Operativity path:** writing and revision skills call the resolver, then load and compose the named files themselves. Code owns path identity and mechanical errors; skill text remains the authority for reading order, role, precedence, and semantic use.
 
@@ -56,13 +56,13 @@ This removes duplicated filesystem logic while preserving native file reads. It 
 
 ### 3. Add a closed, mode-aware deterministic assembler
 
-A package command or equivalent tool resolves a fixed set of named authoring roles and renders one inspectable packet. The collection and type contracts are the established common roles. The packet may differ by declared mode: an edit can include facts resolved from the incumbent, while a new write can include deterministic initiation material that would otherwise be spelled out or discovered inside the skill. For example, it could expose valid structural choices, preserve explicit task-fixed intent, and identify unresolved contribution fields. It must not invent answers to those fields. A write brief becomes another named role only if its companion proposal is adopted first or in the same decision.
+A package command or equivalent tool resolves a fixed set of named authoring roles and renders one inspectable packet. The collection and type contracts are the established common roles. The packet may differ by declared mode: an edit can include facts resolved from the incumbent, while a new write can include deterministic initiation material that would otherwise be spelled out or discovered inside the skill. For example, it could expose valid structural choices, preserve explicit task-fixed intent, and identify unresolved contribution fields. It must not invent answers to those fields. Including the already-adopted write brief as a named assembler role is a separate choice; its validated pointer remains authoritative.
 
 Canonical Markdown and explicit invocation inputs remain authoritative. The packet is transient and identifies the source, role, and force of every included block. Features borrowed from the multistage experiment enter only when they make the ordinary path better; adopting this option does not adopt its workshop pipeline, multi-agent stages, or promotion lifecycle.
 
 The assembler resolves paths, ordering, provenance, and mechanical errors. It does not select an angle, discover evidence, summarize source content through an LLM, or accept arbitrary extra context. Adding another role requires an explicit change to the assembler's contract and tests rather than registration through a generic provider API.
 
-Named roles also need explicit applicability and termination rules. If a durable write brief is added, the ordinary writing skill should still write the brief artifact, but assembly for that target must omit the write-brief role. The brief still receives its collection and type contracts; it does not acquire a brief of its own. Cycle rejection remains a defensive backstop for malformed associations rather than the normal way recursion terminates.
+Named roles also need explicit applicability and termination rules. If the assembler includes the write-brief role, the ordinary writing skill must still be able to write the brief artifact, but assembly for that target must omit that role. The brief still receives its collection and type contracts; it does not acquire a brief of its own. Cycle rejection remains a defensive backstop for malformed associations rather than the normal way recursion terminates.
 
 **Operativity path:** the ordinary writing skill calls the package command with the known operation and target information, then consumes the rendered packet. Canonical contract or brief edits affect the next invocation because the packet is rendered from live files. The skill retains semantic drafting and stopping rules but no longer duplicates input lookup, mode branching, and combination mechanics that the tool can determine. Other writing procedures may adopt the same path later on their own evidence.
 
@@ -75,6 +75,32 @@ A registry or provider protocol lets independently defined inputs contribute blo
 **Operativity path:** providers register with the assembler; every writing consumer receives their output whenever the provider's selection rule matches the target. Provider registration therefore changes writing behavior without editing the consuming skills.
 
 This is the most general design and the easiest to accrete. It needs admission, precedence, trust, context-budget, conflict, and observability rules before the first third-party or collection-defined provider can be treated as binding. No current requirement establishes that this openness is needed.
+
+## Commitment scope and feasibility
+
+Options 2 and 3 propose routine reliance by the ordinary writing skill, not
+adoption by every writing procedure. A pilot supplies evidence for that
+choice; it does not authorize routine use. Canonical files and explicit
+invocation inputs remain authoritative under either option. Reversal would
+restore resolution and composition instructions in the ordinary skill and
+remove its command dependency; it would not migrate authored artifacts or
+change their type, collection, or brief associations. Tests and documentation
+of the command would also need to be retired or revised. Broader consumer
+adoption would create additional reversal work and needs a separate decision.
+
+The existing review-side resolver is a limited feasibility witness: package
+code can resolve named criteria to canonical files for a skill-like consumer.
+It does not establish correct write-target resolution, mode-aware assembly,
+or an improvement to writing. Options 2 and 3 would reuse the existing
+collection, type, and brief identities and file reads; unresolved work is
+implementing their mode-specific contract and demonstrating the adoption
+criteria below. The named risks remain obstacles to useful adoption, not
+claims that construction is impossible.
+
+The proposal seeks replaceable routine use within that boundary. It does not
+yet warrant a shared interface whose removal would require migrations across
+many consumers. No enduring constraint or demonstrated cross-consumer benefit
+requires such entrenchment; the review-side precedent alone cannot supply it.
 
 ## Forces
 
@@ -97,7 +123,7 @@ This is the most general design and the easiest to accrete. It needs admission, 
 - Which additional new-write information is worth compiling. Every candidate needs a deterministic source, a named role, a loading condition, and a context-cost argument; the existence of the tool is not sufficient warrant.
 - Whether the packet includes provenance and context-cost diagnostics, and how clearly it separates diagnostics from binding instructions.
 - Whether failure to find an optional role is silent absence or an explicit diagnostic. A declared-but-missing input should not look the same as an undeclared one.
-- Whether the closed assembler is adopted independently of write briefs, using only the already-shipped collection and type inputs.
+- Whether the closed assembler initially includes the already-adopted write brief or resolves only collection and type inputs.
 - Where role eligibility is declared. A type-level rule is explicit; an association-level rule accommodates more storage forms but must still be deterministic and validated.
 
 ## Adoption criteria

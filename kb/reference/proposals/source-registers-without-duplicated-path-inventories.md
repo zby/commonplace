@@ -52,6 +52,18 @@ finding's source ID and path against the frozen source rather than a copied
 inventory. Existing source-resolution and quote-generation code supplies the
 revision boundary; no consumer would treat mere file existence as support.
 
+### Keep the register with explicitly non-exhaustive anchors
+
+Keep the initial inspected-anchor list as an account of the boundary author's
+inspection, not a whitelist for later findings. The source contract and judge
+instructions would explicitly permit additional paths within the declared
+source unit at its frozen revision. Validators and judges would check each
+finding's source ID and path against that source, without requiring register
+membership. This addresses the observed interpretation without removing the
+list or reopening the boundary. It retains the list's context cost and the
+risk that consumers still mistake an inspection record for an exhaustive
+citation surface; removal avoids that ambiguity by omitting the list.
+
 ### Register every source path before analysis
 
 The boundary job could enumerate all paths up front. Later workers and judges
@@ -72,5 +84,8 @@ The operator must choose whether register membership means a frozen source
 unit or an exhaustively enumerated file surface. A trial must demonstrate that
 a specialist can cite a newly inspected path at the same revision without
 reopening the boundary, while an unknown source ID or nonexistent path is
-still refused. Quote-copy integrity and formal reconciliation retention remain
+still refused. Both removal and an explicitly non-exhaustive register could
+meet that criterion; the comparison must also establish whether retaining the
+initial anchors supplies useful inspection context without recreating the
+whitelist interpretation. Quote-copy integrity and formal reconciliation retention remain
 separate decisions. This proposal does not change the shipped contract.

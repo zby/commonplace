@@ -78,7 +78,7 @@ Stated in the form the library already uses for factories,
 > than building per-kind tools, and the cost of the shared abstractions
 > stays below the duplication they remove.
 
-Three held results give it its economic form. A machinery improvement is
+Two held results motivate its economic form. A machinery improvement is
 paid once and reused by every later episode, so **G**'s return grows with
 the number of kinds and episodes that use it
 ([machinery investment](../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md)).
@@ -86,10 +86,11 @@ The expensive part per kind is acquiring **K_P**, not constructing
 machinery
 ([factory construction does not establish knowledge acquisition](../../theory/factory-construction-does-not-establish-knowledge-acquisition.md)),
 so a shared **G** does not remove the hard work; it removes rebuilding the
-easy part. And conversion of a kind's stable patterns into routines is the
-mechanism by which that kind's work gets cheaper, and the conversion
+easy part. The further conjecture is that converting stable patterns into
+routines makes work cheaper across kinds through reusable conversion
 machinery (observe, commit when stable, relax on failure signals, price
-the stake) is the same for every kind.
+the stake). Whether that machinery can be shared economically is part of
+what the proposal tests, not a held result supporting it.
 
 What **G** is, in the library's terms, is theory-building machinery: the
 operations a [theory builder](../../theory/definitions/theory-builder.md)
@@ -207,7 +208,7 @@ measures are reused, and their warrant stops where that proposal says.
 
 ## Adoption criteria
 
-The proposal reduces to one question: does shared support deliver
+The economic conjecture asks: does shared support deliver
 comparable outcomes at lower total cost in a second kind of work? The
 comparison is made *within* the second kind, against a competent baseline
 on the same work, so that architecture is not confounded with task
@@ -243,11 +244,16 @@ and the instrument note, restated as cost comparisons:
 - The competent baseline reaches comparable outcomes at lower total cost
   over the same horizon.
 
-The trigger for an adoption decision is the first completed second-kind
-run with the comparison recorded. One run supports a bounded next step; it
-does not establish the claim for every kind. Until then the proposal holds
-the conjecture and its defeaters, and the program's successes inside the
-KB remain evidence about theory building only.
+The first completed second-kind run with the comparison recorded triggers
+reconsideration of whether shared support merits further investment. The run
+must identify which route it used so its setup and maintenance costs can be
+attributed. The comparison tests reuse economy against the no-shared-layer
+baseline; it does not by itself select interface-first over extraction-later.
+Choosing a route for the run remains a separate decision, and a favorable
+result does not authorize promoting that route's interface as the shared
+layer. One run supports a bounded next step, not the claim for every kind.
+Until then the proposal holds the conjecture and its defeaters, and the
+program's successes inside the KB remain evidence about theory building only.
 
 ---
 
