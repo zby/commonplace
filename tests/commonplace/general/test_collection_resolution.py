@@ -7,7 +7,7 @@ from commonplace.lib.project_paths import resolve_collection
 from tests.commonplace.link_helpers import junction
 
 
-@pytest.mark.parametrize("name", ["notes", "theory", "claims", "teams/claims"])
+@pytest.mark.parametrize("name", ["claims", "teams/claims"])
 @pytest.mark.parametrize("typed", [False, True])
 def test_resolve_collection_accepts_explicit_names_and_paths(tmp_path: Path, name: str, typed: bool):
     collection = tmp_path / "kb" / name

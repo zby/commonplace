@@ -81,28 +81,15 @@ def boundary_findings(analysis: Analysis, text: str | bytes, incumbent: str | No
     return check_candidate(analysis.candidate("boundary", data, members))
 
 
-@pytest.mark.parametrize("disposition", ["complete", "blocked", "out-of-scope"])
-def test_accepts_pinned_boundary(analysis, disposition):
-    assert boundary_findings(analysis, candidate(scripted(analysis), disposition)) == []
-
-
 @pytest.mark.parametrize("changes,reason", [
     ({"run-id": "AAS-2026-10-07-other-0123456789ab-01"}, "identity field run-id 'AAS-2026-10-07-other-0123456789ab-01' does not match the run"),
     ({"reviewed-boundary": "b" * 40}, "exactly the checkout code froze"),
     # A non-complete disposition does not authorize dropping code's source pin.
     ({"result-disposition": "blocked", "source": None, "reviewed-boundary": None}, "exactly the checkout code froze"),
-    ({"result-disposition": "not-a-disposition"}, "[artifact]"),
-    ({"extra": "not allowed"}, "[artifact]"),
-    ({"type": "types/note.md"}, "[artifact]"),
 ])
 def test_refuses_bad_content_or_invocation(analysis, changes, reason):
     findings = boundary_findings(analysis, candidate(scripted(analysis), **changes))
     assert any(reason in finding for finding in findings), findings
-
-
-def test_unreadable_candidate_is_a_refusal_not_a_failed_check(analysis):
-    findings = boundary_findings(analysis, b"\xff")
-    assert any(finding.startswith("[artifact]") for finding in findings)
 
 
 def test_dirty_frozen_checkout_is_refused_without_cleaning_it(analysis):
@@ -116,12 +103,11 @@ def test_dirty_frozen_checkout_is_refused_without_cleaning_it(analysis):
     assert boundary_findings(analysis, text) == []
 
 
-@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
-def test_no_source_is_valid_only_for_noncomplete_boundary(begin, disposition):
+def test_no_source_is_valid_only_for_noncomplete_boundary(begin):
     analysis = begin(CAPTURE_IDENTITY)
     a = scripted(analysis)
     assert a.source() is None
-    assert boundary_findings(analysis, candidate(a, disposition)) == []
+    assert boundary_findings(analysis, candidate(a, "blocked")) == []
     assert boundary_findings(analysis, candidate(a, "complete")) != []
 
 

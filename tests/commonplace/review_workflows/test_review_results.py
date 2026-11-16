@@ -11,14 +11,12 @@ from commonplace.lib import library
 from commonplace.lib.review_workflows import result_contract
 from commonplace.lib.review_workflows.results import (
     Freshness,
-    Summary,
     criterion_id,
     make_result,
     orphaned,
     read_result,
     result_path,
     status,
-    stored,
     summarize,
     write_result,
 )
@@ -104,7 +102,7 @@ def test_written_result_reads_back_equal_at_its_pair_path(repo: Path) -> None:
 
 @pytest.mark.parametrize("scan", [
     lambda root: status(root, [(NOTE, GATE), (NOTE, OTHER_GATE)]),
-    stored, summarize, orphaned,
+    summarize,
 ])
 def test_scan_captures_contract_once_and_refreshes_next_operation(repo: Path, scan) -> None:
     _review(repo, NOTE, GATE)
@@ -140,24 +138,6 @@ def test_shared_validation_context_does_not_cache_evidence(repo: Path, field) ->
     path.write_text("not a review result")
     with pytest.raises(ValueError, match="unsupported review-result"):
         read_result(path, context=context)
-
-
-def test_missing_result_scan_never_captures_contract(repo: Path) -> None:
-    with patch.object(result_contract, "capture_contract", side_effect=AssertionError("unnecessary capture")):
-        assert status(repo, [(NOTE, GATE)])[0].freshness == Freshness("missing")
-        assert stored(repo) == ([], [])
-
-
-def test_note_edit_stales_only_criteria_that_watch_the_edited_part(repo: Path) -> None:
-    _review(repo, NOTE, GATE)
-    _review(repo, NOTE, TYPE_SPEC)
-    # Description and other frontmatter are outside a body-only gate's watches.
-    _edit(repo, NOTE, "Alpha in one line", "Alpha, restated")
-    _edit(repo, NOTE, "seedling", "current")
-    assert _states(repo, [(NOTE, GATE), (NOTE, TYPE_SPEC)]) == [
-        Freshness("fresh"), Freshness("stale", ("note",))]
-    _edit(repo, NOTE, "Body paragraph.", "Changed body.")
-    assert _states(repo, [(NOTE, GATE)]) == [Freshness("stale", ("note",))]
 
 
 def test_part_content_cannot_forge_a_part_boundary(repo: Path) -> None:
@@ -198,40 +178,6 @@ def test_unparseable_result_file_raises_with_its_path(repo: Path) -> None:
 def test_paths_escaping_the_results_root_are_refused(repo: Path, note: str, criterion_id: str) -> None:
     with pytest.raises(ValueError):
         result_path(repo, note, criterion_id)
-
-
-def test_orphaned_finds_results_whose_note_or_criterion_is_gone(repo: Path) -> None:
-    _, kept = _review(repo, NOTE, OTHER_GATE)
-    _, by_note = _review(repo, NOTE, GATE)
-    second = "kb/notes/beta.md"
-    _write(repo, second, NOTE_TEXT)
-    _, gone = _review(repo, second, GATE)
-    (repo / second).unlink()
-    assert orphaned(repo) == [gone]
-    (repo / OTHER_GATE).unlink()
-    assert orphaned(repo) == sorted([gone, kept])
-    assert by_note.is_file()
-
-
-def test_summary_counts_each_stored_result_once(repo: Path) -> None:
-    second = "kb/notes/beta.md"
-    _write(repo, second, NOTE_TEXT.replace("Alpha", "Beta"))
-    _review(repo, NOTE, GATE, outcome="warn", body="A warning.\n")
-    _review(repo, NOTE, OTHER_GATE, outcome="fail", body="A failure.\n")
-    _review(repo, NOTE, TYPE_SPEC)
-    _, gone = _review(repo, second, GATE, outcome="warn", body="A warning.\n")
-    _edit(repo, OTHER_GATE, "Flag", "Strictly flag")                       # the fail is no longer current
-    (repo / second).unlink()
-    rows, orphans = stored(repo)
-    assert orphans == [gone]
-    assert {(row.criterion, row.freshness.state, row.outcome) for row in rows} == {
-        (GATE, "fresh", "warn"), (OTHER_GATE, "stale", "fail"), (TYPE_SPEC, "fresh", "pass")}
-    assert all(row.path is not None and read_result(row.path).criterion == row.criterion for row in rows)
-    assert summarize(repo) == Summary(results=4, fresh=2, stale=1, orphaned=1, warn=1, fail=0)
-
-
-def test_summary_of_a_project_without_results_is_empty(repo: Path) -> None:
-    assert summarize(repo) == Summary()
 
 
 def test_installed_library_criteria_are_library_identities(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

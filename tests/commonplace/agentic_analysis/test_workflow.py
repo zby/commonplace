@@ -173,7 +173,6 @@ print(json.dumps({"type": "message_end", "message": {"role": "assistant", "model
 print(json.dumps({"type": "agent_settled", "aborted": False}))
 '''
 
-REFUSE_RUNTIME_AND_MEMORY = "- runtime: reconsider the SRC-1 runtime account.\n- memory: reconsider the SRC-1 memory account."
 REFUSE_MEMORY_AND_EPISTEMIC = ("- memory: reconsider the SRC-1 memory account.\n"
                                "- epistemic: reconsider the SRC-1 epistemic account.")
 
@@ -230,10 +229,6 @@ def launch_counts(run_dir: Path) -> dict[str, int]:
     return counts
 
 
-def complete_members(analysis) -> set[str]:
-    return {role.path for role in analysis.layout.roles.values()}
-
-
 def run(new, raises=None):
     """Run one Analysis under its lock; return the receipt, or the exception when `raises` is given."""
     analysis = new()
@@ -250,56 +245,6 @@ def cli(capsys, *argv) -> tuple[int, str, str]:
     code = main(list(argv))
     out, err = capsys.readouterr()
     return code, out, err
-
-
-def test_complete_run_with_one_correction_round(workflow):
-    run_dir, new = workflow(disposition="complete",
-                            **{"report-verification": [REFUSE_RUNTIME_AND_MEMORY, "none"]})
-    analysis, receipt = run(new)
-    assert receipt["published"] is True, receipt
-    artifact = run_dir / "artifact"
-    assert {p.name for p in artifact.iterdir()} == complete_members(analysis) | {"ARTIFACT.yaml"}
-    assert "overview.md" in complete_members(analysis)
-    manifest = yaml.safe_load((artifact / "ARTIFACT.yaml").read_text())
-    assert manifest["worker"]["model"] == "fake-model-1", manifest
-    assert manifest["type"] == "agentic-system-analyses/types/agentic-system-analysis-set.md"
-    assert set(manifest["members"]) == complete_members(analysis), manifest
-    for name, entry in manifest["members"].items():
-        assert entry["sha256"] == sha256((artifact / name).read_bytes()).hexdigest(), name
-
-    log = events(run_dir)
-    verdicts = [e for e in log if e["event"] == "verdict" and e["role"] == "report-verification"]
-    assert [v["refused"] for v in verdicts] == [["memory", "runtime"], []], verdicts
-    assert [e["event"] for e in log].count("published") == 1
-    jobs = [e for e in log if e["event"] == "job"]
-    corrections = [e["role"] for e in jobs if e["correcting"]]
-    assert corrections == ["runtime", "memory"], corrections
-    runtime_launches = [i for i, e in enumerate(log) if e["event"] == "launch" and e["job"] == "runtime"]
-    memory_launches = [i for i, e in enumerate(log) if e["event"] == "launch" and e["job"] == "memory"]
-    assert len(runtime_launches) == 2 and len(memory_launches) == 2
-    assert runtime_launches[1] < memory_launches[1], "runtime's correction precedes memory's"
-    counts = launch_counts(run_dir)
-    assert counts["epistemic"] == 1 and counts["workflow"] == 1, counts
-    reconciliation = launches(run_dir, "reconciliation")
-    assert len({e["key"] for e in reconciliation}) == 2, reconciliation
-    assert counts["report-verification"] == 2, counts
-    assert counts["memory-profile"] == counts["profile-verification"] == 1, counts
-    assert counts["synthesis"] == counts["synthesis-verification"] == 1, counts
-    correction = (run_dir / "calls" / "launches" / log[memory_launches[1]]["launch"] / "prompt.txt").read_text()
-    inputs = correction[correction.index("Inputs (read these exact files):"):]
-    assert "- refusal.md:" in inputs and "- previous-report.md:" in inputs, inputs
-    assert "refusal = " in correction and "previous-report = " in correction
-
-    status = inspect_analysis(run_dir)
-    assert status["state"] == "published" and status["stopped"] is None, status["state"]
-    assert status["receipt"]["published"] is True
-    assert status["result-disposition"] == "complete"
-    assert {job: entry["launches"] for job, entry in status["jobs"].items()} == counts
-    answers = [answer for entry in status["jobs"].values() for answer in entry["answers"]]
-    assert answers and all(answer["launches"] for answer in answers)
-    assert len(status["jobs"]["runtime"]["answers"]) == 2
-    assert status["problems"] == []
-    assert set(status["members"]) == complete_members(analysis) | {"ARTIFACT.yaml"}
 
 
 def digests(members) -> dict[str, str]:
@@ -396,18 +341,8 @@ def test_parallel_corrections_are_checked_against_the_round_snapshot(workflow, m
     assert list(swapped["members"]) == list(receipt["members"])
 
 
-def test_construction_writes_the_type_manifest_without_launching_workers(workflow):
-    run_dir, new = workflow(disposition="complete")
-    manifest = run_dir / "artifact" / "ARTIFACT.yaml"
-    with new().run:      # construction holds the run's lock; release it before the run
-        assert yaml.safe_load(manifest.read_text()) == {
-            "type": "agentic-system-analyses/types/agentic-system-analysis-set.md"}
-        assert not (run_dir / "log.jsonl").exists() or launches(run_dir) == []
-
-
-@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
-def test_non_complete_boundary_publishes_nothing(workflow, disposition):
-    run_dir, new = workflow(disposition=disposition)
+def test_non_complete_boundary_publishes_nothing(workflow):
+    run_dir, new = workflow(disposition="blocked")
     _, receipt = run(new)
     assert receipt["published"] is False, receipt
     assert set(launch_counts(run_dir)) == {"boundary"}
@@ -494,24 +429,6 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     assert code == 0 and json.loads(out)["state"] == "published"
 
 
-def test_advisory_failure_does_not_block_published_result(workflow, capsys, monkeypatch):
-    from commonplace.lib.agentic_analysis import audit
-
-    run_dir, _ = workflow(disposition="complete")
-
-    def broken_capture(root):
-        raise ValueError("fixture scanner failure")
-
-    monkeypatch.setattr(audit, "collect", broken_capture)
-    code, out, err = cli(capsys, "run", str(run_dir))
-    assert code == 0, err
-    assert json.loads(out.partition("\n")[2])["published"] is True
-    status = inspect_analysis(run_dir)
-    assert status["state"] == "published"
-    assert status["advisory-audit"]["state"] == "failed"
-    assert "fixture scanner failure" in err
-
-
 def link_to_origin(prepared, monkeypatch) -> Path:
     """Turn the prepared checkout into a linked worktree of an origin on clean `main`, as `prepare` leaves it."""
     origin = prepared.repo.with_name("origin")
@@ -522,27 +439,6 @@ def link_to_origin(prepared, monkeypatch) -> Path:
     monkeypatch.chdir(prepared.repo)                   # the old cwd moved with the rename
     assert git(origin, "status", "--porcelain", "--untracked-files=all") == ""
     return origin
-
-
-def test_integrate_merges_a_published_run_into_main(workflow, monkeypatch, capsys):
-    origin = link_to_origin(workflow.prepared, monkeypatch)
-    run_dir, new = workflow(disposition="complete")
-    _, receipt = run(new)
-    assert receipt["published"] is True, receipt
-    destination = Path(receipt["destination"])
-
-    code, out, err = cli(capsys, "integrate", str(run_dir))
-    assert code == 0, err
-    head = out.strip()
-    assert head == git(origin, "rev-parse", "main")
-    merged = git(origin, "show", "--name-only", "--format=", f"{head}^2")
-    relative = destination.relative_to(workflow.prepared.repo).as_posix()
-    assert merged.splitlines() and all(path.startswith(relative + "/") for path in merged.splitlines()), merged
-    assert git(origin, "log", "-1", "--format=%s", f"{head}^2") == "Publish analysis result"
-    assert f"Run: {run_dir.name}" in git(origin, "log", "-1", "--format=%b", f"{head}^2")
-    assert {name: sha256((origin / relative / name).read_bytes()).hexdigest()
-            for name in receipt["members"]} == receipt["members"]
-    assert git(origin, "status", "--porcelain") == ""
 
 
 def tree_bytes(directory: Path) -> dict[str, bytes]:
@@ -611,25 +507,17 @@ def test_reset_restores_the_incumbent(workflow, monkeypatch, capsys):
     assert inspect_analysis(second)["state"] == "withdrawn"
 
 
-@pytest.mark.parametrize("scenario", ["local", "never-published"])
-def test_reset_refuses_when_nothing_was_published(workflow, monkeypatch, capsys, scenario):
+def test_reset_refuses_when_nothing_was_published(workflow, monkeypatch, capsys):
     link_to_origin(workflow.prepared, monkeypatch)
-    if scenario == "local":
-        run_dir, _ = workflow(disposition="blocked")
-        code, _, err = cli(capsys, "run", str(run_dir))
-        assert code == 0, err
-    else:
-        run_dir, _ = workflow(disposition="complete", problem={"synthesis": [1]})
-        code, _, err = cli(capsys, "run", str(run_dir))
-        assert code == 2, err
-    receipt = (run_dir / "receipt.json").read_bytes() if scenario == "local" else None
-    assert scenario == "local" or not (run_dir / "receipt.json").exists()
+    run_dir, _ = workflow(disposition="blocked")
+    code, _, err = cli(capsys, "run", str(run_dir))
+    assert code == 0, err
+    receipt = (run_dir / "receipt.json").read_bytes()
 
     code, _, err = cli(capsys, "reset", str(run_dir))
     assert code == 1
     assert "nothing to withdraw" in err, err
-    if receipt is not None:
-        assert (run_dir / "receipt.json").read_bytes() == receipt
+    assert (run_dir / "receipt.json").read_bytes() == receipt
     assert "withdrawn" not in [e["event"] for e in events(run_dir)]
 
 

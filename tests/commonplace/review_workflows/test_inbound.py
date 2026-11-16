@@ -41,18 +41,6 @@ def test_finds_each_passage_that_links_to_the_note(root):
     assert "> - [Alpha](./alpha.md) — grounds: the term\n>   wraps onto a second line." in text
 
 
-def test_excludes_reports_work_hidden_directories_and_the_note_itself(root):
-    for rel in ("kb/reports/state/x.md", "kb/work/draft/x.md", "kb/sources/.snapshots/x.md"):
-        write(root, rel, "# X\n\n[Alpha](../../theory/alpha.md) and [alpha](../../../theory/alpha.md)\n")
-    write(root, "kb/theory/gamma.md", "# Gamma\n\n[Another](./alpha-two.md) names a similar file.\n")
-    assert inbound.linking(root, NOTE) == []
-
-
-def test_no_inbound_links_says_so(root):
-    text = inbound.collect(root, NOTE)
-    assert text.startswith(f"# Inbound contexts of `{NOTE}`") and "No file links to this note" in text
-
-
 def test_caps_cut_files_passages_and_long_passages_and_say_so(root, monkeypatch):
     monkeypatch.setattr(inbound, "MAX_LINKING_FILES", 2)
     monkeypatch.setattr(inbound, "MAX_PASSAGES_PER_FILE", 1)

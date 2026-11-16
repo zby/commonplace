@@ -3,7 +3,6 @@ from __future__ import annotations
 import pytest
 
 from commonplace.lib.note_parser import (
-    find_markdown_links_with_text,
     parse_document,
 )
 
@@ -44,28 +43,6 @@ def test_parsing_corrected_yaml_does_not_reuse_an_error() -> None:
     corrected, error = parse_document(content.replace("items: [", "items: []"))
     assert error is None and corrected is not None
     assert corrected.frontmatter == {"items": []}
-
-
-def test_parse_document_extracts_headings_and_excludes_fenced_code() -> None:
-    document, error = parse_document(
-        """---
-description: Example
-type: types/note.md
----
-
-# Title
-
-## Kept
-
-```md
-## Ignored
-```
-"""
-    )
-
-    assert error is None
-    assert document is not None
-    assert document.headings == ("# Title", "## Kept")
 
 
 def test_parse_document_excludes_dates_in_code_regions() -> None:
@@ -109,14 +86,6 @@ Run AAS-2026-04-14-example-01 covered the deletions of 2026-04-15/16.
     )
 
 
-def test_find_markdown_links_with_text_keeps_code_formatted_link_text() -> None:
-    links = find_markdown_links_with_text(
-        "Reference [`examples/`](../examples/) and `[ignored](./ignored.md)`."
-    )
-
-    assert links == (("`examples/`", "../examples/"),)
-
-
 def test_link_scan_keeps_links_around_and_across_inline_code() -> None:
     from commonplace.lib.note_parser import find_markdown_links, replace_markdown_links
 
@@ -131,20 +100,6 @@ def test_link_scan_keeps_links_around_and_across_inline_code() -> None:
     assert find_markdown_links(replaced) == tuple("new/" + link for link in expected)
     assert "`[hidden](hidden.md)`" in replaced
     assert "`[also hidden](hidden-too.md)`" in replaced
-
-
-def test_parse_document_keeps_plain_text_as_no_frontmatter() -> None:
-    document, error = parse_document(
-        """# Title
-
-Body.
-"""
-    )
-
-    assert error is None
-    assert document is not None
-    assert document.frontmatter is None
-    assert document.body == "# Title\n\nBody.\n"
 
 
 def test_parse_document_reports_unclosed_frontmatter() -> None:

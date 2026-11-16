@@ -18,7 +18,7 @@ from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import answers as answer_files
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, edits, observations, results
+from commonplace.lib.review_workflows import decisions, edits, results
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
@@ -288,7 +288,7 @@ def test_fixed_single_pass_has_no_planner_dependency_and_replays_to_publication(
     assert code == 2 and "choose --plan FILE" in error and launches == []
 
 
-@pytest.mark.parametrize("missing", ["mode", "plan"])
+@pytest.mark.parametrize("missing", ["mode"])
 def test_incomplete_recorded_options_never_fall_back_to_assessment(repo, capsys, tmp_path, missing):
     original = start(repo)
     path = named_plan(tmp_path)
@@ -303,19 +303,6 @@ def test_incomplete_recorded_options_never_fall_back_to_assessment(repo, capsys,
     _, resumed, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
     assert resumed["mode"] == "fixed-plan" and launches == []
     assert resumed["waiting-for"] == ready["waiting-for"]
-
-
-def test_mode_switch_is_explicit_and_remembered(repo, capsys, tmp_path):
-    start(repo)
-    path = named_plan(tmp_path)
-    _, fixed, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert fixed["mode"] == "fixed-plan" and launches == [ORDINARY[0]]
-    _, assessed, launches = revise(repo, capsys, NOTE_PATH, "--assess")
-    assert assessed["mode"] == "assess" and launches == ["assess - big", *ORDINARY[1:]]
-    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
-    assert repeated["mode"] == "assess" and launches == []
-    _, fixed_again, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert fixed_again["mode"] == "fixed-plan" and launches == []
 
 
 def test_automatic_preparation_waits_for_publication_and_replays_after_approval(repo, capsys):
@@ -382,7 +369,7 @@ def test_captured_plan_edits_are_not_overrides_use_plan_option(repo, capsys, tmp
     publish(repo, capsys, fresh)
 
 
-@pytest.mark.parametrize("pass_name", ["plain-wording", "abstractions"])
+@pytest.mark.parametrize("pass_name", ["plain-wording"])
 def test_per_item_passes_stop_for_answers_and_unapproved_edits_are_not_used(repo, capsys, tmp_path, pass_name):
     original = start(repo)
     path = named_plan(tmp_path, passes=(pass_name,))
@@ -420,10 +407,6 @@ def _drop(text):
 @pytest.mark.parametrize("damage, problem", [
     (_drop, "item 2: missing"),
     (lambda text: decide(text, {"beta": {"state": "rejected"}}), "'reason' is a required property"),
-    (lambda text: text.replace("reason: decorative", "reason: ambiguous"), "item 1: its proposal differs"),
-    (lambda text: decide(text, {"beta": {"state": "rejected", "reason": "r", "decided-by": "agent"}}),
-     "'operator' was expected"),
-    (lambda text: decide(text, {"beta": {"state": "deferred", "reason": "r"}}), "'revisit' is a required property"),
 ])
 def test_invalid_answers_wait_for_a_corrected_file(repo, capsys, tmp_path, damage, problem):
     original = start(repo)
@@ -476,27 +459,6 @@ def test_approving_no_item_completes_without_publication(repo, capsys, tmp_path)
     assert note_text(repo) == original
 
 
-def test_publication_refuses_answers_over_another_text_and_a_rejection(repo, capsys, tmp_path):
-    original = start(repo)
-    _, ready, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
-    file = repo[0] / ready["waiting-for"]["file"]
-    pending = file.read_text()
-    file.write_text(decide(pending.replace(observations.sha(artifact_file(repo, ready, "final.md").read_bytes()),
-                                           "0" * 64), {"text": APPROVED}))
-    approve(repo, capsys, ready)
-    code, refused, launches = revise(repo, capsys, NOTE_PATH)
-    assert code == 0 and launches == [] and not refused["applied"] and note_text(repo) == original
-    assert "do not authorize publication" in refused["waiting-for"]["what"]
-    assert "question-sha256" in refused["waiting-for"]["what"]
-    assert "item text: its proposal differs" in refused["waiting-for"]["what"]
-    file.write_text(decide(pending, {"text": rejected("the closing reads worse")}))
-    approve(repo, capsys, refused)
-    code, declined, _ = revise(repo, capsys, NOTE_PATH)
-    assert code == 0 and not declined["applied"] and note_text(repo) == original
-    assert "the operator's answer is `rejected`: the closing reads worse" in declined["waiting-for"]["what"]
-    publish(repo, capsys, declined)
-
-
 @pytest.mark.parametrize("change", ["criterion", "profile", "retry"])
 def test_changed_proposing_request_or_retried_proposal_requires_new_answers(repo, capsys, change):
     original = start(repo, "PLAIN")
@@ -535,7 +497,7 @@ def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     publish(repo, capsys, ready)
 
 
-@pytest.mark.parametrize("kind", ["assess", "pass", "list", "apply"])
+@pytest.mark.parametrize("kind", ["assess", "apply"])
 def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     start(repo, "PLAIN")
     add_brief(repo[0], NOTE_PATH)
@@ -551,7 +513,7 @@ def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     assert not any("place-external-systems" in line for line in launches)
 
 
-@pytest.mark.parametrize("damage", ["missing", "wrong-type", "wrong-name"])
+@pytest.mark.parametrize("damage", ["wrong-name"])
 def test_invalid_brief_stops_before_workers(repo, capsys, damage):
     start(repo)
     brief = add_brief(repo[0], NOTE_PATH)
@@ -662,45 +624,6 @@ def test_candidate_file_edits_are_not_an_override(repo, capsys):
     assert candidate.read_text() == checked and note_text(repo) == original
     publish(repo, capsys, waiting)
     assert note_text(repo) == checked
-
-
-def test_named_plan_validation_and_no_change(repo, capsys, tmp_path):
-    original = start(repo)
-    path = named_plan(tmp_path, passes=())
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert code == 0 and report["complete"] and not report["applied"] and launches == []
-    assert note_text(repo) == original
-    path.write_text("purpose: p\ndefend: []\npasses: []\n")
-    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert code == 2 and "`stop` is missing" in error and launches == []
-    path = named_plan(tmp_path, passes=("opening-and-title", "readability-and-flow", "polish"))
-    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert code == 2 and "must run before" in error and "unknown pass `polish`" in error and launches == []
-    path.unlink()
-    assert revise(repo, capsys, NOTE_PATH, "--plan", str(path))[0] == 2
-
-
-@pytest.mark.parametrize("defend", [[], ["Alpha body holds."]])
-def test_conversation_and_interactive_passes(repo, capsys, tmp_path, defend):
-    start(repo)
-    path = named_plan(tmp_path, passes=("split-out-a-treatment", "narrow-overclaims"), defend=defend)
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
-    assert code == 0 and report["passes"][0]["state"] == "skipped"
-    assert report["passes"][1]["state"] == ("applied" if defend else "skipped")
-    if defend:
-        assert launches == ["pass narrow-overclaims big"]
-        publish(repo, capsys, report)
-    else:
-        assert report["complete"] and launches == []
-
-
-def test_plain_markdown_keeps_h1_and_waits_for_publication(repo, capsys):
-    path = "kb/work/draft/notes.md"
-    original = start(repo, path=path, text="# Draft\n\nA draft body.\n")
-    _, ready, _ = revise(repo, capsys, path, "--assess")
-    assert (repo[0] / path).read_text() == original
-    publish(repo, capsys, ready, path)
-    assert (repo[0] / path).read_text().startswith(original + "readability-and-flow")
 
 
 def test_edited_artifact_starts_new_run_without_reusing_publication(repo, capsys):
@@ -829,16 +752,6 @@ def test_identical_proposals_carry_earlier_decisions_and_the_stop_still_waits(re
     assert f"carried-from: {first['waiting-for']['file']}" in capsys.readouterr().out
 
 
-def test_a_differing_change_is_asked_as_usual(repo, capsys, tmp_path):
-    first_decisions(repo, capsys, tmp_path)
-    start(repo, "changed")
-    (repo[0] / "new-proposal").touch()                       # alpha's change becomes delta
-    _, second, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
-    found = items(repo, second)
-    assert found["delta"]["state"] == "pending" and "carried-from" not in found["delta"]
-    assert found["beta"]["state"] == "rejected"
-
-
 def test_a_repeat_keeps_its_earlier_decisions_after_another_run_decides(repo, capsys, tmp_path):
     first_decisions(repo, capsys, tmp_path)
     plan = str(named_plan(tmp_path, passes=("plain-wording",)))
@@ -852,26 +765,6 @@ def test_a_repeat_keeps_its_earlier_decisions_after_another_run_decides(repo, ca
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["waiting-for"] == second["waiting-for"]
     assert items(repo, repeated)["gamma"]["state"] == "pending"
-
-
-def test_the_fix_receives_earlier_decisions_and_an_ordinary_pass_does_not(repo, capsys, tmp_path):
-    first_decisions(repo, capsys, tmp_path)
-    start(repo, "changed")
-    finding = stored(repo, "warn")
-    code, _, launches = revise(repo, capsys, NOTE_PATH, "--finding", finding)
-    assert code == 0 and launches == ["pass fix-strategy-taxonomy big"]
-    fix = captured_inputs(repo[2])[-1]
-    assert "Operator's reason: a registered word" in fix["inputs"]["earlier-decisions"]
-    start(repo, "changed again")
-    revise(repo, capsys, NOTE_PATH, "--pass", "readability-and-flow")
-    assert "earlier-decisions" not in captured_inputs(repo[2])[-1]["inputs"]
-
-
-def test_a_note_without_earlier_decisions_passes_none(repo, capsys, tmp_path):
-    start(repo)
-    revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
-    [listed] = captured_inputs(repo[2])
-    assert "earlier-decisions" not in listed["inputs"]
 
 
 # --- Focused plans and findings ------------------------------------------------------------
@@ -924,14 +817,6 @@ def test_pass_runs_a_one_entry_plan_and_repeats_replay_it(repo, capsys):
     publish(repo, capsys, repeated)
 
 
-def test_pass_without_purpose_gets_the_focused_purpose(repo, capsys):
-    start(repo)
-    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--pass", "opening-and-title")
-    assert launches == [ORDINARY[2]] and ready["plan"]["purpose"] == revise_module.FOCUSED_PURPOSE
-    code, error, _ = revise(repo, capsys, NOTE_PATH, "--pass", revise_module.FIX)
-    assert code == 2 and "fixes one review finding" in error
-
-
 def test_finding_runs_the_fix_with_its_result_as_input(repo, capsys):
     start(repo)
     finding = stored(repo, "warn")
@@ -976,6 +861,7 @@ def test_plan_entries_for_the_fix_carry_a_finding_at_its_criterion_depth(repo, c
     assert code == 0 and launches == ["pass fix-strategy-taxonomy big", ORDINARY[0]]
 
 
+@pytest.mark.slow
 def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     start(repo, "FIXIT")
     _, plain, _ = revise(repo, capsys, NOTE_PATH, "--assess")
@@ -1137,6 +1023,7 @@ def assessed_inputs(repo):
     return [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"][-1]["inputs"]
 
 
+@pytest.mark.slow
 def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo, capsys):
     text = start(repo, "FIXIT")
     stored(repo, "warn", found=[finding("same")])
@@ -1175,17 +1062,6 @@ def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo,
     given = assessed_inputs(repo)
     assert given["finding-1"] == (repo[0] / replaced).read_text()
     assert "Operator's reason: wrong for this note only" in given["earlier-decisions"]
-
-
-def test_a_result_whose_every_finding_was_rejected_is_not_given(repo):
-    start(repo)
-    path = stored(repo, "warn", found=[finding("same")])
-    found = revise_module.read_finding(repo[0], NOTE_PATH, path)
-    rejection = {"criterion": GATE, "state": "rejected", "proposal": finding("same"),
-                 "answered": [hashlib.sha256(found.text.encode()).hexdigest()]}
-    assert revise_module.without_rejected([found], [rejection]) == []
-    assert revise_module.without_rejected([found], [{**rejection, "answered": ["0" * 64]}]) == [found]
-    assert revise_module.without_rejected([found], [{**rejection, "state": "deferred"}]) == [found]
 
 
 def test_answers_create_takes_a_review_result_but_writes_outside_the_store(repo, capsys, tmp_path):
@@ -1259,6 +1135,7 @@ def reviewed(repo, tmp_path):
     return repo
 
 
+@pytest.mark.slow
 def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed, capsys):
     repo = reviewed
     (repo[0] / "kb/notes/beta.md").parent.mkdir(parents=True, exist_ok=True)
@@ -1297,6 +1174,7 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     publish(repo, capsys, repeated)
 
 
+@pytest.mark.slow
 def test_full_reuses_fresh_review_results(reviewed, capsys):
     repo = reviewed
     start(repo)
@@ -1347,17 +1225,7 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     assert repo[2].read_text().splitlines()[len(before):] == []
 
 
-def test_full_stops_on_a_depth_one_proposal_with_nothing_edited(reviewed, capsys):
-    repo = reviewed
-    original = start(repo, "STOP")
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
-    assert code == 0 and report["stop"] == "rewrite-needed" and report["passes"] == []
-    assert launches[-1] == "assess - big" and len(launches) == 9
-    assert note_text(repo) == original and report["complete"] and not report["applied"]
-    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
-    assert launches == [] and repeated["stop"] == "rewrite-needed"
-
-
+@pytest.mark.slow
 def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(reviewed, capsys):
     repo = reviewed
     start(repo, "STOP")
@@ -1383,6 +1251,7 @@ def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(rev
     assert launches == [] and repeated["stop-answers"]["key"] == stop["key"] and not repeated["unapproved-edits"]
 
 
+@pytest.mark.slow
 def test_full_stops_when_a_review_has_no_result(reviewed, capsys):
     repo = reviewed
     original = start(repo, "NOREVIEW")

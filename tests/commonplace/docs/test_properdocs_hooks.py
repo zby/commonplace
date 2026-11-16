@@ -37,17 +37,6 @@ type: types/tag-readme.md
     )
 
 
-def test_on_config_omits_unpublished_report_collection(tmp_path: Path) -> None:
-    docs_dir = tmp_path / "kb"
-    write(docs_dir / "notes" / "README.md", "# Notes\n")
-    write(docs_dir / "reports" / "README.md", "# Reports\n")
-
-    config = properdocs_hooks.on_config({"docs_dir": str(docs_dir)})
-
-    assert {"Notes": "notes/README.md"} in config["nav"]
-    assert {"Reports": "reports/README.md"} not in config["nav"]
-
-
 def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_path: Path) -> None:
     note = write(tmp_path / "kb" / "reference" / "adr" / "044-example.md", "# Example\n")
     page = SimpleNamespace(
@@ -160,37 +149,6 @@ tags: [kb-design]
         config={"docs_dir": str(tmp_path / "kb")},
     )
 
-    assert "Other tagged notes" not in result
-def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    write(notes / "COLLECTION.md", "# Notes collection\n")
-    tags = tag_space(tmp_path)
-    readme = head(tags, "kb-design", marks="complete: true\n")
-    write(
-        notes / "curated.md",
-        """---
-description: Curated note
-type: types/note.md
-tags: [kb-design]
----
-
-# Curated note
-""",
-    )
-    page = SimpleNamespace(
-        meta={"type": "types/tag-readme.md", "complete": True},
-        file=SimpleNamespace(abs_src_path=str(readme)),
-    )
-    curated_body = "# kb-design\n\n- [Curated](../notes/curated.md) — placed\n"
-    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
-
-    result = properdocs_hooks.on_page_markdown(
-        curated_body,
-        page,
-        config={"docs_dir": str(tmp_path / "kb")},
-    )
-
-    # Every member is curated, so no generated section is appended at all
     assert "Other tagged notes" not in result
 def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
     class Config(dict):

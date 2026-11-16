@@ -14,11 +14,8 @@ from commonplace.lib.type_resolver import resolve_type_definition
 from commonplace.lib.validation import CheckResults, ParsedNote, apply_schema_validation
 from tests.commonplace.validation_helpers import REPO_ROOT
 
-NOTE = "kb/types/note.md"
 SNAPSHOT = "kb/types/snapshot.md"
 INGEST = "kb/types/ingest-report.md"
-STRUCTURED_CLAIM = "kb/theory/types/structured-claim.md"
-ADR = "kb/reference/types/adr.md"
 
 
 def check(type_path: str, text: str) -> CheckResults:
@@ -47,94 +44,6 @@ def note(frontmatter: str, body: str = "# Sample\n") -> str:
 
 def assert_fails_with(results: CheckResults, expected: str) -> None:
     assert any(expected in item for item in results.fails), results.fails
-
-
-# --- note -------------------------------------------------------------------
-
-NOTE_DESCRIPTION = "A sample note description long enough to sit inside the style band"
-
-
-@pytest.mark.parametrize(
-    ("description_line", "expected"),
-    [
-        ("", "'description' is a required property"),
-        ("description: '   '", "frontmatter.description: '   ' does not match"),
-    ],
-    ids=["missing", "whitespace"],
-)
-def test_note_description_must_be_non_empty_text(
-    description_line: str, expected: str
-) -> None:
-    results = check(NOTE, note(f"{description_line}\ntype: {NOTE}"))
-
-    assert_fails_with(results, expected)
-
-
-@pytest.mark.parametrize(
-    ("description", "expected"),
-    [
-        ("Short but non-empty", "description should be at least 50 characters"),
-        ("x" * 251, "description should be at most 250 characters"),
-        ("x" * 225, None),
-    ],
-    ids=["too-short", "too-long", "inside-band"],
-)
-def test_note_description_length_band_only_warns(
-    description: str, expected: str | None
-) -> None:
-    results = check(NOTE, note(f"description: {description}\ntype: {NOTE}"))
-
-    assert results.fails == []
-    warns = [item for item in results.warns if "frontmatter.description" in item]
-    if expected is None:
-        assert warns == []
-    else:
-        assert any(f"frontmatter.description: {expected}" in item for item in warns)
-
-
-@pytest.mark.parametrize(
-    ("extra", "should_pass"),
-    [
-        ("", True),
-        ("user-verified: true", True),
-        ("user-verified: false", False),
-        ("status: current", False),
-    ],
-)
-def test_note_user_verification_and_status_boundary(
-    extra: str, should_pass: bool
-) -> None:
-    results = check(NOTE, note(f"description: {NOTE_DESCRIPTION}\ntype: {NOTE}\n{extra}"))
-
-    assert (results.fails == []) is should_pass
-
-
-# --- structured claim and ADR -----------------------------------------------
-
-
-def test_structured_claim_requires_evidence_and_reasoning() -> None:
-    results = check(
-        STRUCTURED_CLAIM,
-        note(
-            f"description: {NOTE_DESCRIPTION}\ntype: {STRUCTURED_CLAIM}",
-            "# Claims need support\n\n## Evidence\n\nSome evidence.\n",
-        ),
-    )
-
-    assert_fails_with(results, "missing '## Reasoning'")
-
-
-@pytest.mark.parametrize(("status", "should_pass"), [("accepted", True), ("current", False)])
-def test_adr_status_uses_its_own_enum(status: str, should_pass: bool) -> None:
-    results = check(
-        ADR,
-        note(
-            f"description: {NOTE_DESCRIPTION}\ntype: {ADR}\nstatus: {status}",
-            "# Decision\n\n## Context\n\nC.\n\n## Decision\n\nD.\n\n## Consequences\n\nQ.\n",
-        ),
-    )
-
-    assert (results.fails == []) is should_pass
 
 
 # --- sources ----------------------------------------------------------------

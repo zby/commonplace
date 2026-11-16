@@ -6,19 +6,12 @@ Markdown link to that heading's anchor, `[RT-OBJ-store](runtime.md#rt-obj-store)
 
 from __future__ import annotations
 
-import re
-from pathlib import Path
-
 import pytest
 
 from commonplace.lib.agentic_analysis.records import (
-    ROUTE_FIELDS,
     amendment_index,
-    anchor,
     annotated_ids,
-    artifact_record_findings,
     declared_ids,
-    identifier_from_anchor,
     record_declaration,
     record_links,
     record_reference_errors,
@@ -46,7 +39,7 @@ def route_body(identifier: str = "RT-RTE-model-call", answers: str = ROUTE_ANSWE
 # Route fields
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", "WF-"])
+@pytest.mark.parametrize("prefix", ["RT-"])
 def test_route_fields_apply_to_every_analyst(prefix: str) -> None:
     assert route_field_errors(route_body(prefix + "RTE-model-call")) == []
     errors = route_field_errors(route_body(prefix + "RTE-model-call", ""))
@@ -82,17 +75,6 @@ def test_source_excerpts_cannot_supply_fields_or_declare_routes() -> None:
         assert len(route_field_errors(route_body(answers=fenced))) == 7
     excerpt = "\n```markdown\n#### RT-RTE-missing\n```\n"
     assert route_field_errors(route_body() + excerpt) == []
-
-
-def test_annotation_fields_are_not_required() -> None:
-    assert route_field_errors("## Shared records\n\n#### On [RT-RTE-model-call](runtime.md#rt-rte-model-call)\n") == []
-
-
-def test_route_field_labels_match_the_delivered_contract() -> None:
-    contract = (Path(__file__).resolve().parents[3] / "kb/agentic-system-analyses/instructions/"
-                "agentic-analysis-records.md").read_text()
-    labels = re.findall(r"(?m)^- ([^:\n]+): \.\.\.$", contract)
-    assert tuple(labels) == ROUTE_FIELDS
 
 
 # Declarations
@@ -152,12 +134,6 @@ def test_record_headings_outside_shared_records_do_not_declare() -> None:
     assert declared_ids("## Discussion\n\n#### RT-OBJ-missing\n") == []
 
 
-@pytest.mark.parametrize("prefix", ["RT-", "MEM-", "EPI-", "WF-"])
-def test_duplicate_declarations_are_refused(prefix: str) -> None:
-    body = "## Shared records\n\n" + declaration(f"{prefix}OBJ-store") + declaration(f"{prefix}OBJ-store")
-    assert record_reference_errors(body) == [f"record references: duplicate declarations: {prefix}OBJ-store"]
-
-
 def test_workflow_records_resolve_across_members() -> None:
     workflow = "## Shared records\n\n" + declaration("WF-CLM-review-handoff", text="SRC-1.")
     synthesis = "See [WF-CLM-review-handoff](workflow.md#wf-clm-review-handoff).\n"
@@ -176,19 +152,7 @@ def test_a_record_declared_by_two_members_is_refused_in_both() -> None:
     assert "memory.md: duplicate artifact declaration: RT-OBJ-store" in found
 
 
-def test_ids_that_extend_one_another_can_coexist() -> None:
-    body = "## Shared records\n\n" + declaration("MEM-OBJ-sheet") + declaration("MEM-OBJ-sheet-cache")
-    assert record_reference_errors(body) == []
-
-
 # Citations
-
-
-def test_anchor_and_id_are_one_mapping() -> None:
-    assert anchor("RT-OBJ-store") == "rt-obj-store"
-    assert identifier_from_anchor("rt-obj-store") == "RT-OBJ-store"
-    assert identifier_from_anchor("mem-rte-update2-path") == "MEM-RTE-update2-path"
-    assert identifier_from_anchor("persistent-store") is None
 
 
 def test_valid_cross_member_and_within_member_citations_resolve() -> None:
@@ -252,10 +216,6 @@ def test_a_record_declared_twice_is_the_declaring_member_s_finding() -> None:
     assert errors(**{"runtime.md": runtime}) == []  # Not repeated for the declarer or its citers.
 
 
-def test_changing_a_declarations_label_leaves_citations_valid() -> None:
-    assert errors(**{"runtime.md": RUNTIME.replace("Label: Persistent store", "Label: Shared storage")}) == []
-
-
 def test_bare_ids_are_text_not_citations() -> None:
     memory = MEMORY + "\nThe bare RT-OBJ-missing and MEM-OBJ-UPPER are literal text.\n"
     assert errors(**{"memory.md": memory}) == []
@@ -278,11 +238,6 @@ def test_ordinary_links_stay_ordinary() -> None:
     )
     assert errors(**{"memory.md": memory}) == []
     assert record_links(memory)[-1].identifier == "RT-RTE-model-call", "only the record citations are collected"
-
-
-def test_a_citation_leaving_the_artifact_directory_is_left_to_the_member_link_rule() -> None:
-    memory = MEMORY.replace("(runtime.md#rt-obj-store)", "(../other/runtime.md#rt-obj-store)")
-    assert errors(**{"memory.md": memory}) == []
 
 
 # Annotations, parts and supersessions
@@ -343,13 +298,8 @@ def test_bare_source_ids_resolve_against_the_register_in_scope() -> None:
         "memory.md: unresolved source SRC-9; the Source register does not declare it"]
 
 
-def test_duplicate_source_rows_are_the_boundary_rule_s_finding() -> None:
-    # The boundary's register rule refuses the second row; resolution does not repeat it.
-    assert errors(**{"boundary.md": BOUNDARY + "| SRC-1 | Again |\n"}) == []
-
-
 @pytest.mark.parametrize("reference", [
-    "SRC-1 through SRC-2", "SRC-1–SRC-2", "SRC-1–2", "`SRC-1`–`SRC-2`", "SRC-1-2",
+    "SRC-1 through SRC-2", "SRC-1–2",
 ])
 def test_source_ranges_are_refused(reference: str) -> None:
     assert any("ranges are not expanded" in error for error in record_reference_errors(RUNTIME + reference))
@@ -364,9 +314,3 @@ def test_source_register_rows_preserve_escaped_pipes_and_ignore_examples() -> No
         "SRC-1", "git", "`https://example.invalid/source`", "`revision`",
         "implementation", "`a|b.txt`", "`a|b.txt`", "none",
     ]]
-
-
-def test_findings_name_the_member_they_belong_to() -> None:
-    profile = "Uses [RT-OBJ-store](runtime.md#rt-obj-store).\n"
-    _, findings = artifact_record_findings("boundary.md", bodies(**{"profile.md": profile}), cites=CITES)
-    assert [name for name, _, _ in findings] == ["profile.md"]

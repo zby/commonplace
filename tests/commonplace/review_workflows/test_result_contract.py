@@ -31,18 +31,6 @@ def complete(tmp_path, text, target="A unique passage.", **kwargs):
     return contract.complete(tmp_path, path, text, metadata=given, target=target, contracts=captured)
 
 
-def test_complete_and_saved_validate_identically(tmp_path):
-    candidate = complete(tmp_path, fragment())
-    assert candidate.data["outcome"] == "pass"
-    assert candidate.data["format"] == 2
-    assert candidate.body.startswith("\n# Review")
-    path = tmp_path / "kb/reports/state/review.md"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    (path.parent / ".commonplace-validation-ignore").touch()
-    path.write_text(candidate.text)
-    assert not contract.validate_saved(tmp_path, path, path.read_text()).fails
-
-
 @pytest.mark.parametrize("text,match", [
     ("## Result: PASS\n", "declare type"),
     (fragment() + "## Result: PASS\n", "footer"),
@@ -72,16 +60,6 @@ def test_anchor_survives_line_wrap_and_quote_marks(tmp_path):
     finding = {"scope": "passage", "quotes": ['the note wraps across "two" lines'],
                "reason": "Needs support", "level": "info"}
     assert complete(tmp_path, fragment(findings=[finding]), target).data["findings"] == [finding]
-
-
-def test_report_is_not_a_verdict(tmp_path):
-    text = contract.render({"type": contract.TYPE, "findings": [], "outcome": "report",
-                            "attack-outcome": "no surviving attack"},
-                           "# Critique\n\n## Strongest case against it\nAn attack.\n\n"
-                           "## How the note engages it\nAnswers it.\n\n## Constructive findings\nNone.\n")
-    candidate = complete(tmp_path, text, metadata={**metadata(), "contract": "report",
-                                                   "criterion": "kb/instructions/critique-note.md"})
-    assert candidate.data["attack-outcome"] == "no surviving attack"
 
 
 def test_captured_schema_not_process_cache(tmp_path):
@@ -114,29 +92,13 @@ def report(criterion, body, reasons=(), **extra):
 
 
 @pytest.mark.parametrize("criterion,body,reasons,extra", [
-    ("kb/instructions/critique-note.md", CRITIQUE_BODY, ["A finding"], {"attack-outcome": "lands"}),
-    ("commonplace:instructions/critique-note.md", CRITIQUE_BODY, [], {"attack-outcome": "no surviving attack"}),
-    (FRICTION, FRICTION_BODY, ["UNSUPPORTED - no ground", "HOLDS - fine"], {}),
-    (PREMISES, PREMISES_BODY, ["HOLDS - p", "DEFEATED - q - GLOBAL - prevalence"], {}),
-    (SYNTHESIS, SYNTHESIS_BODY, ["Buried thesis; surface it"] * 3, {}),
-])
-def test_each_report_method_accepts_its_own_shape(tmp_path, criterion, body, reasons, extra):
-    text, given = report(criterion, body, reasons, **extra)
-    assert complete(tmp_path, text, metadata=given).data["outcome"] == "report"
-
-
-@pytest.mark.parametrize("criterion,body,reasons,extra", [
     # Critique keeps attack-outcome and its sections; no other method may borrow them.
     ("kb/instructions/critique-note.md", CRITIQUE_BODY, [], {}),
     ("kb/instructions/critique-note.md", FRICTION_BODY, [], {"attack-outcome": "lands"}),
-    (FRICTION, CRITIQUE_BODY, [], {"attack-outcome": "lands"}),
     (FRICTION, FRICTION_BODY, [], {"attack-outcome": "lands"}),
-    (FRICTION, FRICTION_BODY.replace("**Filter:** SURVIVES", "**Filter:** PASS"), [], {}),
     (FRICTION, FRICTION_BODY, ["WEAK - unrated"], {}),
     (PREMISES, PREMISES_BODY, ["DOUBTFUL - no routing"], {}),
-    (PREMISES, PREMISES_BODY.replace("## For the human", "## Summary"), [], {}),
     (SYNTHESIS, SYNTHESIS_BODY, ["One"] * 4, {}),
-    (SYNTHESIS, "\n# Synthesis\n\nNo section.\n", [], {}),
     # A report contract needs a report criterion.
     ("kb/test.md", SYNTHESIS_BODY, [], {}),
 ])

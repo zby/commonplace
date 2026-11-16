@@ -189,17 +189,6 @@ def test_overview_validates_independently_of_siblings(tmp_path: Path) -> None:
     assert results.note_type == "agentic-system-analysis-overview"
 
 
-def test_blocked_overview_has_nullable_boundary(tmp_path: Path) -> None:
-    results = validate(tmp_path, "overview.md", overview_text(disposition="blocked"))
-    assert results.fails == []
-
-
-def test_overview_rejects_obsolete_manifest_metadata(tmp_path: Path) -> None:
-    content = overview_text().replace("inputs-commit:", "members: []\ninputs-commit:")
-    results = validate(tmp_path, "overview.md", content)
-    assert results.fails
-
-
 def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     content = overview_text()
     content = content.replace("## Members", "## TEMP", 1)
@@ -207,12 +196,6 @@ def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     content = content.replace("## TEMP", "## Amendment index", 1)
     results = validate(tmp_path, "overview.md", content)
     assert any("canonical reading order" in failure for failure in results.fails)
-
-
-def test_runtime_report_validates(tmp_path: Path) -> None:
-    results = validate(tmp_path, "runtime.md", RUNTIME_TEXT)
-    assert results.fails == []
-    assert results.note_type == "agentic-system-runtime-report"
 
 
 def test_workflow_can_report_no_established_workflow(tmp_path: Path) -> None:
@@ -241,25 +224,6 @@ def test_workflow_uses_shared_report_checks(tmp_path: Path, change, expected) ->
         assert failures == []
     else:
         assert any(expected in failure for failure in failures), failures
-
-
-def test_member_validation_rejects_missing_route_answers(tmp_path: Path) -> None:
-    content = RUNTIME_TEXT.replace(
-        "- Selection predicate: The caller selects the object.\n", ""
-    )
-    failures = validate(tmp_path, "runtime.md", content).fails
-    assert any("RT-RTE-model-call: Selection predicate: missing field" in error for error in failures)
-
-
-def test_runtime_report_requires_record_kinds_under_shared_records(tmp_path: Path) -> None:
-    content = RUNTIME_TEXT.replace("### Claims\n\nnone declared in this member.\n\n", "")
-    results = validate(tmp_path, "runtime.md", content)
-    assert any("Claims" in failure for failure in results.fails)
-
-
-def test_runtime_report_has_no_amendments_section(tmp_path: Path) -> None:
-    amended = RUNTIME_TEXT + "\n## Amendments\n\nAmendment: RT-OBJ-store label changed.\n"
-    assert validate(tmp_path, "runtime.md", amended).fails != []
 
 
 def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:

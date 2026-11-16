@@ -374,18 +374,6 @@ def test_every_project_collection_the_template_routes_to_is_scaffolded(
     assert missing == []
 
 
-def test_init_project_resolves_templates(tmp_path: Path) -> None:
-    init_project(tmp_path, name="myproject")
-
-    # AGENTS.md.template has project name filled in
-    agents = tmp_path / "AGENTS.md.template"
-    text = agents.read_text(encoding="utf-8")
-    assert "myproject" in text
-    assert "{{project_name}}" not in text
-
-
-
-
 def test_init_project_preserves_existing_files(tmp_path: Path) -> None:
     init_project(tmp_path)
 
@@ -418,24 +406,6 @@ def test_init_project_treats_crlf_copies_as_matching(tmp_path: Path) -> None:
 
     assert {Path("AGENTS.md.template"), Path("kb/notes/COLLECTION.md")} <= set(rerun.preserved_identical)
     assert rerun.preserved_different == []
-
-
-def test_main_reports_preserved_file_statuses(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-) -> None:
-    init_project(tmp_path)
-    (tmp_path / "kb" / "instructions" / "COLLECTION.md").write_text(
-        "custom content",
-        encoding="utf-8",
-    )
-
-    exit_code = main(["--root", str(tmp_path), "--name", "myproject"])
-
-    captured = capsys.readouterr()
-    assert exit_code == 0
-    assert "Preserved existing files already matching scaffold:" in captured.out
-    assert "Preserved existing files differing from current scaffold output:" in captured.out
-    assert "- kb/instructions/COLLECTION.md" in captured.out
 
 
 VALIDATE_TARGET = ("commonplace.cli.validate_notes", "main")

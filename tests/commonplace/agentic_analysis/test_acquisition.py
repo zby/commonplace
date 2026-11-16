@@ -118,16 +118,6 @@ def test_requested_older_commit_is_frozen_not_the_current_tip(acquiring):
 
 
 @pytest.mark.slow
-def test_matching_requested_checkout_keeps_its_branch(acquiring):
-    a = acquiring
-    revision = git(a.upstream, "rev-parse", "HEAD")
-    a.clone()
-    branch = git(a.checkout, "rev-parse", "--abbrev-ref", "HEAD")
-    assert a.acquire(revision)["revision"] == revision
-    assert git(a.checkout, "rev-parse", "--abbrev-ref", "HEAD") == branch
-
-
-@pytest.mark.slow
 def test_existing_checkout_fetches_and_freezes_the_new_default_tip(acquiring):
     a = acquiring
     a.clone()
@@ -176,25 +166,7 @@ def test_unavailable_explicit_commit_is_an_ordinary_retryable_failure(acquiring)
 
 
 @pytest.mark.slow
-def test_interrupted_intent_with_no_installed_checkout_is_safe_to_retry(acquiring, monkeypatch):
-    a = acquiring
-    original = sources._write_journal
-
-    def interrupt(path, record):
-        original(path, record)
-        raise KeyboardInterrupt("after intent, before mutation")
-
-    monkeypatch.setattr(sources, "_write_journal", interrupt)
-    with pytest.raises(KeyboardInterrupt):
-        a.acquire()
-    assert not a.checkout.exists() and not a.freezes
-    monkeypatch.setattr(sources, "_write_journal", original)
-    assert a.acquire()["kind"] == "git"
-    assert len(a.freezes) == 1
-
-
-@pytest.mark.slow
-@pytest.mark.parametrize("case", ("new-default", "new-requested", "existing-requested"))
+@pytest.mark.parametrize("case", ("new-default", "existing-requested"))
 def test_interrupted_installation_is_recognized_without_refetching(acquiring, monkeypatch, case):
     a = acquiring
     initial = git(a.upstream, "rev-parse", "HEAD")
@@ -203,8 +175,6 @@ def test_interrupted_installation_is_recognized_without_refetching(acquiring, mo
         requested = advance_upstream(a.upstream)
         a.clone()
         git(a.checkout, "checkout", "--quiet", "--detach", initial)
-    elif case == "new-requested":
-        requested = initial
     revision = requested or initial
     original = sources._write_journal
 

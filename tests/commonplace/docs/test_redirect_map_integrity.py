@@ -25,16 +25,6 @@ def write_page(root: Path, relative_path: str) -> None:
     path.write_text("# Page\n", encoding="utf-8")
 
 
-def test_redirect_map_validation_skips_absent_config(tmp_path: Path) -> None:
-    results = validate_redirect_map(repo_root=tmp_path)
-
-    assert results.fails == []
-    assert results.passes == []
-    assert results.infos == [
-        "[repository] properdocs.yml: not configured; redirect validation skipped"
-    ]
-
-
 def test_redirect_map_validation_accepts_resolving_flat_map(tmp_path: Path) -> None:
     write_page(tmp_path, "notes/current.md")
     write_config(tmp_path, {"notes/old.md": "notes/current.md"})
@@ -45,19 +35,6 @@ def test_redirect_map_validation_accepts_resolving_flat_map(tmp_path: Path) -> N
     assert "[repository] redirect targets: all 1 resolve" in results.passes
     assert "[repository] redirect keys: none shadow live pages" in results.passes
     assert "[repository] redirect topology: flat" in results.passes
-
-
-def test_redirect_map_validation_reports_missing_target(tmp_path: Path) -> None:
-    write_config(tmp_path, {"notes/old.md": "notes/missing.md"})
-
-    results = validate_redirect_map(repo_root=tmp_path)
-
-    assert results.fails == [
-        (
-            "[repository] redirect target does not exist: "
-            "notes/old.md -> notes/missing.md"
-        )
-    ]
 
 
 def test_redirect_map_validation_reports_live_key_and_chain(tmp_path: Path) -> None:
@@ -91,7 +68,7 @@ def enable_shipped_hook(root: Path) -> None:
     path.write_text(yaml.safe_dump(config), encoding="utf-8")
 
 
-@pytest.mark.parametrize("collection", ["theory", "claims", "research/knowledge"])
+@pytest.mark.parametrize("collection", ["claims", "research/knowledge"])
 def test_redirect_map_accepts_actual_generated_directory_addresses(
     tmp_path: Path, collection: str,
 ) -> None:

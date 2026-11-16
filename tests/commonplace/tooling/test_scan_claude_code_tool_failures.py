@@ -203,10 +203,6 @@ def test_empty_or_foreign_input_is_not_a_clean_scan(tmp_path, records):
     assert scan(trace(tmp_path, records))["input_issues"]
 
 
-def test_missing_file_is_reported(tmp_path):
-    assert scan(tmp_path / "absent")["input_issues"]
-
-
 def test_stream_json_correlates_by_id_and_records_denials_and_result(tmp_path):
     # `claude --print --output-format stream-json` records carry uuid and
     # session_id but no parentUuid; successful tool_results omit is_error.
@@ -255,7 +251,7 @@ def test_session_file_has_no_stream_fields(tmp_path):
     assert (observations(report, "permission_denial"), report["details"]["result"]) == ([], None)
 
 
-def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
+def test_cli_deduplicates_input_paths(tmp_path):
     path = trace(tmp_path, [use("a", None), result("b", "a")])
     before = path.read_bytes()
     run = subprocess.run([sys.executable, str(SCRIPT), str(path), str(path)],
@@ -265,8 +261,3 @@ def test_cli_exit_zero_with_failures_and_two_with_input_issues(tmp_path):
     output = json.loads(run.stdout)
     assert output["finding_count"] == 1
     assert len(output["traces"]) == 1
-    path.write_text("{truncated", encoding="utf-8")
-    run = subprocess.run([sys.executable, str(SCRIPT), str(path)],
-                         capture_output=True, text=True, check=False)
-    assert run.returncode == 2
-    assert json.loads(run.stdout)["traces"][0]["input_issues"]

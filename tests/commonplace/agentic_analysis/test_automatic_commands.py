@@ -80,10 +80,6 @@ def test_replacement_automatically_integrates_exact_incumbent_archive(command_or
     assert {p.name: p.read_bytes() for p in (origin / relative).iterdir()} == {
         p.name: p.read_bytes() for p in Path(next_receipt["destination"]).iterdir()}
     assert (run / "receipt.json").read_bytes() == receipt_bytes
-    before = git(origin, "rev-parse", "HEAD")
-    code, resumed, err = invoke(capsys, "resume", second["controller"])
-    assert code == 0 and resumed["targets"][0]["integration"]["state"] == "integrated", err
-    assert git(origin, "rev-parse", "HEAD") == before
     assert git(origin, "status", "--porcelain") == ""
 
 

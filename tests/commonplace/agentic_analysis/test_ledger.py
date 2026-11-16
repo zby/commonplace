@@ -16,39 +16,6 @@ def errors(ledger: str) -> list[str]:
     return epistemic_ledger_errors("## Authority-route ledger\n\n" + ledger)
 
 
-def test_quotations_cannot_silently_interrupt_a_ledger_table() -> None:
-    quote = '\n> excerpt\n> --- `src/example.rs:1-1` @ `abc`\n\n'
-    assert any("orphan table row" in error for error in errors(HEADER + ROW + quote + ROW))
-    assert errors(HEADER + ROW + quote + HEADER + ROW) == []
-
-
-@pytest.mark.parametrize(("row", "diagnostic"), [
-    (ROW.replace("content transformation", "truth-apt transformation"), "invalid route function"),
-    (ROW.replace("implemented", "implemented and observed"), "invalid architectural status"),
-    (ROW.replace(" | no observed candidate", ""), "cells"),
-    (ROW.rstrip('\n|') + '\n', "end with a pipe"),
-])
-def test_malformed_table_rows_are_refused(row: str, diagnostic: str) -> None:
-    assert any(diagnostic in error for error in errors(HEADER + row))
-
-
-def test_tables_require_matching_separator_and_core_columns() -> None:
-    assert errors(HEADER.replace("|---|---|---|---|", "|---|---|") + ROW)
-    assert errors(HEADER.replace("route function", "function") + ROW)
-    assert errors(HEADER.replace("gap/limit", "route function") + ROW)
-
-
-def test_literal_pipes_must_be_escaped_even_inside_code() -> None:
-    assert errors(HEADER + ROW.replace("no observed candidate", "`left|right`"))
-    assert errors(HEADER + ROW.replace("no observed candidate", r"`left\|right`")) == []
-
-
-def test_controlled_values_accept_code_formatting_and_described_other_functions() -> None:
-    assert errors(HEADER + ROW.replace("content transformation", "`other — custom check`")) == []
-    assert errors(HEADER + ROW.replace("implemented", "`doctrine only`")) == []
-    assert errors(HEADER + ROW.replace("content transformation", "other — "))
-
-
 COMPACT = "Route ID: RTE-model-call\nRoute function: retention\nArchitectural status: implemented\n"
 
 

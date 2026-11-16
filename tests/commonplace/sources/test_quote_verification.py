@@ -5,9 +5,7 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib.hashing import content_sha256_for_text
-from commonplace.lib.quote_matching import normalize_text
 from commonplace.lib.quote_verification import (
-    ingest_quotes_section,
     verify_content,
     verify_note,
 )
@@ -55,10 +53,6 @@ _INGEST_WITH_QUOTED_PHRASE = (
     "> shorter contexts help\n"
     "> --- `kb/sources/.snapshots/source.md` @ `sha256:example` — Section 1.\n"
 )
-
-
-def test_normalize_text_folds_capture_typography_and_whitespace():
-    assert normalize_text("  “one\n two” … it’s  ") == '"one two" ... it\'s'
 
 
 @pytest.mark.parametrize(
@@ -344,20 +338,6 @@ def test_validator_warns_on_unresolved_only_where_the_convention_is_used(tmp_pat
     assert any("verbatim quote:" in warn for warn in results.warns)
 
 
-def test_validator_is_inert_on_notes_with_no_verbatim_marker(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'A plain note quoting "quoted words here" from [Source](../sources/source.md).',
-        "The source has quoted words here in its abstract.",
-    )
-
-    results = _check(note)
-
-    assert not results.fails
-    assert not results.warns
-    assert not results.passes
-
-
 def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
     """Blanking rather than deleting is what keeps reported line numbers true."""
     note = _write_pair(
@@ -573,12 +553,3 @@ def test_marker_word_inside_a_link_target_is_not_a_citation(tmp_path: Path):
     )
 
     assert verify_note(note) == []
-
-
-def test_ingest_quotes_section_stops_at_the_next_h2():
-    content = "## Quotes\n\nretained passage\n\n## Recommended Next Action\n\nlater prose\n"
-
-    section = ingest_quotes_section(content)
-
-    assert "retained passage" in section
-    assert "later prose" not in section

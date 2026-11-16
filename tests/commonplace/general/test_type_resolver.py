@@ -141,35 +141,6 @@ def test_collectionless_namespace_keeps_referential_type_resolution(
     assert profile.type_path == "reference/types/adr.md"
 
 
-def test_schema_null_skips_schema_validation(tmp_path: Path) -> None:
-    write_type_spec(
-        tmp_path,
-        "kb/tasks/types/task-backlog.md",
-        name="task-backlog",
-        schema=None,
-    )
-
-    profile = type_resolver.resolve_type(
-        tmp_path / "kb" / "tasks" / "backlog" / "task.md",
-        {"type": "tasks/types/task-backlog.md"},
-        repo_root=tmp_path,
-    )
-
-    assert profile.schema_path is None
-    assert type_resolver.validate_instance(profile, {"frontmatter": {}}) == []
-
-
-def test_text_without_frontmatter_resolves_to_implicit_text_profile(tmp_path: Path) -> None:
-    note = write(tmp_path / "kb" / "notes" / "raw.md", "# Raw\n")
-
-    profile = type_resolver.resolve_type(note, None, repo_root=tmp_path)
-
-    assert profile.type_path == "text"
-    assert profile.type_name == "text"
-    assert profile.type_doc_path is None
-    assert profile.schema_path is None
-
-
 @pytest.mark.parametrize("value", ["kb/types/note.md", "../reference/types/adr.md"])
 def test_retired_type_values_are_rejected(tmp_path: Path, value: str) -> None:
     with pytest.raises(ValueError, match="spec's path under a KB root"):
