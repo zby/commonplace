@@ -7,7 +7,7 @@ tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems
 
 # System use is an initial selection environment when theory fit lacks a fixed oracle
 
-A working theory may contain claims that have each survived independent tests yet still fit poorly together or fail to help the system reason, modify, or recover. [A claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md). When no complete fixed oracle decides that fit, using the theory in the live system supplies an initial selection environment: claims and formulations can earn provisional standing by changing consequential work and surviving the distributed consequences of that use.
+A working theory may contain claims that have each survived independent tests yet still fit poorly together or fail to help the system reason, modify, or recover. [A claim's test record does not determine its fit in a working theory](./a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md). When no complete fixed oracle decides that fit, using the theory in the live system supplies an initial selection environment: claims and formulations can earn provisional standing by changing consequential work and surviving the distributed consequences of that use.
 
 For a narrow transformation, a test suite may give a compact acceptance criterion. Open-ended project theory is different. No current automatic evaluator fully decides whether a candidate claim belongs in the larger causal picture, which neighboring claims it should displace, whether its abstraction is useful, or whether it will still guide coherent modification when later demands expose consequences that were not locally visible.
 
@@ -63,7 +63,7 @@ Nor does the claim say that explicit theory-guided selection is the only route. 
 
 Relevant Notes:
 
-- [A claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — grounds: separates a claim's independent test record from its fit
+- [A claim's test record does not determine its fit in a working theory](./a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md) — grounds: separates a claim's independent test record from its fit
 - [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — extends: bounds the evidential meaning of successful system use
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: identifies the longitudinal consequences through which program-theory fit can become visible
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — grounds: bounds what one successful configuration can establish beyond its originating context

@@ -9,7 +9,7 @@ tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems
 
 Putting a claim to work in a live system creates evidence that static inspection cannot supply. If the claim changes proposal, diagnosis, branch allocation, modification, recovery, transfer, or later operation, and those changes survive consequential use, the result bears on whether the claim is integrated into the working theory and causally useful there. It does not by itself add to the claim's independent test record, and it does not show that the claim is true.
 
-The distinction follows because [a claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md). System use primarily exposes fit. A claim that sounds coherent but never changes behavior has weak evidence of operative fit. A claim that changes search, helps distinguish rival repairs, reduces later repair, or transfers to a new case has stronger evidence that it participates usefully in the theory's operation.
+The distinction follows because [a claim's test record does not determine its fit in a working theory](./a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md). System use primarily exposes fit. A claim that sounds coherent but never changes behavior has weak evidence of operative fit. A claim that changes search, helps distinguish rival repairs, reduces later repair, or transfers to a new case has stronger evidence that it participates usefully in the theory's operation.
 
 But the live system can reward its own misconceptions. Earlier implementation choices may already assume the claim; neighboring retained claims may make it appear indispensable; an evaluator may share the same error; or the current task distribution may never expose the claim's bad scope. Successful use can therefore be self-confirming.
 
@@ -34,5 +34,5 @@ The useful division is therefore not "system evidence versus real evidence." Sys
 
 Relevant Notes:
 
-- [A claim's test record does not determine its fit in a working theory](./a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — grounds: supplies the distinction between a claim's independent test record and its fit
+- [A claim's test record does not determine its fit in a working theory](./a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md) — grounds: supplies the distinction between a claim's independent test record and its fit
 - [System use is an initial selection environment when theory fit lacks a fixed oracle](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — extends: develops why distributed and delayed live-system consequences can serve as an initial selection environment

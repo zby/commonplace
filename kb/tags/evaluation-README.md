@@ -19,7 +19,7 @@ This tag gathers how claims, changes, and agent outputs are judged and tested: o
 
 ## Warrant and theory fit
 
-- [A claim's test record does not determine its fit in a working theory](../theory/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — truth, test record and fit are separate questions; fit is a test only where the claim could have failed
+- [A claim's test record does not determine its fit in a working theory](../theory/a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md) — truth, test record and fit are separate questions; fit is a test only where the claim could have failed
 - [System use provides evidence of theory fit, not an independent test](../theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — live use tests integration and usefulness; factual, source, or scope evidence is still needed for warrant
 - [System use is an initial selection environment when theory fit lacks a fixed oracle](../theory/system-use-selects-theory-fit-without-a-fixed-oracle.md) — distributed consequences of use can select claims where no fixed oracle exists
 - [Disconnected witnesses do not establish a causal path through theory](../theory/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — evidence of learning through theory must join one causal path
