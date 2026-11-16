@@ -20,7 +20,9 @@ records the typed review, retained-observation and fixture boundary;
 [ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)
 extends that boundary to edit operations;
 [ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)
-makes the revise workflow the one runner of the improvement procedures. Exact behavior belongs to `commonplace.lib.review_workflows`,
+makes the revise workflow the one runner of the improvement procedures; the
+rewrite workflow ports the edit path of
+[multistage writing](../instructions/cp-skill-write-multistage/SKILL.md). Exact behavior belongs to `commonplace.lib.review_workflows`,
 `commonplace.headless` and `commonplace.cli.review_workflows`.
 
 ## Components
@@ -39,9 +41,10 @@ makes the revise workflow the one runner of the improvement procedures. Exact be
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views; call grouping, the worker prompt and the checkout guard |
 | `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
-| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
+| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate and the revised candidate that revise and rewrite share, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
 | `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, per-item answers stops and publication; each operation runs through `edit_operations.ask()` |
+| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, four fresh-worker steps with one repair, the review bound to the candidate's hash, and the same publication stop as revise |
 | `review_workflows.decisions` | the read-only operator-decision record over run operator records, and over the packets and fix reports of the retired procedures |
 
 Workjig launches each worker in the checkout through the harness's headless
@@ -122,13 +125,25 @@ before publication; it cannot verify semantic obedience. An amendment to the
 commission must happen outside the run. Review workers do not receive this
 input, and brief changes do not stale gate results.
 
+A rewrite run (`run rewrite`) captures its commission, the note's write
+brief, its sources and the note's contracts once, in `rewrite-inputs.json`;
+every call receives the brief, and a changed commission or brief requires an
+explicit restart. Code chooses each worker's inputs: the reconstruct and
+claim-account workers do not receive the note, and their prompt forbids
+opening it. Workers can still read the checkout, so this isolation rests on
+supplied inputs and instruction, not on a sandbox. A source that git
+ignores is referenced by path and SHA-256 and never copied into the run.
+Code binds each review to the SHA-256 of the candidate it judged, allows one
+repair after a `block`, and publishes only through the shared publication
+stop.
+
 ## Durable state and run state
 
 | State | Location | Lifetime |
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-review decisions` still reads it |
-| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a revise run | a sweep and its resumes; every repeat of a workflow command on the same note text |
+| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a revise or rewrite run | a sweep and its resumes; every repeat of a workflow command on the same note text |
 | observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; exact inputs, completed results, candidate texts and their hashes remain citable |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 

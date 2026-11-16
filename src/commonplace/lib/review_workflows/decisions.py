@@ -3,13 +3,13 @@
 Nothing here writes state. Entries come from three places under
 kb/reports/state/:
 
-- operator records `operator/*.json` in the revise run directories: for an
+- operator records `operator/*.json` in the revise and rewrite run directories: for an
   answers stop (`types/answers.md`), one entry per item of the approved
   answers file with its state, decider and reason, the publication approval
   as a bundle entry, marked `revised` when its question is the run's
   revised candidate `revised.md` (`revise.supply_revised()`) and not the
   workflow's candidate; one `pending` entry per stop without an answer. In a
-  revise run, a pending entry is `overtaken` instead when the note no longer
+  revise or rewrite run, a pending entry is `overtaken` instead when the note no longer
   holds the text the run started from: the note is gone, or `edits.run_dir()`
   of its current text is another run directory. Such a run can never
   continue. This is computed when listing; nothing is written;
@@ -46,7 +46,7 @@ from commonplace.lib import answers, frontmatter
 from commonplace.lib.review_workflows import edits, gates, results
 
 # BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
-WORKFLOWS = ("revise", "full-pass")
+WORKFLOWS = ("revise", "rewrite", "full-pass")
 """Run families whose run directories may hold operator records; dated sweep directories hold none.
 
 `full-pass` is the run family of the retired full-pass workflow (ADR 135)."""
@@ -128,13 +128,17 @@ def _revised(root: Path, run_dir: Path, proposal: str) -> bool:
     return question == (run_dir / "artifact" / edits.REVISED).relative_to(root).as_posix()
 
 
-def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
-    """Whether a revise run can no longer continue: its note is gone or now holds another text.
+OWN_TEXT = ("revise", "rewrite")
+"""Run families whose run directory is `edits.run_dir()` of the note's start text."""
 
-    A revise run's directory is `edits.run_dir()` of the note's text when it
+
+def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
+    """Whether a revise or rewrite run can no longer continue: its note is gone or now holds another text.
+
+    Such a run's directory is `edits.run_dir()` of the note's text when it
     started, so another current text names another directory.
     """
-    if workflow != "revise":
+    if workflow not in OWN_TEXT:
         return False
     return not (root / note).is_file() or edits.run_dir(root, workflow, note) != run_dir
 

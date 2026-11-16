@@ -573,17 +573,45 @@ continues the run and replays answered calls; an edited note opens a new
 run. A repeat reuses the recorded options (`--purpose`, `--defend` and the
 effort profiles); an option given on the repeat replaces the recorded value.
 
+`run rewrite NOTE --commission FILE [--restart] [--profile NAME]` rewrites
+one note from its authorized sources, for a note whose contribution is known
+but whose claims or synthesis are unsettled. FILE is the commission: Markdown
+with YAML frontmatter naming `note` and `sources` (each a repository `path`
+and its `role`), and the sections `## Intended contribution`, `## Must keep`,
+`## Must exclude`, `## Reserved decisions` and `## Current direction`. The
+run captures the commission once, with the note's write brief, the sources
+and the note's type and collection contracts. A source that git ignores, or
+lies under a `.snapshots/` directory, or is not text, is referenced by path
+and SHA-256 and never copied into the run. Fresh workers then reconstruct
+the sources and account for the claims without the note, write a candidate
+with a reconciliation report, and review the exact candidate, ending
+`accept` or `block`. A `block` allows one repair and a second fresh review;
+a second `block` ends the run unpublished, with `blocked` in the JSON report.
+After `accept` the run stops at the same publication stop as `run revise`,
+and `run rewrite NOTE --revised FILE` accepts the candidate with a revision
+the same way. The run directory is
+`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
+hex of the note's SHA-256>/`. A repeat continues from the capture;
+`--commission` may then be omitted. A different commission is refused unless
+`--restart`, which captures it again and asks every call again in the same
+run directory. A referenced source whose bytes changed stops the run until a
+restart. `--profile` names the worker profile for every call; the default is
+the `effort` mapping for `judgment`, and a repeat keeps the recorded one. It
+exits 0 when the run completes, waits or ends blocked with a clean guard, 1
+for a stop, a conflict or a guard change, and 2 for a command error. See
+[the rewrite workflow](./README-REVIEW-SYSTEM.md#rewriting-a-note).
+
 `decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
 decisions and launches nothing. It is read-only: it reads the operator
-records in revise run directories and writes no state. So that decisions
+records in revise and rewrite run directories and writes no state. So that decisions
 recorded before ADR 135 stay visible, it also reads the records of the
 retired procedures: operator records in full-pass run directories, full-pass
 packets under `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`. Each
 entry says who proposed and who decided (`operator`, `agent`,
 `version-guard`, `pending` for an unanswered stop, or `overtaken` for a
-stop of a revise run whose note is gone or now holds another text, so the
-run can never continue), the action class
+stop of a revise or rewrite run whose note is gone or now holds another
+text, so the run can never continue), the action class
 (the pass name of a per-item stop, `finding` for a triage stop, whose item
 names the criterion, `publication`, `packet` or `fix-report`),
 and whether the decision covered one `item` or a `bundle`. An approved

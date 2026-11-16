@@ -5,45 +5,215 @@ type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill, Task
 argument-hint: "[target path | collection/type/topic] [source paths or brief]"
-context: fork
 ---
 
 # cp-skill-write-multistage
 
 Produce one supported KB artifact while preserving the user's contribution and
 leaving evidence-dependent choices to fresh workers. The live target remains
-untouched until an independent reviewer accepts its exact candidate bytes.
+untouched until an independent reviewer accepts its exact candidate bytes and
+the user approves them.
 
 ## Execute now
 
 **Target and inputs: $ARGUMENTS**
 
-Use this workflow when the intended contribution is known but its claims,
+Use this skill when the intended contribution is known but its claims,
 evidence, or synthesis remain unsettled. Route a settled edit to
 `cp-skill-write`. Keep work with no authorized library target in a separate
-ordinary workshop and stop; do not initialize this workflow for it.
+ordinary workshop and stop.
 
-The invoking agent is the **parent**. It fixes the commission and authority
-boundary, supplies privileged context, and owns all live mutations. Workers
+The invoking agent is the **session agent**. It talks with the user, fixes the
+commission and the authority boundary, and owns every live mutation. Workers
 choose investigative, structural, and prose means inside their assigned result
 and evidence boundary.
 
-Use three roles: a fresh source reconstructor, one fresh consolidated author,
-and a fresh independent reviewer. Conditional procedures may add roles only
-where they explicitly say so. If the harness cannot provide the required fresh
-contexts, initialize the run and stop before reconstruction.
+Choose the path by the target:
 
-## 1. Commission one artifact
+- **An existing note:** follow [part A](#a-rewrite-an-existing-note). The
+  rewrite runs as a code workflow, `commonplace-review run rewrite`.
+- **A new artifact:** follow [part B](#b-write-a-new-artifact). The session
+  agent runs the fresh workers itself.
+- **An explicit external-literature question** about an existing note
+  (duplication, subsumption, keep/rewrite/thin, merge/retire, cohort): follow
+  part B in edit mode. The rewrite workflow has no literature step.
+
+A retitle, replacement, fold, merge, retirement, or artifact-set change
+requires explicit user authority; never infer it from a worker
+recommendation.
+
+## A. Rewrite an existing note
+
+The workflow runs four fresh workers in order. A reconstructor rebuilds the
+evidence from the authorized sources without the note. A claim-account
+worker decides, still without the note, how each reconstructed commitment is
+treated. An author then receives the frozen claim account and the note, and
+writes the candidate with a report that reconciles the note's commitments. An
+independent reviewer accepts or blocks the exact candidate bytes. One repair
+is allowed: on `block`, a fresh author receives the review and a fresh
+reviewer judges the repair. A second `block` ends the run unpublished.
+
+This is a deliberate change from part B. Part B uses one author for the
+claim account and the candidate, so that claim selection and prose stay one
+judgment. In the workflow the two author calls are fresh workers, and the
+frozen claim account carries the judgment between them.
+
+The first two workers are not given the note, and their prompt forbids
+opening it. They can still read the checkout. The isolation is by supplied
+inputs and instruction, not by sandbox.
+
+### A1. Fix the commission with the user
+
+Read the note, its collection's `COLLECTION.md` and its type spec. When the
+note declares a write brief (`brief: <stem>.brief.md`), read the brief. The
+brief is the base of the commission: it binds as retained intent. Add only
+what is specific to this rewrite: the current direction, the sources, and any
+narrower boundary.
+
+Fix with the user:
+
+- the intended contribution and what the reader should understand or do
+  because of it;
+- what the note must keep and what it must exclude;
+- the decisions reserved for the user, such as a retitle;
+- the user's current direction for this rewrite;
+- the authorized sources, each with its role.
+
+Do not derive the contribution from the existing note. Stop and ask when
+several materially different contributions still fit.
+
+The commission must not contradict the brief. When the user's direction
+amends a brief item, update the brief before the run, under the
+[write brief](../../types/write-brief.md) rules, so that the run captures the
+amended brief. A worker that finds a conflict between the commission and the
+brief reports a problem, and the run stops.
+
+### A2. Ground the sources
+
+Grounding is the session agent's work and comes before the run. Follow
+[section C](#c-ground-named-source-dependencies) for each claim that depends
+on a named external source. A source the run receives must be a file in the
+repository: an ingest, a retained snapshot, or another tracked file.
+
+### A3. Write the commission file
+
+Write the commission as a Markdown file outside `kb/`, for example in the
+session's scratch directory. The run captures it; the file is not kept. Use
+this format; code checks the frontmatter and every heading:
+
+```markdown
+---
+note: kb/theory/the-note.md
+sources:
+  - path: kb/sources/some-source.ingest.md
+    role: the ingest that states the mechanism
+  - path: kb/sources/.snapshots/some-source/page.md
+    role: the full text, for exact wording
+---
+
+# Commission: <short note name>
+
+## Intended contribution
+
+<The claim or purpose, and the reader update.>
+
+## Must keep
+
+<Passages, distinctions or qualifications, and why. `None.` when empty.>
+
+## Must exclude
+
+<Content the note must not contain, and why. `None.` when empty.>
+
+## Reserved decisions
+
+<Choices the workers must not make. `None.` when empty.>
+
+## Current direction
+
+<What the user wants from this rewrite.>
+```
+
+`note` is the note's repository path. Each source is a repository file other
+than the note and its brief. A source that git ignores, such as a snapshot
+under `kb/sources/.snapshots/`, is passed by path and SHA-256 and never
+copied into the run; any other text source is copied into the run as an
+input.
+
+### A4. Run the workflow
+
+```bash
+commonplace-review run rewrite <note> --commission <file>
+```
+
+The run lives under
+`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<12 hex of
+the note's SHA-256>/`. Repeat the same command, with or without
+`--commission`, to continue it: answered calls replay. A commission that
+differs from the captured one is refused; to rewrite under the new
+commission, add `--restart`, which captures the commission, the brief and the
+sources again and asks every call again. A changed note text starts a new run
+directory.
+
+Read the JSON report and act on it:
+
+- **`waiting-for` names `publication-answers.md`:** follow
+  [approve a text](../approve-a-text.md). For a revision the user states,
+  supply it with `commonplace-review run rewrite <note> --revised <file>`.
+  Tell the user each entry of `new-warnings`.
+- **`blocked`:** the second review blocked. Read `review-1.md` and
+  `review-2.md` under the run's `artifact/` and tell the user. When a finding
+  asks for evidence the sources lack, ground or add a source (A2), change the
+  commission, and repeat with `--commission <file> --restart`. When a finding
+  needs a user decision, settle it in the commission and restart the same way.
+- **`stopped` with a worker problem:** read it to the user. A conflict
+  between the commission and the brief needs a changed commission or an
+  amended brief, then `--restart`. A transient problem can be dismissed with
+  `commonplace-review retry <run-dir> <job>`, then repeat.
+- **`stopped` because a referenced source changed:** confirm the new text is
+  wanted, then repeat with `--commission <file> --restart`.
+- **`unchanged`:** the reviewer accepted the note's own text. Nothing is
+  written.
+- **`conflict`:** the note changed during the run. Nothing was written.
+
+The workflow writes the note only after the user's approval and only when
+the note still holds the text the run started from.
+
+### A5. Keep the commission's lasting parts in the write brief
+
+After publication, write or update the note's
+[write brief](../../types/write-brief.md) from the commission's lasting parts:
+the intended contribution, what must be kept, what must be excluded, and the
+reserved decisions. Leave out the current direction and the sources. Follow
+the type's rules: do not copy the note's claims, evidence or prose; omit an
+empty section; write no brief that would hold only `## Intent`. A new brief
+needs `brief: <stem>.brief.md` in the note's frontmatter. Validate the note and
+the brief with `commonplace-validate`, one target per call.
+
+A retitle is a separate step on the user's word:
+`commonplace-relocate-note <old-path> --to <new-path>`, committed alone.
+
+### A6. Report
+
+Report the run directory, the outcome (published, blocked, stopped or
+unchanged), whether the repair ran, the brief change, and validation.
+Suggest `cp-skill-connect` only as optional follow-up.
+
+## B. Write a new artifact
+
+The parent of this part is the session agent. Use three roles: a fresh source
+reconstructor, one fresh consolidated author, and a fresh independent
+reviewer. Conditional procedures may add roles only where they explicitly say
+so. If the harness cannot provide the required fresh contexts, initialize the
+run and stop before reconstruction.
+
+### B1. Commission one artifact
 
 Resolve one target, mode, collection, type, and acceptance condition. Read the
 target collection's `COLLECTION.md` and the applicable type contract in full.
 Stop if the collection has no local contract or the target identity is
 ambiguous.
 
-- **Edit:** require an existing Markdown target. Frontmatter without `type:` is
-  invalid; no frontmatter means implicit `text`. Save byte-exact `original.md`,
-  its lowercase SHA-256, and one backlinks query before any worker runs. The
-  incumbent is a reconciliation and rollback input, never evidence for itself.
 - **New:** resolve the requested collection and type. Use an explicit collection
   or the project's authored routing for this contribution; ask if it does not
   select one collection. This KB routes theoretical notes to `kb/theory/`;
@@ -52,10 +222,13 @@ ambiguous.
   `kb/work/` as a library target. Verify an explicit type path or resolve type
   shorthand to exactly one type spec. Run a targeted near-duplicate search.
   Preserve a valid user-supplied path; otherwise use a provisional filename.
+- **Edit (an external-literature question only):** require an existing
+  Markdown target. Frontmatter without `type:` is invalid; no frontmatter
+  means implicit `text`. Save byte-exact `original.md`, its lowercase
+  SHA-256, and one backlinks query before any worker runs. The incumbent is a
+  reconciliation and rollback input, never evidence for itself.
 
-A change of identity, mode, collection, or type restarts setup. A retitle,
-replacement, fold, merge, retirement, or artifact-set change requires explicit
-user authority; never infer it from a worker recommendation.
+A change of identity, mode, collection, or type restarts setup.
 
 The run parent is exactly `kb/reports/state/multistage/`, in the ignored
 operational tree; a run is not a workshop. Before
@@ -80,7 +253,7 @@ Keep only durable run state:
 Scratch, copied sources, skeletons, and separate planning or acceptance files
 are optional worker means, not workflow state.
 
-## 2. Freeze intent and reconstruct sources
+### B2. Freeze intent and reconstruct sources
 
 Write `brief.md` from the user's current direction or named retained intent.
 Record what workers cannot recover safely: the intended contribution, audience
@@ -92,8 +265,9 @@ Stop on conflicting authority or when several materially different central
 contributions still fit.
 
 Acquire every source needed for the governing question. If an external source
-needs ingestion or retained quotations, use the grounding interface in section
-4 before treating it as available evidence.
+needs ingestion or retained quotations, use the grounding interface in
+[section C](#c-ground-named-source-dependencies) before treating it as
+available evidence.
 
 For an explicit external duplication, subsumption, keep/rewrite/thin,
 merge/retire, or cohort question, run
@@ -115,7 +289,7 @@ The parent verifies that the reconstruction answers the brief from authorized
 sources and then freezes it. A changed governing premise or substantive new
 evidence invalidates this stage and every dependent stage.
 
-## 3. Give one author staged evidence
+### B3. Give one author staged evidence
 
 Use one consolidated author so claim selection and prose remain one coherent
 judgment. Its result is a complete target-compatible candidate whose material
@@ -146,33 +320,12 @@ material commitment first returns to disposition; a user-owned contribution
 or mutation choice returns to the user with the exact decision and resume
 point.
 
-## 4. Ground named source dependencies
+### B4. Ground, then review exact bytes and allow one repair
 
-Before review, identify each new or materially changed candidate claim that
-depends on a named external source. For every dependency not already grounded
-by the literature procedure, invoke `cp-skill-ground` with exactly:
-
-```text
-Target: <exact ingest path or authorized canonical source URL>
-Claim needed: <source-side proposition or question>
-```
-
-Do not pass target prose or target-specific transfer reasoning. Obtain user
-authority before using an agent-nominated untracked URL. The grounding skill
-alone owns ingest resolution and permitted Quotes mutations.
-
-- For `quotes sufficient` or `quotes added`, verify the ingest's complete
-  Quotes section, apply `semantic/grounding-alignment`, and record the result;
-  retain the appended text for `quotes added`.
-- For `snapshot required`, follow the returned snapshot and gate requirements
-  and retain the exact `(snapshot required)` marker.
-- Any blocker, including a `re-ingest.md` route, stops this run. Do not bypass
-  the result or invoke `cp-skill-ingest` directly.
-
-Substantive evidence added here returns to reconstruction. Waiting for evidence
-is not completion.
-
-## 5. Review exact bytes and allow one repair
+Before review, ground each new or materially changed candidate claim that
+depends on a named external source, as [section C](#c-ground-named-source-dependencies)
+directs. Substantive evidence added here returns to reconstruction. Waiting
+for evidence is not completion.
 
 Hash `candidate.md`. Launch a fresh reviewer who did not author or revise it.
 Give the reviewer the exact candidate and digest, brief, reconstruction,
@@ -215,7 +368,7 @@ Invalidate only what the changed premise affects:
   return to disposition only while the repair allowance remains, otherwise a
   new run is required.
 
-## 6. Promote and close
+### B5. Promote and close
 
 After final acceptance, read and execute
 `references/promotion.md` beside this skill. It owns live-drift checks,
@@ -225,3 +378,31 @@ closing account, and run retention. Do not improvise a shorter mutation path.
 Report the exact run path, target or blocker, final candidate and review
 digests, validation, any source mutation, and whether repair or recovery ran. Suggest `cp-skill-connect` only
 as optional follow-up; do not launch sibling work automatically.
+
+## C. Ground named source dependencies
+
+Identify each new or materially changed claim that depends on a named
+external source. For every dependency not already grounded by the literature
+procedure, invoke `cp-skill-ground` with exactly:
+
+```text
+Target: <exact ingest path or authorized canonical source URL>
+Claim needed: <source-side proposition or question>
+```
+
+Do not pass target prose or target-specific transfer reasoning. Obtain user
+authority before using an agent-nominated untracked URL. The grounding skill
+alone owns ingest resolution and permitted Quotes mutations.
+
+- For `quotes sufficient` or `quotes added`, verify the ingest's complete
+  Quotes section, apply `semantic/grounding-alignment`, and record the result;
+  retain the appended text for `quotes added`.
+- For `snapshot required`, follow the returned snapshot and gate requirements
+  and retain the exact `(snapshot required)` marker. In part A, list the
+  snapshot as a source of the commission.
+- Any blocker, including a `re-ingest.md` route, stops the work. Do not bypass
+  the result or invoke `cp-skill-ingest` directly.
+
+In part A grounding precedes the run, so the claims are those the commission
+expects the rewrite to rest on. A source the reviewer finds missing sends the
+work back here, then to a restarted run.

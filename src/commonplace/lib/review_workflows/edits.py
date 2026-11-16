@@ -34,12 +34,14 @@ from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
 from commonplace.lib.note_parser import blank_fenced_code_blocks, find_markdown_links
 from commonplace.lib.quote_matching import normalize_text
 from commonplace.lib.quote_verification import parse_prose_citations
-from commonplace.lib.review_workflows import gates, results
+from commonplace.lib.review_workflows import gates, observations, results
 from commonplace.lib.validation import CheckResults, ValidationRun
 
 PUBLICATION = "publication-answers.md"
 """The stop file of a publication: the operator's answers over the candidate `final.md`, or the revised candidate."""
 CANDIDATE = "final.md"
+START = "start.md"
+"""The note's text when the run started, which the run may replace."""
 REVISED = "revised.md"
 """The revised candidate: the operator's revision of `final.md`, supplied with `--revised`."""
 REVISED_DIFF = "revised.diff"
@@ -352,6 +354,156 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
         return operator.waiting(run, root, name, "The approved answers do not authorize publication: "
                                 + "; ".join(problems) + ". No artifact was written. " + instruction, command)
     return None
+
+
+# --- The publication stop of a workflow ------------------------------------------------------
+#
+# The revise and rewrite workflows end the same way: the candidate `final.md`
+# waits for approval, the operator may accept it with a revision, and the note
+# is written once. The workflow's report carries the fields `proposed`,
+# `revised_candidate`, `new_warnings`, `waiting_for`, `applied` and `not_applied`.
+
+REVISED_RECORD = "revised.json"
+"""The revised candidate the run captured: its text, and the workflow candidate's hash and key it revises."""
+PUBLICATION_FILES = (CANDIDATE, "final.diff", PUBLICATION, REVISED, REVISED_DIFF, REVISION_DIFF)
+"""The files a run writes at its publication stop; one of them is the last a run waiting there accepted."""
+NOT_AT_PUBLICATION = ("the run of {artifact} for its current text is not waiting at its publication stop; repeat "
+                      "the run and supply the revised candidate when its report waits on publication-answers.md")
+
+
+def revised_report_files(root: Path, run: Run) -> dict[str, str]:
+    """The report's names for the files of a revised candidate."""
+    return {"candidate": (run.artifact / CANDIDATE).relative_to(root).as_posix(),
+            "revised": (run.artifact / REVISED).relative_to(root).as_posix(),
+            "diff-from-candidate": (run.artifact / REVISION_DIFF).relative_to(root).as_posix(),
+            "diff-from-note": (run.artifact / REVISED_DIFF).relative_to(root).as_posix()}
+
+
+def revision(run: Run, root: Path, note: str, start: str, final: str, context: dict, report) -> str | None:
+    """The revised candidate the run captured, while `final` is the candidate it revises; otherwise None.
+
+    A revision of another candidate is withdrawn: its record and files are
+    removed and the report says why. The record keeps the key of the current
+    candidate, so a later `supply_revised()` binds the same context.
+    """
+    path = run.root / REVISED_RECORD
+    if not path.is_file():
+        return None
+    record = json.loads(path.read_text(encoding="utf-8"))
+    if record["candidate-sha256"] != answers.sha(final.encode("utf-8")):
+        path.unlink()
+        for name in (REVISED, REVISED_DIFF, REVISION_DIFF):
+            (run.artifact / name).unlink(missing_ok=True)
+        report.revised_candidate = {"withdrawn": "The workflow's candidate changed since the revised candidate was "
+                                                 "supplied, so the revised candidate is withdrawn. Supply it again "
+                                                 "with --revised if it still applies to the new candidate."}
+        return None
+    key = candidate_key(note, start, final, context)
+    if record["candidate-key"] != key:
+        observations.atomic_json(path, {**record, "candidate-key": key})
+    report.revised_candidate = revised_report_files(root, run)
+    return record["text"]
+
+
+def publish(run: Run, root: Path, note: str, start: str, final: str, context: dict, brief: dict[str, str],
+            command: str, report) -> str:
+    """Stop at publication for the changed `final`, or write the approved text; return the text to publish.
+
+    The text to publish is `final`, or the operator's revised candidate while
+    it revises `final` (`revision()`). The captured `brief` is checked before
+    the stop and again before the write (`unchanged_brief()`).
+    """
+    unchanged_brief(root, note, start, brief)
+    revised = revision(run, root, note, start, final, context, report)
+    published = final if revised is None else revised
+    report.proposed = (run.artifact / (CANDIDATE if revised is None else REVISED)).relative_to(root).as_posix()
+    report.new_warnings = new_warnings(root, note, start, published)
+    report.waiting_for = publication(run, root, note, start, final, inputs=context, command=command,
+                                     revised=revised, warnings=report.new_warnings)
+    if report.waiting_for is None:
+        unchanged_brief(root, note, start, brief)
+        apply(root, note, start, published, root / report.proposed)
+        report.applied = True
+    else:
+        what = "" if revised is None else ", the operator's revised candidate"
+        report.not_applied = (f"The proposed text is {report.proposed}{what}; it is not applied: "
+                              "final publication needs explicit approval.")
+    return published
+
+
+def at_publication(run_dir: Path) -> bool:
+    """Whether the run's last invocation ended at its publication stop.
+
+    It did when the last file the run accepted is one of `PUBLICATION_FILES`.
+    """
+    log = run_dir / "log.jsonl"
+    last = None
+    if log.is_file():
+        for line in log.read_text(encoding="utf-8").splitlines():
+            event = json.loads(line)
+            if event.get("event") == "accepted":
+                last = event.get("path")
+    return last in PUBLICATION_FILES
+
+
+def revised_source(run_dir: Path, source: Path, note: str) -> None:
+    """Refuse (ValueError) a revised candidate supplied from inside the run's `artifact/`, or a missing run."""
+    if source.resolve().is_relative_to(run_dir.resolve() / "artifact"):
+        raise ValueError("supply the revised candidate from a file outside the run's artifact/ directory; "
+                         "the run captures it there")
+    if not run_dir.is_dir():
+        raise ValueError(NOT_AT_PUBLICATION.format(artifact=note))
+
+
+def supply_revised(run: Run, root: Path, note: str, revised: str, command: str) -> dict:
+    """Capture the operator's revised candidate at the publication stop of `run`; launch nothing.
+
+    Refuses (ValueError) unless the run of the note's current text waits at
+    its publication stop, `final.md` is the candidate the run proposed and
+    the revised text passes `revised_problems()`. A refusal changes nothing.
+    Otherwise the text is captured in `REVISED_RECORD` and as
+    `artifact/revised.md`, with its diffs, and the pending publication
+    answers are replaced by one over `revised.md`, which withdraws any
+    approval. A second revision replaces the first in the same way. Returns
+    the report's `proposed`, `revised-candidate`, `new-warnings`,
+    `not-applied` and `waiting-for`.
+    """
+    record = operator.recorded(run, PUBLICATION)
+    start_path, final_path = run.artifact / START, run.artifact / CANDIDATE
+    if record is None or not at_publication(run.root) or not start_path.is_file() or not final_path.is_file():
+        raise ValueError(NOT_AT_PUBLICATION.format(artifact=note))
+    start, final = start_path.read_text(encoding="utf-8"), final_path.read_text(encoding="utf-8")
+    if (root / note).read_text(encoding="utf-8") != start:
+        raise ValueError(f"{note} no longer holds the text the run started from")
+    captured = run.root / REVISED_RECORD
+    if captured.is_file():
+        earlier = json.loads(captured.read_text(encoding="utf-8"))
+        candidate, key = earlier["candidate-sha256"], earlier["candidate-key"]
+    else:
+        asked = frontmatter.parse(record["proposal"]).data
+        if asked.get("question") != final_path.relative_to(root).as_posix():
+            raise ValueError(NOT_AT_PUBLICATION.format(artifact=note))
+        candidate, key = asked.get("question-sha256"), record["input-key"]
+    if answers.sha(final.encode("utf-8")) != candidate:
+        raise ValueError(f"{final_path.relative_to(root).as_posix()} is not the candidate the run proposed; repeat "
+                         "the run to restore it, then supply the revised candidate")
+    problems = revised_problems(root, note, start, revised)
+    if problems:
+        raise ValueError("the revised candidate is refused; the candidate and its pending answers are kept: "
+                         + "; ".join(problems))
+    observations.atomic_json(captured, {"text": revised, "candidate-sha256": candidate, "candidate-key": key})
+    for name, text in revised_files(note, start, final, revised).items():
+        run.accept(name, text)
+    question = run.artifact / REVISED
+    operator.answer(run, PUBLICATION, answers.pending(question.relative_to(root).as_posix(), revised.encode("utf-8")),
+                    key=revised_key(key, revised))
+    proposed = question.relative_to(root).as_posix()
+    warnings = new_warnings(root, note, start, revised)
+    return {"proposed": proposed, "revised-candidate": revised_report_files(root, run), "new-warnings": warnings,
+            "not-applied": (f"The proposed text is {proposed}, the operator's revised candidate; it is not "
+                            "applied: final publication needs explicit approval."),
+            "waiting-for": operator.waiting(run, root, PUBLICATION, publication_instruction(True, warnings),
+                                            command)}
 
 
 def run_dir(root: Path, workflow: str, note: str) -> Path:

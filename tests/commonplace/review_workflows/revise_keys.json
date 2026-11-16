@@ -1,0 +1,61 @@
+{
+  "inputs": {
+    "kb/instructions/fix-warnings/fix-strategy-taxonomy.md": "12c35f999bb2ce55341fb3b94d9c41240c32efb017c4869250d32b14101a8dac",
+    "kb/instructions/review-profiles.yaml": "9db03a22fc4dc0cc0fc024e46d8cc06e0d9940ce57d2c6b8e754108cd37448e3",
+    "kb/instructions/simplification-passes/README.md": "e05ad2df67ebb4691c247425a72fbec715e57c138d54a1e4dfd69a3a229128e6",
+    "kb/instructions/simplification-passes/abstractions.md": "66c1e66712553330a826d33689fc281147d52ac6c08ae6f8510f4eb0cd9238a4",
+    "kb/instructions/simplification-passes/audit-a-prior-pass.md": "9e2f0c4a34b5ccdb9d35506bb0a273f1be695002f4ccea01075c9821295cbcfd",
+    "kb/instructions/simplification-passes/execute-a-revision-pass.md": "c50a413eeb79bad4562149f1e50cc5d97e84c4c9734b5e2b0f734a7c208a699a",
+    "kb/instructions/simplification-passes/narrow-overclaims.md": "2e627d71a54ea21109203837b00e1da8deff0bcaca0260d779f9a0e95a3b9857",
+    "kb/instructions/simplification-passes/opening-and-title.md": "9168b243627ec0110c4ec1b0541178939b79e456d5711c4c77cc741535ff66fd",
+    "kb/instructions/simplification-passes/place-external-systems.md": "c89d198ec7818c3da95c3dcb4b5743669e1fafd6346e81baca1d44cc31dc7105",
+    "kb/instructions/simplification-passes/plain-wording.md": "ae9094451a0d8c479ebfd0dd4d4f7625246322a7fda1b9bc676e34d26ea25542",
+    "kb/instructions/simplification-passes/readability-and-flow.md": "c251205640499cde8b58fe05008ceef9e3d0319e2b3d5647ca41736cbc34fcd3",
+    "kb/instructions/simplification-passes/revise-an-article-or-note.md": "92dcce89141dcd85a2d413230f7e270ea853999cd5e645133646e2347ebea523",
+    "kb/instructions/simplification-passes/split-out-a-treatment.md": "658bed5e2416fbc4d3a7e3b863e4cebfb248d5a919619fd5797f24dbd269b6bf",
+    "kb/notes/COLLECTION.md": "365d0b84ae63c2afc293dedd2b00bdf0dc8d6ef70c9297d90f9e5682ab0d72ee",
+    "kb/types/answers.md": "481d4e758ea1aa9642b9b64c5dc1f19ef7c70ec088c9c79faab52c1452e23cc3",
+    "kb/types/answers.schema.yaml": "78c037bb8feb5abe08cd9783a4461ef9aa595bc03e7597f55b565a4a6aa67bb4",
+    "kb/types/edit-result.md": "e7cd3739ddb9154e94d9de992ff0c56f458abc8043f2fe5e483310bd0318d1e0",
+    "kb/types/edit-result.schema.yaml": "2e1e4d99b5a9da4faaaa817ac4a1b89763631baaa2fe95d79af08b48b61a88be",
+    "kb/types/note-base.schema.yaml": "e0f4e67a8064a348fa9d377438bf03ac4807a3efb800eb67e3051776b69cb6af",
+    "kb/types/note.md": "e111a08a6571349949088c99b6e0f61f50c60864f83079bdfc22a2ebcbb17a4b",
+    "kb/types/note.schema.yaml": "b8c7dd2809530208b9698e89c4a48fbde15f07d1b448fa4f1b7546676e53f3a1",
+    "kb/types/type-spec.md": "8d0227740dfd06ee868a3c833c9d3ad014ef3bf380d34335899fbdc379021fd6",
+    "kb/types/type-spec.schema.yaml": "0ece0ba916243528708ed7f1bbbd0a3ed1a2aa818367e25552ed3016a9646ecd"
+  },
+  "at-publication": {
+    "calls": [
+      "plain-wording/apply 029d6070f323ef1eab742addb6b71c37532eff0e401a7db69a1f8332ec2fbe6b",
+      "plain-wording/propose 694668a75545b0099ee0c5bf2210a271d7dffa91a89568f296d84f27d77f8e86",
+      "readability-and-flow f64b6cf4d6427ff0e8a0da11680ffc497b947ff28482882ea26af343f5f29604"
+    ],
+    "operator": {
+      "publication-answers.md": {
+        "input-key": "c4afba872fb7a9a75f7c3386a6cf31de794ad9a0a5ace0017d9b38f2171f2a65",
+        "key": "d0e3d2949612d654e14743c6a8d24662b4838a5f6d883eb6922e631cb0fea28a"
+      },
+      "plain-wording-answers-694668a75545.md": {
+        "input-key": "694668a75545b0099ee0c5bf2210a271d7dffa91a89568f296d84f27d77f8e86",
+        "key": "67c0fe8cd5f6fe76ce2e9179efb9e8f0c80f682649a951165d5d6199dac95cd6"
+      }
+    }
+  },
+  "after-revision": {
+    "calls": [
+      "plain-wording/apply 029d6070f323ef1eab742addb6b71c37532eff0e401a7db69a1f8332ec2fbe6b",
+      "plain-wording/propose 694668a75545b0099ee0c5bf2210a271d7dffa91a89568f296d84f27d77f8e86",
+      "readability-and-flow f64b6cf4d6427ff0e8a0da11680ffc497b947ff28482882ea26af343f5f29604"
+    ],
+    "operator": {
+      "publication-answers.md": {
+        "input-key": "a1e065e250248df3c0c37990aef214b5dc90a7d9d86b8eb2bd893b5f278965e2",
+        "key": "d07715a72e8154e9c3b7ced499d1d045685d41bcbbd1f4f0b608f3e41273c44d"
+      },
+      "plain-wording-answers-694668a75545.md": {
+        "input-key": "694668a75545b0099ee0c5bf2210a271d7dffa91a89568f296d84f27d77f8e86",
+        "key": "67c0fe8cd5f6fe76ce2e9179efb9e8f0c80f682649a951165d5d6199dac95cd6"
+      }
+    }
+  }
+}

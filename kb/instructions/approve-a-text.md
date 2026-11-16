@@ -1,5 +1,5 @@
 ---
-description: "Use when commonplace-review run revise stopped waiting on artifact/publication-answers.md: show the operator the exact candidate and its diff, record their decision or supply their revised candidate, and continue on their word"
+description: "Use when commonplace-review run revise or run rewrite stopped waiting on artifact/publication-answers.md: show the operator the exact candidate and its diff, record their decision or supply their revised candidate, and continue on their word"
 type: types/instruction.md
 ---
 
@@ -30,7 +30,7 @@ Authority: the decision is the operator's. The agent shows, records and runs com
    Change no `id`, `proposal`, `question` or `question-sha256`.
 4. Run `commonplace-validate` on the answers file. Stop if it reports that the question changed: the candidate is not the one the operator saw.
 5. On the operator's stated word for this exact file, run the reported approval command, then the repeat command.
-6. If the repeat stops on the same file with a `what` that names a refusal, read it to the operator. A rejection or deferral is a normal end: the note keeps its text. To revise the candidate beyond a stated change, the operator changes the workflow inputs, such as a replacement plan with `--plan`; do not edit `final.md`.
+6. If the repeat stops on the same file with a `what` that names a refusal, read it to the operator. A rejection or deferral is a normal end: the note keeps its text. To revise the candidate beyond a stated change, the operator changes the workflow inputs, such as a replacement plan with `--plan` for revise, or a changed commission with `--commission FILE --restart` for rewrite; do not edit `final.md`.
 
 ## Accept with a revision
 
@@ -38,7 +38,7 @@ Use this when the operator accepts the candidate with changes. The revised candi
 
 1. Copy the candidate the run proposes, `final.md` or the current `revised.md`, to a file outside the run's `artifact/` directory.
 2. In the copy, apply exactly the changes the operator stated, or the wording the operator approved. Change nothing else.
-3. Supply the copy: `commonplace-review run revise NOTE --revised FILE`. It launches nothing. It is refused when the run is not waiting at its publication stop for the note's current text, or when the text fails the candidate checks (frontmatter, H1, validation); a refusal keeps the earlier candidate and its pending answers. Read a refusal to the operator.
+3. Supply the copy: `commonplace-review run revise NOTE --revised FILE`, or `run rewrite` in place of `run revise` when the report's repeat command is a rewrite. It launches nothing. It is refused when the run is not waiting at its publication stop for the note's current text, or when the text fails the candidate checks (frontmatter, H1, validation); a refusal keeps the earlier candidate and its pending answers. Read a refusal to the operator.
 4. Show the operator `revised-from-final.diff`, the diff from the workflow's candidate to the revised candidate. If the report's `new-warnings` lists warnings, tell the operator each one. The answers file now names `revised.md`, every item is `pending`, and any earlier approval is withdrawn.
 5. Ask the operator to approve this exact revised text, approve it with further changes, reject it, or defer. Then follow steps 3 to 5 of the procedure. Do not set the item's `state` before the operator has seen the revised diff.
 

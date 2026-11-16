@@ -12,6 +12,8 @@
                                   [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review run revise ARTIFACT --revised FILE  # at the publication stop; launches nothing
+    commonplace-review run rewrite NOTE [--commission FILE [--restart]] [--profile NAME] [--timeout SECONDS]
+    commonplace-review run rewrite NOTE --revised FILE    # at the publication stop; launches nothing
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
@@ -134,6 +136,25 @@ override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
 or a guard change.
 
+`run rewrite NOTE --commission FILE` rewrites one note from its authorized
+sources when its claims or synthesis are unsettled (see
+`commonplace.lib.review_workflows.rewrite`). The commission is Markdown with
+YAML frontmatter naming `note` and `sources` (each a `path` and a `role`)
+and the sections Intended contribution, Must keep, Must exclude, Reserved
+decisions and Current direction. Fresh workers reconstruct the sources and
+account for the claims without the note, then write a candidate with the
+note's text, and a fresh reviewer accepts or blocks the exact candidate; one
+repair follows a block. The run keeps its files under
+kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
+hex of the note's SHA-256>/ and stops at the same publication stop as `run
+revise`, including `--revised FILE`. A repeat continues from the captured
+commission; `--commission` may be omitted then, and a different commission
+is refused unless `--restart` captures it again and asks every call again.
+`--profile` names the worker profile (default: the profile file's `effort`
+mapping for `judgment`); a repeat keeps the recorded one. It exits 0 when
+the run completes, waits or ends blocked with a clean guard, 1 for a stop,
+a conflict or a guard change, and 2 when the command failed.
+
 `run gates` opens a new run under kb/reports/state/review/runs/v2/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
@@ -169,6 +190,7 @@ from commonplace.lib.review_workflows import (
     result_contract,
     results,
     revise,
+    rewrite,
 )
 from commonplace.lib.tasks import load_profile
 
@@ -257,6 +279,18 @@ def _parser() -> argparse.ArgumentParser:
                      help="at the publication stop, replace the candidate with this revised candidate, the full "
                      "text the operator approved in wording; launches nothing, takes no option but --timeout, "
                      "which has no effect")
+    rw = workflows.add_parser("rewrite", help="rewrite one note from its authorized sources under a commission")
+    rw.add_argument("artifact")
+    rw.add_argument("--commission", type=Path, metavar="FILE",
+                    help="the commission: required for a new run; on a repeat it must equal the captured one")
+    rw.add_argument("--restart", action="store_true",
+                    help="capture the --commission FILE, the brief and the sources again and ask every call again")
+    rw.add_argument("--profile", help="worker profile for every call (default: the profile file's `effort` mapping "
+                    "for `judgment`; a repeat keeps the recorded one)")
+    rw.add_argument("--timeout", type=float, help="seconds a launch may take")
+    rw.add_argument("--revised", type=Path, metavar="FILE",
+                    help="at the publication stop, replace the candidate with this revised candidate; launches "
+                    "nothing, takes no option but --timeout, which has no effect")
     approve = commands.add_parser("approve", help="explicitly approve an operator proposal; launches nothing")
     approve.add_argument("run", type=Path)
     approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
@@ -552,10 +586,43 @@ def _revised(root: Path, artifact: str, arguments: argparse.Namespace, harnesses
     run_dir = edits.run_dir(root, "revise", artifact)
     recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
     if not recorded.get("profiles") or not recorded.get("mode"):
-        raise ValueError(revise.NOT_AT_PUBLICATION.format(artifact=artifact))
+        raise ValueError(edits.NOT_AT_PUBLICATION.format(artifact=artifact))
     text = arguments.revised.read_text(encoding="utf-8")
     report = revise.supply_revised(root, artifact, run_dir, Profile(**recorded["profiles"]["judgment"]), text,
                                    arguments.revised, mode=recorded["mode"], harnesses=harnesses)
+    print(json.dumps(report.to_dict(), indent=2))
+    return 0 if report.ok else 1
+
+
+def _rewrite(root: Path, arguments: argparse.Namespace, harnesses) -> int:
+    artifact = _note(root, arguments.artifact)
+    if not artifact.endswith(".md"):
+        raise ValueError(f"not a markdown artifact: {artifact}")
+    run_dir = edits.run_dir(root, rewrite.WORKFLOW, artifact)
+    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
+    if arguments.revised is not None:
+        given = [option for option, value in (("--commission", arguments.commission), ("--restart", arguments.restart),
+                                              ("--profile", arguments.profile)) if value not in (None, False)]
+        if given:
+            raise ValueError(f"--revised takes no workflow option: {', '.join(given)}")
+        if not recorded.get("profile"):
+            raise ValueError(edits.NOT_AT_PUBLICATION.format(artifact=artifact))
+        report = rewrite.supply_revised(root, artifact, run_dir, Profile(**recorded["profile"]),
+                                        arguments.revised.read_text(encoding="utf-8"), arguments.revised,
+                                        harnesses=harnesses)
+    else:
+        if arguments.commission is None and (arguments.restart or not (run_dir / rewrite.INPUTS).is_file()):
+            raise ValueError("--restart needs --commission FILE" if arguments.restart
+                             else "a new rewrite run needs --commission FILE")
+        if arguments.profile is not None:
+            profile = load_profile(root, arguments.profile, gates.profiles())
+        elif recorded.get("profile"):
+            profile = Profile(**recorded["profile"])
+        else:
+            profile = edit_operations.effort_profiles(root, {})["judgment"]
+        _options(run_dir, {"workflow": rewrite.WORKFLOW, "profile": asdict(profile)})
+        report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission,
+                                 restart=arguments.restart, timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
@@ -643,6 +710,8 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
         if arguments.command == "run":
             if arguments.workflow == "revise":
                 return _revise(root, arguments, harnesses)
+            if arguments.workflow == "rewrite":
+                return _rewrite(root, arguments, harnesses)
             if arguments.workflow == "edit":
                 return _edit(root, arguments, harnesses)
             return _gates(root, arguments, harnesses)

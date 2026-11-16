@@ -1,7 +1,16 @@
 # Promote an accepted multistage candidate
 
-Load this reference only after `candidate.md` has an independent `accept` for
-its current SHA-256. The parent executes every mutation and recovery step.
+Load this reference only in part B of the skill (a new artifact, or an edit
+for an explicit external-literature question), after `candidate.md` has an
+independent `accept` for its current SHA-256. The parent executes every
+mutation and recovery step.
+
+Part A, the rewrite of an existing note, does not use this reference.
+`commonplace-review run rewrite` promotes its own candidate at its
+publication stop: it writes the note only after the user approves the exact
+candidate and only when the note still holds the text the run started from.
+A retitle there is a separate `commonplace-relocate-note` step on the user's
+word.
 
 ## Preflight and drift
 
@@ -65,7 +74,7 @@ commonplace-validate <target>
 On failure, restore `original.md` or `relocated-original.md` byte for byte; for
 a new artifact, remove only the newly created target. Verify recovery, retain
 the run, and report the validation failure. Never patch live bytes after
-acceptance. A repair can return to the main workflow only if its one
+acceptance. A repair can return to part B only if its one
 post-review allowance remains unused.
 
 ## Add authorized lineage

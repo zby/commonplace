@@ -1,5 +1,5 @@
 ---
-description: How to operate commonplace-review — criteria and pairs, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, single edit operations and the improvement procedures on one runner
+description: How to operate commonplace-review — criteria, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, single edits, the improvement procedures and the rewrite of a note
 type: types/note.md
 tags: []
 ---
@@ -418,7 +418,8 @@ not establish reliable selection or editing judgment.
 ## Workflows beyond the sweep
 
 Beyond the sweep, `commonplace-review` runs one edit operation alone, runs
-the improvement procedures, and lists the operator's decisions.
+the improvement procedures, rewrites a note from its sources, and lists the
+operator's decisions.
 
 ### One edit operation
 
@@ -636,11 +637,133 @@ candidate. `decisions` marks such a publication entry `revised`.
 A conflict leaves the original untouched and names the proposed text.
 Instructions remain the judgment authority; prompts name inputs only.
 
+### Rewriting a note
+
+`commonplace-review run rewrite NOTE --commission FILE` rewrites one note
+from its authorized sources. Use it instead of `run revise` when the note's
+contribution is known but its claims or synthesis are unsettled: a review
+found a problem with a claim, the claim overreaches its evidence, or the
+note must be rebuilt from new sources. `run revise` edits a text whose claims
+stand; its passes may not narrow or change claims generally. The rewrite may
+change claims, and it may not change the title: a retitle is a separate
+`commonplace-relocate-note` step on the operator's word. It ports the edit
+path of [multistage writing](../instructions/cp-skill-write-multistage/SKILL.md),
+which tells the session agent how to prepare and run it.
+
+**Commission.** The session agent writes the commission with the operator
+before the run. It is a Markdown file with YAML frontmatter:
+
+```markdown
+---
+note: kb/theory/the-note.md
+sources:
+  - path: kb/sources/some-source.ingest.md
+    role: the ingest that states the mechanism
+  - path: kb/sources/.snapshots/some-source/page.md
+    role: the full text, for exact wording
+---
+
+# Commission: <short note name>
+
+## Intended contribution
+## Must keep
+## Must exclude
+## Reserved decisions
+## Current direction
+```
+
+Code checks that `note` is the note being rewritten, that each source is a
+repository file other than the note, its write brief and run state, and that
+every section is present. The run captures the commission once in
+`rewrite-inputs.json`, with the note's [write brief](../types/write-brief.md)
+when the note declares one, the sources and the note's type spec and
+collection contract. Every worker receives the brief as binding retained
+intent; the commission must not contradict it, and a worker that finds a
+conflict reports a problem, which stops the run.
+
+**Sources.** A source that git does not ignore and that is UTF-8 text is
+captured: its text is an input of the reconstruct worker. A source that git
+ignores, such as a snapshot under `kb/sources/.snapshots/`, or any file under
+a `.snapshots/` directory, or a file that is not text, is referenced: the
+source list gives its path and SHA-256 and the worker reads the file there.
+A referenced source is never copied into the run, so full external sources
+stay out of run state. The report's `sources` says which mode each source
+has. A referenced source whose bytes changed since capture stops the run
+until a restart. Grounding comes before the run: the session agent grounds
+claims with `cp-skill-ground` and lists the ingests and snapshots as sources.
+
+**Calls.** Each call is a fresh worker on the profile file's `judgment`
+profile, or the one `--profile` names, with only its listed inputs. Each
+worker follows its role instruction:
+[reconstruct the sources](../instructions/rewrite-a-note/reconstruct-the-sources-of-a-rewrite.md),
+[account for the claims](../instructions/rewrite-a-note/account-for-the-claims-of-a-rewrite.md),
+[write a candidate](../instructions/rewrite-a-note/write-a-rewrite-candidate.md) or
+[review a candidate](../instructions/rewrite-a-note/review-a-rewrite-candidate.md).
+Code checks each output:
+
+| Job | Inputs | Output and the check code applies |
+|---|---|---|
+| `reconstruct` | instruction, commission, brief, source list, captured sources, contracts | `reconstruction`, with `## Support`, `## Inference`, `## Conflicts`, `## Scope` and `## Gaps` |
+| `claim-account` | instruction, commission, brief, reconstruction, contracts | `claim-account`, with at least one `## ` section |
+| `candidate` | the above without the sources, plus the claim account and the note's start text as `note` | `candidate`, which must pass the candidate checks of `edits.artifact_bounds()`, and `report`, with `## Kept`, `## Replaced` and `## Omitted` |
+| `review` | the candidate and its report, commission, brief, reconstruction, claim account, `note`, contracts | `review`: frontmatter `candidate-sha256` equal to the candidate's hash, each `## ` finding with `Anchor:`, `Basis:` and `Required change:`, and a last line `accept` or `block`; a `block` names a finding |
+| `candidate-repair` | the candidate inputs, plus the blocking `review` and the `blocked-candidate` | as `candidate`, and different from the blocked candidate |
+| `review-repair` | as `review`, for the repaired candidate; no earlier review | as `review` |
+
+A rejected output goes back to its worker with the problems, up to three
+attempts. A worker problem stops the run; `retry RUN JOB` dismisses it. The
+candidate checks are those of `--revised`: the frontmatter parses and keeps
+`title`, `type` and `brief`, the H1 is kept, `user-verified` is gone when
+the body changed, and validation finds no new failure. The per-pass bounds
+of edit operations do not apply. A review that names another candidate's
+hash is refused.
+
+**Isolation.** The reconstruct and claim-account workers do not receive the
+note, and their prompt forbids opening it, its brief file or its earlier
+texts. They can still read the checkout. The isolation is by supplied inputs
+and instruction, not by sandbox. Workers write only their outputs inside the
+run directory, under the same profile flags as review workers.
+
+**One author, two fresh calls.** Multistage writing gives the claim account
+and the candidate to one author, so that claim selection and prose stay one
+judgment. This workflow deliberately uses two fresh workers; the frozen
+claim account carries the judgment from the first to the second.
+
+**Repair and end.** On `block`, one repair runs: `candidate-repair`, then
+`review-repair`, a fresh reviewer. A second `block` ends the run with
+`blocked` in the report, every output kept and nothing published. When a
+finding asks for evidence the sources lack, the session agent grounds or
+adds a source and starts again with a changed commission. A candidate the
+reviewer accepts that equals the start text ends with `unchanged` and no
+publication. Otherwise the run stops at the publication stop of `run
+revise`: `artifact/final.md`, `artifact/final.diff` and
+`artifact/publication-answers.md`, approval with
+[approve a text](../instructions/approve-a-text.md), `--revised FILE`,
+`new-warnings`, and one write after approval, only over the start text. The
+proposal key binds the start text, the candidate, the capture and every
+call's key.
+
+**Run directory.** `kb/reports/state/review/runs/v2/rewrite/<note path
+without .md>/<first 12 hex of the note's SHA-256>/` holds `sweep.json` (the
+profile), `rewrite-inputs.json`, the Workjig records under `calls/`, the
+operator records under `operator/` and, under `artifact/`: `commission.md`,
+`brief.md` when there is a brief, `sources.md` (the source list),
+`start.md`, `reconstruction.md`, `claim-account.md`, `candidate-1.md`,
+`candidate-1-report.md`, `review-1.md`, after a repair `candidate-2.md`,
+`candidate-2-report.md` and `review-2.md`, and the publication files.
+Repeating the command continues the run and launches nothing already
+answered; `--commission` may be omitted on a repeat. A commission that
+differs from the capture is refused. `--restart` with `--commission FILE`
+captures the commission, brief and sources again, removes the step and
+publication files under `artifact/`, withdraws any publication approval and
+asks every call whose inputs changed. Earlier calls stay in the records. A
+changed note text opens a new run directory.
+
 ### The operator-decision record
 
 `commonplace-review decisions` is the one path to the
 operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
-It reads, without writing, the operator records in revise run directories,
+It reads, without writing, the operator records in revise and rewrite run directories,
 and lists each decision with who proposed it, who decided it and whether it
 covered one item or a bundle. A decision on a finding at a triage has class
 `finding`, and its item names the criterion, the level and the reviewer's
@@ -650,8 +773,8 @@ stay visible, it also reads the records of the two retired procedures
 operator records in full-pass run directories, full-pass packets under
 `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`.
-A pending entry of a revise run is listed as `overtaken` when the note no
-longer holds the text the run started from. The note is gone, or the hash of
+A pending entry of a revise or rewrite run is listed as `overtaken` when the
+note no longer holds the text the run started from. The note is gone, or the hash of
 its current text names another run directory. Such a run can never continue.
 This is computed when listing; nothing is written and no item changes state.
 It computes no statistics; `--note`, `--class` and `--json` narrow and

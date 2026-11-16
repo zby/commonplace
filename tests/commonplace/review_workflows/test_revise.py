@@ -1446,7 +1446,7 @@ def test_a_run_stopped_at_publication_before_the_feature_accepts_a_revision_with
     run = repo[0] / ready["run-dir"]
     calls = [(call["job"], call["key"], len(call["launches"])) for call in recorded_calls(run)]
     kept = {name: artifact_file(repo, ready, name).read_bytes() for name in ("plan.yaml", "final.md", "final.diff")}
-    assert not (run / revise_module.REVISED_RECORD).exists()
+    assert not (run / edits.REVISED_RECORD).exists()
     candidate = kept["final.md"].decode()
     revised = candidate.replace("opening-and-title (all).\n", "The operator's opening note.\n")
     code, report, launches = supply(repo, capsys, tmp_path, revised)
