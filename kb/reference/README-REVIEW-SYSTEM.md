@@ -432,6 +432,9 @@ the validator accepts them and their question is a result of the same
 operation on the same text. It refuses a candidate that changed the passage
 of an item that is not approved; it does not detect a change outside the
 items ([ADR 134](./adr/134-stops-record-the-operators-answers-in-one-typed-file.md)).
+This route does not collect earlier decisions. An operator can supply a file
+of them with `--input earlier-decisions=PATH`; it is not carried over into
+the answers file.
 
 ### Improvement procedures
 
@@ -507,6 +510,26 @@ retain proposed, accepted and rejected choices with reasons, evolve the
 selection rules and checks, and evaluate retained and fresh examples before
 separately authorizing removal. This is not new automatic learning
 infrastructure, and fewer proposals do not establish reliability.
+
+**Earlier decisions.** Decisions carry over between revise runs on the same
+note. When a
+revise run starts, code collects the operator's decided items from the
+approved answers of the other revise runs on the same note path. It takes
+items whose proposal has a `quote` and a `change` and whose state is not
+`pending`. It skips publication and plan-stop answers, and answers the
+validator refuses. When the same proposal was decided more than once, the
+latest `decided-at` wins. The run captures the result once in
+`earlier-decisions.json`, so a repeat uses the same decisions even after
+other runs record more. Each per-item pass and each fix of a finding
+receives them as the input `earlier-decisions`, when there is at least
+one. A new proposal with the same `quote` and `change` as an earlier
+decided item starts decided in the answers file: code copies the earlier
+`state`, `reason`, `revisit`, `decided-by` and `decided-at` and sets
+`carried-from` to the earlier answers file. Only identical proposals are
+carried over. The stop still waits for approval, even when every item is
+carried over, and the operator may change a carried item; changing it
+removes `carried-from`. `commonplace-review decisions` shows `carried-from`
+on each carried item.
 
 **Revise runs.** The run directory is derived from the inputs:
 `kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12

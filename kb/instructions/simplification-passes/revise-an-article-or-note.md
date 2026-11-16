@@ -215,7 +215,14 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    refuses stop the run again naming the problem: correct the file and
    approve it again. Answers that approve no item end the pass as
    `no-change`. Proposals made again for another text get a new file and
-   stop again. These are temporary procedure-development points for
+   stop again. Decisions carry over between runs on the same note. When a
+   run starts, code collects the operator's decided items from the earlier
+   runs on the note and keeps them in the run as `earlier-decisions.json`.
+   The pass receives them as its `earlier-decisions` input. A proposal with
+   the same `quote` and `change` as an item the operator already decided
+   starts decided as before, with `carried-from` naming the earlier answers
+   file. The run still stops, and the operator may change such an item.
+   Every other proposal is asked as usual. These are temporary procedure-development points for
    unsettled selection rules. The run retains the answers with each
    rejection's and deferral's reason in the operator's words. Use them to revise
    selection rules and checks, then evaluate those changes on retained and

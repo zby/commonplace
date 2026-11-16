@@ -8,7 +8,8 @@ A question is a file whose items the operator decides. There are two kinds:
   path and hash.
 
 An answers file names its question by path and SHA-256 and copies each item's
-`proposal` unaltered. `pending()` renders the pending file for a question.
+`proposal` unaltered. `pending()` renders the pending file for a question,
+with the items the operator already decided for an earlier text carried over.
 `problems()` is the part of the acceptance that compares the answers with
 their question: the hash and every item present once and unaltered. The
 schema checks the rest: the states, a reason on `rejected` and `deferred`, a
@@ -47,16 +48,41 @@ def question_items(path: str, content: bytes) -> list[dict]:
     return [{"id": str(index), "proposal": proposal} for index, proposal in enumerate(proposals, 1)]
 
 
-def pending(path: str, content: bytes) -> str:
-    """The answers file for the question at `path`, every item `pending`."""
+CARRIED = ("state", "reason", "revisit", "decided-by", "decided-at")
+"""The fields a carried-over item copies from the earlier decision."""
+
+
+def _carried(item: dict, earlier: dict[tuple[str, str], dict]) -> dict:
+    """The item `pending`, or decided as before when an earlier decision has the same quote and change."""
+    proposal = item["proposal"]
+    found = (earlier.get((proposal.get("quote"), proposal.get("change")))
+             if isinstance(proposal, dict) and "quote" in proposal and "change" in proposal else None)
+    if found is None:
+        return {**item, "state": "pending"}
+    return {**item, **{field: found[field] for field in CARRIED if found.get(field) is not None},
+            "carried-from": found["answers-file"]}
+
+
+def pending(path: str, content: bytes, earlier: list[dict] = ()) -> str:
+    """The answers file for the question at `path`, every item `pending` unless it is carried over.
+
+    `earlier` holds the operator's earlier decisions (`review_workflows.decisions.earlier()`).
+    An item whose proposal has the same `quote` and `change` as one of them
+    starts decided as before, with `carried-from` naming the earlier answers
+    file. The proposal's `reason` is not compared.
+    """
+    known = {(decision["proposal"]["quote"], decision["proposal"]["change"]): decision for decision in earlier}
+    items = [_carried(item, known) for item in question_items(path, content)]
     data = {"type": TYPE, "description": f"The operator's answers to {path}", "question": path,
-            "question-sha256": sha(content),
-            "items": [{**item, "state": "pending"} for item in question_items(path, content)]}
+            "question-sha256": sha(content), "items": items}
     head = yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=10**6)
+    carried = ("\nItems with `carried-from` hold the operator's decision on the same proposal in the earlier "
+               "answers file it names. Change one only on the operator's word, and then remove its "
+               "`carried-from`.\n" if any("carried-from" in item for item in items) else "")
     return (f"---\n{head}---\n\n# Answers\n\n"
             "Set each item's `state` on the operator's word: `approved`, `rejected` with a `reason`, or "
             "`deferred` with a `reason` and a `revisit` condition. A decided item also carries "
-            "`decided-by: operator` and `decided-at`. Change no `id` or `proposal`.\n")
+            "`decided-by: operator` and `decided-at`. Change no `id` or `proposal`.\n" + carried)
 
 
 def problems(data: dict, content: bytes) -> list[str]:

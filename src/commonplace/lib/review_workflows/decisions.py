@@ -17,16 +17,21 @@ kb/reports/state/:
 Each entry says who proposed and who decided, and whether the decision
 covered one item or a bundle. A publication approval is approval of the
 final text, never of each edit that produced it. No statistic is computed.
+
+`earlier()` reads the same operator records for the revise workflow: the
+operator's decided items on edit proposals in the other runs on one note,
+which a new run carries over (`types/answers.md`, "Decisions carried over").
 """
 
 from __future__ import annotations
 
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.lib.review_workflows import gates
+from commonplace.lib.review_workflows import edits, gates
 
 # BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 WORKFLOWS = ("revise", "full-pass")
@@ -52,10 +57,11 @@ class MalformedRecord(ValueError):
 def _entry(note: str, workflow: str, run: str | None, record: str, cls: str, proposed_by: str,
            decided_by: str, decision: str, unit: str, *, item: str | None = None, reason: str | None = None,
            key: str | None = None, at: str | None = None, resolution: str | None = None,
-           refs: list[str] | None = None) -> dict:
+           refs: list[str] | None = None, carried_from: str | None = None) -> dict:
     return {"note": note, "workflow": workflow, "run": run, "record": record, "class": cls,
             "proposed-by": proposed_by, "decided-by": decided_by, "decision": decision, "unit": unit,
-            "item": item, "reason": reason, "resolution": resolution, "refs": refs, "key": key, "at": at}
+            "item": item, "reason": reason, "resolution": resolution, "refs": refs, "carried-from": carried_from,
+            "key": key, "at": at}
 
 
 def _head(proposal: object) -> str:
@@ -70,19 +76,27 @@ def _head(proposal: object) -> str:
     return line if len(line) <= ITEM_WIDTH else line[:ITEM_WIDTH - 1] + "…"
 
 
-def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
-    run = run_dir.relative_to(root).as_posix()
-    note = run_dir.parent.relative_to(root / gates.RUNS / workflow).as_posix() + ".md"
+def _records(root: Path, run_dir: Path) -> list[tuple[str, dict]]:
+    """The operator records of one run directory, each with its repository path; MalformedRecord when one breaks."""
     found = []
     for path in sorted((run_dir / "operator").glob("*.json")):
         record = path.relative_to(root).as_posix()
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-            name, key = data["name"], data["key"]
-            if "proposal" not in data:
-                raise KeyError("proposal")
+            if not isinstance(data["name"], str) or "key" not in data or "proposal" not in data:
+                raise KeyError("name, key or proposal")
         except (json.JSONDecodeError, KeyError, TypeError) as error:
             raise MalformedRecord(f"malformed operator record: {record}: {error!r}") from error
+        found.append((record, data))
+    return found
+
+
+def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
+    run = run_dir.relative_to(root).as_posix()
+    note = run_dir.parent.relative_to(root / gates.RUNS / workflow).as_posix() + ".md"
+    found = []
+    for record, data in _records(root, run_dir):
+        name, key = data["name"], data["key"]
         answer, at = data.get("answer"), data.get("answered-at")
         common = {"key": key, "at": at if answer is not None else None}
         stop = _ANSWERS.fullmatch(name)
@@ -106,7 +120,7 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
                                     "pending" if state == "pending" else str(item.get("decided-by")), state,
                                     "bundle" if cls == "publication" else "item", item=_head(item.get("proposal")),
                                     reason=item.get("reason"), resolution=item.get("resolution"),
-                                    refs=item.get("refs"),
+                                    refs=item.get("refs"), carried_from=item.get("carried-from"),
                                     key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
         else:                               # a stop of an earlier workflow version, such as plan.yaml
             found.append(_entry(note, workflow, run, record, name, "workflow",
@@ -197,6 +211,89 @@ def text(found: list[dict]) -> str:
             fields.append(f"resolution: {entry['resolution']}")
         if entry["refs"]:
             fields.append(f"refs: {', '.join(entry['refs'])}")
+        if entry["carried-from"]:
+            fields.append(f"carried-from: {entry['carried-from']}")
         fields.append(entry["record"])
         lines.append("  " + " | ".join(fields))
     return "\n".join(lines) + ("\n" if lines else "")
+
+
+# --- Earlier decisions -----------------------------------------------------------------------
+
+EARLIER_WORKFLOW = "revise"
+"""The run family whose decisions a new run on the same note carries over."""
+
+
+def _moment(text: str) -> datetime | None:
+    """`decided-at` as a UTC-aware time; None when it is not an ISO 8601 time. A time without a zone is UTC."""
+    try:
+        moment = datetime.fromisoformat(text)
+    except ValueError:
+        return None
+    return moment if moment.tzinfo is not None else moment.replace(tzinfo=UTC)
+
+
+def _when(decision: dict) -> tuple[datetime, str]:
+    return _moment(decision["decided-at"]), decision["answers-file"]
+
+
+def earlier(root: Path, note: str, current: Path) -> list[dict]:
+    """The operator's decided items on edit proposals in the revise runs on `note` other than `current`.
+
+    Each run directory beside `current`, under the note's path, holds
+    operator records. For each answers stop with an approved capture that
+    the validator accepts, every item whose proposal has a `quote` and a
+    `change` and whose state is not `pending` is an earlier decision. A
+    capture the validator refuses is skipped whole: the run that captured it
+    refused it too. An item whose `decided-at` is not an ISO 8601 time is
+    skipped. When the same proposal (same quote and change) was
+    decided more than once, the latest `decided-at` wins. Each decision
+    holds `proposal`, `state`, `reason`, `revisit`, `decided-by`,
+    `decided-at` and `answers-file`, the repository path of its answers
+    file; the list is ordered by `decided-at`.
+    """
+    base = root / gates.RUNS / EARLIER_WORKFLOW / note.removesuffix(".md")
+    if not base.is_dir():
+        return []
+    current = current.resolve()
+    latest: dict[tuple[str, str], dict] = {}
+    for run_dir in sorted(base.iterdir()):
+        if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
+            continue
+        for _, data in _records(root, run_dir):
+            answer = data.get("answer")
+            if answer is None or not _ANSWERS.fullmatch(data["name"]):
+                continue
+            path = run_dir / "artifact" / data["name"]
+            parsed, problems = edits.answered(root, path, answer)
+            if problems:
+                continue
+            for item in parsed["items"]:
+                proposal = item["proposal"]
+                if (item["state"] == "pending" or "quote" not in proposal or "change" not in proposal
+                        or _moment(item["decided-at"]) is None):
+                    continue
+                decision = {"proposal": proposal, "state": item["state"], "reason": item.get("reason"),
+                            "revisit": item.get("revisit"), "decided-by": item["decided-by"],
+                            "decided-at": item["decided-at"], "answers-file": path.relative_to(root).as_posix()}
+                same = (proposal["quote"], proposal["change"])
+                if same not in latest or _when(decision) > _when(latest[same]):
+                    latest[same] = decision
+    return sorted(latest.values(), key=_when)
+
+
+def earlier_text(found: list[dict]) -> str:
+    """The earlier decisions as the readable text a worker receives, one section per decided item."""
+    lines = ["# Earlier decisions", "",
+             "The operator decided these proposals in earlier runs on other texts of this note.", ""]
+    for index, decision in enumerate(found, 1):
+        proposal = decision["proposal"]
+        lines += [f"## {index}. {decision['state']}", "", "Passage:", "",
+                  *(f"> {line}" for line in str(proposal["quote"]).splitlines()), "", "Change:", "",
+                  *(f"> {line}" for line in str(proposal["change"]).splitlines()), ""]
+        if decision["reason"]:
+            lines.append(f"Operator's reason: {decision['reason']}")
+        if decision["revisit"]:
+            lines.append(f"Revisit when: {decision['revisit']}")
+        lines += [f"Decided at: {decision['decided-at']}", f"Answers file: `{decision['answers-file']}`", ""]
+    return "\n".join(lines)

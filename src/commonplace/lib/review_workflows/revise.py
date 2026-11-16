@@ -65,6 +65,13 @@ never approves: only the recorded approved text becomes the operator's answer:
    pass as `no-change`. Only `approved` items are applied. The reasons bind
    publication through the selection context. Proposals made again for other
    text have another key, so they get a new file and stop again.
+   When the run starts, code collects the operator's decided items from the
+   other revise runs on the same note (`decisions.earlier()`) and captures
+   them once in `earlier-decisions.json`, so a repeat uses the same ones.
+   Each per-item pass and each fix of a finding receives them as the input
+   `earlier-decisions`. A proposal with the same `quote` and `change` as an
+   earlier decided item starts decided as before, with `carried-from`
+   naming the earlier answers file; the stop still waits for approval.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
    `defend` list carries that evidence explicitly (is non-empty), and is
@@ -112,6 +119,7 @@ from commonplace.lib.library import artifact_identity, library_root
 from commonplace.lib.naming import write_brief_name_for
 from commonplace.lib.review_workflows import (
     criteria,
+    decisions,
     edit_operations,
     edits,
     gates,
@@ -501,12 +509,14 @@ def _assess(run: Run, root: Path, artifact: str, prompt: str, inputs: dict[str, 
 
 def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_operations.Operation,
             roles: dict[str, dict], profile: Profile, state: PassState, report: ReviseReport, context: dict,
-            **route) -> edit_operations.Edit | None:
+            earlier: list[dict], **route) -> edit_operations.Edit | None:
     """The applying run of a `per-item` pass; None when it stops for the operator or has nothing to apply.
 
     The first run returns the proposals: the question of the stop, whose
-    pending answers file the operator decides. The second run is the same
-    operation with the approved answers file as its `answers` input.
+    pending answers file the operator decides. A proposal identical to one
+    of the `earlier` decisions starts decided as before (`answers.pending()`);
+    the stop still waits. The second run is the same operation with the
+    approved answers file as its `answers` input.
     """
     name = state.name
     proposed = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{name}/propose",
@@ -519,7 +529,7 @@ def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_oper
         state.state, state.reason = "no-change", "the pass found no candidate"
         return None
     selection["question"] = proposed.text
-    pending = answers.pending(_rel(root, proposed.path), proposed.text.encode("utf-8"))
+    pending = answers.pending(_rel(root, proposed.path), proposed.text.encode("utf-8"), earlier)
     file = f"{name}-answers-{proposed.answer.key[:12]}.md"      # answers for another text wait again
     approved = operator.answer(run, file, pending, key=proposed.answer.key)
     selection["answers"] = approved
@@ -547,6 +557,10 @@ def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_oper
 
 KB_ROLE = "kb-role"
 """The input role that hands an edit operation the `## Role` section of the note's role report."""
+EARLIER_DECISIONS = "earlier-decisions"
+"""The input role that hands a `per-item` pass and the fix the operator's earlier decisions on the note."""
+EARLIER_FILE = "earlier-decisions.json"
+"""The earlier decisions the run used, captured once: a repeat reads them here, not from the other runs."""
 
 
 def role_section(report: str) -> str | None:
@@ -557,10 +571,14 @@ def role_section(report: str) -> str | None:
 
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
             profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
-            context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None = None) -> str:
+            context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None = None,
+            earlier: list[dict] = ()) -> str:
     """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left.
 
     `kb_role` is the note's role in the KB, from the full procedure's role report; each pass receives it.
+    `earlier` holds the operator's earlier decisions on this note; each
+    `per-item` pass and each fix of a finding receives them, when there is
+    at least one, as `earlier-decisions`.
     """
     run.accept(START, start)
     text = start
@@ -572,6 +590,8 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                      for entry, (current, finding) in zip(plan["passes"], entries, strict=True)]
     defend = "".join(f"- {claim}\n" for claim in plan["defend"])
     route = {"contracts": contracts, "execution": instruction}
+    told = ({EARLIER_DECISIONS: {"origin": _rel(root, run.root / EARLIER_FILE),
+                                 "text": decisions.earlier_text(list(earlier))}} if earlier else {})
     for state, (current, finding) in zip(report.passes, entries, strict=True):
         if current.name in INTERACTIVE or (current.name == CONVERSATION and not defend):
             state.state = "skipped"
@@ -584,11 +604,13 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                  **({"defend": {"origin": "plan:defend", "text": defend}} if defend else {}),
                  **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {}),
                  **({KB_ROLE: kb_role} if kb_role else {}),
-                 **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {})}
+                 **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {}),
+                 **(told if operation.decision == "per-item" or current.responds_to else {})}
         profile = profiles[current.effort]
         try:
             if operation.decision == "per-item":
-                edit = _decide(run, root, artifact, text, operation, roles, profile, state, report, context, **route)
+                edit = _decide(run, root, artifact, text, operation, roles, profile, state, report, context,
+                               list(earlier), **route)
                 if edit is None:
                     if state.state == "waiting":
                         return text
@@ -739,6 +761,12 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                        "contract-sha256": result_contract.fingerprint(contracts),
                        "pass-answers": [], "selections": []}
             kb_role = None
+            told = run_dir / EARLIER_FILE
+            if told.is_file():                         # a repeat: other runs may have decided more since
+                earlier = json.loads(told.read_text(encoding="utf-8"))["decisions"]
+            else:
+                earlier = decisions.earlier(root, artifact, run_dir)
+                observations.atomic_json(told, {"decisions": earlier})
             if named_plan is None:
                 captured = run_dir / ASSESSMENT_INPUTS
                 if captured.is_file():                # a repeat: the store may have changed since the assessment
@@ -792,7 +820,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
                 final = _passes(run, root, artifact, start, plan, known, profiles, report,
                                 {name: {"origin": origin, "text": value} for name, value in brief.items()},
-                                instruction, context, contracts, kb_role)
+                                instruction, context, contracts, kb_role, earlier)
                 problems = [state.name for state in report.passes if state.state == "problem"]
                 if final != start and report.waiting_for is None and not problems:
                     unchanged_brief(root, artifact, start, brief)

@@ -11,7 +11,7 @@ Consumption: an agent in a session with the operator. It is reached from a run r
 
 Inputs:
 
-- the answers file (`type: types/answers.md`): its `question` names the question file, and each item holds an `id`, the question's `proposal` and `state: pending`;
+- the answers file (`type: types/answers.md`): its `question` names the question file, and each item holds an `id`, the question's `proposal` and `state: pending`, or, for a carried-over item, the earlier decision and `carried-from`;
 - the question: an edit result with outcome `proposed`, whose `note` and `input-sha256` name the text the proposals were made for;
 - that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; for a single edit, the note, or the `--text` file the edit ran on;
 - the operation the proposals came from, for its preserve rules.
@@ -23,11 +23,13 @@ Authority: the decisions are the operator's. The agent presents, records and run
 ## Procedure
 
 1. Present each item: the quoted passage in context, the proposed `change`, the worker's `reason`, and any preserve rule of the operation that bears on it. Choose the context by what the operator needs to judge the item. The sentence is enough for a local rewording. Show the paragraph, or the neighbouring sentences, when the change drops or moves a clause, when the passage refers to text around it, or when the same wording occurs nearby. Show more whenever the operator asks. Ask the operator: approve, reject or defer. One item per question unless the operator asks for the whole list.
+   A carried-over item has `carried-from`: the operator already decided the same proposal, with the same `quote` and `change`, for an earlier text of the note. Present it as carried over: the earlier `state`, the operator's `reason` and `revisit` when present, `decided-at`, and the answers file `carried-from` names. Ask only whether the operator wants to change that decision. If not, leave the item as it is.
 2. Record each answer in the item, exactly:
    - approve: `state: approved`; a `reason` only if the operator gives one;
    - reject: `state: rejected` and `reason` in the operator's words; do not suggest a reason and do not carry one over from another item;
    - defer: `state: deferred`, `reason`, and `revisit`, the condition under which the operator wants the item taken up again, in the operator's words;
    - every decided item also gets `decided-by: operator` and `decided-at` with the current UTC time, quoted, such as `'2026-11-15T12:00:00Z'`.
+   - a changed decision on a carried-over item: record it as above with a new `decided-at`. Replace the earlier `reason` and `revisit` with the operator's new words, or remove them when the new state takes none. Remove `carried-from`.
    Change no `id`, `proposal`, `question` or `question-sha256`; add and delete no item. An item the operator does not decide stays `pending`.
 3. Run `commonplace-validate <answers file>`. Fix only what you recorded wrongly; if it reports that the question changed, stop: the proposals are stale.
 4. Show the operator the recorded decisions. Continue on the operator's stated word for this exact file:

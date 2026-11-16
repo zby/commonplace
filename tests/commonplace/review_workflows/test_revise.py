@@ -14,7 +14,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run, recorded_calls
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, observations
+from commonplace.lib.review_workflows import decisions, edits, observations
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
@@ -746,6 +746,128 @@ def test_decisions_command_lists_the_answers_of_a_revise_run(repo, capsys, tmp_p
         ("plain-wording", "item", "operator", "approved", "long enough -> gamma", None),
         ("plain-wording", "item", "operator", "rejected", "A note about -> beta", "a registered word"),
         ("publication", "bundle", "operator", "approved", final if len(final) <= 80 else final[:79] + "…", None)]
+
+
+# --- Earlier decisions ---------------------------------------------------------------------
+
+def items(repo, report):
+    """The items of the answers file the report waits for, by proposed change."""
+    head = (repo[0] / report["waiting-for"]["file"]).read_text().split("---\n")[1]
+    return {item["proposal"]["change"]: item for item in yaml.safe_load(head)["items"]}
+
+
+def change_decision(repo, report, change, decision):
+    """Record the operator's changed decision on a carried item: the earlier decision and `carried-from` go."""
+    path = repo[0] / report["waiting-for"]["file"]
+    head, body = path.read_text().split("---\n")[1:]
+    data = yaml.safe_load(head)
+    for item in data["items"]:
+        if item["proposal"]["change"] == change:
+            for name in ("reason", "revisit", "carried-from"):
+                item.pop(name, None)
+            item.update(decision)
+    path.write_text("---\n" + yaml.safe_dump(data, sort_keys=False, allow_unicode=True) + "---\n" + body)
+
+
+def first_decisions(repo, capsys, tmp_path, words=""):
+    """A plain-wording run on the note with `words`: alpha approved, beta rejected, gamma left pending."""
+    start(repo, words)
+    _, waiting, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    answer(repo, waiting, {"alpha": APPROVED, "beta": rejected("a registered word")}, default=None)
+    approve(repo, capsys, waiting)
+    return waiting
+
+
+def test_identical_proposals_carry_earlier_decisions_and_the_stop_still_waits(repo, capsys, tmp_path):
+    first = first_decisions(repo, capsys, tmp_path)
+    start(repo, "changed")                                   # another text: another run
+    plan = str(named_plan(tmp_path, passes=("plain-wording",)))
+    _, second, launches = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    assert launches == ["list plain-wording small"] and second["run-dir"] != first["run-dir"]
+    found = items(repo, second)
+    assert found["alpha"]["state"] == "approved" and found["alpha"]["carried-from"] == first["waiting-for"]["file"]
+    assert (found["beta"]["state"], found["beta"]["reason"], found["beta"]["decided-at"]) == (
+        "rejected", "a registered word", "2026-11-15T12:00:00Z")
+    assert found["beta"]["carried-from"] == first["waiting-for"]["file"]
+    assert found["gamma"]["state"] == "pending" and "carried-from" not in found["gamma"]   # pending is not carried
+    path = repo[0] / second["waiting-for"]["file"]
+    assert edits.answered(repo[0], path, path.read_text())[1] == []
+    [listed] = [c for c in captured_inputs(repo[2]) if c["kind"] == "list" and "changed" in c["inputs"]["text"]]
+    told = listed["inputs"]["earlier-decisions"]
+    assert "> Alpha body" in told and "Operator's reason: a registered word" in told
+    assert first["waiting-for"]["file"] in told
+    captured = json.loads((repo[0] / second["run-dir"] / revise_module.EARLIER_FILE).read_text())
+    assert [d["proposal"]["change"] for d in captured["decisions"]] == ["alpha", "beta"]
+
+    # The operator changes beta and decides gamma; that later decision wins in the next run.
+    change_decision(repo, second, "beta", {"state": "approved", "decided-by": "operator",
+                                           "decided-at": "2026-11-16T09:00:00Z"})
+    answer(repo, second, {"gamma": rejected("keep it")}, default=None)
+    approve(repo, capsys, second)
+    start(repo, "changed again")
+    _, third, launches = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    assert launches == ["list plain-wording small"]
+    found = items(repo, third)
+    assert {change: item["state"] for change, item in found.items()} == {
+        "alpha": "approved", "beta": "approved", "gamma": "rejected"}
+    assert found["beta"]["carried-from"] == second["waiting-for"]["file"] and "reason" not in found["beta"]
+    assert found["alpha"]["carried-from"] == first["waiting-for"]["file"]
+    assert third["waiting-for"]["file"].endswith(".md") and not third["complete"]   # every item carried; it waits
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["waiting-for"] == third["waiting-for"]
+
+    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    listed = json.loads(capsys.readouterr().out)
+    carried = {(e["run"], e["item"]): e["carried-from"] for e in listed if e["class"] == "plain-wording"}
+    assert carried[(second["run-dir"], "Alpha body -> alpha")] == first["waiting-for"]["file"]
+    assert carried[(second["run-dir"], "A note about -> beta")] is None
+    assert main(["decisions", "--note", NOTE_PATH]) == 0
+    assert f"carried-from: {first['waiting-for']['file']}" in capsys.readouterr().out
+
+
+def test_a_differing_change_is_asked_as_usual(repo, capsys, tmp_path):
+    first_decisions(repo, capsys, tmp_path)
+    start(repo, "changed")
+    (repo[0] / "new-proposal").touch()                       # alpha's change becomes delta
+    _, second, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    found = items(repo, second)
+    assert found["delta"]["state"] == "pending" and "carried-from" not in found["delta"]
+    assert found["beta"]["state"] == "rejected"
+
+
+def test_a_repeat_keeps_its_earlier_decisions_after_another_run_decides(repo, capsys, tmp_path):
+    first_decisions(repo, capsys, tmp_path)
+    plan = str(named_plan(tmp_path, passes=("plain-wording",)))
+    second_text = start(repo, "second")
+    _, second, _ = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    start(repo, "third")
+    _, third, _ = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    answer(repo, third, {"gamma": rejected("keep it")}, default=None)
+    approve(repo, capsys, third)
+    start(repo, text=second_text)                            # back to the second text: its run repeats
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["waiting-for"] == second["waiting-for"]
+    assert items(repo, repeated)["gamma"]["state"] == "pending"
+
+
+def test_the_fix_receives_earlier_decisions_and_an_ordinary_pass_does_not(repo, capsys, tmp_path):
+    first_decisions(repo, capsys, tmp_path)
+    start(repo, "changed")
+    finding = stored(repo, "warn")
+    code, _, launches = revise(repo, capsys, NOTE_PATH, "--finding", finding)
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big"]
+    fix = captured_inputs(repo[2])[-1]
+    assert "Operator's reason: a registered word" in fix["inputs"]["earlier-decisions"]
+    start(repo, "changed again")
+    revise(repo, capsys, NOTE_PATH, "--pass", "readability-and-flow")
+    assert "earlier-decisions" not in captured_inputs(repo[2])[-1]["inputs"]
+
+
+def test_a_note_without_earlier_decisions_passes_none(repo, capsys, tmp_path):
+    start(repo)
+    revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    [listed] = captured_inputs(repo[2])
+    assert "earlier-decisions" not in listed["inputs"]
 
 
 # --- Focused plans and findings ------------------------------------------------------------

@@ -31,6 +31,16 @@ role. The revise workflow supplies these roles:
   report. Do not rename, redefine or drop a term or claim it lists as relied
   on. When the operation would otherwise change one, leave it and say so in
   the report. Terms and claims it lists as unused carry no such limit.
+- `earlier-decisions`: the operator's decisions on proposals made in
+  earlier runs on other texts of this note. Each entry gives the passage,
+  the change, the decision, the operator's reason and the answers file.
+  `per-item` operations and the fix of a finding receive it. Do not propose
+  again, unchanged, a change the operator rejected, unless the passage or
+  its context changed in a way that answers the operator's reason. When you
+  propose a change to a passage that has an earlier decision, state that
+  decision in the proposal's `reason`. When you fix a finding, prefer the
+  replacement the operator approved earlier for the same finding when it
+  still fits the text.
 
 An operation's own Steps section names any further role it reads, such as
 `diff` or `findings`. Use the supplied copies; do not read their origins.
@@ -48,7 +58,8 @@ A `per-item` operation first proposes: return `outcome: proposed` with the
 proposals and apply nothing. Each proposal's `quote` is a passage copied from
 the text that occurs there exactly once. Run again with an `answers` input,
 an answers file with one item per proposal, apply only the items whose
-`state` is `approved`. List the `rejected` and `deferred` items with the
+`state` is `approved`, including approved items with `carried-from`. List
+the `rejected` and `deferred` items with the
 operator's reasons in the report. Apply no other item and introduce no new
 change. The operator's answers do not widen the operation or
 scope.
