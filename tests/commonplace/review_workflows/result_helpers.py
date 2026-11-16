@@ -7,52 +7,11 @@ from commonplace.lib.review_workflows import result_contract
 SOURCE = Path(__file__).resolve().parents[3] / "kb"
 
 
-ROLE_SCHEMA_EDITS = (
-    (("  report-criterion:\n"
-     "    anyOf: [{$ref: '#/$defs/critique'}, {$ref: '#/$defs/friction'}, {$ref: '#/$defs/premises'},\n"
-     "            {$ref: '#/$defs/synthesis'}]\n"),
-     ("  role: {type: string, pattern: '^(kb/|commonplace:)instructions/role-in-the-kb-gate\\.md$'}\n"
-     "  report-criterion:\n"
-     "    anyOf: [{$ref: '#/$defs/critique'}, {$ref: '#/$defs/friction'}, {$ref: '#/$defs/premises'},\n"
-     "            {$ref: '#/$defs/synthesis'}, {$ref: '#/$defs/role'}]\n")),
-    (("      - if: {properties: {outcome: {enum: [warn, fail]}}}\n"),
-     ("      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/role'}}}\n"
-     "        then:\n"
-     "          properties:\n"
-     "            findings:\n"
-     "              items:\n"
-     "                properties:\n"
-     "                  reason: {pattern: '^(SUPPLIED|PARTLY SUPPLIED|NOT SUPPLIED|DUPLICATED|UNTAKEN)\\b'}\n"
-     "      - if: {properties: {outcome: {enum: [warn, fail]}}}\n")),
-    (("$defs:\n"),
-     ("  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/role'}}}}}\n"
-     "    then:\n"
-     "      properties:\n"
-     "        headings:\n"
-     "          allOf:\n"
-     "            - contains: {const: '## Role'}\n"
-     "            - contains: {const: '## Dependents'}\n"
-     "            - contains: {const: '## Duplication'}\n"
-     "            - contains: {const: '## Untaken recommendations'}\n"
-     "            - contains: {const: '## Reach'}\n"
-     "$defs:\n")),
-)
-"""The schema change that admits the role report, which kb/types/review-result.schema.yaml does not yet carry.
-
-Applied to the copied contract only while the source schema lacks it; remove it once the schema carries it.
-"""
-
-
 def copy_contract(library: Path) -> None:
     for name in ("review-result.md", "review-result.schema.yaml"):
         path = library / "types" / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        text = (SOURCE / "types" / name).read_text(encoding="utf-8")
-        if name.endswith(".yaml") and "role-in-the-kb-gate" not in text:
-            for old, new in ROLE_SCHEMA_EDITS:
-                assert text.count(old) == 1, old
-                text = text.replace(old, new)
-        path.write_text(text, encoding="utf-8")
+        path.write_text((SOURCE / "types" / name).read_text(encoding="utf-8"), encoding="utf-8")
 
 
 def evidence(root: Path, target: str = "Fixture target", raw: str = "Fixture raw output") -> dict:

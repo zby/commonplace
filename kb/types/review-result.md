@@ -7,7 +7,7 @@ schema: ./review-result.schema.yaml
 
 # Review result
 
-A review result records one assessment of captured target text against a criterion. Completion means the output passed deterministic checks, not that its judgment is correct. A report outcome is not a favorable verdict. Use this type for individual gate, compression-check, type-conformance and collection-conformance verdicts, and for critique, composition-friction, premise-decomposition and compression-synthesis reports. Do not use it for combined improvement packets or connection discovery.
+A review result records one assessment of captured target text against a criterion. Completion means the output passed deterministic checks, not that its judgment is correct. A report outcome is not a favorable verdict. Use this type for individual gate, compression-check, type-conformance and collection-conformance verdicts, and for critique, composition-friction, premise-decomposition and compression-synthesis reports and role reports. Do not use it for combined improvement packets or connection discovery.
 
 ## Content
 
@@ -23,6 +23,7 @@ Each report method has its own shape, which the schema checks by the result's `c
 | Composition friction | the surfaced joints, thinnest first; each reason begins `UNSUPPORTED`, `THIN` or `HOLDS` | a `**Filter:** SURVIVES` or `DISSOLVES` line; `## Filter`, `## Thinnest joints`, `## For the human` |
 | Premise decomposition | one per premise; each reason begins `HOLDS`, `DOUBTFUL` or `DEFEATED`, and a non-`HOLDS` reason names `LOCAL` or `GLOBAL` and `instance`, `prevalence` or `priced-exception` | a `**Register:**` line; `## Premises and counterexamples`, `## For the human` |
 | Compression synthesis | zero to three opportunities | `## Opportunities` |
+| Role report | one per dependent need, duplication or untaken recommendation; each reason begins `SUPPLIED`, `PARTLY SUPPLIED`, `NOT SUPPLIED`, `DUPLICATED` or `UNTAKEN` | `## Role`, `## Dependents`, `## Duplication`, `## Untaken recommendations`, `## Reach` |
 
 Only critique supplies `attack-outcome`. Friction's filter line and the premise statuses route attention; they are not overall verdicts. A report criterion is named by its library instruction's identity, so moving one of these instructions requires a schema edit.
 

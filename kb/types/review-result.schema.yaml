@@ -76,6 +76,13 @@ properties:
                     pattern: '^(HOLDS\b|(DOUBTFUL|DEFEATED)\b(?=[\s\S]*\b(LOCAL|GLOBAL)\b)(?=[\s\S]*\b(instance|prevalence|priced-exception)\b))'
       - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/synthesis'}}}
         then: {properties: {findings: {maxItems: 3}}}
+      - if: {required: [criterion], properties: {criterion: {$ref: '#/$defs/role'}}}
+        then:
+          properties:
+            findings:
+              items:
+                properties:
+                  reason: {pattern: '^(SUPPLIED|PARTLY SUPPLIED|NOT SUPPLIED|DUPLICATED|UNTAKEN)\b'}
       - if: {properties: {outcome: {enum: [warn, fail]}}}
         then: {properties: {findings: {minItems: 1}}}
       - if: {properties: {outcome: {const: pass}}}
@@ -114,6 +121,16 @@ allOf:
     then:
       properties:
         headings: {contains: {const: '## Opportunities'}}
+  - if: {properties: {frontmatter: {required: [criterion], properties: {criterion: {$ref: '#/$defs/role'}}}}}
+    then:
+      properties:
+        headings:
+          allOf:
+            - contains: {const: '## Role'}
+            - contains: {const: '## Dependents'}
+            - contains: {const: '## Duplication'}
+            - contains: {const: '## Untaken recommendations'}
+            - contains: {const: '## Reach'}
 $defs:
   # A report criterion is named by its library instruction: `kb/<path>` in a
   # Commonplace checkout, `commonplace:<path>` in an installed project.
@@ -123,8 +140,9 @@ $defs:
   synthesis:
     type: string
     pattern: '^(kb/|commonplace:)instructions/compression-bundle/high-impact-simplification-synthesis\.md$'
+  role: {type: string, pattern: '^(kb/|commonplace:)instructions/role-in-the-kb-gate\.md$'}
   report-criterion:
     anyOf: [{$ref: '#/$defs/critique'}, {$ref: '#/$defs/friction'}, {$ref: '#/$defs/premises'},
-            {$ref: '#/$defs/synthesis'}]
+            {$ref: '#/$defs/synthesis'}, {$ref: '#/$defs/role'}]
   digest: {type: string, pattern: '^[0-9a-f]{64}$'}
   path: {type: string, minLength: 1, pattern: '^(?!/)(?!.*(?:^|/)\.\.(?:/|$))[^\\]+$'}
