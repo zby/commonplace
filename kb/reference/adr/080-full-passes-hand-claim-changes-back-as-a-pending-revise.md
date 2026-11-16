@@ -2,12 +2,12 @@
 description: "The full improvement pass applies only edits that keep a note's claim; a finding that requires changing the claim becomes a pending revise disposition handed to the author, and the packet records its execution phase and final capture"
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 080-Full passes hand claim changes back as a pending revise
 
-**Status:** accepted
+**Status:** superseded by [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md) (2026-11-16): the full-pass workflow, its dispositions, hand-backs and bounded closing are retired; a full revise run stops on a depth 1 proposal instead, with no typed states.
 **Date:** 2026-08-26
 **Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): the five dispositions, the revise brief, routed attention and the bounded closing (one repair, otherwise restore the start text) stay. `phase` and the final capture are gone; code writes each accepted edit only from the text it expects and records it in the run, and `repaired` records the spent repair. The copyeditor's candidate is an output that code checks and writes.
 
@@ -52,7 +52,7 @@ Limits: decided for `kb/notes/` passes on this installation's review machinery. 
 
 - [ADR 051 — Full-pass packets own guarded captures and resolutions](./051-full-pass-packets-own-guarded-captures-and-resolutions.md) — amends: adds `revise`, `phase`, and the final capture to the packet contract
 - [ADR 066 — Claims declare modality in text, and passes repair mode mismatch](./066-claims-declare-modality-in-text-and-passes-repair-mode-mismatch.md) — amends: decision 4; mode mismatch becomes a revise brief rather than an in-pass conversion
-- [Run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) — procedure: the decision table and state machine
-- [Resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) — procedure: executes hand-backs
+- Run a full improvement pass (retired by ADR 135) — procedure: the decision table and state machine
+- Resolve a full-pass disposition (retired by ADR 135) — procedure: executes hand-backs
 - [Full-pass report type](../../types/full-pass-report.md) — implemented-by: packet fields
 - [Narrowing bought to survive review is paid for in content](../../theory/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — rests-on: the drift mechanism this decision removes from the pass

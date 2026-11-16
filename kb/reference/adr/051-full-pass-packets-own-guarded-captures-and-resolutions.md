@@ -2,12 +2,12 @@
 description: Full-pass packets retain guarded start-state captures and authoritative asynchronous disposition resolution
 type: reference/types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 051-Full-pass packets own guarded captures and resolutions
 
-**Status:** accepted — amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): `revise` joins the pending dispositions, the packet carries `phase` and a final capture, and the guard compares each path with its latest capture
+**Status:** superseded by [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md) (2026-11-16): the full-pass workflow is retired, and no workflow writes or resolves packets; `commonplace-review decisions` still reads existing packets. Before that: accepted — amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): `revise` joins the pending dispositions, the packet carries `phase` and a final capture, and the guard compares each path with its latest capture
 **Date:** 2026-07-13
 **Amended by:** [ADR 127](./127-review-runs-as-workflows-over-result-files.md) (2026-11-10): packets still own disposition and resolution, and pending hand-backs are resolved under the same instruction. The `.txt` captures and `commonplace-guard-full-pass-report` are gone: the start text lives in the run directory, the packet records `start-sha256`, `final-sha256` and `merge-target-sha256`, and `commonplace-review packet` compares them with the files. One current packet per note lives under `kb/reports/state/review/packets/`.
 
@@ -52,7 +52,7 @@ Harder:
 ## Links
 
 - [Full-pass report type](../../types/full-pass-report.md) — implemented-by: defines the packet's structured state contract
-- [Run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) — procedure: creates captures and typed packets and guards keep application
-- [Resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) — procedure: inspects, guards, and records asynchronous outcomes
+- Run a full improvement pass (retired by ADR 135) — procedure: creates captures and typed packets and guards keep application
+- Resolve a full-pass disposition (retired by ADR 135) — procedure: inspects, guards, and records asynchronous outcomes
 - [Commonplace CLI commands](../commands.md) — implemented-by: documents the deterministic guard command
 - [ADR 036 — Review acceptance is current state](./036-review-acceptance-is-current-state-not-append-only-history.md) — contrasts: review evidence retention remains separate from packet-owned decision retention
