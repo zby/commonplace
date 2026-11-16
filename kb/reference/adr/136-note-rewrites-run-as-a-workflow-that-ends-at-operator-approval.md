@@ -23,7 +23,11 @@ The procedure for that case existed as the multistage writing skill. A session a
 
 **The commission is a file the session agent writes with the operator.** It names the note and the authorized sources with their roles, and states the intended contribution, what to keep and exclude, the reserved decisions and the operator's current direction. The run captures it once; a changed commission needs `--restart`. When the note declares a write brief, every worker receives it as binding retained intent, and after publication the session agent writes or updates the brief from the commission's lasting parts.
 
-**Four calls, each a fresh worker with only its listed inputs.** Reconstruct from the sources; account for the claims; write the candidate; review it. The first two workers are not given the note. The review is bound to the candidate's hash and ends in `accept` or `block`. One repair and a second review are allowed; a second `block` ends the run with nothing published.
+**Four calls, each a fresh worker with only its listed inputs.** Reconstruct from the sources; account for the claims; write the candidate; review it. The first two workers are not given the note. One repair and a second review are allowed; a second blocking review ends the run with nothing published.
+
+**The review step is a review operation.** Its criterion is the review instruction and its target is the candidate text, so it returns a typed review result bound to that text. `fail` blocks. `warn` findings reach the operator at the publication stop. When the operator publishes exactly the judged candidate, the result becomes the note's current result for that criterion, and its `warn` findings can be triaged like any review's. A revised candidate leaves the result unstored, because the published text is not the text judged.
+
+**The candidate and review calls receive what the improvement procedures receive.** They get the operator's earlier decisions on the note and the role report's list of what other notes rely on. The first two calls get neither, because both describe the note's current text and claim selection must come from the sources alone. A fresh role report from a full `revise` run on the same text is reused; otherwise the rewrite runs it, at one more call.
 
 **The operator approves the exact text.** An accepted candidate goes to the publication stop of `revise`: an answers file, acceptance with a revision, new validation warnings named, and a write only when the note still holds its start text. The reviewer's acceptance lets the run reach that stop and publishes nothing.
 
@@ -43,7 +47,7 @@ The procedure for that case existed as the multistage writing skill. A session a
 
 **Copy all sources into the run.** Rejected. Full copies of external sources must stay out of operational state that may be published.
 
-**A typed result for each call.** Not adopted. Code checks the headings and the review's last line. A type is warranted when another consumer reads these outputs.
+**A typed result for each call.** Adopted for the review, whose findings triage and the fix operation consume. Not adopted for the reconstruction, the claim account and the candidate report, where code checks the headings and no other consumer reads them.
 
 **Port the new-note path in the same change.** Deferred. It needs a run identity without a start text, collection and type resolution, a near-duplicate search and a create-only write.
 
@@ -53,6 +57,6 @@ The first live run, on the pre-rewrite text of the note rewritten by hand that m
 
 Isolation is by supplied inputs and instruction. The first two workers can still read the checkout; nothing prevents a worker from opening the note.
 
-A rewrite run costs four model calls at least, six with a repair.
+A rewrite run costs four model calls at least, five when it must obtain the role report, and two more with a repair.
 
-Known gaps: the publication stop's waiting text still refers to `--plan`, which belongs to `revise`. The full procedure's planning instruction does not yet name the rewrite as the route for a claim-level finding. No run has exercised the repair, a referenced snapshot source, or a note with a write brief.
+Known gaps: the one live run preceded the typed review, the role report and the earlier decisions, so none of these has run live. No run has exercised the repair, a referenced snapshot source, or a note with a write brief. A stale stored rewrite review cannot be rerun by `run gates`, though the project status counts it among stale results.
