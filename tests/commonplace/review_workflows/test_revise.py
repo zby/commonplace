@@ -1119,6 +1119,10 @@ def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(rev
     path = repo[0] / stop["file"]
     assert path.name == "stop-answers.md" and report["waiting-for"] is None and report["complete"]
     assert [e["decision"] for e in decisions.entries(repo[0]) if e["class"] == "stop"] == ["pending"]
+    original = note_text(repo)
+    (repo[0] / NOTE_PATH).write_text(original + "\nAn edit after the stop.\n")   # this run can never continue
+    assert [e["decision"] for e in decisions.entries(repo[0]) if e["class"] == "stop"] == ["overtaken"]
+    (repo[0] / NOTE_PATH).write_text(original)
     path.write_text(decide(path.read_text(), {"text": {
         "state": "rejected", "reason": "the note needs a rewrite", "resolution": "rewrote the note",
         "refs": ["0123abc", "kb/work/some-workshop"]}}))

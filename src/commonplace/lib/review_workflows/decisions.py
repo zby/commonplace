@@ -6,7 +6,11 @@ kb/reports/state/:
 - operator records `operator/*.json` in the revise run directories: for an
   answers stop (`types/answers.md`), one entry per item of the approved
   answers file with its state, decider and reason, the publication approval
-  as a bundle entry; one `pending` entry per stop without an answer;
+  as a bundle entry; one `pending` entry per stop without an answer. In a
+  revise run, a pending entry is `overtaken` instead when the note no longer
+  holds the text the run started from: the note is gone, or `edits.run_dir()`
+  of its current text is another run directory. Such a run can never
+  continue. This is computed when listing; nothing is written;
 - records of the two retired procedures (ADR 135), kept so that recorded
   operator decisions stay visible: operator records in full-pass run
   directories; full-pass packets, with the disposition, which was the
@@ -91,9 +95,21 @@ def _records(root: Path, run_dir: Path) -> list[tuple[str, dict]]:
     return found
 
 
+def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
+    """Whether a revise run can no longer continue: its note is gone or now holds another text.
+
+    A revise run's directory is `edits.run_dir()` of the note's text when it
+    started, so another current text names another directory.
+    """
+    if workflow != "revise":
+        return False
+    return not (root / note).is_file() or edits.run_dir(root, workflow, note) != run_dir
+
+
 def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
     run = run_dir.relative_to(root).as_posix()
     note = run_dir.parent.relative_to(root / gates.RUNS / workflow).as_posix() + ".md"
+    waiting = "overtaken" if _overtaken(root, workflow, note, run_dir) else "pending"
     found = []
     for record, data in _records(root, run_dir):
         name, key = data["name"], data["key"]
@@ -104,7 +120,7 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
             cls = stop.group(1)
             proposer = "workflow" if cls == "publication" else "worker"   # a plan's `stop` is the assessor's
             if answer is None:
-                found.append(_entry(note, workflow, run, record, cls, proposer, "pending", "pending", "bundle",
+                found.append(_entry(note, workflow, run, record, cls, proposer, waiting, waiting, "bundle",
                                     **common))
                 continue
             parsed = frontmatter.parse(answer)
@@ -117,15 +133,16 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
             for item in items:
                 state = str(item.get("state"))
                 found.append(_entry(note, workflow, run, record, cls, proposer,
-                                    "pending" if state == "pending" else str(item.get("decided-by")), state,
+                                    waiting if state == "pending" else str(item.get("decided-by")),
+                                waiting if state == "pending" else state,
                                     "bundle" if cls == "publication" else "item", item=_head(item.get("proposal")),
                                     reason=item.get("reason"), resolution=item.get("resolution"),
                                     refs=item.get("refs"), carried_from=item.get("carried-from"),
                                     key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
         else:                               # a stop of an earlier workflow version, such as plan.yaml
             found.append(_entry(note, workflow, run, record, name, "workflow",
-                                "pending" if answer is None else "operator",
-                                "pending" if answer is None else "approve", "bundle", **common))
+                                waiting if answer is None else "operator",
+                                waiting if answer is None else "approve", "bundle", **common))
     return found
 
 

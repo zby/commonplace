@@ -574,6 +574,10 @@ stay visible, it also reads the records of the two retired procedures
 operator records in full-pass run directories, full-pass packets under
 `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`.
+A pending entry of a revise run is listed as `overtaken` when the note no
+longer holds the text the run started from. The note is gone, or the hash of
+its current text names another run directory. Such a run can never continue.
+This is computed when listing; nothing is written and no item changes state.
 It computes no statistics; `--note`, `--class` and `--json` narrow and
 format the listing.
 

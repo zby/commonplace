@@ -547,11 +547,13 @@ retired procedures: operator records in full-pass run directories, full-pass
 packets under `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`. Each
 entry says who proposed and who decided (`operator`, `agent`,
-`version-guard`, or `pending` for an unanswered stop), the action class
+`version-guard`, `pending` for an unanswered stop, or `overtaken` for a
+stop of a revise run whose note is gone or now holds another text, so the
+run can never continue), the action class
 (the pass name of a per-item stop, `publication`, `packet` or `fix-report`),
 and whether the decision covered one `item` or a `bundle`. An approved
 answers file gives one entry per item, with its state (`approved`,
-`rejected`, `deferred` or `pending`) and the operator's reason; a
+`rejected`, `deferred`, `pending` or `overtaken`) and the operator's reason; a
 publication approval is one bundle entry for the final text, not one per
 edit. A packet gives its disposition as an agent entry and, once resolved,
 its resolution. A fix report is listed once, by path, since its format is

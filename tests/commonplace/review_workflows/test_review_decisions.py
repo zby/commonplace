@@ -1,6 +1,7 @@
 """The operator-decision record: a read-only listing over run records, packets and fix reports."""
 
 import json
+from hashlib import sha256
 
 import pytest
 import yaml
@@ -9,7 +10,8 @@ from commonplace.cli import review_workflows as cli
 from commonplace.lib.review_workflows import decisions
 
 NOTE = "kb/theory/foo.md"
-RUN = "kb/reports/state/review/runs/v2/revise/kb/theory/foo/0123456789ab"
+NOTE_TEXT = "# Foo\n"
+RUN = f"kb/reports/state/review/runs/v2/revise/kb/theory/foo/{sha256(NOTE_TEXT.encode()).hexdigest()[:12]}"
 DECIDED = {"decided-by": "operator", "decided-at": "2026-11-12T10:00:00Z"}
 ITEMS = [{"id": "1", "proposal": {"quote": "first entry", "change": "kept", "reason": "plain"}},
          {"id": "2", "proposal": {"quote": "second entry", "change": "rejected", "reason": "plain"}},
@@ -62,6 +64,7 @@ resolution-summary: {summary}
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     root = tmp_path
+    write(root, NOTE, NOTE_TEXT)                 # the text the run started from
     record(root, RUN, "a", "plain-wording-answers-0123456789ab.md", PENDING, ANSWER, "2026-11-12T10:05:00Z",
            "list-key")
     record(root, RUN, "b", "abstractions-answers-0123456789ab.md", PENDING)
@@ -99,6 +102,23 @@ def test_unanswered_stop_is_one_pending_bundle(repo):
     [pending] = by(decisions.entries(repo), **{"class": "abstractions"})
     assert (pending["decided-by"], pending["decision"], pending["unit"], pending["at"]) == (
         "pending", "pending", "bundle", None)
+
+
+def test_pending_stop_is_overtaken_once_the_note_holds_another_text(repo):
+    write(repo, NOTE, NOTE_TEXT + "\nAn edit after the stop.\n")
+    [stop] = by(decisions.entries(repo), **{"class": "abstractions"})
+    assert (stop["decided-by"], stop["decision"], stop["at"]) == ("overtaken", "overtaken", None)
+    assert [e["decision"] for e in by(decisions.entries(repo), **{"class": "plain-wording"})] == [
+        "approved", "rejected", "deferred"]                      # decided entries are unaffected
+    assert not (repo / RUN / "artifact").exists()               # computed at listing time; nothing written
+
+
+def test_pending_stop_is_overtaken_when_the_note_is_removed(repo):
+    (repo / NOTE).unlink()
+    [stop] = by(decisions.entries(repo), **{"class": "abstractions"})
+    assert stop["decision"] == "overtaken"
+    [publication] = by(decisions.entries(repo), **{"class": "publication"})
+    assert publication["decision"] == "approved"
 
 
 def test_a_pending_item_in_approved_answers_is_listed_as_pending(repo):
@@ -152,6 +172,11 @@ def test_cli_filters_and_json(repo, capsys):
     assert cli.main(["decisions", "--class", "fix-report"]) == 0
     out = capsys.readouterr().out
     assert out.splitlines()[0] == "kb/theory/qux.md" and "fix-report" in out and NOTE not in out
+    write(repo, NOTE, "# Foo, edited\n")
+    assert cli.main(["decisions", "--note", NOTE, "--class", "abstractions", "--json"]) == 0
+    assert [e["decision"] for e in json.loads(capsys.readouterr().out)] == ["overtaken"]
+    assert cli.main(["decisions", "--note", NOTE, "--class", "abstractions"]) == 0
+    assert "worker->overtaken | overtaken" in capsys.readouterr().out
 
 
 def test_malformed_operator_record_fails_naming_its_path(repo, capsys):
