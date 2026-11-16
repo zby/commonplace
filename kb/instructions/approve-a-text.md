@@ -20,7 +20,7 @@ Authority: the decision is the operator's. The agent shows, records and runs com
 
 ## Procedure
 
-1. If the report's `new-warnings` lists warnings, tell the operator each one. A warning does not block approval; the operator decides with it in view.
+1. If the report's `new-warnings` lists warnings, tell the operator each one. A warning does not block approval; the operator decides with it in view. If the waiting text says the accepted review left findings of level warn, tell the operator how many there are and where the review is.
 2. Give the operator the full paths of the note, `final.md` and `final.diff`, so they can open each. Show the operator `final.diff`, and `final.md` when they ask for the whole text. Ask: approve this exact text for publication, approve it with changes, reject it, or defer. For approval with changes, follow [accept with a revision](#accept-with-a-revision).
 3. Record the answer in the `text` item, exactly:
    - approve: `state: approved`;

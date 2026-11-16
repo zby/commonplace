@@ -1,8 +1,11 @@
-"""The rewrite workflow through the CLI with a fake worker: inputs per call, review binding, repair and publication."""
+"""The rewrite workflow through the CLI with a fake worker: inputs per call, the review operation, repair,
+publication and the accepted review as the note's current result."""
 from __future__ import annotations
 
+import dataclasses
 import functools
 import json
+import shlex
 import subprocess
 import sys
 
@@ -12,24 +15,69 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
 from commonplace.lib import library
-from commonplace.lib.review_workflows import decisions, edits, observations
+from commonplace.lib.review_workflows import (
+    criteria,
+    decisions,
+    edits,
+    observations,
+    results,
+)
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows import rewrite as rewrite_module
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
 from tests.commonplace.review_workflows.result_helpers import copy_contract
 from tests.commonplace.review_workflows.test_revise import (
     EDIT_TYPES,
+    FIX,
     NOTE,
     NOTE_PATH,
+    PASSES,
     PROFILES,
     REVIEW_FAKE,
     REVIEW_FILES,
     ROLE,
     approve_publication,
     artifact_file,
+    decide,
     note_text,
+    rejected,
 )
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
+
+REVIEW = r'''
+import json, os, re, sys
+from pathlib import Path
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+if frame.removeprefix("Task:\n").startswith("Review one note") and "review-a-rewrite-candidate.md`" in frame:
+    def listed(name):
+        return Path(re.search(rf"^- {re.escape(name)}: (.+)$", frame, re.MULTILINE).group(1))
+    candidate = listed("note.md").read_text()
+    kind = "review-repair" if "REPAIRED" in candidate else "review"
+    given = {name: listed(name + ".md").read_text() for name in re.findall(r"^- (supplied-[^:]+)\.md: ", frame, re.MULTILINE)}
+    with open(os.environ["FAKE_LOG"], "a") as log:
+        log.write(kind + "\n")
+    with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
+        log.write(json.dumps({"kind": kind, "prompt": frame,
+                              "inputs": {"candidate": candidate, **given}}) + "\n")
+    block = Path("block-all").exists() or (Path("block-1").exists() and kind == "review")
+    reason = "Basis: the reconstruction says only under the condition. Required change: qualify it."
+    once = Path(os.environ["FAKE_LOG"] + ".bare-reason")       # outside the checkout, which the guard watches
+    if Path("bare-reason").exists() and not once.exists():
+        once.touch()
+        reason = "qualify it"
+    if block:
+        findings, outcome = [{"scope": "document", "quotes": [], "reason": reason, "level": "fail"}], "fail"
+    elif Path("warn-review").exists():
+        findings = [{"scope": "passage", "quotes": ["Alpha, rewritten from sources"], "reason": reason,
+                     "level": "warn"},
+                    {"scope": "document", "quotes": [], "reason": "The order reads well.", "level": "info"}]
+        outcome = "warn"
+    else:
+        findings, outcome = [], "pass"
+    data = {"type": "types/review-result.md", "findings": findings, "outcome": outcome}
+    listed("review.md").write_text("---\n" + json.dumps(data) + "\n---\n\n# Review\n\n## Summary\n\nJudged.\n")
+    sys.exit(0)
+'''
 
 FAKE = r'''
 import json, os, re, sys
@@ -51,10 +99,8 @@ if "reconstruction" in outputs:
     kind = "reconstruct"
 elif "claim-account" in outputs:
     kind = "claim-account"
-elif "candidate" in outputs:
-    kind = "candidate-repair" if "blocked-candidate" in inputs else "candidate"
 else:
-    kind = "review-repair" if "REPAIRED" in inputs["candidate"].read_text() else "review"
+    kind = "candidate-repair" if "blocked-candidate" in inputs else "candidate"
 with open(os.environ["FAKE_LOG"], "a") as log:
     log.write(kind + "\n")
 with open(os.environ["FAKE_LOG"] + ".inputs", "a") as log:
@@ -69,7 +115,7 @@ if kind == "reconstruct":
                                          "## Conflicts\n\nNone.\n\n## Scope\n\nAll.\n\n## Gaps\n\nNone.\n")
 elif kind == "claim-account":
     outputs["claim-account"].write_text("# Claim account\n\n## Alpha holds\n\nState it.\n")
-elif kind.startswith("candidate"):
+else:
     text = inputs["note"].read_text()
     if Path("same-text").exists():
         candidate = text
@@ -81,14 +127,6 @@ elif kind.startswith("candidate"):
         candidate = candidate.replace("\n# Alpha\n", "\n# Beta\n")
     outputs["candidate"].write_text(candidate)
     outputs["report"].write_text("# Report\n\n## Kept\n\nNone.\n\n## Replaced\n\nThe body.\n\n## Omitted\n\nNone.\n")
-else:
-    sha = re.search(r"The candidate's SHA-256 is `([0-9a-f]+)`", frame).group(1)
-    if Path("wrong-hash").exists():
-        sha = "0" * 64
-    block = Path("block-all").exists() or (Path("block-1").exists() and kind == "review")
-    finding = "## Finding 1\n\nAnchor: the body\nBasis: the reconstruction\nRequired change: qualify it\n\n"
-    outputs["review"].write_text(f"---\ncandidate-sha256: {sha}\n---\n\n# Review\n\n"
-                                 + (finding if block else "") + ("block\n" if block else "accept\n"))
 '''
 
 INSTRUCTIONS = REPO_ROOT / "kb" / rewrite_module.INSTRUCTIONS_DIR
@@ -154,7 +192,7 @@ def repo(tmp_path, monkeypatch):
     monkeypatch.setattr(rewrite_module, "Run", functools.partial(Run, sleep=lambda seconds: None))
     monkeypatch.chdir(root)
     script, log = tmp_path / "fake.py", tmp_path / "launches.log"
-    script.write_text(REVIEW_FAKE + FAKE)
+    script.write_text(REVIEW + REVIEW_FAKE + FAKE)
     log.touch()
     harness = Harness(sys.executable, {"_subcommand": [str(script)], "_env": {"FAKE_LOG": str(log)}},
                       lambda profile: {"model": profile.launch_model}, model_used=lambda launch: "fake-model-1")
@@ -192,7 +230,9 @@ def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(
     code, report, launches = rewrite(repo, capsys)
     assert code == 0 and launches == STEPS and not report["applied"] and report["guard"]["clean"]
     assert report["waiting-for"]["file"].endswith("/artifact/publication-answers.md")
-    assert [review["verdict"] for review in report["reviews"]] == ["accept"] and not report["repair-used"]
+    assert [review["outcome"] for review in report["reviews"]] == ["pass"] and not report["repair-used"]
+    assert report["accepted"] == {"review": report["reviews"][0]["review"], "outcome": "pass", "warn-findings": []}
+    assert "finding(s) of level warn" not in report["waiting-for"]["what"]
     assert note_text(repo) == start != original
     run = repo[0] / report["run-dir"]
     assert report["run-dir"].startswith("kb/reports/state/review/runs/v2/rewrite/kb/notes/alpha/")
@@ -205,9 +245,11 @@ def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(
     assert set(found["reconstruct"]["inputs"]) == shared | {"sources", "source-1"}
     assert set(found["claim-account"]["inputs"]) == shared | {"reconstruction"}
     assert set(found["candidate"]["inputs"]) == shared | {"reconstruction", "claim-account", "note", "kb-role"}
-    assert set(found["review"]["inputs"]) == shared | {"reconstruction", "claim-account", "note", "candidate",
-                                                       "candidate-report", "kb-role"}
-    assert found["candidate"]["inputs"]["kb-role"] == found["review"]["inputs"]["kb-role"] == ROLE_SECTION
+    supplied = {"commission", "brief", *contracts, "start", "reconstruction", "claim-account", "candidate-report",
+                "kb-role"}
+    assert set(found["review"]["inputs"]) == {"candidate", *(f"supplied-{name}" for name in supplied)}
+    assert found["review"]["inputs"]["supplied-start"] == start
+    assert found["candidate"]["inputs"]["kb-role"] == found["review"]["inputs"]["supplied-kb-role"] == ROLE_SECTION
     assert report["role"] == {"report": f"{report['run-dir']}/role", "reused": False}
     given = (run / "role").glob("artifact/reviews/*/inputs/operational/inbound.md")
     assert [path.read_text().startswith(f"# Inbound contexts of `{NOTE_PATH}`") for path in given] == [True]
@@ -215,14 +257,18 @@ def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(
         assert all(text != start and "Alpha body ." not in text for text in found[kind]["inputs"].values())
         assert f"do not open `{NOTE_PATH}`" in found[kind]["prompt"]
     assert found["candidate"]["inputs"]["note"] == start
-    assert all(call["inputs"]["brief"] == brief.read_text() for call in found.values())
+    assert all(call["inputs"]["brief"] == brief.read_text() for kind, call in found.items() if kind != "review")
+    assert found["review"]["inputs"]["supplied-brief"] == brief.read_text()
     assert found["review"]["inputs"]["candidate"] == artifact_file(repo, report, "final.md").read_text()
     code, again, launches = rewrite(repo, capsys, commission=False)
     assert code == 0 and launches == [] and again["waiting-for"] == report["waiting-for"]
     assert note_text(repo) == start
-    publish(repo, capsys, again)
+    done = publish(repo, capsys, again)
     assert note_text(repo) == artifact_file(repo, report, "final.md").read_text()
     assert "Alpha, rewritten from sources" in note_text(repo) and "user-verified" not in note_text(repo)
+    assert done["current-result"]["freshness"] == "fresh" and done["not-current"] is None
+    stored = results.read_result(repo[0] / done["current-result"]["result"])     # validates as a review result
+    assert stored.outcome == "pass" and stored.criterion == f"kb/{criteria.REWRITE_REL}"
 
 
 def test_an_ignored_source_is_referenced_by_path_and_hash_and_never_copied(repo, capsys):
@@ -246,13 +292,14 @@ def test_a_block_takes_one_repair_and_a_fresh_review_of_the_repaired_candidate(r
     (repo[0] / "block-1").touch()
     code, report, launches = rewrite(repo, capsys)
     assert code == 0 and launches == [*STEPS, "candidate-repair", "review-repair"]
-    assert report["repair-used"] and [r["verdict"] for r in report["reviews"]] == ["block", "accept"]
+    assert report["repair-used"] and [r["outcome"] for r in report["reviews"]] == ["fail", "pass"]
     found = calls(repo)
     review = artifact_file(repo, report, "review-1.md").read_text()
+    assert review.startswith("---\ntype: types/review-result.md\n") and "outcome: fail" in review
     assert found["candidate-repair"]["inputs"]["review"] == review
     assert found["candidate-repair"]["inputs"]["blocked-candidate"] == artifact_file(repo, report,
                                                                                     "candidate-1.md").read_text()
-    assert "review" not in found["review-repair"]["inputs"]               # the second reviewer sees no prior review
+    assert "supplied-review" not in found["review-repair"]["inputs"]      # the second reviewer sees no prior review
     final = artifact_file(repo, report, "final.md").read_text()
     assert final == artifact_file(repo, report, "candidate-2.md").read_text() and final.endswith("REPAIRED.\n")
     publish(repo, capsys, report)
@@ -272,14 +319,65 @@ def test_a_second_block_ends_the_run_with_nothing_published(repo, capsys):
     assert launches == [] and again["blocked"] == report["blocked"]
 
 
-def test_a_review_bound_to_another_candidate_hash_is_refused(repo, capsys):
+def test_a_review_result_of_another_text_is_refused(repo, capsys, monkeypatch):
     original = note_text(repo)
-    (repo[0] / "wrong-hash").touch()
+    swept = revise_module._sweep
+
+    def other(*args, **kwargs):
+        report = swept(*args, **kwargs)
+        if report.pairs[0].result.criterion.endswith(criteria.REWRITE_REL):
+            report.pairs[0].result = dataclasses.replace(report.pairs[0].result, target_sha256="0" * 64)
+        return report
+    monkeypatch.setattr(revise_module, "_sweep", other)
     code, report, launches = rewrite(repo, capsys)
-    assert code == 1 and report["stopped"].startswith("review: ")
-    assert "not the candidate it was given" in report["stopped"]
-    assert launches[:len(STEPS)] == STEPS and set(launches[len(STEPS):]) == {"review"} and not report["reviews"]
-    assert note_text(repo) == original
+    assert code == 1 and report["stopped"].startswith("review: ") and "it is refused" in report["stopped"]
+    assert launches == STEPS and not report["reviews"] and note_text(repo) == original
+
+
+def test_a_review_finding_without_its_basis_and_required_change_is_asked_again(repo, capsys):
+    (repo[0] / "warn-review").touch()
+    (repo[0] / "bare-reason").touch()
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == [*STEPS, "review"] and report["reviews"][0]["outcome"] == "warn"
+    [retried] = [c for c in captured_inputs(repo[2]) if c["kind"] == "review"][1:]
+    assert "`Basis:` and then `Required change:`" in retried["prompt"]
+
+
+def test_a_warned_candidate_reaches_publication_and_its_findings_become_triageable(repo, capsys):
+    (repo[0] / "block-1").touch()
+    (repo[0] / "warn-review").touch()
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == [*STEPS, "candidate-repair", "review-repair"]
+    assert [r["outcome"] for r in report["reviews"]] == ["fail", "warn"]
+    review = report["reviews"][1]["review"]
+    [warned] = report["accepted"]["warn-findings"]
+    assert report["accepted"]["review"] == review and warned["quotes"] == ["Alpha, rewritten from sources"]
+    assert f"The accepted review {review} left 1 finding(s) of level warn" in report["waiting-for"]["what"]
+    done = publish(repo, capsys, report)
+    assert done["current-result"]["freshness"] == "fresh"
+    criterion = f"kb/{criteria.REWRITE_REL}"
+    [row] = results.status(repo[0], [(NOTE_PATH, criterion)])
+    assert (row.freshness.state, row.outcome) == ("fresh", "warn")
+    assert main(["status", NOTE_PATH, "--criteria", "type", "collection", "--json"]) == 0          # selected criteria never include the review
+    assert not [pair for pair in json.loads(capsys.readouterr().out)["pairs"] if pair["criterion"] == criterion]
+    for path in (REPO_ROOT / FIX, *PASSES.glob("*.md")):         # revise's operations, which the triage reads
+        copy = repo[0] / path.relative_to(REPO_ROOT)
+        copy.parent.mkdir(parents=True, exist_ok=True)
+        copy.write_text(path.read_text())
+    code = main(["run", "revise", NOTE_PATH, "--triage"], harnesses=repo[1])
+    printed = capsys.readouterr()
+    assert code == 0, printed.err
+    triage = json.loads(printed.out)["triage"]
+    [listed] = triage["results"]
+    assert listed["result"] == done["current-result"]["result"] and listed["state"] == "waiting"
+    assert repo[2].read_text().splitlines()[-1] == "review-repair", "a triage launches nothing"
+    answers = repo[0] / listed["answers"]
+    answers.write_text(decide(answers.read_text(), {"1": rejected("the sources state no condition")}))
+    assert results.freshness(repo[0], NOTE_PATH, criterion).state == "fresh", "an unapproved answer counts for nothing"
+    stop = listed["waiting-for"]
+    assert main(shlex.split(stop["approve-command"])[1:], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    assert results.freshness(repo[0], NOTE_PATH, criterion) == results.Freshness("stale", ("criterion",))
 
 
 def test_a_candidate_that_breaks_the_bounds_is_refused(repo, capsys):
@@ -351,8 +449,11 @@ def test_earlier_decisions_and_the_role_reach_only_the_candidate_repair_and_revi
     assert asked == [run], "the run collects them once, excluding its own run"
     found = calls(repo)
     told = decisions.earlier_text([DECIDED])
-    for kind in ("candidate", "review", "candidate-repair", "review-repair"):
+    for kind in ("candidate", "candidate-repair"):
         assert found[kind]["inputs"]["earlier-decisions"] == told and found[kind]["inputs"]["kb-role"] == ROLE_SECTION
+    for kind in ("review", "review-repair"):
+        given = found[kind]["inputs"]
+        assert given["supplied-earlier-decisions"] == told and given["supplied-kb-role"] == ROLE_SECTION
     for kind in ("reconstruct", "claim-account"):       # material about the note's text stays out of claim selection
         assert not {"earlier-decisions", "kb-role"} & set(found[kind]["inputs"])
     assert json.loads((run / rewrite_module.EARLIER_FILE).read_text()) == {"decisions": [DECIDED]}
@@ -418,6 +519,8 @@ def test_a_revised_candidate_is_published_only_on_its_approval(repo, capsys, tmp
     assert "run rewrite" in supplied["waiting-for"]["command"] and note_text(repo) == original
     done = publish(repo, capsys, supplied)
     assert note_text(repo) == revised and done["revised-candidate"]["revised"] == supplied["proposed"]
+    assert done["current-result"] is None and done["not-current"] == rewrite_module.NOT_CURRENT
+    assert results.freshness(repo[0], NOTE_PATH, f"kb/{criteria.REWRITE_REL}").state == "missing"
     [entry] = [e for e in decisions.entries(repo[0]) if e["note"] == NOTE_PATH]
     assert entry["workflow"] == "rewrite" and entry["revised"] and entry["decision"] == "approved"
 

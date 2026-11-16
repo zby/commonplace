@@ -837,12 +837,15 @@ def _supplied_inputs(root: Path, pair: gates.Pair, reviewed: list[gates.Pair]) -
 
 
 def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile, timeout: float | None,
-           harnesses, inputs: dict[str, dict[str, str]] | None = None, workflow: str = "revise") -> gates.SweepReport:
+           harnesses, inputs: dict[str, dict[str, str]] | None = None, workflow: str = "revise",
+           targets: dict[str, str] | None = None) -> gates.SweepReport:
     """Run `wanted` through the sweep in its own run, or continue that run; Stop unless every pair has a result.
 
     Without `inputs`, results are published to the shared store and fresh
-    ones are reused. With them (a criterion of `criteria.SUPPLIED`), nothing
-    is published and the pair is always asked, as `run gates --input` does.
+    ones are reused. With them (a criterion of `criteria.SUPPLIED`, or the
+    rewrite's review), nothing is published and the pair is always asked, as
+    `run gates --input` does. `targets` gives a note's text in place of its
+    file (`gates.sweep()`).
     """
     request = run_dir / "review-request.json"
     if request.is_file():                         # a repeat: replay the captured request
@@ -853,7 +856,7 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
                                                          "profile": asdict(profile)})
     swept = gates.sweep(root, wanted, profile, run_dir, max_workers=REVIEW_WORKERS, timeout=timeout,
                         force=inputs is not None, grouping="bundle", harnesses=harnesses,
-                        publish_results=inputs is None, operational_inputs=inputs)
+                        publish_results=inputs is None, operational_inputs=inputs, targets=targets)
     if swept.stopped:
         raise Stop(f"reviews in {swept.run_dir}: {swept.stopped}")
     unfinished = [pair.job for pair in swept.pairs if pair.state not in ("fresh", "reviewed")]

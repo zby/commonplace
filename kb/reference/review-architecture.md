@@ -33,18 +33,18 @@ rewrite workflow ports the edit path of
 | `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
 | `headless.operator` | `answer()`, a proposal that waits for an explicitly captured answer; `approve()`, capture under the run lock bound to the proposal and its inputs; `waiting()`, the file, proposal key, approval command and repeat command |
 | `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
-| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`, `role`) resolved into applicable pairs; reads only |
+| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`, `role`) resolved into applicable pairs, and the rewrite review's criterion, which no request selects; reads only |
 | `review_workflows.inbound` | the role report's inbound contexts: the passages under `kb/` that link to one note, with each linking file's path, title and description, capped; reads only |
 | `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance; it captures the edit-result contract the same way |
 | `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
 | `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
-| `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views; call grouping, the worker prompt and the checkout guard |
+| `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views, or judges a supplied target text; call grouping, the worker prompt and the checkout guard |
 | `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
 | `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate and the revised candidate that revise and rewrite share, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
 | `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, per-item answers stops and publication; each operation runs through `edit_operations.ask()` |
-| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, four fresh-worker steps with one repair, the review bound to the candidate's hash, and the same publication stop as revise |
+| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, three fresh-worker steps and the review operation, with one repair, the review result bound to the candidate's hash, the same publication stop as revise, and the accepted review stored as the note's current result after publication of the judged candidate |
 | `review_workflows.decisions` | the read-only operator-decision record over run operator records, and over the packets and fix reports of the retired procedures |
 
 Workjig launches each worker in the checkout through the harness's headless
@@ -133,9 +133,15 @@ claim-account workers do not receive the note, and their prompt forbids
 opening it. Workers can still read the checkout, so this isolation rests on
 supplied inputs and instruction, not on a sandbox. A source that git
 ignores is referenced by path and SHA-256 and never copied into the run.
-Code binds each review to the SHA-256 of the candidate it judged, allows one
-repair after a `block`, and publishes only through the shared publication
-stop.
+The review is a review operation run alone through the sweep: its criterion
+is the rewrite's review instruction, its target the candidate text in place
+of the note's file, and the rewrite's other inputs are operational inputs. It
+publishes nothing while it runs. Its typed result is bound to the candidate
+by its target hash; `fail` takes the one repair, and `warn` or `pass` reaches
+the shared publication stop. When the operator publishes exactly the judged
+candidate, the workflow writes that result as the note's current result for
+the criterion, so its freshness, status and triage are those of any result.
+A revised candidate is not the judged text, and its review is not stored.
 
 ## Durable state and run state
 

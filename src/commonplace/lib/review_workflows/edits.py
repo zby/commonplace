@@ -265,16 +265,18 @@ def revised_problems(root: Path, note: str, start: str, revised: str) -> list[st
     return problems
 
 
-def publication_instruction(revised: bool, warnings: Sequence[str] = (), *, change: str) -> str:
+def publication_instruction(revised: bool, warnings: Sequence[str] = (), *, change: str, notice: str = "") -> str:
     """What the operator does at the publication stop, for the candidate or for a revised candidate.
 
     `warnings` are the text's new validation warnings (`new_warnings()`); the text names each one.
     `change` is the workflow's way to change the candidate otherwise, such as revise's `--plan`.
+    `notice` is what else the workflow tells the operator before the decision; it opens the text.
     """
     warned = ("" if not warnings else
               "The text to publish has validation warnings the note did not have: " + "; ".join(warnings)
               + ". Tell the operator each one before asking for the decision; a warning does not block "
               "approval. ")
+    warned = notice + warned
     inspect = ("Inspect final.md and final.diff" if not revised else
                f"The candidate was revised. Inspect the revised candidate {REVISED}, {REVISION_DIFF} (from the "
                f"workflow's candidate final.md) and {REVISED_DIFF} (from the note)")
@@ -287,7 +289,7 @@ def publication_instruction(revised: bool, warnings: Sequence[str] = (), *, chan
 
 def publication(run: Run, root: Path, note: str, start: str, final: str, *,
                 inputs: dict, command: str, change: str, revised: str | None = None,
-                warnings: Sequence[str] = ()) -> dict | None:
+                warnings: Sequence[str] = (), notice: str = "") -> dict | None:
     """Require the operator's approval of the exact checked candidate, never of an editable replacement.
 
     The question is the candidate `final.md`; the stop's file is a pending
@@ -306,7 +308,8 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
 
     `warnings` are the new validation warnings of the text to publish; the
     waiting text names them. They bind no key. `change` is the workflow's
-    way to change the candidate otherwise (`publication_instruction()`).
+    way to change the candidate otherwise, and `notice` what else it tells
+    the operator (`publication_instruction()`).
     """
     root = root.resolve()
     name = PUBLICATION
@@ -334,7 +337,7 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
     if revised is not None:
         key = revised_key(key, revised)
     approved = operator.answer(run, name, proposal, key=key)
-    instruction = publication_instruction(revised is not None, warnings, change=change)
+    instruction = publication_instruction(revised is not None, warnings, change=change, notice=notice)
     if changed:
         operator.invalidate(run, name)
         run.accept(name, proposal)
@@ -409,12 +412,13 @@ def revision(run: Run, root: Path, note: str, start: str, final: str, context: d
 
 
 def publish(run: Run, root: Path, note: str, start: str, final: str, context: dict, brief: dict[str, str],
-            command: str, report, *, change: str) -> str:
+            command: str, report, *, change: str, notice: str = "") -> str:
     """Stop at publication for the changed `final`, or write the approved text; return the text to publish.
 
     The text to publish is `final`, or the operator's revised candidate while
     it revises `final` (`revision()`). The captured `brief` is checked before
-    the stop and again before the write (`unchanged_brief()`).
+    the stop and again before the write (`unchanged_brief()`). `notice`
+    opens the waiting text (`publication_instruction()`).
     """
     unchanged_brief(root, note, start, brief)
     revised = revision(run, root, note, start, final, context, report)
@@ -422,7 +426,7 @@ def publish(run: Run, root: Path, note: str, start: str, final: str, context: di
     report.proposed = (run.artifact / (CANDIDATE if revised is None else REVISED)).relative_to(root).as_posix()
     report.new_warnings = new_warnings(root, note, start, published)
     report.waiting_for = publication(run, root, note, start, final, inputs=context, command=command, change=change,
-                                     revised=revised, warnings=report.new_warnings)
+                                     revised=revised, warnings=report.new_warnings, notice=notice)
     if report.waiting_for is None:
         unchanged_brief(root, note, start, brief)
         apply(root, note, start, published, root / report.proposed)

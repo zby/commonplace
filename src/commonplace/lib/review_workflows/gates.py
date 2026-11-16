@@ -55,6 +55,11 @@ request, asks the pair alone and supplies them as the input
 pair's criterion hash covers them, so a new rejection stales that pair and
 no other. A pair without a rejection keeps its call, inputs and hashes.
 
+The review of a rewrite candidate (`criteria.REWRITE`) is no request either.
+The rewrite workflow runs it alone through `sweep()` with `targets`, the
+candidate as the note's text, and the rewrite's inputs as operational inputs,
+publishing nothing. Its result must also pass `rewrite_review_problems()`.
+
 The prompt around the inputs is outside the freshness hashes: keep it
 mechanical (how to read the inputs and write the result). Judgment belongs
 in criterion files, where the hash sees it.
@@ -358,6 +363,39 @@ COMPRESSION_WRAPPER = (
 )
 """Mechanical only: how a compression check's PASS/INFO/WARN maps onto the verdict contract."""
 
+REWRITE_WRAPPER = (
+    "This is the review of a rewrite candidate. The note's text input is the candidate: the full text the rewrite",
+    "proposes for the note, not the note's current file. The criterion is the rewrite's review instruction.",
+    "The rewrite's other inputs are the operational inputs below, each named by its role in the instruction.",
+    "- FAIL: the candidate cannot be published without a change; each such change is a finding of level fail.",
+    "- WARN: the candidate can be published, and findings of level warn ask for changes.",
+    "- PASS: the candidate can be published as it is; a finding, if any, has level info and asks for no change.",
+    "Write outcome: fail exactly when a finding has level fail. The reason of each warn or fail finding states",
+    "`Basis:`, the input and passage that show the problem, and then `Required change:`, the change it needs.",
+)
+"""Mechanical only: how the rewrite review's accept and block map onto the verdict contract (`rewrite_review_problems()`)."""
+
+BASIS, REQUIRED_CHANGE = "Basis:", "Required change:"
+
+
+def rewrite_review_problems(data: dict) -> list[str]:
+    """What a rewrite review's result breaks beyond the schema: its outcome against its levels, and each reason.
+
+    The outcome is `fail` exactly when a finding has level `fail`; each
+    `warn` or `fail` finding's reason holds `Basis:` and then `Required change:`.
+    """
+    findings = data.get("findings") or []
+    problems = []
+    if (data.get("outcome") == "fail") != any(finding.get("level") == "fail" for finding in findings):
+        problems.append("write outcome: fail exactly when a finding has level fail")
+    for index, finding in enumerate(findings, 1):
+        reason = str(finding.get("reason", ""))
+        if (finding.get("level") in ("warn", "fail")
+                and not (BASIS in reason and REQUIRED_CHANGE in reason.split(BASIS, 1)[1])):
+            problems.append(f"finding {index}: its reason states `{BASIS}` and then `{REQUIRED_CHANGE}`")
+    return problems
+
+
 VERDICT_OUTPUT = """\
 - Write YAML frontmatter with type: types/review-result.md, findings, then outcome: pass | warn | fail.
 - Each finding has scope: passage | document, quotes (verbatim target spans that occur once, empty for document scope;
@@ -395,7 +433,8 @@ def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
     reading = READING.format(note_dir=Path(first.note).parent.as_posix())
     if len(call.pairs) == 1:
         wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER,
-                   criteria.COMPRESSION: COMPRESSION_WRAPPER}.get(first.kind, ())
+                   criteria.COMPRESSION: COMPRESSION_WRAPPER,
+                   criteria.REWRITE: REWRITE_WRAPPER}.get(first.kind, ())
         text = PROMPT.format(
             problem=PROBLEM_REF, note=first.note, note_input=input_ref("note"), criterion=first.criterion,
             criterion_input=input_ref("criterion"),
@@ -534,6 +573,9 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
             checked = result_contract.complete(root, results.result_path(root, pair.note, pair.criterion_id),
                                                raw.decode("utf-8"), metadata=metadata,
                                                target=note_text, contracts=contracts)
+            problems = rewrite_review_problems(checked.data) if pair.kind == criteria.REWRITE else []
+            if problems:
+                raise ValueError("; ".join(problems))
             return checked, saved
 
         def found(answer) -> list[str]:
@@ -621,8 +663,13 @@ def check_supplied(wanted: list[Pair], operational_inputs: dict | None, publish_
 def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, max_workers: int | None = None,
           timeout: float | None = None, force: bool = False, grouping: str = "pair",
           harnesses=HARNESSES, publish_results: bool = True,
-          operational_inputs: dict[str, dict[str, str]] | None = None) -> SweepReport:
-    """Review frozen request inputs. Resuming never silently substitutes live bytes."""
+          operational_inputs: dict[str, dict[str, str]] | None = None,
+          targets: dict[str, str] | None = None) -> SweepReport:
+    """Review frozen request inputs. Resuming never silently substitutes live bytes.
+
+    `targets` gives a note's text to judge in place of its file, as the
+    rewrite's review judges its candidate. The request captures it.
+    """
     if not (run_dir / "review-request.json").exists():      # a resume replays an already checked request
         check_supplied(wanted, operational_inputs, publish_results)
     run_id = run_dir.resolve().relative_to(root.resolve()).as_posix()
@@ -646,7 +693,9 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
             if result_contract.fingerprint(result_contract.capture_contract(root)) != result_contract.fingerprint(contracts):
                 raise ValueError("output contract changed; start a new run instead of resuming")
         else:
-            texts = {pair.note: (root / pair.note).read_bytes().decode("utf-8") for pair in wanted}
+            targets = targets or {}
+            texts = {pair.note: targets[pair.note] if pair.note in targets
+                     else (root / pair.note).read_bytes().decode("utf-8") for pair in wanted}
             criterion_texts = {pair.criterion: results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8")
                                for pair in wanted}
             contracts = result_contract.capture_contract(root)

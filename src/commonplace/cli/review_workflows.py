@@ -146,8 +146,11 @@ the sections Intended contribution, Must keep, Must exclude and Reserved
 decisions; with a brief they are optional and hold only what the rewrite
 adds to it. Fresh workers reconstruct the sources and
 account for the claims without the note, then write a candidate with the
-note's text, and a fresh reviewer accepts or blocks the exact candidate; one
-repair follows a block. Before the candidate, the run obtains the note's role
+note's text, and a review operation judges the exact candidate with a typed
+review result: `fail` blocks it and takes one repair, `warn` or `pass`
+accepts it. When the operator publishes exactly the judged candidate, the
+review becomes the note's current result, so `run revise --triage` presents
+its `warn` findings. Before the candidate, the run obtains the note's role
 report: a fresh one kept by `run revise --full` on the same text, or one
 call of the role report alone on the profile file's `default` profile. Its
 `## Role` section reaches the candidate, repair and review calls as `kb-role`,

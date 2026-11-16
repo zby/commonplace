@@ -49,9 +49,11 @@ evidence from the authorized sources without the note. A claim-account
 worker decides, still without the note, how each reconstructed commitment is
 treated. An author then receives the frozen claim account and the note, and
 writes the candidate with a report that reconciles the note's commitments. An
-independent reviewer accepts or blocks the exact candidate bytes. One repair
-is allowed: on `block`, a fresh author receives the review and a fresh
-reviewer judges the repair. A second `block` ends the run unpublished.
+independent reviewer judges the exact candidate as a review operation, with
+a typed review result: `fail` blocks it, `warn` accepts it with findings, and
+`pass` accepts it with none. One repair is allowed: on `fail`, a fresh author
+receives the review and a fresh reviewer judges the repair. A second `fail`
+ends the run unpublished.
 
 This is a deliberate change from part B. Part B uses one author for the
 claim account and the candidate, so that claim selection and prose stay one
@@ -188,8 +190,10 @@ Read the JSON report and act on it:
 - **`waiting-for` names `publication-answers.md`:** follow
   [approve a text](../approve-a-text.md). For a revision the user states,
   supply it with `commonplace-review run rewrite <note> --revised <file>`.
-  Tell the user each entry of `new-warnings`.
-- **`blocked`:** the second review blocked. Read `review-1.md` and
+  Tell the user each entry of `new-warnings`. When the report's `accepted`
+  lists `warn-findings`, tell the user how many there are and where the
+  review is, as the waiting text says, before asking for the decision.
+- **`blocked`:** the second review failed the candidate. Read `review-1.md` and
   `review-2.md` under the run's `artifact/` and tell the user. When a finding
   asks for evidence the sources lack, ground or add a source (A2), change the
   commission, and repeat with `--commission <file> --restart`. When a finding
@@ -206,6 +210,11 @@ Read the JSON report and act on it:
 - **`unchanged`:** the reviewer accepted the note's own text. Nothing is
   written.
 - **`conflict`:** the note changed during the run. Nothing was written.
+- **`applied` with `current-result`:** the user published the judged
+  candidate, and the accepted review is now the note's current result. When
+  it left `warn` findings, offer the user a triage:
+  `commonplace-review run revise <note> --triage`. A `not-current` report
+  means the user published a revised candidate; its review was not stored.
 
 The workflow writes the note only after the user's approval and only when
 the note still holds the text the run started from.
@@ -228,7 +237,8 @@ A retitle is a separate step on the user's word:
 ### A6. Report
 
 Report the run directory, the outcome (published, blocked, stopped or
-unchanged), whether the repair ran, the brief change, and validation.
+unchanged), whether the repair ran, the accepted review's `warn` findings and
+whether the user took the triage, the brief change, and validation.
 Suggest `cp-skill-connect` only as optional follow-up.
 
 ## B. Write a new artifact

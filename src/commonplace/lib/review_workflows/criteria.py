@@ -28,6 +28,12 @@ The compression checks and the report criteria stay out of the default set.
 The compression synthesis and the role report judge operational inputs
 (`SUPPLIED`), so each runs alone and publishes no current result.
 
+The review of a rewrite candidate (`REWRITE`, the library's
+`REWRITE_REL`) is no request: only the rewrite workflow runs it, alone, on
+its candidate text with the rewrite's inputs supplied. It is a verdict
+criterion. The workflow stores its result as the note's current result only
+when the note is published with exactly the judged candidate.
+
 Everything here reads files and nothing writes.
 """
 
@@ -53,6 +59,9 @@ FRICTION = "friction"
 PREMISES = "premises"
 SYNTHESIS = "compression-synthesis"
 ROLE = "role"
+REWRITE = "rewrite-review"
+REWRITE_REL = "instructions/rewrite-a-note/review-a-rewrite-candidate.md"
+"""The rewrite workflow's review of its candidate: the kind and the library instruction that is its criterion."""
 REPORTS = {CRITIQUE: CRITIQUE_REL,
            FRICTION: "instructions/composition-friction-gate.md",
            PREMISES: "instructions/premise-decomposition-gate.md",
@@ -65,7 +74,7 @@ SUPPLIED = {SYNTHESIS: None, ROLE: "inbound"}
 No freshness hash covers those inputs, so each runs alone, on one note,
 always asked, and publishes no current result; `status` refuses it.
 """
-KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION, FRICTION, PREMISES, SYNTHESIS, ROLE)
+KINDS = ("gate", TYPE, COLLECTION, CRITIQUE, "draft", COMPRESSION, FRICTION, PREMISES, SYNTHESIS, ROLE, REWRITE)
 STALENESS = "changed"
 """The only `staleness:` a catalog gate may declare."""
 
@@ -301,6 +310,14 @@ def report_identity(root: Path, selector: str) -> str:
     path = library_root() / REPORTS[selector]
     if not path.is_file():
         raise FileNotFoundError(f"{selector} instruction not found: {path}")
+    return artifact_identity(root, path)
+
+
+def rewrite_review_identity(root: Path) -> str:
+    """The identity of the library instruction that is the criterion of the rewrite's review."""
+    path = library_root() / REWRITE_REL
+    if not path.is_file():
+        raise FileNotFoundError(f"rewrite review instruction not found: {path}")
     return artifact_identity(root, path)
 
 

@@ -31,7 +31,8 @@ the decision. Exact arguments are in `commonplace-review --help` and
 **Criterion.** The markdown file a note is judged against. It may be a
 catalog gate, a compression check, the note's type spec, its collection's
 `COLLECTION.md`, or a report instruction: critique, friction, premises,
-compression synthesis or the role report. A criterion is named by its artifact identity: a
+compression synthesis or the role report. The rewrite's review instruction is
+also a criterion, which only the rewrite workflow runs. A criterion is named by its artifact identity: a
 repository path, or `commonplace:<path>` for a library file outside the
 repository, as the gates are in an installed project.
 
@@ -124,6 +125,14 @@ input, it writes no current result, and `status` refuses it. In a full run,
 each edit operation also receives the `## Role` section alone, as the input
 `kb-role`, and may not rename, redefine or drop a term or claim that section
 lists as relied on.
+
+**Rewrite review.** The
+[review of a rewrite candidate](../instructions/rewrite-a-note/review-a-rewrite-candidate.md)
+is a verdict criterion that no request selects. Only `run rewrite` runs it,
+alone, on its candidate text with the rewrite's inputs supplied; see
+[rewriting a note](#rewriting-a-note). Its result becomes the note's current
+result only when the note is published with exactly the judged candidate.
+Then `status` and `--triage` treat it like a gate's result.
 
 The role report feeds the note's [write brief](../types/write-brief.md)
 only through the operator. No code writes a brief. When a role report lists
@@ -722,18 +731,19 @@ claims with `cp-skill-ground` and lists the ingests and snapshots as sources.
 profile, or the one `--profile` names, with only its listed inputs. Each
 worker follows its role instruction:
 [reconstruct the sources](../instructions/rewrite-a-note/reconstruct-the-sources-of-a-rewrite.md),
-[account for the claims](../instructions/rewrite-a-note/account-for-the-claims-of-a-rewrite.md),
-[write a candidate](../instructions/rewrite-a-note/write-a-rewrite-candidate.md) or
-[review a candidate](../instructions/rewrite-a-note/review-a-rewrite-candidate.md).
-Code checks each output:
+[account for the claims](../instructions/rewrite-a-note/account-for-the-claims-of-a-rewrite.md) or
+[write a candidate](../instructions/rewrite-a-note/write-a-rewrite-candidate.md).
+The review is a review operation whose criterion is
+[review a candidate](../instructions/rewrite-a-note/review-a-rewrite-candidate.md)
+(below). Code checks each output:
 
 | Job | Inputs | Output and the check code applies |
 |---|---|---|
 | `reconstruct` | instruction, commission, brief, source list, captured sources, contracts | `reconstruction`, with `## Support`, `## Inference`, `## Conflicts`, `## Scope` and `## Gaps` |
 | `claim-account` | instruction, commission, brief, reconstruction, contracts | `claim-account`, with at least one `## ` section |
 | `candidate` | the above without the sources, plus the claim account, the note's start text as `note`, `kb-role` and `earlier-decisions` | `candidate`, which must pass the candidate checks of `edits.artifact_bounds()`, and `report`, with `## Kept`, `## Replaced` and `## Omitted` |
-| `review` | the candidate and its report, commission, brief, reconstruction, claim account, `note`, contracts, `kb-role`, `earlier-decisions` | `review`: frontmatter `candidate-sha256` equal to the candidate's hash, each `## ` finding with `Anchor:`, `Basis:` and `Required change:`, and a last line `accept` or `block`; a `block` names a finding |
-| `candidate-repair` | the candidate inputs, plus the blocking `review` and the `blocked-candidate` | as `candidate`, and different from the blocked candidate |
+| `review` | the candidate as the target; operational inputs commission, brief, reconstruction, claim account, `candidate-report`, the start text as `start`, contracts, `kb-role`, `earlier-decisions` | a typed review result with outcome `pass`, `warn` or `fail` (below) |
+| `candidate-repair` | the candidate inputs, plus the failed typed `review` and the `blocked-candidate` | as `candidate`, and different from the blocked candidate |
 | `review-repair` | as `review`, for the repaired candidate; no earlier review | as `review` |
 
 A rejected output goes back to its worker with the problems, up to three
@@ -741,8 +751,26 @@ attempts. A worker problem stops the run; `retry RUN JOB` dismisses it. The
 candidate checks are those of `--revised`: the frontmatter parses and keeps
 `title`, `type` and `brief`, the H1 is kept, `user-verified` is gone when
 the body changed, and validation finds no new failure. The per-pass bounds
-of edit operations do not apply. A review that names another candidate's
-hash is refused.
+of edit operations do not apply.
+
+**The review operation.** The review is a review operation like a gate, run
+alone. Its criterion is the review instruction; its target is the candidate
+text, judged in place of the note's file. The rewrite's other inputs are its
+operational inputs. It runs through the sweep in its own run under
+`reviews/<12 hex>/` in the rewrite run, named by the hash of the candidate and
+those inputs, and publishes nothing while it runs. Like any review, it also
+receives the operator's rejected findings of this note against this criterion
+as `finding-decisions`. Its output is a [review result](../types/review-result.md)
+with a verdict: `fail` blocks the candidate, `warn` accepts it with findings,
+and `pass` accepts it with none. Each finding quotes the passage it anchors
+to in `quotes`, or has `scope: document` for an absence. Its `reason` states
+`Basis:` and then `Required change:`. A blocking finding has level `fail`, a
+non-blocking one `warn`, and a remark that asks for no change `info`. Code
+refuses an outcome that does not match the levels and a `warn` or `fail`
+reason without its basis and required change; the worker is asked again.
+The result's target hash binds it to the candidate, and a result of another
+text is refused. The run keeps a copy as `artifact/review-<n>.md`, and the
+report's `reviews` lists each review with its outcome.
 
 **What revise workers also receive.** The candidate, repair and review
 calls receive the two inputs the revise procedures give their workers. Before
@@ -783,8 +811,8 @@ and the candidate to one author, so that claim selection and prose stay one
 judgment. This workflow deliberately uses two fresh workers; the frozen
 claim account carries the judgment from the first to the second.
 
-**Repair and end.** On `block`, one repair runs: `candidate-repair`, then
-`review-repair`, a fresh reviewer. A second `block` ends the run with
+**Repair and end.** On `fail`, one repair runs: `candidate-repair`, then
+`review-repair`, a fresh reviewer. A second `fail` ends the run with
 `blocked` in the report, every output kept and nothing published. When a
 finding asks for evidence the sources lack, the session agent grounds or
 adds a source and starts again with a changed commission. A candidate the
@@ -794,16 +822,35 @@ revise`: `artifact/final.md`, `artifact/final.diff` and
 `artifact/publication-answers.md`, approval with
 [approve a text](../instructions/approve-a-text.md), `--revised FILE`,
 `new-warnings`, and one write after approval, only over the start text. The
-proposal key binds the start text, the candidate, the capture and every
-call's key. The waiting text names each workflow's way to change the
-candidate otherwise: `--plan` for revise, a changed commission with
-`--restart` for the rewrite.
+report's `accepted` names the accepted review, its outcome and its `warn`
+findings. When there are any, the waiting text says how many and where the
+review is, and the session agent tells the operator before the decision. The
+proposal key binds the start text, the candidate, the capture, every call's
+key and each review's raw output. The waiting text names each workflow's way
+to change the candidate otherwise: `--plan` for revise, a changed commission
+with `--restart` for the rewrite.
+
+**After publication.** When the published text is exactly the candidate the
+accepted review judged, the review result becomes the note's current result
+for its criterion, at `kb/reports/state/review/results/<note>/<criterion
+id>.md`. The report's `current-result` names it and its freshness. It is
+fresh while the note, the review instruction, the operator's rejected
+findings of that pair and the output contract are unchanged, so `run revise
+NOTE --triage` presents its `warn` findings like any other result. A
+rejection at that triage stales it, as for a gate. When the operator
+published a revised candidate (`--revised`), the published text is not the
+judged text: the result is not stored, and the report's `not-current` says
+so. The other inputs of the review, such as the commission, are outside the
+freshness hashes. `status NOTE` never lists this criterion as missing, since
+no criterion request selects it; `status` without NOTES lists a stored one.
+No sweep reruns a stale one: a new rewrite reviews again.
 
 **Run directory.** `kb/reports/state/review/runs/v2/rewrite/<note path
 without .md>/<first 12 hex of the note's SHA-256>/` holds `sweep.json` (the
 profile and the role report's profile), `rewrite-inputs.json`,
 `earlier-decisions.json`, `role.json`, the role report's run under `role/`
-when one ran, the Workjig records under `calls/`, the operator records under
+when one ran, the review runs under `reviews/`, the Workjig records under
+`calls/`, the operator records under
 `operator/` and, under `artifact/`: `commission.md`,
 `brief.md` when there is a brief, `sources.md` (the source list),
 `start.md`, `reconstruction.md`, `claim-account.md`, `candidate-1.md`,
