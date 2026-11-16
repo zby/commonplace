@@ -28,11 +28,17 @@ The operator endorsed this research lead on 2026-11-14:
 
 Keep this as a methodological lead, not a mandatory literature-review phase or a conclusion already established. The architectural split follows from the different retention costs and purposes of ordinary operation and controlled investigation. Design the workflow and provenance boundary and a concrete pilot first; consult incident-reproduction, test-fixture and statistical methods where specific design or inference questions remain unresolved. The aim is to design Commonplace to support these activities, not merely to write a testing procedure alongside an unchanged system.
 
-- **Workflows:** determine how operation boundaries, execution records, input capture, traces, state reset and replay controls can support comparable trials and failure localization. The design must work without presupposing code-led rather than instruction-led orchestration.
+- **Workflows:** determine how operation boundaries, execution records, input capture, traces, state reset and replay controls can support comparable trials and failure localization. The review-only subset applies these requirements through Workjig; broader application is deferred.
 - **Provenance and freshness:** determine what each operation records about how its result was produced. Freshness consumes that record to decide which changes warrant another run; debugging and experiments consume it to reconstruct and compare executions. Keep scheduling a rerun distinct from recovering inputs or reusing an old answer. Do not make approximate freshness imply exact reproducibility.
 - **Evaluation:** determine how a failure is recognized and how changes in its frequency are interpreted. The KB must retain enough evidence to question the evaluator as well as the operation.
 
 The object of model-dependent debugging is a behavioral tendency under stated conditions, not just one bad output. Repeated trials test whether a repair improves the outcome distribution. Individual traces help locate mechanisms. Systematic bias, harmful tail behavior and deterministic implementation defects remain distinguishable; variation among acceptable outputs is not itself a bug.
+
+## First application: the review-only subset
+
+The operator selected the review-only subset as the focused first application on 2026-11-14. That implementation is complete under [ADR 132](../../reference/adr/132-review-atoms-retain-observations-behind-current-results.md); the [review architecture](../../reference/review-architecture.md) owns its execution and retention boundary. The [acceptance record](../../reports/retained/review-atom-acceptance-20261115/README.md) retains the four-kind live check and final fixture/replay evidence, including the differing tool and trust environments. This is machinery acceptance, not judgment calibration.
+
+This parent workshop retains the general testing principles and trial evidence. Do not make the review subset implement edits, stops, full improvement compositions or a general coordinator framework first. Broader reuse is a later decision informed by the working subset.
 
 ## Retention differs between ordinary runs and controlled trials
 
@@ -44,6 +50,10 @@ The operator clarified the design direction on 2026-11-14: comprehensive retenti
 A shared immutable fixture can serve several trials; each trial still needs independent mutable state and separately attributable outputs. More complete retention does not require duplicating identical bytes. Privacy, credentials and external-source retention rules remain binding; completeness is not permission to retain secrets or publish private source copies.
 
 This is an asymmetric retention policy over one provenance concept, not a requirement to make ordinary maintenance as expensive as an experiment. Moving from an ordinary observation to a controlled fixture may establish a new, documented baseline rather than reconstruct the first run exactly. Trial records should make later investigation and comparison recoverable to the extent technically and operationally possible.
+
+## Concrete provenance and fixture design
+
+The selected starting point—KB commit plus retained exact target, execution identity and explicit self-contained run-local operational inputs—is implemented in the [review machinery](../../reference/review-architecture.md). A second state repository and automatic dependency traversal are not prerequisites. The reconstruction trial retained here and the later [fixture acceptance](../../reports/retained/review-atom-acceptance-20261115/README.md) support content reconstruction without establishing complete harness isolation. Future work here concerns controlled evaluation and its remaining evidence gaps, not another implementation of the same runner.
 
 ## Operator direction and starting hypothesis
 
@@ -79,7 +89,7 @@ A worktree isolates the trial from the main checkout but does not prevent its ow
 
 ## Questions to resolve
 
-1. What minimum ordinary-run record is worth its cost? Consider Git revision, target hash, request, effective instructions, execution configuration, traces and references to retained non-Git inputs. Do not turn this candidate list into a schema before examining actual consumers.
+1. Does the minimal ordinary provenance design above meet actual consumers' needs, and which operations require exceptions? Settle capture, execution identity and ownership before committing to a schema.
 2. How should freshness work for operations with open-ended discovery? Distinguish target changes from corpus-change signals and useful rerun schedules. Decide what dirty checkout markers can and cannot establish.
 3. What belongs in a controlled fixture? Include accessible operational state and ignored sources where relevant, not just the positive reads of one trial. Distinguish deliberate empty state from missing evidence.
 4. Which failures require controlled concurrent edits, tool responses or scheduling rather than a static fixture? Determine when boundary mocks are useful and what they exclude from an end-to-end claim.
@@ -89,6 +99,8 @@ A worktree isolates the trial from the main checkout but does not prevent its ow
 8. Which protections remain necessary in permissive maintenance? In particular, do not confuse allowing changing context with permission to overwrite concurrent target edits or apply a finding without checking its relevant current evidence.
 
 The first pilot is [gate verdict stability on unchanged text](./pilot-gate-verdict-stability.md), approved by the operator on 2026-11-14. It works under an operator assumption set the same day: review verdicts can be made stable, and the improvement procedure is designed on that assumption. The pilot measures and locates present instability; it does not decide whether re-review stays in the procedure.
+
+The [commit-plus-note reconstruction trial](./provenance-reconstruction-trial.md) ran on the operator's approval on 2026-11-14. Its [results](./provenance-reconstruction-results.md) demonstrate two independent fixtures from a commit and an actually uncommitted target, with exact captured input matches and two new review calls costing about $0.50. The harness advertised additional tools in the second launch, so the exercise establishes content reconstruction, not full execution-environment equivalence. No new runtime code was needed.
 
 The [literature map](./literature-map.md) records starting sources and unverified leads. Source findings may revise the hypothesis; the workshop does not presume novelty.
 
@@ -102,7 +114,7 @@ For a later authorized trial, use independent initial state and output locations
 
 ## Coordination
 
-- [Review on Workjig](../review-on-workjig/README.md) owns the existing workflow work. This workshop may recommend an execution boundary but does not replace it or decide instruction-led versus code-led orchestration in advance.
+- [Review on Workjig](../review-on-workjig/README.md) owns the existing workflow work. The completed review-unification slice supplies the first shared-execution implementation. Extension beyond the review subset is deferred.
 - [Artifact freshness and referential checks](../artifact-freshness-and-referential-checks/README.md) contains historical store-era designs. Reconcile against ADR 127 before reuse; do not revive the deleted generic store by implication.
 - [Unattended processing failure modes](../unattended-processing-failure-modes/README.md) owns its behavior catalogue and countermeasures. This workshop develops the live-observation-to-controlled-test method rather than duplicating that catalogue.
 - [LLM debugging diagnosis](../../theory/llm-debugging-starts-with-retry-versus-rewrite-triage.md) already distinguishes specification gaps, instruction violations and run-to-run variation. Extend or operationalize it where warranted instead of writing a parallel general account.
