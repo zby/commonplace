@@ -14,7 +14,7 @@ Commonplace has three ways to improve one note after review: the full improvemen
 
 The goal is one procedure in their place. It is flexible because it is mostly LLM instructions. It is held in shape by the infrastructure every other artifact already uses: types, schemas and `commonplace-validate`. Code stays only where batching needs it, in review.
 
-## Current state (as of 2026-11-15)
+## Current state (as of 2026-11-16)
 
 **Adopted:** catalog gates, type/collection conformance, the four compression
 checks, and the critique, composition-friction, premise-decomposition and
@@ -46,6 +46,15 @@ for publication. The per-item edit operations and both workflows' publication
 read answers; the strike-list format is gone. The full pass's hand-back
 disposition stays on its packet route. The composition design remains
 unadopted.
+
+**Adopted:** the composition, in a different form than proposed below, under
+[ADR 135](../adr/135-improvement-procedures-are-three-plans-on-one-runner.md).
+One runner, `commonplace-review run revise`, executes a plan of edit
+operations; the focused, quick and full procedures differ only in how the
+plan is made. The full-pass workflow and the fix procedure are retired.
+Not adopted from the design below: procedure variants as typed instruction
+files, and the run as a typed directory the validator checks. The table
+below describes the three procedures before that change.
 
 The three procedures, as the operator meets them:
 
