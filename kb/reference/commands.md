@@ -483,7 +483,7 @@ compression checks' results and publishes no result. The review runs live
 under the revise run directory, in `reviews/` and `synthesis/`; the JSON report
 lists them under `reviews`. A review without a result stops the run before
 assessment. The assessor then receives the `warn` and `fail` results and the
-depth 1 reports, and may stop the plan on a depth 1 proposal.
+depth 1 reports and the compression synthesis report, and may stop the plan on a depth 1 proposal.
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text

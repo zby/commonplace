@@ -100,7 +100,7 @@ receives the artifact's fresh stored `warn` and `fail` review results.
 `--full` first runs every review operation that declares a `depth` on the
 artifact, as `run gates` would on the profile file's `default` profile, in
 runs under the revise run directory; then the assessor also receives the
-depth 1 reports and may stop the plan on a proposal to change the artifact. Assessment runs the
+depth 1 reports and the compression synthesis report, and may stop the plan on a proposal to change the artifact. Assessment runs the
 plan's settled passes automatically, retaining `artifact/assessment.md` and
 `artifact/plan.yaml` for inspection. A repeat keeps the recorded mode and plan.
 `--plan FILE` also overrides a stopped plan. Editing the retained plan alone

@@ -66,7 +66,7 @@ order. The procedures differ only in how the plan is made.
   their synthesis, critique, composition friction and premise
   decomposition. Fresh results are reused and new ones go to the shared
   store. The assessor then reads the `warn` and `fail` results and the
-  depth 1 reports. If a depth 1 report proposes changing what the artifact
+  depth 1 reports and the compression synthesis report. If a depth 1 report proposes changing what the artifact
   is, the plan stops and nothing is edited. The edited text is not
   reviewed again.
 

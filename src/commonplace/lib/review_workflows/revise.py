@@ -36,7 +36,7 @@ never approves: only the recorded approved text becomes the operator's answer:
    `gates.sweep()` in `reviews/` under the run directory, publishing results
    and reusing fresh ones; the compression synthesis then runs alone in
    `synthesis/` on the checks' results and publishes nothing. The assessor
-   also receives the depth 1 reports, and its plan's `stop` is how a depth 1
+   also receives the depth 1 reports and the synthesis report, and its plan's `stop` is how a depth 1
    proposal ends the run. A review without a result stops the run.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
@@ -420,8 +420,9 @@ instruction says to report a rewrite and stop. {no_writes}
 
 FINDINGS_INTRO = ("\nThe artifact's stored review results with outcome warn or fail are inputs. Each line gives "
                   "the result file's repository path, its criterion and the depth the criterion declares:\n")
-REPORTS_INTRO = ("\nThe depth 1 review reports on this text are inputs. Each line gives the result file's "
-                 "repository path and its criterion:\n")
+REPORTS_INTRO = ("\nThe depth 1 review reports on this text, and the compression synthesis when it ran, are "
+                 "inputs. Each line gives the result file's repository path, or for the synthesis its run "
+                 "directory, and its criterion:\n")
 FINDING_FIELD = (", and, for a pass that fixes a finding, `finding` naming that review result file's "
                  "repository path, as listed above")
 
@@ -632,8 +633,11 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
 
 
 def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profile, timeout: float | None,
-            harnesses, report: ReviseReport) -> None:
-    """Run every review operation that declares `depth` on `text`, writing results as the sweep does."""
+            harnesses, report: ReviseReport) -> list[Finding]:
+    """Run every review operation that declares `depth` on `text`, writing results as the sweep does.
+
+    Returns the compression synthesis report, which is not in the store, for the assessor.
+    """
     wanted, synthesis = review_pairs(root, artifact, text)
     report.reviews.append(_sweep(root, run_dir / REVIEWS, wanted, profile, timeout, harnesses).to_dict())
     if synthesis:
@@ -644,8 +648,13 @@ def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profil
             path = results.result_path(root, pair.note, pair.criterion_id)
             inputs[Path(pair.criterion_id).name] = {           # the check's name, such as detail-overhang
                 "origin": _rel(root, path), "text": path.read_text(encoding="utf-8")}
-        report.reviews.append(_sweep(root, run_dir / SYNTHESIS, synthesis, profile, timeout, harnesses,
-                                     inputs).to_dict())
+        swept = _sweep(root, run_dir / SYNTHESIS, synthesis, profile, timeout, harnesses, inputs)
+        report.reviews.append(swept.to_dict())
+        return [Finding(swept.run_dir, pair.result.criterion, results.criterion_id(root, pair.result.criterion),
+                        criterion_depth(root, pair.result.criterion), pair.result.outcome,
+                        results.result_text(pair.result))
+                for pair in swept.pairs if pair.result is not None]
+    return []
 
 
 def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
@@ -688,8 +697,8 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             if named_plan is None:
                 reports = []
                 if review is not None:
-                    _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
-                    reports = depth_one_reports(root, artifact)
+                    synthesis = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
+                    reports = [*depth_one_reports(root, artifact), *synthesis]
                 findings = current_findings(root, artifact)
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,

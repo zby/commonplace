@@ -943,8 +943,8 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     assert call["inputs"]["finding-1"] == (store / "prose/warned.md").read_text()
     assert "finding-2" not in call["inputs"]
     reports = sorted(text for name, text in call["inputs"].items() if name.startswith("report-"))
-    assert len(reports) == 3 and all("outcome" in text for text in reports)
-    assert len(report["findings"]) == 4
+    assert len(reports) == 4 and all("outcome" in text for text in reports), "three at depth 1 and the synthesis"
+    assert len(report["findings"]) == 5
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["mode"] == "full"
     assert repeated["waiting-for"]["key"] == report["waiting-for"]["key"]

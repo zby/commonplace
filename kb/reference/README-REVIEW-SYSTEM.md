@@ -444,7 +444,7 @@ procedure is `--full`: it first runs every review operation that declares a
 `depth` on the artifact, through the sweep's route. Fresh results are reused,
 new results go to the shared store, and the compression synthesis runs on
 the checks' results without publishing one. The assessor then also reads the
-depth 1 reports. When one proposes changing what the artifact is, the plan's
+depth 1 reports and the compression synthesis report. When one proposes changing what the artifact is, the plan's
 `stop` names the proposal and its report, and nothing is edited. The full
 procedure does not review the candidate; the next sweep finds the stale
 results after publication. A review without a result stops the run before

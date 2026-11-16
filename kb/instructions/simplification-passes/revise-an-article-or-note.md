@@ -132,8 +132,8 @@ first runs every review operation that declares a `depth` on the artifact,
 through the same route as `commonplace-review run gates`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
 then runs on the compression checks' results and publishes no result. The
-assessment receives the fresh `warn` and `fail` results and the depth 1
-reports. A review that ends without a result stops the run before the
+assessment receives the fresh `warn` and `fail` results, the depth 1
+reports and the synthesis report. A review that ends without a result stops the run before the
 assessment. The full procedure does not review the edited text. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
