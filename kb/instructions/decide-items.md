@@ -22,7 +22,7 @@ Authority: the decisions are the operator's. The agent presents, records and run
 
 ## Procedure
 
-1. Present each item: the quoted passage inside its sentence or paragraph, the proposed `change`, the worker's `reason`, and any preserve rule of the operation that bears on it. Ask the operator: approve, reject or defer. One item per question unless the operator asks for the whole list.
+1. Present each item: the quoted passage in context, the proposed `change`, the worker's `reason`, and any preserve rule of the operation that bears on it. Choose the context by what the operator needs to judge the item. The sentence is enough for a local rewording. Show the paragraph, or the neighbouring sentences, when the change drops or moves a clause, when the passage refers to text around it, or when the same wording occurs nearby. Show more whenever the operator asks. Ask the operator: approve, reject or defer. One item per question unless the operator asks for the whole list.
 2. Record each answer in the item, exactly:
    - approve: `state: approved`; a `reason` only if the operator gives one;
    - reject: `state: rejected` and `reason` in the operator's words; do not suggest a reason and do not carry one over from another item;

@@ -326,11 +326,15 @@ Where the build departs from the plan:
 
 Not yet done:
 
-- **No operator session has used either stop.** The answers in the live
-  check were written by the agent as a mechanism test and marked as
-  such. "How a stop is tested" asks for one live session per stop.
-- **No revise run has gone through to publication** on the new route
-  outside the tests.
+- **Each stop has been used once by the operator,** on 2026-11-16, in a
+  revise run of plain-wording on
+  [links encode conditional possibilities](../../theory/links-encode-conditional-possibilities-not-obligations.md).
+  Five items were decided, one rejected with a reason; the four approved
+  changes were applied and the operator approved the exact text, which
+  was published. `commonplace-review decisions` lists all six decisions.
+  The session showed one gap: the operator will sometimes need more
+  context than the sentence. The decide-items instruction now leaves the
+  amount of context to the agent's judgment.
 - **The third change,** `depth` on review operations, is not built.
 - **Edit quality is unjudged.** The live checks show that real output is
   accepted, not that the edits are good.
