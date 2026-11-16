@@ -31,10 +31,15 @@ An approval of a text is therefore an answers file with one item that names the 
 | `revisit` | The condition under which a `deferred` item is taken up again |
 | `decided-by` | `operator` on every decided item; absent while `pending` |
 | `decided-at` | The decision's timestamp; absent while `pending` |
+| `carried-from` | Optional. The earlier answers file this decision was copied from, when the same proposal was already decided for an earlier text of the note |
 | `resolution` | Optional. What was done after the decision, when it differs from or goes beyond the proposal. A statement of fact, not a new decision |
 | `refs` | Optional. Where it was done: commit hashes, file paths, a workshop directory or URLs. Not checked |
 
 `deferred` means the operator has seen the item and has not decided it. Only the operator sets it. An agent that cannot decide an item leaves it `pending`.
+
+## Decisions carried over
+
+A decision outlives the run it was made in. When a later run on the same note makes a proposal with the same `quote` and the same `change` as an item the operator already decided, the new answers file starts with that item decided: the earlier `state`, `reason`, `revisit`, `decided-by` and `decided-at`, and `carried-from` naming the earlier answers file. Code copies only an identical proposal. The operator sees the item at the stop and may change it; changing it removes `carried-from`. A proposal that differs in any way is asked as usual.
 
 ## What happened after the decision
 
