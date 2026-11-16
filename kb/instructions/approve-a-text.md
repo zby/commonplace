@@ -19,7 +19,7 @@ Authority: the decision is the operator's. The agent shows, records and runs com
 
 ## Procedure
 
-1. Show the operator `final.diff`, and `final.md` when they ask for the whole text. Ask: approve this exact text for publication, approve it with changes, reject it, or defer. For approval with changes, follow [accept with a revision](#accept-with-a-revision).
+1. Give the operator the full paths of the note, `final.md` and `final.diff`, so they can open each. Show the operator `final.diff`, and `final.md` when they ask for the whole text. Ask: approve this exact text for publication, approve it with changes, reject it, or defer. For approval with changes, follow [accept with a revision](#accept-with-a-revision).
 2. Record the answer in the `text` item, exactly:
    - approve: `state: approved`;
    - reject: `state: rejected` and `reason` in the operator's words;
