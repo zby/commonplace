@@ -224,7 +224,7 @@ def test_interrupted_archive_is_uncertain_and_a_resolved_rollback_retries(tmp_pa
         overview, manifest = f.assemble()
         return f, overview, manifest, destination, old
 
-    monkeypatch.setattr(publication, "_environment", lambda *a, **kw: require_publishable_worktree(a[1]))
+    monkeypatch.setattr(publication, "_environment", lambda *a, **kw: require_publishable_worktree(publication.checkout(a[-1])))
     monkeypatch.setattr(publication, "inspect_destination", lambda **kw: {
         "expected_incumbent_sha256": publication._digest(doc({"run-id": OLD_ID}))})
     write = effects.atomic_write
@@ -294,7 +294,7 @@ def test_environment_rechecks_the_declared_capture_identity(tmp_path):
     boundary = doc({**fields, "source": source, "reviewed-boundary": source["revision"]})
 
     def environment():
-        publication._environment(f.metadata, tmp_path, boundary, b"null\n", f.run_dir, job="fixture")
+        publication._environment(f.metadata, boundary, b"null\n", f.run_dir, job="fixture")
 
     environment()
     capture.write_bytes(b"changed local fixture bytes")

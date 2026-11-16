@@ -35,7 +35,7 @@ def source_at(path, kind="capture"):
 
 def check(data, root, **kwargs):
     return agentic_boundary.boundary_refusals(
-        data, repo_root=root, identity=IDENTITY, **kwargs,
+        data, identity=IDENTITY, **kwargs,
     )
 
 

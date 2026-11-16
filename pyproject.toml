@@ -64,6 +64,13 @@ include = ["src/**/*.py", "tests/**/*.py"]
 # Retained source captures preserve their producing bytes; they are not live code.
 extend-exclude = ["kb/reports/retained/**", "kb/agentic-systems/reports/**"]
 
+[tool.ruff.lint]
+extend-select = ["B", "SIM", "UP", "PERF", "ARG"]
+
+[tool.ruff.lint.per-file-ignores]
+# Test doubles and monkeypatched lambdas keep the signature of what they replace.
+"tests/**" = ["ARG"]
+
 [project.optional-dependencies]
 docs = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]
 all = ["properdocs", "properdocs-theme-mkdocs", "mkdocs-redirects"]

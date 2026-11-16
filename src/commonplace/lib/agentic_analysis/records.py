@@ -242,10 +242,11 @@ def _record_syntax_errors(body: str) -> list[str]:
         "put the label on the record's first line as 'Label: <label>'"
         for identifier in _LABELLED_DECLARATION.findall(records)
     )
-    for heading in _ANNOTATION.findall(prose):
-        if len(record_links(heading)) != 1:
-            errors.append(f"record annotations: 'On {heading}' must link exactly one record, "
-                          "as 'On [ID](member.md#anchor)'")
+    errors.extend(
+        f"record annotations: 'On {heading}' must link exactly one record, as 'On [ID](member.md#anchor)'"
+        for heading in _ANNOTATION.findall(prose)
+        if len(record_links(heading)) != 1
+    )
     # Each declaration opens with its label; a Part of field belongs to a declaration.
     owner = None
     in_records = False

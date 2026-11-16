@@ -1239,7 +1239,7 @@ def _snapshot_body_rule(
 
 @type_rule("agent-memory-systems/types/agent-memory-system-review.md")
 def _quote_citation_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
     validate_quote_citations(results, parsed.content)
 

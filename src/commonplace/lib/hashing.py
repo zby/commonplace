@@ -14,12 +14,7 @@ agree on the version of the same content.
 from __future__ import annotations
 
 from hashlib import sha256
-from pathlib import Path
 
 
 def content_sha256_for_text(text: str) -> str:
     return sha256(text.encode("utf-8")).hexdigest()
-
-
-def file_content_sha256(path: Path) -> str:
-    return content_sha256_for_text(path.read_text(encoding="utf-8"))

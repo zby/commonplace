@@ -238,7 +238,6 @@ def _post_url(post: dict[str, Any], users: dict[str, dict[str, Any]]) -> str:
 def _render_markdown(
     source_url: str,
     timestamp: str,
-    kind: str,
     target_post: dict[str, Any],
     posts_sorted: list[dict[str, Any]],
     users: dict[str, dict[str, Any]],
@@ -307,8 +306,7 @@ def _render_markdown(
         if expanded:
             lines.append("")
             lines.append("Links:")
-            for link in expanded:
-                lines.append(f"- {link}")
+            lines.extend(f"- {link}" for link in expanded)
         lines.append("")
 
     return "\n".join(lines)
@@ -426,7 +424,6 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int, *, reobserve: bool = 
     md = _render_markdown(
         source_url=source_url,
         timestamp=timestamp,
-        kind=kind,
         target_post=target_post,
         posts_sorted=posts_sorted,
         users=users,

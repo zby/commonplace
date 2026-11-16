@@ -518,7 +518,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 for pair in call.pairs:
                     reports[pair].state, reports[pair].problem = state, answer.problem
                 return
-            for pair, _, output in names:
+            for pair, _, _ in names:
                 checked, saved = candidates[pair]
                 saved.parent.mkdir(parents=True, exist_ok=True)
                 if saved.exists() and saved.read_bytes() != checked.text.encode("utf-8"):

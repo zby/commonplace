@@ -27,8 +27,6 @@ from commonplace.lib import frontmatter
 
 TYPE = "types/answers.md"
 EDIT_RESULT = "types/edit-result.md"
-STATES = ("pending", "approved", "rejected", "deferred")
-DECIDER = "operator"
 TEXT_ITEM = "text"
 """The id of the one item of a text to approve."""
 

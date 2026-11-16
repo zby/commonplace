@@ -74,7 +74,7 @@ declaration_grammar(
 
 @type_rule("agentic-system-analyses/types/agentic-system-boundary.md")
 def _agentic_boundary_register_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
     """The register's shape and identity are content, not invocation checks."""
     body = parsed.document.body
@@ -106,7 +106,7 @@ def _agentic_boundary_register_rule(
 
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 def _agentic_reconciliation_amendment_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
 
     errors = [
@@ -127,7 +127,7 @@ def _agentic_reconciliation_amendment_rule(
 @type_rule("agentic-system-analyses/types/agentic-system-reconciliation-report.md")
 @type_rule("agentic-system-analyses/types/agentic-system-workflow-report.md")
 def _agentic_evidence_and_references_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
 
     field_errors = route_field_errors(parsed.document.body)
@@ -250,7 +250,7 @@ def _record_prefix_rule(
 
 @type_rule("agentic-system-analyses/types/agentic-system-memory-report.md")
 def _memory_report_pending_check_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
 
     checks = blank_fenced_code_blocks(section(parsed.document.body, "Limitations and checks"))
@@ -260,7 +260,7 @@ def _memory_report_pending_check_rule(
 
 @type_rule("agentic-system-analyses/types/agentic-system-epistemic-report.md")
 def _epistemic_ledger_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
 
     errors = epistemic_ledger_errors(parsed.document.body)
@@ -271,7 +271,7 @@ def _epistemic_ledger_rule(
 
 @type_rule("agentic-system-analyses/types/agentic-system-memory-profile.md")
 def _memory_profile_local_rule(
-    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun  # noqa: ARG001 - type-rule signature
 ) -> None:
     """The profile's own content; its references resolve in the artifact rule."""
     if re.search(r"(?m)^> ?", parsed.document.body):

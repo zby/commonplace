@@ -157,8 +157,10 @@ class _RedirectMaps:
                 else self._header_indent + 2
             )
             redirect_lines = [f'{" " * self._header_indent}redirect_maps:']
-            for key in sorted(self.redirects, key=str.casefold):
-                redirect_lines.append(f"{' ' * indent}'{key}': '{self.redirects[key]}'")
+            redirect_lines.extend(
+                f"{' ' * indent}'{key}': '{self.redirects[key]}'"
+                for key in sorted(self.redirects, key=str.casefold)
+            )
             rebuilt[self._header_index : self._header_index + 1] = redirect_lines
         new_content = "\n".join(rebuilt)
         if self._trailing_newline:

@@ -377,6 +377,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
                     profile["version"],
                     str(meta.get("description", "")),
                 ],
+                strict=True,
             )
         )
         row.update(project_comparison(profile))

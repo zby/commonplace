@@ -52,7 +52,7 @@ def produce(run: Run, job: str, build_prompt, check, outputs: list[str], *, memb
     primary, auxiliary = outputs[0], list(outputs[1:])
     state = {"refusal": refusal, "previous": dict(previous or {}), "given": {}}
 
-    def prompt(problems: list) -> str:
+    def prompt(problems: list) -> str:  # noqa: ARG001 - the correction loop calls prompt(problems)
         return build_prompt(dict(state["given"]))
 
     def given(problems: list, last: Answer | None) -> dict[str, str]:

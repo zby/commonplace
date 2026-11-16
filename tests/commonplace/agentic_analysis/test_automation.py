@@ -8,6 +8,7 @@ startup, source, member, publication and replay guards are real.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import shutil
@@ -332,10 +333,8 @@ def test_killed_pinned_controller_leaves_unsettled_worker_without_relaunch(comma
         assert len(list((Path(item["worktree"]) / STATE_ROOT).glob("AAS-*"))) == 1
     finally:
         if worker is not None:
-            try:
+            with contextlib.suppress(ProcessLookupError):
                 os.killpg(worker["pid"], signal.SIGKILL)
-            except ProcessLookupError:
-                pass
         if process.poll() is None:
             process.kill()
         process.wait(timeout=10)
@@ -684,10 +683,8 @@ def test_low_level_commands_keep_group_cancellation_for_descendants(tmp_path, si
         assert process.wait(timeout=20) != 0
         wait_for(stopped.exists)
     finally:
-        try:
+        with contextlib.suppress(ProcessLookupError):
             os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
         process.wait(timeout=10)
 
 

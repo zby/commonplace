@@ -304,9 +304,11 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
                 current = stub.is_file() and read_text(stub) == render_stub(skill)
                 found.append(OutputStatus("ok" if current else "stale", dest))
         if directory.is_dir():
-            for dest in sorted(directory.iterdir()):
-                if dest.name not in wanted and not _is_link(dest) and (dest / STUB_MARKER).is_file():
-                    found.append(OutputStatus("extra", dest))
+            found.extend(
+                OutputStatus("extra", dest)
+                for dest in sorted(directory.iterdir())
+                if dest.name not in wanted and not _is_link(dest) and (dest / STUB_MARKER).is_file()
+            )
     routing = project / ROUTING
     if not routing.is_file():
         found.append(OutputStatus("missing", routing))

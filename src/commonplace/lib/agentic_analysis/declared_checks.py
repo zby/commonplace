@@ -24,17 +24,17 @@ def bound_boundary(check: Candidate) -> list[str]:
     run-id is a run identity field, which draft validation checks.
     """
     metadata = json.loads(check.inputs["metadata"])
-    repo = checkout(check.run_dir)
+    checkout(check.run_dir)  # refuses a run outside its analysis checkout
     frozen = acquired_source(check.inputs["source"], job="the boundary check")
     # Only an accepted boundary establishes the capture pin. The check's
     # incumbent input preserves it across later corrections without a second source record.
     incumbent_source = source_field(check.incumbent) if check.incumbent is not None else None
     findings = ["[invocation] " + refusal for refusal in boundary_refusals(
-        check.data, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
+        check.data, identity=metadata["source-identity"], frozen=frozen,
         capture_directory=check.run_dir / CAPTURE_DIRECTORY,
     )]
     if incumbent_source is not None and incumbent_source != frozen:
         findings += ["[incumbent] " + refusal for refusal in boundary_refusals(
-            check.data, repo_root=repo, identity=metadata["source-identity"], frozen=incumbent_source,
+            check.data, identity=metadata["source-identity"], frozen=incumbent_source,
         )]
     return findings

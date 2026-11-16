@@ -162,7 +162,7 @@ def _manifest(layout: Layout, type_spec: str, members: Mapping[str, bytes], work
     }, sort_keys=False).encode("utf-8")
 
 
-def _environment(metadata: dict, repo: Path, boundary: bytes, source: bytes | None, run_dir: Path,
+def _environment(metadata: dict, boundary: bytes, source: bytes | None, run_dir: Path,
                  *, job: str) -> None:
     """Bind the boundary's source to the opened identity and the acquisition result."""
     frozen = acquired_source(source, job=job)
@@ -170,7 +170,7 @@ def _environment(metadata: dict, repo: Path, boundary: bytes, source: bytes | No
     if fields.get("result-disposition") == "complete" and not isinstance(fields.get("source"), dict):
         raise ValueError("complete publication requires a frozen boundary source")
     reasons = boundary_refusals(
-        boundary, repo_root=repo, identity=metadata["source-identity"], frozen=frozen,
+        boundary, identity=metadata["source-identity"], frozen=frozen,
         capture_directory=run_dir / CAPTURE_DIRECTORY,
     )
     if reasons:
@@ -186,7 +186,7 @@ def assemble_analysis(members: Mapping[str, bytes], *, metadata: bytes, source: 
     """
     boundary = _classified_boundary(members)
     opened, repo = json.loads(metadata), checkout(run_dir)
-    _environment(opened, repo, members["boundary"], source, run_dir, job="assembly")
+    _environment(opened, members["boundary"], source, run_dir, job="assembly")
     worker = _provenance(members, provenance, opened)
     fields = boundary.frontmatter
     disposition = fields["result-disposition"]
@@ -254,7 +254,7 @@ def _prepare_publication(members: Mapping[str, bytes], *, metadata: bytes | None
     """Check pinned inputs and environment before journal reconciliation or mutation."""
     boundary = _classified_boundary(members)
     opened, repo = _opened_environment(metadata, run_dir, library, job="publication")
-    _environment(opened, repo, members["boundary"], source, run_dir, job="publication")
+    _environment(opened, members["boundary"], source, run_dir, job="publication")
     worker = _provenance(members, provenance, opened)
     if manifest is None:
         raise ValueError("publication requires assembly's pinned manifest")

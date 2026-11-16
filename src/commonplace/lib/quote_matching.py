@@ -205,8 +205,7 @@ def ranged_prose_anchors(content: str) -> list[tuple[int, str]]:
     for index, line in enumerate(lines, start=1):
         if index - 1 in attributions:
             continue
-        for match in LOCAL_ANCHOR_RE.finditer(line):
-            found.append((index, match.group()))
+        found.extend((index, match.group()) for match in LOCAL_ANCHOR_RE.finditer(line))
         for match in URL_RE.finditer(line):
             url = match.group().rstrip(".,;")
             try:

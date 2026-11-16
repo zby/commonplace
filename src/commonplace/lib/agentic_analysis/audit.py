@@ -6,6 +6,7 @@ ignored run state; worktree removal still requires evidence extraction.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import shutil
 import sys
@@ -244,10 +245,8 @@ def advisory_audit(analysis, *, completed: bool) -> None:
             pass  # The stderr message remains available if evidence storage itself failed.
     print(f"advisory audit: {status['state']}; {analysis.run_dir / 'audit/status.json'}"
           + (f"; {status['reason']}" if status.get("reason") else ""), file=sys.stderr)
-    try:
+    with contextlib.suppress(OSError):  # Preserve the analysis result even when its audit log cannot be saved.
         analysis.run.log(event="advisory-audit", **status)
-    except OSError:
-        pass  # Preserve the analysis result even when its audit log cannot be saved.
 
 
 def audit(analysis, *, completed: bool) -> dict:

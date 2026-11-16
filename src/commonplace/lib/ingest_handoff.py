@@ -265,7 +265,7 @@ def load_record(path: Path, *, repo_root: Path) -> HandoffRecord:
 def _first_difference(expected: str, actual: str) -> str:
     left, right = expected.encode("utf-8"), actual.encode("utf-8")
     offset = next(
-        (i for i, (a, b) in enumerate(zip(left, right)) if a != b),
+        (i for i, (a, b) in enumerate(zip(left, right, strict=False)) if a != b),
         min(len(left), len(right)),
     )
     return (

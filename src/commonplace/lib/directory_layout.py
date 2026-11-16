@@ -266,11 +266,12 @@ def layout_findings(layout: Layout, members: Mapping[str, ParsedDocument],
 
     Run identity fields are checked only when ``run_values`` is given.
     """
-    findings: list[Finding] = []
-    for name in sorted(members):
-        if layout.role_at(name) is None and layout.membership == "closed":
-            findings.append(Finding(None, f"{name}: no layout role; this type has closed membership",
-                                    repair="remove the file, or write it at the path of the role it fills"))
+    findings: list[Finding] = [
+        Finding(None, f"{name}: no layout role; this type has closed membership",
+                repair="remove the file, or write it at the path of the role it fills")
+        for name in sorted(members)
+        if layout.role_at(name) is None and layout.membership == "closed"
+    ]
     required, permitted = layout.requirement(members)
     discriminator = (
         f"{layout.path(layout.required.when_role)} {layout.required.when_field}"

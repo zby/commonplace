@@ -84,9 +84,9 @@ def _render_markdown(data: dict) -> str:
 
     labels: list[str] = []
     if isinstance(data.get("labels"), list):
-        for label in data["labels"]:
-            if isinstance(label, dict) and label.get("name"):
-                labels.append(str(label["name"]))
+        labels.extend(
+            str(label["name"]) for label in data["labels"] if isinstance(label, dict) and label.get("name")
+        )
 
     lines = [f"# {title}" + (f" (#{number})" if number else ""), ""]
 

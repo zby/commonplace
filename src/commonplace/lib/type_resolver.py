@@ -487,7 +487,9 @@ def _validator_for_path(path_str: str) -> Draft202012Validator:
 
 
 @cache
-def _validator_for_path_with_library(path_str: str, library_str: str) -> Draft202012Validator:
+def _validator_for_path_with_library(
+    path_str: str, library_str: str  # noqa: ARG001 - library_str keys the cache
+) -> Draft202012Validator:
     return Draft202012Validator(
         _load_schema(path_str),
         registry=Registry(retrieve=_retrieve_schema),

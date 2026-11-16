@@ -21,7 +21,7 @@ def acquired_source(data: bytes | None, *, job: str) -> dict | None:
 
 
 def boundary_refusals(
-    candidate: Path | bytes, *, repo_root: Path, identity: str,
+    candidate: Path | bytes, *, identity: str,
     frozen: dict[str, Any] | None = None, capture_directory: Path | None = None,
 ) -> list[str]:
     """The boundary's source bound to the run's source identity and pinned bytes.

@@ -90,7 +90,7 @@ class SnapshotPin:
             return "attribution checksum differs from snapshot_sha256"
         return None
 
-    def read(self, citation: Citation) -> SourceText:
+    def read(self, citation: Citation) -> SourceText:  # noqa: ARG002 - shared source interface
         if self._text is None:
             location = "the checksum-verified snapshot"
             try:
@@ -192,7 +192,7 @@ class CapturePin:
         """Why the pinned bytes are not here, or None when they are."""
         return self._load().missing
 
-    def read(self, citation: Citation) -> SourceText:
+    def read(self, citation: Citation) -> SourceText:  # noqa: ARG002 - shared source interface
         return self._load()
 
     def _load(self) -> SourceText:
