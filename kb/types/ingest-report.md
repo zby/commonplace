@@ -18,6 +18,9 @@ path is local state and never appears in tracked frontmatter or links.
 
 Assess fit relative to the installed KB's goals, local collection contracts, and current connection context. Interpret "our theory", "our stack", "our codebase", and "our practices" through those local goals and contracts.
 
+Source terms liable to confusion with the installed KB's vocabulary have
+their differences in meaning made explicit.
+
 ## Metadata
 
 - Keep the H1 title text, including the `Ingest:` prefix, to at most 100

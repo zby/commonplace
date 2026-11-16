@@ -99,6 +99,9 @@ durable report.
    the connect report as candidate discovery input. Treat its `Maintenance
    Observations` as non-actionable context. One settled connection is sufficient.
 
+   **Terminology:** Where a source term risks confusion with the installed
+   KB's vocabulary, briefly clarify the difference without forcing equivalence.
+
    For scientific papers, use your pretrained knowledge of the NeurIPS
    reviewing methodology as a coherent framework for the experimental
    `Contribution assessment (our opinion)`, adapted to the paper's contribution
