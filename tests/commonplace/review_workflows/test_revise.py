@@ -85,12 +85,12 @@ if kind == "assess":
         passes.insert(0, "narrow-overclaims")
     if "BADPLAN" in text and "was rejected" not in frame:
         passes.append("make-it-shine")
-    plan = "purpose: p\ndefend: []\nstop: null\npasses:\n" + "".join(f"  - pass: {p}\n" for p in passes)
+    plan = "purpose: p\nmust-keep: []\nstop: null\npasses:\n" + "".join(f"  - pass: {p}\n" for p in passes)
     listed = re.findall(r"^- `([^`]+)` \(criterion `[^`]+`, depth", frame, re.MULTILINE)
     if "FIXIT" in text and listed:
         plan = plan.replace("passes:\n", f"passes:\n  - pass: fix-strategy-taxonomy\n    finding: {listed[0]}\n")
     if "STOP" in text:
-        plan = "purpose: p\ndefend: []\npasses: []\nstop: rewrite-needed\n"
+        plan = "purpose: p\nmust-keep: []\npasses: []\nstop: rewrite-needed\n"
     if Path("new-proposal").exists():
         plan = plan.replace("purpose: p", "purpose: new")
     outputs["assessment"].write_text("# Assessment\n\nRanked changes.\n")
@@ -196,7 +196,7 @@ def note_text(repo):
 
 def named_plan(tmp_path, passes=("readability-and-flow",), **fields):
     path = tmp_path / "custom.yaml"
-    path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None,
+    path.write_text(yaml.safe_dump({"purpose": "p", "must-keep": [], "stop": None,
                                    "passes": [{"pass": p} for p in passes], **fields}))
     return path
 
@@ -251,14 +251,14 @@ def test_new_run_requires_explicit_mode_and_fixed_plan_rejects_ignored_constrain
     code, error, launches = revise(repo, capsys, NOTE_PATH)
     assert code == 2 and "choose --plan FILE" in error and launches == []
     path = named_plan(tmp_path)
-    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path), "--defend", "Keep alpha")
-    assert code == 2 and "takes purpose and defend from the plan" in error and launches == []
+    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path), "--must-keep", "Keep alpha")
+    assert code == 2 and "takes purpose and must-keep from the plan" in error and launches == []
     assert note_text(repo) == original
 
 
 def test_fixed_single_pass_has_no_planner_dependency_and_replays_to_publication(repo, capsys, tmp_path, monkeypatch):
     original = start(repo)
-    path = named_plan(tmp_path, purpose="Improve the body for its reader", defend=["Alpha body holds."])
+    path = named_plan(tmp_path, purpose="Improve the body for its reader", **{"must-keep": ["Alpha body holds."]})
     plan = yaml.safe_load(path.read_text())
     plan["passes"][0]["scope"] = "body only"
     path.write_text(yaml.safe_dump(plan))
@@ -274,7 +274,7 @@ def test_fixed_single_pass_has_no_planner_dependency_and_replays_to_publication(
     [call] = captured_inputs(repo[2])
     assert call["inputs"]["purpose"] == "Improve the body for its reader"
     assert call["inputs"]["scope"] == "body only"
-    assert call["inputs"]["defend"] == "- Alpha body holds.\n"
+    assert call["inputs"]["must-keep"] == "- Alpha body holds.\n"
     assert call["inputs"]["execution"] == (repo[0] / "kb" / revise_module.EXECUTION_REL).read_text()
     assert "passes" not in call["inputs"]
     path.unlink()  # repeats use captured inputs, not the now-missing source plan
@@ -497,7 +497,28 @@ def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     assert {c["kind"] for c in calls} == {"assess", "pass", "list", "apply"}
     assert all(c["inputs"]["brief"] == brief.read_text() for c in calls)
     assert all("## Headless write briefs" in c["inputs"]["execution"] for c in calls if c["kind"] != "assess")
+    [assess] = [c for c in calls if c["kind"] == "assess"]
+    assert "The plan starts from the brief" in assess["inputs"]["criterion"], \
+        "the planning instruction tells the assessor to add to the brief's Must keep, not restate it"
     publish(repo, capsys, ready)
+
+
+def test_the_old_defend_name_is_refused_on_the_command_line_and_in_a_plan(repo, capsys, tmp_path):
+    original = start(repo)
+    with pytest.raises(SystemExit):
+        main(["run", "revise", NOTE_PATH, "--pass", "readability-and-flow", "--defend", "Keep alpha"])
+    capsys.readouterr()
+    path = tmp_path / "old.yaml"
+    path.write_text(yaml.safe_dump({"purpose": "p", "defend": ["Keep alpha"], "stop": None,
+                                    "passes": [{"pass": "readability-and-flow"}]}))
+    code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
+    assert code == 2 and "unknown fields: defend" in error and "`must-keep` is missing" in error
+    assert launches == [] and note_text(repo) == original
+    _, ready, launches = revise(repo, capsys, NOTE_PATH, "--pass", "narrow-overclaims", "--must-keep", "Keep alpha")
+    assert yaml.safe_load(artifact_file(repo, ready, "plan.yaml").read_text())["must-keep"] == ["Keep alpha"]
+    assert launches == ["pass narrow-overclaims big"], "a non-empty must-keep list runs narrow-overclaims"
+    [call] = captured_inputs(repo[2])
+    assert call["inputs"]["must-keep"] == "- Keep alpha\n"
 
 
 @pytest.mark.parametrize("kind", ["assess", "apply"])
@@ -810,11 +831,11 @@ def test_pass_runs_a_one_entry_plan_and_repeats_replay_it(repo, capsys):
     assert code == 2 and "unknown pass `polish`" in error and launches == []
     code, ready, launches = revise(repo, capsys, NOTE_PATH, "--pass", "readability-and-flow", "--purpose", "Readers")
     assert code == 0 and ready["mode"] == "fixed-plan" and launches == [ORDINARY[0]]
-    assert ready["plan"] == {"purpose": "Readers", "defend": [], "stop": None,
+    assert ready["plan"] == {"purpose": "Readers", "must-keep": [], "stop": None,
                              "passes": [{"pass": "readability-and-flow", "scope": None}]}
     assert not artifact_file(repo, ready, "assessment.md").exists() and note_text(repo) == original
     code, error, _ = revise(repo, capsys, NOTE_PATH, "--purpose", "Others")
-    assert code == 2 and "takes purpose and defend from the plan" in error
+    assert code == 2 and "takes purpose and must-keep from the plan" in error
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["waiting-for"] == ready["waiting-for"]
     publish(repo, capsys, repeated)
@@ -855,10 +876,10 @@ def test_plan_entries_for_the_fix_carry_a_finding_at_its_criterion_depth(repo, c
                              ([{"pass": "readability-and-flow", "finding": finding}], "takes no `finding`"),
                              ([{"pass": "opening-and-title"}, fix], "must run before `opening-and-title`"),
                              ([fix, fix], "is listed twice")):
-        path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None, "passes": entries}))
+        path.write_text(yaml.safe_dump({"purpose": "p", "must-keep": [], "stop": None, "passes": entries}))
         code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
         assert code == 2 and problem in error and launches == [], error
-    path.write_text(yaml.safe_dump({"purpose": "p", "defend": [], "stop": None,
+    path.write_text(yaml.safe_dump({"purpose": "p", "must-keep": [], "stop": None,
                                     "passes": [fix, {"pass": "readability-and-flow"}]}))
     code, _, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path))
     assert code == 0 and launches == ["pass fix-strategy-taxonomy big", ORDINARY[0]]
@@ -969,7 +990,7 @@ def test_triage_fixes_only_results_with_an_approved_finding(repo, capsys):
     code, ready, launches = revise(repo, capsys, NOTE_PATH)
     questions = {s["criterion"]: s["question"] for s in ready["triage"]["results"]}
     assert code == 0 and launches == ["pass fix-strategy-taxonomy big", "pass fix-strategy-taxonomy big"]
-    assert ready["plan"] == {"purpose": "Readers", "defend": [], "stop": None, "passes": [
+    assert ready["plan"] == {"purpose": "Readers", "must-keep": [], "stop": None, "passes": [
         {"pass": revise_module.FIX, "scope": None, "finding": questions["prose/residue"]},
         {"pass": revise_module.FIX, "scope": None, "finding": questions["sentence/packing"]}]}
     assert [s["state"] for s in ready["passes"]] == ["applied", "applied"]

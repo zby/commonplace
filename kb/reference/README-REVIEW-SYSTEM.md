@@ -125,6 +125,13 @@ each edit operation also receives the `## Role` section alone, as the input
 `kb-role`, and may not rename, redefine or drop a term or claim that section
 lists as relied on.
 
+The role report feeds the note's [write brief](../types/write-brief.md)
+only through the operator. No code writes a brief. When a role report lists
+relied-on terms or claims that the note's brief does not keep, the session
+agent tells the operator and offers to add them to the brief's Must keep, or
+to create the brief when the note has none. The agent never amends a brief
+without the operator's word.
+
 **Connect.** [Connect](../instructions/cp-skill-connect/SKILL.md) keeps its
 own route. It writes a connect report, not a review result, and its
 candidates depend on the whole corpus, which no note or criterion hash
@@ -520,6 +527,17 @@ plans no fix for a rejected finding unless the text changed in a way that
 answers the operator's reason, and no fix for a deferred one unless its
 `revisit` condition is met. The full procedure's assessor receives the same.
 
+**The write brief and `must-keep`.** The note's
+[write brief](../types/write-brief.md) is the one lasting statement of what
+the note must keep and exclude. The assessor and every edit operation receive
+it as `brief`. A plan's `must-keep` list, and the `--must-keep` option that
+feeds it, holds only what one run keeps beyond the brief's Must keep; the
+planning instruction tells the assessor not to restate the brief there. The
+assessor plans no pass that conflicts with the brief. When the purpose or the
+operator's must-keep items conflict with it, the plan's `stop` names the brief
+item. A plan with a field other than `purpose`, `must-keep`, `passes` and
+`stop` is refused.
+
 **Full.** `--full` first runs every review operation that declares a `depth`
 on the artifact, through the sweep's route. Fresh results are reused, new
 results go to the shared store. Then the compression synthesis runs on the
@@ -672,9 +690,17 @@ sources:
 ## Current direction
 ```
 
+The note's write brief is the one lasting statement of what the note must
+do, keep and exclude; the commission adds only what is specific to this
+rewrite. `## Current direction` is always required. The four sections that
+repeat the brief's headings are required only when the note has no brief.
+When it has one, they are optional and hold only what this rewrite adds to
+the brief. A brief item the operator changes for this rewrite is amended in
+the brief before the run, and the commission says which item.
+
 Code checks that `note` is the note being rewritten, that each source is a
 repository file other than the note, its write brief and run state, and that
-every section is present. The run captures the commission once in
+every required section is present. The run captures the commission once in
 `rewrite-inputs.json`, with the note's [write brief](../types/write-brief.md)
 when the note declares one, the sources and the note's type spec and
 collection contract. Every worker receives the brief as binding retained

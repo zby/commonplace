@@ -9,7 +9,7 @@
     commonplace-review run edit --fixture PATH
     commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --triage | --assess
                                             | --full]
-                                  [--purpose TEXT] [--defend CLAIM ...]
+                                  [--purpose TEXT] [--must-keep CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review run revise ARTIFACT --revised FILE  # at the publication stop; launches nothing
     commonplace-review run rewrite NOTE [--commission FILE [--restart]] [--profile NAME] [--timeout SECONDS]
@@ -57,7 +57,7 @@ kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/. Repeating the command on the same note text
 continues that run: answered calls replay. An edited note has another hash,
 so the same command opens a new run. A repeat reuses the options the run
-recorded (`--purpose`, `--defend` and the effort profiles); an option given
+recorded (`--purpose`, `--must-keep` and the effort profiles); an option given
 on a repeat replaces the recorded value.
 The workflow writes the note at most once, at its end, and only from the
 text the run started from; a note changed during the run is a conflict, and
@@ -89,8 +89,9 @@ per fresh stored `warn` or `fail` result and stops; the report's `triage`
 lists each file with its approval command. When every file is approved, the
 plan holds one fix entry per result with an `approved` finding, and the fix
 receives the approved answers as `finding-answers`. `--assess`, `--full`,
-`--triage` and the one-entry plans use `--purpose` and `--defend`; a plan
-file carries those fields itself. The assessor also receives the artifact's fresh
+`--triage` and the one-entry plans use `--purpose` and `--must-keep`; a plan
+file carries those fields itself. `--must-keep` lists only what this run keeps
+beyond the note's write brief, whose Must keep every worker already receives. The assessor also receives the artifact's fresh
 stored `warn` and `fail` review results. `--full` first runs every review operation that declares a `depth` on the
 artifact, as `run gates` would on the profile file's `default` profile, in
 runs under the revise run directory; then the assessor also receives the
@@ -140,8 +141,10 @@ or a guard change.
 sources when its claims or synthesis are unsettled (see
 `commonplace.lib.review_workflows.rewrite`). The commission is Markdown with
 YAML frontmatter naming `note` and `sources` (each a `path` and a `role`)
-and the sections Intended contribution, Must keep, Must exclude, Reserved
-decisions and Current direction. Fresh workers reconstruct the sources and
+and the section Current direction. A note without a write brief also needs
+the sections Intended contribution, Must keep, Must exclude and Reserved
+decisions; with a brief they are optional and hold only what the rewrite
+adds to it. Fresh workers reconstruct the sources and
 account for the claims without the note, then write a candidate with the
 note's text, and a fresh reviewer accepts or blocks the exact candidate; one
 repair follows a block. The run keeps its files under
@@ -256,8 +259,8 @@ def _parser() -> argparse.ArgumentParser:
     rev = workflows.add_parser("revise", help="revise one markdown artifact through the simplification passes")
     rev.add_argument("artifact")
     rev.add_argument("--purpose", help="who the reader is and what they should notice or be able to do")
-    rev.add_argument("--defend", action="append", default=[], metavar="CLAIM",
-                     help="a claim the passes may not narrow; repeat for each")
+    rev.add_argument("--must-keep", action="append", default=[], metavar="CLAIM",
+                     help="a claim the passes may not narrow, beyond the write brief's Must keep; repeat for each")
     mode = rev.add_mutually_exclusive_group()
     mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment; final publication needs approval")
     mode.add_argument("--pass", dest="pass_name", metavar="NAME",
@@ -538,7 +541,7 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
             finding = revise.read_finding(root, artifact, (raw.resolve().relative_to(root) if raw.is_absolute()
                                                            else raw).as_posix()).path
         named_plan = revise.one_entry_plan(revise.FIX if finding else arguments.pass_name, finding,
-                                           arguments.purpose, arguments.defend)
+                                           arguments.purpose, arguments.must_keep)
     if named_plan is not None:
         revise.read_plan(named_plan, root, artifact)
     run_dir = edits.run_dir(root, "revise", artifact)
@@ -552,8 +555,8 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                          "chooses work implicitly")
     if mode == "fixed-plan" and not isinstance(named_plan if named_plan is not None else recorded.get("plan"), str):
         raise ValueError("fixed-plan run has no captured plan; supply --plan FILE")
-    if mode == "fixed-plan" and not focused and (arguments.purpose is not None or arguments.defend):
-        raise ValueError("fixed-plan execution takes purpose and defend from the plan; edit the --plan input, "
+    if mode == "fixed-plan" and not focused and (arguments.purpose is not None or arguments.must_keep):
+        raise ValueError("fixed-plan execution takes purpose and must-keep from the plan; edit the --plan input, "
                          "or give them with --pass or --finding")
     profiles = recorded.get("profiles") or {effort: asdict(profile)
                                             for effort, profile in edit_operations.effort_profiles(root, names).items()}
@@ -562,10 +565,10 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     if mode == "full":                    # the review step's profile: recorded, or the profile file's default
         review = recorded.get("review-profile") or asdict(load_profile(root, None, gates.profiles()))
     options = _options(run_dir, {"mode": mode, "purpose": None if focused else arguments.purpose,
-                                 "defend": None if focused else arguments.defend or None,
+                                 revise.MUST_KEEP: None if focused else arguments.must_keep or None,
                                  "profiles": profiles, "plan": named_plan, "review-profile": review})
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
-                           purpose=options.get("purpose"), defend=options.get("defend", []),
+                           purpose=options.get("purpose"), must_keep=options.get(revise.MUST_KEEP, []),
                            named_plan=options["plan"] if mode == "fixed-plan" else None,
                            review=Profile(**review) if review else None, triage=mode == "triage",
                            timeout=arguments.timeout, harnesses=harnesses)
@@ -578,7 +581,7 @@ def _revised(root: Path, artifact: str, arguments: argparse.Namespace, harnesses
     given = [option for option, value in (
         ("--plan", arguments.plan), ("--pass", arguments.pass_name), ("--finding", arguments.finding),
         ("--assess", arguments.assess), ("--triage", arguments.triage), ("--full", arguments.full),
-        ("--purpose", arguments.purpose), ("--defend", arguments.defend),
+        ("--purpose", arguments.purpose), ("--must-keep", arguments.must_keep),
         *((f"--profile-{effort}", getattr(arguments, f"profile_{effort}")) for effort in edit_operations.EFFORTS))
         if value not in (None, False, [])]
     if given:

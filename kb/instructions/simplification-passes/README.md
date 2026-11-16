@@ -56,7 +56,7 @@ order. The procedures differ only in how the plan is made.
   `--finding RESULT` runs a one-entry plan for
   [fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md),
   with that review result of the artifact as its `finding` input. Nothing
-  is assessed and nothing is reviewed. `--purpose` and `--defend` go into
+  is assessed and nothing is reviewed. `--purpose` and `--must-keep` go into
   the plan; without `--purpose`, the plan states that the operator named
   no other purpose. `--plan FILE` supplies any other fixed plan.
 - **Triage.** `--triage` asks the operator about the artifact's fresh stored
@@ -89,11 +89,13 @@ order. The procedures differ only in how the plan is made.
 ## Fixed-plan execution: the simple baseline
 
 Use one pass to evaluate an editing operation independently of planning.
-Supply a YAML plan whose purpose, scope and protected claims are settled:
+Supply a YAML plan whose purpose, scope and must-keep claims are settled.
+`must-keep` lists only what this run keeps beyond the note's write brief;
+every pass receives the brief and keeps its Must keep:
 
 ```yaml
 purpose: "Make the experiment description easier for KB maintainers to follow."
-defend:
+must-keep:
   - "The proposed experiment is a prediction, not an established result."
 passes:
   - pass: readability-and-flow
@@ -112,10 +114,10 @@ For one pass with no scope, `--pass NAME` writes this plan for you.
 
 This route makes no assessment call and does not choose or add passes. The
 worker still exercises judgment within the assigned operation. The plan owns
-`purpose` and `defend`; do not also supply their CLI options. Multiple fixed
+`purpose` and `must-keep`; do not also supply their CLI options. Multiple fixed
 passes are supported, but do not treat their composition as evidence that an
 individual pass is reliable. A missing scope covers the whole artifact; use
-an explicit scope for a bounded trial. An empty `defend` list does not license
+an explicit scope for a bounded trial. An empty `must-keep` list does not license
 changing claims.
 
 Inspect the returned report, `artifact/final.md` and `artifact/final.diff`.
@@ -149,7 +151,7 @@ in these note workflows; Python tests belong to development of the machinery.
 
 ## Planning-containing workflows
 
-`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
+`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--must-keep CLAIM ...]`
 commissions assessment and pass selection, then runs the validated plan without
 a routine plan-approval stop. The assessor also receives the artifact's fresh
 `warn` and `fail` review results. The planning instruction's "Run it as a workflow"

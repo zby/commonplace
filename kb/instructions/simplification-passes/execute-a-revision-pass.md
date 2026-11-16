@@ -22,9 +22,10 @@ role. The revise workflow supplies these roles:
 - `purpose`: who the reader is and what they should notice or be able to do.
 - `scope`: the only part of the text the operation may change. Without it,
   the whole text is in scope.
-- `defend`: claims the operation may not narrow. Without it, no claim is
-  specially protected, but claims still may not change generally.
-- `brief`: the note's write brief.
+- `must-keep`: claims the operation may not narrow, in addition to the
+  brief's Must keep. Without it, no claim beyond the brief is specially
+  protected, but claims still may not change generally.
+- `brief`: the note's write brief. Its Must keep binds as `must-keep` does.
 - `answers`: the operator's answered list of this operation's proposals.
 - `kb-role`: what the note is for in the KB, and which of its terms and claims
   other notes rely on. The full procedure supplies it from the note's role
@@ -72,7 +73,7 @@ Treat the captured write brief as binding retained intent. Keep its must-keep,
 must-exclude and reserved decisions. Do not amend it or change the artifact's
 `brief:` field. Use the captured input rather than rereading the live brief.
 
-If the purpose, protected claims, scope, answers or operation conflicts with
+If the purpose, the must-keep list, scope, answers or operation conflicts with
 the brief, use the worker-problem output and stop. Approval of a selection or
 publication does not authorize amending the brief. The operator must resolve
 that commission change outside the run.

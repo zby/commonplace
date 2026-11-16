@@ -37,8 +37,8 @@ instead of assessing again.
 
    Two things the passes cannot own belong in the assessment too. For each
    candidate overclaim, propose whether the sentence is support (may be
-   narrowed) or divergence (defend); the divergence items become the
-   packets' `Defend:` line unless the operator objects. And list
+   narrowed) or divergence (must be kept); the divergence items become the
+   packets' `Must keep:` line unless the operator objects. And list
    qualifications that have gone stale against the body: a scope bullet
    qualifying words the body no longer uses, a table cell filed under the
    wrong row, a cross-note ordinal pointing at the wrong list. These are
@@ -116,7 +116,7 @@ instead of assessing again.
    Purpose: {the operator's one line}
    Artifact: {path}
    Pass: {absolute path of {pass}.md in this instruction's directory}
-   Defend: {claims the operator has marked as divergence; a pass may not narrow them}
+   Must keep: {what this run keeps beyond the write brief's Must keep; a pass may not narrow it}
    Write scope: {the artifact only | none, return proposals}
    Return: the pass's report, plus items noticed but not applied, nothing committed
    ```
@@ -142,7 +142,7 @@ instead of assessing again.
 
 ## Run it as a workflow
 
-`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--defend CLAIM ...]`
+`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--must-keep CLAIM ...]`
 runs these steps with headless workers, which never write the checkout. This
 is the quick procedure. The assessment also receives the artifact's fresh
 stored review results with outcome `warn` or `fail`, when any exist; the
@@ -167,7 +167,7 @@ assessment. The full procedure does not review the edited text. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
 Repeating alone never approves the proposal or starts its dependent work.
-A repeat reuses the recorded `--purpose`, `--defend` and profiles unless you
+A repeat reuses the recorded `--purpose`, `--must-keep` and profiles unless you
 give them again. Each approval stop prints a JSON report whose `waiting-for` gives
 what to do, the file, proposal key, `approve-command` and command to repeat.
 Assessment, planning and settled intermediate passes are preauthorized;
@@ -185,7 +185,7 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    `artifact/` for inspection and proceeds with the validated plan.
    `--plan FILE` supplies an explicit input or override without assessment
    or approval, including replacement of a stopped plan. The plan holds
-   `purpose`, `defend`, `passes` in run order (each a `pass` name, an
+   `purpose`, `must-keep`, `passes` in run order (each a `pass` name, an
    optional `scope` and, for a pass that declares `responds-to`, the
    `finding` it fixes) and `stop`. A plan with `stop` set ends the run without
    editing the artifact. To run passes instead, supply a replacement with
@@ -202,6 +202,7 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    approval command each time the file changes, so that
    `commonplace-review decisions` lists the current text.
    The command rejects a plan that names an unknown pass, misses a field,
+   has a field it does not know,
    names a `finding` that is not a review result of the artifact, or breaks
    the depth order the pass files and the findings' criteria declare. A replacement supplied
    with `--plan` reuses calls whose inputs did not change and reruns the others.
@@ -244,7 +245,7 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    fresh examples before seeking separate authorization to remove a
    selection stop. This requires no new automatic learning infrastructure;
    fewer proposals alone do not establish reliability.
-4. Narrow-overclaims runs only when the plan's `defend` list is not empty.
+4. Narrow-overclaims runs only when the plan's `must-keep` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
 5. For a changed final artifact, follow [approve a text](../approve-a-text.md):
@@ -279,14 +280,24 @@ When the artifact declares a [write brief](../../types/write-brief.md), the asse
 as `execution`, not this planning procedure. That execution instruction carries
 the pass bounds and brief constraints without commissioning assessment or dispatch.
 
-Treat the supplied brief as binding retained intent. Keep its must-keep,
-must-exclude and reserved decisions in both the plan and the edited text.
+Treat the supplied brief as binding retained intent. It is the one lasting
+statement of what the artifact must keep and exclude. Keep its Must keep,
+Must exclude and Reserved decisions in both the plan and the edited text.
 Do not amend the brief or remove or change the artifact's `brief:` field.
-If the purpose, defended claims, validated plan, approved candidate list or
-pass instruction conflicts with it, report the conflict through the
-worker-problem output and stop. Selection or publication approval does not authorise
-amending the brief. The operator must resolve the commission change outside
-this workflow before continuing.
+
+The plan starts from the brief. Its `must-keep` lists only what this run adds
+to the brief's Must keep: the operator's must-keep items and the claims the
+assessment marks as divergence. Do not restate the brief's items there; every
+pass receives the brief. Never plan a pass that conflicts with the brief.
+When the purpose or the operator's must-keep items conflict with the brief,
+set the plan's `stop`, list no passes, and name the brief item and the
+conflicting text.
+
+A pass worker that finds the purpose, the must-keep list, the validated plan,
+an approved candidate list or its instruction in conflict with the brief
+reports the conflict through the worker-problem output and stops. Selection
+or publication approval does not authorise amending the brief. The operator
+must resolve the commission change outside this workflow before continuing.
 
 Use the captured input, not a reread of the live brief. A brief change between
 invocations invalidates affected calls and dependent approvals; a change during an

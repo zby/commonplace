@@ -57,7 +57,7 @@ never approves: only the recorded approved text becomes the operator's answer:
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
    (`edit_operations.ask()`) on the profile its `effort` selects, with the
-   current text and the roles `purpose`, `defend`, `scope` and `brief`. The
+   current text and the roles `purpose`, `must-keep`, `scope` and `brief`. The
    route checks the edit result and the candidate and retains both in its
    observation under `artifact/edits/`; the next pass works on the
    candidate. Each
@@ -86,7 +86,7 @@ never approves: only the recorded approved text becomes the operator's answer:
    naming the earlier answers file; the stop still waits for approval.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
-   `defend` list carries that evidence explicitly (is non-empty), and is
+   `must-keep` list carries that evidence explicitly (is non-empty), and is
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
    skipped pass is reported as left for the interactive path.
@@ -200,11 +200,13 @@ INSTRUCTION_REL = f"{PASSES_DIR}/revise-an-article-or-note.md"
 EXECUTION_REL = edit_operations.EXECUTION_REL
 ATTEMPTS = 3
 CONVERSATION = "narrow-overclaims"
-"""The pass whose evidence is the conversation: it runs only with a non-empty defend list."""
+"""The pass whose evidence is the conversation: it runs only with a non-empty must-keep list."""
 INTERACTIVE = {"split-out-a-treatment": "it writes a second file and the collection index from the "
                                         "discussion's text, which a headless worker has not seen"}
 """Passes the workflow never runs, with the reason."""
-PLAN_SCHEMA = {"purpose": str, "defend": list, "passes": list, "stop": (str, type(None))}
+MUST_KEEP = "must-keep"
+"""The plan field, and the input role, listing what this run keeps beyond the write brief's Must keep."""
+PLAN_SCHEMA = {"purpose": str, MUST_KEEP: list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN = "assessment.md", "plan.yaml"
 REPEAT = "commonplace-review run revise {artifact}"
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
@@ -327,7 +329,7 @@ def catalog(known: dict[str, Pass]) -> str:
         if current.name in INTERACTIVE:
             return " This workflow does not run it: it is left for the interactive path."
         if current.name == CONVERSATION:
-            return " This workflow runs it only when `defend` is not empty."
+            return f" This workflow runs it only when `{MUST_KEEP}` is not empty."
         if current.responds_to:
             return (f" Each entry names one review result file as `{FINDING}` and takes the depth of that "
                     "result's criterion; list one entry per finding.")
@@ -362,16 +364,22 @@ def _order_problems(entries: list[tuple[str, int | None]]) -> list[str]:
     return problems
 
 
+def unknown_fields(data: dict) -> list[str]:
+    """The plan's top-level fields outside `PLAN_SCHEMA`, as one problem; empty when there is none."""
+    unknown = sorted(str(name) for name in set(data) - set(PLAN_SCHEMA))
+    return [f"the plan has unknown fields: {', '.join(unknown)}"] if unknown else []
+
+
 def plan_checks(data: dict, known: dict[str, Pass], root: Path, artifact: str) -> list[str]:
-    """What a plan breaks beyond its schema: purpose, defend items, pass entries, findings and depth order.
+    """What a plan breaks beyond its schema: unknown fields, purpose, must-keep items, entries, findings, order.
 
     An entry for a pass that declares `responds-to` names one review result
     of `artifact` as `finding` and takes the depth of that result's
     criterion; no other entry names a finding.
     """
-    problems = [] if data["purpose"].strip() else ["`purpose` is empty"]
-    if not all(isinstance(claim, str) and claim.strip() for claim in data["defend"]):
-        problems.append("each `defend` item is a claim's text")
+    problems = unknown_fields(data) + ([] if data["purpose"].strip() else ["`purpose` is empty"])
+    if not all(isinstance(claim, str) and claim.strip() for claim in data[MUST_KEEP]):
+        problems.append(f"each `{MUST_KEEP}` item is a claim's text")
     entries, seen = [], set()
     for index, entry in enumerate(data["passes"], 1):
         if not isinstance(entry, dict) or not isinstance(entry.get("pass"), str):
@@ -414,19 +422,19 @@ def read_plan(text: str, root: Path, artifact: str, known: dict[str, Pass] | Non
     known = passes() if known is None else known
     data = parse(text)
     problems = (["the plan must be a YAML mapping"] if not isinstance(data, dict)
-                else violations(data, PLAN_SCHEMA) or plan_checks(data, known, root, artifact))
+                else violations(data, PLAN_SCHEMA) + unknown_fields(data) or plan_checks(data, known, root, artifact))
     if problems:
         raise ValueError("invalid plan: " + "; ".join(problems))
-    return {"purpose": data["purpose"], "defend": list(data["defend"]), "stop": data["stop"],
+    return {"purpose": data["purpose"], MUST_KEEP: list(data[MUST_KEEP]), "stop": data["stop"],
             "passes": [{"pass": entry["pass"], "scope": entry.get("scope"),
                         **({FINDING: entry[FINDING]} if entry.get(FINDING) is not None else {})}
                        for entry in data["passes"]]}
 
 
-def one_entry_plan(name: str, finding: str | None, purpose: str | None, defend: list[str]) -> str:
+def one_entry_plan(name: str, finding: str | None, purpose: str | None, must_keep: list[str]) -> str:
     """The plan of a focused run: one entry for the pass `name`, naming its finding when it takes one."""
     entry = {"pass": name, **({FINDING: finding} if finding is not None else {})}
-    return yaml.safe_dump({"purpose": purpose or FOCUSED_PURPOSE, "defend": list(defend), "stop": None,
+    return yaml.safe_dump({"purpose": purpose or FOCUSED_PURPOSE, MUST_KEEP: list(must_keep), "stop": None,
                            "passes": [entry]}, sort_keys=False, allow_unicode=True)
 
 
@@ -495,18 +503,19 @@ The artifact is `{artifact}` in this repository; its text is {artifact_input}. \
 Judge this input text; the file on disk may differ. The instruction is \
 {criterion_input}: do its step 1, the assessment, and nothing after it. The \
 plan is validated and ordinary passes run automatically. \
-{purpose}{defend}{brief}The passes you may recommend are listed in {passes_input}; \
+{purpose}{must_keep}{brief}The passes you may recommend are listed in {passes_input}; \
 choose only from them, by name.
 {findings}
 Output:
 - Write the assessment to {assessment}, as the instruction's step 1 describes.
 - Write the plan to {plan}: a YAML mapping holding exactly the decision fields \
-below. `purpose` is the purpose the assessment works under; `defend` lists the \
-claims the assessment marks as divergence, each as the claim's text; `passes` \
+below. `purpose` is the purpose the assessment works under; `must-keep` lists \
+what this run keeps beyond the write brief's Must keep, as the instruction's \
+step 1 says, each item as a claim's text; `passes` \
 lists the recommended passes in run order, each a mapping with `pass` (its \
 name) and, when the pass should touch only part of the artifact, `scope` \
 naming that part{finding_field}; `stop` is null, or the reason when the \
-instruction says to report a rewrite and stop. {no_writes}
+instruction says to stop. {no_writes}
 """
 
 FINDINGS_INTRO = ("\nThe artifact's stored review results with outcome warn or fail are inputs. Each line gives "
@@ -526,7 +535,7 @@ def _rel(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
-def _assessment_request(artifact: str, text: str, purpose: str | None, defend: list[str],
+def _assessment_request(artifact: str, text: str, purpose: str | None, must_keep: list[str],
                         known: dict[str, Pass], brief: dict[str, str], findings: list[Finding] = (),
                         reports: list[Finding] = (), told: list[dict] = ()) -> tuple[str, dict[str, str]]:
     """The captured request, also bound into the final publication approval.
@@ -544,8 +553,8 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, defend: l
               "passes": catalog(offered), **brief}
     if purpose:
         inputs["purpose"] = purpose
-    if defend:
-        inputs["defend"] = "".join(f"- {claim}\n" for claim in defend)
+    if must_keep:
+        inputs[MUST_KEEP] = "".join(f"- {claim}\n" for claim in must_keep)
     listed = ""
     for prefix, intro, given in (("finding", FINDINGS_INTRO, findings), ("report", REPORTS_INTRO, reports)):
         if not given:
@@ -564,7 +573,8 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, defend: l
         criterion_input=input_ref("criterion"), passes_input=input_ref("passes"),
         purpose=(f"The operator's purpose is {input_ref('purpose')}. " if purpose
                  else "The operator named no purpose: propose one as the instruction directs. "),
-        defend=f"The operator marks these claims as defended: {input_ref('defend')}. " if defend else "",
+        must_keep=(f"The operator's must-keep list for this run is {input_ref(MUST_KEEP)}. " if must_keep
+                   else ""),
         brief=f"The write brief is {input_ref('brief')}. " if brief else "",
         findings=listed, finding_field=FINDING_FIELD if findings else "",
         assessment=output_ref("assessment"), plan=output_ref("plan"), no_writes=NO_WRITES)
@@ -697,9 +707,9 @@ def _triage(run: Run, root: Path, artifact: str, findings: list[Finding], earlie
     return entries, given
 
 
-def triage_plan(entries: list[dict], purpose: str | None, defend: list[str]) -> str:
+def triage_plan(entries: list[dict], purpose: str | None, must_keep: list[str]) -> str:
     """The plan a triage makes: one fix entry per review result with an approved finding, in depth order."""
-    return yaml.safe_dump({"purpose": purpose or TRIAGE_PURPOSE, "defend": list(defend), "stop": None,
+    return yaml.safe_dump({"purpose": purpose or TRIAGE_PURPOSE, MUST_KEEP: list(must_keep), "stop": None,
                            "passes": entries}, sort_keys=False, allow_unicode=True)
 
 
@@ -739,20 +749,20 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     report.passes = [PassState(label(current.name, finding), entry["scope"], current.effort,
                                finding.path if finding else None)
                      for entry, (current, finding) in zip(plan["passes"], entries, strict=True)]
-    defend = "".join(f"- {claim}\n" for claim in plan["defend"])
+    must_keep = "".join(f"- {claim}\n" for claim in plan[MUST_KEEP])
     route = {"contracts": contracts, "execution": instruction}
     told = ({EARLIER_DECISIONS: {"origin": _rel(root, run.root / EARLIER_FILE),
                                  "text": decisions.earlier_text(list(earlier))}} if earlier else {})
     for state, (current, finding) in zip(report.passes, entries, strict=True):
-        if current.name in INTERACTIVE or (current.name == CONVERSATION and not defend):
+        if current.name in INTERACTIVE or (current.name == CONVERSATION and not must_keep):
             state.state = "skipped"
             state.reason = ("left for the interactive path: "
                             + INTERACTIVE.get(current.name, "its evidence is the conversation, and the plan's "
-                                              "`defend` list is empty"))
+                                              f"`{MUST_KEEP}` list is empty"))
             continue
         operation = edit_operations.parse(artifact_identity(root, library_root() / current.rel), current.text)
         roles = {"purpose": {"origin": "plan:purpose", "text": plan["purpose"]}, **brief,
-                 **({"defend": {"origin": "plan:defend", "text": defend}} if defend else {}),
+                 **({MUST_KEEP: {"origin": f"plan:{MUST_KEEP}", "text": must_keep}} if must_keep else {}),
                  **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {}),
                  **({KB_ROLE: kb_role} if kb_role else {}),
                  **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {}),
@@ -885,7 +895,7 @@ def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
 
 
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
-           defend: list[str] = (), named_plan: str | None = None, review: Profile | None = None,
+           must_keep: list[str] = (), named_plan: str | None = None, review: Profile | None = None,
            triage: bool = False, timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
@@ -943,7 +953,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     decided = _triage(run, root, artifact, findings, earlier, report, context)
                     if decided is not None:
                         entries, finding_answers = decided
-                        proposed = triage_plan(entries, purpose, list(defend))
+                        proposed = triage_plan(entries, purpose, list(must_keep))
             elif named_plan is None:
                 captured = run_dir / ASSESSMENT_INPUTS
                 if captured.is_file():                # a repeat: the store may have changed since the assessment
@@ -966,7 +976,8 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     if section:
                         kb_role = {"origin": given.path, "text": section}
                 report.findings = [finding.path for finding in (*findings, *reports)]
-                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,
+                prompt, inputs = _assessment_request(artifact, start, purpose, list(must_keep), known, brief,
+                                                     findings,
                                                      reports, decisions.planning_decisions(earlier))
                 context.update({"assessment": inputs, "assessment-prompt": prompt})
                 assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])

@@ -19,11 +19,16 @@ claims; write it so that another writer can follow it.
 
 ## Inputs
 
-- `commission`: the intended contribution and reader update, what to keep
-  and exclude, decisions reserved for the operator, the operator's current
-  direction, and the sources with their roles.
+- `commission`: the operator's current direction for this rewrite and the
+  sources with their roles. When the note has no write brief, it also states
+  the intended contribution and reader update, what to keep and exclude, and
+  the decisions reserved for the operator. When the note has a brief, it
+  holds only what this rewrite adds to the brief, and it names any brief item
+  the operator amended for this rewrite.
 - `brief`, when present: the note's write brief. It is binding retained
-  intent.
+  intent. Its Intent, Must keep, Must exclude and Reserved decisions hold
+  together with the commission's additions. A commission that only adds to
+  the brief does not contradict it.
 - `reconstruction`: the source-faithful basis. It separates support from
   inference and names conflicts, scope and gaps.
 - `type-contract` and `collection-contract`, when present: the contracts the

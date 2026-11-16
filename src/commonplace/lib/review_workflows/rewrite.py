@@ -13,10 +13,16 @@ review to the exact candidate and the one write to the checkout.
 before the run and supplies it with `--commission FILE`. It is Markdown with
 YAML frontmatter: `note` names the note to rewrite and `sources` lists the
 authorized sources, each a mapping with a repository `path` and its `role`.
-The body has the sections of `COMMISSION_SECTIONS`. `read_commission()`
-checks it. The run captures it once, with the note's write brief when the
-note declares one, the sources and the note's type and collection contracts,
-in `INPUTS` (`capture()`). A repeat uses the capture. A commission file whose
+The body always has the sections of `COMMISSION_SECTIONS`. The note's write
+brief is the one lasting statement of what the note must do, keep and
+exclude, so the sections of `BRIEF_SECTIONS`, which repeat the brief's, are
+required only when the note has no brief. With a brief they are optional and
+hold only what this rewrite adds; a brief item the operator amends is amended
+in the brief before the run, and the commission says which item. Code checks
+the sections and the frontmatter (`read_commission()`). The run captures the
+commission once, with the note's write brief when the note declares one, the
+sources and the note's type and collection contracts, in `INPUTS`
+(`capture()`). A repeat uses the capture. A commission file whose
 text differs from the capture is refused unless `restart` is set: a restart
 captures again, removes the step files under `artifact/` and asks every call
 again with the new inputs; earlier calls stay in the run's records.
@@ -105,8 +111,10 @@ INSTRUCTIONS = {
 """The role instruction of each step, under `INSTRUCTIONS_DIR` of the library."""
 INPUTS = "rewrite-inputs.json"
 """The commission, brief, sources and contracts the run captured once; a repeat reads them here."""
-COMMISSION_SECTIONS = ("Intended contribution", "Must keep", "Must exclude", "Reserved decisions",
-                       "Current direction")
+COMMISSION_SECTIONS = ("Current direction",)
+"""The commission's sections every commission has."""
+BRIEF_SECTIONS = ("Intended contribution", "Must keep", "Must exclude", "Reserved decisions")
+"""The commission's sections that repeat the write brief's: required only when the note has no brief."""
 RECONSTRUCTION_SECTIONS = ("Support", "Inference", "Conflicts", "Scope", "Gaps")
 REPORT_SECTIONS = ("Kept", "Replaced", "Omitted")
 FINDING_FIELDS = ("Anchor", "Basis", "Required change")
@@ -136,12 +144,13 @@ def _missing(text: str, wanted: tuple[str, ...]) -> list[str]:
     return [f"the section `## {name}` is missing" for name in wanted if name not in found]
 
 
-def read_commission(root: Path, note: str, text: str) -> list[dict]:
+def read_commission(root: Path, note: str, text: str, *, brief: bool) -> list[dict]:
     """The commission's sources as `{"path", "role"}`; ValueError lists what the commission breaks.
 
     The frontmatter names `note` and a non-empty `sources` list; each source
     is a file in the repository other than the note, its write brief and run
-    state; the body has every section of `COMMISSION_SECTIONS`.
+    state; the body has every section of `COMMISSION_SECTIONS`, and, when the
+    note has no write brief (`brief` false), every section of `BRIEF_SECTIONS`.
     """
     parsed = frontmatter.parse(text)
     if not frontmatter.opens_frontmatter(text) or not parsed.ok:
@@ -177,7 +186,7 @@ def read_commission(root: Path, note: str, text: str) -> list[dict]:
         else:
             seen.add(rel)
             sources.append({"path": rel, "role": source["role"].strip()})
-    problems += _missing(frontmatter.strip(text), COMMISSION_SECTIONS)
+    problems += _missing(frontmatter.strip(text), COMMISSION_SECTIONS + (() if brief else BRIEF_SECTIONS))
     if problems:
         raise ValueError("commission: " + "; ".join(problems))
     return sources
@@ -212,7 +221,7 @@ def capture(root: Path, note: str, start: str, commission: Path, brief: dict[str
     """
     text = commission.read_text(encoding="utf-8")
     sources = []
-    for index, source in enumerate(read_commission(root, note, text), 1):
+    for index, source in enumerate(read_commission(root, note, text, brief="brief" in brief), 1):
         content = (root / source["path"]).read_bytes()
         entry = {**source, "sha256": observations.sha(content), "mode": "referenced", "input": None}
         if not _referenced(root, source["path"]):
@@ -358,8 +367,8 @@ GIVEN = {
 }
 ROLES = {
     "instruction": "the instruction for this step",
-    "commission": "the commission: intent, what to keep and exclude, reserved decisions, current direction and "
-                  "sources",
+    "commission": "the commission: the current direction, the sources, and the intent and boundaries of this "
+                  "rewrite beyond the write brief",
     "brief": "the note's write brief: binding retained intent",
     "type-contract": "the note's type spec",
     "collection-contract": "the contract of the note's collection",

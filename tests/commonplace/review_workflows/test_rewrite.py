@@ -319,6 +319,22 @@ def test_the_commission_is_required_checked_and_frozen_unless_restarted(repo, ca
     assert code == 2 and "--restart needs --commission FILE" in error
 
 
+def test_the_brief_sections_of_a_commission_are_required_only_without_a_write_brief(repo, capsys):
+    short = COMMISSION.split("## Intended contribution")[0] + COMMISSION[COMMISSION.index("## Current direction"):]
+    repo[3].write_text(short)
+    code, error, launches = rewrite(repo, capsys)
+    assert code == 2 and launches == []
+    assert all(f"`## {name}` is missing" in error for name in rewrite_module.BRIEF_SECTIONS)
+    add_brief(repo[0], NOTE_PATH)
+    subprocess.run(["git", "add", "."], cwd=repo[0], check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "brief"], cwd=repo[0], check=True)
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == STEPS and report["waiting-for"] is not None
+    repo[3].write_text(short.replace("## Current direction", "## Direction"))
+    code, error, _ = rewrite(repo, capsys, "--restart")
+    assert code == 2 and "`## Current direction` is missing" in error
+
+
 def test_a_revised_candidate_is_published_only_on_its_approval(repo, capsys, tmp_path):
     original = note_text(repo)
     path = tmp_path / "revised.md"

@@ -11,7 +11,7 @@ depth: 2
 Make every load-bearing sentence assert only what its evidence can show, and
 mark what it cannot as a gap rather than filling it.
 
-Effort: judgment. Deciding what the evidence bounds needs the stronger model. When the conversation that raised the overclaim is the evidence, that evidence must be supplied as an input; the revise workflow runs this operation only with a `defend` input.
+Effort: judgment. Deciding what the evidence bounds needs the stronger model. When the conversation that raised the overclaim is the evidence, that evidence must be supplied as an input; the revise workflow runs this operation only with a `must-keep` input.
 
 ## Steps
 
@@ -42,5 +42,6 @@ that bounds it.
 
 ## Preserve
 
-The claims in the `defend` input. Narrow a defended claim's wording only if
-the operator confirms; report the proposed narrowing instead of applying it.
+The claims in the `must-keep` input and the write brief's Must keep. Narrow
+such a claim's wording only if the operator confirms; report the proposed
+narrowing instead of applying it.

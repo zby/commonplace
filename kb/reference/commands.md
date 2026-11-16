@@ -451,18 +451,20 @@ focused (`--plan`, `--pass`, `--finding`), triage (`--triage`), quick
 (`--assess`) and full (`--full`). Each makes the plan the runner executes
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
 `run revise ARTIFACT --plan FILE` executes fixed work without assessment.
-The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
+The YAML plan supplies `purpose`, `must-keep`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
-Do not also supply `--purpose` or `--defend`: the plan owns those fields.
+A plan with any other field is refused. `must-keep` lists only what the run
+keeps beyond the note's write brief, whose Must keep every worker receives.
+Do not also supply `--purpose` or `--must-keep`: the plan owns those fields.
 A plan entry for a pass that declares `responds-to` also names the review
 result it fixes as `finding`, and takes the depth of that result's criterion.
-`run revise ARTIFACT --pass NAME [--purpose TEXT] [--defend CLAIM ...]` writes
+`run revise ARTIFACT --pass NAME [--purpose TEXT] [--must-keep CLAIM ...]` writes
 and runs a one-entry plan for that pass. `run revise ARTIFACT --finding RESULT
-[--purpose TEXT] [--defend CLAIM ...]` writes and runs a one-entry plan for
+[--purpose TEXT] [--must-keep CLAIM ...]` writes and runs a one-entry plan for
 [fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
 with RESULT as its `finding`; RESULT must be a review result of ARTIFACT.
-Both are fixed-plan runs, and their purpose and defended claims go into the
-plan. `run revise ARTIFACT --triage [--purpose TEXT] [--defend CLAIM ...]`
+Both are fixed-plan runs, and their purpose and must-keep claims go into the
+plan. `run revise ARTIFACT --triage [--purpose TEXT] [--must-keep CLAIM ...]`
 makes the plan from the operator's answers on the artifact's fresh stored
 review results with outcome `warn` or `fail`. It launches no review and no
 assessor. It copies each result that has a `warn` or `fail` finding into
@@ -477,11 +479,11 @@ one fix entry per result with an `approved` finding, in depth order; the
 fix receives the approved answers as `finding-answers` and fixes only the
 approved findings. A finding identical to one the operator decided in an
 earlier run on the note starts decided, with `carried-from`.
-`run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
+`run revise ARTIFACT --assess [--purpose TEXT] [--must-keep CLAIM ...]` instead
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
 The assessor also receives the artifact's fresh stored review results with
 outcome `warn` or `fail`; no review is launched.
-`run revise ARTIFACT --full [--purpose TEXT] [--defend CLAIM ...]` first runs
+`run revise ARTIFACT --full [--purpose TEXT] [--must-keep CLAIM ...]` first runs
 every review operation that declares a `depth` on the artifact, with bundle
 grouping, on the profile file's `default` profile. Fresh results are reused;
 new results go to the shared store. The compression synthesis runs on the
@@ -570,16 +572,18 @@ only.
 `kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the command on the same note text
 continues the run and replays answered calls; an edited note opens a new
-run. A repeat reuses the recorded options (`--purpose`, `--defend` and the
+run. A repeat reuses the recorded options (`--purpose`, `--must-keep` and the
 effort profiles); an option given on the repeat replaces the recorded value.
 
 `run rewrite NOTE --commission FILE [--restart] [--profile NAME]` rewrites
 one note from its authorized sources, for a note whose contribution is known
 but whose claims or synthesis are unsettled. FILE is the commission: Markdown
 with YAML frontmatter naming `note` and `sources` (each a repository `path`
-and its `role`), and the sections `## Intended contribution`, `## Must keep`,
-`## Must exclude`, `## Reserved decisions` and `## Current direction`. The
-run captures the commission once, with the note's write brief, the sources
+and its `role`), and the section `## Current direction`. When the note has
+no write brief, the commission also needs `## Intended contribution`,
+`## Must keep`, `## Must exclude` and `## Reserved decisions`. When it has
+one, those sections are optional and hold only what this rewrite adds to the
+brief. The run captures the commission once, with the note's write brief, the sources
 and the note's type and collection contracts. A source that git ignores, or
 lies under a `.snapshots/` directory, or is not text, is referenced by path
 and SHA-256 and never copied into the run. Fresh workers then reconstruct

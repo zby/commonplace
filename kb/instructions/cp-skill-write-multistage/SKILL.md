@@ -66,27 +66,37 @@ inputs and instruction, not by sandbox.
 
 Read the note, its collection's `COLLECTION.md` and its type spec. When the
 note declares a write brief (`brief: <stem>.brief.md`), read the brief. The
-brief is the base of the commission: it binds as retained intent. Add only
-what is specific to this rewrite: the current direction, the sources, and any
+brief is the one lasting statement of what the note must do, keep and
+exclude, and every worker receives it. The commission adds only what is
+specific to this rewrite: the current direction, the sources, and any
 narrower boundary.
 
 Fix with the user:
 
-- the intended contribution and what the reader should understand or do
-  because of it;
-- what the note must keep and what it must exclude;
-- the decisions reserved for the user, such as a retitle;
 - the user's current direction for this rewrite;
-- the authorized sources, each with its role.
+- the authorized sources, each with its role;
+- without a brief: the intended contribution and what the reader should
+  understand or do because of it, what the note must keep and exclude, and
+  the decisions reserved for the user, such as a retitle;
+- with a brief: only what this rewrite adds to the brief's Intent, Must keep,
+  Must exclude and Reserved decisions. Do not restate the brief.
 
 Do not derive the contribution from the existing note. Stop and ask when
 several materially different contributions still fit.
 
 The commission must not contradict the brief. When the user's direction
-amends a brief item, update the brief before the run, under the
+amends a brief item, update the brief with the user before the run, under the
 [write brief](../../types/write-brief.md) rules, so that the run captures the
-amended brief. A worker that finds a conflict between the commission and the
-brief reports a problem, and the run stops.
+amended brief, and say in the commission which item was amended. A worker
+that finds a conflict between the commission and the brief reports a
+problem, and the run stops.
+
+A role report on the note, such as the one `commonplace-review run revise
+<note> --full` runs, states which of its terms and claims other notes rely
+on. When a role report lists relied-on terms or claims that the brief does
+not keep, tell the user and offer to add them to the brief's Must keep, or to
+create the brief when the note has none. Never amend or create a brief
+without the user's word. No code writes a brief.
 
 ### A2. Ground the sources
 
@@ -99,7 +109,10 @@ repository: an ingest, a retained snapshot, or another tracked file.
 
 Write the commission as a Markdown file outside `kb/`, for example in the
 session's scratch directory. The run captures it; the file is not kept. Use
-this format; code checks the frontmatter and every heading:
+this format. Code checks the frontmatter and the headings: `## Current
+direction` always; the other four only when the note has no write brief.
+With a brief, keep only the sections that add something to it, and name in
+them any brief item the user amended for this rewrite:
 
 ```markdown
 ---
@@ -115,19 +128,23 @@ sources:
 
 ## Intended contribution
 
-<The claim or purpose, and the reader update.>
+<The claim or purpose, and the reader update. With a brief: only what this
+rewrite adds to its Intent.>
 
 ## Must keep
 
-<Passages, distinctions or qualifications, and why. `None.` when empty.>
+<Passages, distinctions or qualifications, and why. `None.` when empty.
+With a brief: only what this rewrite adds to its Must keep.>
 
 ## Must exclude
 
-<Content the note must not contain, and why. `None.` when empty.>
+<Content the note must not contain, and why. `None.` when empty. With a
+brief: only what this rewrite adds to its Must exclude.>
 
 ## Reserved decisions
 
-<Choices the workers must not make. `None.` when empty.>
+<Choices the workers must not make. `None.` when empty. With a brief: only
+what this rewrite adds to its Reserved decisions.>
 
 ## Current direction
 
@@ -184,7 +201,8 @@ the note still holds the text the run started from.
 After publication, write or update the note's
 [write brief](../../types/write-brief.md) from the commission's lasting parts:
 the intended contribution, what must be kept, what must be excluded, and the
-reserved decisions. Leave out the current direction and the sources. Follow
+reserved decisions. With a brief, these are the commission's additions to it.
+Leave out the current direction and the sources. Follow
 the type's rules: do not copy the note's claims, evidence or prose; omit an
 empty section; write no brief that would hold only `## Intent`. A new brief
 needs `brief: <stem>.brief.md` in the note's frontmatter. Validate the note and
