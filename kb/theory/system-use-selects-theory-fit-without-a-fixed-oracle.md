@@ -34,7 +34,7 @@ The live system is therefore an **initial** selection environment, not a final a
 
 A system can reward its own misconceptions. Earlier design choices may already assume a claim, neighboring artifacts may encode the same error, or the current workload may never reach the claim's bad scope. Successful use can then make a mistaken claim appear indispensable.
 
-For that reason, [system use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md). Rival formulations, withholding or perturbation, held-out demands, transfer, delayed outcomes, and independent factual or formal checks are ways to make the selection environment less self-sealing.
+For that reason, [system use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-an-independent-test.md). Rival formulations, withholding or perturbation, held-out demands, transfer, delayed outcomes, and independent factual or formal checks are ways to make the selection environment less self-sealing.
 
 The same limitation applies to blame assignment. A failed modification may reflect a false theory, a misapplied theory, a missing premise, a bad implementation, or a weak evaluator. System use exposes the failure but does not identify its cause automatically. The refinement path must retain enough structure for later read-back to assign credit or blame at the granularity the evidence supports.
 
@@ -64,7 +64,7 @@ Nor does the claim say that explicit theory-guided selection is the only route. 
 Relevant Notes:
 
 - [A claim's test record does not determine its fit in a working theory](./a-claims-test-record-does-not-determine-its-fit-in-a-working-theory.md) — grounds: separates a claim's independent test record from its fit
-- [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — extends: bounds the evidential meaning of successful system use
+- [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-an-independent-test.md) — extends: bounds the evidential meaning of successful system use
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: identifies the longitudinal consequences through which program-theory fit can become visible
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — grounds: bounds what one successful configuration can establish beyond its originating context
 - [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: explains why qualities with weak operative signals can disappear under selection despite sounding important

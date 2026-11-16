@@ -49,6 +49,6 @@ When a well-tested new claim contradicts the working theory, logic says only tha
 
 Relevant Notes:
 
-- [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — extends: applies the limit on fit as a test to evidence from operating a live system
+- [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-an-independent-test.md) — extends: applies the limit on fit as a test to evidence from operating a live system
 - [System use is an initial selection environment when theory fit lacks a fixed oracle](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — extends: develops how a live system can expose theory fit when no complete fixed oracle decides it
 - [Epistemic stance](../reference/epistemic-stance.md) — grounds: the fallibilism under which a test record is a dated report and never a proof
