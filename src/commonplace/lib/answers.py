@@ -1,15 +1,19 @@
 """Answers (`types/answers.md`): the operator's decision on each item of one question file.
 
-A question is a file whose items the operator decides. There are two kinds:
+A question is a file whose items the operator decides. There are three kinds:
 
 - an edit result (`types/edit-result.md`) with outcome `proposed`: its items
   are its proposals, numbered from 1;
+- a review result (`types/review-result.md`) with outcome `warn` or `fail`:
+  its items are its findings whose `level` is `warn` or `fail`, each with its
+  position in `findings` as id and its `scope`, `quotes`, `reason` and
+  `level` as proposal;
 - any other file, a text to approve: its one item, `text`, names the file's
   path and hash.
 
 An answers file names its question by path and SHA-256 and copies each item's
 `proposal` unaltered. `pending()` renders the pending file for a question,
-with the items the operator already decided for an earlier text carried over.
+with the items the operator already decided carried over (`decision_key()`).
 `problems()` is the part of the acceptance that compares the answers with
 their question: the hash and every item present once and unaltered. The
 schema checks the rest: the states, a reason on `rejected` and `deferred`, a
@@ -21,6 +25,7 @@ revisit condition on `deferred`, and `decided-by: operator` with
 from __future__ import annotations
 
 import hashlib
+import json
 
 import yaml
 
@@ -28,6 +33,11 @@ from commonplace.lib import frontmatter
 
 TYPE = "types/answers.md"
 EDIT_RESULT = "types/edit-result.md"
+REVIEW_RESULT = "types/review-result.md"
+FINDING_LEVELS = ("warn", "fail")
+"""The outcomes that make a review result a question, and the levels of the findings that are its items."""
+FINDING_FIELDS = ("scope", "quotes", "reason", "level")
+"""The fields of a finding that an item's `proposal` copies."""
 TEXT_ITEM = "text"
 """The id of the one item of a text to approve."""
 
@@ -36,10 +46,29 @@ def sha(content: bytes) -> str:
     return hashlib.sha256(content).hexdigest()
 
 
+def _question(content: bytes) -> dict:
+    parsed = frontmatter.parse(content.decode("utf-8"))
+    return parsed.data if parsed.ok else {}
+
+
+def finding_criterion(content: bytes) -> str | None:
+    """The criterion of a question that is a review result; None for any other question."""
+    data = _question(content)
+    return data.get("criterion") if data.get("type") == REVIEW_RESULT else None
+
+
 def question_items(path: str, content: bytes) -> list[dict]:
     """The items of the question file at the repository path `path`; ValueError when it asks nothing."""
-    parsed = frontmatter.parse(content.decode("utf-8"))
-    data = parsed.data if parsed.ok else {}
+    data = _question(content)
+    if data.get("type") == REVIEW_RESULT:
+        findings = data.get("findings")
+        items = [{"id": str(index), "proposal": {key: finding[key] for key in FINDING_FIELDS if key in finding}}
+                 for index, finding in enumerate(findings if isinstance(findings, list) else [], 1)
+                 if isinstance(finding, dict) and finding.get("level") in FINDING_LEVELS]
+        if data.get("outcome") not in FINDING_LEVELS or not items:
+            raise ValueError(f"{path}: a review result is a question only with outcome `warn` or `fail` "
+                             "and at least one finding of level `warn` or `fail`")
+        return items
     if data.get("type") != EDIT_RESULT:
         return [{"id": TEXT_ITEM, "proposal": {"text": path, "text-sha256": sha(content)}}]
     proposals = data.get("proposals")
@@ -48,15 +77,30 @@ def question_items(path: str, content: bytes) -> list[dict]:
     return [{"id": str(index), "proposal": proposal} for index, proposal in enumerate(proposals, 1)]
 
 
+def decision_key(proposal: object, criterion: str | None = None) -> tuple | None:
+    """The identity under which a decided item is carried over; None for an item that is never carried.
+
+    A finding of a review result is identified by its criterion and its whole
+    proposal; an edit proposal by its `quote` and `change`, so its `reason`
+    is not compared. A text to approve is never carried over.
+    """
+    if not isinstance(proposal, dict):
+        return None
+    if criterion is not None:
+        return ("finding", criterion, json.dumps(proposal, sort_keys=True, ensure_ascii=False))
+    if "quote" in proposal and "change" in proposal:
+        return ("edit", proposal["quote"], proposal["change"])
+    return None
+
+
 CARRIED = ("state", "reason", "revisit", "decided-by", "decided-at")
 """The fields a carried-over item copies from the earlier decision."""
 
 
-def _carried(item: dict, earlier: dict[tuple[str, str], dict]) -> dict:
-    """The item `pending`, or decided as before when an earlier decision has the same quote and change."""
-    proposal = item["proposal"]
-    found = (earlier.get((proposal.get("quote"), proposal.get("change")))
-             if isinstance(proposal, dict) and "quote" in proposal and "change" in proposal else None)
+def _carried(item: dict, criterion: str | None, earlier: dict[tuple, dict]) -> dict:
+    """The item `pending`, or decided as before when an earlier decision has the same identity."""
+    key = decision_key(item["proposal"], criterion)
+    found = earlier.get(key) if key is not None else None
     if found is None:
         return {**item, "state": "pending"}
     return {**item, **{field: found[field] for field in CARRIED if found.get(field) is not None},
@@ -67,12 +111,14 @@ def pending(path: str, content: bytes, earlier: list[dict] = ()) -> str:
     """The answers file for the question at `path`, every item `pending` unless it is carried over.
 
     `earlier` holds the operator's earlier decisions (`review_workflows.decisions.earlier()`).
-    An item whose proposal has the same `quote` and `change` as one of them
-    starts decided as before, with `carried-from` naming the earlier answers
-    file. The proposal's `reason` is not compared.
+    An item with the same identity (`decision_key()`) as one of them starts
+    decided as before, with `carried-from` naming the earlier answers file:
+    an edit proposal with the same `quote` and `change`, or a finding with
+    the same criterion and the same `scope`, `quotes`, `reason` and `level`.
     """
-    known = {(decision["proposal"]["quote"], decision["proposal"]["change"]): decision for decision in earlier}
-    items = [_carried(item, known) for item in question_items(path, content)]
+    known = {decision_key(decision["proposal"], decision.get("criterion")): decision for decision in earlier}
+    criterion = finding_criterion(content)
+    items = [_carried(item, criterion, known) for item in question_items(path, content)]
     data = {"type": TYPE, "description": f"The operator's answers to {path}", "question": path,
             "question-sha256": sha(content), "items": items}
     head = yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=10**6)

@@ -41,6 +41,15 @@ never approves: only the recorded approved text becomes the operator's answer:
    contexts (`inbound.collect()`). The assessor also receives the depth 1
    reports, the synthesis report and the role report, and its plan's `stop`
    is how a depth 1 proposal ends the run. A review without a result stops the run.
+   **Triage** (`triage`) makes the plan from the operator's answers instead
+   of an assessor. It takes the results `current_findings()` gives, keeps
+   those with a warn or fail finding (`triage_findings()`), captures them
+   once in `triage-inputs.json` and copies each into `artifact/findings/` as
+   the question of a pending answers file `artifact/finding-answers-<key>.md`.
+   It stops until the operator's approved answers exist for every file. The
+   plan then holds one fix entry per result with an `approved` finding, in
+   depth order, naming the copy as its `finding`; the fix also receives the
+   approved answers as `finding-answers` and fixes only those findings.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
@@ -150,6 +159,22 @@ FINDING_OUTCOMES = ("warn", "fail")
 """The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
 ASSESSMENT_INPUTS = "assessment-inputs.json"
 """The review results the assessor received, captured once: a repeat reads them here, not from the store."""
+TRIAGE_INPUTS = "triage-inputs.json"
+"""The review results a triage asks about, captured once: a repeat reads them here, not from the store."""
+TRIAGE_DIR = "findings"
+"""Where a triage keeps, under the run's `artifact/`, a copy of each review result it asks about: the question."""
+FINDING_ANSWERS = "finding-answers"
+"""The input role that hands the fix the operator's approved answers on its finding's review result."""
+TRIAGE_PURPOSE = "Fix the findings the operator approved at triage; the operator named no other purpose."
+"""The purpose of a plan made by a triage when the operator gives none."""
+TRIAGE_HOW = ("Record the operator's decision on each finding of the {criterion} review result in this answers "
+              "file, following instructions/decide-items.md: `approved` when the finding is right and should be "
+              "fixed, `rejected` with the operator's `reason` when it is wrong, or `deferred` with a `reason` and "
+              "a `revisit` condition; add `decided-by: operator` and `decided-at` to each decided item; change no "
+              "`id` or `proposal`. Approve each answers file the report's `triage` lists, then repeat. The plan "
+              "fixes the approved findings only.")
+NOTHING_TO_TRIAGE = ("No fresh review result of the artifact has outcome warn or fail with a finding of level warn "
+                     "or fail. There is nothing to triage; nothing is changed.")
 REVIEWS = "reviews"
 SUPPLIED_DIRS = {criteria.SYNTHESIS: "synthesis", criteria.ROLE: "role"}
 """The run directories of the full procedure's review step, under the revise run."""
@@ -389,7 +414,8 @@ class ReviseReport:
     mode: str = "fixed-plan"
     plan: dict | None = None
     reviews: list[dict] = field(default_factory=list)    # the review step's sweep reports, in the full procedure
-    findings: list[str] = field(default_factory=list)   # review results the assessor received
+    findings: list[str] = field(default_factory=list)   # review results the assessor or the triage received
+    triage: dict | None = None        # a triage's answers file per review result, and what each waits for
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
     applied: bool = False             # the final text was written to the artifact
@@ -555,6 +581,78 @@ def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_oper
                                job=f"{name}/apply", profile=profile, **route)
 
 
+def _asks(finding: Finding) -> bool:
+    """Whether a review result is a question: it has a finding of level warn or fail."""
+    try:
+        answers.question_items(finding.path, finding.text.encode("utf-8"))
+    except ValueError:
+        return False
+    return True
+
+
+def triage_findings(root: Path, artifact: str) -> list[Finding]:
+    """The review results a triage asks about: `current_findings()` that are questions, in depth order.
+
+    A criterion without a depth runs anywhere; its result comes last.
+    """
+    return sorted((finding for finding in current_findings(root, artifact) if _asks(finding)),
+                  key=lambda finding: (finding.depth is None, finding.depth or 0, finding.criterion_id))
+
+
+def _triage(run: Run, root: Path, artifact: str, findings: list[Finding], earlier: list[dict], report: ReviseReport,
+            context: dict) -> tuple[list[dict], dict[str, dict]] | None:
+    """The fix entries and their approved answers; None while an answers file waits for the operator.
+
+    Each review result is copied into the run as the question of its answers
+    file, so the question stays the same when the store changes. An item
+    identical to one of the `earlier` decisions starts decided as before
+    (`answers.pending()`); every file still waits for its own approval. A
+    result with at least one `approved` finding becomes one entry for the
+    fix, which names the copy as its `finding`.
+    """
+    entries, given = [], {}
+    listed = report.triage["results"]
+    for finding in findings:
+        content = finding.text.encode("utf-8")
+        question = _rel(root, run.accept(f"{TRIAGE_DIR}/{finding.criterion_id}.md", finding.text))
+        file = f"{decisions.FINDING}-answers-{answers.sha(content)[:12]}.md"
+        approved = operator.answer(run, file, answers.pending(question, content, earlier), key=answers.sha(content))
+        state = {"result": finding.path, "criterion": finding.criterion_id, "question": question,
+                 "answers": _rel(root, run.artifact / file), "state": "waiting"}
+        listed.append(state)
+        how = TRIAGE_HOW.format(criterion=finding.criterion_id)
+        if approved is None:
+            state["waiting-for"] = operator.waiting(run, root, file, how, REPEAT.format(artifact=artifact))
+            continue
+        if operator.edited(run, file):
+            report.unapproved_edits.append(operator.waiting(run, root, file, UNAPPROVED,
+                                                            REPEAT.format(artifact=artifact)))
+        data, problems = edits.answered(root, run.artifact / file, approved)
+        if problems:
+            state["state"] = "invalid"
+            state["reason"] = "the approved answers are not valid: " + "; ".join(problems)
+            state["waiting-for"] = operator.waiting(run, root, file, f"{state['reason']}. {how}",
+                                                    REPEAT.format(artifact=artifact))
+            continue
+        state["state"] = "decided"
+        state["approved"] = [item["id"] for item in data["items"] if item["state"] == "approved"]
+        context["triage"].append({"answers": state["answers"], "text": approved})
+        if state["approved"]:
+            entries.append({"pass": FIX, FINDING: question})
+            given[question] = {"origin": state["answers"], "text": approved}
+    waiting = [state["waiting-for"] for state in listed if "waiting-for" in state]
+    if waiting:
+        report.waiting_for = waiting[0]
+        return None
+    return entries, given
+
+
+def triage_plan(entries: list[dict], purpose: str | None, defend: list[str]) -> str:
+    """The plan a triage makes: one fix entry per review result with an approved finding, in depth order."""
+    return yaml.safe_dump({"purpose": purpose or TRIAGE_PURPOSE, "defend": list(defend), "stop": None,
+                           "passes": entries}, sort_keys=False, allow_unicode=True)
+
+
 KB_ROLE = "kb-role"
 """The input role that hands an edit operation the `## Role` section of the note's role report."""
 EARLIER_DECISIONS = "earlier-decisions"
@@ -572,14 +670,17 @@ def role_section(report: str) -> str | None:
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
             profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
             context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None = None,
-            earlier: list[dict] = ()) -> str:
+            earlier: list[dict] = (), finding_answers: dict[str, dict] | None = None) -> str:
     """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left.
 
     `kb_role` is the note's role in the KB, from the full procedure's role report; each pass receives it.
     `earlier` holds the operator's earlier decisions on this note; each
     `per-item` pass and each fix of a finding receives them, when there is
-    at least one, as `earlier-decisions`.
+    at least one, as `earlier-decisions`. `finding_answers` maps a
+    triage's finding to the operator's approved answers on it; the fix of
+    that finding receives them as `finding-answers`.
     """
+    finding_answers = finding_answers or {}
     run.accept(START, start)
     text = start
     findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
@@ -605,6 +706,8 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                  **({"scope": {"origin": "plan:scope", "text": state.scope}} if state.scope else {}),
                  **({KB_ROLE: kb_role} if kb_role else {}),
                  **({FINDING: {"origin": finding.path, "text": finding.text}} if finding else {}),
+                 **({FINDING_ANSWERS: finding_answers[finding.path]}
+                    if finding and finding.path in finding_answers else {}),
                  **(told if operation.decision == "per-item" or current.responds_to else {})}
         profile = profiles[current.effort]
         try:
@@ -733,7 +836,7 @@ def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
 
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
            defend: list[str] = (), named_plan: str | None = None, review: Profile | None = None,
-           timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
+           triage: bool = False, timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
     The artifact's current text is the start text. Validated plans run
@@ -742,12 +845,16 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     final publication require explicit approval. `profiles` maps each effort
     to its profile; the assessment is a judgment ask. `review` is the profile
     of the full procedure's review step; without it no review is launched.
+    `triage` makes the plan from the operator's answers on the artifact's
+    fresh warn and fail review results (`_triage()`); it launches no review
+    and no assessor.
     """
     root = root.resolve()
-    if named_plan is not None and review is not None:
-        raise ValueError("a named plan runs without the review step")
+    if sum((named_plan is not None, review is not None, triage)) > 1:
+        raise ValueError("choose one of a named plan, the review step or the triage")
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact,
-                          mode="fixed-plan" if named_plan is not None else "full" if review else "assess")
+                          mode="fixed-plan" if named_plan is not None else "full" if review
+                          else "triage" if triage else "assess")
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
@@ -767,7 +874,27 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             else:
                 earlier = decisions.earlier(root, artifact, run_dir)
                 observations.atomic_json(told, {"decisions": earlier})
-            if named_plan is None:
+            finding_answers = {}
+            if triage:
+                proposed = None
+                context["triage"] = []
+                captured = run_dir / TRIAGE_INPUTS
+                if captured.is_file():                # a repeat: the store may have changed since the triage began
+                    findings = [Finding(**given) for given in
+                                json.loads(captured.read_text(encoding="utf-8"))["findings"]]
+                else:
+                    findings = triage_findings(root, artifact)
+                    observations.atomic_json(captured, {"findings": [asdict(given) for given in findings]})
+                report.findings = [finding.path for finding in findings]
+                report.triage = {"results": []}
+                if not findings:
+                    report.triage["what"] = NOTHING_TO_TRIAGE
+                else:
+                    decided = _triage(run, root, artifact, findings, earlier, report, context)
+                    if decided is not None:
+                        entries, finding_answers = decided
+                        proposed = triage_plan(entries, purpose, list(defend))
+            elif named_plan is None:
                 captured = run_dir / ASSESSMENT_INPUTS
                 if captured.is_file():                # a repeat: the store may have changed since the assessment
                     data = json.loads(captured.read_text(encoding="utf-8"))
@@ -797,52 +924,65 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 context["assessment-answer"] = {"key": assessed.key, "outputs": assessed.outputs}
             else:
                 proposed = named_plan
-            plan = report.plan = read_plan(proposed, root, artifact, known)
-            context["plan"] = plan
-            relevant = known if named_plan is None else {entry["pass"]: known[entry["pass"]] for entry in plan["passes"]}
-            efforts = set(profiles) if named_plan is None else {current.effort for current in relevant.values()}
-            context["passes"] = {name: asdict(current) for name, current in relevant.items()}
-            context["profiles"] = {name: asdict(profiles[name]) for name in sorted(efforts)}
-            run.accept(PLAN, proposed)
-            if plan["stop"]:
-                report.stop = plan["stop"]
-                question = run.artifact / PLAN
-                operator.answer(run, STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()),
-                                key=answers.sha(question.read_bytes()))
-                report.stop_answers = operator.waiting(run, root, STOP_ANSWERS, STOP_HOW,
-                                                       REPEAT.format(artifact=artifact))
-                report.override = {
-                    "what": "The plan stops. To run passes instead, supply a validated replacement with --plan; "
-                            "editing artifact/plan.yaml alone does not override the plan.",
-                    "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
-                }
-            else:
-                origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
-                final = _passes(run, root, artifact, start, plan, known, profiles, report,
-                                {name: {"origin": origin, "text": value} for name, value in brief.items()},
-                                instruction, context, contracts, kb_role, earlier)
-                problems = [state.name for state in report.passes if state.state == "problem"]
-                if final != start and report.waiting_for is None and not problems:
-                    unchanged_brief(root, artifact, start, brief)
-                    report.proposed = _rel(root, run.artifact / "final.md")
-                    report.waiting_for = publication(
-                        run, root, artifact, start, final,
-                        inputs=context,
-                        command=REPEAT.format(artifact=artifact))
-                    if report.waiting_for is None:
-                        unchanged_brief(root, artifact, start, brief)
-                        apply(root, artifact, start, final, root / report.proposed)
-                        report.applied = True
-                    else:
-                        report.not_applied = (f"The proposed text is {report.proposed}; it is not applied: "
-                                              "final publication needs explicit approval.")
-                elif final != start:
-                    why = ("the run waits for the operator" if report.waiting_for is not None
-                           else f"{', '.join(problems)} ended with a problem")
-                    report.not_applied = f"The proposed text is {report.proposed}; it is not applied: {why}."
+            if proposed is not None:                  # a triage without a plan waits or has nothing to ask
+                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start, instruction,
+                                  context, contracts, kb_role, earlier, finding_answers,
+                                  assessed=named_plan is None and not triage)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
     report.changed = guarded_changes(root, before, artifact, final if report.applied else None)
     return report
+
+
+def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[str, Pass],
+              profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str,
+              instruction: str, context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None,
+              earlier: list[dict], finding_answers: dict[str, dict], *, assessed: bool) -> str | None:
+    """Check and keep the plan, then stop on it or run its passes to the publication stop; return the final text.
+
+    `assessed` is true for a plan an assessor made: it may name any pass, so
+    every pass and every effort's profile binds publication.
+    """
+    plan = report.plan = read_plan(proposed, root, artifact, known)
+    context["plan"] = plan
+    relevant = known if assessed else {entry["pass"]: known[entry["pass"]] for entry in plan["passes"]}
+    efforts = set(profiles) if assessed else {current.effort for current in relevant.values()}
+    context["passes"] = {name: asdict(current) for name, current in relevant.items()}
+    context["profiles"] = {name: asdict(profiles[name]) for name in sorted(efforts)}
+    run.accept(PLAN, proposed)
+    if plan["stop"]:
+        report.stop = plan["stop"]
+        question = run.artifact / PLAN
+        operator.answer(run, STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()),
+                        key=answers.sha(question.read_bytes()))
+        report.stop_answers = operator.waiting(run, root, STOP_ANSWERS, STOP_HOW, REPEAT.format(artifact=artifact))
+        report.override = {
+            "what": "The plan stops. To run passes instead, supply a validated replacement with --plan; "
+                    "editing artifact/plan.yaml alone does not override the plan.",
+            "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
+        }
+        return None
+    origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
+    final = _passes(run, root, artifact, start, plan, known, profiles, report,
+                    {name: {"origin": origin, "text": value} for name, value in brief.items()},
+                    instruction, context, contracts, kb_role, earlier, finding_answers)
+    problems = [state.name for state in report.passes if state.state == "problem"]
+    if final != start and report.waiting_for is None and not problems:
+        unchanged_brief(root, artifact, start, brief)
+        report.proposed = _rel(root, run.artifact / "final.md")
+        report.waiting_for = publication(run, root, artifact, start, final, inputs=context,
+                                         command=REPEAT.format(artifact=artifact))
+        if report.waiting_for is None:
+            unchanged_brief(root, artifact, start, brief)
+            apply(root, artifact, start, final, root / report.proposed)
+            report.applied = True
+        else:
+            report.not_applied = (f"The proposed text is {report.proposed}; it is not applied: "
+                                  "final publication needs explicit approval.")
+    elif final != start:
+        why = ("the run waits for the operator" if report.waiting_for is not None
+               else f"{', '.join(problems)} ended with a problem")
+        report.not_applied = f"The proposed text is {report.proposed}; it is not applied: {why}."
+    return final

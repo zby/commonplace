@@ -24,6 +24,16 @@ The caller supplies the finding as the `finding` input: a review result file,
 or a file holding one finding with its criterion, its quoted passage and its
 reason. Fix only that finding.
 
+A review result can hold several findings. When the caller also supplies
+`finding-answers`, the operator has decided each finding of that result:
+the file's items are the findings, by their position in `findings`. Fix only
+the findings whose item is `approved`. Leave every `rejected`, `deferred` or
+`pending` finding untouched, even when you would fix it.
+
+When the caller supplies `earlier-decisions`, do not fix a finding that the
+operator rejected there, unless the text changed in a way that answers the
+operator's reason.
+
 1. Find the finding's passage in the text. If the text no longer shows the
    pattern the finding names, change nothing and say so in the report.
 2. Choose the strategy whose pattern matches the finding. Verify the pattern
@@ -38,6 +48,9 @@ reason. Fix only that finding.
 One line per change: the strategy by anchor, or `new-pattern` with its
 description; the passage; and what changed. A finding the text no longer
 shows is reported as not applicable, with the passage that now stands there.
+List once each finding of the result that you did not touch, by its position
+in `findings`, with the reason: the operator did not approve it, the operator
+rejected it earlier, or the text no longer shows it.
 
 ## Preserve
 

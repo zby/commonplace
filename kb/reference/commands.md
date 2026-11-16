@@ -446,9 +446,9 @@ profile defaults to the `effort` mapping for the operation's `effort`. It exits
 guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
 a fixture created from an edit observation.
 
-`run revise ARTIFACT` is the one runner of the three improvement procedures:
-focused (`--plan`, `--pass`, `--finding`), quick (`--assess`) and full
-(`--full`). Each makes the plan the runner executes
+`run revise ARTIFACT` is the one runner of the improvement procedures:
+focused (`--plan`, `--pass`, `--finding`), triage (`--triage`), quick
+(`--assess`) and full (`--full`). Each makes the plan the runner executes
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
 `run revise ARTIFACT --plan FILE` executes fixed work without assessment.
 The YAML plan supplies `purpose`, `defend`, ordered `passes` with optional
@@ -462,7 +462,22 @@ and runs a one-entry plan for that pass. `run revise ARTIFACT --finding RESULT
 [fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
 with RESULT as its `finding`; RESULT must be a review result of ARTIFACT.
 Both are fixed-plan runs, and their purpose and defended claims go into the
-plan. `run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
+plan. `run revise ARTIFACT --triage [--purpose TEXT] [--defend CLAIM ...]`
+makes the plan from the operator's answers on the artifact's fresh stored
+review results with outcome `warn` or `fail`. It launches no review and no
+assessor. It copies each result that has a `warn` or `fail` finding into
+`artifact/findings/` and writes one pending answers file per result,
+`artifact/finding-answers-<key>.md`, whose items are the result's `warn` and
+`fail` findings. It captures the results once in `triage-inputs.json`, so a
+repeat asks about the same results after the store changes. The run stops
+until every file is approved; the JSON report's `triage` lists each file
+with its state and, while it waits, its `waiting-for`. With no such result,
+the run ends with no change and `triage.what` says so. The plan then holds
+one fix entry per result with an `approved` finding, in depth order; the
+fix receives the approved answers as `finding-answers` and fixes only the
+approved findings. A finding identical to one the operator decided in an
+earlier run on the note starts decided, with `carried-from`.
+`run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` instead
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
 The assessor also receives the artifact's fresh stored review results with
 outcome `warn` or `fail`; no review is launched.
@@ -481,7 +496,7 @@ It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text
 requires the choice again. Old-format runs cannot resume; retain their evidence
-and start a new run. The JSON report names the mode as `fixed-plan`, `assess` or `full`.
+and start a new run. The JSON report names the mode as `fixed-plan`, `triage`, `assess` or `full`.
 Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
@@ -516,10 +531,14 @@ proposal at the same path.
 
 `answers create --from QUESTION [--to PATH]` writes the pending answers file
 for a question and launches nothing. A question is an edit result with
-outcome `proposed`, whose items are its proposals, or any other file, a text
-to approve, with one item naming its hash. The default PATH is
+outcome `proposed`, whose items are its proposals; a review result with
+outcome `warn` or `fail`, whose items are its `warn` and `fail` findings,
+each with its position in `findings` as id; or any other file, a text to
+approve, with one item naming its hash. The default PATH is
 `<question stem>-answers.md` beside the question; an existing file is never
-replaced. The command writes every hash, so nobody writes one by hand.
+replaced. A path under `kb/reports/state/review/results/` is refused, since
+the store would read the file as a review result; give `--to` for a stored
+result. The command writes every hash, so nobody writes one by hand.
 `commonplace-validate PATH` checks a completed file against its question.
 
 `run revise` retains `artifact/final.md` and `artifact/final.diff`
@@ -550,7 +569,8 @@ entry says who proposed and who decided (`operator`, `agent`,
 `version-guard`, `pending` for an unanswered stop, or `overtaken` for a
 stop of a revise run whose note is gone or now holds another text, so the
 run can never continue), the action class
-(the pass name of a per-item stop, `publication`, `packet` or `fix-report`),
+(the pass name of a per-item stop, `finding` for a triage stop, whose item
+names the criterion, `publication`, `packet` or `fix-report`),
 and whether the decision covered one `item` or a `bundle`. An approved
 answers file gives one entry per item, with its state (`approved`,
 `rejected`, `deferred`, `pending` or `overtaken`) and the operator's reason; a

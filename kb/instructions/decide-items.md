@@ -1,5 +1,5 @@
 ---
-description: "Use when a procedure stopped on a pending answers file over a list of proposals, such as a per-item pass's <pass>-answers-<key>.md or a per-item edit result: take the operator's decision on each item in a session and record it"
+description: "Use when a procedure stopped on a pending answers file over proposals or review findings, such as <pass>-answers-<key>.md, a triage's finding-answers-<key>.md or a per-item edit result: take and record the operator's decision on each item"
 type: types/instruction.md
 ---
 
@@ -7,14 +7,14 @@ type: types/instruction.md
 
 Goal: every item of the question carries the operator's own decision, with the operator's reason where one is required, so that only what the operator approved is applied and the reasons stay available for revising the procedure that proposed the items.
 
-Consumption: an agent in a session with the operator. It is reached from a run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, or after `commonplace-review run edit` returned `proposed`. Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
+Consumption: an agent in a session with the operator. It is reached from a run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-review run revise NOTE --triage`), or after `commonplace-review run edit` returned `proposed`. Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
 
 Inputs:
 
 - the answers file (`type: types/answers.md`): its `question` names the question file, and each item holds an `id`, the question's `proposal` and `state: pending`, or, for a carried-over item, the earlier decision and `carried-from`;
-- the question: an edit result with outcome `proposed`, whose `note` and `input-sha256` name the text the proposals were made for;
-- that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; for a single edit, the note, or the `--text` file the edit ran on;
-- the operation the proposals came from, for its preserve rules.
+- the question: an edit result with outcome `proposed`, whose `note` and `input-sha256` name the text the proposals were made for; or, at a triage, a review result with outcome `warn` or `fail`, whose items are its `warn` and `fail` findings;
+- that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; for a single edit, the note, or the `--text` file the edit ran on; at a triage, the note's file: a triage takes only fresh results, so the note holds the text they judged, in the parts the criterion watches;
+- the operation the proposals came from, for its preserve rules; at a triage, the review result's `criterion` file instead.
 
 If no answers file exists yet for a proposed edit result, create it: `commonplace-review answers create --from <result path>`. It writes `<result stem>-answers.md` beside the result, every item `pending`. Never write a hash by hand.
 
@@ -23,7 +23,9 @@ Authority: the decisions are the operator's. The agent presents, records and run
 ## Procedure
 
 1. Present each item: the quoted passage in context, the proposed `change`, the worker's `reason`, and any preserve rule of the operation that bears on it. Choose the context by what the operator needs to judge the item. The sentence is enough for a local rewording. Show the paragraph, or the neighbouring sentences, when the change drops or moves a clause, when the passage refers to text around it, or when the same wording occurs nearby. Show more whenever the operator asks. Ask the operator: approve, reject or defer. One item per question unless the operator asks for the whole list.
-   A carried-over item has `carried-from`: the operator already decided the same proposal, with the same `quote` and `change`, for an earlier text of the note. Present it as carried over: the earlier `state`, the operator's `reason` and `revisit` when present, `decided-at`, and the answers file `carried-from` names. Ask only whether the operator wants to change that decision. If not, leave the item as it is.
+   A finding item, at a triage, is one finding of a review result. Present the criterion (the result's `criterion` and its file), the passages the finding's `quotes` name, in context as above, and the reviewer's `reason` and `level`; a `document` finding has no quotes. The operator decides whether the finding stands: approve means the finding is right and the plan fixes it; reject means the finding is wrong, and nothing fixes it; defer leaves it for later.
+   On a rejection, ask the operator one more question: is the finding wrong for this note only, or is the criterion too broad? Record the answer in the `reason`, in the operator's words. When the operator says the criterion is too broad, also append one line under Open observations in `kb/log.md` on the operator's word: `- OBSERVATION: [<criterion path>, <answers file>] — <the operator's reason>`.
+   A carried-over item has `carried-from`: the operator already decided the same proposal, with the same `quote` and `change`, or the same finding of the same criterion, for an earlier text of the note. Present it as carried over: the earlier `state`, the operator's `reason` and `revisit` when present, `decided-at`, and the answers file `carried-from` names. Ask only whether the operator wants to change that decision. If not, leave the item as it is.
 2. Record each answer in the item, exactly:
    - approve: `state: approved`; a `reason` only if the operator gives one;
    - reject: `state: rejected` and `reason` in the operator's words; do not suggest a reason and do not carry one over from another item;
@@ -37,7 +39,7 @@ Authority: the decisions are the operator's. The agent presents, records and run
    - for a single edit, run the same operation again with `--input answers=<answers file>`.
 5. If a revise repeat stops on the same file again, its `what` names what the validator refused. Correct the file as it says, confirm with the operator, approve again and repeat.
 
-Verification: `commonplace-validate` passes on the answers file. In a revise run, the repeat's report shows the pass `applied` or `no-change`, or the run waiting on `artifact/publication-answers.md`; an edit after approval is reported as unapproved and not used. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
+Verification: `commonplace-validate` passes on the answers file. In a revise run, the repeat's report shows the pass `applied` or `no-change`, or the run waiting on `artifact/publication-answers.md`; after a triage, the plan holds one fix entry per review result with an approved finding, or no entry when none was approved; an edit after approval is reported as unapproved and not used. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
 
 The reasons stay in the answers file and, for a revise run, in the operator record beside it, where `commonplace-review decisions` lists them. Do not copy them elsewhere.
 

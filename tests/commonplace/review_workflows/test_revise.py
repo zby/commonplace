@@ -875,10 +875,11 @@ def test_a_note_without_earlier_decisions_passes_none(repo, capsys, tmp_path):
 GATE = "kb/instructions/review-gates/prose/residue.md"
 
 
-def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH):
+def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH, found=None):
     """Write a current review result for `note` against `gate`; return its repository path.
 
-    `info` writes a `pass` result that holds one INFO-level finding.
+    `info` writes a `pass` result that holds one INFO-level finding. `found`
+    replaces the one fixture finding.
     """
     root = repo[0]
     path = root / gate
@@ -891,7 +892,8 @@ def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH):
                        outcome="pass" if outcome == "info" else outcome,
                        profile={"harness": "fake", "launch-model": "m", "effort": "low"}, model="fake-model-1",
                        run="r", launch="L1", completed_at="2026-11-16T00:00:00Z", body="# Review\n\nFound it.\n",
-                       findings=level if outcome == "info" else findings(outcome), evidence=evidence(root))
+                       findings=found if found is not None else level if outcome == "info" else findings(outcome),
+                       evidence=evidence(root))
     return write_result(root, made).relative_to(root).as_posix()
 
 
@@ -989,6 +991,144 @@ def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     assert report["passes"][0]["finding"] == report["plan"]["passes"][0]["finding"]
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
+
+
+# --- Triage ------------------------------------------------------------------------------------
+
+PACKING = "kb/instructions/review-gates/sentence/packing.md"
+HEDGING = "kb/instructions/review-gates/prose/hedging.md"
+
+
+def finding(reason, level="warn"):
+    return {"scope": "document", "quotes": [], "reason": reason, "level": level}
+
+
+def triaged(repo, capsys, report, chosen):
+    """Record the operator's decisions in each triage answers file and approve it.
+
+    `chosen` maps a criterion id to the decisions by item id, as `decide()` takes them.
+    """
+    for state in report["triage"]["results"]:
+        path = repo[0] / state["answers"]
+        path.write_text(decide(path.read_text(), chosen[state["criterion"]]))
+        stop = state["waiting-for"]
+        assert main(["approve", report["run-dir"], stop["file"], "--key", stop["key"]], harnesses=repo[1]) == 0
+    capsys.readouterr()
+
+
+def test_triage_without_warn_or_fail_findings_changes_nothing(repo, capsys):
+    original = start(repo)
+    stored(repo, "info")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    assert code == 0 and report["complete"] and report["mode"] == "triage" and launches == []
+    assert report["triage"] == {"results": [], "what": revise_module.NOTHING_TO_TRIAGE}
+    assert report["plan"] is None and report["proposed"] is None and note_text(repo) == original
+
+
+def test_triage_waits_for_each_answers_file_and_rejections_plan_nothing(repo, capsys):
+    original = start(repo)
+    late = stored(repo, "fail", gate=PACKING, depth=5)
+    early = stored(repo, "warn")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    assert code == 0 and launches == [] and not report["complete"] and report["plan"] is None
+    listed = report["triage"]["results"]
+    assert [(s["result"], s["criterion"], s["state"]) for s in listed] == [
+        (early, "prose/residue", "waiting"), (late, "sentence/packing", "waiting")]     # in depth order
+    assert report["waiting-for"] == listed[0]["waiting-for"]
+    assert re.fullmatch(r".*/artifact/finding-answers-[0-9a-f]{12}\.md", listed[0]["answers"])
+    assert (repo[0] / listed[0]["question"]).read_text() == (repo[0] / early).read_text()
+    head = yaml.safe_load((repo[0] / listed[0]["answers"]).read_text().split("---\n")[1])
+    assert head["question"] == listed[0]["question"]
+    assert head["items"] == [{"id": "1", "proposal": findings("warn")[0], "state": "pending"}]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["triage"] == report["triage"]
+
+    triaged(repo, capsys, report, {"prose/residue": {"1": rejected("wrong for this note only")},
+                                   "sentence/packing": {"1": rejected("the criterion is too broad")}})
+    code, done, launches = revise(repo, capsys, NOTE_PATH)
+    assert code == 0 and done["complete"] and launches == []
+    assert done["plan"]["passes"] == [] and done["plan"]["purpose"] == revise_module.TRIAGE_PURPOSE
+    assert [s["state"] for s in done["triage"]["results"]] == ["decided", "decided"]
+    assert done["proposed"] is None and not done["applied"] and note_text(repo) == original
+
+    assert main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
+    listed = json.loads(capsys.readouterr().out)
+    assert sorted((e["unit"], e["decided-by"], e["decision"], e["item"], e["reason"]) for e in listed) == [
+        ("item", "operator", "rejected", "prose/residue: warn: A fixture finding", "wrong for this note only"),
+        ("item", "operator", "rejected", "sentence/packing: fail: A fixture finding", "the criterion is too broad")]
+
+
+def test_triage_fixes_only_results_with_an_approved_finding(repo, capsys):
+    start(repo)
+    two = stored(repo, "warn", found=[finding("first"), finding("second")])
+    stored(repo, "warn", gate=HEDGING, depth=3, found=[finding("hedged")])
+    stored(repo, "fail", gate=PACKING, depth=5)
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage", "--purpose", "Readers")
+    assert [s["criterion"] for s in report["triage"]["results"]] == ["prose/residue", "prose/hedging",
+                                                                     "sentence/packing"]
+    triaged(repo, capsys, report, {"prose/residue": {"1": APPROVED, "2": rejected("not residue")},
+                                   "prose/hedging": {"1": rejected("the hedge is needed")},
+                                   "sentence/packing": {"1": APPROVED}})
+    code, ready, launches = revise(repo, capsys, NOTE_PATH)
+    questions = {s["criterion"]: s["question"] for s in ready["triage"]["results"]}
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big", "pass fix-strategy-taxonomy big"]
+    assert ready["plan"] == {"purpose": "Readers", "defend": [], "stop": None, "passes": [
+        {"pass": revise_module.FIX, "scope": None, "finding": questions["prose/residue"]},
+        {"pass": revise_module.FIX, "scope": None, "finding": questions["sentence/packing"]}]}
+    assert [s["state"] for s in ready["passes"]] == ["applied", "applied"]
+    fixes = [c for c in captured_inputs(repo[2]) if c["pass"] == revise_module.FIX]
+    answered = {s["question"]: (repo[0] / s["answers"]).read_text() for s in ready["triage"]["results"]}
+    assert fixes[0]["inputs"]["finding"] == (repo[0] / two).read_text()
+    assert fixes[0]["inputs"][revise_module.FINDING_ANSWERS] == answered[questions["prose/residue"]]
+    assert "not residue" in fixes[0]["inputs"][revise_module.FINDING_ANSWERS]
+    assert fixes[1]["inputs"][revise_module.FINDING_ANSWERS] == answered[questions["sentence/packing"]]
+    assert ready["waiting-for"]["file"].endswith("/publication-answers.md")
+    publish(repo, capsys, ready)
+
+
+def test_a_triage_repeat_keeps_its_results_after_the_store_changes(repo, capsys):
+    start(repo)
+    result = stored(repo, "warn")
+    captured = (repo[0] / result).read_text()
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    stored(repo, "fail", found=[finding("a new finding", "fail")])      # a new review replaces the result
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["triage"] == report["triage"] and repeated["findings"] == [result]
+    triaged(repo, capsys, repeated, {"prose/residue": {"1": APPROVED}})
+    _, _, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == ["pass fix-strategy-taxonomy big"]
+    [fix] = [c for c in captured_inputs(repo[2]) if c["pass"] == revise_module.FIX]
+    assert fix["inputs"]["finding"] == captured != (repo[0] / result).read_text()
+
+
+def test_a_triage_carries_over_the_decision_on_an_identical_finding(repo, capsys):
+    start(repo)
+    stored(repo, "warn", found=[finding("same"), finding("other")])
+    _, first, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    triaged(repo, capsys, first, {"prose/residue": {"1": rejected("wrong for this note only"), "2": APPROVED}})
+    start(repo, "changed")                                   # another text: another run
+    stored(repo, "warn", found=[finding("same"), finding("other, reworded")])
+    _, second, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    assert launches == [] and second["run-dir"] != first["run-dir"] and not second["complete"]
+    head = yaml.safe_load((repo[0] / second["waiting-for"]["file"]).read_text().split("---\n")[1])
+    carried, asked = head["items"]
+    assert (carried["state"], carried["reason"], carried["carried-from"]) == (
+        "rejected", "wrong for this note only", first["triage"]["results"][0]["answers"])
+    assert asked["state"] == "pending" and "carried-from" not in asked
+    captured = json.loads((repo[0] / second["run-dir"] / revise_module.EARLIER_FILE).read_text())["decisions"]
+    assert sorted((d["criterion"], d["proposal"]["reason"], d["state"]) for d in captured) == [
+        (GATE, "other", "approved"), (GATE, "same", "rejected")]
+
+
+def test_answers_create_takes_a_review_result_but_writes_outside_the_store(repo, capsys, tmp_path):
+    start(repo)
+    result = stored(repo, "warn")
+    assert main(["answers", "create", "--from", result]) == 2
+    assert "would be read as a review result" in capsys.readouterr().err
+    assert main(["answers", "create", "--from", result, "--to", "kb/work/residue-answers.md"]) == 0
+    capsys.readouterr()
+    head = yaml.safe_load((repo[0] / "kb/work/residue-answers.md").read_text().split("---\n")[1])
+    assert head["items"] == [{"id": "1", "proposal": findings("warn")[0], "state": "pending"}]
 
 
 # --- The full procedure ---------------------------------------------------------------------

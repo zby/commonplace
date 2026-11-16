@@ -7,7 +7,8 @@
     commonplace-review run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]
                                 [--timeout SECONDS]
     commonplace-review run edit --fixture PATH
-    commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --assess | --full]
+    commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --triage | --assess
+                                            | --full]
                                   [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
@@ -78,9 +79,15 @@ instructions/simplification-passes/revise-an-article-or-note.md). It runs a
 plan, and the first invocation chooses how the plan is made: focused (a fixed
 plan), quick (`--assess`) or full (`--full`). A fixed plan is `--plan FILE`,
 `--pass NAME` (a one-entry plan for that pass) or `--finding RESULT` (a
-one-entry plan that fixes that review result of the artifact). `--assess`,
-`--full` and the one-entry plans use `--purpose` and `--defend`; a plan file
-carries those fields itself. The assessor also receives the artifact's fresh
+one-entry plan that fixes that review result of the artifact). `--triage`
+makes the plan from the operator's answers: it launches no review and no
+assessor, writes one pending answers file `artifact/finding-answers-<key>.md`
+per fresh stored `warn` or `fail` result and stops; the report's `triage`
+lists each file with its approval command. When every file is approved, the
+plan holds one fix entry per result with an `approved` finding, and the fix
+receives the approved answers as `finding-answers`. `--assess`, `--full`,
+`--triage` and the one-entry plans use `--purpose` and `--defend`; a plan
+file carries those fields itself. The assessor also receives the artifact's fresh
 stored `warn` and `fail` review results. `--full` first runs every review operation that declares a `depth` on the
 artifact, as `run gates` would on the profile file's `default` profile, in
 runs under the revise run directory; then the assessor also receives the
@@ -226,7 +233,10 @@ def _parser() -> argparse.ArgumentParser:
     mode.add_argument("--finding", metavar="RESULT",
                       help="execute a one-entry plan that fixes this review result of the artifact, without assessment")
     mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection; "
-                      "new runs require --plan, --pass, --finding, --assess or --full, repeats keep the recorded mode")
+                      "new runs require --plan, --pass, --finding, --triage, --assess or --full, repeats keep the "
+                      "recorded mode")
+    mode.add_argument("--triage", action="store_true", help="stop for the operator's answers on each fresh warn "
+                      "or fail review result, then fix the approved findings; no review and no assessor")
     mode.add_argument("--full", action="store_true", help="run every review operation that declares a depth, "
                       "then assess with the findings")
     for effort in edit_operations.EFFORTS:
@@ -251,7 +261,8 @@ def _parser() -> argparse.ArgumentParser:
     create_answers = answer_commands.add_parser(
         "create", help="write the answers file for a question, every item pending; launches nothing")
     create_answers.add_argument("--from", dest="question", required=True,
-                                help="the question: an edit result with outcome proposed, or a text to approve")
+                                help="the question: an edit result with outcome proposed, a review result with "
+                                "outcome warn or fail, or a text to approve")
     create_answers.add_argument("--to", help="where to write it (default: <question stem>-answers.md beside "
                                 "the question); an existing file is never replaced")
     listed = commands.add_parser("decisions", help="list operator and agent decisions from run operator records, "
@@ -484,10 +495,11 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
     recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
     mode = ("fixed-plan" if named_plan is not None else "assess" if arguments.assess
-            else "full" if arguments.full else recorded.get("mode"))
-    if mode not in {"fixed-plan", "assess", "full"}:
-        raise ValueError("choose --plan FILE, --pass NAME or --finding RESULT for fixed-plan execution, or --assess "
-                         "or --full for planning; a new run never chooses work implicitly")
+            else "full" if arguments.full else "triage" if arguments.triage else recorded.get("mode"))
+    if mode not in {"fixed-plan", "assess", "full", "triage"}:
+        raise ValueError("choose --plan FILE, --pass NAME or --finding RESULT for fixed-plan execution, --triage "
+                         "to decide the stored findings, or --assess or --full for planning; a new run never "
+                         "chooses work implicitly")
     if mode == "fixed-plan" and not isinstance(named_plan if named_plan is not None else recorded.get("plan"), str):
         raise ValueError("fixed-plan run has no captured plan; supply --plan FILE")
     if mode == "fixed-plan" and not focused and (arguments.purpose is not None or arguments.defend):
@@ -505,7 +517,7 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
                            purpose=options.get("purpose"), defend=options.get("defend", []),
                            named_plan=options["plan"] if mode == "fixed-plan" else None,
-                           review=Profile(**review) if review else None,
+                           review=Profile(**review) if review else None, triage=mode == "triage",
                            timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
@@ -518,6 +530,9 @@ def _answers(root: Path, arguments: argparse.Namespace) -> int:
               else question.with_name(f"{question.stem}-answers.md"))
     if target.exists():
         raise ValueError(f"answers file exists, not replaced: {target.relative_to(root).as_posix()}")
+    if target.resolve().is_relative_to((root / results.RESULTS).resolve()):
+        raise ValueError(f"an answers file under {results.RESULTS.as_posix()} would be read as a review result; "
+                         "give --to a path outside it")
     edits.write_text(target, answers.pending(rel, question.read_bytes()))
     print(json.dumps({"answers": target.relative_to(root).as_posix(), "question": rel}, indent=2))
     return 0

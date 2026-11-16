@@ -1,5 +1,5 @@
 ---
-description: How to operate commonplace-review — criteria and pairs, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, single edit operations and the three improvement procedures on one runner
+description: How to operate commonplace-review — criteria and pairs, result files and freshness, gate sweeps, status, retry and resume, the checkout guard, worker profiles, cost, single edit operations and the improvement procedures on one runner
 type: types/note.md
 tags: []
 ---
@@ -244,7 +244,9 @@ by one.
 
 The current warnings are the fixing queue: read each finding in the result
 file `--json` names, and fix one with the focused procedure,
-`commonplace-review run revise NOTE --finding RESULT` (see
+`commonplace-review run revise NOTE --finding RESULT`, or have the operator
+decide each finding of a note first with
+`commonplace-review run revise NOTE --triage` (see
 [improvement procedures](#improvement-procedures)).
 `commonplace-status --review` adds counts of fresh, stale and orphaned
 results and of current `warn` and `fail` outcomes to the project status.
@@ -444,15 +446,16 @@ note or another markdown artifact. It executes a plan: a list of
 [simplification passes](../instructions/simplification-passes/README.md) in
 increasing depth, each through the same route as `run edit`. It stops for
 the operator's answers on a per-item operation and for approval of the exact
-final text, and it writes the artifact once. Three procedures differ only in
+final text, and it writes the artifact once. Four procedures differ only in
 how the plan is made
-([three ways](../instructions/simplification-passes/README.md#three-ways-to-make-a-plan),
+([ways to make a plan](../instructions/simplification-passes/README.md#ways-to-make-a-plan),
 [ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
 A new run requires one choice.
 
 | Procedure | Flags | What chooses the edits | New review launches |
 |---|---|---|---|
 | focused | `--pass NAME`, `--finding RESULT`, `--plan FILE` | the operator | none |
+| triage | `--triage` | the operator, by deciding each finding of the fresh stored `warn` and `fail` results | none |
 | quick | `--assess` | one assessor, from the artifact and its fresh stored `warn` and `fail` results | none |
 | full | `--full` | one assessor, from the artifact, the new findings, the depth 1 reports and the role report | every review operation that declares a `depth` |
 
@@ -462,6 +465,29 @@ the whole artifact. `--finding RESULT` writes a one-entry plan that runs
 with that review result of the artifact as its `finding` input; the
 operation changes only the passage the finding names. `--plan FILE` supplies
 any other plan.
+
+**Triage.** `--triage` presents the artifact's findings to the operator. It
+takes the same results the quick procedure gives its assessor, the fresh
+stored results with outcome `warn` or `fail`, and keeps those with a finding
+of level `warn` or `fail`. It captures them once in `triage-inputs.json`,
+so a repeat asks about the same results after the store changes. It copies
+each result into the run's `artifact/findings/` and writes one pending
+[answers](../types/answers.md) file per result,
+`artifact/finding-answers-<key>.md`, whose question is the copy and whose
+items are the result's `warn` and `fail` findings. Then it stops. The
+report's `triage` lists each file with its state and its own approval
+command; `waiting-for` names the first file that waits. In a session,
+follow [decide items](../instructions/decide-items.md): the operator
+approves a finding that is right, rejects one that is wrong with a reason,
+and says whether it is wrong for this note only or the criterion is too
+broad, or defers it. When every file is approved, the plan holds one entry
+for the fix per result with at least one `approved` finding, in depth
+order, naming the copy as its `finding`. The fix also receives the approved
+answers as `finding-answers` and fixes only the approved findings; its
+report lists the findings it did not touch. With no approved finding the
+plan is empty and nothing changes. With no fresh `warn` or `fail` result the
+run ends at once, and `triage.what` says so. Nothing is reviewed and nothing
+is assessed.
 
 **Quick.** `--assess`: one assessor chooses the edit operations from the
 artifact and its fresh stored `warn` and `fail` review results. No review is
@@ -501,7 +527,8 @@ checks do not establish the quality of the selected edits.
 No procedure checks that an edit fixed its finding, and none records a
 judgment over the whole note other than a plan's `stop` and its answers. A finding fixed by
 the focused procedure leaves an edit result and a publication decision; a
-finding the operator rejects as spurious leaves no record unless a stop asks.
+finding the operator rejects as spurious leaves a record only through a
+triage, whose answers file holds the rejection and its reason.
 
 Plain-wording and abstractions, the `per-item` passes, still stop for the
 operator's answers on each proposal, in `artifact/<pass>-answers-<key>.md`.
@@ -515,15 +542,17 @@ infrastructure, and fewer proposals do not establish reliability.
 note. When a
 revise run starts, code collects the operator's decided items from the
 approved answers of the other revise runs on the same note path. It takes
-items whose proposal has a `quote` and a `change` and whose state is not
-`pending`. It skips publication and plan-stop answers, and answers the
-validator refuses. When the same proposal was decided more than once, the
-latest `decided-at` wins. The run captures the result once in
+items whose state is not `pending` and whose proposal is an edit proposal,
+with a `quote` and a `change`, or a finding of a triage, which it records
+with its criterion. It skips publication and plan-stop answers, and answers the
+validator refuses. When the same proposal, or the same finding of the same
+criterion, was decided more than once, the latest `decided-at` wins. The run captures the result once in
 `earlier-decisions.json`, so a repeat uses the same decisions even after
 other runs record more. Each per-item pass and each fix of a finding
 receives them as the input `earlier-decisions`, when there is at least
 one. A new proposal with the same `quote` and `change` as an earlier
-decided item starts decided in the answers file: code copies the earlier
+decided item, or a triage finding with the same criterion and the same
+`scope`, `quotes`, `reason` and `level`, starts decided in the answers file: code copies the earlier
 `state`, `reason`, `revisit`, `decided-by` and `decided-at` and sets
 `carried-from` to the earlier answers file. Only identical proposals are
 carried over. The stop still waits for approval, even when every item is
@@ -568,7 +597,9 @@ Instructions remain the judgment authority; prompts name inputs only.
 operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
 It reads, without writing, the operator records in revise run directories,
 and lists each decision with who proposed it, who decided it and whether it
-covered one item or a bundle. So that decisions recorded before the cutover
+covered one item or a bundle. A decision on a finding at a triage has class
+`finding`, and its item names the criterion, the level and the reviewer's
+reason. So that decisions recorded before the cutover
 stay visible, it also reads the records of the two retired procedures
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)):
 operator records in full-pass run directories, full-pass packets under

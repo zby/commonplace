@@ -142,7 +142,11 @@ stored review results with outcome `warn` or `fail`, when any exist; the
 command launches no review. Results with only INFO-level findings are not
 given. The focused procedure makes no assessment: `--pass NAME` runs a
 one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
-that fixes that review result of the artifact. The full procedure, `--full`,
+that fixes that review result of the artifact. The triage, `--triage`, makes
+no assessment either: it stops with one answers file per fresh `warn` or
+`fail` result, the operator decides each finding with
+[decide items](../decide-items.md), and the plan fixes the approved findings
+only, one entry per result with an approved finding. The full procedure, `--full`,
 first runs every review operation that declares a `depth` on the artifact,
 through the same route as `commonplace-review run gates`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
@@ -245,8 +249,8 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    revise the text: supply `--plan`, change workflow inputs, or start a new
    run.
 6. An artifact edited between invocations has another hash, so the command
-   opens a new run. Choose `--assess` again to commission planning, or
-   `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run is a conflict: nothing
+   opens a new run. Choose `--assess` again to commission planning,
+   `--triage` to decide the findings, or `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run is a conflict: nothing
    is written, and the report names the run file holding the proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are

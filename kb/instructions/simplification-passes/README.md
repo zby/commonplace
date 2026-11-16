@@ -14,7 +14,7 @@ a stop on a per-item pass's answers file is resolved in a session with
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. To review the artifact before the
 assessor plans, use the full procedure, `--full` (see
-[three ways to make a plan](#three-ways-to-make-a-plan)). The
+[ways to make a plan](#ways-to-make-a-plan)). The
 [audit pass](./audit-a-prior-pass.md) here is for checking what an earlier
 automated pass did.
 
@@ -46,7 +46,7 @@ without `depth` may run at any point.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.
 
-## Three ways to make a plan
+## Ways to make a plan
 
 `commonplace-review run revise` runs a plan: a list of passes in depth
 order. The procedures differ only in how the plan is made.
@@ -59,6 +59,16 @@ order. The procedures differ only in how the plan is made.
   is assessed and nothing is reviewed. `--purpose` and `--defend` go into
   the plan; without `--purpose`, the plan states that the operator named
   no other purpose. `--plan FILE` supplies any other fixed plan.
+- **Triage.** `--triage` asks the operator about the artifact's fresh stored
+  `warn` and `fail` review results. It writes one answers file per result,
+  whose items are the result's `warn` and `fail` findings, and stops. In a
+  session, follow [decide items](../decide-items.md): the operator approves
+  a finding that is right, rejects one that is wrong, with a reason, or
+  defers it. The plan then holds one entry for
+  [fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md)
+  per result with an approved finding, in depth order. The fix receives the
+  approved answers as `finding-answers` and fixes only the approved
+  findings. Nothing is reviewed and nothing is assessed.
 - **Quick.** `--assess` asks one assessor to choose the passes. It reads the
   artifact and the artifact's fresh stored `warn` and `fail` review
   results, when any exist. It launches no review.

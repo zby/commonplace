@@ -150,7 +150,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 *Limitations.* Every launch is paid and a changed pair is always re-reviewed. Gate selection depends on note types and traits. The checkout guard cannot tell a worker's change from another session's.
 
-See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system, including the three improvement procedures that edit notes, and [review-architecture.md](./review-architecture.md) for how it is built.
+See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review system, including the improvement procedures that edit notes, and [review-architecture.md](./review-architecture.md) for how it is built.
 
 ### Direct CLI commands
 

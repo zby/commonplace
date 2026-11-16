@@ -23,8 +23,11 @@ covered one item or a bundle. A publication approval is approval of the
 final text, never of each edit that produced it. No statistic is computed.
 
 `earlier()` reads the same operator records for the revise workflow: the
-operator's decided items on edit proposals in the other runs on one note,
-which a new run carries over (`types/answers.md`, "Decisions carried over").
+operator's decided items on edit proposals and on review findings in the
+other runs on one note, which a new run carries over (`types/answers.md`,
+"Decisions carried over"). A decision on a finding comes from a triage stop,
+`finding-answers-<key>.md`, whose question is a review result; the listing
+shows it with class `finding` and names its criterion.
 """
 
 from __future__ import annotations
@@ -34,8 +37,8 @@ import re
 from datetime import UTC, datetime
 from pathlib import Path
 
-from commonplace.lib import frontmatter
-from commonplace.lib.review_workflows import edits, gates
+from commonplace.lib import answers, frontmatter
+from commonplace.lib.review_workflows import edits, gates, results
 
 # BACKCOMPAT: reads packets and fix reports written before the cutover - remove after the operator says the old records are dispensable
 WORKFLOWS = ("revise", "full-pass")
@@ -50,7 +53,10 @@ FIXES = Path("kb/reports/state/fixes")
 ITEM_WIDTH = 80
 _RUN = re.compile(r"[0-9a-f]{12}")
 _ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
-"""An answers stop: `<pass>-answers-<key>.md` of a per-item pass, `publication-answers.md` or `stop-answers.md`."""
+"""An answers stop: `<pass>-answers-<key>.md` of a per-item pass, `finding-answers-<key>.md` of a triage,
+`publication-answers.md` or `stop-answers.md`."""
+FINDING = "finding"
+"""The class of a triage stop: its question is a review result, and its items are the result's findings."""
 _AUTHORITY = {"user": "operator", "version-guard": "version-guard"}
 
 
@@ -68,9 +74,15 @@ def _entry(note: str, workflow: str, run: str | None, record: str, cls: str, pro
             "key": key, "at": at}
 
 
-def _head(proposal: object) -> str:
-    """One line naming an answered item: an edit proposal's quote and change, or the approved text's path."""
-    if isinstance(proposal, dict) and "quote" in proposal:
+def _head(proposal: object, criterion: str | None = None) -> str:
+    """One line naming an answered item.
+
+    A finding: its criterion, level and reason. An edit proposal: its quote
+    and change. A text to approve: its path.
+    """
+    if criterion is not None and isinstance(proposal, dict):
+        line = f"{criterion}: {proposal.get('level')}: {proposal.get('reason')}"
+    elif isinstance(proposal, dict) and "quote" in proposal:
         line = f"{proposal['quote']} -> {proposal.get('change')}"
     elif isinstance(proposal, dict) and "text" in proposal:
         line = str(proposal["text"])
@@ -93,6 +105,15 @@ def _records(root: Path, run_dir: Path) -> list[tuple[str, dict]]:
             raise MalformedRecord(f"malformed operator record: {record}: {error!r}") from error
         found.append((record, data))
     return found
+
+
+def _criterion(root: Path, question: object) -> str | None:
+    """The criterion id of the review result an answers file names as `question`; None when it cannot be read."""
+    try:
+        identity = answers.finding_criterion((root / str(question)).read_bytes())
+        return None if identity is None else results.criterion_id(root, identity)
+    except (OSError, ValueError):
+        return None
 
 
 def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
@@ -130,12 +151,14 @@ def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
                 found.append(_entry(note, workflow, run, record, cls, proposer, "operator", "invalid", "bundle",
                                     **common))
                 continue
+            criterion = _criterion(root, parsed.data.get("question")) if cls == FINDING else None
             for item in items:
                 state = str(item.get("state"))
                 found.append(_entry(note, workflow, run, record, cls, proposer,
                                     waiting if state == "pending" else str(item.get("decided-by")),
                                 waiting if state == "pending" else state,
-                                    "bundle" if cls == "publication" else "item", item=_head(item.get("proposal")),
+                                    "bundle" if cls == "publication" else "item",
+                                    item=_head(item.get("proposal"), criterion),
                                     reason=item.get("reason"), resolution=item.get("resolution"),
                                     refs=item.get("refs"), carried_from=item.get("carried-from"),
                                     key=key, at=None if state == "pending" else str(item.get("decided-at") or at)))
@@ -255,25 +278,29 @@ def _when(decision: dict) -> tuple[datetime, str]:
 
 
 def earlier(root: Path, note: str, current: Path) -> list[dict]:
-    """The operator's decided items on edit proposals in the revise runs on `note` other than `current`.
+    """The operator's decided items on edit proposals and findings in the revise runs on `note` other than `current`.
 
     Each run directory beside `current`, under the note's path, holds
     operator records. For each answers stop with an approved capture that
-    the validator accepts, every item whose proposal has a `quote` and a
-    `change` and whose state is not `pending` is an earlier decision. A
-    capture the validator refuses is skipped whole: the run that captured it
-    refused it too. An item whose `decided-at` is not an ISO 8601 time is
-    skipped. When the same proposal (same quote and change) was
-    decided more than once, the latest `decided-at` wins. Each decision
-    holds `proposal`, `state`, `reason`, `revisit`, `decided-by`,
-    `decided-at` and `answers-file`, the repository path of its answers
-    file; the list is ordered by `decided-at`.
+    the validator accepts, every item that `answers.decision_key()`
+    identifies and whose state is not `pending` is an earlier decision: an
+    edit proposal, with a `quote` and a `change`, or a finding of a review
+    result, the question of a triage stop. A capture the validator refuses
+    is skipped whole: the run that captured it refused it too. An item whose
+    `decided-at` is not an ISO 8601 time is skipped. When the same proposal
+    (same quote and change) or the same finding (same criterion and
+    identical finding) was decided more than once, the latest `decided-at`
+    wins. Each decision holds `proposal`, `state`, `reason`, `revisit`,
+    `decided-by`, `decided-at` and `answers-file`, the repository path of
+    its answers file; a decision on a finding also holds `criterion`, the
+    criterion's identity, and `question-sha256`, the hash of the review
+    result it answered. The list is ordered by `decided-at`.
     """
     base = root / gates.RUNS / EARLIER_WORKFLOW / note.removesuffix(".md")
     if not base.is_dir():
         return []
     current = current.resolve()
-    latest: dict[tuple[str, str], dict] = {}
+    latest: dict[tuple, dict] = {}
     for run_dir in sorted(base.iterdir()):
         if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
             continue
@@ -285,18 +312,32 @@ def earlier(root: Path, note: str, current: Path) -> list[dict]:
             parsed, problems = edits.answered(root, path, answer)
             if problems:
                 continue
+            criterion = answers.finding_criterion((root / parsed["question"]).read_bytes())
             for item in parsed["items"]:
                 proposal = item["proposal"]
-                if (item["state"] == "pending" or "quote" not in proposal or "change" not in proposal
-                        or _moment(item["decided-at"]) is None):
+                same = answers.decision_key(proposal, criterion)
+                if same is None or item["state"] == "pending" or _moment(item["decided-at"]) is None:
                     continue
                 decision = {"proposal": proposal, "state": item["state"], "reason": item.get("reason"),
                             "revisit": item.get("revisit"), "decided-by": item["decided-by"],
                             "decided-at": item["decided-at"], "answers-file": path.relative_to(root).as_posix()}
-                same = (proposal["quote"], proposal["change"])
+                if criterion is not None:
+                    decision |= {"criterion": criterion, "question-sha256": parsed["question-sha256"]}
                 if same not in latest or _when(decision) > _when(latest[same]):
                     latest[same] = decision
     return sorted(latest.values(), key=_when)
+
+
+def _quoted(text: object) -> list[str]:
+    return [f"> {line}" for line in str(text).splitlines()]
+
+
+def _finding_lines(proposal: dict) -> list[str]:
+    """A finding as the reviewer wrote it: its scope, the passages it quotes, its reason and level."""
+    lines = [f"Scope: {proposal.get('scope')}", ""]
+    for quote in proposal.get("quotes") or []:
+        lines += ["Passage:", "", *_quoted(quote), ""]
+    return lines + [f"Reviewer's reason: {proposal.get('reason')}", f"Level: {proposal.get('level')}", ""]
 
 
 def earlier_text(found: list[dict]) -> str:
@@ -305,9 +346,12 @@ def earlier_text(found: list[dict]) -> str:
              "The operator decided these proposals in earlier runs on other texts of this note.", ""]
     for index, decision in enumerate(found, 1):
         proposal = decision["proposal"]
-        lines += [f"## {index}. {decision['state']}", "", "Passage:", "",
-                  *(f"> {line}" for line in str(proposal["quote"]).splitlines()), "", "Change:", "",
-                  *(f"> {line}" for line in str(proposal["change"]).splitlines()), ""]
+        if decision.get("criterion") is not None:
+            lines += [f"## {index}. {decision['state']}: a finding against `{decision['criterion']}`", "",
+                      *_finding_lines(proposal)]
+        else:
+            lines += [f"## {index}. {decision['state']}", "", "Passage:", "", *_quoted(proposal["quote"]), "",
+                      "Change:", "", *_quoted(proposal["change"]), ""]
         if decision["reason"]:
             lines.append(f"Operator's reason: {decision['reason']}")
         if decision["revisit"]:

@@ -157,3 +157,46 @@ def test_an_edit_result_that_proposes_nothing_is_no_question(root):
     (root / QUESTION).write_text(RESULT.replace("outcome: proposed", "outcome: unchanged"))
     with pytest.raises(ValueError, match="only with outcome `proposed`"):
         answers.pending(QUESTION, (root / QUESTION).read_bytes())
+
+
+# --- A review result as the question: a triage ----------------------------------------------
+
+FINDINGS = [{"scope": "passage", "quotes": ["Alpha body"], "reason": "residue", "level": "warn"},
+            {"scope": "document", "quotes": [], "reason": "a remark", "level": "info"},
+            {"scope": "document", "quotes": [], "reason": "missing condition", "level": "fail"}]
+REVIEW = "kb/reports/state/run/findings/prose/residue.md"
+
+
+def review(outcome="fail", found=FINDINGS):
+    data = {"type": "types/review-result.md", "note": "kb/notes/alpha.md",
+            "criterion": "kb/instructions/review-gates/prose/residue.md", "findings": found, "outcome": outcome}
+    return "---\n" + yaml.safe_dump(data, sort_keys=False) + "---\n\n# Review\n\nFound.\n"
+
+
+def test_a_review_result_asks_about_its_warn_and_fail_findings_by_position(root):
+    (root / REVIEW).parent.mkdir(parents=True)
+    (root / REVIEW).write_text(review())
+    data = yaml.safe_load(answers.pending(REVIEW, (root / REVIEW).read_bytes()).split("---\n")[1])
+    assert data["items"] == [{"id": "1", "proposal": FINDINGS[0], "state": "pending"},
+                             {"id": "3", "proposal": FINDINGS[2], "state": "pending"}]   # the info finding is no item
+    assert check(root, data) == []
+    data["items"][0].update({"state": "rejected", "reason": "wrong for this note only", **DECIDED})
+    data["items"][1].update({"state": "approved", **DECIDED})
+    assert check(root, data) == []
+    data["items"][0]["proposal"]["reason"] = "edited"
+    assert any("item 1: its proposal differs" in fail for fail in check(root, data))
+    data["items"][0]["proposal"]["reason"] = "residue"
+    data["items"].append({"id": "2", "proposal": FINDINGS[1], "state": "pending"})
+    assert any("item 2: not in the question" in fail for fail in check(root, data))
+
+
+@pytest.mark.parametrize("outcome, found", [("pass", []), ("report", FINDINGS[:1]), ("warn", FINDINGS[1:2])])
+def test_a_review_result_without_a_warn_or_fail_finding_is_no_question(root, outcome, found):
+    (root / REVIEW).parent.mkdir(parents=True)
+    (root / REVIEW).write_text(review(outcome, found))
+    with pytest.raises(ValueError, match="a review result is a question only with outcome `warn` or `fail`"):
+        answers.pending(REVIEW, (root / REVIEW).read_bytes())
+    data = {"type": "types/answers.md", "description": "d", "question": REVIEW,
+            "question-sha256": answers.sha((root / REVIEW).read_bytes()),
+            "items": [{"id": "1", "proposal": FINDINGS[0], "state": "pending"}]}
+    assert any("a review result is a question only" in fail for fail in check(root, data))
