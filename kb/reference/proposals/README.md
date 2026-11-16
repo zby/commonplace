@@ -17,6 +17,7 @@ This README is navigation only; it states no rules ([ADR 084](../adr/084-kind-ru
 
 - [Reusable commitment support across kinds of knowledge work](./reusable-commitment-support-across-kinds-of-knowledge-work.md) — Commonplace's strategy as a testable conjecture in `configure(G, K_P)` form: support built for theory building generalizes to other kinds of knowledge work at lower total cost than per-kind tools; three options for how G comes to exist, and the one comparison that would support or defeat it.
 - [Cost-per-yield records for routine controllers](./cost-per-yield-records-for-routine-controllers.md) — give each routine search controller a record of yield and cost that states the context regime it ran in, so controllers in unattended pipelines can be compared on cost as well as yield.
+- [Recorded revision of write briefs](./recorded-revision-of-write-briefs.md) — revise a note's write brief through a recorded operator decision instead of an unrecorded hand edit; deferred by the operator until the improvement and rewrite procedures have run on notes with briefs.
 
 ## Lifecycle at a glance
 

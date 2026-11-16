@@ -38,6 +38,7 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 - [Structured-output codec for the review protocol](../reference/proposals/structured-output-codec-for-review-protocol.md) — proposal to make review output a pluggable codec: sentinel markdown now, schema-validated structured output when harnesses support it
 - [One improvement procedure over atomic instructions](../reference/proposals/one-improvement-procedure-over-atomic-instructions.md) — proposal to replace the full pass, fix procedure and simplification passes with variants of one procedure composed from their review operations, edit operations and stops, each run a typed directory the validator checks
 - [Authority grades and learning from operator decisions](../reference/proposals/authority-grades-and-learning-from-operator-decisions.md) — proposal for what the procedure's run records are used for: grades per atom, the cross-run narrowing drift, and the evidence that may move a stop
+- [Recorded revision of write briefs](../reference/proposals/recorded-revision-of-write-briefs.md) — proposal to change a note's write brief through a recorded operator decision, as a note is changed, instead of by an unrecorded hand edit
 
 ## Related Tags
 
