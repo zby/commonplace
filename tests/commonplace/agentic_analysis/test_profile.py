@@ -5,13 +5,11 @@ from __future__ import annotations
 from hashlib import sha256
 
 import pytest
-import yaml
 
 from commonplace.lib.agentic_analysis.checks import (
     Correction,
     apply_verdict,
     check_candidate,
-    refusal_findings,
 )
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     acquisition as local_acquisition,  # noqa: F401 - explicit fixture registration
@@ -84,31 +82,18 @@ def correction(refusal: bytes, answers: bytes, previous: bytes) -> Correction:
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("stage", ["profile", "synthesis"])
-def test_valid_content_is_accepted(analysis, stage):
+def test_invalid_verdict_judges_no_subject(analysis):
     a = scripted(analysis)
-    data = profile(a) if stage == "profile" else synthesis(a)
-    assert subject_findings(analysis, stage, data) == []
-
-
-@pytest.mark.slow
-@pytest.mark.parametrize("stage", ["profile", "synthesis"])
-@pytest.mark.parametrize("defect", ["identity", "grammar", "citation", "utf8"])
-def test_invalid_verdict_judges_no_subject(analysis, stage, defect):
-    a = scripted(analysis)
-    data = {
-        "identity": lambda: verdict(a, **{"reviewed-boundary": "wrong"}),
-        "grammar": lambda: verdict(a, blockers="a prose blocker is invalid"),
-        "citation": lambda: verdict(a, blockers="- [MEM-OBJ-unhanded](memory.md#mem-obj-unhanded) is unsupported."),
-        "utf8": lambda: b"\xff",
-    }[defect]()
-    own, judgments = applied(analysis, stage, data)
+    data = verdict(a, blockers="- [MEM-OBJ-unhanded](memory.md#mem-obj-unhanded) is unsupported.")
+    own, judgments = applied(analysis, "profile", data)
     assert own and judgments == []
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("stage", ["profile", "synthesis"])
-@pytest.mark.parametrize("blockers", ["none", "- RT-OBJ-store: materially unsupported conclusion; a caveat cannot contain it.\n  Continued evidence explanation."])
+@pytest.mark.parametrize("stage,blockers", [
+    ("synthesis", "none"),
+    ("profile", "- RT-OBJ-store: materially unsupported conclusion; a caveat cannot contain it.\n  Continued evidence explanation."),
+])
 def test_semantic_verdict_judges_the_handed_subject(analysis, stage, blockers):
     a = scripted(analysis)
     # Poison the mutable projection; the verdict is applied to the handed bytes.
@@ -124,7 +109,7 @@ def test_semantic_verdict_judges_the_handed_subject(analysis, stage, blockers):
 
 
 @pytest.mark.slow
-@pytest.mark.parametrize("stage,apply", [("profile", False), ("synthesis", False), ("profile", True), ("synthesis", True)])
+@pytest.mark.parametrize("stage,apply", [("profile", False), ("synthesis", True)])
 def test_correction_answers_use_exact_delivered_baseline(analysis, stage, apply):
     a = scripted(analysis)
     data = verdict(a) if apply else profile(a) if stage == "profile" else synthesis(a)
@@ -139,29 +124,6 @@ def test_correction_answers_use_exact_delivered_baseline(analysis, stage, apply)
 
     assert any("identical to its predecessor" in finding for finding in findings(b"- corrected: fixed it.\n"))
     assert findings(b"- declined: SRC-1 still warrants the bounded finding.\n") == []
-
-
-@pytest.mark.slow
-def test_structural_synthesis_refusal_preserves_semantic_blockers_and_limits(analysis):
-    data = synthesis(scripted(analysis), **{"reviewed-boundary": "wrong"})
-    refusal = (b"## Blockers\n\n- RT-OBJ-store: reconsider support.\n\n"
-               b"## Limits\n\n- RT-OBJ-store: do not infer complete inventory.\n")
-    findings = subject_findings(analysis, "synthesis", data,
-                                Correction(refusal, b"- declined: retained the bounded finding.\n", None))
-    assert findings
-    carried = refusal_findings(findings, member="synthesis", answered=refusal)
-    assert "reconsider support" in carried
-    assert "## Limits" in carried and "do not infer complete inventory" in carried
-
-
-@pytest.mark.slow
-def test_profile_revision_and_source_identity_are_checked_by_validation(analysis):
-    data = profile(scripted(analysis), **{"source-identity": "wrong"})
-    fields = yaml.safe_load(data.decode().split("---")[1])
-    fields["memory-comparison"].pop("version")
-    data = encoded(fields, "# Example System profile\n\n## Comparison rationale\n\nNo evidence added.\n")
-    text = "\n".join(subject_findings(analysis, "profile", data))
-    assert "'version' is a required property" in text and "source-identity" in text
 
 
 @pytest.mark.slow

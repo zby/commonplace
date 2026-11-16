@@ -134,6 +134,7 @@ def write(root: Path, rel: str, text: str) -> None:
     (root / rel).write_text(text, encoding="utf-8")
 
 
+@pytest.mark.slow
 def test_sweep_writes_one_result_per_pair_and_a_rerun_launches_nothing(repo, capsys):
     root = repo[0]
     code, report, launches = review(repo, capsys, "kb/notes", "--criteria", "prose", "type", "collection",
@@ -282,6 +283,7 @@ def test_status_filters_list_current_findings_and_what_a_sweep_would_ask(repo, c
     assert main(["status", "--criteria", "prose", "--json"], harnesses=repo[1]) == 2
 
 
+@pytest.mark.slow
 def test_installed_project_reviews_against_library_criteria(installed, capsys):
     root = installed[0]
     lib = library.library_root()
@@ -307,6 +309,7 @@ def test_installed_project_reviews_against_library_criteria(installed, capsys):
         "kb/reports/state/review/results/kb/notes/beta.md/commonplace/instructions/critique-note.md"]
 
 
+@pytest.mark.slow
 def test_bundle_grouping_writes_one_result_per_gate_from_one_launch(repo, capsys):
     root = repo[0]
     write(root, f"{GATE_DIR}/title-gate.md", gate("title-gate", "title"))
@@ -356,6 +359,7 @@ def compression(name: str) -> str:
             f"watches: [body]\nstaleness: changed\n---\n\n## Failure mode\n\n{name} fails.\n")
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("layout", ["repo"])
 def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(layout, request, capsys):
     from commonplace.lib.review_workflows import fixtures

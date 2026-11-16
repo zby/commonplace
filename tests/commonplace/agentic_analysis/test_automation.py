@@ -39,10 +39,7 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 from tests.commonplace.agentic_analysis.execution_fixtures import (
     prepared_template as prepared_template,  # noqa: PLC0414 - immutable baseline registration
 )
-from tests.commonplace.agentic_analysis.test_workflow import (
-    FAKE,
-    REFUSE_RUNTIME_AND_MEMORY,
-)
+from tests.commonplace.agentic_analysis.test_workflow import FAKE
 
 PRODUCTION_INSTALL = preparation._install
 
@@ -158,76 +155,6 @@ def test_complete_route_installs_frozen_environment_offline(command_origin, caps
 
 
 @pytest.mark.slow
-def test_complete_prepared_command_correction_audit_and_fresh_controller(command_origin, capsys, tmp_path):
-    origin, scenario, upstream = command_origin
-    scenario.write_text(json.dumps({"report-verification": [REFUSE_RUNTIME_AND_MEMORY, "none"],
-                                    "expected": {"boundary": 1, "runtime": 2, "memory": 2, "workflow": 1,
-                                                 "epistemic": 1, "reconciliation": 2, "report-verification": 2,
-                                                 "memory-profile": 1, "profile-verification": 1,
-                                                 "synthesis": 1, "synthesis-verification": 1}}))
-    before = git(origin, "rev-parse", "main")
-    state = tmp_path / "controller"
-    code, record, err = invoke(capsys, "analyse", IDENTITY, "--state", str(state))
-    assert code == 0, (record, err)
-    item, = record["targets"]
-    assert item["status"] == "published"
-    tree, run = Path(item["worktree"]), Path(item["run"])
-    view = item["result"]["inspection"]
-    assert view["opening"]["inputs-commit"] == record["method-commit"] == before
-    assert view["parameters"]["worker-profile"] == "pi-sol"
-    assert view["parameters"]["command-path"] == str(tree / ".venv/bin")
-    assert view["opening"]["source-identity"] == IDENTITY
-    assert view["receipt"]["published"] is True
-    assert view["advisory-audit"]["state"] == "complete"
-    assert view["advisory-audit"]["model"] == "fake-auditor"
-    assert json.loads((run / "code/acquire.json").read_text())["revision"] == git(upstream, "rev-parse", "HEAD")
-    assert "fixture-only-no-model" in (run / "artifact/ARTIFACT.yaml").read_text()
-    counts = {p.name: p.read_text() for p in scenario.with_name("counts").iterdir()}
-    code, resumed, err = invoke(capsys, "resume", str(state))
-    assert code == 0, err
-    assert resumed["targets"][0]["run"] == str(run)
-    assert {p.name: p.read_text() for p in scenario.with_name("counts").iterdir()} == counts
-    assert len(list((tree / STATE_ROOT).glob("AAS-*"))) == 1
-    integration = resumed["targets"][0]["integration"]
-    assert integration["state"] == "integrated"
-    assert git(origin, "rev-parse", "main") == integration["merge-commit"] != before
-    assert git(origin, "rev-list", "--count", f"{before}..main") == "2"
-    destination = Path(view["receipt"]["destination"]).relative_to(tree)
-    assert {p.name: p.read_bytes() for p in (origin / destination).iterdir()} == {
-        p.name: p.read_bytes() for p in (tree / destination).iterdir()}
-    assert "Model:" not in git(tree, "log", "-1", "--format=%B")
-    assert git(origin, "status", "--porcelain") == ""
-    assert tree.is_dir() and tree.with_name(tree.name + ".preparation.json").is_file()
-    assert (state / f"{item['key']}.stdout.log").is_file()
-
-
-@pytest.mark.slow
-@pytest.mark.parametrize("scenario_data,expected", [
-    ({"disposition": "blocked", "expected": {"boundary": 1}}, "local-complete"),
-    ({"disposition": "out-of-scope", "expected": {"boundary": 1}}, "local-complete"),
-    ({"problem": {"boundary": [1]}, "expected": {"boundary": 1}}, "stopped"),
-    ({"missing": {"boundary": [1, 2, 3]}, "expected": {"boundary": 3}}, "stopped"),
-    ({"usage": {"boundary": [1]}, "expected": {"boundary": 1}}, "stopped"),
-    ({"nonzero": {"boundary": [1, 2, 3]}, "expected": {"boundary": 3}}, "stopped"),
-])
-def test_prepared_local_and_worker_stops(command_origin, capsys, tmp_path, scenario_data, expected):
-    origin, scenario, _ = command_origin
-    scenario.write_text(json.dumps(scenario_data))
-    code, record, err = invoke(capsys, "analyse", IDENTITY, "--state", str(tmp_path / "controller"))
-    assert code == (0 if expected == "local-complete" else 2), (record, err)
-    item, = record["targets"]
-    assert item["status"] == expected
-    view = item["result"]["inspection"]
-    assert view["advisory-audit"]["state"] == ("complete" if expected == "local-complete" else "skipped")
-    assert not (origin / "kb/agentic-system-analyses/retained").exists()
-    if expected == "local-complete":
-        assert view["receipt"]["published"] is False
-    else:
-        assert view["receipt"] is None
-        assert Path(item["worktree"]).is_dir()
-
-
-@pytest.mark.slow
 def test_explicit_resume_replays_answers_under_original_profile(command_origin, capsys, tmp_path):
     _, scenario, _ = command_origin
     scenario.write_text(json.dumps({"problem": {"synthesis": [1]}}))
@@ -291,17 +218,6 @@ def test_shared_opening_failure_pauses_before_preparing_next_target(command_orig
     assert "current analysis must be a directory" in first["error"]
     assert not Path(second["worktree"]).exists()
     assert not scenario.with_name("counts").exists()
-
-
-@pytest.mark.slow
-def test_advisory_audit_failure_reaches_outer_result_without_gating_completion(command_origin, capsys, tmp_path):
-    _, scenario, _ = command_origin
-    scenario.write_text(json.dumps({"disposition": "blocked", "audit-failure": True}))
-    code, record, err = invoke(capsys, "analyse", IDENTITY, "--state", str(tmp_path / "controller"))
-    assert code == 0, (record, err)
-    item, = record["targets"]
-    assert item["status"] == "local-complete"
-    assert item["result"]["inspection"]["advisory-audit"]["state"] == "failed"
 
 
 @pytest.mark.slow

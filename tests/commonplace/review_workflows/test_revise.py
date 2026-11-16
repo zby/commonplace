@@ -860,6 +860,7 @@ def test_plan_entries_for_the_fix_carry_a_finding_at_its_criterion_depth(repo, c
     assert code == 0 and launches == ["pass fix-strategy-taxonomy big", ORDINARY[0]]
 
 
+@pytest.mark.slow
 def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     start(repo, "FIXIT")
     _, plain, _ = revise(repo, capsys, NOTE_PATH, "--assess")
@@ -1021,6 +1022,7 @@ def assessed_inputs(repo):
     return [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"][-1]["inputs"]
 
 
+@pytest.mark.slow
 def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo, capsys):
     text = start(repo, "FIXIT")
     stored(repo, "warn", found=[finding("same")])
@@ -1132,6 +1134,7 @@ def reviewed(repo, tmp_path):
     return repo
 
 
+@pytest.mark.slow
 def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed, capsys):
     repo = reviewed
     (repo[0] / "kb/notes/beta.md").parent.mkdir(parents=True, exist_ok=True)
@@ -1170,6 +1173,7 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     publish(repo, capsys, repeated)
 
 
+@pytest.mark.slow
 def test_full_reuses_fresh_review_results(reviewed, capsys):
     repo = reviewed
     start(repo)
@@ -1220,6 +1224,7 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     assert repo[2].read_text().splitlines()[len(before):] == []
 
 
+@pytest.mark.slow
 def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(reviewed, capsys):
     repo = reviewed
     start(repo, "STOP")
@@ -1245,6 +1250,7 @@ def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(rev
     assert launches == [] and repeated["stop-answers"]["key"] == stop["key"] and not repeated["unapproved-edits"]
 
 
+@pytest.mark.slow
 def test_full_stops_when_a_review_has_no_result(reviewed, capsys):
     repo = reviewed
     original = start(repo, "NOREVIEW")
