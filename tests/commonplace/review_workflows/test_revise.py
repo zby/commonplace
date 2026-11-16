@@ -850,6 +850,7 @@ def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     [call] = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"]
     assert plain["findings"] == [] and not any(name.startswith("finding") for name in call["inputs"])
     assert revise_module.FIX not in call["inputs"]["passes"]
+    start(repo, "FIXIT again")                  # another text, so another run: a run keeps the inputs it assessed
     warned = stored(repo, "warn")
     stored(repo, "info", gate="kb/instructions/review-gates/prose/hedging.md")
     failed = stored(repo, "fail", gate="kb/instructions/review-gates/sentence/packing.md", depth=5)
@@ -958,9 +959,11 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     passes = [c for c in captured_inputs(repo[2]) if c["kind"] not in ("assess", "review")]
     assert passes and all(c["inputs"].get("kb-role") == "It supplies one term.\nRelied on: the term. Unused: none."
                           for c in passes), "each pass receives the role section alone"
+    (store / "prose/warned.md").unlink()       # the store changes after the assessment; the run kept its inputs
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["mode"] == "full"
     assert repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
+    assert repeated["findings"] == report["findings"] and repeated["reviews"] == report["reviews"]
     publish(repo, capsys, repeated)
 
 

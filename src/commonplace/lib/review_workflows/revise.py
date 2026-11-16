@@ -140,6 +140,8 @@ FINDING = "finding"
 """The plan field, and the input role, that names a review result file."""
 FINDING_OUTCOMES = ("warn", "fail")
 """The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
+ASSESSMENT_INPUTS = "assessment-inputs.json"
+"""The review results the assessor received, captured once: a repeat reads them here, not from the store."""
 REVIEWS = "reviews"
 SUPPLIED_DIRS = {criteria.SYNTHESIS: "synthesis", criteria.ROLE: "role"}
 """The run directories of the full procedure's review step, under the revise run."""
@@ -738,15 +740,26 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                        "pass-answers": [], "selections": []}
             kb_role = None
             if named_plan is None:
-                reports = []
-                if review is not None:
-                    supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
-                    reports = [*depth_one_reports(root, artifact), *supplied]
-                    for given in supplied:
-                        section = role_section(given.text) if given.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None
-                        if section:
-                            kb_role = {"origin": given.path, "text": section}
-                findings = current_findings(root, artifact)
+                captured = run_dir / ASSESSMENT_INPUTS
+                if captured.is_file():                # a repeat: the store may have changed since the assessment
+                    data = json.loads(captured.read_text(encoding="utf-8"))
+                    findings = [Finding(**given) for given in data["findings"]]
+                    reports = [Finding(**given) for given in data["reports"]]
+                    report.reviews = data["reviews"]
+                else:
+                    reports = []
+                    if review is not None:
+                        supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
+                        reports = [*depth_one_reports(root, artifact), *supplied]
+                    findings = current_findings(root, artifact)
+                    observations.atomic_json(captured, {
+                        "findings": [asdict(given) for given in findings],
+                        "reports": [asdict(given) for given in reports], "reviews": report.reviews})
+                for given in reports:
+                    section = (role_section(given.text)
+                               if given.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None)
+                    if section:
+                        kb_role = {"origin": given.path, "text": section}
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,
                                                      reports)
