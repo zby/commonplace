@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Operationalization, Goals, and Grounded Concepts](./operationalization-goals-grounded-concepts/README.md) — posed 2026-11-16: six distinct RE comparisons for agent-operated knowledge work, with bounded source/version gaps and four unrun countertests; assumption-failure diagnosis is the recommended first pilot, not authorized execution
+
 
 - [From live operation to controlled testing and debugging](./stochastic-operation-testing/README.md) — posed 2026-11-14: design workflows and provenance to turn affordable live observations into controlled, retained fixtures; freshness consumes provenance, and stochastic execution adds repeated-trial evaluation
 
