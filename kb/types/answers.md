@@ -11,11 +11,12 @@ An answers file records what the operator decided at one stop. A stop is a point
 
 ## Questions
 
-A question is the file whose items the operator decides. There are two kinds:
+A question is the file whose items the operator decides. There are three kinds:
 
 | Question | Its items |
 |---|---|
 | an edit result with outcome `proposed` | its `proposals`, with ids `1`, `2` and so on in order; each item's `proposal` is the proposal's `quote`, `change` and `reason` |
+| a review result with outcome `warn` or `fail` | its `findings` whose `level` is `warn` or `fail`, with the finding's position in `findings` as id (`1` for the first); each item's `proposal` is the finding's `scope`, `quotes`, `reason` and `level` |
 | any other file: a text to approve | one item with id `text`, whose `proposal` names the file as `text` and its hash as `text-sha256` |
 
 An approval of a text is therefore an answers file with one item that names the candidate's hash. `commonplace-review answers create --from QUESTION` writes the pending file for a question, so nobody writes a hash by hand.
@@ -36,6 +37,10 @@ An approval of a text is therefore an answers file with one item that names the 
 | `refs` | Optional. Where it was done: commit hashes, file paths, a workshop directory or URLs. Not checked |
 
 `deferred` means the operator has seen the item and has not decided it. Only the operator sets it. An agent that cannot decide an item leaves it `pending`.
+
+## Decisions on findings
+
+For a review result, the operator decides whether each finding stands. `approved` means the finding is right and should be acted on. `rejected` means the finding is wrong; the `reason` says why, and says whether it is wrong for this note only or because the criterion is too broad. `deferred` leaves it for later. A rejection does not change the review result. Later work on the note receives it: no fix is planned for a rejected finding, and the next review of the note against that criterion receives the operator's reason.
 
 ## Decisions carried over
 
