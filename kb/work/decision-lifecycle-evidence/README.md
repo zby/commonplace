@@ -169,6 +169,10 @@ written on 2026-11-15. Its first two changes are built: edit operations
 under ADR 133 and stops under ADR 134. The plan's last section records
 what was built, where it departs from the plan and what is not yet done.
 
+The grouping itself is proposed in
+[grouping the atoms into three procedures](./grouping-design.md), written
+on 2026-11-16 and awaiting the operator's approval. Nothing in it is built.
+
 This changes the entry above in three ways:
 
 - The [first variant](./first-variant-fix-findings.md) is shelved as
