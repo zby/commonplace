@@ -475,11 +475,20 @@ plan. `run revise ARTIFACT --assess [--purpose TEXT] [--defend CLAIM ...]` inste
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
 The assessor also receives the artifact's fresh stored review results with
 outcome `warn` or `fail`; no review is launched.
+`run revise ARTIFACT --full [--purpose TEXT] [--defend CLAIM ...]` first runs
+every review operation that declares a `depth` on the artifact, with bundle
+grouping, on the profile file's `default` profile. Fresh results are reused;
+new results go to the shared store. The compression synthesis runs on the
+compression checks' results and publishes no result. The review runs live
+under the revise run directory, in `reviews/` and `synthesis/`; the JSON report
+lists them under `reviews`. A review without a result stops the run before
+assessment. The assessor then receives the `warn` and `fail` results and the
+depth 1 reports, and may stop the plan on a depth 1 proposal.
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
 validated plan without routine approval. A new run requires one of these
 modes. A repeat retains its mode and captured plan; changed artifact text
 requires the choice again. Old-format runs cannot resume; retain their evidence
-and start a new run. The JSON report names the mode as `fixed-plan` or `assess`.
+and start a new run. The JSON report names the mode as `fixed-plan`, `assess` or `full`.
 Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`

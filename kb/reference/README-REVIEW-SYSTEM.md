@@ -168,8 +168,9 @@ The values are best-effort declarations. Each file holds its own value;
 the table summarizes them and the file governs. No code orders review
 operations by depth yet: the revise workflow checks the depth order of
 its passes, places a plan entry that fixes a finding at the depth of the
-finding's criterion, and shows the assessor each finding's depth. Nothing
-else reads the field. The type and collection
+finding's criterion, and shows the assessor each finding's depth. Its full
+procedure selects the review operations that declare a depth and runs them
+together, not in depth order. Nothing else reads the field. The type and collection
 conformance reviews declare no depth, because their criterion is a type
 spec or a collection contract. Expect the first runs of an ordered
 procedure to show wrong values, and correct them in the files.
@@ -438,7 +439,17 @@ a one-entry plan that runs
 with that review result of the artifact as its `finding` input, and
 `--plan FILE` supplies any other plan. The quick procedure is `--assess`:
 one assessor chooses the passes from the artifact and its fresh stored
-`warn` and `fail` review results, and no review is launched. A plan entry
+`warn` and `fail` review results, and no review is launched. The full
+procedure is `--full`: it first runs every review operation that declares a
+`depth` on the artifact, through the sweep's route. Fresh results are reused,
+new results go to the shared store, and the compression synthesis runs on
+the checks' results without publishing one. The assessor then also reads the
+depth 1 reports. When one proposes changing what the artifact is, the plan's
+`stop` names the proposal and its report, and nothing is edited. The full
+procedure does not review the candidate; the next sweep finds the stale
+results after publication. A review without a result stops the run before
+assessment; dismiss its problem with `retry` on the review run under the
+revise run directory, then repeat. A plan entry
 for a pass that declares `responds-to` names its `finding` and takes the
 depth of that finding's criterion. Within the chosen mode, ordinary
 intermediate work is preauthorized. The assessment report and generated plan
@@ -463,7 +474,7 @@ inputs: `kb/reports/state/review/runs/v2/<workflow>/<note path without
 .md>/<first 12 hex of the note's SHA-256>/`. Repeating the same command on
 the same note text continues that run, and answered calls replay. An edited
 note, including one the workflow itself wrote, has another hash, so the same
-command opens a new run. Revision then requires a new `--plan` or `--assess`
+command opens a new run. Revision then requires a new mode choice
 choice rather than silently assessing again. Older revision runs without a
 recorded mode require an explicit choice too. A repeat reuses the options the run recorded,
 including the full pass's `--direction`; an option given on the repeat

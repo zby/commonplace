@@ -30,7 +30,14 @@ never approves: only the recorded approved text becomes the operator's answer:
    A pass that declares `responds-to`, the fix of `FIX_REL`, takes one such
    result as its `finding` input: its plan entry names the result file and
    takes the depth of the result's criterion. `one_entry_plan()` writes the
-   plan of `--pass NAME` and `--finding RESULT`.
+   plan of `--pass NAME` and `--finding RESULT`. With a `review` profile
+   (`--full`), the assessment is preceded by the review step: every review
+   operation that declares `depth` (`review_pairs()`) runs through
+   `gates.sweep()` in `reviews/` under the run directory, publishing results
+   and reusing fresh ones; the compression synthesis then runs alone in
+   `synthesis/` on the checks' results and publishes nothing. The assessor
+   also receives the depth 1 reports, and its plan's `stop` is how a depth 1
+   proposal ends the run. A review without a result stops the run.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
@@ -78,6 +85,7 @@ reported as unapproved and never silently used.
 
 from __future__ import annotations
 
+import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -99,6 +107,7 @@ from commonplace.lib import answers, frontmatter
 from commonplace.lib.library import artifact_identity, library_root
 from commonplace.lib.naming import write_brief_name_for
 from commonplace.lib.review_workflows import (
+    criteria,
     edit_operations,
     edits,
     gates,
@@ -126,7 +135,10 @@ FINDING = "finding"
 """The plan field, and the input role, that names a review result file."""
 FINDING_OUTCOMES = ("warn", "fail")
 """The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
-FOCUSED_PURPOSE = "Apply this one operation as its instruction directs; the operator named no other purpose."
+REVIEWS, SYNTHESIS = "reviews", "synthesis"
+"""The run directories of the full procedure's review step, under the revise run."""
+REVIEW_WORKERS = 4
+FOCUSED_PURPOSE ="Apply this one operation as its instruction directs; the operator named no other purpose."
 """The purpose of a one-entry plan made with `--pass` or `--finding` when the operator gives none."""
 INSTRUCTION_REL = f"{PASSES_DIR}/revise-an-article-or-note.md"
 EXECUTION_REL = edit_operations.EXECUTION_REL
@@ -353,6 +365,7 @@ class ReviseReport:
     artifact: str
     mode: str = "fixed-plan"
     plan: dict | None = None
+    reviews: list[dict] = field(default_factory=list)    # the review step's sweep reports, in the full procedure
     findings: list[str] = field(default_factory=list)   # review results the assessor received
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
@@ -569,8 +582,82 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     return text
 
 
+# --- The review step of the full procedure ----------------------------------------------------
+
+def review_pairs(root: Path, artifact: str, text: str) -> tuple[list[gates.Pair], list[gates.Pair]]:
+    """The review operations that declare `depth` and apply to `text`, and the compression synthesis apart.
+
+    The synthesis is listed only when a compression check applies, since it
+    takes the checks' results as inputs.
+    """
+    bundles = sorted(entry.name for entry in criteria.gates_dir().iterdir() if entry.is_dir())
+    requests = [*bundles, criteria.TYPE, criteria.COLLECTION, *criteria.compression_checks(),
+                *(selector for selector in criteria.REPORTS if selector != criteria.SYNTHESIS)]
+    texts = {artifact: text}
+    found = [pair for pair in gates.pairs(root, [artifact], requests, texts)
+             if criterion_depth(root, pair.criterion) is not None]
+    synthesis = []
+    if any(pair.kind == criteria.COMPRESSION for pair in found):
+        synthesis = [pair for pair in gates.pairs(root, [artifact], [criteria.SYNTHESIS], texts)
+                     if criterion_depth(root, pair.criterion) is not None]
+    return found, synthesis
+
+
+def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile, timeout: float | None,
+           harnesses, inputs: dict[str, dict[str, str]] | None = None) -> gates.SweepReport:
+    """Run `wanted` through the sweep in its own run, or continue that run; Stop unless every pair has a result.
+
+    Without `inputs`, results are published to the shared store and fresh
+    ones are reused. With them (the compression synthesis), nothing is
+    published and the pair is always asked, as `run gates --input` does.
+    """
+    request = run_dir / "review-request.json"
+    if request.is_file():                         # a repeat: replay the captured request
+        wanted = [gates.Pair(**pair) for pair in json.loads(request.read_text(encoding="utf-8"))["pairs"]]
+        timeout = None
+    else:
+        observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": "revise",
+                                                         "profile": asdict(profile)})
+    swept = gates.sweep(root, wanted, profile, run_dir, max_workers=REVIEW_WORKERS, timeout=timeout,
+                        force=inputs is not None, grouping="bundle", harnesses=harnesses,
+                        publish_results=inputs is None, operational_inputs=inputs)
+    if swept.stopped:
+        raise Stop(f"reviews in {swept.run_dir}: {swept.stopped}")
+    unfinished = [pair.job for pair in swept.pairs if pair.state not in ("fresh", "reviewed")]
+    if unfinished:
+        raise Stop(f"reviews in {swept.run_dir} ended without a result: {', '.join(unfinished)}. Read the problem "
+                   f"with `commonplace-review show {swept.run_dir}`, dismiss it with `commonplace-review retry "
+                   f"{swept.run_dir} JOB`, then repeat")
+    return swept
+
+
+def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profile, timeout: float | None,
+            harnesses, report: ReviseReport) -> None:
+    """Run every review operation that declares `depth` on `text`, writing results as the sweep does."""
+    wanted, synthesis = review_pairs(root, artifact, text)
+    report.reviews.append(_sweep(root, run_dir / REVIEWS, wanted, profile, timeout, harnesses).to_dict())
+    if synthesis:
+        checks = [pair for pair in wanted if pair.kind == criteria.COMPRESSION]
+        inputs = {}                               # a repeat replays the captured inputs
+        resumed = (run_dir / SYNTHESIS / "review-request.json").is_file()
+        for pair in [] if resumed else checks:
+            path = results.result_path(root, pair.note, pair.criterion_id)
+            inputs[Path(pair.criterion_id).name] = {           # the check's name, such as detail-overhang
+                "origin": _rel(root, path), "text": path.read_text(encoding="utf-8")}
+        report.reviews.append(_sweep(root, run_dir / SYNTHESIS, synthesis, profile, timeout, harnesses,
+                                     inputs).to_dict())
+
+
+def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
+    """The artifact's fresh stored review reports whose criterion declares depth 1."""
+    found = [read_finding(root, artifact, row.path.relative_to(root).as_posix())
+             for row in results.note_rows(root, artifact)
+             if row.freshness.state == "fresh" and row.outcome == "report"]
+    return [finding for finding in found if finding.depth == 1]
+
+
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
-           defend: list[str] = (), named_plan: str | None = None,
+           defend: list[str] = (), named_plan: str | None = None, review: Profile | None = None,
            timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
     """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
 
@@ -578,11 +665,14 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     automatically; `named_plan` bypasses assessment and explicitly replaces its
     plan. Editing the captured plan is not an override. Strike selections and
     final publication require explicit approval. `profiles` maps each effort
-    to its profile; the assessment is a judgment ask.
+    to its profile; the assessment is a judgment ask. `review` is the profile
+    of the full procedure's review step; without it no review is launched.
     """
     root = root.resolve()
+    if named_plan is not None and review is not None:
+        raise ValueError("a named plan runs without the review step")
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact,
-                          mode="fixed-plan" if named_plan is not None else "assess")
+                          mode="fixed-plan" if named_plan is not None else "full" if review else "assess")
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
@@ -596,9 +686,14 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                        "contract-sha256": result_contract.fingerprint(contracts),
                        "pass-answers": [], "selections": []}
             if named_plan is None:
+                reports = []
+                if review is not None:
+                    _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
+                    reports = depth_one_reports(root, artifact)
                 findings = current_findings(root, artifact)
-                report.findings = [finding.path for finding in findings]
-                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings)
+                report.findings = [finding.path for finding in (*findings, *reports)]
+                prompt, inputs = _assessment_request(artifact, start, purpose, list(defend), known, brief, findings,
+                                                     reports)
                 context.update({"assessment": inputs, "assessment-prompt": prompt})
                 assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]

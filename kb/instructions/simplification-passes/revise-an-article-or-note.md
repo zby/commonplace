@@ -57,6 +57,16 @@ instead of assessing again.
    the change a finding points at only when its value against the purpose
    is clear. List the findings you do not act on once, each with its reason.
 
+   Depth 1 review reports may come with the artifact as well: critique,
+   composition friction and premise decomposition. If one of them proposes
+   changing what the artifact is (a split, a merge, a different claim or a
+   rejection), set the plan's `stop` and list no passes. The stop names the
+   proposal and the repository path of the report it comes from. The run
+   then ends with nothing edited, and the operator decides the proposal.
+   When the proposal is to move a full argument into a separate file, the
+   stop may recommend [split out a treatment](./split-out-a-treatment.md);
+   no procedure runs it.
+
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,
    since they share one write scope. Order them by depth, not by the
@@ -117,7 +127,14 @@ stored review results with outcome `warn` or `fail`, when any exist; the
 command launches no review. Results with only INFO-level findings are not
 given. The focused procedure makes no assessment: `--pass NAME` runs a
 one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
-that fixes that review result of the artifact. Its
+that fixes that review result of the artifact. The full procedure, `--full`,
+first runs every review operation that declares a `depth` on the artifact,
+through the same route as `commonplace-review run gates`. Its results go to
+the shared store, and fresh results are reused. The compression synthesis
+then runs on the compression checks' results and publishes no result. The
+assessment receives the fresh `warn` and `fail` results and the depth 1
+reports. A review that ends without a result stops the run before the
+assessment. The full procedure does not review the edited text. Its
 run directory is derived from the artifact's path and the hash of its text.
 It stops with a proposal wherever this procedure waits for the operator.
 Repeating alone never approves the proposal or starts its dependent work.

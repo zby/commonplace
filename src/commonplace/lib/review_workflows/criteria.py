@@ -311,6 +311,16 @@ def compression_check(request: str) -> tuple[Path, dict[str, Any]]:
     return path, _gate_metadata(path)
 
 
+def compression_checks() -> list[str]:
+    """The id of each compression check in the library, such as `compression/detail-overhang`."""
+    found = []
+    for path in sorted((library_root() / COMPRESSION_REL).glob("*.md")):
+        metadata = _frontmatter(path)
+        if metadata.get("type") == "types/review-gate.md" and metadata.get("gate_id") == f"{COMPRESSION}/{path.stem}":
+            found.append(metadata["gate_id"])
+    return found
+
+
 def select(root: Path, notes: list[str], requests: list[str] | None = None,
            texts: dict[str, str] | None = None) -> list[tuple[str, Criterion]]:
     """The applicable (note, criterion) pairs for repository-relative notes, in request order per note.

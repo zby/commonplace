@@ -19,6 +19,7 @@ from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
 from tests.commonplace.review_workflows.brief_helpers import add_brief, captured_inputs
 from tests.commonplace.review_workflows.result_helpers import (
+    FAKE_RESULT,
     copy_contract,
     evidence,
     findings,
@@ -865,3 +866,119 @@ def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     assert report["passes"][0]["finding"] == report["plan"]["passes"][0]["finding"]
     _, repeated, launches = revise(repo, capsys, NOTE_PATH)
     assert launches == [] and repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
+
+
+# --- The full procedure ---------------------------------------------------------------------
+
+REVIEW_FAKE = FAKE_RESULT + r'''
+import json, os, re, sys
+from pathlib import Path
+frame = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1)).read_text()
+if frame.removeprefix("Task:\n").startswith("Review one note"):
+    def listed(name):
+        return re.search(rf"^- {re.escape(name)}: (.+)$", frame, re.MULTILINE).group(1)
+    names = [a or b for a, b in re.findall(r"The criterion is `([^`]+)`|^- `([^`]+)`: its text is",
+                                           frame, re.MULTILINE)]
+    with open(os.environ["FAKE_LOG"], "a") as log:
+        log.write("review " + ",".join(sorted(Path(name).stem for name in names)) + "\n")
+    if "NOREVIEW" in Path(listed("note.md")).read_text() and "critique" in names[0]:
+        Path(frame.split("problem file:\n")[1].splitlines()[0]).write_text(
+            json.dumps({"kind": "unable", "message": "cannot review"}))
+        sys.exit(0)
+    for output in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
+        criterion = names[0] if output == "review.md" else output
+        outcome = "report" if "outcome: report" in frame else "warn" if "warned" in criterion else "pass"
+        Path(listed(output)).write_text(review_text(outcome, criterion))
+    sys.exit(0)
+'''
+
+
+def review_operation(depth, gate_id=None):
+    head = f"type: types/review-gate.md\ngate_id: {gate_id}\nstaleness: changed\n" if gate_id else ""
+    return f"---\n{head}depth: {depth}\n---\n\n# Operation\n\nJudge it.\n"
+
+
+REVIEW_FILES = {
+    "kb/instructions/review-gates/prose/residue.md": review_operation(2, "prose/residue"),
+    "kb/instructions/review-gates/prose/warned.md": review_operation(2, "prose/warned"),
+    "kb/instructions/review-gates/sentence/packing.md": review_operation(5, "sentence/packing"),
+    "kb/instructions/compression-bundle/detail-overhang.md": review_operation(4, "compression/detail-overhang"),
+    "kb/instructions/compression-bundle/high-impact-simplification-synthesis.md": review_operation(4),
+    "kb/instructions/critique-note.md": review_operation(1),
+    "kb/instructions/composition-friction-gate.md": review_operation(1),
+    "kb/instructions/premise-decomposition-gate.md": review_operation(1),
+    "kb/reports/COLLECTION.md": ("---\ntype: types/collection-contract.md\nunquoted-source-limit: 0\n---\n\n"
+                                 "# Reports\n\nRetained operational evidence.\n"),
+}
+REVIEWS = {"review residue,warned", "review packing", "review detail-overhang", "review critique-note",
+           "review composition-friction-gate", "review premise-decomposition-gate"}
+SYNTHESIS = "review high-impact-simplification-synthesis"
+
+
+@pytest.fixture
+def reviewed(repo, tmp_path):
+    """The revise repository with review operations that declare a depth, and a fake that also reviews."""
+    for rel, text in REVIEW_FILES.items():
+        (repo[0] / rel).parent.mkdir(parents=True, exist_ok=True)
+        (repo[0] / rel).write_text(text)
+    copy_contract(repo[0] / "kb")
+    (tmp_path / "fake.py").write_text(REVIEW_FAKE + FAKE)
+    return repo
+
+
+def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed, capsys):
+    repo = reviewed
+    original = start(repo)
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--full", "--purpose", "p")
+    assert code == 0 and report["mode"] == "full" and note_text(repo) == original
+    assert set(launches[:6]) == REVIEWS and launches[6] == SYNTHESIS
+    assert launches[7:] == ["assess - big", *ORDINARY]
+    assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 7}, {"reviewed": 1}]
+    store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH
+    bundle = store / "kb/instructions/compression-bundle"
+    assert (store / "prose/warned.md").is_file() and (bundle / "detail-overhang.md").is_file()
+    assert not (bundle / "high-impact-simplification-synthesis.md").exists(), "the synthesis publishes no result"
+    assert not (store / "kb/types").exists(), "the type lens declares no depth"
+    [call] = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"]
+    assert call["inputs"]["finding-1"] == (store / "prose/warned.md").read_text()
+    assert "finding-2" not in call["inputs"]
+    reports = sorted(text for name, text in call["inputs"].items() if name.startswith("report-"))
+    assert len(reports) == 3 and all("outcome" in text for text in reports)
+    assert len(report["findings"]) == 4
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["mode"] == "full"
+    assert repeated["waiting-for"]["key"] == report["waiting-for"]["key"]
+    publish(repo, capsys, repeated)
+
+
+def test_full_reuses_fresh_review_results(reviewed, capsys):
+    repo = reviewed
+    start(repo)
+    assert main(["run", "gates", NOTE_PATH, "--criteria", "prose", "--timeout", "30"], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    _, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
+    assert sorted(repo[2].read_text().splitlines()[:2]) == ["review residue", "review warned"]
+    assert set(launches[:5]) == REVIEWS - {"review residue,warned"} and launches[5] == SYNTHESIS
+    assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 5}
+
+
+def test_full_stops_on_a_depth_one_proposal_with_nothing_edited(reviewed, capsys):
+    repo = reviewed
+    original = start(repo, "STOP")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
+    assert code == 0 and report["stop"] == "rewrite-needed" and report["passes"] == []
+    assert launches[-1] == "assess - big" and len(launches) == 8
+    assert note_text(repo) == original and report["complete"] and not report["applied"]
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["stop"] == "rewrite-needed"
+
+
+def test_full_stops_when_a_review_has_no_result(reviewed, capsys):
+    repo = reviewed
+    original = start(repo, "NOREVIEW")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
+    assert code == 1 and "ended without a result" in report["stopped"] and "critique" in report["stopped"]
+    assert not any(line.startswith("assess") for line in launches) and SYNTHESIS not in launches
+    assert note_text(repo) == original
+    _, again, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and again["stopped"] == report["stopped"]

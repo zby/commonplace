@@ -61,6 +61,14 @@ order. The procedures differ only in how the plan is made.
 - **Quick.** `--assess` asks one assessor to choose the passes. It reads the
   artifact and the artifact's fresh stored `warn` and `fail` review
   results, when any exist. It launches no review.
+- **Full.** `--full` first runs every review operation that declares a
+  `depth` on the artifact: the catalog gates, the compression checks and
+  their synthesis, critique, composition friction and premise
+  decomposition. Fresh results are reused and new ones go to the shared
+  store. The assessor then reads the `warn` and `fail` results and the
+  depth 1 reports. If a depth 1 report proposes changing what the artifact
+  is, the plan stops and nothing is edited. The edited text is not
+  reviewed again.
 
 ## Fixed-plan execution: the simple baseline
 
@@ -105,7 +113,7 @@ approval. Wording-selection passes stop earlier for their own approvals.
 
 An unchanged repeat retains the mode and captured plan, even if the supplied
 plan file is later removed. Changed artifact text starts a new run: choose
-`--plan` or `--assess` again. Older runs without a recorded mode also require
+a mode again. Older runs without a recorded mode also require
 that explicit choice; their retained files are not migrated or deleted.
 
 For an independent report-only operation, use one artifact and one gate id:

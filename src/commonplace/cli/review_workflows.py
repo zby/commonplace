@@ -9,7 +9,7 @@
     commonplace-review run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]
                                 [--timeout SECONDS]
     commonplace-review run edit --fixture PATH
-    commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --assess]
+    commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --assess | --full]
                                   [--purpose TEXT] [--defend CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
@@ -96,7 +96,11 @@ assessment. A fixed plan is `--plan FILE`, `--pass NAME` (a one-entry plan for
 that pass) or `--finding RESULT` (a one-entry plan that fixes that review
 result of the artifact). `--assess` and the one-entry plans use `--purpose`
 and `--defend`; a plan file carries those fields itself. The assessor also
-receives the artifact's fresh stored `warn` and `fail` review results. Assessment runs the
+receives the artifact's fresh stored `warn` and `fail` review results.
+`--full` first runs every review operation that declares a `depth` on the
+artifact, as `run gates` would on the profile file's `default` profile, in
+runs under the revise run directory; then the assessor also receives the
+depth 1 reports and may stop the plan on a proposal to change the artifact. Assessment runs the
 plan's settled passes automatically, retaining `artifact/assessment.md` and
 `artifact/plan.yaml` for inspection. A repeat keeps the recorded mode and plan.
 `--plan FILE` also overrides a stopped plan. Editing the retained plan alone
@@ -245,7 +249,9 @@ def _parser() -> argparse.ArgumentParser:
     mode.add_argument("--finding", metavar="RESULT",
                       help="execute a one-entry plan that fixes this review result of the artifact, without assessment")
     mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection; "
-                      "new runs require --plan, --pass, --finding or --assess, repeats keep the recorded mode")
+                      "new runs require --plan, --pass, --finding, --assess or --full, repeats keep the recorded mode")
+    mode.add_argument("--full", action="store_true", help="run every review operation that declares a depth, "
+                      "then assess with the findings")
     for effort in edit_operations.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
@@ -512,10 +518,11 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     run_dir = edits.run_dir(root, "revise", artifact)
     names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
     recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
-    mode = "fixed-plan" if named_plan is not None else "assess" if arguments.assess else recorded.get("mode")
-    if mode not in {"fixed-plan", "assess"}:
+    mode = ("fixed-plan" if named_plan is not None else "assess" if arguments.assess
+            else "full" if arguments.full else recorded.get("mode"))
+    if mode not in {"fixed-plan", "assess", "full"}:
         raise ValueError("choose --plan FILE, --pass NAME or --finding RESULT for fixed-plan execution, or --assess "
-                         "for planning; a new run never chooses work implicitly")
+                         "or --full for planning; a new run never chooses work implicitly")
     if mode == "fixed-plan" and not isinstance(named_plan if named_plan is not None else recorded.get("plan"), str):
         raise ValueError("fixed-plan run has no captured plan; supply --plan FILE")
     if mode == "fixed-plan" and not focused and (arguments.purpose is not None or arguments.defend):
@@ -524,12 +531,16 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     profiles = recorded.get("profiles") or {effort: asdict(profile)
                                             for effort, profile in edit_operations.effort_profiles(root, names).items()}
     profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
+    review = None
+    if mode == "full":                    # the review step's profile: recorded, or the profile file's default
+        review = recorded.get("review-profile") or asdict(load_profile(root, None, gates.profiles()))
     options = _options(run_dir, {"mode": mode, "purpose": None if focused else arguments.purpose,
                                  "defend": None if focused else arguments.defend or None,
-                                 "profiles": profiles, "plan": named_plan})
+                                 "profiles": profiles, "plan": named_plan, "review-profile": review})
     report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
                            purpose=options.get("purpose"), defend=options.get("defend", []),
                            named_plan=options["plan"] if mode == "fixed-plan" else None,
+                           review=Profile(**review) if review else None,
                            timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
