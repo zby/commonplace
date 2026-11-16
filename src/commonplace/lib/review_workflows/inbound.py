@@ -51,11 +51,10 @@ class Linking:
 def _passage(body: str, offset: int) -> str:
     """The list item, table row, heading or paragraph of `body` that holds `offset`."""
     lines = body.splitlines(keepends=True)
-    index, seen = 0, 0
-    for index, line in enumerate(lines):
-        if seen + len(line) > offset:
-            break
-        seen += len(line)
+    index, seen = 0, len(lines[0]) if lines else 0
+    while seen <= offset and index + 1 < len(lines):
+        index += 1
+        seen += len(lines[index])
     line = lines[index]
     if _HEADING.match(line) or line.lstrip().startswith("|"):
         return line.strip()
