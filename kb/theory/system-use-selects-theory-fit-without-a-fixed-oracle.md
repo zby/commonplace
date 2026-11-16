@@ -1,5 +1,5 @@
 ---
-description: "When no complete fixed oracle decides whether a claim belongs in a working theory, distributed consequences of live system use can provide an initial selection environment"
+description: "A claim gains provisional fit when withholding or replacing it changes proposal, diagnosis or recovery and its use survives later demands; this selects without a complete oracle but can confirm the system's own misconceptions"
 type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems, theory-builder, improvement-loop]
@@ -13,7 +13,7 @@ For a narrow transformation, a test suite may give a compact acceptance criterio
 
 This does not make theory fit untestable. It changes the shape of the test. Fit is exposed through a portfolio of consequences spread across operation and time, including whether a claim:
 
-- changes proposal, diagnosis, branch allocation, or recovery rather than merely being cited;
+- changes proposal, diagnosis, branch allocation (which candidate lines of work receive effort), or recovery rather than merely being cited;
 - yields expectations that survive later evidence;
 - helps modifications preserve relevant organization across subsequent demands;
 - helps distinguish a bad candidate from a bad underlying theory;
@@ -49,7 +49,7 @@ Nor does the claim say that explicit theory-guided selection is the only route. 
 - The claim concerns **theory fit**, not a claim's independent test record. The distinction is developed in the linked notes above.
 - "Initial" means a starting environment under incomplete evaluation, not a permanent architecture or a promise that human holistic judgment remains necessary.
 - No single scalar is assumed to capture theory fit. A portfolio of causal, predictive, operational, and transfer evidence may support selection.
-- The current absence of a complete fixed oracle is a statement about this research setting, not a proof that no general evaluator can exist.
+- The absence of a complete fixed oracle is an observed current condition, not a proof that no general evaluator can exist.
 - Objectives, commitments, and grants of authority may remain externally supplied even when empirical and procedural theory selection becomes increasingly computational.
 
 ## Open Questions
@@ -67,4 +67,4 @@ Relevant Notes:
 - [System use provides evidence of theory fit and causal usefulness, not an independent test](./system-use-provides-evidence-of-theory-fit-not-an-independent-test.md) — extends: bounds the evidential meaning of successful system use
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: identifies the longitudinal consequences through which program-theory fit can become visible
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](./use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — grounds: bounds what one successful configuration can establish beyond its originating context
-- [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: explains why qualities with weak operative signals can disappear under selection despite sounding important
+- [Weakly discriminated qualities tend to be underselected](./weakly-discriminated-qualities-tend-to-be-underselected.md) — mechanism: explains why qualities with weak operative signals gain less from selection despite sounding important
