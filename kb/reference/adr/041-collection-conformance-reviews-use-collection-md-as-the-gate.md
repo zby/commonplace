@@ -44,7 +44,7 @@ Harder / accepted costs:
 - Cohort blast radius exceeds the type case: one `COLLECTION.md` edit stales every note in the collection, and acking is per-note. This sharpens the [cohort-scoped ack](../proposals/factored-dependency-pairs-for-review-freshness.md) case; it stays deferred until a real edit makes per-note acking painful.
 - Conformance reviews may be vague until a `COLLECTION.md` carries an authored `## Review` section; the wrapper-prompted reviewer sets its own bar. Same containment as ADR 038: model partitioning limits but does not fix this.
 - `COLLECTION.md` files carry no frontmatter, so unlike catalog gates they cannot declare `watches:` or gate metadata; all filtering is positional. Accepted — the contract is collection-shaped by construction, and `requires_trait`/`requires_type` filtering has no meaning for it.
-- The overlap between a collection contract and the type specs it hosts (a collection-local type restating a collection convention) is managed by the wrapper's boundary statement plus the existing derived-copy rule: contract language lives in exactly one of the two documents and the other references it.
+- The overlap between a collection contract and the type specs it hosts (a collection-local type restating a collection convention) is managed by the wrapper's boundary statement plus the selected single-home policy: contract language lives in exactly one of the two documents and the other references it. This avoids maintaining agreement between copies; it is a local design choice, not a prohibition on all unchecked copies.
 
 ---
 
@@ -54,5 +54,5 @@ Relevant Notes:
 - [017-COLLECTION.md is the register convention boundary](./017-collection-md-is-the-register-convention-boundary.md) — extends: the collection contract this ADR makes reviewable; its deferred register-correctness check now exists
 - [012-types for structure, traits for review](./012-types-for-structure-traits-for-review.md) — extends: with both conformance pairs shipped, semantic enforcement attaches to contract surfaces generally, not to traits alone
 - [factored dependency pairs for review freshness](../proposals/factored-dependency-pairs-for-review-freshness.md) — part-of: the proposal whose COLLECTION.md-as-gate item this ADR adopts
-- [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: why the gate must be the COLLECTION.md rather than a catalog gate restating it
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the choice to use COLLECTION.md directly, avoiding restatement drift while reusing the existing freshness machinery
 - [review architecture](../review-architecture.md) — part-of: the code architecture carrying the collection gate source and the shared wrapper rules

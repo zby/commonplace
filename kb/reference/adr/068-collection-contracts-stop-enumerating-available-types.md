@@ -17,7 +17,7 @@ Each type spec declares its own `name:` and `description:`; that is the ground t
 
 Drift here was not cosmetic, because one copy was load-bearing for a procedure. `kb/instructions/cp-skill-write/SKILL.md` directed the writer to pick a type path listed in the target collection's `## Types` section and to stop if the requested shorthand was absent. `cp-skill-write-multistage` and `cp-skill-snapshot-web` read the same menu. So a stale table refused legitimate shorthand writes: asking `cp-skill-write` for a `type-spec` under `kb/reference/` was declined, though two such artifacts already sat there. Supplying the explicit type path bypassed the table.
 
-Nothing in the runtime parsed these tables and nothing enforced their contents. The menu was therefore an unchecked constraint that agents obeyed — the configuration [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) rules out, producing the failure [indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) names.
+Nothing in the runtime parsed these tables and nothing enforced their contents. The menu was therefore an unchecked constraint that agents obeyed. [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) frames this trade-off; the observed refusal of legitimate writes is the local reason to stop accepting that risk. It instantiates the failure [indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) names.
 
 Type resolution itself does not depend on the tables. [`collections-and-types.md`](../collections-and-types.md) records that explicit resolution follows the stored path directly. Validation rejects missing type files, bare enum values, absolute paths, URLs, paths escaping `kb/`, and targets that are not type specs. The menu was not what prevented an invented type.
 
@@ -37,7 +37,7 @@ Current-state type exposition has one general surface. `collections-and-types.md
 
 Type-wide restrictions remain owned by their type specs; collection-local placement policy remains ordinary collection prose.
 
-**Reopening clause.** This ADR removes a *hand-maintained* enumeration. It does not settle that a collection may never carry one. An enumeration may return if it is built the way the marks on `tag-readme` are built — recomputable from the type specs, validated by code, and therefore **enforced-or-omitted** rather than trusted (`kb/types/tag-readme.md`, ADR 026). A generated or validator-checked list is a different artifact from the prose table this ADR removes, and it is admissible on that basis. What is ruled out is the middle state: a copy that consumers treat as authoritative and nothing recomputes.
+**Reopening clause.** This ADR removes a *hand-maintained* enumeration. It does not settle that a collection may never carry one. An enumeration may return if it is built the way the marks on `tag-readme` are built — recomputable from the type specs, validated by code, and therefore **enforced-or-omitted** rather than trusted (`kb/types/tag-readme.md`, ADR 026). A generated or validator-checked list is a different artifact from the prose table this ADR removes, and it is admissible on that basis. This decision rules out an unchecked authoritative type menu because of the observed drift and write refusals. It does not rule out unchecked retained results in general.
 
 ## Considered alternatives
 
@@ -80,6 +80,6 @@ Free choice left open: whether the derivation rule is stated per collection or s
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: the rule that decides between removing the copy and enforcing it
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the trade-off; observed write refusals and the simpler path invariant support removing this unchecked menu
 - [LLM recompute cost inverts the store-vs-recompute default](../../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — rests-on: why a validated cache is ever worth its cost, and why this one is not yet
 - [Indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — evidenced-by: the failure mode the `## Types` gate reproduces on the write path

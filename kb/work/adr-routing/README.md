@@ -50,10 +50,15 @@ an agent that finds three relevant ADRs can stop before a search that would
 find the fourth. Any index either carries a completeness guarantee it can keep,
 or must not read as complete.
 
-**Enforce or omit.** If a routing surface caches anything recomputable from the
-ADR set, [it must be machine-checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md).
-The `complete`/`covered_by` marks on tag-READMEs are the shipped precedent for
-how that can work.
+**Enforce or omit is this workshop's selected policy for recomputable routing claims.**
+[Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md);
+recomputability alone does not require checking every copy. This workshop keeps
+the stricter policy because a routing claim can authorize a reader to stop
+searching. A mechanical check needs a judgment-free comparison rule, locatable
+copy and inputs, inputs available at check time, and a sufficiently trustworthy
+checker. The `complete`/`covered_by` marks on tag-READMEs are the shipped precedent;
+checking membership does not establish the semantic relevance of a routed ADR.
+Assurance dates from the last check, not from the absence of a known change.
 
 **Retention is cheap; standing search surface is not.** `proposals/README.md`
 already applies this — archived proposals are named in prose rather than

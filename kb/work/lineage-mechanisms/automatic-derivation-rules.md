@@ -65,12 +65,14 @@ This keeps model provenance where it is useful. A report's model is part of the 
 | Experimental process evidence | Yes while the investigation needs it. | Retain non-regenerable judgments and compared artifacts only until the aggregate conclusion is promoted; delete the temporary evidence when the investigation closes unless a continuing audit consumer justifies a durable event surface. |
 | Durable source analyses | Yes. | Ingest reports and agent-memory-system reviews are derived, but they are independently useful durable analysis. |
 | Model provenance for retained derivatives | Yes, in the derivative artifact or run manifest. | One-shot generated artifacts need producer provenance; canonical notes need event provenance instead. |
-| Deterministic generated views | No, unless a runtime needs the file and a validator checks it. | Rebuildable truth should be checked or absent. |
+| Deterministic generated views | No, unless a runtime needs the file and a validator checks it. | Selected retention policy for this draft, not a consequence of recomputability alone: runtime reliance motivates checking retained views despite its cost. |
 | High-churn many-to-many edge state | Usually no; use edge files, a generated index, or a database. | Review acceptance/freshness lineage belongs in SQLite because selectors query current state over review edges. Similar automatic dependency meshes should expect relational edge-state, with implementation weight chosen by churn and lookup needs. Review prose can still exist as generated markdown report output. |
 | Behavior-facing compiled views | Only with explicit source hash, generator, regeneration rule, and direct-edit policy. | A compiled cue, prompt, or skill projection must not drift into independent policy. |
 | Merge-back provenance | Maybe not the report, but yes to enough provenance. | If a report causes a note edit, the new note version is canonical; the derivation event still needs to be recoverable. |
 
 The short rule: commit sources, contracts, durable analyses, and canonical artifacts. Do not commit cheap automatic intermediates unless they become evidence, state, or a durable review surface.
+
+These are proposed local retention choices. [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) does not require checking or regenerating every reusable result on every use. In particular, a candidate-only report may be worth reusing when rerunning costs more than the task's accepted reliance risk. Mechanical structure checks do not reconstruct its semantic judgments.
 
 ## Merge-Back Lineage
 

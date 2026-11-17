@@ -65,7 +65,7 @@ Several existing KB mechanisms are the same move — reify something into the ar
 
 The family splits into two validity regimes:
 
-- **Checkable witnesses** — ground truth still dereferenceable (link text vs target title, quote anchor vs repo file, description vs body). These are derived copies of recomputable truth: *checked or absent*.
+- **Checkable witnesses** — source still dereferenceable (link text vs target title, quote anchor vs repo file, description vs body). Check frequency trades cost against the risk of relying on a stale or wrong witness; checkability alone does not require *checked or absent*. Exact title equality or substring membership can have a mechanical rule, whereas whether a description faithfully represents its body calls for semantic judgment. A mechanical check requires a judgment-free rule, locatable copy and inputs, source availability at check time, and a sufficiently trustworthy checker. It supplies assurance as of that check, not permanent freshness.
 - **Credence witnesses** — ground truth gone or external (provenance fields, quotes from a decayed source). Unrecomputable by construction; the record is the ground truth now, and validity rests on trusting the recorder.
 
 A witness's regime can change over time: a quote anchor into an external repo is checkable until the source moves, then silently becomes credence — the decay spectrum with a concrete mechanism attached.
@@ -147,7 +147,7 @@ Relevant Notes:
 
 - [ADR 038](../../reference/adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — depends-on: the watched note←type edge this theory generalizes
 - [verifiability gradient](../../theory/verifiability-gradient.md) — contrasts: orthogonal axis — cost/mechanism of checking vs what can be checked at all, and when
-- [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — extends: the recomputable special case; provenance records are the non-recomputable complement
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — contrasts: checking reusable results requires available inputs; provenance records preserve history that may no longer be recoverable
 - [link graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — grounds: the build-product model the invalidation corollary formalizes
 - [model provenance](./model-provenance.md) — see-also: the model edge as an instance of the ladder
 - [current practices and theory](./current-practices-and-theory.md) — see-also: the descriptive inventory this frame reorganizes

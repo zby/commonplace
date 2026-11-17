@@ -33,7 +33,7 @@ This is the natural-language equivalent of a missing function boundary, except t
 - one authoritative definition for maintainers; and
 - literal, sufficient instructions in the bounded context that performs the work.
 
-The existing rule that [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) rules out a trusted, hand-maintained middle state. The question is which checked or absent form fits instruction text.
+[Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) frames the choice between accepting drift, checking copies, and reading the source. This proposal seeks agreement for rules intended to remain identical across writers, so its candidate designs favor checks or live reads over unchecked copies. Whether that extra machinery is worth its cost remains subject to the adoption criteria below.
 
 ## Option space
 
@@ -49,7 +49,7 @@ Make the specialized workflow invoke `cp-skill-write` as a subroutine. The skill
 
 ### Keep independent inline prose
 
-Repeat the mechanics manually wherever needed. Each writer consumes literal prose in its own skill or delegated task, with direct prescriptive force and no extra read. This is the simplest execution path but leaves no oracle for agreement. It is a description of the current failure mode, not a safe steady state: a maintainer can update one copy and receive no signal that another writer now teaches different behavior.
+Repeat the mechanics manually wherever needed. Each writer consumes literal prose in its own skill or delegated task, with direct prescriptive force and no extra read. This is the simplest execution path but leaves no oracle for agreement. This proposal does not select it as the steady state: a maintainer can update one copy and receive no signal that another writer now teaches different behavior. Accepting that risk could cost less than checking, but would not meet this proposal's chosen agreement requirement.
 
 ### Check marked inline copies against one source
 
@@ -111,7 +111,7 @@ Choosing the exact marker syntax, defining a general natural-language module sys
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the cost of checking shared text against the risk of divergent writer instructions and states the mechanical-check conditions
 - [Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) — see-also: supplies the untested behavioral comparison between a runtime reference and a generated local view; this proposal adds the deterministic-equality and adoption constraints
 - [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
 - [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: accounts for the execution cost of making a delegated writer resolve an additional instruction reference

@@ -72,11 +72,13 @@ verifier's own code version marks the verdict Unsynced, while a change to the
 producer's code version marks the producer Unsynced and reaches the verdict
 only when the producer's output fingerprint changes. That is the note's key
 boundary realized as a cache design, though Dagster does not frame it as
-criteria versus process. It qualifies
-[A derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md):
+criteria versus process. It bears on
+[Checking retained results trades cost against reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md):
 the hand-declared `code_version` is a trusted, unchecked copy whose forgotten
 bump leaves a stale memoized value, and the guide names source hashing as the
-checked alternative. It is a deployed instance of the forward query in
+checked alternative. The choice illustrates the trade-off: checking the version
+reduces reliance on manual updates but adds work. This is our interpretation,
+not a measured cost-risk comparison. It is a deployed instance of the forward query in
 [Source changes should surface downstream review targets](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md),
 limited to one hop at a time. Against
 [Link graph plus timestamps enables make-like staleness detection](../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md),
@@ -95,7 +97,7 @@ acting on the Unsynced signal.
 2. **Smallest transferable kernel: output fingerprint plus consumed-version stamp plus one-hop comparison.** Give each member a data version that fingerprints its content, such as a content hash, as the guide's user-supplied `DataVersion` does. Have each verification record the data version of every member it judged. Flag a verification as stale when a member's current data version differs from the recorded one. A correction that replaces a member then flags exactly the verifications that judged the earlier version. A correction that leaves content unchanged flags nothing, which is the guide's cascade-stopping example. This kernel needs neither code versions, derived data versions, memoization nor observable sources. [experiment]
 3. **Code versions are optional, and if used they map onto the criteria/process split.** A code version is worth adding only for the verifier's own instructions or criteria, so that a criteria edit marks its verdicts stale. A producer-side code version should not enter the verdict's key. With content fingerprints, a producer process change reaches a verdict only through changed output. This gives an operational form of the criteria-edits note for the occasion. [experiment]
 4. **Non-transitive staleness suits a single coordinator.** Flagging only the next hop means a corrected member flags its verifications, and anything depending on those verifications is flagged only after they are re-run. A single coordinator advancing one step at a time gets a bounded worklist rather than a flood from one upstream edit. No KB note treats one-hop flagging as a design choice; it is a candidate addition to the link-graph staleness note. [just-a-reference]
-5. **Hand-declared versions are a trust hazard.** The default `code_version` string, and any user-supplied data version that is not derived from the output, are unchecked copies. A forgotten bump yields a silently stale verdict. For model-written documents a content hash is cheap, so the checked variant costs little. This is a concrete instance for the derived-copy note. [just-a-reference]
+5. **Hand-declared versions are a trust hazard.** The default `code_version` string, and any user-supplied data version that is not derived from the output, are unchecked copies. A forgotten bump yields a silently stale verdict. For model-written documents a content hash is cheap, so the checked variant costs little. This illustrates the retained-results note's cost-risk choice, without measuring the risk or establishing a checking interval. [just-a-reference]
 
 ## Limitations (our opinion)
 
@@ -130,7 +132,7 @@ Relevant Notes:
 - [Dagster asset versioning and caching](https://docs.dagster.io/guides/build/assets/asset-versioning-and-caching) — derived-from: the external guide this analysis is worked out from
 - [Build Systems à la Carte](./build-systems-a-la-carte.ingest.md) — compares-with: on the rebuilder axis; Dagster is a deployed verifying-traces rebuilder with optional early cutoff through output fingerprints
 - [Criteria edits invalidate verdicts; process edits invalidate artifacts](../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: a deployed cache key in which the consumer's code version invalidates its own result while upstream process changes propagate only through changed output fingerprints
-- [A derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — is-evidence-for: qualifies the claim; a production system ships the trusted, hand-declared version string as its default, with source hashing as the checked option
+- [Checking retained results trades cost against reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — is-evidence-for: bears on the choice of checking mechanism; a production system ships the trusted, hand-declared version string as its default, with source hashing as the checked option, but does not measure the cost-risk trade-off
 - [Source changes should surface downstream review targets](../theory/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — is-evidence-for: a deployed forward query that records consumed input versions and surfaces affected downstream assets, one hop at a time
 - [Link graph plus timestamps enables make-like staleness detection](../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — compares-with: on the staleness-signal axis; recorded version keys and non-transitive flagging instead of timestamps
 - [LLM recompute cost shifts the store-vs-recompute balance](../theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — compares-with: on the store-vs-recompute axis; Dagster is the deterministic, cost-justified caching baseline

@@ -35,6 +35,6 @@ The philosophy-of-science anchor is Reichenbach's distinction between the contex
 Relevant Notes:
 
 - [The verifiability gradient](./verifiability-gradient.md) — contrasts: an orthogonal axis — how *cheaply* something can be checked, versus whether and when it can be checked at all
-- [A derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) — extends: the recomputable special case; provenance records are the non-recomputable complement, trusted precisely because they cannot be recomputed
+- [Checking retained results trades cost against reliance risk](./checking-retained-results-trades-cost-against-reliance-risk.md) — contrasts: its condition 3 requires source availability at check time; when the historical source is gone, retained provenance may be the only evidence, but non-recomputability does not itself establish trust
 - [W3C PROV overview](../sources/prov-overview.ingest.md) — evidenced-by: standardizes a carried representation for production-related provenance without prescribing when it was captured
 - [in-toto farm-to-table guarantees](../sources/in-toto-farm-to-table-guarantees.ingest.md) — evidenced-by: records and verifies declared software-supply-chain steps under signed-layout, link-metadata, artifact-rule, and key-trust bounds

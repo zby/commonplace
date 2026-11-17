@@ -55,14 +55,17 @@ not certify the relevance or quality of the second.
 
 A valid `complete` mark permits a consumer to skip the by-tag membership sweep
 and to trust the README's routing through its linked child heads. Without the
-mark, the scoped membership query remains the fallback. The mark is therefore [non-load-bearing validated
-copies](./checking-retained-results-trades-cost-against-reliance-risk.md)
-that authorize particular shortcuts rather than replace canonical membership.
+mark, the scoped membership query remains the fallback. The mark is a retained
+claim that authorizes a particular shortcut rather than replacing canonical
+membership. [Checking retained results trades cost against reliance
+risk](./checking-retained-results-trades-cost-against-reliance-risk.md): the
+validator checks this claim when the head is validated, and later reads reuse
+that result rather than repeating the membership derivation.
 A false trusted copy can hide missing members when it [suppresses the retrieval
 that would expose
 them](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md);
 checking the exact relation on which stopping depends turns such drift into a
-visible failure. This is a conditional control-flow mechanism, not evidence
+visible failure at the next validation. The mark may be false between checks. This is a conditional control-flow mechanism, not evidence
 that every agent needs these marks or that consumers always stop at an index.
 
 ## Scope

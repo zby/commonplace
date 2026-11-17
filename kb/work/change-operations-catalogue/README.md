@@ -21,8 +21,9 @@ workshop builds that list and uses it in both directions:
 The catalogue is a **working list grown by observation**. An operation enters
 it only when an observed instance — an ADR, a commit, or a recorded episode —
 shows the system being changed that way. It carries no completeness mark and
-will not until a checkable one exists ([a derived copy of recomputable truth
-must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md)).
+will not until a checkable one exists. This is a local policy for a claim that
+could authorize readers to stop searching, not a prohibition on all unchecked
+retained results ([checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md)).
 Consequences for a reader:
 
 - An operation missing from the list is not evidence that it does not exist.

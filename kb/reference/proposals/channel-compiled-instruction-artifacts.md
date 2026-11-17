@@ -33,7 +33,7 @@ The channel is known at install time. Nothing about it requires the reading agen
 
 - **Context cost.** Unresolved branches consume always-loaded and per-skill budget for text that is inert on the machine reading it.
 - **Silent mistranslation.** Agent-side translation of shell idioms can fail without failing loudly.
-- **Derived-copy hazard.** A compiled artifact is a derived copy; the KB's standing rule is that such a copy must be checked or absent. Deepening compilation deepens the drift surface that `commonplace-init` already reports rather than clobbers.
+- **Derived-copy hazard.** A compiled artifact can drift from its source. Deepening compilation deepens the drift surface that `commonplace-init` already reports rather than clobbers. The adoption decision must weigh checking and refresh costs against the risk of executing stale instructions; an unchecked copy is not ruled out by theory alone.
 - **Review target ambiguity.** Gates and freshness currently hash source text. If the compiled form is what agents execute, reviewing only the source leaves the executed artifact unreviewed — the same dependency gap the audit recorded as F4 and F6.
 - **Search surface.** The instructions tree is the searchable source; multiplying compiled copies multiplies lexical matches. Already true for skills, and worse if the whole tree compiles.
 - **Authoring and review cost.** A channel-branching source is harder to write, review, and keep symmetric than a single literal form — the cost moves rather than vanishing.
@@ -91,6 +91,6 @@ Relevant Notes:
 - [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
 - [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: why leaving branch resolution to the model adds interpretation work during execution
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
-- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: the constraint a compiled artifact must satisfy
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: the trade-off the compiled-copy adoption criterion asks the design to resolve
 - [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends
 - [ADR 064: Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — compares-with: removes command location and environment activation from the channel variables this proposal must resolve

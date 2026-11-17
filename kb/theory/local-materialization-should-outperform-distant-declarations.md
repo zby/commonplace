@@ -23,7 +23,7 @@ What can be materialized safely depends on [representational form, or how retain
 
 - **Bulk.** Each local view adds text, and the extra context can reduce performance elsewhere.
 - **Conditional applicability.** A conditional fact requires either template branching or a renderer that emits the local view only when the committed condition holds.
-- **Verification.** Literal or derived views need a deterministic guard; interpretive consequences instead need human or assay review.
+- **Verification.** This experiment chooses a deterministic guard for literal or mechanically derived views and human or assay review for interpretive consequences. Checking frequency remains a cost–risk choice, not a universal condition of retention.
 
 ## Testing the conjecture
 
@@ -39,6 +39,6 @@ Relevant Notes:
 
 - [Codification](./definitions/codification.md) — contrasts: a symbolic consumer assigns consequences to a binding; the natural-language consumer studied here does not have that reference operation
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — contrasts: both move information to consumption time, but frontloading precomputes known inputs while local materialization tests whether proximity changes behavioral use
-- [A derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) — exemplifies: a displayed verification label may take the checked branch when it is mechanically derived from `user-verified`; a contextual judgment cannot
+- [Checking retained results trades cost against reliance risk](./checking-retained-results-trades-cost-against-reliance-risk.md) — exemplifies: a displayed label derived from `user-verified` admits a mechanical check; a contextual judgment needs review, and neither method alone fixes the checking schedule
 - [Links encode conditional possibilities, not obligations](./links-encode-conditional-possibilities-not-obligations.md) — extends: a reader may not follow a reference, so content required at every use must arrive through an enforced consumption path or be present locally
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — contrasts: absent boundaries can make content over-reach, while absent dereference can make a declaration under-reach

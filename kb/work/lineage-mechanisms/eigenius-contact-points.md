@@ -71,4 +71,4 @@ Relevant notes:
 - [model-provenance.md](./model-provenance.md) — is-evidence-for: event-side model recording
 - [history has one chance to become checkable](../../theory/history-has-one-chance-to-become-checkable.md) — is-evidence-for: their authoring-time chain discipline is the claim practiced as method
 - [criteria edits invalidate verdicts; process edits invalidate artifacts](../../theory/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — is-evidence-for: their content-addressed proposition/witness edges show the watched-edge mechanism, while incomplete execution identities expose its boundary
-- [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — see-also: their drift detectors (D35) enforce the same rule at load time
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — see-also: distinguishes a selected checking policy from a universal requirement to check every retained result

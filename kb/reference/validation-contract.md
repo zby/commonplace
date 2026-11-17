@@ -177,7 +177,7 @@ The schema is **not** limited to frontmatter. `ParsedDocument.to_validation_obje
 
 What a schema cannot do is **dereference** — it has no way to say *follow this path and look inside the artifact it names*. JSON Schema validates one instance document; the referent is another file. This is an inherited limit of the substrate, not a gap worth closing, and it is the whole reason a second, imperative check mechanism exists at all.
 
-So the dividing line is not frontmatter/body. It is **inside the supplied schema instance** (declarable) versus **outside that instance** (must be loaded and checked). Directory schemas can compare the member data their loader supplies; they cannot perform filesystem reads themselves. A referential check's ground truth lives in a second artifact, which is precondition 3 of [a derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — the rule that makes these checks obligatory rather than optional.
+So the dividing line is not frontmatter/body. It is **inside the supplied schema instance** (declarable) versus **outside that instance** (must be loaded and checked). Directory schemas can compare the member data their loader supplies; they cannot perform filesystem reads themselves. A referential check needs locatable inputs outside the supplied instance and those inputs must be available at check time: distinct conditions 2 and 3 of [checking retained results trades cost against reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md). Those conditions make checking possible; they do not make it obligatory. The base contract below selects which checks Commonplace runs and their severities.
 
 ## The base contract
 
@@ -209,7 +209,7 @@ ingest instead, so one condition produces one warning.
 
 ### Why the two referential checks have different severities
 
-Link health **warns**; a false verbatim quote **fails**. That asymmetry is the derived-copy rule, not an inconsistency. A dangling link costs the reader a bounded, recoverable search. A false verbatim quote tells the reader the text was checked when it was not — it *suppresses* the verification it claims to have done, which is silent and unbounded. Absence degrades; a false copy corrupts.
+Link health **warns**; a false verbatim quote **fails**. This is the policy selected in ADR 046, not a severity rule deduced from the theory. A dangling link exposes a retrieval problem; a false verbatim claim can conceal one if the reader trusts the asserted fidelity and skips comparison. The decision prioritizes detecting that false assurance. Its prototype audit supports mismatch detection in the audited corpus, but does not establish comparative reader harm or a cost threshold that uniquely warrants these severities.
 
 ### Why the base checks are not type-configurable
 
@@ -255,7 +255,7 @@ collection's contract states any authoring conventions that go with the limit.
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: why a referential check is obligatory rather than optional, and why a false copy fails where an absent one warns
+- [Checking retained results trades cost against reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the checking-cost and reliance-risk trade-off; the base contract selects checks and severities locally
 - [ADR 046 — Verbatim quotes are validated against their cited source](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) — decided-by: the decision that added the second referential check and surfaced the class
 - [ADR 024 — Schema severity is per-constraint, fail by default](./adr/024-schema-severity-is-per-constraint-fail-by-default.md) — decided-by: how the `schema` source assigns its own severities
 - [Commands](./commands.md) — see-also: the `commonplace-validate` command surface

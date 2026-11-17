@@ -15,11 +15,11 @@ Expensive model-side derivation does not by itself justify persistence. Code may
 
 ## Checked materialization needs a deterministic checking path
 
-The economic case explains why a copy may earn its cost. It does not make the copy safe. When a live source can regenerate the value, [a derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md). A trusted copy needs a machine-locatable boundary, an explicit binding to its source and derivation, deterministic comparison semantics, and enforcement before the model consumes it. If validation fails, the system must withhold the copy from trusted use and fall back to recomputation.
+The economic case explains why a copy may earn its cost. It does not make the copy safe: [checking retained results trades cost against reliance risk](./checking-retained-results-trades-cost-against-reliance-risk.md). Mechanical checking needs a judgment-free rule, a locatable copy and source, source availability at check time, and a sufficiently trustworthy checker. A system can choose enforcement before every consumption and fallback on failure, but this is a strict policy, not a consequence of checkability. Checking once and reusing across reads preserves more of the saving while accepting risk between checks.
 
 Checkability does not require a fully symbolic payload. For example, a deterministic generator can reproduce a natural-language paragraph byte for byte inside a delimited region bound to its source. The payload remains natural language, while its envelope and validation path are symbolic. The retained artifact therefore has mixed [representational form](./definitions/representational-form.md). Fully symbolic content is one implementation, not a consequence of checkability alone.
 
-The economic and safety constraints remain distinct. Materialization pulls repeated derivation out of the model's bounded call. Validation keeps the resulting cache subordinate to the live source and prevents it from becoming a second authority.
+The economic and safety constraints remain distinct. Materialization pulls repeated derivation out of the model's bounded call. Validation compares the cache with the source at check time; an explicit reuse and refresh policy keeps the cache subordinate without implying continuous freshness.
 
 ## An instance, a broader pattern, and a non-instance
 
@@ -44,4 +44,4 @@ The comparison illustrates why materialization must be evaluated as a consumptio
 ## Open Questions
 
 - What is the smallest general mechanism for a machine-locatable, source-bound materialized region inside natural-language instruction text, so a validator can re-derive it before trusted consumption?
-- Are any derived values worth materializing for a model reader even when they are not cheaply re-derivable? If so, what managed-staleness rule can make them trustworthy when mechanical re-derivation before consumption is unavailable?
+- Which values justify reuse when re-derivation is expensive or judgment-dependent, and what review intervals keep the accepted reliance risk within the task's requirements? The qualitative trade-off alone does not calibrate those choices.

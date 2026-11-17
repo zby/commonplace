@@ -43,14 +43,14 @@ Keeping the two boundaries apart prevents two opposite misfilings: judgment-chec
 |---|---|---|
 | substantive content | recoverable from source plus declared consumer goal | includes resolutions the source does not determine |
 | ground truth after production | the source | the artifact; source demotes to provenance |
-| maintenance rule | checked-or-absent where mechanical; managed staleness where judgment-checked | supersession |
+| maintenance rule | checking or review frequency chosen against reliance risk | supersession |
 | repair on drift | recompute, or judged re-derivation | a new commitment naming the old |
 | deletion cost | recomputation work — bounded and mechanical, or dear but claim-preserving | irrecoverable loss of the only record |
 | worked instances | marks, generated indexes, duplicated build assets; derived summaries and reshaped natural-language | ADRs, notes promoted from workshops, verification attestations, kept generated code |
 
 Three consequences do real work.
 
-**Enforce-or-omit is a mechanical-zone rule.** [A derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) rides on the deletion column: absence costs a recomputation, a false copy costs silent unbounded wrongness, so hand-maintained-and-trusted is forbidden. Its precondition 1 — mechanical re-derivability — is the mechanical zone's admission test stated as an availability condition. Pushed past the commitment boundary the rule degenerates rather than weakens: with no derivation to check against, "checked or absent" reduces to "absent", which deletes the only copy of something no source recovers. The rule is not weaker there; it does not apply there.
+**Mechanical checkability supplies an option, not a universal enforcement rule.** [Checking retained results trades cost against reliance risk](./checking-retained-results-trades-cost-against-reliance-risk.md): retaining a result amortizes production across uses, while checking spends part of that saving to reduce reliance risk. Its condition 1 requires a judgment-free derivation or comparison rule, but does not fix a checking interval. Judgment-checked derivations may also merit reuse. Past the commitment boundary, comparison with the original inputs cannot recover what the commitment added; requiring that recovery as a condition of retention would delete irrecoverable content.
 
 **Supersession is a commitment rule, and demanding it of a derivation is over-ceremony.** You do not write a decision record to regenerate an index. Supersession exists because a superseded commitment is not wrong-relative-to-a-source — it was the ground truth for its moment, and only a later commitment can displace it. That is history, and history is not re-derivable.
 
@@ -64,7 +64,7 @@ A tag-README carries curated editorial prose *and* a validator-enforced `complet
 
 A recurring arbitration can be retired by codifying it — which is what [progressive constraining](./progressive-constraining-commits-only-after-patterns-stabilize.md) does: observe which resolution stabilizes across many runs, then commit that resolution to an artifact with precise semantics. The codified artifact is itself a commitment — it becomes the new source — but everything regenerated from it afterwards is derivation, with recompute available as the repair. Commit once, derive thereafter. The reverse move — relaxing a codified rule back into judgment — reopens the free choice and forfeits the repair, which is sometimes worth it and never a maintenance improvement.
 
-That also bounds the promotion: until the arbitration is actually codified, treating its outputs as derived is aspiration, and the aspiration is the exact failure mode enforce-or-omit warns about — a trusted copy with no check behind it.
+That also bounds the promotion: until the arbitration is actually codified, treating its added resolutions as mechanically derived misstates what can be checked. Retaining and relying on a judgment may still be reasonable; it needs to be assessed as a judgment, not presented as mechanically certified.
 
 ## Scope
 
@@ -88,7 +88,7 @@ Relevant Notes:
 - [Prompting changes failure diagnosis with the semantic reference](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — grounds: the English account behind the generated-code case, including why deterministic generation does not make the source entail the additions
 - [Program refinement](./definitions/program-refinement.md) — grounds: generated code is a candidate refinement of its spec, which is why the kept code and not the prompt is the committed artifact
 - [Methodology and its theory form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — grounds: the mechanical / judgment-checked grading inside derived content that this note distinguishes from the commitment boundary
-- [A derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) — extends: locates its rule as the mechanical zone's enforcement rule and shows it degenerating rather than weakening past the commitment boundary
+- [Checking retained results trades cost against reliance risk](./checking-retained-results-trades-cost-against-reliance-risk.md) — contrasts: checking a retained derivation manages reliance risk, but cannot reconstruct an addition its source never determined
 - [Selecting an LLM output fixes a result, not its interpretation](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md) — grounds: selecting which generated result becomes the maintained record is a commitment that cannot be recovered from the prompt alone
 - [Progressive constraining commits only after patterns stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — mechanism: how a recurring arbitration is committed once into a codified source, after which production from it is derivation
 - [Retaining the episode keeps a distilled rule re-derivable](./retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — contrasts: re-examining a committed generalization against its retained evidence is a fresh arbitration that may disagree with it, unlike a recompute

@@ -29,7 +29,7 @@ The old warning design is foreclosed. “Unreviewed” is not derivable from `us
 3. **Commit a binary banner.** Verified artifacts carry the positive line; all others carry `> **No current user verification.** No human attestation is committed for the current contents.` This makes absence explicit and universally visible, but puts a warning-shaped line on most artifacts and risks readers inferring more than the sentence says.
 4. **Generate a banner at render time.** ProperDocs promotes its existing metadata label into a banner, positive-only or binary. This avoids a committed derived copy but reaches only the site; agents, GitHub readers, and other Markdown renderers still see no body signal.
 
-Options 2 and 3 require deterministic consistency enforcement. The banner is a copy of frontmatter truth and must be checked or absent; author discipline alone is not enough.
+Options 2 and 3 retain deterministic consistency enforcement as a proposed adoption requirement. The banner copies frontmatter that substantive editing can revoke; a stale positive banner would still claim attestation. This proposal selects a mechanical comparison of the two local representations rather than accepting that drift risk through author discipline alone. That is a local cost-risk choice, not a universal requirement on retained copies.
 
 ## Forces
 
@@ -79,5 +79,5 @@ Relevant Notes:
 - [ADR 044 — User verification replaces global note status](../adr/044-user-verification-replaces-global-note-status.md) — part-of: defines the portable signal and the semantic boundaries this proposal must preserve
 - [Note type](../../types/note.md) — implemented-by: owns `user-verified` authoring and revocation semantics
 - [Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) — see-also: frames the proposal's required comparison of a generated point-of-reading banner with declaration-only frontmatter as an untested intervention
-- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: a committed banner is safe only when mechanically checked against frontmatter
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the proposed consistency check as a choice to spend checking effort against false attestation risk
 - [Representational form](../../theory/definitions/representational-form.md) — defined-in: distinguishes committed Markdown presentation from the ProperDocs-generated view

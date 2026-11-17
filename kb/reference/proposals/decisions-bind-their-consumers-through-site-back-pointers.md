@@ -54,10 +54,10 @@ has something to choose from.
   the site it constrains over this collection, because a warning found only by
   someone who thought to read a reference document is a warning most changers
   will miss.
-- The mark rule is shipped and enforced. A cached value recomputable from
-  ground truth elsewhere is either validator-checked or absent
+- The tag-README mark contract is shipped and enforced
   ([`kb/types/tag-readme.md`](../../types/tag-readme.md), ADR 026); the
-  `complete` and `covered_by` marks on tag-READMEs are the working precedent.
+  `complete` and `covered_by` marks are the working precedent for checking
+  declared relations. That contract does not require checking every cached value.
 - A change-operations catalogue exists in the workshop layer as an
   observational first pass: eighteen operations, each with observed instances,
   premises the actor must know before acting, the current home of those
@@ -73,17 +73,20 @@ were fixed by earlier decisions. Those premises are recorded. They are not
 delivered. The actor either already knows which ADRs apply, or searches on a
 hunch, or proceeds without them and reverses a decision by accident.
 
-Two constraints bound any fix.
+This proposal selects two requirements for its routing surface.
 
-**A partial index is worse than none.** A stale or incomplete routing surface
-suppresses fallback search: an agent that finds three relevant decisions stops
-looking for the fourth. Any surface either carries a completeness guarantee it
-can keep, or must not read as complete.
+**Do not present partial coverage as complete.** A stale or incomplete routing
+surface can suppress fallback search if an agent finds three relevant decisions
+and stops looking for the fourth. The risk depends on that stopping behavior
+and on whether further search would find relevant decisions. A surface must
+state the coverage it can actually support.
 
-**Anything recomputable that gets cached must be checked.** A routing surface
-that copies information derivable from the ADR set is subject to the mark
-rule: machine-checked against its source, or absent. Hand-maintained and
-trusted is the forbidden middle.
+**Check copied routing declarations.** The candidate requires machine checking
+against the ADR declarations rather than trusting hand-maintained copies.
+This is a local choice to spend checking effort against missed decision
+constraints, not a universal prohibition on unchecked caches. No comparative
+cost or reader-behavior evidence is recorded here to establish that this is the
+only acceptable choice.
 
 ## Option space
 
@@ -93,12 +96,12 @@ A README under `kb/reference/adr/` listing decisions by the change operation
 or the artifact they govern. Cheap to start, immediately readable, and the
 first shape anyone reaches for.
 
-**Rejected.** It is exactly the surface both constraints forbid. Nothing
-recomputes it from the ADR set, so it is a hand-maintained cache of
-recomputable truth; and an index that is silently partial is worse than no
-index, because it converts "I should search" into "I found the list." Neither
-defect is fixed by care at authoring time — the index goes stale on the next
-ADR nobody remembers to file.
+**Rejected by this proposal.** It does not meet the selected requirement to
+check copied routing declarations. An index that readers mistake for a full
+list can also suppress useful search. Care at authoring time does not ensure
+later additions are filed. A clearly partial index with accepted drift risk
+remains a possible alternative in the design space, but is not selected here;
+comparative evidence for rejecting that risk is not recorded.
 
 ### B. Instruction-declared read paths, per operation
 
@@ -136,7 +139,8 @@ completeness.
 3. **A validator checks reciprocity.** Every artifact a decision declares as
    bound carries the matching back-pointer, and every back-pointer names a
    decision that claims it. The back-pointer is then a *checked* derived copy,
-   which the mark rule permits, rather than a trusted index, which it forbids.
+   meeting this proposal's selected consistency requirement rather than
+   relying on manual agreement.
 
 Completeness is enforced from the decision side, where a new ADR is the event
 that would otherwise be forgotten. The residual gap is bounded and nameable:
@@ -183,8 +187,9 @@ where the check ships.
 
 The validator can verify **presence and reciprocity**: the declared target
 exists, and it carries a pointer back to the declaring decision. Both facts are
-recomputable from the two files, which is what licenses the cached
-back-pointer under the mark rule.
+recomputable from the two files, which makes the selected consistency check
+possible. It does not establish that checking is cheaper than accepting drift,
+or that the checker is correct.
 
 The validator cannot verify that the decision **still applies** to the
 artifact, that the declaration is **complete** for that artifact, or that the
@@ -197,17 +202,17 @@ certified currency reproduces the stale-index failure one level up.
 ## Forces
 
 - **Completeness versus partiality.** A pointer set that reads as complete
-  while missing entries misleads more than an absence does, because it stops
-  fallback search. Whatever is claimed must be enforced from the side where
-  the omission would occur.
+  while missing entries can mislead when readers stop fallback search on it.
+  This proposal requires enforcement of declared reciprocity from the decision
+  side, without treating that check as proof of complete decision coverage.
 - **Push to the site versus pull from an index.** Loading frequency is the
   whole difference. A site is read by the operation that touches it; an index
   is read only by an agent that thinks to look. The site rule in
   `kb/reference/COLLECTION.md` already resolves this force for warnings; a
   decision pointer is the same shape.
-- **Checked derived copies versus hand-maintained ones.** The mark rule admits
-  a cache only with a validator behind it. This decides the *form* of the
-  back-pointer, not whether one is wanted.
+- **Checking cost versus drift risk.** This proposal selects validator-backed
+  copies to detect disagreement with declarations. That fixes the candidate's
+  back-pointer form; it does not establish that the mechanism is worth building.
 - **Binding force versus advisory presence.** The same line means different
   things at different sites. On a collection contract it inherits contract
   force; on a reference doc it is advice. The design should not pretend the
@@ -237,7 +242,7 @@ certified currency reproduces the stale-index failure one level up.
   or a line in the body or footer. Frontmatter is easier to check; a body line
   is read by an agent that loads the artifact for its content.
 - Whether the back-pointer is **generated by a command** from the declarations
-  and checked, or **written by hand** and checked. Both satisfy the mark rule;
+  and checked, or **written by hand** and checked. Both satisfy the proposed consistency requirement;
   they differ in who does the work and in how a conflict is resolved.
 - Whether **section-level targets** are permitted, or declarations name whole
   files only.
@@ -294,8 +299,8 @@ Relevant Notes:
 
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: a retained decision reaches later behavior only through a consumer, a channel, and a force, which is the property the ADR set currently lacks
 - [System-definition artifact](../../theory/definitions/system-definition-artifact.md) — rests-on: binding force comes from a consumption path, so an ADR nothing consults is data rather than a system definition
-- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: why the candidate's back-pointer must be validator-checked and why the hand-maintained index option is rejected outright
-- [Indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a partial routing surface must not suppress retrieval with greater task-relevant coverage, the constraint that eliminates option A
+- [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: frames the candidate's checked back-pointers as a local cost-risk choice, not the only permissible retained routing surface
+- [Indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: the conditional risk of readers stopping on a partial routing surface; this proposal chooses not to accept that risk for option A
 - [Agent statelessness makes routing architectural, not learned](../../theory/agent-statelessness-makes-routing-architectural-not-learned.md) — rests-on: why consultation cannot be left to accumulated habit and must be built into what the operation loads
 - [ADR 074 — Git is the change-history layer](../adr/074-git-is-the-change-history-layer.md) — compares-with: the precedent for an instruction-declared read path, which option B generalizes
 - [ADR 077 — Content routing by regeneration source and consumer](../adr/077-content-routing-by-regeneration-source-and-consumer.md) — compares-with: the routing table whose row 4 records this gap and hands it here
