@@ -71,11 +71,57 @@ instead of assessing again.
    `revisit` condition is met.
 
    Depth 1 review reports may come with the artifact as well: critique,
-   composition friction and premise decomposition. If one of them proposes
-   changing what the artifact is (a split, a merge, a different claim or a
-   rejection), set the plan's `stop` and list no passes. The stop names the
-   proposal and the repository path of the report it comes from. The run
-   then ends with nothing edited, and the operator decides the proposal.
+   composition friction and premise decomposition. These reports are
+   written to find the strongest objection, so every text gets one, and a
+   revised text gets a new one. A proposal is not a defect because a report
+   made it. Judge each proposal that would change what the artifact is (a
+   split, a merge, a different claim or a rejection) against the claim as
+   the artifact scopes it, and place it in one of three kinds:
+
+   - **Defect.** The report shows the claim is wrong or unusable as scoped:
+     a case inside the artifact's stated conditions for which the claim is
+     false, two statements of the artifact that cannot both hold, or two
+     readings that the artifact's own wording both supports and under
+     which the reader would conclude or do different things. You can state
+     the case, the two statements or the two readings. A term the artifact
+     does not define is not by that fact a defect.
+   - **Choice.** The report proposes a different artifact without showing a
+     defect: a split, a merge, a different thesis or contribution.
+   - **Extension.** The report asks the artifact to cover more: further
+     cases, grounds for a premise the artifact states as its condition, or
+     a neighbouring question. The claim as scoped stands without it. A
+     claim made relative to a stated condition does not have to establish
+     that condition.
+
+   The compression synthesis's proposals are sorted in the same way.
+
+   A defect stops the run when correcting it would replace or restructure
+   the text the passes work on: a different thesis, a split, a merge, a
+   reordered argument. A choice stops the run only when you judge, against
+   the purpose and the brief, that it is the highest-value change; a
+   report's making the proposal is not that judgment. Then set the plan's
+   `stop` and list no passes. In the stop, give each proposal's kind and
+   the repository path of its report; for a defect, state the case, the
+   two statements or the two readings; for a choice, say that no defect is
+   shown, why you rank it first, and that the operator may decline it. The
+   run then ends with nothing edited, and the operator decides the
+   proposal.
+
+   Everything else goes in the assessment under the heading `Claim
+   questions for the operator`, and the passes are planned as usual. This
+   covers a defect that one or two sentences would correct, with its
+   passage, its case and the report's path; a choice you do not rank
+   first, marked as a choice with no defect shown; and a proposed change
+   of title or file name. The passes cannot make these changes, because
+   they do not change claims. Scope a pass away from a passage that has an
+   open claim question.
+
+   An extension does not stop the run. List it once among the findings not
+   acted on, with the reason, and plan the passes as usual. Recommend an
+   extension only when the purpose or the brief asks for that coverage. An
+   extension into something the brief excludes is never recommended. When
+   you cannot tell a defect from an extension, say so in the plan and
+   treat it as a choice.
    When the proposal is to move a full argument into a separate file, the
    stop may recommend [split out a treatment](./split-out-a-treatment.md);
    no procedure runs it.

@@ -56,3 +56,14 @@ The operator may answer a run's findings with a split or another structural chan
 4. Never record a rejected finding as `approved` because a useful edit followed from it. `approved` means the finding is right.
 5. Validate each file, then approve it on the operator's word with the printed command.
 6. Run a fresh review on each resulting note. The decisions reach only later runs on the original note path.
+
+## A plan that stopped on a proposal
+
+A full or assessed revise run ends with nothing edited when its plan sets `stop`. The stop names proposals from the depth 1 reports and leaves `artifact/stop-answers.md` with one item. The depth 1 reports are written to find the strongest objection, so a revised note gets a new one. A completed review does not show that its argument is right, and neither does a stop.
+
+1. Read the plan's `stop`, the reports it names and the note. Do not revise the note because the run stopped.
+2. For each proposal, tell the operator its kind as the plan gives it: a defect in the claim as scoped, a choice of a different artifact, or an extension that asks the note to cover more. For a defect, state the case, the two statements or the two readings, and check it against the note yourself.
+3. Give your own recommendation for each proposal against the operator's stated purpose for the note and its write brief. Recommend a change only when its value against that purpose is clear. Say so plainly when a proposal is right in general and not needed here.
+4. Record the operator's answer in `artifact/stop-answers.md`: `rejected` with the reason, or `approved` with what was done in `resolution` and where in `refs`. Approve the file with the command the run report gives.
+5. A run that does not stop may still leave questions. Its assessment (`artifact/assessment.md`) lists `Claim questions for the operator`: small defects the passes cannot correct, and choices the assessor did not rank first. Tell the operator each one with its passage and report, with your recommendation as in step 3. Change the note for one only on the operator's word.
+6. When successive runs on one note stop on new proposals after each revision, tell the operator that this is happening. Offer to write the note's contribution and its exclusions into a write brief, which the assessor reads; write it only on the operator's word.
