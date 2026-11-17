@@ -15,7 +15,7 @@ Expensive model-side derivation does not by itself justify persistence. Code may
 
 ## Checked materialization needs a deterministic checking path
 
-The economic case explains why a copy may earn its cost. It does not make the copy safe. When a live source can regenerate the value, [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). A trusted copy needs a machine-locatable boundary, an explicit binding to its source and derivation, deterministic comparison semantics, and enforcement before the model consumes it. If validation fails, the system must withhold the copy from trusted use and fall back to recomputation.
+The economic case explains why a copy may earn its cost. It does not make the copy safe. When a live source can regenerate the value, [a derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md). A trusted copy needs a machine-locatable boundary, an explicit binding to its source and derivation, deterministic comparison semantics, and enforcement before the model consumes it. If validation fails, the system must withhold the copy from trusted use and fall back to recomputation.
 
 Checkability does not require a fully symbolic payload. For example, a deterministic generator can reproduce a natural-language paragraph byte for byte inside a delimited region bound to its source. The payload remains natural language, while its envelope and validation path are symbolic. The retained artifact therefore has mixed [representational form](./definitions/representational-form.md). Fully symbolic content is one implementation, not a consequence of checkability alone.
 

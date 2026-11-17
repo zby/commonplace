@@ -96,4 +96,4 @@ Relevant Notes:
 - [Knowledge storage does not imply contextual activation](../../theory/knowledge-storage-does-not-imply-contextual-activation.md) - Explains why Swamp's durable data and static lookup instructions still form a pull-only read-back path.
 - [Skills are instructions plus routing and execution policy](../../theory/skills-are-instructions-plus-routing-and-execution-policy.md) - Frames Swamp's progressively disclosed skill package and routing table.
 - [Scheduler-LLM separation exploits an error-correction asymmetry](../../theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) - Provides the rationale for compiling recurring workflow bookkeeping into a symbolic DAG executor.
-- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - Matches Swamp's rebuildable catalog and on-disk verification behavior.
+- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) - Matches Swamp's rebuildable catalog and on-disk verification behavior.

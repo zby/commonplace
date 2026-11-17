@@ -33,7 +33,7 @@ This is the natural-language equivalent of a missing function boundary, except t
 - one authoritative definition for maintainers; and
 - literal, sufficient instructions in the bounded context that performs the work.
 
-The existing rule that [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) rules out a trusted, hand-maintained middle state. The question is which checked or absent form fits instruction text.
+The existing rule that [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) rules out a trusted, hand-maintained middle state. The question is which checked or absent form fits instruction text.
 
 ## Option space
 
@@ -111,7 +111,7 @@ Choosing the exact marker syntax, defining a general natural-language module sys
 
 Relevant Notes:
 
-- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
+- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: rules out a trusted but unchecked inline copy and supplies the deterministic-oracle boundary
 - [Local materialization should outperform distant natural-language declarations](../../theory/local-materialization-should-outperform-distant-declarations.md) — see-also: supplies the untested behavioral comparison between a runtime reference and a generated local view; this proposal adds the deterministic-equality and adoption constraints
 - [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: frames literal insertion of already-known instruction content as a context-shaping operation
 - [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: accounts for the execution cost of making a delegated writer resolve an additional instruction reference

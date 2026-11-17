@@ -147,7 +147,7 @@ Relevant Notes:
 
 - [ADR 038](../../reference/adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — depends-on: the watched note←type edge this theory generalizes
 - [verifiability gradient](../../theory/verifiability-gradient.md) — contrasts: orthogonal axis — cost/mechanism of checking vs what can be checked at all, and when
-- [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — extends: the recomputable special case; provenance records are the non-recomputable complement
+- [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — extends: the recomputable special case; provenance records are the non-recomputable complement
 - [link graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — grounds: the build-product model the invalidation corollary formalizes
 - [model provenance](./model-provenance.md) — see-also: the model edge as an instance of the ladder
 - [current practices and theory](./current-practices-and-theory.md) — see-also: the descriptive inventory this frame reorganizes

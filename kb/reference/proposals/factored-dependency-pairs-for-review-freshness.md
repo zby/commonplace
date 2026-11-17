@@ -53,6 +53,6 @@ Relevant Notes:
 
 - [link graph plus timestamps enables make-like staleness detection](../../theory/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — rests-on: the build-product/prerequisite model; factored two-input pairs are its cheapest review-side realization
 - [038-type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — evidenced-by: the shipped first instance of the factoring pattern this proposal generalizes
-- [a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why each dependency document must be the gate rather than be restated in one
+- [a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: why each dependency document must be the gate rather than be restated in one
 - [review system](../README-REVIEW-SYSTEM.md) — part-of: the result-file freshness every factored pair reuses unchanged
 - [032-review freshness uses DB snapshots, not Git](../adr/032-review-freshness-uses-db-snapshots-not-git.md) — see-also: the role-neutral snapshot substrate that lets any repo document sit on the criterion side

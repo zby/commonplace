@@ -69,7 +69,7 @@ the source-side material is itself held as retained quotes validated against the
 captured source ([ADR
 073](../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md)).
 This is the general rule that [a derived copy of recomputable truth must be
-checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
+checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md)
 applied to citation: the quote is a copy of something held elsewhere, and it is
 admissible because a validator re-derives it and fails on mismatch. A paraphrase
 has no such derivation rule, and [a citation cannot assert more fidelity than
@@ -235,7 +235,7 @@ Relevant Notes:
 - [Short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — contrasts: the co-loading bound sized to the reader's context, against the checking bound sized to the checker's pass
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: the premise that a check's domain is what makes "atomic relative to a check" a real restriction
 - [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — grounds: the general form of the dependence between what can run unattended and what can be checked
-- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — grounds: why a validated quote may be trusted as a copy while a paraphrase may not
+- [A derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) — grounds: why a validated quote may be trusted as a copy while a paraphrase may not
 - [A citation cannot assert more fidelity than its capture preserved](./a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md) — grounds: the capture-time bound that decides which sources can take the quoting route at all
 - [Title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — enables: the convention that lets a chain of notes read as a chain of checked steps
 - [A five-link cap missed four grounding findings in twelve reviews](../reports/retained/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidenced-by: the paired outcomes this note rereads as evidence about note size rather than reviewer capacity

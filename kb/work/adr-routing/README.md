@@ -51,7 +51,7 @@ find the fourth. Any index either carries a completeness guarantee it can keep,
 or must not read as complete.
 
 **Enforce or omit.** If a routing surface caches anything recomputable from the
-ADR set, [it must be machine-checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+ADR set, [it must be machine-checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md).
 The `complete`/`covered_by` marks on tag-READMEs are the shipped precedent for
 how that can work.
 

@@ -91,6 +91,6 @@ Relevant Notes:
 - [Frontloading spares execution context](../../theory/frontloading-spares-execution-context.md) — rests-on: the test for what belongs at build time, and the validity-window obligation a compiled artifact inherits
 - [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: why leaving branch resolution to the model adds interpretation work during execution
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
-- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: the constraint a compiled artifact must satisfy
+- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: the constraint a compiled artifact must satisfy
 - [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends
 - [ADR 064: Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — compares-with: removes command location and environment activation from the channel variables this proposal must resolve

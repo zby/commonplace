@@ -111,7 +111,7 @@ before exact prose could be removed safely.
 Relevant Notes:
 
 - [Attempted recovery identifies informational gaps, not provenance or authority](../documentation-generates-the-system-rather-than-describing-it.md) — grounds: supplies the per-unit recovery assay and prevents successful reconstruction from deciding authority or history
-- [A derived copy of recomputable truth must be checked or absent](../a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — grounds: supplies the safety boundary for exact copies whose source remains authoritative
+- [A derived copy of recomputable truth must be checked or absent](../checking-retained-results-trades-cost-against-reliance-risk.md) — grounds: supplies the safety boundary for exact copies whose source remains authoritative
 - [Opposed recompute factors do not decide documentation segmentation](../opposed-recompute-factors-do-not-decide-documentation-segmentation.md) — grounds: explains why source readability alone does not decide whether a useful cache pays
 - [Addressability grain sets a matched selective-read floor](../addressability-grain-sets-a-matched-selective-read-floor.md) — grounds: supplies the source-unit versus document-unit comparison used in the retrieval experiments
 - [An insufficient summary precedes the source rather than replacing it](../an-insufficient-summary-precedes-the-source-rather-than-replacing.md) — exemplifies: exactness prose that did not license stopping left live implementation in the path and added its own read cost

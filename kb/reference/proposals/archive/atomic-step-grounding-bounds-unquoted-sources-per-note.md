@@ -160,7 +160,7 @@ rejected evidence living in the target artifact and kept the ingest `## Quotes`
 pool as the evidence owner. An inline quotation is not a second evidence store:
 it is a checked copy of a quote the ingest already retains, admissible exactly
 because a validator re-derives it and fails on mismatch — the general rule that
-[a derived copy of recomputable truth must be checked or absent](../../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md).
+[a derived copy of recomputable truth must be checked or absent](../../../theory/checking-retained-results-trades-cost-against-reliance-risk.md).
 The ingest remains the owner, and the required `## Quotes` tightening above is
 what keeps that true.
 

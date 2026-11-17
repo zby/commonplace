@@ -56,7 +56,7 @@ not certify the relevance or quality of the second.
 A valid `complete` mark permits a consumer to skip the by-tag membership sweep
 and to trust the README's routing through its linked child heads. Without the
 mark, the scoped membership query remains the fallback. The mark is therefore [non-load-bearing validated
-copies](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
+copies](./checking-retained-results-trades-cost-against-reliance-risk.md)
 that authorize particular shortcuts rather than replace canonical membership.
 A false trusted copy can hide missing members when it [suppresses the retrieval
 that would expose

@@ -16,7 +16,7 @@ This tag gathers work on getting the right knowledge into a bounded LLM context 
 - [A context-operation interface bounds the projections its policy can realize](../theory/context-operation-interface-bounds-context-policy.md) - separates structural projection reach from policy success within one interface
 - [Addressability grain, not compression ratio, sets a matched selective-read floor](../theory/addressability-grain-sets-a-matched-selective-read-floor.md) - isolates the retrieval-floor condition for a known question that maps to one discriminating unit on each path, while leaving fan-out, sufficiency, reliability, and net value separate
 - [Opposed recompute factors do not decide documentation segmentation](../theory/opposed-recompute-factors-do-not-decide-documentation-segmentation.md) - why crossed savings and recurrence rankings do not order cache value, and why cache value alone does not decide whether a second content layer pays
-- [A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) - names when a recomputable value is safe to inline for context economy: only when a validator can re-derive and check it, otherwise it must stay a live read
+- [A derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) - names when a recomputable value is safe to inline for context economy: only when a validator can re-derive and check it, otherwise it must stay a live read
 
 ## Methodology Activation
 

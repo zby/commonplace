@@ -68,4 +68,4 @@ Relevant Notes:
 - [A functioning KB needs a workshop layer, not just a library](../../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — rests-on: the sinks-not-sources rule this decision extends to a second, retained sink layer
 - [ADR 028: design proposals live in kb/reference/proposals](./028-design-proposals-live-in-reference-proposals.md) — supersedes: adds the disposal clause its lifecycle left undefined
 - [ADR 024: schema severity is per-constraint, fail by default](./024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the audit-before-flipping rule that kept the alternatives requirement out of the schema
-- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — see-also: the marks doctrine that ruled out an unvalidated lifecycle frontmatter field
+- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — see-also: the marks doctrine that ruled out an unvalidated lifecycle frontmatter field

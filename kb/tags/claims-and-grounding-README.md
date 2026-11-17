@@ -25,7 +25,7 @@ How KB content commits to claims and how those claims stay tied to what supports
 ## Ground truth and supersession
 
 - [Commitment, not derivation, creates new ground truth](../theory/commitment-not-derivation-creates-new-ground-truth.md) — derived claims leave the source as ground truth; unentailed resolutions become ground truth at commit
-- [A derived copy of recomputable truth must be checked or absent](../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of recomputable information is machine-checked against its source or does not exist
+- [A derived copy of recomputable truth must be checked or absent](../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — a copy of recomputable information is machine-checked against its source or does not exist
 - [Superseded choices need a historical witness; refuted beliefs lose subject-matter standing](../theory/superseded-choices-are-retained-superseded-beliefs-are-not.md) — what to keep after supersession depends on the claim's remaining truth role
 
 ## Grounding in sources

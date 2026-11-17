@@ -47,7 +47,7 @@ This boundary belongs inside a [reflective architecture](./definitions/reflectiv
 
 ## The cure states a claim of its own
 
-Authorization metadata inherits the same problem. A verified flag or approved status is itself content in a trusted position, so a stale or unbacked mark can suppress the check that would have caught it. A [derived copy of recomputable truth must therefore be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md), while a non-recomputable attestation must be invalidated whenever its scope may no longer hold. This KB applies the latter rule to `user-verified`: a substantive edit strips the human attestation, and only another explicit act restores it.
+Authorization metadata inherits the same problem. A verified flag or approved status is itself content in a trusted position, so a stale or unbacked mark can suppress the check that would have caught it. A [derived copy of recomputable truth must therefore be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md), while a non-recomputable attestation must be invalidated whenever its scope may no longer hold. This KB applies the latter rule to `user-verified`: a substantive edit strips the human attestation, and only another explicit act restores it.
 
 ---
 

@@ -45,7 +45,7 @@ Whether the sources determine a passage's content is separate from what the reta
 
 Once the fidelity test passes and independent roles are excluded, judge recoverable explanation as a cache. Compare the reconstruction work it avoids across expected uses with its creation, validation, retrieval, maintenance, and failure costs. This is the comparison developed in [opposed recompute factors do not decide documentation segmentation](./opposed-recompute-factors-do-not-decide-documentation-segmentation.md). A retained summary can reduce source access, transformation, verification, and model-side reasoning. It cannot preserve information absent from its declared sources.
 
-Mechanically derived copies have a stricter maintenance rule: [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). Natural-language explanations whose fidelity requires judgment have no mechanical check; what stands in for one — a lineage edge, a review baseline, a named owner — is a design choice this note does not fix. Neither case licenses a hand-maintained copy to acquire unexamined authority merely because it is convenient to read.
+Mechanically derived copies have a stricter maintenance rule: [a derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md). Natural-language explanations whose fidelity requires judgment have no mechanical check; what stands in for one — a lineage edge, a review baseline, a named owner — is a design choice this note does not fix. Neither case licenses a hand-maintained copy to acquire unexamined authority merely because it is convenient to read.
 
 ## Scope
 

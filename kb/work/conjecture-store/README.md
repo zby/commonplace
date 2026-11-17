@@ -101,7 +101,7 @@ is moot, not refuted.
 the operator required materialized projections that a person can edit in
 any editor. A projection that rewrote content would make the theory
 collection a derived copy, and an edit to it a write-back problem
-([a derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md),
+([a derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md),
 ADR 025). So each conjecture is one file carrying its record, and the
 projection decides only where that file lives. The theory collection is
 materialized as location, the file a person opens there is the conjecture

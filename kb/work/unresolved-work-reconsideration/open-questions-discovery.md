@@ -30,7 +30,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - [theory/a-claim-without-external-assessment-carries-three-obligations.md](../../theory/a-claim-without-external-assessment-carries-three-obligations.md) — line 172: `## Open Questions`
 - [theory/a-complete-theory-path-does-not-establish-improved-capacity.md](../../theory/a-complete-theory-path-does-not-establish-improved-capacity.md) — line 179: `## Open Questions`
 - [theory/addressability-grain-sets-a-matched-selective-read-floor.md](../../theory/addressability-grain-sets-a-matched-selective-read-floor.md) — line 76: `## Open Questions`
-- [theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — line 54: `## Open Questions`
+- [theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — line 54: `## Open Questions`
 - [theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md](../../theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — line 80: `## Open Questions`
 - [theory/ad-hoc-prompts-extend-the-system-without-schema-changes.md](../../theory/ad-hoc-prompts-extend-the-system-without-schema-changes.md) — line 46: `## Open Questions`
 - [theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md](../../theory/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md) — line 158: `## Open Questions`

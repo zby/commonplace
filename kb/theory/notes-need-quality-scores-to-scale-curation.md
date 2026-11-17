@@ -52,7 +52,7 @@ The right point on this spectrum depends on when /connect starts struggling. We'
 
 ## Open questions
 
-- ~~Should scores be visible in frontmatter, or computed on demand?~~ Settled by the mark doctrine: computed on demand, never persisted-and-trusted. An authored score field is a hand-maintained copy of a judgment — the forbidden middle, [since a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md). The removal of the `status` field was this doctrine applied: it was the one scoring input that could not be recomputed from ground truth.
+- ~~Should scores be visible in frontmatter, or computed on demand?~~ Settled by the mark doctrine: computed on demand, never persisted-and-trusted. An authored score field is a hand-maintained copy of a judgment — the forbidden middle, [since a derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md). The removal of the `status` field was this doctrine applied: it was the one scoring input that could not be recomputed from ground truth.
 - How do you bootstrap scores for new notes? A fresh note with no inbound links scores low, but it might be exactly the right link target. Some grace period or "new note bonus" might be needed.
 - Does filtering by score create a rich-get-richer problem? Well-connected notes get more connections, new notes get ignored. This is the scaling version of the orphan detection problem. The exploration slice in budget-bounded listings is the current answer in design: reserve part of any truncated surface for low-degree and recent notes regardless of score.
 

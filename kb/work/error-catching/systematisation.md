@@ -24,7 +24,7 @@ Draft scheme, workshop register. The aim is one frame in which every error-catch
 | Technique | Lens | Site | Oracle | Economics | Status |
 |---|---|---|---|---|---|
 | Deterministic validators (schema, link health, `covered_by`/`complete` marks) | closed | write-time | mechanical | ~free per run; catches only what is codified | shipped |
-| Derived-copy checks ([checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)) | closed | write-time | mechanical | free; the recomputable-copy discipline | shipped |
+| Derived-copy checks ([checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md)) | closed | write-time | mechanical | free; the recomputable-copy discipline | shipped |
 | Review gates (closed-ended assays) | closed | scheduled | LLM judgment | cheap per pair; value proven by catch rates on "obvious" rules (15–67%) | shipped |
 | Type/collection conformance pairs | closed (contract as lens) | scheduled | LLM judgment | criterion-side staleness ties detection to contract edits | shipped |
 | Semantic review generally ([what structural validation cannot catch](../../theory/semantic-review-catches-content-errors-that-structural-validation.md)) | closed-per-gate | scheduled | LLM judgment | the fast path's judgment tier | shipped |

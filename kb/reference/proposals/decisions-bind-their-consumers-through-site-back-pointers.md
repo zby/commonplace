@@ -294,7 +294,7 @@ Relevant Notes:
 
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: a retained decision reaches later behavior only through a consumer, a channel, and a force, which is the property the ADR set currently lacks
 - [System-definition artifact](../../theory/definitions/system-definition-artifact.md) — rests-on: binding force comes from a consumption path, so an ADR nothing consults is data rather than a system definition
-- [A derived copy of recomputable truth must be checked or absent](../../theory/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — rests-on: why the candidate's back-pointer must be validator-checked and why the hand-maintained index option is rejected outright
+- [A derived copy of recomputable truth must be checked or absent](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: why the candidate's back-pointer must be validator-checked and why the hand-maintained index option is rejected outright
 - [Indexes lower recall when they suppress retrieval that would find more](../../theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a partial routing surface must not suppress retrieval with greater task-relevant coverage, the constraint that eliminates option A
 - [Agent statelessness makes routing architectural, not learned](../../theory/agent-statelessness-makes-routing-architectural-not-learned.md) — rests-on: why consultation cannot be left to accumulated habit and must be built into what the operation loads
 - [ADR 074 — Git is the change-history layer](../adr/074-git-is-the-change-history-layer.md) — compares-with: the precedent for an instruction-declared read path, which option B generalizes

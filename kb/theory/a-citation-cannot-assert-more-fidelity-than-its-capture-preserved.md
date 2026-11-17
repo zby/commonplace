@@ -19,7 +19,7 @@ A citation raises four separable questions:
 
 A string check answers only the wording question. An identity check answers part of the second question (below). Context needs a reader of both texts. Wording agreement is deterministic, cheap and binary, so it can run on every pass. Judging support is costlier and noisier, so it cannot simply block the way a wording check does, and how reliably it detects out-of-context use is unmeasured.
 
-This asymmetry explains why a wording mismatch can fail rather than warn. A quoted span is a copy of a source span, and its occurrence is mechanically recomputable, so the reasoning that [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) applies: a false copy misleads silently, while an absent one costs a recomputation. That reasoning covers wording only, because the choice of span and its claimed use are not recomputable. It also presupposes that the source bytes are present when the check runs.
+This asymmetry explains why a wording mismatch can fail rather than warn. A quoted span is a copy of a source span, and its occurrence is mechanically recomputable, so the reasoning that [a derived copy of recomputable truth must be checked or absent](./checking-retained-results-trades-cost-against-reliance-risk.md) applies: a false copy misleads silently, while an absent one costs a recomputation. That reasoning covers wording only, because the choice of span and its claimed use are not recomputable. It also presupposes that the source bytes are present when the check runs.
 
 ## What makes "exact" meaningful
 
