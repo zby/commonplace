@@ -2,7 +2,7 @@
 description: "English clauses supply a candidate behavioral abstraction of precise model-defined prompt semantics; local reasoning depends on its fidelity, including interactions and unexplained residual behavior."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [computational-model, artifact-analysis]
+tags: [computational-model, prompt-semantics, artifact-analysis]
 ---
 
 # English can approximate a model-defined prompt language

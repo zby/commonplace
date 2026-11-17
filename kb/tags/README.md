@@ -24,6 +24,7 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
 - [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model-README.md) — programming-language framing for LLM instructions and orchestration
+  - [Prompt semantics](./prompt-semantics-README.md) — what fixes a prompt's meaning and how accurately it can be predicted or inspected
 - [Context engineering](./context-engineering-README.md) — getting the right knowledge into bounded context at the right time
 - [Failure modes](./failure-modes-README.md) — characteristic ways knowledge can exist without changing agent behavior
 - [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology

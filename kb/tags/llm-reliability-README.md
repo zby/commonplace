@@ -54,5 +54,6 @@ How LLM outputs depart from intended requirements, and how to prevent, detect or
 
 ## Related Tags
 
+- [prompt-semantics](./prompt-semantics-README.md) — neighbour: which reference governs a prompt
 - [learning-theory](./learning-theory-README.md) — the parent: oracle and verification theory applied here to LLM output deviations
 - [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works

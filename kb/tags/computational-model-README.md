@@ -11,7 +11,7 @@ Instruction interpretation, scoping, state and orchestration of bounded LLM call
 
 ## Foundations
 
-- [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — model-defined programming and English instruction execution share a prediction problem but judge conformance against different references
+- [Prompt semantics](./prompt-semantics-README.md) — child tag: which reference fixes a prompt's meaning, English as an approximation of model-defined behavior, and the evidence a claim about prompt behavior needs
 - [Context efficiency](../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — why context is the scarce resource; cost has two dimensions (volume and complexity) that drive the mechanisms below
 - [Bounded-context orchestration](../theory/bounded-context-orchestration-model.md) — gives closed-world orchestration with explicit state and barriered independent call batches a conditional select/call normal form
 - [LLM contexts interpret instructions and content through the same token medium](../theory/llm-context-interprets-instructions-and-content-through-one-medium.md) — instructions and data share the same representation, enabling extensibility but removing structural guardrails
@@ -30,11 +30,7 @@ Instruction interpretation, scoping, state and orchestration of bounded LLM call
 
 ## Instruction Properties
 
-- [English can approximate a model-defined prompt language](../theory/english-can-approximate-a-model-defined-prompt-language.md) — coarse clause meanings support local reasoning where their predictions hold; residual behavior bounds fidelity
-- [Clear instructions can compose into an unsettled contract](../theory/clear-instructions-can-compose-into-an-unsettled-contract.md) — scope, precedence and exceptions can leave combined English requirements unsettled
-
 - [Instruction writing styles](../theory/writing-styles-are-strategies-for-managing-underspecification.md) — five observed context-file writing styles as strategies for narrowing the interpretation space
-- [Checks for prompt programming](../theory/programming-practices-for-prompts-need-question-specific-evidence.md) — checks matched to requirements, conformance, prediction and variation
 - [Unified calling conventions](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
 - [Local materialization should outperform distant natural-language declarations](../theory/local-materialization-should-outperform-distant-declarations.md) — untested comparison of declaration-only context with generated point-of-use views, under a single canonical maintenance authority
 - [Model-resolved indirection adds interpretation work to LLM execution](../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — distinguishes references resolved by the model from aliases expanded by a deterministic executor and makes literalization conditional on token and lifecycle costs

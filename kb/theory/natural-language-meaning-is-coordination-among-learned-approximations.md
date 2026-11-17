@@ -2,7 +2,7 @@
 description: "Untested hypothesis extending Lampinen's learned-approximation mechanism to natural language: no external semantics exists to approximate, so meaning is coordination held by weak checks; recasts constraining and deviation diagnosis"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, constraining, llm-reliability]
+tags: [learning-theory, computational-model, prompt-semantics, constraining, llm-reliability]
 ---
 
 # Natural-language meaning is coordination among learned approximations, not approximation of a target

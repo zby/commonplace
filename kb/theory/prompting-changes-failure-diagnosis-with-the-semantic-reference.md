@@ -3,7 +3,7 @@ description: "Two accounts of prompting share a behavior-prediction problem but 
 type: types/note.md
 brief: prompting-changes-failure-diagnosis-with-the-semantic-reference.brief.md
 traits: [title-as-claim, has-comparison]
-tags: [learning-theory, computational-model, constraining, llm-reliability]
+tags: [learning-theory, computational-model, prompt-semantics, constraining, llm-reliability]
 ---
 
 # Prompting changes failure diagnosis with the semantic reference

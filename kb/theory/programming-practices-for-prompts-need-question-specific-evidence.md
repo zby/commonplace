@@ -3,7 +3,7 @@ description: "Maps typing, testing, code extraction and versioning to the questi
 type: types/note.md
 brief: programming-practices-for-prompts-need-question-specific-evidence.brief.md
 traits: [title-as-claim, has-comparison]
-tags: [learning-theory, computational-model, constraining, llm-reliability]
+tags: [learning-theory, computational-model, prompt-semantics, constraining, llm-reliability]
 ---
 
 # Programming practices for prompts need evidence matched to the question
