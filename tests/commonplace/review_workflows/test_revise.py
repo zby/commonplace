@@ -1381,6 +1381,117 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     assert repo[2].read_text().splitlines()[len(before):] == []
 
 
+WARNED = "kb/instructions/review-gates/prose/warned.md"
+
+
+def record(repo, capsys, run_dir):
+    """Run `record` on a revise run; return its report and the launches it made."""
+    before = repo[2].read_text().splitlines()
+    code = main(["record", run_dir], harnesses=repo[1])
+    captured = capsys.readouterr()
+    assert code == 0, captured.err
+    return json.loads(captured.out), repo[2].read_text().splitlines()[len(before):]
+
+
+def files(directory):
+    return {path.relative_to(directory).as_posix(): path.read_bytes()
+            for path in directory.rglob("*") if path.is_file()}
+
+
+def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_run(reviewed, capsys):
+    repo = reviewed
+    text = start(repo, "STOP")
+    result = stored(repo, "warn", gate=WARNED, found=[finding("diagnosis"), finding("undiscussed")])
+    stored(repo, "info")                                          # a pass result asks nothing
+    _, stopped, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert stopped["stop"] and stopped["findings"] == [result] and stopped["waiting-for"] is None
+    run = repo[0] / stopped["run-dir"]
+    split = text.replace("STOP", "STOP, split into three notes")
+    (repo[0] / NOTE_PATH).write_text(split)                      # the operator's split: the run cannot continue
+    before = files(run)
+
+    report, launches = record(repo, capsys, stopped["run-dir"])
+    assert launches == [] and report["overtaken"] and report["artifact"] == NOTE_PATH
+    [listed] = report["results"]
+    assert (listed["result"], listed["criterion"], listed["state"]) == (result, "prose/warned", "written")
+    assert re.fullmatch(r".*/artifact/finding-answers-[0-9a-f]{12}\.md", listed["file"])
+    assert listed["approve-command"].startswith(f"commonplace-review approve {stopped['run-dir']} ")
+    path = repo[0] / listed["file"]
+    head = yaml.safe_load(path.read_text().split("---\n")[1])
+    assert (repo[0] / head["question"]).read_text() == (repo[0] / result).read_text()
+    assert [(item["id"], item["state"]) for item in head["items"]] == [("1", "pending"), ("2", "pending")]
+    after = files(run)
+    new = {name for name in after if name not in before}
+    assert new - {"artifact/findings/prose/warned.md", f"artifact/{path.name}"} == {
+        name for name in new if name.startswith("operator/")} and len(new) == 3
+    assert [name for name in before if after[name] != before[name]] == ["log.jsonl"], "no plan, fix or publication"
+
+    again, launches = record(repo, capsys, stopped["run-dir"])
+    assert launches == [] and [given["state"] for given in again["results"]] == ["exists"]
+    assert files(run) == {**after, "log.jsonl": files(run)["log.jsonl"]}
+
+    path.write_text(decide(path.read_text(), {"1": {
+        "state": "rejected", "reason": "the diagnosis is wrong",
+        "resolution": "retained its question, whether the note holds three claims; answered it by the split",
+        "refs": ["kb/notes/alpha-one.md", "kb/notes/alpha-two.md"]}}))
+    assert edits.answered(repo[0], path, path.read_text())[1] == []
+    assert main(["approve", stopped["run-dir"], listed["file"], "--key", listed["key"]], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    assert main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
+    entries = json.loads(capsys.readouterr().out)
+    assert [(e["decision"], e["reason"], e["resolution"], e["refs"]) for e in entries] == [
+        ("rejected", "the diagnosis is wrong",
+         "retained its question, whether the note holds three claims; answered it by the split",
+         ["kb/notes/alpha-one.md", "kb/notes/alpha-two.md"]),
+        ("overtaken", None, None, None)], "the undecided finding is no pending work"
+
+    # The next run on the edited note receives the rejection with its resolution.
+    _, later, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert later["run-dir"] != stopped["run-dir"] and later["stop"] and not later["published"]
+    [decision] = json.loads((repo[0] / later["run-dir"] / revise_module.EARLIER_FILE).read_text())["decisions"]
+    assert (decision["state"], decision["criterion"]) == ("rejected", WARNED)
+    assert decision["resolution"].startswith("retained its question")
+    told = assessed_inputs(repo)["earlier-decisions"]
+    assert f"{decisions.RESOLUTION}: retained its question" in told
+    swept = gates_run(repo, capsys)
+    [given] = (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/inputs/operational/finding-decisions.md")
+    text = given.read_text()
+    assert decisions.RETAINED_QUESTION in text and "Operator's reason: the diagnosis is wrong" in text
+    assert f"{decisions.RESOLUTION}: retained its question" in text and "undiscussed" not in text
+    assert not (run / edits.PUBLISHED).exists() and note_text(repo) == split
+
+
+def test_record_makes_no_second_file_for_a_result_a_triage_asked_about(repo, capsys):
+    start(repo)
+    stored(repo, "warn")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    run = repo[0] / report["run-dir"]
+    before = files(run)
+    recorded, launches = record(repo, capsys, report["run-dir"])
+    [listed] = recorded["results"]
+    assert launches == [] and not recorded["overtaken"] and listed["state"] == "exists"
+    assert listed["file"] == report["triage"]["results"][0]["answers"]
+    assert {name for name in files(run) if name not in before} == set()
+
+
+def test_record_refuses_a_run_without_review_results(repo, capsys, tmp_path):
+    start(repo)
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
+    assert main(["record", report["run-dir"]], harnesses=repo[1]) == 2
+    assert "holds no review results" in capsys.readouterr().err
+
+
+@pytest.mark.slow
+def test_record_takes_the_results_of_a_full_run(reviewed, capsys):
+    repo = reviewed
+    start(repo, "STOP")
+    _, stopped, _ = revise(repo, capsys, NOTE_PATH, "--full")
+    (repo[0] / NOTE_PATH).write_text(note_text(repo) + "\nSplit into three notes.\n")
+    report, launches = record(repo, capsys, stopped["run-dir"])
+    assert launches == [] and report["overtaken"]
+    assert [(given["criterion"], given["state"]) for given in report["results"]] == [("prose/warned", "written")]
+
+
 @pytest.mark.slow
 def test_a_plan_stop_leaves_an_answers_file_that_takes_a_resolution_and_refs(reviewed, capsys):
     repo = reviewed

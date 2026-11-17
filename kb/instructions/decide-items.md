@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: every item of the question carries the operator's own decision, with the operator's reason where one is required, so that only what the operator approved is applied and the reasons stay available for revising the procedure that proposed the items.
 
-Consumption: an agent in a session with the operator. It is reached from a run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-review run revise NOTE --triage`), or after `commonplace-review run edit` returned `proposed`. Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
+Consumption: an agent in a session with the operator. It is reached from a run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-review run revise NOTE --triage`), after `commonplace-review run edit` returned `proposed`, or after `commonplace-review record` wrote answers files over an overtaken run's findings ([below](#findings-answered-by-a-structural-change)). Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
 
 Inputs:
 
@@ -45,3 +45,14 @@ Verification: `commonplace-validate` passes on the answers file. In a revise run
 The reasons stay in the answers file and, for a revise run, in the operator record beside it, where `commonplace-review decisions` lists them. Do not copy them elsewhere.
 
 Stop and leave the items `pending` when the operator declines to decide them.
+
+## Findings answered by a structural change
+
+The operator may answer a run's findings with a split or another structural change instead of at a stop. The note's text then changes, and the old run cannot continue. Record the decisions this way:
+
+1. Run `commonplace-review record <run directory>`. It writes one pending answers file per review result of the run that has a `warn` or `fail` finding, and prints each file with its approval command. It changes nothing else.
+2. Record each finding the operator discussed: its `state` and the operator's `reason`, as in step 2 above; in `resolution`, what was done; in `refs`, the new notes or the commit. A rejected diagnosis whose question the operator kept is `state: rejected`, and the `resolution` names the kept question and the change that answers it.
+3. Leave every finding the operator did not discuss `pending`.
+4. Never record a rejected finding as `approved` because a useful edit followed from it. `approved` means the finding is right.
+5. Validate each file, then approve it on the operator's word with the printed command.
+6. Run a fresh review on each resulting note. The decisions reach only later runs on the original note path.

@@ -525,6 +525,25 @@ assessor plans no fix for it. Because a new rejection stales its result,
 the quick procedure no longer receives that result until the pair is
 reviewed again.
 
+**Recording decisions on an overtaken run.** The operator may answer a
+run's findings in a session instead of at a triage, for example by splitting
+the note. The note's text then changes, so the run cannot continue.
+`commonplace-review record RUN` writes the triage's pending answers file over
+each review result the run's assessor or triage received that has a `warn`
+or `fail` finding, and prints each file with its approval command. It
+launches nothing, makes no plan and publishes nothing; a file that exists is
+left as it is. Record each finding the operator discussed with its state and
+reason, what was done in `resolution` and the new notes or commit in `refs`;
+leave the rest `pending`
+([decide items](../instructions/decide-items.md#findings-answered-by-a-structural-change)).
+After approval, `decisions` lists the decided items, and the undecided ones
+as `overtaken`. Later runs on the same note path receive the decisions as
+they receive a triage's: a rejection reaches the next review of that
+criterion as `finding-decisions`, with its `resolution`. A rejection whose
+`resolution` states a retained question closes the rejected diagnosis, not
+the question; the reviewer may still report on that question. Notes made by
+the split receive nothing; review each of them afresh.
+
 **Quick.** `--assess`: one assessor chooses the edit operations from the
 artifact and its fresh stored `warn` and `fail` review results. No review is
 launched, so an artifact that was never reviewed is assessed from its text

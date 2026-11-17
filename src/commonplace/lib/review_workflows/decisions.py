@@ -31,8 +31,10 @@ final text, never of each edit that produced it. No statistic is computed.
 workflows: the operator's decided items on edit proposals and on review
 findings in the other revise and rewrite runs on one note, which a new run
 carries over (`types/answers.md`, "Decisions carried over"). A decision on a finding comes from a triage stop,
-`finding-answers-<key>.md`, whose question is a review result; the listing
-shows it with class `finding` and names its criterion. `review_inputs()`
+`finding-answers-<key>.md`, whose question is a review result, or from a
+file of the same name that `revise.record()` writes over a run's findings as
+a record only; the listing shows it with class `finding` and names its
+criterion. An item's `resolution` goes wherever its `reason` goes. `review_inputs()`
 renders the rejected findings per criterion as the input a later review of
 the note against that criterion receives; the input takes part in that
 result's freshness (`results.criterion_sha256()`).
@@ -139,7 +141,7 @@ OWN_TEXT = ("revise", "rewrite")
 """Run families whose run directory is `edits.run_dir()` of the note's start text."""
 
 
-def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
+def overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
     """Whether a revise or rewrite run can no longer continue: its note is gone or now holds another text.
 
     Such a run is `edits.run_dir()` of the note's text when it started, or,
@@ -170,7 +172,7 @@ def _automatic(root: Path, workflow: str, run_dir: Path) -> list[dict]:
 def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
     run = run_dir.relative_to(root).as_posix()
     note = _note(root, workflow, run_dir)
-    waiting = "overtaken" if _overtaken(root, workflow, note, run_dir) else "pending"
+    waiting = "overtaken" if overtaken(root, workflow, note, run_dir) else "pending"
     found = []
     for record, data in _records(root, run_dir):
         name, key = data["name"], data["key"]
@@ -343,7 +345,8 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
     identical finding) was decided more than once, the latest `decided-at`
     wins. Each decision holds `proposal`, `state`, `reason`, `revisit`,
     `decided-by`, `decided-at` and `answers-file`, the repository path of
-    its answers file; a decision on a finding also holds `criterion`, the
+    its answers file, and `resolution` when the item, or another answers
+    file holding this same decision, records one; a decision on a finding also holds `criterion`, the
     criterion's identity, and `answered`, the hashes of the review results
     whose answers hold this same decision, the first one and those it was
     carried over to. The list is ordered by `decided-at`.
@@ -352,6 +355,7 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
     current = current.resolve() if current is not None else None
     latest: dict[tuple, dict] = {}
     answered: dict[tuple, list[tuple[str, str, str]]] = {}
+    resolved: dict[tuple, str] = {}
     for run_dir in [path for base in bases if base.is_dir() for path in sorted(base.iterdir())]:
         if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
             continue
@@ -373,6 +377,9 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
                 decision = {"proposal": proposal, "state": item["state"], "reason": item.get("reason"),
                             "revisit": item.get("revisit"), "decided-by": item["decided-by"],
                             "decided-at": item["decided-at"], "answers-file": path.relative_to(root).as_posix()}
+                if item.get("resolution"):
+                    decision["resolution"] = item["resolution"]
+                    resolved.setdefault((same, item["state"], item["decided-at"]), item["resolution"])
                 if criterion is not None:
                     decision["criterion"] = criterion
                     answered.setdefault(same, []).append(
@@ -380,6 +387,9 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
                 if same not in latest or _when(decision) > _when(latest[same]):
                     latest[same] = decision
     for same, decision in latest.items():
+        found = resolved.get((same, decision["state"], decision["decided-at"]))
+        if found and not decision.get("resolution"):       # a carried-over copy holds no resolution
+            decision["resolution"] = found
         if same in answered:
             decision["answered"] = sorted({question for state, at, question in answered[same]
                                            if (state, at) == (decision["state"], decision["decided-at"])})
@@ -412,6 +422,8 @@ def earlier_text(found: list[dict]) -> str:
                       "Change:", "", *_quoted(proposal["change"]), ""]
         if decision["reason"]:
             lines.append(f"Operator's reason: {decision['reason']}")
+        if decision.get("resolution"):
+            lines.append(f"{RESOLUTION}: {decision['resolution']}")
         if decision["revisit"]:
             lines.append(f"Revisit when: {decision['revisit']}")
         lines += [f"Decided at: {decision['decided-at']}", f"Answers file: `{decision['answers-file']}`", ""]
@@ -426,19 +438,29 @@ REVIEW_RULE = (
     "operator's reason, or you have an argument that the operator's reason does not address. When you "
     "raise it again, state that argument or that change, and why the operator's reason no longer holds.")
 """The reviewer's rule for the finding decisions it receives. It is part of the input, so its hash covers it."""
+RETAINED_QUESTION = (
+    "A rejection whose resolution states a retained question closes the rejected diagnosis, not the question; "
+    "you may still report on that question against the current text.")
+"""The reviewer's rule for a rejection with a `resolution`. The input holds it only when a decision has a
+resolution, so the input of every other pair, and the hash of its result, stays as it was."""
+RESOLUTION = "Resolution (what was done after the decision)"
 
 
 def review_input(found: list[dict]) -> str:
     """The operator's rejections of findings on one note and criterion, as the text a reviewer receives.
 
-    It holds each finding, the operator's reason and the decision's date,
-    and not the answers file, so a decision carried over unchanged into
+    It holds each finding, the operator's reason, the item's `resolution`
+    when it has one, and the decision's date, and not the answers file, so a decision carried over unchanged into
     another answers file gives the same text.
     """
-    lines = ["# The operator's decisions on earlier findings", "", REVIEW_RULE, ""]
+    resolved = any(decision.get("resolution") for decision in found)
+    lines = ["# The operator's decisions on earlier findings", "", REVIEW_RULE, "",
+             *([RETAINED_QUESTION, ""] if resolved else [])]
     for index, decision in enumerate(found, 1):
         lines += [f"## {index}. {decision['state']}", "", *_finding_lines(decision["proposal"]),
-                  f"Operator's reason: {decision['reason']}", f"Decided at: {decision['decided-at']}", ""]
+                  f"Operator's reason: {decision['reason']}",
+                  *([f"{RESOLUTION}: {decision['resolution']}"] if decision.get("resolution") else []),
+                  f"Decided at: {decision['decided-at']}", ""]
     return "\n".join(lines)
 
 

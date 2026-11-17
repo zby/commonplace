@@ -532,6 +532,18 @@ each such file under `unapproved-edits`. Changed proposal
 inputs require fresh approval; an old key cannot approve a replacement
 proposal at the same path.
 
+`record RUN` writes a pending answers file over each review result of the
+revise run RUN that has a `warn` or `fail` finding, and launches nothing. The
+results are those the run's assessor or triage received. Each file is the one
+a triage writes: `artifact/finding-answers-<key>.md`, whose question is the
+run's copy of the result in `artifact/findings/`. The command prints each
+file with its approval command. It works whether or not the note still
+holds the run's text. It makes no plan, runs no fix and publishes nothing.
+A file that already exists, from a triage or an earlier `record`, is left as
+it is. Use it to record the operator's decisions on findings answered
+outside the run, such as by a split; approve the file with `approve`. A run
+that holds no review results is a command error.
+
 `answers create --from QUESTION [--to PATH]` writes the pending answers file
 for a question and launches nothing. A question is an edit result with
 outcome `proposed`, whose items are its proposals; a review result with
@@ -644,8 +656,8 @@ entry says who proposed and who decided (`operator`, `agent`,
 `version-guard`, `pending` for an unanswered stop, or `overtaken` for a
 stop of a revise or rewrite run whose note is gone or now holds another
 text, so the run can never continue), the action class
-(the pass name of a per-item stop, `finding` for a triage stop, whose item
-names the criterion, `publication`, `packet` or `fix-report`),
+(the pass name of a per-item stop, `finding` for a triage stop or a `record`
+file, whose item names the criterion, `publication`, `packet` or `fix-report`),
 and whether the decision covered one `item` or a `bundle`. An approved
 answers file gives one entry per item, with its state (`approved`,
 `rejected`, `deferred`, `pending` or `overtaken`) and the operator's reason; a

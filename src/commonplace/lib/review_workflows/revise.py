@@ -126,6 +126,12 @@ never approves: only the recorded approved text becomes the operator's answer:
    candidate under the same conditions as the candidate. The revision holds
    only while the workflow's candidate is the one it revised; a changed
    candidate withdraws it.
+7. **Record.** When the operator answered a run's findings in a session,
+   for example by splitting the note, `record()` writes the triage's
+   pending answers file over each review result the run's assessor or
+   triage received, as a record only. It launches nothing and plans,
+   fixes and publishes nothing, so it also serves a run that can no longer
+   continue. The approved files are decisions on findings like a triage's.
 
 Because the plan and the operator's answers are inputs, an unedited repeat
 replays every answered call. A replacement supplied with `--plan` re-asks
@@ -728,6 +734,70 @@ def triage_plan(entries: list[dict], purpose: str | None, must_keep: list[str]) 
     """The plan a triage makes: one fix entry per review result with an approved finding, in depth order."""
     return yaml.safe_dump({"purpose": purpose or TRIAGE_PURPOSE, MUST_KEEP: list(must_keep), "stop": None,
                            "passes": entries}, sort_keys=False, allow_unicode=True)
+
+
+RECORD = "commonplace-review record {run}"
+RECORD_HOW = ("A record only: this run does not continue from this file. Record what the operator decided about "
+              "the findings of the {criterion} review result, following instructions/decide-items.md: `approved`, "
+              "`rejected` with the operator's `reason`, or `deferred` with a `reason` and a `revisit` condition, "
+              "with `decided-by: operator` and `decided-at`; add `resolution` (what was done, when it went beyond "
+              "the proposal) and `refs` (new notes, commits) where the operator says so. Leave every finding the "
+              "operator did not decide `pending`. Change no `id` or `proposal`. Then approve the file.")
+NO_RESULTS = ("{run} holds no review results: it is not a revise run that made an assessment ({assessed}) or a "
+              "triage ({triaged})")
+
+
+def record(root: Path, run_dir: Path, profile: Profile, harnesses=HARNESSES) -> dict:
+    """Write a pending answers file over each review result the revise run at `run_dir` holds; launch nothing.
+
+    The results are those the run's assessor or triage received, captured in
+    `ASSESSMENT_INPUTS` or `TRIAGE_INPUTS`; only a result that is a question
+    (`_asks()`) gets a file. Each file is built as a triage builds it: a copy
+    of the result in `artifact/findings/` as its question, and
+    `finding-answers-<key>.md` through `operator.answer()`, with the run's
+    captured earlier decisions carried over. A file that already has an
+    operator record, written by a triage or an earlier record, is left as it
+    is. Nothing is planned, fixed or published, and the note is not read, so
+    this works for an overtaken run. `decisions.earlier()` reads the approved
+    files as it reads a triage's. ValueError when the run holds no results.
+    """
+    root, run_dir = root.resolve(), run_dir.resolve()
+    base = (root / gates.RUNS / "revise").resolve()
+    if not run_dir.is_relative_to(base) or run_dir.parent == base:
+        raise ValueError(f"not a revise run: {run_dir}")
+    run_rel, artifact = _rel(root, run_dir), run_dir.parent.relative_to(base).as_posix() + ".md"
+    captured = [run_dir / name for name in (ASSESSMENT_INPUTS, TRIAGE_INPUTS) if (run_dir / name).is_file()]
+    if not captured:
+        raise ValueError(NO_RESULTS.format(run=run_rel, assessed=ASSESSMENT_INPUTS, triaged=TRIAGE_INPUTS))
+    found: dict[str, Finding] = {}
+    for path in captured:
+        for given in json.loads(path.read_text(encoding="utf-8"))["findings"]:
+            finding = Finding(**given)
+            if _asks(finding):
+                found.setdefault(answers.sha(finding.text.encode("utf-8")), finding)
+    told = run_dir / EARLIER_FILE
+    earlier = json.loads(told.read_text(encoding="utf-8"))["decisions"] if told.is_file() else []
+    listed = []
+    with Run(run_dir, root, profile, harnesses=harnesses) as run:
+        for key, finding in sorted(found.items(), key=lambda pair: (
+                pair[1].depth is None, pair[1].depth or 0, pair[1].criterion_id, pair[0])):
+            file = f"{decisions.FINDING}-answers-{key[:12]}.md"
+            written = operator.recorded(run, file) is None
+            if written:
+                name = f"{TRIAGE_DIR}/{finding.criterion_id}.md"
+                copy = run.artifact / name
+                if copy.is_file() and copy.read_text(encoding="utf-8") != finding.text:
+                    name = f"{TRIAGE_DIR}/{finding.criterion_id}-{key[:12]}.md"   # keep another file's question
+                question = _rel(root, run.accept(name, finding.text))
+                operator.answer(run, file, answers.pending(question, finding.text.encode("utf-8"), earlier),
+                                key=key)
+            approved = operator.recorded(run, file).get("answer") is not None
+            listed.append({"result": finding.path, "criterion": finding.criterion_id,
+                           "state": "written" if written else "approved" if approved else "exists",
+                           **operator.waiting(run, root, file, RECORD_HOW.format(criterion=finding.criterion_id),
+                                              RECORD.format(run=run_rel))})
+    return {"run-dir": run_rel, "artifact": artifact,
+            "overtaken": decisions.overtaken(root, "revise", artifact, run_dir), "results": listed}
 
 
 KB_ROLE = "kb-role"

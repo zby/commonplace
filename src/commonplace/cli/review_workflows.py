@@ -15,6 +15,7 @@
     commonplace-review run rewrite NOTE [--commission FILE [--restart]] [--profile NAME] [--timeout SECONDS]
     commonplace-review run rewrite NOTE --revised FILE    # at the publication stop; launches nothing
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
+    commonplace-review record RUN                # answers files over a revise run's findings, as a record; launches nothing
     commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
@@ -150,6 +151,18 @@ file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
 or a guard change.
+
+`record RUN` names a revise run directory whose findings the operator
+answered outside the run, such as by splitting the note. For each review
+result the run's assessor or triage received that has a `warn` or `fail`
+finding, it writes the pending answers file a triage writes,
+`artifact/finding-answers-<key>.md`, over the run's copy of the result, and
+prints each file with its approval command. It works whether or not the
+note still holds the run's text. It launches nothing, makes no plan and
+publishes nothing; a file that exists, from a triage or an earlier record,
+is left as it is. Approved with `approve`, the file's decided items appear in
+`decisions`, and later runs on the same note receive them as triage
+decisions.
 
 `run rewrite NOTE --commission FILE` rewrites one note from its authorized
 sources when its claims or synthesis are unsettled (see
@@ -316,6 +329,10 @@ def _parser() -> argparse.ArgumentParser:
     rw.add_argument("--revised", type=Path, metavar="FILE",
                     help="at the publication stop, replace the candidate with this revised candidate; launches "
                     "nothing, takes no option but --timeout, which has no effect")
+    recorded = commands.add_parser(
+        "record", help="write a pending answers file over each warn or fail review result a revise run holds, to "
+        "record the operator's decisions; launches nothing, plans nothing, publishes nothing")
+    recorded.add_argument("run", type=Path, help="the revise run directory")
     approve = commands.add_parser("approve", help="explicitly approve an operator proposal; launches nothing")
     approve.add_argument("run", type=Path)
     approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
@@ -754,6 +771,12 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
                 raise ValueError("proposal is outside the run's artifact directory")
             print(json.dumps(operator.approve(run_dir, path.relative_to(artifact).as_posix(), arguments.key),
                              indent=2))
+        elif arguments.command == "record":
+            options = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
+            if not options.get("profiles"):
+                raise ValueError(f"not a revise run: {arguments.run}")
+            print(json.dumps(revise.record(root, run_dir, Profile(**options["profiles"]["judgment"]),
+                                           harnesses=harnesses), indent=2))
         elif arguments.command == "retry":
             print(json.dumps(dismiss(run_dir, arguments.job, arguments.key), indent=2))
         else:
