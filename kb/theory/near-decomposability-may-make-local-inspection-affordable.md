@@ -1,5 +1,5 @@
 ---
-description: "Conjectures near-decomposability as a mechanism for affordable inspection; explores description length as a cost proxy and separates locating an intervention point from establishing that a repair preserves required invariants."
+description: "Conjectures near-decomposability as sufficient for affordable local inspection and necessary for any budget-bounded inspector; explores description length as a cost proxy and separates locating an intervention from safe repair."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, artifact-analysis]
@@ -7,7 +7,7 @@ tags: [learning-theory, artifact-analysis]
 
 # Near-decomposability may make local inspection affordable
 
-An artifact may be affordable to inspect when the question can be answered by reading one part and summaries of its interactions with the rest. A division whose parts interact weakly enough for this is a near-decomposition. This note conjectures that knowing such a division can make local inspection affordable. It leaves open whether other inspection methods can be affordable without one.
+An artifact may be affordable to inspect when the question can be answered by reading one part and summaries of its interactions with the rest. A division whose parts interact weakly enough for this is a near-decomposition. This note conjectures that knowing such a division can make local inspection affordable. It also conjectures the converse: every inspector whose budget is smaller than the artifact needs such a division, at a granularity set by its budget and question.
 
 The proposal applies to three sources of [opacity](./opacity-depends-on-the-inspection-question-and-budget.md), where answering the question exceeds the inspection budget: scale, the reference's form, and deliberate obfuscation. It transfers Herbert Simon's account of dynamic systems to dependencies within artifacts; that transfer is this note's conjecture, not Simon's claim. Description length is explored as a proxy for the amount to explain. Finding and checking the explanation also cost work.
 
@@ -43,6 +43,20 @@ The conjecture reads the three sources of opacity as different obstacles to loca
 
 Known but expensive, unknown, and disrupted would then be three states of one obstacle. Opacity's definition does not depend on this unification succeeding.
 
+## A necessity conjecture
+
+The sections above conjecture sufficiency. This section conjectures necessity, as a universal claim. An inspector whose budget is smaller than the artifact must answer from one part plus summaries of the rest. Its answer is correct within the question's tolerance only if the omitted interactions can be summarized within that tolerance. That is a near-decomposition relative to the question. The need follows from the budget bound, not from the kind of inspector: a person, a model call and a program analyzer face it alike.
+
+An inspector with an unlimited budget is the limiting case, not a counterexample. Laplace's demon, which tracks every particle, needs no summaries. A demon able to track every molecule in a glass of water, but no more, still needs aggregates such as temperature for the ocean around the glass.
+
+The conjecture's main use is diagnostic. An argument that some inspector needs no aggregate concepts assumes that its budget is at least as large as the system it inspects. A thought experiment can leave that premise unstated. Stating it shows that the conclusion holds only for the limiting case, and that a larger budget moves the level at which aggregates become necessary without removing the need.
+
+**Granularity and partition.** For one artifact and one question, inspectors with different budgets differ in granularity. A larger budget allows a larger block, a longer horizon or a tighter tolerance. A smaller budget forces smaller blocks and coarser summaries, which succeed only where the question tolerates them. A different question can make different interactions matter. It then changes the partition itself, not only its fineness, which is why a decomposition useful for one question need not support another. The conjecture is that some near-decomposition is always needed, not that one partition serves every inspector.
+
+**Certificates and abstraction.** A certificate check appears to answer a question without decomposing the artifact. This note's argument is that the check moves the need to a different artifact. Checking a certificate is local reading of the certificate: each step is checked against a few others. The certificate is built to be nearly decomposable for the checking question. An abstraction moves the need the same way: it is read in parts, and it serves only where it summarizes the omitted interactions within the question's tolerance. This argument gives a conjectured answer to the third open question below; it does not close it. An affordable inspection method that reads no artifact locally would refute it.
+
+**Need does not imply availability.** The conjecture states what affordable inspection requires, not that the requirement can be met. Where no near-decomposition exists at the granularity an inspector can afford, the artifact is opaque to that inspector for that question. An artifact without one therefore does not refute the conjecture; an affordable correct answer obtained without one would. How often the requirement is met is the selection-effect question under Scope.
+
 ## Finding an intervention point does not establish safe repair
 
 Mechanistic interpretability is the search for a decomposition where none is exposed. [Templeton and co-authors](../sources/scaling-monosemanticity-claude-3-sonnet.ingest.md) train sparse autoencoders on a production model's activations and test the found units by intervention. Clamping the Golden Gate Bridge feature to ten times its maximum activation changes behavior as the feature's interpretation predicts; verbatim, "In this example, the model starts to self-identify as the Golden Gate Bridge!"
@@ -69,13 +83,15 @@ For a direct coupled case, consider the explicitly stated equations `x = y + 1` 
 
 - Simon's result is a theorem about linear dynamic systems described by a nearly decomposable interaction matrix. Reading interaction as dependency between an artifact's units is this note's transfer. It needs a worked case on a real codebase or KB dependency graph before it can enter a definition as more than a mechanism.
 - Decomposability is a structure. Opacity is a cost judgment on top of it, relative to the question, to the decompositions known, and to the budget. Composing a model from understood numerical operations does not by itself supply an affordable instruction-level description. A coarse semantic decomposition may supply one without locating separate parameter blocks.
-- Simon flags a selection effect: a world may look hierarchic because its non-hierarchic parts elude understanding. The mechanism explains the affordable cases without showing that they predominate.
+- Simon flags a selection effect: a world may look hierarchic because its non-hierarchic parts elude understanding. The mechanism explains the affordable cases without showing that they predominate. Under the necessity conjecture, the same effect is expected: artifacts without an affordable near-decomposition are the ones that stay opaque, so the affordable cases studied will all be nearly decomposable.
+- The necessity argument is close to definitional once a summary correct within tolerance is read as a near-decomposition. That limits what it can predict, not its diagnostic use of exposing an unstated unbounded-budget premise. Its empirical content lies in whether certificates, abstractions and execution-based evidence fit that reading. No such case has been worked through.
 
 ## Open Questions
 
 - Compression. Simon ties near-decomposability to the redundancy that makes a compact description of a system possible, and the [epiplexity](../sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md) ingest's time-bounded description length is the nearest formal neighbor. Whether inspection cost and compressibility are one quantity or two is a separate task.
 - Whether obfuscation is exactly the destruction of near-decomposability, or only one route to it.
-- Whether affordable abstraction or certificate checking can answer a question without the near-decomposition proposed here. Such a case would limit the mechanism to local reading rather than opacity in general.
+- Whether affordable abstraction or certificate checking can answer a question without any near-decomposition. The necessity conjecture answers no, by moving the need to the certificate or abstraction. A worked certificate scheme would test that answer.
+- Whether execution-based evidence is local reading. Running an artifact and reading its outputs inspects a trace, not the artifact. Whether sampled behavior answers a question or only bounds it decides whether execution can refute the necessity conjecture.
 - The worked case named under Scope.
 
 ---
