@@ -5,7 +5,7 @@ traits: [title-as-claim]
 tags: [context-engineering, kb-maintenance, claims-and-grounding]
 ---
 
-# A derived copy of recomputable truth must be checked or absent
+# Checking retained results trades cost against reliance risk
 
 A retained derived result saves work: a consumer that reads it skips the discovery and derivation it would otherwise repeat on every use, so one production is amortized over many uses. This is the saving [frontloading spares execution context](./frontloading-spares-execution-context.md) argues for results computed before an LLM call, extended here to persisted artifacts. Checking spends part of that saving. A check that fully recomputes the result on every use largely defeats it; when verification is cheaper than derivation, checking on every use can still save work.
 
