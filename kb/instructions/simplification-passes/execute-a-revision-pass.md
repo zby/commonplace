@@ -91,5 +91,4 @@ Before returning a candidate, check that each change belongs to the assigned
 pass and scope and that each removed element is accounted for. The controller
 checks artifact validation and preserved fields; these mechanical checks do
 not establish that the edits preserve meaning. Do not run software tests for
-a note-editing task. The candidate remains private until the controller obtains
-explicit final-publication approval.
+a note-editing task. The controller publishes the candidate; you do not.
