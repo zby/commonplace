@@ -56,12 +56,15 @@ can read the finding.
 kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/. Repeating the command on the same note text
 continues that run: answered calls replay. An edited note has another hash,
-so the same command opens a new run. A repeat reuses the options the run
+so the same command opens a new run. A run that wrote the note itself is
+found by the text it last wrote while it waits or stopped, and never again by
+its start text: a note reverted to that text opens a new run in
+<hash prefix>-2/. A repeat reuses the options the run
 recorded (`--purpose`, `--must-keep` and the effort profiles); an option given
 on a repeat replaces the recorded value.
-The workflow writes the note at most once, at its end, and only from the
-text the run started from; a note changed during the run is a conflict, and
-the proposed text stays in the run directory.
+The workflow writes the note only over the text the run last knew, its start
+text or the text it last wrote; a note changed by anyone else is a conflict,
+and the proposed text stays in the run directory.
 
 `run edit` runs one edit operation (types/edit-operation.md) on one note and
 writes nothing to the checkout (see `commonplace.lib.review_workflows.edit_operations`).
@@ -113,16 +116,27 @@ have no effect until approved again, and the report lists such a file under
 `unapproved-edits`. A plan with `stop` set ends the run; override it by explicitly
 supplying a revised plan with `--plan`. Changed selection inputs require fresh
 approval, and an old approval key is refused. Only the operator, or an agent
-on the operator's stated word for that proposal, may approve. The
-artifact is written once, only after every pass ended `applied`, `no-change` or
-`skipped` and final publication is approved. Otherwise `not-applied` explains
-why the candidate remains private. The workflow retains `final.md`,
-`final.diff` and `publication-answers.md` under the run's `artifact/`. Inspect
+on the operator's stated word for that proposal, may approve.
+The run publishes without a stop: at a per-item stop it first writes what the
+earlier passes applied, and at the end of the plan it writes the final text,
+each time only when the text differs from the note and no pass ended with a
+problem. Approved items are published when applied, with no approval of the
+whole text. Each publication is kept as `artifact/publications/<n>.md` with
+its diff `<n>.diff` from the text before it, and recorded in the run's
+`published.json` with its hash, the plan entries it covers and the time; the
+report lists them under `publications` and says `published: true` when this
+invocation wrote the note. Nothing is committed: `git diff` shows the change,
+and git reverses it. Otherwise `not-published` explains why the candidate
+remains private. A candidate that adds a validation warning the note does not
+have is not published automatically: at a per-item stop it stays in the run,
+and at the end it waits at the publication stop. The workflow then retains
+`final.md`, `final.diff` and `publication-answers.md` under the run's
+`artifact/`, and the waiting text names the warning as the reason. Inspect
 the candidate and diff, record the operator's decision on the answers file's
 one item, which names the candidate's hash, approve the file, then repeat.
-The proposal key binds the original, candidate and decision context; answers
-over another text cannot authorize it. Candidate files are outputs, not
-editable workflow inputs. To accept the candidate with a revision, supply
+The proposal key binds the text the run last knew, candidate and decision
+context; answers over another text cannot authorize it. Candidate files are
+outputs, not editable workflow inputs. To accept the candidate with a revision, supply
 the full revised text with `--revised FILE`, a file outside the run's
 `artifact/`. It is refused unless the run waits at its publication stop for
 the note's current text and the text passes the candidate checks (frontmatter,
@@ -131,7 +145,7 @@ candidate as `artifact/revised.md`, with `artifact/revised-from-final.diff`
 and `artifact/revised.diff`, keeps `final.md`, and replaces the pending
 publication answers with one over `revised.md`; any approval is withdrawn.
 Repeats keep the revised candidate; another `--revised` replaces it. A
-no-change result needs no publication approval. Each pass's `effort` picks its profile from the profile
+no-change result writes nothing. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan is a command error (exit 2); the run exits 0
 when it completes or waits with a clean guard, and 1 for a stop, a conflict
@@ -157,8 +171,8 @@ call of the role report alone on the profile file's `default` profile. Its
 with the operator's earlier decisions on the note as `earlier-decisions`
 when there are any. The run keeps its files under
 kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
-hex of the note's SHA-256>/ and stops at the same publication stop as `run
-revise`, including `--revised FILE`. A repeat continues from the captured
+hex of the note's SHA-256>/ and always stops at the publication stop that
+`run revise` uses for a candidate with a new warning, including `--revised FILE`. A repeat continues from the captured
 commission; `--commission` may be omitted then, and a different commission
 is refused unless `--restart` captures it again and asks every call again.
 `--profile` names the worker profile (default: the profile file's `effort`
@@ -270,7 +284,7 @@ def _parser() -> argparse.ArgumentParser:
     rev.add_argument("--must-keep", action="append", default=[], metavar="CLAIM",
                      help="a claim the passes may not narrow, beyond the write brief's Must keep; repeat for each")
     mode = rev.add_mutually_exclusive_group()
-    mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment; final publication needs approval")
+    mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment")
     mode.add_argument("--pass", dest="pass_name", metavar="NAME",
                       help="execute a one-entry plan for this edit operation, without assessment")
     mode.add_argument("--finding", metavar="RESULT",

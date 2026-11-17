@@ -376,8 +376,8 @@ One process at a time may hold a run; a second exits 2.
 A run records `git status` (with untracked files), the content digest of
 every listed path and `HEAD`, before and after, ignoring
 `kb/reports/state/review/`. The report lists every path that differs. A
-revise run leaves out its note only when the note holds the final text the
-run applied.
+revise run leaves out its note only when the note holds the text the run
+wrote in that invocation.
 
 What it can claim: these paths changed while the run was open. What it
 cannot claim: that a worker changed them. Other sessions editing or
@@ -476,8 +476,9 @@ note or another markdown artifact. It executes a plan: a list of
 [edit operations](../types/edit-operation.md) from the
 [simplification passes](../instructions/simplification-passes/README.md) in
 increasing depth, each through the same route as `run edit`. It stops for
-the operator's answers on a per-item operation and for approval of the exact
-final text, and it writes the artifact once. Four procedures differ only in
+the operator's answers on a per-item operation. It publishes its candidate to
+the artifact without a stop, at a per-item stop and at the end of the plan
+(see [publication](#publication)). Four procedures differ only in
 how the plan is made
 ([ways to make a plan](../instructions/simplification-passes/README.md#ways-to-make-a-plan),
 [ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
@@ -574,12 +575,12 @@ without routine approval. `--plan FILE` also supplies a validated override
 of a stopped plan. Editing the retained plan alone is not an override. Each
 listed operation runs in order on the preceding text; its `effort` selects
 the profile. Every operation must end `applied`, `no-change` or `skipped`
-before changed final text is offered for publication approval. Control-flow
+before the final text is published. Control-flow
 checks do not establish the quality of the selected edits.
 
 No procedure checks that an edit fixed its finding, and none records a
 judgment over the whole note other than a plan's `stop` and its answers. A finding fixed by
-the focused procedure leaves an edit result and a publication decision; a
+the focused procedure leaves an edit result and a recorded publication; a
 finding the operator rejects as spurious leaves a record only through a
 triage, whose answers file holds the rejection and its reason.
 
@@ -616,9 +617,14 @@ on each carried item.
 **Revise runs.** The run directory is derived from the inputs:
 `kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the same command on
-the same note text continues that run, and answered calls replay. An edited
-note, including one the workflow itself wrote, has another hash, so the same
-command opens a new run. Revision then requires a new procedure choice
+the same note text continues that run, and answered calls replay. A run that
+published and then waits or stopped is found by the text it last published,
+so the same command continues it after a publication before a per-item stop.
+After the run ends, its published text has another hash, so the same command
+opens a new run. A run that published is never found by its start text
+again: a note reverted to that text opens a new run in `<hash prefix>-2/`. A
+note edited by anyone else also opens a new run, and the old run's pending
+stop is `overtaken`. Revision in a new run requires a new procedure choice
 rather than silently assessing again. Older revision runs without a recorded
 mode require an explicit choice too. A repeat reuses the options the run
 recorded; an option given on the repeat replaces the recorded value. A stop for the operator proposes a file in the
@@ -630,19 +636,49 @@ Changed proposal inputs require fresh approval. A plan with `stop` set ends
 the run; replace it explicitly with `--plan`, not an approval command. An
 agent may approve only on the operator's stated word for that proposal.
 
-For changed final text, inspect `artifact/final.md` and
-`artifact/final.diff`, record the operator's decision on the one item of
-`artifact/publication-answers.md`, which names the candidate's hash, approve
-that file with `commonplace-review approve RUN FILE --key KEY` and repeat
-([approve a text](../instructions/approve-a-text.md)). Publication requires
-answers that pass the validator and approve that exact candidate. The
-proposal key binds the original, the candidate and the decision context, so
-a change in any of them withdraws the approval. To revise, use `--plan` for
-revision, change workflow inputs, or start a new run; do not edit the
-candidate. Publication also requires the original artifact and captured
-brief to remain unchanged. Validation warnings that the text to publish has
-and the original did not have do not block approval. The report lists them
-under `new-warnings`, and the `waiting-for` text names them.
+#### Publication
+
+A revise run writes its candidate to the note without a stop. Changes
+applied without a decision, and items the operator already decided, need no
+approval of the whole text. The run publishes at two points:
+
+- at a per-item stop, what the earlier entries applied, so the operator
+  decides the items on the note's text;
+- at the end of the plan, the final text, when no entry ended with a problem.
+
+It publishes only a text that differs from the note. It writes the note only
+while the note holds the text the run last knew, its start text or the text
+it last published, and only while the captured brief is unchanged.
+Otherwise the run ends with a conflict and nothing is written. A plan `stop`,
+the depth 1 stop of the full procedure and the triage stop publish nothing.
+
+Each publication is recorded in the run's `published.json`: the published
+text `artifact/publications/<n>.md`, its hash, its diff
+`artifact/publications/<n>.diff` from the text before it, the plan entries it
+covers and the time. The report lists them under `publications` and says
+`published: true` when this invocation wrote the note; a run that ended
+without a stop has `complete: true` and no `waiting-for`.
+`commonplace-review decisions` lists each one with class `publication`,
+decided by `automatic`, never by the operator. Nothing is committed: the
+change is in the working tree, `git diff` shows it, and git reverses it. The
+session agent tells the operator what was published, with the note's path
+and the diff's path ([approve a text](../instructions/approve-a-text.md)).
+
+A candidate that adds a validation warning the note's text does not have is
+not published automatically. At a per-item stop it stays in the run, and
+`not-published` says so. At the end of the plan it waits at the publication
+stop: inspect `artifact/final.md` and `artifact/final.diff`, record the
+operator's decision on the one item of `artifact/publication-answers.md`,
+which names the candidate's hash, approve that file with
+`commonplace-review approve RUN FILE --key KEY` and repeat
+([approve a text](../instructions/approve-a-text.md)). The waiting text says
+that the new warning is why the run stopped, and the report lists the
+warnings under `new-warnings`; a warning does not block approval.
+Publication requires answers that pass the validator and approve that exact
+candidate. The proposal key binds the text the run last knew, the candidate
+and the decision context, so a change in any of them withdraws the approval.
+To revise, use `--plan` for revision, change workflow inputs, or start a new
+run; do not edit the candidate.
 
 To accept the candidate with a revision, a session agent applies the
 operator's stated changes to a copy of the candidate outside the run's
@@ -817,8 +853,8 @@ claim account carries the judgment from the first to the second.
 finding asks for evidence the sources lack, the session agent grounds or
 adds a source and starts again with a changed commission. A candidate the
 reviewer accepts that equals the start text ends with `unchanged` and no
-publication. Otherwise the run stops at the publication stop of `run
-revise`: `artifact/final.md`, `artifact/final.diff` and
+publication. Otherwise the run always stops at the publication stop that `run
+revise` uses for a candidate with a new warning: `artifact/final.md`, `artifact/final.diff` and
 `artifact/publication-answers.md`, approval with
 [approve a text](../instructions/approve-a-text.md), `--revised FILE`,
 `new-warnings`, and one write after approval, only over the start text. The
@@ -878,9 +914,13 @@ stay visible, it also reads the records of the two retired procedures
 operator records in full-pass run directories, full-pass packets under
 `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`.
+It also lists each automatic publication of a revise run from its
+`published.json`, with class `publication`, decision `published` and
+decided by `automatic`: no one decided it.
 A pending entry of a revise or rewrite run is listed as `overtaken` when the
-note no longer holds the text the run started from. The note is gone, or the hash of
-its current text names another run directory. Such a run can never continue.
+note no longer holds the text the run last knew, its start text or the text
+it last published. The note is gone, or its current text names another run
+directory. Such a run can never continue.
 This is computed when listing; nothing is written and no item changes state.
 It computes no statistics; `--note`, `--class` and `--json` narrow and
 format the listing.

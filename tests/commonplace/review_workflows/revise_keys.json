@@ -2,7 +2,7 @@
   "inputs": {
     "kb/instructions/fix-warnings/fix-strategy-taxonomy.md": "12c35f999bb2ce55341fb3b94d9c41240c32efb017c4869250d32b14101a8dac",
     "kb/instructions/review-profiles.yaml": "9db03a22fc4dc0cc0fc024e46d8cc06e0d9940ce57d2c6b8e754108cd37448e3",
-    "kb/instructions/simplification-passes/README.md": "dc41d134f82004cfc4ddf7f71238d0149ef201c4fc56c2492f411ae77101b05e",
+    "kb/instructions/simplification-passes/README.md": "83bb46d7c910bec6062d461d07cf120c5256b51a4424991346faf18267d3965d",
     "kb/instructions/simplification-passes/abstractions.md": "66c1e66712553330a826d33689fc281147d52ac6c08ae6f8510f4eb0cd9238a4",
     "kb/instructions/simplification-passes/audit-a-prior-pass.md": "9e2f0c4a34b5ccdb9d35506bb0a273f1be695002f4ccea01075c9821295cbcfd",
     "kb/instructions/simplification-passes/execute-a-revision-pass.md": "853250818a5768022924285bb8e61781de6d84a98253ae2f9447fec42bbd8e98",
@@ -11,7 +11,7 @@
     "kb/instructions/simplification-passes/place-external-systems.md": "c89d198ec7818c3da95c3dcb4b5743669e1fafd6346e81baca1d44cc31dc7105",
     "kb/instructions/simplification-passes/plain-wording.md": "ae9094451a0d8c479ebfd0dd4d4f7625246322a7fda1b9bc676e34d26ea25542",
     "kb/instructions/simplification-passes/readability-and-flow.md": "c251205640499cde8b58fe05008ceef9e3d0319e2b3d5647ca41736cbc34fcd3",
-    "kb/instructions/simplification-passes/revise-an-article-or-note.md": "09d3638e640e68e3d25e931d3781fb375b01aa1ac2913887a0b41680b989ea93",
+    "kb/instructions/simplification-passes/revise-an-article-or-note.md": "8aa4560d4466cb90f828da59597cc369247f904fd31af24a360f3cca2c58e670",
     "kb/instructions/simplification-passes/split-out-a-treatment.md": "658bed5e2416fbc4d3a7e3b863e4cebfb248d5a919619fd5797f24dbd269b6bf",
     "kb/notes/COLLECTION.md": "365d0b84ae63c2afc293dedd2b00bdf0dc8d6ef70c9297d90f9e5682ab0d72ee",
     "kb/types/answers.md": "481d4e758ea1aa9642b9b64c5dc1f19ef7c70ec088c9c79faab52c1452e23cc3",
@@ -24,37 +24,38 @@
     "kb/types/type-spec.md": "8d0227740dfd06ee868a3c833c9d3ad014ef3bf380d34335899fbdc379021fd6",
     "kb/types/type-spec.schema.yaml": "0ece0ba916243528708ed7f1bbbd0a3ed1a2aa818367e25552ed3016a9646ecd"
   },
-  "at-publication": {
+  "published": {
     "calls": [
       "plain-wording/apply cbf3dcfdf25fe40d33e5c8757073b6b8a2a0c1b503c69fabddc82201bf67f18b",
       "plain-wording/propose 724b10c5aeb9387b59caa5489e1d3fe5892bd53fe5d7008a1c16c376a7ba764a",
       "readability-and-flow 85b80ea4c9e714da89fa79c17721c6ef85440ed3b7db6b60d766717705fc30ff"
     ],
     "operator": {
-      "publication-answers.md": {
-        "input-key": "e13b4a053debd3438b41750dd12f63181f7e251b92d5ab7bf1f3b6bdd9871e9e",
-        "key": "c48fa91c314084c5ba3f9159374b5d99fc8b900e65d7b13112fa9ce8ce50c8a7"
-      },
       "plain-wording-answers-724b10c5aeb9.md": {
         "input-key": "724b10c5aeb9387b59caa5489e1d3fe5892bd53fe5d7008a1c16c376a7ba764a",
         "key": "196c7575de2c8e8625011937cef95abbc525ffd763753df73cffc8eba5184754"
       }
     }
   },
-  "after-revision": {
+  "at-publication": {
     "calls": [
-      "plain-wording/apply cbf3dcfdf25fe40d33e5c8757073b6b8a2a0c1b503c69fabddc82201bf67f18b",
-      "plain-wording/propose 724b10c5aeb9387b59caa5489e1d3fe5892bd53fe5d7008a1c16c376a7ba764a",
-      "readability-and-flow 85b80ea4c9e714da89fa79c17721c6ef85440ed3b7db6b60d766717705fc30ff"
+      "readability-and-flow 0118e8e3410cab1458ffcd578c7e1e2b7572e7fd1e50e2980efabed6e3210c93"
     ],
     "operator": {
       "publication-answers.md": {
-        "input-key": "219ec3686ec55fc204f9e62cb69ddc6d6515bf7df57dcba54646bba0d34eb845",
-        "key": "107d7a2efc02512538fc6009d5a3d36b835dc8eac5c5017673dd6c1a791342bb"
-      },
-      "plain-wording-answers-724b10c5aeb9.md": {
-        "input-key": "724b10c5aeb9387b59caa5489e1d3fe5892bd53fe5d7008a1c16c376a7ba764a",
-        "key": "196c7575de2c8e8625011937cef95abbc525ffd763753df73cffc8eba5184754"
+        "input-key": "c55e1544379d839d5ed4facdd55a891728016440924e8cb9c39e8cb7b1383f7d",
+        "key": "a29522bfebbe2c926122b851d5f718963aed3217a23d150f6e03335516b72525"
+      }
+    }
+  },
+  "after-revision": {
+    "calls": [
+      "readability-and-flow 0118e8e3410cab1458ffcd578c7e1e2b7572e7fd1e50e2980efabed6e3210c93"
+    ],
+    "operator": {
+      "publication-answers.md": {
+        "input-key": "73af024f3fb2f146143e769a6a3434a1a69dc5f7fef5fb08f02ae0466657aef5",
+        "key": "c7758ce59662105e2700ddfc43101990ea8db9fde2e072ec254de0f3a072bf1a"
       }
     }
   }

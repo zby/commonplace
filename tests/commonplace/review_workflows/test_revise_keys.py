@@ -1,11 +1,14 @@
-"""The revise workflow's call and operator keys, pinned against a recorded run.
+"""The revise workflow's call and operator keys, pinned against recorded runs.
 
-The rewrite workflow shares the publication stop and the revised candidate
-with revise (`edits.publish()`, `edits.supply_revised()`). A change in that
-shared code that alters what revise binds would silently withdraw every
-approval at a revise publication stop. This test runs one revise scenario
-with a deterministic fake worker and compares every Workjig call key and every
-operator proposal key with `revise_keys.json`.
+A change that alters a call key asks an answered call again; a change that
+alters an operator key withdraws an approval. The rewrite workflow shares the
+publication stop and the revised candidate with revise (`edits.publish()`,
+`edits.supply_revised()`). This test runs two revise scenarios with a
+deterministic fake worker and compares every Workjig call key and every
+operator proposal key with `revise_keys.json`: a plan that publishes without
+a publication stop (`published`), and a candidate that adds a validation
+warning and so waits at the publication stop (`at-publication`,
+`after-revision`).
 
 The keys also depend on the library files the scenario reads (passes,
 execution instruction, contracts). When one of those changes, the recorded
@@ -35,6 +38,7 @@ from tests.commonplace.review_workflows.test_revise import (
     EDIT_TYPES,
     FAKE,
     FIX,
+    HELD_WORDS,
     NOTE,
     NOTE_PATH,
     PASSES,
@@ -94,8 +98,12 @@ def _keys(root: Path, run_dir: str) -> dict:
     return {"calls": calls, "operator": operator}
 
 
-def _run(repo, capsys, *args):
-    code = main(["run", "revise", NOTE_PATH, *args, "--timeout", "30"], harnesses=repo[1])
+HELD_PATH = "kb/notes/held.md"
+"""The note of the second scenario, whose candidate adds a validation warning and so stops at publication."""
+
+
+def _run(repo, capsys, *args, path=NOTE_PATH):
+    code = main(["run", "revise", path, *args, "--timeout", "30"], harnesses=repo[1])
     captured = capsys.readouterr()
     assert code == 0, captured.err or captured.out
     return json.loads(captured.out)
@@ -107,13 +115,19 @@ def test_revise_keys_are_unchanged(stable, capsys, tmp_path):
     waiting = _run(stable, capsys, "--plan", str(plan))
     answer(stable, waiting, {"beta": rejected("a registered word")})
     approve(stable, capsys, waiting)
-    ready = _run(stable, capsys)
+    done = _run(stable, capsys)
+    assert done["published"] and done["waiting-for"] is None
+    published = _keys(root, done["run-dir"])
+    (root / HELD_PATH).write_text(NOTE.format(words=HELD_WORDS))
+    ready = _run(stable, capsys, "--plan", str(named_plan(tmp_path)), path=HELD_PATH)
+    assert ready["waiting-for"]["file"].endswith("/publication-answers.md")
     at_stop = _keys(root, ready["run-dir"])
     approve_publication(stable, capsys, ready)
     revised = tmp_path / "revised.md"
     revised.write_text((root / ready["run-dir"] / "artifact/final.md").read_text() + "The operator's sentence.\n")
-    supplied = _run(stable, capsys, "--revised", str(revised))
-    found = {"inputs": stable[3], "at-publication": at_stop, "after-revision": _keys(root, supplied["run-dir"])}
+    supplied = _run(stable, capsys, "--revised", str(revised), path=HELD_PATH)
+    found = {"inputs": stable[3], "published": published, "at-publication": at_stop,
+             "after-revision": _keys(root, supplied["run-dir"])}
     if os.environ.get("COMMONPLACE_REGENERATE_KEYS"):
         GOLDEN.write_text(json.dumps(found, indent=2) + "\n", encoding="utf-8")
     recorded = json.loads(GOLDEN.read_text(encoding="utf-8"))

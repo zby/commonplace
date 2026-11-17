@@ -10,9 +10,12 @@ kb/reports/state/:
   revised candidate `revised.md` (`revise.supply_revised()`) and not the
   workflow's candidate; one `pending` entry per stop without an answer. In a
   revise or rewrite run, a pending entry is `overtaken` instead when the note no longer
-  holds the text the run started from: the note is gone, or `edits.run_dir()`
+  holds the text the run last knew: the note is gone, or `edits.run_dir()`
   of its current text is another run directory. Such a run can never
   continue. This is computed when listing; nothing is written;
+- the automatic publications of revise runs, `edits.PUBLISHED`: one entry
+  per publication, of class `publication`, decided by `automatic`, never by
+  the operator, with the decision `published`;
 - records of the two retired procedures (ADR 135), kept so that recorded
   operator decisions stay visible: operator records in full-pass run
   directories; full-pass packets, with the disposition, which was the
@@ -56,7 +59,11 @@ FIXES = Path("kb/reports/state/fixes")
 """Where the retired fix procedure wrote its fix reports."""
 
 ITEM_WIDTH = 80
-_RUN = re.compile(r"[0-9a-f]{12}")
+_RUN = re.compile(r"[0-9a-f]{12}(?:-[0-9]+)?")
+"""A revise or rewrite run directory: the hash prefix of its start text, and a number when that text had a run
+that published (`edits.run_dir()`)."""
+AUTOMATIC = "automatic"
+"""Who decided an automatic publication of a revise run: no one; the workflow's rule published it."""
 _ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
 """An answers stop: `<pass>-answers-<key>.md` of a per-item pass, `finding-answers-<key>.md` of a triage,
 `publication-answers.md` or `stop-answers.md`."""
@@ -135,17 +142,34 @@ OWN_TEXT = ("revise", "rewrite")
 def _overtaken(root: Path, workflow: str, note: str, run_dir: Path) -> bool:
     """Whether a revise or rewrite run can no longer continue: its note is gone or now holds another text.
 
-    Such a run's directory is `edits.run_dir()` of the note's text when it
-    started, so another current text names another directory.
+    Such a run is `edits.run_dir()` of the note's text when it started, or,
+    after it published, of the text it last published; another current text
+    names another directory.
     """
     if workflow not in OWN_TEXT:
         return False
     return not (root / note).is_file() or edits.run_dir(root, workflow, note) != run_dir
 
 
+def _note(root: Path, workflow: str, run_dir: Path) -> str:
+    return run_dir.parent.relative_to(root / gates.RUNS / workflow).as_posix() + ".md"
+
+
+def _automatic(root: Path, workflow: str, run_dir: Path) -> list[dict]:
+    """One entry per automatic publication of a revise run (`edits.PUBLISHED`); no one decided it."""
+    record = edits.published(run_dir)
+    if record is None:
+        return []
+    path = (run_dir / edits.PUBLISHED).relative_to(root).as_posix()
+    return [_entry(_note(root, workflow, run_dir), workflow, run_dir.relative_to(root).as_posix(), path,
+                   "publication", "workflow", AUTOMATIC, "published", "bundle",
+                   item=_head({"text": given["text"]}), key=given["sha256"], at=given["at"])
+            for given in record["publications"]]
+
+
 def _operator(root: Path, workflow: str, run_dir: Path) -> list[dict]:
     run = run_dir.relative_to(root).as_posix()
-    note = run_dir.parent.relative_to(root / gates.RUNS / workflow).as_posix() + ".md"
+    note = _note(root, workflow, run_dir)
     waiting = "overtaken" if _overtaken(root, workflow, note, run_dir) else "pending"
     found = []
     for record, data in _records(root, run_dir):
@@ -238,6 +262,9 @@ def entries(root: Path) -> list[dict]:
             for records in sorted(base.rglob("operator")):
                 if records.is_dir() and _RUN.fullmatch(records.parent.name):
                     found.extend(_operator(root, workflow, records.parent))
+            for record in sorted(base.rglob(edits.PUBLISHED)):
+                if _RUN.fullmatch(record.parent.name):
+                    found.extend(_automatic(root, workflow, record.parent))
     packets = root / PACKETS
     if packets.is_dir():
         for path in sorted(packets.rglob("*.md")):

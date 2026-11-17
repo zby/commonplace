@@ -219,9 +219,9 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    H1 kept; no new validation failure; link targets and quoted spans kept),
    and the next pass works on that text. Each run's result and candidate are
    retained under `artifact/edits/`. Every pass must end
-   `applied`, `no-change` or `skipped` before final publication is offered.
-   After a `problem` pass, or while the run waits, the original artifact is
-   untouched, and `not-applied` names the run file holding the proposed text.
+   `applied`, `no-change` or `skipped` before the final text is published.
+   After a `problem` pass the run publishes nothing more, and
+   `not-published` names the run file holding the proposed text.
    The workflow does not commit.
 3. A pass whose `decision` is `per-item` (plain-wording, abstractions) first
    returns proposals, and stops with the pending answers file
@@ -254,26 +254,36 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
 4. Narrow-overclaims runs only when the plan's `must-keep` list is not empty.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
-5. For a changed final artifact, follow [approve a text](../approve-a-text.md):
-   inspect `artifact/final.md` and `artifact/final.diff`, record the
-   operator's decision on the one item of `artifact/publication-answers.md`,
-   which names the candidate's hash, then run the report's
-   `commonplace-review approve RUN FILE --key KEY` command. Repeat to
-   publish. The command writes the original once, only when the approved
-   answers approve that exact candidate and the original and captured brief
-   are unchanged. Repeating never approves. Do not edit the candidate to
-   revise the text: supply `--plan`, change workflow inputs, or start a new
-   run.
+5. The command publishes a changed text to the artifact without a stop:
+   before it waits at a per-item stop, what the earlier passes applied, and
+   at the end of the plan, the final text. Approved items are published when
+   applied, with no second approval. It writes only while the artifact holds
+   the text the run last knew and the captured brief is unchanged. Each
+   publication is kept under `artifact/publications/` with its diff and
+   listed in the report's `publications`. Nothing is committed. After a run
+   publishes, follow [approve a text](../approve-a-text.md): tell the
+   operator what was published, with the path of the note and of the diff;
+   `git diff` shows the change, and the operator reverses it with git.
+   A final text that adds a validation warning the artifact does not have
+   stops at `artifact/publication-answers.md` instead. Follow
+   [approve a text](../approve-a-text.md): inspect `artifact/final.md` and
+   `artifact/final.diff`, record the operator's decision on the answers
+   file's one item, which names the candidate's hash, then run the report's
+   `commonplace-review approve RUN FILE --key KEY` command and repeat.
+   Repeating never approves. Do not edit the candidate to revise the text:
+   supply `--plan`, change workflow inputs, or start a new run.
 6. An artifact edited between invocations has another hash, so the command
-   opens a new run. Choose `--assess` again to commission planning,
-   `--triage` to decide the findings, or `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run is a conflict: nothing
+   opens a new run. A run that published before a per-item stop is the
+   exception: the command finds it by the text it published. Choose `--assess` again to commission planning,
+   `--triage` to decide the findings, or `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run, or by anyone else after the run published, is a conflict: nothing
    is written, and the report names the run file holding the proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are
-under `artifact/reports/` and `artifact/texts/`; read each diff before final
-approval. If a report does not account for an edit, revise through workflow
-inputs or `--plan`, not by editing the generated candidate. Commit only after
-approved publication. Use this procedure in a
+under `artifact/reports/` and `artifact/texts/`; read each diff after the
+run publishes. If a report does not account for an edit, revise through workflow
+inputs or `--plan`, not by editing the generated candidate, or reverse the
+publication with git. Commit only after the operator has seen the
+published diff. Use this procedure in a
 conversation instead when the passes are chosen as the conversation goes,
 when a pass needs the conversation as evidence, or when each pass should be
 integrated and committed before the next one runs.
@@ -327,8 +337,9 @@ an edit respects its meaning; the worker must identify conflicts.
 - Every passage a diff weakened is accounted for by that pass's report.
 - No claim, evidence, or qualification changed unless the operator asked.
 - Conversational execution validates and commits each integrated pass. The
-  headless workflow instead retains per-pass reports and checked texts, then
-  permits one final write only after publication approval.
+  headless workflow instead retains per-pass reports and checked texts, and
+  writes the artifact only through its recorded publications, without
+  committing.
 - Operator reverts have been recorded as thresholds.
 
 ---

@@ -10,8 +10,10 @@ Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
 The run directory is `edits.run_dir()`, derived from the artifact's path and
-the hash of its text when the command runs. Assessment and settled edits
-run automatically. Per-item decisions and final publication propose a file
+the hash of its text when the command runs; a run that published is found
+by the text it last published while it is open. Assessment, settled edits
+and publication of their result run automatically. Per-item decisions, and
+publication of a candidate that adds a validation warning, propose a file
 through `headless.operator.answer()` and stop; the report's `waiting-for` names the
 file, the explicit approval command and the command to repeat. Repeating
 never approves: only the recorded approved text becomes the operator's answer:
@@ -75,8 +77,10 @@ never approves: only the recorded approved text becomes the operator's answer:
    `answers` input. Answers the validator refuses block the pass until the
    operator approves a corrected file; answers that approve no item end the
    pass as `no-change`. Only `approved` items are applied. The reasons bind
-   publication through the selection context. Proposals made again for other
+   a held publication through the selection context. Proposals made again for other
    text have another key, so they get a new file and stop again.
+   Before the stop waits, the run publishes what the earlier entries
+   applied (step 5), so the operator decides the items on the note's text.
    When the run starts, code collects the operator's decided items from the
    other revise and rewrite runs on the same note (`decisions.earlier()`) and captures
    them once in `earlier-decisions.json`, so a repeat uses the same ones.
@@ -90,15 +94,25 @@ never approves: only the recorded approved text becomes the operator's answer:
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
    skipped pass is reported as left for the interactive path.
-5. **Publication.** When every pass is `applied`, `no-change` or `skipped`,
-   changed final text is materialized as `artifact/final.md`, with a diff
-   and a pending answers file `artifact/publication-answers.md` whose one
-   item names the candidate's hash (`edits.publication()`). Only approved
-   answers that approve that item permit `edits.apply()` to write the
-   checkout. Approval binds the start, candidate and execution context;
-   brief and live-text conflicts block the write. Validation warnings the
-   text to publish adds (`edits.new_warnings()`) do not block; the report's
-   `new-warnings` and the waiting text name them. No-change runs complete without approval. Problems and genuine
+5. **Publication.** At a per-item stop, and at the end of the plan when no
+   pass ended with a problem, a candidate other than the note's text is
+   written to the note without a stop (`_publish()`): changes applied
+   without a decision, and items the operator already decided, need no
+   second approval of the whole text. Each such publication is recorded in
+   `edits.PUBLISHED`, with its text and its diff from the text before it
+   under `artifact/publications/`, the plan entries it covers and the time;
+   the report lists them as `publications`. Nothing is committed. The note
+   is written only while it holds the text the run last knew, its start
+   text or the text it last published, and only while the brief is
+   unchanged. A candidate that adds a validation warning the note's text
+   does not have (`edits.new_warnings()`) is not published automatically.
+   At a per-item stop it stays in the run. At the end of the plan it waits
+   at the publication stop: `artifact/final.md`, a diff and a pending
+   answers file `artifact/publication-answers.md` whose one item names the
+   candidate's hash (`edits.publication()`). Only approved answers that
+   approve that item permit `edits.apply()` to write the checkout. Approval
+   binds the text the run last knew, the candidate and the execution
+   context. No-change runs complete without a write. Problems and genuine
    operator stops never write the artifact merely because the command repeats.
 6. **Revised candidate.** At the publication stop, the operator may accept
    the candidate with a revision: `supply_revised()` takes the full revised
@@ -469,8 +483,9 @@ class ReviseReport:
     proposed: str | None = None       # repository path of the final revised text in the run directory
     revised_candidate: dict | None = None   # the operator's revised candidate and its files, or why it was withdrawn
     new_warnings: list[str] = field(default_factory=list)   # validation warnings the text to publish adds
-    applied: bool = False             # the final text was written to the artifact
-    not_applied: str | None = None    # why the proposed text was not written
+    published: bool = False           # this invocation wrote the run's candidate to the artifact
+    publications: list[dict] = field(default_factory=list)   # the run's automatic publications (`edits.PUBLISHED`)
+    not_published: str | None = None  # why the proposed text was not written
     waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
     stop: str | None = None           # the plan's stop: the assessment is the result
     stop_answers: dict | None = None  # the answers file for the plan's stop, and how to approve it
@@ -968,8 +983,11 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
 
     The artifact's current text is the start text. Validated plans run
     automatically; `named_plan` bypasses assessment and explicitly replaces its
-    plan. Editing the captured plan is not an override. Strike selections and
-    final publication require explicit approval. `profiles` maps each effort
+    plan. Editing the captured plan is not an override. Per-item selections,
+    and publication of a candidate that adds a validation warning, require
+    explicit approval; other publication is automatic. A run that already
+    published continues from its start text `artifact/start.md` and needs
+    the note to hold the text it last published. `profiles` maps each effort
     to its profile; the assessment is a judgment ask. `review` is the profile
     of the full procedure's review step; without it no review is launched.
     `triage` makes the plan from the operator's answers on the artifact's
@@ -984,9 +1002,17 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                           else "triage" if triage else "assess")
     known = passes()
     before = gates.checkout_state(root)
-    start = (root / artifact).read_text(encoding="utf-8")
+    start = current = (root / artifact).read_text(encoding="utf-8")
     final = None
     try:
+        record = edits.published(run_dir)
+        if record is not None:                 # the run wrote the note: it continues from its own start text
+            report.publications = record["publications"]
+            start = (run_dir / "artifact" / START).read_text(encoding="utf-8")
+            if observations.sha(current.encode("utf-8")) != record["publications"][-1]["sha256"]:
+                raise Conflict(f"{artifact} changed since this run published "
+                               f"{record['publications'][-1]['text']}; nothing was written. This run does not "
+                               "continue; the command on the note's current text opens another run")
         brief = capture_brief(root, artifact, start)
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
             instruction = (library_root() / EXECUTION_REL).read_text(encoding="utf-8")
@@ -1053,22 +1079,52 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             else:
                 proposed = named_plan
             if proposed is not None:                  # a triage without a plan waits or has nothing to ask
-                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start, instruction,
-                                  context, contracts, kb_role, earlier, finding_answers,
+                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start, current,
+                                  instruction, context, contracts, kb_role, earlier, finding_answers,
                                   assessed=named_plan is None and not triage)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, artifact, final if report.applied else None)
+    edits.mark_open(run_dir, not report.complete)
+    report.changed = guarded_changes(root, before, artifact, final if report.published else None)
     return report
 
 
+HELD = ("The run stopped here, and did not publish automatically, because the candidate adds a validation "
+        "warning that the note does not have. ")
+"""What opens the waiting text of revise's publication stop: why the run did not publish."""
+
+
+def _publish(run: Run, root: Path, artifact: str, start: str, current: str, final: str, brief: dict[str, str],
+             report: ReviseReport) -> None:
+    """Write `final` over the note's `current` text as an automatic publication, and record it.
+
+    The publication covers the entries applied since the run's last
+    publication. The brief is checked first (`edits.unchanged_brief()`); the
+    note must still hold `current` (`edits.record_publication()`).
+    """
+    edits.unchanged_brief(root, artifact, start, brief)
+    covered = {name for given in report.publications for name in given["entries"]}
+    entries = [state.name for state in report.passes if state.state == "applied" and state.name not in covered]
+    entry = edits.record_publication(run, root, artifact, current, final, entries, observations.timestamp())
+    report.publications = [*report.publications, entry]
+    report.published = True
+
+
 def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[str, Pass],
-              profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str,
+              profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str, current: str,
               instruction: str, context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None,
               earlier: list[dict], finding_answers: dict[str, dict], *, assessed: bool) -> str | None:
-    """Check and keep the plan, then stop on it or run its passes to the publication stop; return the final text.
+    """Check and keep the plan, then stop on it or run its passes and publish; return the text to publish.
+
+    `start` is the run's start text, from which the passes run; `current` is
+    the note's text, which the run last knew. At a per-item stop and at the
+    end of the plan, a candidate other than `current` is published
+    automatically (`_publish()`). At a per-item stop, a candidate that adds
+    a validation warning stays in the run. At the end, it stops at the
+    publication stop (`edits.publish()`). A pass that ended with a problem
+    publishes nothing.
 
     `assessed` is true for a plan an assessor made: it may name any pass, so
     every pass and every effort's profile binds publication.
@@ -1097,13 +1153,26 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
                     {name: {"origin": origin, "text": value} for name, value in brief.items()},
                     instruction, context, contracts, kb_role, earlier, finding_answers)
     problems = [state.name for state in report.passes if state.state == "problem"]
-    if final != start and report.waiting_for is None and not problems:
-        return edits.publish(run, root, artifact, start, final, context, brief, REPEAT.format(artifact=artifact),
-                             report, change=CHANGE)
-    if final != start:
-        why = ("the run waits for the operator" if report.waiting_for is not None
-               else f"{', '.join(problems)} ended with a problem")
-        report.not_applied = f"The proposed text is {report.proposed}; it is not applied: {why}."
+    if final == current:
+        return final
+    if problems:
+        report.not_published = (f"The proposed text is {report.proposed}; it is not published: "
+                                f"{', '.join(problems)} ended with a problem.")
+        return final
+    warnings = edits.new_warnings(root, artifact, current, final)
+    if report.waiting_for is not None and warnings:          # a per-item stop holds no second stop
+        report.new_warnings = warnings
+        report.not_published = (f"The proposed text is {report.proposed}; it is not published at this stop: it "
+                                "adds validation warnings the note does not have. The run publishes it, or stops "
+                                "at its publication stop, at the end of its plan.")
+        return final
+    if warnings:
+        final, report.not_published = edits.publish(run, root, artifact, current, final, context, brief,
+                                                     REPEAT.format(artifact=artifact), report, change=CHANGE,
+                                                     notice=HELD)
+        report.published = report.not_published is None
+        return final
+    _publish(run, root, artifact, start, current, final, brief, report)
     return final
 
 
@@ -1129,4 +1198,4 @@ def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, r
                                         change=CHANGE)
     return ReviseReport(_rel(root, run_dir), artifact, mode=mode, proposed=supplied["proposed"],
                         revised_candidate=supplied["revised-candidate"], new_warnings=supplied["new-warnings"],
-                        not_applied=supplied["not-applied"], waiting_for=supplied["waiting-for"])
+                        not_published=supplied["not-applied"], waiting_for=supplied["waiting-for"])

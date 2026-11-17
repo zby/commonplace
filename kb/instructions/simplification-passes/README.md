@@ -8,8 +8,10 @@ what the pass exists to make true, what it must preserve, and what it returns.
 Workers follow [execute a revision pass](./execute-a-revision-pass.md).
 The planning procedure is [revise an article or note](./revise-an-article-or-note.md);
 a stop on a per-item pass's answers file is resolved in a session with
-[decide items](../decide-items.md), and the stop for publication with
-[approve a text](../approve-a-text.md).
+[decide items](../decide-items.md). The workflow publishes its result to the
+artifact without a stop; [approve a text](../approve-a-text.md) says what to
+tell the operator after a publication, and how to resolve the publication
+stop of a text that adds a validation warning.
 
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. To review the artifact before the
@@ -120,8 +122,15 @@ individual pass is reliable. A missing scope covers the whole artifact; use
 an explicit scope for a bounded trial. An empty `must-keep` list does not license
 changing claims.
 
-Inspect the returned report, `artifact/final.md` and `artifact/final.diff`.
-The original remains unchanged until the operator approves the candidate in
+The command writes the changed text to the artifact without a stop and
+records the publication: the report's `publications` names the published
+text and its diff under `artifact/publications/`. Nothing is committed;
+`git diff` shows the change, and git reverses it. Tell the operator what was
+published, with the path of the note and of the diff
+([approve a text](../approve-a-text.md)). A text that adds a validation
+warning the artifact does not have stops instead: inspect
+`artifact/final.md` and `artifact/final.diff`; the original remains
+unchanged until the operator approves the candidate in
 `artifact/publication-answers.md`, whose one item names the candidate's hash,
 and the file is approved with the report's `approve-command`. Repeat the
 reported command to publish from captured inputs. Repeating alone never
@@ -130,8 +139,9 @@ candidate with a revision, supply the operator's revised candidate, a full
 text outside `artifact/`, with `--revised FILE`
 ([approve a text](../approve-a-text.md)); the run captures it and asks for
 approval of that exact text.
-Use `--plan` for a changed commission. No-change runs need no publication
-approval. Wording-selection passes stop earlier for their own approvals.
+Use `--plan` for a changed commission. No-change runs write nothing.
+Wording-selection passes stop for their own approvals; the run publishes what
+the earlier passes applied before it waits.
 
 An unchanged repeat retains the mode and captured plan, even if the supplied
 plan file is later removed. Changed artifact text starts a new run: choose

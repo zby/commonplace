@@ -4,13 +4,15 @@ A workflow never lets a worker write the checkout. A worker's edited text is
 an output; code checks it against hard bounds (`bounds()`) and keeps the
 accepted text in memory and in the run's `artifact/` directory. The next
 step works on that text, not on the file. Only the workflow's last step
-writes the file, once, through `apply()`, and only over the start text. Any
-other text is a change made outside the run, and `Conflict` stops the write.
+writes the file, through `apply()`, and only over the text the run last
+knew: its start text, or the text it last published itself. Any other text
+is a change made outside the run, and `Conflict` stops the write.
 
 A run is a function of its inputs. `run_dir()` derives its directory from
 the workflow, the note's path and the hash of the note's current text, so
 repeating a command continues its run by replay, and an edited note opens a
-new run.
+new run. A run that wrote the note itself (`PUBLISHED`) is found by the text
+it last wrote while it is open, and never again by its start text.
 
 `guarded_changes()` is the checkout guard's finding minus the workflow's own
 write: the file is dropped from the changed paths when it holds exactly the
@@ -364,10 +366,12 @@ def publication(run: Run, root: Path, note: str, start: str, final: str, *,
 
 # --- The publication stop of a workflow ------------------------------------------------------
 #
-# The revise and rewrite workflows end the same way: the candidate `final.md`
-# waits for approval, the operator may accept it with a revision, and the note
-# is written once. The workflow's report carries the fields `proposed`,
-# `revised_candidate`, `new_warnings`, `waiting_for`, `applied` and `not_applied`.
+# Every rewrite run, and a revise run whose candidate adds a validation
+# warning, end the same way: the candidate `final.md` waits for approval, the
+# operator may accept it with a revision, and the note is written once. The
+# workflow's report carries the fields `proposed`, `revised_candidate`,
+# `new_warnings` and `waiting_for`; `publish()` returns why the text is not
+# written yet.
 
 REVISED_RECORD = "revised.json"
 """The revised candidate the run captured: its text, and the workflow candidate's hash and key it revises."""
@@ -412,13 +416,16 @@ def revision(run: Run, root: Path, note: str, start: str, final: str, context: d
 
 
 def publish(run: Run, root: Path, note: str, start: str, final: str, context: dict, brief: dict[str, str],
-            command: str, report, *, change: str, notice: str = "") -> str:
-    """Stop at publication for the changed `final`, or write the approved text; return the text to publish.
+            command: str, report, *, change: str, notice: str = "") -> tuple[str, str | None]:
+    """Stop at publication for the changed `final`, or write the approved text.
 
-    The text to publish is `final`, or the operator's revised candidate while
-    it revises `final` (`revision()`). The captured `brief` is checked before
-    the stop and again before the write (`unchanged_brief()`). `notice`
-    opens the waiting text (`publication_instruction()`).
+    Returns the text to publish and, while it is not written, why. `start`
+    is the text the note must hold for the write: the run's start text, or
+    the text the run last published itself. The text to publish is `final`,
+    or the operator's revised candidate while it revises `final`
+    (`revision()`). The captured `brief` is checked before the stop and again
+    before the write (`unchanged_brief()`). `notice` opens the waiting text
+    (`publication_instruction()`).
     """
     unchanged_brief(root, note, start, brief)
     revised = revision(run, root, note, start, final, context, report)
@@ -430,12 +437,10 @@ def publish(run: Run, root: Path, note: str, start: str, final: str, context: di
     if report.waiting_for is None:
         unchanged_brief(root, note, start, brief)
         apply(root, note, start, published, root / report.proposed)
-        report.applied = True
-    else:
-        what = "" if revised is None else ", the operator's revised candidate"
-        report.not_applied = (f"The proposed text is {report.proposed}{what}; it is not applied: "
-                              "final publication needs explicit approval.")
-    return published
+        return published, None
+    what = "" if revised is None else ", the operator's revised candidate"
+    return published, (f"The proposed text is {report.proposed}{what}; it is not applied: "
+                       "final publication needs explicit approval.")
 
 
 def at_publication(run_dir: Path) -> bool:
@@ -466,8 +471,9 @@ def supply_revised(run: Run, root: Path, note: str, revised: str, command: str, 
     """Capture the operator's revised candidate at the publication stop of `run`; launch nothing.
 
     Refuses (ValueError) unless the run of the note's current text waits at
-    its publication stop, `final.md` is the candidate the run proposed and
-    the revised text passes `revised_problems()`. A refusal changes nothing.
+    its publication stop, the note holds the text the run last knew
+    (`known_text()`), `final.md` is the candidate the run proposed and the
+    revised text passes `revised_problems()`. A refusal changes nothing.
     Otherwise the text is captured in `REVISED_RECORD` and as
     `artifact/revised.md`, with its diffs, and the pending publication
     answers are replaced by one over `revised.md`, which withdraws any
@@ -479,9 +485,10 @@ def supply_revised(run: Run, root: Path, note: str, revised: str, command: str, 
     start_path, final_path = run.artifact / START, run.artifact / CANDIDATE
     if record is None or not at_publication(run.root) or not start_path.is_file() or not final_path.is_file():
         raise ValueError(NOT_AT_PUBLICATION.format(artifact=note))
-    start, final = start_path.read_text(encoding="utf-8"), final_path.read_text(encoding="utf-8")
+    start, final = known_text(root, run.root), final_path.read_text(encoding="utf-8")
     if (root / note).read_text(encoding="utf-8") != start:
-        raise ValueError(f"{note} no longer holds the text the run started from")
+        raise ValueError(f"{note} no longer holds the text the run last knew: its start text or the text it "
+                         "last published")
     captured = run.root / REVISED_RECORD
     if captured.is_file():
         earlier = json.loads(captured.read_text(encoding="utf-8"))
@@ -513,13 +520,88 @@ def supply_revised(run: Run, root: Path, note: str, revised: str, command: str, 
                                             publication_instruction(True, warnings, change=change), command)}
 
 
-def run_dir(root: Path, workflow: str, note: str) -> Path:
-    """The run of `workflow` over the note's current text: `runs/v2/<workflow>/<note without .md>/<hash prefix>`.
+# --- Automatic publication ---------------------------------------------------------------------
+#
+# A revise run writes its candidate to the note without a stop when no
+# operator decision is needed (`revise._run_plan()`). Each such write is
+# recorded in `PUBLISHED` in the run directory. The record also says whether
+# the run is open: its last invocation ended waiting or stopped. An open run
+# is found by the text it last published (`run_dir()`).
 
-    The same command on the same text finds the same run and continues it by
-    replay; another text opens another run.
+PUBLISHED = "published.json"
+"""The run's automatic publications, in order, and whether the run is open."""
+PUBLICATIONS_DIR = "publications"
+"""Where a run keeps, under `artifact/`, each text it published automatically and its diff."""
+
+
+def published(run_dir: Path) -> dict | None:
+    """The run's record of its automatic publications; None when it published nothing automatically."""
+    path = run_dir / PUBLISHED
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+
+
+def known_text(root: Path, run_dir: Path) -> str:
+    """The text the note must hold for the run to write it: the text the run last published, or its start text."""
+    record = published(run_dir)
+    if record is None:
+        return (run_dir / "artifact" / START).read_text(encoding="utf-8")
+    return (root / record["publications"][-1]["text"]).read_text(encoding="utf-8")
+
+
+def record_publication(run: Run, root: Path, note: str, before: str, text: str, entries: list[str],
+                       at: str) -> dict:
+    """Write `text` over `before` and record it as the run's next automatic publication; return its record.
+
+    The text and its diff from `before` are kept under
+    `artifact/publications/`. The note is written only while it holds
+    `before` (`apply()`); otherwise `Conflict`, and nothing is recorded.
+    `entries` names the plan entries the publication covers; `at` is the time.
     """
-    return run_dir_for(root, workflow, note, (root / note).read_text(encoding="utf-8"))
+    record = published(run.root) or {"open": True, "publications": []}
+    number = len(record["publications"]) + 1
+    path = run.accept(f"{PUBLICATIONS_DIR}/{number}.md", text)
+    changes = run.accept(f"{PUBLICATIONS_DIR}/{number}.diff",
+                         diff(before, text, note, f"{note} (publication {number})"))
+    apply(root, note, before, text, path)
+    entry = {"number": number, "text": path.relative_to(root).as_posix(), "sha256": sha256(text),
+             "diff": changes.relative_to(root).as_posix(), "before-sha256": sha256(before), "entries": entries,
+             "at": at}
+    record["publications"].append(entry)
+    observations.atomic_json(run.root / PUBLISHED, {**record, "open": True})
+    return entry
+
+
+def mark_open(run_dir: Path, is_open: bool) -> None:
+    """Record whether a run that published automatically is open after this invocation; others have no record."""
+    record = published(run_dir)
+    if record is not None and record["open"] != is_open:
+        observations.atomic_json(run_dir / PUBLISHED, {**record, "open": is_open})
+
+
+def run_dir(root: Path, workflow: str, note: str) -> Path:
+    """The run of `workflow` over the note's current text, under `runs/v2/<workflow>/<note without .md>/`.
+
+    An open run whose last automatic publication is the note's current text
+    is that run (`PUBLISHED`). Otherwise the run is the first directory named
+    by the hash prefix of the text, then `-2`, `-3` and so on, that has
+    published nothing automatically: a run that published is never found
+    again by its start text, so a note reverted to that text opens a new
+    run. The same command on the same text finds the same run and continues
+    it by replay; another text opens another run.
+    """
+    text = (root / note).read_text(encoding="utf-8")
+    first = run_dir_for(root, workflow, note, text)
+    current = sha256(text)
+    if first.parent.is_dir():
+        for found in sorted(first.parent.iterdir()):
+            record = published(found) if found.is_dir() else None
+            if record is not None and record["open"] and record["publications"][-1]["sha256"] == current:
+                return found
+    found, number = first, 1
+    while published(found) is not None:
+        number += 1
+        found = first.with_name(f"{first.name}-{number}")
+    return found
 
 
 def run_dir_for(root: Path, workflow: str, note: str, text: str) -> Path:

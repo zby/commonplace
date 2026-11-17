@@ -91,8 +91,9 @@ receive them as `earlier-decisions`. A repeat reads both files; a restart
 obtains both again.
 
 **Publication.** After `pass` or `warn`, a candidate equal to the start text
-ends the run with no change. Otherwise the run stops at the publication stop
-of `edits.publish()`, as revise does: the operator approves the exact
+ends the run with no change. Otherwise the run always stops at the
+publication stop of `edits.publish()`, which revise uses only for a
+candidate that adds a validation warning: the operator approves the exact
 candidate, may accept it with a revision (`supply_revised()`), is told of new
 validation warnings, and the note is written only after approval and only
 over the start text. The report's `accepted` names the accepted review and
@@ -712,8 +713,10 @@ def _steps(steps: _Steps, start: str, brief: dict[str, str], captured: dict, ear
                "calls": steps.keys, "profile": asdict(steps.profile)}
     notice = (FINDINGS_NOTICE.format(review=report.accepted["review"], count=len(warned), artifact=artifact)
               if warned else "")
-    published = edits.publish(run, root, artifact, start, candidate, context, brief, REPEAT.format(artifact=artifact),
-                              report, change=CHANGE, notice=notice)
+    published, report.not_applied = edits.publish(run, root, artifact, start, candidate, context, brief,
+                                                  REPEAT.format(artifact=artifact), report, change=CHANGE,
+                                                  notice=notice)
+    report.applied = report.not_applied is None
     if report.applied:
         _store(root, artifact, published, result, report)
     return published

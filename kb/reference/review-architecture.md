@@ -41,11 +41,11 @@ rewrite workflow ports the edit path of
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views, or judges a supplied target text; call grouping, the worker prompt and the checkout guard |
 | `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
-| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate and the revised candidate that revise and rewrite share, the single write of the final text, the run directory derived from the inputs and the guard minus a workflow's own write |
+| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the publication stop over the candidate and the revised candidate that revise and rewrite share, the guarded write of a text, the record of a revise run's automatic publications, the run directory derived from the inputs and the guard minus a workflow's own write |
 | `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
-| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, per-item answers stops and publication; each operation runs through `edit_operations.ask()` |
-| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, three fresh-worker steps and the review operation, with one repair, the review result bound to the candidate's hash, the same publication stop as revise, and the accepted review stored as the note's current result after publication of the judged candidate |
-| `review_workflows.decisions` | the read-only operator-decision record over run operator records, and over the packets and fix reports of the retired procedures |
+| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, per-item answers stops, automatic publication and the publication stop for a candidate with a new warning; each operation runs through `edit_operations.ask()` |
+| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, three fresh-worker steps and the review operation, with one repair, the review result bound to the candidate's hash, the publication stop shared with revise on every run, and the accepted review stored as the note's current result after publication of the judged candidate |
+| `review_workflows.decisions` | the read-only operator-decision record over run operator records and revise runs' automatic publications, and over the packets and fix reports of the retired procedures |
 
 Workjig launches each worker in the checkout through the harness's headless
 mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
@@ -70,16 +70,23 @@ kept, `user-verified` removed after a body change, and no validation failure
 added. A text from an edit operation also keeps every link target the result
 does not name as removed and every quoted span. Every revision pass candidate
 comes from `edit_operations.ask()`, which also serves `run edit`. An accepted text stays in memory and in the run's `artifact/`
-directory, and the next step works on it. The workflow's last step writes the
-final text once, atomically, only over the start text and after approved
-answers that approve the exact candidate. Any other text
+directory, and the next step works on it. Code writes a text atomically and
+only over the text the run last knew: its start text, or the text the run
+last published itself. A revise run publishes without a stop at a per-item
+stop and at the end of its plan. A rewrite run, and a revise candidate that
+adds a validation warning, write only after approved answers that approve
+the exact candidate. Any other text in the note
 is a change made outside the run: the run writes nothing and reports a
 conflict that names the file holding the proposed text.
 
 A revise run reuses answers by each call's inputs. Its run directory is
 derived from the workflow, the note's path and the hash of the note's start
 text, so repeating the command continues the run by replay, and an edited
-note opens a new run. The directory is not a complete input identity: changed
+note opens a new run. A run that published is recorded in its
+`published.json`. While it is open, waiting or stopped, it is found by the
+text it last published, and it is never found by its start text again; a
+note reverted to that text opens a new run in `<hash prefix>-2/`. The
+directory is not a complete input identity: changed
 instructions, profiles, write briefs or approved answers can produce new calls inside it.
 A new revision run explicitly chooses a fixed plan (`--plan`, `--pass` or
 `--finding`), `--assess` or `--full`. Repeats retain that mode; changed artifact text requires a new
@@ -90,7 +97,7 @@ without approval. Editing the retained plan alone is not an override.
 
 Fixed-plan execution constructs no assessment request. Editors in both modes
 receive the execution instruction and the assigned pass, not the planning
-procedure. Fixed-plan publication binds those inputs, the supplied plan and
+procedure. Approval of a fixed-plan publication stop binds those inputs, the supplied plan and
 the profiles used by its passes; assessment-only instructions, unselected
 passes and unused effort profiles do not invalidate it. Assessment-led runs
 also bind the assessment request, answer and the catalog of edit operations. A single
@@ -101,27 +108,34 @@ answer per proposal, in an [answers](../types/answers.md) file whose
 question is the proposing run's edit result. These temporary
 procedure-development points retain each answer with the operator's reason
 for a rejection or deferral, in the run's operator record and the selection
-context that binds publication. Removal needs separate authorization
+context that binds a publication stop. Approved items are published when
+applied, with no second approval of the whole text. Removal needs separate authorization
 after selection rules and checks have been revised and evaluated on retained
 and fresh examples. This is not automatic learning infrastructure; a lower
 proposal count does not establish reliability.
 
-Changed final text requires an answers file,
+A revise run publishes a changed candidate without a stop: changes applied
+without a decision, and items the operator already decided. Each publication
+is recorded in `published.json` with its text and diff under
+`artifact/publications/`, its hash, the plan entries it covers and the time;
+`decisions` lists it as decided by `automatic`. Nothing is committed; git
+shows and reverses the change. A revise candidate that adds a validation
+warning, and every rewrite candidate, require an answers file,
 `artifact/publication-answers.md`, whose question is the candidate
 `artifact/final.md` and whose one item, naming the candidate's hash, the
 operator approved; `commonplace-review approve RUN FILE --key KEY` records
 it. `artifact/final.diff` is the inspection view. Repeating never approves.
-The proposal key binds the start text, the candidate and the decision
+The proposal key binds the text the run last knew, the candidate and the decision
 context; a change in any of them withdraws the approval. The candidate is a
 generated output, not a revision input: use `--plan` for revision, change
 workflow inputs or start a new run. Judgment stays in instructions; prompts name inputs only.
 
 A declared [write brief](../types/write-brief.md) is captured for revision
 assessment and every pass. Its bytes
-participate in those calls' identities and in final publication approval. A
+participate in those calls' identities and in approval at a publication stop. A
 worker reports a brief conflict as a problem, stopping the run. Code prevents
 changing the declaration and checks that the captured brief is still current
-before publication; it cannot verify semantic obedience. An amendment to the
+before each publication; it cannot verify semantic obedience. An amendment to the
 commission must happen outside the run. Review workers do not receive this
 input, and brief changes do not stale gate results.
 
@@ -149,15 +163,16 @@ A revised candidate is not the judged text, and its review is not stored.
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-review decisions` still reads it |
-| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/` for a revise or rewrite run | a sweep and its resumes; every repeat of a workflow command on the same note text |
+| run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<start-hash prefix>/`, or `<start-hash prefix>-<n>/` when that text had a run that published, for a revise or rewrite run | a sweep and its resumes; every repeat of a workflow command on the same note text, or on the text an open revise run last published |
 | observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; exact inputs, completed results, candidate texts and their hashes remain citable |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
 options it opened with in `sweep.json`, operator proposals and approved answers
 under `operator/`, and accepted per-run artifacts under `artifact/`
-(the start text, the assessment and plan, each accepted edited text and the
-publication candidate). Its
+(the start text, the assessment and plan, each accepted edited text, each
+automatic publication and its diff, and the publication candidate). A revise
+run that published also holds `published.json`. Its
 records exist for replay inside the run and promise no format stability
 across versions. The current result references its observation, exact target
 capture and raw launch output. Historical run state is evidence, not an input

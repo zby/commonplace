@@ -13,7 +13,7 @@ Inputs:
 
 - the answers file (`type: types/answers.md`): its `question` names the question file, and each item holds an `id`, the question's `proposal` and `state: pending`, or, for a carried-over item, the earlier decision and `carried-from`;
 - the question: an edit result with outcome `proposed`, whose `note` and `input-sha256` name the text the proposals were made for; or, at a triage, a review result with outcome `warn` or `fail`, whose items are its `warn` and `fail` findings;
-- that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; for a single edit, the note, or the `--text` file the edit ran on; at a triage, the note's file: a triage takes only fresh results, so the note holds the text they judged, in the parts the criterion watches;
+- that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; the run published that text to the note before it stopped, unless the report's `not-published` says why not; for a single edit, the note, or the `--text` file the edit ran on; at a triage, the note's file: a triage takes only fresh results, so the note holds the text they judged, in the parts the criterion watches;
 - the operation the proposals came from, for its preserve rules; at a triage, the review result's `criterion` file instead.
 
 If no answers file exists yet for a proposed edit result, create it: `commonplace-review answers create --from <result path>`. It writes `<result stem>-answers.md` beside the result, every item `pending`. Never write a hash by hand.
@@ -38,8 +38,9 @@ Authority: the decisions are the operator's. The agent presents, records and run
    - in a revise run, run the reported approval command, then the repeat command;
    - for a single edit, run the same operation again with `--input answers=<answers file>`.
 5. If a revise repeat stops on the same file again, its `what` names what the validator refused. Correct the file as it says, confirm with the operator, approve again and repeat.
+6. A revise repeat applies the approved items and publishes them without asking for approval of the whole text. When its report has `published: true`, follow [approve a text](./approve-a-text.md#after-a-revise-run-publishes): tell the operator what was published, with the path of the note and of the publication's diff; the change is uncommitted, `git diff` shows it, and the operator reverses it with git.
 
-Verification: `commonplace-validate` passes on the answers file. In a revise run, the repeat's report shows the pass `applied` or `no-change`, or the run waiting on `artifact/publication-answers.md`; after a triage, the plan holds one fix entry per review result with an approved finding, or no entry when none was approved; an edit after approval is reported as unapproved and not used. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
+Verification: `commonplace-validate` passes on the answers file. In a revise run, the repeat's report shows the pass `applied` or `no-change`, and the run published, waits on the next stop, or waits on `artifact/publication-answers.md` because the final text adds a validation warning; after a triage, the plan holds one fix entry per review result with an approved finding, or no entry when none was approved; an edit after approval is reported as unapproved and not used. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
 
 The reasons stay in the answers file and, for a revise run, in the operator record beside it, where `commonplace-review decisions` lists them. Do not copy them elsewhere.
 

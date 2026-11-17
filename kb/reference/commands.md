@@ -503,9 +503,10 @@ Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left. The command
-writes the artifact once, after every pass ended `applied`, `no-change` or
-`skipped` and the operator's publication answers approve the exact
-candidate. Each pass runs through the `run edit` route. A `per-item` pass
+publishes without a stop: at a per-item stop it writes what the earlier
+passes applied, and at the end of the plan it writes the final text when
+every pass ended `applied`, `no-change` or `skipped`. Each pass runs through
+the `run edit` route. A `per-item` pass
 (plain-wording, abstractions) stops with the pending answers file for its
 proposals as `artifact/<pass>-answers-<key>.md`; the operator decides each
 item, and answers the validator refuses stop the run again. A stop for the
@@ -543,14 +544,30 @@ the store would read the file as a review result; give `--to` for a stored
 result. The command writes every hash, so nobody writes one by hand.
 `commonplace-validate PATH` checks a completed file against its question.
 
-`run revise` retains `artifact/final.md` and `artifact/final.diff`
-for inspection and stop on `artifact/publication-answers.md`, an answers file
-whose one item names the candidate's hash. Record the operator's decision,
-approve the file, then repeat; publication needs answers that pass the
-validator and approve that exact candidate. Do not edit the candidate to
-revise the text. Supply `--plan` for revision, change workflow inputs, or
-start a new run. The original artifact and captured brief must still be
-unchanged before the write.
+`run revise` writes a changed candidate to the artifact only while the
+artifact holds the text the run last knew, its start text or the text it
+last published, and the captured brief is unchanged; otherwise the run ends
+with a conflict and writes nothing. It publishes only a text that differs
+from the artifact. Each publication keeps the text as
+`artifact/publications/<n>.md` and its diff from the text before it as
+`artifact/publications/<n>.diff`, and records the hash, the plan entries it
+covers and the time in the run's `published.json`. The JSON report lists
+them under `publications` and has `published: true` when the invocation
+wrote the artifact. Approved per-item answers are published when applied,
+with no second approval. Nothing is committed: `git diff` shows the change,
+and git reverses it. `decisions` lists each publication as decided by
+`automatic`.
+
+A candidate that adds a validation warning the artifact's text does not have
+is not published automatically. At a per-item stop it stays in the run, and
+`not-published` says so. At the end of the plan, `run revise` retains
+`artifact/final.md` and `artifact/final.diff` for inspection and stops on
+`artifact/publication-answers.md`, an answers file whose one item names the
+candidate's hash; the waiting text says the new warning is why it stopped.
+Record the operator's decision, approve the file, then repeat; publication
+needs answers that pass the validator and approve that exact candidate. Do
+not edit the candidate to revise the text. Supply `--plan` for revision,
+change workflow inputs, or start a new run.
 
 `run revise ARTIFACT --revised FILE` accepts the candidate with a revision:
 FILE, outside the run's `artifact/`, holds the full revised text the
@@ -572,7 +589,10 @@ only.
 `kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
 hex of the note's SHA-256>/`. Repeating the command on the same note text
 continues the run and replays answered calls; an edited note opens a new
-run. A repeat reuses the recorded options (`--purpose`, `--must-keep` and the
+run. A run that published and then waits or stopped is found by the text it
+last published, so the command continues it. A run that published is never
+found by its start text again: a note reverted to that text opens a new run
+in `<hash prefix>-2/`. A repeat reuses the recorded options (`--purpose`, `--must-keep` and the
 effort profiles); an option given on the repeat replaces the recorded value.
 
 `run rewrite NOTE --commission FILE [--restart] [--profile NAME]` rewrites
@@ -598,7 +618,8 @@ earlier decisions on the note, from revise and rewrite runs, as
 `earlier-decisions` when there are any. The JSON report's `role` names the
 role report and whether it was reused. A `block` allows one repair and a second fresh review;
 a second `block` ends the run unpublished, with `blocked` in the JSON report.
-After `accept` the run stops at the same publication stop as `run revise`,
+After `accept` the run always stops at the publication stop that `run revise`
+uses for a candidate with a new warning,
 and `run rewrite NOTE --revised FILE` accepts the candidate with a revision
 the same way. The run directory is
 `kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12

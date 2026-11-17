@@ -1,13 +1,30 @@
 ---
-description: "Use when commonplace-review run revise or run rewrite stopped waiting on artifact/publication-answers.md: show the operator the exact candidate and its diff, record their decision or supply their revised candidate, and continue on their word"
+description: "Use when run revise published a text, or run revise or run rewrite waits on artifact/publication-answers.md: report the publication, or show the exact candidate and diff, record the operator's decision or revision, and continue on their word"
 type: types/instruction.md
 ---
 
 # Approve a text
 
-Goal: a candidate text replaces the note only when the operator has seen that exact text and approved it, and a refusal leaves the operator's reason in the run.
+Goal: the operator knows each text a revise run published, and at a publication stop a candidate text replaces the note only when the operator has seen that exact text and approved it, and a refusal leaves the operator's reason in the run.
 
-Consumption: an agent in a session with the operator, reached from a run report's `waiting-for` text. Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For a list of proposals, follow [decide items](./decide-items.md) instead.
+Consumption: an agent in a session with the operator, reached from a run report's `publications` or `waiting-for` text. Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For a list of proposals, follow [decide items](./decide-items.md) instead.
+
+## After a revise run publishes
+
+`commonplace-review run revise` writes its candidate to the note without a stop when no decision is needed: changes applied without a decision, and items the operator already decided. It does so before it waits at a per-item stop and at the end of its plan. The report then has `published: true`, and its `publications` list gives, for each publication, the published text `text`, its `diff` from the text before it, and the plan `entries` it covers. The run does not ask for approval of these texts.
+
+After each run whose report has `published: true`:
+
+1. Tell the operator what was published: the plan entries the new publication covers, the path of the note, and the path of the publication's `diff`.
+2. Tell the operator that the change is not committed. It is in the working tree, and `git diff` on the note shows it.
+3. Tell the operator that they reverse it with git, for example `git checkout -- NOTE` or `git restore NOTE`. The run does not reverse it.
+4. If the report also waits, continue with the stop its `waiting-for` names.
+
+Do not approve, commit or reverse a publication on your own judgment.
+
+## At a publication stop
+
+A revise run stops at `artifact/publication-answers.md` only when its final candidate adds a validation warning the note does not have; the waiting text says so. Every rewrite run stops there.
 
 Inputs:
 
@@ -18,9 +35,9 @@ Inputs:
 
 Authority: the decision is the operator's. The agent shows, records and runs commands. It never approves, rejects or defers on its own judgment, never revises the text on its own judgment, and never edits a file under the run's `artifact/`: the candidate and the revised candidate are workflow outputs, not inputs.
 
-## Procedure
+### Procedure
 
-1. If the report's `new-warnings` lists warnings, tell the operator each one. A warning does not block approval; the operator decides with it in view. If the waiting text says the accepted review left findings of level warn, tell the operator how many there are and where the review is.
+1. If the report's `new-warnings` lists warnings, tell the operator each one, and that a revise run stopped because of them. A warning does not block approval; the operator decides with it in view. If the waiting text says the accepted review left findings of level warn, tell the operator how many there are and where the review is.
 2. Give the operator the full paths of the note, `final.md` and `final.diff`, so they can open each. Show the operator `final.diff`, and `final.md` when they ask for the whole text. Ask: approve this exact text for publication, approve it with changes, reject it, or defer. For approval with changes, follow [accept with a revision](#accept-with-a-revision).
 3. Record the answer in the `text` item, exactly:
    - approve: `state: approved`;
@@ -32,7 +49,7 @@ Authority: the decision is the operator's. The agent shows, records and runs com
 5. On the operator's stated word for this exact file, run the reported approval command, then the repeat command.
 6. If the repeat stops on the same file with a `what` that names a refusal, read it to the operator. A rejection or deferral is a normal end: the note keeps its text. To revise the candidate beyond a stated change, the operator changes the workflow inputs, such as a replacement plan with `--plan` for revise, or a changed commission with `--commission FILE --restart` for rewrite; do not edit `final.md`.
 
-## Accept with a revision
+### Accept with a revision
 
 Use this when the operator accepts the candidate with changes. The revised candidate replaces the candidate as the text to approve, and the operator approves that exact text.
 
@@ -44,6 +61,6 @@ Use this when the operator accepts the candidate with changes. The revised candi
 
 A repeat keeps the revised candidate. A further revision replaces it in the same way. If the workflow's candidate changes later, the run withdraws the revised candidate and says so in its report.
 
-Verification: a repeat after approval reports `applied: true` and the note holds the approved text, `final.md` or `revised.md`. Code writes the note only when the approved answers pass the validator, the item is `approved`, its hash is that of the text to publish, and the note still holds the text the run started from. Any other case writes nothing.
+Verification: a repeat after approval reports `published: true` for revise, or `applied: true` for rewrite, and the note holds the approved text, `final.md` or `revised.md`. Code writes the note only when the approved answers pass the validator, the item is `approved`, its hash is that of the text to publish, and the note still holds the text the run last knew: its start text, or the text the run last published. Any other case writes nothing.
 
 Stop and leave the item `pending` when the operator declines to decide.
