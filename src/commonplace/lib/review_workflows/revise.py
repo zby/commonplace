@@ -31,7 +31,10 @@ never approves: only the recorded approved text becomes the operator's answer:
    with outcome warn or fail (`current_findings()`); it launches no review.
    A finding the operator rejected at a triage of that same result is
    removed from it (`without_rejected()`), and the operator's rejected and
-   deferred findings of the note come as `earlier-decisions`.
+   deferred findings of the note come as `earlier-decisions`. So do the
+   operator's decisions on the stops of other revise runs on the note
+   (`decisions.earlier_stops()`), captured once in `STOPS_FILE`; only the
+   assessor receives them.
    A pass that declares `responds-to`, the fix of `FIX_REL`, takes one such
    result as its `finding` input: its plan entry names the result file and
    takes the depth of the result's criterion. `one_entry_plan()` writes the
@@ -233,8 +236,10 @@ CHANGE = "change the workflow inputs or supply --plan for revision"
 """How the publication stop's waiting text tells the operator to change revise's candidate otherwise."""
 UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
               "Approve the file and repeat to use it.")
-STOP_ANSWERS = "stop-answers.md"
+STOP_ANSWERS = decisions.STOP_ANSWERS
 """The answers file for a plan that stops: one item, the plan. The run does not wait for it."""
+STOPS_FILE = "earlier-stops.json"
+"""The operator's decided stops of other runs on the note that the assessor received, captured once."""
 STOP_HOW = ("The plan stops with a proposal. Record the operator's decision on the one item of this answers file: "
             "`approved` to act on the proposal as made, or `rejected` or `deferred` with the operator's reason, "
             "with `decided-by: operator` and `decided-at`. When the work that followed is done, add `resolution` "
@@ -549,6 +554,8 @@ REPORTS_INTRO = ("\nThe depth 1 review reports on this text, the compression syn
                  "directory, and its criterion:\n")
 DECISIONS_INTRO = ("\nThe operator's decisions on findings of this note, the rejected and the deferred ones, are "
                    "{decisions}.\n")
+STOPS_INTRO = ("\nThe operator's decisions on the stops of earlier assessments of this note are in the section "
+               "`Earlier stops` of {decisions}.\n")
 FINDING_FIELD = (", and, for a pass that fixes a finding, `finding` naming that review result file's "
                  "repository path, as listed above")
 
@@ -560,16 +567,18 @@ def _rel(root: Path, path: Path) -> str:
 
 def _assessment_request(artifact: str, text: str, purpose: str | None, must_keep: list[str],
                         known: dict[str, Pass], brief: dict[str, str], findings: list[Finding] = (),
-                        reports: list[Finding] = (), told: list[dict] = ()) -> tuple[str, dict[str, str]]:
+                        reports: list[Finding] = (), told: list[dict] = (),
+                        stops: list[dict] = ()) -> tuple[str, dict[str, str]]:
     """The captured request, also bound into the final publication approval.
 
     `findings` are the stored warn and fail results the assessor may turn
     into plan entries; `reports` are review reports it reads. Without
     findings, the passes that fix a finding are not offered. `told` holds
     the operator's rejected and deferred findings of the note
-    (`decisions.planning_decisions()`); when there is one, the assessor
-    receives them as `earlier-decisions`, and the request is otherwise
-    unchanged.
+    (`decisions.planning_decisions()`); `stops` holds the operator's
+    decided stops of other runs on the note (`decisions.earlier_stops()`),
+    as a section after them. When there is either, the assessor receives
+    them as `earlier-decisions`, and the request is otherwise unchanged.
     """
     offered = known if findings else {name: current for name, current in known.items() if not current.responds_to}
     inputs = {"artifact": text, "criterion": (library_root() / INSTRUCTION_REL).read_text(encoding="utf-8"),
@@ -588,9 +597,14 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, must_keep
             depth = "" if prefix == "report" else f", depth {'none' if finding.depth is None else finding.depth}"
             listed += (f"- `{finding.path}` (criterion `{finding.criterion_id}`{depth}, outcome "
                        f"{finding.outcome}): {input_ref(f'{prefix}-{index}')}\n")
+    if told or stops:
+        inputs[EARLIER_DECISIONS] = "\n".join(
+            [*([decisions.earlier_text(list(told))] if told else []),
+             *([decisions.stops_text(list(stops))] if stops else [])])
     if told:
-        inputs[EARLIER_DECISIONS] = decisions.earlier_text(list(told))
         listed += DECISIONS_INTRO.format(decisions=input_ref(EARLIER_DECISIONS))
+    if stops:
+        listed += STOPS_INTRO.format(decisions=input_ref(EARLIER_DECISIONS))
     prompt = ASSESS_PROMPT.format(
         problem=PROBLEM_REF, artifact=artifact, artifact_input=input_ref("artifact"),
         criterion_input=input_ref("criterion"), passes_input=input_ref("passes"),
@@ -1133,6 +1147,12 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                     observations.atomic_json(captured, {
                         "findings": [asdict(given) for given in findings],
                         "reports": [asdict(given) for given in reports], "reviews": report.reviews})
+                stopped = run_dir / STOPS_FILE
+                if stopped.is_file():                 # a repeat: other runs may have decided stops since
+                    stops = json.loads(stopped.read_text(encoding="utf-8"))["stops"]
+                else:
+                    stops = decisions.earlier_stops(root, artifact, run_dir)
+                    observations.atomic_json(stopped, {"stops": stops})
                 for given in reports:
                     section = (role_section(given.text)
                                if given.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None)
@@ -1141,7 +1161,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(must_keep), known, brief,
                                                      findings,
-                                                     reports, decisions.planning_decisions(earlier))
+                                                     reports, decisions.planning_decisions(earlier), stops)
                 context.update({"assessment": inputs, "assessment-prompt": prompt})
                 assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])
                 proposed = assessed.outputs["plan"]

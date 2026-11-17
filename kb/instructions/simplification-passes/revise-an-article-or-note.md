@@ -70,6 +70,16 @@ instead of assessing again.
    operator's reason; say so when you plan one. Plan no fix for a deferred finding unless its
    `revisit` condition is met.
 
+   Earlier stops the operator decided may come too, in the section
+   `Earlier stops` of `earlier-decisions`, each with its stop, the
+   operator's decision and reason, and any resolution. A rejected stop is
+   one decision on everything the stop named, so read the operator's reason
+   to see which proposals it covers. Do not stop again on a proposal the
+   operator rejected, and do not list it again as a claim question, unless
+   the text changed in a way that answers the operator's reason or the new
+   report gives a case the reason does not address; when you raise it
+   again, say which.
+
    Depth 1 review reports may come with the artifact as well: critique,
    composition friction and premise decomposition. These reports are
    written to find the strongest objection, so every text gets one, and a

@@ -38,6 +38,10 @@ criterion. An item's `resolution` goes wherever its `reason` goes. `review_input
 renders the rejected findings per criterion as the input a later review of
 the note against that criterion receives; the input takes part in that
 result's freshness (`results.criterion_sha256()`).
+
+`earlier_stops()` reads the operator's decisions on the stops of the other
+revise runs on one note (`stop-answers.md`), which the next run's assessor
+receives; they are never carried over.
 """
 
 from __future__ import annotations
@@ -46,6 +50,8 @@ import json
 import re
 from datetime import UTC, datetime
 from pathlib import Path
+
+import yaml
 
 from commonplace.lib import answers, frontmatter
 from commonplace.lib.review_workflows import edits, gates, results
@@ -394,6 +400,63 @@ def earlier(root: Path, note: str, current: Path | None = None, *, findings_only
             decision["answered"] = sorted({question for state, at, question in answered[same]
                                            if (state, at) == (decision["state"], decision["decided-at"])})
     return sorted(latest.values(), key=_when)
+
+
+STOP_ANSWERS = "stop-answers.md"
+"""The answers file of a revise plan that stops: one text item, whose question is the run's `plan.yaml`."""
+
+
+def earlier_stops(root: Path, note: str, current: Path | None = None) -> list[dict]:
+    """The operator's decided stops of the other revise runs on `note`, ordered by `decided-at`.
+
+    A stop counts when its `STOP_ANSWERS` file has an approved capture that
+    the validator accepts and its item is not `pending` and has an ISO 8601
+    `decided-at`. Each holds `stop`, the `stop` text of that run's plan, read
+    from the answers file's question; `state`, `reason`, `revisit`,
+    `resolution` when the item has one, `decided-at` and `answers-file`, the
+    answers file's repository path. `earlier()` does not return these: a stop
+    names no passage and no change, so nothing is carried over from it.
+    """
+    base = root / gates.RUNS / "revise" / note.removesuffix(".md")
+    current = current.resolve() if current is not None else None
+    found = []
+    for run_dir in sorted(base.iterdir()) if base.is_dir() else []:
+        if not _RUN.fullmatch(run_dir.name) or not run_dir.is_dir() or run_dir.resolve() == current:
+            continue
+        for _, data in _records(root, run_dir):
+            if data["name"] != STOP_ANSWERS or data.get("answer") is None:
+                continue
+            path = run_dir / "artifact" / STOP_ANSWERS
+            parsed, problems = edits.answered(root, path, data["answer"])
+            if problems:
+                continue
+            plan = yaml.safe_load((root / parsed["question"]).read_text(encoding="utf-8"))
+            for item in parsed["items"]:
+                if item["state"] == "pending" or _moment(item["decided-at"]) is None:
+                    continue
+                stop = {"stop": plan.get("stop") if isinstance(plan, dict) else None, "state": item["state"],
+                        "reason": item.get("reason"), "revisit": item.get("revisit"),
+                        "decided-at": item["decided-at"], "answers-file": path.relative_to(root).as_posix()}
+                if item.get("resolution"):
+                    stop["resolution"] = item["resolution"]
+                found.append(stop)
+    return sorted(found, key=_when)
+
+
+def stops_text(found: list[dict]) -> str:
+    """The earlier decided stops as the readable section an assessor receives, one subsection per stop."""
+    lines = ["# Earlier stops", "",
+             "Assessments of other texts of this note stopped with these proposals; the operator decided each.", ""]
+    for index, stop in enumerate(found, 1):
+        lines += [f"## {index}. {stop['state']}", "", "Stop:", "", *_quoted(stop["stop"]), ""]
+        if stop["reason"]:
+            lines.append(f"Operator's reason: {stop['reason']}")
+        if stop.get("resolution"):
+            lines.append(f"{RESOLUTION}: {stop['resolution']}")
+        if stop["revisit"]:
+            lines.append(f"Revisit when: {stop['revisit']}")
+        lines += [f"Decided at: {stop['decided-at']}", f"Answers file: `{stop['answers-file']}`", ""]
+    return "\n".join(lines)
 
 
 def _quoted(text: object) -> list[str]:

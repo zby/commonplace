@@ -920,6 +920,61 @@ def test_earlier_decisions_are_read_from_rewrite_runs_too(repo, capsys, tmp_path
     assert all("/v2/rewrite/" in decision["answers-file"] for decision in found)
 
 
+def stopped_run(repo, capsys, words, decision=None, approved=True):
+    """An assessed run on the note with `words` whose plan stops; record `decision` on its stop, approved or not."""
+    start(repo, words)
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    stop = report["stop-answers"]
+    if decision is not None:
+        path = repo[0] / stop["file"]
+        path.write_text(decide(path.read_text(), {"text": decision}))
+    if approved:
+        assert main(["approve", report["run-dir"], stop["file"], "--key", stop["key"]], harnesses=repo[1]) == 0
+        capsys.readouterr()
+    return report
+
+
+def test_a_decided_stop_reaches_the_next_assessor_only(repo, capsys):
+    first = stopped_run(repo, capsys, "STOP", {**rejected("the note is fine as one note"),
+                                               "resolution": "kept the note whole"})
+    second_text = start(repo, "STOP PLAIN")                 # another text: another run
+    _, second, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert launches[0] == "assess - big"
+    given = assessed_inputs(repo)
+    told = given["earlier-decisions"]
+    assert told.startswith("# Earlier stops") and "> rewrite-needed" in told
+    assert "Operator's reason: the note is fine as one note" in told
+    assert f"{decisions.RESOLUTION}: kept the note whole" in told and first["stop-answers"]["file"] in told
+    [prompt] = [line for line in (repo[0] / second["run-dir"]).rglob("prompt.txt")
+                if "Assess one artifact" in line.read_text()]
+    assert "`Earlier stops`" in prompt.read_text()
+
+    # A later decided stop does not reach the repeat of the second run: it sends the same request.
+    stopped_run(repo, capsys, "STOP third", rejected("no"))
+    start(repo, text=second_text)
+    _, repeated, launches = revise(repo, capsys, NOTE_PATH)
+    assert launches == [] and repeated["stop-answers"] == second["stop-answers"]
+    captured = json.loads((repo[0] / second["run-dir"] / revise_module.STOPS_FILE).read_text())["stops"]
+    assert [stop["answers-file"] for stop in captured] == [first["stop-answers"]["file"]]
+
+    # Edit workers do not receive stops.
+    start(repo, "PLAIN")
+    _, _, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert "list plain-wording small" in launches
+    assert "Earlier stops" in assessed_inputs(repo)["earlier-decisions"]
+    workers = [c for c in captured_inputs(repo[2]) if c["kind"] != "assess"]
+    assert workers and not any("Earlier stops" in text for c in workers for text in c["inputs"].values())
+
+
+@pytest.mark.parametrize("decision, approved", [(rejected("no"), False), (None, True)])
+def test_an_undecided_or_unapproved_stop_does_not_reach_the_assessor(repo, capsys, decision, approved):
+    stopped_run(repo, capsys, "STOP", decision, approved)
+    start(repo, "changed")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    assert "earlier-decisions" not in assessed_inputs(repo)
+    assert json.loads((repo[0] / report["run-dir"] / revise_module.STOPS_FILE).read_text()) == {"stops": []}
+
+
 # --- Focused plans and findings ------------------------------------------------------------
 
 GATE = "kb/instructions/review-gates/prose/residue.md"

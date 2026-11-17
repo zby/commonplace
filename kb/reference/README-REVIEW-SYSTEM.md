@@ -581,6 +581,8 @@ when a change would reach dependents, the `stop` names them. A stopped plan leav
 `artifact/stop-answers.md`, where the operator's decision on the proposal is
 recorded and, afterwards, what was done and where: the item's `resolution`
 and `refs` (commit hashes, paths). The run does not wait for that file.
+Once approved, the recorded decision reaches the assessor of the next run on
+the note, so the reason should state which of the stop's proposals it covers.
 The full procedure does not review the
 candidate; the next sweep finds the stale results after publication. A
 review without a result stops the run before assessment; dismiss its problem
