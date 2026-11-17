@@ -1,55 +1,47 @@
 ---
-description: "Capture is layered (verbatim / paraphrase / second-hand) by forced constraints; a citation's fidelity is bounded by which layer holds the passage, and no notation can raise it — only re-capture"
+description: "Quote checking in general: what a wording check, an occurrence check and a source-identity check each establish, which evidence a pass is relative to, and what stays unverified — attribution upstream, contextual support, truth"
 type: types/note.md
-traits: [title-as-claim, has-external-sources]
 tags: [document-system, claims-and-grounding, kb-maintenance]
 ---
 
 # A citation cannot assert more fidelity than its capture preserved
 
-A claim that cites a captured source can be no better grounded than the capture step left it. Fidelity is fixed at ingest and is **non-increasing** downstream: no citation syntax, no locator type, no review gate can promote a passage to a grade its capture did not preserve. The only operation that raises fidelity is re-capture.
+Marking a span as an exact quotation asserts that these words occur in a named source. Unchecked, that assertion rests on the author's word. A quote check makes it falsifiable by testing one relation: given a quoted span, a resolved source text and a normalization rule, does the span occur in that text, once or once inside a stated range? Markers that never claimed exact wording, such as a paraphrase marker, give the check nothing to match.
 
-This is a claim about **fidelity**, not authority, and the two move in opposite directions — worth stating plainly, because [trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) asserts the complement. *Authority* — how much weight a reader should give a claim — is earned by post-capture work: verify, abstract, consult. *Fidelity* — what grade of provenance evidence a passage carries, whether the source's own words or somebody's restatement — is spent at capture and never replenished. The two compose: capture sets a ceiling, and post-capture operations earn authority beneath it. A heavily verified rule can still rest on a second-hand passage; a pristine verbatim quote can sit unverified indefinitely.
+## Four questions, one answered mechanically
 
-## Capture is layered because it is forced to be
+A citation raises four separable questions:
 
-The layering is not a design choice — [a framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md), and no rival capture design drops the layering while preserving the commitments the framework has already made. A long source cannot be captured verbatim into markdown at full fidelity, because the consumer's context window is finite and because copyright forces trims. Any framework whose consumer is an LLM and whose sources are real documents faces both; hosted providers' output filters on mass verbatim reproduction add a third barrier, but that one is provider-contingent rather than inherited. So a snapshot of a long source is not a copy — it is an *extraction*, and it stratifies:
+1. Wording: do these words occur in the compared text?
+2. Attribution: is the compared text the source the citation names, and did the named author produce it?
+3. Context: does the passage, read where it occurs, support the use the citing text makes of it?
+4. Truth: is the quoted claim true?
 
-- **Verbatim layer** — the source's own words, reproduced. A claim may quote, and a machine can string-match the quote back against the snapshot.
-- **Paraphrase layer** — the snapshot's own-words summary of a passage. A claim may cite it, but must not use quotation marks, and verification requires going back to the authoritative artifact (the sibling PDF).
-- **Second-hand** — the captured text is itself another party's restatement (a court restating a complaint; a news article quoting an order whose original is no longer served). The citation must name the intermediary, because the provenance chain has a party in the middle whose fidelity is an assumption.
+A string check answers only the wording question. An identity check answers part of the second question (below). Context needs a reader of both texts. Wording agreement is deterministic, cheap and binary, so it can run on every pass. Judging support is costlier and noisier, so it cannot simply block the way a wording check does, and how reliably it detects out-of-context use is unmeasured.
 
-## Why notation cannot repair it
+This asymmetry explains why a wording mismatch can fail rather than warn. A quoted span is a copy of a source span, and its occurrence is mechanically recomputable, so the reasoning that [a derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) applies: a false copy misleads silently, while an absent one costs a recomputation. That reasoning covers wording only, because the choice of span and its claimed use are not recomputable. It also presupposes that the source bytes are present when the check runs.
 
-The temptation is to fix provenance downstream — a richer citation format, a structured span locator, a stricter gate. It cannot work, and the reason is exact rather than merely practical. [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) requires a *mechanical derivation rule* before a copy may be trusted. A verbatim-layer quote has one: substring match. A paraphrase-layer passage has no such rule — there is no mechanical comparison between a paraphrase and its source, only judgment. So marking a paraphrase-layer passage `verbatim` does not make it verbatim; it produces precisely the hand-maintained-and-trusted copy that rule forbids, with a stronger trust signal attached than the unmarked version would carry. Notation can *express* the fidelity bound. It cannot move it.
+## What makes "exact" meaningful
 
-This is the citation-fidelity instance of a general rule: [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md). The one chance here is ingest, and what was not preserved verbatim then is permanently downgraded — recoverable only by returning to the authoritative artifact and capturing again.
+"Exact" means "equal after this normalization rule", and the rule can err in both directions. Too little normalization fails correct quotes on quote marks or whitespace; [ADR 046](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md) judges such false mismatches worse than no check. Too much would let substantive edits pass. In one casebook corpus the real mismatches were mostly editorial omissions, bracketed substitutions and case changes (ADR 046), which a permissive enough rule would ignore. Typography and emphasis can affect meaning in prose as well as code; a normalization rule must specify which differences it ignores.
 
-## Corollary: a locator must carry the layer, not just the span
+Occurrence is not location. A span can occur several times, and a plausible line range can point elsewhere in the same file. Requiring exactly one occurrence, or exactly one complete occurrence inside a checked range, removes ambiguity about which passage the span equals. Forbidding concatenation of disjoint ranges prevents certifying a passage that never existed contiguously (ADR 094). Uniqueness does not establish that the author intended this occurrence. A locator the check does not test supplies context but is not evidence.
 
-It follows that a source-span locator encoding only *position* is underspecified. **Two spans at the same file offset can differ in provenance quality by a full layer** — one lifted from the snapshot's verbatim block, one from its paraphrase summary. A position-only locator would render them identical, which is the one distinction a consumer of the citation most needs. Any locator design must encode the layer.
+## Which evidence a pass is relative to
+
+A pass means "agrees with the evidence this check used". That evidence may be the original, a capture (a retained copy of the source bytes taken at one time), an intermediary's retained extract, or nothing.
+
+Source identity comes first. A checksum against a recorded capture, with explicit name pairing between citation and file, binds the compared bytes to that capture; equal bytes at an arbitrary path do not (ADR 073). A mismatched or unreadable file is a failure, not an invitation to find another copy. The binding stops at the capture: no mechanism here checks that the capture faithfully represents the original or that the named author wrote it. A pin records identity, and change is detected only when a later check compares current bytes with it. Checking current bytes catches a changed or removed passage at the next check, but misses a changed surrounding context when the quoted words survive.
+
+Retained, accessible and used material differ. A capture kept on another machine is not evidence for a check on this one, and neither is text that happens to sit in a model's context. Missing bytes therefore report as unverified, never as passed. A silent fallback to whatever copy is present would make one citation pass or fail with ambient cache state, without declaring that dependency (ADR 073).
+
+A model may need several reads to check a source that exceeds its context budget. Each excerpt can preserve the wording exactly while omitting context needed to judge the quotation’s use. The checker must retrieve that context before judging support; the full source can remain stored outside the model’s context.
+
+Exactness and second-hand provenance are independent. A quote can be exact with respect to an intermediary's extract and second-hand with respect to the original. Each exact check in a chain, such as capture to extract and extract to note, verifies only its own pair. Semantic hops compound instead: checking a paraphrase against a paraphrase adds a judgment at each hop, and rewording at either hop can change the proposition. Checking against verified source extracts avoids judging a paraphrase of a paraphrase.
 
 ## Scope
 
-Change the premise and the conclusion moves, which is where the claim earns its boundaries. If a source is short enough to capture losslessly — a tweet, a short abstract, a commit message — the layers collapse to one, the bound goes vacuous, and *position* becomes the binding constraint again. In that regime a structured span locator earns its keep; the corollary above is out of scope rather than in conflict with that design. The claim bites exactly where capture is lossy, which is to say wherever the sources are long.
-
-The practical consequence is that provenance quality is decided *before any note is written*. If a passage will be load-bearing, it must be promoted into the snapshot's verbatim layer at capture time, or the author must return to the authoritative artifact and quote-mine it. Because the debt is fixed at ingest and visible in the citation, it can at least be made explicit and repaid deliberately rather than discovered later.
-
-## Open Questions
-
-- Does forum-thread or transcript sourcing — many small utterances rather than a few long papers — change the natural grain, since each utterance *is* losslessly capturable while the corpus is not?
-- Fidelity is a ceiling on verification, but is it a ceiling on *usefulness*? A well-attributed paraphrase may serve a reader better than a verbatim fragment shorn of context.
-
----
-
-Evidence for the layering and for the failure of naive `verbatim` marking comes from both epistack casebook work in the sibling `epistack-casebooks` repository and from [ADR 046](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md): the shipped verbatim-quote checker, run over that corpus, found eighteen of eighty-seven `verbatim`-marked spans that did not appear in their cited snapshot, with no false mismatches on manual audit.
-
-Relevant Notes:
-
-- [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md)
-- [A derived copy of recomputable truth must be checked or absent](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
-- [A framework rule with a boundary-preserving rival is not an inherited constraint](./a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md)
-- [Trace-extracted memory earns authority per operation, not at capture](./trace-extracted-memory-earns-authority-per-operation-not-at-capture.md)
-- [Structure inference needs capture at the decision surface](./structure-inference-needs-capture-at-the-decision-surface.md) — decision rationale rather than quote fidelity
-- [ADR 046 — Verbatim quotes are validated against their cited source](../reference/adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)
-- [Collection prototypes](../reference/collection-prototypes.md) — the experimental dialectical/evidential starting contract demonstrates the grounding-layer marker
+- Covers textual sources with retrievable bytes. Audio, images, oral quotation and sources whose original is gone are out of scope.
+- Transfer beyond agent-operated KBs rests on the reasoning above, not on external evidence.
+- Marked editorial alterations (ellipsis, brackets) fail a strict wording assertion; whether a segment-wise check could support them is open.
+- An "unresolved" outcome covers recognized quote candidates the checker could not pair with a source. Quotations the extractor never recognized appear in no outcome, and their rate is unmeasured.
