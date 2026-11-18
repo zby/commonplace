@@ -1,80 +1,104 @@
 ---
-description: "Use when a commonplace-review run revise report carries a continuation record: finish in a session with the operator the work the run left, each item by an actor who can settle it, from the text the run published"
+description: "Use when a commonplace-review run revise report carries a continuation record: help the operator resolve what the run left open, in a session, from the text the run published"
 type: types/instruction.md
 ---
 
 # Continue a revise pass
 
-Goal: the work a revise run left unfinished is done, dropped or handed to a new run, each item by an actor who can settle it, and the operator knows what changed in the note.
+Goal: resolve issues that a revise run left open. An issue you take up is finished, not left half done. At the end the operator knows what changed in the note and what remains.
 
-Consumption: an agent in a session with the operator, reached from the `continuation` field of a `commonplace-review run revise` report, or from its `continuation.json` in the run directory. The rules below are the whole procedure, apart from the two instructions it names for recording decisions.
+Consumption: an agent in a session with the operator, reached from the `continuation` field of a `commonplace-review run revise` report, or from `continuation.json` in the run directory.
 
-This procedure changes no rule about who decides an item. Proposals of a per-item operation, findings and exact candidate texts are decided by the operator, as [decide items](./decide-items.md) and [approve a text](./approve-a-text.md) state. You present, record and run commands; you run a command that names an answers file or a run only on the operator's stated word for that exact file or run. Naming it to the command is the approval; no separate approval precedes it.
+## Your task
 
-## Inputs
+The operator wants the note improved and has limited attention. The run did what needed no decision and left the rest. Help the operator resolve it: understand each open issue well enough to explain it and recommend, bring the operator the decisions that are theirs, and do the rest yourself.
 
-- The continuation record. `run-dir` is the run directory. `made-for` names the note's text when the run ended: its path `note`, its `sha256` and `text`, the file holding that text (the run's last publication, or `artifact/start.md`). Every item was computed on that text, and the record is never updated. Each item in `items` has `id`, `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with its `effort`), `after` (the ids of items to settle first), `how` and `evidence` (the files it rests on). `how.step` names the section below that handles it; `how.command` is the command that proceeds, where one exists; `how.record` is the command that keeps an answers file nothing consumes; `how.revised` is the command for an operator's revision of a held candidate. An item that waits for answers files names them in `answers`.
-- The run report, `report.json` in the run directory: the plan with its `purpose` and `must-keep`, the state of each plan entry, and `publications`.
-- The note, and its run directories under `kb/reports/state/review/runs/v2/revise/<note path without .md>/`. Runs are named by their UTC start time, so they list in time order; older runs are named by a hash. Each run records its start text's hash in `start.json` and each text it published in `published.json`.
-- After a pause, the entry of the earlier session in `kb/work/full-pass-continuation/episodes.md`.
+How you run the session is yours to judge: the order, what to group, how much to show, what to prepare before asking, and when a question is better asked than explained. The record's order and its `actor` values are the run's estimates, not instructions. Reaching the goal matters more than following the record: when an item no longer fits the note, or two items are one decision, say so and treat them that way.
 
-## Before the items
+The sections below give what you cannot work out yourself: what counts as resolved, the limits, what the record holds, and what each kind of item needs.
 
-1. Compare the note's SHA-256 with `made-for.sha256`. If they differ, account for the difference: read the note's later run directories for publications that lead from `made-for` to the current text, and after a pause read the earlier session's episode entry. Tell the operator what changed the note. If part of the difference has no record, say so and show `git diff` on the note. A difference does not end the procedure: each item below is checked against the current text.
-2. If the report lists `publications`, tell the operator what was published: the plan entries each covers, the note's path and the path of each publication's `diff`. The change is uncommitted, and git reverses it.
-3. Tell the operator the remaining items in order: what each is, and who is expected to resolve it. Ask which to take up. An item the operator leaves stays in the record; do not work on it.
+## What resolved means
 
-## The items
+The session need not take up every issue. The operator chooses how much to do, and the rest stays in the record. But an issue you take up is resolved only when nobody has to come back to it to finish it. A decision alone does not resolve an issue. Its consequences must also be in place. An issue you took up ends in one of three states.
 
-Work through the chosen items in the record's order. An item waits for the items its `after` names. After each command that publishes, report the publication and its diff as in step 2. A command you run may end with a continuation record of its own; take up its items the same way before the items that waited on this one. When you change the note by hand on the operator's word, check that the diff holds only the agreed change. No change to the note makes old proposals fresh: the command that applies answers refuses when the note is not the text the proposals were made for.
+**Settled.** All of these hold:
 
-**Proposals awaiting decision.** Follow [decide items](./decide-items.md) steps 1 to 3 on the answers file in `answers`. Then, on the operator's word for that file, run `how.command`: a new run applies the approved items and publishes. When the operator approved no item, nothing is applied: run `how.record` instead, so that later runs receive the rejections and deferrals. If the command reports that the note no longer holds the text of the proposals, or that the write brief changed, the proposals are stale: say so, record the file with `how.record`, and run the pass again only on the operator's word.
+- the decision is made by the one who can make it;
+- its effect is in the note: the approved items were applied by their run, or the agreed sentence was written, and the diff holds that change and nothing else;
+- the note still validates, and the operator saw the diff;
+- the decision is recorded where a later run reads it, when it is one a later run could ask again: a rejection, a deferral or an answer to a stop;
+- what the change set in motion is itself settled or named: the continuation record of a run you started, another passage of the note that the change made wrong, and a note or document elsewhere that relied on what changed.
 
-**Findings awaiting decision.** A triage left one answers file per review result, listed in `answers`. Follow [decide items](./decide-items.md) steps 1 to 3 on each file. Then, on the operator's word for those files, run `how.command`, which names every file: a new run fixes the approved findings, one fix per result with an approved finding. When no file approves a finding, nothing is fixed: keep each file with `commonplace-review answers record FILE`. If the command reports that a result no longer matches the note, its findings are stale: tell the operator, keep that file with `answers record`, and run the command again without it on the operator's word.
+**Dropped.** The issue no longer applies, or the operator declined it. The reason is stated to the operator, and recorded where a later run reads it when a later run could raise the issue again.
 
-**A plan entry not run, for an operation that applies directly.** Read the entry's reason in `artifact/assessment.md` and the passages it concerns in the current note. Run `how.command` only when the reason still describes the current text. It runs `--plan` on a one-entry plan the run wrote under its `artifact/continue/`, listed in `evidence`, which keeps the entry's scope and the plan's purpose and must-keep claims. When the reason no longer holds, tell the operator and drop the entry.
+**Left.** The operator chose to leave it, or it is larger than this session, such as a rewrite or a change to other notes. It is left properly only when a later session can find it without this conversation: the episode entry names the issue, why it was left, what the next step is and what it waits on.
 
-**A plan entry not run, for a per-item operation.** Run it as above. When `how.command` names an answers file with `--answers`, the operator already decided its items; confirm with the operator before running it. Otherwise the new run ends with proposals: treat them as proposals awaiting decision.
+An issue is half done when the operator decided and nothing was applied; when a change was applied and its diff was never checked or shown; when a decision was only said in the session; when a run you started ended with open items that nobody took up; or when an issue was left without a record. Before the session ends, check each issue you took up against these states. Tell the operator which state each is in, and which issues were not taken up.
 
-**A plan entry that fixes a finding.** The finding was made on an earlier text. Open the review result in `evidence`: the run's copy of the result it read, which a later sweep does not replace, and find each passage its `quotes` name in the current note. Use the quotes to locate the passages, then reread them in context against the finding's reason. Run `how.command` only if every quoted passage survives unchanged and the reason still holds. If an edit elsewhere resolved the issue, drop the finding and explain why. If the passage moved beyond recognition or the judgment is uncertain, leave it for the next review and say so. A finding without quotes concerns the whole document: bring it to the operator.
+Changes to the note stay uncommitted unless the operator asks for a commit. Say so at the end, with the list of changed files.
 
-**An operation skipped as interactive.** `narrow-overclaims` needs the evidence for each claim, which only the conversation has. Ask the operator for it, then run `commonplace-review run revise NOTE --pass narrow-overclaims` with each piece of evidence as `--must-keep`, and the plan's `--purpose`. `split-out-a-treatment` writes a second note: do it with the operator under the instructions for writing a note, not through this command.
+## Limits
 
-**Claim questions from the assessment.** Tell the operator each one with its passage and report, and your recommendation against the note's purpose and write brief. Change the note for one only on the operator's word.
+- **The operator decides** proposals of a per-item operation, review findings, exact candidate texts, claim questions and whether to rewrite. [Decide items](./decide-items.md) and [approve a text](./approve-a-text.md) state how each is presented and recorded. Give your own recommendation; do not decide.
+- **Naming a file or run to a command is the approval.** Run a command that names an answers file or a run only on the operator's stated word for that exact file or run. Nothing else approves it.
+- **Change the note by hand only on the operator's word**, and check that the diff holds only what was agreed.
+- **Start a new run only on the operator's word.** Do not retry a failed command more than once.
+- **Do not settle an item whose inputs you could not check.** Bring it to the operator with what you found.
+- **Decisions and their reasons live in answers files**, kept by the command that consumes them or by `commonplace-review answers record FILE`. A decision that is only said in the session does not reach later runs.
+- **Tell the operator about every publication**: which plan entries it covers and where its diff is. A publication is uncommitted, and git reverses it.
 
-**A candidate held back for a validation warning.** Follow [approve a text](./approve-a-text.md#a-held-candidate). `how.command` publishes the exact candidate; `how.revised` publishes the operator's revision of it.
+## What you have
 
-**A plan that stopped on a proposal.** Follow [decide items](./decide-items.md#a-plan-that-stopped-on-a-proposal) on the file in `answers`, and keep it with `how.record`. `how.command` is the form of a run with a replacement plan; write that plan only on the operator's word.
+- **The continuation record.** `made-for` names the note's text when the run ended: its `sha256` and the file holding it. Every item was computed on that text, and the record is never updated. Each item has `id`, `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with its `effort`), `after` (items the run expected to come first), `how` and `evidence`. In `how`, `step` names the kind below; `command` proceeds, where a command exists; `record` keeps an answers file nothing consumes; `revised` publishes the operator's revision of a held candidate. `answers` lists the answers files an item waits on.
+- **The run report**, `report.json` in the run directory: the plan with its `purpose` and `must-keep`, the state of each entry, and `publications`.
+- **The assessment**, `artifact/assessment.md`: why each plan entry was chosen, the claim questions, and the findings not acted on.
+- **The note's runs**, under `kb/reports/state/review/runs/v2/revise/<note path without .md>/`, in time order by name; older runs are named by a hash. Each records its start text's hash in `start.json` and its publications in `published.json`.
+- **After a pause**, the earlier session's entry in the episode record.
 
-**A worker or review failure.** Read the failure in the report. If you can repair its cause, repair it and tell the operator; otherwise tell the operator what failed and where its output is. The failed entry and the entries after it are their own items, after this one. Start a new run only on the operator's word.
+The note may no longer hold the `made-for` text: an earlier step of this session, another run or a hand edit changed it. Account for the difference from the note's run records and `git diff`, and tell the operator what you cannot account for. A changed note does not end the work. The commands guard their own inputs: one that applies answers refuses when the note is not the text the proposals were made for, and no later change makes old proposals fresh.
 
-**Stale reviews.** A publication makes the stored review results whose criterion watches the changed parts stale; `what` counts the stale ones. Tell the operator once, at the end; `how.command` lists the stale results. Run a review only on the operator's word.
+A command you run may end with a continuation record of its own. Its items are part of the same work.
 
-## When the named actor cannot settle an item
+## What settles each kind of item
 
-The `actor` of an item is an estimate, not a permission. When a worker's run ends with a problem, or you cannot judge whether an entry still fits, bring the item to the operator with what you found. Do not retry the same command more than once, and do not decide an item whose inputs you could not check.
+**Proposals awaiting decision.** The operator decides each item of the answers file. `how.command` starts a new run that applies the approved items and publishes. When nothing is approved, `how.record` keeps the rejections and deferrals for later runs. When the command reports that the note or the write brief changed, the proposals are stale: keep the file with `how.record`; running the pass again is the operator's call.
+
+**Findings awaiting decision.** A triage left one answers file per review result. The operator decides each finding. `how.command` names every file and starts a run with one fix per result that has an approved finding. Keep a file with no approved finding, or one whose result no longer matches the note, with `commonplace-review answers record FILE`.
+
+**A plan entry not run, for an operation that applies directly.** `how.command` runs a one-entry plan the run wrote under `artifact/continue/`, which keeps the entry's scope and the plan's purpose and must-keep claims. The entry was chosen for an earlier text. It is worth running only while its reason in the assessment still describes the note; otherwise drop it and tell the operator why.
+
+**A plan entry not run, for a per-item operation.** As above. When `how.command` names an answers file with `--answers`, the operator already decided its items; confirm before running. Otherwise the new run ends with proposals for the operator.
+
+**A plan entry that fixes a finding.** The finding was made on an earlier text. `evidence` holds the run's copy of the review result, which a later sweep does not replace. The fix is worth running only when the passages its `quotes` name survive in the note and its reason still holds on rereading them in context. An issue an earlier edit resolved is dropped with that explanation. An uncertain one is left for the next review. A finding without quotes concerns the whole document and goes to the operator.
+
+**An operation skipped as interactive.** `narrow-overclaims` needs the evidence for each claim, which only the operator has: with it, `commonplace-review run revise NOTE --pass narrow-overclaims` takes each piece as `--must-keep`, with the plan's `--purpose`. `split-out-a-treatment` writes a second note, which is done with the operator under the instructions for writing a note.
+
+**Claim questions from the assessment.** Each is a small defect the passes cannot correct or a choice the assessor did not rank first. The operator answers each, and may decline. Check a claimed defect against the note yourself before recommending.
+
+**A candidate held back for a validation warning.** [Approve a text](./approve-a-text.md#a-held-candidate) applies. `how.command` publishes the exact candidate; `how.revised` publishes the operator's revision of it.
+
+**A plan that stopped on a proposal.** The run edited nothing because the assessor found something it judged no edit pass could correct. The operator's question is what to do with the note: follow the route the stop proposes, run a replacement plan (`how.command` gives the form), or leave it. [Decide items](./decide-items.md#a-plan-that-stopped-on-a-proposal) applies. Keep the operator's answer with `how.record`: it reaches the assessor of the next run on the note, which otherwise may stop on the same proposal.
+
+**A worker or review failure.** The report states the failure. Repair its cause when you can, and tell the operator; otherwise say what failed and where its output is. The failed entry and those after it are items of their own.
+
+**Stale reviews.** A publication makes stale the stored review results whose criterion watches the changed parts. `what` counts them and `how.command` lists them. The operator decides whether to review again.
+
+## When to recommend a new run
+
+Continuing stops being the cheaper path when the record no longer describes the note. Recommend a new run when the note changed in a way no record explains and the operator does not want to continue on it, when leftover entries keep failing to fit the current text, or when the operator changed the note's purpose, scope or write brief during the session. Say what was done, what was dropped and why, and what remains. Published edits stay in place.
 
 ## Pause between sessions
 
-If the operator leaves items for later, [record the episode](#record-the-episode) now. Its entry is what the next session starts from, so it must list the items done, dropped and remaining, and each change made to the note by hand, with what was agreed. The next agent reads that entry, follows [Before the items](#before-the-items) and asks which remaining items to take up. It does not repeat the run, and the entry approves nothing.
-
-## Stop continuing
-
-Stop and recommend a new run when any of these holds:
-
-- the note changed in a way no record explains, and the operator does not want to continue on the current text;
-- two leftover entries in a row no longer fit the current text;
-- the operator changed the note's purpose, scope or write brief during the session.
-
-Say which items were done, which were dropped and why, and which remain. Leave published edits in place. Do not start a new run unless the operator asks.
+When the operator leaves items for later, record the episode before the session ends. The next session starts from that entry, so it lists the items done, dropped and remaining, and each change made to the note by hand with what was agreed. The next agent does not repeat the run, and the entry approves nothing.
 
 ## Record the episode
 
-The episode record is a trial: it ends when the workshop `kb/work/full-pass-continuation/` closes. Until then, append to `kb/work/full-pass-continuation/episodes.md`: the run directory and the path of its continuation record, each item with its expected actor and who settled it or that it remains, each change made to the note by hand, each proposal the operator changed or rejected with the item's path, each entry dropped as no longer fitting, and any step that took long and that the workflow could have prepared. Record decisions and their reasons only in the answers files; do not copy them here.
+The episode record is a trial: it ends when the workshop `kb/work/full-pass-continuation/` closes. Until then, append to `kb/work/full-pass-continuation/episodes.md`: the run directory and its continuation record, each item with its expected actor and who settled it or that it remains, each change made to the note by hand, each proposal the operator changed or rejected with the item's path, each entry dropped as no longer fitting, and anything that took long and that the workflow could have prepared. Decisions and their reasons stay in the answers files; do not copy them.
 
 ## Verify
 
-- Every item the operator took up is done, dropped with a stated reason, or handed to the operator.
-- Each publication during the session was reported to the operator with its diff.
-- No answers file was named to a command, and no item decided, without the operator's word for it.
+- Every issue taken up is settled, dropped or left as [what resolved means](#what-resolved-means) defines those states, and the operator was told which. The operator was told which issues were not taken up.
+- No issue is half done: no decision without its effect, no applied change without a checked diff, no run of yours with open items nobody took up.
+- The operator was told of each publication during the session, with its diff.
+- No answers file or run was named to a command, and no operator's item decided, without the operator's word for it.
 - The episode is recorded.
