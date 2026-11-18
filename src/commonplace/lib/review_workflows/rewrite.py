@@ -36,30 +36,17 @@ when a referenced source's bytes changed after the capture.
 
 **Calls.** Each is a fresh worker with only its listed inputs:
 
-1. `reconstruct`: commission, brief, source list, captured sources, contracts.
-   Not the note. Output `reconstruction`, with the sections of
-   `RECONSTRUCTION_SECTIONS`.
-2. `claim-account`: commission, brief, reconstruction, contracts. Not the
-   note. Output `claim-account`, one `## ` section per material commitment.
-3. `candidate`: all of the above but the sources, the claim account, the
-   note's start text, and `kb-role` and `earlier-decisions` when the run has
-   them (below). Outputs `candidate`, which must keep the candidate bounds of
-   `edits.artifact_bounds()`, and `report`, with the sections of
-   `REPORT_SECTIONS`.
-4. `review`: a review operation (below) whose target is the candidate.
-   Output: a typed review result (`types/review-result.md`) with a verdict.
-   `fail` blocks; `warn` accepts with findings; `pass` accepts with none.
-5. On `fail`, one repair: `candidate-repair` also receives the typed review
-   as `review` and the blocked candidate, then `review-repair`, a fresh review
-   of the repaired candidate. A second `fail` ends the run; nothing is
-   held or published.
+One writer selects and writes from the commission, sources and old note. The
+old note is not independent support. Incoming citation passages inform the
+writer and reviewer; they do not bind claim selection. The independent
+review can require one repair followed by a fresh review.
 
 **The review operation.** Its criterion is the library instruction
 `criteria.REWRITE_REL`, of kind `criteria.REWRITE`; its target is the
 candidate text, judged in place of the note's file. Its operational inputs
-are the commission, brief, reconstruction, claim account, the candidate's
+are the commission, brief, sources, inbound passages, the candidate's
 report as `candidate-report`, the note's start text as `start`, the
-contracts, and `kb-role` and `earlier-decisions` when the run has them.
+contracts, and `earlier-decisions` when the run has them.
 `_review()` runs it alone through the sweep (`revise._sweep()`), publishing
 nothing, in its own run under `REVIEWS`, named by the hash of the candidate
 and those inputs, so another candidate or other inputs is a new review. The
@@ -71,22 +58,7 @@ finding's reason states its basis and its required change. Its
 `target-sha256` binds it to the candidate; a result of any other text is
 refused. The run keeps a copy as `artifact/review-<n>.md`.
 
-The reconstruct and claim-account workers are not given the note, and their
-prompt tells them not to open it; they can still read the checkout. The
-isolation is by supplied inputs and instruction, not by sandbox. They also
-receive neither `kb-role` nor `earlier-decisions`: both describe the note's
-current text, and the claim selection must come from the sources alone.
-
-**What revise workers also receive.** Before the candidate call, the run
-obtains the note's role report once and keeps it in `ROLE_FILE`: a fresh one
-the full revise procedure kept for the same text (`revise.stored_role()`),
-which costs no launch, or else one call of the role report alone, on the
-review profile, in `ROLE_DIR` under the run (`revise.role_report()`). Its
-`## Role` section is the input `kb-role` of the candidate, repair and review
-calls. When the run starts, code collects the operator's earlier decisions
-on the note from the other revise and rewrite runs (`decisions.earlier()`)
-and keeps them in `EARLIER_FILE`; when there is at least one, the same calls
-receive them as `earlier-decisions`. Both files record what the run read.
+Earlier operator decisions reach both workers when present.
 
 **Publication.** After `pass` or `warn`, a candidate equal to the start text
 ends the run with no change. Otherwise the run holds the candidate
@@ -136,6 +108,7 @@ from commonplace.lib.review_workflows import (
     decisions,
     edits,
     gates,
+    inbound,
     observations,
     result_contract,
     results,
@@ -152,29 +125,19 @@ from commonplace.lib.review_workflows.edits import (
 
 WORKFLOW = "rewrite"
 INSTRUCTIONS_DIR = "instructions/rewrite-a-note"
-INSTRUCTIONS = {
-    "reconstruct": "reconstruct-the-sources-of-a-rewrite.md",
-    "claim-account": "account-for-the-claims-of-a-rewrite.md",
-    "candidate": "write-a-rewrite-candidate.md",
-}
-"""The role instruction of each worker step, under `INSTRUCTIONS_DIR`; the review's is `criteria.REWRITE_REL`."""
+WRITER = "write-a-rewrite-candidate.md"
 INPUTS = "rewrite-inputs.json"
 """The commission, brief, sources and contracts the run captured: what its workers read."""
 COMMISSION_SECTIONS = ("Current direction",)
 """The commission's sections every commission has."""
 BRIEF_SECTIONS = ("Intended contribution", "Must keep", "Must exclude", "Reserved decisions")
 """The commission's sections that repeat the write brief's: required only when the note has no brief."""
-RECONSTRUCTION_SECTIONS = ("Support", "Inference", "Conflicts", "Scope", "Gaps")
-REPORT_SECTIONS = ("Kept", "Replaced", "Omitted")
+REPORT_SECTIONS = ("Affected citations",)
 BLOCK = "fail"
 """The review outcome that blocks the candidate; `warn` and `pass` accept it."""
 ATTEMPTS = 3
 COMMAND = "commonplace-review run rewrite {artifact} --commission FILE"
-KB_ROLE, EARLIER_DECISIONS = revise.KB_ROLE, revise.EARLIER_DECISIONS
-ROLE_FILE = "role.json"
-"""The role report the run used and its `## Role` section: a record of what the run read."""
-ROLE_DIR = "role"
-"""The run of the role report alone, under the rewrite run, when no fresh stored one exists."""
+EARLIER_DECISIONS = revise.EARLIER_DECISIONS
 EARLIER_FILE = revise.EARLIER_FILE
 """The operator's earlier decisions the run used: a record of what it read."""
 REVIEWS = "reviews"
@@ -334,7 +297,6 @@ class RewriteReport:
     commission: str | None = None     # the captured commission in the run, and where it came from
     origin: str | None = None
     brief: str | None = None          # the captured write brief in the run, when the note declares one
-    role: dict | None = None          # the role report the candidate and review calls used, and whether it was reused
     sources: list[dict] = field(default_factory=list)   # path, role, sha256, and mode: captured or referenced
     steps: list[dict] = field(default_factory=list)     # each answered call: job, key, model and its files
     reviews: list[dict] = field(default_factory=list)   # each review: its copy, run, candidate, hash and outcome
@@ -372,16 +334,13 @@ Do one step of the rewrite of one note. Nobody will answer questions. If you \
 cannot do it, write {problem} instead of guessing.
 
 The note is `{artifact}` in this repository. The instruction for this step is \
-{instruction}; follow it. {withheld}{given}
+{instruction}; follow it. {given}
 The inputs, by role:
 {inputs}
 Output:
 {outputs}- {no_writes}
 """
 
-WITHHELD = ("You do not receive the note's text, and you must not read it: do not open `{artifact}`, its write "
-            "brief file, any earlier text of it in git history or under kb/reports/, or any file that quotes it. "
-            "Read no repository file except the referenced sources the source list names. ")
 GIVEN = {
     "candidate": ("The note's text when the run started is `note`; it is not evidence for its own claims. "
                   "The candidate keeps the note's frontmatter `title`, `type` and `brief` declaration and its "
@@ -400,39 +359,23 @@ ROLES = {
     "type-contract": "the note's type spec",
     "collection-contract": "the contract of the note's collection",
     "sources": "the source list",
-    "reconstruction": "the reconstruction of the sources",
-    "claim-account": "the claim account",
     "note": "the note's text when the run started",
     "review": "the typed review result that blocked the candidate",
     "blocked-candidate": "the candidate the review blocked",
-    KB_ROLE: "the note's role in the KB: the `## Role` section of its role report",
+    inbound.INPUT: "the passages that cite the note; not evidence or preservation requirements",
     EARLIER_DECISIONS: "the operator's decisions in earlier runs on this note",
 }
-OUTPUTS = {
-    "reconstruct": ("- Write the reconstruction to {reconstruction}: Markdown with the sections `## Support`, "
-                       "`## Inference`, `## Conflicts`, `## Scope` and `## Gaps`. Write `None.` in a section "
-                       "with nothing in it.\n"),
-    "claim-account": ("- Write the claim account to {claim_account}: Markdown with one `## ` section per material "
-                      "commitment of the reconstruction, saying how the note treats it.\n"),
-    "candidate": ("- Write the complete candidate text of the note, frontmatter included, to {candidate}.\n"
-                  "- Write the reconciliation report to {report}: Markdown with the sections `## Kept`, "
-                  "`## Replaced` and `## Omitted`, which together account for every material commitment of "
-                  "the note's text with the reason. Write `None.` in a section with nothing in it.\n"),
-}
+OUTPUTS = ("- Write the complete candidate text, frontmatter included, to {candidate}.\n"
+           "- Write the citation consequences to {report}, under `## Affected citations`.\n")
 
 
 def _prompt(step: str, artifact: str, inputs: dict[str, str]) -> str:
-    kind = "candidate" if step.startswith("candidate") else step
     listed = "".join(f"- `{name}` ({ROLES.get(name, 'a captured source')}): {input_ref(name)}\n"
                      for name in inputs if name != "instruction")
-    given = GIVEN.get(step, GIVEN.get(kind, ""))
     return PROMPT.format(
         problem=PROBLEM_REF, artifact=artifact, instruction=input_ref("instruction"),
-        withheld=WITHHELD.format(artifact=artifact) if kind in ("reconstruct", "claim-account") else "",
-        given=given, inputs=listed,
-        outputs=OUTPUTS[kind].format(reconstruction=output_ref("reconstruction"),
-                                     claim_account=output_ref("claim-account"), candidate=output_ref("candidate"),
-                                     report=output_ref("report")),
+        given=GIVEN[step], inputs=listed,
+        outputs=OUTPUTS.format(candidate=output_ref("candidate"), report=output_ref("report")),
         no_writes=NO_WRITES)
 
 
@@ -464,10 +407,6 @@ class _Steps:
         path = _rel(self.root, self.run.accept(name, text))
         self.report.steps[-1]["files"][Path(name).stem] = path
         return path
-
-
-def _instruction(step: str) -> str:
-    return (library_root() / INSTRUCTIONS_DIR / INSTRUCTIONS[step]).read_text(encoding="utf-8")
 
 
 def _candidate_check(root: Path, artifact: str, start: str, baseline: set[str], blocked: str | None):
@@ -542,12 +481,10 @@ def store_accepted(root: Path, run_dir: Path, published: dict) -> dict:
 
 
 def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commission: Path,
-            review: Profile | None = None, timeout: float | None = None, harnesses=HARNESSES) -> RewriteReport:
+            timeout: float | None = None, harnesses=HARNESSES) -> RewriteReport:
     """Rewrite the repository-relative `artifact` in the new run at `run_dir`, under the `commission` file.
 
-    The note's current text is the start text. `review` is the profile of
-    the role report when it must run; without it, `profile`. ValueError (a
-    command error) for a commission that breaks `read_commission()`.
+    The note's current text is the start text. Invalid commissions raise ValueError.
     """
     root = root.resolve()
     report = RewriteReport(_rel(root, run_dir.resolve()), artifact)
@@ -561,8 +498,7 @@ def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commi
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses) as run:
             earlier = decisions.earlier(root, artifact, run_dir)
             observations.atomic_json(run_dir / EARLIER_FILE, {"decisions": earlier})
-            _steps(_Steps(run, root, artifact, profile, report, timeout, harnesses), start, captured, earlier,
-                   lambda: _role(run_dir, root, artifact, start, review or profile, timeout, harnesses, report))
+            _steps(_Steps(run, root, artifact, profile, report, timeout, harnesses), start, captured, earlier)
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
@@ -571,33 +507,8 @@ def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commi
     return report
 
 
-def _role(run_dir: Path, root: Path, artifact: str, start: str, profile: Profile, timeout: float | None, harnesses,
-          report: RewriteReport) -> dict[str, str] | None:
-    """The `kb-role` input, origin and text, from the note's role report; None when it has no `## Role` section.
-
-    The report is a fresh stored one (`revise.stored_role()`), without a
-    launch, or else the role report run alone in `ROLE_DIR`
-    (`revise.role_report()`). The run keeps which in `ROLE_FILE`.
-    """
-    stored = revise.stored_role(root, artifact, start)
-    given = stored or revise.role_report(root, artifact, start, run_dir / ROLE_DIR, profile, timeout, harnesses,
-                                         WORKFLOW)
-    found = {"report": None if given is None else given.path, "reused": stored is not None,
-             "section": None if given is None else revise.role_section(given.text)}
-    observations.atomic_json(run_dir / ROLE_FILE, found)
-    report.role = {"report": found["report"], "reused": found["reused"]}
-    return None if found["section"] is None else {"origin": found["report"], "text": found["section"]}
-
-
-def _steps(steps: _Steps, start: str, captured: dict, earlier: list[dict], role) -> None:
-    """Run the calls to an accepted candidate, then hold it for the operator (`edits.hold()`).
-
-    `earlier` holds the operator's earlier decisions on the note; `role()`
-    gives the `kb-role` input. The candidate, repair and review calls
-    receive both, each when it has content; the first two calls receive
-    neither. The held record names the accepted review, which
-    `store_accepted()` stores after publication.
-    """
+def _steps(steps: _Steps, start: str, captured: dict, earlier: list[dict]) -> None:
+    """Write from the captured inputs, review and hold the accepted candidate."""
     run, root, artifact, report = steps.run, steps.root, steps.artifact, steps.report
     sources = captured["sources"]
     report.origin = captured["commission"]["origin"]
@@ -613,29 +524,17 @@ def _steps(steps: _Steps, start: str, captured: dict, earlier: list[dict], role)
                    for role, contract in captured["contracts"].items()},
                 START_INPUT: {"origin": _rel(root, run.accept(START, start)), "text": start}}
 
-    inputs = {"instruction": _instruction("reconstruct"), **_texts(supplied, START_INPUT), "sources": listing,
-              **{source["input"]: source["text"] for source in sources if source["mode"] == "captured"}}
-    answer = steps.ask("reconstruct", inputs, ["reconstruction"],
-                       lambda outputs: _missing(outputs["reconstruction"], RECONSTRUCTION_SECTIONS))
-    reconstruction = answer.outputs["reconstruction"]
-    supplied["reconstruction"] = {"origin": steps.keep("reconstruction.md", reconstruction), "text": reconstruction}
-
-    inputs = {"instruction": _instruction("claim-account"), **_texts(supplied, START_INPUT)}
-    answer = steps.ask("claim-account", inputs, ["claim-account"],
-                       lambda outputs: [] if sections(outputs["claim-account"])
-                       else ["the claim account has no `## ` section; write one per material commitment"])
-    account = answer.outputs["claim-account"]
-    supplied["claim-account"] = {"origin": steps.keep("claim-account.md", account), "text": account}
-
-    kb_role = role()
-    if kb_role:
-        supplied[KB_ROLE] = kb_role
+    supplied["sources"] = {"origin": _rel(root, run.artifact / "sources.md"), "text": listing}
+    supplied.update({source["input"]: {"origin": source["path"], "text": source["text"]}
+                     for source in sources if source["mode"] == "captured"})
+    supplied[inbound.INPUT] = inbound.supplied(root, artifact)
+    instruction = (library_root() / INSTRUCTIONS_DIR / WRITER).read_text(encoding="utf-8")
     if earlier:
         supplied[EARLIER_DECISIONS] = {"origin": _rel(root, run.root / EARLIER_FILE),
                                        "text": decisions.earlier_text(earlier)}
     common = {**_texts(supplied, START_INPUT), "note": start}
     baseline = edits.validation_fails(root, artifact, start)
-    answer = steps.ask("candidate", {"instruction": _instruction("candidate"), **common}, ["candidate", "report"],
+    answer = steps.ask("candidate", {"instruction": instruction, **common}, ["candidate", "report"],
                        _candidate_check(root, artifact, start, baseline, None))
     candidate, written = answer.outputs["candidate"], answer.outputs["report"]
     steps.keep("candidate-1.md", candidate)
@@ -644,7 +543,7 @@ def _steps(steps: _Steps, start: str, captured: dict, earlier: list[dict], role)
     if result.outcome == BLOCK:
         report.repair_used = True
         review = (run.artifact / "review-1.md").read_text(encoding="utf-8")
-        inputs = {"instruction": _instruction("candidate"), **common, "review": review, "blocked-candidate": candidate}
+        inputs = {"instruction": instruction, **common, "review": review, "blocked-candidate": candidate}
         answer = steps.ask("candidate-repair", inputs, ["candidate", "report"],
                            _candidate_check(root, artifact, start, baseline, candidate))
         candidate, written = answer.outputs["candidate"], answer.outputs["report"]

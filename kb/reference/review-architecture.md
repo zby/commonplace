@@ -145,10 +145,7 @@ input, and brief changes do not stale gate results.
 A rewrite run (`run rewrite`) captures its commission, the note's write
 brief, its sources and the note's contracts once, in `rewrite-inputs.json`;
 every call receives the brief, and a changed commission or brief needs a
-new run. Code chooses each worker's inputs: the reconstruct and
-claim-account workers do not receive the note, and their prompt forbids
-opening it. Workers can still read the checkout, so this isolation rests on
-supplied inputs and instruction, not on a sandbox. A source that git
+new run. One writer and an independent reviewer receive the sources, old note and bounded incoming citation passages. Neither the old text nor its citations are independent evidence. A source that git
 ignores is referenced by path and SHA-256 and never copied into the run.
 The review is a review operation run alone through the sweep: its criterion
 is the rewrite's review instruction, its target the candidate text in place

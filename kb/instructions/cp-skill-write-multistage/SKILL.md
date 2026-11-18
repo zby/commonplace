@@ -44,35 +44,7 @@ recommendation.
 
 ## A. Rewrite an existing note
 
-The workflow runs four fresh workers in order. A reconstructor rebuilds the
-evidence from the authorized sources without the note. A claim-account
-worker decides, still without the note, how each reconstructed commitment is
-treated. An author then receives the frozen claim account and the note, and
-writes the candidate with a report that reconciles the note's commitments. An
-independent reviewer judges the exact candidate as a review operation, with
-a typed review result: `fail` blocks it, `warn` accepts it with findings, and
-`pass` accepts it with none. One repair is allowed: on `fail`, a fresh author
-receives the review and a fresh reviewer judges the repair. A second `fail`
-ends the run unpublished.
-
-This is a deliberate change from part B. Part B uses one author for the
-claim account and the candidate, so that claim selection and prose stay one
-judgment. In the workflow the two author calls are fresh workers, and the
-frozen claim account carries the judgment between them.
-
-The first two workers are not given the note, and their prompt forbids
-opening it. They can still read the checkout. The isolation is by supplied
-inputs and instruction, not by sandbox.
-
-The author and the reviewer also receive what the revise procedures give
-their workers. Before the candidate, the run obtains the note's role report:
-a fresh one kept by `commonplace-review run revise <note> --full` on the same
-text, without a launch, or else one role-report call. Its `## Role` section,
-which lists the terms and claims other notes rely on, reaches the author and
-the reviewer as `kb-role`. The operator's decisions in earlier revise and
-rewrite runs on the note reach them as `earlier-decisions`. The first two
-workers receive neither, so that claim selection comes from the sources
-alone.
+One writer receives the commission, authorized sources, existing note, incoming citation passages and earlier operator decisions. It selects claims while writing. The old note and citations are not independent support. An independent reviewer judges the exact candidate from the same evidence. If it fails, one repair and a fresh review are allowed. Changed candidates are held for the operator.
 
 ### A1. Fix the commission with the user
 
@@ -103,13 +75,7 @@ amended brief, and say in the commission which item was amended. A worker
 that finds a conflict between the commission and the brief reports a
 problem, and the run stops.
 
-A role report on the note states which of its terms and claims other notes
-rely on: the one `commonplace-review run revise <note> --full` runs, or the
-one a rewrite run obtains (its report's `role` names it). When a role report
-lists relied-on terms or claims that the brief does
-not keep, tell the user and offer to add them to the brief's Must keep, or to
-create the brief when the note has none. Never amend or create a brief
-without the user's word. No code writes a brief.
+Incoming citations may suggest an angle; they are not additions to Must keep. If a use loses support, discuss the affected passage with the operator. The default is to remove the reference and assess that passage separately, not to restore the claim.
 
 ### A2. Ground the sources
 
@@ -199,10 +165,7 @@ Read the JSON report and act on it:
   decision, settle it in the commission and run again the same way.
 - **`stopped` with a worker problem:** read it to the user. A conflict
   between the commission and the brief needs a changed commission or an
-  amended brief, then a new run. A claim that dependents rely on and that
-  the claim account leaves out needs the user's decision: keep it, or drop
-  it and say so in the current direction, then a new run. Dependents a
-  change reaches are the user's separate work. After a transient problem,
+  amended brief, then a new run. A changed dependency does not block a rewrite. After a transient problem,
   run the command again on the user's word.
 - **`stopped` because a referenced source changed:** confirm the new text is
   wanted, then run the command again.

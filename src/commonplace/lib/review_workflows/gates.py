@@ -449,6 +449,9 @@ def prompt(call: Call | Pair, problems: list[list[str]] = ()) -> str:
     call = call if isinstance(call, Call) else Call(call.job, (call,))
     first = call.pairs[0]
     reading = READING.format(note_dir=Path(first.note).parent.as_posix())
+    if first.kind == criteria.REWRITE:
+        reading = ("Use the supplied inputs. For a referenced source, read only the exact repository path named "
+                   "in supplied-sources. Do not browse other runs, delegate, or copy full snapshots into outputs.")
     if len(call.pairs) == 1:
         wrapper = {criteria.TYPE: TYPE_WRAPPER, criteria.COLLECTION: COLLECTION_WRAPPER,
                    criteria.COMPRESSION: COMPRESSION_WRAPPER,

@@ -179,16 +179,10 @@ YAML frontmatter naming `note` and `sources` (each a `path` and a `role`)
 and the section Current direction. A note without a write brief also needs
 the sections Intended contribution, Must keep, Must exclude and Reserved
 decisions; with a brief they are optional and hold only what the rewrite
-adds to it. Fresh workers reconstruct the sources and
-account for the claims without the note, then write a candidate with the
-note's text, and a review operation judges the exact candidate with a typed
-review result: `fail` blocks it and takes one repair, `warn` or `pass`
-accepts it. Before the candidate, the run obtains the note's role report: a
-fresh one kept by `run revise --full` on the same text, or one call of the
-role report alone on the profile file's `default` profile. Its `## Role`
-section reaches the candidate, repair and review calls as `kb-role`, with
-the operator's earlier decisions on the note as `earlier-decisions` when
-there are any. The run always holds its accepted candidate, as `run revise`
+adds to it. One writer drafts from the sources and old note. Both writer
+and reviewer receive incoming citation passages and earlier decisions.
+A typed review judges the exact candidate: fail takes one repair;
+warn or pass accepts it. The run always holds its accepted candidate, as `run revise`
 holds one with a new warning; `publish RUN` publishes it. When the operator
 publishes exactly the judged candidate, the review becomes the note's
 current result, so `run revise --triage` presents its `warn` findings.
@@ -603,11 +597,10 @@ def _rewrite(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                                                                  (root / artifact).read_text(encoding="utf-8")))
     profile = (load_profile(root, arguments.profile, gates.profiles()) if arguments.profile is not None
                else edit_operations.effort_profiles(root, {})["judgment"])
-    review = load_profile(root, None, gates.profiles())
     run_dir = edits.new_run_dir(root, rewrite.WORKFLOW, artifact)
     observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": rewrite.WORKFLOW,
-                                               "profile": asdict(profile), "review-profile": asdict(review)})
-    report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission, review=review,
+                                               "profile": asdict(profile)})
+    report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission,
                              timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
