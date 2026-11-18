@@ -137,9 +137,10 @@ A held candidate stays in the run as `artifact/final.md` with
 `artifact/final.diff`, and the report's `held` names the warnings and the
 command that publishes it. `publish RUN` publishes that exact candidate:
 naming the run is the operator's approval. It is refused unless the note
-still holds the run's start text, the write brief is the one the run
-captured, `final.md` is the candidate the run held and the run published
-nothing. `--revised FILE` publishes the operator's full revised text instead,
+still holds the text the candidate was held over (the run's start text, or
+its last automatic publication), the write brief is the one the run
+captured, `final.md` and `final.diff` are the ones the run held and the
+operator has not published the candidate already. `--revised FILE` publishes the operator's full revised text instead,
 read from a file outside the run's `artifact/`, after the candidate checks
 (frontmatter, H1 and validation); the run keeps it as `artifact/revised.md`
 with `artifact/revised-from-final.diff` and `artifact/revised.diff`. `publish`

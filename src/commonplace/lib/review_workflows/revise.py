@@ -13,7 +13,8 @@ Every invocation is a new run, in `edits.new_run_dir()`, named by its UTC
 start time under the note's path; the run records the hash of its start
 text (`edits.begin()`). No run is repeated or resumed. A run ends in one of
 three ways: it completed, it needs continuation, or it failed. It publishes
-at most once, as its last write to the note. What it could not finish is
+before it asks a per-item pass for proposals and at the end of its plan, so
+at most twice, and writes nothing to the note after it ends. What it could not finish is
 its **continuation record** (`CONTINUATION`, `continuation()`), also given in
 the report: the text it was made for and each unfinished item in dependency
 order, with the actor expected to resolve it, the items to settle first,

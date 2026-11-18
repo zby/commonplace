@@ -12,9 +12,10 @@ Every invocation of a revise or rewrite workflow is a new run, in
 `new_run_dir()`: `<runs>/<workflow>/<note path without .md>/<UTC stamp>/`.
 No run is repeated or resumed. The run records the hash of its start text
 and of the brief it captured in `START_RECORD` (`begin()`). A run publishes
-at most once: automatically (`record_publication()`), or, for a candidate it
-held (`hold()`), when a later `commonplace-review publish RUN` names it
-(`publish_held()`). Each publication is recorded in `PUBLISHED`.
+automatically (`record_publication()`), before a per-item pass is asked for
+proposals and at the end of its plan. A candidate it held (`hold()`) is
+published at most once, when a later `commonplace-review publish RUN` names
+it (`publish_held()`). Each publication is recorded in `PUBLISHED`.
 
 `guarded_changes()` is the checkout guard's finding minus the workflow's own
 write: the file is dropped from the changed paths when it holds exactly the
@@ -304,7 +305,7 @@ def made_for(run_dir: Path) -> str | None:
 # recorded in `PUBLISHED` in the run directory.
 
 PUBLISHED = "published.json"
-"""The run's publications, in order; a run publishes at most once."""
+"""The run's publications, in order: its automatic ones, then the operator's publication of a held candidate."""
 PUBLICATIONS_DIR = "publications"
 """Where a run keeps, under `artifact/`, each text it published and its diff."""
 AUTOMATIC = "automatic"
