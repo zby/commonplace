@@ -1,10 +1,11 @@
 """The rewrite workflow through the CLI with a fake worker: inputs per call, the review operation, repair,
-publication and the accepted review as the note's current result."""
+the held candidate, its publication and the accepted review as the note's current result."""
 from __future__ import annotations
 
 import dataclasses
 import functools
 import json
+import re
 import shlex
 import subprocess
 import sys
@@ -36,7 +37,6 @@ from tests.commonplace.review_workflows.test_revise import (
     REVIEW_FAKE,
     REVIEW_FILES,
     ROLE,
-    approve_publication,
     artifact_file,
     decide,
     note_text,
@@ -116,6 +116,8 @@ if kind == "reconstruct":
 elif kind == "claim-account":
     outputs["claim-account"].write_text("# Claim account\n\n## Alpha holds\n\nState it.\n")
 else:
+    if Path("drift-source").exists():
+        Path("kb/sources/.snapshots/alpha/page.md").write_text("Changed while the worker ran.\n")
     text = inputs["note"].read_text()
     if Path("same-text").exists():
         candidate = text
@@ -200,45 +202,53 @@ def repo(tmp_path, monkeypatch):
     commission.write_text(COMMISSION)
     return root, {"fake": harness}, log, commission
 
-
-def rewrite(repo, capsys, *args, commission=True):
+def rewrite(repo, capsys, *args):
     before = repo[2].read_text().splitlines()
-    given = ["--commission", str(repo[3])] if commission else []
-    code = main(["run", "rewrite", NOTE_PATH, *given, *args, "--timeout", "30"], harnesses=repo[1])
+    code = main(["run", "rewrite", NOTE_PATH, "--commission", str(repo[3]), *args, "--timeout", "30"],
+                harnesses=repo[1])
     captured = capsys.readouterr()
     return code, json.loads(captured.out) if code != 2 else captured.err, repo[2].read_text().splitlines()[len(before):]
 
 
-def publish(repo, capsys, report):
-    approve_publication(repo, capsys, report)
-    code, done, launches = rewrite(repo, capsys, commission=False)
-    assert code == 0 and done["complete"] and done["applied"], done["waiting-for"]
-    assert launches == [], "an approved publication replays every call"
-    return done
+def publish(repo, capsys, report, *args):
+    """Publish the candidate the run held, on the operator's word; no worker is launched."""
+    before = repo[2].read_text()
+    code = main(["publish", report["run-dir"], *args], harnesses=repo[1])
+    captured = capsys.readouterr()
+    assert code == 0, captured.err
+    assert repo[2].read_text() == before, "publishing launches nothing"
+    return json.loads(captured.out)
 
 
 def calls(repo):
     return {call["kind"]: call for call in captured_inputs(repo[2])}
 
 
-def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(repo, capsys):
+def test_a_rewrite_runs_its_calls_and_holds_its_candidate_for_the_operator(repo, capsys):
     original = note_text(repo)
     brief = add_brief(repo[0], NOTE_PATH)
     subprocess.run(["git", "add", "."], cwd=repo[0], check=True)
     subprocess.run(["git", "commit", "-q", "-m", "brief"], cwd=repo[0], check=True)
     start = note_text(repo)
     code, report, launches = rewrite(repo, capsys)
-    assert code == 0 and launches == STEPS and not report["applied"] and report["guard"]["clean"]
-    assert report["waiting-for"]["file"].endswith("/artifact/publication-answers.md")
+    assert code == 0 and launches == STEPS and not report["complete"] and report["guard"]["clean"]
+    held = report["held"]
+    assert held["candidate"] == report["proposed"] == f"{report['run-dir']}/artifact/final.md"
+    assert held["command"] == f"commonplace-review publish {report['run-dir']}" and held["command"] in held["what"]
     assert [review["outcome"] for review in report["reviews"]] == ["pass"] and not report["repair-used"]
     assert report["accepted"] == {"review": report["reviews"][0]["review"], "outcome": "pass", "warn-findings": []}
-    assert "finding(s) of level warn" not in report["waiting-for"]["what"]
+    assert "finding(s) of level warn" not in held["what"]
     assert note_text(repo) == start != original
     run = repo[0] / report["run-dir"]
-    assert report["run-dir"].startswith("kb/reports/state/review/runs/v2/rewrite/kb/notes/alpha/")
+    assert re.fullmatch(r"kb/reports/state/review/runs/v2/rewrite/kb/notes/alpha/[0-9]{8}T[0-9]{6}Z(-[0-9]+)?",
+                        report["run-dir"])
+    started = json.loads((run / edits.START_RECORD).read_text())
+    assert started == {"note": NOTE_PATH, "sha256": observations.sha(start.encode()),
+                       "brief-sha256": observations.sha(brief.read_bytes())}
     for name in ("commission.md", "brief.md", "sources.md", "start.md", "reconstruction.md", "claim-account.md",
                  "candidate-1.md", "candidate-1-report.md", "review-1.md", "final.md", "final.diff"):
         assert (run / "artifact" / name).is_file(), name
+    assert json.loads((run / edits.HELD).read_text())["review"] == report["accepted"]["review"]
     found = calls(repo)
     contracts = {"type-contract", "collection-contract"}
     shared = {"instruction", "commission", "brief", *contracts}
@@ -260,12 +270,10 @@ def test_a_rewrite_runs_its_calls_to_publication_and_writes_only_after_approval(
     assert all(call["inputs"]["brief"] == brief.read_text() for kind, call in found.items() if kind != "review")
     assert found["review"]["inputs"]["supplied-brief"] == brief.read_text()
     assert found["review"]["inputs"]["candidate"] == artifact_file(repo, report, "final.md").read_text()
-    code, again, launches = rewrite(repo, capsys, commission=False)
-    assert code == 0 and launches == [] and again["waiting-for"] == report["waiting-for"]
-    assert note_text(repo) == start
-    done = publish(repo, capsys, again)
+    done = publish(repo, capsys, report)
     assert note_text(repo) == artifact_file(repo, report, "final.md").read_text()
     assert "Alpha, rewritten from sources" in note_text(repo) and "user-verified" not in note_text(repo)
+    assert done["published"]["decided-by"] == "operator" and done["published"]["entries"] == []
     assert done["current-result"]["freshness"] == "fresh" and done["not-current"] is None
     stored = results.read_result(repo[0] / done["current-result"]["result"])     # validates as a review result
     assert stored.outcome == "pass" and stored.criterion == f"kb/{criteria.REWRITE_REL}"
@@ -283,9 +291,14 @@ def test_an_ignored_source_is_referenced_by_path_and_hash_and_never_copied(repo,
     assert not any("SNAPSHOT-MARKER" in text for text in reconstruct["inputs"].values())
     run = repo[0] / report["run-dir"]
     assert not any(b"SNAPSHOT-MARKER" in path.read_bytes() for path in run.rglob("*") if path.is_file())
-    (repo[0] / SNAPSHOT).write_text(SNAPSHOT_TEXT + "Changed.\n")       # a referenced source must not drift
-    code, changed, launches = rewrite(repo, capsys, commission=False)
-    assert code == 1 and "referenced sources changed" in changed["stopped"] and launches == []
+
+
+def test_a_referenced_source_that_drifts_during_the_run_holds_nothing(repo, capsys):
+    (repo[0] / "drift-source").touch()
+    code, report, launches = rewrite(repo, capsys)
+    assert code == 1 and "referenced sources changed after the run captured them" in report["stopped"]
+    assert SNAPSHOT in report["stopped"] and launches == STEPS
+    assert report["held"] is None and not artifact_file(repo, report, "final.md").exists()
 
 
 def test_a_block_takes_one_repair_and_a_fresh_review_of_the_repaired_candidate(repo, capsys):
@@ -306,17 +319,17 @@ def test_a_block_takes_one_repair_and_a_fresh_review_of_the_repaired_candidate(r
     assert note_text(repo) == final
 
 
-def test_a_second_block_ends_the_run_with_nothing_published(repo, capsys):
+def test_a_second_block_ends_the_run_with_nothing_held(repo, capsys):
     original = note_text(repo)
     (repo[0] / "block-all").touch()
     code, report, launches = rewrite(repo, capsys)
     assert code == 0 and report["complete"] and launches == [*STEPS, "candidate-repair", "review-repair"]
-    assert report["blocked"] and "--restart" in report["blocked"] and report["waiting-for"] is None
-    assert not report["applied"] and note_text(repo) == original
-    assert not artifact_file(repo, report, "publication-answers.md").exists()
+    assert report["blocked"] and "--commission FILE" in report["blocked"] and "--restart" not in report["blocked"]
+    assert report["held"] is None and note_text(repo) == original
+    assert not artifact_file(repo, report, "final.md").exists()
     assert artifact_file(repo, report, "review-2.md").is_file()
-    code, again, launches = rewrite(repo, capsys, commission=False)
-    assert launches == [] and again["blocked"] == report["blocked"]
+    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert "holds no candidate to publish" in capsys.readouterr().err
 
 
 def test_a_review_result_of_another_text_is_refused(repo, capsys, monkeypatch):
@@ -343,7 +356,7 @@ def test_a_review_finding_without_its_basis_and_required_change_is_asked_again(r
     assert "`Basis:` and then `Required change:`" in retried["prompt"]
 
 
-def test_a_warned_candidate_reaches_publication_and_its_findings_become_triageable(repo, capsys):
+def test_a_warned_candidate_is_held_and_its_findings_become_triageable(repo, capsys):
     (repo[0] / "block-1").touch()
     (repo[0] / "warn-review").touch()
     code, report, launches = rewrite(repo, capsys)
@@ -352,7 +365,7 @@ def test_a_warned_candidate_reaches_publication_and_its_findings_become_triageab
     review = report["reviews"][1]["review"]
     [warned] = report["accepted"]["warn-findings"]
     assert report["accepted"]["review"] == review and warned["quotes"] == ["Alpha, rewritten from sources"]
-    assert f"The accepted review {review} left 1 finding(s) of level warn" in report["waiting-for"]["what"]
+    assert f"The accepted review {review} left 1 finding(s) of level warn" in report["held"]["what"]
     done = publish(repo, capsys, report)
     assert done["current-result"]["freshness"] == "fresh"
     criterion = f"kb/{criteria.REWRITE_REL}"
@@ -369,13 +382,12 @@ def test_a_warned_candidate_reaches_publication_and_its_findings_become_triageab
     assert code == 0, printed.err
     triage = json.loads(printed.out)["triage"]
     [listed] = triage["results"]
-    assert listed["result"] == done["current-result"]["result"] and listed["state"] == "waiting"
+    assert listed["result"] == done["current-result"]["result"]
     assert repo[2].read_text().splitlines()[-1] == "review-repair", "a triage launches nothing"
     answers = repo[0] / listed["answers"]
     answers.write_text(decide(answers.read_text(), {"1": rejected("the sources state no condition")}))
-    assert results.freshness(repo[0], NOTE_PATH, criterion).state == "fresh", "an unapproved answer counts for nothing"
-    stop = listed["waiting-for"]
-    assert main(shlex.split(stop["approve-command"])[1:], harnesses=repo[1]) == 0
+    assert results.freshness(repo[0], NOTE_PATH, criterion).state == "fresh", "an unrecorded answer counts for nothing"
+    assert main(shlex.split(decisions.RECORD.format(file=listed["answers"]))[1:]) == 0
     capsys.readouterr()
     assert results.freshness(repo[0], NOTE_PATH, criterion) == results.Freshness("stale", ("criterion",))
 
@@ -389,13 +401,14 @@ def test_a_candidate_that_breaks_the_bounds_is_refused(repo, capsys):
     assert note_text(repo) == original
 
 
-def test_an_accepted_unchanged_candidate_ends_without_publication(repo, capsys):
+def test_an_accepted_unchanged_candidate_ends_without_a_held_candidate(repo, capsys):
     original = note_text(repo).replace("user-verified: true\n", "")
     (repo[0] / NOTE_PATH).write_text(original)
     (repo[0] / "same-text").touch()
     code, report, launches = rewrite(repo, capsys)
     assert code == 0 and report["complete"] and report["unchanged"] and launches == STEPS
-    assert report["waiting-for"] is None and not report["applied"] and note_text(repo) == original
+    assert report["held"] is None and note_text(repo) == original
+    assert not artifact_file(repo, report, "final.md").exists()
 
 
 def test_a_worker_problem_stops_the_run(repo, capsys):
@@ -405,30 +418,26 @@ def test_a_worker_problem_stops_the_run(repo, capsys):
     assert launches == ["reconstruct", "claim-account"]
 
 
-def test_the_commission_is_required_checked_and_frozen_unless_restarted(repo, capsys):
-    code, error, launches = rewrite(repo, capsys, commission=False)
-    assert code == 2 and "needs --commission FILE" in error and launches == []
+def test_the_commission_is_required_and_checked_and_every_invocation_is_a_new_run(repo, capsys):
+    with pytest.raises(SystemExit):
+        main(["run", "rewrite", NOTE_PATH], harnesses=repo[1])
+    assert "--commission" in capsys.readouterr().err
     repo[3].write_text(COMMISSION.replace("## Must exclude", "## Out of scope").replace(
         "note: kb/notes/alpha.md", "note: kb/notes/beta.md"))
     code, error, launches = rewrite(repo, capsys)
     assert code == 2 and "`## Must exclude` is missing" in error and "`note` must be kb/notes/alpha.md" in error
-    assert launches == []
+    assert launches == [] and not (repo[0] / "kb/reports/state/review/runs/v2/rewrite").exists()
     repo[3].write_text(COMMISSION.replace(SOURCE, NOTE_PATH))
     code, error, _ = rewrite(repo, capsys)
     assert code == 2 and "is the note or its write brief" in error
     repo[3].write_text(COMMISSION)
     _, report, _ = rewrite(repo, capsys)
     repo[3].write_text(COMMISSION.replace("the existing claim overreaches", "keep it short"))
-    code, error, launches = rewrite(repo, capsys)
-    assert code == 2 and "differs from the one this run captured" in error and launches == []
-    code, restarted, launches = rewrite(repo, capsys, "--restart")
-    # The role report is obtained again; its inputs did not change, so its call replays without a launch.
-    assert code == 0 and restarted["restarted"] and launches == [step for step in STEPS if step != ROLE]
-    assert restarted["run-dir"] == report["run-dir"]
-    assert restarted["waiting-for"]["key"] != report["waiting-for"]["key"]
-    assert "keep it short" in calls(repo)["reconstruct"]["inputs"]["commission"]
-    code, error, _ = rewrite(repo, capsys, "--restart", commission=False)
-    assert code == 2 and "--restart needs --commission FILE" in error
+    code, fresh, launches = rewrite(repo, capsys)
+    assert code == 0 and launches == STEPS and fresh["run-dir"] != report["run-dir"]
+    assert "keep it short" in [c for c in captured_inputs(repo[2]) if c["kind"] == "reconstruct"][-1][
+        "inputs"]["commission"]
+    assert "keep it short" not in artifact_file(repo, report, "commission.md").read_text(), "a run's record stays"
 
 
 DECIDED = {"proposal": {"quote": "Alpha body", "change": "alpha", "reason": "plain"}, "state": "rejected",
@@ -457,14 +466,11 @@ def test_earlier_decisions_and_the_role_reach_only_the_candidate_repair_and_revi
     for kind in ("reconstruct", "claim-account"):       # material about the note's text stays out of claim selection
         assert not {"earlier-decisions", "kb-role"} & set(found[kind]["inputs"])
     assert json.loads((run / rewrite_module.EARLIER_FILE).read_text()) == {"decisions": [DECIDED]}
-    monkeypatch.setattr(decisions, "earlier", lambda *args, **kwargs: pytest.fail("a repeat collects again"))
-    code, again, launches = rewrite(repo, capsys, commission=False)
-    assert code == 0 and launches == [] and again["waiting-for"] == report["waiting-for"]
 
 
 def test_a_fresh_role_report_of_the_full_revise_procedure_is_reused_without_a_launch(repo, capsys):
     root, start = repo[0], note_text(repo)
-    revise_role = edits.run_dir(root, "revise", NOTE_PATH) / "role"
+    revise_role = edits.new_run_dir(root, "revise", NOTE_PATH) / "role"
     profile = Profile(harness="fake", launch_model="small", effort="low")
     kept = revise_module.role_report(root, NOTE_PATH, start, revise_role, profile, 30, repo[1], "revise")
     assert repo[2].read_text().splitlines() == [ROLE]
@@ -474,17 +480,6 @@ def test_a_fresh_role_report_of_the_full_revise_procedure_is_reused_without_a_la
     assert calls(repo)["candidate"]["inputs"]["kb-role"] == ROLE_SECTION
     (root / "kb/notes/beta.md").write_text(NOTE.format(words="beta") + "\nBeta cites [Alpha](./alpha.md).\n")
     assert revise_module.stored_role(root, NOTE_PATH, start) is None, "new inbound contexts make it stale"
-
-
-def test_the_publication_stop_names_each_workflow_s_way_to_change_the_candidate(repo, capsys, tmp_path):
-    _, report, _ = rewrite(repo, capsys)
-    what = report["waiting-for"]["what"]
-    assert "change the commission and repeat with --commission FILE --restart" in what and "--plan" not in what
-    path = tmp_path / "revised.md"
-    path.write_text(artifact_file(repo, report, "final.md").read_text() + "The operator's sentence.\n")
-    _, supplied, _ = rewrite(repo, capsys, "--revised", str(path), commission=False)
-    assert "--restart" in supplied["waiting-for"]["what"] and "--plan" not in supplied["waiting-for"]["what"]
-    assert "supply --plan for revision" in edits.publication_instruction(False, change=revise_module.CHANGE)
 
 
 def test_the_brief_sections_of_a_commission_are_required_only_without_a_write_brief(repo, capsys):
@@ -497,45 +492,51 @@ def test_the_brief_sections_of_a_commission_are_required_only_without_a_write_br
     subprocess.run(["git", "add", "."], cwd=repo[0], check=True)
     subprocess.run(["git", "commit", "-q", "-m", "brief"], cwd=repo[0], check=True)
     code, report, launches = rewrite(repo, capsys)
-    assert code == 0 and launches == STEPS and report["waiting-for"] is not None
+    assert code == 0 and launches == STEPS and report["held"] is not None
     repo[3].write_text(short.replace("## Current direction", "## Direction"))
-    code, error, _ = rewrite(repo, capsys, "--restart")
+    code, error, _ = rewrite(repo, capsys)
     assert code == 2 and "`## Current direction` is missing" in error
 
 
-def test_a_revised_candidate_is_published_only_on_its_approval(repo, capsys, tmp_path):
+def test_a_revised_text_is_published_but_is_not_the_reviewed_result(repo, capsys, tmp_path):
     original = note_text(repo)
-    path = tmp_path / "revised.md"
-    path.write_text(original + "More.\n")
-    code, error, _ = rewrite(repo, capsys, "--revised", str(path), commission=False)
-    assert code == 2 and "not waiting at its publication stop" in error
     _, report, _ = rewrite(repo, capsys)
     revised = artifact_file(repo, report, "final.md").read_text() + "The operator's sentence.\n"
+    path = tmp_path / "revised.md"
     path.write_text(revised)
-    code, error, _ = rewrite(repo, capsys, "--revised", str(path))
-    assert code == 2 and "--revised takes no workflow option: --commission" in error
-    code, supplied, launches = rewrite(repo, capsys, "--revised", str(path), commission=False)
-    assert code == 0 and launches == [] and supplied["proposed"].endswith("/artifact/revised.md")
-    assert "run rewrite" in supplied["waiting-for"]["command"] and note_text(repo) == original
-    done = publish(repo, capsys, supplied)
-    assert note_text(repo) == revised and done["revised-candidate"]["revised"] == supplied["proposed"]
+    assert note_text(repo) == original
+    done = publish(repo, capsys, report, "--revised", str(path))
+    assert note_text(repo) == revised and done["revised-candidate"]["revised"].endswith("/artifact/revised.md")
     assert done["current-result"] is None and done["not-current"] == rewrite_module.NOT_CURRENT
     assert results.freshness(repo[0], NOTE_PATH, f"kb/{criteria.REWRITE_REL}").state == "missing"
     [entry] = [e for e in decisions.entries(repo[0]) if e["note"] == NOTE_PATH]
-    assert entry["workflow"] == "rewrite" and entry["revised"] and entry["decision"] == "approved"
+    assert entry["workflow"] == "rewrite" and entry["revised"] and entry["decision"] == "published"
 
 
-def test_decisions_lists_the_rewrite_publication_and_marks_an_overtaken_stop(repo, capsys):
+def test_decisions_lists_the_rewrite_publication_and_marks_an_overtaken_candidate(repo, capsys):
     _, report, _ = rewrite(repo, capsys)
     [entry] = [e for e in decisions.entries(repo[0]) if e["note"] == NOTE_PATH]
     assert (entry["workflow"], entry["class"], entry["decision"]) == ("rewrite", "publication", "pending")
     original = note_text(repo)
-    (repo[0] / NOTE_PATH).write_text(original + "An edit after the stop.\n")
+    (repo[0] / NOTE_PATH).write_text(original + "An edit after the run.\n")
     assert [e["decision"] for e in decisions.entries(repo[0])] == ["overtaken"]
+    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert "no longer holds the text the run held its candidate over" in capsys.readouterr().err
     (repo[0] / NOTE_PATH).write_text(original)
     publish(repo, capsys, report)
     assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
     [entry] = json.loads(capsys.readouterr().out)
     assert (entry["workflow"], entry["class"], entry["decided-by"], entry["decision"]) == (
-        "rewrite", "publication", "operator", "approved")
+        "rewrite", "publication", "operator", "published")
     assert entry["run"] == report["run-dir"]
+
+
+def test_a_changed_accepted_review_refuses_publication(repo, capsys):
+    original = note_text(repo)
+    _, report, _ = rewrite(repo, capsys)
+    review = repo[0] / report["accepted"]["review"]
+    review.write_text(review.read_text().replace("outcome: pass", "outcome: warn"))
+    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert "is not the file the run held" in capsys.readouterr().err
+    assert note_text(repo) == original and results.freshness(
+        repo[0], NOTE_PATH, f"kb/{criteria.REWRITE_REL}").state == "missing"

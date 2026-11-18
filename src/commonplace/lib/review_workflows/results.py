@@ -308,6 +308,16 @@ def read_result(path: Path, *, context: result_contract.ValidationContext | None
         raise ValueError(f"unreadable review result {path}: {error}") from error
 
 
+def parse_result(text: str) -> Result:
+    """The result a retained copy of a result file holds, such as a rewrite's `review-<n>.md`, without validation.
+
+    `write_result()` validates it before it is stored.
+    """
+    data = frontmatter.parse(text).data
+    return Result(**{field: data[key] for key, field in _KEYS.items()}, attack_outcome=data.get("attack-outcome"),
+                  body=frontmatter.strip(text))
+
+
 class _ReadContext:
     """Scan-local inputs; creating an empty/missing-result scan does no schema work."""
 

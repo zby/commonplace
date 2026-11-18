@@ -214,10 +214,11 @@ removed, and the operator's rejected and deferred findings of the artifact
 come as `earlier-decisions`. The focused procedure makes no assessment: `--pass NAME` runs a
 one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
 that fixes that review result of the artifact. The triage, `--triage`, makes
-no assessment either: it stops with one answers file per fresh `warn` or
+no assessment either: it ends with one answers file per fresh `warn` or
 `fail` result, the operator decides each finding with
-[decide items](../decide-items.md), and the plan fixes the approved findings
-only, one entry per result with an approved finding. The full procedure, `--full`,
+[decide items](../decide-items.md), and a new run that names the decided
+files with `--answers` fixes the approved findings only, one entry per
+result with an approved finding. The full procedure, `--full`,
 first runs every review operation that declares a `depth` on the artifact,
 through the same route as `commonplace-review run gates`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
@@ -225,22 +226,20 @@ then runs on the compression checks' results, and the role report on the
 artifact's inbound contexts; neither publishes a result. The assessment
 receives the fresh `warn` and `fail` results, the depth 1 reports, the
 synthesis report and the role report. A review that ends without a result stops the run before the
-assessment. The full procedure does not review the edited text. Its
-run directory is derived from the artifact's path and the hash of its text.
-It stops with a proposal wherever this procedure waits for the operator.
-Repeating alone never approves the proposal or starts its dependent work.
-A repeat reuses the recorded `--purpose`, `--must-keep` and profiles unless you
-give them again. Each approval stop prints a JSON report whose `waiting-for` gives
-what to do, the file, proposal key, `approve-command` and command to repeat.
-Assessment, planning and settled intermediate passes are preauthorized;
-never wait for routine plan approval. Each stop's file is a pending
-[answers](../../types/answers.md) file: record the operator's decision on its
-items before the `approve-command`, then repeat the workflow command.
-Approval captures that text; later edits require approval again and are
-listed under `unapproved-edits`. Changed proposal inputs require fresh approval. An agent
-may approve only on the operator's stated word for that specific proposal;
-it must not infer approval from a request to retry. This instruction and the
-pass files own judgment; worker prompts name inputs, not additional criteria.
+assessment. The full procedure does not review the edited text. Every
+invocation is a new run, named by its start time under the artifact's path;
+no run is repeated or resumed. The run ends at its first stop, where this
+procedure waits for the operator, and leaves a continuation record in its
+report: each piece of unfinished work, the actor expected to resolve it and
+the command or step that proceeds. In a session, follow
+[continue a revise pass](../continue-a-revise-pass.md). Assessment, planning
+and settled intermediate passes are preauthorized; never wait for routine
+plan approval. Each stop's file is a pending [answers](../../types/answers.md)
+file: record the operator's decision on its items, then name the file to the
+command that acts on it. Naming it is the approval. An agent names a file
+only on the operator's stated word for that exact file; it must not infer
+approval from a request to retry. This instruction and the pass files own
+judgment; worker prompts name inputs, not additional criteria.
 
 1. Step 1 runs as one assessment ask, on the profile for `judgment`. The run
    retains `assessment.md` and `plan.yaml` under the run directory's
@@ -255,51 +254,53 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    retained `artifact/plan.yaml` alone is not an override.
    A stopped plan also leaves `artifact/stop-answers.md`, an
    [answers](../../types/answers.md) file with one item for the plan. The
-   run does not wait for it; its report names it under `stop-answers`.
+   run ends; its continuation record names it in a `plan-stop` item.
    Record the operator's decision on the proposal there: `approved` to act
    on it as made, or `rejected` or `deferred` with the operator's reason.
    When the work that followed is done, add `resolution` (what was done,
    when it differs from or goes beyond the proposal) and `refs` (commit
-   hashes, paths, a workshop directory) to the item. Run the reported
-   approval command each time the file changes, so that
+   hashes, paths, a workshop directory) to the item. Keep the file with
+   `commonplace-review answers record FILE` each time it changes, so that
    `commonplace-review decisions` lists the current text.
    The command rejects a plan that names an unknown pass, misses a field,
    has a field it does not know,
    names a `finding` that is not a review result of the artifact, or breaks
    the depth order the pass files and the findings' criteria declare. A replacement supplied
-   with `--plan` reuses calls whose inputs did not change and reruns the others.
+   with `--plan` runs as a new run.
 2. Step 2 runs each listed pass as one run of the edit route, the same one
    `commonplace-review run edit` uses, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
    the edit result and the revised text (title, type, brief declaration and
    H1 kept; no new validation failure; link targets and quoted spans kept),
    and the next pass works on that text. Each run's result and candidate are
-   retained under `artifact/edits/`. Every pass must end
-   `applied`, `no-change` or `skipped` before the final text is published.
-   After a `problem` pass the run publishes nothing more, and
-   `not-published` names the run file holding the proposed text.
+   retained under `artifact/edits/`. A `problem` pass ends the run: the
+   run publishes what the passes before it applied, and that pass and the
+   later ones are left in the continuation record.
    The workflow does not commit.
 3. A pass whose `decision` is `per-item` (plain-wording, abstractions) first
-   returns proposals, and stops with the pending answers file
-   `artifact/<pass>-answers-<key>.md`: one item per proposal, holding its
-   `quote`, `change` and `reason`, every item `pending`. In a session, follow
+   returns proposals. The run publishes what the earlier passes applied,
+   asks for the proposals on that text, writes the pending answers file
+   `artifact/<pass>-answers.md` and ends: one item per proposal, holding its
+   `quote`, `change` and `reason`, every item `pending`. Later passes wait in
+   the continuation record. In a session, follow
    [decide items](../decide-items.md): the agent presents each item in
    context, asks, and records the operator's answer as `approved`,
    `rejected` with a reason, or `deferred` with a reason and a revisit
-   condition. Run the stop's approval command, then repeat; the same
-   operation runs again with the answers file as its `answers` input and
-   applies only the `approved` items. Code refuses a candidate that changed
-   the passage of an item that is not approved. Answers the validator
-   refuses stop the run again naming the problem: correct the file and
-   approve it again. Answers that approve no item end the pass as
-   `no-change`. Proposals made again for another text get a new file and
-   stop again. Decisions carry over between runs on the same note. When a
+   condition. On the operator's word for that file,
+   `commonplace-review run revise ARTIFACT --answers FILE` starts a new run
+   of that pass with the answers file as its `answers` input, which applies
+   only the `approved` items and publishes. Code refuses a candidate that
+   changed the passage of an item that is not approved. The command refuses
+   answers the validator refuses, a note that is not the text the proposals
+   were made for, a changed write brief, and a file that approves no item;
+   keep such a file with `commonplace-review answers record FILE`.
+   Decisions carry over between runs on the same note. When a
    run starts, code collects the operator's decided items from the earlier
    runs on the note and keeps them in the run as `earlier-decisions.json`.
    The pass receives them as its `earlier-decisions` input. A proposal with
    the same `quote` and `change` as an item the operator already decided
    starts decided as before, with `carried-from` naming the earlier answers
-   file. The run still stops, and the operator may change such an item.
+   file. The run still ends at the stop, and the operator may change such an item.
    Every other proposal is asked as usual. These are temporary procedure-development points for
    unsettled selection rules. The run retains the answers with each
    rejection's and deferral's reason in the operator's words. Use them to revise
@@ -311,28 +312,29 @@ pass files own judgment; worker prompts name inputs, not additional criteria.
    Split-out-a-treatment does not run. Both are reported as skipped, left
    for this procedure in a conversation.
 5. The command publishes a changed text to the artifact without a stop:
-   before it waits at a per-item stop, what the earlier passes applied, and
-   at the end of the plan, the final text. Approved items are published when
-   applied, with no second approval. It writes only while the artifact holds
-   the text the run last knew and the captured brief is unchanged. Each
-   publication is kept under `artifact/publications/` with its diff and
-   listed in the report's `publications`. Nothing is committed. After a run
-   publishes, follow [approve a text](../approve-a-text.md): tell the
-   operator what was published, with the path of the note and of the diff;
-   `git diff` shows the change, and the operator reverses it with git.
-   A final text that adds a validation warning the artifact does not have
-   stops at `artifact/publication-answers.md` instead. Follow
-   [approve a text](../approve-a-text.md): inspect `artifact/final.md` and
-   `artifact/final.diff`, record the operator's decision on the answers
-   file's one item, which names the candidate's hash, then run the report's
-   `commonplace-review approve RUN FILE --key KEY` command and repeat.
-   Repeating never approves. Do not edit the candidate to revise the text:
-   supply `--plan`, change workflow inputs, or start a new run.
-6. An artifact edited between invocations has another hash, so the command
-   opens a new run. A run that published before a per-item stop is the
-   exception: the command finds it by the text it published. Choose `--assess` again to commission planning,
-   `--triage` to decide the findings, or `--plan FILE` to execute fixed work. A bare command does not choose a mode. An artifact changed during a run, or by anyone else after the run published, is a conflict: nothing
-   is written, and the report names the run file holding the proposed text.
+   before a per-item pass is asked for proposals, what the earlier passes
+   applied, and when the run ends, what the passes applied since. Approved
+   items are published when applied, with no second approval. It writes
+   only while the artifact holds the text the run last knew and the
+   captured brief is unchanged. Each publication is kept under
+   `artifact/publications/` with its diff and listed in the report's
+   `publications`. Nothing is committed. After a run publishes, follow
+   [approve a text](../approve-a-text.md): tell the operator what was
+   published, with the path of the note and of the diff; `git diff` shows
+   the change, and the operator reverses it with git.
+   A text that adds a validation warning the artifact does not have is held
+   instead, and the run ends. Follow [approve a text](../approve-a-text.md):
+   show the operator `artifact/final.md` and `artifact/final.diff`, and on
+   the operator's word run `commonplace-review publish RUN`, or
+   `publish RUN --revised FILE` for the operator's revision. Do not edit
+   the candidate to revise the text: supply `--plan`, change workflow
+   inputs, or start a new run.
+6. Every invocation is a new run and needs a mode: `--assess` to commission
+   planning, `--triage` to decide the findings, `--answers FILE` to apply
+   decided answers, or `--plan FILE` to execute fixed work. A bare command
+   does not choose a mode. An artifact changed during a run is a conflict:
+   nothing is written, and the report names the run file holding the
+   proposed text.
 
 Step 3 stays with the operator: each pass's report and the text it left are
 under `artifact/reports/` and `artifact/texts/`; read each diff after the

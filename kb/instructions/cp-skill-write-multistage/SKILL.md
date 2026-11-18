@@ -176,48 +176,50 @@ input.
 commonplace-review run rewrite <note> --commission <file>
 ```
 
-The run lives under
-`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<12 hex of
-the note's SHA-256>/`. Repeat the same command, with or without
-`--commission`, to continue it: answered calls replay. A commission that
-differs from the captured one is refused; to rewrite under the new
-commission, add `--restart`, which captures the commission, the brief and the
-sources again and asks every call again. A changed note text starts a new run
-directory.
+Every invocation opens a new run under
+`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<UTC start
+stamp>/` and needs the commission. No run is repeated or resumed: to rewrite
+under a changed commission, brief or source, run the command again, which
+starts a new run.
 
 Read the JSON report and act on it:
 
-- **`waiting-for` names `publication-answers.md`:** follow
-  [approve a text](../approve-a-text.md). For a revision the user states,
-  supply it with `commonplace-review run rewrite <note> --revised <file>`.
-  Tell the user each entry of `new-warnings`. When the report's `accepted`
-  lists `warn-findings`, tell the user how many there are and where the
-  review is, as the waiting text says, before asking for the decision.
+- **`held`:** the run holds the accepted candidate; the note is not written.
+  Follow [approve a text](../approve-a-text.md#a-held-candidate). On the
+  user's word, `commonplace-review publish <run-dir>` publishes the exact
+  candidate; for a revision the user states,
+  `commonplace-review publish <run-dir> --revised <file>`. Tell the user each
+  entry of `new-warnings`. When the report's `accepted` lists
+  `warn-findings`, tell the user how many there are and where the review
+  is, as `held.what` says, before asking for the decision.
 - **`blocked`:** the second review failed the candidate. Read `review-1.md` and
   `review-2.md` under the run's `artifact/` and tell the user. When a finding
   asks for evidence the sources lack, ground or add a source (A2), change the
-  commission, and repeat with `--commission <file> --restart`. When a finding
-  needs a user decision, settle it in the commission and restart the same way.
+  commission, and run the command again. When a finding needs a user
+  decision, settle it in the commission and run again the same way.
 - **`stopped` with a worker problem:** read it to the user. A conflict
   between the commission and the brief needs a changed commission or an
-  amended brief, then `--restart`. A claim that dependents rely on and that
+  amended brief, then a new run. A claim that dependents rely on and that
   the claim account leaves out needs the user's decision: keep it, or drop
-  it and say so in the current direction, then `--restart`. Dependents a
-  change reaches are the user's separate work. A transient problem can be dismissed with
-  `commonplace-review retry <run-dir> <job>`, then repeat.
+  it and say so in the current direction, then a new run. Dependents a
+  change reaches are the user's separate work. After a transient problem,
+  run the command again on the user's word.
 - **`stopped` because a referenced source changed:** confirm the new text is
-  wanted, then repeat with `--commission <file> --restart`.
+  wanted, then run the command again.
 - **`unchanged`:** the reviewer accepted the note's own text. Nothing is
   written.
 - **`conflict`:** the note changed during the run. Nothing was written.
-- **`applied` with `current-result`:** the user published the judged
-  candidate, and the accepted review is now the note's current result. When
-  it left `warn` findings, offer the user a triage:
-  `commonplace-review run revise <note> --triage`. A `not-current` report
-  means the user published a revised candidate; its review was not stored.
 
-The workflow writes the note only after the user's approval and only when
-the note still holds the text the run started from.
+After `publish`, its report names the publication. When the published text
+is the judged candidate, `current-result` names the accepted review, now the
+note's current result. When it left `warn` findings, offer the user a
+triage: `commonplace-review run revise <note> --triage`. A `not-current`
+report means the user published a revised candidate; its review was not
+stored.
+
+The workflow never writes the note itself. `publish` writes it only on the
+user's word and only when the note still holds the text the run started
+from.
 
 ### A5. Keep the commission's lasting parts in the write brief
 

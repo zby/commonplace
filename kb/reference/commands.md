@@ -447,9 +447,12 @@ guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
 a fixture created from an edit observation.
 
 `run revise ARTIFACT` is the one runner of the improvement procedures:
-focused (`--plan`, `--pass`, `--finding`), triage (`--triage`), quick
-(`--assess`) and full (`--full`). Each makes the plan the runner executes
+focused (`--plan`, `--pass`, `--finding`, `--answers`), triage (`--triage`),
+quick (`--assess`) and full (`--full`). Each makes the plan the runner executes
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
+Every invocation needs one of these choices; a bare `run revise ARTIFACT` is
+a command error. The JSON report names the mode as `fixed-plan`, `answers`,
+`triage`, `assess` or `full`.
 `run revise ARTIFACT --plan FILE` executes fixed work without assessment.
 The YAML plan supplies `purpose`, `must-keep`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
@@ -465,20 +468,16 @@ and runs a one-entry plan for that pass. `run revise ARTIFACT --finding RESULT
 with RESULT as its `finding`; RESULT must be a review result of ARTIFACT.
 Both are fixed-plan runs, and their purpose and must-keep claims go into the
 plan. `run revise ARTIFACT --triage [--purpose TEXT] [--must-keep CLAIM ...]`
-makes the plan from the operator's answers on the artifact's fresh stored
-review results with outcome `warn` or `fail`. It launches no review and no
-assessor. It copies each result that has a `warn` or `fail` finding into
-`artifact/findings/` and writes one pending answers file per result,
+asks the operator about the artifact's fresh stored review results with
+outcome `warn` or `fail`. It launches no review and no assessor. It copies
+each result that has a `warn` or `fail` finding into `artifact/findings/`,
+writes one pending answers file per result,
 `artifact/finding-answers-<key>.md`, whose items are the result's `warn` and
-`fail` findings. It captures the results once in `triage-inputs.json`, so a
-repeat asks about the same results after the store changes. The run stops
-until every file is approved; the JSON report's `triage` lists each file
-with its state and, while it waits, its `waiting-for`. With no such result,
-the run ends with no change and `triage.what` says so. The plan then holds
-one fix entry per result with an `approved` finding, in depth order; the
-fix receives the approved answers as `finding-answers` and fixes only the
-approved findings. A finding identical to one the operator decided in an
-earlier run on the note starts decided, with `carried-from`.
+`fail` findings, records the results in `triage-inputs.json` and ends. The
+JSON report's `triage` lists each file. With no such result, the run ends
+with no change and `triage.what` says so. A finding identical to one the
+operator decided in an earlier run on the note starts decided, with
+`carried-from`.
 `run revise ARTIFACT --assess [--purpose TEXT] [--must-keep CLAIM ...]` instead
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
 The assessor also receives the artifact's fresh stored review results with
@@ -495,54 +494,111 @@ assessment. The assessor then receives the `warn` and `fail` results, the
 depth 1 reports, the compression synthesis report and the role report, and
 may stop the plan on a depth 1 proposal, naming the dependents a change would reach.
 It retains `artifact/assessment.md` and `artifact/plan.yaml` and runs the
-validated plan without routine approval. A new run requires one of these
-modes. A repeat retains its mode and captured plan; changed artifact text
-requires the choice again. Old-format runs cannot resume; retain their evidence
-and start a new run. The JSON report names the mode as `fixed-plan`, `triage`, `assess` or `full`.
+validated plan without routine approval.
 Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
-override it). Each pass works on the text the one before left. The command
-publishes without a stop: at a per-item stop it writes what the earlier
-passes applied, and at the end of the plan it writes the final text when
-every pass ended `applied`, `no-change` or `skipped`. Each pass runs through
-the `run edit` route. A `per-item` pass
-(plain-wording, abstractions) stops with the pending answers file for its
-proposals as `artifact/<pass>-answers-<key>.md`; the operator decides each
-item, and answers the validator refuses stop the run again. A stop for the
-operator exits 0 with `waiting-for` in the JSON report: what to do, the
-file, proposal key, approval command and command to repeat. These stops
-remain explicit per-proposal decisions;
-the [revision instruction](../instructions/simplification-passes/revise-an-article-or-note.md)
-governs their temporary procedure-development role and the evidence needed
-before separately authorizing removal. `--plan FILE` supplies an explicit
-validated input or override without assessment or approval; it also replaces
-a stopped plan. An invalid plan is a command error. A plan with `stop` set
-ends the run; replace it through `--plan`. Editing the retained plan alone
-is not an override.
+override it). Each pass works on the text the one before left, through the
+`run edit` route. `--plan FILE` supplies an explicit validated input or
+override without assessment or approval; it also replaces a stopped plan.
+An invalid plan is a command error. A plan with `stop` set ends the run and
+leaves `artifact/stop-answers.md`; replace the plan through `--plan`.
+Editing the retained plan alone is not an override.
 
-`approve RUN FILE --key KEY` captures the proposal file's current text as
-its answer, under the run lock, without launching workers. Use the
-`waiting-for` report's `approve-command`. Each stop's file is an
-[answers](../types/answers.md) file: record the operator's decisions in it
-first. Only the operator, or an agent on the operator's stated word for that
-proposal, may approve. Repeating a workflow never approves.
-Answers edited after approval require approval again; the report lists
-each such file under `unapproved-edits`. Changed proposal
-inputs require fresh approval; an old key cannot approve a replacement
-proposal at the same path.
+Every invocation of `run revise` opens a new run under
+`kb/reports/state/review/runs/v2/revise/<note path without .md>/<UTC stamp>/`,
+with `-2`, `-3` on a collision; runs made before this layout keep 12-hex
+hash names. The run records the note, the hash of its start text and the
+hash of the captured write brief in `start.json`. No run is repeated or
+resumed ([ADR 138](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md)).
+The run ends at its first stop. A `per-item` pass (plain-wording,
+abstractions) that proposes anything ends the run with the pending answers
+file `artifact/<pass>-answers.md`; later passes wait. A pass that ends with
+a problem ends the run, after the passes before it are published.
+
+The run publishes without a stop: before a `per-item` pass is asked for
+proposals, what the earlier passes applied, and when the run ends, what the
+passes applied since. It writes only a text that differs from the artifact,
+only while the artifact holds the text the run last knew, its start text or
+the text it last published, and only while the captured brief is unchanged;
+otherwise the run ends with a conflict and writes nothing. The check and the
+write hold the artifact's publication lock under
+`kb/reports/state/review/publication-locks/`, shared by every revise and
+rewrite run and `publish`. Each publication
+keeps the text as `artifact/publications/<n>.md` and its diff from the text
+before it as `artifact/publications/<n>.diff`, and records the hash, the plan
+entries it covers, the time and who decided it in the run's
+`published.json`. The JSON report lists them under `publications` and has
+`published: true` when the run wrote the artifact. Nothing is committed:
+`git diff` shows the change, and git reverses it. A candidate that adds a
+validation warning the artifact's text does not have is not published: the
+run holds it as `artifact/final.md` with `artifact/final.diff` and
+`held.json`, asks no per-item pass for proposals, and ends; the report's
+`held` names the files, the `new-warnings` and the `publish` commands.
+
+A run that leaves work unfinished writes `continuation.json` and reports it
+as `continuation`: `run-dir`; `made-for`, the artifact's `note`, `sha256` and
+`text` when the run ended; and `items` in dependency order. Each item has
+`id`, `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with
+its `effort`), `after` (the ids of the items to settle first), `how` (`step`,
+the step of [continue a revise pass](../instructions/continue-a-revise-pass.md),
+and where they apply `command`, `record` and `revised`), `answers` (the
+answers files it waits for) and `evidence`. The kinds are `failure`,
+`findings`, `plan-stop`, `held-candidate`, `proposals`, `claim-questions`,
+`direct-entry`, `per-item-entry`, `fix-entry`, `interactive-entry` and
+`stale-reviews`; the [review-system guide](./README-REVIEW-SYSTEM.md#revise-runs-and-the-continuation-record)
+says when each is left. A plan entry not run is continued by `--plan` on a
+one-entry plan the run wrote under `artifact/continue/`, which keeps the
+entry's scope, or by `--answers FILE` when it applies the operator's
+answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`. It exits
+0 when it ends with a clean guard, complete or with work to continue, 1 for
+a failed pass or review, a conflict or a guard change, and 2 for a command
+error, including an invalid plan or refused answers.
+
+`run revise ARTIFACT --answers FILE [--answers FILE ...] [--purpose TEXT]
+[--must-keep CLAIM ...]` names the operator's decided
+[answers](../types/answers.md) files. Naming a file is the operator's
+approval; an agent names it only on the operator's stated word for that
+exact file. The run keeps a copy of each named file under `answers/` before
+it launches anything. One file over a `per-item` pass's proposals makes a
+run of that pass alone, in the scope the asking run's plan gave it, which
+applies the `approved` items and publishes. It is refused unless the validator accepts the answers, the artifact holds
+exactly the text the proposals were made for, the write brief is the one the
+asking run recorded, and some item is approved. Files over review results,
+such as a triage's or those `record` writes, make a plan with one fix entry
+per result with an `approved` finding, in depth order, each receiving its
+answers as `finding-answers`. They are refused unless each result's
+criterion watches the same parts of the artifact it judged and some finding
+is approved. One run takes either one file over proposals or files over
+review results, not both.
+
+`publish RUN [--revised FILE]` publishes the candidate the revise or rewrite
+run RUN held, and launches nothing. Naming the run is the operator's
+approval of its exact candidate. It is refused, writing nothing, when the
+artifact no longer holds the text the candidate was held over, when
+`final.md`, `final.diff` or a rewrite's accepted review changed after the
+run, when the write brief changed since the run, or when the operator
+already published the candidate. `--revised FILE` publishes the operator's
+full revised text instead, from a file outside the run's `artifact/`, after
+those checks and the candidate checks (frontmatter, H1, `user-verified` and
+no new validation failure). The run keeps it as `artifact/revised.md`, with
+`artifact/revised-from-final.diff` (from `final.md`) and
+`artifact/revised.diff` (from the artifact); the JSON report's
+`revised-candidate` names the files. For a rewrite run whose published text
+is the judged candidate, the accepted review becomes the note's current
+result, named in `current-result`; otherwise `not-current` says why not.
 
 `record RUN` writes a pending answers file over each review result of the
 revise run RUN that has a `warn` or `fail` finding, and launches nothing. The
 results are those the run's assessor or triage received. Each file is the one
 a triage writes: `artifact/finding-answers-<key>.md`, whose question is the
 run's copy of the result in `artifact/findings/`. The command prints each
-file with its approval command. It works whether or not the note still
+file with the command that records it. It works whether or not the note still
 holds the run's text. It makes no plan, runs no fix and publishes nothing.
 A file that already exists, from a triage or an earlier `record`, is left as
 it is. Use it to record the operator's decisions on findings answered
-outside the run, such as by a split; approve the file with `approve`. A run
-that holds no review results is a command error.
+outside the run, such as by a split; keep the decided file with
+`answers record FILE`. A run that holds no review results is a command error.
 
 `answers create --from QUESTION [--to PATH]` writes the pending answers file
 for a question and launches nothing. A question is an edit result with
@@ -556,58 +612,16 @@ the store would read the file as a review result; give `--to` for a stored
 result. The command writes every hash, so nobody writes one by hand.
 `commonplace-validate PATH` checks a completed file against its question.
 
-`run revise` writes a changed candidate to the artifact only while the
-artifact holds the text the run last knew, its start text or the text it
-last published, and the captured brief is unchanged; otherwise the run ends
-with a conflict and writes nothing. It publishes only a text that differs
-from the artifact. Each publication keeps the text as
-`artifact/publications/<n>.md` and its diff from the text before it as
-`artifact/publications/<n>.diff`, and records the hash, the plan entries it
-covers and the time in the run's `published.json`. The JSON report lists
-them under `publications` and has `published: true` when the invocation
-wrote the artifact. Approved per-item answers are published when applied,
-with no second approval. Nothing is committed: `git diff` shows the change,
-and git reverses it. `decisions` lists each publication as decided by
-`automatic`.
+`answers record FILE` keeps an answers file under a revise or rewrite run's
+`artifact/` as the operator's decisions, in that run's `answers/`, and
+launches nothing. Use it for a file whose decisions nothing consumes: one
+that approves no item, a plan stop's `stop-answers.md`, or the files
+`record` writes. The validator must accept the file against its question;
+otherwise nothing is kept. Recording a file again after a change, such as an
+added `resolution`, replaces the record. Naming the file is the operator's
+approval of its text.
 
-A candidate that adds a validation warning the artifact's text does not have
-is not published automatically. At a per-item stop it stays in the run, and
-`not-published` says so. At the end of the plan, `run revise` retains
-`artifact/final.md` and `artifact/final.diff` for inspection and stops on
-`artifact/publication-answers.md`, an answers file whose one item names the
-candidate's hash; the waiting text says the new warning is why it stopped.
-Record the operator's decision, approve the file, then repeat; publication
-needs answers that pass the validator and approve that exact candidate. Do
-not edit the candidate to revise the text. Supply `--plan` for revision,
-change workflow inputs, or start a new run.
-
-`run revise ARTIFACT --revised FILE` accepts the candidate with a revision:
-FILE, outside the run's `artifact/`, holds the full revised text the
-operator approved in wording. It launches nothing and takes no workflow
-option. It is refused unless the run of the artifact's current text waits at
-its publication stop and the text passes the candidate checks (frontmatter,
-H1, `user-verified` and no new validation failure); a refusal keeps the
-candidate and its pending answers. The run captures `artifact/revised.md`,
-`artifact/revised-from-final.diff` (from `final.md`) and
-`artifact/revised.diff` (from the note), keeps `final.md`, and replaces the
-pending publication answers with one whose question is `revised.md`; any
-approval is withdrawn. Approve that file and repeat as for the candidate. A
-repeat keeps the revised candidate, another `--revised` replaces it, and a
-changed workflow candidate withdraws it. The report's `revised-candidate`
-names the files. Instructions own judgment; prompts name inputs
-only.
-
-`run revise` derives its run directory from the inputs:
-`kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
-hex of the note's SHA-256>/`. Repeating the command on the same note text
-continues the run and replays answered calls; an edited note opens a new
-run. A run that published and then waits or stopped is found by the text it
-last published, so the command continues it. A run that published is never
-found by its start text again: a note reverted to that text opens a new run
-in `<hash prefix>-2/`. A repeat reuses the recorded options (`--purpose`, `--must-keep` and the
-effort profiles); an option given on the repeat replaces the recorded value.
-
-`run rewrite NOTE --commission FILE [--restart] [--profile NAME]` rewrites
+`run rewrite NOTE --commission FILE [--profile NAME]` rewrites
 one note from its authorized sources, for a note whose contribution is known
 but whose claims or synthesis are unsettled. FILE is the commission: Markdown
 with YAML frontmatter naming `note` and `sources` (each a repository `path`
@@ -615,7 +629,10 @@ and its `role`), and the section `## Current direction`. When the note has
 no write brief, the commission also needs `## Intended contribution`,
 `## Must keep`, `## Must exclude` and `## Reserved decisions`. When it has
 one, those sections are optional and hold only what this rewrite adds to the
-brief. The run captures the commission once, with the note's write brief, the sources
+brief. Every invocation opens a new run under
+`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<UTC stamp>/`,
+named as a revise run is, and needs the commission. The run captures the
+commission, with the note's write brief, the sources
 and the note's type and collection contracts. A source that git ignores, or
 lies under a `.snapshots/` directory, or is not text, is referenced by path
 and SHA-256 and never copied into the run. Fresh workers then reconstruct
@@ -630,43 +647,42 @@ earlier decisions on the note, from revise and rewrite runs, as
 `earlier-decisions` when there are any. The JSON report's `role` names the
 role report and whether it was reused. A `block` allows one repair and a second fresh review;
 a second `block` ends the run unpublished, with `blocked` in the JSON report.
-After `accept` the run always stops at the publication stop that `run revise`
-uses for a candidate with a new warning,
-and `run rewrite NOTE --revised FILE` accepts the candidate with a revision
-the same way. The run directory is
-`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
-hex of the note's SHA-256>/`. A repeat continues from the capture;
-`--commission` may then be omitted. A different commission is refused unless
-`--restart`, which captures it again and asks every call again in the same
-run directory. A referenced source whose bytes changed stops the run until a
-restart. `--profile` names the worker profile for every call; the default is
-the `effort` mapping for `judgment`, and a repeat keeps the recorded one. It
-exits 0 when the run completes, waits or ends blocked with a clean guard, 1
-for a stop, a conflict or a guard change, and 2 for a command error. See
+After `accept`, a candidate other than the note's text is held, as `run
+revise` holds one with a new warning, and the run ends; `publish RUN`
+publishes it. A referenced source whose bytes changed stops the run before
+the candidate is held. `--profile` names the worker profile for every call;
+the default is the `effort` mapping for `judgment`. It exits 0 when the run
+ends with a held candidate, no change or a block and a clean guard, 1 for a
+stop, a conflict or a guard change, and 2 for a command error. See
 [the rewrite workflow](./README-REVIEW-SYSTEM.md#rewriting-a-note).
 
 `decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
-decisions and launches nothing. It is read-only: it reads the operator
-records in revise and rewrite run directories and writes no state. So that decisions
-recorded before ADR 135 stay visible, it also reads the records of the
-retired procedures: operator records in full-pass run directories, full-pass
-packets under `kb/reports/state/review/packets/` and fix reports under
-`kb/reports/state/fixes/`. Each
-entry says who proposed and who decided (`operator`, `agent`,
-`version-guard`, `pending` for an unanswered stop, or `overtaken` for a
-stop of a revise or rewrite run whose note is gone or now holds another
-text, so the run can never continue), the action class
-(the pass name of a per-item stop, `finding` for a triage stop or a `record`
-file, whose item names the criterion, `publication`, `packet` or `fix-report`),
-and whether the decision covered one `item` or a `bundle`. An approved
-answers file gives one entry per item, with its state (`approved`,
-`rejected`, `deferred`, `pending` or `overtaken`) and the operator's reason; a
-publication approval is one bundle entry for the final text, not one per
-edit. A publication entry whose question is the operator's revised
-candidate has `revised: true` in JSON and `revised candidate` in the text. A packet gives its disposition as an agent entry and, once resolved,
-its resolution. A fix report is listed once, by path, since its format is
-free. Entries are grouped by note and ordered by `answered-at` or
-`resolved-at`; untimed entries come last. `--note` and `--class` filter;
-`--json` gives the entries as JSON. The command computes no statistics. A
-malformed record exits 2 with its path. This is the
-operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
+decisions and launches nothing. It is read-only: it reads the revise and
+rewrite run directories and writes no state. An answers file is a decision
+once a command kept it in a run's `answers/`: a run it was named to with
+`--answers`, or `answers record`. A file kept by two runs is listed once.
+So that decisions recorded before ADR 135 stay visible, it also reads the
+records of the retired procedures: operator records in full-pass run
+directories, full-pass packets under `kb/reports/state/review/packets/` and
+fix reports under `kb/reports/state/fixes/`. Operator records of revise and
+rewrite runs are not read. Each
+entry says who proposed and who decided (`operator`, `agent`, `automatic`,
+`version-guard`, `pending` for an answers file a continuation record waits
+for or a held candidate not yet published, or `overtaken` for such an entry
+whose note is gone or no longer holds the text the run left it), the action
+class (the pass name of a per-item stop, `finding` for a triage or `record`
+file, whose item names the criterion, `stop` for a plan stop,
+`publication`, `packet` or `fix-report`), and whether the decision covered
+one `item` or a `bundle`. A kept answers file gives one entry per item, with
+its state (`approved`, `rejected`, `deferred`, `pending` or `overtaken`) and
+the operator's reason. A publication is one bundle entry for the published
+text, not one per edit, decided by `automatic` or, through `publish`, by the
+operator; one that published the operator's revised text has
+`revised: true` in JSON and `revised candidate` in the text. A packet gives
+its disposition as an agent entry and, once resolved, its resolution. A fix
+report is listed once, by path, since its format is free. Entries are
+grouped by note and ordered by decision time; untimed entries come last.
+`--note` and `--class` filter; `--json` gives the entries as JSON. The
+command computes no statistics. A malformed record exits 2 with its path.
+This is the operator-decision record
+([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).

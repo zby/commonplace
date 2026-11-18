@@ -1,136 +1,138 @@
-"""Publication authority binds what the operator could inspect: answers that approve the exact candidate."""
+"""Publishing a held candidate: only the exact candidate, only over the run's start text, under the same brief."""
 
+import contextlib
+import json
 import sys
+import threading
 
 import pytest
-import yaml
 
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
-from commonplace.headless.operator import approve
 from commonplace.lib import library
-from commonplace.lib.review_workflows.edits import (
-    PUBLICATION,
-    Conflict,
-    apply,
-    publication,
-)
+from commonplace.lib.review_workflows import edits
+from commonplace.lib.review_workflows.edits import Conflict, apply
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, REPO_ROOT
+
+NOTE = "kb/notes/note.md"
+START = "---\ndescription: The start text of the note under test\ntype: note\n---\n\n# Note\n\noriginal\n"
+FINAL = START.replace("original", "candidate")
 
 
 @pytest.fixture
-def gate(tmp_path, monkeypatch):
+def held(tmp_path, monkeypatch):
+    """A run that held FINAL over START, as a revise run holds a candidate with a new warning."""
     root = tmp_path.resolve()
     for rel in (*NOTE_TYPE_SPECS, "kb/types/answers.md", "kb/types/answers.schema.yaml"):
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         (root / rel).write_text((REPO_ROOT / rel).read_text())
     monkeypatch.setattr(library, "_library_root", lambda _override: (root / "kb").resolve())
-    (root / "note.md").write_text("original\n")
-    run_dir = root / "run"
+    (root / NOTE).parent.mkdir(parents=True, exist_ok=True)
+    (root / NOTE).write_text(START)
+    run_dir = edits.new_run_dir(root, "revise", NOTE)
     harness = Harness(sys.executable, {"_subcommand": ["-c", "pass"]}, lambda profile: {})
-
-    def invoke(context="first"):
-        with Run(run_dir, root, Profile("fake", "m", "low"), harnesses={"fake": harness}) as run:
-            return publication(run, root, "note.md", "original\n", "candidate\n",
-                               inputs={"context": context}, command="repeat", change="change the inputs")
-
-    return root, run_dir, invoke
+    edits.begin(run_dir, NOTE, START, {})
+    with Run(run_dir, root, Profile("fake", "m", "low"), harnesses={"fake": harness}) as run:
+        run.accept(edits.START, START)
+        report = edits.hold(run, root, NOTE, START, FINAL, ["plain-wording"])
+    return root, run_dir, report
 
 
-def answer(run_dir, state="approved", **fields):
-    """Record the operator's decision on the publication item, as the approve-a-text stop does."""
-    path = run_dir / "artifact" / PUBLICATION
-    head, body = path.read_text().split("---\n")[1:]
-    data = yaml.safe_load(head)
-    data["items"][0].update({"state": state, "decided-by": "operator", "decided-at": "2026-11-15T12:00:00Z",
-                             **fields})
-    path.write_text("---\n" + yaml.safe_dump(data, sort_keys=False) + "---\n" + body)
+def test_a_run_directory_is_a_timestamp_under_the_note(held):
+    root, run_dir, _ = held
+    assert run_dir.parent == root / "kb/reports/state/review/runs/v2/revise/kb/notes/note"
+    assert len(run_dir.name) == len("20261118T120000Z") and run_dir.name.endswith("Z")
+    second = edits.new_run_dir(root, "revise", NOTE)
+    assert second.parent == run_dir.parent and second != run_dir
+    start = json.loads((run_dir / edits.START_RECORD).read_text())
+    assert start == {"note": NOTE, "sha256": edits.sha256(START), "brief-sha256": None}
 
 
-def test_the_stop_is_a_pending_answers_file_over_the_candidate(gate):
-    root, run_dir, invoke = gate
-    waiting = invoke()
-    assert waiting["file"] == f"run/artifact/{PUBLICATION}"
-    data = yaml.safe_load((run_dir / "artifact" / PUBLICATION).read_text().split("---\n")[1])
-    assert data["question"] == "run/artifact/final.md"
-    [item] = data["items"]
-    assert item["id"] == "text" and item["state"] == "pending"
-    assert item["proposal"]["text"] == "run/artifact/final.md"
-    approve(run_dir, PUBLICATION, waiting["key"])
-    assert "answer is `pending`" in invoke()["what"], "an approved file must also approve the item"
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, waiting["key"])
-    assert invoke() is None
-    assert (root / "note.md").read_text() == "original\n", "the gate itself never publishes"
+def test_holding_writes_nothing_and_names_the_command(held):
+    root, run_dir, report = held
+    rel = run_dir.relative_to(root).as_posix()
+    assert (root / NOTE).read_text() == START
+    assert report["candidate"] == f"{rel}/artifact/final.md"
+    assert report["command"] == f"commonplace-review publish {rel}"
+    assert report["revised-command"] == f"commonplace-review publish {rel} --revised FILE"
+    assert edits.published(run_dir) is None
 
 
-def test_a_rejection_does_not_authorize_publication(gate):
-    _, run_dir, invoke = gate
-    waiting = invoke()
-    answer(run_dir, "rejected", reason="the closing reads worse")
-    approve(run_dir, PUBLICATION, waiting["key"])
-    assert "answer is `rejected`: the closing reads worse" in invoke()["what"]
+def test_publishing_writes_the_exact_candidate_once(held):
+    root, run_dir, _ = held
+    report = edits.publish_held(root, run_dir)
+    assert (root / NOTE).read_text() == FINAL
+    entry = report["published"]
+    assert entry["decided-by"] == "operator" and entry["revised"] is False
+    assert entry["sha256"] == edits.sha256(FINAL) and entry["before-sha256"] == edits.sha256(START)
+    assert entry["entries"] == ["plain-wording"]
+    assert (root / entry["text"]).read_text() == FINAL
+    assert edits.made_for(run_dir) == edits.sha256(FINAL)
+    with pytest.raises(ValueError, match="already published"):
+        edits.publish_held(root, run_dir)
 
 
-def test_answers_naming_another_hash_do_not_authorize_publication(gate):
-    _, run_dir, invoke = gate
-    waiting = invoke()
-    answer(run_dir)
-    path = run_dir / "artifact" / PUBLICATION
-    data = yaml.safe_load(path.read_text().split("---\n")[1])
-    path.write_text(path.read_text().replace(data["items"][0]["proposal"]["text-sha256"], "0" * 64))
-    approve(run_dir, PUBLICATION, waiting["key"])
-    refused = invoke()
-    assert "do not authorize publication" in refused["what"] and "question-sha256" in refused["what"]
+def test_a_changed_note_refuses_publication(held):
+    root, run_dir, _ = held
+    (root / NOTE).write_text(START + "someone else's edit\n")
+    with pytest.raises(ValueError, match="no longer holds the text the run held its candidate over"):
+        edits.publish_held(root, run_dir)
+    assert (root / NOTE).read_text() == START + "someone else's edit\n"
+    assert edits.published(run_dir) is None
 
 
-@pytest.mark.parametrize("filename", [PUBLICATION, "final.md", "final.diff"])
-def test_changed_inspection_files_after_approval_withdraw_it(gate, filename):
-    _, run_dir, invoke = gate
-    waiting = invoke()
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, waiting["key"])
+@pytest.mark.parametrize("filename", ["final.md", "start.md", "final.diff"])
+def test_a_changed_run_file_refuses_publication(held, filename):
+    root, run_dir, _ = held
     (run_dir / "artifact" / filename).write_text("operator saw different text\n")
-    restored = invoke()
-    assert restored and "withdrawn" in restored["what"]
-    assert invoke() is not None, "restoring files must not resurrect the withdrawn approval"
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, restored["key"])
-    assert invoke() is None
+    with pytest.raises(ValueError):
+        edits.publish_held(root, run_dir)
+    assert (root / NOTE).read_text() == START
 
 
-@pytest.mark.parametrize("filenames", [(PUBLICATION,), ("final.md",), ("final.diff",),
-                                      (PUBLICATION, "final.md", "final.diff")])
-def test_deleted_inspection_files_cannot_restore_prior_approval(gate, filenames):
-    _, run_dir, invoke = gate
-    waiting = invoke()
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, waiting["key"])
-    for filename in filenames:
-        (run_dir / "artifact" / filename).unlink()
-    restored = invoke()
-    assert restored and "withdrawn" in restored["what"]
-    assert invoke() is not None
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, restored["key"])
-    assert invoke() is None
+def test_a_deleted_candidate_cannot_be_published(held):
+    root, run_dir, _ = held
+    (run_dir / "artifact" / "final.md").unlink()
+    with pytest.raises(FileNotFoundError):
+        edits.publish_held(root, run_dir)
+    assert (root / NOTE).read_text() == START
 
 
-def test_identical_candidate_with_changed_context_and_stale_original_cannot_publish(gate):
-    root, run_dir, invoke = gate
-    first = invoke()
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, first["key"])
-    changed = invoke("second")
-    assert changed and changed["key"] != first["key"]
-    with pytest.raises(ValueError, match="proposal changed"):
-        approve(run_dir, PUBLICATION, first["key"])
-    answer(run_dir)
-    approve(run_dir, PUBLICATION, changed["key"])
-    (root / "note.md").write_text("someone else's edit\n")
-    with pytest.raises(Conflict):
-        invoke("second")
-    assert (root / "note.md").read_text() == "someone else's edit\n"
+def test_a_changed_brief_refuses_publication(held):
+    root, run_dir, _ = held
+    record = json.loads((run_dir / edits.START_RECORD).read_text())
+    record["brief-sha256"] = "0" * 64
+    (run_dir / edits.START_RECORD).write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="write brief"):
+        edits.publish_held(root, run_dir)
+    assert (root / NOTE).read_text() == START
+
+
+def test_a_revised_text_is_published_after_the_candidate_checks(held, tmp_path):
+    root, run_dir, _ = held
+    source = tmp_path / "revised.md"
+    revised = FINAL.replace("candidate", "operator's text")
+    source.write_text(revised)
+    with pytest.raises(ValueError, match="H1"):
+        edits.publish_held(root, run_dir, revised.replace("# Note", "# Other"), source)
+    with pytest.raises(ValueError, match="current text"):
+        edits.publish_held(root, run_dir, START, source)
+    with pytest.raises(ValueError, match="outside the run's artifact"):
+        edits.publish_held(root, run_dir, revised, run_dir / "artifact" / "mine.md")
+    assert (root / NOTE).read_text() == START
+    report = edits.publish_held(root, run_dir, revised, source)
+    assert (root / NOTE).read_text() == revised
+    assert report["published"]["revised"] is True
+    assert (root / report["revised-candidate"]["revised"]).read_text() == revised
+    assert "operator's text" in (root / report["revised-candidate"]["diff-from-candidate"]).read_text()
+    assert (root / report["revised-candidate"]["candidate"]).read_text() == FINAL
+
+
+def test_a_run_that_held_nothing_cannot_publish(held):
+    root, run_dir, _ = held
+    (run_dir / edits.HELD).unlink()
+    with pytest.raises(ValueError, match="holds no candidate"):
+        edits.publish_held(root, run_dir)
 
 
 def test_apply_writes_only_from_the_start_text(tmp_path):
@@ -142,3 +144,36 @@ def test_apply_writes_only_from_the_start_text(tmp_path):
     with pytest.raises(Conflict, match="proposed.md"):
         apply(tmp_path, "note.md", "start", "final", proposed)
     assert note.read_text() == "other"
+
+
+def test_two_publications_over_one_text_publish_once(tmp_path, monkeypatch):
+    """Two runs on one note, each past its own run lock: the note's publication lock lets one publish."""
+    root = tmp_path / "repo"
+    (root / "kb/notes").mkdir(parents=True)
+    (root / NOTE).write_text(START)
+    barrier, checked = threading.Barrier(2, timeout=1), edits.unchanged
+
+    def unchanged(*args):                      # both runs check, then both write, unless the lock orders them
+        checked(*args)
+        with contextlib.suppress(threading.BrokenBarrierError):
+            barrier.wait()
+
+    monkeypatch.setattr(edits, "unchanged", unchanged)
+    outcomes = []
+
+    def publish(number):
+        run_dir = edits.new_run_dir(root, "revise", NOTE)
+        try:
+            outcomes.append(edits.record_publication(run_dir, root, NOTE, START, f"{START}Run {number}.\n", [],
+                                                     "2026-11-18T00:00:00Z"))
+        except Conflict as conflict:
+            outcomes.append(conflict)
+
+    threads = [threading.Thread(target=publish, args=(number,)) for number in (1, 2)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    assert sorted(type(outcome).__name__ for outcome in outcomes) == ["Conflict", "dict"]
+    [entry] = [outcome for outcome in outcomes if isinstance(outcome, dict)]
+    assert (root / NOTE).read_text() == (root / entry["text"]).read_text()

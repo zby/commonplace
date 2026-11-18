@@ -7,11 +7,12 @@ plain-wording and abstractions retain their selection-approval stops. Each pass 
 what the pass exists to make true, what it must preserve, and what it returns.
 Workers follow [execute a revision pass](./execute-a-revision-pass.md).
 The planning procedure is [revise an article or note](./revise-an-article-or-note.md);
-a stop on a per-item pass's answers file is resolved in a session with
-[decide items](../decide-items.md). The workflow publishes its result to the
-artifact without a stop; [approve a text](../approve-a-text.md) says what to
-tell the operator after a publication, and how to resolve the publication
-stop of a text that adds a validation warning.
+the workflow publishes what needs no decision, ends at its first stop and
+leaves a continuation record, which a session agent takes up with the
+operator by [continue a revise pass](../continue-a-revise-pass.md). A per-item
+pass's answers file is decided with [decide items](../decide-items.md);
+[approve a text](../approve-a-text.md) says what to tell the operator after a
+publication, and how to publish a held candidate.
 
 For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. To review the artifact before the
@@ -63,10 +64,11 @@ order. The procedures differ only in how the plan is made.
   no other purpose. `--plan FILE` supplies any other fixed plan.
 - **Triage.** `--triage` asks the operator about the artifact's fresh stored
   `warn` and `fail` review results. It writes one answers file per result,
-  whose items are the result's `warn` and `fail` findings, and stops. In a
+  whose items are the result's `warn` and `fail` findings, and ends. In a
   session, follow [decide items](../decide-items.md): the operator approves
   a finding that is right, rejects one that is wrong, with a reason, or
-  defers it. The plan then holds one entry for
+  defers it. On the operator's word, `--answers FILE`, once per decided
+  file, starts a new run whose plan holds one entry for
   [fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md)
   per result with an approved finding, in depth order. The fix receives the
   approved answers as `finding-answers` and fixes only the approved
@@ -128,25 +130,20 @@ text and its diff under `artifact/publications/`. Nothing is committed;
 `git diff` shows the change, and git reverses it. Tell the operator what was
 published, with the path of the note and of the diff
 ([approve a text](../approve-a-text.md)). A text that adds a validation
-warning the artifact does not have stops instead: inspect
-`artifact/final.md` and `artifact/final.diff`; the original remains
-unchanged until the operator approves the candidate in
-`artifact/publication-answers.md`, whose one item names the candidate's hash,
-and the file is approved with the report's `approve-command`. Repeat the
-reported command to publish from captured inputs. Repeating alone never
-approves. Candidate files are outputs, not editable inputs. To accept the
-candidate with a revision, supply the operator's revised candidate, a full
-text outside `artifact/`, with `--revised FILE`
-([approve a text](../approve-a-text.md)); the run captures it and asks for
-approval of that exact text.
-Use `--plan` for a changed commission. No-change runs write nothing.
-Wording-selection passes stop for their own approvals; the run publishes what
-the earlier passes applied before it waits.
+warning the artifact does not have is held instead: the run keeps
+`artifact/final.md` and `artifact/final.diff`, the original remains
+unchanged, and the report's `held` names the command that publishes it.
+On the operator's word, `commonplace-review publish RUN` publishes that
+exact candidate, and `publish RUN --revised FILE` the operator's revision of
+it, a full text outside `artifact/` ([approve a text](../approve-a-text.md)).
+Candidate files are outputs, not editable inputs. Use `--plan` for a changed
+commission. No-change runs write nothing. A wording-selection pass that
+proposes anything ends the run after the earlier passes' work is published;
+its proposals wait in `artifact/<pass>-answers.md`, and later passes wait in
+the continuation record.
 
-An unchanged repeat retains the mode and captured plan, even if the supplied
-plan file is later removed. Changed artifact text starts a new run: choose
-a mode again. Older runs without a recorded mode also require
-that explicit choice; their retained files are not migrated or deleted.
+Every invocation is a new run: choose a mode each time. No run is repeated
+or resumed; a later command names the answers file or the run it acts on.
 
 For an independent report-only operation, use one artifact and one gate id:
 

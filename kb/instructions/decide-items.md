@@ -1,5 +1,5 @@
 ---
-description: "Use when a procedure stopped on a pending answers file over proposals or review findings, such as <pass>-answers-<key>.md, a triage's finding-answers-<key>.md or a per-item edit result: take and record the operator's decision on each item"
+description: "Use when a run left a pending answers file over proposals or review findings, such as <pass>-answers.md, a triage's finding-answers-<key>.md or a per-item edit result: take and record the operator's decision on each item"
 type: types/instruction.md
 ---
 
@@ -7,13 +7,13 @@ type: types/instruction.md
 
 Goal: every item of the question carries the operator's own decision, with the operator's reason where one is required, so that only what the operator approved is applied and the reasons stay available for revising the procedure that proposed the items.
 
-Consumption: an agent in a session with the operator. It is reached from a run report's `waiting-for` text, from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-review run revise NOTE --triage`), after `commonplace-review run edit` returned `proposed`, or after `commonplace-review record` wrote answers files over an overtaken run's findings ([below](#findings-answered-by-a-structural-change)). Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
+Consumption: an agent in a session with the operator. It is reached from a `proposals`, `findings` or `plan-stop` item of a continuation record through [continue a revise pass](./continue-a-revise-pass.md), from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-review run revise NOTE --triage`), after `commonplace-review run edit` returned `proposed`, or after `commonplace-review record` wrote answers files over an overtaken run's findings ([below](#findings-answered-by-a-structural-change)). Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
 
 Inputs:
 
 - the answers file (`type: types/answers.md`): its `question` names the question file, and each item holds an `id`, the question's `proposal` and `state: pending`, or, for a carried-over item, the earlier decision and `carried-from`;
 - the question: an edit result with outcome `proposed`, whose `note` and `input-sha256` name the text the proposals were made for; or, at a triage, a review result with outcome `warn` or `fail`, whose items are its `warn` and `fail` findings;
-- that text: in a revise run, the `text` of the last applied pass in the report, or `artifact/start.md` when none applied; the run published that text to the note before it stopped, unless the report's `not-published` says why not; for a single edit, the note, or the `--text` file the edit ran on; at a triage, the note's file: a triage takes only fresh results, so the note holds the text they judged, in the parts the criterion watches;
+- that text: in a revise run, the continuation record's `made-for.text`; the run published that text to the note before it asked for the proposals, or it is the run's start text; for a single edit, the note, or the `--text` file the edit ran on; at a triage, the note's file: a triage takes only fresh results, so the note holds the text they judged, in the parts the criterion watches;
 - the operation the proposals came from, for its preserve rules; at a triage, the review result's `criterion` file instead.
 
 If no answers file exists yet for a proposed edit result, create it: `commonplace-review answers create --from <result path>`. It writes `<result stem>-answers.md` beside the result, every item `pending`. Never write a hash by hand.
@@ -34,27 +34,28 @@ Authority: the decisions are the operator's. The agent presents, records and run
    - a changed decision on a carried-over item: record it as above with a new `decided-at`. Replace the earlier `reason` and `revisit` with the operator's new words, or remove them when the new state takes none. Remove `carried-from`.
    Change no `id`, `proposal`, `question` or `question-sha256`; add and delete no item. An item the operator does not decide stays `pending`.
 3. Run `commonplace-validate <answers file>`. Fix only what you recorded wrongly; if it reports that the question changed, stop: the proposals are stale.
-4. Show the operator the recorded decisions. Continue on the operator's stated word for this exact file:
-   - in a revise run, run the reported approval command, then the repeat command;
+4. Show the operator the recorded decisions. Continue on the operator's stated word for this exact file; naming the file to a command is the approval, and no separate approval precedes it:
+   - in a revise run, when some item is approved, run the command the continuation record's item gives in `how.command`: `commonplace-review run revise NOTE --answers FILE`, with every decided file of a triage named by its own `--answers`. It starts a new run and keeps a copy of each named file;
+   - in a revise run, when no item is approved, run `commonplace-review answers record FILE` instead, so that later runs receive the rejections and deferrals;
    - for a single edit, run the same operation again with `--input answers=<answers file>`.
-5. If a revise repeat stops on the same file again, its `what` names what the validator refused. Correct the file as it says, confirm with the operator, approve again and repeat.
-6. A revise repeat applies the approved items and publishes them without asking for approval of the whole text. When its report has `published: true`, follow [approve a text](./approve-a-text.md#after-a-revise-run-publishes): tell the operator what was published, with the path of the note and of the publication's diff; the change is uncommitted, `git diff` shows it, and the operator reverses it with git.
+5. If the revise command refuses the file, read the refusal to the operator. When the validator refused it, correct the file as the refusal says, confirm with the operator and run the command again. When the note is no longer the text the proposals were made for, the write brief changed, or a review result no longer matches the note, the items are stale: keep the file with `answers record FILE` and run the operation again only on the operator's word.
+6. The new revise run applies the approved items and publishes them without asking for approval of the whole text. When its report has `published: true`, follow [approve a text](./approve-a-text.md#after-a-revise-run-publishes): tell the operator what was published, with the path of the note and of the publication's diff; the change is uncommitted, `git diff` shows it, and the operator reverses it with git. When its report has `held` or a `continuation`, continue with [continue a revise pass](./continue-a-revise-pass.md).
 
-Verification: `commonplace-validate` passes on the answers file. In a revise run, the repeat's report shows the pass `applied` or `no-change`, and the run published, waits on the next stop, or waits on `artifact/publication-answers.md` because the final text adds a validation warning; after a triage, the plan holds one fix entry per review result with an approved finding, or no entry when none was approved; an edit after approval is reported as unapproved and not used. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
+Verification: `commonplace-validate` passes on the answers file. In a revise run, the new run's report lists the file under `answers` and shows the pass `applied` or `no-change`, and the run published, or held the candidate because it adds a validation warning; after a triage, the plan holds one fix entry per review result with an approved finding; a file that approved nothing was kept with `answers record` and appears in `commonplace-review decisions`. A single edit returns `changed`. Only `approved` items are applied; `pending`, `rejected` and `deferred` items are not.
 
-The reasons stay in the answers file and, for a revise run, in the operator record beside it, where `commonplace-review decisions` lists them. Do not copy them elsewhere.
+The reasons stay in the answers file and, for a revise run, in the copy a command kept under the run's `answers/`, where `commonplace-review decisions` lists them. Do not copy them elsewhere.
 
 Stop and leave the items `pending` when the operator declines to decide them.
 
 ## Findings answered by a structural change
 
-The operator may answer a run's findings with a split or another structural change instead of at a stop. The note's text then changes, and the old run cannot continue. Record the decisions this way:
+The operator may answer a run's findings with a split or another structural change instead of at a stop. The note's text then changes, and no command applies the run's findings. Record the decisions this way:
 
-1. Run `commonplace-review record <run directory>`. It writes one pending answers file per review result of the run that has a `warn` or `fail` finding, and prints each file with its approval command. It changes nothing else.
+1. Run `commonplace-review record <run directory>`. It writes one pending answers file per review result of the run that has a `warn` or `fail` finding, and prints each file with the command that records it. It changes nothing else.
 2. Record each finding the operator discussed: its `state` and the operator's `reason`, as in step 2 above; in `resolution`, what was done; in `refs`, the new notes or the commit. A rejected diagnosis whose question the operator kept is `state: rejected`, and the `resolution` names the kept question and the change that answers it.
 3. Leave every finding the operator did not discuss `pending`.
 4. Never record a rejected finding as `approved` because a useful edit followed from it. `approved` means the finding is right.
-5. Validate each file, then approve it on the operator's word with the printed command.
+5. Validate each file, then keep it on the operator's word for that file with the printed command, `commonplace-review answers record FILE`.
 6. Run a fresh review on each resulting note. The decisions reach only later runs on the original note path.
 
 ## A plan that stopped on a proposal
@@ -64,6 +65,6 @@ A full or assessed revise run ends with nothing edited when its plan sets `stop`
 1. Read the plan's `stop`, the reports it names and the note. Do not revise the note because the run stopped.
 2. For each proposal, tell the operator its kind as the plan gives it: a defect in the claim as scoped, a choice of a different artifact, or an extension that asks the note to cover more. For a defect, state the case, the two statements or the two readings, and check it against the note yourself.
 3. Give your own recommendation for each proposal against the operator's stated purpose for the note and its write brief. Recommend a change only when its value against that purpose is clear. Say so plainly when a proposal is right in general and not needed here.
-4. Record the operator's answer in `artifact/stop-answers.md`: `rejected` with the reason, or `approved` with what was done in `resolution` and where in `refs`. Approve the file with the command the run report gives. The recorded decision reaches the assessor of the next run on the note, so state in the reason which proposals it covers.
+4. Record the operator's answer in `artifact/stop-answers.md`: `rejected` with the reason, or `approved` with what was done in `resolution` and where in `refs`. On the operator's word, keep the file with `commonplace-review answers record FILE`, the `how.record` of the continuation record's `plan-stop` item; keep it again after adding `resolution` or `refs`. A replacement plan runs as a new run with `--plan`. The kept decision reaches the assessor of the next run on the note, so state in the reason which proposals it covers.
 5. A run that does not stop may still leave questions. Its assessment (`artifact/assessment.md`) lists `Claim questions for the operator`: small defects the passes cannot correct, and choices the assessor did not rank first. Tell the operator each one with its passage and report, with your recommendation as in step 3. Change the note for one only on the operator's word.
 6. When successive runs on one note stop on new proposals after each revision, tell the operator that this is happening. Offer to write the note's contribution and its exclusions into a write brief, which the assessor reads; write it only on the operator's word.

@@ -10,6 +10,7 @@ functions over those files. ``gates`` is the gate sweep that asks workers for
 the stale pairs, one call per pair or per note and bundle, and writes those
 files. ``edit_operations`` runs one edit operation on one text. ``revise`` is
 the one runner of the improvement procedures: it executes a plan of edit
-operations and publishes the approved final text once. ``decisions`` lists
-the operator decisions already on disk.
+operations to its first stop, publishes what it applied and records the
+work left in a continuation record. ``decisions`` keeps and lists the
+operator's answers files and the runs' publications.
 """

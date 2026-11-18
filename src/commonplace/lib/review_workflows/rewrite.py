@@ -19,21 +19,20 @@ exclude, so the sections of `BRIEF_SECTIONS`, which repeat the brief's, are
 required only when the note has no brief. With a brief they are optional and
 hold only what this rewrite adds; a brief item the operator amends is amended
 in the brief before the run, and the commission says which item. Code checks
-the sections and the frontmatter (`read_commission()`). The run captures the
-commission once, with the note's write brief when the note declares one, the
+the sections and the frontmatter (`read_commission()`). Every invocation is
+a new run (`edits.new_run_dir()`) and needs the commission. The run captures
+the commission, with the note's write brief when the note declares one, the
 sources and the note's type and collection contracts, in `INPUTS`
-(`capture()`). A repeat uses the capture. A commission file whose
-text differs from the capture is refused unless `restart` is set: a restart
-captures again, removes the step files under `artifact/` and asks every call
-again with the new inputs; earlier calls stay in the run's records.
+(`capture()`); the workers read the capture, and it stays as the record of
+what the run read.
 
 **Sources.** A source that git does not ignore and whose bytes are UTF-8 text
 is captured: its text is an input. A source that git ignores, or that lies
 under a `.snapshots/` directory, or whose bytes are not text, is referenced:
 the worker receives its path and SHA-256 in the source list and reads the
 file at that path. A referenced source is never copied into the run, so full
-external sources stay out of operational state. Each invocation refuses to go
-on when a referenced source's bytes changed since capture.
+external sources stay out of operational state. The run holds no candidate
+when a referenced source's bytes changed after the capture.
 
 **Calls.** Each is a fresh worker with only its listed inputs:
 
@@ -53,7 +52,7 @@ on when a referenced source's bytes changed since capture.
 5. On `fail`, one repair: `candidate-repair` also receives the typed review
    as `review` and the blocked candidate, then `review-repair`, a fresh review
    of the repaired candidate. A second `fail` ends the run; nothing is
-   published.
+   held or published.
 
 **The review operation.** Its criterion is the library instruction
 `criteria.REWRITE_REL`, of kind `criteria.REWRITE`; its target is the
@@ -87,27 +86,26 @@ review profile, in `ROLE_DIR` under the run (`revise.role_report()`). Its
 calls. When the run starts, code collects the operator's earlier decisions
 on the note from the other revise and rewrite runs (`decisions.earlier()`)
 and keeps them in `EARLIER_FILE`; when there is at least one, the same calls
-receive them as `earlier-decisions`. A repeat reads both files; a restart
-obtains both again.
+receive them as `earlier-decisions`. Both files record what the run read.
 
 **Publication.** After `pass` or `warn`, a candidate equal to the start text
-ends the run with no change. Otherwise the run always stops at the
-publication stop of `edits.publish()`, which revise uses only for a
-candidate that adds a validation warning: the operator approves the exact
-candidate, may accept it with a revision (`supply_revised()`), is told of new
-validation warnings, and the note is written only after approval and only
-over the start text. The report's `accepted` names the accepted review and
-its `warn` findings, and the waiting text says how many there are and where
-the review is. The proposal key binds the start text, the candidate, the
-capture, every call's key and each review's raw output.
+ends the run with no change. Otherwise the run holds the candidate
+(`edits.hold()`), as revise holds one that adds a validation warning, and
+ends: the note is not written. The report's `held` names the candidate, its
+diff, its new validation warnings and the command that publishes it; its
+`accepted` names the accepted review and its `warn` findings, which the
+`held` notice counts. `commonplace-review publish RUN` publishes the exact
+candidate on the operator's word, or with `--revised FILE` the operator's
+revision of it, only over the start text and under the captured brief
+(`edits.publish_held()`).
 
 **After publication.** When the published text is the text the accepted
-review judged, its result becomes the note's current result for the
-criterion (`results.write_result()`): it is fresh while the note, the
-instruction and the output contract are unchanged, so
+review judged, `store_accepted()` makes its result the note's current
+result for the criterion (`results.write_result()`): it is fresh while the
+note, the instruction and the output contract are unchanged, so
 `run revise NOTE --triage` presents its `warn` findings. A revised candidate
-is not the judged text, so the result is not stored, and the report's
-`not-current` says so.
+is not the judged text, so the result is not stored, and the `publish`
+report's `not-current` says so.
 """
 
 from __future__ import annotations
@@ -161,7 +159,7 @@ INSTRUCTIONS = {
 }
 """The role instruction of each worker step, under `INSTRUCTIONS_DIR`; the review's is `criteria.REWRITE_REL`."""
 INPUTS = "rewrite-inputs.json"
-"""The commission, brief, sources and contracts the run captured once; a repeat reads them here."""
+"""The commission, brief, sources and contracts the run captured: what its workers read."""
 COMMISSION_SECTIONS = ("Current direction",)
 """The commission's sections every commission has."""
 BRIEF_SECTIONS = ("Intended contribution", "Must keep", "Must exclude", "Reserved decisions")
@@ -171,32 +169,30 @@ REPORT_SECTIONS = ("Kept", "Replaced", "Omitted")
 BLOCK = "fail"
 """The review outcome that blocks the candidate; `warn` and `pass` accept it."""
 ATTEMPTS = 3
-REPEAT = "commonplace-review run rewrite {artifact}"
-CHANGE = "change the commission and repeat with --commission FILE --restart"
-"""How the publication stop's waiting text tells the operator to change the rewrite's candidate otherwise."""
+COMMAND = "commonplace-review run rewrite {artifact} --commission FILE"
 KB_ROLE, EARLIER_DECISIONS = revise.KB_ROLE, revise.EARLIER_DECISIONS
 ROLE_FILE = "role.json"
-"""The role report the run used and its `## Role` section, obtained once: a repeat reads them here."""
+"""The role report the run used and its `## Role` section: a record of what the run read."""
 ROLE_DIR = "role"
 """The run of the role report alone, under the rewrite run, when no fresh stored one exists."""
 EARLIER_FILE = revise.EARLIER_FILE
-"""The operator's earlier decisions the run used, captured once: a repeat reads them here."""
+"""The operator's earlier decisions the run used: a record of what it read."""
 REVIEWS = "reviews"
 """The runs of the review operation under the rewrite run, one per candidate and inputs."""
 START_INPUT, CANDIDATE_REPORT = "start", "candidate-report"
 """The review's operational inputs that hold the note's start text and the author's report."""
-STEP_FILES = ("reconstruction.md", "claim-account.md", "candidate-1.md", "candidate-1-report.md", "review-1.md",
-              "candidate-2.md", "candidate-2-report.md", "review-2.md", *edits.PUBLICATION_FILES)
-"""The files under `artifact/` a restart removes: every step's output and the publication files."""
 BLOCKED = ("The review failed the repaired candidate, and the one repair is used. Nothing was published; the "
            "run keeps every output under artifact/. Read review-2.md. When a finding asks for evidence the "
-           "sources lack, ground or add a source, then start again with a changed commission: `{command} "
-           "--commission FILE --restart`. When a finding needs the operator's decision, settle it in the "
-           "commission and start again the same way.")
-FINDINGS_NOTICE = ("The accepted review {review} left {count} finding(s) of level warn, which do not block "
+           "sources lack, ground or add a source, then start a new run with a changed commission: `{command}`. "
+           "When a finding needs the operator's decision, settle it in the commission and start a new run the "
+           "same way.")
+HELD_NOTICE = ("The candidate is published only on the operator's word, with the command `{command}`, or with "
+               "`--revised FILE` for the operator's revision of it. Tell the operator of each new validation "
+               "warning before asking.")
+FINDINGS_NOTICE = (" The accepted review {review} left {count} finding(s) of level warn, which do not block "
                    "publication. Tell the operator how many there are and where the review is before asking for "
                    "the decision. When this exact candidate is published, `commonplace-review run revise {artifact} "
-                   "--triage` presents them. ")
+                   "--triage` presents them.")
 NOT_CURRENT = ("The published text is the operator's revised candidate, not the candidate the accepted review "
                "judged, so the review is not stored as the note's current result.")
 
@@ -284,7 +280,7 @@ def _contracts(root: Path, note: str, start: str) -> dict[str, dict[str, str]]:
 
 
 def capture(root: Path, note: str, start: str, commission: Path, brief: dict[str, str]) -> dict:
-    """Read the commission, its sources and the contracts once, as the run keeps them in `INPUTS`.
+    """Read the commission, its sources and the contracts, as the run keeps them in `INPUTS`.
 
     A captured source keeps its text; a referenced one keeps only its path,
     role and SHA-256.
@@ -340,32 +336,27 @@ class RewriteReport:
     brief: str | None = None          # the captured write brief in the run, when the note declares one
     role: dict | None = None          # the role report the candidate and review calls used, and whether it was reused
     sources: list[dict] = field(default_factory=list)   # path, role, sha256, and mode: captured or referenced
-    restarted: bool = False
     steps: list[dict] = field(default_factory=list)     # each answered call: job, key, model and its files
     reviews: list[dict] = field(default_factory=list)   # each review: its copy, run, candidate, hash and outcome
     accepted: dict | None = None      # the accepted review, its outcome and its `warn` findings
     repair_used: bool = False
-    blocked: str | None = None        # the second review failed; nothing is published
+    blocked: str | None = None        # the second review failed; nothing is held
     unchanged: bool = False           # the accepted candidate is the start text; nothing to publish
     proposed: str | None = None
-    revised_candidate: dict | None = None
     new_warnings: list[str] = field(default_factory=list)
-    applied: bool = False
-    not_applied: str | None = None
-    current_result: dict | None = None   # after publication: the stored current result and its freshness
-    not_current: str | None = None    # after publication: why the accepted review is not the current result
-    waiting_for: dict | None = None
+    held: dict | None = None          # the candidate held for the operator, and the commands that publish it
     stopped: str | None = None
     conflict: str | None = None
     changed: list[str] = field(default_factory=list)
 
     @property
     def complete(self) -> bool:
-        return self.waiting_for is None and self.stopped is None and self.conflict is None
+        """Nothing is left: no held candidate, no stop and no conflict."""
+        return self.held is None and self.stopped is None and self.conflict is None
 
     @property
     def ok(self) -> bool:
-        """No stop, no conflict and no unexpected change; waiting for the operator and a block are ok."""
+        """No stop, no conflict and no unexpected change; a held candidate and a block are ok."""
         return self.stopped is None and self.conflict is None and not self.changed
 
     def to_dict(self) -> dict:
@@ -452,14 +443,12 @@ def _rel(root: Path, path: Path) -> str:
 
 
 class _Steps:
-    """The calls of one invocation: each asked or replayed, checked, and its outputs kept under `artifact/`."""
+    """The calls of one run: each asked, checked, and its outputs kept under `artifact/`."""
 
     def __init__(self, run: Run, root: Path, artifact: str, profile: Profile, report: RewriteReport,
                  timeout: float | None, harnesses):
         self.run, self.root, self.artifact, self.profile, self.report = run, root, artifact, profile, report
         self.timeout, self.harnesses = timeout, harnesses
-        self.keys: dict[str, str] = {}
-        """Each call's key; for a review, the SHA-256 of its raw output, which identifies its answer."""
 
     def ask(self, job: str, inputs: dict[str, str], outputs: list[str], check) -> Answer:
         prompt = _prompt(job, self.artifact, inputs)
@@ -468,7 +457,6 @@ class _Steps:
                                   profile=self.profile)
         if answer.problem is not None:
             raise Stop(f"{job}: worker problem: {answer.problem}")
-        self.keys[job] = answer.key
         self.report.steps.append({"job": job, "key": answer.key, "model": answer.record["model"], "files": {}})
         return answer
 
@@ -495,7 +483,7 @@ def _candidate_check(root: Path, artifact: str, start: str, baseline: set[str], 
 
 def _review(steps: _Steps, job: str, number: int, candidate: str, written: str,
             supplied: dict[str, dict[str, str]]) -> results.Result:
-    """Run the review operation alone on the exact `candidate`, or replay it; keep its typed result and return it.
+    """Run the review operation alone on the exact `candidate`; keep its typed result and return it.
 
     `written` is the candidate's report; `supplied` holds the other
     operational inputs by role, each with its origin and text. Stop when the
@@ -515,7 +503,6 @@ def _review(steps: _Steps, job: str, number: int, candidate: str, written: str,
         raise Stop(f"{job}: the review in {swept.run_dir} judged the text {result.target_sha256}, not the "
                    f"candidate {sha}; it is refused")
     path = _rel(root, run.accept(f"review-{number}.md", results.result_text(result)))
-    steps.keys[job] = result.raw_output_sha256
     steps.report.steps.append({"job": job, "run": swept.run_dir, "model": result.model,
                                "files": {f"review-{number}": path}})
     steps.report.reviews.append({"review": path, "run": swept.run_dir,
@@ -524,134 +511,97 @@ def _review(steps: _Steps, job: str, number: int, candidate: str, written: str,
     return result
 
 
-def _store(root: Path, artifact: str, published: str, result: results.Result, report: RewriteReport) -> None:
-    """Store the accepted review as the note's current result when `published` is the text it judged."""
-    if result.target_sha256 != observations.sha(published.encode("utf-8")):
-        report.not_current = NOT_CURRENT
-        return
+def store_accepted(root: Path, run_dir: Path, published: dict) -> dict:
+    """After `publish RUN` on a rewrite run: store its accepted review as the note's current result, if it applies.
+
+    `published` is `edits.publish_held()`'s report. `publish_held()` has
+    refused a review file whose hash is not the one `HELD` recorded; the
+    file is checked again here, after publication. The review is stored
+    (`results.write_result()`) only when it is that file and the published
+    text is the text it judged; a revised candidate is not. Returns the report's
+    `current-result`, the stored result and its freshness, or `not-current`,
+    why it was not stored.
+    """
+    held = json.loads((run_dir / edits.HELD).read_text(encoding="utf-8"))
+    artifact = published["artifact"]
+    text = (root / held["review"]).read_text(encoding="utf-8")
+    if edits.sha256(text) != held["review-sha256"]:
+        return {"current-result": None,
+                "not-current": f"{held['review']} is not the review the run accepted; it was changed after the run"}
+    result = results.parse_result(text)
+    if result.target_sha256 != published["published"]["sha256"]:
+        return {"current-result": None, "not-current": NOT_CURRENT}
     try:
         path = results.write_result(root, result)
     except (ValueError, result_contract.ControllerError) as error:
-        report.not_current = f"the accepted review could not be stored as the note's current result: {error}"
-        return
-    report.current_result = {"result": _rel(root, path),
-                             "freshness": results.freshness(root, artifact, result.criterion).state}
+        return {"current-result": None,
+                "not-current": f"the accepted review could not be stored as the note's current result: {error}"}
+    return {"current-result": {"result": _rel(root, path),
+                               "freshness": results.freshness(root, artifact, result.criterion).state},
+            "not-current": None}
 
 
-def _inputs(run_dir: Path, root: Path, artifact: str, start: str, brief: dict[str, str], commission: Path | None,
-            restart: bool, report: RewriteReport) -> dict:
-    """The captured inputs: read from `INPUTS` on a repeat, captured from `commission` on a new run or a restart.
+def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commission: Path,
+            review: Profile | None = None, timeout: float | None = None, harnesses=HARNESSES) -> RewriteReport:
+    """Rewrite the repository-relative `artifact` in the new run at `run_dir`, under the `commission` file.
 
-    ValueError (a command error) for a new run without a commission, a
-    restart without one, or a commission that differs from the capture
-    without a restart.
-    """
-    path = run_dir / INPUTS
-    if path.is_file() and not restart:
-        captured = json.loads(path.read_text(encoding="utf-8"))
-        if commission is not None and commission.read_text(encoding="utf-8") != captured["commission"]["text"]:
-            raise ValueError("the commission differs from the one this run captured; to rewrite under the new "
-                             "commission, repeat with --commission FILE --restart, which asks every call again")
-        if captured["brief"] != brief.get("brief"):
-            raise ValueError(f"the write brief of {artifact} changed since the run captured it; repeat with "
-                             "--commission FILE --restart to rewrite under the current brief")
-        return captured
-    if commission is None:
-        raise ValueError("a new rewrite run needs --commission FILE" if not restart
-                         else "--restart needs --commission FILE")
-    captured = capture(root, artifact, start, commission, brief)
-    if path.is_file():                               # a restart: the earlier steps' files go
-        report.restarted = True
-        for name in STEP_FILES:
-            (run_dir / "artifact" / name).unlink(missing_ok=True)
-        for name in (edits.REVISED_RECORD, ROLE_FILE, EARLIER_FILE, f"{ROLE_DIR}/review-request.json"):
-            (run_dir / name).unlink(missing_ok=True)
-    observations.atomic_json(path, captured)
-    return captured
-
-
-def rewrite(root: Path, artifact: str, run_dir: Path, profile: Profile, *, commission: Path | None = None,
-            restart: bool = False, review: Profile | None = None, timeout: float | None = None,
-            harnesses=HARNESSES) -> RewriteReport:
-    """Rewrite the repository-relative `artifact` in the run at `run_dir`, new or continued.
-
-    The note's current text is the start text. `commission` is the
-    commission file: required for a new run and for `restart`, optional on a
-    repeat, where it must equal the capture. `review` is the profile of the
-    role report when it must run; without it, `profile`.
+    The note's current text is the start text. `review` is the profile of
+    the role report when it must run; without it, `profile`. ValueError (a
+    command error) for a commission that breaks `read_commission()`.
     """
     root = root.resolve()
     report = RewriteReport(_rel(root, run_dir.resolve()), artifact)
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
-    final = None
     try:
         brief = capture_brief(root, artifact, start)
+        captured = capture(root, artifact, start, commission, brief)
+        edits.begin(run_dir, artifact, start, brief)
+        observations.atomic_json(run_dir / INPUTS, captured)
         with Run(run_dir, root, profile, timeout=timeout, harnesses=harnesses) as run:
-            captured = _inputs(run_dir, root, artifact, start, brief, commission, restart, report)
-            earlier = _earlier(run_dir, root, artifact)
-            final = _steps(_Steps(run, root, artifact, profile, report, timeout, harnesses), start, brief,
-                           captured, earlier,
-                           lambda: _role(run_dir, root, artifact, start, review or profile, timeout, harnesses,
-                                         report))
+            earlier = decisions.earlier(root, artifact, run_dir)
+            observations.atomic_json(run_dir / EARLIER_FILE, {"decisions": earlier})
+            _steps(_Steps(run, root, artifact, profile, report, timeout, harnesses), start, captured, earlier,
+                   lambda: _role(run_dir, root, artifact, start, review or profile, timeout, harnesses, report))
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, artifact, final if report.applied else None)
+    report.changed = guarded_changes(root, before, artifact, None)
     return report
-
-
-def _earlier(run_dir: Path, root: Path, artifact: str) -> list[dict]:
-    """The operator's earlier decisions on the note: read from `EARLIER_FILE`, or collected once and kept there."""
-    path = run_dir / EARLIER_FILE
-    if path.is_file():                                # a repeat: other runs may have decided more since
-        return json.loads(path.read_text(encoding="utf-8"))["decisions"]
-    found = decisions.earlier(root, artifact, run_dir)
-    observations.atomic_json(path, {"decisions": found})
-    return found
 
 
 def _role(run_dir: Path, root: Path, artifact: str, start: str, profile: Profile, timeout: float | None, harnesses,
           report: RewriteReport) -> dict[str, str] | None:
     """The `kb-role` input, origin and text, from the note's role report; None when it has no `## Role` section.
 
-    The report is read from `ROLE_FILE`, or obtained once and kept there: a
-    fresh stored one (`revise.stored_role()`), without a launch, or else
-    the role report run alone in `ROLE_DIR` (`revise.role_report()`).
+    The report is a fresh stored one (`revise.stored_role()`), without a
+    launch, or else the role report run alone in `ROLE_DIR`
+    (`revise.role_report()`). The run keeps which in `ROLE_FILE`.
     """
-    path = run_dir / ROLE_FILE
-    if path.is_file():
-        found = json.loads(path.read_text(encoding="utf-8"))
-    else:
-        stored = revise.stored_role(root, artifact, start)
-        given = stored or revise.role_report(root, artifact, start, run_dir / ROLE_DIR, profile, timeout, harnesses,
-                                             WORKFLOW)
-        found = {"report": None if given is None else given.path, "reused": stored is not None,
-                 "section": None if given is None else revise.role_section(given.text)}
-        observations.atomic_json(path, found)
+    stored = revise.stored_role(root, artifact, start)
+    given = stored or revise.role_report(root, artifact, start, run_dir / ROLE_DIR, profile, timeout, harnesses,
+                                         WORKFLOW)
+    found = {"report": None if given is None else given.path, "reused": stored is not None,
+             "section": None if given is None else revise.role_section(given.text)}
+    observations.atomic_json(run_dir / ROLE_FILE, found)
     report.role = {"report": found["report"], "reused": found["reused"]}
     return None if found["section"] is None else {"origin": found["report"], "text": found["section"]}
 
 
-def _steps(steps: _Steps, start: str, brief: dict[str, str], captured: dict, earlier: list[dict],
-           role) -> str | None:
-    """Run or replay the calls to an accepted candidate, then stop at publication; return the text to publish.
+def _steps(steps: _Steps, start: str, captured: dict, earlier: list[dict], role) -> None:
+    """Run the calls to an accepted candidate, then hold it for the operator (`edits.hold()`).
 
     `earlier` holds the operator's earlier decisions on the note; `role()`
     gives the `kb-role` input. The candidate, repair and review calls
     receive both, each when it has content; the first two calls receive
-    neither. After publication of the judged candidate, the accepted review
-    becomes the note's current result (`_store()`).
+    neither. The held record names the accepted review, which
+    `store_accepted()` stores after publication.
     """
     run, root, artifact, report = steps.run, steps.root, steps.artifact, steps.report
     sources = captured["sources"]
     report.origin = captured["commission"]["origin"]
     report.sources = [{key: source[key] for key in ("path", "role", "sha256", "mode")} for source in sources]
-    changed = _changed_sources(root, sources)
-    if changed:
-        raise Stop(f"referenced sources changed since the run captured them: {', '.join(changed)}; repeat with "
-                   "--commission FILE --restart to rewrite from their current text")
     report.commission = _rel(root, run.accept("commission.md", captured["commission"]["text"]))
     if captured["brief"] is not None:
         report.brief = _rel(root, run.accept("brief.md", captured["brief"]))
@@ -702,42 +652,24 @@ def _steps(steps: _Steps, start: str, brief: dict[str, str], captured: dict, ear
         steps.keep("candidate-2-report.md", written)
         result = _review(steps, "review-repair", 2, candidate, written, supplied)
         if result.outcome == BLOCK:
-            report.blocked = BLOCKED.format(command=REPEAT.format(artifact=artifact))
-            return None
+            report.blocked = BLOCKED.format(command=COMMAND.format(artifact=artifact))
+            return
     warned = [finding for finding in result.findings if finding.get("level") == "warn"]
     report.accepted = {"review": report.reviews[-1]["review"], "outcome": result.outcome, "warn-findings": warned}
     if candidate == start:
         report.unchanged = True
-        return None
-    context = {"workflow": WORKFLOW, "inputs": observations.sha(json.dumps(captured, sort_keys=True).encode()),
-               "calls": steps.keys, "profile": asdict(steps.profile)}
-    notice = (FINDINGS_NOTICE.format(review=report.accepted["review"], count=len(warned), artifact=artifact)
-              if warned else "")
-    published, report.not_applied = edits.publish(run, root, artifact, start, candidate, context, brief,
-                                                  REPEAT.format(artifact=artifact), report, change=CHANGE,
-                                                  notice=notice)
-    report.applied = report.not_applied is None
-    if report.applied:
-        _store(root, artifact, published, result, report)
-    return published
+        return
+    changed = _changed_sources(root, sources)
+    if changed:
+        raise Stop(f"referenced sources changed after the run captured them: {', '.join(changed)}; nothing is "
+                   "held. A new run rewrites from their current text")
+    report.held = edits.hold(run, root, artifact, start, candidate, [], review=report.accepted["review"])
+    report.held["what"] = HELD_NOTICE.format(command=report.held["command"]) + (
+        FINDINGS_NOTICE.format(review=report.accepted["review"], count=len(warned), artifact=artifact)
+        if warned else "")
+    report.proposed, report.new_warnings = report.held["candidate"], report.held["new-warnings"]
 
 
 def _texts(supplied: dict[str, dict[str, str]], *left_out: str) -> dict[str, str]:
     """The text of each supplied input by role, without the roles `left_out`."""
     return {role: item["text"] for role, item in supplied.items() if role not in left_out}
-
-
-def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, revised: str, source: Path, *,
-                   harnesses=HARNESSES) -> RewriteReport:
-    """Capture the operator's revised candidate at the publication stop and wait for its approval; launch nothing.
-
-    The checks and the capture are `edits.supply_revised()`'s, as for revise.
-    """
-    root, run_dir = root.resolve(), run_dir.resolve()
-    edits.revised_source(run_dir, source, artifact)
-    with Run(run_dir, root, profile, harnesses=harnesses) as run:
-        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact),
-                                        change=CHANGE)
-    return RewriteReport(_rel(root, run_dir), artifact, proposed=supplied["proposed"],
-                         revised_candidate=supplied["revised-candidate"], new_warnings=supplied["new-warnings"],
-                         not_applied=supplied["not-applied"], waiting_for=supplied["waiting-for"])

@@ -80,6 +80,7 @@ import hashlib
 import json
 import subprocess
 import threading
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -114,6 +115,23 @@ ATTEMPTS = 3
 GROUPINGS = ("pair", "bundle")
 FINDING_DECISIONS = "finding-decisions"
 """The supplied input that hands a review call the operator's rejected findings of its pair."""
+
+
+def new_run_dir(parent: Path) -> Path:
+    """Create and return a new run directory `<parent>/<UTC stamp>/`, with `-2`, `-3` and so on on a collision.
+
+    Gate sweeps open theirs under `RUNS`; revise and rewrite runs under
+    `RUNS/<workflow>/<note path without .md>/`.
+    """
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    for suffix in ("", *(f"-{n}" for n in range(2, 100))):
+        run_dir = parent / f"{stamp}{suffix}"
+        try:
+            run_dir.mkdir(parents=True)
+        except FileExistsError:
+            continue
+        return run_dir
+    raise ValueError(f"no free run directory for {stamp} under {parent}")
 
 
 def finding_decisions(root: Path, wanted: list[Pair]) -> dict[str, str]:
