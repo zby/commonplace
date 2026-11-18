@@ -412,6 +412,12 @@ def _fix_report(root: Path, path: Path, notes: dict[str, list[str]]) -> dict:
     return _entry(str(note), "fix", None, record, "fix-report", "agent", "agent", "report", "bundle")
 
 
+def _run_order(name: str) -> tuple[str, int]:
+    """A run directory's name as its stamp and collision number, so `<stamp>-2` follows `<stamp>`."""
+    stamp, _, number = name.partition("-")
+    return stamp, int(number or 1)
+
+
 def entries(root: Path) -> list[dict]:
     """Every decision entry, grouped by note and ordered by time where known (untimed last).
 
@@ -422,14 +428,14 @@ def entries(root: Path) -> list[dict]:
     found: list[dict] = []
     runs = {workflow: _runs(root, workflow) for workflow in EARLIER_WORKFLOWS}
     kept: dict[str, set[str]] = {}                  # the origins of every kept answers file, by note
-    latest: dict[tuple[str, str], tuple[str, str]] = {}     # (origin, text hash) -> (time kept, record)
+    latest: dict[tuple[str, str], tuple] = {}       # (origin, text hash) -> (time kept, run order, record)
     for workflow, listed in runs.items():
         for run_dir in listed:
             for record, data in kept_answers(root, run_dir):
                 kept.setdefault(_note(root, workflow, run_dir), set()).add(data["origin"])
                 same = (data["origin"], data["sha256"])
-                latest[same] = max(latest.get(same, ("", "")), (data["at"], record))
-    shown = {record for _, record in latest.values()}
+                latest[same] = max(latest.get(same, ("", (), "")), (data["at"], _run_order(run_dir.name), record))
+    shown = {kept_last[-1] for kept_last in latest.values()}
     for workflow, listed in runs.items():
         for run_dir in listed:
             found.extend(_kept(root, workflow, run_dir, shown))
