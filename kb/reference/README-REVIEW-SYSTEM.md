@@ -655,8 +655,21 @@ brief it captured in `start.json`. No run is repeated or resumed, and every
 invocation needs a procedure choice: a bare `run revise NOTE` is a command
 error. Within one invocation, Workjig's call records serve retries.
 
-A run ends in one of three ways: it completed, it needs continuation, or it
-failed. It ends at its first stop: a plan `stop`, a triage, the first
+A run ends in one of three ways, which its report states as `outcome`:
+
+| `outcome` | Meaning |
+|---|---|
+| `completed` | Nothing is left. The run may have published |
+| `needs-continuation` | The run did what it could and left a continuation record. It may have published; a run that finished its whole plan still has this outcome when the assessment left claim questions or the publication left reviews stale |
+| `failed` | A worker, a review or the write to the note failed. Entries before the failure may have been published |
+
+The report's `ok` is a different statement: no failure and no change in the
+checkout outside the run while it was open
+([the checkout guard](#the-checkout-guard)). Another session's edit makes
+`ok` false and the exit status 1 without changing the `outcome`. `stop` is
+the plan's stop text; `stopped` is a failure's message.
+
+It ends at its first stop: a plan `stop`, a triage, the first
 per-item entry that proposes anything, a held candidate, or a failed entry.
 What it could not finish is its continuation record, `continuation.json` in
 the run directory and `continuation` in the report:

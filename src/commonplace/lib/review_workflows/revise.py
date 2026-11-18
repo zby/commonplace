@@ -508,9 +508,18 @@ class ReviseReport:
     changed: list[str] = field(default_factory=list)
 
     @property
-    def complete(self) -> bool:
-        """Nothing is left: no continuation, no stop and no conflict."""
-        return self.continuation is None and self.stopped is None and self.conflict is None
+    def outcome(self) -> str:
+        """How the run ended: `failed`, `needs-continuation` or `completed`.
+
+        `failed`: a worker, a review or the write to the note failed
+        (`stopped` or `conflict`). `needs-continuation`: the run did what
+        it could and left a continuation record; it may have published.
+        `completed`: nothing is left. The checkout guard does not enter
+        into it.
+        """
+        if self.stopped is not None or self.conflict is not None:
+            return "failed"
+        return "needs-continuation" if self.continuation is not None else "completed"
 
     @property
     def ok(self) -> bool:
@@ -519,7 +528,7 @@ class ReviseReport:
 
     def to_dict(self) -> dict:
         data = {key.replace("_", "-"): value for key, value in asdict(self).items() if key != "changed"}
-        return {"ok": self.ok, "complete": self.complete, **data,
+        return {"ok": self.ok, "outcome": self.outcome, **data,
                 "guard": {"clean": not self.changed, "changed": self.changed}}
 
 

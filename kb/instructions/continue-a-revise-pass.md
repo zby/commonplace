@@ -26,10 +26,10 @@ The session need not take up every issue. The operator chooses how much to do, a
 - the decision is made by the one who can make it;
 - its effect is in the note: the approved items were applied by their run, or the agreed sentence was written, and the diff holds that change and nothing else;
 - the note still validates, and the operator saw the diff;
-- the decision is recorded where a later run reads it, when it is one a later run could ask again: a rejection, a deferral or an answer to a stop;
+- the decision is recorded where a later run reads it, when such a place exists: an answers file for a proposal, a finding or a stop. Claim questions and held candidates have none;
 - what the change set in motion is itself settled or named: the continuation record of a run you started, another passage of the note that the change made wrong, and a note or document elsewhere that relied on what changed.
 
-**Dropped.** The issue no longer applies, or the operator declined it. The reason is stated to the operator, and recorded where a later run reads it when a later run could raise the issue again.
+**Dropped.** The issue no longer applies, or the operator declined it. The reason is stated to the operator, and recorded in the issue's answers file when it has one.
 
 **Left.** The operator chose to leave it, or it is larger than this session, such as a rewrite or a change to other notes. It is left properly only when a later session can find it without this conversation: the episode entry names the issue, why it was left, what the next step is and what it waits on.
 
@@ -50,7 +50,7 @@ Changes to the note stay uncommitted unless the operator asks for a commit. Say 
 ## What you have
 
 - **The continuation record.** `made-for` names the note's text when the run ended: its `sha256` and the file holding it. Every item was computed on that text, and the record is never updated. Each item has `id`, `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with its `effort`), `after` (items the run expected to come first), `how` and `evidence`. In `how`, `step` names the kind below; `command` proceeds, where a command exists; `record` keeps an answers file nothing consumes; `revised` publishes the operator's revision of a held candidate. `answers` lists the answers files an item waits on.
-- **The run report**, `report.json` in the run directory: the plan with its `purpose` and `must-keep`, the state of each entry, and `publications`.
+- **The run report**, `report.json` in the run directory: its `outcome` (`completed`, `needs-continuation` or `failed`), the plan with its `purpose` and `must-keep`, the state of each entry, and `publications`. A run with the outcome `needs-continuation` may have finished its plan and published. `ok: false` with no failure means only that some file outside the run changed while it was open, which another session can cause.
 - **The assessment**, `artifact/assessment.md`: why each plan entry was chosen, the claim questions, and the findings not acted on.
 - **The note's runs**, under `kb/reports/state/review/runs/v2/revise/<note path without .md>/`, in time order by name; older runs are named by a hash. Each records its start text's hash in `start.json` and its publications in `published.json`.
 - **After a pause**, the earlier session's entry in the episode record.
@@ -73,7 +73,7 @@ A command you run may end with a continuation record of its own. Its items are p
 
 **An operation skipped as interactive.** `narrow-overclaims` needs the evidence for each claim, which only the operator has: with it, `commonplace-review run revise NOTE --pass narrow-overclaims` takes each piece as `--must-keep`, with the plan's `--purpose`. `split-out-a-treatment` writes a second note, which is done with the operator under the instructions for writing a note.
 
-**Claim questions from the assessment.** Each is a small defect the passes cannot correct or a choice the assessor did not rank first. The operator answers each, and may decline. Check a claimed defect against the note yourself before recommending.
+**Claim questions from the assessment.** Each is a small defect the passes cannot correct or a choice the assessor did not rank first. The operator answers each, and may decline. Check a claimed defect against the note yourself before recommending. No file records these answers. An accepted one is settled by the change to the note. A declined one is dropped by telling the operator; a later assessor may raise it again. When the operator wants a declined question not to return, the place for it is the note's write brief, which every assessor reads; write it there only on the operator's word.
 
 **A candidate held back for a validation warning.** [Approve a text](./approve-a-text.md#a-held-candidate) applies. `how.command` publishes the exact candidate; `how.revised` publishes the operator's revision of it.
 

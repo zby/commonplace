@@ -550,8 +550,9 @@ answers files it waits for) and `evidence`. The kinds are `failure`,
 says when each is left. A plan entry not run is continued by `--plan` on a
 one-entry plan the run wrote under `artifact/continue/`, which keeps the
 entry's scope, or by `--answers FILE` when it applies the operator's
-answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`. It exits
-0 when it ends with a clean guard, complete or with work to continue, 1 for
+answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`, whose `outcome` is `completed`,
+`needs-continuation` or `failed`. It exits
+0 when it ends with a clean guard, completed or with work to continue, 1 for
 a failed pass or review, a conflict or a guard change, and 2 for a command
 error, including an invalid plan or refused answers.
 
