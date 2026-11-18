@@ -29,11 +29,25 @@ workshop retains.
 5. At least two live continuations are retained in `episodes.md` here, and
    what they showed is extracted or discarded.
 
+State on 2026-11-18: conditions 1 to 4 are met by the merge `5d97ab35f`
+and [ADR 138](../../reference/adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md).
+Condition 5 is open: no live run has used the new flow. The result is
+compared with the earlier prediction in
+[implementation comparison](./implementation-comparison.md).
+
+Left for later work by the operator: making old unanswered stops listable
+(one live plan stop is affected), and naming a review profile in the
+stale-reviews item. Not yet decided: declining a held candidate leaves no
+recorded reason.
+
 ## Decided
 
 - **A stop ends the pass.** A pass ends in one of three ways: it completed,
   it needs continuation, or it failed. A publication is the pass's last
-  write, not a checkpoint.
+  write, not a checkpoint. As implemented, a run publishes before it asks a
+  per-item pass for proposals; when that pass proposes nothing the run goes
+  on and publishes again at its end. Nothing waits between the two, and
+  nothing is written after the run ends.
 - **Partial publication stays.** Edits that need no decision are published
   before the pass ends, as ADR 137 has it.
 - **Continuation is interactive first.** An instruction for a session agent
@@ -77,7 +91,11 @@ workshop retains.
   each item. It names the actor expected to be able to do the work. It is not
   a statement of permission.
 
-## Current state (2026-11-18)
+## State before the change (`209d4dc3d`)
+
+This section and [Design](#design) are the record of what was planned. The
+shipped behaviour is in ADR 138 and
+[the review system](../../reference/README-REVIEW-SYSTEM.md).
 
 Read from `src/commonplace/lib/review_workflows/revise.py` and `edits.py`.
 
@@ -219,9 +237,9 @@ The same rule gives every other stop a command that names its input:
 
 ### The instruction
 
-Drafted in [continue a revise pass](../../instructions/continue-a-revise-pass.md). It is not
-live: nothing loads it, and it names the command of option 1, which does not
-exist. It carries three judgments that code does not make:
+[Continue a revise pass](../../instructions/continue-a-revise-pass.md) is
+live in `kb/instructions/`. It carries three judgments that code does not
+make:
 
 - whether a leftover plan entry still fits the text that was published;
 - whether a finding's reason still holds in the current context, not just
@@ -265,10 +283,11 @@ exist. It carries three judgments that code does not make:
   `decide-items.md` step 4 and `approve-a-text.md`, which tell the agent to
   repeat the command.
 
-Not in this workshop: one writer per note at publication. `apply()` checks
-the note and then replaces it, and the note is written before the
-publication record. A lock keyed by the note closes both. It is independent
-of this design.
+One writer per note at publication was first placed outside this workshop
+as independent of the design. That was wrong: repeated runs had shared one
+run directory and its lock, and the change removed that. `apply()` now
+holds a per-note publication lock across the check and the write. The note
+is still written before the publication record.
 
 ## Open choices
 
