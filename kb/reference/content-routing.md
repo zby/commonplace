@@ -26,6 +26,7 @@ Force decides the destination among retained kinds:
 | theory: the reader reasons with it | `kb/theory/` | on demand, via routing and links |
 | record: the reader needs the exact analytical output | `kb/reports/retained/` | when reproducing, auditing, or citing the report |
 | audit: the reader reconstructs what happened | git | through an instruction that declares the read path |
+| reuse: the reader wants the reply, example or comparison as written | `kb/notes/` | when the question or situation recurs |
 | observation: nobody consumes it yet | `kb/log.md` | on triage |
 | in-flight: consumed by the work that produced it | `kb/work/` | during the workshop; deleted at close |
 
@@ -39,7 +40,7 @@ Force decides the destination among retained kinds:
 | 4 | **The decision itself** | justify | the implementation carries the choice; the ADR is retained as its exact record and addressable handle | revise / supersede; any change touching what it binds | ADR Decision; the implementation is primary | the choice stated so it can be reversed on purpose, not by accident |
 | 5 | **Rejected alternatives** and the forces that decided | justify | nothing, unless a commit or proposal recorded it; an unchosen branch otherwise leaves no trace | revise / supersede | ADR Considered alternatives; `kb/reference/proposals/` while undecided | a paragraph per option and why it lost; "none developed" is admissible |
 | 6 | **Applicability conditions / scope** of a rule, decision, or theory | modify | nothing, unless a contract already states the limit | rescoping after a failure; judging whether a new demand is similar | a separately addressable section of the artifact that holds the claim: a note's Caveats/Scope, an ADR's Consequences, an instruction's stated preconditions | separable from the claim so it can be narrowed without deleting the claim (retention condition 3) |
-| 7 | **Transferable mechanism** — why something works beyond the case that produced it | justify (general) | nothing | reasoning about any similar design | `kb/theory/` | explanatory-reach claim; the notes placement test: after every system choice is scoped, does a design-space claim remain? |
+| 7 | **Transferable mechanism** — why something works beyond the case that produced it | justify (general) | nothing | reasoning about any similar design | `kb/theory/` | explanatory-reach claim; the theory placement test: after every system choice is scoped, does a design-space claim remain? |
 | 8 | **Procedure steps, conventions, arbitrary choices** the executor cannot determine | none (system definition) | nothing for the arbitrary part; the goal regenerates the rest | executing the operation | `kb/instructions/` or the owning collection's `instructions/`, `COLLECTION.md`, type specs, validators | imperative, first-read executable; per-step *why* cut and linked `rests-on` to a note; the procedure's goal kept (row 1) |
 | 9 | **Exact implementation facts** — structure, parameters, current values, module ownership | none | the implementation | any | not retained; live implementation is the read path; `kb/reference/` keeps only the orientation premises a change operation needs and cannot cheaply recover | a symbol or path as a search key, never a restated body |
 | 10 | **Change narrative** — what moved, when, in what order, migration steps, files touched, counts kept/cut/deferred | none | git | audit; ADR revision via `git log --grep` | commit message body, with `Decision:` / `Workshop:` trailers naming what it implements | subject: imperative summary; body: the narrative |
@@ -50,12 +51,13 @@ Force decides the destination among retained kinds:
 | 15 | **In-flight reasoning, drafts, traces** | any, unfinished | nothing, but consumed once | the work producing it | `kb/work/`; deleted at close after extraction | free form |
 | 16 | **Source-side claim and its evidence** | map (external world) | the pinned snapshot | grounding gate; any note citing the source | ingest `## Quotes` via `cp-skill-ground`; snapshot when bounded quotes cannot carry it | verbatim extract plus locator |
 | 17 | **Self-directed theory** — a claim about the system's own operation, such as a retrieval step surfacing the wrong artifact for one kind of query | modify (applied to itself) | nothing | reflective improvement; the instruction it would change | `kb/theory/` with scope separable (row 6), plus the instruction or validator change it licenses, linked | claim, scope, and the change it produced, each addressable |
+| 18 | **Reusable reply, example or comparison** | communicate | the underlying theory may exist, but not the formulation for this occasion | a reader facing the same question or situation | `kb/notes/` | a finished piece usable without the originating conversation |
 
 ## Relation to other placement rules
 
 - `kb/reference/COLLECTION.md` — the economy tests decide whether a reference
   passage exists at all; row 9 restates their regeneration sources.
-- `kb/theory/COLLECTION.md` — the placement test between notes and reference;
+- `kb/theory/COLLECTION.md` — the placement test between theory and reference;
   row 7.
 - `kb/instructions/COLLECTION.md` — the reasoning constraint; rows 1 and 8.
 - [`types/adr.md`](./types/adr.md) — the ADR retention rule; rows 3–5, 13.

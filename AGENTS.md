@@ -169,6 +169,7 @@ For ambiguous content placement, read [content routing](./kb/reference/content-r
 
 | Path | Contribution |
 |---|---|
+| `kb/notes/` | Finished replies, examples and comparisons for a recognizable occasion |
 | `kb/theory/` | Transferable claims, mechanisms, definitions and theory |
 | `kb/tags/` | Tag heads and participating-collection declaration |
 | `kb/reference/` | Shipped system, architecture, types, commands and ADRs |

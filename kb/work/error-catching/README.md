@@ -14,6 +14,14 @@ Started 2026-07-18 from the distillation-migration retrospective ([rename-lesson
 - [gate-stats.md](./gate-stats.md) — first execution of the telemetry row (2026-07-18): the activation gap quantified (29.6% first-encounter catch, 67% peak, mechanical lenses catch 2–3× judgment lenses), the fix loop's 79% one-cycle resolution, within-partition absorption after the April sweep, the luna/sol 2.5× reviewer-variance finding, and three coverage-bet failures awaiting adjudication
 - [calibration-run-01.md](./calibration-run-01.md) — seeded-violation calibration (2026-07-18): 8 gates × (4 seeds + 2 controls), blind reviewers; 30/30 valid seeds caught, zero clear false positives — recall is not the bottleneck, catch rate ≈ incidence, `title-as-claim` adjudicated absorbed-not-blind; two new second-order guards surfaced (seeder self-check; verdict-block content binding). Raw artifacts under `run-01/`
 
+## Proposed retirement trial for simple review gates
+
+1. Start with `frontmatter/title-as-claim`. The [first calibration](./calibration-run-01.md) found no flags in 66 production reviews, but a blind reviewer caught four of four planted violations. That makes the gate a candidate for a trial, not proof that today's writers no longer need it.
+2. On the next writer upgrade, name the writer, task class, trial window and tolerable misses before looking at results. Keep the writing convention. Omit the dedicated check on routine reviews in that trial; independently inspect a sample of fresh drafts before any title fixes. Track genuine mistakes the lighter review would have let through and what they would cost. Test the reviewer on known bad and good titles separately: silence from a reviewer that misses known defects is not evidence for retirement.
+3. At the end of the trial, the operator decides: restore routine checking if the misses matter, continue sampling if the evidence is thin, or retire the routine check for that writer and task class if the saving warrants the observed risk. Keep examples for regressions. Reopen the decision if consequential misses recur or the writer or task mix changes.
+
+This is a proposed trial, not a change to the catalog or the full review procedure. It applies to paid checks for recurring writing mistakes, not to checks that enforce permissions or protect stored work.
+
 ## What closes this workshop
 
 1. The scheme survives contact with the existing catalogue: every current technique (validators, gates, conformance pairs, critique, friction gate, operator review) places cleanly, and every governing claim either cites existing notes or is marked as this workshop's conjecture.

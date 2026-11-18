@@ -42,7 +42,7 @@ The correction arguments are direct. The broader theorem program and literature 
 - [No bounded summary preserves all distinctions for a rich query family](./no-bounded-summary-preserves-all-distinctions-for-a-rich-query-family.md)
 - [Adaptive dependencies force width, reopening, or sequential rounds](./adaptive-dependencies-force-width-reopening-or-sequential-rounds.md) — adaptive-chain theorem invalid as written; interaction-cut argument remains useful
 - [Few calls require width and long chains require verification](./few-calls-require-width-and-long-chains-require-verification.md) — reliability correlation caveat needs replacement
-- [Archive readability toy model](./archive-readability-toy-model.md)
+- [Archive readability toy model](./archive-readability-toy-model.md). For a worked numerical example, see [Can an agent read an archive larger than its context window?](../../notes/can-an-agent-read-an-archive-larger-than-its-context-window.md).
 
 ## Sketch abstracts
 
