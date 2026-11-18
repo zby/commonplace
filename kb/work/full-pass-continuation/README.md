@@ -65,6 +65,11 @@ workshop retains.
   operator records, 18 of them answered. A one-time script rewrites the
   answered ones into the new recorded form, in place. The new code gets no
   reader for the old format. The old run directories keep their hash names.
+- **A held candidate ends the pass before any proposals.** When the edits
+  so far add a validation warning, the candidate is not published and the
+  pass ends there. It does not ask for the proposals of the next per-item
+  entry, which would concern a text that may never be published. So every
+  item in a continuation record concerns the text `made-for` names.
 - **Each leftover item names who can resolve it.** The
   [unresolved frontier](../../reference/definitions/unresolved-frontier.md)
   definition now asks a feasibility claim to name the actor: the operator, a
@@ -149,25 +154,23 @@ the work depends on. The field names below are illustrative.
 
 | Field | Content |
 |---|---|
-| `made-for` | Hash and path of the checkout text at handoff: the pass's last publication, or its start text. Never updated. |
+| `made-for` | Hash and path of the note's text when the pass ended: its last publication, or its start text. Every item was computed on it. Never updated. |
 | `what` | The item: see the kinds below |
 | `actor` | Who is expected to be able to resolve it |
 | `after` | Items that must be settled first |
 | `how` | The command, or the section of the instruction |
-| `evidence` | Paths of the proposals, reports or candidate the item rests on, identifying the exact text each concerns |
+| `evidence` | Paths of the proposals, reports or candidate the item rests on |
 
-`made-for` is not evidence that every item applies to that text. For example,
-proposals computed on a held candidate depend on publication of that exact
-candidate. The answers-taking command must check the proposal input against
-the checkout even if the session's checkout check passed.
+The record is not a lock on the note. Each command guards its own input:
+the answers-taking command refuses when the note is not the text the
+proposals were made for, and a focused run of a direct operation works on
+whatever the note holds. After the first publication of a session the note
+no longer matches `made-for`. That is expected, and the instruction has the
+agent account for the difference from the note's run records.
 
-A later session may take up unfinished items without reopening the run. At a
-pause, the session agent gives the operator a handoff: the original record,
-items done, dropped and remaining, and the expected checkout hash with its
-supporting publications or authorized edit diffs. Start from `made-for` and
-advance only for those changes. If the later session cannot verify the
-handoff, recommend a new pass rather than guessing from the latest run. Try
-this with an operator-carried handoff before adding workflow state.
+A later session takes up unfinished items from the episode record of the
+earlier session, which lists the items done, dropped and remaining. No
+handoff is carried by the operator, and the run is not reopened.
 
 Values of `actor`: `operator`; `session-agent`, an agent working with the
 operator; `worker` with the `effort` that selects its profile. A decision
@@ -246,6 +249,8 @@ exist. It carries three judgments that code does not make:
   recorded unconsumed ones. How much of `decisions.py` this touches has not
   been read.
 - Publish the completed entries before a failed one.
+- End the pass at a held candidate without asking for the next per-item
+  entry's proposals.
 - Accept both directory names in `decisions.py`: the hash names of existing
   runs and the timestamp names of new ones.
 - Write and run the one-time conversion of answered operator records. Keep
@@ -277,8 +282,9 @@ content is extracted or discarded.
 Seek two contrasting live episodes: one where an approved edit makes a later
 entry unnecessary, and one where the operator leaves items for another
 session after a publication. In the second, check whether the next session
-can identify what was authorized, what changed and what remains from the
-handoff alone, without repeating the run. Report if either case was not
+can identify what changed and what remains from the episode record and the
+note's run records, without repeating the run. If it cannot, that is the
+evidence for a stricter handoff. Report if either case was not
 observed. These outcomes test the procedure; source line counts test only
 the prediction about implementation size.
 

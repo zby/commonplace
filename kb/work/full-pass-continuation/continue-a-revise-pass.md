@@ -13,19 +13,20 @@ This procedure changes no rule about who decides an item. Proposals of a per-ite
 
 ## Inputs
 
-- The continuation record. `made-for` identifies the checkout text at handoff, not necessarily the text an item's evidence describes. Each item has `what`, `actor`, `after`, `how` and `evidence`.
+- The continuation record. `made-for` names the note's text when the pass ended; every item was computed on it. Each item has `what`, `actor`, `after`, `how` and `evidence`.
 - The run report: the plan with its `purpose` and `must-keep`, the state of each plan entry, and `publications`.
-- The note.
+- The note, and its run directories, which are listed in time order under the note's path. Each run records the hash of its start text and each text it published.
+- After a pause, the entry of the earlier session in `kb/work/full-pass-continuation/episodes.md`.
 
 ## Before the items
 
-1. Start with `made-for` as the expected checkout hash. If returning after a pause, ask for the [session handoff](#pause-between-sessions). Trace its authorized changes from `made-for`: each change must start at the preceding expected text. Use the last verified output hash as the expected hash. If the history is uncertain or the note's SHA-256 differs, go to [Stop continuing](#stop-continuing). Never adopt the checkout hash merely because it is current.
+1. Compare the note's SHA-256 with `made-for`. If they differ, account for the difference: read the note's later run directories for publications that lead from `made-for` to the current text, and after a pause read the earlier session's episode entry. Tell the operator what changed the note. If part of the difference has no record, say so and show `git diff` on the note. A difference does not end the procedure: each item below is checked against the current text.
 2. If the report has `published: true`, tell the operator what was published: the plan entries covered, the note's path and the publication's diff. The change is uncommitted, and git reverses it.
 3. Tell the operator the remaining items in order: what each is, and who is expected to resolve it. Ask which to take up. An item the operator leaves stays in the record; do not work on it.
 
 ## The items
 
-Work through the chosen items in the record's order. An item waits for the items its `after` names. Before each item, check the note against the expected hash. After an authorized publication, advance that hash to the publication's output hash and report its diff as in step 2. For an authorized direct edit, verify the diff contains only the agreed change and retain its before and after hashes. Neither kind of change updates `made-for` or makes old proposals fresh. If proposals concern a held candidate, wait for that exact text to be published before applying its answers.
+Work through the chosen items in the record's order. An item waits for the items its `after` names. After each command that publishes, report the publication and its diff as in step 2. When you change the note by hand on the operator's word, check that the diff holds only the agreed change. No change to the note makes old proposals fresh: the command that applies answers refuses when the note is not the text the proposals were made for.
 
 **Proposals awaiting decision.** Follow [decide items](../../instructions/decide-items.md) steps 1 to 3 on the answers file the item names. Then, on the operator's word for that file, apply the approved items with the command in `how`; naming the file to that command is the approval, and no separate approval precedes it. When the operator approved no item, nothing is applied: record the file with the recording command in `how`, so that later runs receive the rejections and deferrals. If the command reports that the note no longer holds the text of the proposals, the proposals are stale: say so and run the operation again only on the operator's word.
 
@@ -53,13 +54,13 @@ The `actor` of an item is an estimate. When a worker's run ends with a problem, 
 
 ## Pause between sessions
 
-If the operator leaves items for later, give them a handoff to bring to the next session: the original record path; items done, dropped and remaining; and the expected checkout hash. Cite the publications or authorized direct-edit diffs in order, with their before and after hashes. Point to recorded answers rather than copying decisions. The next agent verifies the handoff and asks which remaining items to take up; it does not repeat the run or treat the handoff as approval.
+If the operator leaves items for later, [record the episode](#record-the-episode) now. Its entry is what the next session starts from, so it must list the items done, dropped and remaining, and each change made to the note by hand, with what was agreed. The next agent reads that entry, follows [Before the items](#before-the-items) and asks which remaining items to take up. It does not repeat the run, and the entry approves nothing.
 
 ## Stop continuing
 
 Stop and recommend a new pass when any of these holds:
 
-- the note differs from the expected checkout text, or you cannot verify how the authorized changes led to it;
+- the note changed in a way no record explains, and the operator does not want to continue on the current text;
 - two leftover entries in a row no longer fit the current text;
 - the operator changed the note's purpose, scope or write brief during the session.
 
@@ -67,7 +68,7 @@ Say which items were done, which were dropped and why, and which remain. Leave p
 
 ## Record the episode
 
-Append to `kb/work/full-pass-continuation/episodes.md`: the run directory, each item with its expected actor and who settled it, each proposal the operator changed or rejected with the item's path, each entry dropped as no longer fitting, and any step that took long and that the workflow could have prepared. Record decisions and their reasons only in the answers files; do not copy them here.
+Append to `kb/work/full-pass-continuation/episodes.md`: the run directory and the path of its continuation record, each item with its expected actor and who settled it or that it remains, each change made to the note by hand, each proposal the operator changed or rejected with the item's path, each entry dropped as no longer fitting, and any step that took long and that the workflow could have prepared. Record decisions and their reasons only in the answers files; do not copy them here.
 
 ## Verify
 
