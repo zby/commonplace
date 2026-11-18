@@ -7,16 +7,15 @@
     commonplace-review run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]
                                 [--timeout SECONDS]
     commonplace-review run edit --fixture PATH
-    commonplace-review run revise ARTIFACT [--plan FILE | --pass NAME | --finding RESULT | --triage | --assess
-                                            | --full]
+    commonplace-review run revise ARTIFACT (--plan FILE | --pass NAME | --finding RESULT | --answers FILE ...
+                                            | --triage | --assess | --full)
                                   [--purpose TEXT] [--must-keep CLAIM ...]
                                   [--profile-simple NAME] [--profile-judgment NAME] [--timeout SECONDS]
-    commonplace-review run revise ARTIFACT --revised FILE  # at the publication stop; launches nothing
-    commonplace-review run rewrite NOTE [--commission FILE [--restart]] [--profile NAME] [--timeout SECONDS]
-    commonplace-review run rewrite NOTE --revised FILE    # at the publication stop; launches nothing
+    commonplace-review run rewrite NOTE --commission FILE [--profile NAME] [--timeout SECONDS]
+    commonplace-review publish RUN [--revised FILE]  # publish the candidate a run held; launches nothing
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
-    commonplace-review record RUN                # answers files over a revise run's findings, as a record; launches nothing
-    commonplace-review approve RUN FILE --key KEY # approve the current proposal; launches nothing
+    commonplace-review answers record FILE       # keep answers nothing consumes as the operator's decisions
+    commonplace-review record RUN                # answers files over a revise run's findings; launches nothing
     commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
     commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
@@ -53,19 +52,14 @@ note or criterion is gone, are listed apart and are not filtered; removing
 one is deleting its file. `--json` gives each row's result file, so a fixer
 can read the finding.
 
-`run revise` keeps its run under
-kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
-hex of the note's SHA-256>/. Repeating the command on the same note text
-continues that run: answered calls replay. An edited note has another hash,
-so the same command opens a new run. A run that wrote the note itself is
-found by the text it last wrote while it waits or stopped, and never again by
-its start text: a note reverted to that text opens a new run in
-<hash prefix>-2/. A repeat reuses the options the run
-recorded (`--purpose`, `--must-keep` and the effort profiles); an option given
-on a repeat replaces the recorded value.
-The workflow writes the note only over the text the run last knew, its start
-text or the text it last wrote; a note changed by anyone else is a conflict,
-and the proposed text stays in the run directory.
+`run revise` and `run rewrite` open a new run on every invocation, under
+kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<UTC
+stamp>/, with `-2`, `-3` on a collision; the latest run of a note is the last
+entry of its directory. The run records the hash of the note's start text in
+start.json. No run is repeated or resumed: a run that stops ends, and a later
+command that acts on its output names the file or the run. The workflow
+writes the note only over the run's start text; a note changed by anyone
+else is a conflict, and the proposed text stays in the run directory.
 
 `run edit` runs one edit operation (types/edit-operation.md) on one note and
 writes nothing to the checkout (see `commonplace.lib.review_workflows.edit_operations`).
@@ -83,86 +77,93 @@ It exits 0 for an accepted result other than `problem` with a clean guard,
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
 instructions/simplification-passes/revise-an-article-or-note.md). It runs a
-plan, and the first invocation chooses how the plan is made: focused (a fixed
+plan, and every invocation chooses how the plan is made: focused (a fixed
 plan), quick (`--assess`) or full (`--full`). A fixed plan is `--plan FILE`,
 `--pass NAME` (a one-entry plan for that pass) or `--finding RESULT` (a
-one-entry plan that fixes that review result of the artifact). `--triage`
-makes the plan from the operator's answers: it launches no review and no
-assessor, writes one pending answers file `artifact/finding-answers-<key>.md`
-per fresh stored `warn` or `fail` result and stops; the report's `triage`
-lists each file with its approval command. When every file is approved, the
-plan holds one fix entry per result with an `approved` finding, and the fix
-receives the approved answers as `finding-answers`. `--assess`, `--full`,
-`--triage` and the one-entry plans use `--purpose` and `--must-keep`; a plan
-file carries those fields itself. `--must-keep` lists only what this run keeps
-beyond the note's write brief, whose Must keep every worker already receives. The assessor also receives the artifact's fresh
-stored `warn` and `fail` review results. `--full` first runs every review operation that declares a `depth` on the
-artifact, as `run gates` would on the profile file's `default` profile, in
-runs under the revise run directory; then the assessor also receives the
-depth 1 reports, the compression synthesis report and the role report, and may stop the plan on a proposal to change the artifact. Assessment runs the
-plan's settled passes automatically, retaining `artifact/assessment.md` and
-`artifact/plan.yaml` for inspection. A repeat keeps the recorded mode and plan.
-`--plan FILE` also overrides a stopped plan. Editing the retained plan alone
-does not change workflow inputs. Changed artifact text starts a new run and
-requires the mode again; runs recorded without a mode also require an explicit
-choice before continuing. `run gates NOTE --criteria GATE-ID --grouping pair`
-is the report-only, single-criterion baseline.
-A `per-item` pass (plain-wording, abstractions) stops with the pending answers
-file for its proposals in `artifact/<pass>-answers-<key>.md`: record the
-operator's decision on each item, approve, then repeat. A stop for the operator is a normal end. The JSON report's
-`waiting-for` gives what to do, the file, proposal key, approval command and
-command to repeat. A repeat never approves and launches nothing at an
-unchanged unapproved stop. Approval captures the file's text: later edits
-have no effect until approved again, and the report lists such a file under
-`unapproved-edits`. A plan with `stop` set ends the run; override it by explicitly
-supplying a revised plan with `--plan`. Changed selection inputs require fresh
-approval, and an old approval key is refused. Only the operator, or an agent
-on the operator's stated word for that proposal, may approve.
-The run publishes without a stop: at a per-item stop it first writes what the
-earlier passes applied, and at the end of the plan it writes the final text,
-each time only when the text differs from the note and no pass ended with a
-problem. Approved items are published when applied, with no approval of the
-whole text. Each publication is kept as `artifact/publications/<n>.md` with
-its diff `<n>.diff` from the text before it, and recorded in the run's
-`published.json` with its hash, the plan entries it covers and the time; the
-report lists them under `publications` and says `published: true` when this
-invocation wrote the note. Nothing is committed: `git diff` shows the change,
-and git reverses it. Otherwise `not-published` explains why the candidate
-remains private. A candidate that adds a validation warning the note does not
-have is not published automatically: at a per-item stop it stays in the run,
-and at the end it waits at the publication stop. The workflow then retains
-`final.md`, `final.diff` and `publication-answers.md` under the run's
-`artifact/`, and the waiting text names the warning as the reason. Inspect
-the candidate and diff, record the operator's decision on the answers file's
-one item, which names the candidate's hash, approve the file, then repeat.
-The proposal key binds the text the run last knew, candidate and decision
-context; answers over another text cannot authorize it. Candidate files are
-outputs, not editable workflow inputs. To accept the candidate with a revision, supply
-the full revised text with `--revised FILE`, a file outside the run's
-`artifact/`. It is refused unless the run waits at its publication stop for
-the note's current text and the text passes the candidate checks (frontmatter,
-H1 and validation). It launches nothing. The run captures the revised
-candidate as `artifact/revised.md`, with `artifact/revised-from-final.diff`
-and `artifact/revised.diff`, keeps `final.md`, and replaces the pending
-publication answers with one over `revised.md`; any approval is withdrawn.
-Repeats keep the revised candidate; another `--revised` replaces it. A
-no-change result writes nothing. Each pass's `effort` picks its profile from the profile
+one-entry plan that fixes that review result of the artifact). `--assess`,
+`--full`, `--triage`, `--answers` and the one-entry plans use `--purpose` and
+`--must-keep`; a plan file carries those fields itself. `--must-keep` lists
+only what this run keeps beyond the note's write brief, whose Must keep every
+worker already receives. The assessor also receives the artifact's fresh
+stored `warn` and `fail` review results. `--full` first runs every review
+operation that declares a `depth` on the artifact, as `run gates` would on
+the profile file's `default` profile, in runs under the revise run
+directory; then the assessor also receives the depth 1 reports, the
+compression synthesis report and the role report, and may stop the plan on a
+proposal to change the artifact. Assessment runs the plan's settled passes
+automatically, retaining `artifact/assessment.md` and `artifact/plan.yaml`.
+A plan with `stop` set ends the run with `artifact/stop-answers.md`; a
+replacement plan runs with `--plan`. `run gates NOTE --criteria GATE-ID
+--grouping pair` is the report-only, single-criterion baseline.
+
+The run ends at its first stop. Before a `per-item` pass (plain-wording,
+abstractions) asks for proposals, the run publishes what the earlier passes
+applied; then it writes the pending answers file for the proposals as
+`artifact/<pass>-answers.md` and ends. A pass that ends with a problem ends
+the run after the earlier passes' work is published. The run publishes only
+when the text differs from the note and adds no validation warning the note
+does not have; such a candidate is held instead (below). The publication is
+kept as `artifact/publications/1.md` with its diff `1.diff`, and recorded in
+the run's `published.json` with its hash, the plan entries it covers and the
+time; the report lists it under `publications` and says `published: true`.
+Nothing is committed: `git diff` shows the change, and git reverses it.
+
+A run that leaves work unfinished writes `continuation.json` and reports it
+as `continuation`: `made-for`, the note's hash and text when the run ended,
+and one item per unfinished piece of work in dependency order, each with
+`kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with its
+`effort`), `after` (the ids of the items to settle first), `how` (the step
+of the continuation instruction and, where one exists, the `command`), the
+`answers` files it waits for and its `evidence`. The run also keeps its
+report as report.json.
+
+`--triage` launches no review and no assessor: it writes one pending answers
+file `artifact/finding-answers-<key>.md` per fresh stored `warn` or `fail`
+result and ends. `--answers FILE` (repeatable) names the operator's decided
+answers files; naming them is the approval, and the run keeps a copy of
+each under answers/ before it launches anything. Answers over a `per-item`
+pass's proposals make a run of that pass alone that applies the `approved`
+items and publishes; it is refused unless the note holds exactly the text
+the proposals were made for. Answers over review results, such as a
+triage's, make a plan with one fix entry per result with an `approved`
+finding, each receiving its answers as `finding-answers`; refused unless the
+parts of the note each result's criterion watches are those it judged. Files
+whose decisions nothing applies
+(no item approved, a plan stop's answers, the files `record` writes) are
+kept with `answers record FILE` instead.
+
+A held candidate stays in the run as `artifact/final.md` with
+`artifact/final.diff`, and the report's `held` names the warnings and the
+command that publishes it. `publish RUN` publishes that exact candidate:
+naming the run is the operator's approval. It is refused unless the note
+still holds the run's start text, the write brief is the one the run
+captured, `final.md` is the candidate the run held and the run published
+nothing. `--revised FILE` publishes the operator's full revised text instead,
+read from a file outside the run's `artifact/`, after the candidate checks
+(frontmatter, H1 and validation); the run keeps it as `artifact/revised.md`
+with `artifact/revised-from-final.diff` and `artifact/revised.diff`. `publish`
+launches nothing. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
-override it. An invalid plan is a command error (exit 2); the run exits 0
-when it completes or waits with a clean guard, and 1 for a stop, a conflict
-or a guard change.
+override it. An invalid plan or refused answers are a command error (exit
+2); the run exits 0 when it ends with a clean guard, completed or with work
+left to continue, and 1 for a failed pass or review, a conflict or a guard
+change.
 
 `record RUN` names a revise run directory whose findings the operator
 answered outside the run, such as by splitting the note. For each review
 result the run's assessor or triage received that has a `warn` or `fail`
 finding, it writes the pending answers file a triage writes,
 `artifact/finding-answers-<key>.md`, over the run's copy of the result, and
-prints each file with its approval command. It works whether or not the
-note still holds the run's text. It launches nothing, makes no plan and
+prints each file with the command that records it. It works whether or not
+the note still holds the run's text. It launches nothing, makes no plan and
 publishes nothing; a file that exists, from a triage or an earlier record,
-is left as it is. Approved with `approve`, the file's decided items appear in
-`decisions`, and later runs on the same note receive them as triage
-decisions.
+is left as it is.
+
+`answers record FILE` keeps an answers file under a revise or rewrite run's
+`artifact/` as the operator's decisions, in that run's answers/, after the
+validator accepts it. Recording a file again after a change, such as an
+added `resolution`, replaces the record. `decisions` lists kept answers, and
+later runs on the same note receive their decided items.
 
 `run rewrite NOTE --commission FILE` rewrites one note from its authorized
 sources when its claims or synthesis are unsettled (see
@@ -175,23 +176,19 @@ adds to it. Fresh workers reconstruct the sources and
 account for the claims without the note, then write a candidate with the
 note's text, and a review operation judges the exact candidate with a typed
 review result: `fail` blocks it and takes one repair, `warn` or `pass`
-accepts it. When the operator publishes exactly the judged candidate, the
-review becomes the note's current result, so `run revise --triage` presents
-its `warn` findings. Before the candidate, the run obtains the note's role
-report: a fresh one kept by `run revise --full` on the same text, or one
-call of the role report alone on the profile file's `default` profile. Its
-`## Role` section reaches the candidate, repair and review calls as `kb-role`,
-with the operator's earlier decisions on the note as `earlier-decisions`
-when there are any. The run keeps its files under
-kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<first 12
-hex of the note's SHA-256>/ and always stops at the publication stop that
-`run revise` uses for a candidate with a new warning, including `--revised FILE`. A repeat continues from the captured
-commission; `--commission` may be omitted then, and a different commission
-is refused unless `--restart` captures it again and asks every call again.
+accepts it. Before the candidate, the run obtains the note's role report: a
+fresh one kept by `run revise --full` on the same text, or one call of the
+role report alone on the profile file's `default` profile. Its `## Role`
+section reaches the candidate, repair and review calls as `kb-role`, with
+the operator's earlier decisions on the note as `earlier-decisions` when
+there are any. The run always holds its accepted candidate, as `run revise`
+holds one with a new warning; `publish RUN` publishes it. When the operator
+publishes exactly the judged candidate, the review becomes the note's
+current result, so `run revise --triage` presents its `warn` findings.
 `--profile` names the worker profile (default: the profile file's `effort`
-mapping for `judgment`); a repeat keeps the recorded one. It exits 0 when
-the run completes, waits or ends blocked with a clean guard, 1 for a stop,
-a conflict or a guard change, and 2 when the command failed.
+mapping for `judgment`). It exits 0 when the run ends with a held candidate,
+no change or a block and a clean guard, 1 for a stop, a conflict or a guard
+change, and 2 when the command failed.
 
 `run gates` opens a new run under kb/reports/state/review/runs/v2/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
@@ -208,11 +205,9 @@ import json
 import re
 import subprocess
 import sys
-import time
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.headless import operator
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss, run_lock
 from commonplace.lib import answers, frontmatter
@@ -233,7 +228,7 @@ from commonplace.lib.review_workflows import (
 from commonplace.lib.tasks import load_profile
 
 SWEEP = "sweep.json"
-"""The run's profile and options, recorded so a resumed or repeated run asks the same worker."""
+"""The run's profile and options: what a resumed gate sweep reuses, and a record of what any other run used."""
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -302,41 +297,34 @@ def _parser() -> argparse.ArgumentParser:
                       help="execute a one-entry plan for this edit operation, without assessment")
     mode.add_argument("--finding", metavar="RESULT",
                       help="execute a one-entry plan that fixes this review result of the artifact, without assessment")
-    mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection; "
-                      "new runs require --plan, --pass, --finding, --triage, --assess or --full, repeats keep the "
-                      "recorded mode")
-    mode.add_argument("--triage", action="store_true", help="stop for the operator's answers on each fresh warn "
-                      "or fail review result, then fix the approved findings; no review and no assessor")
+    mode.add_argument("--answers", action="append", metavar="FILE",
+                      help="apply the operator's decided answers file: over a per-item pass's proposals, or over "
+                      "review results such as a triage's (repeat for each); naming it approves it")
+    mode.add_argument("--assess", action="store_true", help="opt into assessment and automatic pass selection")
+    mode.add_argument("--triage", action="store_true", help="write a pending answers file over each fresh warn "
+                      "or fail review result and end; no review and no assessor")
     mode.add_argument("--full", action="store_true", help="run every review operation that declares a depth, "
                       "then assess with the findings")
     for effort in edit_operations.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")
     rev.add_argument("--timeout", type=float, help="seconds a launch may take")
-    rev.add_argument("--revised", type=Path, metavar="FILE",
-                     help="at the publication stop, replace the candidate with this revised candidate, the full "
-                     "text the operator approved in wording; launches nothing, takes no option but --timeout, "
-                     "which has no effect")
     rw = workflows.add_parser("rewrite", help="rewrite one note from its authorized sources under a commission")
     rw.add_argument("artifact")
-    rw.add_argument("--commission", type=Path, metavar="FILE",
-                    help="the commission: required for a new run; on a repeat it must equal the captured one")
-    rw.add_argument("--restart", action="store_true",
-                    help="capture the --commission FILE, the brief and the sources again and ask every call again")
+    rw.add_argument("--commission", type=Path, metavar="FILE", required=True, help="the commission")
     rw.add_argument("--profile", help="worker profile for every call (default: the profile file's `effort` mapping "
-                    "for `judgment`; a repeat keeps the recorded one)")
+                    "for `judgment`)")
     rw.add_argument("--timeout", type=float, help="seconds a launch may take")
-    rw.add_argument("--revised", type=Path, metavar="FILE",
-                    help="at the publication stop, replace the candidate with this revised candidate; launches "
-                    "nothing, takes no option but --timeout, which has no effect")
+    publish = commands.add_parser("publish", help="publish the candidate a revise or rewrite run held, on the "
+                                  "operator's word; launches nothing")
+    publish.add_argument("run", type=Path, help="the run directory")
+    publish.add_argument("--revised", type=Path, metavar="FILE",
+                         help="publish this full revised text of the candidate instead, from a file outside the "
+                         "run's artifact/")
     recorded = commands.add_parser(
-        "record", help="write a pending answers file over each warn or fail review result a revise run holds, to "
-        "record the operator's decisions; launches nothing, plans nothing, publishes nothing")
+        "record", help="write a pending answers file over each warn or fail review result a revise run holds, for "
+        "the operator's decisions; launches nothing, plans nothing, publishes nothing")
     recorded.add_argument("run", type=Path, help="the revise run directory")
-    approve = commands.add_parser("approve", help="explicitly approve an operator proposal; launches nothing")
-    approve.add_argument("run", type=Path)
-    approve.add_argument("file", type=Path, help="proposal path, relative to the repository or absolute")
-    approve.add_argument("--key", required=True, help="proposal key from the waiting-for report")
     retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
     retry.add_argument("run", type=Path)
     retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`, or a revise job "
@@ -346,7 +334,7 @@ def _parser() -> argparse.ArgumentParser:
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
     acknowledge.add_argument("run", type=Path)
     acknowledge.add_argument("launch")
-    answered = commands.add_parser("answers", help="create the pending answers file for a stop's question")
+    answered = commands.add_parser("answers", help="create an answers file for a question, or record one")
     answer_commands = answered.add_subparsers(dest="answers_command", required=True)
     create_answers = answer_commands.add_parser(
         "create", help="write the answers file for a question, every item pending; launches nothing")
@@ -355,9 +343,13 @@ def _parser() -> argparse.ArgumentParser:
                                 "outcome warn or fail, or a text to approve")
     create_answers.add_argument("--to", help="where to write it (default: <question stem>-answers.md beside "
                                 "the question); an existing file is never replaced")
-    listed = commands.add_parser("decisions", help="list operator and agent decisions from run operator records, "
-                                 "and from packets and fix reports of the retired procedures; read-only, "
-                                 "computes no statistic")
+    record_answers = answer_commands.add_parser(
+        "record", help="keep an answers file of a revise or rewrite run that nothing consumes as the operator's "
+        "decisions; launches nothing")
+    record_answers.add_argument("file", help="the answers file, under the run's artifact/")
+    listed = commands.add_parser("decisions", help="list operator and agent decisions from the answers runs kept, "
+                                 "their publications and pending stops, and the records of the retired "
+                                 "procedures; read-only, computes no statistic")
     listed.add_argument("--note", help="only this artifact path, such as kb/theory/foo.md")
     listed.add_argument("--class", dest="cls", metavar="NAME",
                         help="only this action class: a pass name, publication, packet or fix-report")
@@ -427,15 +419,7 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
         if not run_dir.is_relative_to((root / gates.RUNS).resolve()):
             raise ValueError("resume must name a run in the active review namespace")
         return run_dir
-    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    for suffix in ("", *(f"-{n}" for n in range(2, 100))):
-        run_dir = root / gates.RUNS / f"{stamp}{suffix}"
-        try:
-            run_dir.mkdir(parents=True)
-        except FileExistsError:
-            continue
-        return run_dir
-    raise ValueError(f"no free run directory for {stamp}")
+    return gates.new_run_dir(root / gates.RUNS)
 
 
 def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Profile:
@@ -452,18 +436,6 @@ def _profile(root: Path, run_dir: Path, name: str | None, resumed: bool) -> Prof
     (run_dir / SWEEP).write_text(json.dumps({"format": observations.VERSION, "profile": asdict(profile)}, indent=2),
                                  encoding="utf-8")
     return profile
-
-
-def _options(run_dir: Path, given: dict) -> dict:
-    """The options this run recorded, with each option given now (not None) in place of its value; recorded again."""
-    path = run_dir / SWEEP
-    options = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
-    if options and options.get("format") != observations.VERSION:
-        raise ValueError("old-format run is historical; start a new run")
-    options |= {"format": observations.VERSION, **{key: value for key, value in given.items() if value is not None}}
-    run_dir.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(options, indent=2), encoding="utf-8")
-    return options
 
 
 def _inputs(root: Path, given: list[str]) -> dict[str, dict[str, str]]:
@@ -568,9 +540,8 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     artifact = _note(root, arguments.artifact)
     if not artifact.endswith(".md"):
         raise ValueError(f"not a markdown artifact: {artifact}")
-    if arguments.revised is not None:
-        return _revised(root, artifact, arguments, harnesses)
     named_plan, focused = None, arguments.pass_name is not None or arguments.finding is not None
+    consumed, given, finding_answers = [], {}, {}
     if arguments.plan:
         named_plan = arguments.plan.read_text(encoding="utf-8")   # a missing file is an error, not an assessment
     elif focused:
@@ -581,57 +552,37 @@ def _revise(root: Path, arguments: argparse.Namespace, harnesses) -> int:
                                                            else raw).as_posix()).path
         named_plan = revise.one_entry_plan(revise.FIX if finding else arguments.pass_name, finding,
                                            arguments.purpose, arguments.must_keep)
+    elif arguments.answers:
+        for name in arguments.answers:
+            path = observations.safe_path(root, name)
+            consumed.append({"origin": path.relative_to(root).as_posix(), "text": path.read_text(encoding="utf-8")})
+        named_plan, given, finding_answers = revise.answers_plan(root, artifact, consumed, arguments.purpose,
+                                                                 arguments.must_keep)
     if named_plan is not None:
         revise.read_plan(named_plan, root, artifact)
-    run_dir = edits.run_dir(root, "revise", artifact)
-    names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
-    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
-    mode = ("fixed-plan" if named_plan is not None else "assess" if arguments.assess
-            else "full" if arguments.full else "triage" if arguments.triage else recorded.get("mode"))
-    if mode not in {"fixed-plan", "assess", "full", "triage"}:
-        raise ValueError("choose --plan FILE, --pass NAME or --finding RESULT for fixed-plan execution, --triage "
-                         "to decide the stored findings, or --assess or --full for planning; a new run never "
-                         "chooses work implicitly")
-    if mode == "fixed-plan" and not isinstance(named_plan if named_plan is not None else recorded.get("plan"), str):
-        raise ValueError("fixed-plan run has no captured plan; supply --plan FILE")
-    if mode == "fixed-plan" and not focused and (arguments.purpose is not None or arguments.must_keep):
+    mode = ("answers" if consumed else "fixed-plan" if named_plan is not None else "assess" if arguments.assess
+            else "full" if arguments.full else "triage" if arguments.triage else None)
+    if mode is None:
+        raise ValueError("choose --plan FILE, --pass NAME or --finding RESULT for fixed-plan execution, --answers "
+                         "FILE to apply the operator's answers, --triage to decide the stored findings, or --assess "
+                         "or --full for planning; a run never chooses work implicitly")
+    if arguments.plan and (arguments.purpose is not None or arguments.must_keep):
         raise ValueError("fixed-plan execution takes purpose and must-keep from the plan; edit the --plan input, "
                          "or give them with --pass or --finding")
-    profiles = recorded.get("profiles") or {effort: asdict(profile)
-                                            for effort, profile in edit_operations.effort_profiles(root, names).items()}
-    profiles |= {effort: asdict(load_profile(root, name, gates.profiles())) for effort, name in names.items() if name}
-    review = None
-    if mode == "full":                    # the review step's profile: recorded, or the profile file's default
-        review = recorded.get("review-profile") or asdict(load_profile(root, None, gates.profiles()))
-    options = _options(run_dir, {"mode": mode, "purpose": None if focused else arguments.purpose,
-                                 revise.MUST_KEEP: None if focused else arguments.must_keep or None,
-                                 "profiles": profiles, "plan": named_plan, "review-profile": review})
-    report = revise.revise(root, artifact, {effort: Profile(**entry) for effort, entry in profiles.items()}, run_dir,
-                           purpose=options.get("purpose"), must_keep=options.get(revise.MUST_KEEP, []),
-                           named_plan=options["plan"] if mode == "fixed-plan" else None,
-                           review=Profile(**review) if review else None, triage=mode == "triage",
-                           timeout=arguments.timeout, harnesses=harnesses)
-    print(json.dumps(report.to_dict(), indent=2))
-    return 0 if report.ok else 1
-
-
-def _revised(root: Path, artifact: str, arguments: argparse.Namespace, harnesses) -> int:
-    """Supply the revised candidate to the run of the artifact's current text; launches nothing."""
-    given = [option for option, value in (
-        ("--plan", arguments.plan), ("--pass", arguments.pass_name), ("--finding", arguments.finding),
-        ("--assess", arguments.assess), ("--triage", arguments.triage), ("--full", arguments.full),
-        ("--purpose", arguments.purpose), ("--must-keep", arguments.must_keep),
-        *((f"--profile-{effort}", getattr(arguments, f"profile_{effort}")) for effort in edit_operations.EFFORTS))
-        if value not in (None, False, [])]
-    if given:
-        raise ValueError(f"--revised takes no workflow option: {', '.join(given)}")
-    run_dir = edits.run_dir(root, "revise", artifact)
-    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
-    if not recorded.get("profiles") or not recorded.get("mode"):
-        raise ValueError(edits.NOT_AT_PUBLICATION.format(artifact=artifact))
-    text = arguments.revised.read_text(encoding="utf-8")
-    report = revise.supply_revised(root, artifact, run_dir, Profile(**recorded["profiles"]["judgment"]), text,
-                                   arguments.revised, mode=recorded["mode"], harnesses=harnesses)
+    names = {effort: getattr(arguments, f"profile_{effort}") for effort in edit_operations.EFFORTS}
+    profiles = edit_operations.effort_profiles(root, names)
+    review = load_profile(root, None, gates.profiles()) if mode == "full" else None
+    run_dir = edits.new_run_dir(root, "revise", artifact)
+    observations.atomic_json(run_dir / SWEEP, {
+        "format": observations.VERSION, "workflow": "revise", "mode": mode, "purpose": arguments.purpose,
+        revise.MUST_KEEP: arguments.must_keep, "plan": named_plan, "answers": [item["origin"] for item in consumed],
+        "profiles": {effort: asdict(profile) for effort, profile in profiles.items()},
+        "review-profile": asdict(review) if review else None})
+    report = revise.revise(root, artifact, profiles, run_dir, purpose=arguments.purpose,
+                           must_keep=arguments.must_keep,
+                           named_plan=named_plan if mode in ("fixed-plan", "answers") else None,
+                           review=review, triage=mode == "triage", consumed=consumed, given=given,
+                           finding_answers=finding_answers, timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
@@ -640,38 +591,37 @@ def _rewrite(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     artifact = _note(root, arguments.artifact)
     if not artifact.endswith(".md"):
         raise ValueError(f"not a markdown artifact: {artifact}")
-    run_dir = edits.run_dir(root, rewrite.WORKFLOW, artifact)
-    recorded = json.loads((run_dir / SWEEP).read_text(encoding="utf-8")) if (run_dir / SWEEP).is_file() else {}
-    if arguments.revised is not None:
-        given = [option for option, value in (("--commission", arguments.commission), ("--restart", arguments.restart),
-                                              ("--profile", arguments.profile)) if value not in (None, False)]
-        if given:
-            raise ValueError(f"--revised takes no workflow option: {', '.join(given)}")
-        if not recorded.get("profile"):
-            raise ValueError(edits.NOT_AT_PUBLICATION.format(artifact=artifact))
-        report = rewrite.supply_revised(root, artifact, run_dir, Profile(**recorded["profile"]),
-                                        arguments.revised.read_text(encoding="utf-8"), arguments.revised,
-                                        harnesses=harnesses)
-    else:
-        if arguments.commission is None and (arguments.restart or not (run_dir / rewrite.INPUTS).is_file()):
-            raise ValueError("--restart needs --commission FILE" if arguments.restart
-                             else "a new rewrite run needs --commission FILE")
-        if arguments.profile is not None:
-            profile = load_profile(root, arguments.profile, gates.profiles())
-        elif recorded.get("profile"):
-            profile = Profile(**recorded["profile"])
-        else:
-            profile = edit_operations.effort_profiles(root, {})["judgment"]
-        review = recorded.get("review-profile") or asdict(load_profile(root, None, gates.profiles()))
-        _options(run_dir, {"workflow": rewrite.WORKFLOW, "profile": asdict(profile), "review-profile": review})
-        report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission,
-                                 restart=arguments.restart, review=Profile(**review), timeout=arguments.timeout,
-                                 harnesses=harnesses)
+    rewrite.read_commission(root, artifact, arguments.commission.read_text(encoding="utf-8"),
+                            brief="brief" in edits.capture_brief(root, artifact,
+                                                                 (root / artifact).read_text(encoding="utf-8")))
+    profile = (load_profile(root, arguments.profile, gates.profiles()) if arguments.profile is not None
+               else edit_operations.effort_profiles(root, {})["judgment"])
+    review = load_profile(root, None, gates.profiles())
+    run_dir = edits.new_run_dir(root, rewrite.WORKFLOW, artifact)
+    observations.atomic_json(run_dir / SWEEP, {"format": observations.VERSION, "workflow": rewrite.WORKFLOW,
+                                               "profile": asdict(profile), "review-profile": asdict(review)})
+    report = rewrite.rewrite(root, artifact, run_dir, profile, commission=arguments.commission, review=review,
+                             timeout=arguments.timeout, harnesses=harnesses)
     print(json.dumps(report.to_dict(), indent=2))
     return 0 if report.ok else 1
 
 
+def _publish(root: Path, arguments: argparse.Namespace) -> int:
+    """Publish the candidate the named revise or rewrite run held, or the operator's revision of it."""
+    run_dir = _run_dir(root, arguments.run)
+    workflow, _ = decisions.run_of(root, run_dir / "artifact" / edits.CANDIDATE)
+    revised = None if arguments.revised is None else arguments.revised.read_text(encoding="utf-8")
+    report = edits.publish_held(root, run_dir, revised, arguments.revised)
+    if workflow == rewrite.WORKFLOW:
+        report |= rewrite.store_accepted(root, run_dir, report)
+    print(json.dumps(report, indent=2))
+    return 0
+
+
 def _answers(root: Path, arguments: argparse.Namespace) -> int:
+    if arguments.answers_command == "record":
+        print(json.dumps(decisions.record_answers(root, observations.safe_path(root, arguments.file)), indent=2))
+        return 0
     question = observations.safe_path(root, arguments.question)
     rel = question.relative_to(root).as_posix()
     target = (observations.safe_path(root, arguments.to) if arguments.to
@@ -763,20 +713,11 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
             return _decisions(root, arguments)
         if arguments.command == "answers":
             return _answers(root, arguments)
+        if arguments.command == "publish":
+            return _publish(root, arguments)
         run_dir = _run_dir(root, arguments.run)
-        if arguments.command == "approve":
-            path = (root / arguments.file).resolve()
-            artifact = (run_dir / "artifact").resolve()
-            if not path.is_relative_to(artifact):
-                raise ValueError("proposal is outside the run's artifact directory")
-            print(json.dumps(operator.approve(run_dir, path.relative_to(artifact).as_posix(), arguments.key),
-                             indent=2))
-        elif arguments.command == "record":
-            options = json.loads((run_dir / SWEEP).read_text(encoding="utf-8"))
-            if not options.get("profiles"):
-                raise ValueError(f"not a revise run: {arguments.run}")
-            print(json.dumps(revise.record(root, run_dir, Profile(**options["profiles"]["judgment"]),
-                                           harnesses=harnesses), indent=2))
+        if arguments.command == "record":
+            print(json.dumps(revise.record(root, run_dir), indent=2))
         elif arguments.command == "retry":
             print(json.dumps(dismiss(run_dir, arguments.job, arguments.key), indent=2))
         else:

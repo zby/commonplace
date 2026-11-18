@@ -9,14 +9,16 @@ Prompts here say only how to read inputs and write outputs.
 Code owns the plan's check, the order, the bounds it can check and the one
 write to the checkout.
 
-The run directory is `edits.run_dir()`, derived from the artifact's path and
-the hash of its text when the command runs; a run that published is found
-by the text it last published while it is open. Assessment, settled edits
-and publication of their result run automatically. Per-item decisions, and
-publication of a candidate that adds a validation warning, propose a file
-through `headless.operator.answer()` and stop; the report's `waiting-for` names the
-file, the explicit approval command and the command to repeat. Repeating
-never approves: only the recorded approved text becomes the operator's answer:
+Every invocation is a new run, in `edits.new_run_dir()`, named by its UTC
+start time under the note's path; the run records the hash of its start
+text (`edits.begin()`). No run is repeated or resumed. A run ends in one of
+three ways: it completed, it needs continuation, or it failed. It publishes
+at most once, as its last write to the note. What it could not finish is
+its **continuation record** (`CONTINUATION`, `continuation()`), also given in
+the report: the text it was made for and each unfinished item in dependency
+order, with the actor expected to resolve it, the items to settle first,
+the command or instruction step that proceeds and the evidence. A later
+command acts on a stop's output by naming the file or the run:
 
 1. **Assessment.** One `decide()` ask, on the judgment profile, with two
    outputs: `assessment` for the operator and `plan` for code. Code hands the
@@ -24,17 +26,20 @@ never approves: only the recorded approved text becomes the operator's answer:
    (`catalog()`), and `plan_problems()` rejects unknown passes, missing
    fields and an order against the depth the pass files declare. The run
    keeps `artifact/assessment.md` and `artifact/plan.yaml`, then proceeds.
-   A plan whose `stop` is set ends the run there. To replace a stopped or
-   generated plan, supply `--plan`; editing the captured plan is not an
-   override. A named plan bypasses assessment but still requires validation.
+   A plan whose `stop` is set ends the run there, with the pending answers
+   file `artifact/stop-answers.md` over the plan; the operator's decision is
+   kept with `commonplace-review answers record FILE`, and a replacement plan
+   runs with `--plan`. A named plan bypasses assessment but still requires
+   validation.
    The assessor also receives the artifact's fresh stored review results
    with outcome warn or fail (`current_findings()`); it launches no review.
    A finding the operator rejected at a triage of that same result is
    removed from it (`without_rejected()`), and the operator's rejected and
    deferred findings of the note come as `earlier-decisions`. So do the
    operator's decisions on the stops of other revise runs on the note
-   (`decisions.earlier_stops()`), captured once in `STOPS_FILE`; only the
-   assessor receives them.
+   (`decisions.earlier_stops()`), kept in `STOPS_FILE`; only the assessor
+   receives them. The run keeps the results it assessed in
+   `ASSESSMENT_INPUTS`, as a record of what it read.
    A pass that declares `responds-to`, the fix of `FIX_REL`, takes one such
    result as its `finding` input: its plan entry names the result file and
    takes the depth of the result's criterion. `one_entry_plan()` writes the
@@ -49,15 +54,15 @@ never approves: only the recorded approved text becomes the operator's answer:
    contexts (`inbound.collect()`). The assessor also receives the depth 1
    reports, the synthesis report and the role report, and its plan's `stop`
    is how a depth 1 proposal ends the run. A review without a result stops the run.
-   **Triage** (`triage`) makes the plan from the operator's answers instead
-   of an assessor. It takes the results `current_findings()` gives, keeps
-   those with a warn or fail finding (`triage_findings()`), captures them
-   once in `triage-inputs.json` and copies each into `artifact/findings/` as
-   the question of a pending answers file `artifact/finding-answers-<key>.md`.
-   It stops until the operator's approved answers exist for every file. The
-   plan then holds one fix entry per result with an `approved` finding, in
-   depth order, naming the copy as its `finding`; the fix also receives the
-   approved answers as `finding-answers` and fixes only those findings.
+   **Triage** (`triage`) asks the operator instead of an assessor. It takes
+   the results `current_findings()` gives, keeps those with a warn or fail
+   finding (`triage_findings()`), records them in `triage-inputs.json` and
+   copies each into `artifact/findings/` as the question of a pending answers
+   file `artifact/finding-answers-<key>.md`. Then it ends. The decided files,
+   named to `run revise NOTE --answers FILE ...` (`answers_plan()`), make a
+   new run whose plan holds one fix entry per result with an `approved`
+   finding, in depth order, naming the copy as its `finding`; the fix also
+   receives the answers as `finding-answers` and fixes only those findings.
 2. **Passes.** Validated plans run automatically. An invalid named plan
    raises ValueError, a command error, not a worker retry. The artifact's text is kept as
    `artifact/start.md`. Each listed pass is one run of the edit route
@@ -65,93 +70,73 @@ never approves: only the recorded approved text becomes the operator's answer:
    current text and the roles `purpose`, `must-keep`, `scope` and `brief`. The
    route checks the edit result and the candidate and retains both in its
    observation under `artifact/edits/`; the next pass works on the
-   candidate. Each
-   pass's report and the text it left are kept under `artifact/reports/` and
-   `artifact/texts/`, so the operator can read each pass's diff. A pass
-   whose result is `unchanged` is `no-change`. A worker-reported problem
-   stops the run; a pass out of correction attempts is `problem`, and the run
-   can collect the remaining pass outputs but applies none of them.
-3. **Per-item decisions.** A pass whose `decision` is `per-item` has the
-   operator decide its proposals before any is applied: a proposing run whose
-   edit result is the question, a stop with the pending answers file
-   (`types/answers.md`, `answers.pending()`) in
-   `artifact/<pass>-answers-<answer key prefix>.md`, and on the repeat the
-   same operation run again with the explicitly approved answers file as its
-   `answers` input. Answers the validator refuses block the pass until the
-   operator approves a corrected file; answers that approve no item end the
-   pass as `no-change`. Only `approved` items are applied. The reasons bind
-   a held publication through the selection context. Proposals made again for other
-   text have another key, so they get a new file and stop again.
-   Before the stop waits, the run publishes what the earlier entries
-   applied (step 5), so the operator decides the items on the note's text.
+   candidate. Each pass's report and the text it left are kept under
+   `artifact/reports/` and `artifact/texts/`, so the operator can read each
+   pass's diff. A pass whose result is `unchanged` is `no-change`. A pass
+   whose worker reports a problem, runs out of correction attempts or cannot
+   launch is `problem`: the run publishes what the entries before it applied
+   and ends, and that entry and the later ones are left in the continuation
+   record.
+3. **Per-item decisions.** The run ends at its first pass whose `decision`
+   is `per-item` that proposes anything: it publishes what the earlier
+   entries applied (step 5), then asks the worker for the proposals on that
+   text, writes their pending answers file (`types/answers.md`,
+   `answers.pending()`) as `artifact/<pass>-answers.md`, and ends. Later
+   entries wait in the continuation record, so they run on text that already
+   has the approved items. The decided file, named to `run revise NOTE
+   --answers FILE`, makes a new run of that one pass with the answers as its
+   `answers` input; naming it is the approval, and the run keeps a copy
+   (`decisions.keep_answers()`). It is refused unless the validator accepts
+   the answers and the note holds exactly the text the proposals were made
+   for. Only `approved` items are applied. A file that approves no item is
+   kept with `commonplace-review answers record FILE` instead.
    When the run starts, code collects the operator's decided items from the
-   other revise and rewrite runs on the same note (`decisions.earlier()`) and captures
-   them once in `earlier-decisions.json`, so a repeat uses the same ones.
-   Each per-item pass and each fix of a finding receives them as the input
-   `earlier-decisions`. A proposal with the same `quote` and `change` as an
-   earlier decided item starts decided as before, with `carried-from`
-   naming the earlier answers file; the stop still waits for approval.
+   other revise and rewrite runs on the same note (`decisions.earlier()`)
+   and keeps them in `earlier-decisions.json`. Each per-item pass and each
+   fix of a finding receives them as the input `earlier-decisions`. A
+   proposal with the same `quote` and `change` as an earlier decided item
+   starts decided as before, with `carried-from` naming the earlier answers
+   file.
 4. **Interactive passes.** `narrow-overclaims` takes its evidence from the
    conversation, which no headless worker has; it runs only when the plan's
    `must-keep` list carries that evidence explicitly (is non-empty), and is
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
-   skipped pass is reported as left for the interactive path.
-5. **Publication.** At a per-item stop, and at the end of the plan when no
-   pass ended with a problem, a candidate other than the note's text is
-   written to the note without a stop (`_publish()`): changes applied
-   without a decision, and items the operator already decided, need no
-   second approval of the whole text. Each such publication is recorded in
-   `edits.PUBLISHED`, with its text and its diff from the text before it
-   under `artifact/publications/`, the plan entries it covers and the time;
-   the report lists them as `publications`. Nothing is committed. The note
-   is written only while it holds the text the run last knew, its start
-   text or the text it last published, and only while the brief is
-   unchanged. A candidate that adds a validation warning the note's text
-   does not have (`edits.new_warnings()`) is not published automatically.
-   At a per-item stop it stays in the run. At the end of the plan it waits
-   at the publication stop: `artifact/final.md`, a diff and a pending
-   answers file `artifact/publication-answers.md` whose one item names the
-   candidate's hash (`edits.publication()`). Only approved answers that
-   approve that item permit `edits.apply()` to write the checkout. Approval
-   binds the text the run last knew, the candidate and the execution
-   context. No-change runs complete without a write. Problems and genuine
-   operator stops never write the artifact merely because the command repeats.
-6. **Revised candidate.** At the publication stop, the operator may accept
-   the candidate with a revision: `supply_revised()` takes the full revised
-   text, launches nothing, and refuses unless the run waits at its
-   publication stop for the note's current text and the text passes the
-   candidate checks (`edits.revised_problems()`). The run captures it once in
-   `REVISED_RECORD` and as `artifact/revised.md`, with its diff from
-   `final.md` and from the note, and replaces the pending publication answers
-   with one whose question is `revised.md`; any approval is withdrawn.
-   `final.md` stays the workflow's candidate. A repeat publishes the revised
-   candidate under the same conditions as the candidate. The revision holds
-   only while the workflow's candidate is the one it revised; a changed
-   candidate withdraws it.
-7. **Record.** When the operator answered a run's findings in a session,
+   skipped pass is left in the continuation record for the session agent.
+5. **Publication.** When the run ends, a candidate other than the note's
+   text is written to the note without a stop (`_publish()`): changes
+   applied without a decision, and items the operator already decided, need
+   no second approval of the whole text. The publication is recorded in
+   `edits.PUBLISHED`, with its text and its diff under
+   `artifact/publications/`, the plan entries it covers and the time; the
+   report lists it under `publications`. Nothing is committed. The note is
+   written only while it holds the run's start text and only while the brief
+   is unchanged. A candidate that adds a validation warning the note's text
+   does not have (`edits.new_warnings()`) is not published: the run holds it
+   (`edits.hold()`) as `artifact/final.md` with its diff, and ends there,
+   before asking a per-item pass for proposals on a text that may never be
+   published. `commonplace-review publish RUN` publishes that exact
+   candidate later, or with `--revised FILE` the operator's revision of it
+   (`edits.publish_held()`).
+6. **Record.** When the operator answered a run's findings in a session,
    for example by splitting the note, `record()` writes the triage's
    pending answers file over each review result the run's assessor or
-   triage received, as a record only. It launches nothing and plans,
-   fixes and publishes nothing, so it also serves a run that can no longer
-   continue. The approved files are decisions on findings like a triage's.
-
-Because the plan and the operator's answers are inputs, an unedited repeat
-replays every answered call. A replacement supplied with `--plan` re-asks
-only passes whose inputs changed. Answers edited after approval are
-reported as unapproved and never silently used.
+   triage received, for `commonplace-review answers record FILE`. It
+   launches nothing and plans, fixes and publishes nothing, so it also
+   serves an overtaken run. The recorded files are decisions on findings
+   like a triage's.
 """
 
 from __future__ import annotations
 
 import json
 import re
+import shlex
 from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 
 import yaml
 
-from commonplace.headless import operator
 from commonplace.headless.decisions import decide, parse, violations
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import (
@@ -162,9 +147,14 @@ from commonplace.headless.jobs import (
     Run,
     input_ref,
     output_ref,
+    run_lock,
 )
 from commonplace.lib import answers, frontmatter
-from commonplace.lib.library import artifact_identity, library_root
+from commonplace.lib.library import (
+    LIBRARY_IDENTITY_PREFIX,
+    artifact_identity,
+    library_root,
+)
 from commonplace.lib.naming import write_brief_name_for
 from commonplace.lib.review_workflows import (
     criteria,
@@ -196,21 +186,15 @@ FINDING = "finding"
 FINDING_OUTCOMES = ("warn", "fail")
 """The outcomes of the stored results the assessor receives; INFO-level findings sit in `pass` results."""
 ASSESSMENT_INPUTS = "assessment-inputs.json"
-"""The review results the assessor received, captured once: a repeat reads them here, not from the store."""
+"""The review results the assessor received: a record of what the run read."""
 TRIAGE_INPUTS = "triage-inputs.json"
-"""The review results a triage asks about, captured once: a repeat reads them here, not from the store."""
+"""The review results a triage asked about: a record of what the run read."""
 TRIAGE_DIR = "findings"
 """Where a triage keeps, under the run's `artifact/`, a copy of each review result it asks about: the question."""
 FINDING_ANSWERS = "finding-answers"
 """The input role that hands the fix the operator's approved answers on its finding's review result."""
 TRIAGE_PURPOSE = "Fix the findings the operator approved at triage; the operator named no other purpose."
-"""The purpose of a plan made by a triage when the operator gives none."""
-TRIAGE_HOW = ("Record the operator's decision on each finding of the {criterion} review result in this answers "
-              "file, following instructions/decide-items.md: `approved` when the finding is right and should be "
-              "fixed, `rejected` with the operator's `reason` when it is wrong, or `deferred` with a `reason` and "
-              "a `revisit` condition; add `decided-by: operator` and `decided-at` to each decided item; change no "
-              "`id` or `proposal`. Approve each answers file the report's `triage` lists, then repeat. The plan "
-              "fixes the approved findings only.")
+"""The purpose of a plan made from a triage's answers when the operator gives none."""
 NOTHING_TO_TRIAGE = ("No fresh review result of the artifact has outcome warn or fail with a finding of level warn "
                      "or fail. There is nothing to triage; nothing is changed.")
 REVIEWS = "reviews"
@@ -231,25 +215,14 @@ MUST_KEEP = "must-keep"
 """The plan field, and the input role, listing what this run keeps beyond the write brief's Must keep."""
 PLAN_SCHEMA = {"purpose": str, MUST_KEEP: list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN = "assessment.md", "plan.yaml"
-REPEAT = "commonplace-review run revise {artifact}"
-CHANGE = "change the workflow inputs or supply --plan for revision"
-"""How the publication stop's waiting text tells the operator to change revise's candidate otherwise."""
-UNAPPROVED = ("This file was edited after its approval. The run used the approved text, not the edit. "
-              "Approve the file and repeat to use it.")
+COMMAND = "commonplace-review run revise"
 STOP_ANSWERS = decisions.STOP_ANSWERS
-"""The answers file for a plan that stops: one item, the plan. The run does not wait for it."""
+"""The answers file for a plan that stops: one item, the plan."""
 STOPS_FILE = "earlier-stops.json"
-"""The operator's decided stops of other runs on the note that the assessor received, captured once."""
-STOP_HOW = ("The plan stops with a proposal. Record the operator's decision on the one item of this answers file: "
-            "`approved` to act on the proposal as made, or `rejected` or `deferred` with the operator's reason, "
-            "with `decided-by: operator` and `decided-at`. When the work that followed is done, add `resolution` "
-            "and `refs` (commit hashes, paths) to the item. Approve the file each time it changes; the run does "
-            "not wait for it.")
-DECIDE_HOW = ("Record the operator's decision on each item of the {name} answers file: set `state` to `approved`, "
-              "`rejected` with a `reason`, or `deferred` with a `reason` and a `revisit` condition, and add "
-              "`decided-by: operator` and `decided-at` to each decided item; change no `id` or `proposal`. "
-              "Only approved items are applied. In a session, follow instructions/decide-items.md. Then approve "
-              "the file and repeat.")
+"""The operator's decided stops of other runs on the note that the assessor received: a record of what it read."""
+CONTINUATION = decisions.CONTINUATION
+REPORT = "report.json"
+"""The run's report, as printed, kept in the run directory as evidence for the continuation record."""
 
 
 @dataclass(frozen=True)
@@ -473,12 +446,13 @@ class PassState:
     scope: str | None
     effort: str
     finding: str | None = None        # repository path of the review result the entry fixes
-    state: str = "pending"            # applied, no-change, skipped, problem, waiting or pending
+    state: str = "pending"            # applied, no-change, skipped, problem, waiting or pending (not run)
     reason: str | None = None
     profile: dict | None = None       # the answering call's profile and recorded model
     model: str | None = None
     report: str | None = None         # repository path of the pass's report
     text: str | None = None           # repository path of the text the pass left, to diff against the one before
+    answers: str | None = None        # while `waiting`: the pending answers file over the pass's proposals
 
 
 @dataclass
@@ -487,32 +461,31 @@ class ReviseReport:
     artifact: str
     mode: str = "fixed-plan"
     plan: dict | None = None
+    answers: list[str] = field(default_factory=list)    # the answers files this run consumed, as named
     reviews: list[dict] = field(default_factory=list)    # the review step's sweep reports, in the full procedure
     findings: list[str] = field(default_factory=list)   # review results the assessor or the triage received
-    triage: dict | None = None        # a triage's answers file per review result, and what each waits for
+    triage: dict | None = None        # a triage's answers file per review result
     passes: list[PassState] = field(default_factory=list)
     proposed: str | None = None       # repository path of the final revised text in the run directory
-    revised_candidate: dict | None = None   # the operator's revised candidate and its files, or why it was withdrawn
     new_warnings: list[str] = field(default_factory=list)   # validation warnings the text to publish adds
-    published: bool = False           # this invocation wrote the run's candidate to the artifact
-    publications: list[dict] = field(default_factory=list)   # the run's automatic publications (`edits.PUBLISHED`)
+    published: bool = False           # this run wrote its candidate to the artifact
+    publications: list[dict] = field(default_factory=list)   # the run's publication (`edits.PUBLISHED`)
     not_published: str | None = None  # why the proposed text was not written
-    waiting_for: dict | None = None   # the operator's file the run stopped for, and how to continue
+    held: dict | None = None          # the candidate held for the operator, and the commands that publish it
     stop: str | None = None           # the plan's stop: the assessment is the result
-    stop_answers: dict | None = None  # the answers file for the plan's stop, and how to approve it
-    override: dict | None = None      # advice for explicitly replacing a stopped plan with --plan
-    unapproved_edits: list[dict] = field(default_factory=list)   # drafts edited after approval; not in use
+    continuation: dict | None = None  # the unfinished work, as in the run's `CONTINUATION` file
     stopped: str | None = None
     conflict: str | None = None
     changed: list[str] = field(default_factory=list)
 
     @property
     def complete(self) -> bool:
-        return self.waiting_for is None and self.stopped is None and self.conflict is None
+        """Nothing is left: no continuation, no stop and no conflict."""
+        return self.continuation is None and self.stopped is None and self.conflict is None
 
     @property
     def ok(self) -> bool:
-        """No stop, no conflict and no unexpected change; waiting for the operator is ok."""
+        """No stop, no conflict and no unexpected change; leaving work to continue is ok."""
         return self.stopped is None and self.conflict is None and not self.changed
 
     def to_dict(self) -> dict:
@@ -569,7 +542,7 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, must_keep
                         known: dict[str, Pass], brief: dict[str, str], findings: list[Finding] = (),
                         reports: list[Finding] = (), told: list[dict] = (),
                         stops: list[dict] = ()) -> tuple[str, dict[str, str]]:
-    """The captured request, also bound into the final publication approval.
+    """The assessor's prompt and inputs.
 
     `findings` are the stored warn and fail results the assessor may turn
     into plan entries; `reports` are review reports it reads. Without
@@ -620,7 +593,7 @@ def _assessment_request(artifact: str, text: str, purpose: str | None, must_keep
 
 def _assess(run: Run, root: Path, artifact: str, prompt: str, inputs: dict[str, str], known: dict[str, Pass],
             profile: Profile) -> Answer:
-    """Ask or replay the assessment and plan; keep the assessment and return its answer identity."""
+    """Ask for the assessment and plan; keep the assessment and return its answer."""
     data, answer = decide(run, "assessment", prompt, PLAN_SCHEMA, output="plan", also=["assessment"],
                           check=lambda data, _text: plan_checks(data, known, root, artifact), attempts=ATTEMPTS,
                           inputs=inputs, profile=profile)
@@ -628,54 +601,6 @@ def _assess(run: Run, root: Path, artifact: str, prompt: str, inputs: dict[str, 
         raise Stop(f"assessment: worker problem: {answer.problem}")
     run.accept(ASSESSMENT, answer.outputs["assessment"])
     return answer
-
-
-def _decide(run: Run, root: Path, artifact: str, text: str, operation: edit_operations.Operation,
-            roles: dict[str, dict], profile: Profile, state: PassState, report: ReviseReport, context: dict,
-            earlier: list[dict], **route) -> edit_operations.Edit | None:
-    """The applying run of a `per-item` pass; None when it stops for the operator or has nothing to apply.
-
-    The first run returns the proposals: the question of the stop, whose
-    pending answers file the operator decides. A proposal identical to one
-    of the `earlier` decisions starts decided as before (`answers.pending()`);
-    the stop still waits. The second run is the same operation with the
-    approved answers file as its `answers` input.
-    """
-    name = state.name
-    proposed = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{name}/propose",
-                                   profile=profile, **route)
-    if proposed.outcome == "problem":
-        return proposed
-    selection = {"pass": name, "key": proposed.answer.key, "question": None, "answers": None}
-    context["selections"].append(selection)
-    if proposed.outcome == "unchanged":
-        state.state, state.reason = "no-change", "the pass found no candidate"
-        return None
-    selection["question"] = proposed.text
-    pending = answers.pending(_rel(root, proposed.path), proposed.text.encode("utf-8"), earlier)
-    file = f"{name}-answers-{proposed.answer.key[:12]}.md"      # answers for another text wait again
-    approved = operator.answer(run, file, pending, key=proposed.answer.key)
-    selection["answers"] = approved
-    if approved is None:
-        state.state = "waiting"
-        report.waiting_for = operator.waiting(run, root, file, DECIDE_HOW.format(name=name),
-                                              REPEAT.format(artifact=artifact))
-        return None
-    if operator.edited(run, file):
-        report.unapproved_edits.append(operator.waiting(run, root, file, UNAPPROVED, REPEAT.format(artifact=artifact)))
-    data, problems = edits.answered(root, run.artifact / file, approved)
-    if problems:
-        state.state = "waiting"
-        state.reason = "the approved answers are not valid: " + "; ".join(problems)
-        report.waiting_for = operator.waiting(
-            run, root, file, f"{state.reason}. {DECIDE_HOW.format(name=name)}", REPEAT.format(artifact=artifact))
-        return None
-    if not any(item["state"] == "approved" for item in data["items"]):
-        state.state, state.reason = "no-change", "the operator approved no item"
-        return None
-    given = {"origin": _rel(root, run.artifact / file), "text": approved}
-    return edit_operations.ask(run, root, operation, artifact, text, {**roles, edit_operations.ANSWERS: given},
-                               job=f"{name}/apply", profile=profile, **route)
 
 
 def _asks(finding: Finding) -> bool:
@@ -696,84 +621,47 @@ def triage_findings(root: Path, artifact: str) -> list[Finding]:
                   key=lambda finding: (finding.depth is None, finding.depth or 0, finding.criterion_id))
 
 
-def _triage(run: Run, root: Path, artifact: str, findings: list[Finding], earlier: list[dict], report: ReviseReport,
-            context: dict) -> tuple[list[dict], dict[str, dict]] | None:
-    """The fix entries and their approved answers; None while an answers file waits for the operator.
+def _triage(run: Run, root: Path, findings: list[Finding], earlier: list[dict], report: ReviseReport) -> None:
+    """Write a pending answers file over each review result, and end; the run plans nothing.
 
     Each review result is copied into the run as the question of its answers
     file, so the question stays the same when the store changes. An item
     identical to one of the `earlier` decisions starts decided as before
-    (`answers.pending()`); every file still waits for its own approval. A
-    result with at least one `approved` finding becomes one entry for the
-    fix, which names the copy as its `finding`.
+    (`answers.pending()`).
     """
-    entries, given = [], {}
-    listed = report.triage["results"]
     for finding in findings:
         content = finding.text.encode("utf-8")
         question = _rel(root, run.accept(f"{TRIAGE_DIR}/{finding.criterion_id}.md", finding.text))
-        file = f"{decisions.FINDING}-answers-{answers.sha(content)[:12]}.md"
-        approved = operator.answer(run, file, answers.pending(question, content, earlier), key=answers.sha(content))
-        state = {"result": finding.path, "criterion": finding.criterion_id, "question": question,
-                 "answers": _rel(root, run.artifact / file), "state": "waiting"}
-        listed.append(state)
-        how = TRIAGE_HOW.format(criterion=finding.criterion_id)
-        if approved is None:
-            state["waiting-for"] = operator.waiting(run, root, file, how, REPEAT.format(artifact=artifact))
-            continue
-        if operator.edited(run, file):
-            report.unapproved_edits.append(operator.waiting(run, root, file, UNAPPROVED,
-                                                            REPEAT.format(artifact=artifact)))
-        data, problems = edits.answered(root, run.artifact / file, approved)
-        if problems:
-            state["state"] = "invalid"
-            state["reason"] = "the approved answers are not valid: " + "; ".join(problems)
-            state["waiting-for"] = operator.waiting(run, root, file, f"{state['reason']}. {how}",
-                                                    REPEAT.format(artifact=artifact))
-            continue
-        state["state"] = "decided"
-        state["approved"] = [item["id"] for item in data["items"] if item["state"] == "approved"]
-        context["triage"].append({"answers": state["answers"], "text": approved})
-        if state["approved"]:
-            entries.append({"pass": FIX, FINDING: question})
-            given[question] = {"origin": state["answers"], "text": approved}
-    waiting = [state["waiting-for"] for state in listed if "waiting-for" in state]
-    if waiting:
-        report.waiting_for = waiting[0]
-        return None
-    return entries, given
+        file = run.accept(f"{decisions.FINDING}-answers-{answers.sha(content)[:12]}.md",
+                          answers.pending(question, content, earlier))
+        report.triage["results"].append({"result": finding.path, "criterion": finding.criterion_id,
+                                         "question": question, "answers": _rel(root, file)})
 
 
 def triage_plan(entries: list[dict], purpose: str | None, must_keep: list[str]) -> str:
-    """The plan a triage makes: one fix entry per review result with an approved finding, in depth order."""
+    """The plan made from a triage's answers: one fix entry per review result with an approved finding."""
     return yaml.safe_dump({"purpose": purpose or TRIAGE_PURPOSE, MUST_KEEP: list(must_keep), "stop": None,
                            "passes": entries}, sort_keys=False, allow_unicode=True)
 
 
-RECORD = "commonplace-review record {run}"
-RECORD_HOW = ("A record only: this run does not continue from this file. Record what the operator decided about "
-              "the findings of the {criterion} review result, following instructions/decide-items.md: `approved`, "
-              "`rejected` with the operator's `reason`, or `deferred` with a `reason` and a `revisit` condition, "
-              "with `decided-by: operator` and `decided-at`; add `resolution` (what was done, when it went beyond "
-              "the proposal) and `refs` (new notes, commits) where the operator says so. Leave every finding the "
-              "operator did not decide `pending`. Change no `id` or `proposal`. Then approve the file.")
 NO_RESULTS = ("{run} holds no review results: it is not a revise run that made an assessment ({assessed}) or a "
               "triage ({triaged})")
 
 
-def record(root: Path, run_dir: Path, profile: Profile, harnesses=HARNESSES) -> dict:
+def record(root: Path, run_dir: Path) -> dict:
     """Write a pending answers file over each review result the revise run at `run_dir` holds; launch nothing.
 
-    The results are those the run's assessor or triage received, captured in
+    The results are those the run's assessor or triage received, recorded in
     `ASSESSMENT_INPUTS` or `TRIAGE_INPUTS`; only a result that is a question
     (`_asks()`) gets a file. Each file is built as a triage builds it: a copy
     of the result in `artifact/findings/` as its question, and
-    `finding-answers-<key>.md` through `operator.answer()`, with the run's
-    captured earlier decisions carried over. A file that already has an
-    operator record, written by a triage or an earlier record, is left as it
-    is. Nothing is planned, fixed or published, and the note is not read, so
-    this works for an overtaken run. `decisions.earlier()` reads the approved
-    files as it reads a triage's. ValueError when the run holds no results.
+    `finding-answers-<key>.md`, with the run's earlier decisions carried
+    over. A file that exists, written by a triage or an earlier record, is
+    left as it is. Nothing is planned, fixed or published, and the note is
+    not read, so this works for an overtaken run. The operator's decided
+    file is kept with `commonplace-review answers record FILE`, and
+    `decisions.earlier()` then reads it as it reads a triage's. ValueError
+    when the run holds no results.
     """
     root, run_dir = root.resolve(), run_dir.resolve()
     base = (root / gates.RUNS / "revise").resolve()
@@ -792,24 +680,22 @@ def record(root: Path, run_dir: Path, profile: Profile, harnesses=HARNESSES) -> 
     told = run_dir / EARLIER_FILE
     earlier = json.loads(told.read_text(encoding="utf-8"))["decisions"] if told.is_file() else []
     listed = []
-    with Run(run_dir, root, profile, harnesses=harnesses) as run:
+    with run_lock(run_dir):
         for key, finding in sorted(found.items(), key=lambda pair: (
                 pair[1].depth is None, pair[1].depth or 0, pair[1].criterion_id, pair[0])):
-            file = f"{decisions.FINDING}-answers-{key[:12]}.md"
-            written = operator.recorded(run, file) is None
+            file = run_dir / "artifact" / f"{decisions.FINDING}-answers-{key[:12]}.md"
+            written = not file.is_file()
             if written:
                 name = f"{TRIAGE_DIR}/{finding.criterion_id}.md"
-                copy = run.artifact / name
+                copy = run_dir / "artifact" / name
                 if copy.is_file() and copy.read_text(encoding="utf-8") != finding.text:
                     name = f"{TRIAGE_DIR}/{finding.criterion_id}-{key[:12]}.md"   # keep another file's question
-                question = _rel(root, run.accept(name, finding.text))
-                operator.answer(run, file, answers.pending(question, finding.text.encode("utf-8"), earlier),
-                                key=key)
-            approved = operator.recorded(run, file).get("answer") is not None
+                question = run_dir / "artifact" / name
+                edits.write_text(question, finding.text)
+                edits.write_text(file, answers.pending(_rel(root, question), finding.text.encode("utf-8"), earlier))
             listed.append({"result": finding.path, "criterion": finding.criterion_id,
-                           "state": "written" if written else "approved" if approved else "exists",
-                           **operator.waiting(run, root, file, RECORD_HOW.format(criterion=finding.criterion_id),
-                                              RECORD.format(run=run_rel))})
+                           "state": "written" if written else "exists", "file": _rel(root, file),
+                           "command": decisions.RECORD.format(file=_rel(root, file))})
     return {"run-dir": run_rel, "artifact": artifact,
             "overtaken": decisions.overtaken(root, "revise", artifact, run_dir), "results": listed}
 
@@ -819,7 +705,7 @@ KB_ROLE = "kb-role"
 EARLIER_DECISIONS = "earlier-decisions"
 """The input role that hands a `per-item` pass and the fix the operator's earlier decisions on the note."""
 EARLIER_FILE = "earlier-decisions.json"
-"""The earlier decisions the run used, captured once: a repeat reads them here, not from the other runs."""
+"""The earlier decisions the run used: a record of what it read from the other runs."""
 
 
 def role_section(report: str) -> str | None:
@@ -828,21 +714,34 @@ def role_section(report: str) -> str | None:
     return found.group(1).strip() or None if found else None
 
 
+def _failed(states: list[PassState], index: int, reason: str) -> None:
+    """Mark the entry at `index` as `problem` with `reason`; the later entries stay `pending`."""
+    states[index].state, states[index].reason = "problem", reason
+
+
 def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: dict[str, Pass],
             profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
-            context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None = None,
-            earlier: list[dict] = (), finding_answers: dict[str, dict] | None = None) -> str:
-    """Run the plan's passes from `start` through the edit route; return the text the last accepted pass left.
+            contracts: dict[str, bytes], kb_role: dict[str, str] | None = None, earlier: list[dict] = (),
+            finding_answers: dict[str, dict] | None = None,
+            given: dict[str, dict] | None = None) -> tuple[str, str]:
+    """Run the plan's passes from `start` through the edit route until the first stop; return the text and the end.
 
-    `kb_role` is the note's role in the KB, from the full procedure's role report; each pass receives it.
-    `earlier` holds the operator's earlier decisions on this note; each
-    `per-item` pass and each fix of a finding receives them, when there is
-    at least one, as `earlier-decisions`. `finding_answers` maps a
-    triage's finding to the operator's approved answers on it; the fix of
-    that finding receives them as `finding-answers`.
+    The end is `done` when every entry ran or was skipped; `proposals` when a
+    `per-item` pass proposed changes and the run ends at its pending answers
+    file; `held` when the text so far adds a validation warning and the run
+    ends before asking the next `per-item` pass for proposals; `failed` when
+    an entry ended with a problem. Entries after the stop stay `pending`.
+
+    `kb_role` is the note's role in the KB, from the full procedure's role
+    report; each pass receives it. `earlier` holds the operator's earlier
+    decisions on this note; each `per-item` pass and each fix of a finding
+    receives them, when there is at least one, as `earlier-decisions`.
+    `finding_answers` maps a triage's finding to the operator's answers on
+    it; the fix of that finding receives them as `finding-answers`. `given`
+    maps a `per-item` entry's label to the operator's answers on its
+    proposals, which the pass applies without proposing again.
     """
-    finding_answers = finding_answers or {}
-    run.accept(START, start)
+    finding_answers, given = finding_answers or {}, given or {}
     text = start
     findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
                 for entry in plan["passes"] if entry.get(FINDING)}
@@ -854,7 +753,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     route = {"contracts": contracts, "execution": instruction}
     told = ({EARLIER_DECISIONS: {"origin": _rel(root, run.root / EARLIER_FILE),
                                  "text": decisions.earlier_text(list(earlier))}} if earlier else {})
-    for state, (current, finding) in zip(report.passes, entries, strict=True):
+    for index, (state, (current, finding)) in enumerate(zip(report.passes, entries, strict=True)):
         if current.name in INTERACTIVE or (current.name == CONVERSATION and not must_keep):
             state.state = "skipped"
             state.reason = ("left for the interactive path: "
@@ -871,33 +770,40 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                     if finding and finding.path in finding_answers else {}),
                  **(told if operation.decision == "per-item" or current.responds_to else {})}
         profile = profiles[current.effort]
+        proposing = operation.decision == "per-item" and state.name not in given
+        if proposing and text != start and edits.new_warnings(root, artifact, start, text):
+            return text, "held"
         try:
-            if operation.decision == "per-item":
-                edit = _decide(run, root, artifact, text, operation, roles, profile, state, report, context,
-                               list(earlier), **route)
-                if edit is None:
-                    if state.state == "waiting":
-                        return text
-                    continue
-            else:
-                edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=state.name,
+            if proposing:
+                edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{state.name}/propose",
                                            profile=profile, **route)
-        except OutOfAttempts as spent:
-            state.state, state.reason = "problem", str(spent)
-            continue
-        context["pass-answers"].append({"pass": state.name, "key": edit.answer.key, "result": edit.text,
-                                        "candidate": edit.candidate})
+            else:
+                if state.name in given:
+                    roles[edit_operations.ANSWERS] = given[state.name]
+                edit = edit_operations.ask(run, root, operation, artifact, text, roles,
+                                           job=f"{state.name}/apply" if state.name in given else state.name,
+                                           profile=profile, **route)
+        except (OutOfAttempts, LaunchFailed) as failure:         # LaunchFailed includes UsageLimited
+            _failed(report.passes, index, str(failure))
+            return text, "failed"
         state.profile, state.model = edit.data["profile"], edit.data["model"]
         if edit.outcome == "problem":
-            state.state, state.reason = "problem", f"worker problem: {edit.answer.problem}"
-            raise Stop(f"{state.name}: {state.reason}")
+            _failed(report.passes, index, f"worker problem: {edit.answer.problem}")
+            return text, "failed"
         state.report = _rel(root, run.accept(f"reports/{state.name}.md", edit.body))
         if edit.outcome == "unchanged":
             state.state = "no-change"
+            if proposing:
+                state.reason = "the pass found no candidate"
             continue
+        if proposing:
+            state.state = "waiting"
+            state.answers = _rel(root, run.accept(f"{state.name}-answers.md", answers.pending(
+                _rel(root, edit.path), edit.text.encode("utf-8"), list(earlier))))
+            return text, "proposals"
         state.text = report.proposed = _rel(root, run.accept(f"texts/{state.name}.md", edit.candidate))
         state.state, text = "applied", edit.candidate
-    return text
+    return text, "done"
 
 
 # --- The review step of the full procedure ----------------------------------------------------
@@ -938,7 +844,7 @@ def _supplied_inputs(root: Path, pair: gates.Pair, reviewed: list[gates.Pair]) -
 def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile, timeout: float | None,
            harnesses, inputs: dict[str, dict[str, str]] | None = None, workflow: str = "revise",
            targets: dict[str, str] | None = None) -> gates.SweepReport:
-    """Run `wanted` through the sweep in its own run, or continue that run; Stop unless every pair has a result.
+    """Run `wanted` through the sweep in its own new run; Stop unless every pair has a result.
 
     Without `inputs`, results are published to the shared store and fresh
     ones are reused. With them (a criterion of `criteria.SUPPLIED`, or the
@@ -946,13 +852,8 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
     `run gates --input` does. `targets` gives a note's text in place of its
     file (`gates.sweep()`).
     """
-    request = run_dir / "review-request.json"
-    if request.is_file():                         # a repeat: replay the captured request
-        wanted = [gates.Pair(**pair) for pair in json.loads(request.read_text(encoding="utf-8"))["pairs"]]
-        timeout = None
-    else:
-        observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": workflow,
-                                                         "profile": asdict(profile)})
+    observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": workflow,
+                                                     "profile": asdict(profile)})
     swept = gates.sweep(root, wanted, profile, run_dir, max_workers=REVIEW_WORKERS, timeout=timeout,
                         force=inputs is not None, grouping="bundle", harnesses=harnesses,
                         publish_results=inputs is None, operational_inputs=inputs, targets=targets)
@@ -961,8 +862,7 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
     unfinished = [pair.job for pair in swept.pairs if pair.state not in ("fresh", "reviewed")]
     if unfinished:
         raise Stop(f"reviews in {swept.run_dir} ended without a result: {', '.join(unfinished)}. Read the problem "
-                   f"with `commonplace-review show {swept.run_dir}`, dismiss it with `commonplace-review retry "
-                   f"{swept.run_dir} JOB`, then repeat")
+                   f"with `commonplace-review show {swept.run_dir}`; a new run asks again")
     return swept
 
 
@@ -978,10 +878,8 @@ def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profil
     report.reviews.append(_sweep(root, run_dir / REVIEWS, wanted, profile, timeout, harnesses).to_dict())
     found = []
     for pair in supplied:
-        directory = run_dir / SUPPLIED_DIRS[pair.kind]
-        resumed = (directory / "review-request.json").is_file()   # a repeat replays the captured inputs
-        inputs = {} if resumed else _supplied_inputs(root, pair, wanted)
-        swept = _sweep(root, directory, [pair], profile, timeout, harnesses, inputs)
+        swept = _sweep(root, run_dir / SUPPLIED_DIRS[pair.kind], [pair], profile, timeout, harnesses,
+                       _supplied_inputs(root, pair, wanted))
         report.reviews.append(swept.to_dict())
         found += [Finding(swept.run_dir, done.result.criterion, results.criterion_id(root, done.result.criterion),
                           criterion_depth(root, done.result.criterion), done.result.outcome,
@@ -997,55 +895,54 @@ def role_pair(root: Path, artifact: str, text: str) -> gates.Pair | None:
 
 
 def stored_role(root: Path, artifact: str, text: str) -> Finding | None:
-    """The role report of the full procedure's run on this same `text`, when it is fresh; otherwise None.
+    """The role report of a full procedure's run on this same `text`, when it is fresh; otherwise None.
 
     A role report publishes no result, so the shared store never holds one.
-    The full procedure keeps its role report in `role/` under the revise run
-    of the artifact's text (`edits.run_dir()`). That report is fresh when
-    its captured request holds the same pair, the same artifact text, the
-    same criterion text, the same inbound contexts as `inbound.collect()`
-    gives now and the same output contract, and the review completed.
+    The full procedure keeps its role report in `role/` under its revise
+    run. The revise runs of the artifact are read newest first, and the
+    first fresh report is returned. A report is fresh when its captured
+    request holds the same pair, the same artifact text, the same criterion
+    text, the same inbound contexts as `inbound.collect()` gives now and the
+    same output contract, and the review completed.
     """
-    directory = edits.run_dir_for(root, "revise", artifact, text) / SUPPLIED_DIRS[criteria.ROLE]
-    request = directory / "review-request.json"
-    if not request.is_file():
-        return None
-    data = json.loads(request.read_text(encoding="utf-8"))
-    pair = role_pair(root, artifact, text)
+    base = root / gates.RUNS / "revise" / artifact.removesuffix(".md")
+    requests = sorted(base.glob(f"*/{SUPPLIED_DIRS[criteria.ROLE]}/review-request.json"), reverse=True)
+    pair = role_pair(root, artifact, text) if requests else None
     if pair is None:
         return None
     criterion = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
-    contracts = {name: value.encode("utf-8") for name, value in data["contracts"].items()}
-    if (data["pairs"] != [asdict(pair)] or data["targets"].get(artifact) != text
-            or data["criteria"].get(pair.criterion) != criterion
-            or data["operational-inputs"].get(inbound.INPUT, {}).get("text") != inbound.collect(root, artifact)
-            or result_contract.fingerprint(contracts)
-            != result_contract.fingerprint(result_contract.capture_contract(root))):
-        return None
-    for record in sorted((directory / "artifact" / "reviews").glob("*/observation.json")):
-        observation = json.loads(record.read_text(encoding="utf-8"))
-        if observation.get("state") == "completed" and observation.get("latest-result"):
-            path = record.parent / observation["latest-result"]
-            report = path.read_text(encoding="utf-8")
-            return Finding(_rel(root, path), pair.criterion, pair.criterion_id, criterion_depth(root, pair.criterion),
-                           frontmatter.parse(report).data.get("outcome"), report)
+    contexts, contract = inbound.collect(root, artifact), result_contract.capture_contract(root)
+    for request in requests:
+        data = json.loads(request.read_text(encoding="utf-8"))
+        contracts = {name: value.encode("utf-8") for name, value in data["contracts"].items()}
+        if (data["pairs"] != [asdict(pair)] or data["targets"].get(artifact) != text
+                or data["criteria"].get(pair.criterion) != criterion
+                or data["operational-inputs"].get(inbound.INPUT, {}).get("text") != contexts
+                or result_contract.fingerprint(contracts) != result_contract.fingerprint(contract)):
+            continue
+        for record in sorted((request.parent / "artifact" / "reviews").glob("*/observation.json")):
+            observation = json.loads(record.read_text(encoding="utf-8"))
+            if observation.get("state") == "completed" and observation.get("latest-result"):
+                path = record.parent / observation["latest-result"]
+                report = path.read_text(encoding="utf-8")
+                return Finding(_rel(root, path), pair.criterion, pair.criterion_id,
+                               criterion_depth(root, pair.criterion), frontmatter.parse(report).data.get("outcome"),
+                               report)
     return None
 
 
 def role_report(root: Path, artifact: str, text: str, run_dir: Path, profile: Profile, timeout: float | None,
                 harnesses, workflow: str) -> Finding | None:
-    """Run the role report alone on `text` in the run at `run_dir`, or replay it; Stop unless it has a result.
+    """Run the role report alone on `text` in the new run at `run_dir`; Stop unless it has a result.
 
-    A new run collects the inbound contexts (`inbound.collect()`); a repeat
-    replays the captured request. Nothing is published. None when the role
-    report does not apply to the artifact.
+    The run collects the inbound contexts (`inbound.collect()`). Nothing is
+    published. None when the role report does not apply to the artifact.
     """
     pair = role_pair(root, artifact, text)
     if pair is None:
         return None
-    resumed = (run_dir / "review-request.json").is_file()
-    inputs = {} if resumed else {inbound.INPUT: inbound.supplied(root, artifact)}
-    swept = _sweep(root, run_dir, [pair], profile, timeout, harnesses, inputs, workflow)
+    swept = _sweep(root, run_dir, [pair], profile, timeout, harnesses, {inbound.INPUT: inbound.supplied(root, artifact)},
+                   workflow)
     [done] = swept.pairs
     return Finding(swept.run_dir, done.result.criterion, results.criterion_id(root, done.result.criterion),
                    criterion_depth(root, done.result.criterion), done.result.outcome,
@@ -1060,232 +957,360 @@ def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
     return [finding for finding in found if finding.depth == 1]
 
 
+def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | None,
+                 must_keep: list[str]) -> tuple[str, dict[str, dict], dict[str, dict]]:
+    """The plan, and the answers each entry receives, of a run that consumes the operator's answers files.
+
+    `given` holds each named file's `origin` (repository path) and `text`.
+    Naming a file is the operator's approval of its text; each must pass the
+    validator against its question (`edits.answered()`). Either:
+
+    - one file whose question is a `per-item` operation's proposals (an edit
+      result) on `artifact`: the plan is that pass alone, and the pass
+      applies the approved items. Refused unless the note holds exactly the
+      text the proposals were made for and some item is approved; or
+    - files whose questions are review results of `artifact`, such as a
+      triage's: the plan holds one fix entry per result with an `approved`
+      finding, in depth order, and each fix receives its answers as
+      `finding-answers`. Refused unless the parts of the note each result's
+      criterion watches are those it judged (its `note-sha256`, as freshness
+      compares them) and some finding is approved.
+
+    Returns the plan's text, the answers by `per-item` entry label and the
+    answers by finding path. ValueError, a command error, otherwise; a file
+    whose decisions nothing applies is kept with `answers record`.
+    """
+    note = (root / artifact).read_text(encoding="utf-8")
+    known, edited, entries = passes(), [], []
+    nothing = ("no item of {files} is approved; there is nothing to apply. Keep the operator's decisions with "
+               "`commonplace-review answers record FILE`")
+    for item in given:
+        data, problems = edits.answered(root, root / item["origin"], item["text"])
+        if problems:
+            raise ValueError(f"{item['origin']}: the answers are not valid: " + "; ".join(problems))
+        question = frontmatter.parse((root / data["question"]).read_text(encoding="utf-8")).data
+        approved = [entry["id"] for entry in data["items"] if entry["state"] == "approved"]
+        if question.get("type") == edit_operations.RESULT_TYPE:
+            name = Path(str(question.get("operation", "")).removeprefix(LIBRARY_IDENTITY_PREFIX)).stem
+            if name not in known or known[name].decision != "per-item" or question.get("note") != artifact:
+                raise ValueError(f"{item['origin']}: its question is a result of {question.get('operation')} on "
+                                 f"{question.get('note')}, not of a per-item pass on {artifact}")
+            if question.get("input-sha256") != observations.sha(note.encode("utf-8")):
+                raise ValueError(f"{artifact} no longer holds the text the proposals of {item['origin']} were "
+                                 "made for; the proposals are stale. A new run of the pass proposes again")
+            if not approved:
+                raise ValueError(nothing.format(files=item["origin"]))
+            edited.append((name, item))
+        elif question.get("type") == result_contract.TYPE:
+            finding = read_finding(root, artifact, data["question"])
+            criterion = results.criterion_file(root, finding.criterion).read_text(encoding="utf-8")
+            if question.get("note-sha256") != results.note_sha256(note, criterion):
+                raise ValueError(f"{artifact} no longer holds the text the review result {data['question']} "
+                                 "judged, in the parts its criterion watches; its findings are stale")
+            if approved:
+                entries.append((finding, item))
+        else:
+            raise ValueError(f"{item['origin']}: its question {data['question']} is neither an edit result nor a "
+                             "review result; keep the decision with `commonplace-review answers record FILE`")
+    if edited and (entries or len(edited) > 1 or len(given) > 1):
+        raise ValueError("--answers takes one answers file over a per-item pass's proposals, or answers files "
+                         "over review results, not both")
+    if edited:
+        [(name, item)] = edited
+        return (one_entry_plan(name, None, purpose, must_keep),
+                {name: {"origin": item["origin"], "text": item["text"]}}, {})
+    if not entries:
+        raise ValueError(nothing.format(files=", ".join(item["origin"] for item in given)))
+    entries.sort(key=lambda pair: (pair[0].depth is None, pair[0].depth or 0, pair[0].criterion_id))
+    return (triage_plan([{"pass": FIX, FINDING: finding.path} for finding, _ in entries], purpose, must_keep),
+            {}, {finding.path: {"origin": item["origin"], "text": item["text"]} for finding, item in entries})
+
+
 def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Path, *, purpose: str | None = None,
            must_keep: list[str] = (), named_plan: str | None = None, review: Profile | None = None,
-           triage: bool = False, timeout: float | None = None, harnesses=HARNESSES) -> ReviseReport:
-    """Revise the repository-relative `artifact` in the run at `run_dir`, new or continued.
+           triage: bool = False, consumed: list[dict] = (), given: dict[str, dict] | None = None,
+           finding_answers: dict[str, dict] | None = None, timeout: float | None = None,
+           harnesses=HARNESSES) -> ReviseReport:
+    """Revise the repository-relative `artifact` in the new run at `run_dir`.
 
     The artifact's current text is the start text. Validated plans run
-    automatically; `named_plan` bypasses assessment and explicitly replaces its
-    plan. Editing the captured plan is not an override. Per-item selections,
-    and publication of a candidate that adds a validation warning, require
-    explicit approval; other publication is automatic. A run that already
-    published continues from its start text `artifact/start.md` and needs
-    the note to hold the text it last published. `profiles` maps each effort
-    to its profile; the assessment is a judgment ask. `review` is the profile
-    of the full procedure's review step; without it no review is launched.
-    `triage` makes the plan from the operator's answers on the artifact's
-    fresh warn and fail review results (`_triage()`); it launches no review
-    and no assessor.
+    automatically; `named_plan` bypasses assessment. A candidate that adds a
+    validation warning is held, and other publication is automatic.
+    `profiles` maps each effort to its profile; the assessment is a judgment
+    ask. `review` is the profile of the full procedure's review step;
+    without it no review is launched. `triage` writes the pending answers
+    files over the artifact's fresh warn and fail review results and ends
+    (`_triage()`); it launches no review and no assessor. `consumed` holds
+    the answers files the operator named (`origin`, `text`), kept in the run
+    before anything is launched; `given` and `finding_answers` are what
+    `answers_plan()` made of them. The run ends at its first stop and writes
+    its continuation record (`continuation()`) and its report (`REPORT`).
     """
     root = root.resolve()
     if sum((named_plan is not None, review is not None, triage)) > 1:
         raise ValueError("choose one of a named plan, the review step or the triage")
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact,
-                          mode="fixed-plan" if named_plan is not None else "full" if review
-                          else "triage" if triage else "assess")
+                          mode="answers" if consumed else "fixed-plan" if named_plan is not None
+                          else "full" if review else "triage" if triage else "assess")
     known = passes()
     before = gates.checkout_state(root)
-    start = current = (root / artifact).read_text(encoding="utf-8")
+    start = (root / artifact).read_text(encoding="utf-8")
     final = None
     try:
-        record = edits.published(run_dir)
-        if record is not None:                 # the run wrote the note: it continues from its own start text
-            report.publications = record["publications"]
-            start = (run_dir / "artifact" / START).read_text(encoding="utf-8")
-            if observations.sha(current.encode("utf-8")) != record["publications"][-1]["sha256"]:
-                raise Conflict(f"{artifact} changed since this run published "
-                               f"{record['publications'][-1]['text']}; nothing was written. This run does not "
-                               "continue; the command on the note's current text opens another run")
         brief = capture_brief(root, artifact, start)
+        edits.begin(run_dir, artifact, start, brief)
+        for item in consumed:
+            decisions.keep_answers(run_dir, item["origin"], item["text"])
+        report.answers = [item["origin"] for item in consumed]
         with Run(run_dir, root, profiles["judgment"], timeout=timeout, harnesses=harnesses) as run:
+            run.accept(START, start)
             instruction = (library_root() / EXECUTION_REL).read_text(encoding="utf-8")
             contracts = result_contract.capture_contract(root, edit_operations.RESULT_TYPE)
-            context = {"mode": report.mode, "execution": instruction, **brief,
-                       "contract-sha256": result_contract.fingerprint(contracts),
-                       "pass-answers": [], "selections": []}
-            kb_role = None
-            told = run_dir / EARLIER_FILE
-            if told.is_file():                         # a repeat: other runs may have decided more since
-                earlier = json.loads(told.read_text(encoding="utf-8"))["decisions"]
-            else:
-                earlier = decisions.earlier(root, artifact, run_dir)
-                observations.atomic_json(told, {"decisions": earlier})
-            finding_answers = {}
+            kb_role, proposed = None, None
+            earlier = decisions.earlier(root, artifact, run_dir)
+            observations.atomic_json(run_dir / EARLIER_FILE, {"decisions": earlier})
             if triage:
-                proposed = None
-                context["triage"] = []
-                captured = run_dir / TRIAGE_INPUTS
-                if captured.is_file():                # a repeat: the store may have changed since the triage began
-                    findings = [Finding(**given) for given in
-                                json.loads(captured.read_text(encoding="utf-8"))["findings"]]
-                else:
-                    findings = triage_findings(root, artifact)
-                    observations.atomic_json(captured, {"findings": [asdict(given) for given in findings]})
+                findings = triage_findings(root, artifact)
+                observations.atomic_json(run_dir / TRIAGE_INPUTS, {"findings": [asdict(given) for given in findings]})
                 report.findings = [finding.path for finding in findings]
                 report.triage = {"results": []}
                 if not findings:
                     report.triage["what"] = NOTHING_TO_TRIAGE
-                else:
-                    decided = _triage(run, root, artifact, findings, earlier, report, context)
-                    if decided is not None:
-                        entries, finding_answers = decided
-                        proposed = triage_plan(entries, purpose, list(must_keep))
+                _triage(run, root, findings, earlier, report)
             elif named_plan is None:
-                captured = run_dir / ASSESSMENT_INPUTS
-                if captured.is_file():                # a repeat: the store may have changed since the assessment
-                    data = json.loads(captured.read_text(encoding="utf-8"))
-                    findings = [Finding(**given) for given in data["findings"]]
-                    reports = [Finding(**given) for given in data["reports"]]
-                    report.reviews = data["reviews"]
-                else:
-                    reports = []
-                    if review is not None:
-                        supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
-                        reports = [*depth_one_reports(root, artifact), *supplied]
-                    findings = without_rejected(current_findings(root, artifact), earlier)
-                    observations.atomic_json(captured, {
-                        "findings": [asdict(given) for given in findings],
-                        "reports": [asdict(given) for given in reports], "reviews": report.reviews})
-                stopped = run_dir / STOPS_FILE
-                if stopped.is_file():                 # a repeat: other runs may have decided stops since
-                    stops = json.loads(stopped.read_text(encoding="utf-8"))["stops"]
-                else:
-                    stops = decisions.earlier_stops(root, artifact, run_dir)
-                    observations.atomic_json(stopped, {"stops": stops})
-                for given in reports:
-                    section = (role_section(given.text)
-                               if given.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None)
+                reports = []
+                if review is not None:
+                    supplied = _review(root, artifact, start, run_dir, review, timeout, harnesses, report)
+                    reports = [*depth_one_reports(root, artifact), *supplied]
+                findings = without_rejected(current_findings(root, artifact), earlier)
+                observations.atomic_json(run_dir / ASSESSMENT_INPUTS, {
+                    "findings": [asdict(given) for given in findings],
+                    "reports": [asdict(given) for given in reports], "reviews": report.reviews})
+                stops = decisions.earlier_stops(root, artifact, run_dir)
+                observations.atomic_json(run_dir / STOPS_FILE, {"stops": stops})
+                for given_report in reports:
+                    section = (role_section(given_report.text)
+                               if given_report.criterion.endswith(criteria.REPORTS[criteria.ROLE]) else None)
                     if section:
-                        kb_role = {"origin": given.path, "text": section}
+                        kb_role = {"origin": given_report.path, "text": section}
                 report.findings = [finding.path for finding in (*findings, *reports)]
                 prompt, inputs = _assessment_request(artifact, start, purpose, list(must_keep), known, brief,
-                                                     findings,
-                                                     reports, decisions.planning_decisions(earlier), stops)
-                context.update({"assessment": inputs, "assessment-prompt": prompt})
-                assessed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"])
-                proposed = assessed.outputs["plan"]
-                context["assessment-answer"] = {"key": assessed.key, "outputs": assessed.outputs}
+                                                     findings, reports, decisions.planning_decisions(earlier),
+                                                     stops)
+                proposed = _assess(run, root, artifact, prompt, inputs, known, profiles["judgment"]).outputs["plan"]
             else:
                 proposed = named_plan
-            if proposed is not None:                  # a triage without a plan waits or has nothing to ask
-                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start, current,
-                                  instruction, context, contracts, kb_role, earlier, finding_answers,
-                                  assessed=named_plan is None and not triage)
+            if proposed is not None:
+                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start,
+                                  instruction, contracts, kb_role, earlier, finding_answers or {}, given or {})
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    edits.mark_open(run_dir, not report.complete)
     report.changed = guarded_changes(root, before, artifact, final if report.published else None)
+    report.continuation = continuation(root, artifact, run_dir, report, known, start,
+                                       purpose=purpose, must_keep=list(must_keep))
+    observations.atomic_json(run_dir / REPORT, report.to_dict())
     return report
 
 
-HELD = ("The run stopped here, and did not publish automatically, because the candidate adds a validation "
-        "warning that the note does not have. ")
-"""What opens the waiting text of revise's publication stop: why the run did not publish."""
-
-
-def _publish(run: Run, root: Path, artifact: str, start: str, current: str, final: str, brief: dict[str, str],
+def _publish(root: Path, artifact: str, run_dir: Path, start: str, final: str, brief: dict[str, str],
              report: ReviseReport) -> None:
-    """Write `final` over the note's `current` text as an automatic publication, and record it.
+    """Write `final` over the note's start text as the run's automatic publication, and record it.
 
-    The publication covers the entries applied since the run's last
-    publication. The brief is checked first (`edits.unchanged_brief()`); the
-    note must still hold `current` (`edits.record_publication()`).
+    The publication covers the entries the run applied. The brief is
+    checked first (`edits.unchanged_brief()`); the note must still hold
+    `start` (`edits.record_publication()`).
     """
     edits.unchanged_brief(root, artifact, start, brief)
-    covered = {name for given in report.publications for name in given["entries"]}
-    entries = [state.name for state in report.passes if state.state == "applied" and state.name not in covered]
-    entry = edits.record_publication(run, root, artifact, current, final, entries, observations.timestamp())
-    report.publications = [*report.publications, entry]
+    entries = [state.name for state in report.passes if state.state == "applied"]
+    entry = edits.record_publication(run_dir, root, artifact, start, final, entries, observations.timestamp())
+    report.publications = [entry]
     report.published = True
 
 
 def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[str, Pass],
-              profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str, current: str,
-              instruction: str, context: dict, contracts: dict[str, bytes], kb_role: dict[str, str] | None,
-              earlier: list[dict], finding_answers: dict[str, dict], *, assessed: bool) -> str | None:
-    """Check and keep the plan, then stop on it or run its passes and publish; return the text to publish.
+              profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str,
+              instruction: str, contracts: dict[str, bytes], kb_role: dict[str, str] | None,
+              earlier: list[dict], finding_answers: dict[str, dict], given: dict[str, dict]) -> str | None:
+    """Check and keep the plan, then end on its stop or run its passes to the first stop and publish.
 
-    `start` is the run's start text, from which the passes run; `current` is
-    the note's text, which the run last knew. At a per-item stop and at the
-    end of the plan, a candidate other than `current` is published
-    automatically (`_publish()`). At a per-item stop, a candidate that adds
-    a validation warning stays in the run. At the end, it stops at the
-    publication stop (`edits.publish()`). A pass that ended with a problem
-    publishes nothing.
-
-    `assessed` is true for a plan an assessor made: it may name any pass, so
-    every pass and every effort's profile binds publication.
+    Returns the text to publish. A candidate other than `start` is published
+    automatically (`_publish()`) unless it adds a validation warning; then
+    the run holds it (`edits.hold()`). That happens whether the passes ran
+    to the end, reached a `per-item` pass's proposals, or ended with a
+    problem: an entry that failed does not hold back the entries before it.
     """
     plan = report.plan = read_plan(proposed, root, artifact, known)
-    context["plan"] = plan
-    relevant = known if assessed else {entry["pass"]: known[entry["pass"]] for entry in plan["passes"]}
-    efforts = set(profiles) if assessed else {current.effort for current in relevant.values()}
-    context["passes"] = {name: asdict(current) for name, current in relevant.items()}
-    context["profiles"] = {name: asdict(profiles[name]) for name in sorted(efforts)}
     run.accept(PLAN, proposed)
     if plan["stop"]:
         report.stop = plan["stop"]
         question = run.artifact / PLAN
-        operator.answer(run, STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()),
-                        key=answers.sha(question.read_bytes()))
-        report.stop_answers = operator.waiting(run, root, STOP_ANSWERS, STOP_HOW, REPEAT.format(artifact=artifact))
-        report.override = {
-            "what": "The plan stops. To run passes instead, supply a validated replacement with --plan; "
-                    "editing artifact/plan.yaml alone does not override the plan.",
-            "command": REPEAT.format(artifact=artifact) + " --plan <replacement-plan.yaml>",
-        }
+        run.accept(STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()))
         return None
     origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
-    final = _passes(run, root, artifact, start, plan, known, profiles, report,
-                    {name: {"origin": origin, "text": value} for name, value in brief.items()},
-                    instruction, context, contracts, kb_role, earlier, finding_answers)
-    problems = [state.name for state in report.passes if state.state == "problem"]
-    if final == current:
-        return final
-    if problems:
-        report.not_published = (f"The proposed text is {report.proposed}; it is not published: "
-                                f"{', '.join(problems)} ended with a problem.")
-        return final
-    warnings = edits.new_warnings(root, artifact, current, final)
-    if report.waiting_for is not None and warnings:          # a per-item stop holds no second stop
-        report.new_warnings = warnings
-        report.not_published = (f"The proposed text is {report.proposed}; it is not published at this stop: it "
-                                "adds validation warnings the note does not have. The run publishes it, or stops "
-                                "at its publication stop, at the end of its plan.")
-        return final
-    if warnings:
-        final, report.not_published = edits.publish(run, root, artifact, current, final, context, brief,
-                                                     REPEAT.format(artifact=artifact), report, change=CHANGE,
-                                                     notice=HELD)
-        report.published = report.not_published is None
-        return final
-    _publish(run, root, artifact, start, current, final, brief, report)
+    final, end = _passes(run, root, artifact, start, plan, known, profiles, report,
+                         {name: {"origin": origin, "text": value} for name, value in brief.items()},
+                         instruction, contracts, kb_role, earlier, finding_answers, given)
+    if final != start:
+        warnings = edits.new_warnings(root, artifact, start, final)
+        if warnings:
+            entries = [state.name for state in report.passes if state.state == "applied"]
+            report.held = edits.hold(run, root, artifact, start, final, entries)
+            report.new_warnings, report.proposed = warnings, report.held["candidate"]
+            report.not_published = (f"The proposed text is {report.proposed}; it is not published: it adds "
+                                    "validation warnings the note does not have. It is published only when the "
+                                    f"operator names this run: `{report.held['command']}`.")
+        else:
+            _publish(root, artifact, run.root, start, final, brief, report)
+    if end == "failed":
+        [failed] = [state for state in report.passes if state.state == "problem"]
+        report.stopped = f"{failed.name}: {failed.reason}"
     return final
 
 
-# --- The revised candidate ---------------------------------------------------------------------
+# --- The continuation record -------------------------------------------------------------------
+#
+# Each item names what is left (`kind`, `what`), the actor expected to be able
+# to resolve it (`actor`: `operator`, `session-agent`, or `worker` with its
+# `effort`), the items to settle first (`after`), how to proceed (`how`: the
+# step of the continuation instruction, and a command where one exists) and
+# the files it rests on (`evidence`). An item that waits for an answers file
+# names it in `answers`. The actor is an estimate, not a permission.
 
-def supply_revised(root: Path, artifact: str, run_dir: Path, profile: Profile, revised: str, source: Path, *,
-                   mode: str, harnesses=HARNESSES) -> ReviseReport:
-    """Capture the operator's revised candidate at the publication stop and wait for its approval; launch nothing.
+STEPS = {
+    "failure": "A worker or review failure",
+    "proposals": "Proposals awaiting decision",
+    "findings": "Findings awaiting decision",
+    "plan-stop": "A plan that stopped on a proposal",
+    "held-candidate": "A candidate held back for a validation warning",
+    "direct-entry": "A plan entry not run, for an operation that applies directly",
+    "per-item-entry": "A plan entry not run, for a per-item operation",
+    "fix-entry": "A plan entry that fixes a finding",
+    "interactive-entry": "An operation skipped as interactive",
+    "claim-questions": "Claim questions from the assessment",
+    "stale-reviews": "Stale reviews",
+}
+"""The step of the continuation instruction for each kind of item, by its label in that instruction."""
+CLAIM_QUESTIONS = re.compile(r"^#+\s*Claim questions for the operator\s*$(.*?)(?=^#|\Z)",
+                             re.MULTILINE | re.DOTALL | re.IGNORECASE)
 
-    Refuses (ValueError) unless the run of the note's current text waits at
-    its publication stop, `final.md` is the candidate the run proposed, the
-    file `source` lies outside the run's `artifact/` and the revised text
-    passes `edits.revised_problems()`. A refusal changes nothing. Otherwise
-    the text is captured in `REVISED_RECORD` and as `artifact/revised.md`,
-    with its diffs, and the pending publication answers are replaced by one
-    over `revised.md`, which withdraws any approval. A second revision
-    replaces the first in the same way.
+
+def _focused(artifact: str, option: list[str], purpose: str | None, must_keep: list[str]) -> str:
+    """The command of a focused run: `option`, with the plan's purpose and must-keep list."""
+    return shlex.join([*COMMAND.split(), artifact, *option, *(["--purpose", purpose] if purpose else []),
+                       *[part for claim in must_keep for part in ("--must-keep", claim)]])
+
+
+def _claim_questions(path: Path) -> bool:
+    """Whether the assessment lists claim questions for the operator: the section has more than `None`."""
+    if not path.is_file():
+        return False
+    found = CLAIM_QUESTIONS.search(path.read_text(encoding="utf-8"))
+    return bool(found) and found.group(1).strip().rstrip(".").lower() not in ("", "none")
+
+
+def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport, known: dict[str, Pass],
+                 start: str, *, purpose: str | None, must_keep: list[str]) -> dict | None:
+    """Write the run's continuation record, `CONTINUATION`, and return it with its path; None when nothing is left.
+
+    `made-for` names the note's text when the run ended: its publication, or
+    its start text. Every item was computed on it, and it is never updated.
     """
-    root, run_dir = root.resolve(), run_dir.resolve()
-    edits.revised_source(run_dir, source, artifact)
-    with Run(run_dir, root, profile, harnesses=harnesses) as run:
-        supplied = edits.supply_revised(run, root, artifact, revised, REPEAT.format(artifact=artifact),
-                                        change=CHANGE)
-    return ReviseReport(_rel(root, run_dir), artifact, mode=mode, proposed=supplied["proposed"],
-                        revised_candidate=supplied["revised-candidate"], new_warnings=supplied["new-warnings"],
-                        not_published=supplied["not-applied"], waiting_for=supplied["waiting-for"])
+    run_rel = _rel(root, run_dir.resolve())
+    artifact_dir = f"{run_rel}/artifact"
+    items: list[dict] = []
+
+    def add(kind: str, what: str, actor: str, *, effort: str | None = None, after: list[str] = (),
+            command: str | None = None, record: str | None = None, revised: str | None = None,
+            answers_files: list[str] = (), evidence: list[str] = ()) -> str:
+        item = {"id": str(len(items) + 1), "kind": kind, "what": what, "actor": actor,
+                **({"effort": effort} if effort else {}), "after": list(after),
+                "how": {"step": STEPS[kind], **({"command": command} if command else {}),
+                        **({"record": record} if record else {}), **({"revised": revised} if revised else {})},
+                **({"answers": list(answers_files)} if answers_files else {}), "evidence": list(evidence)}
+        items.append(item)
+        return item["id"]
+
+    plan = report.plan or {}
+    purpose = plan.get("purpose", purpose) if report.mode != "triage" else purpose
+    must_keep = plan.get(MUST_KEEP, must_keep) if report.mode != "triage" else must_keep
+    failure = report.stopped or report.conflict
+    failed = (add("failure", f"The run did not finish: {failure}", "session-agent", evidence=[f"{run_rel}/{REPORT}"])
+              if failure else None)
+    if report.triage and report.triage["results"]:
+        files = [given["answers"] for given in report.triage["results"]]
+        add("findings", "The operator decides the findings of each review result; the approved ones are fixed by "
+            "one new run that names every decided file.", "operator",
+            command=_focused(artifact, [part for file in files for part in ("--answers", file)], purpose,
+                             must_keep),
+            record=decisions.RECORD.format(file="FILE"), answers_files=files,
+            evidence=[path for given in report.triage["results"] for path in (given["question"], given["answers"])])
+    if report.stop:
+        stop_file = f"{artifact_dir}/{STOP_ANSWERS}"
+        add("plan-stop", f"The plan stops with a proposal: {report.stop}", "operator",
+            command=f"{COMMAND} {shlex.quote(artifact)} --plan <replacement-plan.yaml>",
+            record=decisions.RECORD.format(file=stop_file), answers_files=[stop_file],
+            evidence=[f"{artifact_dir}/{ASSESSMENT}", f"{artifact_dir}/{PLAN}"])
+    held = None
+    if report.held:
+        held = add("held-candidate", "The candidate adds validation warnings the note does not have: "
+                   + "; ".join(report.held["new-warnings"]) + ". It is published only on the operator's word.",
+                   "operator", command=report.held["command"], revised=report.held["revised-command"],
+                   evidence=[report.held["candidate"], report.held["diff"]])
+    chain = held
+    for state in report.passes:
+        current = known.get(FIX if state.finding else state.name)
+        if state.state == "waiting":
+            chain = add("proposals", f"The operator decides the proposals of `{state.name}`; the approved items "
+                        "are applied by a new run that names the file.", "operator",
+                        command=_focused(artifact, ["--answers", state.answers], purpose, must_keep),
+                        record=decisions.RECORD.format(file=state.answers), answers_files=[state.answers],
+                        evidence=[state.answers, frontmatter.parse((root / state.answers).read_text(
+                            encoding="utf-8")).data["question"]])
+            continue
+        if state.state not in ("skipped", "problem", "pending"):
+            continue
+        after = ([failed] if state.state == "problem" and failed else []) + ([chain] if chain else [])
+        evidence = [path for path in (f"{artifact_dir}/{ASSESSMENT}", f"{artifact_dir}/{PLAN}")
+                    if (root / path).is_file()]
+        if (state.state == "skipped" or current.name in INTERACTIVE
+                or (current.name == CONVERSATION and not must_keep)):
+            item = add("interactive-entry", f"The plan entry `{state.name}` is left for the interactive path.",
+                       "session-agent", after=[] if state.state == "skipped" else after, evidence=evidence)
+        elif state.finding:
+            item = add("fix-entry", f"The plan entry `{state.name}` was not run: it fixes a finding made on an "
+                       "earlier text.", "worker", effort=state.effort, after=after,
+                       command=_focused(artifact, ["--finding", state.finding], purpose, must_keep),
+                       evidence=[*evidence, state.finding])
+        elif current.decision == "per-item":
+            item = add("per-item-entry", f"The plan entry `{state.name}` was not run; its proposals then wait for "
+                       "the operator.", "worker", effort=state.effort, after=after,
+                       command=_focused(artifact, ["--pass", state.name], purpose, must_keep), evidence=evidence)
+        else:
+            item = add("direct-entry", f"The plan entry `{state.name}` was not run.", "worker", effort=state.effort,
+                       after=after, command=_focused(artifact, ["--pass", state.name], purpose, must_keep),
+                       evidence=evidence)
+        if state.state != "skipped":
+            chain = item
+    if _claim_questions(run_dir / "artifact" / ASSESSMENT):
+        add("claim-questions", "The assessment lists claim questions for the operator.", "operator",
+            evidence=[f"{artifact_dir}/{ASSESSMENT}"])
+    if not items:
+        return None
+    if report.published:
+        stored = [row for row in results.note_rows(root, artifact) if row.path is not None]
+        if stored:
+            add("stale-reviews", f"The publication made {len(stored)} stored review result(s) of the note stale; "
+                "reviewing them again launches one worker per review operation. Nothing schedules it.", "worker",
+                after=[item["id"] for item in items],
+                command=shlex.join(["commonplace-review", "status", artifact, "--stale"]),
+                evidence=[report.publications[-1]["diff"]])
+    publication = report.publications[-1] if report.publications else None
+    record = {"run-dir": run_rel,
+              "made-for": {"note": artifact,
+                           "sha256": publication["sha256"] if publication else observations.sha(start.encode()),
+                           "text": publication["text"] if publication else f"{artifact_dir}/{START}"},
+              "items": items}
+    observations.atomic_json(run_dir / CONTINUATION, record)
+    return {"file": f"{run_rel}/{CONTINUATION}", **record}
