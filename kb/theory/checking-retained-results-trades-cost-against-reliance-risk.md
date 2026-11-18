@@ -7,15 +7,15 @@ tags: [context-engineering, kb-maintenance, claims-and-grounding]
 
 # Checking retained results trades cost against reliance risk
 
-A retained derived result saves work: a consumer that reads it skips the discovery and derivation it would otherwise repeat on every use, so one production is amortized over many uses. This is the saving [frontloading spares execution context](./frontloading-spares-execution-context.md) argues for results computed before an LLM call, extended here to persisted artifacts. Checking spends part of that saving. A check that fully recomputes the result on every use largely defeats it; when verification is cheaper than derivation, checking on every use can still save work.
+A retained derived result saves work: a consumer that reads it skips the discovery and derivation it would otherwise repeat on every use, so one production is amortized over many uses. The note [frontloading spares execution context](./frontloading-spares-execution-context.md) argues for this saving in the case of results computed before an LLM call; this note extends the argument to persisted artifacts. Checking spends part of that saving. A check that fully recomputes the result on every use largely defeats it; when verification is cheaper than derivation, checking on every use can still save work.
 
-Against the saving stands the risk of reliance. A retained result goes stale because its source and the copy have separate update paths. A stale copy can also hide its own error: when a consumer treats the copy as exhaustive and stops on it, the copy suppresses the search that would have exposed what it misses, which is how [indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). This requires that the consumer actually stops and that the suppressed search would find more task-relevant material.
+Against the saving stands the risk of reliance. A retained result goes stale because its source and the copy have separate update paths. A stale copy can also hide its own error: when a consumer treats the copy as exhaustive and stops on it, the copy suppresses the search that would have exposed what it misses. This is how [indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md). This requires that the consumer actually stops and that the suppressed search would find more task-relevant material.
 
 How often to check a retained result therefore depends on the cost of checking relative to the risk of relying on stale or wrong content. Accepting some risk between checks can be right, provided it is an explicit choice rather than a hidden consequence of trusting the copy. Two retained results in this KB land differently.
 
 ## The completeness mark: a stop-authorizing claim with a defined check
 
-A tag head's `complete: true` [mark](../types/tag-readme.md) asserts that every artifact carrying the tag in the participating collections is reached from the head in one hop. Its contract lets readers skip the by-tag `rg` membership search. That permission is the mark's value and its risk: a false mark tells exhaustive consumers to stop looking while members are still out there.
+A tag head is the curated index page for one tag, linking to artifacts that carry the tag. Its `complete: true` [mark](../types/tag-readme.md) asserts that every artifact carrying the tag in the participating collections (the collections the KB declares as covered by its tags) is reached from the head in one hop. Its contract lets readers skip the by-tag `rg` membership search. That permission is the mark's value and its risk: a false mark tells exhaustive consumers to stop looking while members are still out there.
 
 The validator performs the membership derivation when the head is validated, rather than on every read. This lets subsequent reads reuse the checked result. The check applies a defined rule (one-hop reach over tagged artifacts) to named inputs (the participating collections and nothing else), which the validator reads when they are supplied. An inexpensive, defined check on a claim that authorizes stopping makes enforcement attractive. Enforcement is reactive: the validator flags a gap when the head is next validated, so a mark can be false in between. The check covers reach given the tags; whether an assignment fits the tag is for semantic review.
 
@@ -27,7 +27,7 @@ Rerunning discovery costs real work, and the result's dependencies are broad. A 
 
 ## No known change does not establish freshness
 
-The absence of a known change is evidence of freshness only if every relevant change reaches the checker. Even the enforced mark can be stale until its head is next validated, and a reused connect report reflects the KB as of its pass. Assurance dates from the last check.
+If some relevant changes can go unreported, the absence of a report does not establish that the result is still fresh. Assurance dates from the last check.
 
 ## What a mechanical check requires
 
@@ -38,12 +38,12 @@ A mechanical check derives a retained result from, or compares it against, ident
 3. **A source available at check time.**
 4. **A sufficiently trustworthy checker.** Testing or centralizing a validator lowers the cost of assurance but does not prove the validator correct.
 
-These conditions make a check possible and worth relying on, not free or current. The mark's contract supplies the first three; nothing in it establishes the fourth.
+These conditions make a check possible and worth relying on, not free or current. The mark’s contract defines the rule and identifies the inputs. It does not guarantee that the inputs are available at check time or that the checker is trustworthy.
 
 ## Scope
 
 - The trade-off is qualitative. No costs, risks or refresh intervals are calibrated.
-- The suppression mechanism is conditional. It makes no claim about how often consumers stop on a copy or how often the fallback search finds more.
+- The note makes no claim about how often consumers stop on a copy or how often the fallback search finds more.
 - The connect report's candidate-only status is a contract on readers, not evidence of how consumers behave.
 
 ## Open Questions
@@ -55,6 +55,6 @@ These conditions make a check possible and worth relying on, not free or current
 
 Relevant Notes:
 
-- [LLM recompute cost inverts the store-vs-recompute default](./llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — grounds: why recomputation is costly enough for retained results to be worth keeping
+- [LLM recompute cost shifts the store-vs-recompute balance](./llm-recompute-cost-inverts-the-store-vs-recompute-default.md) — grounds: why costly model-side recomputation can make a retained result worth keeping, when its total expected cost beats the alternatives
 - [An enforced tag-README is a MOC with a machine-checked contract](./an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — extends: develops the completeness-mark example
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — contrasts: content with no later source to check against, where condition 3 fails
