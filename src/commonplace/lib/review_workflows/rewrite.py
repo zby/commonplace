@@ -514,15 +514,20 @@ def _review(steps: _Steps, job: str, number: int, candidate: str, written: str,
 def store_accepted(root: Path, run_dir: Path, published: dict) -> dict:
     """After `publish RUN` on a rewrite run: store its accepted review as the note's current result, if it applies.
 
-    `published` is `edits.publish_held()`'s report. The review is stored
-    (`results.write_result()`) only when the published text is the text it
-    judged; a revised candidate is not. Returns the report's
+    `published` is `edits.publish_held()`'s report. `publish_held()` has
+    refused a review file whose hash is not the one `HELD` recorded; the
+    file is checked again here, after publication. The review is stored
+    (`results.write_result()`) only when it is that file and the published
+    text is the text it judged; a revised candidate is not. Returns the report's
     `current-result`, the stored result and its freshness, or `not-current`,
     why it was not stored.
     """
     held = json.loads((run_dir / edits.HELD).read_text(encoding="utf-8"))
     artifact = published["artifact"]
     text = (root / held["review"]).read_text(encoding="utf-8")
+    if edits.sha256(text) != held["review-sha256"]:
+        return {"current-result": None,
+                "not-current": f"{held['review']} is not the review the run accepted; it was changed after the run"}
     result = results.parse_result(text)
     if result.target_sha256 != published["published"]["sha256"]:
         return {"current-result": None, "not-current": NOT_CURRENT}

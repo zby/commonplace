@@ -79,16 +79,18 @@ command acts on a stop's output by naming the file or the run:
    record.
 3. **Per-item decisions.** The run ends at its first pass whose `decision`
    is `per-item` that proposes anything: it publishes what the earlier
-   entries applied (step 5), then asks the worker for the proposals on that
-   text, writes their pending answers file (`types/answers.md`,
+   entries applied (step 5), then asks the worker for the proposals on the
+   published text; when that publication fails or is held, nothing is
+   asked. It writes their pending answers file (`types/answers.md`,
    `answers.pending()`) as `artifact/<pass>-answers.md`, and ends. Later
    entries wait in the continuation record, so they run on text that already
    has the approved items. The decided file, named to `run revise NOTE
    --answers FILE`, makes a new run of that one pass with the answers as its
    `answers` input; naming it is the approval, and the run keeps a copy
    (`decisions.keep_answers()`). It is refused unless the validator accepts
-   the answers and the note holds exactly the text the proposals were made
-   for. Only `approved` items are applied. A file that approves no item is
+   the answers, the note holds exactly the text the proposals were made
+   for, and the note's write brief is the one the asking run recorded in
+   `start.json`. Only `approved` items are applied. A file that approves no item is
    kept with `commonplace-review answers record FILE` instead.
    When the run starts, code collects the operator's decided items from the
    other revise and rewrite runs on the same note (`decisions.earlier()`)
@@ -103,15 +105,16 @@ command acts on a stop's output by naming the file or the run:
    skipped otherwise. `split-out-a-treatment` writes a second file and the
    collection index from the discussion's text, so it is always skipped. A
    skipped pass is left in the continuation record for the session agent.
-5. **Publication.** When the run ends, a candidate other than the note's
-   text is written to the note without a stop (`_publish()`): changes
+5. **Publication.** Before a per-item pass is asked for proposals, and when
+   the run ends, a candidate other than the note's text is written to the
+   note without a stop (`_publish()`), so a run may publish twice: changes
    applied without a decision, and items the operator already decided, need
    no second approval of the whole text. The publication is recorded in
    `edits.PUBLISHED`, with its text and its diff under
    `artifact/publications/`, the plan entries it covers and the time; the
    report lists it under `publications`. Nothing is committed. The note is
-   written only while it holds the run's start text and only while the brief
-   is unchanged. A candidate that adds a validation warning the note's text
+   written only while it holds the run's start text or its last publication,
+   and only while the brief is unchanged. A candidate that adds a validation warning the note's text
    does not have (`edits.new_warnings()`) is not published: the run holds it
    (`edits.hold()`) as `artifact/final.md` with its diff, and ends there,
    before asking a per-item pass for proposals on a text that may never be
@@ -452,7 +455,7 @@ class PassState:
     model: str | None = None
     report: str | None = None         # repository path of the pass's report
     text: str | None = None           # repository path of the text the pass left, to diff against the one before
-    answers: str | None = None        # while `waiting`: the pending answers file over the pass's proposals
+    answers: str | None = None        # the entry's answers file: pending while `waiting`, else the decided one it applies
 
 
 @dataclass
@@ -723,14 +726,20 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
             profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, dict], instruction: str,
             contracts: dict[str, bytes], kb_role: dict[str, str] | None = None, earlier: list[dict] = (),
             finding_answers: dict[str, dict] | None = None,
-            given: dict[str, dict] | None = None) -> tuple[str, str]:
+            given: dict[str, dict] | None = None, publish=None) -> tuple[str, str]:
     """Run the plan's passes from `start` through the edit route until the first stop; return the text and the end.
 
     The end is `done` when every entry ran or was skipped; `proposals` when a
     `per-item` pass proposed changes and the run ends at its pending answers
     file; `held` when the text so far adds a validation warning and the run
     ends before asking the next `per-item` pass for proposals; `failed` when
-    an entry ended with a problem. Entries after the stop stay `pending`.
+    an entry ended with a problem, or its answers were refused. Entries
+    after the stop stay `pending`.
+
+    Before a `per-item` pass is asked for proposals, the text the earlier
+    passes applied is published (`publish(text)`), so the proposals are made
+    for the note's text; a publication that fails raises, and nothing is
+    asked.
 
     `kb_role` is the note's role in the KB, from the full procedure's role
     report; each pass receives it. `earlier` holds the operator's earlier
@@ -742,13 +751,16 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     proposals, which the pass applies without proposing again.
     """
     finding_answers, given = finding_answers or {}, given or {}
-    text = start
+    text = base = start                     # `base`: the note's text, the run's last publication or `start`
     findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
                 for entry in plan["passes"] if entry.get(FINDING)}
     entries = [(known[entry["pass"]], findings.get(entry.get(FINDING))) for entry in plan["passes"]]
     report.passes = [PassState(label(current.name, finding), entry["scope"], current.effort,
                                finding.path if finding else None)
                      for entry, (current, finding) in zip(plan["passes"], entries, strict=True)]
+    for state, (_, finding) in zip(report.passes, entries, strict=True):    # what each entry applies
+        decided = given.get(state.name) or (finding_answers.get(finding.path) if finding else None)
+        state.answers = decided["origin"] if decided else None
     must_keep = "".join(f"- {claim}\n" for claim in plan[MUST_KEEP])
     route = {"contracts": contracts, "execution": instruction}
     told = ({EARLIER_DECISIONS: {"origin": _rel(root, run.root / EARLIER_FILE),
@@ -771,8 +783,11 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                  **(told if operation.decision == "per-item" or current.responds_to else {})}
         profile = profiles[current.effort]
         proposing = operation.decision == "per-item" and state.name not in given
-        if proposing and text != start and edits.new_warnings(root, artifact, start, text):
-            return text, "held"
+        if proposing and text != base:
+            if edits.new_warnings(root, artifact, start, text):
+                return text, "held"
+            publish(text)
+            base = text
         try:
             if proposing:
                 edit = edit_operations.ask(run, root, operation, artifact, text, roles, job=f"{state.name}/propose",
@@ -785,6 +800,9 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
                                            profile=profile, **route)
         except (OutOfAttempts, LaunchFailed) as failure:         # LaunchFailed includes UsageLimited
             _failed(report.passes, index, str(failure))
+            return text, "failed"
+        except ValueError as refused:      # the route refused the operator's answers, such as for a changed note
+            _failed(report.passes, index, str(refused))
             return text, "failed"
         state.profile, state.model = edit.data["profile"], edit.data["model"]
         if edit.outcome == "problem":
@@ -957,6 +975,15 @@ def depth_one_reports(root: Path, artifact: str) -> list[Finding]:
     return [finding for finding in found if finding.depth == 1]
 
 
+def _brief_sha(root: Path, artifact: str, note: str) -> str | None:
+    """The SHA-256 of the note's write brief as `edits.begin()` records it; None without one. ValueError when broken."""
+    try:
+        brief = capture_brief(root, artifact, note)
+    except Stop as error:
+        raise ValueError(str(error)) from error
+    return observations.sha(brief["brief"].encode("utf-8")) if "brief" in brief else None
+
+
 def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | None,
                  must_keep: list[str]) -> tuple[str, dict[str, dict], dict[str, dict]]:
     """The plan, and the answers each entry receives, of a run that consumes the operator's answers files.
@@ -968,7 +995,8 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
     - one file whose question is a `per-item` operation's proposals (an edit
       result) on `artifact`: the plan is that pass alone, and the pass
       applies the approved items. Refused unless the note holds exactly the
-      text the proposals were made for and some item is approved; or
+      text the proposals were made for, under the write brief the asking
+      run recorded (`start.json`), and some item is approved; or
     - files whose questions are review results of `artifact`, such as a
       triage's: the plan holds one fix entry per result with an `approved`
       finding, in depth order, and each fix receives its answers as
@@ -998,6 +1026,10 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
             if question.get("input-sha256") != observations.sha(note.encode("utf-8")):
                 raise ValueError(f"{artifact} no longer holds the text the proposals of {item['origin']} were "
                                  "made for; the proposals are stale. A new run of the pass proposes again")
+            _, asking = decisions.run_of(root, root / data["question"])
+            if (edits.started(asking) or {}).get("brief-sha256", "") != _brief_sha(root, artifact, note):
+                raise ValueError(f"the write brief of {artifact} is not the one the proposals of {item['origin']} "
+                                 "were made under; the proposals are stale. A new run of the pass proposes again")
             if not approved:
                 raise ValueError(nothing.format(files=item["origin"]))
             edited.append((name, item))
@@ -1055,7 +1087,6 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
-    final = None
     try:
         brief = capture_brief(root, artifact, start)
         edits.begin(run_dir, artifact, start, brief)
@@ -1101,13 +1132,15 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
             else:
                 proposed = named_plan
             if proposed is not None:
-                final = _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start,
-                                  instruction, contracts, kb_role, earlier, finding_answers or {}, given or {})
+                _run_plan(run, root, artifact, proposed, known, profiles, report, brief, start,
+                          instruction, contracts, kb_role, earlier, finding_answers or {}, given or {})
     except Conflict as conflict:
         report.conflict = str(conflict)
     except (Stop, OutOfAttempts, LaunchFailed) as stop:      # LaunchFailed includes UsageLimited
         report.stopped = str(stop)
-    report.changed = guarded_changes(root, before, artifact, final if report.published else None)
+    published = report.publications[-1]["text"] if report.publications else None    # the note's last write
+    report.changed = guarded_changes(root, before, artifact,
+                                     (root / published).read_text(encoding="utf-8") if published else None)
     report.continuation = continuation(root, artifact, run_dir, report, known, start,
                                        purpose=purpose, must_keep=list(must_keep))
     observations.atomic_json(run_dir / REPORT, report.to_dict())
@@ -1116,30 +1149,34 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
 
 def _publish(root: Path, artifact: str, run_dir: Path, start: str, final: str, brief: dict[str, str],
              report: ReviseReport) -> None:
-    """Write `final` over the note's start text as the run's automatic publication, and record it.
+    """Write `final` over the note's text as the run's automatic publication, and record it.
 
-    The publication covers the entries the run applied. The brief is
-    checked first (`edits.unchanged_brief()`); the note must still hold
-    `start` (`edits.record_publication()`).
+    The publication covers the entries applied since the run's last
+    publication, and is written over that publication's text, or over
+    `start`. The brief is checked first (`edits.unchanged_brief()`); the
+    note must still hold the text written over (`edits.record_publication()`).
     """
+    before = (root / report.publications[-1]["text"]).read_text(encoding="utf-8") if report.publications else start
     edits.unchanged_brief(root, artifact, start, brief)
-    entries = [state.name for state in report.passes if state.state == "applied"]
-    entry = edits.record_publication(run_dir, root, artifact, start, final, entries, observations.timestamp())
-    report.publications = [entry]
+    covered = {name for publication in report.publications for name in publication["entries"]}
+    entries = [state.name for state in report.passes if state.state == "applied" and state.name not in covered]
+    entry = edits.record_publication(run_dir, root, artifact, before, final, entries, observations.timestamp())
+    report.publications.append(entry)
     report.published = True
 
 
 def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[str, Pass],
               profiles: dict[str, Profile], report: ReviseReport, brief: dict[str, str], start: str,
               instruction: str, contracts: dict[str, bytes], kb_role: dict[str, str] | None,
-              earlier: list[dict], finding_answers: dict[str, dict], given: dict[str, dict]) -> str | None:
+              earlier: list[dict], finding_answers: dict[str, dict], given: dict[str, dict]) -> None:
     """Check and keep the plan, then end on its stop or run its passes to the first stop and publish.
 
-    Returns the text to publish. A candidate other than `start` is published
+    A candidate other than the note's text is published
     automatically (`_publish()`) unless it adds a validation warning; then
     the run holds it (`edits.hold()`). That happens whether the passes ran
-    to the end, reached a `per-item` pass's proposals, or ended with a
-    problem: an entry that failed does not hold back the entries before it.
+    to the end or ended with a problem: an entry that failed does not hold
+    back the entries before it. Before a `per-item` pass's proposals, the
+    passes publish what they applied themselves (`_passes()`).
     """
     plan = report.plan = read_plan(proposed, root, artifact, known)
     run.accept(PLAN, proposed)
@@ -1147,16 +1184,19 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
         report.stop = plan["stop"]
         question = run.artifact / PLAN
         run.accept(STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()))
-        return None
+        return
     origin = (Path(artifact).parent / write_brief_name_for(Path(artifact))).as_posix()
     final, end = _passes(run, root, artifact, start, plan, known, profiles, report,
                          {name: {"origin": origin, "text": value} for name, value in brief.items()},
-                         instruction, contracts, kb_role, earlier, finding_answers, given)
-    if final != start:
+                         instruction, contracts, kb_role, earlier, finding_answers, given,
+                         lambda text: _publish(root, artifact, run.root, start, text, brief, report))
+    published = (root / report.publications[-1]["text"]).read_text(encoding="utf-8") if report.publications else start
+    if final != published:
         warnings = edits.new_warnings(root, artifact, start, final)
         if warnings:
-            entries = [state.name for state in report.passes if state.state == "applied"]
-            report.held = edits.hold(run, root, artifact, start, final, entries)
+            covered = {name for publication in report.publications for name in publication["entries"]}
+            entries = [state.name for state in report.passes if state.state == "applied" and state.name not in covered]
+            report.held = edits.hold(run, root, artifact, published, final, entries)
             report.new_warnings, report.proposed = warnings, report.held["candidate"]
             report.not_published = (f"The proposed text is {report.proposed}; it is not published: it adds "
                                     "validation warnings the note does not have. It is published only when the "
@@ -1166,7 +1206,6 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
     if end == "failed":
         [failed] = [state for state in report.passes if state.state == "problem"]
         report.stopped = f"{failed.name}: {failed.reason}"
-    return final
 
 
 # --- The continuation record -------------------------------------------------------------------
@@ -1279,14 +1318,19 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
             item = add("interactive-entry", f"The plan entry `{state.name}` is left for the interactive path.",
                        "session-agent", after=[] if state.state == "skipped" else after, evidence=evidence)
         elif state.finding:
+            option = ["--answers", state.answers] if state.answers else ["--finding", state.finding]
             item = add("fix-entry", f"The plan entry `{state.name}` was not run: it fixes a finding made on an "
-                       "earlier text.", "worker", effort=state.effort, after=after,
-                       command=_focused(artifact, ["--finding", state.finding], purpose, must_keep),
-                       evidence=[*evidence, state.finding])
+                       "earlier text" + (", as the operator's answers decide" if state.answers else "") + ".",
+                       "worker", effort=state.effort, after=after,
+                       command=_focused(artifact, option, purpose, must_keep),
+                       evidence=[*evidence, state.finding, *([state.answers] if state.answers else [])])
         elif current.decision == "per-item":
-            item = add("per-item-entry", f"The plan entry `{state.name}` was not run; its proposals then wait for "
-                       "the operator.", "worker", effort=state.effort, after=after,
-                       command=_focused(artifact, ["--pass", state.name], purpose, must_keep), evidence=evidence)
+            option = ["--answers", state.answers] if state.answers else ["--pass", state.name]
+            item = add("per-item-entry", f"The plan entry `{state.name}` was not run; " + (
+                       "it applies the items the operator approved." if state.answers
+                       else "its proposals then wait for the operator."), "worker", effort=state.effort,
+                       after=after, command=_focused(artifact, option, purpose, must_keep),
+                       evidence=[*evidence, *([state.answers] if state.answers else [])])
         else:
             item = add("direct-entry", f"The plan entry `{state.name}` was not run.", "worker", effort=state.effort,
                        after=after, command=_focused(artifact, ["--pass", state.name], purpose, must_keep),

@@ -521,7 +521,7 @@ def test_decisions_lists_the_rewrite_publication_and_marks_an_overtaken_candidat
     (repo[0] / NOTE_PATH).write_text(original + "An edit after the run.\n")
     assert [e["decision"] for e in decisions.entries(repo[0])] == ["overtaken"]
     assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
-    assert "no longer holds the text the run started from" in capsys.readouterr().err
+    assert "no longer holds the text the run held its candidate over" in capsys.readouterr().err
     (repo[0] / NOTE_PATH).write_text(original)
     publish(repo, capsys, report)
     assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
@@ -529,3 +529,14 @@ def test_decisions_lists_the_rewrite_publication_and_marks_an_overtaken_candidat
     assert (entry["workflow"], entry["class"], entry["decided-by"], entry["decision"]) == (
         "rewrite", "publication", "operator", "published")
     assert entry["run"] == report["run-dir"]
+
+
+def test_a_changed_accepted_review_refuses_publication(repo, capsys):
+    original = note_text(repo)
+    _, report, _ = rewrite(repo, capsys)
+    review = repo[0] / report["accepted"]["review"]
+    review.write_text(review.read_text().replace("outcome: pass", "outcome: warn"))
+    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert "is not the file the run held" in capsys.readouterr().err
+    assert note_text(repo) == original and results.freshness(
+        repo[0], NOTE_PATH, f"kb/{criteria.REWRITE_REL}").state == "missing"

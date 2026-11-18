@@ -16,7 +16,7 @@
     commonplace-review answers create --from QUESTION [--to PATH]  # the pending answers file; launches nothing
     commonplace-review answers record FILE       # keep answers nothing consumes as the operator's decisions
     commonplace-review record RUN                # answers files over a revise run's findings; launches nothing
-    commonplace-review retry RUN JOB [--key KEY]   # dismiss a worker problem or an answer; a rerun asks again
+    commonplace-review retry RUN JOB [--key KEY]   # dismiss a gate sweep's worker problem or answer for --resume
     commonplace-review acknowledge RUN LAUNCH      # confirm a launch an earlier controller left unsettled has stopped
     commonplace-review decisions [--note PATH] [--class NAME] [--json]  # the operator-decision record; read-only
 
@@ -54,8 +54,9 @@ can read the finding.
 
 `run revise` and `run rewrite` open a new run on every invocation, under
 kb/reports/state/review/runs/v2/<workflow>/<note path without .md>/<UTC
-stamp>/, with `-2`, `-3` on a collision; the latest run of a note is the last
-entry of its directory. The run records the hash of the note's start text in
+stamp>/, with `-2`, `-3` on a collision. These names sort in time order;
+runs made before this layout are named by a hash of their start text and do
+not, so the time of a run is in its records, not its name. The run records the hash of the note's start text in
 start.json. No run is repeated or resumed: a run that stops ends, and a later
 command that acts on its output names the file or the run. The workflow
 writes the note only over the run's start text; a note changed by anyone
@@ -325,10 +326,10 @@ def _parser() -> argparse.ArgumentParser:
         "record", help="write a pending answers file over each warn or fail review result a revise run holds, for "
         "the operator's decisions; launches nothing, plans nothing, publishes nothing")
     recorded.add_argument("run", type=Path, help="the revise run directory")
-    retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
+    retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, in a gate sweep run, "
+                                "so `run gates --resume` asks again; revise and rewrite runs are never rerun")
     retry.add_argument("run", type=Path)
-    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`, or a revise job "
-                       "such as `assessment`")
+    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`")
     retry.add_argument("--key", help="the answer to dismiss; otherwise the worker problems")
     acknowledge = commands.add_parser(
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")

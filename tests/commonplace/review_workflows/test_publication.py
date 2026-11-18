@@ -73,13 +73,13 @@ def test_publishing_writes_the_exact_candidate_once(held):
 def test_a_changed_note_refuses_publication(held):
     root, run_dir, _ = held
     (root / NOTE).write_text(START + "someone else's edit\n")
-    with pytest.raises(ValueError, match="no longer holds the text the run started from"):
+    with pytest.raises(ValueError, match="no longer holds the text the run held its candidate over"):
         edits.publish_held(root, run_dir)
     assert (root / NOTE).read_text() == START + "someone else's edit\n"
     assert edits.published(run_dir) is None
 
 
-@pytest.mark.parametrize("filename", ["final.md", "start.md"])
+@pytest.mark.parametrize("filename", ["final.md", "start.md", "final.diff"])
 def test_a_changed_run_file_refuses_publication(held, filename):
     root, run_dir, _ = held
     (run_dir / "artifact" / filename).write_text("operator saw different text\n")

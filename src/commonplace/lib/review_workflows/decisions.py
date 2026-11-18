@@ -84,8 +84,8 @@ runs were named by time, the hash prefix of its start text; each with an optiona
 AUTOMATIC = edits.AUTOMATIC
 _ANSWERS = re.compile(r"([a-z0-9-]+?)-answers(?:-[0-9a-f]+)?\.md")
 """An answers file a workflow writes: `<pass>-answers.md` of a per-item pass, `finding-answers-<key>.md` of a
-triage or a record, `stop-answers.md`, and, in runs made before publication took no answers file,
-`publication-answers.md`."""
+triage or a record, `stop-answers.md`; and in runs converted from operator records, `<pass>-answers-<key>.md`
+and `publication-answers.md`."""
 FINDING = "finding"
 """The class of answers whose question is a review result, and whose items are the result's findings."""
 ANSWERS_DIR = "answers"
@@ -206,6 +206,7 @@ def _criterion(root: Path, question: object) -> str | None:
         return None
 
 
+# BACKCOMPAT: converted approve-a-text records name publication-answers.md - remove after the converted runs are deleted
 def _revised(root: Path, run_dir: Path, proposal: str) -> bool:
     """Whether converted publication answers approved the run's revised candidate, not the workflow's candidate."""
     parsed = frontmatter.parse(proposal)
@@ -249,13 +250,15 @@ def _publications(root: Path, workflow: str, run_dir: Path) -> list[dict]:
             for given in record["publications"]]
 
 
-def _kept(root: Path, workflow: str, run_dir: Path) -> list[dict]:
-    """One entry per item of each answers file the run kept."""
+def _kept(root: Path, workflow: str, run_dir: Path, shown: set[str] | None = None) -> list[dict]:
+    """One entry per item of each answers file the run kept; only the records in `shown`, when given."""
     run = run_dir.relative_to(root).as_posix()
     note = _note(root, workflow, run_dir)
     waiting = "overtaken" if overtaken(root, workflow, note, run_dir) else "pending"
     found = []
     for record, data in kept_answers(root, run_dir):
+        if shown is not None and record not in shown:
+            continue
         cls = _class(Path(data["origin"]).name)
         proposer = "workflow" if cls == "publication" else "worker"   # a plan's `stop` is the assessor's
         parsed = frontmatter.parse(data["text"])
@@ -292,7 +295,8 @@ def _waiting(root: Path, workflow: str, run_dir: Path, kept: set[str]) -> list[d
                          item=file)
                   for item in json.loads(path.read_text(encoding="utf-8"))["items"]
                   for file in item.get("answers", []) if file not in kept]
-    if (run_dir / edits.HELD).is_file() and edits.published(run_dir) is None:
+    publications = (edits.published(run_dir) or {"publications": []})["publications"]
+    if (run_dir / edits.HELD).is_file() and all(entry["decided-by"] == AUTOMATIC for entry in publications):
         held = json.loads((run_dir / edits.HELD).read_text(encoding="utf-8"))
         found.append(_entry(note, workflow, run, (run_dir / edits.HELD).relative_to(root).as_posix(),
                             "publication", "workflow", waiting, waiting, "bundle", item=held["candidate"],
@@ -409,17 +413,26 @@ def _fix_report(root: Path, path: Path, notes: dict[str, list[str]]) -> dict:
 
 
 def entries(root: Path) -> list[dict]:
-    """Every decision entry, grouped by note and ordered by time where known (untimed last)."""
+    """Every decision entry, grouped by note and ordered by time where known (untimed last).
+
+    One answers file may be kept by more than one run, such as by `answers
+    record` and then by the run its `--answers` started; the same text is
+    listed once, from the record kept last.
+    """
     found: list[dict] = []
     runs = {workflow: _runs(root, workflow) for workflow in EARLIER_WORKFLOWS}
     kept: dict[str, set[str]] = {}                  # the origins of every kept answers file, by note
+    latest: dict[tuple[str, str], tuple[str, str]] = {}     # (origin, text hash) -> (time kept, record)
     for workflow, listed in runs.items():
         for run_dir in listed:
-            kept.setdefault(_note(root, workflow, run_dir), set()).update(
-                data["origin"] for _, data in kept_answers(root, run_dir))
+            for record, data in kept_answers(root, run_dir):
+                kept.setdefault(_note(root, workflow, run_dir), set()).add(data["origin"])
+                same = (data["origin"], data["sha256"])
+                latest[same] = max(latest.get(same, ("", "")), (data["at"], record))
+    shown = {record for _, record in latest.values()}
     for workflow, listed in runs.items():
         for run_dir in listed:
-            found.extend(_kept(root, workflow, run_dir))
+            found.extend(_kept(root, workflow, run_dir, shown))
             found.extend(_publications(root, workflow, run_dir))
             found.extend(_waiting(root, workflow, run_dir, kept.get(_note(root, workflow, run_dir), set())))
     base = root / gates.RUNS / "full-pass"

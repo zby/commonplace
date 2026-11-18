@@ -16,8 +16,9 @@ import pytest
 import yaml
 
 from commonplace.cli.review_workflows import main
-from commonplace.headless.harness import Harness
+from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
+from commonplace.lib import answers as answer_files
 from commonplace.lib import library
 from commonplace.lib.review_workflows import decisions, edits, observations, results
 from commonplace.lib.review_workflows import revise as revise_module
@@ -123,6 +124,8 @@ else:
     if "BRIEFDRIFT" in text and name == "opening-and-title":
         path = Path("kb/notes/alpha.brief.md")
         path.write_text(path.read_text() + "Changed while the worker ran.\n")
+    if "EDITMID" in text and name == "readability-and-flow":
+        Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
     if "TOUCH" in text and name == "opening-and-title":
         Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
     outputs["candidate"].write_text(revised)
@@ -679,6 +682,9 @@ def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     assert not any("place-external-systems" in line for line in launches)
     if kind == "apply":
         assert items_of(report) == [("failure", "session-agent", []), ("per-item-entry", "worker", ["1"])]
+        entry = report["continuation"]["items"][1]
+        assert f"--answers {file} --purpose" in entry["how"]["command"], "it reapplies the decided file"
+        assert file in entry["evidence"]
 
 
 @pytest.mark.parametrize("damage", ["wrong-name"])
@@ -1607,3 +1613,132 @@ def test_full_stops_when_a_review_has_no_result(reviewed, capsys):
     assert ROLE not in launches
     assert note_text(repo) == original
     assert items_of(report) == [("failure", "session-agent", [])]
+
+
+# --- Continuing after a stop: the operator's answers, the brief and the publication order --------------
+
+def test_proposals_are_asked_only_after_the_text_before_them_is_published(repo, capsys, tmp_path):
+    original = start(repo, "EDITMID")              # readability-and-flow's worker edits the note meanwhile
+    plan = named_plan(tmp_path, passes=("readability-and-flow", "plain-wording"))
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(plan))
+    assert code == 1 and report["conflict"] and not report["published"]
+    assert launches == [ORDINARY[0]], "no proposals are asked for a text that was not published"
+    assert note_text(repo) == original + "The operator's sentence.\n"
+    assert [s["state"] for s in report["passes"]] == ["applied", "pending"]
+    assert items_of(report) == [("failure", "session-agent", []), ("per-item-entry", "worker", [])]
+    assert report["continuation"]["made-for"]["sha256"] == observations.sha(original.encode())
+    assert not [e for e in decisions.entries(repo[0]) if e["class"] == "plain-wording"]
+
+
+def test_the_proposals_are_made_for_the_published_text(repo, capsys, tmp_path):
+    start(repo)
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=THREE)))
+    [publication] = ended["publications"]
+    question = frontmatter_head(repo[0] / ended["continuation"]["items"][0]["evidence"][1])
+    assert question["input-sha256"] == publication["sha256"] == observations.sha(note_text(repo).encode())
+
+
+def frontmatter_head(path):
+    return yaml.safe_load(path.read_text().split("---\n")[1])
+
+
+def test_a_candidate_held_after_a_publication_is_held_over_that_publication(repo, capsys, tmp_path):
+    original = start(repo, HELD_WORDS)
+    (repo[0] / "no-candidates").touch()             # abstractions proposes nothing
+    plan = named_plan(tmp_path, passes=("place-external-systems", "abstractions", "readability-and-flow"))
+    code, ended, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(plan))
+    assert code == 0 and launches == [ORDINARY[1], "list abstractions big", ORDINARY[0]], (ended, launches)
+    [first] = ended["publications"]
+    assert first["entries"] == ["place-external-systems"] and note_text(repo) != original
+    assert ended["held"] and json.loads((repo[0] / ended["run-dir"] / edits.HELD).read_text())["entries"] == [
+        "readability-and-flow"]
+    assert "+place-external-systems" not in artifact_file(repo, ended, "final.diff").read_text()
+    listed = sorted(e["decision"] for e in decisions.entries(repo[0]) if e["class"] == "publication")
+    assert listed == ["pending", "published"], "the automatic publication, and the held candidate still waiting"
+    code, done = publish(repo, capsys, ended)
+    assert code == 0 and note_text(repo) == artifact_file(repo, ended, "final.md").read_text()
+    assert done["published"]["before-sha256"] == first["sha256"] and done["published"]["number"] == 2
+    code, error = publish(repo, capsys, ended)
+    assert code == 2 and "already published its held candidate" in error
+
+
+def test_a_failed_answers_run_continues_with_the_operators_answers(repo, capsys):
+    start(repo)
+    stored(repo, "warn", found=[finding("first"), finding("second")])
+    stored(repo, "fail", gate=PACKING, depth=5)
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    files = triaged(repo, report, {"prose/residue": {"1": APPROVED, "2": rejected("not residue")},
+                                   "sentence/packing": {"1": APPROVED}})
+    (repo[0] / "fail-fix-strategy-taxonomy").touch()
+    code, failed, _ = apply_answers(repo, capsys, *files)
+    assert code == 1 and failed["stopped"] and not failed["published"]
+    assert items_of(failed) == [("failure", "session-agent", []), ("fix-entry", "worker", ["1"]),
+                                ("fix-entry", "worker", ["2"])]
+    commands = [item["how"]["command"] for item in failed["continuation"]["items"][1:]]
+    assert [c.split(" --purpose")[0] for c in commands] == [
+        f"commonplace-review run revise {NOTE_PATH} --answers {file}" for file in files]
+    assert "--finding" not in " ".join(commands), "a bare fix would fix the findings the operator rejected"
+    (repo[0] / "fail-fix-strategy-taxonomy").unlink()
+    code, done, launches = continued(repo, capsys, failed["continuation"]["items"][1])
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big"] and done["published"]
+    [fix] = [c for c in captured_inputs(repo[2]) if c["pass"] == revise_module.FIX][-1:]
+    assert "not residue" in fix["inputs"][revise_module.FINDING_ANSWERS]
+
+
+def test_answers_made_under_another_write_brief_are_refused(repo, capsys, tmp_path):
+    start(repo)
+    brief = add_brief(repo[0], NOTE_PATH)
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    file = answer(repo, ended, {})
+    brief.write_text(brief.read_text() + "\nKeep another passage.\n")
+    code, error, launches = apply_answers(repo, capsys, file)
+    assert code == 2 and "write brief" in error and launches == []
+
+
+def test_answers_over_another_notes_or_another_operations_result_are_refused(repo, capsys, tmp_path):
+    start(repo)
+    start(repo, path="kb/notes/beta.md", text=NOTE.format(words="beta"))
+    plan = str(named_plan(tmp_path, passes=("plain-wording",)))
+    _, other, _ = revise(repo, capsys, "kb/notes/beta.md", "--plan", plan)
+    other_file = answer(repo, other, {})
+    code, error, launches = apply_answers(repo, capsys, other_file)
+    assert code == 2 and "not of a per-item pass on kb/notes/alpha.md" in error and launches == []
+
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    result = repo[0] / frontmatter_head(repo[0] / waiting(ended))["question"]
+    copy = result.with_name("readability-result.md")
+    copy.write_text(result.read_text().replace("simplification-passes/plain-wording.md",
+                                               "simplification-passes/readability-and-flow.md"))
+    assert copy.read_text() != result.read_text()
+    rel = copy.relative_to(repo[0]).as_posix()
+    path = repo[0] / ended["run-dir"] / "artifact" / "readability-answers.md"
+    path.write_text(decide(answer_files.pending(rel, copy.read_bytes()), {}, APPROVED))
+    code, error, launches = apply_answers(repo, capsys, path.relative_to(repo[0]).as_posix())
+    assert code == 2 and "not of a per-item pass" in error and launches == []
+
+
+def test_an_answers_file_kept_twice_is_listed_once(repo, capsys, tmp_path):
+    start(repo)
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    file = answer(repo, ended, {"beta": rejected("a registered word")})
+    record_answers(repo, capsys, file)
+    _, done, _ = apply_answers(repo, capsys, file)
+    assert done["published"]
+    listed = [e for e in decisions.entries(repo[0]) if e["class"] == "plain-wording"]
+    assert len(listed) == 3 and {e["run"] for e in listed} == {done["run-dir"]}, "the record kept last"
+
+
+def test_answers_refused_inside_the_run_end_it_with_a_report(repo, capsys, tmp_path):
+    start(repo)
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
+    file = answer(repo, ended, {})
+    consumed = [{"origin": file, "text": (repo[0] / file).read_text()}]
+    plan, given, _ = revise_module.answers_plan(repo[0], NOTE_PATH, consumed, None, [])
+    (repo[0] / NOTE_PATH).write_text(note_text(repo) + "Changed after the command checked it.\n")
+    run_dir = edits.new_run_dir(repo[0], "revise", NOTE_PATH)
+    profiles = {e: Profile("fake", m, "low") for e, m in (("simple", "small"), ("judgment", "big"))}
+    report = revise_module.revise(repo[0], NOTE_PATH, profiles, run_dir, named_plan=plan, consumed=consumed,
+                                  given=given, timeout=30, harnesses=repo[1])
+    assert report.stopped and "made from another text" in report.stopped and not report.published
+    assert (run_dir / revise_module.REPORT).is_file() and (run_dir / revise_module.CONTINUATION).is_file()
+    assert [item["kind"] for item in report.continuation["items"]] == ["failure", "per-item-entry"]

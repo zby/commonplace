@@ -310,7 +310,8 @@ PUBLICATIONS_DIR = "publications"
 AUTOMATIC = "automatic"
 """Who decided an automatic publication: no one; the workflow's rule published it."""
 HELD = "held.json"
-"""The candidate a run held for the operator: its path and hash, its new warnings and the plan entries it covers."""
+"""The candidate a run held for the operator: its path and hash, its diff and the diff's hash, its new warnings,
+the plan entries it covers, and for a rewrite the accepted review and its hash."""
 PUBLISH = "commonplace-review publish {run}"
 
 
@@ -347,21 +348,32 @@ def record_publication(run_dir: Path, root: Path, note: str, before: str, text: 
     return entry
 
 
-def hold(run: Run, root: Path, note: str, start: str, final: str, entries: list[str], **extra) -> dict:
+def hold(run: Run, root: Path, note: str, start: str, final: str, entries: list[str], *,
+         review: str | None = None) -> dict:
     """Keep `final` as the candidate the run holds for the operator; write nothing to the note.
 
-    The run keeps `artifact/final.md`, its diff `final.diff` from `start` and
-    `HELD`, with the candidate's hash, its new validation warnings
-    (`new_warnings()`), the plan `entries` it covers and `extra`. Returns the
-    report's `held`: those files, the warnings and the commands that publish
-    the candidate or the operator's revision of it.
+    `start` is the note's text the candidate is held over: the run's start
+    text, or its last publication. The run keeps `artifact/final.md`, its
+    diff `final.diff` from `start` and `HELD`, with the hashes of the text
+    held over, of the candidate and of its diff, its new
+    validation warnings (`new_warnings()`) and the plan `entries` it covers.
+    A rewrite also names its accepted `review`, a file the run kept, with
+    its hash. `publish_held()` refuses when any of these files changed.
+    Returns the report's `held`: those files, the warnings and the commands
+    that publish the candidate or the operator's revision of it.
     """
     candidate = run.accept(CANDIDATE, final)
-    changes = run.accept("final.diff", diff(start, final, note, f"{note} (candidate)"))
+    shown = diff(start, final, note, f"{note} (candidate)")
+    changes = run.accept("final.diff", shown)
     warnings = new_warnings(root, note, start, final)
     rel = candidate.relative_to(root).as_posix()
-    observations.atomic_json(run.root / HELD, {"candidate": rel, "sha256": sha256(final), "new-warnings": warnings,
-                                               "entries": entries, **extra})
+    reviewed = ({"review": review, "review-sha256": sha256((root / review).read_text(encoding="utf-8"))}
+                if review is not None else {})
+    observations.atomic_json(run.root / HELD, {"candidate": rel, "sha256": sha256(final),
+                                               "before-sha256": sha256(start),
+                                               "diff": changes.relative_to(root).as_posix(),
+                                               "diff-sha256": sha256(shown), "new-warnings": warnings,
+                                               "entries": entries, **reviewed})
     command = PUBLISH.format(run=run.root.resolve().relative_to(root).as_posix())
     return {"candidate": rel, "diff": changes.relative_to(root).as_posix(), "new-warnings": warnings,
             "command": command, "revised-command": command + " --revised FILE"}
@@ -371,13 +383,16 @@ def publish_held(root: Path, run_dir: Path, revised: str | None = None, source: 
     """Publish the candidate the run at `run_dir` held, or the operator's `revised` text; launch nothing.
 
     Naming the run is the operator's approval of its exact candidate. The
-    note is written only while it holds the run's start text, the write
-    brief is the one the run captured, `final.md` is the candidate the run
-    held, and the run has published nothing. A revised text, read from the
+    note is written only while it holds the text the candidate was held
+    over (the run's start text, or the run's last automatic publication),
+    the write brief is the one the run captured, `final.md` is the candidate
+    the run held, and the operator has not published it already. A revised text, read from the
     file `source` outside the run's `artifact/`, must also pass
     `revised_problems()`; the run keeps it as `artifact/revised.md` with its
-    diffs from the note and from `final.md`. ValueError, with nothing
-    written, when a check fails. Returns the publication record and the new
+    diffs from the note and from `final.md`. The other files the operator
+    inspects, `final.diff` and a rewrite's accepted review, must also hold
+    what the run held (`HELD`). ValueError, with nothing written, when a
+    check fails. Returns the publication record and the new
     validation warnings of the published text.
     """
     root, run_dir = root.resolve(), run_dir.resolve()
@@ -388,18 +403,26 @@ def publish_held(root: Path, run_dir: Path, revised: str | None = None, source: 
         raise ValueError("supply the revised candidate from a file outside the run's artifact/ directory")
     with run_lock(run_dir):
         held, start_record = json.loads((run_dir / HELD).read_text(encoding="utf-8")), started(run_dir)
-        note = start_record["note"]
-        if published(run_dir) is not None:
-            raise ValueError(f"{rel} already published; it publishes at most once")
+        note, record = start_record["note"], published(run_dir) or {"publications": []}
+        if any(entry["decided-by"] != AUTOMATIC for entry in record["publications"]):
+            raise ValueError(f"{rel} already published its held candidate; it publishes it at most once")
         final = (root / held["candidate"]).read_text(encoding="utf-8")
         if sha256(final) != held["sha256"]:
             raise ValueError(f"{held['candidate']} is not the candidate the run held; it was changed after the run")
+        for name in ("diff", "review"):
+            path = root / held[name] if name in held else None
+            if path is not None and (not path.is_file()
+                                     or sha256(path.read_text(encoding="utf-8")) != held[f"{name}-sha256"]):
+                raise ValueError(f"{held[name]} is not the file the run held; it was changed after the run. "
+                                 "Nothing was written")
         start = (run_dir / "artifact" / START).read_text(encoding="utf-8")
+        last = record["publications"][-1]["text"] if record["publications"] else None
+        base = start if last is None else (root / last).read_text(encoding="utf-8")
         path = root / note
-        if (sha256(start) != start_record["sha256"] or not path.is_file()
-                or path.read_text(encoding="utf-8") != start):
-            raise ValueError(f"{note} no longer holds the text the run started from; nothing was written. "
-                             "A new run works on its current text")
+        if (sha256(start) != start_record["sha256"] or sha256(base) != held["before-sha256"] or not path.is_file()
+                or path.read_text(encoding="utf-8") != base):
+            raise ValueError(f"{note} no longer holds the text the run held its candidate over; nothing was "
+                             "written. A new run works on its current text")
         try:
             brief = capture_brief(root, note, start)
         except Stop as error:
@@ -408,19 +431,19 @@ def publish_held(root: Path, run_dir: Path, revised: str | None = None, source: 
             raise ValueError(f"the write brief of {note} changed since the run; nothing was written")
         text = final
         if revised is not None:
-            problems = revised_problems(root, note, start, revised)
+            problems = revised_problems(root, note, base, revised)
             if problems:
                 raise ValueError("the revised candidate is refused; nothing was written: " + "; ".join(problems))
-            for name, content in revised_files(note, start, final, revised).items():
+            for name, content in revised_files(note, base, final, revised).items():
                 write_text(run_dir / "artifact" / name, content)
             text = revised
         try:
-            entry = record_publication(run_dir, root, note, start, text, held.get("entries", []),
+            entry = record_publication(run_dir, root, note, base, text, held.get("entries", []),
                                        observations.timestamp(), decided_by="operator",
                                        revised=revised is not None)
         except Conflict as conflict:
             raise ValueError(str(conflict)) from conflict
-    report = {"run-dir": rel, "artifact": note, "published": entry, "new-warnings": new_warnings(root, note, start, text)}
+    report = {"run-dir": rel, "artifact": note, "published": entry, "new-warnings": new_warnings(root, note, base, text)}
     if revised is not None:
         artifact = (run_dir / "artifact").relative_to(root).as_posix()
         report["revised-candidate"] = {"candidate": held["candidate"], "revised": f"{artifact}/{REVISED}",
