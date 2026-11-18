@@ -175,10 +175,12 @@ def _pi_model(launch: LaunchRecord) -> str | None:
 
 HARNESSES = {
     "claude-code": Harness("claude", {
-        "print": True, "output-format": "stream-json", "verbose": True,
+        # Keep completion/model evidence without duplicating the persisted session trace.
+        "print": True, "output-format": "json",
         # Print mode ends the run when background tasks are still alive after
         # 600 s; "0" disables that ceiling (mdflow's claude adapter).
         "_env": {"CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0"},
+    # Workjig's Claude parser accepts a single result record as well as a stream.
     }, _claude, "claude-stream-json", _claude_model),
     "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, "codex-json", _codex_model),
     "pi": Harness("pi", {"print": True, "mode": "json"}, _pi, "pi-json", _pi_model),

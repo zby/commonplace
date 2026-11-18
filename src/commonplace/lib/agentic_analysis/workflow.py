@@ -112,7 +112,10 @@ REPORT_VERIFICATION = "report-verification"
 REPORT_CHECK = "report-check"
 CODE_OUTPUTS = {"opening": "metadata", "acquire": "source", REPORT_CHECK: "findings"}
 """The code jobs' outputs, which a role's read names as `job:output`."""
-UNATTENDED = {"claude-code": {"permission-mode": "acceptEdits"}, "codex": {"sandbox": "workspace-write"},
+# Analysis scans worker stdout for tool failures; retain full events here even
+# though ordinary headless calls need only the compact completion record.
+UNATTENDED = {"claude-code": {"permission-mode": "acceptEdits", "output-format": "stream-json", "verbose": True},
+              "codex": {"sandbox": "workspace-write"},
               "pi": {"approve": True}}
 """Per-harness unattended flags (phase 0); each grants less than full autonomy.
 

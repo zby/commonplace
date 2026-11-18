@@ -39,6 +39,8 @@ PI_FLAGS = {"no-session": True, "no-context-files": True, "no-extensions": True,
             # --no-context-files disables AGENTS/CLAUDE discovery, not SYSTEM/APPEND_SYSTEM.
             "system-prompt": SYSTEM_PROMPT, "append-system-prompt": APPEND_SYSTEM_PROMPT}
 CLAUDE_CODE_FLAGS = {
+    # Completion checks count tool calls and permission denials from stdout.
+    "output-format": "stream-json", "verbose": True,
     # Read, Grep and Glob inspect without a permission prompt; Bash parses JSONL
     # in memory; Write saves report.md, since print mode refuses shell redirection.
     "tools": "Read,Grep,Glob,Bash,Write",

@@ -153,8 +153,8 @@ def run(tmp_path, script, sleeps):
 def test_harness_commands():
     worker = HARNESSES["claude-code"].worker(
         Profile("claude-code", "opus", "medium",
-                {"permission-mode": "acceptEdits", "add-dir": "../a, ../b", "verbose": False}))
-    assert list(worker.argv) == ["claude", "--print", "--output-format", "stream-json", "--model", "opus",
+                {"permission-mode": "acceptEdits", "add-dir": "../a, ../b"}))
+    assert list(worker.argv) == ["claude", "--print", "--output-format", "json", "--model", "opus",
                                  "--effort", "medium", "--permission-mode", "acceptEdits",
                                  "--add-dir=../a", "--add-dir=../b", worker.argv[-1]], worker.argv
     assert "{prompt}" in worker.argv[-1]
@@ -169,6 +169,23 @@ def test_harness_commands():
     worker = HARNESSES["pi"].worker(Profile("pi", "gpt-6-luna", "low"))
     assert list(worker.argv[:6]) == ["pi", "--print", "--mode", "json", "--model", "gpt-6-luna:low"], worker.argv
     assert worker.output_protocol == "pi-json"
+
+
+def test_compact_claude_result_preserves_completion_and_model(tmp_path, script):
+    # Claude's non-verbose JSON mode emits only the final result object. The
+    # Workjig protocol must still classify it and retain actual model provenance.
+    script.write_text(FAKE + '\nprint(json.dumps({"type": "result", "subtype": "success", '
+                      '"is_error": False, "session_id": "compact-session", '
+                      '"modelUsage": {"actual-claude-model": {}}}))\n')
+    claude = HARNESSES["claude-code"]
+    harness = Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile: {},
+                      protocol=claude.protocol, model_used=claude.model_used)
+    with Run(tmp_path / "run", tmp_path, Profile("claude-code", "opus", "medium"),
+             harnesses={"claude-code": harness}) as run:
+        answer = run.ask("compact", "Write GOOD things.", ["report"])
+        assert answer.outputs == {"report": "report: good"}
+        assert answer.record["model"] == "actual-claude-model"
+        assert launch_count(run.root) == 1
 
 
 def test_ask_records_model_and_second_ask_replays(run):
