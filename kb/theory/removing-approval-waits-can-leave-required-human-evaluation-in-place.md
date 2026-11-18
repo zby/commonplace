@@ -25,7 +25,7 @@ Both cases involve examining results and forming a verdict. Calling an activity 
 
 ## Name the process being automated
 
-Suppose adoption is automatic, but the process specification assigns a maintainer a weekly sample review and rollback of harmful changes. Adoption continues if the maintainer does nothing, but the specified review goes undone. Calling the whole process automated would conceal an omitted task. This example establishes a gap against the specification, not that skipping review causes harm.
+Suppose adoption is automatic, but the process specification assigns a maintainer a weekly sample review and rollback of harmful changes. Adoption continues if the maintainer does nothing, but the specified review goes undone. Calling the whole process automated would conceal an omitted task.
 
 The same distinction applies to subsequent revisions. If the next revision requires the maintainer's assessment, that assessment is a dependency of the revision process, though not of the earlier adoption. Using an optional study's available findings does not itself require future studies. Making a new human assessment a condition of each revision does.
 
