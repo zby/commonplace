@@ -54,6 +54,17 @@ workshop retains.
   deferral, a plan-stop answer and the decisions on an overtaken run have no
   command that consumes them. One command fixes such a file's text and time
   as the record, with no key and no tie to a waiting run.
+- **The pass ends at its first per-item entry.** It does not run later
+  entries first. They wait in the continuation record, so they run on text
+  that already has the approved items.
+- **A failed entry does not hold back the completed ones.** The pass
+  publishes what the entries before the failure applied, under the usual
+  publication checks, and ends. The failed entry and those after it go into
+  the continuation record.
+- **Existing decisions are converted once.** The runs on disk hold 28
+  operator records, 18 of them answered. A one-time script rewrites the
+  answered ones into the new recorded form, in place. The new code gets no
+  reader for the old format. The old run directories keep their hash names.
 - **Each leftover item names who can resolve it.** The
   [unresolved frontier](../../reference/definitions/unresolved-frontier.md)
   definition now asks a feasibility claim to name the actor: the operator, a
@@ -84,6 +95,12 @@ Read from `src/commonplace/lib/review_workflows/revise.py` and `edits.py`.
   for a text by computing that text's run directory. `decisions.overtaken()`
   decides whether a pending stop is overtaken by comparing the run's
   directory with the directory of the note's current text.
+- `decisions.py` accepts a revise or rewrite run directory only when its
+  name matches a 12-digit hash with an optional number (`_RUN`). A
+  timestamp name does not match, so the listing and the carry-over would
+  skip the new runs.
+- A plan entry that ends with a problem prevents the final publication: the
+  run publishes only when no entry has the state `problem`.
 - Several inputs are captured once so that a repeat reads the same ones:
   `triage-inputs.json`, `earlier-decisions.json` and the captured stop
   decisions. A run also records its mode and options for the repeat.
@@ -132,12 +149,25 @@ the work depends on. The field names below are illustrative.
 
 | Field | Content |
 |---|---|
-| `made-for` | Hash and path of the text the items were computed on: the pass's last publication, or its start text |
+| `made-for` | Hash and path of the checkout text at handoff: the pass's last publication, or its start text. Never updated. |
 | `what` | The item: see the kinds below |
 | `actor` | Who is expected to be able to resolve it |
 | `after` | Items that must be settled first |
 | `how` | The command, or the section of the instruction |
-| `evidence` | Paths of the proposals, reports or candidate the item rests on |
+| `evidence` | Paths of the proposals, reports or candidate the item rests on, identifying the exact text each concerns |
+
+`made-for` is not evidence that every item applies to that text. For example,
+proposals computed on a held candidate depend on publication of that exact
+candidate. The answers-taking command must check the proposal input against
+the checkout even if the session's checkout check passed.
+
+A later session may take up unfinished items without reopening the run. At a
+pause, the session agent gives the operator a handoff: the original record,
+items done, dropped and remaining, and the expected checkout hash with its
+supporting publications or authorized edit diffs. Start from `made-for` and
+advance only for those changes. If the later session cannot verify the
+handoff, recommend a new pass rather than guessing from the latest run. Try
+this with an operator-carried handoff before adding workflow state.
 
 Values of `actor`: `operator`; `session-agent`, an agent working with the
 operator; `worker` with the `effort` that selects its profile. A decision
@@ -191,8 +221,8 @@ live: nothing loads it, and it names the command of option 1, which does not
 exist. It carries three judgments that code does not make:
 
 - whether a leftover plan entry still fits the text that was published;
-- whether a finding made on the earlier text still describes a passage of
-  the current text;
+- whether a finding's reason still holds in the current context, not just
+  whether its quoted passage survives;
 - when to stop continuing and recommend a new pass.
 
 ### Code changes implied
@@ -215,6 +245,15 @@ exist. It carries three judgments that code does not make:
   decisions to read answers files: the copies in consuming runs and the
   recorded unconsumed ones. How much of `decisions.py` this touches has not
   been read.
+- Publish the completed entries before a failed one.
+- Accept both directory names in `decisions.py`: the hash names of existing
+  runs and the timestamp names of new ones.
+- Write and run the one-time conversion of answered operator records. Keep
+  it under `scripts/` only if it is reusable; otherwise remove it after the
+  run and state the counts in the commit.
+- Keep `triage-inputs.json`, `earlier-decisions.json` and the captured stop
+  decisions as the record of what a run read. Remove the branches that read
+  them back on a repeat.
 - Remove or rewrite the tests of replay across invocations, including
   `test_revise_keys.py`.
 - Update the report's `waiting-for` text, `README-REVIEW-SYSTEM.md`,
@@ -228,24 +267,20 @@ of this design.
 
 ## Open choices
 
-1. **Captured inputs.** `triage-inputs.json` and `earlier-decisions.json`
-   no longer need to be frozen for a repeat. They can stay as the record of
-   what the run read.
-2. **Publishing before a failure.** A pass with a failed entry applies
-   nothing today. It could publish the entries that completed, as it does
-   before a per-item stop, so that a new pass repeats less.
-3. **Existing run directories.** The hash-named runs on disk stay where
-   they are. Whether `decisions` must keep reading them, and how it tells
-   their start text, is not settled. The same holds for the operator
-   records in those runs, which hold the decisions made so far.
-4. **How far "publish what it can" goes.** As drafted, the pass ends at the
-   first per-item entry. It could instead run later entries that need no
-   decision first. A later pass may change a passage an earlier proposal
-   quotes, which makes that proposal stale. Not proposed.
-5. **Where episodes go after the trial.** `episodes.md` here holds them
-   until the workshop closes.
+None on 2026-11-18. Two were settled by the agent as defaults, for the
+operator to overrule: captured input files stay as a record of what the run
+read; and `episodes.md` stays in this workshop until it closes, when its
+content is extracted or discarded.
 
 ## What the episodes should show
+
+Seek two contrasting live episodes: one where an approved edit makes a later
+entry unnecessary, and one where the operator leaves items for another
+session after a publication. In the second, check whether the next session
+can identify what was authorized, what changed and what remains from the
+handoff alone, without repeating the run. Report if either case was not
+observed. These outcomes test the procedure; source line counts test only
+the prediction about implementation size.
 
 - How often the operator accepted unchanged what a worker proposed, by
   operation. This is the evidence ADR 137 names for moving a per-item
