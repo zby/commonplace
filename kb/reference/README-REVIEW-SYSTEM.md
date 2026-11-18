@@ -713,7 +713,7 @@ exact file or run:
 
 `run revise NOTE --answers FILE` over a per-item entry's proposals starts a
 new run of that one entry, which applies the `approved` items and publishes.
-The run keeps a copy of the named file under `answers/`. It is refused when
+The entry keeps the scope the asking run's plan gave it. The run keeps a copy of the named file under `answers/`. It is refused when
 the validator refuses the answers, when the note is not the text the
 proposals were made for, when the write brief changed since the asking run,
 or when no item is approved; nothing is applied then. A note changed by

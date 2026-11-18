@@ -1003,6 +1003,12 @@ def _brief_sha(root: Path, artifact: str, note: str) -> str | None:
     return observations.sha(brief["brief"].encode("utf-8")) if "brief" in brief else None
 
 
+def _asked_scope(asking: Path, name: str) -> str | None:
+    """The scope of the entry for the per-item pass `name` in the plan of the run that asked its proposals."""
+    plan = yaml.safe_load((asking / "artifact" / PLAN).read_text(encoding="utf-8"))
+    return next((entry.get("scope") for entry in plan["passes"] if entry["pass"] == name), None)
+
+
 def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | None,
                  must_keep: list[str]) -> tuple[str, dict[str, dict], dict[str, dict]]:
     """The plan, and the answers each entry receives, of a run that consumes the operator's answers files.
@@ -1015,11 +1021,15 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
       result) on `artifact`: the plan is that pass alone, and the pass
       applies the approved items. Refused unless the note holds exactly the
       text the proposals were made for, under the write brief the asking
-      run recorded (`start.json`), and some item is approved; or
+      run recorded (`start.json`), and some item is approved. The entry
+      keeps the scope the asking run's plan gave the pass; or
     - files whose questions are review results of `artifact`, such as a
       triage's: the plan holds one fix entry per result with an `approved`
       finding, in depth order, and each fix receives its answers as
-      `finding-answers`. Refused unless the parts of the note each result's
+      `finding-answers`, with no scope: a triage's results come from
+      review results, not plan entries, and a scoped fix entry of a plan
+      is continued with `--plan`, never with answers. Refused unless the
+      parts of the note each result's
       criterion watches are those it judged (its `note-sha256`, as freshness
       compares them) and some finding is approved.
 
@@ -1051,7 +1061,7 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
                                  "were made under; the proposals are stale. A new run of the pass proposes again")
             if not approved:
                 raise ValueError(nothing.format(files=item["origin"]))
-            edited.append((name, item))
+            edited.append((name, item, _asked_scope(asking, name)))
         elif question.get("type") == result_contract.TYPE:
             finding = read_finding(root, artifact, data["question"])
             criterion = results.criterion_file(root, finding.criterion).read_text(encoding="utf-8")
@@ -1067,8 +1077,8 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
         raise ValueError("--answers takes one answers file over a per-item pass's proposals, or answers files "
                          "over review results, not both")
     if edited:
-        [(name, item)] = edited
-        return (one_entry_plan(name, None, purpose, must_keep),
+        [(name, item, scope)] = edited
+        return (one_entry_plan(name, None, purpose, must_keep, scope),
                 {name: {"origin": item["origin"], "text": item["text"]}}, {})
     if not entries:
         raise ValueError(nothing.format(files=", ".join(item["origin"] for item in given)))

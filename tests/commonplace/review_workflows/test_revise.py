@@ -1809,3 +1809,18 @@ def test_stale_reviews_counts_only_the_results_the_publication_made_stale(repo, 
     assert fresh == {"residue": "stale", "title": "fresh"}
     [stale] = [item for item in ended["continuation"]["items"] if item["kind"] == "stale-reviews"]
     assert stale["what"] == "1 stored review result(s) of the note are stale. Nothing schedules reviewing them again."
+
+
+def test_answers_over_a_scoped_entrys_proposals_apply_in_that_scope(repo, capsys, tmp_path):
+    start(repo)
+    plan = scoped_plan(tmp_path, {"pass": "plain-wording", "scope": "the opening only"})
+    _, ended, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(plan))
+    assert launches == ["list plain-wording small"]
+    assert captured_inputs(repo[2])[-1]["inputs"]["scope"] == "the opening only"
+    answer(repo, ended, {})
+    [item] = ended["continuation"]["items"]
+    code, done, launches = continued(repo, capsys, item)
+    assert code == 0 and launches == ["apply plain-wording small"] and done["published"]
+    assert done["plan"]["passes"] == [{"pass": "plain-wording", "scope": "the opening only"}]
+    call = captured_inputs(repo[2])[-1]
+    assert call["pass"] == "plain-wording" and call["inputs"]["scope"] == "the opening only"

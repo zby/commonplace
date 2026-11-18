@@ -561,8 +561,8 @@ error, including an invalid plan or refused answers.
 approval; an agent names it only on the operator's stated word for that
 exact file. The run keeps a copy of each named file under `answers/` before
 it launches anything. One file over a `per-item` pass's proposals makes a
-run of that pass alone, which applies the `approved` items and publishes. It
-is refused unless the validator accepts the answers, the artifact holds
+run of that pass alone, in the scope the asking run's plan gave it, which
+applies the `approved` items and publishes. It is refused unless the validator accepts the answers, the artifact holds
 exactly the text the proposals were made for, the write brief is the one the
 asking run recorded, and some item is approved. Files over review results,
 such as a triage's or those `record` writes, make a plan with one fix entry
