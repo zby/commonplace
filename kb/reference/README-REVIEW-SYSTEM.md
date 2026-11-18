@@ -475,10 +475,11 @@ the answers file.
 note or another markdown artifact. It executes a plan: a list of
 [edit operations](../types/edit-operation.md) from the
 [simplification passes](../instructions/simplification-passes/README.md) in
-increasing depth, each through the same route as `run edit`. It stops for
-the operator's answers on a per-item operation. It publishes its candidate to
-the artifact without a stop, at a per-item stop and at the end of the plan
-(see [publication](#publication)). Four procedures differ only in
+increasing depth, each through the same route as `run edit`. It publishes
+its candidate to the artifact without a stop (see [publication](#publication))
+and ends at its first stop, leaving a [continuation record](#revise-runs-and-the-continuation-record)
+([ADR 138](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md)).
+Four procedures differ only in
 how the plan is made
 ([ways to make a plan](../instructions/simplification-passes/README.md#ways-to-make-a-plan),
 [ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
@@ -486,7 +487,7 @@ A new run requires one choice.
 
 | Procedure | Flags | What chooses the edits | New review launches |
 |---|---|---|---|
-| focused | `--pass NAME`, `--finding RESULT`, `--plan FILE` | the operator | none |
+| focused | `--pass NAME`, `--finding RESULT`, `--plan FILE`, `--answers FILE` | the operator | none |
 | triage | `--triage` | the operator, by deciding each finding of the fresh stored `warn` and `fail` results | none |
 | quick | `--assess` | one assessor, from the artifact and its fresh stored `warn` and `fail` results | none |
 | full | `--full` | one assessor, from the artifact, the new findings, the depth 1 reports and the role report | every review operation that declares a `depth` |
@@ -496,30 +497,34 @@ the whole artifact. `--finding RESULT` writes a one-entry plan that runs
 [fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
 with that review result of the artifact as its `finding` input; the
 operation changes only the passage the finding names. `--plan FILE` supplies
-any other plan.
+any other plan. `--answers FILE` makes the plan from the operator's decided
+answers files (see [the continuation record](#revise-runs-and-the-continuation-record)).
 
 **Triage.** `--triage` presents the artifact's findings to the operator. It
 takes the same results the quick procedure gives its assessor, the fresh
 stored results with outcome `warn` or `fail`, and keeps those with a finding
-of level `warn` or `fail`. It captures them once in `triage-inputs.json`,
-so a repeat asks about the same results after the store changes. It copies
-each result into the run's `artifact/findings/` and writes one pending
-[answers](../types/answers.md) file per result,
+of level `warn` or `fail`, and records them in `triage-inputs.json`. It
+copies each result into the run's `artifact/findings/` and writes one
+pending [answers](../types/answers.md) file per result,
 `artifact/finding-answers-<key>.md`, whose question is the copy and whose
-items are the result's `warn` and `fail` findings. Then it stops. The
-report's `triage` lists each file with its state and its own approval
-command; `waiting-for` names the first file that waits. In a session,
-follow [decide items](../instructions/decide-items.md): the operator
-approves a finding that is right, rejects one that is wrong with a reason,
-and says whether it is wrong for this note only or the criterion is too
-broad, or defers it. When every file is approved, the plan holds one entry
-for the fix per result with at least one `approved` finding, in depth
-order, naming the copy as its `finding`. The fix also receives the approved
-answers as `finding-answers` and fixes only the approved findings; its
-report lists the findings it did not touch. With no approved finding the
-plan is empty and nothing changes. With no fresh `warn` or `fail` result the
-run ends at once, and `triage.what` says so. Nothing is reviewed and nothing
-is assessed. A rejection feeds later work: the next review of the pair
+items are the result's `warn` and `fail` findings. Then it ends. The
+report's `triage` lists each file, and the continuation record has one
+`findings` item naming every file and the command that consumes them. In a
+session, follow [decide items](../instructions/decide-items.md): the
+operator approves a finding that is right, rejects one that is wrong with a
+reason, and says whether it is wrong for this note only or the criterion is
+too broad, or defers it. On the operator's word,
+`run revise NOTE --answers FILE --answers FILE ...` names the decided files
+and starts a new run. Its plan holds one entry for the fix per result with
+at least one `approved` finding, in depth order, naming the copy as its
+`finding`. The fix also receives the answers as `finding-answers` and fixes
+only the approved findings; its report lists the findings it did not touch.
+The run keeps a copy of every named file, including one that approves
+nothing. It is refused when a result no longer matches the parts of the
+note its criterion watches, or when no named file approves a finding; then
+keep each file with `answers record FILE`. With no fresh `warn` or `fail` result the triage ends
+at once, and `triage.what` says so. Nothing is reviewed and nothing is
+assessed. A rejection feeds later work: the next review of the pair
 receives it (see [finding decisions](#result-files-and-freshness)), and the
 assessor plans no fix for it. Because a new rejection stales its result,
 the quick procedure no longer receives that result until the pair is
@@ -527,17 +532,18 @@ reviewed again.
 
 **Recording decisions on an overtaken run.** The operator may answer a
 run's findings in a session instead of at a triage, for example by splitting
-the note. The note's text then changes, so the run cannot continue.
+the note. The note's text then changes, and no command applies the run's
+findings.
 `commonplace-review record RUN` writes the triage's pending answers file over
 each review result the run's assessor or triage received that has a `warn`
-or `fail` finding, and prints each file with its approval command. It
+or `fail` finding, and prints each file with the command that records it. It
 launches nothing, makes no plan and publishes nothing; a file that exists is
 left as it is. Record each finding the operator discussed with its state and
 reason, what was done in `resolution` and the new notes or commit in `refs`;
 leave the rest `pending`
 ([decide items](../instructions/decide-items.md#findings-answered-by-a-structural-change)).
-After approval, `decisions` lists the decided items, and the undecided ones
-as `overtaken`. Later runs on the same note path receive the decisions as
+After `answers record FILE`, `decisions` lists the decided items, and the
+undecided ones as `overtaken`. Later runs on the same note path receive the decisions as
 they receive a triage's: a rejection reaches the next review of that
 criterion as `finding-decisions`, with its `resolution`. A rejection whose
 `resolution` states a retained question closes the rejected diagnosis, not
@@ -580,13 +586,14 @@ whether the proposal's cause may be a term or claim that dependents rely on;
 when a change would reach dependents, the `stop` names them. A stopped plan leaves
 `artifact/stop-answers.md`, where the operator's decision on the proposal is
 recorded and, afterwards, what was done and where: the item's `resolution`
-and `refs` (commit hashes, paths). The run does not wait for that file.
-Once approved, the recorded decision reaches the assessor of the next run on
-the note, so the reason should state which of the stop's proposals it covers.
-The full procedure does not review the
-candidate; the next sweep finds the stale results after publication. A
-review without a result stops the run before assessment; dismiss its problem
-with `retry` on the review run under the revise run directory, then repeat.
+and `refs` (commit hashes, paths). Nothing consumes that file: keep it with
+`answers record FILE`, again after adding `resolution` or `refs`. A replacement
+plan runs with `--plan`. The kept decision reaches the assessor of the next
+run on the note, so the reason should state which of the stop's proposals it
+covers. The full procedure does not review the candidate; the next sweep
+finds the stale results after publication. A review without a result ends
+the run before assessment; a new run reuses the results the review step
+published, which are fresh.
 
 A plan entry for an operation that declares `responds-to` names its
 `finding` and takes the depth of that finding's criterion. Within the chosen
@@ -606,7 +613,7 @@ finding the operator rejects as spurious leaves a record only through a
 triage, whose answers file holds the rejection and its reason.
 
 Plain-wording and abstractions, the `per-item` passes, still stop for the
-operator's answers on each proposal, in `artifact/<pass>-answers-<key>.md`.
+operator's answers on each proposal, in `artifact/<pass>-answers.md`.
 These are temporary procedure-development points:
 retain proposed, accepted and rejected choices with reasons, evolve the
 selection rules and checks, and evaluate retained and fresh examples before
@@ -615,111 +622,155 @@ infrastructure, and fewer proposals do not establish reliability.
 
 **Earlier decisions.** Decisions carry over between revise and rewrite runs
 on the same note. When a revise or rewrite run starts, code collects the
-operator's decided items from the approved answers of the other revise and
-rewrite runs on the same note path. It takes
+operator's decided items from the answers kept in the other revise and
+rewrite runs on the same note path (`answers/` in each run). It takes
 items whose state is not `pending` and whose proposal is an edit proposal,
 with a `quote` and a `change`, or a finding of a triage, which it records
 with its criterion. It skips publication and plan-stop answers, and answers the
 validator refuses. When the same proposal, or the same finding of the same
-criterion, was decided more than once, the latest `decided-at` wins. The run captures the result once in
-`earlier-decisions.json`, so a repeat uses the same decisions even after
-other runs record more. Each per-item pass and each fix of a finding
+criterion, was decided more than once, the latest `decided-at` wins. The run keeps what it collected in
+`earlier-decisions.json`, as a record of what it read. Each per-item pass and each fix of a finding
 receives them as the input `earlier-decisions`, when there is at least
 one. A new proposal with the same `quote` and `change` as an earlier
 decided item, or a triage finding with the same criterion and the same
 `scope`, `quotes`, `reason` and `level`, starts decided in the answers file: code copies the earlier
 `state`, `reason`, `revisit`, `decided-by` and `decided-at` and sets
 `carried-from` to the earlier answers file. Only identical proposals are
-carried over. The stop still waits for approval, even when every item is
+carried over. The run still ends at the stop, even when every item is
 carried over, and the operator may change a carried item; changing it
 removes `carried-from`. `commonplace-review decisions` shows `carried-from`
 on each carried item.
 
-**Revise runs.** The run directory is derived from the inputs:
-`kb/reports/state/review/runs/v2/revise/<note path without .md>/<first 12
-hex of the note's SHA-256>/`. Repeating the same command on
-the same note text continues that run, and answered calls replay. A run that
-published and then waits or stopped is found by the text it last published,
-so the same command continues it after a publication before a per-item stop.
-After the run ends, its published text has another hash, so the same command
-opens a new run. A run that published is never found by its start text
-again: a note reverted to that text opens a new run in `<hash prefix>-2/`. A
-note edited by anyone else also opens a new run, and the old run's pending
-stop is `overtaken`. Revision in a new run requires a new procedure choice
-rather than silently assessing again. Older revision runs without a recorded
-mode require an explicit choice too. A repeat reuses the options the run
-recorded; an option given on the repeat replaces the recorded value. A stop for the operator proposes a file in the
-run directory, and the report's `waiting-for` gives what to do, the file,
-the approval command and the command to repeat. Approval captures the file's
-current text; repeating alone never approves it. Answers edited after
-approval require another approval and appear under `unapproved-edits`.
-Changed proposal inputs require fresh approval. A plan with `stop` set ends
-the run; replace it explicitly with `--plan`, not an approval command. An
-agent may approve only on the operator's stated word for that proposal.
+#### Revise runs and the continuation record
+
+Every invocation opens a new run, in
+`kb/reports/state/review/runs/v2/revise/<note path without .md>/<UTC
+stamp>/`, with `-2`, `-3` on a collision. A note's runs are listed under the
+note's directory; runs made before this layout are named by a 12-hex hash of
+their start text, so the time of a run is in its records, not its name. The
+run records the note, the hash of its start text and the hash of the write
+brief it captured in `start.json`. No run is repeated or resumed, and every
+invocation needs a procedure choice: a bare `run revise NOTE` is a command
+error. Within one invocation, Workjig's call records serve retries.
+
+A run ends in one of three ways: it completed, it needs continuation, or it
+failed. It ends at its first stop: a plan `stop`, a triage, the first
+per-item entry that proposes anything, a held candidate, or a failed entry.
+What it could not finish is its continuation record, `continuation.json` in
+the run directory and `continuation` in the report:
+
+| Field | Content |
+|---|---|
+| `run-dir` | The run directory |
+| `made-for` | The note's text when the run ended: `note`, `sha256` and `text`, the path of its last publication or of `artifact/start.md`. Every item was computed on it; it is never updated |
+| `items` | One per piece of unfinished work, in dependency order |
+
+Each item has an `id`; a `kind`; `what`, in words; `actor`, the actor
+expected to be able to resolve it (`operator`, `session-agent`, or `worker`
+with its `effort`), an estimate and not a permission; `after`, the ids of the
+items to settle first; `how`, with `step`, the step of
+[continue a revise pass](../instructions/continue-a-revise-pass.md) that
+handles it, `command` where a command proceeds, `record` where the
+recording command applies and `revised` for a held candidate; `answers`, the
+answers files it waits for; and `evidence`, the files it rests on.
+
+| `kind` | Left when |
+|---|---|
+| `failure` | a worker, review or publication failed, or the note changed during the run |
+| `findings` | a triage wrote answers files over review results |
+| `plan-stop` | the plan set `stop`; `artifact/stop-answers.md` waits |
+| `held-candidate` | a candidate added a validation warning and was held |
+| `proposals` | a per-item entry's proposals wait in `artifact/<pass>-answers.md` |
+| `direct-entry` | a plan entry for an operation that applies directly was not run |
+| `per-item-entry` | a plan entry for a per-item operation was not run |
+| `fix-entry` | a plan entry that fixes a finding was not run |
+| `interactive-entry` | `narrow-overclaims` without evidence, or `split-out-a-treatment`, was skipped |
+| `claim-questions` | the assessment lists claim questions for the operator |
+| `stale-reviews` | the run published and the note has stored review results; nothing schedules them |
+
+When the report carries a continuation record, a session agent continues
+with the operator by [continue a revise pass](../instructions/continue-a-revise-pass.md).
+A later command acts on a stop's output by naming the file or the run, and
+naming it is the operator's approval
+([ADR 138](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md)).
+The agent runs such a command only on the operator's stated word for that
+exact file or run:
+
+| Stop's output | Command |
+|---|---|
+| decided proposals of a per-item entry | `run revise NOTE --answers FILE` |
+| decided answers over review results, from a triage or `record` | `run revise NOTE --answers FILE --answers FILE ...` |
+| a held candidate | `publish RUN`, or `publish RUN --revised FILE` |
+| answers nothing consumes: no item approved, a plan stop's answers, decisions on an overtaken run | `answers record FILE` |
+
+`run revise NOTE --answers FILE` over a per-item entry's proposals starts a
+new run of that one entry, which applies the `approved` items and publishes.
+The run keeps a copy of the named file under `answers/`. It is refused when
+the validator refuses the answers, when the note is not the text the
+proposals were made for, when the write brief changed since the asking run,
+or when no item is approved; nothing is applied then. A note changed by
+anyone else leaves a run's pending files `overtaken`
+([decision record](#the-operator-decision-record)).
 
 #### Publication
 
 A revise run writes its candidate to the note without a stop. Changes
 applied without a decision, and items the operator already decided, need no
-approval of the whole text. The run publishes at two points:
+approval of the whole text. The run publishes at two points, so it may
+publish twice:
 
-- at a per-item stop, what the earlier entries applied, so the operator
-  decides the items on the note's text;
-- at the end of the plan, the final text, when no entry ended with a problem.
+- before a per-item entry is asked for proposals, what the earlier entries
+  applied, so the proposals are made on the note's text;
+- when the run ends, what its entries applied since the last publication,
+  including the entries before a failed one.
 
 It publishes only a text that differs from the note. It writes the note only
 while the note holds the text the run last knew, its start text or the text
 it last published, and only while the captured brief is unchanged.
 Otherwise the run ends with a conflict and nothing is written. A plan `stop`,
-the depth 1 stop of the full procedure and the triage stop publish nothing.
+the depth 1 stop of the full procedure and a triage publish nothing.
 
 Each publication is recorded in the run's `published.json`: the published
 text `artifact/publications/<n>.md`, its hash, its diff
 `artifact/publications/<n>.diff` from the text before it, the plan entries it
-covers and the time. The report lists them under `publications` and says
-`published: true` when this invocation wrote the note; a run that ended
-without a stop has `complete: true` and no `waiting-for`.
-`commonplace-review decisions` lists each one with class `publication`,
-decided by `automatic`, never by the operator. Nothing is committed: the
-change is in the working tree, `git diff` shows it, and git reverses it. The
-session agent tells the operator what was published, with the note's path
-and the diff's path ([approve a text](../instructions/approve-a-text.md)).
+covers, the time and who decided it. The report lists them under
+`publications` and says `published: true` when the run wrote the note; a run
+that left nothing has `complete: true` and no `continuation`.
+`commonplace-review decisions` lists each automatic publication with class
+`publication`, decided by `automatic`, never by the operator. Nothing is
+committed: the change is in the working tree, `git diff` shows it, and git
+reverses it. The session agent tells the operator what was published, with
+the note's path and the diff's path
+([approve a text](../instructions/approve-a-text.md)).
 
 A candidate that adds a validation warning the note's text does not have is
-not published automatically. At a per-item stop it stays in the run, and
-`not-published` says so. At the end of the plan it waits at the publication
-stop: inspect `artifact/final.md` and `artifact/final.diff`, record the
-operator's decision on the one item of `artifact/publication-answers.md`,
-which names the candidate's hash, approve that file with
-`commonplace-review approve RUN FILE --key KEY` and repeat
-([approve a text](../instructions/approve-a-text.md)). The waiting text says
-that the new warning is why the run stopped, and the report lists the
-warnings under `new-warnings`; a warning does not block approval.
-Publication requires answers that pass the validator and approve that exact
-candidate. The proposal key binds the text the run last knew, the candidate
-and the decision context, so a change in any of them withdraws the approval.
-To revise, use `--plan` for revision, change workflow inputs, or start a new
-run; do not edit the candidate.
+not published. The run holds it and ends, before it asks a per-item entry
+for proposals: it keeps `artifact/final.md`, its diff `artifact/final.diff`
+from the text it is held over, and `held.json` with the hashes of the text
+held over, the candidate and the diff, the new warnings and the plan entries
+it covers. The report's `held` names the files, the warnings and the
+commands that publish it; `new-warnings` lists the warnings, which do not
+block publication. Follow [approve a text](../instructions/approve-a-text.md).
 
-To accept the candidate with a revision, a session agent applies the
-operator's stated changes to a copy of the candidate outside the run's
-`artifact/` and supplies it with `run revise NOTE --revised FILE`. The
-command launches nothing. It is refused unless the run waits at its
-publication stop for the note's current text, and unless the revised
-candidate passes the candidate checks of `edits.artifact_bounds()`: the
+`commonplace-review publish RUN` publishes that exact candidate and launches
+nothing. Naming the run is the operator's approval. It is refused, and
+writes nothing, when the note no longer holds the text the candidate was
+held over, when `final.md` or `final.diff` changed after the run, when the
+write brief changed since the run, or when the operator already published
+the candidate. `publish RUN --revised FILE` publishes the operator's full
+revised text instead, from a file outside the run's `artifact/`, after the
+same checks and the candidate checks of `edits.artifact_bounds()`: the
 frontmatter parses and keeps `title`, `type` and `brief`, the H1 is kept,
 `user-verified` is gone when the body changed, and the validator finds no
-new failure. The per-pass bounds of edit operations do not apply. A refusal
-keeps the candidate and its pending answers. The run captures the revised
-candidate once, as `artifact/revised.md` with `artifact/revised-from-final.diff`
-and `artifact/revised.diff`, keeps `final.md` unchanged, and replaces the
-pending publication answers with one whose question is `revised.md`. Any
-approval is withdrawn. Repeats keep the revised candidate; another
-`--revised` replaces it; a changed workflow candidate withdraws it.
-Publication writes the revised candidate under the same conditions as the
-candidate. `decisions` marks such a publication entry `revised`.
-A conflict leaves the original untouched and names the proposed text.
-Instructions remain the judgment authority; prompts name inputs only.
+new failure. The per-pass bounds of edit operations do not apply. The run
+keeps the revised text as `artifact/revised.md`, with
+`artifact/revised-from-final.diff` from the candidate and
+`artifact/revised.diff` from the note, and keeps `final.md` unchanged.
+`decisions` lists the publication as decided by the operator, marked
+`revised` for a revised text. The candidate is a workflow output, not an
+input: do not edit it. To change it otherwise, start a new run, for revise
+with `--plan`. Instructions remain the judgment authority; prompts name
+inputs only.
 
 ### Rewriting a note
 
@@ -766,7 +817,8 @@ the brief before the run, and the commission says which item.
 
 Code checks that `note` is the note being rewritten, that each source is a
 repository file other than the note, its write brief and run state, and that
-every required section is present. The run captures the commission once in
+every required section is present. Every invocation is a new run and needs
+the commission. The run captures the commission in
 `rewrite-inputs.json`, with the note's [write brief](../types/write-brief.md)
 when the note declares one, the sources and the note's type spec and
 collection contract. Every worker receives the brief as binding retained
@@ -781,7 +833,7 @@ source list gives its path and SHA-256 and the worker reads the file there.
 A referenced source is never copied into the run, so full external sources
 stay out of run state. The report's `sources` says which mode each source
 has. A referenced source whose bytes changed since capture stops the run
-until a restart. Grounding comes before the run: the session agent grounds
+before a candidate is held; a new run rewrites from the current text. Grounding comes before the run: the session agent grounds
 claims with `cp-skill-ground` and lists the ingests and snapshots as sources.
 
 **Calls.** Each call is a fresh worker on the profile file's `judgment`
@@ -804,7 +856,7 @@ The review is a review operation whose criterion is
 | `review-repair` | as `review`, for the repaired candidate; no earlier review | as `review` |
 
 A rejected output goes back to its worker with the problems, up to three
-attempts. A worker problem stops the run; `retry RUN JOB` dismisses it. The
+attempts. A worker problem stops the run; a new run asks again. The
 candidate checks are those of `--revised`: the frontmatter parses and keeps
 `title`, `type` and `brief`, the H1 is kept, `user-verified` is gone when
 the body changed, and validation finds no new failure. The per-pass bounds
@@ -848,9 +900,8 @@ least one, the same calls receive them as `earlier-decisions`: the author
 does not reintroduce a change the operator rejected and keeps a wording the
 operator approved, unless the current direction says otherwise, and the
 reviewer reports a candidate that goes against an earlier decision. The run
-keeps both in `role.json` and `earlier-decisions.json`; a repeat reads them,
-and a restart obtains them again. A role report call whose inputs did not
-change replays without a launch. The report's `role` names the role report
+keeps both in `role.json` and `earlier-decisions.json`, as a record of what
+it read. The report's `role` names the role report
 and whether it was reused. No option skips the role report: a note without
 dependents still costs that one call.
 
@@ -874,18 +925,20 @@ claim account carries the judgment from the first to the second.
 finding asks for evidence the sources lack, the session agent grounds or
 adds a source and starts again with a changed commission. A candidate the
 reviewer accepts that equals the start text ends with `unchanged` and no
-publication. Otherwise the run always stops at the publication stop that `run
-revise` uses for a candidate with a new warning: `artifact/final.md`, `artifact/final.diff` and
-`artifact/publication-answers.md`, approval with
-[approve a text](../instructions/approve-a-text.md), `--revised FILE`,
-`new-warnings`, and one write after approval, only over the start text. The
-report's `accepted` names the accepted review, its outcome and its `warn`
-findings. When there are any, the waiting text says how many and where the
-review is, and the session agent tells the operator before the decision. The
-proposal key binds the start text, the candidate, the capture, every call's
-key and each review's raw output. The waiting text names each workflow's way
-to change the candidate otherwise: `--plan` for revise, a changed commission
-with `--restart` for the rewrite.
+publication. Otherwise the run holds the candidate and ends, as `run revise`
+holds a candidate with a new warning ([publication](#publication)):
+`artifact/final.md`, `artifact/final.diff`, `held.json` with the hash of
+the accepted review, and `new-warnings`. The note is not written. The
+report's `held` names the candidate, its diff, the warnings and the commands
+that publish it. The report's `accepted` names the accepted review, its
+outcome and its `warn` findings; when there are any, `held.what` says how
+many and where the review is, and the session agent tells the operator
+before the decision ([approve a text](../instructions/approve-a-text.md)).
+`publish RUN` publishes the exact candidate on the operator's word, or
+`publish RUN --revised FILE` the operator's revision of it, only over the
+start text and under the captured brief; it is also refused when the
+accepted review changed after the run. To change the candidate otherwise,
+start a new run with a changed commission.
 
 **After publication.** When the published text is exactly the candidate the
 accepted review judged, the review result becomes the note's current result
@@ -902,46 +955,45 @@ freshness hashes. `status NOTE` never lists this criterion as missing, since
 no criterion request selects it; `status` without NOTES lists a stored one.
 No sweep reruns a stale one: a new rewrite reviews again.
 
-**Run directory.** `kb/reports/state/review/runs/v2/rewrite/<note path
-without .md>/<first 12 hex of the note's SHA-256>/` holds `sweep.json` (the
+**Run directory.** Every invocation opens a new run in
+`kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<UTC
+stamp>/`, named as a revise run is. It holds `start.json`, `sweep.json` (the
 profile and the role report's profile), `rewrite-inputs.json`,
 `earlier-decisions.json`, `role.json`, the role report's run under `role/`
 when one ran, the review runs under `reviews/`, the Workjig records under
-`calls/`, the operator records under
-`operator/` and, under `artifact/`: `commission.md`,
-`brief.md` when there is a brief, `sources.md` (the source list),
-`start.md`, `reconstruction.md`, `claim-account.md`, `candidate-1.md`,
-`candidate-1-report.md`, `review-1.md`, after a repair `candidate-2.md`,
-`candidate-2-report.md` and `review-2.md`, and the publication files.
-Repeating the command continues the run and launches nothing already
-answered; `--commission` may be omitted on a repeat. A commission that
-differs from the capture is refused. `--restart` with `--commission FILE`
-captures the commission, brief and sources again, removes the step and
-publication files under `artifact/`, withdraws any publication approval and
-asks every call whose inputs changed. Earlier calls stay in the records. A
-changed note text opens a new run directory.
+`calls/`, `held.json` and, after publication, `published.json`, and under
+`artifact/`: `commission.md`, `brief.md` when there is a brief, `sources.md`
+(the source list), `start.md`, `reconstruction.md`, `claim-account.md`,
+`candidate-1.md`, `candidate-1-report.md`, `review-1.md`, after a repair
+`candidate-2.md`, `candidate-2-report.md` and `review-2.md`, `final.md`,
+`final.diff` and the publication files. No run is repeated or resumed.
 
 ### The operator-decision record
 
 `commonplace-review decisions` is the one path to the
 operator-decision record ([ADR 130](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md)).
-It reads, without writing, the operator records in revise and rewrite run directories,
-and lists each decision with who proposed it, who decided it and whether it
-covered one item or a bundle. A decision on a finding at a triage has class
-`finding`, and its item names the criterion, the level and the reviewer's
-reason. So that decisions recorded before the cutover
-stay visible, it also reads the records of the two retired procedures
+It reads, without writing, the revise and rewrite run directories, and lists
+each decision with who proposed it, who decided it and whether it covered
+one item or a bundle. An answers file becomes a decision when a command
+keeps it in a run's `answers/`: the run that `--answers` names it to, or
+`answers record FILE`. Each kept file gives one entry per item, with its
+state, decider and reason; a file kept by two runs is listed once. A
+decision on a finding has class `finding`, and its item names the
+criterion, the level and the reviewer's reason. Each publication from a
+run's `published.json` is one bundle entry with class `publication` and
+decision `published`, decided by `automatic` or, through `publish RUN`, by
+the operator. An answers file a continuation record waits for that no run
+kept, and a held candidate not yet published, are listed as `pending`. A
+pending entry is listed as `overtaken` instead when the note no longer holds
+the text the run left it: its last publication, or its start text. So that
+decisions recorded before the cutover stay visible, it also reads the
+records of the two retired procedures
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)):
 operator records in full-pass run directories, full-pass packets under
 `kb/reports/state/review/packets/` and fix reports under
-`kb/reports/state/fixes/`.
-It also lists each automatic publication of a revise run from its
-`published.json`, with class `publication`, decision `published` and
-decided by `automatic`: no one decided it.
-A pending entry of a revise or rewrite run is listed as `overtaken` when the
-note no longer holds the text the run last knew, its start text or the text
-it last published. The note is gone, or its current text names another run
-directory. Such a run can never continue.
+`kb/reports/state/fixes/`. Operator records of revise and rewrite runs are
+not read; `scripts/convert_operator_records.py` converts the answered ones
+to kept answers once.
 This is computed when listing; nothing is written and no item changes state.
 It computes no statistics; `--note`, `--class` and `--json` narrow and
 format the listing.

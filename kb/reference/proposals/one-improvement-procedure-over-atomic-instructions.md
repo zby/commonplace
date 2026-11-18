@@ -42,8 +42,8 @@ An [answers](../../types/answers.md) file holds one item per decision,
 hash; the validator checks it against the question. Two stop instructions
 serve a session agent with the operator: [decide items](../../instructions/decide-items.md)
 for a list of proposals and [approve a text](../../instructions/approve-a-text.md)
-for publication. The per-item edit operations and both workflows' publication
-read answers; the strike-list format is gone. The full pass's hand-back
+for publication. The per-item edit operations read answers; the
+strike-list format is gone. The full pass's hand-back
 disposition stays on its packet route. The composition design remains
 unadopted.
 
@@ -55,6 +55,18 @@ plan is made. The full-pass workflow and the fix procedure are retired.
 Not adopted from the design below: procedure variants as typed instruction
 files, and the run as a typed directory the validator checks. The table
 below describes the three procedures before that change.
+
+**Adopted:** a run ends at its first stop and leaves what it could not
+finish to a later session, under
+[ADR 138](../adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md).
+A revise run publishes what needs no decision, then ends with a
+continuation record. A later command that names the operator's answers
+file, or the run holding a candidate, is the approval: no answers file
+precedes publication, no approval is bound by a key, and no run is resumed.
+Step 3 of the default composition below and its three endings therefore
+match shipped behaviour in run-record form, and the closing statement of
+what the design gives up no longer marks a difference from the shipped
+system for approval and resumption.
 
 The three procedures, as the operator meets them:
 
@@ -80,7 +92,7 @@ The atomic instructions, where they live and who uses them:
 | Edit | fix strategies, keyed to finding kinds, as one typed edit operation | [fix strategy taxonomy](../../instructions/fix-warnings/fix-strategy-taxonomy.md) | fix procedure, `run edit` |
 | Edit | packet body edits and copyedit under `keep` | run a full improvement pass (retired by ADR 135) | full pass |
 | Stop | decide items: the operator's answer per proposal, in an answers file | [decide items](../../instructions/decide-items.md) | revise workflow, `run edit` |
-| Stop | approve a text: exact publication approval, in an answers file | [approve a text](../../instructions/approve-a-text.md) | both workflow commands |
+| Stop | approve a text: the operator's word on a held candidate, given by `commonplace-review publish RUN` | [approve a text](../../instructions/approve-a-text.md) | both workflow commands |
 | Stop | hand-back disposition with a packet | resolve a full-pass disposition (retired by ADR 135) | full pass |
 | Stop | `deferred` item | fix review warnings (retired by ADR 135) | fix procedure |
 
