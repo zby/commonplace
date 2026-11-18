@@ -521,7 +521,10 @@ proposals, what the earlier passes applied, and when the run ends, what the
 passes applied since. It writes only a text that differs from the artifact,
 only while the artifact holds the text the run last knew, its start text or
 the text it last published, and only while the captured brief is unchanged;
-otherwise the run ends with a conflict and writes nothing. Each publication
+otherwise the run ends with a conflict and writes nothing. The check and the
+write hold the artifact's publication lock under
+`kb/reports/state/review/publication-locks/`, shared by every revise and
+rewrite run and `publish`. Each publication
 keeps the text as `artifact/publications/<n>.md` and its diff from the text
 before it as `artifact/publications/<n>.diff`, and records the hash, the plan
 entries it covers, the time and who decided it in the run's
@@ -544,7 +547,10 @@ answers files it waits for) and `evidence`. The kinds are `failure`,
 `findings`, `plan-stop`, `held-candidate`, `proposals`, `claim-questions`,
 `direct-entry`, `per-item-entry`, `fix-entry`, `interactive-entry` and
 `stale-reviews`; the [review-system guide](./README-REVIEW-SYSTEM.md#revise-runs-and-the-continuation-record)
-says when each is left. The run keeps its report as `report.json`. It exits
+says when each is left. A plan entry not run is continued by `--plan` on a
+one-entry plan the run wrote under `artifact/continue/`, which keeps the
+entry's scope, or by `--answers FILE` when it applies the operator's
+answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`. It exits
 0 when it ends with a clean guard, complete or with work to continue, 1 for
 a failed pass or review, a conflict or a guard change, and 2 for a command
 error, including an invalid plan or refused answers.

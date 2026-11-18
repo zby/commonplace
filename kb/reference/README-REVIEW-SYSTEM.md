@@ -674,6 +674,14 @@ handles it, `command` where a command proceeds, `record` where the
 recording command applies and `revised` for a held candidate; `answers`, the
 answers files it waits for; and `evidence`, the files it rests on.
 
+A plan entry not run is continued by `run revise NOTE --plan FILE`, where
+FILE is a one-entry plan the run wrote under `artifact/continue/<id>.yaml`
+with the entry's pass, scope and finding and the plan's purpose and
+must-keep list; an entry that applies the operator's answers is continued
+by `--answers FILE` instead. A fix entry names the run's copy of its review
+result, `artifact/findings/<criterion id>.md`, so a later sweep that
+replaces the stored result does not change what the fix reads.
+
 | `kind` | Left when |
 |---|---|
 | `failure` | a worker, review or publication failed, or the note changed during the run |
@@ -686,7 +694,7 @@ answers files it waits for; and `evidence`, the files it rests on.
 | `fix-entry` | a plan entry that fixes a finding was not run |
 | `interactive-entry` | `narrow-overclaims` without evidence, or `split-out-a-treatment`, was skipped |
 | `claim-questions` | the assessment lists claim questions for the operator |
-| `stale-reviews` | the run published and the note has stored review results; nothing schedules them |
+| `stale-reviews` | the run published and some stored review results of the note are stale; `what` counts them; nothing schedules them |
 
 When the report carries a continuation record, a session agent continues
 with the operator by [continue a revise pass](../instructions/continue-a-revise-pass.md).
@@ -727,7 +735,11 @@ publish twice:
 It publishes only a text that differs from the note. It writes the note only
 while the note holds the text the run last knew, its start text or the text
 it last published, and only while the captured brief is unchanged.
-Otherwise the run ends with a conflict and nothing is written. A plan `stop`,
+Otherwise the run ends with a conflict and nothing is written. The check
+and the write happen under the note's publication lock,
+`kb/reports/state/review/publication-locks/<note path without .md>/`,
+which every revise and rewrite run and `publish` share, so two runs on one
+note cannot both publish over the same text. A plan `stop`,
 the depth 1 stop of the full procedure and a triage publish nothing.
 
 Each publication is recorded in the run's `published.json`: the published
