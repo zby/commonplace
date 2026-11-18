@@ -30,6 +30,18 @@ work without making the result immune to criticism. Under the
 [epistemic stance](../epistemic-stance.md), closure is relative to a purpose;
 new evidence, criticism or circumstances may make renewed attention useful.
 
+## Possible for whom?
+
+“Possible further work” means work that some available actor or combination of
+actors can reasonably undertake with the available context, tools and
+resources. Work that requires a future model is an extrapolation; that
+dependency must be explicit.
+
+Actors include human operators, LLM-based agents and, in future, decision
+models. Feasibility claims need to identify the relevant actor and conditions.
+For LLM-based work, this means the configured agent: model and version,
+reasoning effort, prompts, context and tools—not just the model name.
+
 ## Exclusions
 
 - Not just the boundary of problems beyond current agent capability: easy
@@ -45,6 +57,8 @@ new evidence, criticism or circumstances may make renewed attention useful.
 
 - Excluding a useful pending review merely because its procedure is routine.
 - Requiring a new ledger entry before work can be discovered or proposed.
+- Treating work beyond one agent's capabilities as beyond every actor's
+  capabilities, or treating a model name alone as a sufficient capability claim.
 - Treating an old question as current without checking its source and later work.
 - Treating an item's removal as proof of final truth, or its retention as a
   requirement to work on it now.
