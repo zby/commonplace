@@ -1377,7 +1377,8 @@ REVIEW_FILES = {
 
 
 REVIEWS = {"review residue,warned", "review packing", "review detail-overhang", "review critique-note",
-           "review composition-friction-gate", "review premise-decomposition-gate"}
+           "review composition-friction-gate", "review premise-decomposition-gate", "review note",
+           "review COLLECTION"}
 SYNTHESIS = "review high-impact-simplification-synthesis"
 ROLE = "review role-in-the-kb-gate"
 
@@ -1401,9 +1402,9 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     original = start(repo, "PLAIN")                         # the plan ends at plain-wording
     code, report, launches = revise(repo, capsys, NOTE_PATH, "--full", "--purpose", "p")
     assert code == 0 and report["mode"] == "full" and report["published"] and note_text(repo) != original
-    assert set(launches[:6]) == REVIEWS and launches[6:8] == [SYNTHESIS, ROLE]
-    assert launches[8:] == ["assess - big", ORDINARY[0], "list plain-wording small"]
-    assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 7}, {"reviewed": 1}, {"reviewed": 1}]
+    assert set(launches[:8]) == REVIEWS and launches[8:10] == [SYNTHESIS, ROLE]
+    assert launches[10:] == ["assess - big", ORDINARY[0], "list plain-wording small"]
+    assert [sweep["counts"] for sweep in report["reviews"]] == [{"reviewed": 9}, {"reviewed": 1}, {"reviewed": 1}]
     store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH
     role = repo[0] / report["reviews"][2]["run-dir"]
     assert role.name == "role" and not (store / "kb/instructions/role-in-the-kb-gate.md").exists()
@@ -1412,7 +1413,8 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     bundle = store / "kb/instructions/compression-bundle"
     assert (store / "prose/warned.md").is_file() and (bundle / "detail-overhang.md").is_file()
     assert not (bundle / "high-impact-simplification-synthesis.md").exists(), "the synthesis publishes no result"
-    assert not (store / "kb/types").exists(), "the type lens declares no depth"
+    assert (store / "kb/types/note.md").is_file() and (store / "kb/notes/COLLECTION.md").is_file(), \
+        "the type and collection reviews run though their criteria declare no depth"
     [call] = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"]
     assert call["inputs"]["finding-1"] == (store / "prose/warned.md").read_text()
     assert "finding-2" not in call["inputs"]
@@ -1439,8 +1441,8 @@ def test_full_reuses_fresh_review_results(reviewed, capsys):
     capsys.readouterr()
     _, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
     assert sorted(repo[2].read_text().splitlines()[:2]) == ["review residue", "review warned"]
-    assert set(launches[:5]) == REVIEWS - {"review residue,warned"} and launches[5:7] == [SYNTHESIS, ROLE]
-    assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 5}
+    assert set(launches[:7]) == REVIEWS - {"review residue,warned"} and launches[7:9] == [SYNTHESIS, ROLE]
+    assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 7}
 
 
 def gates_run(repo, capsys, *args):

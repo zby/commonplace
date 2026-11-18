@@ -49,7 +49,8 @@ command acts on a stop's output by naming the file or the run:
    takes the depth of the result's criterion. `one_entry_plan()` writes the
    plan of `--pass NAME` and `--finding RESULT`. With a `review` profile
    (`--full`), the assessment is preceded by the review step: every review
-   operation that declares `depth` (`review_pairs()`) runs through
+   operation with a depth (`review_pairs()`), the type and collection
+   reviews among them, runs through
    `gates.sweep()` in `reviews/` under the run directory, publishing results
    and reusing fresh ones. Then each review operation that judges
    operational inputs (`criteria.SUPPLIED`) runs alone in its own run and
@@ -273,11 +274,29 @@ class Finding:
     text: str
 
 
+CONTRACT_DEPTH = 2
+"""The depth of the type and collection reviews.
+
+A type spec and a collection contract are not review files and declare no
+`depth`, so the full procedure names it here. Both say what the artifact
+must be, which is the concern of depth 2. A best-effort value, as the
+declared depths are.
+"""
+TYPE_SPEC = "types/type-spec.md"
+
+
 def criterion_depth(root: Path, criterion: str) -> int | None:
-    """The `depth` the criterion file declares; None when it declares none."""
-    data = frontmatter.parse(results.criterion_file(root, criterion).read_text(encoding="utf-8")).data
+    """The criterion's depth: the `depth` its file declares, or `CONTRACT_DEPTH` for a type spec or contract.
+
+    A collection contract is a file named `COLLECTION.md`; a type spec
+    declares the type `TYPE_SPEC`. None for any other file without `depth`.
+    """
+    path = results.criterion_file(root, criterion)
+    data = frontmatter.parse(path.read_text(encoding="utf-8")).data
     depth = data.get("depth")
-    return depth if isinstance(depth, int) and not isinstance(depth, bool) else None
+    if isinstance(depth, int) and not isinstance(depth, bool):
+        return depth
+    return CONTRACT_DEPTH if path.name == "COLLECTION.md" or data.get("type") == TYPE_SPEC else None
 
 
 def read_finding(root: Path, artifact: str, raw: str) -> Finding:
@@ -846,7 +865,10 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
 # --- The review step of the full procedure ----------------------------------------------------
 
 def review_pairs(root: Path, artifact: str, text: str) -> tuple[list[gates.Pair], list[gates.Pair]]:
-    """The review operations that declare `depth` and apply to `text`, and apart those of `criteria.SUPPLIED`.
+    """The review operations with a depth that apply to `text`, and apart those of `criteria.SUPPLIED`.
+
+    An operation has a depth when its criterion file declares one, or when
+    it is the type or the collection review (`criterion_depth()`).
 
     The second list holds the compression synthesis, only when a compression
     check applies, since it takes the checks' results as inputs, and the role
@@ -905,7 +927,7 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
 
 def _review(root: Path, artifact: str, text: str, run_dir: Path, profile: Profile, timeout: float | None,
             harnesses, report: ReviseReport) -> list[Finding]:
-    """Run every review operation that declares `depth` on `text`, writing results as the sweep does.
+    """Run every review operation with a depth (`review_pairs()`) on `text`, writing results as the sweep does.
 
     Then runs each criterion of `criteria.SUPPLIED` alone, in its own run,
     on its operational inputs, and returns those reports, which are not in

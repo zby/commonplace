@@ -191,7 +191,7 @@ kinds, so a finding and the edit that answers it sit at the same depth.
 | Depth | Concern | Review operations | Edit operations |
 |---:|---|---|---|
 | 1 | whether the note's claim and scope should stand | critique, composition friction, premise decomposition, the role report | split out a treatment |
-| 2 | what the note asserts and on what grounds | the semantic bundle, `frontmatter/claim-strength`, `prose/source-residue` | narrow overclaims |
+| 2 | what the note asserts and on what grounds | the semantic bundle, `frontmatter/claim-strength`, `prose/source-residue`, the type and collection reviews | narrow overclaims |
 | 3 | terms and what a reader needs to know | the accessibility bundle, `prose/unbridged-cross-domain` | abstractions |
 | 4 | structure and proportion | the complexity bundle, the compression checks and their synthesis, three prose gates, `structural/general-before-specific` | readability and flow |
 | 5 | wording | the sentence bundle, two prose gates, two structural gates | plain wording |
@@ -490,7 +490,7 @@ A new run requires one choice.
 | focused | `--pass NAME`, `--finding RESULT`, `--plan FILE`, `--answers FILE` | the operator | none |
 | triage | `--triage` | the operator, by deciding each finding of the fresh stored `warn` and `fail` results | none |
 | quick | `--assess` | one assessor, from the artifact and its fresh stored `warn` and `fail` results | none |
-| full | `--full` | one assessor, from the artifact, the new findings, the depth 1 reports and the role report | every review operation that declares a `depth` |
+| full | `--full` | one assessor, from the artifact, the new findings, the depth 1 reports and the role report | every review operation that declares a `depth`, and the type and collection reviews |
 
 **Focused.** `--pass NAME` writes a one-entry plan for one edit operation on
 the whole artifact. `--finding RESULT` writes a one-entry plan that runs
@@ -574,7 +574,9 @@ item. A plan with a field other than `purpose`, `must-keep`, `passes` and
 `stop` is refused.
 
 **Full.** `--full` first runs every review operation that declares a `depth`
-on the artifact, through the sweep's route. Fresh results are reused, new
+on the artifact, and the type and collection reviews, through the sweep's
+route. A type spec and a collection contract declare no depth; the
+procedure treats their reviews as depth 2. Fresh results are reused, new
 results go to the shared store. Then the compression synthesis runs on the
 checks' results, and the role report on the artifact's inbound contexts,
 each alone and without publishing a result. The assessor then also reads the

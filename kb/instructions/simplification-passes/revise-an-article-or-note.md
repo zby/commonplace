@@ -220,7 +220,7 @@ no assessment either: it ends with one answers file per fresh `warn` or
 files with `--answers` fixes the approved findings only, one entry per
 result with an approved finding. The full procedure, `--full`,
 first runs every review operation that declares a `depth` on the artifact,
-through the same route as `commonplace-review run gates`. Its results go to
+and the type and collection reviews, through the same route as `commonplace-review run gates`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
 then runs on the compression checks' results, and the role report on the
 artifact's inbound contexts; neither publishes a result. The assessment

@@ -87,7 +87,8 @@ one-entry plan that fixes that review result of the artifact). `--assess`,
 only what this run keeps beyond the note's write brief, whose Must keep every
 worker already receives. The assessor also receives the artifact's fresh
 stored `warn` and `fail` review results. `--full` first runs every review
-operation that declares a `depth` on the artifact, as `run gates` would on
+operation that declares a `depth` on the artifact, and the type and
+collection reviews, as `run gates` would on
 the profile file's `default` profile, in runs under the revise run
 directory; then the assessor also receives the depth 1 reports, the
 compression synthesis report and the role report, and may stop the plan on a
@@ -305,7 +306,7 @@ def _parser() -> argparse.ArgumentParser:
     mode.add_argument("--triage", action="store_true", help="write a pending answers file over each fresh warn "
                       "or fail review result and end; no review and no assessor")
     mode.add_argument("--full", action="store_true", help="run every review operation that declares a depth, "
-                      "then assess with the findings")
+                      "and the type and collection reviews, then assess with the findings")
     for effort in edit_operations.EFFORTS:
         rev.add_argument(f"--profile-{effort}", help=f"profile for {effort} passes (default: the profile file's "
                          f"`effort` mapping)")

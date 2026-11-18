@@ -483,8 +483,8 @@ commissions [assessment and pass selection](../instructions/simplification-passe
 The assessor also receives the artifact's fresh stored review results with
 outcome `warn` or `fail`; no review is launched.
 `run revise ARTIFACT --full [--purpose TEXT] [--must-keep CLAIM ...]` first runs
-every review operation that declares a `depth` on the artifact, with bundle
-grouping, on the profile file's `default` profile. Fresh results are reused;
+every review operation that declares a `depth` on the artifact, and the type
+and collection reviews, with bundle grouping, on the profile file's `default` profile. Fresh results are reused;
 new results go to the shared store. The compression synthesis runs on the
 compression checks' results, and the role report on the artifact's inbound
 contexts; neither publishes a result. The review runs live under the revise
