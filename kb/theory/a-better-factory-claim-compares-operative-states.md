@@ -9,9 +9,9 @@ tags: [learning-theory, self-improving-systems, software-factory, evaluation]
 
 > TODO! remove or update to use software house instead of software factory
 
-A [software factory](./definitions/software-factory.md) undergoes experience-responsive retention when production experience causes a retained change to its reusable machinery that later work depends on, and [learns when such retention improves it](./factory-learning-is-experience-responsive-retention-that-improves.md). Retention has no quality requirement: a retained change can degrade the factory as easily as improve it. Whether it got *better* is therefore its own claim with different relata and its own declarations. The claim compares two operative states of the factory under an assessment relation fixed before the development it judges. Throughout, *better* means better under the declared relation: the claim is relation-relative and auditable, not a verdict on the factory's quality over its open production family.
+A claim that a revised factory got better compares the previous state with the adopted successor under requirements fixed before development. Passing establishes improvement under those requirements, not overall superiority across every product and task the factory may face.
 
-The comparison names the predecessor and adopted successor, the requirements under which the successor counts as better, and how those requirements apply to the predecessor's prior capabilities.
+A [software factory](./definitions/software-factory.md) is a production environment configured with reusable knowledge for building one declared family of software products. The comparison names its predecessor and adopted successor, the capabilities the successor must preserve, and the gain it must achieve.
 
 ## The relata are operative states, not the change that produced them
 
@@ -21,39 +21,40 @@ Three terms keep the comparison's endpoints straight.
 - A **candidate** is a constructed or proposed factory that has not yet been installed. It is not a term in the comparison.
 - The **operative successor** is the state that is installed and that later production and factory development depend on — [operative in the behavioral-authority sense](./definitions/operative-change.md), not merely stored.
 
-A candidate that is generated and discarded never enters the comparison, so a better-factory claim cannot be read off a construction event. A staging comparison can supply evidence for adopting a candidate; the improvement claim concerns the state actually installed and used. In a continuously revised system, the successor can instead be the operative state at a named measurement boundary, after one change or a period of development.
+A candidate that is generated and discarded never enters the comparison, so a better-factory claim cannot be read off a construction event. A staging comparison can supply evidence for adopting a candidate, but the improvement claim concerns the state actually installed and used. In a continuously revised system, the successor can instead be the operative state at a named measurement boundary, after one change or a period of development.
 
 ## The assessment relation is antecedent and scope-indexed
 
 The relation has two components. The successor must meet **non-regression thresholds** on the predecessor's prior scope, and must **improve on the predecessor by a declared amount** on at least one named production dimension.
 
-Both are declared while only the predecessor exists. This framework adds prior declaration of the comparison requirements to the linked requirement that [an improvement objective be independently specifiable](./self-improvement-is-relative-to-a-declared-objective.md). Independent specifiability blocks objectives fitted to the result; prior declaration also makes the comparison requirements available for inspection before development. Choosing dimensions and thresholds after seeing the result permits selection of requirements the successor happens to satisfy. Prior declaration prevents that form of post-hoc selection. It does not show that the requirements track factory quality.
+Both are declared while only the predecessor exists. This framework adds prior declaration of the comparison requirements to the requirement that [an improvement objective be independently specifiable](./self-improvement-is-relative-to-a-declared-objective.md). Independent specifiability blocks objectives fitted to the result. Prior declaration also makes the comparison requirements available for inspection before development. Choosing dimensions and thresholds after seeing the result permits selection of requirements the successor happens to satisfy. Prior declaration prevents that form of post-hoc selection. It does not show that the requirements track factory quality: a comparison can be properly declared in advance and still measure something that does not matter.
 
-Non-regression needs a declared scope: the capabilities the successor must preserve, with thresholds specifying how much degradation is permitted. This framework uses the predecessor's prior capabilities as that scope. Naming it makes explicit which losses would cause the comparison to fail.
+Non-regression needs a declared scope: the capabilities the successor must preserve, with thresholds specifying how much degradation is permitted. This framework uses the predecessor's prior capabilities as that scope. Naming the scope makes explicit which losses would cause the comparison to fail.
 
-The compared states span the whole production environment. Because [the deployed system rather than the model alone is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md), the successor may improve through changes to any operative part of its machinery — prompts, natural-language artifacts, code, tools, workflows, tests, evaluators — and holding model weights fixed does not put the comparison out of reach.
+The compared states span the whole production environment. Because [the deployed system rather than the model alone is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md), the successor may improve through changes to any operative part of its machinery — prompts, natural-language artifacts, code, tools, workflows, tests, evaluators. Holding model weights fixed therefore does not put the comparison out of reach.
 
 If the checked prior scope includes an operative path for [factory development](./definitions/factory-development.md), non-regression requires the successor to preserve that capability: a production gain alone does not show that the system can still produce another revision. The requirement concerns a [revision path that remains applicable after the transition](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md), not merely editable files.
 
 ## Improvement, retention and learning are different claims
 
-Retaining a change does not establish improvement, and establishing improvement does not show that production experience caused it. Consider three hypothetical changes to the search machinery a factory uses to retrieve reusable production knowledge:
+Experience-responsive retention occurs when production experience causes a retained change to reusable machinery and later work depends on that change. The factory [learns when such retention improves it](./factory-learning-is-experience-responsive-retention-that-improves.md). Retaining a change does not establish improvement, and establishing improvement does not show that production experience caused it.
+
+Consider three hypothetical changes to the search machinery a factory uses to retrieve reusable production knowledge:
 
 - **Retention without improvement.** After missing a relevant note, the factory retains an instruction to search by synonyms. Later production uses it, but the extra searches do not improve retrieval and waste time. Experience caused a retained change, but the change did not help.
 - **Improvement without learning.** A scheduled search-tool upgrade, selected independently of the factory's production experience, improves retrieval and passes the declared comparison. The factory improved, but not through learning from its production experience.
 - **Learning.** A missed note leads to the retained synonym-search instruction, and using that instruction improves retrieval under the declared comparison. This is learning when the experience-derived change causally contributes to the improvement.
 
-The third case requires evidence of that contribution, not just the sequence of a failure, a retained instruction and better results. Comparing otherwise equivalent runs with and without the retained instruction tests its contribution, because [an experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+The third case requires evidence of that contribution, not just the sequence of a failure, a retained instruction and better results. Comparing otherwise equivalent runs with and without the retained instruction tests its contribution, because [an experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md). The declared comparison judges improvement; the experience-to-change link distinguishes learning.
 
-The declared comparison judges improvement; the experience-to-change link distinguishes learning. A change that improves the factory against another objective need not pass this comparison. Internal controls on what the factory retains govern adoption, but do not by themselves establish that the adopted state passes the declared comparison.
+The comparison is also separate from other judgments of the factory. A change that improves the factory against another objective need not pass this comparison. Internal controls on what the factory retains govern adoption, but do not by themselves establish that the adopted state passes the declared comparison.
 
 ## Scope
 
-- The framework indexes and disciplines the comparison; it does not supply an oracle for it. What makes a successor genuinely better over an open family remains unresolved here.
-- Antecedence blocks post-hoc dimension selection. It does not make the declared dimensions the right ones: a comparison can be properly declared in advance and still measure something that does not matter.
-- Antecedence guards this claim's auditability; it is not constitutive of improvement. An independently supplied retrospective criterion can ground a legitimate improvement claim, just not this audit-proof one.
-- The two-component relation — non-regression plus a named target — is the shape this framework declares, not the only declarable one. A relation permitting retirement of obsolete or unsafe prior capability can be declared; the preserved-path consequence then no longer follows.
-- A comparison judges the adopted states. Whether an evaluator also controlled adoption is a separate causal question; a description cannot change whether its judgment was required for installation.
+- The framework indexes and disciplines the comparison. It does not supply an oracle for it. What makes a successor genuinely better over an open family remains unresolved here.
+- Antecedence guards this claim's auditability; it is not constitutive of improvement. An independently supplied retrospective criterion can ground a legitimate improvement claim, just not this antecedently declared, auditable one.
+- The two-component relation — non-regression plus a named target — is the shape this framework declares, not the only declarable one. A relation permitting retirement of obsolete or unsafe prior capability can be declared, and the preserved-path consequence then no longer follows.
+- A comparison judges the adopted states. Whether an evaluator also controlled adoption is a separate causal question. A description cannot change whether the evaluator's judgment was required for installation.
 - Operative states and an antecedent scope-indexed relation can be used for other systems that revise their reusable machinery. Preserving factory development follows only when that capability is included in the checked scope.
 
 ## Open Questions
