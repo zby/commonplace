@@ -13,7 +13,9 @@ import uuid
 from dataclasses import asdict
 from pathlib import Path
 
-from commonplace.headless.jobs import recorded_calls
+from workjig import read_run
+
+from commonplace.headless.jobs import CALLS, recorded_calls
 from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows import result_contract
 
@@ -237,12 +239,14 @@ def begin(run, root: Path, pair, note: str, criterion: str, contracts: dict[str,
 
 def refresh(run, directory: Path, data: dict, *, state: str) -> None:
     data["state"] = state
-    index = json.loads((run.root / "calls/run.json").read_text()) if (run.root / "calls/run.json").exists() else {"calls": {}}
+    calls = recorded_calls(run.root)
+    view = read_run(run.root / CALLS)      # read second: it holds at least every call listed above
+    recorded = {(call.call_id, call.request_hash): call for call in view.calls} if view is not None else {}
     data["calls"] = []
-    for call in recorded_calls(run.root):
+    for call in calls:
         if call["job"] != data["request"]["call-job"]:
             continue
-        given = index["calls"][call["call"]][call["key"]]["request"]["inputs"]
+        given = recorded[call["call"], call["key"]].inputs
         if {name: sha(value.encode()) for name, value in given.items()} == data["request"]["call-inputs"]:
             data["calls"].append(call)
     keys = {call["key"] for call in data["calls"]}
@@ -257,8 +261,8 @@ def refresh(run, directory: Path, data: dict, *, state: str) -> None:
     data["diagnostics"] = events
     data["launch-evidence"] = []
     for call in data["calls"]:
-        for launch in call["launches"]:
-            path = run.root / "calls/launches" / launch / "stdout.log"
+        for record in recorded[call["call"], call["key"]].launches:
+            launch, path = record.launch_id, view.launch_files(record).stdout
             if not path.exists():
                 continue
             for line in path.read_text(errors="replace").splitlines():
@@ -267,7 +271,7 @@ def refresh(run, directory: Path, data: dict, *, state: str) -> None:
                 except ValueError:
                     continue
                 if isinstance(event, dict) and event.get("type") == "system" and event.get("subtype") == "init":
-                    data["launch-evidence"].append({"launch": launch, "source": str(path.relative_to(run.root)),
+                    data["launch-evidence"].append({"launch": launch, "source": path.relative_to(view.record_dir.parent).as_posix(),
                         "tools": event.get("tools"), "model": event.get("model"),
                         "mcp": [{key: server.get(key) for key in ("name", "status")}
                                 for server in event.get("mcp_servers", []) if isinstance(server, dict)]})

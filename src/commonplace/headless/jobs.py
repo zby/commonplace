@@ -392,26 +392,24 @@ def _dismissed(root: Path) -> set[str]:
 def recorded_calls(root: Path) -> list[dict]:
     """The run's Workjig calls as `job`, `call`, `key`, `status`, `launches`, `problem`, `dismissed`.
 
-    `status` and `problem` are the latest launch's. Reads only; Workjig
-    replaces its record atomically, so a running controller does not tear it.
+    `status` is the call's and `problem` the latest launch's. Reads only,
+    through Workjig's lock-free view, so it works beside a running controller;
+    a record Workjig rejects raises `workjig.RecordError`.
     """
-    path = Path(root) / CALLS / "run.json"
-    if not path.is_file():
+    view = workjig.read_run(Path(root) / CALLS)
+    if view is None:
         return []
     dismissed = _dismissed(root)
     calls = []
-    for call_id, versions in json.loads(path.read_text(encoding="utf-8"))["calls"].items():
-        for key, entry in versions.items():
-            if not entry["attempts"]:
-                continue
-            last = entry["attempts"][-1]
-            status = "delivered" if entry["result"] is not None else last["status"]
-            calls.append({"job": call_id.partition("#")[0], "call": call_id, "key": key, "status": status,
-                          "launches": [attempt["launch_id"] for attempt in entry["attempts"]],
-                          "problem": last["problem"]["message"] if status == "worker_problem" else None,
-                          "dismissed": last["launch_id"] in dismissed,
-                          "unsettled": [attempt["launch_id"] for attempt in entry["attempts"]
-                                        if attempt["status"] in ("reserved", "running")]})
+    for call in view.calls:
+        last = call.launches[-1]
+        calls.append({"job": call.call_id.partition("#")[0], "call": call.call_id, "key": call.request_hash,
+                      "status": call.status.value,
+                      "launches": [launch.launch_id for launch in call.launches],
+                      "problem": last.problem["message"] if call.status == "worker_problem" else None,
+                      "dismissed": last.launch_id in dismissed,
+                      "unsettled": [launch.launch_id for launch in call.launches
+                                    if launch.status in ("reserved", "running")]})
     return calls
 
 

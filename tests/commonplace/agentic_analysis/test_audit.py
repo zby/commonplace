@@ -1,11 +1,21 @@
 """Advisory capture is all-attempt, replayable and independent of acceptance."""
 
 import json
+import shutil
 import sys
 from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+from workjig import CommandWorker, LaunchRecord, Request, RetryPolicy, read_run
+from workjig.records import (
+    CallEntry,
+    Delivery,
+    RunState,
+    load_state,
+    material_hash,
+    request_material,
+)
 
 from commonplace.headless.harness import HARNESSES, Harness, Profile
 from commonplace.lib.agentic_analysis import audit as module
@@ -28,18 +38,31 @@ def trace(path, failed=True):
 
 
 def add_call(run_dir, job, statuses, *, harness="pi", protocol="pi-json"):
+    """Record one call with a launch per status, built from Workjig's record types.
+
+    No worker runs. Workjig serializes the record, so it is one `read_run` accepts.
+    """
     path = run_dir / "calls/run.json"
-    data = json.loads(path.read_text()) if path.exists() else {"calls": {}}
-    attempts = []
+    state = load_state(path) or RunState(workdir=str(run_dir))
+    request = Request(job, "Original assignment", {}, ("report.md",),
+                      CommandWorker(("worker",), name=harness, output_protocol=protocol))
+    retry = RetryPolicy(tuple(dict.fromkeys(status for status in statuses if status != "delivered")))
+    launches = []
     for index, status in enumerate(statuses):
         directory = run_dir / "calls/launches" / f"{job}-{index}"
         directory.mkdir(parents=True)
         trace(directory / "stdout.log")
         (directory / "prompt.txt").write_text("Original assignment")
-        attempts.append({"launch_dir": str(directory), "launch_id": directory.name, "status": status})
-    data["calls"][job] = {"key": {"request": {"worker": {"name": harness, "output_protocol": protocol}},
-                                  "attempts": attempts}}
-    write_json(path, data)
+        launches.append(LaunchRecord(directory.name, status, str(directory), ("worker",), pid=1,
+                                     returncode=0 if status == "delivered" else 1,
+                                     started_at="2026-01-01T00:00:00+00:00", finished_at="2026-01-01T00:00:01+00:00",
+                                     max_launches=len(statuses), retry=retry))
+    outputs = {"report.md": "Report"}
+    delivery = (Delivery(outputs, launches[-1].launch_id, material_hash(outputs))
+                if statuses[-1] == "delivered" else None)
+    key = material_hash(request_material(request))
+    state.calls[job] = {key: CallEntry(request, key, launches, delivery)}
+    write_json(path, state.to_json())
 
 
 @pytest.fixture
@@ -116,12 +139,8 @@ def test_collect_scans_claude_code_stream_by_protocol(analysis):
 
 
 def test_all_unscanned_attempts_report_no_failure_count(analysis, monkeypatch):
-    path = analysis.run_dir / "calls/run.json"
-    data = json.loads(path.read_text())
-    for versions in data["calls"].values():
-        for entry in versions.values():
-            entry["request"]["worker"] = {"name": "codex", "output_protocol": "codex-json"}
-    write_json(path, data)
+    shutil.rmtree(analysis.run_dir / "calls")
+    add_call(analysis.run_dir, "runtime", ["process_error", "delivered"], harness="codex", protocol="codex-json")
     analysis.run.profile.harness = "codex"
     monkeypatch.setattr(module, "launch", lambda *args: pytest.fail("must not launch"))
     coverage = module.audit(analysis, completed=True)["trace-scan"]
@@ -249,10 +268,9 @@ def test_launch_strips_profile_flags_and_passes_exact_prompt(tmp_path):
     event = json.loads((tmp_path / "stdout.log").read_text())
     argv = event["argv"]
     assert "Exact commissioned task" in event["frame"]
-    records = json.loads((tmp_path / "calls/run.json").read_text())
-    attempts = next(iter(records["calls"]["advisory-audit"].values()))["attempts"]
-    assert len(attempts) == 1
-    assert attempts[0]["status"] == "delivered"
+    [call] = read_run(tmp_path / "calls").calls
+    assert call.call_id == "advisory-audit"
+    assert [launch.status for launch in call.launches] == ["delivered"]
     assert "--no-context-files" in argv and "--no-session" in argv
     assert "--no-extensions" in argv and "--no-skills" in argv and "--no-mcp" in argv
     assert argv[argv.index("--system-prompt") + 1] == module.SYSTEM_PROMPT

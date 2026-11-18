@@ -16,7 +16,7 @@ from dataclasses import dataclass, replace
 from hashlib import file_digest, sha256
 from pathlib import Path
 
-from workjig import Request, Run
+from workjig import Request, Run, read_run
 from workjig.adapters import parse_evidence
 
 from commonplace.headless.harness import Profile
@@ -74,36 +74,32 @@ def collect(run_dir: Path) -> tuple[list[dict], dict]:
     """
     run_dir = run_dir.resolve()
     inventory, traces, issues = [], [], []
-    path = run_dir / "calls/run.json"
-    if not path.is_file():
+    view = read_run(run_dir / "calls")
+    if view is None:
         issues.append("missing calls/run.json; no attempts could be enumerated")
-        calls = {}
-    else:
-        calls = json.loads(path.read_text(encoding="utf-8"))["calls"]
-    for job, versions in calls.items():
-        for key, entry in versions.items():
-            worker = entry["request"]["worker"]
-            for attempt in entry["attempts"]:
-                directory = Path(attempt["launch_dir"]).resolve()
-                stdout, prompt = directory / "stdout.log", directory / "prompt.txt"
-                owned = all(path.resolve().is_relative_to(run_dir / "calls/launches")
-                            for path in (directory, stdout, prompt))
-                scanner = SCANNERS.get(worker.get("output_protocol"))
-                supported = scanner is not None
-                item = {"job": job, "key": key, "launch_id": attempt["launch_id"],
-                        "status": attempt["status"], "harness": worker.get("name"),
-                        "stdout": str(stdout), "prompt": str(prompt),
-                        "scan_status": "scanned" if supported and owned else "unscanned",
-                        "reason": None if supported and owned else (
-                            "unsupported harness/protocol" if not supported else "trace outside run launch tree")}
-                if owned:
-                    item["stdout_sha256"], item["prompt_sha256"] = file_hash(stdout), file_hash(prompt)
-                if supported and owned:
-                    report = scanner(stdout)
-                    traces.append(report)
-                    if report["input_issues"]:
-                        item["scan_status"] = "partial"
-                inventory.append(item)
+    for call in view.calls if view is not None else ():
+        for launch in call.launches:
+            files = view.launch_files(launch)      # under this run's launch tree, wherever the record says
+            stdout, prompt = files.stdout, files.prompt
+            # A symlinked launch directory or file can still lead outside the tree.
+            owned = all(path.resolve().is_relative_to(run_dir / "calls/launches")
+                        for path in (stdout.parent, stdout, prompt))
+            scanner = SCANNERS.get(call.worker.output_protocol)
+            supported = scanner is not None
+            item = {"job": call.call_id, "key": call.request_hash, "launch_id": launch.launch_id,
+                    "status": launch.status.value, "harness": call.worker.name,
+                    "stdout": str(stdout), "prompt": str(prompt),
+                    "scan_status": "scanned" if supported and owned else "unscanned",
+                    "reason": None if supported and owned else (
+                        "unsupported harness/protocol" if not supported else "trace outside run launch tree")}
+            if owned:
+                item["stdout_sha256"], item["prompt_sha256"] = file_hash(stdout), file_hash(prompt)
+            if supported and owned:
+                report = scanner(stdout)
+                traces.append(report)
+                if report["input_issues"]:
+                    item["scan_status"] = "partial"
+            inventory.append(item)
     return inventory, scan_report(
         traces,
         scope="manifest attempts; supported worker streams only; recovery not assessed; "
