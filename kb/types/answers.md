@@ -7,7 +7,7 @@ schema: ./answers.schema.yaml
 
 # Answers
 
-An answers file records what the operator decided at one stop. A stop is a point where a procedure waits for the operator. The file holds one item per decision and names the question it answers by path and SHA-256. Use it for every operator decision over a list of proposals and for every approval of an exact text. Use [`edit-result`](./edit-result.md) for what an operation proposed; an answers file proposes nothing.
+An answers file records what the operator decided at one stop. A stop is a point where a procedure waits for the operator. The file holds one item per decision and names the question it answers by path and SHA-256. Use it for every operator decision over a list of proposals or findings and for a decision on one exact text, such as a plan's `stop`. Use [`edit-result`](./edit-result.md) for what an operation proposed; an answers file proposes nothing.
 
 ## Questions
 
@@ -48,7 +48,7 @@ A decision outlives the run it was made in. When a later run on the same note ma
 
 ## What happened after the decision
 
-A decision can lead to work the proposal did not describe. A reviewer's proposal to reword one sentence may end in a rewrite of the note and of the notes that cite it. `resolution` and `refs` record that on the decided item, so the proposal, the decision and the outcome can be compared later. They are written after the work, on a decided item only. In a run directory, approve the file again after adding them: the decision record reads the approved text.
+A decision can lead to work the proposal did not describe. A reviewer's proposal to reword one sentence may end in a rewrite of the note and of the notes that cite it. `resolution` and `refs` record that on the decided item, so the proposal, the decision and the outcome can be compared later. They are written after the work, on a decided item only. In a run directory, keep the file again with `commonplace-review answers record FILE` after adding them: the decision record reads the kept text.
 
 ## Acceptance
 
@@ -58,7 +58,7 @@ The deterministic validator accepts an answers file only when:
 - every item of the question appears once, with its `proposal` unaltered, and no other item appears;
 - each state carries the fields the table above requires.
 
-A consumer adds its own checks. The edit route applies only `approved` items, and refuses answers whose question is not an edit result of the same operation on the same input text. Publication writes a candidate only when its `text` item is `approved` and the note still holds the text the run started from.
+A consumer adds its own checks. The edit route applies only `approved` items, and refuses answers whose question is not an edit result of the same operation on the same input text. `commonplace-review run revise NOTE --answers FILE` also refuses proposals made for another text of the note or under another write brief, and a file that approves nothing. A command that consumes or records an answers file keeps a copy of its text in its run's `answers/`; naming the file to that command is the operator's approval, and the decision record reads the kept copies. Publication reads no answers file: `commonplace-review publish RUN` publishes a held candidate on the operator's word.
 
 ## Template
 

@@ -22,7 +22,7 @@ workshop retains.
    whose clause "a run continues after it publishes" this design replaces.
 3. The runner writes the continuation record and no longer resumes after a
    publication.
-4. [The draft instruction](./continue-a-revise-pass.md) is in
+4. [The draft instruction](../../instructions/continue-a-revise-pass.md) is in
    `kb/instructions/`, reached from the run report, and its siblings
    [decide items](../../instructions/decide-items.md) and
    [approve a text](../../instructions/approve-a-text.md) agree with it.
@@ -219,7 +219,7 @@ The same rule gives every other stop a command that names its input:
 
 ### The instruction
 
-Drafted in [continue a revise pass](./continue-a-revise-pass.md). It is not
+Drafted in [continue a revise pass](../../instructions/continue-a-revise-pass.md). It is not
 live: nothing loads it, and it names the command of option 1, which does not
 exist. It carries three judgments that code does not make:
 
