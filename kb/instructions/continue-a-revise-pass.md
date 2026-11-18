@@ -31,7 +31,7 @@ The session need not take up every issue. The operator chooses how much to do, a
 
 **Dropped.** The issue no longer applies, or the operator declined it. The reason is stated to the operator, and recorded in the issue's answers file when it has one.
 
-**Left.** The operator chose to leave it, or it is larger than this session, such as a rewrite or a change to other notes. It is left properly only when a later session can find it without this conversation: the episode entry names the issue, why it was left, what the next step is and what it waits on.
+**Left.** The operator chose to leave it, or it is larger than this session, such as a rewrite or a change to other notes. It is left properly only when a later session can find it without this conversation: the run's `episode.md` names the issue, why it was left, what the next step is and what it waits on.
 
 An issue is half done when the operator decided and nothing was applied; when a change was applied and its diff was never checked or shown; when a decision was only said in the session; when a run you started ended with open items that nobody took up; or when an issue was left without a record. Before the session ends, check each issue you took up against these states. Tell the operator which state each is in, and which issues were not taken up.
 
@@ -53,7 +53,7 @@ Changes to the note stay uncommitted unless the operator asks for a commit. Say 
 - **The run report**, `report.json` in the run directory: its `outcome` (`completed`, `needs-continuation` or `failed`), the plan with its `purpose` and `must-keep`, the state of each entry, and `publications`. A run with the outcome `needs-continuation` may have finished its plan and published. The report's `guard` lists files outside the run that changed while it was open; another session can cause that, and it does not make the run fail.
 - **The assessment**, `artifact/assessment.md`: why each plan entry was chosen, the claim questions, and the findings not acted on.
 - **The note's runs**, under `kb/reports/state/review/runs/v2/revise/<note path without .md>/`, in time order by name; older runs are named by a hash. Each records its start text's hash in `start.json` and its publications in `published.json`.
-- **After a pause**, the earlier session's entry in the episode record.
+- **After a pause**, `episode.md` in the run directory, when an earlier session wrote one.
 
 The note may no longer hold the `made-for` text: an earlier step of this session, another run or a hand edit changed it. Account for the difference from the note's run records and `git diff`, and tell the operator what you cannot account for. A changed note does not end the work. The commands guard their own inputs: one that applies answers refuses when the note is not the text the proposals were made for, and no later change makes old proposals fresh.
 
@@ -87,13 +87,17 @@ A command you run may end with a continuation record of its own. Its items are p
 
 Continuing stops being the cheaper path when the record no longer describes the note. Recommend a new run when the note changed in a way no record explains and the operator does not want to continue on it, when leftover entries keep failing to fit the current text, or when the operator changed the note's purpose, scope or write brief during the session. Say what was done, what was dropped and why, and what remains. Published edits stay in place.
 
-## Pause between sessions
-
-When the operator leaves items for later, record the episode before the session ends. The next session starts from that entry, so it lists the items done, dropped and remaining, and each change made to the note by hand with what was agreed. The next agent does not repeat the run, and the entry approves nothing.
-
 ## Record the episode
 
-The episode record is a trial: it ends when the workshop `kb/work/full-pass-continuation/` closes. Until then, append to `kb/work/full-pass-continuation/episodes.md`: the run directory and its continuation record, each item with its expected actor and who settled it or that it remains, each change made to the note by hand, each proposal the operator changed or rejected with the item's path, each entry dropped as no longer fitting, and anything that took long and that the workflow could have prepared. Decisions and their reasons stay in the answers files; do not copy them.
+Before the session ends, append a dated entry to `episode.md` in the run directory of the continuation record. A later session starts from it, so it states:
+
+- each item taken up, and whether it was settled, dropped or left;
+- for each item left: why, the next step and what it waits on;
+- each change made to the note by hand, with what was agreed;
+- each run the session started, by its directory;
+- the items not taken up.
+
+Add anything that took long and that the run could have prepared. Decisions and their reasons stay in the answers files; do not copy them. The entry approves nothing, and the next agent does not repeat the run.
 
 ## Verify
 
@@ -101,4 +105,4 @@ The episode record is a trial: it ends when the workshop `kb/work/full-pass-cont
 - No issue is half done: no decision without its effect, no applied change without a checked diff, no run of yours with open items nobody took up.
 - The operator was told of each publication during the session, with its diff.
 - No answers file or run was named to a command, and no operator's item decided, without the operator's word for it.
-- The episode is recorded.
+- The episode is recorded in the run directory.

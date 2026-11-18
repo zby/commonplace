@@ -122,16 +122,6 @@ ownership check. Use a distinct capture directory for every observation; never
 overwrite captured source bytes. Run with `--help` for the input layout and
 output options.
 
-## Operator record conversion (one-off)
-
-`uv run python scripts/convert_operator_records.py --root PATH --dry-run`
-reports how the operator records (`operator/*.json`) of revise and rewrite
-runs under `PATH/kb/reports/state/review/runs/v2/` would become kept answers
-(`answers/*.json`), the form `commonplace-review decisions` and later runs
-read; drop `--dry-run` to convert them in place. It also writes a missing
-`start.json` from `artifact/start.md`. Unanswered records and full-pass runs
-are left as they are. Delete the script once the review state is converted.
-
 ## Memory landscape queries
 
 `scripts/memory_landscape_queries/` holds the query ledger behind the

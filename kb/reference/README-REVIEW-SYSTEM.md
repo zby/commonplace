@@ -974,8 +974,8 @@ records of the two retired procedures
 operator records in full-pass run directories, full-pass packets under
 `kb/reports/state/review/packets/` and fix reports under
 `kb/reports/state/fixes/`. Operator records of revise and rewrite runs are
-not read; `scripts/convert_operator_records.py` converts the answered ones
-to kept answers once.
+not read; the answered ones were converted to kept answers once
+([ADR 138](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md)).
 This is computed when listing; nothing is written and no item changes state.
 It computes no statistics; `--note`, `--class` and `--json` narrow and
 format the listing.

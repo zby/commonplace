@@ -6,7 +6,7 @@ status: accepted
 
 # 138 — A stop ends the run, and naming its output is the approval
 
-**Status:** accepted; decided by the operator on 2026-11-18 and implemented the same day. No live run has exercised it yet.
+**Status:** accepted; decided by the operator on 2026-11-18 and implemented the same day. Three live runs and two continuation sessions exercised it that day; see [Observed](#observed).
 **Date:** 2026-11-18
 **Amends:** [ADR 137](./137-revise-publishes-without-a-publication-stop.md), whose clause "a run continues after it publishes" this replaces: a run publishes and then ends. It also changes what [ADR 127](./127-review-runs-as-workflows-over-result-files.md), [ADR 134](./134-stops-record-the-operators-answers-in-one-typed-file.md), [ADR 135](./135-improvement-procedures-are-three-plans-on-one-runner.md) and [ADR 136](./136-note-rewrites-run-as-a-workflow-that-ends-at-operator-approval.md) say about approval, repeating a command and the publication stop, and what [ADR 130](./130-the-operator-decision-record-is-a-query-over-the-state-tree.md) names as the source of the decision listing. Their other decisions stand.
 
@@ -50,7 +50,7 @@ The operator wants continuation to be interactive first. An agent in a session w
 
 **Apply approved answers with `run edit`, then publish with a separate command.** Not adopted. It costs the session agent two commands on every per-item entry.
 
-Free choices resolved by the implementing agent, open to the operator: the files that capture what a run read (`triage-inputs.json`, `earlier-decisions.json`, the earlier stop decisions) stay as a record, though nothing reads them back; the record of continuation sessions stays in the workshop that defines the trial.
+Free choices resolved by the implementing agent, open to the operator: the files that capture what a run read (`triage-inputs.json`, `earlier-decisions.json`, the earlier stop decisions) stay as a record, though nothing reads them back.
 
 ## Consequences
 
@@ -60,8 +60,20 @@ Continuation depends on a session agent following an instruction. Nothing schedu
 
 A run may publish twice: before a per-item entry's proposals and at its end, when that entry proposed nothing. Nothing detects an answers file edited between the operator's word and the command; the kept copy records the text the command acted on. A held candidate the operator declines has no consuming command; it stays listed as a pending publication until the note changes.
 
-Until the conversion script has run on a state tree, the decisions in that tree's revise and rewrite operator records are neither listed nor carried over.
+The conversion script ran on this repository's state tree on 2026-11-18 and was then removed; it is in the history at `c31a60961` as `scripts/convert_operator_records.py`. In a state tree it has not run on, the decisions in revise and rewrite operator records are neither listed nor carried over.
 
 Operativity: `commonplace-review run revise`, `run rewrite`, `publish`, `answers record` and `decisions` consume the change in Python, which enforces the end of a run, the checks on a named input and the kept copies. Session agents reach it through the [review-system guide](../README-REVIEW-SYSTEM.md), continue a revise pass, [decide items](../../instructions/decide-items.md), [approve a text](../../instructions/approve-a-text.md) and the multistage writing skill, with the force of instructions. The rule that a command runs only on the operator's word for that exact file rests on those instructions, as it did before.
 
-Limits: no live run has ended at a stop under this decision, and no session has continued from a continuation record. Whether a later session can take up items from the records alone, without a handoff, is untested. The decision covers revise and rewrite runs. Gate sweeps keep `--resume` and `retry`.
+Limits: the decision covers revise and rewrite runs. Gate sweeps keep `--resume` and `retry`.
+
+## Observed
+
+Recorded on 2026-11-18, when the workshop that designed this decision closed.
+
+**Size.** The design predicted that the six source files of the approval machinery would shrink by 300 to 450 lines. They shrank by 77, from 4121 to 4044. Every piece predicted as removable was removed. The removal was offset by code the prediction did not name. Repeated runs had shared one run directory, and so a lock, a plan entry's scope and a finding. With one directory per run, each is carried as data: the per-note publication lock, the one-entry plan files and the run's copies of findings. Each consuming command also checks its own input, which the captured copy used to do. Two reviews after implementation found the missing pieces one defect at a time. The gain is a simpler procedure for the operator and the session agent, not less code.
+
+**Live runs.** Three full passes ran. One ended with proposals and claim questions, one with a plan stop that proposed a rewrite, and one published five fixes and left claim questions and stale reviews. Sessions continued the last two from their continuation records. An operator asked how a run that published could have stopped. The report now states one `outcome`, the plan's stop is advice whose answer is recorded once, and the checkout guard no longer makes a run fail.
+
+**Not observed.** No live run applied approved items with `--answers`. No session resumed another session's work from an episode record. No approved edit made a later plan entry unnecessary. How often the operator accepts a worker's proposal unchanged, the evidence ADR 137 names for moving a per-item operation to applying directly, was not measured.
+
+**Known gaps, left by the operator.** An unanswered plan stop of a run older than this decision is not listed by `decisions`; one exists, on `kb/theory/a-knowledge-base-should-support-fluid-resolution-switching.md`. The stale-reviews item names no review profile. Declining a held candidate records no reason. The rewrite report states `complete` where the revise report states `outcome`.
