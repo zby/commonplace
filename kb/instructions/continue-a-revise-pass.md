@@ -77,7 +77,7 @@ A command you run may end with a continuation record of its own. Its items are p
 
 **A candidate held back for a validation warning.** [Approve a text](./approve-a-text.md#a-held-candidate) applies. `how.command` publishes the exact candidate; `how.revised` publishes the operator's revision of it.
 
-**A plan that stopped on a proposal.** The run edited nothing because the assessor found something it judged no edit pass could correct. The operator's question is what to do with the note: follow the route the stop proposes, run a replacement plan (`how.command` gives the form), or leave it. [Decide items](./decide-items.md#a-plan-that-stopped-on-a-proposal) applies. Keep the operator's answer with `how.record`: it reaches the assessor of the next run on the note, which otherwise may stop on the same proposal.
+**A plan that stopped on a proposal.** The run edited nothing because the assessor found something it judged no edit pass could correct. A stop is advice, and it puts one question to the operator: follow the route the stop proposes, go on editing with a replacement plan, or leave the note. [Decide items](./decide-items.md#a-plan-that-stopped-on-a-proposal) applies. Record the answer once and keep it with `how.record`: it reaches the assessor of the next run on the note, which otherwise may stop on the same proposal. The work that follows, such as a rewrite, is a separate task: start it on the operator's word, or leave it with a record of the next step.
 
 **A worker or review failure.** The report states the failure. Repair its cause when you can, and tell the operator; otherwise say what failed and where its output is. The failed entry and those after it are items of their own.
 

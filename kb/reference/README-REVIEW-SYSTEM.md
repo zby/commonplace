@@ -587,10 +587,10 @@ around a depth 1 proposal, the assessor checks against the role report
 whether the proposal's cause may be a term or claim that dependents rely on;
 when a change would reach dependents, the `stop` names them. A stopped plan leaves
 `artifact/stop-answers.md`, where the operator's decision on the proposal is
-recorded and, afterwards, what was done and where: the item's `resolution`
-and `refs` (commit hashes, paths). Nothing consumes that file: keep it with
-`answers record FILE`, again after adding `resolution` or `refs`. A replacement
-plan runs with `--plan`. The kept decision reaches the assessor of the next
+recorded once. A stop is advice: the run has ended and nothing consumes that
+file, so keep it with `answers record FILE`. What follows the decision is a
+separate task: the route the stop names, or a replacement plan run with
+`--plan`. The kept decision reaches the assessor of the next
 run on the note, so the reason should state which of the stop's proposals it
 covers. The full procedure does not review the candidate; the next sweep
 finds the stale results after publication. A review without a result ends

@@ -255,13 +255,11 @@ judgment; worker prompts name inputs, not additional criteria.
    A stopped plan also leaves `artifact/stop-answers.md`, an
    [answers](../../types/answers.md) file with one item for the plan. The
    run ends; its continuation record names it in a `plan-stop` item.
-   Record the operator's decision on the proposal there: `approved` to act
-   on it as made, or `rejected` or `deferred` with the operator's reason.
-   When the work that followed is done, add `resolution` (what was done,
-   when it differs from or goes beyond the proposal) and `refs` (commit
-   hashes, paths, a workshop directory) to the item. Keep the file with
-   `commonplace-review answers record FILE` each time it changes, so that
-   `commonplace-review decisions` lists the current text.
+   A stop is advice; no command waits for its answer. Record the
+   operator's decision on the proposal there once: `approved` to take the
+   proposed route, or `rejected` or `deferred` with the operator's reason.
+   Keep the file with `commonplace-review answers record FILE`. The work
+   that follows is a separate task and is not recorded in the file.
    The command rejects a plan that names an unknown pass, misses a field,
    has a field it does not know,
    names a `finding` that is not a review result of the artifact, or breaks

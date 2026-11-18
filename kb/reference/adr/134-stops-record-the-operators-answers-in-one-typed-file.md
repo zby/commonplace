@@ -44,6 +44,12 @@ Made after the first operator sessions through the stops, at the operator's dire
 
 Not changed: an approval stays bound to the exact candidate and the inputs that produced it. A candidate invalidated before publication is lost and asked again.
 
+## Amendments (2026-11-18)
+
+Made at the operator's direction, after the first continuations under [ADR 138](./138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md).
+
+**A plan stop's answer is recorded once.** Since ADR 138 a stop ends the run, so no command waits for the answer to a stopped plan, and approving it starts nothing. The stop is advice with one question for the operator: follow its proposal, or go on editing. The answer is recorded once, when the operator decides, and kept with `answers record`. Its remaining use is that the next run's assessor reads it and does not stop again on a proposal the operator declined. The procedure no longer adds `resolution` and `refs` to a stop's item after the work and records the file again: the operator judged the commit history and the later runs on the note sufficient. The two fields stay in the answers type as optional. The continuation record's `plan-stop` item names the recording command and no other; the route is in the stop's text, and a replacement plan runs with `--plan`.
+
 ## Considered alternatives
 
 **Four typed stops.** Rejected with the operator. A strike list and a hand-back disposition are the same act over different item kinds, and `deferred` is a state, not a point where a procedure waits.

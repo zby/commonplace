@@ -566,7 +566,7 @@ def test_a_plan_stop_ends_the_run_and_a_replacement_plan_is_a_new_run(repo, caps
     assert (repo[0] / stop_file).is_file()
     [item] = ended["continuation"]["items"]
     assert (item["kind"], item["actor"], item["answers"]) == ("plan-stop", "operator", [stop_file])
-    assert item["how"]["command"] == f"commonplace-review run revise {NOTE_PATH} --plan <replacement-plan.yaml>"
+    assert "command" not in item["how"], "a stop is advice: its route is in its text, and no command is waiting"
     assert item["how"]["record"] == f"commonplace-review answers record {stop_file}"
     path = repo[0] / stop_file
     path.write_text(decide(path.read_text(), {"text": rejected("the note is fine")}))

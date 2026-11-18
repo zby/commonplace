@@ -1338,8 +1338,7 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
             evidence=[path for given in report.triage["results"] for path in (given["question"], given["answers"])])
     if report.stop:
         stop_file = f"{artifact_dir}/{STOP_ANSWERS}"
-        add("plan-stop", f"The plan stops with a proposal: {report.stop}", "operator",
-            command=f"{COMMAND} {shlex.quote(artifact)} --plan <replacement-plan.yaml>",
+        add("plan-stop", f"The plan stops with a proposal, which names its own route: {report.stop}", "operator",
             record=decisions.RECORD.format(file=stop_file), answers_files=[stop_file],
             evidence=[f"{artifact_dir}/{ASSESSMENT}", f"{artifact_dir}/{PLAN}"])
     held = None
