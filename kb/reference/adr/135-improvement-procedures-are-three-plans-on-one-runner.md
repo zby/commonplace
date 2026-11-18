@@ -35,6 +35,12 @@ The plan is data, so the grouping can change without a code change. Code checks 
 
 **The decision record still reads the old records.** `commonplace-review decisions` keeps its readers for full-pass packets under `kb/reports/state/review/packets/`, fix reports under `kb/reports/state/fixes/`, and operator records in full-pass run directories. Removing them would hide operator decisions already recorded. They are marked as a compatibility shim, to be removed when the operator says the old records are dispensable. This is the one place the cutover keeps old code.
 
+## Amendments (2026-11-18)
+
+Made at the operator's direction, after the operator found that a full procedure left out the type and collection reviews.
+
+**The full procedure also runs the type and collection reviews.** The rule "every review operation that declares a `depth`" excluded both, because their criteria are the note's type spec and its collection's `COLLECTION.md`, and neither file declares a depth. A note could go through the full procedure and still break its type's authoring instructions or its collection's conventions, and the assessor never saw such a finding. The full procedure now runs both reviews beside the operations that declare a depth. It treats both as depth 2, set in code (`CONTRACT_DEPTH` in `revise.py`), so a fix of such a finding is ordered there in a plan. The depth is not declared in the type specs and contracts, because they are not review files. The value is a first guess, as the declared depths are. Each full run launches up to two more reviews per note.
+
 ## Considered alternatives
 
 **Keep the full pass beside the runner.** Rejected. It duplicated the editor, the record and the stop rules, and its closing check was weak evidence (below). Keeping it would leave two answers to "how do I improve this note".
