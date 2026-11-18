@@ -501,7 +501,7 @@ class ReviseReport:
     publications: list[dict] = field(default_factory=list)   # the run's publication (`edits.PUBLISHED`)
     not_published: str | None = None  # why the proposed text was not written
     held: dict | None = None          # the candidate held for the operator, and the commands that publish it
-    stop: str | None = None           # the plan's stop: the assessment is the result
+    plan_stop: str | None = None      # the plan's `stop` text: the assessment is the result
     continuation: dict | None = None  # the unfinished work, as in the run's `CONTINUATION` file
     stopped: str | None = None
     conflict: str | None = None
@@ -523,8 +523,8 @@ class ReviseReport:
 
     @property
     def ok(self) -> bool:
-        """No stop, no conflict and no unexpected change; leaving work to continue is ok."""
-        return self.stopped is None and self.conflict is None and not self.changed
+        """No failure and no conflict; leaving work to continue is ok. The guard is reported apart."""
+        return self.stopped is None and self.conflict is None
 
     def to_dict(self) -> dict:
         data = {key.replace("_", "-"): value for key, value in asdict(self).items() if key != "changed"}
@@ -1241,7 +1241,7 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
     plan = report.plan = read_plan(proposed, root, artifact, known)
     run.accept(PLAN, proposed)
     if plan["stop"]:
-        report.stop = plan["stop"]
+        report.plan_stop = plan["stop"]
         question = run.artifact / PLAN
         run.accept(STOP_ANSWERS, answers.pending(_rel(root, question), question.read_bytes()))
         return
@@ -1277,20 +1277,6 @@ def _run_plan(run: Run, root: Path, artifact: str, proposed: str, known: dict[st
 # the files it rests on (`evidence`). An item that waits for an answers file
 # names it in `answers`. The actor is an estimate, not a permission.
 
-STEPS = {
-    "failure": "A worker or review failure",
-    "proposals": "Proposals awaiting decision",
-    "findings": "Findings awaiting decision",
-    "plan-stop": "A plan that stopped on a proposal",
-    "held-candidate": "A candidate held back for a validation warning",
-    "direct-entry": "A plan entry not run, for an operation that applies directly",
-    "per-item-entry": "A plan entry not run, for a per-item operation",
-    "fix-entry": "A plan entry that fixes a finding",
-    "interactive-entry": "An operation skipped as interactive",
-    "claim-questions": "Claim questions from the assessment",
-    "stale-reviews": "Stale reviews",
-}
-"""The step of the continuation instruction for each kind of item, by its label in that instruction."""
 CLAIM_QUESTIONS = re.compile(r"^#+\s*Claim questions for the operator\s*$(.*?)(?=^#|\Z)",
                              re.MULTILINE | re.DOTALL | re.IGNORECASE)
 
@@ -1325,7 +1311,7 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
             answers_files: list[str] = (), evidence: list[str] = ()) -> str:
         item = {"id": str(len(items) + 1), "kind": kind, "what": what, "actor": actor,
                 **({"effort": effort} if effort else {}), "after": list(after),
-                "how": {"step": STEPS[kind], **({"command": command} if command else {}),
+                "how": {**({"command": command} if command else {}),
                         **({"record": record} if record else {}), **({"revised": revised} if revised else {})},
                 **({"answers": list(answers_files)} if answers_files else {}), "evidence": list(evidence)}
         items.append(item)
@@ -1345,9 +1331,9 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
                              must_keep),
             record=decisions.RECORD.format(file="FILE"), answers_files=files,
             evidence=[path for given in report.triage["results"] for path in (given["question"], given["answers"])])
-    if report.stop:
+    if report.plan_stop:
         stop_file = f"{artifact_dir}/{STOP_ANSWERS}"
-        add("plan-stop", f"The plan stops with a proposal, which names its own route: {report.stop}", "operator",
+        add("plan-stop", f"The plan stops with a proposal, which names its own route: {report.plan_stop}", "operator",
             record=decisions.RECORD.format(file=stop_file), answers_files=[stop_file],
             evidence=[f"{artifact_dir}/{ASSESSMENT}", f"{artifact_dir}/{PLAN}"])
     held = None

@@ -442,8 +442,8 @@ again with `--input answers=PATH`: it applies the `approved` items and
 returns `changed`. The answers must pass the validator, and their question
 must be a result of the same operation on the same text. The
 profile defaults to the `effort` mapping for the operation's `effort`. It exits
-0 for an accepted `changed`, `unchanged` or `proposed` result with a clean
-guard, 1 otherwise, and 2 for a command error. `run edit --fixture PATH` reruns
+0 for an accepted `changed`, `unchanged` or `proposed` result, 1 otherwise,
+and 2 for a command error. `run edit --fixture PATH` reruns
 a fixture created from an edit observation.
 
 `run revise ARTIFACT` is the one runner of the improvement procedures:
@@ -540,9 +540,9 @@ A run that leaves work unfinished writes `continuation.json` and reports it
 as `continuation`: `run-dir`; `made-for`, the artifact's `note`, `sha256` and
 `text` when the run ended; and `items` in dependency order. Each item has
 `id`, `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with
-its `effort`), `after` (the ids of the items to settle first), `how` (`step`,
-the step of [continue a revise pass](../instructions/continue-a-revise-pass.md),
-and where they apply `command`, `record` and `revised`), `answers` (the
+its `effort`), `after` (the ids of the items to settle first), `how` (where they apply, `command`, `record` and `revised`; the section of
+[continue a revise pass](../instructions/continue-a-revise-pass.md) named by
+the `kind` describes the item), `answers` (the
 answers files it waits for) and `evidence`. The kinds are `failure`,
 `findings`, `plan-stop`, `held-candidate`, `proposals`, `claim-questions`,
 `direct-entry`, `per-item-entry`, `fix-entry`, `interactive-entry` and
@@ -552,9 +552,10 @@ one-entry plan the run wrote under `artifact/continue/`, which keeps the
 entry's scope, or by `--answers FILE` when it applies the operator's
 answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`, whose `outcome` is `completed`,
 `needs-continuation` or `failed`. It exits
-0 when it ends with a clean guard, completed or with work to continue, 1 for
-a failed pass or review, a conflict or a guard change, and 2 for a command
-error, including an invalid plan or refused answers.
+0 when it ends completed or with work to continue, 1 for a failed pass or
+review or a conflict, and 2 for a command error, including an invalid plan
+or refused answers. A guard change is reported and does not change the exit
+status.
 
 `run revise ARTIFACT --answers FILE [--answers FILE ...] [--purpose TEXT]
 [--must-keep CLAIM ...]` names the operator's decided
@@ -653,8 +654,8 @@ revise` holds one with a new warning, and the run ends; `publish RUN`
 publishes it. A referenced source whose bytes changed stops the run before
 the candidate is held. `--profile` names the worker profile for every call;
 the default is the `effort` mapping for `judgment`. It exits 0 when the run
-ends with a held candidate, no change or a block and a clean guard, 1 for a
-stop, a conflict or a guard change, and 2 for a command error. See
+ends with a held candidate, no change or a block, 1 for a stop or a
+conflict, and 2 for a command error. See
 [the rewrite workflow](./README-REVIEW-SYSTEM.md#rewriting-a-note).
 
 `decisions [--note PATH] [--class NAME] [--json]` lists operator and agent

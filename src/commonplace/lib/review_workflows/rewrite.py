@@ -318,8 +318,8 @@ class RewriteReport:
 
     @property
     def ok(self) -> bool:
-        """No stop, no conflict and no unexpected change; a held candidate and a block are ok."""
-        return self.stopped is None and self.conflict is None and not self.changed
+        """No stop and no conflict; a held candidate and a block are ok. The guard is reported apart."""
+        return self.stopped is None and self.conflict is None
 
     def to_dict(self) -> dict:
         data = {key.replace("_", "-"): value for key, value in asdict(self).items() if key != "changed"}

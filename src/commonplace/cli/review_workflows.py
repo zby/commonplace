@@ -72,8 +72,9 @@ writes the pending answers file (types/answers.md) for that result; after
 the operator decides its items, `--input answers=PATH` applies the
 `approved` items and returns `changed`. The validator must accept the answers,
 and their question must be a result of the same operation on the same text.
-It exits 0 for an accepted result other than `problem` with a clean guard,
-1 otherwise, and 2 when the command failed.
+It exits 0 for an accepted result other than `problem`, 1 otherwise, and 2
+when the command failed. The guard's finding is in the report and does not
+change the exit status.
 
 `run revise` revises one markdown artifact through the simplification
 passes (see `commonplace.lib.review_workflows.revise` and the library's
@@ -153,9 +154,9 @@ with `artifact/revised-from-final.diff` and `artifact/revised.diff`. `publish`
 launches nothing. Each pass's `effort` picks its profile from the profile
 file's `effort` mapping; `--profile-simple` and `--profile-judgment`
 override it. An invalid plan or refused answers are a command error (exit
-2); the run exits 0 when it ends with a clean guard, completed or with work
-left to continue, and 1 for a failed pass or review, a conflict or a guard
-change.
+2); the run exits 0 when it ends completed or with work left to continue, and
+1 for a failed pass or review or a conflict. The guard's finding is in the
+report and does not change the exit status.
 
 `record RUN` names a revise run directory whose findings the operator
 answered outside the run, such as by splitting the note. For each review
@@ -189,14 +190,16 @@ publishes exactly the judged candidate, the review becomes the note's
 current result, so `run revise --triage` presents its `warn` findings.
 `--profile` names the worker profile (default: the profile file's `effort`
 mapping for `judgment`). It exits 0 when the run ends with a held candidate,
-no change or a block and a clean guard, 1 for a stop, a conflict or a guard
-change, and 2 when the command failed.
+no change or a block, 1 for a stop or a conflict, and 2 when the command
+failed. The guard's finding is in the report and does not change the exit
+status.
 
 `run gates` opens a new run under kb/reports/state/review/runs/v2/<UTC stamp>/,
 or continues RUN_DIR with `--resume`, which replays the calls whose work is
 unchanged; give the same NOTES and criteria again. It prints a JSON report and
-exits 0 only when every pair has a current result and the checkout guard saw
-no change, 1 otherwise, and 2 when the command failed. A pair whose result
+exits 0 only when every pair has a current result, 1 otherwise, and 2 when
+the command failed. The checkout guard's finding is in the report and does
+not change the exit status. A pair whose result
 was written is fresh, so a rerun after `retry` of its answer needs `--force`.
 """
 

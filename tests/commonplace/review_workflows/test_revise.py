@@ -383,7 +383,7 @@ def test_a_run_publishes_and_ends_at_a_per_item_pass_and_later_runs_continue_it(
     proposals, entry = record["items"]
     assert items_of(ended) == [("proposals", "operator", []), ("direct-entry", "worker", ["1"])]
     assert ended["outcome"] == "needs-continuation"
-    assert proposals["answers"] == [file] and proposals["how"]["step"] == "Proposals awaiting decision"
+    assert proposals["answers"] == [file] and "step" not in proposals["how"]
     assert proposals["how"]["command"] == f"commonplace-review run revise {NOTE_PATH} --answers {file} --purpose p"
     assert proposals["how"]["record"] == f"commonplace-review answers record {file}"
     assert file in proposals["evidence"] and any(e.endswith("/result.md") for e in proposals["evidence"])
@@ -462,7 +462,6 @@ def test_a_held_candidate_is_published_only_by_naming_its_run(repo, capsys, tmp_
     [item] = ended["continuation"]["items"]
     assert (item["kind"], item["actor"], item["how"]["command"]) == ("held-candidate", "operator", held["command"])
     assert item["how"]["revised"] == held["command"] + " --revised FILE" and warning in item["what"]
-    assert item["how"]["step"] == "A candidate held back for a validation warning"
     [pending] = [e for e in decisions.entries(repo[0]) if e["class"] == "publication"]
     assert (pending["decision"], pending["item"]) == ("pending", held["candidate"])
     candidate = artifact_file(repo, ended, "final.md").read_text()
@@ -562,7 +561,7 @@ def test_a_held_candidate_ends_the_run_before_the_next_per_item_pass_asks(repo, 
 def test_a_plan_stop_ends_the_run_and_a_replacement_plan_is_a_new_run(repo, capsys, tmp_path):
     original = start(repo, "STOP")
     code, ended, _ = revise(repo, capsys, NOTE_PATH, "--assess")
-    assert code == 0 and ended["stop"] == "rewrite-needed" and note_text(repo) == original
+    assert code == 0 and ended["plan-stop"] == "rewrite-needed" and note_text(repo) == original
     stop_file = f"{ended['run-dir']}/artifact/stop-answers.md"
     assert (repo[0] / stop_file).is_file()
     [item] = ended["continuation"]["items"]
@@ -574,7 +573,7 @@ def test_a_plan_stop_ends_the_run_and_a_replacement_plan_is_a_new_run(repo, caps
     code, error, launches = apply_answers(repo, capsys, stop_file)
     assert code == 2 and "answers record" in error and launches == []
     code, fresh, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
-    assert code == 0 and fresh["stop"] is None and launches == [ORDINARY[0]] and fresh["outcome"] == "completed"
+    assert code == 0 and fresh["plan-stop"] is None and launches == [ORDINARY[0]] and fresh["outcome"] == "completed"
     assert note_text(repo).endswith("readability-and-flow (all).\n") and fresh["run-dir"] != ended["run-dir"]
 
 
@@ -759,8 +758,7 @@ def test_a_failed_entry_publishes_the_entries_before_it_and_a_later_run_continue
     assert [s["state"] for s in report["passes"]] == ["applied", "problem"]
     failed, entry = report["continuation"]["items"]
     assert report["outcome"] == "failed", "a failed entry makes the run failed though it published"
-    assert (failed["kind"], failed["actor"], failed["how"]["step"]) == (
-        "failure", "session-agent", "A worker or review failure")
+    assert (failed["kind"], failed["actor"]) == ("failure", "session-agent")
     assert (entry["kind"], entry["after"], entry["effort"]) == ("direct-entry", ["1"], "simple")
     assert report["continuation"]["made-for"]["sha256"] == report["publications"][0]["sha256"]
     failure.unlink()
@@ -1509,7 +1507,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
     result = stored(repo, "warn", gate=WARNED, found=[finding("diagnosis"), finding("undiscussed")])
     stored(repo, "info")                                          # a pass result asks nothing
     _, stopped, _ = revise(repo, capsys, NOTE_PATH, "--assess")
-    assert stopped["stop"] and stopped["findings"] == [result]
+    assert stopped["plan-stop"] and stopped["findings"] == [result]
     run = repo[0] / stopped["run-dir"]
     split = text.replace("STOP", "STOP, split into three notes")
     (repo[0] / NOTE_PATH).write_text(split)                      # the operator's split: the run's plan is moot
@@ -1550,7 +1548,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
 
     # The next run on the edited note receives the rejection with its resolution.
     _, later, launches = revise(repo, capsys, NOTE_PATH, "--assess")
-    assert later["run-dir"] != stopped["run-dir"] and later["stop"] and not later["published"]
+    assert later["run-dir"] != stopped["run-dir"] and later["plan-stop"] and not later["published"]
     [decision] = json.loads((repo[0] / later["run-dir"] / revise_module.EARLIER_FILE).read_text())["decisions"]
     assert (decision["state"], decision["criterion"]) == ("rejected", WARNED)
     assert decision["resolution"].startswith("retained its question")

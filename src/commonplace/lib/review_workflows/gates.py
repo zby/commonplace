@@ -227,8 +227,8 @@ class SweepReport:
 
     @property
     def ok(self) -> bool:
-        """Every pair has a current result and the guard saw no change."""
-        return (self.stopped is None and not self.changed
+        """Every pair has a current result. The guard is reported apart and does not enter into it."""
+        return (self.stopped is None
                 and all(pair.state in ("fresh", "reviewed") for pair in self.pairs))
 
     def to_dict(self) -> dict:

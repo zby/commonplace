@@ -184,12 +184,12 @@ def test_worker_problem_leaves_no_result_and_the_other_pairs_complete(repo, caps
     assert by_note["kb/notes/beta.md"]["state"] == "reviewed"
 
 
-def test_worker_writing_the_checkout_fails_the_run_through_the_guard(repo, capsys):
+def test_worker_writing_the_checkout_is_reported_by_the_guard_without_failing_the_run(repo, capsys):
     root = repo[0]
     write(root, "kb/notes/alpha.md", note("Alpha", "STRAY body."))
     code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate")
     # The edit of alpha.md happened before the run, so only the worker's file is reported.
-    assert code == 1 and report["guard"] == {"clean": False, "changed": ["stray.md"]}
+    assert code == 0 and report["ok"] and report["guard"] == {"clean": False, "changed": ["stray.md"]}
     assert report["counts"] == {"reviewed": 1}
 
 

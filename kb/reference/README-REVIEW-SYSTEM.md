@@ -307,8 +307,7 @@ Each sweep opens a run directory under `kb/reports/state/review/runs/v2/<UTC
 stamp>/` and prints a JSON report: per pair its state (`fresh`, `reviewed`,
 `problem`, `out-of-attempts` or `not-run`), the counts, what stopped the
 sweep and the guard's finding. It exits 0 only when every pair has a current
-result and the guard saw no change, 1 otherwise, and 2 when the command
-failed.
+result, 1 otherwise, and 2 when the command failed.
 
 ### Drafts, evidence and fixtures
 
@@ -381,8 +380,11 @@ wrote in that invocation.
 
 What it can claim: these paths changed while the run was open. What it
 cannot claim: that a worker changed them. Other sessions editing or
-committing in the same checkout show up as well, so a failed guard means
-"inspect these paths". Nothing is reverted. The guard also misses a change to
+committing in the same checkout show up as well, so a guard that is not
+clean means "inspect these paths". It does not make a run fail: `ok` and the
+exit status of a sweep, an edit, a revise run and a rewrite run do not
+depend on it. Fixture trials are the exception, because a changed trial tree
+invalidates the evidence. Nothing is reverted. The guard also misses a change to
 an ignored file and a change undone before the run ended.
 
 ## Worker profiles
@@ -663,11 +665,10 @@ A run ends in one of three ways, which its report states as `outcome`:
 | `needs-continuation` | The run did what it could and left a continuation record. It may have published; a run that finished its whole plan still has this outcome when the assessment left claim questions or the publication left reviews stale |
 | `failed` | A worker, a review or the write to the note failed. Entries before the failure may have been published |
 
-The report's `ok` is a different statement: no failure and no change in the
-checkout outside the run while it was open
-([the checkout guard](#the-checkout-guard)). Another session's edit makes
-`ok` false and the exit status 1 without changing the `outcome`. `stop` is
-the plan's stop text; `stopped` is a failure's message.
+The report's `ok` is false, and the exit status 1, only for `failed`.
+`plan-stop` is the text of the plan's `stop`; `stopped` is a failure's
+message. [The checkout guard](#the-checkout-guard) is reported apart, as
+`guard`.
 
 It ends at its first stop: a plan `stop`, a triage, the first
 per-item entry that proposes anything, a held candidate, or a failed entry.
@@ -683,9 +684,7 @@ the run directory and `continuation` in the report:
 Each item has an `id`; a `kind`; `what`, in words; `actor`, the actor
 expected to be able to resolve it (`operator`, `session-agent`, or `worker`
 with its `effort`), an estimate and not a permission; `after`, the ids of the
-items to settle first; `how`, with `step`, the step of
-[continue a revise pass](../instructions/continue-a-revise-pass.md) that
-handles it, `command` where a command proceeds, `record` where the
+items to settle first; `how`, with `command` where a command proceeds, `record` where the
 recording command applies and `revised` for a held candidate; `answers`, the
 answers files it waits for; and `evidence`, the files it rests on.
 

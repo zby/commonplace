@@ -487,5 +487,5 @@ def run(root: Path, operation: Operation, note: str, text: str, roles: dict[str,
         report.update({"state": "stopped", "stopped": str(failure)})
     changed = gates.changed_paths(before, gates.checkout_state(root))
     report["guard"] = {"clean": not changed, "changed": changed}
-    report["ok"] = (report["state"] == "edited" and report["outcome"] != "problem" and not changed)
+    report["ok"] = report["state"] == "edited" and report["outcome"] != "problem"
     return report

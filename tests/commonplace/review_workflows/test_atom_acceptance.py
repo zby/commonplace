@@ -57,7 +57,8 @@ def test_dispatch_race_uses_captured_target_and_criterion(tmp_path, monkeypatch,
 
     monkeypatch.setattr(Run, "ask", mutate_before_dispatch)
     code, report, launches = review(repo, capsys, target, "--criteria", "prose/body-gate", "--max-workers", "1")
-    assert code == 1, report  # Assessment succeeds, but concurrent edits fail the checkout guard.
+    assert code == 0, report  # Assessment succeeds; the guard reports the concurrent edits without failing the run.
+    assert not report["guard"]["clean"]
     assert mutations == [True]
     assert launches == [f"{target}::{BODY_GATE}"]
     assert report["counts"] == {"reviewed": 1}

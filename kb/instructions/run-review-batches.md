@@ -35,7 +35,7 @@ A result is fresh while the hashes it records still match the note's watched par
 
    It asks only pairs without a fresh result. `--force` asks fresh pairs too; use it only when the user asks for a new judgment of fresh pairs. `--max-workers N` bounds concurrent workers (default 4).
 
-4. **Read the JSON report.** It names `run-dir`, gives `counts` by pair state, `stopped`, `guard` and one entry per pair with `state`, `outcome` and `problem`. The exit code is 0 only when every pair has a current result and the guard is clean, 1 otherwise, and 2 when the command itself failed. Handle each case:
+4. **Read the JSON report.** It names `run-dir`, gives `counts` by pair state, `stopped`, `guard` and one entry per pair with `state`, `outcome` and `problem`. The exit code is 0 only when every pair has a current result, 1 otherwise, and 2 when the command itself failed. The guard does not change the exit code, so read `guard` in the report every time. Handle each case:
 
    - **`fresh` or `reviewed`** — the pair has a current result; `outcome` is `pass`, `warn` or `fail`, or `report` for critique.
    - **`problem`** — the worker reported that it could not judge the pair; `problem` holds its reason. Fix the cause if it is in the note or the environment. Then either run the sweep again, which opens a new run, or dismiss the problem with `commonplace-review retry {run-dir} {job}` and continue the same run with `--resume {run-dir}`. A resumed run replays a problem that was not dismissed. The job name is the pair's `job` field (`<note>::<criterion-id>`).
