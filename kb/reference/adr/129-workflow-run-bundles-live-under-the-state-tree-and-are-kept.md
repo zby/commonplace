@@ -160,8 +160,7 @@ loses.
 This decision stops at location and the keep rule. Location is not
 retention: the state repository, once created, captures a bundle only when
 it is committed there. Commit cadence, history pruning, version capture
-inside a bundle and churn exceptions stay with the
-[public state repository workshop](../../work/public-state-repository/README.md)
-and the [decision lifecycle and evidence workshop](../../work/decision-lifecycle-evidence/README.md).
+inside a bundle and churn exceptions are outside this decision. For the
+second repository, see the [public state repository workshop](../../work/public-state-repository/README.md).
 It does not cover workflows outside the four families, and it does not make
 anything in the tree safe to publish.

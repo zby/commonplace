@@ -94,8 +94,8 @@ this workshop provides a new operator-commissioned measurement/test track, not
 a replacement routing design. Send any justified routing proposal there rather
 than maintaining a competing mechanism.
 
-[Decision lifecycle and evidence](../decision-lifecycle-evidence/README.md)
-investigates retention and architectural views. This workshop measures whether
+[Decision lifecycle and evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+examined retention and architectural views. This workshop measures whether
 existing records serve change tasks; it does not choose that workshop's storage
 or projection model.
 

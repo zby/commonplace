@@ -134,8 +134,8 @@ remain optional work when their expected decision value warrants the cost.
 
 ## Coordination and bookkeeping
 
-The [decision-lifecycle evidence workshop](../decision-lifecycle-evidence/README.md)
-owns the continuing decision record and its transitions. It already retains
+The [decision-lifecycle evidence workshop](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+examined the continuing decision record and its transitions. It recorded
 the operator's requirement that essential evidence survive loss of access
 to source sessions. This workshop carries that requirement forward and
 focuses on consumption of uncontrolled observations and the cost of growing

@@ -119,7 +119,7 @@ For a later authorized trial, use independent initial state and output locations
 - [Unattended processing failure modes](../unattended-processing-failure-modes/README.md) owns its behavior catalogue and countermeasures. This workshop develops the live-observation-to-controlled-test method rather than duplicating that catalogue.
 - [LLM debugging diagnosis](../../theory/llm-debugging-starts-with-retry-versus-rewrite-triage.md) already distinguishes specification gaps, instruction violations and run-to-run variation. Extend or operationalize it where warranted instead of writing a parallel general account.
 - [One improvement procedure over atomic instructions](../../reference/proposals/one-improvement-procedure-over-atomic-instructions.md) requires every atom to be testable alone and each run to leave a typed directory. That run directory stores the start text as a commit and hash and cites review results by hash, so it is a concrete ordinary-run record for question 1. The proposal owns the run type; this workshop may recommend what the record needs for later controlled investigation.
-- [Decision lifecycle and evidence](../decision-lifecycle-evidence/README.md) holds the [first run](../decision-lifecycle-evidence/first-run.md) of that procedure. Its re-review is a live observation of the problem posed here: verdicts moved on passages the run did not edit, so one re-review could not separate the effect of a fix from run-to-run variation. It is a candidate source for a pilot fixture.
+- [Decision lifecycle and evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md) holds the [first run](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/first-run.md) of that procedure. Its re-review is a live observation of the problem posed here: verdicts moved on passages the run did not edit, so one re-review could not separate the effect of a fix from run-to-run variation. It is a candidate source for a pilot fixture.
 - [Higher-order check evaluation](../higher-order-check-evaluation/README.md) owns calibration of one review operation over repeated rounds. It is an existing consumer of fixtures, independent trial state and denominators. Take its practice as evidence before designing a parallel one.
 - [Authority grades and learning from operator decisions](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md) requires a discriminating check tested on retained and fresh examples before a grade moves. That matches the split in question 7 between diagnostic fixtures selected for failure and held-out evaluation cases. The proposal owns the grade decision; this workshop supplies the test method.
 
@@ -163,8 +163,8 @@ instead of creating a parallel calibration policy.
 
 ### Evaluate retained diagnostic probes
 
-The [review-operation design entry](../decision-lifecycle-evidence/review-operation-overlaps.md#agreed-direction-retain-diagnostic-probes-in-review-results)
-owns the agreed direction for recording concrete probe outputs in result bodies.
+The [review-operation design entry](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/review-operation-overlaps.md#agreed-direction-retain-diagnostic-probes-in-review-results)
+records the agreed direction for recording concrete probe outputs in result bodies.
 This workshop owns their evaluation, not a duplicate retention specification.
 Assess separately whether the probe faithfully represents the passage and its
 context, and whether the resulting finding is correct. Include consequential

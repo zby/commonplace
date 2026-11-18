@@ -14,9 +14,8 @@ The working directory outlives the run. Its record keeps every handoff check
 and how the run ended, so the directories are the operational record of
 ingest drafting. ``prune_published`` deletes old published runs.
 
-Keeping finished runs is provisional. The records exist to decide whether the
-ingest skill keeps its repair round; the end condition is in
-kb/work/decision-lifecycle-evidence/ingest-working-directory.md.
+Finished runs support debugging and the decision whether to keep the ingest
+skill's repair round. Settling that decision alone does not authorize pruning.
 
 Rules that hold for an ingest at any time are ordinary validation
 (``validate_ingest_contract``). A handoff treats their warnings, and dead

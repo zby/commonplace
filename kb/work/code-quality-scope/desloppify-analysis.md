@@ -128,20 +128,20 @@ Each is a candidate for the workshop that owns the matter. None is adopted.
 
 1. **Exclusion lists per criterion.** The `skip` lists do the job of the
    "contrastive preservation examples" entry of 2026-11-16 in
-   [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md#use-existing-decisions-to-calibrate-existing-operations):
+   [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md#use-existing-decisions-to-calibrate-existing-operations):
    they tell the reviewer when a suspicious construction carries meaning. The
    form is cheap: a short list beside the criterion, grown from rejected
-   findings. Owner: decision-lifecycle-evidence.
+   findings. Deferred; not commissioned.
 2. **Dismissal by fingerprint.** A finding the operator struck should not
    return on the next sweep in the same form. Desloppify fingerprints the
    concern type, file and signal keys. Whether Commonplace review results
    already suppress a struck finding after the note changes was not checked.
-   Owner: decision-lifecycle-evidence.
+   Deferred; not commissioned.
 3. **Settled characteristics of the target.** A per-note or per-collection
    list of deliberate choices that reviewers receive, so they stop
    re-reporting them. This overlaps with the cleared candidates retained under
    ADR 132. It also costs context on every review and can go stale. Treat as a
-   question, not a proposal. Owner: decision-lifecycle-evidence.
+   question, not a proposal. Deferred; not commissioned.
 4. **Clustering findings across targets by root cause.** Commonplace plans one
    note at a time. A defect repeated across many notes usually has one cause
    in a type spec, an instruction or a skill. Desloppify's triage looks for

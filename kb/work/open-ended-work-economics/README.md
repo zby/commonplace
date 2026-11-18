@@ -159,8 +159,8 @@ retained evidence and extract only what is needed.
   owns the derive, compare, locate, revise, evaluate and apply interface.
   Proposed changes to those operations go there.
 - [conjecture-store](../conjecture-store/README.md) and
-  [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
-  own conjecture and decision storage and lifecycle. Do not design a
+  [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+  address conjecture and decision storage, respectively. Do not design a
   generalized commitment store here.
 - [reflective-improvement-divergence](../reflective-improvement-divergence/README.md)
   and [self-revision-design-space](../self-revision-design-space/README.md)

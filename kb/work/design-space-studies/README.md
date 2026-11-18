@@ -27,11 +27,10 @@ goes to `kb/theory/`. Then delete this directory and its entry in
 
 ## Coupling with other workshops
 
-- [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md) owns
+- [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md) examined
   the question of what must survive behind an adopted architecture so later
   work can reconsider alternatives. A design-space map is one candidate answer
-  to that question. Do not decide durable storage for maps here. Hand findings
-  about retention to that workshop.
+  to that question. Do not decide durable storage for maps here. Revisit retention only if a concrete loss makes it necessary.
 - [conjecture-store](../conjecture-store/README.md) is developing cheap
   refutable records for theory. A map's axes and compatibility rules are
   conjectures of that kind. Borrow from it without adopting its record type.

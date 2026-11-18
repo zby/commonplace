@@ -6,8 +6,8 @@ Decide whether the local operational state under `kb/reports/state/` should be
 kept in a second, public Git repository, and if so prepare and create it.
 
 The operator opened this workshop on 2026-11-11. It started from a question
-about the [decision lifecycle](../decision-lifecycle-evidence/README.md)
-workshop: that workshop asks what earns admission to the main record, and
+about the [decision lifecycle](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+workshop: that workshop asked what earns admission to the main record, and
 storage size is not what limits admission. A second repository could keep
 state durably without admitting it.
 
@@ -399,9 +399,8 @@ ordinary deletion commits leave it in Git history.
   class before deleting live state. This concerns the current tree only;
   Git-history pruning is deferred.
 - **Effect on retention choices already made.** The
-  [ingest working directory case](../decision-lifecycle-evidence/ingest-working-directory.md)
-  ends by deleting run records once one decision is made. A durable state
-  repository changes that calculation.
+  [ingest working directory case](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/ingest-working-directory.md)
+  originally proposed deleting run records after one decision. Debugging later supplied a reason to keep them.
 - **The fixed boundary it touches.** The decision-lifecycle workshop says not
   to create duplicate primary process records. State files are not session
   traces, but the boundary should be restated if this goes ahead.
@@ -413,8 +412,10 @@ and deleting the abandoned review data that the state README already permits.
 It does not authorize creating or pushing to a public repository; that needs
 the operator's explicit go-ahead after the checks.
 
-Coordinate with [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md),
-which owns the retention economics, and
+The closed [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+workshop distinguished debugging retention from admission to the main record.
+Do not extend its inventory unless a debugging task encounters missing evidence.
+Coordinate with
 [lineage-mechanisms](../lineage-mechanisms/README.md), which owns general
 derived-material retention design.
 

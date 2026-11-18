@@ -207,7 +207,7 @@ on theory notes only, and says nothing yet about other collections.
 A general-claim test was drafted for it the same day and withdrawn. Its
 questions are already asked by `frontmatter/claim-strength` and
 `semantic/unwarranted-scope`, as the
-[overlap map](../decision-lifecycle-evidence/review-operation-overlaps.md)
+[overlap map](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/review-operation-overlaps.md)
 records. Both gates had run on the note that prompted the test, and both
 had written the general claim out and judged it derived, not asserted. So
 a requirement to write the claim down would not have changed their

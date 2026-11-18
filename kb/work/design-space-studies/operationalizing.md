@@ -74,8 +74,8 @@ the schema should be read off the fields that pilots actually used.
 - **Maps that survive commitment clash with the workshop lifecycle.** The
   exploration wants maps kept and revised after the ADR. Workshops are
   consumed and deleted. Where a map lives after commitment is exactly the
-  question [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
-  owns, so this workshop should not answer it.
+  question [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+  examined, so this workshop should not answer it.
 - **The "distinctive Commonplace contribution" claim is untested.** Whether
   combining these methods beats using any one of them is what the pilots
   should find out, not something to assert up front.

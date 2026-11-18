@@ -6,7 +6,7 @@ Drafted 2026-11-14 and run the same day on the operator's approval. The [results
 
 When one (note, criterion) pair is reviewed again on unchanged inputs, how often does the outcome change, and which gates account for the changes?
 
-The [first run](../decision-lifecycle-evidence/first-run.md) of the fix-findings variant prompted the question. Its re-review moved verdicts on passages the run had not edited, so one re-review could not separate the effect of a fix from run-to-run variation.
+The [first run](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/first-run.md) of the fix-findings variant prompted the question. Its re-review moved verdicts on passages the run had not edited, so one re-review could not separate the effect of a fix from run-to-run variation.
 
 ## Operator assumption this pilot works under
 

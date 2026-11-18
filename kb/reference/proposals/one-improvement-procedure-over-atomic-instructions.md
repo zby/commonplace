@@ -148,7 +148,7 @@ What this gives up is stated plainly. Code no longer refuses a text that changed
 
 ## Options
 
-**A. Run as a directory type.** As described above: roles for report, findings, edit chain and answers, validated as one unit. A [workshop draft](../../work/decision-lifecycle-evidence/improvement-run-type.md) gives the layout and what validation can and cannot check.
+**A. Run as a directory type.** As described above: roles for report, findings, edit chain and answers, validated as one unit. A [workshop draft](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/improvement-run-type.md) gives the layout and what validation can and cannot check.
 Operativity: the variant's agent writes the members; `commonplace-validate` and the decisions command consume them. Force against: directory types are experimental, and a second workflow will find their rough edges.
 
 **B. Run as one typed file.** A single run report whose frontmatter holds the decision list, schema-checked like the full-pass packet; the texts stay in git.

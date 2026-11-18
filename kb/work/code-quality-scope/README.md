@@ -9,7 +9,7 @@ The operator posed this on 2026-11-16 in two steps. First: Commonplace
 doctrine mixes code and natural-language instructions, so code quality should
 matter; the automatic improvement procedures being built for texts
 ([ADR 135](../../reference/adr/135-improvement-procedures-are-three-plans-on-one-runner.md),
-developed in [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md))
+developed in [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md))
 could perhaps be used for code too. Second, the same day, while the first
 analysis was running: maybe Commonplace should focus on the natural-language
 part and let others cover the coding part.
@@ -105,8 +105,8 @@ This commission permits design work in this directory and its entry in the
 active list. It does not authorize installing or running desloppify, paid
 workers, code changes or new operations.
 
-- [decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
-  owns the atoms, the grouping and calibration from operator decisions.
+- [decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+  records the original design. For calibration, see the [authority-grades proposal](../../reference/proposals/authority-grades-and-learning-from-operator-decisions.md).
 - [stochastic-operation-testing](../stochastic-operation-testing/README.md)
   owns evaluation cases and measurement.
 - [code-simplification](../code-simplification/README.md) owns the current

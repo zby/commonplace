@@ -131,8 +131,8 @@ The cost is one shared type contract for the store and theory, which
 forecloses a lighter record for theory notes. Accepted: a theory note
 without stated refuters is already a defect by the KB's standards. The KB's placement test already uses this free-variable
 reading (`kb/theory/COLLECTION.md`, evidence placement), and the
-[decision-lifecycle-evidence](../decision-lifecycle-evidence/README.md)
-workshop already treats proposals and ADRs as views of a continuing decision
+[decision-lifecycle-evidence](https://github.com/zby/commonplace/blob/142bff37aeaf7728a0c5cf9f3cd1c225598ba565/kb/work/decision-lifecycle-evidence/README.md)
+workshop treated proposals and ADRs as views of a continuing decision
 record; the store gives that view a source.
 
 ## Threshold vocabulary (decided at stage 0)
