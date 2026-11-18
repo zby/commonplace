@@ -115,7 +115,12 @@ and one item per unfinished piece of work in dependency order, each with
 `kind`, `what`, `actor` (`operator`, `session-agent`, or `worker` with its
 `effort`), `after` (the ids of the items to settle first), `how` (the step
 of the continuation instruction and, where one exists, the `command`), the
-`answers` files it waits for and its `evidence`. The run also keeps its
+`answers` files it waits for and its `evidence`. A plan entry not run is
+continued by `run revise NOTE --plan FILE`, where FILE is a one-entry plan
+the run wrote under `artifact/continue/`, with the entry's scope and the
+run's purpose and must-keep list; an entry that applies the operator's
+answers is continued by `--answers FILE`. A fix names the run's copy of
+its review result, which no later sweep replaces. The run also keeps its
 report as report.json.
 
 `--triage` launches no review and no assessor: it writes one pending answers

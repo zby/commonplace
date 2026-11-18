@@ -1,7 +1,9 @@
 """Publishing a held candidate: only the exact candidate, only over the run's start text, under the same brief."""
 
+import contextlib
 import json
 import sys
+import threading
 
 import pytest
 
@@ -142,3 +144,36 @@ def test_apply_writes_only_from_the_start_text(tmp_path):
     with pytest.raises(Conflict, match="proposed.md"):
         apply(tmp_path, "note.md", "start", "final", proposed)
     assert note.read_text() == "other"
+
+
+def test_two_publications_over_one_text_publish_once(tmp_path, monkeypatch):
+    """Two runs on one note, each past its own run lock: the note's publication lock lets one publish."""
+    root = tmp_path / "repo"
+    (root / "kb/notes").mkdir(parents=True)
+    (root / NOTE).write_text(START)
+    barrier, checked = threading.Barrier(2, timeout=1), edits.unchanged
+
+    def unchanged(*args):                      # both runs check, then both write, unless the lock orders them
+        checked(*args)
+        with contextlib.suppress(threading.BrokenBarrierError):
+            barrier.wait()
+
+    monkeypatch.setattr(edits, "unchanged", unchanged)
+    outcomes = []
+
+    def publish(number):
+        run_dir = edits.new_run_dir(root, "revise", NOTE)
+        try:
+            outcomes.append(edits.record_publication(run_dir, root, NOTE, START, f"{START}Run {number}.\n", [],
+                                                     "2026-11-18T00:00:00Z"))
+        except Conflict as conflict:
+            outcomes.append(conflict)
+
+    threads = [threading.Thread(target=publish, args=(number,)) for number in (1, 2)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    assert sorted(type(outcome).__name__ for outcome in outcomes) == ["Conflict", "dict"]
+    [entry] = [outcome for outcome in outcomes if isinstance(outcome, dict)]
+    assert (root / NOTE).read_text() == (root / entry["text"]).read_text()

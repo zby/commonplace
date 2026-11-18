@@ -185,6 +185,15 @@ def revise(repo, capsys, *args):
     return code, json.loads(captured.out) if code != 2 else captured.err, repo[2].read_text().splitlines()[len(before):]
 
 
+def entry_plan(repo, item):
+    """The plan file a continuation item's `--plan` command names, read as YAML."""
+    command = shlex.split(item["how"]["command"])
+    assert command[:4] == ["commonplace-review", "run", "revise", NOTE_PATH] and command[4] == "--plan"
+    [path] = command[5:]
+    assert path in item["evidence"]
+    return yaml.safe_load((repo[0] / path).read_text())
+
+
 def artifact_file(repo, report, name):
     return repo[0] / report["run-dir"] / "artifact" / name
 
@@ -377,7 +386,8 @@ def test_a_run_publishes_and_ends_at_a_per_item_pass_and_later_runs_continue_it(
     assert proposals["how"]["command"] == f"commonplace-review run revise {NOTE_PATH} --answers {file} --purpose p"
     assert proposals["how"]["record"] == f"commonplace-review answers record {file}"
     assert file in proposals["evidence"] and any(e.endswith("/result.md") for e in proposals["evidence"])
-    assert entry["effort"] == "simple" and entry["how"]["command"].endswith("--pass place-external-systems --purpose p")
+    assert entry["effort"] == "simple" and entry_plan(repo, entry) == {
+        "purpose": "p", "must-keep": [], "stop": None, "passes": [{"pass": "place-external-systems"}]}
     [stop] = [e for e in decisions.entries(repo[0]) if e["class"] == "plain-wording"]
     assert (stop["decision"], stop["item"]) == ("pending", file)
 
@@ -540,7 +550,7 @@ def test_a_held_candidate_ends_the_run_before_the_next_per_item_pass_asks(repo, 
     assert items_of(ended) == [("held-candidate", "operator", []), ("per-item-entry", "worker", ["1"]),
                                ("direct-entry", "worker", ["2"])]
     per_item = ended["continuation"]["items"][1]
-    assert per_item["effort"] == "simple" and "--pass plain-wording" in per_item["how"]["command"]
+    assert per_item["effort"] == "simple" and entry_plan(repo, per_item)["passes"] == [{"pass": "plain-wording"}]
     assert ended["continuation"]["made-for"]["sha256"] == observations.sha(original.encode())
     code, _ = publish(repo, capsys, ended)
     assert code == 0 and LONG in note_text(repo)
@@ -765,10 +775,10 @@ def test_a_failure_after_assessment_leaves_the_rest_of_the_plan_in_order(repo, c
     assert launches == ["assess - big", ORDINARY[0], *([ORDINARY[1]] * 3)]
     assert items_of(stopped) == [("failure", "session-agent", []), ("direct-entry", "worker", ["1"]),
                                  ("direct-entry", "worker", ["2"])]
-    names = [item["how"]["command"].split("--pass ")[1].split()[0] for item in stopped["continuation"]["items"][1:]]
+    names = [entry_plan(repo, item)["passes"][0]["pass"] for item in stopped["continuation"]["items"][1:]]
     assert names == ["place-external-systems", "opening-and-title"]
     evidence = stopped["continuation"]["items"][1]["evidence"]
-    assert [Path(e).name for e in evidence] == ["assessment.md", "plan.yaml"]
+    assert [Path(e).name for e in evidence] == ["assessment.md", "plan.yaml", "2.yaml"]
 
 
 def test_every_pass_candidate_comes_from_the_edit_route(repo, capsys, tmp_path):
@@ -1039,7 +1049,7 @@ def test_finding_runs_the_fix_with_its_result_as_input(repo, capsys):
     assert done["plan"]["passes"] == [{"pass": "fix-strategy-taxonomy", "scope": None, "finding": finding}]
     [state] = done["passes"]
     assert state["name"] == "fix-strategy-taxonomy/prose/residue"
-    assert state["finding"] == finding and state["state"] == "applied"
+    assert state["finding"] == f"{done['run-dir']}/artifact/findings/prose/residue.md" and state["state"] == "applied"
     [call] = captured_inputs(repo[2])
     assert call["inputs"]["finding"] == (repo[0] / finding).read_text()
     assert done["published"] and note_text(repo).endswith("fix-strategy-taxonomy (all).\n")
@@ -1094,7 +1104,9 @@ def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     given = {name: text for name, text in call["inputs"].items() if name.startswith("finding")}
     assert sorted(given.values()) == sorted((repo[0] / path).read_text() for path in (warned, failed))
     assert revise_module.FIX in call["inputs"]["passes"]
-    assert report["passes"][0]["finding"] == report["plan"]["passes"][0]["finding"]
+    kept = report["passes"][0]["finding"]
+    assert kept == f"{report['run-dir']}/artifact/findings/prose/residue.md", "the run's copy of the result"
+    assert (repo[0] / kept).read_text() == (repo[0] / report["plan"]["passes"][0]["finding"]).read_text()
     assert report["published"] and report["publications"][0]["entries"][0].startswith(revise_module.FIX)
 
 
@@ -1742,3 +1754,58 @@ def test_answers_refused_inside_the_run_end_it_with_a_report(repo, capsys, tmp_p
     assert report.stopped and "made from another text" in report.stopped and not report.published
     assert (run_dir / revise_module.REPORT).is_file() and (run_dir / revise_module.CONTINUATION).is_file()
     assert [item["kind"] for item in report.continuation["items"]] == ["failure", "per-item-entry"]
+
+
+# --- Continuation items reproduce the entry: scope, a kept finding, stale results -----------------
+
+def scoped_plan(tmp_path, *entries):
+    path = tmp_path / "scoped.yaml"
+    path.write_text(yaml.safe_dump({"purpose": "p", "must-keep": [], "stop": None, "passes": list(entries)}))
+    return path
+
+
+def test_a_continued_entry_keeps_its_scope(repo, capsys, tmp_path):
+    start(repo)
+    (repo[0] / "fail-readability-and-flow").touch()
+    plan = scoped_plan(tmp_path, {"pass": "readability-and-flow", "scope": "the opening only"})
+    code, stopped, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(plan))
+    assert code == 1 and items_of(stopped) == [("failure", "session-agent", []), ("direct-entry", "worker", ["1"])]
+    (repo[0] / "fail-readability-and-flow").unlink()
+    code, done, launches = continued(repo, capsys, stopped["continuation"]["items"][1])
+    assert code == 0 and launches == [ORDINARY[0]] and done["published"]
+    assert done["plan"]["passes"] == [{"pass": "readability-and-flow", "scope": "the opening only"}]
+    call = captured_inputs(repo[2])[-1]
+    assert call["pass"] == "readability-and-flow" and call["inputs"]["scope"] == "the opening only"
+    assert note_text(repo).endswith("readability-and-flow (the opening only).\n")
+
+
+def test_a_continued_fix_reads_the_result_the_run_read(repo, capsys, tmp_path):
+    start(repo)
+    result = stored(repo, "warn", found=[finding("the original finding")])
+    original = (repo[0] / result).read_text()
+    (repo[0] / "fail-fix-strategy-taxonomy").touch()
+    code, stopped, _ = revise(repo, capsys, NOTE_PATH, "--plan",
+                              str(scoped_plan(tmp_path, {"pass": revise_module.FIX, "finding": result})))
+    assert code == 1 and [item["kind"] for item in stopped["continuation"]["items"]] == ["failure", "fix-entry"]
+    stored(repo, "warn", found=[finding("a later sweep's finding")])     # the sweep replaces the stored result
+    assert (repo[0] / result).read_text() != original
+    (repo[0] / "fail-fix-strategy-taxonomy").unlink()
+    code, _, launches = continued(repo, capsys, stopped["continuation"]["items"][1])
+    assert code == 0 and launches == ["pass fix-strategy-taxonomy big"]
+    call = captured_inputs(repo[2])[-1]
+    assert call["inputs"]["finding"] == original and "a later sweep" not in call["inputs"]["finding"]
+
+
+def test_stale_reviews_counts_only_the_results_the_publication_made_stale(repo, capsys, tmp_path):
+    start(repo)
+    stored(repo, "warn")                                # watches the body, which the passes change
+    title = repo[0] / "kb/instructions/review-gates/prose/title.md"
+    title.parent.mkdir(parents=True, exist_ok=True)
+    title.write_text("---\ndepth: 2\nwatches: [title]\n---\n\n# Title\n\nJudge the title.\n")
+    stored(repo, "warn", gate="kb/instructions/review-gates/prose/title.md")
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=THREE)))
+    assert ended["published"]
+    fresh = {Path(row.criterion).stem: row.freshness.state for row in results.note_rows(repo[0], NOTE_PATH)}
+    assert fresh == {"residue": "stale", "title": "fresh"}
+    [stale] = [item for item in ended["continuation"]["items"] if item["kind"] == "stale-reviews"]
+    assert stale["what"] == "1 stored review result(s) of the note are stale. Nothing schedules reviewing them again."

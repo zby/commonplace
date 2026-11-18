@@ -18,7 +18,10 @@ at most twice, and writes nothing to the note after it ends. What it could not f
 its **continuation record** (`CONTINUATION`, `continuation()`), also given in
 the report: the text it was made for and each unfinished item in dependency
 order, with the actor expected to resolve it, the items to settle first,
-the command or instruction step that proceeds and the evidence. A later
+the command or instruction step that proceeds and the evidence. An entry
+not run is continued from a one-entry plan file the run writes under
+`artifact/continue/` (`CONTINUE_DIR`), so its scope is kept; a fix entry
+names the run's copy of its review result (`_kept_finding()`). A later
 command acts on a stop's output by naming the file or the run:
 
 1. **Assessment.** One `decide()` ask, on the judgment profile, with two
@@ -194,6 +197,8 @@ ASSESSMENT_INPUTS = "assessment-inputs.json"
 TRIAGE_INPUTS = "triage-inputs.json"
 """The review results a triage asked about: a record of what the run read."""
 TRIAGE_DIR = "findings"
+CONTINUE_DIR = "continue"
+"""Under a run's `artifact/`: one plan file per continuation item for an entry not run, named by the item's id."""
 """Where a triage keeps, under the run's `artifact/`, a copy of each review result it asks about: the question."""
 FINDING_ANSWERS = "finding-answers"
 """The input role that hands the fix the operator's approved answers on its finding's review result."""
@@ -435,9 +440,10 @@ def read_plan(text: str, root: Path, artifact: str, known: dict[str, Pass] | Non
                        for entry in data["passes"]]}
 
 
-def one_entry_plan(name: str, finding: str | None, purpose: str | None, must_keep: list[str]) -> str:
-    """The plan of a focused run: one entry for the pass `name`, naming its finding when it takes one."""
-    entry = {"pass": name, **({FINDING: finding} if finding is not None else {})}
+def one_entry_plan(name: str, finding: str | None, purpose: str | None, must_keep: list[str],
+                   scope: str | None = None) -> str:
+    """The plan of a focused run: one entry for the pass `name`, with its scope and, when it takes one, finding."""
+    entry = {"pass": name, **({"scope": scope} if scope else {}), **({FINDING: finding} if finding is not None else {})}
     return yaml.safe_dump({"purpose": purpose or FOCUSED_PURPOSE, MUST_KEEP: list(must_keep), "stop": None,
                            "passes": [entry]}, sort_keys=False, allow_unicode=True)
 
@@ -718,6 +724,18 @@ def role_section(report: str) -> str | None:
     return found.group(1).strip() or None if found else None
 
 
+def _kept_finding(run: Run, root: Path, finding: Finding) -> Finding:
+    """The finding as a file no later sweep replaces: a stored result is copied into the run's `findings/`.
+
+    A result already under a run's records, such as a triage's copy, is
+    kept where it is. The fix, the continuation record and its plan files
+    name the copy, so a continued fix reads the result this run read.
+    """
+    if Path(finding.path).is_relative_to(gates.RUNS):
+        return finding
+    return replace(finding, path=_rel(root, run.accept(f"{TRIAGE_DIR}/{finding.criterion_id}.md", finding.text)))
+
+
 def _failed(states: list[PassState], index: int, reason: str) -> None:
     """Mark the entry at `index` as `problem` with `reason`; the later entries stay `pending`."""
     states[index].state, states[index].reason = "problem", reason
@@ -753,7 +771,7 @@ def _passes(run: Run, root: Path, artifact: str, start: str, plan: dict, known: 
     """
     finding_answers, given = finding_answers or {}, given or {}
     text = base = start                     # `base`: the note's text, the run's last publication or `start`
-    findings = {entry[FINDING]: read_finding(root, artifact, entry[FINDING])
+    findings = {entry[FINDING]: _kept_finding(run, root, read_finding(root, artifact, entry[FINDING]))
                 for entry in plan["passes"] if entry.get(FINDING)}
     entries = [(known[entry["pass"]], findings.get(entry.get(FINDING))) for entry in plan["passes"]]
     report.passes = [PassState(label(current.name, finding), entry["scope"], current.effort,
@@ -1318,24 +1336,27 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
                 or (current.name == CONVERSATION and not must_keep)):
             item = add("interactive-entry", f"The plan entry `{state.name}` is left for the interactive path.",
                        "session-agent", after=[] if state.state == "skipped" else after, evidence=evidence)
-        elif state.finding:
-            option = ["--answers", state.answers] if state.answers else ["--finding", state.finding]
-            item = add("fix-entry", f"The plan entry `{state.name}` was not run: it fixes a finding made on an "
-                       "earlier text" + (", as the operator's answers decide" if state.answers else "") + ".",
-                       "worker", effort=state.effort, after=after,
-                       command=_focused(artifact, option, purpose, must_keep),
-                       evidence=[*evidence, state.finding, *([state.answers] if state.answers else [])])
-        elif current.decision == "per-item":
-            option = ["--answers", state.answers] if state.answers else ["--pass", state.name]
-            item = add("per-item-entry", f"The plan entry `{state.name}` was not run; " + (
-                       "it applies the items the operator approved." if state.answers
-                       else "its proposals then wait for the operator."), "worker", effort=state.effort,
-                       after=after, command=_focused(artifact, option, purpose, must_keep),
-                       evidence=[*evidence, *([state.answers] if state.answers else [])])
         else:
-            item = add("direct-entry", f"The plan entry `{state.name}` was not run.", "worker", effort=state.effort,
-                       after=after, command=_focused(artifact, ["--pass", state.name], purpose, must_keep),
-                       evidence=evidence)
+            if state.answers:
+                command, own = _focused(artifact, ["--answers", state.answers], purpose, must_keep), [state.answers]
+            else:                   # the entry as the plan gave it, scope included, in a plan file of its own
+                own = [f"{artifact_dir}/{CONTINUE_DIR}/{len(items) + 1}.yaml"]
+                edits.write_text(root / own[0], one_entry_plan(current.name, state.finding, purpose, must_keep,
+                                                               state.scope))
+                command = shlex.join([*COMMAND.split(), artifact, "--plan", own[0]])
+            if state.finding:
+                item = add("fix-entry", f"The plan entry `{state.name}` was not run: it fixes a finding made on "
+                           "an earlier text" + (", as the operator's answers decide" if state.answers else "") + ".",
+                           "worker", effort=state.effort, after=after, command=command,
+                           evidence=[*evidence, state.finding, *own])
+            elif current.decision == "per-item":
+                item = add("per-item-entry", f"The plan entry `{state.name}` was not run; " + (
+                           "it applies the items the operator approved." if state.answers
+                           else "its proposals then wait for the operator."), "worker", effort=state.effort,
+                           after=after, command=command, evidence=[*evidence, *own])
+            else:
+                item = add("direct-entry", f"The plan entry `{state.name}` was not run.", "worker",
+                           effort=state.effort, after=after, command=command, evidence=[*evidence, *own])
         if state.state != "skipped":
             chain = item
     if _claim_questions(run_dir / "artifact" / ASSESSMENT):
@@ -1344,10 +1365,11 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
     if not items:
         return None
     if report.published:
-        stored = [row for row in results.note_rows(root, artifact) if row.path is not None]
-        if stored:
-            add("stale-reviews", f"The publication made {len(stored)} stored review result(s) of the note stale; "
-                "reviewing them again launches one worker per review operation. Nothing schedules it.", "worker",
+        stale = [row for row in results.note_rows(root, artifact)
+                 if row.path is not None and row.freshness.state != "fresh"]
+        if stale:
+            add("stale-reviews", f"{len(stale)} stored review result(s) of the note are stale. Nothing schedules "
+                "reviewing them again.", "worker",
                 after=[item["id"] for item in items],
                 command=shlex.join(["commonplace-review", "status", artifact, "--stale"]),
                 evidence=[report.publications[-1]["diff"]])

@@ -3,10 +3,13 @@
 A workflow never lets a worker write the checkout. A worker's edited text is
 an output; code checks it against hard bounds (`bounds()`) and keeps the
 accepted text in memory and in the run's `artifact/` directory. The next
-step works on that text, not on the file. Only the workflow's last step
-writes the file, through `apply()`, and only over the text the run last
-knew: its start text, or the text it last published itself. Any other text
-is a change made outside the run, and `Conflict` stops the write.
+step works on that text, not on the file. Only a publication writes the
+file, through `apply()`, and only over the text the run last knew: its
+start text, or the text it last published itself. Any other text is a
+change made outside the run, and `Conflict` stops the write. `apply()`
+holds the note's publication lock (`publication_lock()`) across the check
+and the write, so two runs on one note cannot both publish over the same
+text.
 
 Every invocation of a revise or rewrite workflow is a new run, in
 `new_run_dir()`: `<runs>/<workflow>/<note path without .md>/<UTC stamp>/`.
@@ -24,11 +27,16 @@ final text the run applied.
 
 from __future__ import annotations
 
+import contextlib
 import difflib
 import json
 import re
+import time
 import uuid
+from collections.abc import Iterator
 from pathlib import Path
+
+import workjig
 
 from commonplace.headless.jobs import Run, run_lock
 from commonplace.lib import answers, frontmatter
@@ -225,10 +233,43 @@ def unchanged(root: Path, note: str, start: str, proposed: Path) -> None:
                        f"The proposed text is {proposed.relative_to(root).as_posix()}")
 
 
+LOCKS = gates.STATE / "publication-locks"
+"""One lock directory per note, `<LOCKS>/<note path without .md>/`, held while a publication writes the note."""
+LOCK_WAIT = 60.0
+"""Seconds a publication waits for another publication of the same note."""
+
+
+@contextlib.contextmanager
+def publication_lock(root: Path, note: str, wait: float = LOCK_WAIT) -> Iterator[None]:
+    """Hold the note's publication lock, shared by every revise and rewrite run and by `publish`.
+
+    Run locks are per run, and two runs on one note have two run
+    directories, so they do not exclude each other's publications. This
+    lock does. It waits up to `wait` seconds, then raises Conflict.
+    """
+    lock, deadline = workjig.hold(root / LOCKS / Path(note).with_suffix("")), time.monotonic() + wait
+    while True:
+        try:
+            lock.__enter__()
+            break
+        except workjig.RunBusyError:
+            if time.monotonic() >= deadline:
+                raise Conflict(f"another publication of {note} holds its lock; nothing was written") from None
+            time.sleep(0.05)
+    try:
+        yield
+    finally:
+        lock.__exit__(None, None, None)
+
+
 def apply(root: Path, note: str, start: str, final: str, proposed: Path) -> None:
-    """Write `final` to the note, atomically and only over `start`; any other text is a Conflict."""
-    unchanged(root, note, start, proposed)
-    write_text(root / note, final)
+    """Write `final` to the note, atomically and only over `start`; any other text is a Conflict.
+
+    The check and the write happen under the note's publication lock.
+    """
+    with publication_lock(root, note):
+        unchanged(root, note, start, proposed)
+        write_text(root / note, final)
 
 
 def diff(before: str, after: str, fromfile: str, tofile: str) -> str:
