@@ -1,4 +1,9 @@
-"""Generate a promotion candidates report for an explicit collection."""
+"""Rank unstructured text files in an explicit collection by incoming links.
+
+Writes `kb/reports/state/promotion-candidates/<collection>/report.md`. Invalid
+frontmatter files are listed separately; validation-ignored subtrees are
+excluded.
+"""
 
 from __future__ import annotations
 

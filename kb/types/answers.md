@@ -44,7 +44,7 @@ For a review result, the operator decides whether each finding stands. `approved
 
 ## Decisions carried over
 
-A decision outlives the run it was made in. When a later run on the same note makes a proposal with the same `quote` and the same `change` as an item the operator already decided, the new answers file starts with that item decided: the earlier `state`, `reason`, `revisit`, `decided-by` and `decided-at`, and `carried-from` naming the earlier answers file. Code copies only an identical proposal. The operator sees the item at the stop and may change it; changing it removes `carried-from`. A proposal that differs in any way is asked as usual.
+A decision outlives the run it was made in. When a later run on the same note makes a proposal with the same `quote` and the same `change` as an item the operator already decided, or a triage surfaces a finding with the same criterion, `scope`, `quotes`, `reason` and `level`, the new answers file starts with that item decided (latest `decided-at` wins when decided more than once): the earlier `state`, `reason`, `revisit`, `decided-by` and `decided-at`, and `carried-from` naming the earlier answers file. Code copies only an identical item. The operator sees the item at the stop and may change it; changing it removes `carried-from`. An item that differs in any way is asked as usual.
 
 ## What happened after the decision
 

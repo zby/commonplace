@@ -678,13 +678,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--role",
-        help="Role the positional draft is intended for; its path comes from the type (requires --artifact; writes nothing).",
+        help=(
+            "Role the positional draft is intended for; its path comes from the type. "
+            "Draft replaces the incumbent in memory, absent-member findings are omitted, "
+            "writes nothing, refuses --output, and --json emits commonplace.validation.role-draft.v1 "
+            "(requires --artifact)."
+        ),
     )
     parser.add_argument(
         "--handoff", type=Path, metavar="RECORD",
         help=(
-            "Ingest handoff record from commonplace-ingest-handoff prepare; check the target "
-            "candidate as if it were at its ingest path, against that drafting run."
+            "Ingest handoff record from commonplace-ingest-handoff prepare; validates the "
+            "candidate at its ingest path, checks snapshot checksum and Quotes bytes, promotes "
+            "ingest contract and dead-link warnings to failures, and appends the verdict to the record."
         ),
     )
     parser.add_argument(

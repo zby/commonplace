@@ -1,4 +1,10 @@
-"""Show a compact read-only Commonplace project situation report."""
+"""Show a compact read-only Commonplace project situation report.
+
+Summarizes project and command versions, Git state, notes validation, and
+workshop-and-task lifecycle validation with stable next-action IDs. Does not
+mutate, rank with a model, schedule work, or become an authority for displayed
+state.
+"""
 
 from __future__ import annotations
 
@@ -71,8 +77,16 @@ def format_status_json(status: ProjectStatus) -> str:
 
 @checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
-    parser.add_argument("--json", action="store_true", help="Print structured status.")
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Print structured status (commonplace.status.v2).",
+    )
     parser.add_argument(
         "--collection", required=True,
         help="Collection name or path to validate; other status components keep their own scope.",

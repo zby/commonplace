@@ -291,7 +291,10 @@ def _review_verbs() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     status = commands.add_parser("status", help="show each pair's freshness and stored outcome; launches nothing")
     status.add_argument("notes", nargs="*", help="notes or directories; without them, every stored result")
-    status.add_argument("--criteria", nargs="+", help="with NOTES: gate ids, bundles or lenses (default: all gates)")
+    status.add_argument(
+        "--criteria", nargs="+",
+        help="with NOTES: gate ids, bundles, compression checks, or lenses (default: every bundle plus type and collection)",
+    )
     status.add_argument("--outcome", nargs="+", action="extend", choices=results.OUTCOMES,
                         help="keep rows whose stored outcome is one of these")
     freshness = status.add_mutually_exclusive_group()
@@ -315,7 +318,10 @@ def _review_verbs() -> argparse.ArgumentParser:
                                 "so `commonplace-review NOTES --resume RUN_DIR` asks again; revise and rewrite "
                                 "runs are never rerun")
     retry.add_argument("run", type=Path)
-    retry.add_argument("job", help="the job name: a pair's `<note>::<criterion-id>`")
+    retry.add_argument(
+        "job",
+        help="the job name: `<note>::<criterion-id>` for a pair, or `<note>::<bundle>/*` for a bundle call",
+    )
     retry.add_argument("--key", help="the answer to dismiss; otherwise the worker problems")
     acknowledge = commands.add_parser(
         "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
@@ -343,7 +349,7 @@ def _revise_parser() -> argparse.ArgumentParser:
     rev.add_argument("artifact", metavar="NOTE")
     mode = rev.add_mutually_exclusive_group()
     mode.add_argument("--full", action="store_true", help="run every review operation that declares a depth, "
-                      "and the type and collection reviews, then assess with the findings (the default)")
+                      "type and collection reviews, compression-synthesis, and role report, then assess (the default)")
     mode.add_argument("--quick", action="store_true", help="assess from the note and its fresh stored findings, "
                       "launching no review")
     mode.add_argument("--plan", type=Path, help="execute this fixed plan without assessment")
@@ -404,7 +410,7 @@ def _revise_verbs() -> argparse.ArgumentParser:
                                  "procedures; read-only, computes no statistic")
     listed.add_argument("--note", help="only this artifact path, such as kb/theory/foo.md")
     listed.add_argument("--class", dest="cls", metavar="NAME",
-                        help="only this action class: a pass name, publication, packet or fix-report")
+                        help="only this action class: a pass name, finding, stop, publication, packet or fix-report")
     listed.add_argument("--json", action="store_true")
     rw = commands.add_parser("rewrite", help="rewrite one note from its authorized sources under a commission; "
                              "the candidate is held, not published")
@@ -413,8 +419,14 @@ def _revise_verbs() -> argparse.ArgumentParser:
     rw.add_argument("--profile", help="worker profile for every call (default: the profile file's `effort` mapping "
                     "for `judgment`)")
     rw.add_argument("--timeout", type=float, help="seconds a launch may take")
-    edit = commands.add_parser("try", help="run one edit operation on one note and keep its candidate in the run; "
-                               "writes nothing to the checkout")
+    edit = commands.add_parser(
+        "try",
+        help="run one edit operation on one note and keep its candidate in the run; writes nothing to the checkout",
+        description=(
+            "Run one edit operation on one note and keep its candidate in the run; writes nothing to the checkout. "
+            "Enforces artifact bounds and protects unapproved proposal passages; does not detect edits outside listed proposals."
+        ),
+    )
     edit.add_argument("operation", nargs="?", help="the operation: a repository or library path, "
                       "such as instructions/simplification-passes/plain-wording.md")
     edit.add_argument("note", nargs="?", help="the note the operation edits")

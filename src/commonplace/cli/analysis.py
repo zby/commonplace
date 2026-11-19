@@ -68,8 +68,15 @@ def _parser() -> argparse.ArgumentParser:
     analyse.add_argument("--source-revision")
     batch = commands.add_parser(
         "batch", help="analyse an explicit target list and automatically integrate publications into main",
-        description="Run one bounded queue, then automatically integrate complete publications serially into clean main.")
-    batch.add_argument("targets", type=Path)
+        description=(
+            "Run one bounded queue, then automatically integrate complete publications serially into clean main. "
+            "Targets file: newline repository locators or a JSON list of objects with `source` and optional "
+            "`source-kind`, `system`, `source-identity`, and `source-revision` (unknown fields and duplicate "
+            "normalized identities are refused). Exit codes: 0 = every target integrated or completed locally "
+            "without publication; 1 = command or preparation failure; 2 = ordinary stops; 3 = pending work, "
+            "unintegrated publication, or operator attention (takes precedence)."
+        ))
+    batch.add_argument("targets", type=Path, help="newline repository locators or JSON list of target objects")
     batch.add_argument("--concurrency", type=int, default=4, help="simultaneous analyses (each allows --max-workers role workers)")
     for command in (analyse, batch):
         command.add_argument("--revision", help="operator-selected committed method (default HEAD, freshness checked)")
@@ -80,10 +87,22 @@ def _parser() -> argparse.ArgumentParser:
         command.add_argument("--worktree-root", type=Path, help="new worktree parent (default ignored .commonplace/worktrees)")
         command.add_argument("--require-clean-origin", action="store_true")
         command.add_argument("--model", help="explicit initiating-agent attribution for the integration commit")
-    resume = commands.add_parser("resume", help="reconcile a controller before continuing pending or explicitly selected stopped targets")
+    resume = commands.add_parser(
+        "resume",
+        help="reconcile a controller before continuing pending or explicitly selected stopped targets",
+        description=(
+            "Reconcile preparation, allocation, and integration evidence and leases, then continue pending "
+            "targets. Stopped targets require --target <recorded-normalized-identity>. Never retries, "
+            "acknowledges, resets, or allocates replacements automatically."
+        ),
+    )
     resume.add_argument("controller", type=Path)
     resume.add_argument("--target", action="append", default=[], help="recorded normalized identity to explicitly resume; never allocates a replacement")
-    report = commands.add_parser("report", help="read the durable controller report without effects")
+    report = commands.add_parser(
+        "report",
+        help="read the durable controller report without effects",
+        description="Read saved controller state without reconciliation, side effects, or liveness claims.",
+    )
     report.add_argument("controller", type=Path)
     execute = commands.add_parser("execute", help="pinned-child execution with an idempotent allocation key (automation protocol)")
     execute.add_argument("key")
@@ -94,7 +113,15 @@ def _parser() -> argparse.ArgumentParser:
     execute.add_argument("--max-workers", type=int, default=3)
     execution_report = commands.add_parser("inspect-execution", help="read allocation/result and current inspection through the pinned command")
     execution_report.add_argument("key")
-    prepare = commands.add_parser("prepare", help="prepare a commit-bound worktree and local commands")
+    prepare = commands.add_parser(
+        "prepare",
+        help="prepare a commit-bound worktree and local commands",
+        description=(
+            "Create a dedicated Commonplace source worktree, install and verify its local command environment, "
+            "and pin the selected commit and 12-hex worktree token. Without --revision, refuses HEAD behind the "
+            "default branch. Startup instruction or configuration differences from the selected commit always stop preparation."
+        ),
+    )
     prepare.add_argument("--name", required=True)
     prepare.add_argument("--revision")
     prepare.add_argument("--worktree", type=Path)
@@ -103,7 +130,15 @@ def _parser() -> argparse.ArgumentParser:
         help="reject unrelated uncommitted origin changes (otherwise excluded from the worktree)",
     )
     prepare.add_argument("launch", nargs=argparse.REMAINDER, help="optional fresh harness command after --")
-    run = commands.add_parser("run", help="run an analysis in this prepared worktree, or resume one")
+    run = commands.add_parser(
+        "run",
+        help="run an analysis in this prepared worktree, or resume one",
+        description=(
+            "Allocate a run under kb/agentic-system-analyses/state/ or resume an existing one (publication-only; "
+            "holds the run lock). Saves an all-attempt trace scan and runs an advisory audit for completed Pi or "
+            "Claude Code runs. Exits 0 on receipt, 2 when stopped, 1 on command failure."
+        ),
+    )
     run.add_argument("run", nargs="?", type=Path, help="an allocated run to resume; otherwise a new run")
     run.add_argument("--system")
     run.add_argument("--source-identity")
@@ -113,23 +148,62 @@ def _parser() -> argparse.ArgumentParser:
                      f"(new-run default: {DEFAULT_WORKER_PROFILE})")
     run.add_argument("--timeout", type=float, default=3 * 3600, help="seconds per worker launch")
     run.add_argument("--max-workers", type=int, default=3, help="workers running at once")
-    inspect = commands.add_parser("inspect", help="print the run's state, jobs, members and receipt as JSON")
+    inspect = commands.add_parser(
+        "inspect",
+        help="print the run's state, jobs, members and receipt as JSON",
+        description=(
+            "Read-only JSON dump of run state, parameters, opening metadata, boundary disposition, verdicts, "
+            "worker problems, job launches/answers (with keys), accepted digests, receipt, and advisory-audit status."
+        ),
+    )
     inspect.add_argument("run", type=Path)
-    reset = commands.add_parser("reset", help="withdraw the run's unreleased publication so a rerun can publish")
+    reset = commands.add_parser(
+        "reset",
+        help="withdraw the run's unreleased publication so a rerun can publish",
+        description=(
+            "Withdraw an unreleased worktree publication: preserve exact published bytes under withdrawn/, "
+            "restore the opening incumbent, and delete the receipt so a rerun can publish. Refuses already-integrated runs."
+        ),
+    )
     reset.add_argument("run", type=Path)
-    retry = commands.add_parser("retry", help="dismiss a job's worker problems, or one answer, so a rerun asks again")
+    retry = commands.add_parser(
+        "retry",
+        help="dismiss a job's worker problems, or one answer, so a rerun asks again",
+        description=(
+            "Dismiss standing worker problems for a job, or one recorded answer (--key), under the run lock "
+            "so the next `run` asks again without spending an attempt."
+        ),
+    )
     retry.add_argument("run", type=Path)
     retry.add_argument("job")
     retry.add_argument("--key", help="the answer to dismiss, as `inspect` lists it; otherwise the worker problems")
     acknowledge = commands.add_parser(
-        "acknowledge", help="record that an unsettled worker launch has stopped; check the process first")
+        "acknowledge",
+        help="record that an unsettled worker launch has stopped; check the process first",
+        description=(
+            "Record operator confirmation that an unsettled worker launch has stopped. Takes the run lock and "
+            "inspects and kills nothing; confirm that the process and its children have exited first."
+        ),
+    )
     acknowledge.add_argument("run", type=Path)
     acknowledge.add_argument("launch")
-    integration_report = commands.add_parser("inspect-integration", help="read pinned integration intent and Git evidence")
+    integration_report = commands.add_parser(
+        "inspect-integration",
+        help="read pinned integration intent and Git evidence",
+        description="Read pinned integration intent and actual Git evidence without starting a transfer.",
+    )
     integration_report.add_argument("run", type=Path)
-    integrate = commands.add_parser("integrate", help="commit exact published bytes and merge into main")
+    integrate = commands.add_parser(
+        "integrate",
+        help="commit exact published bytes and merge into main",
+        description=(
+            "Verify opening/receipt bindings and exact retained bytes, then commit and merge into clean main "
+            "under an origin-wide lock. Conflicts preserve the branch and worktree. Supply --model for agent "
+            "commit attribution."
+        ),
+    )
     integrate.add_argument("run", type=Path)
-    integrate.add_argument("--model")
+    integrate.add_argument("--model", help="explicit initiating-agent attribution for the integration commit")
     return parser
 
 

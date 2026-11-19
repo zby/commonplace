@@ -150,8 +150,6 @@ The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connec
 
 ### Commands and implementation source
 
-The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. For exact command usage, prefer the live command's `--help`. For exact implementation behavior, inspect the source of the installed package rather than relying on a prose restatement; `commonplace-source` prints the package directory for the same installation that supplies the commands. Use `<library>/reference/` for architecture boundaries, invariants, rationale, and orientation that the implementation does not itself recover.
+The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. See `<library>/reference/commands.md` for the command catalogue, and prefer each live command's `--help` for exact usage. For exact implementation behavior, inspect the source of the installed package rather than relying on a prose restatement; `commonplace-source` prints the package directory for the same installation that supplies the commands. Use `<library>/reference/` for architecture boundaries, invariants, rationale, and orientation that the implementation does not itself recover.
 
 Call `commonplace-*` commands by bare name. They come from the user-level `llm-commonplace` uv tool installation; do not prepend project-venv paths or wrap them in `uv run`. If a command is missing, use `cp-skill-health-check` to distinguish a missing tool installation, a missing tool-directory `PATH` entry, or a shadowing executable. If a command warns that the project's Commonplace files are out of date, run `commonplace-init`.
-
-For review work (single-note review, triage, ack, or sweep), to fix review warnings or to improve a note, read `<library>/reference/README-REVIEW-SYSTEM.md`.

@@ -96,6 +96,8 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-health-check",
         "cp-skill-ingest",
         "cp-skill-snapshot-web",
+        "cp-skill-review",
+        "cp-skill-revise",
         "cp-skill-revise-autoreason",
         "cp-skill-write-multistage",
         "cp-skill-ground",

@@ -90,7 +90,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     commands = parser.add_subparsers(dest="command", required=True)
 
-    prepare = commands.add_parser("prepare", help="guard the target and open its working directory")
+    prepare = commands.add_parser(
+        "prepare",
+        help="guard the target and open its working directory",
+        description=(
+            "Guard the target and open kb/reports/state/ingest/<slug>/. Requires "
+            "the name-paired snapshot, refuses an incumbent whose snapshot_sha256 "
+            "differs from the snapshot, and refuses an open prior run. Only the "
+            "last run of an ingest is kept (a finished run is replaced)."
+        ),
+    )
     prepare.add_argument("ingest", type=Path, help="the .ingest.md output path")
     prepare.add_argument("--occasion", metavar="TEXT", help="the supplied occasion, verbatim")
     prepare.add_argument("--code-grounded", action="store_true", help="the run has code-grounding context")

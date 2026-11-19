@@ -1,5 +1,8 @@
 """Relocate a KB note by renaming it, moving it, or both.
 
+A note declaring `brief:` moves with its `<stem>.brief.md` sidecar; a brief
+cannot be relocated on its own.
+
 Usage:
     commonplace-relocate-note kb/theory/my-note.md "New note title"
     commonplace-relocate-note kb/theory/my-note.md --to kb/theory/definitions

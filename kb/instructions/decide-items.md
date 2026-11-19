@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: every item of the question carries the operator's own decision, with the operator's reason where one is required, so that only what the operator approved is applied and the reasons stay available for revising the procedure that proposed the items.
 
-Consumption: an agent in a session with the operator. It is reached from a `proposals`, `findings` or `plan-stop` item of a continuation record through [continue a revise pass](./continue-a-revise-pass.md), from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-revise triage NOTE`), after `commonplace-revise try` returned `proposed`, or after `commonplace-review record` wrote answers files over an overtaken run's findings ([below](#findings-answered-by-a-structural-change)). Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
+Consumption: an agent in a session with the operator. It is reached from a `proposals`, `findings` or `plan-stop` item of a continuation record through [continue a revise pass](./continue-a-revise-pass.md), from [revise an article or note](./simplification-passes/revise-an-article-or-note.md) step 3, from a triage (`commonplace-revise triage NOTE`), after `commonplace-revise try` returned `proposed`, or after `commonplace-revise answers create --run` wrote answers files over an overtaken run's findings ([below](#findings-answered-by-a-structural-change)). Nothing here is inherited from the worker instruction; the rules below are the whole procedure. For the approval of one exact text, follow [approve a text](./approve-a-text.md) instead.
 
 Inputs:
 

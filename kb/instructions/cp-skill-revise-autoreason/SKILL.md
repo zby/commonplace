@@ -1,6 +1,6 @@
 ---
 name: cp-skill-revise-autoreason
-description: "Experimentally revise a note with fresh critic, author, synthesizer, and blind-judge agents while retaining the incumbent as fallback."
+description: "Experimentally revise a note with fresh critic, author, synthesizer, and blind-judge agents, keeping the incumbent as fallback. Use only for AutoReason tournament trials; use cp-skill-revise for standard review-driven revision."
 type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep, Task

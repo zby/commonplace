@@ -66,7 +66,7 @@ commonplace-analysis batch /absolute/targets.txt --concurrency 4
 ```
 
 The list is newline repository locators or a JSON list of target objects. See
-`commonplace-analysis batch --help` and the [command reference](../../../reference/commands.md#commonplace-analysis).
+`commonplace-analysis batch --help` for the target-object fields and exit codes.
 Duplicate normalized identities are refused. Keep triage rationale outside the
 source inputs. Four simultaneous analyses with the default three role workers
 permit twelve role workers, not four. Audits occupy their analysis's slot.
@@ -106,9 +106,10 @@ publication-only controllers keep that policy; resuming one does not grant
 automatic integration authority. Unsettled workers, uncertain effects and
 interrupted audits require operator attention; missing
 PIDs do not prove descendants stopped. Never acknowledge, retry, reset or launch
-a replacement on the command's convenience or an audit's authority. The
-[command reference](../../../reference/commands.md#commonplace-analysis) describes
-separately authorized low-level recovery.
+a replacement on the command's convenience or an audit's authority. See
+`commonplace-analysis --help` and each subcommand's `--help` (`prepare`, `run`,
+`inspect`, `retry`, `acknowledge`, `reset`, `integrate`, `inspect-integration`)
+for separately authorized low-level recovery.
 
 ## Advisory trace audit
 

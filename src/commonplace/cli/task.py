@@ -3,8 +3,11 @@
     commonplace-task run NAME [--profile NAME] [--timeout SECONDS]
 
 Runs in the current checkout, on the current branch, as the task's runbook
-says; prints a JSON report and exits nonzero when the run left anything the
-runbook did not allow. Records live under kb/reports/state/tasks/.
+says; prints a JSON report and checks git commit count, subject, write scope,
+and uncommitted leftovers. Records live under kb/reports/state/tasks/.
+Exits 0 when all checks pass, 1 when any check fails, and 2 when the runbook
+or profile cannot be loaded. The worker's own report is shown but decides
+nothing.
 """
 
 from __future__ import annotations
@@ -19,7 +22,11 @@ from commonplace.lib.tasks import launch, load_profile, load_runbook, report_dic
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="commonplace-task", description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(
+        prog="commonplace-task",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     run = commands.add_parser("run", help="run one task unattended in this checkout and check its commit")
     run.add_argument("name", help="the runbook kb/tasks/<name>.md")
