@@ -1,276 +1,82 @@
 # Reference
 
-Reference documentation for the Commonplace system — how to operate it and how it works.
-
-This collection answers two kinds of question:
-
-- **How do I...?** — operational how-tos for the common workflows your agent runs on your behalf: writing, ingesting, connecting, validating, reviewing, and so on.
-- **How does this work?** — the shipped architecture, type system, control-plane conventions, authoring procedures, and the decision record behind major design choices.
-
-Use this collection when the question is specifically about the shipped Commonplace system. For transferable claims and theory about knowledge-base methodology, see [kb/theory/](../theory/README.md). For authoring conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
-
-## Mental model
-
-You do not operate the KB directly. You instruct an agent, and the agent operates the KB for you.
-
-The agent reads the shipped skills, which live in the installed Commonplace library and are reached through the stubs in `.claude/skills/` or `.agents/skills/`, reads the target collection's `COLLECTION.md`, and writes output under `kb/`.
-
-The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
-
-This guide assumes you have a running agent session (Claude Code, Codex, etc.) with Commonplace's skills in its discovery path. If `commonplace-init` has run and `commonplace-init --check` reports every entry `ok`, you're ready.
-
-## How to
-
-Most operations are things you ask the agent to do. Each entry below shows what the operation is for, how to phrase the request, what the agent does, and the practical limits.
-
-### Add a note
-
-*What it's for.* Capture an insight, decision, or observation as a structured artifact in the KB.
-
-*How to ask.*
-
-- "Write a note arguing that rate limits should be applied per-tenant rather than per-endpoint. Connect it to existing notes on rate limiting."
-- "I just realized our retry logic is swallowing errors. Write that up."
-- "Capture the decision we just made about moving auth to a sidecar."
-
-*What happens.* The agent searches the KB for related notes, picks a type, reads the writing conventions, drafts the file under `kb/theory/`, and connects it to related notes and indexes.
-
-*What you get.* A new markdown file under `kb/theory/` with frontmatter, a claim-shaped title, and inbound and outbound links to related notes.
-
-*Limitations.* The agent's sense of "what's worth a note" depends on the `## KB Goals and Scope` section in `AGENTS.md`. The out-of-scope list is load-bearing; without it, scope creeps.
-
-### Ingest a source
-
-*What it's for.* Analyse one URL-backed external source while keeping its reading copy local.
-
-*How to ask.*
-
-- "Ingest https://example.com/some-article and connect it to our notes on context engineering."
-- "Read this PDF and ingest the key claims."
-- "Ingest the README at github.com/org/project as a related system."
-
-*What happens.* The agent snapshots the source into ignored `kb/sources/.snapshots/`, reads it, finds related notes, and writes a tracked analysis whose frontmatter carries the durable URL, capture provenance, genre, and exact snapshot checksum. In this repo, external system analysis enters through `analyse-agentic-system`. Its memory analyst works against the frozen evidence boundary and runtime records and returns a typed report. Code retains the accepted report unchanged in the analysis set and publishes one compact whole-system review.
-
-*What you get.* A local snapshot under `kb/sources/.snapshots/` and a tracked ingest report at `kb/sources/<slug>.ingest.md` with summary, claims, and links into `kb/theory/`.
-
-*Limitations.* Paywalled or JavaScript-heavy pages can snapshot incompletely. Classification into "related system" versus "source" is sometimes a judgment call.
-
-### Search and navigate
-
-*What it's for.* Find notes relevant to a question without reading the whole KB.
-
-*How to ask.*
-
-- "Find notes about how we decided to validate schemas."
-- "What do we have on retry backoff strategies?"
-- "Is there anything in the KB about the tradeoff between X and Y?"
-
-*What happens.* The agent combines frontmatter search, curated tag READMEs, scoped ripgrep listings and body search, and link following. It filters by descriptions first, then loads only the notes that look relevant.
-
-*What you get.* A short list of notes with justifications, usually followed by a synthesised answer that cites them inline.
-
-*Limitations.* Search quality depends heavily on frontmatter descriptions, tag coverage, and the query terms an agent chooses. Vocabulary-mismatched concepts need synonym searches and link traversal rather than an external semantic-search daemon.
-
-For the full read path and scaling direction, see [navigation.md](./navigation.md).
-
-### Connect an existing note
-
-*What it's for.* Discover relationships between a note and the rest of the KB, and wire them up.
-
-*How to ask.*
-
-- "Connect `kb/theory/my-new-note.md` to related notes."
-- "I just wrote a note on X. Find what it should link to."
-
-*What happens.* The agent reads the source collection's `COLLECTION.md` for its per-destination outbound rules, prospects each authorised destination (curated indexes, scoped `rg` description listings, body search, link-following), applies the articulation test, labels candidates from the destination's authorised set, and writes a connection report. The skill never edits notes — the report is the entire deliverable.
-
-*What you get.* A report at `kb/reports/state/connect/<collection>/<note-name>.connect.md` (gitignored) listing candidate outbound edges, bidirectional candidates, reverse-edge candidates (notes that should link *to* this target under their own COLLECTION.md rules), off-authorisation candidates (articulated but outside the authorised label set), index memberships, synthesis opportunities, and a discovery trace. Review the candidates and apply the ones worth keeping — connect never mutates the source, so applying the suggestions is a separate step.
-
-*Limitations.* Relationship labels are judgment calls and sometimes need correction. Connection is often underdone at write time, so running connect explicitly on new notes is a reasonable habit.
-
-### Convert text to a note
-
-*What it's for.* Promote a rough capture to a more structured form as understanding matures.
-
-*How to ask.*
-
-- "Convert `kb/theory/scratch.md` from text to a note."
-
-*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: types/note.md`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
-
-*What you get.* The same captured content as a structurally valid, unverified note, possibly under a title-aligned filename with its inbound links updated.
-
-*Limitations.* Only text → note is implemented; other conversions are unsupported. Conversion supplies structure and retrieval metadata; it does not improve the body or create rigor.
-
-### Revise a note
-
-*What it's for.* Improve the prose of an existing note without changing its claims.
-
-*How to ask.*
-
-- "Revise `kb/theory/foo.md` for flow and clarity. Don't change what it argues."
-- "This note feels redundant in the middle section. Tighten it."
-
-*What happens.* The agent makes a revision pass, writes the result to a numbered copy, and asks you to compare before applying.
-
-*What you get.* A revised version for review and, after approval, an updated original.
-
-*Limitations.* Iterative revision can drift semantically over many passes. Keep passes short and verify that the claims survived.
-
-### Validate the KB
-
-*What it's for.* Check mechanically decidable artifact properties—well-formed frontmatter, required fields, resolvable links, and valid type-specific structure—and explicit repository invariants for collection landings and site redirects. This is deterministic and does not call an LLM.
-
-*How to ask.*
-
-- "Validate `kb/theory/foo.md`."
-- "Run validation across the whole KB and report any failures."
-- "Check the collection landings and published redirects."
-- Or run `commonplace-validate kb/theory/foo.md`.
-
-*What happens.* Artifact targets check schemas, links, filename constraints, and type-specific structural requirements. The `landings` target requires a non-colliding `README.md` for every collection directly under `kb/`; `redirects` checks `properdocs.yml` against the live published tree.
-
-*What you get.* A pass/fail report per target with `FAIL`, `WARN`, and `INFO` lines. Artifact findings are labelled `[base]`, `[type: <name>]`, or `[schema]`; repository findings are labelled `[repository]`. See the [validation contract](./validation-contract.md) for what each source can express.
-
-*Limitations.* Validation judges mechanically decidable properties only. Vacuous descriptions or weak claims are review problems, not validator problems.
-
-### Review notes
-
-*What it's for.* Judge notes against criterion files with headless workers: closed-ended gates return verdicts, while the opt-in critique returns a report.
-
-*How to ask.*
-
-- "Review `kb/theory/foo.md` with the prose bundle."
-- "Run the semantic review sweep over anything I've changed recently."
-- "Show me the current review warnings."
-
-*What happens.* `commonplace-review` expands the request into `(note, criterion)` pairs, skips pairs whose result is fresh, asks a headless worker for each other pair (or for each note and bundle), checks each review's result line, and writes one result file per accepted review with the hashes of the note and criterion it judged.
-
-*What you get.* Per-gate `pass` / `warn` / `fail` results or critique reports, each fresh while its note and criterion are unchanged, and a JSON run report with a checkout guard.
-
-*Limitations.* Every launch is paid and a changed pair is always re-reviewed. Gate selection depends on note types and traits. The checkout guard cannot tell a worker's change from another session's.
-
-See [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) for how to use the review and editing system, including the improvement procedures that edit notes, and [review-architecture.md](./review-architecture.md) for how it is built.
-
-### Direct CLI commands
-
-Most operations go through the agent, but a few CLI commands are reasonable to run directly:
-
-| Command | Purpose |
-|---|---|
-| `commonplace-validate <target>` | Validate an artifact or collection, global type specs, collection landings, or the published redirect map |
-| `commonplace-relocate-note <note> --to <dest> [--apply]` | Move or rename a note with link rewrites and ProperDocs redirect; dry-run by default |
-| `commonplace-github-snapshot <url>` | Snapshot a GitHub issue or PR into local `kb/sources/.snapshots/` |
-| `commonplace-x-snapshot <url>` | Snapshot a Twitter/X post into local `kb/sources/.snapshots/` |
-
-`commonplace-relocate-note` dry-runs by default. Pass `--apply` to write changes.
-
-For the full CLI surface, see [commands.md](./commands.md).
-
-## Reference
-
-Look up how the shipped system is put together: its architecture, type system, always-loaded context, authoring procedures, and decision history.
-
-### Architecture and packaging
-
-For exact implementation behavior, inspect `src/commonplace/` in this checkout.
-From an installed project, `commonplace-source` locates the package that
-supplies the running commands. The documents below retain architecture,
-invariants, and orientation that the implementation does not cheaply recover.
-
-- [architecture.md](./architecture.md) — installed topology and the library/user, command-runtime, library-location, skill-stub, and path-invariance boundaries
-- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the user's KB in the project, the library read in place from the package, package-provided commands, and measurable scenario decomposition
-- [storage-architecture.md](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived artifacts, and operational state
-- [Coordination between workflow runs](./workflow-architecture.md) — what a new run needs from an earlier one, and why starting fresh does not mean repeating published work
-- [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
-- [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
-- [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
-- [instruction-generation.md](./instruction-generation.md) — build-time instruction generation flow and `commonplace-init`
-- [review-architecture.md](./review-architecture.md) — review workflows over the headless runtime, result files as review state, the freshness hash boundary, write safety and the checkout guard (the build-side companion to [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md))
-
-### Type system and collection model
-
-- [Global type specs](../types/README.md) — the shared type specs and schemas every collection can use
-- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how type values resolve as spec paths on the library and KB roots, common examples, and where both kinds of type spec live
-- [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
-- [vocabulary-collision-ledger.md](./vocabulary-collision-ledger.md) — near collisions judged weak enough to tolerate: the senses, the decision for new text, and the observation that would escalate each to a rename or definition
-- [vocabulary-unification-ledger.md](./vocabulary-unification-ledger.md) — different terms that may express one underlying concept: candidate unifications, remaining distinctions, and current writing decisions
-- [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
-- [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
-- [Answerability](./definitions/answerability.md) — Commonplace's stipulated admission boundary: what an artifact answers to, the property it asserts, and the discrepancy that triggers correction
-- [Collection and text contract](./definitions/collection.md) — canonical definitions of the collection boundary and its complete local authoring declaration
-- [Directory artifact](./definitions/directory-artifact.md) — a directory whose manifest names a directory type; the type's layout declares member roles and relations, and the directory validates as one unit
-- [Commonplace doctrine](./definitions/commonplace-doctrine.md) — the standing instruction a worker inherits with binding force when its runtime loads it; a handoff is a delta from it
-
-### Authoring and operator procedures
-
-Imperative how-to procedures live in [kb/instructions/](../instructions/README.md) rather than this collection, but they are part of the shipped surface:
-
-- Each collection's `COLLECTION.md` — collection-specific writing conventions, quality goals, and placement rules
-- [README-REVIEW-SYSTEM.md](./README-REVIEW-SYSTEM.md) — how to use the review and editing system: concepts, freshness, the batch workflow, and command surface (the how-it-is-built companion is [review-architecture.md](./review-architecture.md))
-- [harness-sub-agent-model-selection-regression.md](./harness-sub-agent-model-selection-regression.md) — the July harness regression that mis-attributed review executions, the August partial restoration of bounded-fork model overrides, and why a requested model is still not execution provenance
-
-### The repository as a worked case
-
-Commonplace runs on its own methodology, so this collection also documents *this repository* as an operating instance — what it has been observed to do, under which declared boundary, and what that does and does not establish. These describe the case, not the surface a consuming project installs.
-
-- [epistemic-stance.md](./epistemic-stance.md) — the Popperian commitments the KB's assertions assume: fallibilism, rules as conventions, anti-essentialism, intersubjective testability; a stub that grows from connections
-- [commonplace-declared-frame.md](./commonplace-declared-frame.md) — the declared boundary all the assessments below are made under: what is inside, what is outside, and how to cite or depart from it
-- [commonplace-as-a-reflective-system.md](../theory/evidence/commonplace-as-a-reflective-system.md) — classifies the repository as a human-inclusive reflective self-improving system and locates which functions in one observed pathway are human, joint, or computational
-- [commonplace-as-an-instrument.md](./commonplace-as-an-instrument.md) — what the KB application is *for* in the design program: the composition test, two worked provenance instances, and the transfer evidence the repository does not have
-- [design-rationale-management.md](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute design rationale, and the end-to-end continuity the shipped contracts do not enforce
-- [content-routing.md](./content-routing.md) — routing table from content kind (intent, force, decision, alternatives, scope, mechanism, procedure, implementation fact, change narrative, observation, evidence, source claim) to destination, with the regeneration source and consumer that justify each row
-- [tag-readme-trace-observed-causal-connection.md](../theory/evidence/tag-readme-trace-observed-causal-connection.md) — the ADR-026 change traced commit by commit as one observed instance of causal connection in both directions
-- [tag-readme-trace-as-self-improving-loop.md](./tag-readme-trace-as-self-improving-loop.md) — the same trace mapped onto search, evaluation, and retention, showing which half of each step runs in code
-- [where-change-candidates-come-from-in-commonplace.md](./where-change-candidates-come-from-in-commonplace.md) — how problem-noticing and candidate-drafting happen beyond a maintainer's own judgment
-- [agent-memory-coverage.md](./agent-memory-coverage.md) — how the shipped surfaces realize agent-memory requirements, and where they currently fall short
-- [commonplace-agent-memory-gap-plan.md](./commonplace-agent-memory-gap-plan.md) — the plan for closing those gaps: session traces, candidates, cue activation, behavioral evaluation, lifecycle, import, ranking, and authority
-
-### Decision history
-
-[adr/](./adr/) contains the architecture decision records for major shipped-system choices. Notable entries:
-
-- [ADR-086: projects read the library from the installed package](./adr/086-projects-read-the-library-from-the-installed-package.md) — the current delivery: the library ships as package data, `commonplace-init` writes stubs and pointers, global types were named by bare name until ADR 088
-- [ADR-087: source and report types are global library types](./adr/087-source-and-report-types-are-global-library-types.md) — the source, snapshot, and report types that commands and procedures produce are read from the library, not copied into projects; local snapshots were retyped once with their checksums re-pinned
-- [ADR-088: type values are paths on a two-root search path](./adr/088-type-values-are-paths-on-a-two-root-search-path.md) — every `type:` value is the spec's path under a KB root (`types/note.md`, `reference/types/adr.md`), looked up in the library root and the artifact's KB root; a value that finds two different files fails
-- [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the earlier layout that copied the library into each project; projects now read it from the installed package
-- [ADR-027: package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — the packaging mechanism for the remaining scaffold assets (templates and ignore files) in source checkouts, sdists, and wheels; the library itself ships as shared data (ADR 086)
-- [ADR-037: promote skills into runtime surfaces by copying](./adr/037-promote-skills-into-runtime-surfaces-by-copying.md) — the earlier skill delivery by copying; `commonplace-init` now writes stubs that point into the installed library
-- [ADR-075: commit messages carry read-path trailers](./adr/075-commit-messages-carry-read-path-trailers.md) — subject, migration-narrative body, and conditional `Decision:`/`Workshop:`/`Model:` trailers, each justified by a named git read path
-- [ADR-074: git is the change-history layer](./adr/074-git-is-the-change-history-layer.md) — change narrative lives in commits; reference and ADRs retain only premises a named change operation must read; instructions declare the git read paths
-- [ADR-039: tool visibility is package-owned and git is never invoked](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md) — the name-based visibility contract that replaced gitignore filtering and `git mv`
-- [ADR-014: scripts as python package, one-tree model](./adr/014-scripts-as-python-package-one-tree-model.md) — the packaging and install decision ADR-021 refines
-- [ADR-012: types for structure, traits for review](./adr/012-types-for-structure-traits-for-review.md) — why structural types and semantic-review traits are separate axes
-- [ADR-015: standardize authored type definitions on JSON schema](./adr/015-standardize-authored-type-definitions-on-json-schema.md) — the authored type-definition format
-- [ADR-016: custom types use template/instruction pairs](./adr/016-custom-types-use-template-instruction-pairs.md) — how specialised types are packaged
-- [ADR-017: COLLECTION.md is the register convention boundary](./adr/017-collection-md-is-the-register-convention-boundary.md) — why collection files became the boundary for the then-current register conventions while types stayed structural
-- [ADR-068: collection contracts stop enumerating available types](./adr/068-collection-contracts-stop-enumerating-available-types.md) — global-plus-owned-local type eligibility, the `kb/work/` exception, and filesystem-backed type discovery
-- [ADR-070: notes bind choices; reference records selections and state](./adr/070-notes-bind-choices-reference-records-selections-and-state.md) — the intended-contribution and choice-binding test that separates transferable theory from Commonplace's selected and resulting state
-- [ADR-071: text contract is part of the collection definition](./adr/071-text-contract-is-part-of-the-collection-definition.md) — why collection and text-contract vocabulary have one reference owner while each local `COLLECTION.md` remains the binding surface
-- [ADR-019: collection-owned link vocabulary with per-destination outbound rules](./adr/019-collection-owned-link-vocabulary.md) — why each `COLLECTION.md` owns outbound rules per local destination collection, and why the connect/write skills read it directly instead of a compiled topology
-- [ADR-059: external is a reserved outbound destination](./adr/059-external-is-a-reserved-outbound-destination.md) — extends collection-owned authorization to external targets without making the open web a connect-search surface
-- [ADR-060: rationale becomes rests-on](./adr/060-rationale-becomes-rests-on-and-off-pattern-grounds-reclassified.md) — applies source-as-subject grammar to design dependencies, reclassifies off-pattern grounds, and gives the global type surface a collection contract
-- [ADR-020: theoretical-default link vocabulary additions](./adr/020-theoretical-default-contrasts-mechanism.md) — the `contrasts` and `mechanism` labels and the directional-asymmetry principle under the historical theoretical-default grouping
-- [ADR-128: one ignored operational tree under kb/reports/state](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md) — the `cache/` area is gone; ignored workflow outputs live under `state/`, one directory per workflow, with the state README stating per workflow what deletion loses
-- [ADR-129: workflow run bundles live under the state tree and are kept](./adr/129-workflow-run-bundles-live-under-the-state-tree-and-are-kept.md) — multistage runs, AutoReason bundles, article staging packages and memory-landscape synthesis scratch move under `kb/reports/state/` and survive their workflow's end; the agentic-system analysis process record is the recorded exception until integration copies it
-- [ADR-130: the operator-decision record is a query over the state tree](./adr/130-the-operator-decision-record-is-a-query-over-the-state-tree.md) — `commonplace-revise decisions` lists operator and agent decisions from run operator records, full-pass packets and fix reports, item or bundle per entry, with no statistic and no new file
-- [ADR-131: conformance reviews leave titles and descriptions to their gates](./adr/131-conformance-reviews-leave-titles-and-descriptions-to-their-gates.md) — the type and collection reviews leave four title and description properties to the frontmatter gates; three pairs of catalog gates asking one question are merged
-- [ADR-132: review atoms retain observations behind current results](./adr/132-review-atoms-retain-observations-behind-current-results.md) — bounded typed review execution, retained evidence, output-contract freshness and single-assessment fixtures; content reconstruction does not establish environment equivalence
-- [ADR-133: edit operations run alone through one typed route](./adr/133-edit-operations-run-alone-through-one-typed-route.md) — typed edit operations and edit results, deterministic bounds, `commonplace-revise try` with retained observations and fixtures; revise runs every pass through it; per-item operations run twice
-- [ADR-134: stops record the operator's answers in one typed file](./adr/134-stops-record-the-operators-answers-in-one-typed-file.md) — the `answers` type with validator acceptance against its hashed question; two stop instructions, decide items and approve a text; per-item edits and publication read answers; the strike-list format is gone
-- [ADR-135: improvement procedures are three plans on one runner](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md) — focused, quick and full improvement are ways to make the plan that `commonplace-revise` executes; the full-pass workflow and the fix procedure are retired, and `commonplace-revise decisions` still reads their records
-- [ADR-136: note rewrites run as a workflow that ends at operator approval](./adr/136-note-rewrites-run-as-a-workflow-that-ends-at-operator-approval.md) — `commonplace-revise rewrite` reconstructs from sources, accounts for claims, writes and reviews a candidate, and stops for the operator's approval of the exact text
-- [ADR-137: revise publishes without a publication stop](./adr/137-revise-publishes-without-a-publication-stop.md) — `commonplace-revise` writes its candidate without the operator's approval of the whole text; the stop remains for rewrites and for a candidate with a new validation warning
-- [ADR-138: a stop ends the run, and naming its output is the approval](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md) — `commonplace-revise` and `commonplace-revise rewrite` are never repeated or resumed; a revise run leaves a continuation record, and `commonplace-revise apply FILE` or `commonplace-revise publish RUN` on the operator's word replaces the `approve` command and operator records
-- [ADR-139: only commonplace-revise writes a note](./adr/139-only-commonplace-revise-writes-a-note.md) — the review and editing commands split by authority over the note: `commonplace-review` never writes one, `commonplace-revise` is the only command that does, a bare `commonplace-revise NOTE` runs the default procedure, and `apply`, `triage` and `answers create --run` replace `--answers`, `--triage` and `record`
-- [ADR-127: review runs as workflows over result files](./adr/127-review-runs-as-workflows-over-result-files.md) — the current review decision: one command, result files with input hashes, no store; supersedes ADRs 035 and 043
+Reference documentation for the shipped Commonplace system — how to work with your agent on a KB, how the system is put together, and where its contracts and decisions live.
+
+For transferable methodology theory, see [kb/theory/](../theory/README.md). For writing conventions, each collection has a [COLLECTION.md](./COLLECTION.md) at its root.
+
+## Working with your agent
+
+You direct an agent toward outcomes rather than running procedures by hand. Ask in ordinary language for what you want; your agent discovers the current skills, collection contracts, and command `--help` on its own.
+
+- **First time?** Start with [Getting started](./getting-started.md) — a worked example of turning a rough thought into a linked, source-grounded note.
+- **Setup or broken commands?** See [INSTALL.md](../../INSTALL.md) (or ask your agent to run a health check).
+
+| What you want to do | Does it edit your KB? | High-level overview |
+|---|---|---|
+| Write or update a note | Yes (creates or edits a file under `kb/`) | [Getting started](./getting-started.md) |
+| Discover links for a note | No (writes a connect report for you to review) | [Link vocabulary](./link-vocabulary.md) |
+| Ingest an external source | Yes (saves a local snapshot + tracked ingest) | `kb/sources/COLLECTION.md` |
+| Check structural validity | No (deterministic validator, no LLM calls) | [Validation contract](./validation-contract.md) |
+| Review notes semantically | No (`commonplace-review` never writes notes; paid launches) | [Review and editing system](./README-REVIEW-SYSTEM.md) |
+| Improve, triage, or rewrite a note | Yes (simplification passes write uncommitted diffs; rewrites hold for approval) | [Review and editing system](./README-REVIEW-SYSTEM.md) |
+| Search and navigate | No (uses `rg`, descriptions, curated heads, and links) | [Navigation](./navigation.md) |
+| Run CLI commands directly | Depends on command (`relocate` dry-runs without `--apply`) | [CLI commands](./commands.md) |
+
+## Architecture and contracts
+
+For exact implementation facts, inspect `src/commonplace/` (or locate the installed package with `commonplace-source`) and use each command's `--help`. These pages retain the stable boundaries, invariants, and contracts that code does not cheaply supply.
+
+### System architecture and operation
+
+- [Getting started](./getting-started.md) — first worked session with an agent
+- [Review and editing system](./README-REVIEW-SYSTEM.md) — high-level operator overview of review, improvement modes, publication boundaries, and order of concerns
+- [CLI commands](./commands.md) — complete checked catalogue of published `commonplace-*` commands
+- [Commonplace architecture](./architecture.md) — installed topology, library/user ownership, skill stubs, and path invariance
+- [Storage architecture](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived views, and operational state
+- [Review architecture](./review-architecture.md) — code/worker ownership, durable state, freshness hash boundary, and checkout guard
+- [Coordination between workflow runs](./workflow-architecture.md) — what crosses the boundary between workflow invocations
+- [Documentation site](./documentation-site.md) — ProperDocs README-vs-index rule, nav generation, and landing-page inventory
+- [Navigation](./navigation.md) — progressive disclosure stack and scoped `rg` recipes
+
+### Type system, contracts, and authoring
+
+- [Global type specs](../types/README.md) — shared type specs and schemas every collection can use
+- [Collections and types](./collections-and-types.md) — how collection contracts and path-valued type specs compose and resolve
+- [Validation contract](./validation-contract.md) — the four finding sources (`base`, `collection`, `type`, `schema`), base checks, directory artifacts, and unquoted-source limits
+- [Content routing](./content-routing.md) — routing table from content kind to destination
+- [Link vocabulary](./link-vocabulary.md) — linking approach, reader-need label catalogue, and lineage semantics
+- [Vocabulary collision ledger](./vocabulary-collision-ledger.md) — tolerated near-collisions and writing decisions for new text
+- [Vocabulary unification ledger](./vocabulary-unification-ledger.md) — candidate vocabulary unifications and current writing decisions
+- Definitions: [Answerability](./definitions/answerability.md), [Collection and text contract](./definitions/collection.md), [Commonplace doctrine](./definitions/commonplace-doctrine.md), [Directory artifact](./definitions/directory-artifact.md), [Special collection](./definitions/special-collection.md)
+
+## System-coupled notes and declarations
+
+Commonplace develops its methodology by running on itself. The notes below record this repository's own declared frames, assessments, and local historical records — too coupled to Commonplace's choices to stand as general theory, and separate from the operational contracts above.
+
+- [Epistemic stance](./epistemic-stance.md) — Popperian commitments this KB's assertions assume
+- [Commonplace declared frame](./commonplace-declared-frame.md) — boundary under which self-improvement attributions hold
+- [Source-adoption policy](./source-adoption-policy.md) — borrowing gates by source domain
+- [Commonplace as an instrument](./commonplace-as-an-instrument.md) — what this KB tests in the design program
+- [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
+- [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — noticing and candidate-drafting mechanisms in this repository
+- [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
+- [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric
+- [Collection prototypes](./collection-prototypes.md) — clone-once starter contracts for new collections
+- [Control-plane goals](./control-plane-goals.md) — how `AGENTS.md` ships always-loaded KB goals and templates
+- [Instruction generation](./instruction-generation.md) — build-time template substitution and `commonplace-init`
+- [Scenario architecture](./scenario-architecture.md) — scenario-derived decomposition of the installed surfaces
+- [Tag-readme trace as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — one observed trace mapped onto search, evaluation, and retention
+- [Agentic-system analysis design brief](./agentic-system-analysis-design-brief.md) — operator direction and evaluation priorities for external-system analyses
+- [Commonplace agent memory gap plan](./commonplace-agent-memory-gap-plan.md) — earlier gap-closure plan (unadopted roadmap)
+- [Harness sub-agent model selection regression](./harness-sub-agent-model-selection-regression.md) — dated July/August Codex model-attribution incident record
+
+## Decision history
+
+Architecture decision records live under [adr/](./adr/). Each ADR records a decision at its date (later ADRs amend or supersede earlier clauses). Search ADRs by description with `rg "^description:" kb/reference/adr/ --glob "*.md"`.
 
 ## Collection boundary
 
-- Use `kb/theory/` for beliefs about the design space whose particular system choices are bound.
-- Use `kb/reference/` for Commonplace's selections and the current or historical state they produced.
-- Use `kb/instructions/` for imperative procedures and operator-facing process details.
-
-Keep these docs self-contained within the shipped surface. A consuming project should be able to read `kb/reference/` without needing links back to the Commonplace source repository or methodology library.
-
-- [ADR-099: collection-owned agentic analysis](./adr/099-agentic-analysis-method-and-reports-belong-to-the-collection.md) — the research method and its local report types share the analysis collection
+- Use `kb/theory/` for transferable claims about KB methodology.
+- Use `kb/reference/` for Commonplace's selections, shipped architecture/contracts, and system-coupled assessments.
+- Use `kb/instructions/` for imperative procedures and promoted skills.
+- Keep operational reference docs self-contained within the shipped library so consuming projects can read them without the source repository.

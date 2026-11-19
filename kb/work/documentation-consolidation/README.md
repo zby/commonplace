@@ -21,15 +21,15 @@ Use the [reference collection's economy tests](../../reference/COLLECTION.md#tex
 
 ## Current order of work
 
-1. **Review, revise, and command activation paths (completed in working tree).** Moved the operational surface of `README-REVIEW-SYSTEM.md` into `cp-skill-review` (read-only) and `cp-skill-revise` (may write the note), extracted Pi reviewer setup into `kb/instructions/run-review-from-pi.md`, removed the review-guide pointers from `AGENTS.md` and `AGENTS.md.template`, and shrank `README-REVIEW-SYSTEM.md` to a high-level human overview. Moved `commands.md`'s unique details into live `--help`, shrank `commands.md` to a checked command catalogue, and wired it into `AGENTS.md.template` beside `AGENTS.md`.
-2. **Check remaining documentation by task and activation path.** Using the [reference analysis](./reference-analysis.md) as input, inspect each remaining document, decide what task actually needs it, move its live rules and command mentions onto the relevant activation path (or `--help`), fix stale statements, and retire documents that serve no live task.
-3. **Human entry points.** Decide how the [Getting started draft](./getting-started.md) (commissioned by [getting-started.brief.md](./getting-started.brief.md)) fits with [kb/reference/README.md](../../reference/README.md).
-4. **Skill pruning (later).** Once activation paths settle, review existing skills and remove any that add trigger noise without earning a dedicated activation path.
+1. **Review, revise, and command activation paths (done — `1149e4305`).** Added promoted `cp-skill-review` and `cp-skill-revise` (with capability/limitation boundaries), extracted Pi reviewer setup into `kb/instructions/run-review-from-pi.md`, removed the review-guide pointers from `AGENTS.md` and `AGENTS.md.template`, shrank `README-REVIEW-SYSTEM.md` (63 KB → 6.0 KB) to a high-level human overview, moved `commands.md`'s unique details into live `--help`, and shrank `commands.md` (43 KB → 4.2 KB) to a checked command catalogue wired from both `AGENTS.md` and `AGENTS.md.template`.
+2. **Audit remaining reference docs by task and activation path (done — `535020d1f`, `d439edf34`; retirements pending approval).** Moved orphaned authoring, delegation, analysis-method, and continuation rules onto their activation paths (`cp-skill-write`, `kb/types/collection-contract.md`, `AGENTS.md`, `cp-skill-add-collection`, `maintain-analysis-method.md`, and code comments in `revise.py`), fixed verified stale claims across 15 `kb/reference/` documents, and trimmed redundant/speculative prose. Kept system-coupled worked-case and declaration notes as valid miscellaneous reference notes.
+   - **Optional retirements/relocations awaiting explicit sign-off** (per `retire-artifact.md` Step 5): delete dead April plan `commonplace-agent-memory-gap-plan.md` (3 inbound links); relocate `harness-sub-agent-model-selection-regression.md` to `kb/reports/retained/` (2 inbound links); optionally relocate `tag-readme-trace-as-self-improving-loop.md` to `kb/theory/evidence/`; optionally retire `agentic-system-analysis-design-brief.md` now that `maintain-analysis-method.md` carries its priorities (5 inbound links).
+3. **Human entry points (done).** Promoted `getting-started.md` and `getting-started.brief.md` to `kb/reference/`, linked them from `kb/reference/README.md` and `kb/index.md`, and rewrote `kb/reference/README.md` around the high-level human-doc principle (replacing the stale 155-line "How to" mechanics and drifting 35-line ADR list).
+4. **Skill pruning (next).** Review existing skills and remove any that add trigger noise without earning a dedicated activation path.
 
 ## Files in this workshop
 
-- [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers), retained as input for step 2.
-- [getting-started.md](./getting-started.md) and [getting-started.brief.md](./getting-started.brief.md) — draft human entry point and its write brief trial.
+- [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers).
 
 ## What closes this workshop
 

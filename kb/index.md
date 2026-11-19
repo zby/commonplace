@@ -42,4 +42,4 @@ Commonplace is open source. You can:
 - **Vendor the knowledge base read-only** inside a project so agents can consult the research and external-system reviews.
 - **Install the system** to give a project the types, conventions, skills, and commands for building its own agent-operated knowledge base.
 
-The [GitHub README](https://github.com/zby/commonplace) covers the tool, [INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md) gives the setup flow, and the [installation architecture](./reference/architecture.md) explains the design.
+The [GitHub README](https://github.com/zby/commonplace) covers the tool, [INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md) gives the setup flow, [Getting started](./reference/getting-started.md) walks through a first session with your agent, and the [installation architecture](./reference/architecture.md) explains the design.

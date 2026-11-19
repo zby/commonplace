@@ -1,6 +1,6 @@
 ---
 type: types/note.md
-description: "Turn a hunch into a note with your agent, connect it to what you already know, and revise it after reading sources you choose."
+description: "Turn a hunch into a note with your agent, connect it to what you already know, and update it after reading sources you choose."
 brief: getting-started.brief.md
 tags: []
 ---
@@ -17,7 +17,7 @@ You don’t need a finished argument to ask your agent to write. Start with some
 
 **Ask what would be worth reading.** “What sources would help us find out when retries hide failures and when they don’t? Suggest a few and tell me what each could settle. Don’t add them yet.” You might choose an incident report for what happened in practice and a guide for what should have been logged.
 
-**Bring your choices into the KB, then revisit the note.** Once you’ve picked the sources, ask: “Ingest these two sources so we have a record of each. Then revise the note using what they actually say. Show me what changed and what’s still a hunch.” The result needn’t be a stronger claim. If a report shows that the job recovered but says nothing about what the team saw, it supports recovery, not a hidden failure.
+**Bring your choices into the KB, then revisit the note.** Once you’ve picked the sources, ask: “Ingest these two sources so we have a record of each. Then update the note using what they actually say. Show me what changed and what’s still a hunch.” The result needn’t be a stronger claim. If a report shows that the job recovered but says nothing about what the team saw, it supports recovery, not a hidden failure.
 
 ## Other starting points
 
