@@ -65,3 +65,6 @@ kb/work/auditable-llm-editing/experiment-02-full-memory-article/
 dir-index.md
 
 kb/work/agent-memory-review-rerun-comparison/
+
+# Per-user Pi defaults (provider, model); not project configuration
+.pi/settings.json
