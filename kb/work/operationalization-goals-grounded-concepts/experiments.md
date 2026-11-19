@@ -1,6 +1,6 @@
 # Experiments
 
-These proposals test whether the distinctions in the [framing](./README.md) change decisions or repairs enough to justify their cost. **None is authorized, run, or evidence of benefit.** A later commission must approve a bounded pilot and its retention paths before execution. It may choose another method that tests the same contrast; the controls below matter because otherwise extra information or attention could explain any gain.
+These proposals test whether the distinctions in the [framing](./README.md) change decisions or repairs enough to justify their cost. **The full designs remain unrun.** A smaller [citation-repair screen](./citation-repair-screen.md) tested one contrast from Experiment 2; neither prompt outperformed the other on those fixtures. A later commission must approve a bounded pilot and its retention paths before execution. It may choose another method that tests the same contrast; the controls below matter because otherwise extra information or attention could explain any gain.
 
 ## Common comparison boundary
 

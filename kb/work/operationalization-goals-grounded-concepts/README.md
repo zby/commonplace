@@ -2,7 +2,7 @@
 
 ## Commission and boundary
 
-**Posed by the Commonplace operator on 2026-11-16. Status: research framing and experiment proposals; no experiments run.** Investigate whether requirements-engineering (RE) distinctions improve agent-operated knowledge work, especially article improvement. The intended reader is a maintainer deciding which distinction deserves a local test, not which RE framework to adopt.
+**Posed by the Commonplace operator on 2026-11-16. Status: one bounded citation-repair screen completed; the full experiments remain proposals.** Investigate whether requirements-engineering (RE) distinctions improve agent-operated knowledge work, especially article improvement. The intended reader is a maintainer deciding which distinction deserves a local test, not which RE framework to adopt.
 
 Commonplace already separates usable guidance from successful outcomes, local conformance from upstream adequacy, and search from adoption. RE may make some missing premises easier to locate. The candidate contribution is **better discrimination among repairs**, not a unifying theory of agency, learning, concepts, and economics. An ordinary task checklist may do equally well at lower cost.
 
@@ -79,6 +79,8 @@ For comparison, the opening of [Chang's operationalism entry](../../sources/oper
 
 ## Next decision
 
-Recommend **Experiment 2, assumption-failure diagnosis**, for a separately authorized first pilot. It tests the strongest practical candidate—making the premise linking action to outcome inspectable—without first requiring consensus on broad article quality. Seeded faults and indistinguishable traces can expose both useful discrimination and unjustified certainty. A failure against the matched checklist would favor using ordinary task guidance rather than adding an RE-specific representation.
+The [citation-repair screen](./citation-repair-screen.md) reached ceiling for both prompts. Do not repeat those cases or adopt an RE-specific instruction on this evidence. If a further diagnosis pilot is authorized, test which missing observation the agent selects under a limited evidence budget.
+
+The [operationalization plan](./operationalization-plan.md) records the original larger comparison and its stopping criteria.
 
 [Experiments](./experiments.md) supplies four proposals only. No positive result would establish general transfer, complete RE coverage, or learning across problems. Source acquisition and broader graph discovery remain separate decisions, not prerequisites for producing more workshop text.
