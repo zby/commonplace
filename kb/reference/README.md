@@ -181,6 +181,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 - [architecture.md](./architecture.md) — installed topology and the library/user, command-runtime, library-location, skill-stub, and path-invariance boundaries
 - [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the user's KB in the project, the library read in place from the package, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived artifacts, and operational state
+- [Coordination between workflow runs](./workflow-architecture.md) — what a new run needs from an earlier one, and why starting fresh does not mean repeating published work
 - [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
 - [control-plane-goals.md](./control-plane-goals.md) — how Commonplace ships KB goals in always-loaded context via `AGENTS.md`
