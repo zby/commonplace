@@ -7,7 +7,7 @@ Proposed by an agent (claude-fable-5-2) on 2026-11-19, from the [analysis](./ref
 Place each piece of content by how it reaches its reader.
 
 1. **A rule an agent must apply** goes on a route: a skill body, a collection contract, a type spec, `AGENTS.md`, or a tool's output (`--help`, a validator message, a test).
-2. **What a command does** goes in its `--help`. Prose does not copy it.
+2. **Name only the tool needed for the operation.** For example, the write instruction names `commonplace-validate` when the agent checks the document it just wrote. Command usage belongs in `--help`.
 3. **What a person needs to decide whether to run something** goes in a short overview: what it does, what it may publish, what it costs, when it needs a decision.
 4. **The current state that several decisions compose**, and invariants that cross components, go in a small set of architecture documents.
 5. **Claims about Commonplace itself**, read by people and found by search, go in one directory of their own.
@@ -114,10 +114,9 @@ Untested: whether agents doing writing tasks apply the authoring rules once they
 
 ## Decisions for the operator
 
-1. **Remove `commands.md` entirely, or keep a 2 kB catalogue** with one line per command that a test keeps in step? The plan assumes removal.
-2. **How do ADRs stay usable** when later ADRs amend them: a decision-chains section in `architecture.md`, as planned, or amending the old ADR texts?
-3. **One `worked-case/` directory, or two**, with the three declarations in a `declarations/` directory of their own? The plan assumes one, because five files do not need two directories.
-4. **The gap plan.** Removal loses its ordering and done-when criteria. Is that accepted?
-5. **The incident record.** Remove, or move to `kb/reports/retained/` to keep the job numbers?
-6. **The name.** ADR 139 and the documents say "review and editing system". The operator later said "Review and Edit System". One has to be chosen before the guide is renamed.
-7. **No further subdirectories.** With fourteen documents left, `architecture/` and `authoring/` directories would group four or five files each and add no route. The plan does not create them.
+1. **How do ADRs stay usable** when later ADRs amend them: a decision-chains section in `architecture.md`, as planned, or amending the old ADR texts?
+2. **One `worked-case/` directory, or two**, with the three declarations in a `declarations/` directory of their own? The plan assumes one, because five files do not need two directories.
+3. **The gap plan.** Removal loses its ordering and done-when criteria. Is that accepted?
+4. **The incident record.** Remove, or move to `kb/reports/retained/` to keep the job numbers?
+5. **The name.** ADR 139 and the documents say "review and editing system". The operator later said "Review and Edit System". One has to be chosen before the guide is renamed.
+6. **No further subdirectories.** With fourteen documents left, `architecture/` and `authoring/` directories would group four or five files each and add no route. The plan does not create them.

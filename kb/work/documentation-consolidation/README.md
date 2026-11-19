@@ -2,7 +2,7 @@
 
 Posed by the operator on 2026-11-18. Which Commonplace documentation should an agent encounter when doing a particular task, and which overviews should remain for a human operator?
 
-**State on 2026-11-19:** the operator asked for a rethink of the reference documents. Four files record it: [routes and skills](./routes-and-skills.md) holds the operator's positions and the rule for what becomes a skill; the [inventory](./reference-inventory.md) lists the 30 top-level reference documents; the [analysis](./reference-analysis.md) says for each what is duplicated, unique, stale and reached by which reader; the [organisation plan](./organisation-plan.md) proposes a layout and an order of work. The plan is an agent's proposal and is not adopted; it ends with seven decisions for the operator. Nothing in the library has changed.
+**State on 2026-11-19:** the operator asked for a rethink of the reference documents. Four files record it: [routes and skills](./routes-and-skills.md) holds the operator's positions and the rule for what becomes a skill; the [inventory](./reference-inventory.md) lists the 30 top-level reference documents; the [analysis](./reference-analysis.md) says for each what is duplicated, unique, stale and reached by which reader; the [organisation plan](./organisation-plan.md) proposes a layout and an order of work. The operator settled command discovery. The installed catalogue is available from uv. Each operation names only the tool it needs, as the write instruction does at its validation step. Six decisions remain open in the proposed plan. Nothing in the library has changed.
 
 ## What to preserve
 

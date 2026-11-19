@@ -54,7 +54,7 @@ Each body says which command fits which intent, what the command may write, what
 Stated on 2026-11-19, before the [analysis](./reference-analysis.md):
 
 - The subdirectories of `kb/reference/` stay.
-- `commands.md` can go.
+- Retire `commands.md`. Use `uv tool list` for the installed command catalogue. Keep the instruction local to the operation. For example, the [write skill](../../instructions/cp-skill-write/SKILL.md) tells the agent to run `commonplace-validate` on the file it just wrote.
 - The review guide is renamed for the review and editing system. It may keep a general introduction that agents also use.
 - Architecture documents mostly repeat ADRs. Some high-level documents may stay; this needs rethinking.
 - Authoring rules are probably useful, but only if agents read them.
