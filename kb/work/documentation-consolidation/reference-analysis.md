@@ -1,8 +1,8 @@
 # Analysis of the top-level reference documents
 
-Made on 2026-11-19 at the operator's request, after the [inventory](./reference-inventory.md). Five reading agents each read one group of documents in full and compared it with the places that could already hold the same content: `--help`, code, ADRs, skills, collection contracts, type specs and the validator. An agent (claude-fable-5-2) wrote this file from their reports. It did not re-check their line numbers; items they marked unverified are marked here.
+Made on 2026-11-19 at the operator's request, covering the 30 top-level documents under `kb/reference/`. Five reading agents each read one group of documents in full and compared it with the places that could already hold the same content: `--help`, code, ADRs, skills, collection contracts, type specs and the validator. An agent (claude-fable-5-2) wrote this file from their reports. It did not re-check their line numbers; items they marked unverified are marked here.
 
-The question for each document: who needs it, by what route does that reader reach it, what does it hold that exists nowhere else, and is it still true. The route terms are from [routes and skills](./routes-and-skills.md).
+The question for each document: who needs it, by what activation path does that reader reach it, what does it hold that exists nowhere else, and is it still true. See [README.md](./README.md) for the current framing and order of work.
 
 ## Authoring rules
 

@@ -1,25 +1,38 @@
 # Documentation consolidation
 
-Posed by the operator on 2026-11-18. Which Commonplace documentation should an agent encounter when doing a particular task, and which overviews should remain for a human operator?
+Posed by the operator on 2026-11-18 and refocused on 2026-11-19.
 
-**State on 2026-11-19:** the operator asked for a rethink of the reference documents. Four files record it: [routes and skills](./routes-and-skills.md) holds the operator's positions and the rule for what becomes a skill; the [inventory](./reference-inventory.md) lists the 30 top-level reference documents; the [analysis](./reference-analysis.md) says for each what is duplicated, unique, stale and reached by which reader; the [organisation plan](./organisation-plan.md) proposes a layout and an order of work. The operator settled command discovery. The installed catalogue is available from uv. Each operation names only the tool it needs, as the write instruction does at its validation step. Six decisions remain open in the proposed plan. Nothing in the library has changed.
+## Motivation
 
-## What to preserve
+Documentation grows, goes out of date, and misleads. Agents rarely read free-standing reference files, and humans find long reference manuals inconvenient when deciding what to do. Adding or reorganizing prose files does not fix that.
 
-For agents, the operator identifies the recurring difficulty as knowing **when to inspect another part of the system**, not understanding code or prompts once found. A useful cue starts from a task the agent recognizes and names a dependency it could otherwise miss. Keep explanations of intent, constraints and rationale that the implementation cannot supply. Do not replace a useful cue with a prose copy of the implementation.
+Every document needs a clear answer to two questions:
 
-For operators, retain readable general overviews. Someone deciding whether to run a workflow should be able to tell what it does, what it may publish and when it needs a decision without tracing code or asking an agent. They may ask an agent for implementation detail; the overview needs a reliable path to that detail, not a duplicate account of it.
+1. **What exact task does this document serve, and for whom?** If no concrete task needs it, retire it after rehoming anything unique.
+2. **Where does that task activate?** Move rules, procedures, and tool references onto the **activation path** — the surface already loaded at the point of use (just as `cp-skill-write` names `commonplace-validate` at its validation step).
 
-A [write brief](../../types/write-brief.md) is an optional experiment for a document whose purpose might be lost in consolidation. For example, if an overview deliberately leaves implementation details to an agent but must still let the operator decide whether to run the command, a brief can preserve that boundary for its next writer. Try it on one document if the title and opening do not already make the intent clear. A brief is for the writer; keep the operator’s decision guidance in the overview and the agent’s reading cues at the task entry point. Do not make briefs a prerequisite for consolidation. The [Getting started draft](./getting-started.md) is the first trial: can a reader choose a useful request without first learning the software?
+## Activation paths and document roles
 
-## Evidence and boundaries
+- **Agent activation path.** Rules, procedures, and tool invocations belong where the triggering task loads them: a skill body, a collection contract, a type spec, `AGENTS.md` (only for cross-task rules with no single trigger), `--help`, a validator message, a test, or a comment beside the constrained code. A pointer in `AGENTS.md` that says "for task X, read Y" is a skill in the wrong place.
+- **Human overview.** Assume the human can use an agent, and that the agent knows how to retrieve current operational details (via skills, `--help`, and live code). Aim human-directed docs at stable, higher-level concepts that let a person choose a request or decide whether to run a workflow — what it does, what it may publish, what it costs, and when it needs a decision — rather than volatile flags, inventories, or implementation detail.
+- **Reference and architecture.** Kept only where code, `--help`, and ADRs do not cheaply supply the answer (cross-component invariants, composed current state across amended ADRs, or declared project frames). Prose copies of behaviour drift and should be cut once their unique detail sits on an activation path or in `--help`.
 
-The workflow continuation review supplies one concrete case. To preserve an editing restriction such as “the opening only,” it was not enough to inspect the code saving unfinished plan entries. Applying approved proposals through an answers file built a plan by a different route. [Coordination between workflow runs](../../reference/workflow-architecture.md) explains why the restriction must survive. The documentation question is where an agent changing continuation would encounter a cue to inspect **both** routes. This is a starting example, not evidence that all missed dependencies need more documentation.
+Use the [reference collection's economy tests](../../reference/COLLECTION.md#text-contract-and-fidelity) and the [seven-case documentation study](../../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md) as the baseline. Coordinate with [ADR routing](../adr-routing/README.md) where the needed context is a binding ADR; do not build a parallel ADR index here.
 
-Use the [reference collection's economy tests](../../reference/COLLECTION.md#text-contract-and-fidelity) and the [earlier seven-case documentation study](../../theory/evidence/seven-documentation-cases-left-routing-and-synthesis.md) before proposing another rule. Coordinate with [ADR routing](../adr-routing/README.md) where the missed dependency is a binding decision; do not run a parallel redesign of ADR navigation.
+## Current order of work
 
-## What would close this workshop
+1. **Review, revise, and command activation paths (completed in working tree).** Moved the operational surface of `README-REVIEW-SYSTEM.md` into `cp-skill-review` (read-only) and `cp-skill-revise` (may write the note), extracted Pi reviewer setup into `kb/instructions/run-review-from-pi.md`, removed the review-guide pointers from `AGENTS.md` and `AGENTS.md.template`, and shrank `README-REVIEW-SYSTEM.md` to a high-level human overview. Moved `commands.md`'s unique details into live `--help`, shrank `commands.md` to a checked command catalogue, and wired it into `AGENTS.md.template` beside `AGENTS.md`.
+2. **Check remaining documentation by task and activation path.** Using the [reference analysis](./reference-analysis.md) as input, inspect each remaining document, decide what task actually needs it, move its live rules and command mentions onto the relevant activation path (or `--help`), fix stale statements, and retire documents that serve no live task.
+3. **Human entry points.** Decide how the [Getting started draft](./getting-started.md) (commissioned by [getting-started.brief.md](./getting-started.brief.md)) fits with [kb/reference/README.md](../../reference/README.md).
+4. **Skill pruning (later).** Once activation paths settle, review existing skills and remove any that add trigger noise without earning a dedicated activation path.
 
-For the cases examined, record the task, its ordinary starting point, what the reader needed but missed, and which passage to keep, link, move or remove. Check the proposed result from both starting points: can an agent find the consequential dependency **without being told its name**, and can an operator make the relevant decision from the overview? Fewer files or words alone does not establish either result.
+## Files in this workshop
 
-Close when the operator has accepted a consolidation or a reason to keep the current arrangement, the agreed routes and overview homes are in the library, and any untested cases are identified. Opening this workshop does not authorize a repository-wide rewrite or deletion sweep.
+- [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers), retained as input for step 2.
+- [getting-started.md](./getting-started.md) and [getting-started.brief.md](./getting-started.brief.md) — draft human entry point and its write brief trial.
+
+## What closes this workshop
+
+- Every retained reference document has an explicit task it serves, and stale copies are removed or moved onto their activation paths.
+- Agent tasks reach their needed rules and commands along their natural activation paths without being told a reference file's name; human overviews stay short and decision-oriented.
+- Any skill removals decided in step 4 are applied or split out, and untested cases are recorded. Opening this workshop does not authorize an unchecked repository-wide deletion sweep.
