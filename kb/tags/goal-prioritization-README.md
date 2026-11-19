@@ -29,27 +29,19 @@ control carries both this tag and improvement-loop.
 
 ## Allocating effort under uncertainty
 
-- [Open-ended knowledge work shares one epistemic layer across roles](../theory/open-ended-knowledge-work-shares-one-epistemic-layer-across-roles.md) — why prioritisation needs the epistemic layer: return guesses are search judgments to mark and criticize, or allocation runs on habit or cost alone
 - [Open-ended improvement must allocate search before decisive evaluation is available](../theory/open-ended-improvement-allocates-search-before-evaluation.md) — choosing which questions, candidates or proof paths to develop before decisive evidence exists
-- [Candidacy evidence licenses escalation, not acceptance](../theory/candidacy-evidence-licenses-escalation-not-acceptance.md) — the evidence that routes a hypothesis to costly assessment differs from the evidence that decides it
 - [Lightweight search control does not license adoption](../theory/lightweight-search-control-does-not-license-adoption.md) — a search judgment's authority stops at allocating investigation, continuation or abandonment
 - [A search controller is tested by what it brings to stronger evaluation](../theory/a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — judged by what it routes forward under matched-resource or net-value comparison
-- [Failure explanation changes later branch decisions](../theory/failure-explanation-changes-later-branch-decisions.md) — an explanation counts as search control when it changes a later choice about scope, priority, probing or abandonment
-- [Ad-hoc explanation can be rational when error is cheap and local](../theory/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — a disposable guess may select the next probe; what is retained needs reach checks
 - [An optimal long-run learning strategy invests in its own machinery](../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — when a one-time machinery improvement outranks immediate learning
 - [Choosing what to learn requires both validity and learning-value gates](../theory/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md) — trustworthy enough to learn from is a different question from worth learning now
-- [Codify-versus-LLM decision heuristics](../theory/codify-versus-llm-decision-heuristics.md) — the stake on a conversion sized to its stated odds and exposure, beside the repetition comparison
 - [Productive deferral requires option evidence and convergence](../theory/productive-deferral-requires-option-evidence-and-convergence.md) — controlled postponement against hidden commitment and indecision
-- [Current-task fit alone does not warrant costly entrenchment](../theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — when a commitment with high removal cost is warranted
 
 ## Objectives, requirements and who sets them
 
 - [Unattended work needs the functions that interaction supplied](../theory/unattended-work-needs-the-functions-that-interaction-supplied.md) — interactive work can hide who resolved purpose, redirected effort and decided when to stop
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — objective change counts as improvement only against a level outside both objectives
-- [Technical constraints make KB objective choice engineering](../theory/technical-constraints-make-kb-objective-choice-engineering.md) — goals set the loss, local contracts specialize it, oracle strength differs by objective
 - [A proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — no check in the loop evaluates the claim that the pursued target serves the objective
 - [Intent controls choices by distinguishing live alternatives](../theory/intent-controls-choices-by-distinguishing-live-alternatives.md) — a stated intent governs only when it changes what is admissible, preferred, worth further search or sufficient to stop
-- [Warranted reader update is the objective of substantive writing](../theory/warranted-reader-update-is-the-objective-of-substantive-writing.md) — a text must change its reader's view with warrant, which selects its contribution
 - [What requirements don't you have?](../sources/sean-goedecke-what-requirements-dont-you-have.ingest.md) — unrequested guards show why legitimate concerns still need task-specific tolerances and scope
 - [Nostalgebraist on persistent coding-agent mistakes and benchmark gaps](../sources/nostalgebraist-coding-agent-mistakes-benchmark-gaps.ingest.md) — reported tangents and repeated steering make the operator's prioritization visible
 
