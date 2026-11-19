@@ -306,7 +306,7 @@ commands require the prepared checkout and its local executing code. See
 workflow there: opening, source acquisition, each role's worker launched as a
 fresh headless session of the profile's harness, the analysis's checks,
 verification and corrections under the plan's attempt budgets, assembly and
-publication. New runs default to `pi-sol` (`gpt-6.1-sol`, medium effort);
+publication. New runs default to `pi-sol` (`gpt-6.2-sol`, medium effort);
 `--worker-profile` overrides it. Resumed runs keep their recorded profile.
 Optional `--source-revision <full-40-hex-commit>` requires a
 GitHub identity; `--max-workers` (default 3) bounds concurrent workers and

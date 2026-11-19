@@ -36,7 +36,7 @@ commonplace-analysis analyse https://github.com/owner/repository
 ```
 
 The command validates locator shape without network probes. New runs default to
-`pi-sol` (`gpt-6.1-sol`, medium effort). Pass `--worker-profile <name>` for an
+`pi-sol` (`gpt-6.2-sol`, medium effort). Pass `--worker-profile <name>` for an
 explicit override; every role, including verifiers, uses that one profile.
 An initiating agent supplies `--model <its-model-id>` for integration commit
 attribution; do not infer that identity from the analyst profile.
