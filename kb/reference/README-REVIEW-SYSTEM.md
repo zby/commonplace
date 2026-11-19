@@ -401,6 +401,56 @@ resumed sweep keeps the profile it opened with.
 - `codex` runs in a `workspace-write` sandbox, which cannot keep the
   checkout read-only. The prompt forbids writing and the guard reports it.
 
+### Running a review from Pi
+
+The Pi session that starts a review and the worker that judges the note are
+separate. To use Pi only to **start** a review, ask it to run
+`commonplace-review run gates NOTE --criteria prose/source-residue --profile sonnet`
+from the project root. That example needs a working Claude Code worker, not
+Pi credentials for the worker. No Pi subagent extension is needed in either role.
+
+To use **Pi as the reviewer**:
+
+1. Follow the [Commonplace installation guide](../../INSTALL.md) for the consuming
+   project. Use a Git repository with at least one commit (the checkout guard
+   reads `HEAD`) and an existing KB note. In the shell or Pi session that will
+   start the run, check that `commonplace-review --help` and `pi --version` work.
+2. Choose a provider and model from `pi --list-models`. Set up credentials for
+   that provider (for example with `/login` in Pi) and check them in the launch
+   environment with `pi auth check --model PROVIDER/MODEL`. The worker must be
+   able to read the note and the installed library and write the requested result
+   under `kb/reports/state/review/runs/` without prompting.
+3. Add the following entry **under the existing `profiles:` key** in the
+   library's [review profile file](../instructions/review-profiles.yaml).
+   Replace `PROVIDER/MODEL` with your chosen ID. For a durable customization,
+   use an editable Commonplace install and edit `kb/instructions/review-profiles.yaml`
+   in that checkout. A file of the same name in a consuming KB is not an override.
+
+   ```yaml
+     pi-review:
+       harness: pi
+       launch-model: PROVIDER/MODEL
+       effort: medium
+       flags:
+         tools: read,grep,find,ls,write
+   ```
+
+   The built-in adapter selects print mode and JSON output; do not start a
+   headless server or add those flags yourself. Bare `pi` in a terminal opens
+   the interactive UI. The `write` tool is not restricted to the result path:
+   inspect the [checkout guard](#the-checkout-guard) after the run.
+4. Try one gate on one note. Replace `NOTE` with its repository-relative path:
+
+   ```bash
+   commonplace-review status NOTE --criteria prose/source-residue
+   commonplace-review run gates NOTE --criteria prose/source-residue --profile pi-review
+   commonplace-review status NOTE --criteria prose/source-residue
+   ```
+
+   `status` launches nothing. Choose a `missing` or `stale` pair to exercise the
+   worker; a `fresh` pair is skipped unless you add `--force`. The run should
+   report `reviewed` and the final status `fresh`, regardless of the verdict.
+
 ## Cost
 
 A launch's fixed context dominates its cost. Single observations with the
