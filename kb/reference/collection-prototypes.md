@@ -25,7 +25,7 @@ catalogue.
 ## Shipped prototypes
 
 `commonplace-init` uses three prototypes when it creates a project's knowledge
-collections; it also seeds operating contracts for sources, reports, and work,
+collections; it also seeds operating contracts for tags, sources, reports, and work,
 which are not prototypes. Their source files are package data under
 `src/commonplace/_data/templates/`:
 

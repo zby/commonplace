@@ -1,12 +1,12 @@
 ---
-description: "The base, type-rule, and schema sources of deterministic findings, their dereferencing limits, and the run-scoped execution model"
+description: "The base, collection, type-rule, and schema sources of deterministic findings, their dereferencing limits, and the run-scoped execution model"
 type: types/note.md
 tags: [type-system]
 ---
 
 # The validation contract
 
-`commonplace-validate` enforces one contract on a note, but the clauses come from three places. Every finding is labelled with the source that produced it, because a reader who knows only the type spec would otherwise get failures from rules that spec never mentions:
+`commonplace-validate` enforces one contract on a note, with clauses from four places. Every finding is labelled with the source that produced it, because a reader who knows only the type spec would otherwise get failures from rules that spec never mentions:
 
 ```
 PASS:
@@ -157,11 +157,12 @@ A type is verified by **three** mechanisms, and only the first two are the valid
 
 This page documents 1 and 2. The third is not a lesser mechanism: **a type spec's natural-language instructions are an executable criterion, not documentation.** Everything a schema cannot express still binds — it binds at review time. That is why [`type-spec.md`](../types/type-spec.md) tells authors *not* to restate schema rules in body text: the schema already enforces them, so a restatement only spends reviewer judgment re-confirming what is already guaranteed, instead of on the properties only a reviewer can check.
 
-## The three sources of a validator finding
+## The four sources of a validator finding
 
 | Source | Owner | Mechanism | Can dereference? |
 |---|---|---|---|
-| `base` | framework | imperative, applies to every typed note; repository-boundary rules may also cover bare library text | yes — link health, archive boundary, verbatim quotes |
+| `base` | framework | imperative, applies to every typed note; repository-boundary, write-brief pairing, and collection-contract naming rules also cover bare text | yes — link health, archive boundary, tag heads, verbatim quotes |
+| `collection` | the collection | imperative, checks `unquoted-source-limit` where the nearest `COLLECTION.md` sets it (typed and bare text) | yes — resolves tracked-source links and verbatim quotes |
 | `type: <name>` | the type | imperative rules registered for that type | yes — tag-readme marks re-derive from the tag space; type specs resolve their declared schemas |
 | `schema` | the type | declarative JSON Schema over the parsed document | **no** |
 
@@ -186,7 +187,9 @@ Every note **with frontmatter** is checked for the following, whatever its type.
 - **Frontmatter parses** — valid delimiters, well-formed YAML.
 - **Title length** within `MAX_NOTE_TITLE_LENGTH`; **filename slug length** within `MAX_NOTE_SLUG_LENGTH` (derived-artifact types, including write briefs, are exempt from the slug limit). Git-ignored artifacts are not authored library artifacts, so explicit validation still runs their other structural checks but exempts both authored length limits. If Git is unavailable or the project is not a worktree, validation applies the limits.
 - **Link health** — every local relative link resolves to an existing target. *Warns.*
-- **Write-brief pairing** — a `brief:` value must be the document's own `<stem>.brief.md`, and that sibling must exist with `type: types/write-brief.md`. Every file named `*.brief.md` must carry that type and be declared by its sibling `<stem>.md`, and every write brief must be so named ([ADR 092](./adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md)). Violations **fail**.
+- **Tag heads** — every tag assigned to a typed artifact in a participating collection (`kb/tags/COLLECTION.md`) must have a head at `kb/tags/<tag>-README.md`. Violations **warn**.
+- **Collection contract name** — every `COLLECTION.md` must declare `type: types/collection-contract.md`, and only a `COLLECTION.md` may carry that type. Violations **fail** (including bare-text `COLLECTION.md` files).
+- **Write-brief pairing** — a `brief:` value must be the document's own `<stem>.brief.md`, and that sibling must exist with `type: types/write-brief.md`. Every file named `*.brief.md` must carry that type and be declared by its sibling `<stem>.md`, and every write brief must be so named ([ADR 092](./adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md)). Violations **fail** (including bare-text `*.brief.md` files).
 - **Proposal archive boundary** — no library artifact links to a file under `kb/reference/proposals/archive/`. The archive README is a permitted target and may link to archived files itself; workshop files under `kb/work/` may also link in. Violations **fail**.
 - **Verbatim quotes** — every `verbatim`-marked quotation resolves against the source it links ([ADR 046](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). A quote absent from or repeated in its eligible source region **fails**; an unpairable verbatim citation warns, but only in notes that demonstrably use the convention.
 - **Ingest snapshot pairing** — when an ignored local snapshot is retained, its name-paired path, source URL, and exact-byte checksum must agree with the tracked ingest. A mismatch warns; when the recorded bytes exist under another filename, the warning locates them without treating that path as mutation authority. For a legacy ingest without a checksum, the source URL may locate a related capture but cannot establish exact-byte identity. Complete cache absence is silent.

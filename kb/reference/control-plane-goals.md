@@ -80,20 +80,20 @@ The three-subsection layout in the template matches the structure the generated 
 
 ## The install-time fill-in flow
 
-The installation guidance distils the "fill in the KB Goals section" step for practitioners. It walks through the five subsections with emphasis on the scope-boundary framing for Domain and the contrast-with-Include framing for Exclude.
+The installation guidance distils the "fill in the KB Goals and Scope section" step for practitioners, walking through its three subsections (`Purpose`, `Scope` with in/out lists, and `Quality bar`).
 
 Concretely, the install sequence is:
 
-1. `commonplace-init --root .` creates the directory structure, scaffolds `AGENTS.md.template` with placeholder goals and `CLAUDE.md.template`, and writes `.commonplace/library.md`
-2. The practitioner renames or copies the templates to `AGENTS.md` and `CLAUDE.md` and fills in the five subsections
+1. `commonplace-init` creates the directory structure, scaffolds `AGENTS.md.template` with placeholder goals and `CLAUDE.md.template`, and writes `.commonplace/library.md`
+2. The practitioner renames or copies the templates to `AGENTS.md` and `CLAUDE.md` and fills in the three subsections
 3. Agents in a runtime configured to load root repository instructions receive `AGENTS.md` and see the populated goals on every invocation
 
-The agent has no fallback if goals are left unfilled — an empty `## KB Goals` section is a silent failure mode, which is why the installation guidance treats the fill-in step as a first-run requirement rather than optional polish.
+The agent has no fallback if goals are left unfilled — an empty `## KB Goals and Scope` section is a silent failure mode, which is why the installation guidance treats the fill-in step as a first-run requirement rather than optional polish.
 
 ## Relationship to other Commonplace invariants
 
 - The routing and navigation content (`## Using the KB`, including its Collection Routing and Navigation subsections) is generated from the framework and does not vary per installation.
-- A vocabulary section is optional and project-specific; many installations will not need one.
+- `AGENTS.md.template` ships a `## Vocabulary` section to populate as project terms stabilize.
 - The version-control expectation is framework-shipped; commit, branch, review, and other development conventions are project-customizable.
 
 ---

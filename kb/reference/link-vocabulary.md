@@ -23,37 +23,7 @@ Markdown's title attribute (`[text](url "grounds")`) could technically carry a l
 
 The [connect skill](../instructions/cp-skill-connect/SKILL.md) operationalizes this model without silently rewriting notes. It reads the source collection's `COLLECTION.md`, searches authorised destinations according to their search guidance, applies the articulation test, and writes a report of candidate links. A maintainer or later editing pass decides which candidates become authored links.
 
-## Relationship to the control plane
-
-`AGENTS.md` handles always-loaded routing: purpose, domain, scope boundaries, key indexes, commands, and durable operating conventions. See [control-plane goals](./control-plane-goals.md).
-
-`COLLECTION.md` handles collection-local authoring: how artifacts in that collection should be written and how they may link outward.
-
-This page sits below both. It explains the shared linking approach and label vocabulary, but it is not the control plane and not the authoritative vocabulary for any specific collection.
-
-## Authoring collection link rules
-
-Collection authors use this page when defining or revising outbound-linking rules. Note writers normally read only their collection's `COLLECTION.md`.
-
-The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
-
-Organise the outbound-linking section **per destination**, not per inherited
-content-mode label. Name local destinations by their actual directory paths,
-either in full (`kb/agent-memory-systems/`) or relative to `kb/`
-(`agent-memory-systems`). Preserve subdirectory restrictions such as
-`theory/definitions`. Use the reserved token `external` for targets outside the
-KB. For each destination your source links to, declare:
-
-1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
-2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.
-
-If a destination isn't listed, it isn't an active link target from this collection. Adding a destination is a collection-author decision; writers cannot unilaterally link outside the authorised set. `any` authorizes every destination, including `external`, so choosing it is an explicit broad permission. A named `external` declaration states a narrower permitted purpose and surface; a type may refine citation format but cannot introduce the permission. Connect does not prospect the open web for this destination. Formal labelled links use labels authorized for `external` directly or through `any`; a collection may instead declare an inline citation or editorial surface without a rendered identifier ([ADR 059](./adr/059-external-is-a-reserved-outbound-destination.md)).
-
-**Footer inclusion is a separate decision from label choice.** Each `COLLECTION.md` also states the collection's inline-vs-footer convention (typically: inline for the strongest, argument-bearing commitment; footer for labelled links — `- [title](path) — label: context phrase`). Authorised labels govern what a footer link may be *called*; they don't decide whether a given relationship earns a footer entry at all. That weight call — is this corroboration formal enough to belong in the note's evidence map, or better left as an inline example in the body — has no validator and is left to the note's author, per the collection's own quality goal. A footer is a curated subset of what a note could link, the same selective-by-default shape as a tag-README's curated head: exhaustiveness is never the assumed default, and if a collection ever wants a footer to be a complete listing of a relation, that has to be an explicit, checked claim, not an implicit one.
-
-**Search latitude.** Search guidance should be specific enough to keep results within the agent's effective context, but open enough to surface serendipitous finds. Over-narrow triggers miss adjacent connections the agent might usefully make; over-broad triggers drown the connect skill in noise. When the destination is small or the query sparse, prefer slight over-retrieval — the agent can filter results in context, whereas missed links are harder to recover. Avoid phrasing that rules out whole classes of plausible connection (e.g., "only when X").
-
-Per-destination rules enable fine-grained experimentation. `kb/theory/ -> kb/reference/` can diverge from `kb/theory/ -> kb/agent-memory-systems/` even when both destinations have similar text-contract shapes.
+Collection authors authoring or revising a `COLLECTION.md` outbound-links section follow [the collection-contract type](../types/collection-contract.md#authoring-outbound-link-rules) and select labels from the catalogue below. Note writers normally read only their collection's `COLLECTION.md` and `cp-skill-write`.
 
 ## Label catalogue
 
@@ -145,7 +115,7 @@ The classifying sequence is:
 2. If the target's substantive claims are reconstructible from the source plus stated premises, use `derived-from` where the source collection authorizes that pairing.
 3. If the target generalizes beyond the source, use `abstracted-from`.
 4. If the target is an executable shape that adds operational choices without substantive claims, use `operationalized-from` where authorized.
-5. Otherwise, if the source materially shaped the target's use-shaped content, use `adapted-from` where authorized.
+5. Otherwise, if the source materially shaped the target's use-shaped content, use `adapted-from` where authorized (no collection currently authorizes `adapted-from`, though the catalogue defines its semantics for future authorization).
 
 A mixed artifact is labelled by its dominant regime — an explicit, revisable call; the mixed case is real (see the structure note's caveat: part of a methodology is native to its own level of description and belongs to neither pure regime).
 

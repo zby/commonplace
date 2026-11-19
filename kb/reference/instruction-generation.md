@@ -28,45 +28,10 @@ Substitution is a flat string replace in `_write_template`. Files that don't nee
 
 ## Project files created once
 
-These outputs belong to the project. Init creates each one only when it is missing.
+These outputs belong to the project. Init creates each one only when it is missing. `commonplace.scaffold_manifest` (`MANIFEST.directories`, `MANIFEST.files`, `MANIFEST.templates`) owns the exact directory and file inventory (inspect via `commonplace-source`).
 
-**Directories** (from `MANIFEST.directories`) — empty directory shells the practitioner fills in:
-
-- `kb/notes/`, `kb/notes/types/` — user's notes collection (not the library's `theory/`)
-- `kb/reference/`, `kb/reference/types/` — user's reference collection
-- `kb/instructions/` — user's instructions collection
-- `kb/sources/`, `kb/sources/types/` — user's tracked source records, and a place for project-authored source types
-- `kb/tasks/` — user's unattended task runbooks and their logs, flat
-- `kb/work/` — user's workshop surface
-- `kb/reports/`, its `state/` and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
-
-There are no scaffold trees: the source, snapshot, and report types that Commonplace commands and procedures produce are global library types, read in place like the rest of the library.
-
-**Scaffold files** — individual files copied into the user's collections:
-
-- `kb/reports/COLLECTION.md`, `README.md`, policy-area READMEs, `.gitignore`,
-  and validation-ignore markers — the report retention contract and local
-  output boundaries
-- `kb/sources/.gitignore` — ignores the local `.snapshots/` materialization directory
-- `kb/sources/COLLECTION.md` — generic tracked-source and local-capture contract
-- `kb/sources/README.md` — curated empty-state landing
-- `kb/notes/COLLECTION.md` — minimal theoretical/descriptive/prescriptive template
-- `kb/notes/README.md` — curated empty-state landing
-- `kb/reference/COLLECTION.md` — minimal template
-- `kb/reference/README.md` — curated empty-state landing
-- `kb/instructions/COLLECTION.md` — minimal template
-- `kb/instructions/README.md` — curated empty-state landing
-- `kb/work/COLLECTION.md` — workshop-layer contract: structure, closing, and loose linking
-- `kb/work/README.md` — active-workshops landing
-
-The notes, reference, and instructions `COLLECTION.md` templates are ready-to-use defaults with no placeholders; a practitioner customizes them only when the project needs different conventions, and the library's own `COLLECTION.md` files serve as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies operational-state, retained-record, and local-type policies. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
-
-**Resolved templates** — read, substituted, written:
-
-- `AGENTS.md.template` → `AGENTS.md.template` in the target root (practitioner then renames it to `AGENTS.md` or merges it into an existing file)
-- `CLAUDE.md.template` → `CLAUDE.md.template` in the target root; it imports `AGENTS.md` and `.commonplace/library.md`, so Claude Code has the library paths in context from the start of a session
-
-The templates flow through `_write_template` with the replacements dictionary. The committed control-plane files name no machine path; they point to `.commonplace/library.md`. The scaffold creates no `.envrc` or Commonplace-specific project venv; command discovery belongs to the user-level uv tool installation.
+- **Directories and starter contracts:** user collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/reports/` with `state/` and `retained/`, `kb/work/`, and `kb/tasks/`), each collection receiving a starter `COLLECTION.md` and curated `README.md` landing. Source, snapshot, and report types produced by commands stay in the installed library rather than being copied into the project.
+- **Resolved templates:** `AGENTS.md.template` and `CLAUDE.md.template` (which imports `AGENTS.md` and `.commonplace/library.md`) flow through `_write_template` with the replacements dictionary. The committed control-plane files name no machine path; they point to `.commonplace/library.md`. The scaffold creates no `.envrc` or Commonplace-specific project venv; command discovery belongs to the user-level uv tool installation.
 
 ## Pointers into the library, rewritten on every run
 

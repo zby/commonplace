@@ -26,8 +26,8 @@ promoted skills.
 project/
   AGENTS.md CLAUDE.md                committed control plane, from init's templates
   kb/
-    notes/ reference/ instructions/  user-owned collections
-    sources/ reports/                user-owned collections, with their local types
+    notes/ reference/ instructions/ tags/  user-owned collections
+    sources/ reports/                      user-owned collections, with their local types
     tasks/ work/                     user-owned operating surfaces
     log.md                           user-owned operational log
   .claude/skills/ .agents/skills/    skill stubs pointing into the library (uncommitted)

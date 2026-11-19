@@ -1,5 +1,5 @@
 ---
-description: "How agents navigate a Commonplace KB using control-plane pointers, rg, titles/descriptions, indexes, links, connect reports, and possible future search layers"
+description: "How agents navigate a Commonplace KB using control-plane pointers, rg, scoped listing recipes, curated indexes, descriptions, links, and connect reports"
 type: types/note.md
 ---
 
@@ -37,7 +37,7 @@ Complete generated listings — per-collection `dir-index.md` pages and per-tag 
 By tag — path plus description for every artifact carrying a tag, over the participating collections:
 
 ```bash
-rg -l '^tags:.*\bTAG\b' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
+rg -l '^tags:.*\bTAG\b' kb/theory/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ kb/reports/ --glob '*.md' \
   | xargs -r rg -N --no-heading '^description:\s*' -r ''
 ```
 
@@ -76,16 +76,6 @@ The current stack works because the KB is still small enough that `rg`, curated 
 2. **Search may need ranking.** When lexical results become too noisy or vocabulary mismatch becomes common, the system may need search stronger than `rg`.
 
 These are complementary. A small curated core keeps reasoning and routing cheap. Better retrieval improves access into larger or less-curated text bases.
-
-## Possible Future Layers
-
-Near-term search improvement should probably be ranked lexical search: BM25 over titles, descriptions, paths, and bodies, with filters for collection, type, user verification, and path. This keeps the behavior inspectable and cheap while improving result ordering.
-
-Semantic search is useful for vocabulary mismatch: cases where the agent asks with different words than the artifact uses. It should return candidates with titles, descriptions, paths, and matched passages rather than opaque answers, so the agent can still decide what to open.
-
-Hybrid search can combine both: lexical precision for exact terms, semantic recall for paraphrase, and structural filters from frontmatter. The output should remain a candidate list, not a replacement for authored descriptions, indexes, and links.
-
-Task-aware retrieval can come later if usage demands it. The mode should come from caller context when available: exact lookup, evidence search, related-note discovery, source lookup, contradiction search, or narrative synthesis. Query length alone is a weak routing signal for agents.
 
 ## Boundary
 

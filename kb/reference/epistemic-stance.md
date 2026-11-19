@@ -13,7 +13,7 @@ commitments. This page is a stub; it grows from the connections notes make to it
 1. **Fallibilism.** Claims are conjectures. Observations never establish a
    universal statement; corroboration is a survived attempt at refutation
    ([Popper, *Logic of Scientific Discovery*](../sources/popper-logic-of-scientific-discovery.ingest.md)).
-   Applied in the [notes contract](../theory/COLLECTION.md) and
+   Applied in the [theory contract](../theory/COLLECTION.md) and
    [claim modality](./adr/066-claims-declare-modality-in-text-and-passes-repair-mode-mismatch.md).
 
 2. **Methodological rules are conventions** (*Logic of Scientific Discovery*,

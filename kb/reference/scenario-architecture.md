@@ -65,13 +65,7 @@ Because this file is always loaded, it anchors the scenario decomposition: the a
 
 ## Measurement surface
 
-The decomposition can be represented as scenario files that name the source artifacts each step depends on and let evaluation tooling measure instruction bytes against the current files.
-
-This gives the architecture a falsifiable surface:
-
-- hop structure is encoded in the scenario description
-- instruction bytes are measured dynamically from the real files
-- architecture changes can be re-evaluated without rewriting the measurement method
+The fork-by-fork decompositions live as hand-maintained scenario notes under `tests/scenarios/`, naming the source artifacts each step depends on so context budgets can be inspected against the live files. No automated byte-measurement runner is currently shipped; evaluation stays an explicit manual or agent-run check (`kb/instructions/evaluate-scenarios/`).
 
 ---
 

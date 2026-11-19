@@ -33,7 +33,7 @@ When a field's meaning would otherwise have to vary by collection, the moves tha
 2. **Carry the distinction in placement and natural-language instruction, with no field at all.** [ADR 017](./adr/017-collection-md-is-the-register-convention-boundary.md) did this for the then-current register distinction: the applicable conventions were encoded by collection placement and stated in that `COLLECTION.md`, never by a frontmatter field whose meaning a collection sets.
 3. **Push it into a collection-local type whose spec owns the field with fixed meaning.** A distinction that only exists under one contract becomes a field on a collection-local type (for example, a casebook-local claim type), where the type spec still fully determines what the field means.
 
-Extending a field's *value set* while keeping each value's meaning fixed does **not** breach the boundary. The extensible-controlled-vocabularies direction for `source_type` — adding new enum values that each mean one thing everywhere — is fine; adding values is a different operation from relativizing meaning. The boundary forbids only the second.
+Extending a field's *value set* while keeping each value's meaning fixed does **not** breach the boundary. Adding new enum values that each mean one thing everywhere (as with `genre` on source ingests, formerly `source_type`) is fine; adding values is a different operation from relativizing meaning. The boundary forbids only the second.
 
 ## Why this is worth stating
 

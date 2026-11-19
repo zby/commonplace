@@ -6,45 +6,29 @@ tags: []
 
 # Review architecture
 
-Review is a set of Python workflows over the headless runtime, behind one
-command, `commonplace-review`. Code owns the control flow, every check that
-can be checked and every write to the checkout. Workers only judge and write
+Review and editing run as Python workflows over the headless runtime, behind two
+commands split by note authority ([ADR 139](./adr/139-only-commonplace-revise-writes-a-note.md)):
+`commonplace-review` (read-only on notes) and `commonplace-revise` (the only
+review/editing command that writes a note). Code owns the control flow, every check
+that can be checked and every write to the checkout. Workers only judge and write
 their output files. Durable state consists of run-owned observations and
 captured evidence and replaceable current results per (note, criterion)
 pair.
 
-For operation, see [the review-system guide](./README-REVIEW-SYSTEM.md).
+For operation, see [the review-system overview](./README-REVIEW-SYSTEM.md) and the
+`cp-skill-review` / `cp-skill-revise` skills.
 [ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) records
-the workflow decision; [ADR 132](./adr/132-review-atoms-retain-observations-behind-current-results.md)
+the workflow decision (command names amended by ADR 139, stops/publication by
+ADRs 132–138); [ADR 132](./adr/132-review-atoms-retain-observations-behind-current-results.md)
 records the typed review, retained-observation and fixture boundary;
 [ADR 133](./adr/133-edit-operations-run-alone-through-one-typed-route.md)
 extends that boundary to edit operations;
 [ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)
 makes the revise workflow the one runner of the improvement procedures; the
 rewrite workflow ports the edit path of
-[multistage writing](../instructions/cp-skill-write-multistage/SKILL.md). Exact behavior belongs to `commonplace.lib.review_workflows`,
-`commonplace.headless` and `commonplace.cli.review_workflows`.
-
-## Components
-
-| Part | Role |
-|---|---|
-| `headless.jobs` | `ask()`, one agent call with named inputs and outputs; `checked()`, retry with a deterministic check; `gather()`, parallel calls; `Run`, a run directory with a lock, durable launch records and replay; `dismiss()` and `acknowledge_stopped()` |
-| `headless.decisions` | `decide()`, an ask whose markdown frontmatter or YAML output is checked against a closed schema before code branches on it |
-| `headless.harness` | worker profiles as Workjig command workers for Claude Code, codex and pi, and the model each harness recorded |
-| `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`, `role`) resolved into applicable pairs, and the rewrite review's criterion, which no request selects; reads only |
-| `review_workflows.inbound` | the role report's inbound contexts: the passages under `kb/` that link to one note, with each linking file's path, title and description, capped; reads only |
-| `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance; it captures the edit-result contract the same way |
-| `review_workflows.observations` | references to Workjig-owned inputs and calls, shared executor provenance, review diagnostics and retained result hashes |
-| `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
-| `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
-| `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views, or judges a supplied target text; call grouping, the worker prompt and the checkout guard |
-| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `commonplace-revise try` command's run |
-| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the new run directory named by its start time and its `start.json`, holding a candidate and publishing it or the operator's revised candidate on `commonplace-revise publish RUN`, which revise and rewrite share, the guarded write of a text, the record of each publication, and the guard minus a workflow's own write |
-| `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
-| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, the end of the run at its first stop with the continuation record, the plan made from named answers files (`apply`), automatic publication and the held candidate with a new warning; each operation runs through `edit_operations.ask()` |
-| `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, three fresh-worker steps and the review operation, with one repair, the review result bound to the candidate's hash, the candidate held on every run that changes the note, and the accepted review stored as the note's current result after publication of the judged candidate |
-| `review_workflows.decisions` | kept answers: the copy a consuming run or `answers record` keeps of an answers file in the run's `answers/`; the read-only operator-decision record over kept answers, publications, the answers files continuation records wait for and held candidates, and over the operator records, packets and fix reports of the retired procedures; the carry-over of earlier decisions |
+[multistage writing](../instructions/cp-skill-write-multistage/SKILL.md). Exact module responsibilities and behavior belong to `commonplace.lib.review_workflows`,
+`commonplace.headless`, `commonplace.cli.review_workflows`, and `commonplace.cli.revise`
+(inspect via `commonplace-source`).
 
 Workjig launches each worker in the checkout through the harness's headless
 mode ([ADR 119](./adr/119-analysis-workers-launch-through-workjig.md)). The
@@ -254,11 +238,7 @@ reruns one edit execution from its captured operation, input text, supplied
 inputs and contract, through `commonplace-revise try --fixture`; a review fixture runs
 through `commonplace-review --fixture`, and each command refuses the other's fixture.
 
-The runtime accepts one result format and one active run namespace. Old
-results and runs must be archived rather than migrated or replayed. Before
-cutover, settle active launches and obtain disposition of unfinished workflows;
-old approvals confer no authority on new runs. Cited launch bytes can remain
-at their historical paths outside active discovery.
+The runtime accepts one result format and one active run namespace (`runs/v2/`).
 
 ## Criterion identity
 
