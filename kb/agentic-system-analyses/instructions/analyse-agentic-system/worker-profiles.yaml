@@ -10,9 +10,9 @@ profiles:
   opus: {harness: claude-code, launch-model: opus, effort: medium}
   sonnet: {harness: claude-code, launch-model: sonnet, effort: medium}
   haiku: {harness: claude-code, launch-model: haiku, effort: medium}
-  codex-sol: {harness: codex, launch-model: gpt-6.1-sol, effort: medium}
+  codex-sol: {harness: codex, launch-model: gpt-6.2-sol, effort: medium}
   codex-luna: {harness: codex, launch-model: gpt-6-luna, effort: medium}
-  pi-sol: {harness: pi, launch-model: gpt-6.1-sol, effort: medium}
+  pi-sol: {harness: pi, launch-model: gpt-6.2-sol, effort: medium}
   pi-ultramarine: {harness: pi, launch-model: paperinstruments/ultramarine-1-flash, effort: "off"}
   pi-luna: {harness: pi, launch-model: gpt-6-luna, effort: medium}
   pi-luna-low: {harness: pi, launch-model: gpt-6-luna, effort: low}

@@ -33,7 +33,7 @@ profiles:
   # sandbox level; the prompt forbids it and the guard reports it.
   codex:
     harness: codex
-    launch-model: gpt-6.1-sol
+    launch-model: gpt-6.2-sol
     effort: medium
     flags:
       sandbox: workspace-write

@@ -20,7 +20,7 @@ profiles:
       allowed-tools: "Read,Grep,Glob,Edit,Write,Bash(git log:*),Bash(git status:*),Bash(git diff:*),Bash(git add:*),Bash(git commit:*)"
   codex:
     harness: codex
-    launch-model: gpt-6.1-sol
+    launch-model: gpt-6.2-sol
     effort: medium
     flags:
       sandbox: workspace-write
