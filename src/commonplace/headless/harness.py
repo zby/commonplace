@@ -24,11 +24,12 @@ from __future__ import annotations
 
 import json
 from collections.abc import Callable
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
+from typing import ClassVar
 
 from workjig import CommandWorker, LaunchRecord
-from workjig.adapters import parse_evidence
+from workjig.adapters import agy_worker, parse_evidence
 
 POINTER = ("Read the complete invocation at `{prompt}` and follow it. "
            "Recover any truncated read before proceeding.")
@@ -37,7 +38,7 @@ POINTER = ("Read the complete invocation at `{prompt}` and follow it. "
 
 @dataclass
 class Profile:
-    harness: str                      # claude-code, codex or pi
+    harness: str                      # claude-code, codex, pi or antigravity
     launch_model: str                 # the name the harness selects a model by
     effort: str
     flags: dict = field(default_factory=dict)   # extra harness flags, as in mdflow frontmatter
@@ -129,6 +130,28 @@ def _pi(profile: Profile) -> dict:
     return {"model": f"{profile.launch_model}:{profile.effort}"}
 
 
+class Antigravity:
+    executable = "agy"
+    defaults: ClassVar[dict] = {}
+
+    @staticmethod
+    def worker(profile: Profile) -> CommandWorker:
+        flags = profile.flags
+        unknown = flags.keys() - {"mode", "sandbox", "_env", "_track_native_session"}
+        if unknown:
+            raise ValueError(f"unsupported Antigravity profile flags: {', '.join(sorted(unknown))}")
+        suffix = f"-{profile.effort}"
+        model = profile.launch_model.removesuffix(suffix) + suffix
+        worker = agy_worker(model, mode=flags.get("mode"), sandbox=flags.get("sandbox", True),
+                            effort=profile.effort, track_native_session=flags.get("_track_native_session", False))
+        return replace(worker, name=profile.harness, env={str(k): str(v) for k, v in flags.get("_env", {}).items()})
+
+    @staticmethod
+    def model_used(launch: LaunchRecord) -> str | None:
+        model = parse_evidence("agy", stdout(launch)).get("reported_model")
+        return model if isinstance(model, str) else None
+
+
 def stdout(launch: LaunchRecord) -> str:
     path = Path(launch.launch_dir) / "stdout.log"
     return path.read_text(encoding="utf-8", errors="replace") if path.is_file() else ""
@@ -185,6 +208,7 @@ HARNESSES = {
     }, _claude, "claude-stream-json", _claude_model),
     "codex": Harness("codex", {"_subcommand": "exec", "json": True}, _codex, "codex-json", _codex_model),
     "pi": Harness("pi", {"print": True, "mode": "json"}, _pi, "pi-json", _pi_model),
+    "antigravity": Antigravity(),
 }
 
 

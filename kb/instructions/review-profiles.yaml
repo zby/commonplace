@@ -37,3 +37,13 @@ profiles:
     effort: medium
     flags:
       sandbox: workspace-write
+  # agy's sandbox restricts terminal commands while keeping workspace writes
+  # available under accept-edits; the prompt forbids editing repository files
+  # and the guard reports any change.
+  neon:
+    harness: antigravity
+    launch-model: gemini-4-neon
+    effort: high
+    flags:
+      mode: accept-edits
+      sandbox: true

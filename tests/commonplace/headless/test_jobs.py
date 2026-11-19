@@ -171,6 +171,37 @@ def test_harness_commands():
     assert worker.output_protocol == "pi-json"
 
 
+@pytest.mark.parametrize("model", ["gemini-4-neon", "gemini-4-neon-high"])
+def test_antigravity_profile(model):
+    worker = HARNESSES["antigravity"].worker(Profile("antigravity", model, "high", {
+        "mode": "accept-edits", "sandbox": True, "_env": {"COMMONPLACE_LIBRARY_ROOT": "/library"}}))
+    assert worker.name == "antigravity"
+    assert worker.output_protocol == "agy-stream-json"
+    for flag, value in [("--model", "gemini-4-neon-high"), ("--mode", "accept-edits"), ("--effort", "high")]:
+        assert worker.argv[worker.argv.index(flag) + 1] == value
+    assert "--sandbox" in worker.argv
+    assert worker.env["COMMONPLACE_LIBRARY_ROOT"] == "/library"
+
+
+def test_antigravity_rejects_unmapped_flags():
+    with pytest.raises(ValueError, match="unsupported Antigravity profile flags: tools"):
+        HARNESSES["antigravity"].worker(Profile("antigravity", "m", "high", {"tools": "Read"}))
+
+
+@pytest.mark.parametrize("reported", ["actual-agy-model", None])
+def test_antigravity_records_only_reported_model(tmp_path, monkeypatch, reported):
+    script = tmp_path / "agy"
+    script.write_text(f"#!{sys.executable}\n" + FAKE +
+                      f'\nprint(json.dumps({{"event": "init", "init": {{"model": {reported!r}}}}}))\n' +
+                      'print(json.dumps({"event": "result", "result": {"status": "SUCCESS"}}))\n')
+    script.chmod(0o755)
+    monkeypatch.setenv("PATH", str(tmp_path))
+    with Run(tmp_path / "run", tmp_path, Profile("antigravity", "requested", "high")) as run:
+        answer = run.ask("draft", "Write GOOD things.", ["report"])
+        assert answer.outputs == {"report": "report: good"}
+        assert answer.record["model"] == reported
+
+
 def test_compact_claude_result_preserves_completion_and_model(tmp_path, script):
     # Claude's non-verbose JSON mode emits only the final result object. The
     # Workjig protocol must still classify it and retain actual model provenance.
