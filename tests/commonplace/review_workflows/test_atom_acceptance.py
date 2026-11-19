@@ -49,7 +49,8 @@ def test_dispatch_race_uses_captured_target_and_criterion(tmp_path, monkeypatch,
         record = observations.load(record_path.parent)
         for role, expected in (("target", original_target), ("criterion", original_criterion)):
             capture = next(item for item in record["inputs"] if item["role"] == role)
-            assert (record_path.parent / capture["path"]).read_bytes() == expected
+            assert capture["sha256"] == observations.sha(expected)
+        assert not (record_path.parent / "inputs").exists(), "Workjig will own the dispatched input bytes"
         (root / target).write_text(note("Alpha", "FAILME changed live passage."))
         (root / BODY_GATE).write_bytes(original_criterion + b"\nChanged live criterion.\n")
         mutations.append(True)
@@ -70,6 +71,8 @@ def test_dispatch_race_uses_captured_target_and_criterion(tmp_path, monkeypatch,
     assert (root / current.target_capture).read_bytes() == original_target
     record_path = root / current.observation
     record = observations.load(record_path.parent)
+    captured = observations.read_inputs(record_path.parent, record)
+    assert next(captured[item["path"]] for item in record["inputs"] if item["role"] == "target") == original_target
     [saved] = record["completed-results"]
     completed = record_path.parent / saved
     assert not result_contract.validate_saved(root, completed, completed.read_text()).fails

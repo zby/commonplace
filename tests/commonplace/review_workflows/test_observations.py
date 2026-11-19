@@ -1,11 +1,14 @@
 """Captured inputs, draft identity and independent fixture trials on a fake harness."""
 import json
+import shutil
 import tarfile
 from pathlib import Path
 
 import pytest
 
 from commonplace.cli.review_workflows import main
+from commonplace.headless.jobs import Run
+from commonplace.lib import frontmatter
 from commonplace.lib.review_workflows import fixtures, observations
 from tests.commonplace.review_workflows.test_gates import (
     _project,
@@ -111,7 +114,8 @@ def test_capture_exact_bytes_and_replay_retains_completion(repo, capsys):
     [record] = records(root, report["run-dir"])
     retained = json.loads(record.read_text())
     captured = next(x for x in retained["inputs"] if x["role"] == "target")
-    assert (record.parent / captured["path"]).read_bytes() == data
+    assert observations.read_inputs(record.parent, retained)[captured["path"]] == data
+    assert not (record.parent / "inputs").exists()
     [result] = retained["completed-results"]
     result_bytes = (record.parent / result).read_bytes()
     target.write_text(note("Alpha", "Changed after capture."))
@@ -120,9 +124,107 @@ def test_capture_exact_bytes_and_replay_retains_completion(repo, capsys):
     assert code == 0 and launches == [], again
     assert (record.parent / result).read_bytes() == result_bytes
     assert len(records(root, report["run-dir"])) == 1
-    (record.parent / captured["path"]).write_text("tampered")
+    # Corrupt the authoritative Workjig request, not a redundant observation copy.
+    [payload] = [path for path in (root / report["run-dir"] / "calls/payloads").rglob("*")
+                 if path.is_file() and b"Uncommitted body." in path.read_bytes()]
+    payload.write_bytes(payload.read_bytes().replace(b"Uncommitted body.", b"Tampered body."))
     assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "prose/body-gate",
                  "--resume", report["run-dir"], "--force"], harnesses=repo[1]) == 2
+
+
+@pytest.mark.parametrize("grouping", ["pair", "bundle"])
+def test_workjig_owns_inputs_and_shared_executor_survives_run_copy(repo, capsys, grouping, tmp_path):
+    root = repo[0]
+    code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria",
+                             "prose/body-gate", "prose/description-gate", "--grouping", grouping)
+    assert code == 0, report
+    run = root / report["run-dir"]
+    paths = records(root, report["run-dir"])
+    assert len(paths) == 2
+    held = [observations.load(path.parent) for path in paths]
+    assert all(data["version"] == observations.VERSION for data in held)
+    assert held[0]["executor"] == held[1]["executor"]
+    assert len(list((run / "provenance").glob("*.json"))) == 1
+    for path, data in zip(paths, held, strict=True):
+        assert not (path.parent / "inputs").exists()
+        assert all(set(call) == {"call", "key"} for call in data["calls"])
+        assert "launch-evidence" not in data
+        inputs = observations.read_inputs(path.parent, data)
+        criterion = next(item for item in data["inputs"] if item["role"] == "criterion")
+        assert inputs[criterion["path"]] == (root / data["request"]["criterion"]).read_bytes()
+    # Resolving a copied run must never fall back to the original absolute path.
+    copied = tmp_path / "exported-run"
+    shutil.copytree(run, copied)
+    directory = copied / paths[0].parent.relative_to(run)
+    assert observations.read_inputs(directory) == observations.read_inputs(paths[0].parent)
+    (copied / "calls/run.json").unlink()
+    with pytest.raises(ValueError, match="Workjig input evidence unavailable"):
+        observations.load(directory)
+    # Shared provenance remains integrity checked, not an unchecked convenience cache.
+    (run / held[0]["executor"]["path"]).write_text("{}")
+    for path in paths:
+        with pytest.raises(ValueError, match="executor provenance changed"):
+            observations.load(path.parent)
+
+
+def test_retained_v2_observation_remains_a_fixture_source(repo, capsys):
+    root = repo[0]
+    code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate")
+    assert code == 0
+    [path] = records(root, report["run-dir"])
+    data = observations.load(path.parent)
+    captured = observations.read_inputs(path.parent, data)
+    data["executor"] = observations.executor_record(path.parent, data)
+    data["version"] = 2
+    for item in data["inputs"]:
+        target = path.parent / item["path"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(captured[item["path"]])
+        item.pop("input", None)
+    [name] = data["completed-results"]
+    saved = path.parent / name
+    text = saved.read_text()
+    original_capture = frontmatter.parse(text).data["target-capture"]
+    legacy_capture = (path.parent / "inputs/target/kb/notes/alpha.md").relative_to(root).as_posix()
+    saved.write_text(text.replace(original_capture, legacy_capture))
+    data["completed-result-sha256"][name] = observations.sha(saved.read_bytes())
+    observations.atomic_json(path, data)
+    assert observations.read_inputs(path.parent) == captured
+    before = saved.read_bytes()
+    code, resumed, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate",
+                                    "--resume", report["run-dir"], "--force")
+    assert code == 0 and not launches, resumed
+    assert saved.read_bytes() == before
+    fixture = fixtures.create(root, report["run-dir"], path.parent.name, substitute_executor=True)
+    assert fixtures.load(root, fixture.relative_to(root).as_posix())[1]["source-executor"] == data["executor"]
+    # Independent exports contain bytes, not live references back to the run.
+    shutil.rmtree(root / report["run-dir"])
+    assert fixtures.load(root, fixture.relative_to(root).as_posix())
+    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=repo[1]) == 0
+    capsys.readouterr()
+
+
+def test_interruption_before_workjig_registration_can_resume(repo, capsys, monkeypatch):
+    root = repo[0]
+
+    def interrupt(*args, **kwargs):
+        raise OSError("stopped before Workjig registration")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(Run, "ask", interrupt)
+        assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "prose/body-gate", "--timeout", "30"],
+                    harnesses=repo[1]) == 2
+    assert "stopped before Workjig registration" in capsys.readouterr().err
+    [path] = (root / "kb/reports/state/review/runs/v2").glob("*/artifact/reviews/*/observation.json")
+    data = observations.load(path.parent)
+    assert data["calls"] == [] and not (path.parent / "inputs").exists()
+    run = observations.run_root(path.parent).relative_to(root).as_posix()
+    assert main(["show", run, "--json"], harnesses=repo[1]) == 0
+    capsys.readouterr()
+    code, report, launches = review(repo, capsys, "kb/notes/alpha.md", "--criteria", "prose/body-gate",
+                                   "--resume", run)
+    assert code == 0 and len(launches) == 1, report
+    assert observations.read_inputs(path.parent)
 
 
 def test_draft_and_show_do_not_publish(repo, capsys):
@@ -213,7 +315,7 @@ def test_explicit_input_and_historical_content_repair(repo, capsys):
     [record] = records(root, report["run-dir"])
     held = json.loads(record.read_text())
     [supplied] = [item for item in held["inputs"] if item["role"] == "operational"]
-    assert (record.parent / supplied["path"]).read_bytes() == (root / source).read_bytes()
+    assert observations.read_inputs(record.parent, held)[supplied["path"]] == (root / source).read_bytes()
     write(root, support, note("Support", "Changed after observation."))
     with pytest.raises(ValueError, match="historical dirty content unavailable"):
         fixtures.create(root, report["run-dir"], record.parent.name, substitute_executor=True)

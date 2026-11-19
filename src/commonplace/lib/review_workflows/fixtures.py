@@ -26,6 +26,8 @@ from commonplace.lib.review_workflows import (
 )
 
 FIXTURES = gates.STATE / "fixtures"
+VERSION = 2
+"""Self-contained fixture format; independent of the observation storage format."""
 
 
 def _command(root: Path, *args: str) -> bytes:
@@ -65,7 +67,7 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
         run = source_root / gates.RUNS / "trial"
     directory = observations.find(run / "artifact", observation)
     record = observations.load(directory)
-    if record.get("version") != observations.VERSION:
+    if record.get("version") not in observations.READ_VERSIONS:
         raise ValueError("fixture needs a supported retained observation")
     if record.get("library-policy") != observations.LIBRARY_POLICY:
         raise ValueError("observation uses an unsupported library inventory policy; start a new observation, "
@@ -79,10 +81,10 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
     repairs = repairs or {}
     if set(repairs) - set(record["content-state"]):
         raise ValueError("repair names content not declared by the observation")
-    captured = {}
+    captured = observations.read_inputs(directory, record)
     originals = {}
     for item in record["inputs"]:
-        data = observations.safe_path(directory, item["path"]).read_bytes()
+        data = captured[item["path"]]
         if observations.sha(data) != item["sha256"]:
             raise ValueError(f"retained input hash mismatch: {item['path']}")
         captured[item["path"]] = data
@@ -140,9 +142,11 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
             info.size = len(data)
             info.mode = 0o644
             archive.addfile(info, io.BytesIO(data))
-    data = {"version": observations.VERSION, "source-observation": str(directory.relative_to(root)),
-            "kb-commit": head, "request": request, "inputs": record["inputs"], "code": code,
-            "source-executor": record["executor"], "packages": observations.package_versions(),
+    data = {"version": VERSION, "source-observation": str(directory.relative_to(root)),
+            "kb-commit": head, "request": request,
+            "inputs": [{key: value for key, value in item.items() if key != "input"} for item in record["inputs"]],
+            "code": code, "source-executor": observations.executor_record(directory, record),
+            "packages": observations.package_versions(),
             "content-state": record["content-state"], "library-sha256": record["library-sha256"],
             "library-policy": observations.LIBRARY_POLICY,
             "library": "kb" if local_library else ".fixture-library",
@@ -160,7 +164,7 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
 def load(root: Path, name: str) -> tuple[Path, dict]:
     fixture = observations.safe_path(root, name)
     data = json.loads((fixture / "fixture.json").read_text())
-    if data.get("version") != observations.VERSION:
+    if data.get("version") != VERSION:
         raise ValueError("unsupported fixture version")
     if data.get("library-policy") != observations.LIBRARY_POLICY:
         raise ValueError("unsupported fixture library inventory policy; create a new baseline")

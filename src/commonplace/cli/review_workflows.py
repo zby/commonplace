@@ -213,6 +213,8 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
+from workjig import RecordError
+
 from commonplace.headless.harness import HARNESSES, Profile
 from commonplace.headless.jobs import RunLocked, acknowledge_stopped, dismiss, run_lock
 from commonplace.lib import answers, frontmatter
@@ -662,8 +664,9 @@ def _show(root: Path, arguments: argparse.Namespace) -> int:
              else sorted(path for family in observations.FAMILIES for path in base.glob(f"{family}/*/observation.json")))
     for path in paths:
         data = observations.load(path.parent)
-        contracts = {item["origin"]: observations.safe_path(path.parent, item["path"]).read_bytes()
-                     for item in data["inputs"] if item["role"] == "contract"}
+        captured = observations.read_inputs(path.parent, data) if data["completed-results"] else {}
+        contracts = {item["origin"]: captured[item["path"]]
+                     for item in data["inputs"] if item["role"] == "contract" and captured}
         completed = []
         edit = data["request"]["kind"] == edit_operations.KIND
         for name in data["completed-results"]:
@@ -730,7 +733,7 @@ def main(argv: list[str] | None = None, *, harnesses=HARNESSES) -> int:
     except RunLocked as held:
         print(f"commonplace-review: another process runs this review: {held}", file=sys.stderr)
         return 2
-    except (ValueError, OSError, subprocess.CalledProcessError, result_contract.ControllerError) as error:
+    except (ValueError, OSError, subprocess.CalledProcessError, RecordError, result_contract.ControllerError) as error:
         print(f"commonplace-review: {error}", file=sys.stderr)
         return 2
     return 0

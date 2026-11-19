@@ -561,7 +561,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
         records = {}
         for pair, given, _ in names:
             directory, record = observations.begin(run, root, pair, note_text, inputs[given], contracts,
-                                                   invocation(), call.job, inputs, supplied)
+                                                   invocation(), call.job, inputs, supplied, criterion_input=given)
             records[pair] = directory, record
         candidates = {}
 
@@ -573,7 +573,7 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 raise result_contract.ControllerError("launch target bytes differ from retained capture")
             if (launch / "inputs" / f"{given}.md").read_bytes() != inputs[given].encode("utf-8"):
                 raise result_contract.ControllerError("launch criterion bytes differ from retained capture")
-            directory, _ = records[pair]
+            directory, observation = records[pair]
             saved = directory / "results" / launch.name / f"{output}.md"
             completed_at = observations.timestamp()
             if saved.exists():
@@ -584,7 +584,10 @@ def ask(run: Run, root: Path, wanted: list[Pair], texts: dict[str, str], *, grou
                 "note-sha256": results.note_sha256(note_text, inputs[given]),
                 "criterion-sha256": results.criterion_sha256(inputs[given], decisions_text),
                 "target-sha256": observations.sha(note_text.encode()),
-                "target-capture": (directory / "inputs/target" / pair.note).relative_to(root).as_posix(),
+                # BACKCOMPAT: retained v2 results pin their original capture path
+                # - remove after v2 run retirement; replay must keep identical bytes.
+                "target-capture": ((directory / "inputs/target" / pair.note) if observation["version"] == 2
+                                   else (launch / "inputs/note.md")).relative_to(root).as_posix(),
                 "observation": (directory / "observation.json").relative_to(root).as_posix(),
                 "contract-sha256": result_contract.fingerprint(contracts), "profile": profile,
                 "model": answer.record["model"], "run": run_id, "launch": launch.name,

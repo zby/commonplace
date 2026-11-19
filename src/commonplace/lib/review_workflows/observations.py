@@ -1,4 +1,9 @@
-"""Run-owned captures and observations; Workjig still owns calls and retries."""
+"""Review semantics over Workjig-owned execution evidence.
+
+Inputs and tasks are read through Workjig's validated view, never copied into
+observations. Executor provenance is immutable and shared within a run.
+Fixtures are explicit independent exports, not a second live input authority.
+"""
 from __future__ import annotations
 
 import hashlib
@@ -19,7 +24,9 @@ from commonplace.headless.jobs import CALLS, recorded_calls
 from commonplace.lib.library import library_root
 from commonplace.lib.review_workflows import result_contract
 
-VERSION = 2
+VERSION = 3
+# BACKCOMPAT: retained v2 runs contain unique evidence - remove after their retirement.
+READ_VERSIONS = (2, VERSION)
 LIBRARY_POLICY = "git-visible-or-installed-v1"
 FAMILIES = ("reviews", "edits")
 """The directories under a run's `artifact/` that hold observations: review and edit executions."""
@@ -158,25 +165,84 @@ def prepare(run) -> dict:
     """
     if not hasattr(run, "_review_provenance"):
         selected = getattr(run, "library_root", None) or library_root()
+        value = executor(run)
+        digest = sha((json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode())
+        name = f"provenance/{digest}.json"
+        path = safe_path(run.root, name)
+        if path.exists():
+            if sha(path.read_bytes()) != digest:
+                raise ValueError(f"executor provenance changed: {path}")
+        else:
+            atomic_json(path, value)
         run._review_provenance = {
             "library-root": str(selected),
             "library-policy": LIBRARY_POLICY,
             "library-sha256": sha(json.dumps(library_files(selected), sort_keys=True).encode()),
-            "executor": executor(run),
+            "executor": {"path": name, "sha256": digest},
         }
     return run._review_provenance
+
+
+def run_root(directory: Path) -> Path:
+    if directory.parent.name not in FAMILIES or directory.parent.parent.name != "artifact":
+        raise ValueError(f"not a run observation directory: {directory}")
+    return directory.parents[2]
+
+
+def executor_record(directory: Path, data: dict) -> dict:
+    if data["version"] == 2:
+        return data["executor"]
+    reference = data["executor"]
+    path = safe_path(run_root(directory), reference["path"])
+    raw = path.read_bytes()
+    if sha(raw) != reference["sha256"]:
+        raise ValueError(f"executor provenance changed: {path}")
+    return json.loads(raw)
+
+
+def read_inputs(directory: Path, data: dict | None = None) -> dict[str, bytes]:
+    """Resolve logical export paths from their sole owner, with exact-byte checks.
+
+    `path` is the name used when exporting an independent fixture, not a file
+    that a caller should open under the observation directory.
+    """
+    data = data if data is not None else json.loads((directory / "observation.json").read_text())
+    if data["version"] not in READ_VERSIONS:
+        raise ValueError("unsupported observation version")
+    if data["version"] == 2:
+        values = {item["path"]: safe_path(directory, item["path"]).read_bytes() for item in data["inputs"]}
+    else:
+        root = run_root(directory)
+        safe_path(root, f"{CALLS}/run.json")
+        view = read_run(safe_path(root, CALLS))
+        request = data["request"]
+        matches = [call for call in view.calls if
+                   call.call_id.partition("#")[0] == request["call-job"]
+                   and {name: sha(value.encode()) for name, value in call.inputs.items()} == request["call-inputs"]
+                   and sha(call.task.encode()) == request["prompt-sha256"]] if view else []
+        if not matches:
+            raise ValueError(f"Workjig input evidence unavailable: {directory}")
+        call = matches[0]
+        values = {item["path"]: (call.task if item["role"] == "prompt" else call.inputs[item["input"]]).encode()
+                  for item in data["inputs"]}
+    for item in data["inputs"]:
+        if sha(values[item["path"]]) != item["sha256"]:
+            raise ValueError(f"captured input changed: {item['path']}")
+    return values
 
 
 def load(directory: Path) -> dict:
     data = json.loads((directory / "observation.json").read_text())
     try:
-        if data["version"] != VERSION or data["id"] != sha(json.dumps(data["request"], sort_keys=True).encode())[:24]:
+        if data["version"] not in READ_VERSIONS or data["id"] != sha(json.dumps(data["request"], sort_keys=True).encode())[:24]:
             raise ValueError("unsupported or inconsistent observation identity")
         if set(data["completed-results"]) != set(data["completed-result-sha256"]):
             raise ValueError("completed-result manifest is inconsistent")
-        for item in data["inputs"]:
-            if sha(safe_path(directory, item["path"]).read_bytes()) != item["sha256"]:
-                raise ValueError(f"captured input changed: {item['path']}")
+        executor_record(directory, data)
+        # Preparation or interruption can precede Workjig's first durable call.
+        # Recorded calls/results must never silently lose their input evidence.
+        if data["version"] == 2 or data.get("calls") or data["completed-results"]:
+            read_inputs(directory, data)
         for name, digest in data["completed-result-sha256"].items():
             if sha(safe_path(directory, name).read_bytes()) != digest:
                 raise ValueError(f"retained completed result changed: {name}")
@@ -196,8 +262,8 @@ def find(run_artifact: Path, observation: str) -> Path:
 
 def begin(run, root: Path, pair, note: str, criterion: str, contracts: dict[str, bytes], prompt: str, call_job: str,
           call_inputs: dict[str, str], operational_inputs: dict[str, dict[str, str]],
-          family: str = "reviews", profile=None) -> tuple[Path, dict]:
-    """Capture one execution's exact inputs under `artifact/<family>/<identity>`, or find it on replay.
+          *, criterion_input: str, family: str = "reviews", profile=None) -> tuple[Path, dict]:
+    """Index one execution's inputs under `artifact/<family>/<identity>`, or find it on replay.
 
     `profile` is the call's own profile when it differs from the run's.
     """
@@ -216,18 +282,21 @@ def begin(run, root: Path, pair, note: str, criterion: str, contracts: dict[str,
             raise ValueError(f"observation identity collision: {record}")
         return directory, data
     directory.mkdir(parents=True, exist_ok=True)
-    captures = {f"inputs/target/{pair.note}": ("target", pair.note, note.encode()),
-                "inputs/criterion.md": ("criterion", pair.criterion, criterion.encode()),
-                "inputs/prompt.txt": ("prompt", "controller", prompt.encode()),
-                **{f"inputs/operational/{name}.md": ("operational", item["origin"], item["text"].encode())
+    captures = {f"inputs/target/{pair.note}": ("target", pair.note, note.encode(),
+                                            "note" if family == "reviews" else "text"),
+                "inputs/criterion.md": ("criterion", pair.criterion, criterion.encode(), criterion_input),
+                "inputs/prompt.txt": ("prompt", "controller", prompt.encode(), None),
+                **{f"inputs/operational/{name}.md": ("operational", item["origin"], item["text"].encode(),
+                                                    f"supplied-{name}" if family == "reviews" else name)
                    for name, item in operational_inputs.items()},
-                **{f"inputs/contract/{name}": ("contract", name, value) for name, value in contracts.items()}}
+                **{f"inputs/contract/{name}": ("contract", name, value, f"output-contract-{index}")
+                   for index, (name, value) in enumerate(sorted(contracts.items()))}}
     entries = []
-    for name, (role, origin, value) in captures.items():
-        path = safe_path(directory, name)
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(value)
-        entries.append({"role": role, "origin": origin, "path": name, "sha256": sha(value), "bytes": len(value)})
+    for name, (role, origin, value, given) in captures.items():
+        if given is not None and call_inputs[given].encode() != value:
+            raise ValueError(f"observation input differs from Workjig request: {name}")
+        entries.append({"role": role, "origin": origin, "path": name, "sha256": sha(value), "bytes": len(value),
+                        **({"input": given + ".md"} if given is not None else {})})
     data = {"version": VERSION, "id": identity, "request": request, "kb-commit": git_head(root),
             "content-state": content_state(root),
             **prepare(run),
@@ -248,7 +317,8 @@ def refresh(run, directory: Path, data: dict, *, state: str) -> None:
             continue
         given = recorded[call["call"], call["key"]].inputs
         if {name: sha(value.encode()) for name, value in given.items()} == data["request"]["call-inputs"]:
-            data["calls"].append(call)
+            # Workjig owns status, attempts and launches; retain only foreign keys.
+            data["calls"].append({"call": call["call"], "key": call["key"]})
     keys = {call["key"] for call in data["calls"]}
     events = []
     log = run.root / "log.jsonl"
@@ -259,22 +329,8 @@ def refresh(run, directory: Path, data: dict, *, state: str) -> None:
                     or (event.get("job") == data["request"]["call-job"] and event.get("event") == "controller-error")):
                 events.append(event)
     data["diagnostics"] = events
-    data["launch-evidence"] = []
-    for call in data["calls"]:
-        for record in recorded[call["call"], call["key"]].launches:
-            launch, path = record.launch_id, view.launch_files(record).stdout
-            if not path.exists():
-                continue
-            for line in path.read_text(errors="replace").splitlines():
-                try:
-                    event = json.loads(line)
-                except ValueError:
-                    continue
-                if isinstance(event, dict) and event.get("type") == "system" and event.get("subtype") == "init":
-                    data["launch-evidence"].append({"launch": launch, "source": path.relative_to(view.record_dir.parent).as_posix(),
-                        "tools": event.get("tools"), "model": event.get("model"),
-                        "mcp": [{key: server.get(key) for key in ("name", "status")}
-                                for server in event.get("mcp_servers", []) if isinstance(server, dict)]})
+    # Native/Workjig traces own launch context. Do not create another mutable
+    # projection here; leave any historical v2 launch evidence untouched.
     data["content-rejections"] = len({event["key"] for event in events if event["event"] == "rejected"})
     data["rejection-events"] = sum(event["event"] == "rejected" for event in events)
     atomic_json(directory / "observation.json", data)

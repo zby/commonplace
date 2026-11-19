@@ -84,7 +84,9 @@ else:
         candidate = candidate.replace("must stay", "may go")
     elif defect == "same":
         candidate = text
-    outputs["candidate"].write_text(candidate)
+    elif defect == "crlf":
+        candidate = candidate.replace("\n", "\r\n")
+    outputs["candidate"].write_bytes(candidate.encode())
     result("changed", changes=["tightened the closing sentence"], **({"removed-links": removed} if removed else {}))
 '''
 PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
@@ -172,7 +174,12 @@ def test_none_operation_outcomes_are_typed_and_write_nothing(repo, capsys, words
     else:
         assert data["candidate"] is None and data["raw-output"] is None
         assert "cannot run" in report["problem"]
-    observation = observations.load(repo[0] / data["observation"].removesuffix("/observation.json"))
+    directory = (repo[0] / data["observation"]).parent
+    observation = observations.load(directory)
+    assert not (directory / "inputs").exists()
+    assert not list(directory.glob("results/*/candidate.md")), "Workjig owns raw candidate bytes"
+    if data["candidate"] is not None:
+        assert "/calls/launches/" in data["candidate"]
     assert observation["request"]["kind"] == "edit" and observation["state"] == "completed"
     assert {item["role"] for item in observation["inputs"]} >= {"target", "criterion", "prompt", "contract"}
 
@@ -189,6 +196,18 @@ def test_each_bounds_failure_goes_back_to_the_worker(repo, capsys, defect, probl
     code, report, launches = edit(repo, capsys, NONE_OP, NOTE_PATH)
     assert code == 0 and report["outcome"] == "changed" and len(launches) == 2, report
     assert any(problem in found for found in rejections(repo, report)), rejections(repo, report)
+
+
+def test_candidate_line_endings_are_retained_as_the_worker_wrote_them(repo, capsys):
+    """The result cites Workjig's output file, so its hash is over the bytes the worker wrote."""
+    repo[3].write_text("crlf")
+    code, report, _ = edit(repo, capsys, NONE_OP, NOTE_PATH)
+    assert code == 0 and report["outcome"] == "changed", report
+    data = result(repo, report).data
+    written = (repo[0] / data["candidate"]).read_bytes()
+    assert b"\r\n" in written and b"\r\n" not in NOTE.encode()
+    assert data["candidate-sha256"] == observations.sha(written)
+    assert main(["show", report["run-dir"], "--json"], harnesses=repo[1]) == 0, capsys.readouterr().err
 
 
 def test_a_named_link_removal_is_accepted(repo, capsys):

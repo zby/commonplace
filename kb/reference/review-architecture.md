@@ -35,7 +35,7 @@ rewrite workflow ports the edit path of
 | `review_workflows.criteria` | criterion requests (gate ids, bundles, `type`, `collection`, compression check ids, and the report instructions `critique`, `friction`, `premises`, `compression-synthesis`, `role`) resolved into applicable pairs, and the rewrite review's criterion, which no request selects; reads only |
 | `review_workflows.inbound` | the role report's inbound contexts: the passages under `kb/` that link to one note, with each linking file's path, title and description, capped; reads only |
 | `review_workflows.result_contract` | captured library type/schema and project collection contract, worker/controller field ownership and typed acceptance; it captures the edit-result contract the same way |
-| `review_workflows.observations` | exact input captures, execution provenance, launch diagnostics and retained result hashes |
+| `review_workflows.observations` | references to Workjig-owned inputs and calls, shared executor provenance, review diagnostics and retained result hashes |
 | `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views, or judges a supplied target text; call grouping, the worker prompt and the checkout guard |
@@ -164,7 +164,7 @@ A revised candidate is not the judged text, and its review is not stored.
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
 | full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-review decisions` still reads it |
 | run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<stamp>/` for a revise or rewrite run, with `-<n>` on a collision; older revise and rewrite runs keep `<start-hash prefix>/` names | a sweep and its resumes; one invocation of a revise or rewrite command |
-| observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; exact inputs, completed results, candidate texts and their hashes remain citable |
+| observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; references keep exact Workjig inputs and outputs citable alongside controller-completed results |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
 
 A run directory holds Workjig's records under `calls/`, the profile and
@@ -180,6 +180,20 @@ across versions. The current result references its observation, exact target
 capture and raw launch output. Historical run state is evidence, not an input
 pool: workers receive only explicitly selected, self-contained operational
 copies. Provenance links do not grant access to another run.
+
+Workjig is the sole owner of execution inputs, tasks, attempts and raw outputs.
+Observations reference those records rather than copying their input bytes or
+mutable call status. Executor provenance not captured by Workjig is shared as
+an immutable, hash-checked snapshot within each run. A completed review or edit
+result adds controller-owned metadata and remains a distinct retained artifact;
+an edit's unmodified candidate bytes stay with Workjig. Current results remain
+replaceable views over that evidence.
+
+Fixtures are deliberately self-contained exports. Their copied inputs have a
+separate retention boundary: they must remain usable without the source run.
+Missing Workjig evidence blocks an export; it does not fall back to current KB
+files. Historical observations with their own captures remain readable without
+automatically rewriting or deleting those captures.
 
 Result files are written atomically. One run holds a lock on its directory;
 two runs over the same pair both write, and the later write stands.

@@ -34,7 +34,8 @@ def test_all_kinds_validate_at_both_locations(tmp_path, monkeypatch, capsys, ins
     assert len(paths) == 4
     for path in paths:
         data = observations.load(path.parent)
-        contracts = {item["origin"]: (path.parent / item["path"]).read_bytes()
+        captured = observations.read_inputs(path.parent, data)
+        contracts = {item["origin"]: captured[item["path"]]
                      for item in data["inputs"] if item["role"] == "contract"}
         assert contracts["reports/COLLECTION.md"] == (root / "kb/reports/COLLECTION.md").read_bytes()
         held = path.parent / data["completed-results"][0]

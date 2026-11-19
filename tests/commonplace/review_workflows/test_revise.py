@@ -1408,8 +1408,9 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     store = repo[0] / "kb/reports/state/review/results" / NOTE_PATH
     role = repo[0] / report["reviews"][2]["run-dir"]
     assert role.name == "role" and not (store / "kb/instructions/role-in-the-kb-gate.md").exists()
-    [given] = role.glob("artifact/reviews/*/inputs/operational/inbound.md")
-    assert "kb/notes/beta.md" in given.read_text() and "Beta cites" in given.read_text()
+    [given] = role.glob("artifact/reviews/*/observation.json")
+    text = observations.read_inputs(given.parent)["inputs/operational/inbound.md"].decode()
+    assert "kb/notes/beta.md" in text and "Beta cites" in text
     bundle = store / "kb/instructions/compression-bundle"
     assert (store / "prose/warned.md").is_file() and (bundle / "detail-overhang.md").is_file()
     assert not (bundle / "high-impact-simplification-synthesis.md").exists(), "the synthesis publishes no result"
@@ -1472,8 +1473,9 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     swept = gates_run(repo, capsys, "--grouping", "bundle")
     assert repo[2].read_text().splitlines()[len(before):] == ["review warned"], "only the pair with a rejection"
     assert (store / "residue.md").read_bytes() == residue and (store / "warned.md").read_bytes() != warned
-    [given] = (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/inputs/operational/finding-decisions.md")
-    text = given.read_text()
+    [text] = [captured["inputs/operational/finding-decisions.md"].decode()
+              for given in (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/observation.json")
+              if "inputs/operational/finding-decisions.md" in (captured := observations.read_inputs(given.parent))]
     assert decisions.REVIEW_RULE in text and "Operator's reason: the criterion is too broad" in text
     assert "Reviewer's reason: A fixture finding" in text
     request = json.loads((repo[0] / swept["run-dir"] / "review-request.json").read_text())
@@ -1555,8 +1557,9 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
     told = assessed_inputs(repo)["earlier-decisions"]
     assert f"{decisions.RESOLUTION}: retained its question" in told
     swept = gates_run(repo, capsys)
-    [given] = (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/inputs/operational/finding-decisions.md")
-    text = given.read_text()
+    [text] = [captured["inputs/operational/finding-decisions.md"].decode()
+              for given in (repo[0] / swept["run-dir"]).glob("artifact/reviews/*/observation.json")
+              if "inputs/operational/finding-decisions.md" in (captured := observations.read_inputs(given.parent))]
     assert decisions.RETAINED_QUESTION in text and "Operator's reason: the diagnosis is wrong" in text
     assert f"{decisions.RESOLUTION}: retained its question" in text and "undiscussed" not in text
     assert not (run / edits.PUBLISHED).exists() and note_text(repo) == split

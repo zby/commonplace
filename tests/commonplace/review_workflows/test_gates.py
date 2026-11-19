@@ -19,7 +19,7 @@ import pytest
 from commonplace.cli.review_workflows import main
 from commonplace.headless.harness import Harness
 from commonplace.lib import library
-from commonplace.lib.review_workflows import inbound
+from commonplace.lib.review_workflows import inbound, observations
 from commonplace.lib.review_workflows.results import read_result, result_path
 from tests.commonplace.review_workflows.result_helpers import FAKE_RESULT, copy_contract
 
@@ -382,8 +382,8 @@ def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(la
                                       for name in ("detail-overhang", "core-claim-obscured"))
     result = read_result(result_path(root, "kb/notes/alpha.md", criterion_id))
     assert (result.criterion, result.contract, result.outcome) == (identity, "verdict", "pass")
-    prompt = (root / result.observation).parent / "inputs/prompt.txt"
-    assert "INFO as outcome: pass with info findings" in prompt.read_text()
+    prompt = observations.read_inputs((root / result.observation).parent)["inputs/prompt.txt"].decode()
+    assert "INFO as outcome: pass with info findings" in prompt
 
     # Freshness follows the check's `watches: [body]`.
     assert review(project, capsys, "kb/notes/alpha.md", *requested)[2] == []
@@ -429,7 +429,7 @@ def test_friction_and_premises_run_alone_as_fresh_reports(layout, request, capsy
     premises = read_result(result_path(root, "kb/notes/alpha.md", f"{prefix}/{REPORT_FILES['premises'][:-3]}"))
     assert (friction.contract, friction.attack_outcome) == ("report", None)
     assert friction.findings[0]["reason"].startswith("THIN") and premises.findings[0]["reason"].startswith("DOUBTFUL")
-    prompt = ((root / friction.observation).parent / "inputs/prompt.txt").read_text()
+    prompt = observations.read_inputs((root / friction.observation).parent)["inputs/prompt.txt"].decode()
     assert "No attack-outcome" in prompt and "critique body" not in prompt
     # Their freshness is the ordinary note, criterion and contract freshness.
     assert review(project, capsys, "kb/notes/alpha.md", "--criteria", "friction", "premises")[2] == []
@@ -499,7 +499,8 @@ def test_role_report_runs_alone_on_collected_or_supplied_inbound_contexts(repo, 
     assert not result_path(root, "kb/notes/alpha.md", role[:-3]).exists()
     [given] = [item for item in observation(report)["inputs"] if item["role"] == "operational"]
     assert given["origin"] == inbound.ORIGIN and given["path"] == "inputs/operational/inbound.md"
-    text = (root / report["run-dir"] / "artifact/reviews" / observation(report)["id"] / given["path"]).read_text()
+    directory = root / report["run-dir"] / "artifact/reviews" / observation(report)["id"]
+    text = observations.read_inputs(directory)[given["path"]].decode()
     assert "kb/notes/gamma.md" in text and "supplies the term" in text
     assert "Other item" not in text and "kb/work/draft.md" not in text
 

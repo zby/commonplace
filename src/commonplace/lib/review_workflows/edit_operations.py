@@ -317,7 +317,7 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
               **{role: item["text"] for role, item in roles.items()}}
     task = prompt(operation, note, roles)
     directory, record = observations.begin(run, root, Target(note, operation.identity, job), text, operation.text,
-                                           contracts, task, job, inputs, roles, family=FAMILY,
+                                           contracts, task, job, inputs, roles, criterion_input="operation", family=FAMILY,
                                            profile=profile)
     run_id = _rel(root.resolve(), run.root.resolve())
     used = profile or run.profile
@@ -332,7 +332,11 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
             "description": f"Retained {outcome} result of {operation.identity} on {note}", "format": FORMAT,
             "operation": operation.identity, "operation-sha256": observations.sha(operation.text.encode()),
             "note": note, "input-sha256": observations.sha(text.encode()),
-            "candidate": _rel(root, saved / "candidate.md") if candidate is not None else None,
+            # BACKCOMPAT: v2 results pin an observation-owned candidate
+            # - remove after v2 run retirement; do not change replayed result bytes.
+            "candidate": (_rel(root, saved / "candidate.md" if record["version"] == 2 else
+                               launch / ("outputs/candidate.md" if outcome == "changed" else "inputs/text.md"))
+                          if candidate is not None else None),
             "candidate-sha256": observations.sha(candidate.encode()) if candidate is not None else None,
             "observation": _rel(root, directory / "observation.json"),
             "contract-sha256": result_contract.fingerprint(contracts), "profile": provenance,
@@ -444,9 +448,12 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
 
 
 def _retain(directory: Path, record: dict, edit: Edit) -> None:
-    """Write the result and its candidate into the observation; a replay must write the same bytes."""
+    """Retain the controller-enriched result; Workjig owns candidate/input text.
+
+    Historical v2 results still name their old candidate capture on replay.
+    """
     files = {edit.path: edit.text}
-    if edit.candidate is not None:
+    if edit.candidate is not None and record["version"] == 2:
         files[edit.path.with_name("candidate.md")] = edit.candidate
     for path, content in files.items():
         path.parent.mkdir(parents=True, exist_ok=True)
