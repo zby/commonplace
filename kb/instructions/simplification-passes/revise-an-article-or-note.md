@@ -112,7 +112,11 @@ instead of assessing again.
 
    A defect stops the run when correcting it would replace or restructure
    the text the passes work on: a different thesis, a split, a merge, a
-   reordered argument. A choice stops the run only when you judge, against
+   reordered argument. Adding a boundary condition or sharpening one or two
+   sentences—even across a few separate passages—does not stop the run when
+   the thesis and argument structure stand; put each such defect under
+   `Claim questions for the operator` and scope passes away from those
+   passages. A choice stops the run only when you judge, against
    the purpose and the brief, that it is the highest-value change; a
    report's making the proposal is not that judgment. Then set the plan's
    `stop` and list no passes. In the stop, give each proposal's kind and
@@ -151,10 +155,12 @@ instead of assessing again.
    proposal's cause may be a term or claim that dependents rely on: a
    contradiction inside the artifact can come from a term a dependent
    uses in another sense. When the proposed change, or a pass you would
-   plan, changes a claim or term that dependents rely on, set `stop` and
-   name those dependents in it, with the role report's run directory: the
-   passes edit only the artifact, so the operator must decide the
-   dependents' change too.
+   plan, invalidates or alters the sense of a claim or term that dependents
+   rely on, set `stop` and name those dependents in it, with the role
+   report's run directory: the passes edit only the artifact, so the
+   operator must decide the dependents' change too. Adding a boundary
+   qualification that leaves every dependent's relied-on claim intact does
+   not by itself require a stop.
 
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,

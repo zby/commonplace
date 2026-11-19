@@ -54,8 +54,8 @@ For every non-`HOLDS` premise, also record the **counterexample shape**: `instan
 
 For every `DOUBTFUL` or `DEFEATED` premise, classify the scope of its failure:
 
-- **LOCAL** — the failure defeats only this premise; the central commitment can still stand on the remaining premises or be rescued by a qualification (narrow the scope, add a condition). The revision changes a premise and keeps the commitment; the qualification belongs in the note's `## Scope` (or `## Caveats`) section, where a later edit can narrow it further without touching the claim.
-- **GLOBAL** — the failure propagates to the central commitment, so the commitment itself fails as stated. The revision must weaken, rescope, or retire the commitment, not just patch a premise.
+- **LOCAL** — the failure defeats only this premise, or exposes a missing boundary condition that can be added without breaking the central commitment's core mechanism (narrow the scope, add a condition). Even on a universal claim, a counterexample answered by an added boundary condition that preserves the claim's explanatory reach is `LOCAL`, not `GLOBAL`. The revision changes a premise or adds a qualification (typically in `## Scope` or `## Caveats`) and keeps the commitment.
+- **GLOBAL** — the failure breaks the central commitment's core mechanism, or rescuing the commitment from it would empty the claim of explanatory reach (turning it tautological or trivial). The revision must replace, weaken in mode, or retire the commitment, not just patch a premise or add a boundary condition.
 
 A `GLOBAL` failure on a load-bearing premise is the strongest signal this method produces; surface it first.
 
