@@ -6,8 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [Review and editing commands](./review-and-editing-commands/README.md) — posed 2026-11-19 to make the full editorial pass easy to invoke and show when a command edits the note or needs an operator decision.
-
 - [Documentation consolidation](./documentation-consolidation/README.md) — posed 2026-11-18: route agents from tasks to easily missed dependencies while keeping general overviews useful to human operators.
 
 - [Operationalization, Goals, and Grounded Concepts](./operationalization-goals-grounded-concepts/README.md) — posed 2026-11-16: six distinct RE comparisons for agent-operated knowledge work, with bounded source/version gaps and four proposed countertests; a citation-repair screen reached ceiling for both prompts, leaving evidence selection as the next question
