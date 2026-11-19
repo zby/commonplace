@@ -85,6 +85,7 @@ def command_origin(tmp_path, prepared_template, monkeypatch):
     scenario.write_text("{}")
     monkeypatch.setenv("PATH", str(fake) + os.pathsep + os.environ["PATH"])
     monkeypatch.setenv("FAKE_ROOT", str(ROOT))
+    monkeypatch.setenv("PI_CODING_AGENT_SESSION_DIR", str(tmp_path / "sessions"))
     monkeypatch.setenv("FAKE_SCENARIO", str(scenario))
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", "/wrong/library/must-not-reach-child")
     upstream = tmp_path / "upstream"
@@ -133,6 +134,8 @@ def test_complete_route_installs_frozen_environment_offline(command_origin, caps
         bundle.extractall(origin, filter="fully_trusted")
     shutil.rmtree(origin / "src")
     shutil.copytree(fixture_origin / "src", origin / "src", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    for name in ("pyproject.toml", "uv.lock"):
+        shutil.copy2(fixture_origin / name, origin / name)
     git(origin, "init", "--quiet")
     git(origin, "config", "user.name", "Fixture")
     git(origin, "config", "user.email", "fixture@example.invalid")

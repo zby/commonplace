@@ -60,6 +60,11 @@ from tests.commonplace.agentic_analysis.execution_fixtures import (
 
 prompt_path = Path(re.search(r"`([^`]+prompt\.txt)`", sys.argv[-1]).group(1))
 prompt = prompt_path.read_text()
+sid = sys.argv[sys.argv.index("--session-id") + 1]
+store = Path(sys.argv[sys.argv.index("--session-dir") + 1])
+(store / f"start_{sid}.jsonl").write_text(json.dumps({"type": "session", "id": sid}) + "\n" +
+    json.dumps({"type": "message", "message": {"role": "assistant", "model": "fixture", "content": [],
+                                               "stopReason": "stop"}}) + "\n")
 if "--no-context-files" in sys.argv:
     if json.loads(Path(os.environ["FAKE_SCENARIO"]).read_text()).get("audit-failure"):
         sys.exit(19)
@@ -184,13 +189,14 @@ def workflow(request, tmp_path, monkeypatch):
     prepared = request.getfixturevalue("prepared_checkout")
     monkeypatch.setenv("COMMONPLACE_LIBRARY_ROOT", str(prepared.repo / "kb"))
     monkeypatch.setenv("FAKE_ROOT", str(ROOT))
+    monkeypatch.setenv("PI_CODING_AGENT_SESSION_DIR", str(tmp_path / "sessions"))
     fake_dir = tmp_path / "fake"
     fake_dir.mkdir()
     script = fake_dir / "fake.py"
     script.write_text(FAKE)
     scenario = fake_dir / "scenario.json"
     monkeypatch.setenv("FAKE_SCENARIO", str(scenario))
-    harness = Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile: {},
+    harness = Harness(sys.executable, {"_subcommand": [str(script)]}, lambda profile: {}, protocol="pi-json",
                       model_used=lambda launch: "fake-model-1" if launch.status == "delivered" else None)
     # The CLI builds its Analysis on the shared mapping; this test's entry is restored afterwards.
     monkeypatch.setitem(HARNESSES, "pi", harness)
@@ -419,7 +425,7 @@ def test_run_command_stops_then_resumes_after_a_retry(workflow, capsys):
     assert (audit_dir / "report.md").read_text() == "Fixture audit only.\n"
     inventory = json.loads((audit_dir / "attempts.json").read_text())
     assert len([i for i in inventory if i["job"] == "synthesis"]) == 2
-    assert all(i["scan_status"] == "unscanned" for i in inventory), "fake analysts use no Pi protocol"
+    assert all(i["scan_status"] == "scanned" for i in inventory)
     assert "advisory audit: complete" in err
     code, _, err = cli(capsys, "run", str(run_dir))
     assert code == 0, err

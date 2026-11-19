@@ -111,7 +111,8 @@ class Harness:
         flags = {**self.defaults, **self.translate(profile), **profile.flags}
         env = {str(k): str(v) for k, v in (flags.get("_env") or {}).items()}
         argv = (self.executable, *subcommands(flags), *build_args(flags), POINTER)
-        return CommandWorker(argv=argv, name=profile.harness, env=env, output_protocol=self.protocol)
+        return CommandWorker(argv=argv, name=profile.harness, env=env, output_protocol=self.protocol,
+                             track_native_session=flags.get("_track_native_session", False) and self.protocol is not None)
 
 
 def _claude(profile: Profile) -> dict:

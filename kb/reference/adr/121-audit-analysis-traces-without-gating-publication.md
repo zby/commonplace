@@ -24,6 +24,11 @@ Pi only) to investigate at most three consequential questions within
 30 tool calls. Use failures as leads; distinguish supported content defects
 from claims that a process failure caused them. No findings is valid.
 
+Use the in-place option from “Native traces for advisory analysis audits”.
+Workjig identifies the native session for each launch. Commonplace reads only
+that transcript and pins its hash. Missing or changed evidence is a coverage
+gap; the audit does not substitute a subprocess log or search personal sessions.
+
 Keep the audit advisory. Findings, timeout and incomplete coverage do not alter
 publication, the receipt or analysis exit status. Corrections require separate
 authority. Preserve audit outputs as local run evidence; before worktree removal,
@@ -35,6 +40,9 @@ extract useful evidence or obtain an explicit decision not to retain it.
 used more calls on the real case; retain it as a comparison, not the default.
 **Automatic correction or publication gating:** not justified by the small pilot;
 a suspicious process event is not sufficient evidence for either.
+**Copy native transcripts into run state:** preserves raw evidence after native-store
+cleanup at the cost of a second full trace. We prefer less retained state.
+This does not decide whether the audits are worth running.
 **Manual audits only:** leave recovery inspection dependent on a separate commission.
 
 ## Consequences

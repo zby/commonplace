@@ -322,15 +322,17 @@ last attempt, a launch an earlier run left unsettled), 1 means the command
 failed.
 
 Before returning, `run` saves an all-attempt trace scan of Pi and Claude Code
-worker streams under
+native sessions under
 `<run>/audit/<input-digest>/`. Completed Pi and Claude Code analyses then
 receive an advisory, read-only meta-analysis using the saved scan and accepted
 outputs. It runs in the run profile's harness with that profile's model and
 effort; a Codex run records a skipped audit. It has a
 900-second ceiling (or the shorter `--timeout`), with prompt limits of three
 questions and 30 tool calls. Missing and unsupported traces are coverage gaps,
-not successful scans. An unchanged rerun reuses the snapshot; changed inputs
-create a new one. Audit failure does not change the analysis exit status or
+not successful scans. Workjig associates a transcript with each physical launch;
+the audit pins its hash without copying it. Deleting or replacing the native
+transcript removes verification even when stdout still exists. An unchanged
+rerun reuses the snapshot; changed inputs create a new one. Audit failure does not change the analysis exit status or
 receipt. The [analysis skill](../agentic-system-analyses/instructions/analyse-agentic-system/SKILL.md#advisory-trace-audit)
 sets the evidence and reporting obligations. Audit files are local state, not
 included by `integrate`; evidence extraction precedes worktree removal.

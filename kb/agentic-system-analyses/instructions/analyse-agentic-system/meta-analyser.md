@@ -29,7 +29,9 @@ suspicion, including equivalent reads, later corrections and qualified wording.
 
 The scanner is incomplete: expected search no-matches can appear as failures,
 while shell pipelines can mask errors. Its diagnostic tails may omit the cause.
-Use original traces where needed and available; otherwise retain uncertainty.
+Use only the native transcript listed for a scanned attempt. Verify its SHA-256
+against the inventory before relying on it. If missing or changed, report the
+gap. Do not search session stores or substitute subprocess logs.
 Passing validation is not semantic verification. Repeated attempts may represent
 successful correction: judge the final accepted result, not only an early draft.
 
