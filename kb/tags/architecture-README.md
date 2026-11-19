@@ -19,6 +19,7 @@ System structure in agent-operated KBs and agent runtimes: how responsibilities,
 
 - [Separate scheduling, context assembly, and external state](../theory/agent-runtime-analysis-should-separate-scheduling-context-state.md) — assigns distinct diagnostic responsibilities without requiring separate implementation modules
 - [Runtime structure determines governance control surfaces](../theory/runtime-structure-determines-governance-control-surfaces.md) — exposed decisions and state determine where governance can inspect and intervene
+- [Context isolation for focus conflicts with global prioritization](../theory/context-isolation-for-focus-conflicts-with-global-prioritization.md) — why bounded-context execution and global prioritization require separate narrow-deep worker and wide-shallow triage views, and the interface friction between them
 - [Skill discovery re-fires in worker contexts](../theory/skill-discovery-re-fires-in-every-sub-agent-context.md) — harness-owned discovery crosses the context boundary a parent tried to establish
 
 ## Control planes and instruction placement

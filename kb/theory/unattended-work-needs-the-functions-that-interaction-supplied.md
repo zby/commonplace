@@ -47,4 +47,5 @@ Does supplying a way to detect and handle one recurring intervention improve una
 
 Relevant Notes:
 
+- [Context isolation for focus conflicts with global prioritization](./context-isolation-for-focus-conflicts-with-global-prioritization.md) — extends: identifies context isolation as a structural reason stopping and redirection degrade when interactive oversight is removed, and splits narrow-deep execution from wide-shallow triage
 - [Norman, The problem of automation: inappropriate feedback and interaction](../sources/norman-problem-of-automation-inappropriate-feedback.ingest.md) — evidenced-by: qualifies the inventory; the lost function is supplied by the delegate, not the operator, and the evidence is incident narratives rather than a test

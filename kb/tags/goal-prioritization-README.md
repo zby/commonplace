@@ -57,6 +57,7 @@ control carries both this tag and improvement-loop.
 
 - [LLM generation can hide a relaxed goal where human writing exposes a stall](../theory/llm-generation-relaxes-goals-where-human-writing-stalls.md) — conjectural account of a necessary constraint losing force while fluent completion remains
 - [A guard against a conjectured requirement removes the experiment that would test it](../theory/a-guard-against-a-conjectured-requirement-removes-the-experiment-that.md) — why test-selected agents add guards by default, and when omitting one is the cheaper experiment
+- [Context isolation for focus conflicts with global prioritization](../theory/context-isolation-for-focus-conflicts-with-global-prioritization.md) — isolating an agent for task focus removes the live comparison set relational prioritization requires, flattening urgency and tangents unless execution is split from wide-shallow triage
 - [Human Routers of Machine Words](../sources/borretti-human-routers-of-machine-words.ingest.md) — asks whether a complete-looking text has displaced the work of resolving its constraints
 
 Sources are linked by hand because generated membership omits them.

@@ -35,3 +35,4 @@ Relevant Notes:
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidenced-by: reads the same agent-assisted drafting as the computational part of jointly performed Search
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: defines the search function this note catalogs mechanisms for
 - [Review architecture](./review-architecture.md) — evidenced-by: the systematic staleness-noticing mechanism, limited to review pairs
+- [Context isolation for focus conflicts with global prioritization](../theory/context-isolation-for-focus-conflicts-with-global-prioritization.md) — see-also: explains why local noticing channels require a separate wide-shallow triage pass instead of prioritizing fixes inside the task that noticed them
