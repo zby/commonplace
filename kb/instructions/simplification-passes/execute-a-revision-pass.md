@@ -9,7 +9,7 @@ Improve the supplied text within the assigned edit operation and its inputs,
 without choosing additional work or publishing the result.
 
 The edit route supplies this instruction as `execution` to every run of an
-[edit operation](../../types/edit-operation.md): `commonplace-review run edit`,
+[edit operation](../../types/edit-operation.md): `commonplace-revise try`,
 and each pass of the revise workflow, including its proposing and applying
 runs. It is binding execution context. It does not commission assessment,
 planning, dispatch or publication.

@@ -71,7 +71,7 @@ def test_fixture_excludes_ignored_ambient_files_but_retains_explicit_input(tmp_p
         assert not any(name.startswith(("kb/messages/", "kb/sources/cache/")) for name in archive.getnames())
     explicit = next(item for item in record["inputs"] if item["role"] == "operational")
     assert (fixture / explicit["path"]).read_text() == "explicit operational evidence"
-    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
+    assert main(["--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
     trial = json.loads(capsys.readouterr().out)
     tree = root / trial["evidence-root"]
     assert not (tree / "kb/messages/private.md").exists()
@@ -128,7 +128,7 @@ def test_capture_exact_bytes_and_replay_retains_completion(repo, capsys):
     [payload] = [path for path in (root / report["run-dir"] / "calls/payloads").rglob("*")
                  if path.is_file() and b"Uncommitted body." in path.read_bytes()]
     payload.write_bytes(payload.read_bytes().replace(b"Uncommitted body.", b"Tampered body."))
-    assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "prose/body-gate",
+    assert main(["kb/notes/alpha.md", "--criteria", "prose/body-gate",
                  "--resume", report["run-dir"], "--force"], harnesses=repo[1]) == 2
 
 
@@ -200,7 +200,7 @@ def test_retained_v2_observation_remains_a_fixture_source(repo, capsys):
     # Independent exports contain bytes, not live references back to the run.
     shutil.rmtree(root / report["run-dir"])
     assert fixtures.load(root, fixture.relative_to(root).as_posix())
-    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=repo[1]) == 0
+    assert main(["--fixture", fixture.relative_to(root).as_posix()], harnesses=repo[1]) == 0
     capsys.readouterr()
 
 
@@ -212,7 +212,7 @@ def test_interruption_before_workjig_registration_can_resume(repo, capsys, monke
 
     with monkeypatch.context() as patch:
         patch.setattr(Run, "ask", interrupt)
-        assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "prose/body-gate", "--timeout", "30"],
+        assert main(["kb/notes/alpha.md", "--criteria", "prose/body-gate", "--timeout", "30"],
                     harnesses=repo[1]) == 2
     assert "stopped before Workjig registration" in capsys.readouterr().err
     [path] = (root / "kb/reports/state/review/runs/v2").glob("*/artifact/reviews/*/observation.json")
@@ -249,7 +249,7 @@ def test_draft_and_show_do_not_publish(repo, capsys):
     shown = json.loads(capsys.readouterr().out)
     assert shown["observations"][0]["results"][0]["findings"] == []
     path.write_text(path.read_text().replace("linked-files", "corpus"))
-    assert main(["run", "gates", "kb/notes/alpha.md", "--criterion-file", "kb/draft.md"], harnesses=repo[1]) == 2
+    assert main(["kb/notes/alpha.md", "--criterion-file", "kb/draft.md"], harnesses=repo[1]) == 2
 
 
 @pytest.mark.parametrize("installed", [False, True])
@@ -268,7 +268,7 @@ def test_fixture_trials_are_independent_and_resume_is_not_a_trial(tmp_path, monk
     runs = []
     for _ in range(2):
         before = len(log.read_text().splitlines())
-        assert main(["run", "gates", "--fixture", name], harnesses=harnesses) == 0
+        assert main(["--fixture", name], harnesses=harnesses) == 0
         report = json.loads(capsys.readouterr().out)
         runs.append(report["run-dir"])
         assert len(log.read_text().splitlines()) == before + 1
@@ -276,7 +276,7 @@ def test_fixture_trials_are_independent_and_resume_is_not_a_trial(tmp_path, monk
         assert not report["changed"]
     assert runs[0] != runs[1]
     before = log.read_text()
-    assert main(["run", "gates", "--fixture", name, "--resume", runs[0]], harnesses=harnesses) == 0
+    assert main(["--fixture", name, "--resume", runs[0]], harnesses=harnesses) == 0
     capsys.readouterr()
     assert log.read_text() == before
     assert {str(p): p.read_bytes() for p in (root / "kb/reports/state/review/results").rglob("*.md") if p.is_file()} == live
@@ -295,7 +295,7 @@ def test_unsafe_capture_and_old_run_are_rejected(repo, capsys):
     old = root / "kb/reports/state/review/runs/old"
     old.mkdir(parents=True)
     (old / "sweep.json").write_text('{"profile": {}}')
-    assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "prose/body-gate", "--resume", str(old)],
+    assert main(["kb/notes/alpha.md", "--criteria", "prose/body-gate", "--resume", str(old)],
                 harnesses=repo[1]) == 2
     assert "old-format" in capsys.readouterr().err
 
@@ -322,7 +322,7 @@ def test_explicit_input_and_historical_content_repair(repo, capsys):
     write(root, "repair.md", original)
     fixture = fixtures.create(root, report["run-dir"], record.parent.name,
                               substitute_executor=True, repairs={support: "repair.md"})
-    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=repo[1]) == 0
+    assert main(["--fixture", fixture.relative_to(root).as_posix()], harnesses=repo[1]) == 0
     trial = json.loads(capsys.readouterr().out)
     tree = root / trial["evidence-root"]
     assert (tree / support).read_text() == original
@@ -333,7 +333,7 @@ def test_explicit_input_and_historical_content_repair(repo, capsys):
     assert len(shown["observations"]) == 1
     assert shown["observations"][0]["results"][0]["outcome"] == "pass"
     (tree / "kb/notes/alpha.md").write_text("unexpected mutation")
-    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix(),
+    assert main(["--fixture", fixture.relative_to(root).as_posix(),
                  "--resume", trial["run-dir"]], harnesses=repo[1]) == 2
     assert "trial tree changed" in capsys.readouterr().err
 

@@ -2,8 +2,8 @@
 
 An answers file (`types/answers.md`) becomes a decision when a command keeps
 its text in a run's `ANSWERS_DIR` (`keep_answers()`): the command that
-consumes it, `commonplace-review run revise NOTE --answers FILE`, which acts
-on its approved items, or `commonplace-review answers record FILE`
+consumes it, `commonplace-revise apply FILE`, which acts
+on its approved items, or `commonplace-revise answers record FILE`
 (`record_answers()`), for a file whose decisions nothing consumes. Naming
 the file to either command is the operator's approval of its text; there is
 no other approval step. Both keep the same record: the file's repository
@@ -94,7 +94,7 @@ CONTINUATION = "continuation.json"
 """The work a revise run left unfinished (`revise.continuation()`); its items name the answers files they wait for."""
 STOP_ANSWERS = "stop-answers.md"
 """The answers file of a revise plan that stops: one text item, whose question is the run's `plan.yaml`."""
-RECORD = "commonplace-review answers record {file}"
+RECORD = "commonplace-revise answers record {file}"
 _AUTHORITY = {"user": "operator", "version-guard": "version-guard"}
 
 
@@ -422,7 +422,7 @@ def entries(root: Path) -> list[dict]:
     """Every decision entry, grouped by note and ordered by time where known (untimed last).
 
     One answers file may be kept by more than one run, such as by `answers
-    record` and then by the run its `--answers` started; the same text is
+    record` and then by the run `apply` started; the same text is
     listed once, from the record kept last.
     """
     found: list[dict] = []

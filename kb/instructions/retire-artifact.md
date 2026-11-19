@@ -105,7 +105,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
      | python3 -c 'import json, sys; [print(p) for p in json.load(sys.stdin)["orphaned"] if p.startswith("kb/reports/state/review/results/" + sys.argv[1] + "/")]' "$RETIRED"
    ```
 
-   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Leave any full-pass packet under `kb/reports/state/review/packets/`: it records an operator decision of a retired procedure, which `commonplace-review decisions` still lists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
+   An artifact that was never reviewed has no results and the command prints nothing. Otherwise delete each listed result file, then the empty `kb/reports/state/review/results/<artifact-path>/` directory. Leave any full-pass packet under `kb/reports/state/review/packets/`: it records an operator decision of a retired procedure, which `commonplace-revise decisions` still lists. Delete only paths under the retired artifact's own path: `commonplace-review status` also lists orphans left by earlier retirements, which are not this procedure's to remove.
 
 ## Verify
 

@@ -58,7 +58,7 @@ def test_missing_capture_stops_before_launch(tmp_path, monkeypatch, capsys):
         return {k: v for k, v in capture(root).items() if k != "reports/COLLECTION.md"}
 
     monkeypatch.setattr(result_contract, "capture_contract", incomplete)
-    assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "collection"], harnesses=repo[1]) == 2
+    assert main(["kb/notes/alpha.md", "--criteria", "collection"], harnesses=repo[1]) == 2
     assert "missing pinned criterion" in capsys.readouterr().err
     assert repo[2].read_text() == ""
 
@@ -96,6 +96,6 @@ def test_real_registry_fixture_selector_uses_claude_code(tmp_path, monkeypatch, 
     assert code == 0
     [path] = (root / report["run-dir"] / "artifact/reviews").glob("*/observation.json")
     fixture = fixtures.create(root, report["run-dir"], path.parent.name, substitute_executor=True)
-    assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()]) == 0
+    assert main(["--fixture", fixture.relative_to(root).as_posix()]) == 0
     trial = json.loads(capsys.readouterr().out)
     assert not trial["stopped"] and not trial["changed"]

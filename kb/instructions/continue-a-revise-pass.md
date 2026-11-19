@@ -1,5 +1,5 @@
 ---
-description: "Use when a commonplace-review run revise report carries a continuation record: help the operator resolve what the run left open, in a session, from the text the run published"
+description: "Use when a commonplace-revise report carries a continuation record: help the operator resolve what the run left open, in a session, from the text the run published"
 type: types/instruction.md
 ---
 
@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Goal: resolve issues that a revise run left open. An issue you take up is finished, not left half done. At the end the operator knows what changed in the note and what remains.
 
-Consumption: an agent in a session with the operator, reached from the `continuation` field of a `commonplace-review run revise` report, or from `continuation.json` in the run directory.
+Consumption: an agent in a session with the operator, reached from the `continuation` field of a `commonplace-revise` report, or from `continuation.json` in the run directory.
 
 ## Your task
 
@@ -44,7 +44,7 @@ Changes to the note stay uncommitted unless the operator asks for a commit. Say 
 - **Change the note by hand only on the operator's word**, and check that the diff holds only what was agreed.
 - **Start a new run only on the operator's word.** Do not retry a failed command more than once.
 - **Do not settle an item whose inputs you could not check.** Bring it to the operator with what you found.
-- **Decisions and their reasons live in answers files**, kept by the command that consumes them or by `commonplace-review answers record FILE`. A decision that is only said in the session does not reach later runs.
+- **Decisions and their reasons live in answers files**, kept by the command that consumes them or by `commonplace-revise answers record FILE`. A decision that is only said in the session does not reach later runs.
 - **Tell the operator about every publication**: which plan entries it covers and where its diff is. A publication is uncommitted, and git reverses it.
 
 ## What you have
@@ -63,15 +63,15 @@ A command you run may end with a continuation record of its own. Its items are p
 
 **`proposals`: proposals awaiting decision.** The operator decides each item of the answers file. `how.command` starts a new run that applies the approved items and publishes. When nothing is approved, `how.record` keeps the rejections and deferrals for later runs. When the command reports that the note or the write brief changed, the proposals are stale: keep the file with `how.record`; running the pass again is the operator's call.
 
-**`findings`: findings awaiting decision.** A triage left one answers file per review result. The operator decides each finding. `how.command` names every file and starts a run with one fix per result that has an approved finding. Keep a file with no approved finding, or one whose result no longer matches the note, with `commonplace-review answers record FILE`.
+**`findings`: findings awaiting decision.** A triage left one answers file per review result. The operator decides each finding. `how.command` names every file and starts a run with one fix per result that has an approved finding. Keep a file with no approved finding, or one whose result no longer matches the note, with `commonplace-revise answers record FILE`.
 
 **`direct-entry`: a plan entry not run, for an operation that applies directly.** `how.command` runs a one-entry plan the run wrote under `artifact/continue/`, which keeps the entry's scope and the plan's purpose and must-keep claims. The entry was chosen for an earlier text. It is worth running only while its reason in the assessment still describes the note; otherwise drop it and tell the operator why.
 
-**`per-item-entry`: a plan entry not run, for a per-item operation.** As above. When `how.command` names an answers file with `--answers`, the operator already decided its items; confirm before running. Otherwise the new run ends with proposals for the operator.
+**`per-item-entry`: a plan entry not run, for a per-item operation.** As above. When `how.command` is `commonplace-revise apply FILE`, the operator already decided its items; confirm before running. Otherwise the new run ends with proposals for the operator.
 
 **`fix-entry`: a plan entry that fixes a finding.** The finding was made on an earlier text. `evidence` holds the run's copy of the review result, which a later sweep does not replace. The fix is worth running only when the passages its `quotes` name survive in the note and its reason still holds on rereading them in context. An issue an earlier edit resolved is dropped with that explanation. An uncertain one is left for the next review. A finding without quotes concerns the whole document and goes to the operator.
 
-**`interactive-entry`: an operation skipped as interactive.** `narrow-overclaims` needs the evidence for each claim, which only the operator has: with it, `commonplace-review run revise NOTE --pass narrow-overclaims` takes each piece as `--must-keep`, with the plan's `--purpose`. `split-out-a-treatment` writes a second note, which is done with the operator under the instructions for writing a note.
+**`interactive-entry`: an operation skipped as interactive.** `narrow-overclaims` needs the evidence for each claim, which only the operator has: with it, `commonplace-revise NOTE --pass narrow-overclaims` takes each piece as `--must-keep`, with the plan's `--purpose`. `split-out-a-treatment` writes a second note, which is done with the operator under the instructions for writing a note.
 
 **`claim-questions`: claim questions from the assessment.** Each is a small defect the passes cannot correct or a choice the assessor did not rank first. The operator answers each, and may decline. Check a claimed defect against the note yourself before recommending. No file records these answers. An accepted one is settled by the change to the note. A declined one is dropped by telling the operator; a later assessor may raise it again. When the operator wants a declined question not to return, the place for it is the note's write brief, which every assessor reads; write it there only on the operator's word.
 

@@ -39,10 +39,10 @@ rewrite workflow ports the edit path of
 | `review_workflows.fixtures` | retained single-execution baselines and isolated trials through the same gate or edit implementation |
 | `review_workflows.results` | result files, criterion ids, the watched-parts note hash, and freshness, status, summary and orphans as pure functions over the files |
 | `review_workflows.gates` | `ask()`, which retains individual typed assessments; the sweep, which skips fresh pairs and publishes current views, or judges a supplied target text; call grouping, the worker prompt and the checkout guard |
-| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `run edit` command's run |
-| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the new run directory named by its start time and its `start.json`, holding a candidate and publishing it or the operator's revised candidate on `publish RUN`, which revise and rewrite share, the guarded write of a text, the record of each publication, and the guard minus a workflow's own write |
+| `review_workflows.edit_operations` | one edit operation on one input text: the worker prompt, the typed edit result, its acceptance including the check of an `answers` input, its observation under `artifact/edits/`, and the `commonplace-revise try` command's run |
+| `review_workflows.edits` | the bounds an edited text must keep, including link targets and quoted spans, reading an answers file through the validator, the new run directory named by its start time and its `start.json`, holding a candidate and publishing it or the operator's revised candidate on `commonplace-revise publish RUN`, which revise and rewrite share, the guarded write of a text, the record of each publication, and the guard minus a workflow's own write |
 | `answers` | the [answers](../types/answers.md) type's question items, its pending file and its comparison with the question, which the validator runs for every answers file |
-| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, the end of the run at its first stop with the continuation record, the plan made from named answers files (`--answers`), automatic publication and the held candidate with a new warning; each operation runs through `edit_operations.ask()` |
+| `review_workflows.revise` | the one runner of the improvement procedures: the plan (fixed, one-entry, or written by the assessor after an optional review step), its order, the end of the run at its first stop with the continuation record, the plan made from named answers files (`apply`), automatic publication and the held candidate with a new warning; each operation runs through `edit_operations.ask()` |
 | `review_workflows.rewrite` | the rewrite of one note from its sources under a commission: the captured commission and sources, three fresh-worker steps and the review operation, with one repair, the review result bound to the candidate's hash, the candidate held on every run that changes the note, and the accepted review stored as the note's current result after publication of the judged candidate |
 | `review_workflows.decisions` | kept answers: the copy a consuming run or `answers record` keeps of an answers file in the run's `answers/`; the read-only operator-decision record over kept answers, publications, the answers files continuation records wait for and held candidates, and over the operator records, packets and fix reports of the retired procedures; the carry-over of earlier decisions |
 
@@ -68,13 +68,13 @@ first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
 added. A text from an edit operation also keeps every link target the result
 does not name as removed and every quoted span. Every revision pass candidate
-comes from `edit_operations.ask()`, which also serves `run edit`. An accepted text stays in memory and in the run's `artifact/`
+comes from `edit_operations.ask()`, which also serves `commonplace-revise try`. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. Code writes a text atomically and
 only over the text the run last knew: its start text, or the text the run
 last published itself. A revise run publishes without a stop, before a
 per-item entry's proposals and when it ends. A rewrite candidate that
 changes the note, and a revise candidate that adds a validation warning,
-are held; `publish RUN` writes one on the operator's word. Any other text in
+are held; `commonplace-revise publish RUN` writes one on the operator's word. Any other text in
 the note is a change made outside the run: the run writes nothing and
 reports a conflict that names the file holding the proposed text.
 
@@ -88,8 +88,9 @@ record, `continuation.json`: the text it was made for and one item per piece
 of unfinished work, each with the actor expected to resolve it, the items
 to settle first, the command or instruction step that proceeds and the
 evidence. A session agent continues from it; nothing in code schedules it.
-A new revision run explicitly chooses a fixed plan (`--plan`, `--pass`,
-`--finding` or `--answers`), `--triage`, `--assess` or `--full`. Within the
+A new revision run is a fixed plan (`--plan`, `--pass`, `--finding`, or
+`apply` over decided answers), `commonplace-revise triage`, `--quick` or
+`--full`; a bare `commonplace-revise NOTE` runs the default, `--full`. Within the
 selected mode, ordinary intermediate work is preauthorized. Revision retains
 its generated plan for inspection and runs it after validation; `--plan`
 also supplies a validated override of a stopped plan, without approval.
@@ -97,19 +98,19 @@ Editing the retained plan alone is not an override.
 
 Fixed-plan execution constructs no assessment request. Editors in both modes
 receive the execution instruction and the assigned pass, not the planning
-procedure. A single criterion through `run gates` is report-only and never
+procedure. A single criterion through `commonplace-review` is report-only and never
 selects subsequent work.
 
 A later command acts on a stop's output by naming the file or the run, and
-naming it is the operator's approval: `run revise NOTE --answers FILE` for
-decided proposals or findings, `publish RUN` for a held candidate. There is
+naming it is the operator's approval: `commonplace-revise apply FILE` for
+decided proposals or findings, `commonplace-revise publish RUN` for a held candidate. There is
 no separate approval step and no key. Each command checks its own input. An
 answers file must pass the validator against its question; proposals must
 have been made for the note's current text under the current brief; a held
 candidate is published only over the text it was held over, under the
 captured brief, while the candidate, its diff and a rewrite's accepted
 review are unchanged. The consuming run keeps a copy of each answers file
-in its `answers/`; `answers record FILE` keeps a file nothing consumes. Code
+in its `answers/`; `commonplace-revise answers record FILE` keeps a file nothing consumes. Code
 cannot tell whether the operator gave the word; that rests on the
 instructions a session agent follows.
 
@@ -142,7 +143,7 @@ before each publication and before applying named answers; it cannot verify sema
 commission must happen outside the run. Review workers do not receive this
 input, and brief changes do not stale gate results.
 
-A rewrite run (`run rewrite`) captures its commission, the note's write
+A rewrite run (`commonplace-revise rewrite`) captures its commission, the note's write
 brief, its sources and the note's contracts once, in `rewrite-inputs.json`;
 every call receives the brief, and a changed commission or brief needs a
 new run. One writer and an independent reviewer receive the sources, old note and bounded incoming citation passages. Neither the old text nor its citations are independent evidence. A source that git
@@ -162,7 +163,7 @@ A revised candidate is not the judged text, and its review is not stored.
 | State | Location | Lifetime |
 |---|---|---|
 | result files | `kb/reports/state/review/results/<note-path>/<criterion-id>.md` | until replaced by a later review of the pair or deleted as orphaned |
-| full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-review decisions` still reads it |
+| full-pass packet (retired) | `kb/reports/state/review/packets/<note-path>` | written by the retired full-pass workflow; nothing writes it now, and `commonplace-revise decisions` still reads it |
 | run directory | `kb/reports/state/review/runs/v2/<stamp>/` for a sweep; `runs/v2/<workflow>/<note path without .md>/<stamp>/` for a revise or rewrite run, with `-<n>` on a collision; older revise and rewrite runs keep `<start-hash prefix>/` names | a sweep and its resumes; one invocation of a revise or rewrite command |
 | observation | a run's `artifact/reviews/<id>/`, or `artifact/edits/<id>/` for an edit operation | one assessment or edit execution, including retries and replay; references keep exact Workjig inputs and outputs citable alongside controller-completed results |
 | fixture | `kb/reports/state/review/fixtures/<id>/` | one retained content baseline; each new trial owns independent mutable files and Git state |
@@ -250,8 +251,8 @@ recorded gaps, not claims of environment equivalence. Every trial bypasses
 freshness skips and never publishes into the live result store. Resume stays
 within that trial; it is not an independent observation. An edit fixture
 reruns one edit execution from its captured operation, input text, supplied
-inputs and contract, through `run edit --fixture`; a review fixture runs
-through `run gates --fixture`, and each command refuses the other's fixture.
+inputs and contract, through `commonplace-revise try --fixture`; a review fixture runs
+through `commonplace-review --fixture`, and each command refuses the other's fixture.
 
 The runtime accepts one result format and one active run namespace. Old
 results and runs must be archived rather than migrated or replayed. Before

@@ -16,7 +16,7 @@ Each execution is an observation under the run's `artifact/edits/`: the exact
 input text, operation, prompt, supplied inputs and contract, the raw output,
 the completed result and the candidate (`observations.begin()`). A fixture
 reruns one such observation (`fixtures.trial()`). `ask()` writes nothing to
-the checkout. `commonplace-review run edit` runs one operation alone through
+the checkout. `commonplace-revise try` runs one operation alone through
 `run()`; the revise workflow runs every pass through `ask()`.
 
 A `per-item` operation runs twice. The first run returns `proposed`; that

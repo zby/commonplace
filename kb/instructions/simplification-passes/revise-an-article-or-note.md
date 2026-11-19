@@ -43,7 +43,7 @@ instead of assessing again.
    When the assessment finds that a claim itself is wrong or unsupported,
    the passes cannot fix it: they do not change claims. Set the plan's
    `stop`, name the claim, and name the rewrite route:
-   `commonplace-review run rewrite NOTE --commission FILE`, with the
+   `commonplace-revise rewrite NOTE --commission FILE`, with the
    commission prepared with `cp-skill-write-multistage`.
 
    Two things the passes cannot own belong in the assessment too. For each
@@ -209,7 +209,7 @@ instead of assessing again.
 
 ## Run it as a workflow
 
-`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--must-keep CLAIM ...]`
+`commonplace-revise ARTIFACT --quick --purpose TEXT [--must-keep CLAIM ...]`
 runs these steps with headless workers, which never write the checkout. This
 is the quick procedure. The assessment also receives the artifact's fresh
 stored review results with outcome `warn` or `fail`, when any exist; the
@@ -218,14 +218,14 @@ given. A finding the operator rejected at a triage of the same result is
 removed, and the operator's rejected and deferred findings of the artifact
 come as `earlier-decisions`. The focused procedure makes no assessment: `--pass NAME` runs a
 one-entry plan for that pass, and `--finding RESULT` runs a one-entry plan
-that fixes that review result of the artifact. The triage, `--triage`, makes
+that fixes that review result of the artifact. The triage, `commonplace-revise triage`, makes
 no assessment either: it ends with one answers file per fresh `warn` or
 `fail` result, the operator decides each finding with
 [decide items](../decide-items.md), and a new run that names the decided
-files with `--answers` fixes the approved findings only, one entry per
+files to `commonplace-revise apply` fixes the approved findings only, one entry per
 result with an approved finding. The full procedure, `--full`,
 first runs every review operation that declares a `depth` on the artifact,
-and the type and collection reviews, through the same route as `commonplace-review run gates`. Its results go to
+and the type and collection reviews, through the same route as `commonplace-review`. Its results go to
 the shared store, and fresh results are reused. The compression synthesis
 then runs on the compression checks' results, and the role report on the
 artifact's inbound contexts; neither publishes a result. The assessment
@@ -263,7 +263,7 @@ judgment; worker prompts name inputs, not additional criteria.
    A stop is advice; no command waits for its answer. Record the
    operator's decision on the proposal there once: `approved` to take the
    proposed route, or `rejected` or `deferred` with the operator's reason.
-   Keep the file with `commonplace-review answers record FILE`. The work
+   Keep the file with `commonplace-revise answers record FILE`. The work
    that follows is a separate task and is not recorded in the file.
    The command rejects a plan that names an unknown pass, misses a field,
    has a field it does not know,
@@ -271,7 +271,7 @@ judgment; worker prompts name inputs, not additional criteria.
    the depth order the pass files and the findings' criteria declare. A replacement supplied
    with `--plan` runs as a new run.
 2. Step 2 runs each listed pass as one run of the edit route, the same one
-   `commonplace-review run edit` uses, on the profile from
+   `commonplace-revise try` uses, on the profile from
    `instructions/review-profiles.yaml` that its `effort` selects. Code checks
    the edit result and the revised text (title, type, brief declaration and
    H1 kept; no new validation failure; link targets and quoted spans kept),
@@ -290,13 +290,13 @@ judgment; worker prompts name inputs, not additional criteria.
    context, asks, and records the operator's answer as `approved`,
    `rejected` with a reason, or `deferred` with a reason and a revisit
    condition. On the operator's word for that file,
-   `commonplace-review run revise ARTIFACT --answers FILE` starts a new run
+   `commonplace-revise apply FILE` starts a new run
    of that pass with the answers file as its `answers` input, which applies
    only the `approved` items and publishes. Code refuses a candidate that
    changed the passage of an item that is not approved. The command refuses
    answers the validator refuses, a note that is not the text the proposals
    were made for, a changed write brief, and a file that approves no item;
-   keep such a file with `commonplace-review answers record FILE`.
+   keep such a file with `commonplace-revise answers record FILE`.
    Decisions carry over between runs on the same note. When a
    run starts, code collects the operator's decided items from the earlier
    runs on the note and keeps them in the run as `earlier-decisions.json`.
@@ -328,14 +328,15 @@ judgment; worker prompts name inputs, not additional criteria.
    A text that adds a validation warning the artifact does not have is held
    instead, and the run ends. Follow [approve a text](../approve-a-text.md):
    show the operator `artifact/final.md` and `artifact/final.diff`, and on
-   the operator's word run `commonplace-review publish RUN`, or
-   `publish RUN --revised FILE` for the operator's revision. Do not edit
+   the operator's word run `commonplace-revise publish RUN`, or
+   `commonplace-revise publish RUN --revised FILE` for the operator's revision. Do not edit
    the candidate to revise the text: supply `--plan`, change workflow
    inputs, or start a new run.
-6. Every invocation is a new run and needs a mode: `--assess` to commission
-   planning, `--triage` to decide the findings, `--answers FILE` to apply
-   decided answers, or `--plan FILE` to execute fixed work. A bare command
-   does not choose a mode. An artifact changed during a run is a conflict:
+6. Every invocation is a new run. Name its mode: `--full` or `--quick` to
+   commission planning, `commonplace-revise triage` to decide the findings,
+   `commonplace-revise apply FILE` to apply decided answers, or `--plan FILE`
+   to execute fixed work. A bare `commonplace-revise NOTE` runs the default
+   mode, which is `--full` today and may change. An artifact changed during a run is a conflict:
    nothing is written, and the report names the run file holding the
    proposed text.
 

@@ -142,23 +142,23 @@ def test_packet_yields_disposition_and_user_resolution(repo):
 
 
 def test_cli_filters_and_json(repo, capsys):
-    assert cli.main(["decisions", "--note", NOTE, "--class", "plain-wording", "--json"]) == 0
+    assert cli.revise_main(["decisions", "--note", NOTE, "--class", "plain-wording", "--json"]) == 0
     found = json.loads(capsys.readouterr().out)
     assert [e["decision"] for e in found] == ["approved", "rejected", "deferred"]
     assert set(found[0]) == {"note", "workflow", "run", "record", "class", "proposed-by", "decided-by",
                              "decision", "unit", "item", "reason", "resolution", "refs", "carried-from", "revised",
                              "key", "at"}
-    assert cli.main(["decisions", "--class", "fix-report"]) == 0
+    assert cli.revise_main(["decisions", "--class", "fix-report"]) == 0
     out = capsys.readouterr().out
     assert out.splitlines()[0] == "kb/theory/qux.md" and "fix-report" in out and NOTE not in out
     write(repo, NOTE, "# Foo, edited\n")
-    assert cli.main(["decisions", "--note", NOTE, "--class", "abstractions", "--json"]) == 0
+    assert cli.revise_main(["decisions", "--note", NOTE, "--class", "abstractions", "--json"]) == 0
     assert [e["decision"] for e in json.loads(capsys.readouterr().out)] == ["overtaken"]
-    assert cli.main(["decisions", "--note", NOTE, "--class", "abstractions"]) == 0
+    assert cli.revise_main(["decisions", "--note", NOTE, "--class", "abstractions"]) == 0
     assert "worker->overtaken | overtaken" in capsys.readouterr().out
 
 
 def test_malformed_kept_answers_fail_naming_their_path(repo, capsys):
     write(repo, f"{RUN}/answers/e.json", "{not json")
-    assert cli.main(["decisions"]) == 2
+    assert cli.revise_main(["decisions"]) == 2
     assert f"{RUN}/answers/e.json" in capsys.readouterr().err

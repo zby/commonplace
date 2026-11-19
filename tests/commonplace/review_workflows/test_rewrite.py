@@ -12,7 +12,7 @@ import sys
 
 import pytest
 
-from commonplace.cli.review_workflows import main
+from commonplace.cli.review_workflows import main, revise_main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run
 from commonplace.lib import library
@@ -191,7 +191,7 @@ def repo(tmp_path, monkeypatch):
 
 def rewrite(repo, capsys, *args):
     before = repo[2].read_text().splitlines()
-    code = main(["run", "rewrite", NOTE_PATH, "--commission", str(repo[3]), *args, "--timeout", "30"],
+    code = revise_main(["rewrite", NOTE_PATH, "--commission", str(repo[3]), *args, "--timeout", "30"],
                 harnesses=repo[1])
     captured = capsys.readouterr()
     return code, json.loads(captured.out) if code != 2 else captured.err, repo[2].read_text().splitlines()[len(before):]
@@ -200,7 +200,7 @@ def rewrite(repo, capsys, *args):
 def publish(repo, capsys, report, *args):
     """Publish the candidate the run held, on the operator's word; no worker is launched."""
     before = repo[2].read_text()
-    code = main(["publish", report["run-dir"], *args], harnesses=repo[1])
+    code = revise_main(["publish", report["run-dir"], *args], harnesses=repo[1])
     captured = capsys.readouterr()
     assert code == 0, captured.err
     assert repo[2].read_text() == before, "publishing launches nothing"
@@ -221,7 +221,7 @@ def test_a_rewrite_runs_its_calls_and_holds_its_candidate_for_the_operator(repo,
     assert code == 0 and launches == STEPS and not report["complete"] and report["guard"]["clean"]
     held = report["held"]
     assert held["candidate"] == report["proposed"] == f"{report['run-dir']}/artifact/final.md"
-    assert held["command"] == f"commonplace-review publish {report['run-dir']}" and held["command"] in held["what"]
+    assert held["command"] == f"commonplace-revise publish {report['run-dir']}" and held["command"] in held["what"]
     assert [review["outcome"] for review in report["reviews"]] == ["pass"] and not report["repair-used"]
     assert report["accepted"] == {"review": report["reviews"][0]["review"], "outcome": "pass", "warn-findings": []}
     assert "finding(s) of level warn" not in held["what"]
@@ -307,7 +307,7 @@ def test_a_second_block_ends_the_run_with_nothing_held(repo, capsys):
     assert report["held"] is None and note_text(repo) == original
     assert not artifact_file(repo, report, "final.md").exists()
     assert artifact_file(repo, report, "review-2.md").is_file()
-    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert revise_main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
     assert "holds no candidate to publish" in capsys.readouterr().err
 
 
@@ -356,7 +356,7 @@ def test_a_warned_candidate_is_held_and_its_findings_become_triageable(repo, cap
         copy = repo[0] / path.relative_to(REPO_ROOT)
         copy.parent.mkdir(parents=True, exist_ok=True)
         copy.write_text(path.read_text())
-    code = main(["run", "revise", NOTE_PATH, "--triage"], harnesses=repo[1])
+    code = revise_main(["triage", NOTE_PATH], harnesses=repo[1])
     printed = capsys.readouterr()
     assert code == 0, printed.err
     triage = json.loads(printed.out)["triage"]
@@ -366,7 +366,7 @@ def test_a_warned_candidate_is_held_and_its_findings_become_triageable(repo, cap
     answers = repo[0] / listed["answers"]
     answers.write_text(decide(answers.read_text(), {"1": rejected("the sources state no condition")}))
     assert results.freshness(repo[0], NOTE_PATH, criterion).state == "fresh", "an unrecorded answer counts for nothing"
-    assert main(shlex.split(decisions.RECORD.format(file=listed["answers"]))[1:]) == 0
+    assert revise_main(shlex.split(decisions.RECORD.format(file=listed["answers"]))[1:]) == 0
     capsys.readouterr()
     assert results.freshness(repo[0], NOTE_PATH, criterion) == results.Freshness("stale", ("criterion",))
 
@@ -399,7 +399,7 @@ def test_a_worker_problem_stops_the_run(repo, capsys):
 
 def test_the_commission_is_required_and_checked_and_every_invocation_is_a_new_run(repo, capsys):
     with pytest.raises(SystemExit):
-        main(["run", "rewrite", NOTE_PATH], harnesses=repo[1])
+        revise_main(["rewrite", NOTE_PATH], harnesses=repo[1])
     assert "--commission" in capsys.readouterr().err
     repo[3].write_text(COMMISSION.replace("## Must exclude", "## Out of scope").replace(
         "note: kb/notes/alpha.md", "note: kb/notes/beta.md"))
@@ -493,11 +493,11 @@ def test_decisions_lists_the_rewrite_publication_and_marks_an_overtaken_candidat
     original = note_text(repo)
     (repo[0] / NOTE_PATH).write_text(original + "An edit after the run.\n")
     assert [e["decision"] for e in decisions.entries(repo[0])] == ["overtaken"]
-    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert revise_main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
     assert "no longer holds the text the run held its candidate over" in capsys.readouterr().err
     (repo[0] / NOTE_PATH).write_text(original)
     publish(repo, capsys, report)
-    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
     [entry] = json.loads(capsys.readouterr().out)
     assert (entry["workflow"], entry["class"], entry["decided-by"], entry["decision"]) == (
         "rewrite", "publication", "operator", "published")
@@ -509,7 +509,7 @@ def test_a_changed_accepted_review_refuses_publication(repo, capsys):
     _, report, _ = rewrite(repo, capsys)
     review = repo[0] / report["accepted"]["review"]
     review.write_text(review.read_text().replace("outcome: pass", "outcome: warn"))
-    assert main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
+    assert revise_main(["publish", report["run-dir"]], harnesses=repo[1]) == 2
     assert "is not the file the run held" in capsys.readouterr().err
     assert note_text(repo) == original and results.freshness(
         repo[0], NOTE_PATH, f"kb/{criteria.REWRITE_REL}").state == "missing"

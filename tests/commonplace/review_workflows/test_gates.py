@@ -123,10 +123,10 @@ def installed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
 
 
 def review(repo, capsys, *args: str) -> tuple[int, dict, list[str]]:
-    """Run `commonplace-review run gates`; return the exit code, the report and this run's launches."""
+    """Run `commonplace-review NOTES...`; return the exit code, the report and this run's launches."""
     _, harnesses, log = repo
     before = log.read_text().splitlines()
-    code = main(["run", "gates", *args, "--timeout", "30"], harnesses=harnesses)
+    code = main([*args, "--timeout", "30"], harnesses=harnesses)
     return code, json.loads(capsys.readouterr().out), log.read_text().splitlines()[len(before):]
 
 
@@ -346,12 +346,13 @@ def test_malformed_review_in_a_bundle_reasks_the_bundle(repo, capsys):
     assert report["counts"] == {"reviewed": 2}
 
 
-def test_run_gates_refuses_to_default_to_all_gates(repo) -> None:
-    # A sweep spends one launch per stale pair: all gates must be asked for, not assumed.
-    _, harnesses, log = repo
-    with pytest.raises(SystemExit):
-        main(["run", "gates", "kb/notes"], harnesses=harnesses)
-    assert log.read_text() == ""
+def test_a_review_without_criteria_covers_all_gates(repo, capsys) -> None:
+    # The same default as `status`: every bundle plus `type` and `collection`, one launch per stale pair.
+    _, harnesses, _ = repo
+    _, _, launches = review(repo, capsys, "kb/notes")
+    assert main(["status", "kb/notes", "--json"], harnesses=harnesses) == 0
+    pairs = json.loads(capsys.readouterr().out)["pairs"]
+    assert len(launches) == len(pairs) > 1
 
 
 def compression(name: str) -> str:
@@ -395,14 +396,14 @@ def test_compression_check_runs_alone_as_a_fresh_verdict_outside_the_defaults(la
     # Neither the default status set nor a bare `compression` request reaches the checks.
     assert main(["status", "kb/notes/alpha.md", "--json"], harnesses=harnesses) == 0
     assert not any("compression-bundle" in row["criterion"] for row in json.loads(capsys.readouterr().out)["pairs"])
-    assert main(["run", "gates", "kb/notes/alpha.md", "--criteria", "compression"], harnesses=harnesses) == 2
+    assert main(["kb/notes/alpha.md", "--criteria", "compression"], harnesses=harnesses) == 2
     assert "one at a time" in capsys.readouterr().err
 
     if layout == "repo":
         # One retained observation is a fixture baseline, and a trial re-runs that check alone.
         observation = (root / result.observation).parent
         fixture = fixtures.create(root, result.run, observation.name, substitute_executor=True)
-        assert main(["run", "gates", "--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
+        assert main(["--fixture", fixture.relative_to(root).as_posix()], harnesses=harnesses) == 0
         trial = json.loads(capsys.readouterr().out)
         assert [item["state"] for item in trial["observations"]] == ["reviewed"]
         assert trial["observations"][0]["criterion"] == identity
@@ -458,7 +459,7 @@ def test_synthesis_runs_alone_on_supplied_findings_and_publishes_nothing(repo, c
             args = [*args, "compression-synthesis"]
         else:
             args = [*args, "--criteria", "compression-synthesis"]
-        command = ["run", "gates", *args, "--timeout", "30"]
+        command = [*args, "--timeout", "30"]
         assert main(command, harnesses=harnesses) == 2
         assert message in capsys.readouterr().err and repo[2].read_text() == before
 
@@ -515,7 +516,7 @@ def test_role_report_runs_alone_on_collected_or_supplied_inbound_contexts(repo, 
     for args, message in ((["--criteria", "role", "--input", "other=inbound.md"], "--input inbound=PATH"),
                           (["--criteria", "role", "friction"], "runs alone")):
         before = repo[2].read_text()
-        assert main(["run", "gates", "kb/notes/alpha.md", *args, "--timeout", "30"], harnesses=harnesses) == 2
+        assert main(["kb/notes/alpha.md", *args, "--timeout", "30"], harnesses=harnesses) == 2
         assert message in capsys.readouterr().err and repo[2].read_text() == before
     assert main(["status", "kb/notes/alpha.md", "--criteria", "role"], harnesses=harnesses) == 2
     assert "role has no current result" in capsys.readouterr().err

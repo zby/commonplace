@@ -31,7 +31,7 @@ and evidence boundary.
 Choose the path by the target:
 
 - **An existing note:** follow [part A](#a-rewrite-an-existing-note). The
-  rewrite runs as a code workflow, `commonplace-review run rewrite`.
+  rewrite runs as a code workflow, `commonplace-revise rewrite`.
 - **A new artifact:** follow [part B](#b-write-a-new-artifact). The session
   agent runs the fresh workers itself.
 - **An explicit external-literature question** about an existing note
@@ -139,7 +139,7 @@ input.
 ### A4. Run the workflow
 
 ```bash
-commonplace-review run rewrite <note> --commission <file>
+commonplace-revise rewrite <note> --commission <file>
 ```
 
 Every invocation opens a new run under
@@ -152,9 +152,9 @@ Read the JSON report and act on it:
 
 - **`held`:** the run holds the accepted candidate; the note is not written.
   Follow [approve a text](../approve-a-text.md#a-held-candidate). On the
-  user's word, `commonplace-review publish <run-dir>` publishes the exact
+  user's word, `commonplace-revise publish <run-dir>` publishes the exact
   candidate; for a revision the user states,
-  `commonplace-review publish <run-dir> --revised <file>`. Tell the user each
+  `commonplace-revise publish <run-dir> --revised <file>`. Tell the user each
   entry of `new-warnings`. When the report's `accepted` lists
   `warn-findings`, tell the user how many there are and where the review
   is, as `held.what` says, before asking for the decision.
@@ -176,7 +176,7 @@ Read the JSON report and act on it:
 After `publish`, its report names the publication. When the published text
 is the judged candidate, `current-result` names the accepted review, now the
 note's current result. When it left `warn` findings, offer the user a
-triage: `commonplace-review run revise <note> --triage`. A `not-current`
+triage: `commonplace-revise triage <note>`. A `not-current`
 report means the user published a revised candidate; its review was not
 stored.
 

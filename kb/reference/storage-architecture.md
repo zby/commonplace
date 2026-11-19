@@ -20,7 +20,7 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Workflow outputs | Ignored files under `kb/reports/state/`, one directory per workflow | Kept under the producing workflow's cleanup rule; the state README states per workflow what deletion loses ([ADR 128](./adr/128-one-ignored-operational-tree-under-kb-reports-state.md)) |
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
 | Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
-| Retired decision records | Full-pass packets under `kb/reports/state/review/packets/` and fix reports under `kb/reports/state/fixes/` | Written by the procedures ADR 135 retired; nothing writes them now. `commonplace-review decisions` reads them, so they hold recorded operator decisions |
+| Retired decision records | Full-pass packets under `kb/reports/state/review/packets/` and fix reports under `kb/reports/state/fixes/` | Written by the procedures ADR 135 retired; nothing writes them now. `commonplace-revise decisions` reads them, so they hold recorded operator decisions |
 | Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay of answered calls within one run; not read across runs and not a format promise |
 
 The reports collection separates ignored operational outputs in `state/`
@@ -107,7 +107,7 @@ make them current. Exact report records whose value survives the run live under
 Full-pass packets and fix reports are records of two retired procedures
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
 No workflow writes or resolves them now. They hold operator decisions that
-`commonplace-review decisions` lists, so keep them until the operator says
+`commonplace-revise decisions` lists, so keep them until the operator says
 the old records are dispensable. They are local and ignored; portability
 across machines is not promised.
 

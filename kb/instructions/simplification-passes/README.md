@@ -26,7 +26,7 @@ automated pass did.
 Every pass except split-out-a-treatment is an
 [edit operation](../../types/edit-operation.md): it takes one text of the
 note and returns an [edit result](../../types/edit-result.md). Each runs
-alone with `commonplace-review run edit OPERATION NOTE`, which writes nothing
+alone with `commonplace-revise try OPERATION NOTE`, which writes nothing
 to the checkout, and the revise workflow runs each pass through the same
 route. Split-out-a-treatment writes a second file, so it stays a plain
 instruction for a session.
@@ -51,7 +51,7 @@ without `depth` may run at any point.
 
 ## Ways to make a plan
 
-`commonplace-review run revise` runs a plan: a list of passes in depth
+`commonplace-revise` runs a plan: a list of passes in depth
 order. The procedures differ only in how the plan is made.
 
 - **Focused.** The operator names one pass or one review finding.
@@ -62,18 +62,18 @@ order. The procedures differ only in how the plan is made.
   is assessed and nothing is reviewed. `--purpose` and `--must-keep` go into
   the plan; without `--purpose`, the plan states that the operator named
   no other purpose. `--plan FILE` supplies any other fixed plan.
-- **Triage.** `--triage` asks the operator about the artifact's fresh stored
+- **Triage.** `commonplace-revise triage` asks the operator about the artifact's fresh stored
   `warn` and `fail` review results. It writes one answers file per result,
   whose items are the result's `warn` and `fail` findings, and ends. In a
   session, follow [decide items](../decide-items.md): the operator approves
   a finding that is right, rejects one that is wrong, with a reason, or
-  defers it. On the operator's word, `--answers FILE`, once per decided
+  defers it. On the operator's word, `commonplace-revise apply FILE FILE ...`, naming every decided
   file, starts a new run whose plan holds one entry for
   [fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md)
   per result with an approved finding, in depth order. The fix receives the
   approved answers as `finding-answers` and fixes only the approved
   findings. Nothing is reviewed and nothing is assessed.
-- **Quick.** `--assess` asks one assessor to choose the passes. It reads the
+- **Quick.** `--quick` asks one assessor to choose the passes. It reads the
   artifact and the artifact's fresh stored `warn` and `fail` review
   results, when any exist. It launches no review.
 - **Full.** `--full` first runs every review operation that declares a
@@ -111,7 +111,7 @@ Replace these example values with the actual commission, save the plan outside
 the run's generated `artifact/` directory, and run:
 
 ```bash
-commonplace-review run revise ARTIFACT --plan PLAN.yaml
+commonplace-revise ARTIFACT --plan PLAN.yaml
 ```
 
 For one pass with no scope, `--pass NAME` writes this plan for you.
@@ -133,8 +133,8 @@ published, with the path of the note and of the diff
 warning the artifact does not have is held instead: the run keeps
 `artifact/final.md` and `artifact/final.diff`, the original remains
 unchanged, and the report's `held` names the command that publishes it.
-On the operator's word, `commonplace-review publish RUN` publishes that
-exact candidate, and `publish RUN --revised FILE` the operator's revision of
+On the operator's word, `commonplace-revise publish RUN` publishes that
+exact candidate, and `commonplace-revise publish RUN --revised FILE` the operator's revision of
 it, a full text outside `artifact/` ([approve a text](../approve-a-text.md)).
 Candidate files are outputs, not editable inputs. Use `--plan` for a changed
 commission. No-change runs write nothing. A wording-selection pass that
@@ -148,17 +148,17 @@ or resumed; a later command names the answers file or the run it acts on.
 For an independent report-only operation, use one artifact and one gate id:
 
 ```bash
-commonplace-review run gates ARTIFACT --criteria GATE-ID --grouping pair
+commonplace-review ARTIFACT --criteria GATE-ID --grouping pair
 ```
 
-Use a gate id, not a bundle name or `--all-gates`. A finding does not trigger
+Use a gate id, not a bundle name or the default criteria. A finding does not trigger
 an edit or choose more review work. Fresh pairs are skipped; use `--force`
 only when deliberately requesting a new judgment. Artifact validation belongs
 in these note workflows; Python tests belong to development of the machinery.
 
 ## Planning-containing workflows
 
-`commonplace-review run revise ARTIFACT --assess --purpose TEXT [--must-keep CLAIM ...]`
+`commonplace-revise ARTIFACT --quick --purpose TEXT [--must-keep CLAIM ...]`
 commissions assessment and pass selection, then runs the validated plan without
 a routine plan-approval stop. The assessor also receives the artifact's fresh
 `warn` and `fail` review results. The planning instruction's "Run it as a workflow"

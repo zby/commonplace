@@ -105,7 +105,7 @@ def test_publication_crash_resumes_retained_result_without_new_launch(tmp_path, 
 
     with monkeypatch.context() as crash:
         crash.setattr(results, "write_result", crash_before_publication)
-        assert main(["run", "gates", target, "--criteria", "prose/body-gate", "--max-workers", "1",
+        assert main([target, "--criteria", "prose/body-gate", "--max-workers", "1",
                      "--timeout", "30"], harnesses=harnesses) == 2
     assert "injected failure after retention, before current publication" in capsys.readouterr().err
     [(original, retained, completed_bytes)] = interrupted

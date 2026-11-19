@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Review a specific note against the compression criteria without writing review result files.
 
-This is deliberately separate from the gate sweep in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, and this procedure writes no review result files. Use it when the goal is a disposable report rather than fresh review evidence. For a stored result from one check, run `commonplace-review run gates NOTE --criteria compression/<check>` instead.
+This is deliberately separate from the gate sweep in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter the default criteria of a review, and this procedure writes no review result files. Use it when the goal is a disposable report rather than fresh review evidence. For a stored result from one check, run `commonplace-review NOTE --criteria compression/<check>` instead.
 
 Inputs:
 
@@ -25,7 +25,7 @@ Use these criterion files, in this order:
 
 After the four criteria, apply [high-impact-simplification-synthesis.md](./compression-bundle/high-impact-simplification-synthesis.md) to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
 
-Do not request these criteria from `commonplace-review run gates`, and do not write under `kb/reports/state/review/results/`.
+Do not request these criteria from `commonplace-review`, and do not write under `kb/reports/state/review/results/`.
 
 ## Dispatch
 
@@ -103,6 +103,6 @@ The final synthesis is selective rather than exhaustive. It may combine several 
 ## Do Not
 
 - Do not mutate the target note.
-- Do not request these criteria from `commonplace-review run gates`.
+- Do not request these criteria from `commonplace-review`.
 - Do not write review result files.
 - Do not skip any gate in the bundle.

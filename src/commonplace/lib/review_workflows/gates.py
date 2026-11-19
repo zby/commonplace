@@ -36,7 +36,7 @@ pairs. A launch failure or usage limit stops the asking: no call not yet
 started is asked, and a rerun with the same run directory continues by
 replay.
 
-`sweep()` is the `run gates` command. It reads the notes from disk, skips
+`sweep()` is the `commonplace-review NOTES...` command. It reads the notes from disk, skips
 pairs whose result file is fresh unless forced, runs `ask()` in its own run
 between two checkout snapshots, and writes each result file as its answer
 arrives, so results already written stay after a stop.

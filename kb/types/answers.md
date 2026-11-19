@@ -19,7 +19,7 @@ A question is the file whose items the operator decides. There are three kinds:
 | a review result with outcome `warn` or `fail` | its `findings` whose `level` is `warn` or `fail`, with the finding's position in `findings` as id (`1` for the first); each item's `proposal` is the finding's `scope`, `quotes`, `reason` and `level` |
 | any other file: a text to approve | one item with id `text`, whose `proposal` names the file as `text` and its hash as `text-sha256` |
 
-An approval of a text is therefore an answers file with one item that names the candidate's hash. `commonplace-review answers create --from QUESTION` writes the pending file for a question, so nobody writes a hash by hand.
+An approval of a text is therefore an answers file with one item that names the candidate's hash. `commonplace-revise answers create --from QUESTION` writes the pending file for a question, so nobody writes a hash by hand.
 
 ## Items
 
@@ -48,7 +48,7 @@ A decision outlives the run it was made in. When a later run on the same note ma
 
 ## What happened after the decision
 
-A decision can lead to work the proposal did not describe. A reviewer's proposal to reword one sentence may end in a rewrite of the note and of the notes that cite it. `resolution` and `refs` record that on the decided item, so the proposal, the decision and the outcome can be compared later. They are written after the work, on a decided item only. In a run directory, keep the file again with `commonplace-review answers record FILE` after adding them: the decision record reads the kept text.
+A decision can lead to work the proposal did not describe. A reviewer's proposal to reword one sentence may end in a rewrite of the note and of the notes that cite it. `resolution` and `refs` record that on the decided item, so the proposal, the decision and the outcome can be compared later. They are written after the work, on a decided item only. In a run directory, keep the file again with `commonplace-revise answers record FILE` after adding them: the decision record reads the kept text.
 
 ## Acceptance
 
@@ -58,11 +58,11 @@ The deterministic validator accepts an answers file only when:
 - every item of the question appears once, with its `proposal` unaltered, and no other item appears;
 - each state carries the fields the table above requires.
 
-A consumer adds its own checks. The edit route applies only `approved` items, and refuses answers whose question is not an edit result of the same operation on the same input text. `commonplace-review run revise NOTE --answers FILE` also refuses proposals made for another text of the note or under another write brief, and a file that approves nothing. A command that consumes or records an answers file keeps a copy of its text in its run's `answers/`; naming the file to that command is the operator's approval, and the decision record reads the kept copies. Publication reads no answers file: `commonplace-review publish RUN` publishes a held candidate on the operator's word.
+A consumer adds its own checks. The edit route applies only `approved` items, and refuses answers whose question is not an edit result of the same operation on the same input text. `commonplace-revise apply FILE` also refuses proposals made for another text of the note or under another write brief, and a file that approves nothing. A command that consumes or records an answers file keeps a copy of its text in its run's `answers/`; naming the file to that command is the operator's approval, and the decision record reads the kept copies. Publication reads no answers file: `commonplace-revise publish RUN` publishes a held candidate on the operator's word.
 
 ## Template
 
-The pending file for a proposed edit result; `answers create` writes it:
+The pending file for a proposed edit result; `commonplace-revise answers create` writes it:
 
 ```markdown
 ---

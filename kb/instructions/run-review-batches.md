@@ -5,14 +5,14 @@ type: types/instruction.md
 
 # Run review batches
 
-Review chosen notes against chosen criteria so that every selected (note, criterion) pair has a fresh result file. `commonplace-review run gates` launches the reviewer workers, checks each review and writes the results; the agent running this procedure chooses the scope, runs the command and settles what the report hands back. Do not launch reviewer sub-agents yourself, and do not review the pairs in your own context.
+Review chosen notes against chosen criteria so that every selected (note, criterion) pair has a fresh result file. `commonplace-review` launches the reviewer workers, checks each review and writes the results; the agent running this procedure chooses the scope, runs the command and settles what the report hands back. Do not launch reviewer sub-agents yourself, and do not review the pairs in your own context.
 
 A result is fresh while the hashes it records still match the note's watched parts (title, description or body, as the criterion's `watches:` declares; the whole note when it declares none) and the criterion's text. Results live under `kb/reports/state/review/results/<note-path>/<criterion-id>.md`.
 
 ## Inputs
 
 - **Notes** — files or directories. A directory means its reviewable notes, not recursively; it skips indexes, collection contracts and type specs. Name files in a validation-ignored directory one by one.
-- **Criteria** — catalog gate ids (`prose/source-residue`), bundle names (`prose`), the lenses `type` and `collection` (or `type/<name>`, `collection/<path>`), and `critique`, the one report criterion. `--all-gates` means every bundle plus `type` and `collection`; `critique` is never included unless named.
+- **Criteria** — catalog gate ids (`prose/source-residue`), bundle names (`prose`), the lenses `type` and `collection` (or `type/<name>`, `collection/<path>`), and `critique`, the one report criterion. Without `--criteria`, a review covers every bundle plus `type` and `collection`; `critique` is never included unless named.
 - **Profile** — optional; a worker profile from the library's `instructions/review-profiles.yaml`. Without `--profile` the file's `default` is used.
 
 ## Steps
@@ -23,14 +23,14 @@ A result is fresh while the hashes it records still match the note's watched par
    commonplace-review status {notes...} --criteria {criteria...} --stale
    ```
 
-   Each row is a pair that is `missing` or `stale` (with `note`, `criterion` or both changed). If there are none, stop: every pair is fresh. Without `--criteria`, `status` covers all gates; `run gates` requires the criteria to be named or `--all-gates`.
+   Each row is a pair that is `missing` or `stale` (with `note`, `criterion` or both changed). If there are none, stop: every pair is fresh. Without `--criteria`, `status` and `commonplace-review` both cover all gates.
 
 2. **Choose the grouping.** A launch's fixed context dominates its cost. For several catalog gates on each note, add `--grouping bundle`: one worker per note and bundle asks that bundle's stale gates together, and each gate still gets its own result file. Keep the default `--grouping pair` for one or two gates per note, or when each gate must be judged in a separate context. The `type`, `collection` and `critique` pairs are one call each under either grouping.
 
 3. **Run the sweep:**
 
    ```bash
-   commonplace-review run gates {notes...} --criteria {criteria...} [--grouping bundle] [--profile NAME]
+   commonplace-review {notes...} --criteria {criteria...} [--grouping bundle] [--profile NAME]
    ```
 
    It asks only pairs without a fresh result. `--force` asks fresh pairs too; use it only when the user asks for a new judgment of fresh pairs. `--max-workers N` bounds concurrent workers (default 4).

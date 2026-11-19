@@ -17,7 +17,7 @@ No run is repeated or resumed. The run records the hash of its start text
 and of the brief it captured in `START_RECORD` (`begin()`). A run publishes
 automatically (`record_publication()`), before a per-item pass is asked for
 proposals and at the end of its plan. A candidate it held (`hold()`) is
-published at most once, when a later `commonplace-review publish RUN` names
+published at most once, when a later `commonplace-revise publish RUN` names
 it (`publish_held()`). Each publication is recorded in `PUBLISHED`.
 
 `guarded_changes()` is the checkout guard's finding minus the workflow's own
@@ -341,7 +341,7 @@ def made_for(run_dir: Path) -> str | None:
 # A revise run writes its candidate to the note without a stop when no
 # operator decision is needed (`revise._run_plan()`). A candidate that adds a
 # validation warning, and every rewrite candidate, is held (`hold()`): the run
-# ends with it in `artifact/final.md`, and `commonplace-review publish RUN`
+# ends with it in `artifact/final.md`, and `commonplace-revise publish RUN`
 # publishes it later (`publish_held()`). Either way the publication is
 # recorded in `PUBLISHED` in the run directory.
 
@@ -354,7 +354,7 @@ AUTOMATIC = "automatic"
 HELD = "held.json"
 """The candidate a run held for the operator: its path and hash, its diff and the diff's hash, its new warnings,
 the plan entries it covers, and for a rewrite the accepted review and its hash."""
-PUBLISH = "commonplace-review publish {run}"
+PUBLISH = "commonplace-revise publish {run}"
 
 
 def published(run_dir: Path) -> dict | None:

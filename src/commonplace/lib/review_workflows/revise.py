@@ -32,7 +32,7 @@ command acts on a stop's output by naming the file or the run:
    keeps `artifact/assessment.md` and `artifact/plan.yaml`, then proceeds.
    A plan whose `stop` is set ends the run there, with the pending answers
    file `artifact/stop-answers.md` over the plan; the operator's decision is
-   kept with `commonplace-review answers record FILE`, and a replacement plan
+   kept with `commonplace-revise answers record FILE`, and a replacement plan
    runs with `--plan`. A named plan bypasses assessment but still requires
    validation.
    The assessor also receives the artifact's fresh stored review results
@@ -64,7 +64,7 @@ command acts on a stop's output by naming the file or the run:
    finding (`triage_findings()`), records them in `triage-inputs.json` and
    copies each into `artifact/findings/` as the question of a pending answers
    file `artifact/finding-answers-<key>.md`. Then it ends. The decided files,
-   named to `run revise NOTE --answers FILE ...` (`answers_plan()`), make a
+   named to `commonplace-revise apply FILE ...` (`answers_plan()`), make a
    new run whose plan holds one fix entry per result with an `approved`
    finding, in depth order, naming the copy as its `finding`; the fix also
    receives the answers as `finding-answers` and fixes only those findings.
@@ -89,14 +89,14 @@ command acts on a stop's output by naming the file or the run:
    asked. It writes their pending answers file (`types/answers.md`,
    `answers.pending()`) as `artifact/<pass>-answers.md`, and ends. Later
    entries wait in the continuation record, so they run on text that already
-   has the approved items. The decided file, named to `run revise NOTE
-   --answers FILE`, makes a new run of that one pass with the answers as its
+   has the approved items. The decided file, named to `commonplace-revise
+   apply FILE`, makes a new run of that one pass with the answers as its
    `answers` input; naming it is the approval, and the run keeps a copy
    (`decisions.keep_answers()`). It is refused unless the validator accepts
    the answers, the note holds exactly the text the proposals were made
    for, and the note's write brief is the one the asking run recorded in
    `start.json`. Only `approved` items are applied. A file that approves no item is
-   kept with `commonplace-review answers record FILE` instead.
+   kept with `commonplace-revise answers record FILE` instead.
    When the run starts, code collects the operator's decided items from the
    other revise and rewrite runs on the same note (`decisions.earlier()`)
    and keeps them in `earlier-decisions.json`. Each per-item pass and each
@@ -123,13 +123,13 @@ command acts on a stop's output by naming the file or the run:
    does not have (`edits.new_warnings()`) is not published: the run holds it
    (`edits.hold()`) as `artifact/final.md` with its diff, and ends there,
    before asking a per-item pass for proposals on a text that may never be
-   published. `commonplace-review publish RUN` publishes that exact
+   published. `commonplace-revise publish RUN` publishes that exact
    candidate later, or with `--revised FILE` the operator's revision of it
    (`edits.publish_held()`).
 6. **Record.** When the operator answered a run's findings in a session,
    for example by splitting the note, `record()` writes the triage's
    pending answers file over each review result the run's assessor or
-   triage received, for `commonplace-review answers record FILE`. It
+   triage received, for `commonplace-revise answers record FILE`. It
    launches nothing and plans, fixes and publishes nothing, so it also
    serves an overtaken run. The recorded files are decisions on findings
    like a triage's.
@@ -225,7 +225,7 @@ MUST_KEEP = "must-keep"
 """The plan field, and the input role, listing what this run keeps beyond the write brief's Must keep."""
 PLAN_SCHEMA = {"purpose": str, MUST_KEEP: list, "passes": list, "stop": (str, type(None))}
 ASSESSMENT, PLAN = "assessment.md", "plan.yaml"
-COMMAND = "commonplace-review run revise"
+COMMAND = "commonplace-revise"
 STOP_ANSWERS = decisions.STOP_ANSWERS
 """The answers file for a plan that stops: one item, the plan."""
 STOPS_FILE = "earlier-stops.json"
@@ -697,7 +697,7 @@ def record(root: Path, run_dir: Path) -> dict:
     over. A file that exists, written by a triage or an earlier record, is
     left as it is. Nothing is planned, fixed or published, and the note is
     not read, so this works for an overtaken run. The operator's decided
-    file is kept with `commonplace-review answers record FILE`, and
+    file is kept with `commonplace-revise answers record FILE`, and
     `decisions.earlier()` then reads it as it reads a triage's. ValueError
     when the run holds no results.
     """
@@ -917,7 +917,7 @@ def _sweep(root: Path, run_dir: Path, wanted: list[gates.Pair], profile: Profile
     Without `inputs`, results are published to the shared store and fresh
     ones are reused. With them (a criterion of `criteria.SUPPLIED`, or the
     rewrite's review), nothing is published and the pair is always asked, as
-    `run gates --input` does. `targets` gives a note's text in place of its
+    `commonplace-review --input` does. `targets` gives a note's text in place of its
     file (`gates.sweep()`).
     """
     observations.atomic_json(run_dir / "sweep.json", {"format": observations.VERSION, "workflow": workflow,
@@ -1071,7 +1071,7 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
     note = (root / artifact).read_text(encoding="utf-8")
     known, edited, entries = passes(), [], []
     nothing = ("no item of {files} is approved; there is nothing to apply. Keep the operator's decisions with "
-               "`commonplace-review answers record FILE`")
+               "`commonplace-revise answers record FILE`")
     for item in given:
         data, problems = edits.answered(root, root / item["origin"], item["text"])
         if problems:
@@ -1103,9 +1103,9 @@ def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | No
                 entries.append((finding, item))
         else:
             raise ValueError(f"{item['origin']}: its question {data['question']} is neither an edit result nor a "
-                             "review result; keep the decision with `commonplace-review answers record FILE`")
+                             "review result; keep the decision with `commonplace-revise answers record FILE`")
     if edited and (entries or len(edited) > 1 or len(given) > 1):
-        raise ValueError("--answers takes one answers file over a per-item pass's proposals, or answers files "
+        raise ValueError("apply takes one answers file over a per-item pass's proposals, or answers files "
                          "over review results, not both")
     if edited:
         [(name, item, scope)] = edited
@@ -1143,7 +1143,7 @@ def revise(root: Path, artifact: str, profiles: dict[str, Profile], run_dir: Pat
         raise ValueError("choose one of a named plan, the review step or the triage")
     report = ReviseReport(_rel(root, run_dir.resolve()), artifact,
                           mode="answers" if consumed else "fixed-plan" if named_plan is not None
-                          else "full" if review else "triage" if triage else "assess")
+                          else "full" if review else "triage" if triage else "quick")
     known = passes()
     before = gates.checkout_state(root)
     start = (root / artifact).read_text(encoding="utf-8")
@@ -1281,9 +1281,9 @@ CLAIM_QUESTIONS = re.compile(r"^#+\s*Claim questions for the operator\s*$(.*?)(?
                              re.MULTILINE | re.DOTALL | re.IGNORECASE)
 
 
-def _focused(artifact: str, option: list[str], purpose: str | None, must_keep: list[str]) -> str:
-    """The command of a focused run: `option`, with the plan's purpose and must-keep list."""
-    return shlex.join([*COMMAND.split(), artifact, *option, *(["--purpose", purpose] if purpose else []),
+def _apply(files: list[str], purpose: str | None, must_keep: list[str]) -> str:
+    """The command that applies the decided answers `files`, with the plan's purpose and must-keep list."""
+    return shlex.join([COMMAND, "apply", *files, *(["--purpose", purpose] if purpose else []),
                        *[part for claim in must_keep for part in ("--must-keep", claim)]])
 
 
@@ -1327,8 +1327,7 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
         files = [given["answers"] for given in report.triage["results"]]
         add("findings", "The operator decides the findings of each review result; the approved ones are fixed by "
             "one new run that names every decided file.", "operator",
-            command=_focused(artifact, [part for file in files for part in ("--answers", file)], purpose,
-                             must_keep),
+            command=_apply(files, purpose, must_keep),
             record=decisions.RECORD.format(file="FILE"), answers_files=files,
             evidence=[path for given in report.triage["results"] for path in (given["question"], given["answers"])])
     if report.plan_stop:
@@ -1348,7 +1347,7 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
         if state.state == "waiting":
             chain = add("proposals", f"The operator decides the proposals of `{state.name}`; the approved items "
                         "are applied by a new run that names the file.", "operator",
-                        command=_focused(artifact, ["--answers", state.answers], purpose, must_keep),
+                        command=_apply([state.answers], purpose, must_keep),
                         record=decisions.RECORD.format(file=state.answers), answers_files=[state.answers],
                         evidence=[state.answers, frontmatter.parse((root / state.answers).read_text(
                             encoding="utf-8")).data["question"]])
@@ -1364,12 +1363,12 @@ def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport,
                        "session-agent", after=[] if state.state == "skipped" else after, evidence=evidence)
         else:
             if state.answers:
-                command, own = _focused(artifact, ["--answers", state.answers], purpose, must_keep), [state.answers]
+                command, own = _apply([state.answers], purpose, must_keep), [state.answers]
             else:                   # the entry as the plan gave it, scope included, in a plan file of its own
                 own = [f"{artifact_dir}/{CONTINUE_DIR}/{len(items) + 1}.yaml"]
                 edits.write_text(root / own[0], one_entry_plan(current.name, state.finding, purpose, must_keep,
                                                                state.scope))
-                command = shlex.join([*COMMAND.split(), artifact, "--plan", own[0]])
+                command = shlex.join([COMMAND, artifact, "--plan", own[0]])
             if state.finding:
                 item = add("fix-entry", f"The plan entry `{state.name}` was not run: it fixes a finding made on "
                            "an earlier text" + (", as the operator's answers decide" if state.answers else "") + ".",

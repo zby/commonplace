@@ -6,7 +6,7 @@ independent `accept` for its current SHA-256. The parent executes every
 mutation and recovery step.
 
 Part A, the rewrite of an existing note, does not use this reference.
-`commonplace-review run rewrite` promotes its own candidate at its
+`commonplace-revise rewrite` promotes its own candidate at its
 publication stop: it writes the note only after the user approves the exact
 candidate and only when the note still holds the text the run started from.
 A retitle there is a separate `commonplace-relocate-note` step on the user's

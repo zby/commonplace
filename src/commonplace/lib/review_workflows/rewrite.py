@@ -66,7 +66,7 @@ ends the run with no change. Otherwise the run holds the candidate
 ends: the note is not written. The report's `held` names the candidate, its
 diff, its new validation warnings and the command that publishes it; its
 `accepted` names the accepted review and its `warn` findings, which the
-`held` notice counts. `commonplace-review publish RUN` publishes the exact
+`held` notice counts. `commonplace-revise publish RUN` publishes the exact
 candidate on the operator's word, or with `--revised FILE` the operator's
 revision of it, only over the start text and under the captured brief
 (`edits.publish_held()`).
@@ -75,7 +75,7 @@ revision of it, only over the start text and under the captured brief
 review judged, `store_accepted()` makes its result the note's current
 result for the criterion (`results.write_result()`): it is fresh while the
 note, the instruction and the output contract are unchanged, so
-`run revise NOTE --triage` presents its `warn` findings. A revised candidate
+`commonplace-revise triage NOTE` presents its `warn` findings. A revised candidate
 is not the judged text, so the result is not stored, and the `publish`
 report's `not-current` says so.
 """
@@ -136,7 +136,7 @@ REPORT_SECTIONS = ("Affected citations",)
 BLOCK = "fail"
 """The review outcome that blocks the candidate; `warn` and `pass` accept it."""
 ATTEMPTS = 3
-COMMAND = "commonplace-review run rewrite {artifact} --commission FILE"
+COMMAND = "commonplace-revise rewrite {artifact} --commission FILE"
 EARLIER_DECISIONS = revise.EARLIER_DECISIONS
 EARLIER_FILE = revise.EARLIER_FILE
 """The operator's earlier decisions the run used: a record of what it read."""
@@ -154,8 +154,8 @@ HELD_NOTICE = ("The candidate is published only on the operator's word, with the
                "warning before asking.")
 FINDINGS_NOTICE = (" The accepted review {review} left {count} finding(s) of level warn, which do not block "
                    "publication. Tell the operator how many there are and where the review is before asking for "
-                   "the decision. When this exact candidate is published, `commonplace-review run revise {artifact} "
-                   "--triage` presents them.")
+                   "the decision. When this exact candidate is published, `commonplace-revise triage {artifact}` "
+                   "presents them.")
 NOT_CURRENT = ("The published text is the operator's revised candidate, not the candidate the accepted review "
                "judged, so the review is not stored as the note's current result.")
 

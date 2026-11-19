@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.cli.review_workflows import main
+from commonplace.cli.review_workflows import main, revise_main
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
 from commonplace.lib import answers as answer_files
@@ -180,7 +180,7 @@ RUN_DIR = re.compile(r"kb/reports/state/review/runs/v2/revise/kb/notes/alpha/[0-
 
 def revise(repo, capsys, *args):
     before = repo[2].read_text().splitlines()
-    code = main(["run", "revise", *args, "--timeout", "30"], harnesses=repo[1])
+    code = revise_main([*args, "--timeout", "30"], harnesses=repo[1])
     captured = capsys.readouterr()
     return code, json.loads(captured.out) if code != 2 else captured.err, repo[2].read_text().splitlines()[len(before):]
 
@@ -188,8 +188,8 @@ def revise(repo, capsys, *args):
 def entry_plan(repo, item):
     """The plan file a continuation item's `--plan` command names, read as YAML."""
     command = shlex.split(item["how"]["command"])
-    assert command[:4] == ["commonplace-review", "run", "revise", NOTE_PATH] and command[4] == "--plan"
-    [path] = command[5:]
+    assert command[:3] == ["commonplace-revise", NOTE_PATH, "--plan"]
+    [path] = command[3:]
     assert path in item["evidence"]
     return yaml.safe_load((repo[0] / path).read_text())
 
@@ -250,12 +250,12 @@ def answer(repo, report, decisions, default=APPROVED, file=None):
 
 def apply_answers(repo, capsys, *files, extra=()):
     """Name decided answers files to a new run: naming them is the operator's approval."""
-    return revise(repo, capsys, NOTE_PATH, *[part for file in files for part in ("--answers", file)], *extra)
+    return revise(repo, capsys, "apply", *files, *extra)
 
 
 def record_answers(repo, capsys, file):
     """Keep an answers file that nothing consumes as the operator's decisions."""
-    code = main(["answers", "record", file])
+    code = revise_main(["answers", "record", file])
     captured = capsys.readouterr()
     assert code == 0, captured.err
     return json.loads(captured.out)
@@ -263,16 +263,16 @@ def record_answers(repo, capsys, file):
 
 def publish(repo, capsys, report, *args):
     """Publish the candidate the run held, on the operator's word; return the exit code and report or error."""
-    code = main(["publish", report["run-dir"], *args], harnesses=repo[1])
+    code = revise_main(["publish", report["run-dir"], *args], harnesses=repo[1])
     captured = capsys.readouterr()
     return code, json.loads(captured.out) if code == 0 else captured.err
 
 
 def continued(repo, capsys, item):
-    """Run the `run revise` command a continuation item names, as an agent does."""
+    """Run the `commonplace-revise` command a continuation item names, as an agent does."""
     words = shlex.split(item["how"]["command"])
-    assert words[:4] == ["commonplace-review", "run", "revise", NOTE_PATH], words
-    return revise(repo, capsys, *words[3:])
+    assert words[0] == "commonplace-revise", words
+    return revise(repo, capsys, *words[1:])
 
 
 def items_of(report):
@@ -299,10 +299,8 @@ HELD_WORDS = "LONGDESC"
 """Note words that make readability-and-flow add a validation warning, so its candidate is held."""
 
 
-def test_new_run_requires_explicit_mode_and_fixed_plan_rejects_ignored_constraints(repo, capsys, tmp_path):
+def test_a_fixed_plan_rejects_ignored_constraints(repo, capsys, tmp_path):
     original = start(repo)
-    code, error, launches = revise(repo, capsys, NOTE_PATH)
-    assert code == 2 and "choose --plan FILE" in error and launches == []
     path = named_plan(tmp_path)
     code, error, launches = revise(repo, capsys, NOTE_PATH, "--plan", str(path), "--must-keep", "Keep alpha")
     assert code == 2 and "takes purpose and must-keep from the plan" in error and launches == []
@@ -346,9 +344,6 @@ def test_fixed_single_pass_has_no_planner_dependency_and_publishes_without_a_sto
     assert call["inputs"]["must-keep"] == "- Alpha body holds.\n"
     assert call["inputs"]["execution"] == (repo[0] / "kb" / revise_module.EXECUTION_REL).read_text()
     assert "passes" not in call["inputs"]
-    # The run ended; a bare command never resumes it or turns into planning.
-    code, error, launches = revise(repo, capsys, NOTE_PATH)
-    assert code == 2 and "choose --plan FILE" in error and launches == []
 
 
 def test_an_unchanged_candidate_publishes_nothing(repo, capsys, tmp_path):
@@ -384,8 +379,8 @@ def test_a_run_publishes_and_ends_at_a_per_item_pass_and_later_runs_continue_it(
     assert items_of(ended) == [("proposals", "operator", []), ("direct-entry", "worker", ["1"])]
     assert ended["outcome"] == "needs-continuation"
     assert proposals["answers"] == [file] and "step" not in proposals["how"]
-    assert proposals["how"]["command"] == f"commonplace-review run revise {NOTE_PATH} --answers {file} --purpose p"
-    assert proposals["how"]["record"] == f"commonplace-review answers record {file}"
+    assert proposals["how"]["command"] == f"commonplace-revise apply {file} --purpose p"
+    assert proposals["how"]["record"] == f"commonplace-revise answers record {file}"
     assert file in proposals["evidence"] and any(e.endswith("/result.md") for e in proposals["evidence"])
     assert entry["effort"] == "simple" and entry_plan(repo, entry) == {
         "purpose": "p", "must-keep": [], "stop": None, "passes": [{"pass": "place-external-systems"}]}
@@ -433,7 +428,7 @@ def test_an_edit_after_the_proposals_overtakes_their_answers(repo, capsys, tmp_p
 
 def test_automatic_preparation_publishes_without_a_stop(repo, capsys):
     original = start(repo)
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess", "--purpose", "p")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--quick", "--purpose", "p")
     assert code == 0 and launches == ["assess - big", *ORDINARY]
     assert report["outcome"] == "completed" and report["published"] and report["not-published"] is None
     assert report["guard"]["clean"] and report["continuation"] is None and report["held"] is None
@@ -458,7 +453,7 @@ def test_a_held_candidate_is_published_only_by_naming_its_run(repo, capsys, tmp_
     assert "250" in warning and "is published only when the operator names this run" in ended["not-published"]
     held = ended["held"]
     assert held["candidate"] == ended["proposed"] == f"{ended['run-dir']}/artifact/final.md"
-    assert held["command"] == f"commonplace-review publish {ended['run-dir']}"
+    assert held["command"] == f"commonplace-revise publish {ended['run-dir']}"
     [item] = ended["continuation"]["items"]
     assert (item["kind"], item["actor"], item["how"]["command"]) == ("held-candidate", "operator", held["command"])
     assert item["how"]["revised"] == held["command"] + " --revised FILE" and warning in item["what"]
@@ -535,7 +530,7 @@ def test_a_revised_text_is_published_after_the_candidate_checks(repo, capsys, tm
         repo[0] / files["diff-from-candidate"]).read_text()
     assert "+The operator's closing sentence.\n" in (repo[0] / files["diff-from-note"]).read_text()
     assert done["published"]["revised"] and done["published"]["sha256"] == observations.sha(revised.encode())
-    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
     [entry] = [e for e in json.loads(capsys.readouterr().out) if e["class"] == "publication"]
     assert entry["revised"] and (entry["decided-by"], entry["decision"]) == ("operator", "published")
 
@@ -560,14 +555,14 @@ def test_a_held_candidate_ends_the_run_before_the_next_per_item_pass_asks(repo, 
 
 def test_a_plan_stop_ends_the_run_and_a_replacement_plan_is_a_new_run(repo, capsys, tmp_path):
     original = start(repo, "STOP")
-    code, ended, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, ended, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     assert code == 0 and ended["plan-stop"] == "rewrite-needed" and note_text(repo) == original
     stop_file = f"{ended['run-dir']}/artifact/stop-answers.md"
     assert (repo[0] / stop_file).is_file()
     [item] = ended["continuation"]["items"]
     assert (item["kind"], item["actor"], item["answers"]) == ("plan-stop", "operator", [stop_file])
     assert "command" not in item["how"], "a stop is advice: its route is in its text, and no command is waiting"
-    assert item["how"]["record"] == f"commonplace-review answers record {stop_file}"
+    assert item["how"]["record"] == f"commonplace-revise answers record {stop_file}"
     path = repo[0] / stop_file
     path.write_text(decide(path.read_text(), {"text": rejected("the note is fine")}))
     code, error, launches = apply_answers(repo, capsys, stop_file)
@@ -621,7 +616,7 @@ def test_invalid_answers_are_refused_before_any_run(repo, capsys, tmp_path, dama
     code, error, launches = apply_answers(repo, capsys, waiting(ended))
     assert code == 2 and "not valid" in error and problem in error and launches == []
     assert note_text(repo) == original and run_dirs(repo) == before
-    assert main(["answers", "record", waiting(ended)]) == 2
+    assert revise_main(["answers", "record", waiting(ended)]) == 2
     assert problem in capsys.readouterr().err
     path.write_text(decide(pending, {"gamma": rejected("keep it")}, APPROVED))
     code, ready, launches = apply_answers(repo, capsys, waiting(ended))
@@ -643,7 +638,7 @@ def test_answers_that_approve_no_item_are_refused_and_recorded_instead(repo, cap
 def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
     start(repo, "PLAIN")
     brief = add_brief(repo[0], NOTE_PATH)
-    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, ended, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     _, ready, _ = apply_answers(repo, capsys, answer(repo, ended, {}))
     calls = captured_inputs(repo[2])
     assert {c["kind"] for c in calls} == {"assess", "pass", "list", "apply"}
@@ -660,7 +655,7 @@ def test_brief_is_captured_for_assessment_passes_lists_and_apply(repo, capsys):
 def test_the_old_defend_name_is_refused_on_the_command_line_and_in_a_plan(repo, capsys, tmp_path):
     original = start(repo)
     with pytest.raises(SystemExit):
-        main(["run", "revise", NOTE_PATH, "--pass", "readability-and-flow", "--defend", "Keep alpha"])
+        revise_main([NOTE_PATH, "--pass", "readability-and-flow", "--defend", "Keep alpha"])
     capsys.readouterr()
     path = tmp_path / "old.yaml"
     path.write_text(yaml.safe_dump({"purpose": "p", "defend": ["Keep alpha"], "stop": None,
@@ -681,19 +676,19 @@ def test_worker_brief_conflict_stops_without_publication(repo, capsys, kind):
     add_brief(repo[0], NOTE_PATH)
     file = None
     if kind == "apply":
-        _, ended, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+        _, ended, _ = revise(repo, capsys, NOTE_PATH, "--quick")
         file = answer(repo, ended, {})
     original = note_text(repo)
     (repo[0] / f"brief-problem-{kind}").touch()
     code, report, launches = (apply_answers(repo, capsys, file) if file
-                              else revise(repo, capsys, NOTE_PATH, "--assess"))
+                              else revise(repo, capsys, NOTE_PATH, "--quick"))
     assert code == 1 and "write brief" in report["stopped"] and not report["published"]
     assert note_text(repo) == original and launches[-1].startswith(kind + " ")
     assert not any("place-external-systems" in line for line in launches)
     if kind == "apply":
         assert items_of(report) == [("failure", "session-agent", []), ("per-item-entry", "worker", ["1"])]
         entry = report["continuation"]["items"][1]
-        assert f"--answers {file} --purpose" in entry["how"]["command"], "it reapplies the decided file"
+        assert f"apply {file} --purpose" in entry["how"]["command"], "it reapplies the decided file"
         assert file in entry["evidence"]
 
 
@@ -708,7 +703,7 @@ def test_invalid_brief_stops_before_workers(repo, capsys, damage):
     else:
         path = repo[0] / NOTE_PATH
         path.write_text(path.read_text().replace("brief: alpha.brief.md", "brief: ../escape.brief.md"))
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert code == 1 and "brief" in report["stopped"] and launches == []
 
 
@@ -717,7 +712,7 @@ def test_concurrent_edits_block_publication(repo, capsys, words):
     start(repo, words)
     add_brief(repo[0], NOTE_PATH)
     original = note_text(repo)
-    code, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, report, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     assert code == 1 and report["conflict"] and not report["published"] and report["publications"] == []
     if words == "BRIEFDRIFT":
         assert "write brief" in report["conflict"] and note_text(repo) == original
@@ -729,7 +724,7 @@ def test_concurrent_edits_block_publication(repo, capsys, words):
 @pytest.mark.parametrize("words", ["BADPLAN", "RETITLE", "BADPASS"])
 def test_correction_attempts_keep_safety_bounds(repo, capsys, words):
     original = start(repo, words)
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     if words == "BADPLAN":
         assert code == 0 and launches.count("assess - big") == 2
     elif words == "RETITLE":
@@ -770,7 +765,7 @@ def test_a_failed_entry_publishes_the_entries_before_it_and_a_later_run_continue
 def test_a_failure_after_assessment_leaves_the_rest_of_the_plan_in_order(repo, capsys):
     start(repo)
     (repo[0] / "fail-place-external-systems").touch()
-    code, stopped, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, stopped, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert code == 1 and stopped["stopped"] and stopped["published"]
     assert launches == ["assess - big", ORDINARY[0], *([ORDINARY[1]] * 3)]
     assert items_of(stopped) == [("failure", "session-agent", []), ("direct-entry", "worker", ["1"]),
@@ -805,7 +800,7 @@ def test_decisions_command_lists_the_answers_of_a_revise_run(repo, capsys, tmp_p
     _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path, passes=("plain-wording",))))
     _, ready, _ = apply_answers(repo, capsys, answer(repo, ended, {"beta": rejected("a registered word")}))
     assert ready["published"]
-    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
     found = json.loads(capsys.readouterr().out)
     listed = [(e["class"], e["unit"], e["decided-by"], e["decision"], e["item"], e["reason"]) for e in found]
     text = ready["publications"][0]["text"]
@@ -818,7 +813,7 @@ def test_decisions_command_lists_the_answers_of_a_revise_run(repo, capsys, tmp_p
     [automatic] = [e for e in found if e["class"] == "publication"]
     assert automatic["proposed-by"] == "workflow" and automatic["record"].endswith("/" + edits.PUBLISHED)
     assert automatic["at"] == ready["publications"][0]["at"]
-    assert main(["decisions", "--note", NOTE_PATH]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH]) == 0
     assert "| publication | bundle | workflow->automatic | published |" in capsys.readouterr().out
 
 
@@ -891,12 +886,12 @@ def test_identical_proposals_carry_earlier_decisions(repo, capsys, tmp_path):
     assert code == 0 and launches == ["apply plain-wording small"]
     assert note_text(repo).endswith("plain-wording applied alpha beta.\n")
 
-    assert main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--json"]) == 0
     listed = json.loads(capsys.readouterr().out)
     carried = {(e["run"], e["item"]): e["carried-from"] for e in listed if e["class"] == "plain-wording"}
     assert carried[(second["run-dir"], "Alpha body -> alpha")] == waiting(first)
     assert carried[(second["run-dir"], "A note about -> beta")] is None
-    assert main(["decisions", "--note", NOTE_PATH]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH]) == 0
     assert f"carried-from: {waiting(first)}" in capsys.readouterr().out
 
 
@@ -945,7 +940,7 @@ def test_earlier_decisions_are_read_from_hash_named_run_directories(repo, capsys
 def stopped_run(repo, capsys, words, decision=None, recorded=True):
     """An assessed run on the note with `words` whose plan stops; record `decision` on its stop, if `recorded`."""
     start(repo, words)
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     file = f"{report['run-dir']}/artifact/stop-answers.md"
     if decision is not None:
         path = repo[0] / file
@@ -959,7 +954,7 @@ def test_a_decided_stop_reaches_the_next_assessor_only(repo, capsys):
     _, first = stopped_run(repo, capsys, "STOP", {**rejected("the note is fine as one note"),
                                                   "resolution": "kept the note whole"})
     start(repo, "STOP PLAIN")
-    _, second, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, second, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert launches[0] == "assess - big"
     given = assessed_inputs(repo)
     told = given["earlier-decisions"]
@@ -974,7 +969,7 @@ def test_a_decided_stop_reaches_the_next_assessor_only(repo, capsys):
 
     # Edit workers do not receive stops.
     start(repo, "PLAIN")
-    _, _, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, _, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert "list plain-wording small" in launches
     assert "Earlier stops" in assessed_inputs(repo)["earlier-decisions"]
     workers = [c for c in captured_inputs(repo[2]) if c["kind"] != "assess"]
@@ -985,7 +980,7 @@ def test_a_decided_stop_reaches_the_next_assessor_only(repo, capsys):
 def test_an_undecided_or_unrecorded_stop_does_not_reach_the_assessor(repo, capsys, decision, recorded):
     stopped_run(repo, capsys, "STOP", decision, recorded)
     start(repo, "changed")
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, report, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     assert "earlier-decisions" not in assessed_inputs(repo)
     assert json.loads((repo[0] / report["run-dir"] / revise_module.STOPS_FILE).read_text()) == {"stops": []}
 
@@ -1024,7 +1019,7 @@ def stored(repo, outcome, gate=GATE, depth=2, note=NOTE_PATH, found=None, decide
 def test_pass_runs_a_one_entry_plan(repo, capsys):
     original = start(repo)
     with pytest.raises(SystemExit):
-        main(["run", "revise", NOTE_PATH, "--pass", "readability-and-flow", "--assess"], harnesses=repo[1])
+        revise_main([NOTE_PATH, "--pass", "readability-and-flow", "--quick"], harnesses=repo[1])
     capsys.readouterr()
     code, error, launches = revise(repo, capsys, NOTE_PATH, "--pass", "polish")
     assert code == 2 and "unknown pass `polish`" in error and launches == []
@@ -1086,7 +1081,7 @@ def test_plan_entries_for_the_fix_carry_a_finding_at_its_criterion_depth(repo, c
 @pytest.mark.slow
 def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     start(repo, "FIXIT")
-    _, plain, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, plain, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     [call] = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"]
     assert plain["findings"] == [] and not any(name.startswith("finding") for name in call["inputs"])
     assert revise_module.FIX not in call["inputs"]["passes"]
@@ -1097,7 +1092,7 @@ def test_assessment_receives_fresh_warn_and_fail_results_only(repo, capsys):
     stale = stored(repo, "warn", gate="kb/instructions/review-gates/prose/stale.md")
     gate = repo[0] / "kb/instructions/review-gates/prose/stale.md"
     gate.write_text(gate.read_text() + "Changed criterion.\n")
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert code == 0 and sorted(report["findings"]) == sorted([warned, failed]) and stale not in report["findings"]
     assert launches == ["assess - big", "pass fix-strategy-taxonomy big", *ORDINARY]
     call = [c for c in captured_inputs(repo[2]) if c["kind"] == "assess"][-1]
@@ -1141,7 +1136,7 @@ def recorded(repo, capsys, files):
 def test_triage_without_warn_or_fail_findings_changes_nothing(repo, capsys):
     original = start(repo)
     stored(repo, "info")
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    code, report, launches = revise(repo, capsys, "triage", NOTE_PATH)
     assert code == 0 and report["outcome"] == "completed" and report["mode"] == "triage" and launches == []
     assert report["triage"] == {"results": [], "what": revise_module.NOTHING_TO_TRIAGE}
     assert report["plan"] is None and report["proposed"] is None and note_text(repo) == original
@@ -1151,7 +1146,7 @@ def test_triage_ends_at_each_answers_file_and_rejections_are_recorded(repo, caps
     original = start(repo)
     late = stored(repo, "fail", gate=PACKING, depth=5)
     early = stored(repo, "warn")
-    code, report, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    code, report, launches = revise(repo, capsys, "triage", NOTE_PATH)
     assert code == 0 and launches == [] and report["outcome"] != "completed" and report["plan"] is None
     listed = report["triage"]["results"]
     assert [(s["result"], s["criterion"]) for s in listed] == [
@@ -1163,8 +1158,8 @@ def test_triage_ends_at_each_answers_file_and_rejections_are_recorded(repo, caps
     assert head["items"] == [{"id": "1", "proposal": findings("warn")[0], "state": "pending"}]
     [item] = report["continuation"]["items"]
     assert (item["kind"], item["actor"], item["answers"]) == ("findings", "operator", [s["answers"] for s in listed])
-    assert item["how"]["command"] == (f"commonplace-review run revise {NOTE_PATH} --answers {listed[0]['answers']} "
-                                      f"--answers {listed[1]['answers']}")
+    assert item["how"]["command"] == (f"commonplace-revise apply {listed[0]['answers']} "
+                                      f"{listed[1]['answers']}")
 
     files = triaged(repo, report, {"prose/residue": {"1": rejected("wrong for this note only")},
                                    "sentence/packing": {"1": rejected("the criterion is too broad")}})
@@ -1173,7 +1168,7 @@ def test_triage_ends_at_each_answers_file_and_rejections_are_recorded(repo, caps
     recorded(repo, capsys, files)
     assert note_text(repo) == original
 
-    assert main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
     listed = json.loads(capsys.readouterr().out)
     assert sorted((e["unit"], e["decided-by"], e["decision"], e["item"], e["reason"]) for e in listed) == [
         ("item", "operator", "rejected", "prose/residue: warn: A fixture finding", "wrong for this note only"),
@@ -1185,7 +1180,7 @@ def test_triage_answers_fix_only_results_with_an_approved_finding(repo, capsys):
     two = stored(repo, "warn", found=[finding("first"), finding("second")])
     stored(repo, "warn", gate=HEDGING, depth=3, found=[finding("hedged")])
     stored(repo, "fail", gate=PACKING, depth=5)
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage", "--purpose", "Readers")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH, "--purpose", "Readers")
     assert [s["criterion"] for s in report["triage"]["results"]] == ["prose/residue", "prose/hedging",
                                                                      "sentence/packing"]
     assert report["continuation"]["items"][0]["how"]["command"].endswith("--purpose Readers")
@@ -1222,7 +1217,7 @@ def test_triage_answers_fix_the_result_the_triage_copied_after_the_store_changes
     start(repo)
     result = stored(repo, "warn")
     captured = (repo[0] / result).read_text()
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH)
     stored(repo, "fail", found=[finding("a new finding", "fail")])      # a new review replaces the result
     [file] = triaged(repo, report, {"prose/residue": {"1": APPROVED}})
     _, _, launches = apply_answers(repo, capsys, file)
@@ -1234,12 +1229,12 @@ def test_triage_answers_fix_the_result_the_triage_copied_after_the_store_changes
 def test_a_triage_carries_over_the_decision_on_an_identical_finding(repo, capsys):
     start(repo)
     stored(repo, "warn", found=[finding("same"), finding("other")])
-    _, first, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, first, _ = revise(repo, capsys, "triage", NOTE_PATH)
     recorded(repo, capsys, triaged(repo, first, {"prose/residue": {"1": rejected("wrong for this note only"),
                                                                     "2": APPROVED}}))
     start(repo, "changed")                                   # another text: another run
     stored(repo, "warn", found=[finding("same"), finding("other, reworded")], decided=True)
-    _, second, launches = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, second, launches = revise(repo, capsys, "triage", NOTE_PATH)
     assert launches == [] and second["run-dir"] != first["run-dir"] and second["outcome"] != "completed"
     head = yaml.safe_load((repo[0] / second["triage"]["results"][0]["answers"]).read_text().split("---\n")[1])
     carried, asked = head["items"]
@@ -1264,7 +1259,7 @@ def assessed_inputs(repo):
 def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo, capsys):
     text = start(repo, "FIXIT")
     stored(repo, "warn", found=[finding("same")])
-    _, first, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, first, _ = revise(repo, capsys, "triage", NOTE_PATH)
     recorded(repo, capsys, triaged(repo, first, {"prose/residue": {"1": rejected("wrong for this note only")}}))
     assert results.freshness(repo[0], NOTE_PATH, GATE) == results.Freshness("stale", ("criterion",))
 
@@ -1272,7 +1267,7 @@ def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo,
     start(repo, text=frontmatter_only(text, "a"))
     answered = stored(repo, "warn", found=[finding("same"), finding("later"), finding("approved")], decided=True)
     assert results.freshness(repo[0], NOTE_PATH, GATE).state == "fresh"
-    _, second, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, second, _ = revise(repo, capsys, "triage", NOTE_PATH)
     file = second["triage"]["results"][0]["answers"]
     head = yaml.safe_load((repo[0] / file).read_text().split("---\n")[1])
     assert head["items"][0]["state"] == "rejected" and "carried-from" in head["items"][0]
@@ -1282,7 +1277,7 @@ def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo,
     assert results.freshness(repo[0], NOTE_PATH, GATE).state == "fresh", "only a new rejection stales the pair"
 
     start(repo, text=frontmatter_only(text, "b"))
-    revise(repo, capsys, NOTE_PATH, "--assess")
+    revise(repo, capsys, NOTE_PATH, "--quick")
     given = assessed_inputs(repo)
     shown = yaml.safe_load(given["finding-1"].split("---\n")[1])
     assert [f["reason"] for f in shown["findings"]] == ["later", "approved"]
@@ -1296,7 +1291,7 @@ def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo,
     # A new review replaces the answered result: the finding comes back, with the decision beside it.
     start(repo, text=frontmatter_only(text, "c"))           # the assessed run published; another text again
     replaced = stored(repo, "warn", found=[finding("same"), finding("other")], decided=True)
-    revise(repo, capsys, NOTE_PATH, "--assess")
+    revise(repo, capsys, NOTE_PATH, "--quick")
     given = assessed_inputs(repo)
     assert given["finding-1"] == (repo[0] / replaced).read_text()
     assert "Operator's reason: wrong for this note only" in given["earlier-decisions"]
@@ -1305,9 +1300,9 @@ def test_the_assessor_gets_no_finding_the_operator_rejected_in_that_result(repo,
 def test_answers_create_takes_a_review_result_but_writes_outside_the_store(repo, capsys, tmp_path):
     start(repo)
     result = stored(repo, "warn")
-    assert main(["answers", "create", "--from", result]) == 2
+    assert revise_main(["answers", "create", "--from", result]) == 2
     assert "would be read as a review result" in capsys.readouterr().err
-    assert main(["answers", "create", "--from", result, "--to", "kb/work/residue-answers.md"]) == 0
+    assert revise_main(["answers", "create", "--from", result, "--to", "kb/work/residue-answers.md"]) == 0
     capsys.readouterr()
     head = yaml.safe_load((repo[0] / "kb/work/residue-answers.md").read_text().split("---\n")[1])
     assert head["items"] == [{"id": "1", "proposal": findings("warn")[0], "state": "pending"}]
@@ -1316,11 +1311,11 @@ def test_answers_create_takes_a_review_result_but_writes_outside_the_store(repo,
 def test_answers_record_takes_only_a_valid_file_under_a_run(repo, capsys, tmp_path):
     start(repo)
     result = stored(repo, "warn")
-    assert main(["answers", "create", "--from", result, "--to", "kb/work/residue-answers.md"]) == 0
+    assert revise_main(["answers", "create", "--from", result, "--to", "kb/work/residue-answers.md"]) == 0
     capsys.readouterr()
-    assert main(["answers", "record", "kb/work/residue-answers.md"]) == 2
+    assert revise_main(["answers", "record", "kb/work/residue-answers.md"]) == 2
     assert "not a file under the artifact/ directory" in capsys.readouterr().err
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH)
     file = report["triage"]["results"][0]["answers"]
     first = record_answers(repo, capsys, file)
     path = repo[0] / file
@@ -1438,16 +1433,17 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
 def test_full_reuses_fresh_review_results(reviewed, capsys):
     repo = reviewed
     start(repo)
-    assert main(["run", "gates", NOTE_PATH, "--criteria", "prose", "--timeout", "30"], harnesses=repo[1]) == 0
+    assert main([NOTE_PATH, "--criteria", "prose", "--timeout", "30"], harnesses=repo[1]) == 0
     capsys.readouterr()
-    _, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
+    _, report, launches = revise(repo, capsys, NOTE_PATH)
+    assert report["mode"] == "full", "a run that names no procedure runs the default one"
     assert sorted(repo[2].read_text().splitlines()[:2]) == ["review residue", "review warned"]
     assert set(launches[:7]) == REVIEWS - {"review residue,warned"} and launches[7:9] == [SYNTHESIS, ROLE]
     assert report["reviews"][0]["counts"] == {"fresh": 2, "reviewed": 7}
 
 
 def gates_run(repo, capsys, *args):
-    code = main(["run", "gates", NOTE_PATH, "--criteria", "prose", *args, "--timeout", "30"], harnesses=repo[1])
+    code = main([NOTE_PATH, "--criteria", "prose", *args, "--timeout", "30"], harnesses=repo[1])
     report = json.loads(capsys.readouterr().out)
     assert code == 0, report
     return report
@@ -1463,7 +1459,7 @@ def test_a_rejection_reaches_the_next_review_of_that_pair_only(reviewed, capsys)
     stored_hash = yaml.safe_load(residue.decode().split("---\n")[1])["criterion-sha256"]
     assert stored_hash == hashlib.sha256(criterion.encode()).hexdigest() == results.criterion_sha256(criterion)
 
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH)
     assert [s["criterion"] for s in report["triage"]["results"]] == ["prose/warned"]
     recorded(repo, capsys, triaged(repo, report, {"prose/warned": {"1": rejected("the criterion is too broad")}}))
     rows = {Path(row.criterion).stem: row.freshness for row in results.note_rows(repo[0], NOTE_PATH)}
@@ -1492,7 +1488,7 @@ WARNED = "kb/instructions/review-gates/prose/warned.md"
 def record(repo, capsys, run_dir):
     """Run `record` on a revise run; return its report and the launches it made."""
     before = repo[2].read_text().splitlines()
-    code = main(["record", run_dir], harnesses=repo[1])
+    code = revise_main(["answers", "create", "--run", run_dir], harnesses=repo[1])
     captured = capsys.readouterr()
     assert code == 0, captured.err
     return json.loads(captured.out), repo[2].read_text().splitlines()[len(before):]
@@ -1508,7 +1504,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
     text = start(repo, "STOP")
     result = stored(repo, "warn", gate=WARNED, found=[finding("diagnosis"), finding("undiscussed")])
     stored(repo, "info")                                          # a pass result asks nothing
-    _, stopped, _ = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, stopped, _ = revise(repo, capsys, NOTE_PATH, "--quick")
     assert stopped["plan-stop"] and stopped["findings"] == [result]
     run = repo[0] / stopped["run-dir"]
     split = text.replace("STOP", "STOP, split into three notes")
@@ -1520,7 +1516,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
     [listed] = report["results"]
     assert (listed["result"], listed["criterion"], listed["state"]) == (result, "prose/warned", "written")
     assert re.fullmatch(r".*/artifact/finding-answers-[0-9a-f]{12}\.md", listed["file"])
-    assert listed["command"] == f"commonplace-review answers record {listed['file']}"
+    assert listed["command"] == f"commonplace-revise answers record {listed['file']}"
     path = repo[0] / listed["file"]
     head = yaml.safe_load(path.read_text().split("---\n")[1])
     assert (repo[0] / head["question"]).read_text() == (repo[0] / result).read_text()
@@ -1540,7 +1536,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
         "refs": ["kb/notes/alpha-one.md", "kb/notes/alpha-two.md"]}}))
     assert edits.answered(repo[0], path, path.read_text())[1] == []
     record_answers(repo, capsys, listed["file"])
-    assert main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
+    assert revise_main(["decisions", "--note", NOTE_PATH, "--class", "finding", "--json"]) == 0
     entries = json.loads(capsys.readouterr().out)
     assert [(e["decision"], e["reason"], e["resolution"], e["refs"]) for e in entries] == [
         ("rejected", "the diagnosis is wrong",
@@ -1549,7 +1545,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
         ("overtaken", None, None, None)], "the undecided finding is no pending work"
 
     # The next run on the edited note receives the rejection with its resolution.
-    _, later, launches = revise(repo, capsys, NOTE_PATH, "--assess")
+    _, later, launches = revise(repo, capsys, NOTE_PATH, "--quick")
     assert later["run-dir"] != stopped["run-dir"] and later["plan-stop"] and not later["published"]
     [decision] = json.loads((repo[0] / later["run-dir"] / revise_module.EARLIER_FILE).read_text())["decisions"]
     assert (decision["state"], decision["criterion"]) == ("rejected", WARNED)
@@ -1568,7 +1564,7 @@ def test_record_keeps_the_operators_decisions_on_the_findings_of_an_overtaken_ru
 def test_record_makes_no_second_file_for_a_result_a_triage_asked_about(repo, capsys):
     start(repo)
     stored(repo, "warn")
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH)
     run = repo[0] / report["run-dir"]
     before = files(run)
     recorded, launches = record(repo, capsys, report["run-dir"])
@@ -1581,7 +1577,7 @@ def test_record_makes_no_second_file_for_a_result_a_triage_asked_about(repo, cap
 def test_record_refuses_a_run_without_review_results(repo, capsys, tmp_path):
     start(repo)
     _, report, _ = revise(repo, capsys, NOTE_PATH, "--plan", str(named_plan(tmp_path)))
-    assert main(["record", report["run-dir"]], harnesses=repo[1]) == 2
+    assert revise_main(["answers", "create", "--run", report["run-dir"]], harnesses=repo[1]) == 2
     assert "holds no review results" in capsys.readouterr().err
 
 
@@ -1683,7 +1679,7 @@ def test_a_failed_answers_run_continues_with_the_operators_answers(repo, capsys)
     start(repo)
     stored(repo, "warn", found=[finding("first"), finding("second")])
     stored(repo, "fail", gate=PACKING, depth=5)
-    _, report, _ = revise(repo, capsys, NOTE_PATH, "--triage")
+    _, report, _ = revise(repo, capsys, "triage", NOTE_PATH)
     files = triaged(repo, report, {"prose/residue": {"1": APPROVED, "2": rejected("not residue")},
                                    "sentence/packing": {"1": APPROVED}})
     (repo[0] / "fail-fix-strategy-taxonomy").touch()
@@ -1693,7 +1689,7 @@ def test_a_failed_answers_run_continues_with_the_operators_answers(repo, capsys)
                                 ("fix-entry", "worker", ["2"])]
     commands = [item["how"]["command"] for item in failed["continuation"]["items"][1:]]
     assert [c.split(" --purpose")[0] for c in commands] == [
-        f"commonplace-review run revise {NOTE_PATH} --answers {file}" for file in files]
+        f"commonplace-revise apply {file}" for file in files]
     assert "--finding" not in " ".join(commands), "a bare fix would fix the findings the operator rejected"
     (repo[0] / "fail-fix-strategy-taxonomy").unlink()
     code, done, launches = continued(repo, capsys, failed["continuation"]["items"][1])
@@ -1718,10 +1714,10 @@ def test_answers_over_another_notes_or_another_operations_result_are_refused(rep
     plan = str(named_plan(tmp_path, passes=("plain-wording",)))
     _, other, _ = revise(repo, capsys, "kb/notes/beta.md", "--plan", plan)
     other_file = answer(repo, other, {})
-    code, error, launches = apply_answers(repo, capsys, other_file)
-    assert code == 2 and "not of a per-item pass on kb/notes/alpha.md" in error and launches == []
-
     _, ended, _ = revise(repo, capsys, NOTE_PATH, "--plan", plan)
+    code, error, launches = apply_answers(repo, capsys, other_file, waiting(ended))   # each question names its note
+    assert code == 2 and "name different notes" in error and launches == []
+
     result = repo[0] / frontmatter_head(repo[0] / waiting(ended))["question"]
     copy = result.with_name("readability-result.md")
     copy.write_text(result.read_text().replace("simplification-passes/plain-wording.md",

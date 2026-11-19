@@ -256,7 +256,7 @@ def _actions(
             StatusAction(
                 "status.review.rerun-stale",
                 "warning",
-                f"{review.stale} review results are stale; rerun their pairs with commonplace-review run gates",
+                f"{review.stale} review results are stale; rerun their pairs with commonplace-review NOTES",
                 "commonplace-review status --stale",
             )
         )

@@ -18,11 +18,11 @@ Judge only from these inputs. Do not open the linking files, and do not search f
 It runs alone, with no other criterion:
 
 ```bash
-commonplace-review run gates NOTE --criteria role
-commonplace-review run gates NOTE --criteria role --input inbound=PATH
+commonplace-review NOTE --criteria role
+commonplace-review NOTE --criteria role --input inbound=PATH
 ```
 
-Without `--input`, the command collects the inbound contexts itself. The run keeps its result as a retained observation and writes no current result, because no freshness hash covers the inbound contexts. The full improvement procedure (`commonplace-review run revise NOTE --full`) runs it after its review sweep and hands the report to the assessor.
+Without `--input`, the command collects the inbound contexts itself. The run keeps its result as a retained observation and writes no current result, because no freshness hash covers the inbound contexts. The full improvement procedure (`commonplace-revise NOTE --full`) runs it after its review sweep and hands the report to the assessor.
 
 ## The hard rule
 

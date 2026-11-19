@@ -53,8 +53,8 @@ def test_holding_writes_nothing_and_names_the_command(held):
     rel = run_dir.relative_to(root).as_posix()
     assert (root / NOTE).read_text() == START
     assert report["candidate"] == f"{rel}/artifact/final.md"
-    assert report["command"] == f"commonplace-review publish {rel}"
-    assert report["revised-command"] == f"commonplace-review publish {rel} --revised FILE"
+    assert report["command"] == f"commonplace-revise publish {rel}"
+    assert report["revised-command"] == f"commonplace-revise publish {rel} --revised FILE"
     assert edits.published(run_dir) is None
 
 

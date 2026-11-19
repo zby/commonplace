@@ -380,12 +380,18 @@ read by these commands. Inspect or integrate such a run from inside its own
 worktree, whose `.venv` installs its pinned source; see
 [ADR 118](./adr/118-analyses-run-as-a-workflow-over-headless-harnesses.md).
 
-## Review system
+## Review and editing system
 
+Two commands, split by authority over the note
+([ADR 139](./adr/139-only-commonplace-revise-writes-a-note.md)).
 `commonplace-review` reviews notes against criteria with headless workers and
 keeps one result file per (note, criterion) pair under
-`kb/reports/state/review/results/`. A result is fresh while the hashes of the
-note (the parts the criterion watches), criterion and output contract match. The [review-system guide](./README-REVIEW-SYSTEM.md) covers operation
+`kb/reports/state/review/results/`. It never writes a note. A result is fresh
+while the hashes of the note (the parts the criterion watches), criterion and
+output contract match. `commonplace-revise` is the only command that writes a
+note. Each command takes its main operation with the note first and its
+follow-up actions with a verb first; a file named like a verb is given with a
+path prefix, such as `./status`. The [review and editing system guide](./README-REVIEW-SYSTEM.md) covers operation
 and [review architecture](./review-architecture.md) how it is built.
 
 ### commonplace-review
@@ -398,7 +404,7 @@ warnings, `--stale` what a sweep would ask; `--json` gives each row's result
 file. Orphaned results, whose note or criterion is gone, are listed apart;
 removing one is deleting its file.
 
-`run gates NOTES... (--criteria C... | --all-gates | --criterion-file PATH) [--profile NAME]` asks one
+`commonplace-review NOTES... [--criteria C... | --criterion-file PATH] [--profile NAME]` asks one
 worker per pair without a fresh result, in a new run under
 `kb/reports/state/review/runs/v2/`, and writes a typed result file for each accepted
 review. `--grouping bundle` asks one worker per note and bundle of catalog
@@ -423,12 +429,17 @@ references and retry diagnostics. `fixture create --from RUN --observation ID
 --substitute-current-executor` retains a content baseline with an explicit
 executable substitution and recorded configuration gaps; `--repair ORIGINAL=PATH`
 can supply missing historical dirty bytes matching their recorded hashes.
-Creation launches nothing. `run gates --fixture PATH` runs one independent
+Creation launches nothing. `commonplace-review --fixture PATH` runs one independent
 trial through the same implementation, currently with Claude Code, pair
 grouping and one worker. It never publishes live results. `--resume TRIAL_RUN`
 continues that trial; it is not another observation. Fixture overrides are rejected.
 
-`run edit OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]`
+### commonplace-revise
+
+Of its invocations, the note-first form, `apply` and `publish` may write the
+note. `triage`, `answers`, `decisions`, `rewrite` and `try` never do.
+
+`commonplace-revise try OPERATION NOTE [--input ROLE=PATH ...] [--text PATH] [--profile NAME]`
 runs one [edit operation](../types/edit-operation.md), such as
 `instructions/simplification-passes/readability-and-flow.md`, on one note, in a
 new run under `kb/reports/state/review/runs/v2/`. It writes nothing to the
@@ -439,23 +450,25 @@ report names both. `--text PATH` supplies a repository file as the start text
 in place of the note's file. `--input ROLE=PATH` supplies a file the operation
 reads under that role, such as `findings` or `diff`. A `per-item` operation
 first returns `proposed`. Create the pending answers file with `answers
-create`, record the operator's decision on each item, and run the operation
+create --from`, record the operator's decision on each item, and run the operation
 again with `--input answers=PATH`: it applies the `approved` items and
 returns `changed`. The answers must pass the validator, and their question
 must be a result of the same operation on the same text. The
 profile defaults to the `effort` mapping for the operation's `effort`. It exits
 0 for an accepted `changed`, `unchanged` or `proposed` result, 1 otherwise,
-and 2 for a command error. `run edit --fixture PATH` reruns
+and 2 for a command error. `commonplace-revise try --fixture PATH` reruns
 a fixture created from an edit observation.
 
-`run revise ARTIFACT` is the one runner of the improvement procedures:
-focused (`--plan`, `--pass`, `--finding`, `--answers`), triage (`--triage`),
-quick (`--assess`) and full (`--full`). Each makes the plan the runner executes
+`commonplace-revise ARTIFACT` is the one runner of the improvement procedures:
+focused (`--plan`, `--pass`, `--finding`, and `apply` for decided answers),
+triage (`commonplace-revise triage`), quick (`--quick`) and full (`--full`).
+Each makes the plan the runner executes
 ([ADR 135](./adr/135-improvement-procedures-are-three-plans-on-one-runner.md)).
-Every invocation needs one of these choices; a bare `run revise ARTIFACT` is
-a command error. The JSON report names the mode as `fixed-plan`, `answers`,
-`triage`, `assess` or `full`.
-`run revise ARTIFACT --plan FILE` executes fixed work without assessment.
+A bare `commonplace-revise ARTIFACT` runs the default procedure, which is the
+full procedure. A caller that needs one procedure names its flag, because the
+default may change. The JSON report names the mode as `fixed-plan`, `answers`,
+`triage`, `quick` or `full`.
+`commonplace-revise ARTIFACT --plan FILE` executes fixed work without assessment.
 The YAML plan supplies `purpose`, `must-keep`, ordered `passes` with optional
 `scope`, and `stop`; see the [single-pass example](../instructions/simplification-passes/README.md#fixed-plan-execution-the-simple-baseline).
 A plan with any other field is refused. `must-keep` lists only what the run
@@ -463,13 +476,13 @@ keeps beyond the note's write brief, whose Must keep every worker receives.
 Do not also supply `--purpose` or `--must-keep`: the plan owns those fields.
 A plan entry for a pass that declares `responds-to` also names the review
 result it fixes as `finding`, and takes the depth of that result's criterion.
-`run revise ARTIFACT --pass NAME [--purpose TEXT] [--must-keep CLAIM ...]` writes
-and runs a one-entry plan for that pass. `run revise ARTIFACT --finding RESULT
+`commonplace-revise ARTIFACT --pass NAME [--purpose TEXT] [--must-keep CLAIM ...]` writes
+and runs a one-entry plan for that pass. `commonplace-revise ARTIFACT --finding RESULT
 [--purpose TEXT] [--must-keep CLAIM ...]` writes and runs a one-entry plan for
 [fix a finding by a named strategy](../instructions/fix-warnings/fix-strategy-taxonomy.md)
 with RESULT as its `finding`; RESULT must be a review result of ARTIFACT.
 Both are fixed-plan runs, and their purpose and must-keep claims go into the
-plan. `run revise ARTIFACT --triage [--purpose TEXT] [--must-keep CLAIM ...]`
+plan. `commonplace-revise triage ARTIFACT [--purpose TEXT] [--must-keep CLAIM ...]`
 asks the operator about the artifact's fresh stored review results with
 outcome `warn` or `fail`. It launches no review and no assessor. It copies
 each result that has a `warn` or `fail` finding into `artifact/findings/`,
@@ -480,11 +493,11 @@ JSON report's `triage` lists each file. With no such result, the run ends
 with no change and `triage.what` says so. A finding identical to one the
 operator decided in an earlier run on the note starts decided, with
 `carried-from`.
-`run revise ARTIFACT --assess [--purpose TEXT] [--must-keep CLAIM ...]` instead
+`commonplace-revise ARTIFACT --quick [--purpose TEXT] [--must-keep CLAIM ...]` instead
 commissions [assessment and pass selection](../instructions/simplification-passes/revise-an-article-or-note.md).
 The assessor also receives the artifact's fresh stored review results with
 outcome `warn` or `fail`; no review is launched.
-`run revise ARTIFACT --full [--purpose TEXT] [--must-keep CLAIM ...]` first runs
+`commonplace-revise ARTIFACT --full [--purpose TEXT] [--must-keep CLAIM ...]` first runs
 every review operation that declares a `depth` on the artifact, and the type
 and collection reviews, with bundle grouping, on the profile file's `default` profile. Fresh results are reused;
 new results go to the shared store. The compression synthesis runs on the
@@ -501,13 +514,13 @@ Settled intermediate passes run in order, each on the
 profile its `effort` selects through the `effort` mapping of
 `instructions/review-profiles.yaml` (`--profile-simple`, `--profile-judgment`
 override it). Each pass works on the text the one before left, through the
-`run edit` route. `--plan FILE` supplies an explicit validated input or
+`commonplace-revise try` route. `--plan FILE` supplies an explicit validated input or
 override without assessment or approval; it also replaces a stopped plan.
 An invalid plan is a command error. A plan with `stop` set ends the run and
 leaves `artifact/stop-answers.md`; replace the plan through `--plan`.
 Editing the retained plan alone is not an override.
 
-Every invocation of `run revise` opens a new run under
+Every invocation of `commonplace-revise` opens a new run under
 `kb/reports/state/review/runs/v2/revise/<note path without .md>/<UTC stamp>/`,
 with `-2`, `-3` on a collision; runs made before this layout keep 12-hex
 hash names. The run records the note, the hash of its start text and the
@@ -551,7 +564,7 @@ answers files it waits for) and `evidence`. The kinds are `failure`,
 `stale-reviews`; the [review-system guide](./README-REVIEW-SYSTEM.md#revise-runs-and-the-continuation-record)
 says when each is left. A plan entry not run is continued by `--plan` on a
 one-entry plan the run wrote under `artifact/continue/`, which keeps the
-entry's scope, or by `--answers FILE` when it applies the operator's
+entry's scope, or by `commonplace-revise apply FILE` when it applies the operator's
 answers; a fix names the run's copy of its review result. The run keeps its report as `report.json`, whose `outcome` is `completed`,
 `needs-continuation` or `failed`. It exits
 0 when it ends completed or with work to continue, 1 for a failed pass or
@@ -559,7 +572,7 @@ review or a conflict, and 2 for a command error, including an invalid plan
 or refused answers. A guard change is reported and does not change the exit
 status.
 
-`run revise ARTIFACT --answers FILE [--answers FILE ...] [--purpose TEXT]
+`commonplace-revise apply FILE [FILE ...] [--purpose TEXT]
 [--must-keep CLAIM ...]` names the operator's decided
 [answers](../types/answers.md) files. Naming a file is the operator's
 approval; an agent names it only on the operator's stated word for that
@@ -569,14 +582,14 @@ run of that pass alone, in the scope the asking run's plan gave it, which
 applies the `approved` items and publishes. It is refused unless the validator accepts the answers, the artifact holds
 exactly the text the proposals were made for, the write brief is the one the
 asking run recorded, and some item is approved. Files over review results,
-such as a triage's or those `record` writes, make a plan with one fix entry
+such as a triage's or those `answers create --run` writes, make a plan with one fix entry
 per result with an `approved` finding, in depth order, each receiving its
 answers as `finding-answers`. They are refused unless each result's
 criterion watches the same parts of the artifact it judged and some finding
 is approved. One run takes either one file over proposals or files over
 review results, not both.
 
-`publish RUN [--revised FILE]` publishes the candidate the revise or rewrite
+`commonplace-revise publish RUN [--revised FILE]` publishes the candidate the revise or rewrite
 run RUN held, and launches nothing. Naming the run is the operator's
 approval of its exact candidate. It is refused, writing nothing, when the
 artifact no longer holds the text the candidate was held over, when
@@ -592,19 +605,19 @@ no new validation failure). The run keeps it as `artifact/revised.md`, with
 is the judged candidate, the accepted review becomes the note's current
 result, named in `current-result`; otherwise `not-current` says why not.
 
-`record RUN` writes a pending answers file over each review result of the
+`commonplace-revise answers create --run RUN` writes a pending answers file over each review result of the
 revise run RUN that has a `warn` or `fail` finding, and launches nothing. The
 results are those the run's assessor or triage received. Each file is the one
 a triage writes: `artifact/finding-answers-<key>.md`, whose question is the
 run's copy of the result in `artifact/findings/`. The command prints each
 file with the command that records it. It works whether or not the note still
 holds the run's text. It makes no plan, runs no fix and publishes nothing.
-A file that already exists, from a triage or an earlier `record`, is left as
+A file that already exists, from a triage or an earlier call, is left as
 it is. Use it to record the operator's decisions on findings answered
 outside the run, such as by a split; keep the decided file with
-`answers record FILE`. A run that holds no review results is a command error.
+`commonplace-revise answers record FILE`. A run that holds no review results is a command error.
 
-`answers create --from QUESTION [--to PATH]` writes the pending answers file
+`commonplace-revise answers create --from QUESTION [--to PATH]` writes the pending answers file
 for a question and launches nothing. A question is an edit result with
 outcome `proposed`, whose items are its proposals; a review result with
 outcome `warn` or `fail`, whose items are its `warn` and `fail` findings,
@@ -616,16 +629,16 @@ the store would read the file as a review result; give `--to` for a stored
 result. The command writes every hash, so nobody writes one by hand.
 `commonplace-validate PATH` checks a completed file against its question.
 
-`answers record FILE` keeps an answers file under a revise or rewrite run's
+`commonplace-revise answers record FILE` keeps an answers file under a revise or rewrite run's
 `artifact/` as the operator's decisions, in that run's `answers/`, and
 launches nothing. Use it for a file whose decisions nothing consumes: one
 that approves no item, a plan stop's `stop-answers.md`, or the files
-`record` writes. The validator must accept the file against its question;
+`answers create --run` writes. The validator must accept the file against its question;
 otherwise nothing is kept. Recording a file again after a change, such as an
 added `resolution`, replaces the record. Naming the file is the operator's
 approval of its text.
 
-`run rewrite NOTE --commission FILE [--profile NAME]` rewrites
+`commonplace-revise rewrite NOTE --commission FILE [--profile NAME]` rewrites
 one note from its authorized sources, for a note whose contribution is known
 but whose claims or synthesis are unsettled. FILE is the commission: Markdown
 with YAML frontmatter naming `note` and `sources` (each a repository `path`
@@ -643,7 +656,7 @@ and SHA-256 and never copied into the run. Fresh workers then reconstruct
 the sources and account for the claims without the note, write a candidate
 with a reconciliation report, and review the exact candidate, ending
 `accept` or `block`. Before the candidate, the run obtains the note's role
-report: a fresh one kept by `run revise --full` on the same text, without a
+report: a fresh one kept by `commonplace-revise --full` on the same text, without a
 launch, or else one call of the role report alone on the profile file's
 `default` profile, in `role/` under the run. The candidate, repair and
 review calls receive its `## Role` section as `kb-role`, and the operator's
@@ -652,7 +665,7 @@ earlier decisions on the note, from revise and rewrite runs, as
 role report and whether it was reused. A `block` allows one repair and a second fresh review;
 a second `block` ends the run unpublished, with `blocked` in the JSON report.
 After `accept`, a candidate other than the note's text is held, as `run
-revise` holds one with a new warning, and the run ends; `publish RUN`
+revise` holds one with a new warning, and the run ends; `commonplace-revise publish RUN`
 publishes it. A referenced source whose bytes changed stops the run before
 the candidate is held. `--profile` names the worker profile for every call;
 the default is the `effort` mapping for `judgment`. It exits 0 when the run
@@ -660,11 +673,11 @@ ends with a held candidate, no change or a block, 1 for a stop or a
 conflict, and 2 for a command error. See
 [the rewrite workflow](./README-REVIEW-SYSTEM.md#rewriting-a-note).
 
-`decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
+`commonplace-revise decisions [--note PATH] [--class NAME] [--json]` lists operator and agent
 decisions and launches nothing. It is read-only: it reads the revise and
 rewrite run directories and writes no state. An answers file is a decision
 once a command kept it in a run's `answers/`: a run it was named to with
-`--answers`, or `answers record`. A file kept by two runs is listed once.
+`apply`, or `answers record`. A file kept by two runs is listed once.
 So that decisions recorded before ADR 135 stay visible, it also reads the
 records of the retired procedures: operator records in full-pass run
 directories, full-pass packets under `kb/reports/state/review/packets/` and
@@ -674,7 +687,7 @@ entry says who proposed and who decided (`operator`, `agent`, `automatic`,
 `version-guard`, `pending` for an answers file a continuation record waits
 for or a held candidate not yet published, or `overtaken` for such an entry
 whose note is gone or no longer holds the text the run left it), the action
-class (the pass name of a per-item stop, `finding` for a triage or `record`
+class (the pass name of a per-item stop, `finding` for a triage or `answers create --run`
 file, whose item names the criterion, `stop` for a plan stop,
 `publication`, `packet` or `fix-report`), and whether the decision covered
 one `item` or a `bundle`. A kept answers file gives one entry per item, with

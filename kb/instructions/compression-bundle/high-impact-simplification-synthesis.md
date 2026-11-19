@@ -35,7 +35,7 @@ The [compression bundle](../run-compression-bundle-on-note.md) applies this synt
 The compression findings are explicit input files, one per check, such as the four check results under `kb/reports/state/review/results/<note-path>/`. Run the synthesis alone:
 
 ```bash
-commonplace-review run gates NOTE --criteria compression-synthesis \
+commonplace-review NOTE --criteria compression-synthesis \
   --input core-claim-obscured=PATH --input branch-bloat=PATH \
   --input detail-overhang=PATH --input marginal-value-redundancy=PATH
 ```

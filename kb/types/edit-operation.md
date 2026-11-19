@@ -9,7 +9,7 @@ schema: ./edit-operation.schema.yaml
 
 An edit operation is an instruction that takes one text of a note and returns one text of that note, or a list of changes it proposes. It is one of three kinds of improvement atom, beside review gates and stops. Use this type when the instruction edits the note's body within the kind of change its goal names. Use [`review-gate`](./review-gate.md) for a check that judges a text and edits nothing. Use [`instruction`](./instruction.md) for a procedure that arranges several operations, writes a second file, or edits more than one note.
 
-An instance runs alone on one note. The [review command](../reference/commands.md) runs it as `commonplace-review run edit OPERATION NOTE`, and its result is an [edit result](./edit-result.md).
+An instance runs alone on one note. The [review command](../reference/commands.md) runs it as `commonplace-revise try OPERATION NOTE`, and its result is an [edit result](./edit-result.md).
 
 ## The contract every instance shares
 

@@ -1,4 +1,4 @@
-"""One edit operation run alone, `commonplace-review run edit`, on a fake worker; no model is called.
+"""One edit operation run alone, `commonplace-revise try`, on a fake worker; no model is called.
 
 The fake worker reads its frame and the input text. The behaviour file
 outside the repository names a defect the worker commits on its first
@@ -16,7 +16,7 @@ import sys
 import pytest
 import yaml
 
-from commonplace.cli.review_workflows import main
+from commonplace.cli.review_workflows import main, revise_main
 from commonplace.headless.harness import Harness
 from commonplace.headless.jobs import Run
 from commonplace.lib import frontmatter, library
@@ -130,9 +130,9 @@ def repo(tmp_path, monkeypatch):
 
 
 def edit(repo, capsys, *args):
-    """Run `commonplace-review run edit`; return the exit code, the report or error, and this run's launches."""
+    """Run `commonplace-revise try`; return the exit code, the report or error, and this run's launches."""
     before = repo[2].read_text().splitlines()
-    code = main(["run", "edit", *args, "--timeout", "30"], harnesses=repo[1])
+    code = revise_main(["try", *args, "--timeout", "30"], harnesses=repo[1])
     captured = capsys.readouterr()
     launches = [json.loads(line) for line in repo[2].read_text().splitlines()[len(before):]]
     return code, json.loads(captured.out) if code != 2 else captured.err, launches
@@ -239,7 +239,7 @@ def propose(repo, capsys) -> tuple[dict, str]:
     """Run the per-item operation's first run and create its pending answers; return the report and its path."""
     code, proposed, _ = edit(repo, capsys, PER_ITEM_OP, NOTE_PATH)
     assert code == 0 and proposed["outcome"] == "proposed", proposed
-    assert main(["answers", "create", "--from", proposed["result"]]) == 0
+    assert revise_main(["answers", "create", "--from", proposed["result"]]) == 0
     created = json.loads(capsys.readouterr().out)
     return proposed, created["answers"]
 
@@ -268,14 +268,14 @@ def test_per_item_operation_proposes_then_applies_only_approved_items(repo, caps
     data = result(repo, proposed).data
     assert data["candidate"] is None and [p["quote"] for p in data["proposals"]] == ["Alpha body", "Closing sentence"]
     assert data["profile"]["launch-model"] == "small"                   # plain-wording is simple
-    assert main(["answers", "create", "--from", proposed["result"]]) == 0
+    assert revise_main(["answers", "create", "--from", proposed["result"]]) == 0
     path = json.loads(capsys.readouterr().out)["answers"]
     pending = frontmatter.parse((repo[0] / path).read_text()).data
     assert pending["question"] == proposed["result"]
     assert pending["question-sha256"] == observations.sha((repo[0] / proposed["result"]).read_bytes())
     assert [(item["id"], item["proposal"], item["state"]) for item in pending["items"]] == [
         ("1", data["proposals"][0], "pending"), ("2", data["proposals"][1], "pending")]
-    assert main(["answers", "create", "--from", proposed["result"]]) == 2
+    assert revise_main(["answers", "create", "--from", proposed["result"]]) == 2
     assert "not replaced" in capsys.readouterr().err
     answered = decide(repo, path, {"1": {"state": "approved"},
                                    "2": {"state": "rejected", "reason": "keep the closing words"}})
@@ -334,10 +334,10 @@ def test_edit_fixture_reruns_one_execution_and_show_validates_it(repo, capsys):
     assert [item["outcome"] for item in record["results"]] == ["changed"]
     fixture = fixtures.create(root, report["run-dir"], observation, substitute_executor=True)
     name = fixture.relative_to(root).as_posix()
-    assert main(["run", "gates", "--fixture", name], harnesses=repo[1]) == 2
-    assert "run edit --fixture" in capsys.readouterr().err
+    assert main(["--fixture", name], harnesses=repo[1]) == 2
+    assert "commonplace-revise try --fixture" in capsys.readouterr().err
     before = len(repo[2].read_text().splitlines())
-    assert main(["run", "edit", "--fixture", name], harnesses=repo[1]) == 0
+    assert revise_main(["try", "--fixture", name], harnesses=repo[1]) == 0
     trial = json.loads(capsys.readouterr().out)
     assert len(repo[2].read_text().splitlines()) == before + 1
     assert trial["observations"][0]["state"] == "edited" and trial["observations"][0]["outcome"] == "changed"

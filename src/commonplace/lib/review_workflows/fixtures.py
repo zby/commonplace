@@ -180,9 +180,9 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES, 
     """Rerun the fixture's observation in a new tree; `family` names the command's kind, reviews or edits."""
     fixture, data = load(root, fixture_name)
     if (data["request"]["kind"] == edit_operations.KIND) != (family == edit_operations.FAMILY):
-        raise ValueError("the fixture holds an edit execution; use `run edit --fixture`"
+        raise ValueError("the fixture holds an edit execution; use `commonplace-revise try --fixture`"
                          if family != edit_operations.FAMILY else
-                         "the fixture holds a review; use `run gates --fixture`")
+                         "the fixture holds a review; use `commonplace-review --fixture`")
     if data["profile"]["harness"] not in harnesses:
         raise ValueError("fixture harness is unavailable")
     if harnesses is HARNESSES and data["profile"]["harness"] != "claude-code":

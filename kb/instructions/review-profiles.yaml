@@ -1,11 +1,11 @@
-# Worker profiles for `commonplace-review run`. Same entry shape as
+# Worker profiles for `commonplace-review` and `commonplace-revise`. Same entry shape as
 # kb/tasks/profiles.yaml: harness, launch-model, effort and optional extra
 # harness flags. A reviewer reads the checkout and writes only its output
 # file under kb/reports/state/review/runs/; unlike a task profile, it has no
 # edit grant on repository files and no git commit. The workflow's checkout
 # guard reports any change the run saw, whatever the flags allowed.
 default: opus
-# `run revise` picks each simplification pass's profile by the pass's
+# `commonplace-revise` picks each simplification pass's profile by the pass's
 # `effort`; the assessment is a judgment ask. `gates`, and the review step of
 # `revise --full`, use `default`.
 effort:
