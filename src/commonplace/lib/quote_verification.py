@@ -338,9 +338,18 @@ def _marker_is_confident(
     return _has_standalone_trailing_marker(prose, quote) or _positive_marker(prefix)
 
 
+def _blank_frontmatter(text: str) -> str:
+    """Neutralize YAML frontmatter while preserving offsets and line numbers."""
+    match = frontmatter._FM_RE.match(text)
+    if match is None:
+        return text
+    header = "".join(char if char in "\r\n" else " " for char in match.group(0))
+    return header + text[match.end() :]
+
+
 def parse_prose_citations(content: str) -> list[Citation]:
     """Pair prose quotations and links without reading or resolving a source."""
-    text = blank_fenced_code_blocks(content)
+    text = blank_fenced_code_blocks(_blank_frontmatter(content))
     citations: list[Citation] = []
     for start_line, paragraph in _paragraphs(text):
         if not VERBATIM_RE.search(paragraph):

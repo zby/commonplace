@@ -457,6 +457,33 @@ def test_trailing_verbatim_marker_does_not_bleed_into_later_unmarked_quote(tmp_p
     assert [(r.status, r.quote) for r in results] == [("match", "quoted words")]
 
 
+def test_frontmatter_quotes_are_not_parsed_as_prose_verbatim_citations(tmp_path: Path):
+    """YAML frontmatter fields such as review findings[].quotes are metadata, not prose citations."""
+    note = _write_pair(
+        tmp_path,
+        "---\n"
+        "type: types/review-result.md\n"
+        "findings:\n"
+        "  - scope: passage\n"
+        "    quotes:\n"
+        '      - \'It says "quoted words" ([Missing](../sources/missing.md), verbatim).\'\n'
+        "    reason: trim overhang\n"
+        "    level: warn\n"
+        "outcome: warn\n"
+        "---\n\n"
+        "# Review\n\n"
+        'The body says "quoted words" ([Source](../sources/source.md), verbatim).\n',
+        "Contains quoted words.",
+    )
+
+    results = verify_note(note)
+    source = (tmp_path / "sources" / "source.md").resolve()
+
+    assert [(r.status, r.quote, r.source, r.line) for r in results] == [
+        ("match", "quoted words", source, 14),
+    ]
+
+
 class TestIngestQuoteValidation:
     """An attributed extract resolves against the ingest's pinned snapshot.
 
