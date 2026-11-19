@@ -72,11 +72,33 @@ required reliability per operator judgment—is not adopted and does not define
 the current commission. A transfer between tiers is one possible investment
 and return for automatic search to consider.
 
-Active-workshop triage was suggested as a cheap test site for the question
-about individual return guesses. No test protocol is commissioned by that
-suggestion. The next consequential decision is to choose a bounded comparison
-that could distinguish competing accounts of search guidance; if no such
-comparison can yet be stated, retain the gap rather than build a controller.
+## Proposed triage comparison: what needs an operator decision now?
+
+A task can be worth keeping without being worth putting on today's shortlist.
+The [November frontier scan](../unresolved-work-reconsideration/scan-results-2026-11-08.md#initial-shortlist)
+illustrates the distinction. Two shortlisted tasks lacked an input. For the
+vocabulary check, the scan itself said to wait for a real naming occasion;
+none was identified. For the link-label experiment, a draft was missing, but
+the operator could decide whether finding one and designing the test merited
+work. The [later dispositions](../unresolved-work-reconsideration/scan-results-2026-11-08.md#disposition-update--2026-11-09)
+differed: the experiment got a workshop, not a result. The operator declined
+the naming-time check and preferred investigating checks during revision.
+The scan already had reason to defer the check; it need not have inferred
+that later preference. A declined recommendation is not by itself a mistake.
+
+On a fresh batch of active workshops, compare the usual shortlist with one
+that asks of each candidate: **what useful decision can the operator make
+now that would otherwise wait?** Use the same candidates and information
+available at triage time. If the answer is to defer, keep the item available
+with the event that would bring it back. A missing input need not mean
+waiting: commissioning someone to obtain it may itself be the decision.
+
+Compare the items whose treatment changes. Ask the operator which interruptions
+could have been spared and which useful decisions the shorter list would have
+hidden. Distinguish reasons available at triage from preferences supplied only
+afterwards. Fewer recommendations alone would not show better prioritisation;
+the comparison must also account for missed decisions and the effort of triage.
+This is a proposed comparison, not a commissioned trial or an adopted rule.
 
 ## Delivered background
 
