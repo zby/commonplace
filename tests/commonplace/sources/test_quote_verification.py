@@ -428,11 +428,27 @@ def test_following_verbatim_citation_beats_preceding_unrelated_link(tmp_path: Pa
     ]
 
 
+def test_later_marked_citation_does_not_override_adjacent_source(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'Verbatim: "alpha" ([A](../sources/source.md)) and '
+        '"beta" ([B](../sources/other.md), verbatim).',
+        "alpha",
+    )
+    other = tmp_path / "sources" / "other.md"
+    other.write_text("beta", encoding="utf-8")
+
+    assert [(r.quote, r.source, r.status) for r in verify_note(note)] == [
+        ("alpha", other.with_name("source.md"), "match"),
+        ("beta", other, "match"),
+    ]
+
+
 def test_trailing_verbatim_marker_does_not_bleed_into_later_unmarked_quote(tmp_path: Path):
     note = _write_pair(
         tmp_path,
         '[Source](../sources/source.md) writes "quoted words" (verbatim) '
-        'and rejects "scare quote".',
+        'and rejects "scare quote" and "another scare quote".',
         "Contains quoted words.",
     )
 

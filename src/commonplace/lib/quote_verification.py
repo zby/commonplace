@@ -256,7 +256,7 @@ def _link_citation_has_verbatim(paragraph: str, link: _Link, prose: str) -> bool
 
 
 def _nearest_link(
-    paragraph: str, quote: _Quote, links: Sequence[_Link], prose: str
+    paragraph: str, quote: _Quote, links: Sequence[_Link], prose: str, next_quote_start: int
 ) -> tuple[_Link, bool]:
     """Choose among the paragraph's nonempty source links."""
     def distance(link: _Link) -> int:
@@ -272,7 +272,7 @@ def _nearest_link(
         candidates = [
             link
             for link in same_sentence
-            if link.start >= quote.end
+            if quote.end <= link.start < next_quote_start
             and _link_citation_has_verbatim(paragraph, link, prose)
         ]
     if not candidates and standalone_trailing:
@@ -294,7 +294,7 @@ def _marker_is_confident(
     link: _Link,
     prose: str,
     *,
-    prev_quote_end: int | None = None,
+    prefix_prose: str,
 ) -> bool:
     """Return whether local prose explicitly marks this quote as verbatim.
 
@@ -303,15 +303,7 @@ def _marker_is_confident(
     never counts as a citation marker. Structure is still read from
     ``paragraph``.
     """
-    before_start = max(0, quote.start - 120)
-    if prev_quote_end is not None and prev_quote_end >= before_start:
-        # Do not borrow a standalone trailing marker such as ``(verbatim)`` from
-        # an earlier quotation in the same sentence, while preserving shared
-        # prefix forms such as ``read, verbatim, as "q1" and "q2"``.
-        trail = STANDALONE_TRAILING_MARKER_RE.match(prose[prev_quote_end : quote.start])
-        if trail is not None:
-            before_start = prev_quote_end + trail.end()
-    before = prose[before_start : quote.start]
+    before = prefix_prose[max(0, quote.start - 120) : quote.start]
     before = re.split(r"[.!?]\s+", before)[-1]
     if _positive_marker(before):
         return True
@@ -342,13 +334,7 @@ def _marker_is_confident(
     between = prose[link.end : quote.start]
     if re.search(r"[.!?]\s+", between):
         return False
-    prefix_start = max(0, link.start - 80)
-    prefix = prose[prefix_start : quote.start]
-    if prev_quote_end is not None and prefix_start <= prev_quote_end <= quote.start:
-        trail = STANDALONE_TRAILING_MARKER_RE.match(prose[prev_quote_end : quote.start])
-        if trail is not None:
-            cut = prev_quote_end - prefix_start
-            prefix = prefix[:cut] + prefix[cut + trail.end() :]
+    prefix = prefix_prose[max(0, link.start - 80) : quote.start]
     return _has_standalone_trailing_marker(prose, quote) or _positive_marker(prefix)
 
 
@@ -367,13 +353,21 @@ def parse_prose_citations(content: str) -> list[Citation]:
         if not VERBATIM_RE.search(prose):
             continue
         paired_links: set[_Link] = set()
-        prev_quote_end: int | None = None
-        for quote in quotes:
-            link, ambiguous = _nearest_link(paragraph, quote, links, prose)
+        bounded_quotes = [(q, quotes[i + 1].start if i + 1 < len(quotes) else len(prose))
+                          for i, q in enumerate(quotes)]
+        # A trailing marker belongs to its quote, never to a later prefix.
+        # Blank just those spans so shared prefix markers and offsets survive.
+        prefix_chars = list(prose)
+        for quote, limit in bounded_quotes:
+            trail = STANDALONE_TRAILING_MARKER_RE.match(prose[quote.end : limit])
+            if trail:
+                prefix_chars[quote.end : quote.end + trail.end()] = " " * trail.end()
+        prefix_prose = "".join(prefix_chars)
+        for quote, limit in bounded_quotes:
+            link, ambiguous = _nearest_link(paragraph, quote, links, prose, limit)
             confident = _marker_is_confident(
-                paragraph, quote, link, prose, prev_quote_end=prev_quote_end
+                paragraph, quote, link, prose, prefix_prose=prefix_prose
             )
-            prev_quote_end = quote.end
             if not confident:
                 continue
             paired_links.add(link)
