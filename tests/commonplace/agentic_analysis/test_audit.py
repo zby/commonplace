@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 from workjig import CommandWorker, LaunchRecord, Request, RetryPolicy, read_run
+from workjig.payloads import PayloadStore
 from workjig.records import (
     CallEntry,
     Delivery,
@@ -15,6 +16,7 @@ from workjig.records import (
     load_state,
     material_hash,
     request_material,
+    stored_material,
 )
 
 from commonplace.headless.harness import HARNESSES, Harness, Profile
@@ -43,7 +45,9 @@ def add_call(run_dir, job, statuses, *, harness="pi", protocol="pi-json"):
     No worker runs. Workjig serializes the record, so it is one `read_run` accepts.
     """
     path = run_dir / "calls/run.json"
-    state = load_state(path) or RunState(workdir=str(run_dir))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    store = PayloadStore(path.parent)
+    state = load_state(path, store) or RunState(workdir=str(run_dir))
     request = Request(job, "Original assignment", {}, ("report.md",),
                       CommandWorker(("worker",), name=harness, output_protocol=protocol))
     retry = RetryPolicy(tuple(dict.fromkeys(status for status in statuses if status != "delivered")))
@@ -58,10 +62,9 @@ def add_call(run_dir, job, statuses, *, harness="pi", protocol="pi-json"):
                                      started_at="2026-01-01T00:00:00+00:00", finished_at="2026-01-01T00:00:01+00:00",
                                      max_launches=len(statuses), retry=retry))
     outputs = {"report.md": "Report"}
-    delivery = (Delivery(outputs, launches[-1].launch_id, material_hash(outputs))
-                if statuses[-1] == "delivered" else None)
+    delivery = Delivery.store(outputs, launches[-1].launch_id, store) if statuses[-1] == "delivered" else None
     key = material_hash(request_material(request))
-    state.calls[job] = {key: CallEntry(request, key, launches, delivery)}
+    state.calls[job] = {key: CallEntry(request, key, stored_material(request, store), launches, delivery)}
     write_json(path, state.to_json())
 
 
