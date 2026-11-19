@@ -86,6 +86,24 @@ Run AAS-2026-04-14-example-01 covered the deletions of 2026-04-15/16.
     )
 
 
+def test_angle_delimited_doi_is_one_target_and_rewrites_keep_delimiters() -> None:
+    from commonplace.lib.note_parser import (
+        find_markdown_link_offsets,
+        find_markdown_links,
+        find_markdown_links_with_text,
+        replace_markdown_links,
+    )
+
+    doi = "https://doi.org/10.1016/0010-0285(82)90008-1"
+    body = f"See [paper](<{doi}>) and [notes](notes.md)."
+    assert find_markdown_links(body) == (doi, "notes.md")
+    assert find_markdown_links_with_text(body) == (("paper", doi), ("notes", "notes.md"))
+    assert find_markdown_link_offsets(body) == ((4, doi), (body.index("[notes]"), "notes.md"))
+    assert replace_markdown_links(body, {doi: "copy (1).md", "notes.md": "more.md"}.__getitem__) == (
+        "See [paper](<copy (1).md>) and [notes](more.md)."
+    )
+
+
 def test_link_scan_keeps_links_around_and_across_inline_code() -> None:
     from commonplace.lib.note_parser import find_markdown_links, replace_markdown_links
 

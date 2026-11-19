@@ -14,7 +14,11 @@ from commonplace.lib import frontmatter as fm_mod
 _BODY_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 _FENCE_LINE_RE = re.compile(r" {0,3}(`{3,}|~{3,})(.*)")
 _INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
-_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+# Angle-delimited destinations end at `>`, not the first `)` in the URL.
+# Keep the delimiters outside the target span so rewrites preserve them.
+_LINK_RE = re.compile(
+    r"\[([^\]]+)\]\((?P<angle><)?(?P<target>(?(angle)[^<>\r\n]*|[^)]+))(?(angle)>)\)"
+)
 # A date stands alone: not the tail of a longer hyphenated, slashed, or dotted
 # token such as the DOI 10.1186/1471-2288-13-91.
 _DATE_RE = re.compile(r"(?<![\w/.-])\d{4}-\d{2}-\d{2}(?![\w-])")
@@ -134,12 +138,12 @@ def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
 
 
 def find_markdown_links(body: str) -> tuple[str, ...]:
-    return tuple(match.group(2) for match in _iter_markdown_link_matches(body))
+    return tuple(match.group("target") for match in _iter_markdown_link_matches(body))
 
 
 def find_markdown_link_offsets(body: str) -> tuple[tuple[int, str], ...]:
     """Each link `find_markdown_links` finds, as its start offset in `body` and its target."""
-    return tuple((match.start(), match.group(2).strip()) for match in _iter_markdown_link_matches(body))
+    return tuple((match.start(), match.group("target").strip()) for match in _iter_markdown_link_matches(body))
 
 
 def replace_markdown_links(body: str, replace: Callable[[str], str]) -> str:
@@ -148,7 +152,7 @@ def replace_markdown_links(body: str, replace: Callable[[str], str]) -> str:
     pieces: list[str] = []
     end = 0
     for match in _iter_markdown_link_matches(body):
-        start, stop = match.span(2)
+        start, stop = match.span("target")
         pieces += [body[end:start], replace(body[start:stop])]
         end = stop
     return "".join(pieces) + body[end:]
@@ -156,7 +160,7 @@ def replace_markdown_links(body: str, replace: Callable[[str], str]) -> str:
 
 def find_markdown_links_with_text(body: str) -> tuple[tuple[str, str], ...]:
     return tuple(
-        (match.group(1), match.group(2).strip())
+        (match.group(1), match.group("target").strip())
         for match in _iter_markdown_link_matches(body)
     )
 
