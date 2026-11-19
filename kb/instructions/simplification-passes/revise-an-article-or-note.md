@@ -30,6 +30,11 @@ instead of assessing again.
    in one sentence. Recommend only passes whose value against the purpose
    is clear; an item you would not defend is not recommended. Do not edit.
 
+   When readers scan a list or table to choose or compare items, recommend
+   [Readability and flow](./readability-and-flow.md) if repeated openings bury
+   the distinction those readers need. Name the reader’s task and two entries
+   that hide the distinction. Repetition alone is not a reason to edit.
+
    If the highest-value change is a rewrite or a restructuring of the
    argument, report that and stop. The passes work on text, and text a
    rewrite will replace is not worth a pass; recommend passes only over the

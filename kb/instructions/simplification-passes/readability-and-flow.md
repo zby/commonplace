@@ -1,5 +1,5 @@
 ---
-description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat, or its sentences need a second reading; structural and sentence-level edits with no change of claim"
+description: "Use when claims are settled but sections repeat, interrupt each other, or bury the point; sentences need a second reading; or repeated openings hide the distinction a reader scans a list or table for"
 type: types/edit-operation.md
 effort: judgment
 decision: none
@@ -24,6 +24,11 @@ Apply these structural moves, each only where the whole read shows the need:
   section, formal first, so the argument section runs without interruption.
 - **State the comparison basis.** A section that says what a route gains
   names what it is compared against in its first sentence.
+- **Lead with what the reader is scanning for.** In a list or table used
+  to choose or compare items, identify what the reader needs to tell apart.
+  Read the entries side by side. If a shared opening buries that distinction,
+  bring it forward or move the shared wording to a heading. Keep an opening
+  that helps the reader group items. Keep a qualifier with the words it limits.
 - **Deduplicate caveats.** When a caveat appears twice, keep the one nearest
   its mechanism and cut the other; do not cross-reference.
 - **Split and merge at argument boundaries.** Split a paragraph that carries
