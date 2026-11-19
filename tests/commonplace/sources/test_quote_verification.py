@@ -354,6 +354,93 @@ def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
     assert results[0].line == 8
 
 
+def test_tight_list_items_do_not_pair_quotes_across_bullets(tmp_path: Path):
+    """A tight bullet list separates items so one bullet's quote cannot bind to the next bullet's link."""
+    note = _write_pair(
+        tmp_path,
+        '- [Source](../sources/source.md) writes "first quote" (verbatim) '
+        'and "second quote" (verbatim).\n'
+        "- Unrelated point analyzed in [Other](../sources/other.md).\n",
+        "Here is first quote and second quote in full.",
+    )
+    (tmp_path / "sources" / "other.md").write_text("Completely different text.", encoding="utf-8")
+
+    results = verify_note(note)
+    source = (tmp_path / "sources" / "source.md").resolve()
+
+    assert [(r.status, r.quote, r.source, r.line) for r in results] == [
+        ("match", "first quote", source, 1),
+        ("match", "second quote", source, 1),
+    ]
+
+
+def test_wrapped_tight_list_item_preserves_item_and_line_numbers(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        "- First bullet.\n"
+        "- [Source](../sources/source.md) writes\n"
+        '  "quoted words" (verbatim).\n'
+        "- Third bullet with [Other](../sources/other.md).\n",
+        "Contains quoted words.",
+    )
+    (tmp_path / "sources" / "other.md").write_text("Other text.", encoding="utf-8")
+
+    results = verify_note(note)
+    source = (tmp_path / "sources" / "source.md").resolve()
+
+    assert [(r.status, r.quote, r.source, r.line) for r in results] == [
+        ("match", "quoted words", source, 3),
+    ]
+
+
+def test_standalone_trailing_verbatim_prefers_preceding_same_sentence_link(tmp_path: Path):
+    """[Source] writes "quote" (verbatim), contrasting with [Other] pairs with Source, not Other."""
+    note = _write_pair(
+        tmp_path,
+        '[Source](../sources/source.md) writes "quoted words" (verbatim), '
+        "contrasting with [Other](../sources/other.md).",
+        "Contains quoted words.",
+    )
+    (tmp_path / "sources" / "other.md").write_text("Other text.", encoding="utf-8")
+
+    results = verify_note(note)
+    source = (tmp_path / "sources" / "source.md").resolve()
+
+    assert [(r.status, r.quote, r.source) for r in results] == [
+        ("match", "quoted words", source),
+    ]
+
+
+def test_following_verbatim_citation_beats_preceding_unrelated_link(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        'As [Other](../sources/other.md) notes, "quoted words" '
+        "([Source](../sources/source.md), verbatim).",
+        "Contains quoted words.",
+    )
+    (tmp_path / "sources" / "other.md").write_text("Other text.", encoding="utf-8")
+
+    results = verify_note(note)
+    source = (tmp_path / "sources" / "source.md").resolve()
+
+    assert [(r.status, r.quote, r.source) for r in results] == [
+        ("match", "quoted words", source),
+    ]
+
+
+def test_trailing_verbatim_marker_does_not_bleed_into_later_unmarked_quote(tmp_path: Path):
+    note = _write_pair(
+        tmp_path,
+        '[Source](../sources/source.md) writes "quoted words" (verbatim) '
+        'and rejects "scare quote".',
+        "Contains quoted words.",
+    )
+
+    results = verify_note(note)
+
+    assert [(r.status, r.quote) for r in results] == [("match", "quoted words")]
+
+
 class TestIngestQuoteValidation:
     """An attributed extract resolves against the ingest's pinned snapshot.
 

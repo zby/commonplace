@@ -55,6 +55,11 @@ NEGATED_VERBATIM_RE = re.compile(
 # A quotation may wrap across source lines inside one paragraph; paragraphs
 # are already split on blank lines, so the span cannot cross one.
 DOUBLE_QUOTE_RE = re.compile(r'"([^"]+)"|“([^”]+)”')
+LIST_ITEM_SPLIT_RE = re.compile(r"\n(?=[ \t]*(?:[-*+]|\d+[.)])[ \t]+)")
+STANDALONE_TRAILING_MARKER_RE = re.compile(
+    r"^[ \t]*(?:\([^()\[\]]*\bverbatim\b[^()\[\]]*\)|,[ \t]*verbatim\b)",
+    re.IGNORECASE,
+)
 INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
 NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
 
@@ -124,6 +129,22 @@ class _Quote:
     text: str
 
 
+def _split_tight_list_items(start_line: int, paragraph: str) -> Iterable[tuple[int, str]]:
+    """Split a tight Markdown list into per-item blocks with exact line numbers."""
+    if paragraph.lstrip().startswith(">") or not LIST_ITEM_SPLIT_RE.search(paragraph):
+        yield start_line, paragraph
+        return
+    offset = 0
+    for boundary in LIST_ITEM_SPLIT_RE.finditer(paragraph):
+        segment = paragraph[offset : boundary.start()]
+        if segment.strip():
+            yield start_line + paragraph.count("\n", 0, offset), segment
+        offset = boundary.end()
+    tail = paragraph[offset:]
+    if tail.strip():
+        yield start_line + paragraph.count("\n", 0, offset), tail
+
+
 def _paragraphs(text: str) -> Iterable[tuple[int, str]]:
     raw = [
         (text.count("\n", 0, match.start(1)) + 1, match.group(1))
@@ -143,7 +164,7 @@ def _paragraphs(text: str) -> Iterable[tuple[int, str]]:
         ):
             paragraph = f"{paragraph}\n\n{raw[index + 1][1]}"
             index += 1
-        yield line, paragraph
+        yield from _split_tight_list_items(line, paragraph)
         index += 1
 
 
@@ -209,24 +230,71 @@ def _quotes(paragraph: str, links: Sequence[_Link]) -> list[_Quote]:
     return found
 
 
-def _nearest_link(quote: _Quote, links: Sequence[_Link]) -> tuple[_Link, bool]:
+def _positive_marker(text: str) -> bool:
+    return bool(VERBATIM_RE.search(text) and not NEGATED_VERBATIM_RE.search(text))
+
+
+def _has_standalone_trailing_marker(prose: str, quote: _Quote) -> bool:
+    match = STANDALONE_TRAILING_MARKER_RE.match(prose[quote.end :])
+    return bool(match and _positive_marker(match.group(0)))
+
+
+def _same_sentence(prose: str, quote: _Quote, link: _Link) -> bool:
+    between = (
+        prose[quote.end : link.start]
+        if quote.end <= link.start
+        else prose[link.end : quote.start]
+    )
+    return not bool(re.search(r"[.!?]\s+", between))
+
+
+def _link_citation_has_verbatim(paragraph: str, link: _Link, prose: str) -> bool:
+    for start, end in _citation_ranges(paragraph, [link]):
+        if start <= link.start < end:
+            return _positive_marker(prose[start:end])
+    return False
+
+
+def _nearest_link(
+    paragraph: str, quote: _Quote, links: Sequence[_Link], prose: str
+) -> tuple[_Link, bool]:
     """Choose among the paragraph's nonempty source links."""
     def distance(link: _Link) -> int:
         if link.start >= quote.end:
             return link.start - quote.end
         return quote.start - link.end
 
-    # Citations conventionally follow their quotation. Prefer that direction
-    # so a quote at the start of the next list item is not captured by the
-    # preceding item's nearby citation.
-    following = [link for link in links if link.start >= quote.end]
-    ordered = sorted(following or links, key=distance)
+    same_sentence = [link for link in links if _same_sentence(prose, quote, link)]
+    standalone_trailing = _has_standalone_trailing_marker(prose, quote)
+
+    candidates: list[_Link] = []
+    if not standalone_trailing:
+        candidates = [
+            link
+            for link in same_sentence
+            if link.start >= quote.end
+            and _link_citation_has_verbatim(paragraph, link, prose)
+        ]
+    if not candidates and standalone_trailing:
+        candidates = [link for link in same_sentence if link.end <= quote.start]
+    if not candidates:
+        following = [link for link in same_sentence if link.start >= quote.end]
+        if not following:
+            following = [link for link in links if link.start >= quote.end]
+        candidates = following or same_sentence or list(links)
+
+    ordered = sorted(candidates, key=distance)
     ambiguous = len(ordered) > 1 and distance(ordered[0]) == distance(ordered[1])
     return ordered[0], ambiguous
 
 
 def _marker_is_confident(
-    paragraph: str, quote: _Quote, link: _Link, prose: str
+    paragraph: str,
+    quote: _Quote,
+    link: _Link,
+    prose: str,
+    *,
+    prev_quote_end: int | None = None,
 ) -> bool:
     """Return whether local prose explicitly marks this quote as verbatim.
 
@@ -235,14 +303,17 @@ def _marker_is_confident(
     never counts as a citation marker. Structure is still read from
     ``paragraph``.
     """
-    def positive_marker(text: str) -> bool:
-        return bool(VERBATIM_RE.search(text) and not NEGATED_VERBATIM_RE.search(text))
-
-    # Support ``verbatim: "quote"`` and ``states, verbatim, that ...`` without
-    # borrowing a marker from an earlier sentence in the same paragraph.
-    before = prose[max(0, quote.start - 120) : quote.start]
+    before_start = max(0, quote.start - 120)
+    if prev_quote_end is not None and prev_quote_end >= before_start:
+        # Do not borrow a standalone trailing marker such as ``(verbatim)`` from
+        # an earlier quotation in the same sentence, while preserving shared
+        # prefix forms such as ``read, verbatim, as "q1" and "q2"``.
+        trail = STANDALONE_TRAILING_MARKER_RE.match(prose[prev_quote_end : quote.start])
+        if trail is not None:
+            before_start = prev_quote_end + trail.end()
+    before = prose[before_start : quote.start]
     before = re.split(r"[.!?]\s+", before)[-1]
-    if positive_marker(before):
+    if _positive_marker(before):
         return True
 
     if quote.end <= link.start:
@@ -259,13 +330,26 @@ def _marker_is_confident(
             if start <= link.start < end:
                 citation_tail = prose[link.end:end]
                 break
-        return positive_marker(between + citation_tail)
+        if _has_standalone_trailing_marker(prose, quote):
+            trail = STANDALONE_TRAILING_MARKER_RE.match(between)
+            remainder = between[trail.end() :] if trail else between
+            if re.search(r"\w", remainder) and not _positive_marker(citation_tail):
+                return False
+        return _positive_marker(between + citation_tail)
 
-    # Less common prefix form: ``verbatim in [source]: "quote"``.
+    # Prefix link form: ``verbatim in [source]: "quote"`` or
+    # ``[source] writes "quote" (verbatim)``.
     between = prose[link.end : quote.start]
     if re.search(r"[.!?]\s+", between):
         return False
-    return positive_marker(prose[max(0, link.start - 80) : quote.start])
+    prefix_start = max(0, link.start - 80)
+    prefix = prose[prefix_start : quote.start]
+    if prev_quote_end is not None and prefix_start <= prev_quote_end <= quote.start:
+        trail = STANDALONE_TRAILING_MARKER_RE.match(prose[prev_quote_end : quote.start])
+        if trail is not None:
+            cut = prev_quote_end - prefix_start
+            prefix = prefix[:cut] + prefix[cut + trail.end() :]
+    return _has_standalone_trailing_marker(prose, quote) or _positive_marker(prefix)
 
 
 def parse_prose_citations(content: str) -> list[Citation]:
@@ -283,9 +367,14 @@ def parse_prose_citations(content: str) -> list[Citation]:
         if not VERBATIM_RE.search(prose):
             continue
         paired_links: set[_Link] = set()
+        prev_quote_end: int | None = None
         for quote in quotes:
-            link, ambiguous = _nearest_link(quote, links)
-            if not _marker_is_confident(paragraph, quote, link, prose):
+            link, ambiguous = _nearest_link(paragraph, quote, links, prose)
+            confident = _marker_is_confident(
+                paragraph, quote, link, prose, prev_quote_end=prev_quote_end
+            )
+            prev_quote_end = quote.end
+            if not confident:
                 continue
             paired_links.add(link)
             citations.append(Citation(
