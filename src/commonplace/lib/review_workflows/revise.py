@@ -1040,6 +1040,9 @@ def _asked_scope(asking: Path, name: str) -> str | None:
     return next((entry.get("scope") for entry in plan["passes"] if entry["pass"] == name), None)
 
 
+# Handoff invariant: plan restrictions (e.g., `scope`, `purpose`, `must-keep`) travel by TWO
+# routes — here (`answers_plan()` for `apply FILE`) and in `continuation()` for `--plan` files.
+# When changing how a restriction survives across runs, inspect and update BOTH routes.
 def answers_plan(root: Path, artifact: str, given: list[dict], purpose: str | None,
                  must_keep: list[str]) -> tuple[str, dict[str, dict], dict[str, dict]]:
     """The plan, and the answers each entry receives, of a run that consumes the operator's answers files.
@@ -1295,6 +1298,9 @@ def _claim_questions(path: Path) -> bool:
     return bool(found) and found.group(1).strip().rstrip(".").lower() not in ("", "none")
 
 
+# Handoff invariant: plan restrictions (e.g., `scope`, `purpose`, `must-keep`) travel by TWO
+# routes — here (writing `artifact/continue/<id>.yaml` for `--plan`) and in `answers_plan()`
+# for `apply FILE`. When changing how a restriction survives across runs, inspect BOTH routes.
 def continuation(root: Path, artifact: str, run_dir: Path, report: ReviseReport, known: dict[str, Pass],
                  start: str, *, purpose: str | None, must_keep: list[str]) -> dict | None:
     """Write the run's continuation record, `CONTINUATION`, and return it with its path; None when nothing is left.

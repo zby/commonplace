@@ -12,9 +12,13 @@ Keep analysis method edits executable and update every affected consumer.
 The method author loads this instruction before an applicable edit, together
 with the owning collection and selected instruction/type-spec contract. The collection contract supplies this mandatory route to method authors.
 Before changing analysis code, worker instructions, report contracts or
-publication design, read the [analysis design brief](../../reference/agentic-system-analysis-design-brief.md)
-for the operator's goals and evaluation priorities. Treat it as design intent,
-not a replacement for adopted execution contracts.
+publication design, apply the operator's goals and evaluation priorities below
+(recorded in [the analysis design brief](../../reference/agentic-system-analysis-design-brief.md);
+treat them as design intent, not a replacement for adopted execution contracts):
+
+- **Goals:** primary — chart the design space of agentic systems and find mechanisms, trade-offs, and applicability conditions worth borrowing for Commonplace; secondary — build a useful public database.
+- **Evaluation priorities:** use KB theories as testable workflow inputs; value learning, comparison, and useful borrowing at reasonable total cost (production, review, and consumption) over counts or completion alone; discover main constraints through use (keep requirements, observed limits, and hypotheses distinct); allow clearly marked local problems and keep uncertainty beside affected claims while still repairing materially misleading conclusions; keep source-system findings distinct from Commonplace adoption judgments (transfer scans stay separate).
+- **Design freedom:** worker roles, correction ownership, report boundaries, review placement, and round budgets are means to test, not fixed architecture.
 
 Analyst job packets load neither this instruction nor the design brief. This
 instruction grants no mutation authority beyond the commissioned edit.

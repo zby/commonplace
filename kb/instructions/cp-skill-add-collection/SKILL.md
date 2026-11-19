@@ -31,9 +31,9 @@ Stop and report instead of creating anything when:
 - an existing collection's contract already covers the contribution: write
   there, or propose a subdirectory of it;
 - `kb/<name>/` already exists;
-- the name is `tags`, `sources`, `reports`, `work` or `types`. Commonplace
-  commands rely on those locations for system roles, so the name is not
-  available for ordinary content.
+- the name is `tags`, `sources`, `reports`, `work`, `types` or
+  `agentic-system-analyses`. Commonplace commands rely on those locations
+  for system roles, so the name is not available for ordinary content.
 
 ## 2. Write `kb/<name>/COLLECTION.md`
 

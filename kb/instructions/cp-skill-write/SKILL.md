@@ -177,7 +177,7 @@ Then suggest `cp-skill-connect` as the next step, for the graph discovery that S
 
 These apply to every document regardless of collection; the frontmatter rules apply to typed documents.
 
-**Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
+**Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags` (keep `tags: [a, b]` inline on one line so lexical by-tag `rg` searches match it), and `user-verified`. Never grant user verification implicitly.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this document's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
@@ -192,7 +192,7 @@ This borrows one idea from *Auftragstaktik* (mission command): when execution wi
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
 
-**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the document: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
+**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the document: do not vary a word for variety, because in technical prose a changed word reads as a changed referent. When using any of the seven near-collision terms (`worker`, `allocation`, `provisional`, `operational`, `projection`, `higher-order concerns` / `second-order lessons`, `refinement`), check [vocabulary-collision-ledger.md](../../reference/vocabulary-collision-ledger.md) and follow its decision for new text.
 
 **Links.** Use relative markdown paths from the source file. Every link must point to a real file.
 
@@ -202,6 +202,6 @@ The collection's `COLLECTION.md` authorises labels per destination and names the
 
 **Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 70 chars.
 
-**Lineage tracking**: when a focused document is worked up from a source, record the dependency in the source's footer — `Derived into:`, `Abstracted into:`, `Operationalized into:`, or `Adapted into:`, whichever the source collection authorizes and [link-vocabulary.md](../../reference/link-vocabulary.md)'s test fits; never stack more than one for the same edge. The produced document does not link back.
+**Lineage tracking**: when a focused document is worked up from a source, classify the edge in order — (1) if the source only motivated or corroborated it, use a non-lineage label; (2) if substantive claims are reconstructible from the source plus stated premises, `derived-from` / `Derived into:`; (3) if it generalizes beyond the source, `abstracted-from` / `Abstracted into:`; (4) if it adds executable ordering/defaults/stops without new substantive claims, `operationalized-from` / `Operationalized into:` (where authorized); (5) otherwise, if reshaped from the source for a new use, `adapted-from` / `Adapted into:` (where authorized). Label mixed artifacts by their dominant regime, never stack two lineage edges on the same pair, and record the forward pointer in a dedicated footer section below `Relevant Notes:` at the source (`Distilled into:` is retired; details in [link-vocabulary.md](../../reference/link-vocabulary.md#lineage-semantics)). The produced document does not link back merely to mirror the edge.
 
 **Renames**: never rename manually. Use `commonplace-relocate-note` to update backlinks.
