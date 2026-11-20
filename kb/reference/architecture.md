@@ -75,6 +75,10 @@ tool's Python version or on upgrade. An editable install reads the source
 checkout's `kb/` instead, because shared data is copied at install time. The
 environment variable `COMMONPLACE_LIBRARY_ROOT` overrides both; tests use it.
 
+At setup, `commonplace-init` fills in the project name in `AGENTS.md.template`
+and writes the installed library paths into local pointers. At runtime the agent
+still reads the canonical instruction, but need not discover its location.
+
 Commands read gates, the critique instruction, and global types from the
 library root. Agents reach it by two routes, both written by `commonplace-init`:
 

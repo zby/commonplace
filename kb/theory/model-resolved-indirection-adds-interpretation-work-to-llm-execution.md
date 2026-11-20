@@ -36,7 +36,7 @@ Generated instructions create a derived-copy obligation. Their producer needs a 
 
 ## Example: knowledge-base skill portability
 
-This boundary became concrete while making knowledge-base (KB) skills—reusable instruction units—portable across installations. A generated skill can replace installation-specific path placeholders before the model sees its instructions. Commonplace’s [instruction-generation flow](../reference/instruction-generation.md) demonstrates this: it resolves project values into generated artifacts while retaining runtime inputs as parameters. The result is [constraining](./definitions/constraining.md): the generated artifact admits fewer valid interpretations, but its copies must remain synchronized with their source.
+This boundary became concrete while making knowledge-base (KB) skills—reusable instruction units—portable across installations. A generated skill can replace installation-specific path placeholders before the model sees its instructions. Commonplace’s [skill stubs](../reference/architecture.md#where-the-library-is-read) demonstrate this: init writes the canonical skill’s path into the stub, and the agent follows it at runtime. The result is [constraining](./definitions/constraining.md): the generated artifact admits fewer valid interpretations, but its copies must remain synchronized with their source.
 
 ---
 

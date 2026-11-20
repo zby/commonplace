@@ -46,4 +46,4 @@ Risks:
 - [014-scripts-as-python-package-one-tree-model](./014-scripts-as-python-package-one-tree-model.md) — refines: keeps the package-and-init model while changing the projection mechanism
 - [021-ship-library-content-under-kb-commonplace](./021-ship-library-content-under-kb-commonplace.md) — implements: projects from the `kb/commonplace/instructions/` source path that decision fixed
 - [027-package-scaffold-assets-without-source-tree-symlinks](./027-package-scaffold-assets-without-source-tree-symlinks.md) — extends: removes the remaining install-time symlink dependency after packaging-time symlinks were removed
-- [instruction-generation](../instruction-generation.md) — implemented-by: skill projection section describing the copy behavior
+- [Skill discovery](../architecture.md#where-the-library-is-read) — implemented-by: the local stub carries frontmatter and points to the canonical skill

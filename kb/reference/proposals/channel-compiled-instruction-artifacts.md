@@ -92,5 +92,5 @@ Relevant Notes:
 - [Model-resolved indirection adds interpretation work to LLM execution](../../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: why leaving branch resolution to the model adds interpretation work during execution
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: the consumer/channel/force test the Operativity section applies
 - [Checking retained results trades cost against reliance risk](../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rests-on: the trade-off the compiled-copy adoption criterion asks the design to resolve
-- [Instruction generation](../instruction-generation.md) — current-state: the shipped build step this proposal extends
+- [Install-time path resolution](../architecture.md#where-the-library-is-read) — current-state: the shipped build step this proposal extends
 - [ADR 064: Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — compares-with: removes command location and environment activation from the channel variables this proposal must resolve

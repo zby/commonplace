@@ -33,7 +33,7 @@ For recurring tasks this is especially clean. The task template is a stable runb
 
 Relevant Notes:
 
-- [instruction-generation](../reference/instruction-generation.md) — current-state: how Commonplace instantiates this argument today through `commonplace-init`, scaffold trees, and the specific substitution points
+- [Commonplace architecture](../reference/architecture.md#where-the-library-is-read) — current-state: init resolves project names and library paths before agents read the instructions
 - [Model-resolved indirection adds interpretation work to LLM execution](./model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — foundation: the resolver boundary this applies; setup-time expansion removes model-side binding work while preserving token and lifecycle tradeoffs
 - [methodology enforcement is constraining](./methodology-enforcement-is-constraining.md) — template generation is a point on the constraining gradient
 - [instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — motivates: always-loaded context should be slim; variable interpretation adds complexity
