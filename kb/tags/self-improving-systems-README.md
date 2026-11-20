@@ -25,6 +25,7 @@ The child areas are [theory-builder](./theory-builder-README.md), [software-fact
 - [Evidence bearing on an improvement objective](../theory/definitions/evidence-bearing-on-an-improvement-objective.md) — gradients, rewards, errors, viability signals, tests, judgments: what carries information about the criterion
 - [The definition classifies its boundary cases without ad hoc exceptions](../theory/the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases run against the criteria; the stress falls on declaring the boundary, not on the definition
 - [Self-improvement is relative to a declared objective](../theory/self-improvement-is-relative-to-a-declared-objective.md) — the objective is a declared parameter beside boundary and horizon, indexed by the analyst and antecedent in the pathway
+- [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — when a gain in the KB’s own machinery supports keeping a change and when it supports only a local claim
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — objective change is improvement only against a level outside both objectives
 - [A proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — between objective and oracle sits a target level whose linking claim no check in the loop tests
 
