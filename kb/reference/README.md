@@ -62,7 +62,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric
-- [Tag-readme trace as a self-improving loop](../theory/evidence/tag-readme-trace-as-self-improving-loop.md) — one observed trace mapped onto search, evaluation, and retention
 
 ## Decision history
 
