@@ -34,7 +34,7 @@ A design constraint can motivate extracting a use-shaped artifact from larger ma
 | Finished but undecided design | [`kb/reference/proposals/`](./proposals/README.md) | Problem, option space, forces, free choices, current-state assumptions, and adoption criteria |
 | Implemented decision | [Architecture decision record (ADR)](./types/adr.md) | Required context, decision, and consequences; richer records may also retain alternatives and evidence |
 | Local operating contract | `COLLECTION.md` and collection-local type specs | The constraints proven for one collection without claiming framework-wide explanatory-reach |
-| Shared reusable design | Global types, instructions, validators, package code, and creation-time [collection prototypes](./collection-prototypes.md) | A commitment promoted after its scope, consumer, and enforcement or copy lifecycle became clear |
+| Shared reusable design | Global types, instructions, validators, package code, and creation-time [collection prototypes](./adr/069-collection-contract-bundles-become-one-time-prototypes.md) | A commitment promoted after its scope, consumer, and enforcement or copy lifecycle became clear |
 | Rejected or displaced design | Rejected proposal options, ADR consequences, supersession links, and git history | Explicitly authored reasons; git history remains an archival fallback rather than a semantic rationale relation |
 
 [Content routing](./content-routing.md) organizes the same surfaces by content kind rather than by rationale state, and adds the kinds that are not rationale states: intents, applicability limits, implementation facts, change narrative, observations, and source claims.

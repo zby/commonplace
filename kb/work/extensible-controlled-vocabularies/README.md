@@ -118,7 +118,7 @@ Close this workshop when there's a concrete mechanism proposal that answers: whe
 ## Grounding
 
 - [ADR 042: register becomes a default profile under open-ended text contracts](../../reference/adr/042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — evidenced-by: historical worked-case-first guard whose lack of an operative adoption path was later corrected
-- [Collection prototypes](../../reference/collection-prototypes.md) — contrasts: clone-once starting text has no maintained union, while this proposal needs framework-owned and local values to compose continuously
+- [Collection prototypes](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) — contrasts: clone-once starting text has no maintained union, while this proposal needs framework-owned and local values to compose continuously
 - [ADR 069: collection contract bundles become one-time prototypes](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) — contrasts: explains why a creation-time prototype cannot serve as the authoritative extensible vocabulary
 - [A universal knowledge framework demotes content taxonomies to defaults](../../theory/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md) — grounds: the demote-don't-delete theory (routing/growth-brake/interoperability) and the "predicted fourth instance" (status) the inventory found
 - [A framework rule with a boundary-preserving rival is not an inherited constraint](../../theory/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md) — grounds: the demotion test (rival vocabulary under the same commitments) the inventory above applies to every schema enum

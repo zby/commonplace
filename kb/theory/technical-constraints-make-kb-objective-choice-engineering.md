@@ -39,7 +39,7 @@ The surviving objective is not monolithic. It is specialized down a two-level hi
 
 - **COLLECTION.md text contracts specialize the loss per collection.** Each writable collection declares a quality goal in its [text contract](../reference/definitions/collection.md#text-contract) — the local objective its writers and reviewers treat as decisive. `kb/theory/` optimizes explanatory-reach; `kb/reference/` optimizes fidelity and economy; `kb/instructions/` optimizes executability and precision. Same global goal, different residual loss per subtree.
 
-The [collection prototypes](../reference/collection-prototypes.md) may lower the one-time cost of drafting a new contract, but they are not a third objective level. After copying, only the destination's local `COLLECTION.md` binds; prototype changes do not specialize or update it. [Artifact classification separates the local authoring objective from content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md).
+The [collection prototypes](../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md) may lower the one-time cost of drafting a new contract, but they are not a third objective level. After copying, only the destination's local `COLLECTION.md` binds; prototype changes do not specialize or update it. [Artifact classification separates the local authoring objective from content kind, lineage, and authority](./artifact-classification-separates-content-kind-lineage-and-authority.md).
 
 ## Judge strength differs by collection objective
 

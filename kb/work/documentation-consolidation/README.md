@@ -37,7 +37,7 @@ Recent decisions provide three controls: routine navigation went back to agent i
 
 First case: [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md). The [connect-report mining proposal](../../reference/proposals/periodic-connect-report-mining.md) uses its distinction between noticing a problem and turning it into a candidate. Contrast [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md): its worked examples might fit, but proposals also cite it to establish the project's objective. Do not move the whole page on the strength of its examples.
 
-Next: inspect `collection-prototypes.md`. ADR 069 names it as the catalogue and several theory notes cite its copy-once rule. Check whether a collection author needs the catalogue to choose a prototype, as distinct from a theory reader who needs only the ownership rule. Do not move it to case studies merely because it uses Commonplace terms.
+Collection prototypes: authors choosing a starting contract now reach the installed templates from the add-collection skill. Readers asking what survives copying use [ADR 069](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). No separate inventory. Next candidate: identify who needs `control-plane-goals.md` beyond the setup guide, root template and rules for editing them.
 
 ## Files in this workshop
 

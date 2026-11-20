@@ -44,13 +44,13 @@ Retire **profile** as text-contract vocabulary. A collection does not adopt,
 extend, conform to, or remain under a shared contract bundle. Its own
 `COLLECTION.md` is complete and authoritative.
 
-Keep genuinely reusable bundles as **collection prototypes** in
-[`collection-prototypes.md`](../collection-prototypes.md). A collection
+Keep genuinely reusable bundles as **collection prototypes** in the package’s
+`_data/templates/` directory. A collection
 prototype is optional creation-time text that may be copied and adapted into a
 new local contract. Copying ends the relationship: the destination project
 owns and maintains its `COLLECTION.md`; Commonplace does not synchronize the
 copy, apply later prototype changes to it, or claim that the collection still
-conforms to the prototype. Catalogue changes affect future copies only.
+conforms to the prototype. Template changes affect future copies only.
 
 The three standard package templates are the shipped notes, reference, and
 instructions prototypes. The dialectical/evidential template is available as
@@ -60,8 +60,7 @@ does not install it automatically. Editorial/expository conventions remain
 only in `kb/articles/COLLECTION.md`; one local realization with no
 collection-creation consumer does not justify a prototype.
 
-The prototype definition lives at the start of its catalogue rather than in a
-separate definition artifact. Creation-only vocabulary does not belong in the
+Creation-only vocabulary does not belong in the
 always-loaded root glossary, so `AGENTS.md` carries no profile vocabulary and
 its routing table has no `Role` column. Live collection contracts state their
 purpose and quality goal directly. [ADR 071](./071-text-contract-is-part-of-the-collection-definition.md)
@@ -95,9 +94,8 @@ and the dialectical/evidential worked case provides a useful opt-in starting
 point. Calling those files prototypes states their actual lifecycle.
 
 **Create a separate collection-prototype definition.** Rejected because the
-term is needed only when selecting creation material. Defining it in the
-catalogue keeps its semantics beside the available copies and avoids another
-canonical surface.
+term is needed only when selecting creation material. Authors need to know
+what copying does, not learn a separate classification system.
 
 **Keep editorial/expository as a prototype.** Rejected because only
 `kb/articles/` realizes it and no workflow copies it. Its local contract remains
@@ -110,8 +108,7 @@ templates once when destination contracts do not yet exist. It preserves
 existing contracts. The experimental template is selected manually and is not
 on the default initialization path. After creation, agents and conformance
 review consume only the destination `COLLECTION.md`, with that file's existing
-contract force. No runtime or authoring consumer reads the prototype catalogue
-to determine an installed collection's rules.
+contract force. The templates do not determine an installed collection's rules.
 
 This makes the documentation match the implementation: a maintainer can tell
 which artifact binds now and which text merely helps create it. Existing
@@ -120,8 +117,8 @@ Future prototype improvements can be made without implying migration work for
 installed projects.
 
 The accepted cost is weaker name-based coordination across collections.
-Similar collections may diverge after copying, and the catalogue no longer
-claims that a common name guarantees compatible conventions. A reader who
+Similar collections may diverge after copying; a common starting point does
+not guarantee compatible conventions. A reader who
 needs to compare them must inspect their local contracts. That was already the
 only reliable comparison.
 
@@ -134,7 +131,7 @@ unrelated concepts are unaffected.
 Relevant Notes:
 
 - [Collection and text contract](../definitions/collection.md) — defined-in: the binding local declaration that prototypes may help an author create but never replace
-- [Collection prototypes](../collection-prototypes.md) — implemented-by: catalogues the actual creation-time starting contracts
+- [Add a collection](../../instructions/cp-skill-add-collection/SKILL.md) — implemented-by: authors select and adapt starting contracts at creation time
 - [ADR 042: Register becomes a default profile under open-ended text contracts](./042-register-becomes-a-default-profile-under-open-ended-text-contracts.md) — supersedes: replaces its adopted-profile model while preserving retirement of the closed register taxonomy
 - [ADR 071: Text contract is part of the collection definition](./071-text-contract-is-part-of-the-collection-definition.md) — see-also: records the later canonical owner of the text-contract vocabulary
 - [ADR 057: Articles use an editorial profile and excluded drafts](./057-articles-use-an-editorial-profile-and-excluded-drafts.md) — supersedes: retires the shared editorial-profile claim while preserving the local article contract and lifecycle
