@@ -34,6 +34,8 @@ Beyond the two-tree problems, the plugin-based skill delivery model ([ADR-013](.
 
 ## Decision
 
+The packaging change preserves ADR 013’s choice to keep project goals in the root instructions rather than an on-demand skill: an agent needs them to decide whether work belongs in the KB before choosing a procedure.
+
 ### 1. Scripts become a Python package
 
 All operational Python code moves into an installable package (`llm-commonplace` on PyPI, `import commonplace` in Python), with each command exposed as a stable `commonplace-*` entry point.
