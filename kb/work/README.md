@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [Frame and objective declaration](./frame-and-objective-declaration/README.md) — posed 2026-11-20: settle one KB-wide rule for how claims about Commonplace state their boundary, partition, horizon and objective; four agent positions recorded; the objective's accounting awaits the operator's ruling, then one cold-reader check on the instrument note decides whether anything beyond the objective declaration is needed
+- [Frame and objective declaration](./frame-and-objective-declaration/README.md) — posed 2026-11-20: settle one KB-wide rule for how claims about Commonplace state their boundary, partition, horizon and objective; refocused the same day by operator direction: progress is claimed on the margin in a declared area, as a conjecture about a total order the objective names; the plan tests that claim form on three past changes, then writes it as a theory note and redeclares the objective
 
 - [Documentation consolidation](./documentation-consolidation/README.md) — posed 2026-11-18, refocused 2026-11-19: cut outdated documentation by tying each document to an explicit task, moving agent guidance onto its activation path, keeping short human overviews, and later pruning unnecessary skills.
 

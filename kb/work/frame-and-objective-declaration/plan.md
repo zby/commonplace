@@ -1,83 +1,132 @@
 # Plan
 
-Revised 2026-11-20 after position D. The earlier version wrote dependent edits
-before the test that would license them; this one does not.
+Revised 2026-11-20 after the operator's direction on marginal measurement. The
+earlier plan was built around one ruling on the objective's accounting (D4) and
+a cold-reader check. The direction replaced that ruling, so the plan is
+rebuilt around what the operator settled.
 
-## Step 1 — the operator rules D4
+## Basis
 
-Proposed ruling, on which B, C and D converge:
+Four points, recorded with their history in [the settlement record](./settlement.md#operator-direction-2026-11-20):
 
-> The objective counts human judgment spent on construction, operation, repair
-> and maintenance over a stated period, reported by who supplied it. A
-> reader's cost of using the work counts in the numerator, as usefulness.
-> Model strength is reported with any comparison. The cost of one more task
-> may be reported, labelled as that.
+1. Progress is measured on the margin, in a declared application area.
+2. A marginal claim is a conjecture about a total order that nobody specifies.
+   The declared objective names that order. The evidence gives a partial order
+   that approximates it.
+3. The claim is that the gain outweighs the probable losses elsewhere. The
+   weighing stays with the operator and users.
+4. A regression argument must be judgeable: it names the mechanism of the
+   loss, who bears it and what it grows with, and gives a judgment at the
+   current size. It need not give the threshold.
 
-## Step 2 — cold-reader check on the instrument note alone
+## Step 1 — test the claim form on three real changes
 
-Needs no ruling; it reads the note as it stands.
+Before anything is written into the library, check that the form produces
+claims someone can judge. Apply it to three past Commonplace changes of
+different kinds:
 
-A fresh agent with no workshop context reads
-`kb/reference/commonplace-as-an-instrument.md` and its linked notes as it
-chooses, then answers one open question: "What does this note claim the
-tag-readme trace shows about Commonplace?" A second open question covers the
-objective: "What does this note say Commonplace is trying to achieve, and how
-would you measure it?"
+- the tag-readme change of ADR 026, where a symbolic check was added;
+- one addition of routing to `AGENTS.md`, the operator's own example;
+- one added or tightened review gate.
 
-Score the answers for overclaims: any statement that the trace shows the
-framework's effect, that the parts composed without human bridging, or that
-the objective has been met. Record the question, the answer and the scoring in
-`cold-reader-check.md`. The runner should not be position B's author.
+For each, write the claim in the form: the area, the gain and its evidence,
+the prior state it is compared with, and the regression argument with its four
+parts. Record where the form was awkward or a part could not be filled.
 
-Prediction on record (D): no overclaim, because the note disclaims effect at
-L21, L39, L47 and L55. The second question is expected to expose the
-unstated denominator, which is the D4 gap and not an overclaim.
+Output: `worked-cases.md`. If a part cannot be filled in two of three cases,
+the form is revised before step 2.
 
-## Step 3 — the minimal edits
+## Step 2 — write the claim form as a theory note
 
-Applied whatever step 2 finds, once D4 is ruled and D5 + D7 is settled:
+The form is a transferable claim, so it belongs in `kb/theory/`, written with
+`cp-skill-write` after reading the collection contract and type spec.
 
-- **Objective declaration.** Two sentences carrying the D4 ruling, in the
-  owner that D5 + D7 selects: the instrument note at L11 (B, C) or the frame
-  note (D).
-- **Frame note, one sentence.** Under B: it fixes boundary and partition;
-  horizon and improvement objective are declared per attribution. Under D:
-  replaced by the objective declaration itself.
+Working title: "Improvement over an open task space is claimed on the margin".
+Content: the two relations, the claim form, the regression-argument standard
+with the routing example, and what the form assumes.
+
+It must state its relation to
+[a better-factory claim](../../theory/a-better-factory-claim-compares-operative-states.md),
+which asks for non-regression checked against thresholds and leaves open how
+to do that for an open-ended family. The new note is the answer for that case:
+the check is replaced by a judgeable argument. Whether the better-factory note
+is then revised is a separate decision; it carries a TODO of its own.
+
+Named gaps the note states and does not close:
+
+- when a regression stops being trivial;
+- the task population that "elsewhere" ranges over. The candidate is tasks
+  that arise, weighted by frequency and importance;
+- how often prior scope must be re-checked so that uncertainty does not
+  accumulate over many changes;
+- whether one total order exists, which rests on the declared objective.
+
+## Step 3 — the objective declaration
+
+In the instrument note, at L11. Proposed wording, for the operator to change:
+
+> Commonplace's objective is more useful and better-warranted knowledge work
+> per unit of human judgment. The objective names what improvement claims are
+> about; it is not a measure. Progress is claimed on the margin: a gain in a
+> declared area, compared with the prior state, with an argument that probable
+> losses elsewhere do not outweigh it. Weighing gains against losses is the
+> operator's and users' judgment.
+
+with a link to the step 2 note. The "not automation" sentence stays.
+
+This replaces the accounting block of the earlier plan. Position D leaned
+toward moving the objective into the frame note because that block would
+change the instrument note's character. The block is gone, so the declaration
+stays in the instrument note unless D's author objects on other grounds.
+
+## Step 4 — dependent edits
+
+- **Baseline-gap bullet, instrument note L39, and "What would change the
+  status", L49.** Both ask for a program-wide baseline comparison "per unit of
+  human judgment". Restate them as marginal comparisons in declared areas.
 - **Two proposals.** Replace the copied objective sentence with a citation.
-- **Instrument note, L17.** Replace "components" with a word that does not
+  The ablation proposal's arms become comparisons in declared areas; say so in
+  one sentence and leave its design alone.
+- **Frame note.** One sentence: it fixes boundary and partition; horizon and
+  improvement objective are declared per attribution.
+- **Instrument note L17.** Replace "components" with a word that does not
   collide with the partition's.
 
-## Step 4 — only if step 2 finds an overclaim
+## Step 5 — one cold-reader check, after the edits
 
-Then, and only then:
+An agent other than position B's author reads the revised instrument note with
+no workshop context and answers two open questions: "What does this note claim
+the tag-readme trace shows about Commonplace?" and "How would you tell whether
+Commonplace had improved?" Score the first for overclaims and the second
+against the four basis points. Record it in `cold-reader-check.md`. A miss on
+the second question means step 3's wording failed, and it is revised.
 
-- Edit the passage the reader overclaimed from, stating locally what was
-  observed and who decided.
-- Run the same open-question check on the other artifacts that link the frame
-  note or make effect claims about Commonplace. The list from the earlier plan
-  is the starting set: the reflective-system classification, the two tag-readme
-  trace notes, `a-repeatable-operative-path…`, `only-explicit-retention…`,
-  `commonplace-revision-used-theory-guided-computational-search`,
-  `commonplace-builds-a-theory-builder…`.
-- If several artifacts show the same overclaim, propose one review criterion
-  under `kb/reference/proposals/`. Otherwise add no rule.
+## Left for the operator, not planned here
 
-Hypotheses this step would test, not edits to make in advance: that L19–21
-lets a reader infer composition without human bridging, and that L39 hides the
-rival explanations.
+- **The bootstrap article's measure.** It measures "human decisions each
+  completed, verified improvement requires". Under the direction that is one
+  dimension a marginal claim may name, not a program measure. The article is a
+  draft under the operator's byline; this workshop does not edit it.
+- **The frame note's person-based boundary.** The software-house investigation
+  found that the frame note places people by designation while the
+  theory-builder and software-house definitions place them by role. No
+  position has argued it. It needs a decision on whether it belongs in this
+  workshop.
+- **A review or writing rule (D8).** None is planned. Revisit only if the
+  claim form is used and misused.
 
-## Step 5 — close
+## Close
 
-If step 2 finds nothing, the workshop's whole output is step 3. Mark D1 and D3
-moot, D6 and D8 resolved as "no addition", validate the changed files with
-`commonplace-validate`, delete the directory and remove its entry from
-`kb/work/README.md`.
+Mark D4 reframed by the operator's direction, D1 and D3 moot, D2, D6 and D8
+resolved as "no addition". Settle D5 + D7 by step 3 and the frame-note
+sentence. Validate changed files with `commonplace-validate`. Delete the
+directory and remove its entry from `kb/work/README.md`.
 
-The observation and effect-claim distinction is then not placed anywhere. It
-is recorded in `kb/log.md` as a first observation, since no artifact needed
-it.
+The software-house investigation is not extracted by this plan. Its
+conjectures are untested. On closing, either move it to its own workshop or
+record its two established findings in `kb/log.md`.
 
 ## Commits
 
-One commit for step 3, one for closure, each with
-`Workshop: kb/work/frame-and-objective-declaration`.
+One for the theory note, one for the instrument, frame and proposal edits, one
+for closure. Each carries `Workshop: kb/work/frame-and-objective-declaration`.

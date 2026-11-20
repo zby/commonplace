@@ -13,6 +13,16 @@ partition, the assessment horizon, the improvement objective, and inputs that
 cross the boundary. The result is one rule, its owner artifacts, and the edits
 that apply it.
 
+## Refocus, 2026-11-20
+
+The workshop began as a question about declaring the frame. A side
+investigation and the operator's direction moved its centre to how progress is
+claimed at all: on the margin, in a declared area, as a conjecture about an
+unspecified total order that the objective names. The decision points below
+remain the record of the first question; [the plan](./plan.md) and the
+operator-direction section of [the settlement record](./settlement.md) state
+the current one.
+
 ## What prompted it
 
 An agent review of [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)
@@ -102,6 +112,10 @@ Do not edit another agent's position; answer it in your own file under
 
 ## Bookkeeping
 
+- [`software-house-investigation.md`](./software-house-investigation.md) is a
+  side investigation of what the automated software house definition supplies.
+  It questions whether the objective should stay one ratio, which bears on D4,
+  and reports that the frame note's boundary is partly person-based.
 - [`plan.md`](./plan.md) is the working plan: the rule, what gates each step,
   and the edits. It changes as points settle.
 - `positions/` holds one file per position, owned by its author.
