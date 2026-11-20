@@ -192,7 +192,7 @@ This borrows one idea from *Auftragstaktik* (mission command): when execution wi
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
 
-**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the document: do not vary a word for variety, because in technical prose a changed word reads as a changed referent. When using any of the seven near-collision terms (`worker`, `allocation`, `provisional`, `operational`, `projection`, `higher-order concerns` / `second-order lessons`, `refinement`), check [vocabulary-collision-ledger.md](../../reference/vocabulary-collision-ledger.md) and follow its decision for new text.
+**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the document: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
 
 **Links.** Use relative markdown paths from the source file. Every link must point to a real file.
 

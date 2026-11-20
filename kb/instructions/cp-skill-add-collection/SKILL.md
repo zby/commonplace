@@ -67,9 +67,11 @@ purpose and the project's goals; do not add requirements nobody asked for.
    takes nearby content instead.
 2. **Quality standards**: the quality goal and its tests, title and
    description conventions, and any attribution or evidence requirements.
-3. **Linking**: an "Outbound links" table naming each label, its destination
-   collections and the reader need it serves. Use labels already declared in
-   the project's other contracts where they fit.
+3. **Linking.** In the "Outbound links" section, name the permitted destinations.
+   For formal links, list each label and the reader need it serves for that
+   destination. Reuse labels from the project's other contracts where they fit.
+   To authorise inline citations to `external`, state their permitted purpose
+   and where they may appear. These citations need no formal label.
 
 Do not restate which types the collection may use; validation enforces that
 for every collection. Create `kb/<name>/types/` only when a local type is

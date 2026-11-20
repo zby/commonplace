@@ -47,7 +47,7 @@ belong in that kind's type spec, not here
 Organise outbound-link rules **per destination** — naming local collections by directory path (e.g. `kb/theory/` or `theory`, preserving subdirectory restrictions like `theory/definitions`) and using the reserved token `external` for targets outside the KB. For each destination, declare:
 
 1. **Search guidance** — concrete triggers for when `cp-skill-connect` or an author should search that destination (specific enough to bound context, open enough to avoid missing adjacent finds).
-2. **Authorised labels** — the labels writers may use for that *source → destination* pairing, each with a one-line reader-need phrase (palette in [link vocabulary](../reference/link-vocabulary.md)).
+2. **Authorised links.** For formal links, list the labels allowed for this source and destination and the reader need each serves (palette in [link vocabulary](../reference/link-vocabulary.md)). For `external`, a collection may also authorise inline citations by stating their permitted purpose and where they may appear. These citations need no formal label.
 
 Unlisted destinations are unauthorized. The wildcard `any` authorizes every destination including `external`; a named `external` entry scopes external links narrowly without making the open web a connect-search surface ([ADR 059](../reference/adr/059-external-is-a-reserved-outbound-destination.md)). State the collection's inline-vs-footer convention: authorised labels govern what a footer link may be called, while footer inclusion remains a separate, selective author judgment unless the contract explicitly declares a checked completeness rule.
 
