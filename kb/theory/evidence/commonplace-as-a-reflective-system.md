@@ -19,7 +19,7 @@ and actor allocation. The case establishes feasibility and one bounded
 combination, not system-wide coverage, computational closure, or improvement
 beyond the adopted criterion.
 
-The evidence is the `tag-readme` change introduced by ADR 026. [The causal-connection trace](./tag-readme-trace-observed-causal-connection.md) follows it commit by commit; [the improvement-loop reading](../../reference/tag-readme-trace-as-self-improving-loop.md) contains the full function mapping. This note states the resulting classification.
+The evidence is the `tag-readme` change introduced by ADR 026. [The causal-connection trace](./tag-readme-trace-observed-causal-connection.md) follows it commit by commit; [the improvement-loop reading](./tag-readme-trace-as-self-improving-loop.md) contains the full function mapping. This note states the resulting classification.
 
 ## The frame
 
@@ -51,7 +51,7 @@ The pathway is cumulative across episodes because later changes read and transfo
 
 For methodological closure, the trace settles form (an enforceable mark), verification (recomputed tag membership), and authority (consumers trust the validated mark and failures route to repair). The design choice that created the type split remained improvised.
 
-[The full mapping](../../reference/tag-readme-trace-as-self-improving-loop.md) locates problem selection, semantic evaluation, and adoption with the maintainer; candidate framing jointly; and the structural check and continuing enforcement computationally. The latter functions are computationally closed, but the whole pathway is not.
+[The full mapping](./tag-readme-trace-as-self-improving-loop.md) locates problem selection, semantic evaluation, and adoption with the maintainer; candidate framing jointly; and the structural check and continuing enforcement computationally. The latter functions are computationally closed, but the whole pathway is not.
 
 Giving the unresolved design judgment to an unconstrained model would change allocation without adding warrant, [because warranted autonomy is bounded by oracle domain](../warranted-autonomy-is-bounded-by-oracle-domain.md).
 
@@ -66,7 +66,7 @@ Relevant Notes:
 - [The declared Commonplace frame](../../reference/commonplace-declared-frame.md) — see-also: the canonical boundary declaration this classification is assessed under
 - [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md) — see-also: the same repository read for what its application is *for* in the design program, rather than for reflectivity and actor allocation
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidenced-by: supplies the full observed trace behind the causal-connection claim
-- [The tag-readme trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — evidenced-by: supplies the full search, evaluation, and retention mapping behind the allocation profile
+- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidenced-by: supplies the full search, evaluation, and retention mapping behind the allocation profile
 - [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of noticing and candidate-forming mechanisms
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the boundary-parametric causal self-representation criterion discharged here
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the evidence-responsive operative self-change criterion and pathway-relative reflective distinction

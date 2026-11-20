@@ -138,7 +138,7 @@ improved capacity.
 shows operative self-representations being interpreted and changed, including
 changes to instructions, validators, schemas, and code. In its tag-readme case,
 the validator pass establishes consistency of the marks with the declared
-criterion; [the improvement remains a claim](../reference/tag-readme-trace-as-self-improving-loop.md#what-the-mapping-settles-and-what-it-does-not).
+criterion; [the improvement remains a claim](./evidence/tag-readme-trace-as-self-improving-loop.md#what-the-mapping-settles-and-what-it-does-not).
 Humans supply decisive assessment and adoption judgments. The evidence
 establishes a bounded connected pathway, not demonstrated improvement in
 capacity, independent computational theory possession, or a general advantage

@@ -15,7 +15,7 @@ separates a reflective system from a merely well-documented one, and it has to
 be shown as an observed instance rather than argued from architecture. The
 `tag-readme` type (ADR 026) supplies one end-to-end case. This note is the full
 walkthrough behind the [classification](./commonplace-as-a-reflective-system.md);
-the [self-improving reading](../../reference/tag-readme-trace-as-self-improving-loop.md)
+the [self-improving reading](./tag-readme-trace-as-self-improving-loop.md)
 interprets the same trace as an improvement loop.
 
 ## The strain
@@ -73,7 +73,7 @@ Two negatives the timeline pins down. First, no size or completeness validator e
 Relevant Notes:
 
 - [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — extends: classifies the system and actor allocation this trace supports
-- [The tag-readme trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
+- [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — see-also: the same trace read as an improvement loop
 - [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of candidate-forming mechanisms the agent's drafting work here is one instance of
 - [Reflective system](../definitions/reflective-system.md) — rests-on: the causal-connection obligation this trace instantiates
 - [Behavioral authority](../definitions/behavioral-authority.md) — defined-in: names each consumer, channel, and force in the trace

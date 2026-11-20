@@ -134,7 +134,7 @@ The audience takeaway: "I can apply these patterns to my own LLM knowledge syste
 - [Vibe-noting](../../theory/vibe-noting.md) — rests-on: the theoretical artifact distilled from the worked case supplies the inspectability-versus-verifiability explanation
 - [Reverse compression is when LLM output expands without adding](../../theory/reverse-compression-is-when-llm-output-expands-without-adding.md) — rests-on: the fluency trap in the 8–12 min section
 - [The tag-README change as an observed causal-connection trace](../../theory/evidence/tag-readme-trace-observed-causal-connection.md) — evidenced-by: the second worked example and its verified implementation timeline
-- [The tag-README trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — rests-on: the calibrated self-hosting close
+- [The tag-README trace read as a self-improving loop](../../theory/evidence/tag-readme-trace-as-self-improving-loop.md) — rests-on: the calibrated self-hosting close
 - [Context efficiency is the central design concern in agent systems](../../theory/context-efficiency-is-the-central-design-concern-in-agent-systems.md) — rests-on: the context-budget section
 - [Agent context is constrained by soft degradation, not hard token limits](../../theory/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) — see-also: deeper context model retained for Q&A rather than taught on stage
 - [Constraining](../../theory/definitions/constraining.md) — defined-in: the convention → schema → validator progression shown through examples
