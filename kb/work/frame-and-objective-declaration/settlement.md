@@ -123,12 +123,19 @@ answer and rework. This is a mechanism to investigate, not a recorded failure.
 The practical question is which tasks benefit and how often important tasks
 are close enough to that limit for the change to hurt. Neither a probability
 nor an exact threshold is required. If the available evidence cannot support
-the trade-off, report the local gain and leave the overall judgment open.
-Revisit it if the table grows or the mix of tasks changes.
+the trade-off, and a plausible answer to what is unknown would reverse the
+decision, report the local gain and leave the overall judgment open. An
+unknown that could not reverse the decision is recorded and the judgment
+stands. Revisit it if the table grows or the mix of tasks changes.
 
-Open under the direction: what counts as an acceptable regression argument.
-Candidates are that the change is not on the causal path of other areas,
-sampled checks on prior scope, and reversibility.
+The limit on unknowns was added by the recorder on 2026-11-20 with the
+operator's agreement. Without it the rule blocks every change, because any
+addition to text loaded on every prompt could tip some near-limit task.
+
+The question of what counts as an acceptable argument about losses is answered
+by the plan's fourth basis point. Three ways of supporting such an argument
+were listed earlier and are still untested: the change is not on the causal
+path of other areas, sampled checks on prior scope, and reversibility.
 
 ## Common ground
 
