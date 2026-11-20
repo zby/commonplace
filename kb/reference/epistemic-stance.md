@@ -6,41 +6,58 @@ tags: []
 
 # Epistemic stance
 
-Commonplace works in the Popperian tradition. Its assertions about claims,
-definitions, types and the meaning of instructions are true only under these
-commitments. This page is a stub; it grows from the connections notes make to it.
+Commonplace adopts four commitments from the Popperian tradition. They shape
+how the KB tests claims, chooses rules, defines terms and interprets instructions.
 
 1. **Fallibilism.** Claims are conjectures. Observations never establish a
-   universal statement; corroboration is a survived attempt at refutation
+   universal statement. Corroboration is a survived attempt at refutation
    ([Popper, *Logic of Scientific Discovery*](../sources/popper-logic-of-scientific-discovery.ingest.md)).
    Applied in the [theory contract](../theory/COLLECTION.md) and
    [claim modality](./adr/066-claims-declare-modality-in-text-and-passes-repair-mode-mismatch.md).
 
 2. **Methodological rules are conventions** (*Logic of Scientific Discovery*,
-   §11). ADRs, contracts, type specs and definitions are adopted by decision
-   and judged by their fruits. They are contested by proposing a better
-   convention, not refuted by counterexample.
+   §11). Commonplace adopts rules through ADRs, contracts, type specs and
+   definitions. A counterexample can overturn a claim about what a rule
+   achieves. It does not repeal the rule. To change the rule, propose an
+   alternative and explain why its consequences would be preferable.
 
 3. **Anti-essentialism** (*Open Society*, ch. 11; *Poverty of Historicism*,
-   §10). The KB does not ask what a term or text really means. A definition is
-   a stipulation read right to left: the term labels the definiens. Applied in
+   §10). A Commonplace definition assigns a name to what the definition
+   describes; it does not claim to discover the term’s true meaning. See
    [verifiable document types](../theory/document-types-should-be-verifiable.md)
    and [taxonomies as defaults](../theory/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md).
-   The meaning of an instruction is read as the reading a designated reference
-   set of interpreters converges on, under a stated rule for when two outputs
-   count as the same answer; see
+   Commonplace takes the meaning of an instruction to be the reading that a
+   designated reference set of interpreters converges on, under a stated rule
+   for when two outputs count as the same answer; see
    [prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md).
 
 4. **Objectivity is intersubjective testability** (*Logic of Scientific
    Discovery*, §8), and knowledge lives in artifacts
    ([Popper 1968](../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md)).
    Applied in the [theory builder](../theory/definitions/theory-builder.md).
-   This is what keeps point 3 from relativism: the reference set is chosen,
-   but whether it converges is a fact that can fail.
+   This commitment keeps point 3 from relativism. The reference set is
+   chosen, but choosing it does not make its interpreters converge. Whether
+   they converge is a fact, and a test can find that they do not.
 
-5. **Not inherited.** The propensity interpretation of probability,
-   verisimilitude measures, and Popper's political writings beyond their
-   anti-essentialist argument.
+## Judgment under uncertainty
 
-*Open Society* and *Poverty of Historicism* are not ingested; cite them
+A test can show what a rule achieved. Deciding whether to keep the rule
+still calls for an [on-balance judgment](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+A validator may catch an omission the old search missed. That is a reason to
+keep it, but it does not settle the choice. How often would readers otherwise
+miss an entry? How much upkeep will maintainers face? Experience can narrow
+those uncertainties. It cannot decide how much maintenance work a benefit to
+readers is worth.
+
+For the decision at hand, investigate an unknown when a plausible answer
+could change the choice. A maintainer can give reasons to keep the validator
+without claiming that its benefits have been shown to outweigh its costs.
+
+## Limits of the declaration
+
+Commonplace does not inherit the propensity interpretation of probability,
+verisimilitude measures, or Popper's political writings beyond their
+anti-essentialist argument.
+
+*Open Society* and *Poverty of Historicism* are not ingested. Cite them
 without quotes until they are.
