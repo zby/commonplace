@@ -1,43 +1,40 @@
 ---
-description: When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do demonstrates this with name-based dispatch over a hybrid VM
+description: When agents and tools share a calling convention, components can move between neural and symbolic without changing call sites — llm-do illustrates this with name-based dispatch over a hybrid VM
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, computational-model, constraining]
 ---
 
-# Unified calling conventions enable bidirectional refactoring between neural and symbolic
+# A unified interface lets programmers choose prompts or code without changing callers
 
-The [underspecified instructions framing](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) says components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — constrain patterns to code, relax rigid code back to LLM. But the framing doesn't say how to make the boundary movable in practice. The answer is a unified calling convention: if neural and symbolic components present the same interface, callers don't need to know which they're talking to, and refactoring across the boundary becomes a local operation.
+A caller uses the same name, arguments, and result format whether a prompt-backed agent or a function handles the call. An LLM caller also sees the same description of the operation. This is **information hiding**: the interface tells callers how to use the operation without making them depend on how the programmer implements it. The programmer can replace a prompt with code once a rule is clear, or put a prompt behind the same interface to try a different rule.
+
+The claim answers a practical question. The [English account of prompting](./prompting-changes-failure-diagnosis-with-the-semantic-reference.md) treats an instruction as permitting a set of readings, from which an LLM executor produces one. It treats extracting a repeated operation into code as a separate intervention whose trade-off must be assessed. This note extends that into a premise of its own: components should move between underspecified (LLM-interpreted) and precise (code) semantics as systems evolve — constrain patterns to code, relax rigid code back to LLM. That premise doesn't say how to make the boundary movable in practice; the unified calling convention does.
 
 ## The mechanism
 
-[llm-do](https://github.com/zby/llm-do) implements this through a hybrid VM where agents (`.agent` files, LLM-backed) and tools (Python functions) share a single namespace. The LLM sees both as callable functions. A call to `ticket_classifier` might dispatch to an agent today and a Python function tomorrow — the prompt that invokes it doesn't change.
-
-This requires **name-based dispatch**: components are identified by string name rather than direct object reference. Names enable dynamic resolution (the LLM outputs a string, the runtime looks it up), late binding (the callee needn't exist when the caller is defined), and implementation-agnostic interfaces (the same name can resolve to either neural or symbolic).
+[llm-do](https://github.com/zby/llm-do) is a runtime in which LLM-backed agents and Python tools can call each other by name. The programmer binds `ticket_classifier` to an implementation: either a prompt-backed agent or a Python function. When the caller invokes `ticket_classifier`, the runtime looks up that binding. The programmer chooses the implementation for the run; the runtime does not decide ticket by ticket whether to use code or a model.
 
 ```
 Agent ──calls──▶ Tool ──calls──▶ Agent ──calls──▶ Tool ...
 neural          symbolic         neural          symbolic
 ```
 
-The calling convention is uniform across the chain. Each link can be independently refactored without disturbing the rest.
+## Scope
+
+What stays unchanged is the call, not necessarily its effect. A classifier that returns the same queue labels can still send a ticket to a different queue. A caller that relied on the old decisions or error behavior needs testing after a swap. If the new implementation requires structured arguments instead of free text, even the call must change unless an adapter preserves the old interface.
 
 ## Why this matters for constraining
 
-[Constraining](./definitions/constraining.md) and [codification](./definitions/codification.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But without a unified interface, each codification step is a breaking change: call sites must be updated, prompt structure must change, the agent's view of available operations shifts. This friction discourages incremental refactoring and pushes toward big-bang rewrites.
+[Constraining](./definitions/constraining.md) and [codification](./definitions/codification.md) describe the learning mechanisms — narrowing the interpretation space, changing medium. But in a system that exposes agents and tools through different invocation surfaces, a codification step that moves a component from one surface to the other is a breaking change: call sites must be updated, prompt structure must change, and the agent's view of available operations shifts. This friction would likely discourage incremental refactoring and push toward big-bang rewrites. That effect is an expectation, not an observed result.
 
-With unified calling, the progression is smooth:
+Suppose the team starts with a prompt for `ticket_classifier` while it learns how tickets should be assigned. By checking the agent's decisions against the queues that actually resolve the tickets, the team identifies a topic-based rule it wants to keep. This is [spec mining](./spec-mining-as-codification.md). If the team wants to keep the same routing behavior, replacing the prompt with a Python function is a refactoring: the programmer changes the implementation, not the rule. The programmer binds `ticket_classifier` to the function. Callers still supply a ticket and receive a queue label.
 
-1. **Start neural** — define an agent to handle a task. Quick to add, handles ambiguity.
-2. **Observe patterns** — the agent consistently lowercases and replaces spaces with underscores. This is [spec-mining](./spec-mining-as-codification.md) — discovering that an underspecified spec consistently resolves to one interpretation, then committing to it in code.
-3. **Codify** — extract `sanitize_filename()` to Python. The agent still handles ambiguous cases. The call site doesn't change.
-4. **Extend via relaxing** — new requirements emerge (handle Unicode, detect dates). Add an LLM call for the new cases. Again, the call site doesn't change.
-
-Each step is local. The system evolves without coordination cost.
+Later the team wants to try assigning tickets by the action the customer needs rather than by topic. The Python function still meets the old requirement. For a test run, the programmer binds `ticket_classifier` to a prompt instead. The team edits the prompt and compares assignments on the same sample tickets without implementing each candidate policy in Python. If that makes the alternatives quicker to test, the prompt has served its purpose even if the programmer puts the chosen rule back into code for production.
 
 ## The scheduler layer
 
-On top of the hybrid VM, llm-do adds an imperative scheduler — Python code that owns control flow rather than a graph DSL. This is a deliberate contrast with declarative agent frameworks (LangGraph, CrewAI) where orchestration is defined as node-edge graphs.
+On top of the hybrid VM, llm-do adds an imperative scheduler: Python code, not a graph DSL, owns control flow. This deliberately contrasts with graph-defined orchestration, such as LangGraph's, which defines orchestration as node-edge graphs.
 
 | Aspect | Graph DSLs | llm-do Scheduler |
 |--------|------------|----------------|
@@ -46,11 +43,9 @@ On top of the hybrid VM, llm-do adds an imperative scheduler — Python code tha
 | Refactoring | Redraw edges, update graph | Change code — extract functions, inline agents |
 | Control flow | DSL constructs | Native Python: `if`, `for`, `try/except` |
 
-The imperative style means refactoring between neural and symbolic uses the same patterns as normal code refactoring — extract function, inline, rename. No graph topology to update.
-
 ## The connection to typed callables
 
-[Instructions are typed callables](./instructions-are-typed-callables.md) argues that prompts, skills, and tools share a callable structure with typed inputs and outputs. llm-do operationalises this: `.agent` files are YAML frontmatter (type signature) plus system prompt (implementation), and tools are Python functions with type annotations. Both are callables with defined interfaces. The unified calling convention is what makes the type-theoretic view practical rather than just analogical.
+[Instructions are typed callables](./instructions-are-typed-callables.md) argues that skills, tasks and workflows are callable in a limited sense: they take and return typed documents and can declare signatures, though a signature does not turn a natural-language procedure into a conventional function. This note extends that callable structure to tools. llm-do operationalises it: `.agent` files are YAML frontmatter (type signature) plus system prompt (implementation), and tools are Python functions with type annotations. The unified calling convention is what makes this callable view practical across the neural-symbolic boundary rather than just analogical.
 
 ## Open Questions
 

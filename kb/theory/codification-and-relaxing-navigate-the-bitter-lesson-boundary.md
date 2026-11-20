@@ -1,5 +1,5 @@
 ---
-description: Since you can't identify which side of the bitter lesson boundary you're on until scale tests it, practical systems must codify and relax — with spec mining avoiding the vision-feature failure mode
+description: More compute can make a general method competitive with a hand-coded decomposition; the capability at stake depends on whether that decomposition defines the task or only approximates it.
 type: types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, constraining, continual-learning, self-improving-systems]
@@ -7,18 +7,20 @@ tags: [learning-theory, constraining, continual-learning, self-improving-systems
 
 # Codification and relaxing navigate the bitter lesson boundary
 
-The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) separates exact specs (the spec is the problem) from proxy theories (the spec is a theory about a larger capability). Since you can't reliably tell which regime you're in until scale tests the distinction, practical systems will always be hybrids — combining explicit scripts and checks with learned components. This is not a partition into codified versus learned: an adopted model package can itself be a codified reference.
+More compute can make a general method competitive with a hand-coded one. What the system stands to gain depends on the [relation between the specification and the objective](./exact-implementation-does-not-validate-a-requirement.md). If the specification defines the task, a different implementation still owes the same result. If it prescribes one way to solve a larger task, a general method can try solutions that the prescription excludes.
+
+This is one reason to reconsider an implementation, not a prerequisite for doing so. For how a programmer can switch a component between a prompt and code to test a changed requirement at today's scale, see [unified calling conventions](./a-unified-interface-lets-programmers-choose-prompts-or-code.md).
 
 ## The trade-off depends on which regime you're in
 
-[Codification](./definitions/codification.md) moves a rule or operation into symbolic form by rewriting it or adopting a governing reference. This note concerns the code-extraction case: committing an interpreted rule to a script, executable test, schema, or validator whose behavior can be inspected and checked at acceptable cost. Retaining a prose convention alone is not codification. Adopting a model package can codify an operation without providing this case's readable rules or reducing inference cost.
+[Codification](./definitions/codification.md) moves a rule or operation into symbolic form by rewriting it or adopting a governing reference. This note concerns the code-extraction case: committing an interpreted rule to a script, executable test, schema, or validator whose behavior can be inspected and checked at acceptable cost. Adoption also codifies: an adopted model package can itself be a codified reference, though it provides neither the readable rules of code extraction nor lower inference cost. Retaining a convention in prose alone is not codification; it [constrains](./definitions/constraining.md) without codifying.
 
-Code extraction can [trade generality for gains in reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) when the committed procedure fits and its execution and maintenance are cheaper than repeated interpretation. But such a procedure can also encode a decomposition of a larger problem, and the arithmetic/vision-feature boundary determines what capability the commitment risks excluding:
+Code extraction can [trade generality for gains in reliability, speed, and cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) when the committed procedure fits and its execution and maintenance are cheaper than repeated interpretation. But such a procedure can also encode a decomposition of a larger problem, and the arithmetic/vision-feature boundary determines what capability the commitment risks excluding. This note names the exact-spec regime the arithmetic regime and the proxy-theory regime the vision-feature regime, after their paradigm cases: arithmetic and hand-designed computer-vision features.
 
-- **Arithmetic-regime decompositions**: the spec fully captures the subproblem, so implementing it need not lose generality within that declared scope. An inspectable script or validator can improve reliability, speed, and cost without excluding required behavior; the economic gain still depends on implementation and maintenance costs.
-- **Vision-feature decompositions**: the spec is a plausible theory of a larger capability, so an efficient local implementation can lose generality at that larger scope. When scale makes the general approach good enough on reliability, speed, and cost, that loss may no longer be worth it.
+- **Arithmetic-regime (exact-spec) decompositions**: the spec fully captures the subproblem, so implementing it need not lose generality within that declared scope. An inspectable script or validator can improve reliability, speed, and cost without excluding required behavior; the economic gain still depends on implementation and maintenance costs.
+- **Vision-feature (proxy-theory) decompositions**: the spec is a plausible theory of a larger capability, so an efficient local implementation can lose generality at that larger scope. When scale makes the general approach good enough on reliability, speed, and cost, that loss may no longer be worth it.
 
-Code extraction therefore has a complement: **relaxing** — replacing an extracted component with a more general one, often a model call, when scale makes that viable, accepting higher cost and lower reliability in exchange for regaining generality. The replacement can itself be codified by adoption; what relaxing reverses is the extraction, not symbolic membership.
+Here **relaxing** means replacing an extracted component with a more general one. Scaling changes the decision when the more general method becomes good enough on the larger task at an acceptable cost. The replacement can itself be codified by adoption; what relaxing reverses is the extraction, not symbolic membership.
 
 The trajectory runs in both directions, and can repeat at different levels of the stack. Edge detection was codified (hand-coded algorithms), relaxed (replaced by learned features), and may re-codify as an accelerator inside a learned architecture. FlashAttention is hand-crafted algorithmic optimization embedded within learned architectures; tokenizers are engineered preprocessing that learned models depend on. The bitter lesson describes a trajectory, not a law of nature.
 
@@ -40,7 +42,7 @@ The induction bias results ([Ebrahimi et al., 2026](https://arxiv.org/pdf/2602.1
 
 ## Working heuristics
 
-1. **Codify for current leverage, not permanence.** An executable test that checks "does this function return the right number" is in the arithmetic regime relative to that numerical contract. A workflow that enforces "always decompose agents into these three phases" is probably a vision feature relative to broader task success. Both can be codified — but expect the second kind to eventually relax. Merely writing the convention in natural language constrains without codifying it.
+1. **Codify for current leverage, not permanence.** An executable test that checks "does this function return the right number" is in the arithmetic regime relative to that numerical contract. A workflow that enforces "always decompose agents into these three phases" is probably a vision feature relative to broader task success. Both can be codified — but expect the second kind to eventually relax.
 
 2. **Prefer specs that describe what over how.** The more a codified artifact encodes a theory of how something works (rather than what it should produce), the more likely it is a relaxing candidate. "This endpoint returns X given Y" survives longer than "always process requests in three stages."
 
