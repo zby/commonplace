@@ -41,6 +41,8 @@ Collection prototypes: authors choosing a starting contract now reach the instal
 
 Scenario architecture: the [write-a-note scenario](../../../tests/scenarios/write-a-note.md) distinguishes a write from optional link discovery. The evaluation procedure consumes that scenario directly; the reference page duplicated the worked example and installed layout.
 
+Workflow handoffs: [storage roles](../../reference/storage-architecture.md#storage-roles) distinguishes a named output another invocation may consume from the producer’s private replay records. The handoff test belongs there rather than on a separate page.
+
 ## Files in this workshop
 
 - [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers).

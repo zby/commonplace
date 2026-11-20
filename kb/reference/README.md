@@ -34,7 +34,6 @@ For exact implementation facts, inspect `src/commonplace/` (or locate the instal
 - [Commonplace architecture](./architecture.md) — installed topology, library/user ownership, skill stubs, and path invariance
 - [Storage architecture](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived views, and operational state
 - [Review architecture](./review-architecture.md) — code/worker ownership, durable state, freshness hash boundary, and checkout guard
-- [Coordination between workflow runs](./workflow-architecture.md) — what crosses the boundary between workflow invocations
 - [Documentation site](./documentation-site.md) — ProperDocs README-vs-index rule, nav generation, and landing-page inventory
 
 ### Type system, contracts, and authoring
