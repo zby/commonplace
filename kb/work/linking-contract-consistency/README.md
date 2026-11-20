@@ -85,7 +85,7 @@ The hold this README previously implied — do not adopt or migrate `explained-b
 
 ### Required collection grammar and accepted working formats disagree
 
-ADR 019, as extended by ADR 059's `external` destination, and the [shared authoring guide](../../reference/link-vocabulary.md#authoring-collection-link-rules) require per-destination semantics with search guidance and authorized labels. Several main collections serialize that contract as one scan paragraph plus a labels table rather than one block per destination. The [writing skill](../../instructions/cp-skill-write/SKILL.md#step-2---load-collection-conventions) already accepts per-destination blocks, a table, or prose.
+ADR 019, as extended by ADR 059's `external` destination, and the [collection contract’s outbound-link rules](../../types/collection-contract.md#authoring-outbound-link-rules) require per-destination semantics with search guidance and authorized labels. Several main collections serialize that contract as one scan paragraph plus a labels table rather than one block per destination. The [writing skill](../../instructions/cp-skill-write/SKILL.md#step-2---load-collection-conventions) already accepts per-destination blocks, a table, or prose.
 
 **Needed outcome:** either make per-destination semantics the requirement while allowing multiple serializations, or migrate contracts and procedures to the stricter block form.
 
