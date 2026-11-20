@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Python change judgment probe, designed 2026-11-20, not run](./python-change-judgment-probe-2026-11-20/README.md) — an experiment design, with no results, for whether LLMs judge a change on balance as people do; five design versions, known weaknesses and ideas for a better design
+
 - [Review atom machinery acceptance, 2026-11-15](./review-atom-acceptance-20261115/README.md) — bounded typed-review and fixture acceptance, two model launches, preserved blocked starts and zero-launch replay; content reconstruction with materially different tool and trust environments.
 
 - [Analysis worker path-selection base rates, 2026-11-09](./analysis-worker-path-selection-2026-11-09/path-selection-base-rates.md) — successful inferred paths, missing-path recovery and compound-shell status masking across 16 runs; retained counts, trace identities and representative tool events, not an adopted navigation rule.
