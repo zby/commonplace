@@ -10,7 +10,7 @@ This answers [turn 2's next question](../turn-02/integration.md) at the level of
 
 ## The inspected surprise: successful completion can preserve false provenance
 
-The local [incident account](../../../../reference/harness-sub-agent-model-selection-regression.md) reports 41 review jobs containing 268 pairs whose child traces recorded Sol while their finalized results claimed Luna. Those are attributed historical counts, not a recount here. The original traces were not recovered. This integration does not adopt the account's external API claims.
+The local [incident account](../../../../reports/retained/harness-sub-agent-model-selection-regression.md) reports 41 review jobs containing 268 pairs whose child traces recorded Sol while their finalized results claimed Luna. Those are attributed historical counts, not a recount here. The original traces were not recovered. This integration does not adopt the account's external API claims.
 
 The important mechanism is directly inspectable in the current finalization code (`src/commonplace/review/finalization.py`). It derives a partition from supplied execution metadata and rejects a disagreement with the job's partition when that metadata yields a partition. The function receives those values from its caller; it does not independently establish which model executed. Thus an internally consistent supplied identity can pass that check without authenticating execution. This is a property of the inspected code, not a newly run experiment.
 

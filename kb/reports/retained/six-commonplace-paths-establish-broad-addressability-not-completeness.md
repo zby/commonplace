@@ -63,7 +63,7 @@ This sequence shows a revised method shaping a later architectural decision and 
 
 Promoted skills request models in metadata, while review execution declares defaults, maps model names into freshness partitions, and records optional provenance. These requests, aliases, partitions, and policies are addressable. Their applicability includes the skill or review pair, runner, partition, and execution episode.
 
-They do not prove which model executed. The [model-selection regression](../../reference/harness-sub-agent-model-selection-regression.md) records 268 review results finalized under a Luna partition even though retained child traces showed Sol execution. Current procedures can reject a worker-reported mismatch, but the parent cannot always observe the model directly and finalization validates supplied provenance rather than the execution event. The requested artifact is addressable; its operative realization remains runtime-dependent.
+They do not prove which model executed. The [model-selection regression](./harness-sub-agent-model-selection-regression.md) records 268 review results finalized under a Luna partition even though retained child traces showed Sol execution. Current procedures can reject a worker-reported mismatch, but the parent cannot always observe the model directly and finalization validates supplied provenance rather than the execution event. The requested artifact is addressable; its operative realization remains runtime-dependent.
 
 ## Generic maintainer admission is the strongest gap in the broader affordance
 

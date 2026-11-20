@@ -12,7 +12,7 @@ This is a proposal only. No comparison, review job, source ingest or delegation 
 
 The [turn 1 integration](../turn-01/integration.md) separates present service, learning investment and later benefit. The [turn 2 integration](../turn-02/integration.md) warns that finite episodes can nevertheless become endless preparation. The [turn 3 integration](../turn-03/integration.md) identifies the current marginal question: extra explanation has not been shown necessary when a competent correction and ordinary records are available.
 
-I reread the local [incident account](../../../../reference/harness-sub-agent-model-selection-regression.md) and [current batch procedure](../../../../instructions/run-review-batches.md). The incident account reports false provenance surviving completed finalization. That is an attributed historical observation, not a fresh trace audit. I did not recover the original traces or independently recount the jobs. Its claims about external API behavior are not premises of this proposal.
+I reread the local [incident account](../../../../reports/retained/harness-sub-agent-model-selection-regression.md) and [current batch procedure](../../../../instructions/run-review-batches.md). The incident account reports false provenance surviving completed finalization. That is an attributed historical observation, not a fresh trace audit. I did not recover the original traces or independently recount the jobs. Its claims about external API behavior are not premises of this proposal.
 
 The procedure directly supplies the present policy distinctions:
 

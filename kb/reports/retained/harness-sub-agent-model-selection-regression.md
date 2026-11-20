@@ -17,7 +17,7 @@ The later `multi_agent_v2` collaboration surface accepts task identity, context-
 | `multi_agent_v2` | No model field | Workers inherited `gpt-5.6-sol` |
 | `codex exec --model luna` | CLI flag exists | Backend rejected the model for the account |
 
-This is a harness regression, not model selection performed by Commonplace. The review system of the time used `model_partition` as review identity and freshness scope; selecting a partition did not cause the harness to dispatch that model. The current [review system](./README-REVIEW-SYSTEM.md) has no partitions and records the model each harness reports.
+This is a harness regression, not model selection performed by Commonplace. The review system of the time used `model_partition` as review identity and freshness scope; selecting a partition did not cause the harness to dispatch that model. The current [review system](../../reference/README-REVIEW-SYSTEM.md) has no partitions and records the model each harness reports.
 
 ## Current collaboration surface (2026-08-23)
 
@@ -40,7 +40,7 @@ Review jobs 6677–6717 were created under the `luna` partition for seven notes:
 
 The stored provenance therefore contradicts the execution traces. Those results may be read as Sol judgments, but they are not Luna review evidence and must not satisfy a Luna freshness claim. Snapshot freshness cannot repair incorrect execution provenance.
 
-The incident exposed the parent-trust boundary described by [ADR 034](./adr/034-queued-review-jobs-and-execution-provenance.md): finalization validates the model string supplied by the parent against the selected partition, but it does not establish that the worker actually ran that model.
+The incident exposed the parent-trust boundary described by [ADR 034](../../reference/adr/034-queued-review-jobs-and-execution-provenance.md): finalization validates the model string supplied by the parent against the selected partition, but it does not establish that the worker actually ran that model.
 
 ## Operational consequence
 
@@ -54,12 +54,12 @@ model from that record rather than from a parent-supplied string.
 
 The restored request field does not repair prior evidence. Jobs 6677–6717 and
 their misattributed Luna evidence were in the review store that
-[ADR 127](./adr/127-review-runs-as-workflows-over-result-files.md) abandoned
+[ADR 127](../../reference/adr/127-review-runs-as-workflows-over-result-files.md) abandoned
 without migration, so no current result rests on them.
 
 ---
 
 Relevant Notes:
 
-- [Run review batches](../instructions/run-review-batches.md) — procedure: dispatch and provenance rules affected by this harness regression
+- [Run review batches](../../instructions/run-review-batches.md) — procedure: dispatch and provenance rules affected by this harness regression
 - [OpenAI Responses API multi-agent documentation](https://developers.openai.com/api/docs/guides/responses-multi-agent) — see-also: documents the separate public surface whose subagents share the request model

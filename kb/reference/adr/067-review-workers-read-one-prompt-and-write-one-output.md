@@ -117,5 +117,5 @@ Relevant Notes:
 
 - [035-Review jobs finalize all-or-nothing with derived artifacts](./035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) — part-of: retains its parent-owned dispatch and deterministic finalization boundary while narrowing the worker-facing contract
 - [Review system architecture](../review-architecture.md) — implemented-by: the prompt renderer and finalization path that enforce the decision
-- [Harness sub-agent model selection regression](../harness-sub-agent-model-selection-regression.md) — evidenced-by: shows why a worker claim can be useful contradiction evidence while remaining distinct from harness-observed execution provenance
+- [Harness sub-agent model selection regression](../../reports/retained/harness-sub-agent-model-selection-regression.md) — evidenced-by: shows why a worker claim can be useful contradiction evidence while remaining distinct from harness-observed execution provenance
 - [Run review batches](../../instructions/run-review-batches.md) — procedure: the binding orchestration procedure that dispatches the generated prompt
