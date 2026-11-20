@@ -196,9 +196,7 @@ integration and recovery. Parallel writers need disjoint ownership or explicit
 coordination; nested delegation stays within existing authority and coordination.
 For an unstated choice: follow an inherited default; exercise deliberately
 delegated judgment from authorized evidence; choose freely if irrelevant to
-acceptance; otherwise return or escalate the gap. Changing this root
-delegation rule reopens worker-commissioning instructions that rely on it;
-open a recorded search-and-review of those instructions when editing it.
+acceptance; otherwise return or escalate the gap.
 
 ### Navigation and task-specific reads
 
