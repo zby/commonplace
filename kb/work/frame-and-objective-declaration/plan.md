@@ -7,10 +7,10 @@ rebuilt around what the operator settled.
 
 Revised again the same day, after the operator read the finished theory note.
 The note does more than the plan assumed. The plan relinked the notes that
-state Commonplace's objective. The note also answers theory notes that stop at
-"no ordering, so no answer", and it removes the measure the bootstrap article
-used. Step 5 is new, the cold-reader check is now step 6, and the bootstrap
-article is no longer left for the operator.
+state Commonplace's objective. The note also bears on theory notes that stop
+at a missing ordering, and it removes the measure the bootstrap article used. Step 5 is new, the cold-reader check is now step 6, and the bootstrap
+article is no longer left for the operator. Step 5 was then narrowed after a
+comment from Astra; the step records why.
 
 ## Basis
 
@@ -37,9 +37,8 @@ to text loaded on every prompt could tip some task that is near its limit.
 
 The routing example also has a part that is shared. How often important tasks
 sit near the limit is a question about `AGENTS.md` as a whole, not about the
-new line. Investigating it once serves every later routing change. A single
-task fails abruptly, but across many tasks the expected loss is roughly the
-share of important tasks near the limit times the size of the addition.
+new line. Evidence about which tasks run near their limit can inform more than
+one routing decision.
 
 ## Step 1 — test the claim form on three real changes
 
@@ -65,55 +64,71 @@ judgment open” when the evidence supports only that conclusion.
 
 [On-balance judgments can guide improvement without a global measure](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) holds the general argument and the practical choice Commonplace makes. The [factory note](../../theory/a-better-factory-claim-compares-operative-states.md) keeps the narrower comparison under predeclared requirements. Other notes link to the relevant argument rather than repeating the declaration.
 
-The instrument note, the frame note and the two proposals now link to that declaration. The instrument note asks for a comparison in a named area. The proposals keep their local design choices. These edits are in the working tree; the next check is whether a reader can use the instrument note and its links without the workshop discussion.
+The instrument note, the frame note and the two proposals now link to that declaration. The instrument note asks for a comparison in a named area. The proposals keep their local design choices. These edits are committed; the next check is whether a reader can use the instrument note and its links without the workshop discussion.
 
-## Step 5 — carry the note into the theory notes it answers
+## Step 5 — two clarifications in theory notes
 
-Several theory notes reason that a comparison needs an ordering, find that the
-objective supplies only a partial one, and stop there. The theory note changes
-the question from ranking versions to choosing between two. Each note below
-still stops at the old point and does not link to the theory note. Checked on
-2026-11-20.
+Revised after a comment from Astra, relayed by the operator on 2026-11-20. The
+first version of this step proposed four edits on the premise that the theory
+note answers every passage that stops at a missing ordering. That premise was
+wrong. Two conclusions are different:
 
-- **[Increasing computational autonomy relocates human effort](../../theory/increasing-computational-autonomy-relocates-human-effort.md), "What to measure instead".**
-  It says a change that trades outcome quality against effort "is incomparable
-  until an objective is declared". Commonplace has declared one and the trade
-  still needs a judgment. Say that the order settles the cases where nothing is
-  traded, and that an on-balance judgment decides the rest.
-- **[Self-improvement is relative to a declared objective](../../theory/self-improvement-is-relative-to-a-declared-objective.md), "What follows".**
-  "A fully indexed comparison can still have no answer" is true of ranking.
-  Add that a choice between two versions can still be made, and link.
-- **[A better-factory claim compares operative states](../../theory/a-better-factory-claim-compares-operative-states.md).**
-  It lists non-regression on an open-ended family as an open question. The
-  theory note answers it: outside the predeclared requirements, regression is
-  judged on balance, not checked. Replace the question with that answer.
-- **[Measuring autonomy well enough to see it improve is an open problem](../../theory/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).**
-  Its second open question asks whether to adopt a rough proxy that lacks a
-  principled basis. Add the third option: decide a transfer without the
-  measure. The title's claim stands; measuring is still open.
-- **[The self-improving-systems head](../../tags/self-improving-systems-README.md).**
-  The theory note is tagged `evaluation` only. Read the head's inclusion
-  condition. If the note meets it, add the tag and list the note under
-  "Definition and objective".
+- we cannot establish which version is better on this measure;
+- we have no grounds for choosing what to do.
 
-Keep each edit to the passage named. If a note's argument depends on the old
-framing in more places, record that here and stop; that note then needs its own
-revision, outside this workshop.
+The theory note addresses the second. It does not overturn the first. Its own
+ADR 085 example shows this: Commonplace chose deletion without claiming that
+deletion beat archiving in a comparison nobody ran. So a passage that says a
+comparison has no answer is usually correct as written. It needs an edit only
+where a reader could infer that no reasoned choice is possible, or that
+declaring an objective settles the trade.
 
-**The two proposals.** Their openings link to the theory note. Their bodies
-still treat the objective as measured, for example "the measure must be per
-unit of human judgment, not per task" in the reusable-commitment proposal.
-Rewording those passages changes what the proposals commit to test, so the
-operator decides whether it happens here.
+Two edits remain:
+
+- **[Increasing computational autonomy relocates human effort](../../theory/increasing-computational-autonomy-relocates-human-effort.md), "What to measure instead". Edit.**
+  "Incomparable until an objective is declared" can suggest that the
+  declaration settles the trade. Sometimes it does. Commonplace's objective
+  does not: when quality rises and human effort rises too, the objective says
+  what to weigh, not whether the gain was worth the cost. Say that and link.
+- **[Self-improvement is relative to a declared objective](../../theory/self-improvement-is-relative-to-a-declared-objective.md), "What follows". Clarify, do not correct.**
+  An objective that is only a viability bound gives no preference between two
+  acceptable versions, even for one pair. An operator can still choose, and
+  should then name the further consideration that favours one. One sentence
+  and a link.
+
+Two proposed edits are dropped:
+
+- **The better-factory note.** The first version said it did not link to the
+  theory note. It does, in "Scope", and says where the on-balance judgment
+  applies. Its open question asks whether prior capabilities can be specified
+  well enough to check non-regression. A reasoned choice outside the checked
+  scope does not answer that.
+- **The autonomy-measurement note.** Deciding whether to move one function to
+  an agent is not a way to measure autonomy across systems or over time. The
+  question stays open. Add a link only if a reader could conclude that
+  practical transfers must wait for the measure, and never as a measurement
+  method.
+
+**The tag.** The theory note is tagged `evaluation` only. Read the
+[self-improving-systems head's](../../tags/self-improving-systems-README.md)
+inclusion condition. If the note meets it, add the tag and list the note under
+"Definition and objective".
+
+**The two proposals.** Keep a proposal's own metrics where they serve its
+experiment. Consolidate only where the shared note changes what a reader can
+infer. No body edit is planned.
 
 ## Step 6 — one cold-reader check, after the edits
 
-An agent other than position B's author reads the revised instrument note with
-no workshop context and answers two open questions: "What does this note claim
-the tag-readme trace shows about Commonplace?" and "How would you tell whether
-Commonplace had improved?" Score the first for overclaims and the second
-for the reasoning, not the terminology: can the reader identify the local
-comparison and explain what would justify or withhold an overall judgment? Record it in `cold-reader-check.md`. If the reader misses the second point, check whether the link was missed or the linked argument was unclear before revising either.
+A fresh reader who did not draft the instrument note or plan receives only the
+revised instrument note and the two questions below. They may follow its
+links. Withhold the workshop discussion and scoring criteria. Ask: "What does this note claim
+the tag-readme trace shows about Commonplace?" and "The maintainer must choose
+whether to keep this change. What can they reasonably decide now, and what can
+they still not claim?" Score the first for overclaims. Score the second for the
+distinction, not the terminology: the reader separates a decision the
+maintainer can defend from a comparison that has not been made. A reader who
+only repeats "better on balance" has not passed. Record it in `cold-reader-check.md`. If the reader misses the second point, check whether the link was missed or the linked argument was unclear before revising either.
 
 ## Left for the operator, not planned here
 
@@ -128,9 +143,6 @@ comparison and explain what would justify or withhold an overall judgment? Recor
     grain problem.
   - The worked example, a stale cross-reference repair, is hypothetical. A
     recorded transfer should replace it if one fits.
-- **Where Commonplace's objective lives.** It is now a section of a theory
-  note, and four reference notes link to its anchor. That settles D5 + D7 by
-  placement. Confirm it, or move the declaration to a reference note.
 - **The frame note's person-based boundary.** The software-house investigation
   found that the frame note places people by designation while the
   theory-builder and software-house definitions place them by role. No
