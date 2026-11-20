@@ -2,17 +2,17 @@
 
 ## Status
 
-This is a record of an experiment design. No session was launched and there
-are no results. The operator expects that running it would probably not give a
+The original six-session design was never run. The operator expects that running it would probably not give a
 useful result, and asked for the design to be kept as a record of what was
 tried, in case it helps someone design a better one.
 
 Nothing here supports a claim about how LLMs judge.
 
+The [follow-on comparison](./comparison/README.md) gives practitioners and model sessions the same decision about a CPython build default. It has its own protocol and collection status.
+
 ## What the probe was for
 
-The operator's hypothesis is that LLMs can use judgment in a way similar to
-humans: weigh a gain against losses elsewhere and reach a verdict on balance.
+**Can an LLM judge whether a change is an improvement on balance as well as a human practitioner can?** Each respondent chooses which gains and losses matter and explains how they bear on the decision. Comparable judgments can reach different verdicts.
 
 The hypothesis came out of the workshop `kb/work/frame-and-objective-declaration/`.
 That workshop concluded that an improvement is claimed on the margin: a gain
@@ -21,9 +21,9 @@ Such a claim relies on someone making that judgment. The probe asked whether
 an agent can. [The method text](./method.md) is that workshop's claim form with
 all Commonplace content removed.
 
-## The design as it stands
+## The original six-session design
 
-[The design document](./design.md) is the last version. In brief:
+The [design document](./design.md) states the clarified question and preserves the original protocol below it.
 
 - **Two cases.** [A contested change](./prompt-walrus.md): was adding
   assignment expressions (`:=`, Python 3.8) an improvement?
@@ -90,7 +90,15 @@ All five versions were written on 2026-11-20.
 - **The definition of similarity is untested.** It was written during the
   design and never applied to an answer.
 
-## Ideas for a better design
+## Proposed next revisions
+
+1. **Start with one decision and a direct human comparison.** Give several Python practitioners and several fresh sessions of one specified model the same factual packet, open question, and answer limit. Choose a single change with a credible gain and a cost that someone actually bears. Try the packet first with a reader who did not prepare it. If one binding requirement settles the choice, revise the case. The archive task in the [pilot](./pilot/author-pilot.md) shows why this check matters.
+2. **Set the reading rule before collecting answers.** Remove authorship labels, mix the answers, and have independent readers apply the same question to each one. Can they point to a sound reason why a particular gain warrants accepting a particular loss, or to a missing fact that could turn the decision? Record the passage, any factual error that undermines it, and where readers disagree. Compare the spread of judgments in both groups. If human respondents regularly justify the tradeoff and model respondents merely enumerate consequences, that weighs against the claim for this case. Overlap would support a bounded claim about the sampled respondents and task.
+3. **Check a stated reason on a second case variant.** Change one fact that respondents identified as consequential and pose the revised case to fresh respondents in both groups. Read whether the changed fact alters the weight of a reason, even when the verdict stays the same. Try this after the open comparison so the variant does not tell the first respondents what to value.
+
+Give both groups the unaided prompt for this comparison. Reserve the method prompt for a later experiment with its own question about instruction effects.
+
+## Earlier ideas for a better design
 
 These were raised and not adopted, or follow from the weaknesses above.
 
@@ -117,7 +125,7 @@ These were raised and not adopted, or follow from the weaknesses above.
 
 | File | Role |
 |---|---|
-| [`design.md`](./design.md) | The last design: hypothesis, definition of similarity, cases, sessions, reading protocol. Written as workshop framing; its closing section describes a readout that never happened. |
+| [`design.md`](./design.md) | The clarified research question and the original six-session protocol. Written as workshop framing; its closing section describes a readout that never happened. |
 | [`prompt-walrus.md`](./prompt-walrus.md), [`prompt-release.md`](./prompt-release.md) | The two base prompts. |
 | [`method.md`](./method.md) | The text appended in the aided branch. |
 | [`sources.md`](./sources.md) | Manifest of captured background sources, with hashes and known defects. |

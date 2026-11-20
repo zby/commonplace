@@ -1,10 +1,14 @@
-# How do agents judge a change to Python?
+# Can LLMs make on-balance judgments about a Python change comparably to humans?
 
-> Status: this design was never run. See [the record](./README.md) for what was tried and why it was kept.
+**Research question.** Given the same change to evaluate, can an LLM decide whether the gain is worth the losses and justify its decision as well as a human practitioner can? The respondent chooses which consequences matter. The question concerns the judgment expressed in the answer. The answer gives us access only to the reasons the respondent offers.
 
-The operator's hypothesis is that LLMs can use judgment in a way similar to humans: weigh a gain against losses elsewhere and reach a verdict on balance. This is exploratory work. It looks for a first observation, not a result.
+The comparison turns on how well those reasons support the conclusion. Two respondents can agree on the facts, give different weights to a cost, and each defend a verdict. Either can also explain why the evidence supports a local gain while leaving the overall comparison open. A list of gains and losses leaves the reader to do the weighing.
 
-The choice of what matters is part of the observation. If we supply release highlights, a user persona, or an objection to address, we have already made part of that choice for the agent.
+The primary question concerns unaided judgment. Whether giving the respondent the [method](./method.md) improves an answer is a separate intervention question.
+
+## Original protocol and its limits
+
+The six-session protocol below was never run. It calls for six model answers and uses published human discussion as an indirect reference. It could illustrate how a model answers. A direct comparison would require human answers to the same task and a common basis for reading them. The [proposed revisions](./README.md#proposed-next-revisions) describe how to make that comparison.
 
 ## What "similar to humans" means here
 
