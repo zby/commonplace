@@ -9,7 +9,7 @@ tags: [learning-theory, constraining, continual-learning, self-improving-systems
 
 More compute can make a general method competitive with a hand-coded one. What the system stands to gain depends on the [relation between the specification and the objective](./exact-implementation-does-not-validate-a-requirement.md). If the specification defines the task, a different implementation still owes the same result. If it prescribes one way to solve a larger task, a general method can try solutions that the prescription excludes.
 
-This is one reason to reconsider an implementation, not a prerequisite for doing so. For how a programmer can switch a component between a prompt and code to test a changed requirement at today's scale, see [unified calling conventions](./a-unified-interface-lets-programmers-choose-prompts-or-code.md).
+This is one reason to reconsider an implementation, not a prerequisite for doing so. For how a programmer can switch a component between a prompt and code to test a changed requirement at today's scale, see [code and prompts can share a unified interface so programmers choose between them as systems evolve](./a-unified-interface-lets-programmers-choose-prompts-or-code.md).
 
 ## The trade-off depends on which regime you're in
 

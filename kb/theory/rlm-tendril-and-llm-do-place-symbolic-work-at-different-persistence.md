@@ -47,7 +47,7 @@ Relevant Notes:
 
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — supplies the model-authored REPL-orchestrator side of the comparison; its discard claim still needs an implementation-specific lifecycle source
 - [Ingest: The Y-Combinator for LLMs](../sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md) — evidenced-by: λ-RLM keeps prompt-as-environment recursion while replacing open-ended model-authored code with a deterministic, typed combinator runtime; post-return persistence is unspecified
-- [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./a-unified-interface-lets-programmers-choose-prompts-or-code.md) — grounds: supplies the llm-do call-boundary side of the comparison
+- [Code and prompts can share a unified interface so programmers choose between them as systems evolve](./a-unified-interface-lets-programmers-choose-prompts-or-code.md) — grounds: supplies the llm-do call-boundary side of the comparison
 - [Tendril](../agent-memory-systems/reviews/tendril.md) — evidenced-by: source-inspected generated-capability system that occupies the cross-session workspace persistence point
 - [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: explains the accumulation trade-off for an RLM implementation that actually discards generated programs
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — mechanism: explains why Tendril's online capability registration is a durable behavior-change loop
