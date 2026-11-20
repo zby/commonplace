@@ -1,5 +1,5 @@
 ---
-description: "What the KB application is for in Commonplace's design program — its declared objective, what operating this KB can and cannot establish, and the limits of local evidence"
+description: "Why Commonplace tests its design on this KB, what local use shows about how its parts work together, and what it leaves untested"
 type: types/note.md
 tags: []
 ---
