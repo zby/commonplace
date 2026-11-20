@@ -1,12 +1,12 @@
 ---
-description: Fork-by-fork decomposition of writing a KB note — orchestrator routes, cp-skill-write drafts, cp-skill-connect links; the most fork-rich common operation
+description: Framework loads for writing a KB note, with a separate cost for optional link discovery
 type: scenario
 frequency: common
 ---
 
 # Write a note
 
-The user asks the agent to capture an insight as a KB note. The work runs as three clean-context forks: the orchestrator routes the request, `cp-skill-write` (context: fork) drafts and validates the note, and the write skill then calls `cp-skill-connect` (context: fork) to wire it into the graph. Each fork pays its framework overhead from scratch.
+The user asks the agent to capture an insight as a KB note. The orchestrator routes the request; `cp-skill-write` drafts and validates the note, then suggests `cp-skill-connect`. Count Forks 1 and 2 for writing alone. Include Fork 3 only if connect is invoked; it produces a candidate-link report, not an edit to the note.
 
 ## Forks
 
@@ -28,9 +28,9 @@ Notes: AGENTS.md is always loaded in the main session (0 hops, bytes still count
 | the insight + any user-named sources | content | variable | 0-2 |
 | targeted validation | overhead | `commonplace-validate` run | 1 |
 
-Notes: as of the focused-write change, Step 4 reads **no** collection-wide listing. Near-duplicate detection is a targeted `rg` of the title's key terms (matching lines only, ~hundreds of bytes, not a complete index); link candidates are limited to already-loaded context and user-named targets. All description-scan and cross-destination prospecting moved to `cp-skill-connect` (Fork 3). This drops Fork 2 overhead from ~154 KB to ~17 KB. Directory-local types (adr, index) add one hop to a `kb/*/types/` spec. Whether AGENTS.md is re-injected into the fork is the main open assumption — set it in the harness config.
+Notes: the writer searches for near duplicates rather than scanning a whole collection. Cross-collection link discovery is separate. Use the evaluator’s `agents_per_fork` setting to match whether the harness supplies root instructions to each fork.
 
-### Fork 3 — cp-skill-connect (context: fork)
+### Fork 3 — cp-skill-connect (optional follow-up)
 | load | kind | source | hops |
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
@@ -39,14 +39,10 @@ Notes: as of the focused-write change, Step 4 reads **no** collection-wide listi
 | the just-written note | content | variable | 1 |
 | candidate notes (body search, tag traversal, reverse-edge) | content | variable | 2-5 |
 
-Notes: cp-skill-write suggests cp-skill-connect as a non-optional next step, so a normal write incurs this fork. Connect runs the *full* prospecting procedure on every authorized destination. As of ADR 025 there are no complete `dir-index.md` reads — each destination costs a curated head plus a scoped `rg` description listing that grows with the matching slice, not the collection (this fork previously re-read ~137 KB of dir-indexes and dominated the operation). Candidate bodies remain the main content load.
+Notes: if connect runs, it reads the source contract and uses its search guidance to prospect permitted local destinations. The number of destination reads depends on that contract; the table illustrates five.
 
 ## Variants
 
-**Commonplace repo vs installed project (common path):** identical forks — installed projects copy COLLECTION.md and the type-specs, so the overhead files and paths match.
+**Write only:** report total overhead and the heaviest fork using Forks 1–2. **Write followed by connect:** report both measures using Forks 1–3. Do not include the optional fork in the write-only total or feasibility check.
 
-**Escalation to methodology (installed projects, ~10%):** when a convention is unclear, an extra search + 1-2 body reads into `commonplace/kb/notes/` are added to Fork 2. In the Commonplace repo this does not occur — the methodology notes are already the content in scope.
-
-**Directory-local types:** for adr / index / agent-memory-system-review, Fork 2 adds one hop to the target collection's `kb/*/types/` spec.
-
-**Write without connect:** if the user declines the suggested connect step, Fork 3 does not run — removing the largest single overhead body and the heaviest content-prospecting fork.
+**Installed project:** measure the target project’s `AGENTS.md` and collection contract. Read global type specs and canonical skill bodies from the installed library identified by `.commonplace/library.md`, not from copies under the project’s `kb/`. For a collection-local type, use its spec under the project’s `kb/<collection>/types/`. If the task needs deeper methodology, count the additional library reads in the fork that makes them.

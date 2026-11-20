@@ -6,7 +6,7 @@ frequency: occasional
 
 # Respond to a change
 
-The user notices an upstream change (PR, RFC, API update) or floats a design idea and asks for a grounded response. The agent assembles evidence in the **main session** (like answer-a-question), then composes the response. If the response is a KB note it invokes `cp-skill-write` and `cp-skill-connect` (two more forks); if it is an external message or PR comment, it stops after the orchestrator fork.
+The user notices an upstream change (PR, RFC, API update) or floats a design idea and asks for a grounded response. The agent assembles evidence in the **main session** (like answer-a-question), then composes the response. If the response is a KB note it invokes `cp-skill-write`, with `cp-skill-connect` as an optional follow-up; if it is an external message or PR comment, it stops after the orchestrator fork.
 
 ## Forks
 
@@ -32,7 +32,7 @@ Notes: the evidence-assembly phase runs in the main session — overhead is just
 
 Notes: identical to write-a-note Fork 2 — no collection-wide listing read; near-duplicate detection is a targeted `rg`, all discovery deferred to connect. The evidence assembled in Fork 1 is the content the write is about. An ADR response uses `kb/reference/types/adr.md` and `kb/reference/COLLECTION.md` instead (one extra type hop).
 
-### Fork 3 — cp-skill-connect (context: fork) — only if the response is a KB note
+### Fork 3 — cp-skill-connect (context: fork) — only if connect is requested for the new note
 | load | kind | source | hops |
 |---|---|---|---|
 | connection procedure | overhead | `kb/instructions/cp-skill-connect/SKILL.md` | 0 |
@@ -46,6 +46,6 @@ Notes: identical to write-a-note Fork 3 — full prospecting covers all five aut
 
 **External output (PR comment / message):** only Fork 1 runs — the cheapest path, overhead ≈ AGENTS.md, no destination prospecting.
 
-**KB-note output:** Forks 2-3 as in write-a-note; this is where the heavy navigation overhead (skill bodies + destination prospecting) is incurred.
+**KB-note output:** add Fork 2 to Fork 1. Add Fork 3 only for a separate connect run; only that variant incurs destination prospecting.
 
 **Escalation (installed projects):** extra `commonplace/kb/notes/` reads can occur in Fork 1 (thin evidence) or Fork 2 (response doesn't fit a standard type) — two escalation points.

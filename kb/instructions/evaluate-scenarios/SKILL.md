@@ -62,6 +62,8 @@ Sum the **hops** column per fork; a range (`2-4`) uses its midpoint. Track overh
 
 ### 6. Compute the two signals (per scenario)
 
+For a scenario with optional forks, name the variant being measured. Compute both signals over only the forks that run in that variant. For write-a-note, report write only and write followed by connect separately; do not count both as independent common tasks in the frequency-weighted total.
+
 - **Net load per fork** = overhead bytes + content bytes − spared credit (bytes); net hops = overhead + content hops.
 - **Feasibility signal** = the single **heaviest** fork by net bytes — report that fork, its net bytes and net hops, and flag it if net bytes exceed `budget`.
 - **Cost signal** = **overhead** bytes summed across **all** forks (gross — the spared credit applies only to feasibility), and overhead hops summed across all forks.

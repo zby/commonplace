@@ -79,7 +79,7 @@ It's less useful for a system with a single user story (the decomposition degene
 
 Relevant Notes:
 
-- [scenario-architecture](../reference/scenario-architecture.md) — current-state: how Commonplace instantiates the scenario-derived architecture today, including the two-tree split, the specific AGENTS.md fragment, and the `tests/scenarios/` measurement surface
+- [Write-a-note scenario](../../tests/scenarios/write-a-note.md) — exemplifies: the [evaluation procedure](../instructions/evaluate-scenarios/SKILL.md) measures writing alone separately from writing followed by link discovery
 - [Instruction specificity should match loading frequency](./instruction-specificity-should-match-loading-frequency.md) — confirms: the loading hierarchy (always-loaded → on-demand → methodology fallback) maps directly onto the step frequency patterns in the decomposition
 - [Always-loaded context mechanisms in agent harnesses](./always-loaded-context-mechanisms-in-agent-harnesses.md) — extends: different always-loaded surfaces have different affordances and map onto different scenario patterns
 - [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — foundation: the "find related notes" step works well precisely because navigation hints (descriptions, titles) are optimised for agent read/skip decisions
