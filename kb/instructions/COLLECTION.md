@@ -64,7 +64,9 @@ recommissions the dependent packets. For a narrow methodological dependency,
 record source-side lineage under the existing link contract. For a universal
 rule in root `AGENTS.md`, this collection contract, or the instruction type,
 the reliance cohort is all commissioning instructions that use that verified
-baseline; review that cohort through repository search when the rule changes.
+baseline. When the rule changes, find those instructions through repository
+search and record which you reviewed. Until reviewed, their packets cannot
+rely on the changed rule by omission.
 Commonplace accepts this broad cohort instead of adding per-packet dependency
 fields or consumer-visible maintenance links.
 
