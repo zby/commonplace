@@ -21,12 +21,14 @@ reconstructed. It does not catalogue the installed directory tree; see
 | Retained report records | Tracked files under `kb/reports/retained/` | Exact measurements, experiments, or analyses whose record remains useful without becoming a library claim |
 | Review results | One file per (note, criterion) pair under `kb/reports/state/review/results/` | The only review and freshness state: judgment text plus the hashes of the inputs it was produced from; machine-local |
 | Retired decision records | Full-pass packets under `kb/reports/state/review/packets/` and fix reports under `kb/reports/state/fixes/` | Written by the procedures ADR 135 retired; nothing writes them now. `commonplace-revise decisions` reads them, so they hold recorded operator decisions |
-| Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay of answered calls within one run; not read across runs and not a format promise |
+| Workflow run records | Run directories under `kb/reports/state/review/runs/` | Replay records belong to the producing run. A later invocation may consume a named output without depending on the run’s private control state. |
 
 The reports collection separates ignored operational outputs in `state/`
 from tracked records in `retained/`. Rebuildability and cleanup depend on the
 producing workflow, not the directory class. Promotion into `retained/` is a
 separate retention decision.
+
+When designing a handoff, ask: **can the recipient tell what it may do, to which version, and what has already happened?** For example, if a revise run publishes an edit and then stops for a decision about the opening paragraph, the next invocation needs the applicable text and the approved scope, not permission to repeat the published edit ([ADR 138](./adr/138-a-stop-ends-the-run-and-naming-its-output-is-the-approval.md)).
 
 ## Authored files and version control
 
