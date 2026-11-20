@@ -867,6 +867,7 @@ plugins:
         'reference/available-types.md': 'reference/collections-and-types.md'
         'reference/collection-prototypes.md': 'reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md'
         'reference/commonplace-as-a-reflective-system.md': 'theory/evidence/commonplace-as-a-reflective-system.md'
+        'reference/control-plane-goals.md': 'reference/adr/014-scripts-as-python-package-one-tree-model.md'
         'reference/freshness-architecture.md': 'reference/review-architecture.md'
         'reference/freshness-schemas.md': 'reference/review-architecture.md'
         'reference/full-improvement-pass-closure.md': 'reference/README-REVIEW-SYSTEM.md'

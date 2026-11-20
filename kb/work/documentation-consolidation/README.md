@@ -37,7 +37,7 @@ Recent decisions provide three controls: routine navigation went back to agent i
 
 First case: [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md). The [connect-report mining proposal](../../reference/proposals/periodic-connect-report-mining.md) uses its distinction between noticing a problem and turning it into a candidate. Contrast [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md): its worked examples might fit, but proposals also cite it to establish the project's objective. Do not move the whole page on the strength of its examples.
 
-Collection prototypes: authors choosing a starting contract now reach the installed templates from the add-collection skill. Readers asking what survives copying use [ADR 069](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). No separate inventory. Next candidate: identify who needs `control-plane-goals.md` beyond the setup guide, root template and rules for editing them.
+Collection prototypes: authors choosing a starting contract now reach the installed templates from the add-collection skill. Readers asking what survives copying use [ADR 069](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). No separate inventory. For control-plane goals, the project’s root instructions supply the goals, the install guide tells the operator how to fill them in, and [ADR 014](../../reference/adr/014-scripts-as-python-package-one-tree-model.md#decision) carries forward the reason goals precede skill selection. No separate reference page or new ADR.
 
 ## Files in this workshop
 

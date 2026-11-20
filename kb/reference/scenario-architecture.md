@@ -73,5 +73,5 @@ Relevant Notes:
 
 - [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decided-by: the one-tree shipped model this scenario note describes
 - [architecture](./architecture.md) — the broader shipped architecture this scenario view decomposes
-- [control-plane-goals](./control-plane-goals.md) — how the always-loaded control plane carries the inclusion and routing context the scenario depends on
+- [ADR 014](./adr/014-scripts-as-python-package-one-tree-model.md#decision) — why the inclusion decision can use project goals before any skill runs
 - [Library access](./architecture.md#where-the-library-is-read) — how init supplies the paths that agents follow at runtime

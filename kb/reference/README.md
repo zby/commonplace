@@ -63,7 +63,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric
-- [Control-plane goals](./control-plane-goals.md) — how `AGENTS.md` ships always-loaded KB goals and templates
 - [Scenario architecture](./scenario-architecture.md) — scenario-derived decomposition of the installed surfaces
 - [Tag-readme trace as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — one observed trace mapped onto search, evaluation, and retention
 - [Commonplace agent memory gap plan](./commonplace-agent-memory-gap-plan.md) — earlier gap-closure plan (unadopted roadmap)

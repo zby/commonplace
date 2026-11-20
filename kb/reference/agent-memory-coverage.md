@@ -14,7 +14,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../t
 
 | Memory requirement | Commonplace realization | Current limit |
 |---|---|---|
-| Control-plane memory | `AGENTS.md` keeps KB goals, scope, routing, vocabulary, commands, skills, and version-control conventions in always-loaded context. See [control-plane goals](./control-plane-goals.md). | There is no typed on-situation cue index yet. |
+| Control-plane memory | A runtime that loads the project’s `AGENTS.md` supplies goals and scope before the agent selects a skill ([ADR 014](./adr/014-scripts-as-python-package-one-tree-model.md#decision)). The same file supplies routing, vocabulary, commands, skills, and version-control conventions. | There is no typed on-situation cue index yet. |
 | Direct memory creation | Agents and maintainers write notes, reference docs, ADRs, instructions, skills, source ingests, workshop artifacts, validators, and indexes as ordinary files. Commonplace implements direct-authored memory strongly through typed notes, indexes, instructions, skills, validation scripts, review gates, and explicit collection/type contracts. | Promotion decisions are still mostly manual. |
 | Artifact contracts | `COLLECTION.md` defines each collection's purpose, intended contribution, quality goal, scope, and outbound-linking rules. The `type:` field points to a type-spec doc with structure, natural-language guidance, and schema. See [collections and types](./collections-and-types.md). | Project-specific collections still depend on users defining good contracts. |
 | Import external knowledge | Source snapshots, ingest reports, conversion tooling, and staged workshops preserve external material and convert it toward Commonplace artifacts. | There is no mature graph-first or bulk-reingest pipeline. |
@@ -43,7 +43,6 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 
 - [Commonplace architecture](./architecture.md) — contains: installed layout, shipped library, user collections, and skill discovery surfaces
 - [Storage](./storage-architecture.md) — contains: authored markdown, generated indexes, reports, and review result files
-- [Control-plane goals](./control-plane-goals.md) — contains: always-loaded KB goals and routing context in `AGENTS.md`
 - [Collections and types](./collections-and-types.md) — implements: collection contracts plus type contracts
 - [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, result-file freshness, and stale-pair detection
 

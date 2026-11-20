@@ -14,7 +14,6 @@ This is a child of [architecture](./architecture-README.md); members keep both t
 - [Reference overview](../reference/README.md) — entry point for current-state documentation and architecture decisions
 - [Commonplace architecture](../reference/architecture.md) — collections, packaged runtime, shipped skills, and operational surfaces
 - [Projects read the library from the installed package](../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — the user's KB stays in the project while the library is read from the installed package
-- [Control-plane goals](../reference/control-plane-goals.md) — how AGENTS.md, the scaffold template, and installation supply KB goals
 - [Scenario architecture](../reference/scenario-architecture.md) — how the shipped architecture meets the requirements derived from user scenarios
 - [Storage architecture](../reference/storage-architecture.md) — canonical files, derived indexes, and file-backed operational state
 - [Review runs as workflows over result files](../reference/adr/127-review-runs-as-workflows-over-result-files.md) — the decision that keeps review state as one file per reviewed pair and runs review as Python workflows

@@ -28,7 +28,7 @@ The table's unit is a scoped authority path, not a file. The same artifact can h
 
 ## Global goals are explicit but lightly governed
 
-The operative objective is the `## KB Goals and Scope` section of [`AGENTS.md`](../../../AGENTS.md). [Control-plane goals](../../reference/control-plane-goals.md) states that every agent invocation receives it in always-loaded context, while [the goals note](../../theory/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) explains its role in inclusion decisions. The artifact and its repository-wide applicability are inspectable and editable. A successor would enter the live path when later sessions load it, so another revision is structurally supported.
+The operative objective is the `## KB Goals and Scope` section of [`AGENTS.md`](../../../AGENTS.md). [Control-plane goals at the audit commit](https://github.com/zby/commonplace/blob/68634f39a12b5e69edbf5505cc3f279a97a91394/kb/reference/control-plane-goals.md) states that every agent invocation receives it in always-loaded context, while [the goals note](../../theory/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) explains its role in inclusion decisions. The artifact and its repository-wide applicability are inspectable and editable. A successor would enter the live path when later sessions load it, so another revision is structurally supported.
 
 The audit found no retained episode showing a changed top-level goal governing a later inclusion decision, nor a generic condition under which one proposed objective displaces another. That is an admission and warrant gap, not a failure to address the objective artifact.
 
