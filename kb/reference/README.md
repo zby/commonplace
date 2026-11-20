@@ -49,6 +49,8 @@ For exact implementation facts, inspect `src/commonplace/` (or locate the instal
 
 ## Case studies
 
+- [Commonplace as an instrument](./case-studies/commonplace-as-an-instrument.md) — what operating this KB demonstrates about its design and what still needs testing.
+
 - [What would `status: current` assert?](./case-studies/what-would-status-current-assert.md) — why the distinction between endorsing a claim and attributing it accurately mattered when Commonplace removed ordinary note status.
 
 - [Where change candidates come from in Commonplace](./case-studies/where-change-candidates-come-from-in-commonplace.md) — how a problem noticed by a check or report becomes a proposed change, and where that still needs a maintainer.
@@ -60,7 +62,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Epistemic stance](./epistemic-stance.md) — Popperian commitments this KB's assertions assume
 - [Commonplace declared frame](./commonplace-declared-frame.md) — boundary under which self-improvement attributions hold
 - [Source-adoption policy](./source-adoption-policy.md) — borrowing gates by source domain
-- [Commonplace as an instrument](./case-studies/commonplace-as-an-instrument.md) — what this KB tests in the design program
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
 
