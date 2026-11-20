@@ -1,5 +1,5 @@
 ---
-description: "Bootstrap supplement: Commonplace starts as a reflective theory builder in which people perform many operations, moves them to computation one at a time, and measures success by human decisions per verified improvement"
+description: "Bootstrap supplement: Commonplace starts as a reflective theory builder staffed partly by people, moves operations to computation one at a time, and judges progress by which kinds of improvement complete without the operator's decisions"
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -19,6 +19,7 @@ source_notes:
   - kb/theory/revising-an-improvement-objective-is-licensed-from-outside-it.md
   - kb/theory/increasing-computational-autonomy-relocates-human-effort.md
   - kb/theory/computationally-directed-self-improvement-is-a-reallocation.md
+  - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
 ---
 
 # Bootstrapping an Autonomous Theory Builder with Commonplace
@@ -58,11 +59,11 @@ at a time, each once evidence shows that computation performs it adequately.
 Throughout, what is learned must be retained in the system, change later
 behaviour, and change it for the better;
 [the lead article](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) says how
-that last condition is tested. The bootstrap is working while the number of
-human decisions each completed, verified improvement requires holds steady
-or falls as the system grows. The strongest evidence of success is an
-improvement process that still completes when the operator's decisions are
-withheld. [The last section](#the-bootstrap) states both tests.
+that last condition is tested. The bootstrap has advanced when a kind of
+improvement that needed the operator's decisions completes with those
+decisions withheld. It is working while the kinds of improvement that pass
+this test keep growing. [The last section](#the-bootstrap) states the test
+and what would count as failure.
 
 ## Retain learning in the system
 
@@ -190,18 +191,43 @@ this process can transfer that work too, beyond the judgments it has
 already stabilized. The conjecture does not cover choosing the objective
 itself. The objective stays declared, and
 [changing it counts as improvement only against a standard outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md).
+Users also keep one judgment under a fixed objective: whether a result is
+worth what it costs them. The objective says what to weigh. It does not
+calculate the answer.
 
-Progress is measured by the number of human decisions each completed,
-verified improvement requires. Operator hours are a poor measure: in an
-open-ended system,
+Progress is judged by
+[a removal test](../theory/computationally-directed-self-improvement-is-a-reallocation.md).
+Take one kind of improvement, withhold the operator's decisions, and check
+whether the process still completes, over a stated scope and time horizon.
+Suppose repairing a stale cross-reference once needed the operator to notice
+it and approve the fix. If the repair now completes from a validator's
+finding with no operator decision, that kind of improvement has moved. The
+bootstrap has advanced when the kinds of improvement that pass the test have
+grown.
+
+Seeing that growth takes no overall score: a kind that failed now passes, and
+none that passed now fails. A transfer can also let one kind pass while
+another stops passing. Then we ask whether the change is better on balance,
+which
+[takes a judgment about who gains and who loses, not a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+
+Human decisions are counted, but only within one kind of change. Operator
+decisions per note revision, before and after a transfer, can be compared. A
+count across all improvements cannot serve as the program's measure.
+Improvements differ in size, and in an open-ended system
 [attention freed from routine work moves to harder work](../theory/increasing-computational-autonomy-relocates-human-effort.md),
-so they can stay flat while the bootstrap succeeds. The conjecture fails, in
-the terms of
+which can need more decisions each. For the same reason operator hours can
+stay flat while the bootstrap succeeds.
+
+The conjecture fails, in the terms of
 [the bootstrap condition](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
-if that number grows as the system grows. The strongest
-evidence of success is
-[a removal test](../theory/computationally-directed-self-improvement-is-a-reallocation.md):
-withhold the operator's decisions and check whether an improvement process
-still completes, over a stated scope and time horizon. The
+in either of two ways. The kinds of improvement that pass the removal test
+stop growing while transfers continue. Or they stay confined to judgments
+that had already stabilized, which is the limit the conjecture says the
+process can pass. We have not yet fixed the period over which no growth
+counts as failure.
+
+Withholding the operator is not always practical. Where the test cannot be
+run, it weakens to an argument from the record of who made each decision. The
 [testing supplement](./testing-whether-a-theory-builder-learns.md) says how
 these decisions are recorded.
