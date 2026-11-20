@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Frame and objective declaration](./frame-and-objective-declaration/README.md) — posed 2026-11-20: settle one KB-wide rule for how claims about Commonplace state their boundary, partition, horizon and objective; four agent positions recorded; the objective's accounting awaits the operator's ruling, then one cold-reader check on the instrument note decides whether anything beyond the objective declaration is needed
+
 - [Documentation consolidation](./documentation-consolidation/README.md) — posed 2026-11-18, refocused 2026-11-19: cut outdated documentation by tying each document to an explicit task, moving agent guidance onto its activation path, keeping short human overviews, and later pruning unnecessary skills.
 
 - [Operationalization, Goals, and Grounded Concepts](./operationalization-goals-grounded-concepts/README.md) — posed 2026-11-16: six distinct RE comparisons for agent-operated knowledge work, with bounded source/version gaps and four proposed countertests; a citation-repair screen reached ceiling for both prompts, leaving evidence selection as the next question
