@@ -199,8 +199,7 @@ acceptance; otherwise return or escalate the gap.
 ### Navigation and task-specific reads
 
 Use `rg` first. Scan scoped titles and descriptions before full files; follow
-links when local context makes them useful. Full model and search recipes:
-[navigation](./kb/reference/navigation.md).
+links when local context makes them useful.
 
 - Start at `kb/tags/README.md` for topics, `kb/reference/README.md` for the system,
   `kb/reports/README.md` for retained reports, or `kb/reference/adr/` for decisions.

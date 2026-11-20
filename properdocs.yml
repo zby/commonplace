@@ -870,6 +870,7 @@ plugins:
         'reference/freshness-schemas.md': 'reference/review-architecture.md'
         'reference/full-improvement-pass-closure.md': 'reference/README-REVIEW-SYSTEM.md'
         'reference/lib-modules.md': 'reference/README.md'
+        'reference/navigation.md': 'tags/README.md'
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/artifact-anchored-validation-over-a-run-scoped-context.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/assertion-force-separate-from-lifecycle-status.md': 'reference/proposals/archive/assertion-force-separate-from-lifecycle-status.md'

@@ -28,7 +28,7 @@ This resembles a resource-allocation policy for uncertain search: broad and chea
 - **`PTS-4` — stop candidates explicitly.** Record whether a path was rejected, deferred for cost, or merely not reached. Otherwise shallow non-selection looks like negative evidence.
 - **`PTS-5` — vary depth within one task.** Not every retrieved artifact deserves a full read or semantic review. Expensive evaluation should be earned by cheaper evidence unless risk mandates immediate depth.
 
-The existing [Commonplace navigation model](../../reference/navigation.md) already embodies a cheap-to-expensive reading progression. This architecture may supply a more general scheduling account and expose the missing exploration and reopening policies.
+The existing [Commonplace navigation model](../../theory/agents-navigate-by-deciding-what-to-read-next.md) already embodies a cheap-to-expensive reading progression. This architecture may supply a more general scheduling account and expose the missing exploration and reopening policies.
 
 ## Method worth borrowing
 

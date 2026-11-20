@@ -134,7 +134,7 @@ separates authored truth from derived and operational state.
 
 ### Progressive disclosure is already the intended navigation model
 
-The [navigation design](../../reference/navigation.md) starts with cheap
+The [navigation design at the audit commit](https://github.com/zby/commonplace/blob/7ced7b1dd67566c138be6e74efce23fa671193ea/kb/reference/navigation.md) starts with cheap
 lexical and curated surfaces and allows an agent to decide what to open next.
 The notes on
 [agent-directed navigation](../../theory/agents-navigate-by-deciding-what-to-read-next.md),

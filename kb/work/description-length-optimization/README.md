@@ -53,7 +53,7 @@ Out of scope:
 
 - The base type defines a description as a discriminating retrieval filter rather than a summary: [note type](../../types/note.md).
 - The current schema warns below 50 and above 250 characters: [note-base schema](../../types/note-base.schema.yaml).
-- The active navigation path uses descriptions both for five-hit triage and scoped path-plus-description slices: [navigation](../../reference/navigation.md).
+- The active navigation path uses descriptions both for five-hit triage and scoped path-plus-description slices: [agent search instructions](../../../AGENTS.md#navigation-and-task-specific-reads).
 - Complete generated listings moved off the agent read path in [ADR 025](../../reference/adr/025-complete-generated-indexes-are-build-time-only.md).
 - Tag READMEs are selective by default and have their own document-weight contract: [tag-readme type](../../types/tag-readme.md).
 - Fixed descriptions trade query-specificity for low read cost and reliable availability: [pointer design tradeoffs](../../theory/pointer-design-tradeoffs-in-progressive-disclosure.md).

@@ -39,4 +39,4 @@ The root `README.md` (tool face) and `kb/index.md` (content face) are kept as se
 ## See also
 
 - [storage-architecture.md](./storage-architecture.md) — the build-time derived indexes and the ProperDocs site as a derived surface over authored markdown
-- [navigation.md](./navigation.md) — how agents (not human site readers) move through the KB via `rg`, indexes, and links
+- [Topic index](../tags/README.md) — browse the published KB by tag

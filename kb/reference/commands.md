@@ -82,4 +82,4 @@ Run isolated, commit-bound agentic-system analyses and bounded queues (`analyse`
 
 ---
 
-*No generated-index rebuild command exists:* ProperDocs generates directory indexes and tag tails during site builds; agents use scoped `rg` search ([navigation](./navigation.md)).
+*No generated-index rebuild command exists:* ProperDocs generates directory indexes and tag tails during site builds. Browse the [topic index](../tags/README.md) or search the checkout with `rg`.

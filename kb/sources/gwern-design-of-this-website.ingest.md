@@ -34,7 +34,7 @@ For the tag-design question, the source is a concrete comparison for the [ADR 08
 
 The source also compares with [checked tag heads](../theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md): introductions plus generated annotation lists combine orientation with membership, but the account does not describe Commonplace’s validator-enforced completeness and coverage marks. Its clustering and ordering proposals illustrate possible assistance with curation while preserving the distinction that [membership alone does not determine editorial orientation](../theory/index-completeness-does-not-determine-editorial-orientation.md).
 
-Nested previews and full tag pages provide practitioner evidence for the feasibility of [resolution-switching](../theory/a-knowledge-base-should-support-fluid-resolution-switching.md). Transfer is bounded by [Commonplace’s navigation architecture](../reference/navigation.md): complete listings serve published human views, while agents use compact heads and scoped queries. A browser’s lazy rendering does not establish a reduction in the text an agent must load.
+Nested previews and full tag pages provide practitioner evidence for the feasibility of [resolution-switching](../theory/a-knowledge-base-should-support-fluid-resolution-switching.md). Transfer is bounded by [Commonplace’s build-time index decision](../reference/adr/025-complete-generated-indexes-are-build-time-only.md): complete listings serve published human views, while agents use compact heads and scoped queries. A browser’s lazy rendering does not establish a reduction in the text an agent must load.
 
 ## Learning Claims (our opinion)
 

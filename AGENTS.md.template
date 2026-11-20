@@ -116,7 +116,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 
 ### Navigation
 
-For the full model, read `<library>/reference/navigation.md`. In short: use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
+Use `rg` for cheap lexical search, scan titles and descriptions in curated indexes and scoped `rg` listings before opening full files, and follow authored links when local context makes the relationship useful.
 
 Entry points:
 
@@ -138,7 +138,7 @@ rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 # Find notes by type (the value is the type spec's path under a KB root)
 rg "^type: types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
-# Find notes by tag
+# Find candidates by tag text (not an exact membership check)
 rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 ```
 

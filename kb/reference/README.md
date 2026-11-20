@@ -19,7 +19,7 @@ You direct an agent toward outcomes rather than running procedures by hand. Ask 
 | Check structural validity | No (deterministic validator, no LLM calls) | [Validation contract](./validation-contract.md) |
 | Review notes semantically | No (`commonplace-review` never writes notes; paid launches) | [Review and editing system](./README-REVIEW-SYSTEM.md) |
 | Improve, triage, or rewrite a note | Yes (simplification passes write uncommitted diffs; rewrites hold for approval) | [Review and editing system](./README-REVIEW-SYSTEM.md) |
-| Search and navigate | No (uses `rg`, descriptions, curated heads, and links) | [Navigation](./navigation.md) |
+| Search and navigate | No (uses `rg`, descriptions, curated heads, and links) | [Browse by topic](../tags/README.md) |
 | Run CLI commands directly | Depends on command (`relocate` dry-runs without `--apply`) | [CLI commands](./commands.md) |
 
 ## Architecture and contracts
@@ -36,7 +36,6 @@ For exact implementation facts, inspect `src/commonplace/` (or locate the instal
 - [Review architecture](./review-architecture.md) — code/worker ownership, durable state, freshness hash boundary, and checkout guard
 - [Coordination between workflow runs](./workflow-architecture.md) — what crosses the boundary between workflow invocations
 - [Documentation site](./documentation-site.md) — ProperDocs README-vs-index rule, nav generation, and landing-page inventory
-- [Navigation](./navigation.md) — progressive disclosure stack and scoped `rg` recipes
 
 ### Type system, contracts, and authoring
 
