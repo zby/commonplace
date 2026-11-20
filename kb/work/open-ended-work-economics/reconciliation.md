@@ -294,7 +294,7 @@ extract nothing else from this direction.
   exists ([system use selects theory fit](../../theory/system-use-selects-theory-fit-without-a-fixed-oracle.md),
   description only); the declared objective is useful, better-warranted
   work per unit of human judgment
-  ([Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md),
+  ([Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md),
   which also says transfer "has not been demonstrated").
 - The failure conditions, verbatim, in
   [a bootstrap fits the Bitter Lesson only if learning outgrows it](../../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):

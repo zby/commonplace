@@ -29,7 +29,7 @@ The brief is an external requirements anchor for evaluating Commonplace as an in
 
 ## Extractable Value
 
-1. **External evaluation profile** -- The COVID, black-hole, and eggs cases vary disagreement, closure, expertise, and question definition, giving [Commonplace as an instrument](../reference/commonplace-as-an-instrument.md) a concrete outside-system task profile rather than another internal structural check. [experiment]
+1. **External evaluation profile** -- The COVID, black-hole, and eggs cases vary disagreement, closure, expertise, and question definition, giving [Commonplace as an instrument](../reference/case-studies/commonplace-as-an-instrument.md) a concrete outside-system task profile rather than another internal structural check. [experiment]
 2. **Three-layer capability matrix** -- Ingestion, structure, and assessment provide a useful top-level comparison frame, but the KB can make it more diagnostic by crossing them with provenance unit, support model, uncertainty representation, authority, update lifecycle, interoperability boundary, and available oracle. [deep-dive]
 3. **Assessment requirements beyond polished synthesis** -- Correlated-evidence detection, rhetorical-versus-evidential weight, crux discovery, missing-perspective search, and “performed settling” are specific probes for whether an agent evaluates reasoning rather than merely producing it. [experiment]
 4. **Interoperability-without-flattening test** -- The brief identifies a practical boundary condition for portable artifacts: shared structure must preserve differing scopes, caveats, uncertainty estimates, emphases, and evolution over time rather than forcing all content into one taxonomy. [deep-dive]
@@ -41,4 +41,4 @@ The brief is authoritative about FLF's intentions, not about whether its ingesti
 
 ## Recommended Next Action
 
-Add a single external-task-profile evaluation subsection to [Commonplace as an instrument](../reference/commonplace-as-an-instrument.md) that maps current Commonplace capabilities and unresolved evidence gaps against the brief's ingestion, structure, and assessment requirements for the three case profiles.
+Add a single external-task-profile evaluation subsection to [Commonplace as an instrument](../reference/case-studies/commonplace-as-an-instrument.md) that maps current Commonplace capabilities and unresolved evidence gaps against the brief's ingestion, structure, and assessment requirements for the three case profiles.

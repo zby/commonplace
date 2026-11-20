@@ -8,7 +8,7 @@ This is bounded criticism of [Explorer A](./explorer-a.md) and [Explorer B](./ex
 
 ## 1. The opening recommendations risk deciding the purpose by interpretation
 
-Both explorers lead with present useful, warranted work and subordinate automation to that outcome. That fits [Commonplace as an instrument](../../../../reference/commonplace-as-an-instrument.md), whose objective explicitly is not automation. But the [new commission](../README.md) deliberately adds learning to automate methodologies and exploration beyond the economic framing. A faithful reading must preserve that research purpose as well as the older objective.
+Both explorers lead with present useful, warranted work and subordinate automation to that outcome. That fits [Commonplace as an instrument](../../../../reference/case-studies/commonplace-as-an-instrument.md), whose objective explicitly is not automation. But the [new commission](../README.md) deliberately adds learning to automate methodologies and exploration beyond the economic framing. A faithful reading must preserve that research purpose as well as the older objective.
 
 This is not merely a wording dispute. Suppose task-first assistance wins on all currently valuable tasks, while a bootstrap experiment offers uncertain evidence about a substantially wider future capability. Present service cannot decide whether to fund that experiment without a horizon and an operator preference about research. Conversely, declaring an investment research does not make its opportunity cost disappear.
 

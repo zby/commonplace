@@ -10,7 +10,7 @@ The practical revision supported here is to distinguish **the useful result deli
 
 ## What should increase remains a purpose-relative question
 
-The existing [instrument reference](../../../../reference/commonplace-as-an-instrument.md) names more useful and better-warranted knowledge work per unit of human judgment, not automation. That supplies an orientation, not a usable accounting unit or a resolution of every investment conflict. The present commission also authorizes exploration whose immediate applicability is uncertain.
+The existing [instrument reference](../../../../reference/case-studies/commonplace-as-an-instrument.md) names more useful and better-warranted knowledge work per unit of human judgment, not automation. That supplies an orientation, not a usable accounting unit or a resolution of every investment conflict. The present commission also authorizes exploration whose immediate applicability is uncertain.
 
 Keep four claims separate:
 

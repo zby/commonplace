@@ -39,7 +39,7 @@ being worth investigating does not make a claim true or warrant adopting it.
 ## What remains unsettled
 
 - **Returns.** What makes further investigation worth pursuing under the
-  declared objective in [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)?
+  declared objective in [Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md)?
   Saving operator judgment or making work cheaper are possible returns;
   moving work between resource tiers is not assumed to be the maximand.
 - **Uncertainty.** How can search use guesses about returns when the

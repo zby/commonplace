@@ -60,7 +60,7 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Epistemic stance](./epistemic-stance.md) — Popperian commitments this KB's assertions assume
 - [Commonplace declared frame](./commonplace-declared-frame.md) — boundary under which self-improvement attributions hold
 - [Source-adoption policy](./source-adoption-policy.md) — borrowing gates by source domain
-- [Commonplace as an instrument](./commonplace-as-an-instrument.md) — what this KB tests in the design program
+- [Commonplace as an instrument](./case-studies/commonplace-as-an-instrument.md) — what this KB tests in the design program
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
 

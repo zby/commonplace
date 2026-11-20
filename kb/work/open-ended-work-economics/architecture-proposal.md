@@ -15,7 +15,7 @@ extraction and does not adopt anything.
 
 - Commonplace's declared objective is more useful and better-warranted
   knowledge work per unit of human judgment
-  ([Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)).
+  ([Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md)).
   Its strategy is stated in pieces: build a theory builder and test whether
   it learns; start from a running system because use supplies selection
   where no fixed oracle exists; invest in machinery because an improvement

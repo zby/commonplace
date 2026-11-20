@@ -10,7 +10,7 @@ The question merits investment because the proposed system can produce valuable 
 
 ## 1. What should increase?
 
-The declared objective in [Commonplace as an instrument](../../../../reference/commonplace-as-an-instrument.md) is more useful and better-warranted knowledge work per unit of human judgment, not automation. The new commission makes learning to automate methodologies part of the plan; it does not silently replace that objective.
+The declared objective in [Commonplace as an instrument](../../../../reference/case-studies/commonplace-as-an-instrument.md) is more useful and better-warranted knowledge work per unit of human judgment, not automation. The new commission makes learning to automate methodologies part of the plan; it does not silently replace that objective.
 
 I would distinguish four claims rather than combine them into a score:
 

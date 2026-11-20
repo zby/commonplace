@@ -718,7 +718,7 @@ component is new.
 | [Periodic connect-report mining](../../reference/proposals/periodic-connect-report-mining.md) | One candidate source, but only after a real queue and consumer exist. |
 | [Error-catching workshop](../../work/error-catching/README.md) | Gate calibration and failure evidence. |
 | [Agent-runtime design workshop](../../work/agent-runtime-design/README.md) | Execution, approval, and runtime-boundary constraints. |
-| [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md) | Declared economic objective and evaluation frame. |
+| [Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md) | Declared economic objective and evaluation frame. |
 
 The main synthesis introduced here is the combination of a situation
 projection, a shared operation envelope, compiled task context, a uniform

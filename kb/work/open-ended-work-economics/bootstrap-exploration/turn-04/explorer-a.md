@@ -25,7 +25,7 @@ The tension retained in turn 3 matters. Authorized recording of exact launch con
 
 Two library arguments inform the design, without independently confirming it. The [retained-theory intervention account](../../../../theory/retained-theory-intervention-isolates-one-explicit-surface.md) explains why varying one explanatory surface tests its marginal contribution, not all understanding carried by code, records or models. The [machinery-investment argument](../../../../theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) makes future use, persistence and competing returns conditions of its claim. Merely having a reusable explanation does not establish any of those conditions here. I borrow those distinctions as arguments; I do not adopt their external-source premises as new evidence.
 
-The [instrument reference](../../../../reference/commonplace-as-an-instrument.md) explicitly lacks demonstrated transfer benefit from retained rationale. This makes a small comparison relevant, but does not make provenance the best investment site across the KB. We have a tractable case, not a measured task portfolio.
+The [instrument reference](../../../../reference/case-studies/commonplace-as-an-instrument.md) explicitly lacks demonstrated transfer benefit from retained rationale. This makes a small comparison relevant, but does not make provenance the best investment site across the KB. We have a tractable case, not a measured task portfolio.
 
 ## Complementarities: why task choice matters before packaging
 

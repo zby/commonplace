@@ -869,6 +869,7 @@ plugins:
         'reference/collections-never-own-frontmatter-semantics.md': 'reference/case-studies/what-would-status-current-assert.md'
         'reference/commonplace-agent-memory-gap-plan.md': 'reference/agent-memory-coverage.md'
         'reference/commonplace-as-a-reflective-system.md': 'theory/evidence/commonplace-as-a-reflective-system.md'
+        'reference/commonplace-as-an-instrument.md': 'reference/case-studies/commonplace-as-an-instrument.md'
         'reference/control-plane-goals.md': 'reference/adr/014-scripts-as-python-package-one-tree-model.md'
         'reference/freshness-architecture.md': 'reference/review-architecture.md'
         'reference/freshness-schemas.md': 'reference/review-architecture.md'

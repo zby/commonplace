@@ -142,7 +142,7 @@ systems should be built. The first implementation was a knowledge-base
 framework. The KB remains the first worked application in which theories about
 retrieval, representation, review, validation, and self-modification meet real
 operating constraints together; it is not the final program boundary, as
-[Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)
+[Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md)
 states.
 
 The operator characterizes the intended direction as having been for the system

@@ -64,7 +64,7 @@ The trace establishes neither whole-pathway computational closure nor improvemen
 Relevant Notes:
 
 - [The declared Commonplace frame](../../reference/commonplace-declared-frame.md) — see-also: the canonical boundary declaration this classification is assessed under
-- [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md) — see-also: the same repository read for what its application is *for* in the design program, rather than for reflectivity and actor allocation
+- [Commonplace as an instrument](../../reference/case-studies/commonplace-as-an-instrument.md) — see-also: the same repository read for what its application is *for* in the design program, rather than for reflectivity and actor allocation
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidenced-by: supplies the full observed trace behind the causal-connection claim
 - [The tag-readme trace read as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — evidenced-by: supplies the full search, evaluation, and retention mapping behind the allocation profile
 - [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of noticing and candidate-forming mechanisms
