@@ -37,7 +37,7 @@ Gybels et al. define **inter-language reflection** as traditional reflection in 
 
 ## Connections Found
 
-The paper supplies the mature technical model for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../theory/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
+The paper supplies the mature technical model for [Cross-representational reflection](../theory/reflective-coverage-is-graded-across-representational-forms.md) and adds a useful qualification to [Unified calling conventions enable bidirectional refactoring](../theory/a-unified-interface-lets-programmers-choose-prompts-or-code.md): sharing a callable surface requires both data mappings and protocol mappings when regimes disagree about values and behavior. [Representational form](../theory/definitions/representational-form.md) constrains the proposed generalization beyond programming languages.
 
 ## Inherited Vocabulary
 

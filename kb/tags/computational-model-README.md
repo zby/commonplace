@@ -31,7 +31,7 @@ Instruction interpretation, scoping, state and orchestration of bounded LLM call
 ## Instruction Properties
 
 - [Instruction writing styles](../theory/writing-styles-are-strategies-for-managing-underspecification.md) — five observed context-file writing styles as strategies for narrowing the interpretation space
-- [Unified calling conventions](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md) — calling conventions that let components move between neural and symbolic implementations
+- [Unified calling conventions](../theory/a-unified-interface-lets-programmers-choose-prompts-or-code.md) — calling conventions that let components move between neural and symbolic implementations
 - [Local materialization should outperform distant natural-language declarations](../theory/local-materialization-should-outperform-distant-declarations.md) — untested comparison of declaration-only context with generated point-of-use views, under a single canonical maintenance authority
 - [Model-resolved indirection adds interpretation work to LLM execution](../theory/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — distinguishes references resolved by the model from aliases expanded by a deterministic executor and makes literalization conditional on token and lifecycle costs
 - [frontloading spares execution context](../theory/frontloading-spares-execution-context.md) — partial evaluation applied to instructions: precompute known inputs and insert results to spare the consuming call's context budget

@@ -162,7 +162,7 @@ rg -ni '^#{1,6}[[:space:]]+.*open questions' kb/theory --glob '*.md' | sort
 - theory/two-context-boundaries-govern-collection-operations.md (retired 2026-11-14) — line 59: `## Open questions`
 - [theory/unattended-work-needs-the-functions-that-interaction-supplied.md](../../theory/unattended-work-needs-the-functions-that-interaction-supplied.md) — line 42: `## Open Questions`
 - [theory/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md](../../theory/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md) — line 44: `## Open Questions`
-- [theory/unified-calling-conventions-enable-bidirectional-refactoring.md](../../theory/unified-calling-conventions-enable-bidirectional-refactoring.md) — line 55: `## Open Questions`
+- [theory/unified-calling-conventions-enable-bidirectional-refactoring.md](../../theory/a-unified-interface-lets-programmers-choose-prompts-or-code.md) — line 55: `## Open Questions`
 - [theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md](../../theory/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — line 50: `## Open questions`
 - [theory/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md](../../theory/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md) — line 60: `## Open Questions`
 - [theory/verification-needs-a-typed-target-before-it-needs-an-oracle.md](../../theory/verification-needs-a-typed-target-before-it-needs-an-oracle.md) — line 46: `## Open Questions`

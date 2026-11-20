@@ -69,4 +69,4 @@ Relevant Notes:
 
 - [Any barrier-delimited symbolic program with LLM calls is a batched select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — mechanism: stores control as explicit state deliberately, for analysis; the source program stays the form a reader reads
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — contrasts: its run-to-completion boundary is where the readable representation also changes
-- [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./unified-calling-conventions-enable-bidirectional-refactoring.md) — exemplifies: the graph-DSL versus imperative-scheduler comparison is one instance of this choice
+- [Unified calling conventions enable bidirectional refactoring between neural and symbolic](./a-unified-interface-lets-programmers-choose-prompts-or-code.md) — exemplifies: the graph-DSL versus imperative-scheduler comparison is one instance of this choice

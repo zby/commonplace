@@ -29,7 +29,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-UPML is a technical basis for distinguishing reusable method content from the adaptation logic that connects or specializes it. Its bridges and refiners make concrete the meta-decisions discussed in [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): a bridge adapts an interface between components, while a refiner changes a component by specialization. It also compares with [Unified calling conventions enable bidirectional refactoring between neural and symbolic](../theory/unified-calling-conventions-enable-bidirectional-refactoring.md), because both treat an explicit interface vocabulary as the boundary that permits components to be recomposed.
+UPML is a technical basis for distinguishing reusable method content from the adaptation logic that connects or specializes it. Its bridges and refiners make concrete the meta-decisions discussed in [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../theory/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md): a bridge adapts an interface between components, while a refiner changes a component by specialization. It also compares with [Unified calling conventions enable bidirectional refactoring between neural and symbolic](../theory/a-unified-interface-lets-programmers-choose-prompts-or-code.md), because both treat an explicit interface vocabulary as the boundary that permits components to be recomposed.
 
 ## Learning Claims (our opinion)
 
