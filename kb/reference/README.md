@@ -14,7 +14,7 @@ You direct an agent toward outcomes rather than running procedures by hand. Ask 
 | What you want to do | Does it edit your KB? | High-level overview |
 |---|---|---|
 | Write or update a note | Yes (creates or edits a file under `kb/`) | [Getting started](./getting-started.md) |
-| Discover links for a note | No (writes a connect report for you to review) | [Link vocabulary](./link-vocabulary.md) |
+| Discover links for a note | No (writes a connect report for you to review) | [Connect skill](../instructions/cp-skill-connect/SKILL.md) |
 | Ingest an external source | Yes (saves a local snapshot + tracked ingest) | `kb/sources/COLLECTION.md` |
 | Check structural validity | No (deterministic validator, no LLM calls) | [Validation contract](./validation-contract.md) |
 | Review notes semantically | No (`commonplace-review` never writes notes; paid launches) | [Review and editing system](./README-REVIEW-SYSTEM.md) |

@@ -69,7 +69,7 @@ purpose and the project's goals; do not add requirements nobody asked for.
    description conventions, and any attribution or evidence requirements.
 3. **Linking.** In the "Outbound links" section, name the permitted destinations.
    For formal links, list each label and the reader need it serves for that
-   destination. Reuse labels from the project's other contracts where they fit.
+   destination. Consult the [label catalogue](../../reference/link-vocabulary.md#label-catalogue) before naming a formal relation. Use a listed name only for its defined meaning and direction. If none fits, define a local label under an unreserved name. In either case, authorise the label for the intended destination in the new contract.
    To authorise inline citations to `external`, state their permitted purpose
    and where they may appear. These citations need no formal label.
 

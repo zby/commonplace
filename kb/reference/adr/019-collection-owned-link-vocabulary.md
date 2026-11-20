@@ -22,7 +22,7 @@ ADR 009 adopted a small universal link vocabulary (`extends`, `grounds`, `contra
 
 ## Decision
 
-`COLLECTION.md` owns outbound-linking rules for its source collection, organised **per destination collection**. A shared catalogue at `kb/reference/link-vocabulary.md` gives `COLLECTION.md` authors a palette of labels to pick from.
+`COLLECTION.md` owns outbound-linking rules for its source collection, organised **per destination collection**. A shared catalogue at `kb/reference/link-vocabulary.md` reserves each listed identifier for its defined relation. A collection may authorise a listed label or introduce a local label under an unreserved name. A declaration says where a label may be used and why a reader would follow it; it cannot reverse or redefine a reserved relation. Listing a label in the catalogue does not authorise its use.
 
 ### Three layers, collection-owned
 
@@ -66,7 +66,7 @@ Operative through `cp-skill-connect` and `cp-skill-write`, which read the source
 
 - **Each `COLLECTION.md` gets longer.** A destination block per active destination plus the search guidance and label table is more text than a single outbound table covering all destinations at register granularity.
 - **New collections need up-front design.** A fresh collection can't fall back on a register-level default; it must declare its outbound destinations explicitly. The catalogue cushions this by suggesting starter sets.
-- **Consistency across collections is softer.** Two collections linking to the same destination may authorise different labels. This is intentional — experimentation is the point — but readers crossing collection boundaries may see different vocabularies for apparently similar edges.
+- **The set of permitted labels varies.** Two collections linking to the same destination may authorise different labels. This is intentional — experimentation is the point — but readers crossing collection boundaries may see different vocabularies for apparently similar edges.
 - **Parsing `COLLECTION.md`.** The connect and write skills rely on model interpretation of the outbound section rather than a structured schema. If parsing becomes brittle, a later ADR may introduce a machine-readable block; for v1 the live-read + model interpretation is the trade.
 
 ### Not changing

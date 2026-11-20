@@ -1,5 +1,5 @@
 ---
-description: "Commonplace's linking approach: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and the shared label catalogue for COLLECTION.md authors"
+description: "Shared meanings and directions for formal link labels, local permission by destination, and the maintenance consequences of lineage relations"
 type: types/note.md
 ---
 
@@ -7,9 +7,9 @@ type: types/note.md
 
 ## Approach
 
-Commonplace treats links as authored reader aids, not automatic graph decoration. A link should tell a future reader why following it might help from the source artifact they are already reading.
+The catalogue defines what a shared formal label asserts. The source collection decides whether its writers may use that label for a given destination. For example, a collection may authorise `derived-from` for links to tracked sources; it cannot use that name for a source that merely inspired the work.
 
-The source collection owns that decision. Each `COLLECTION.md` defines which destinations writers may link to, when an agent should search those destinations, and which labels are authorised for each source-to-destination pairing. A destination is a local collection or the reserved token `external`; external links are unauthorized unless the source collection names `external` or uses the destination wildcard `any`. The shared catalogue on this page is a palette; the collection's own rules are authoritative.
+Collection authors follow the [outbound-link rules](../types/collection-contract.md#authoring-outbound-link-rules). They may introduce a local label under an unreserved name. Writers normally consult their collection’s `COLLECTION.md`; an entry in this catalogue is not permission to use a label.
 
 Labels name reader needs rather than ontology edges. A `grounds` link says "follow this if you need to verify the premise." An `implements` link says "follow this if you need the concrete realization." The label is useful only when the source, target, and reason form an articulated relationship.
 
@@ -19,17 +19,13 @@ The articulation test applies to every outbound link:
 
 > `[source] connects to [target] because [specific reason].`
 
-Markdown's title attribute (`[text](url "grounds")`) could technically carry a label inline, but it doesn't solve the actual problem. The label alone isn't the payload — the articulation test requires label *plus* a specific reason, and a reason clause doesn't fit an attribute. And mechanizing the label wouldn't resolve the harder call every author already faces regardless of syntax: whether a relationship is significant enough to name as a formal edge at all, not just what to call it once named.
-
-The [connect skill](../instructions/cp-skill-connect/SKILL.md) operationalizes this model without silently rewriting notes. It reads the source collection's `COLLECTION.md`, searches authorised destinations according to their search guidance, applies the articulation test, and writes a report of candidate links. A maintainer or later editing pass decides which candidates become authored links.
-
-Collection authors authoring or revising a `COLLECTION.md` outbound-links section follow [the collection-contract type](../types/collection-contract.md#authoring-outbound-link-rules) and select labels from the catalogue below. Note writers normally read only their collection's `COLLECTION.md` and `cp-skill-write`.
-
 ## Label catalogue
 
 Labels cluster by the source shape they emerged to describe. Each `COLLECTION.md` selects whichever labels fit each destination. The grouping is advisory and does not classify collections.
 
 Every directional identifier completes `source <label> target`: the artifact containing the link is the grammatical subject and the linked artifact is the target. A catalogue entry therefore states what the source asserts about the target, not merely what role the target serves. Omitted helper verbs such as “is” are acceptable when they do not reverse the endpoints. Pre-existing identifiers that fail this invariant are explicit migration debt and retain their declared meaning until their own scoped migration; new or changed identifiers must satisfy it ([ADR 058](./adr/058-directional-identifiers-use-source-as-subject.md)).
+
+When adding a name to the catalogue, check live collection contracts and specialised type rules for earlier local uses. If a local use means the same thing, its existing permission can stand. If it means something else, choose another shared name or agree on a migration before reserving it. Registration alone must not change what existing links assert.
 
 ### Theoretical-shaped labels
 
@@ -84,7 +80,7 @@ Operational relations. Commonly used for outbound links to prescriptive destinat
 
 ### Universal / weak
 
-Usable from any source to any destination.
+Not restricted to a particular source or destination shape. Use only where authorised.
 
 | label | reader-need |
 |---|---|
@@ -143,17 +139,12 @@ Rationale: [source changes should surface downstream review targets, while rever
 
 ## Limits
 
-The catalogue is guidance, not a closed enum. Add to it, adapt it, or ignore it where a collection has a better local vocabulary. Labels still need shared recognition to carry stable meaning across collections.
+Only formal uses of a label assert its registered relation. An inline citation or a mention of a label in ordinary prose does not by itself assert one. A local reader-need example may clarify a shared meaning, not replace it.
 
 When a pre-existing directional identifier is replaced, use [Migrate a directional link label](../instructions/migrate-directional-link-label.md) after semantic review supplies an adopted assertion and complete disposition ledger.
 
 Do not use this page as a fallback for lazy labelling. If the source `COLLECTION.md` authorises specific labels for a destination, use those rather than downgrading to `see-also`.
 
-## Open questions
-
-- Is source-shape grouping better than an alphabetical catalogue? Shape helps authors find labels that fit their source; alphabetical is flatter but less suggestive.
-- How should the connect skill treat authorized-but-rarely-used destinations? Speculative — probably depends on use-frequency signal.
-- Should `supersedes` be restricted to intra-descriptive use? Most use is ADR chains inside `kb/reference/`; cross-collection supersession is rare.
 
 ---
 

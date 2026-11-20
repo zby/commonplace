@@ -123,7 +123,9 @@ The old identifier meant “the target is the rationale for the source,” viola
 
 `commonplace-validate` does not currently verify that a footer label is authorized for its source/destination pair, that an asymmetric label points the declared way, or that a writable collection supplies usable outbound rules. The contradictions above therefore validate cleanly.
 
-**Question:** which parts are stable and syntactic enough to validate now, and which should remain collection-conformance review criteria until the vocabulary settles?
+**Enforcement target:** check each formal labelled link against the permissions for its source and destination, including applicable type rules. Accept a declared local label; do not accept an unauthorised use merely because the label is in the shared catalogue. Ignore mentions, examples and unlabeled citations. Whether the evidence supports the asserted relation, or a local gloss changes a reserved meaning, requires semantic review.
+
+Before making this a deterministic failure, settle how the checker will identify formal uses and read permissions from contracts that currently use tables, per-destination blocks or prose. Test an authorised and unauthorised use of the same label, a local-only label, and a prose mention. A parser that silently skips a contract is not a KB-wide check.
 
 ### Reciprocal-link policy is documented but only partially operationalized
 
