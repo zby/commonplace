@@ -10,17 +10,27 @@ Keep analysis method edits executable and update every affected consumer.
 ## Consumption and authority
 
 The method author loads this instruction before an applicable edit, together
-with the owning collection and selected instruction/type-spec contract. The collection contract supplies this mandatory route to method authors.
-Before changing analysis code, worker instructions, report contracts or
-publication design, apply the evaluation priorities below alongside the
-collection's primary/secondary purpose (operator direction, 2026-10-05; treat
-them as design intent, not a replacement for adopted execution contracts):
+with the owning collection and selected instruction/type-spec contract. The
+collection contract supplies this mandatory route to method authors along with
+the collection's purpose and artifact quality standards.
 
-- **Evaluation priorities:** use KB theories as testable workflow inputs; value learning, comparison, and useful borrowing at reasonable total cost (production, review, and consumption) over counts or completion alone; discover main constraints through use (keep requirements, observed limits, and hypotheses distinct); allow clearly marked local problems and keep uncertainty beside affected claims while still repairing materially misleading conclusions; keep source-system findings distinct from Commonplace adoption judgments (transfer scans stay separate).
-- **Design freedom:** worker roles, correction ownership, report boundaries, review placement, and round budgets are means to test, not fixed architecture.
+When changing analysis code, worker instructions, report contracts, or
+publication design, apply these method-evolution priorities as design intent
+(operator direction, 2026-10-05; they do not override adopted execution
+contracts):
 
-Analyst job packets load neither this instruction nor the design brief. This
-instruction grants no mutation authority beyond the commissioned edit.
+- Treat KB theories as potential workflow inputs to apply and test.
+- Judge method changes by learning, comparison, and useful borrowing at
+  reasonable total cost (producing, reviewing, and consuming analyses), not
+  report counts, defect counts, or completion alone.
+- Discover main constraints through use, keeping operator requirements,
+  observed limits, and design hypotheses distinct (the current arrangement is
+  not itself a requirement).
+- Treat worker roles, correction ownership, report boundaries, review
+  placement, and round budgets as means to test, not fixed architecture.
+
+Analyst job packets do not load this instruction. This instruction grants no
+mutation authority beyond the commissioned edit.
 
 ## Composition
 

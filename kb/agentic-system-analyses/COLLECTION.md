@@ -10,15 +10,17 @@ This collection holds workflow-produced analyses of external agentic systems,
 their run state, local types and the analysis method.
 The operator's primary purpose, supplied on 2026-10-05, is to chart the design
 space and find solutions useful to Commonplace. A useful public database is
-secondary. [Maintain the analysis method](./instructions/maintain-analysis-method.md)
-holds the evaluation priorities for method changes. Analyses support that
-purpose without including Commonplace adoption advice.
+secondary. Keep source-system findings distinct from Commonplace adoption
+judgments; transfer scans stay separate.
 
 Their contribution is an evidence-grounded account of source-native operation,
 with bounded synthesis and explicit limitations. The quality goal is fidelity
 and economy. Explain the external mechanism before applying Commonplace concepts;
 qualify mappings and keep evidence limits beside claims. The source account
-must remain intelligible when a reader rejects the mapping.
+must remain intelligible when a reader rejects the mapping. Useful analyses may
+carry clearly marked local problems and keep consequential uncertainty beside
+affected conclusions and comparison values; materially misleading conclusions
+still need repair or qualification.
 
 ## Authoring
 
