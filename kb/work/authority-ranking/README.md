@@ -14,7 +14,7 @@ The composition sketch already exists as a menu candidate — "ranking by author
 
 ## Evaluation boundary
 
-Framework-side design only. Author dossiers and any concrete ranking experiment happen casebook-first in `epistack-casebooks` per that repo's `backlog-to-commonplace.md` protocol; this workshop consumes what that casework proves and designs the transferable mechanism. Doctrine constraints are inputs, not open questions: no stored scalars, adjudication downstream, frontmatter semantics stay type-owned ([collections never own frontmatter semantics](../../reference/case-studies/what-would-status-current-assert.md)).
+Framework-side design only. Author dossiers and any concrete ranking experiment happen casebook-first in `epistack-casebooks` per that repo's `backlog-to-commonplace.md` protocol; this workshop consumes what that casework proves and designs the transferable mechanism. This workshop assumes no stored scalars, downstream adjudication and type-owned meanings for its ranking fields. The [ordinary-note status case](../../reference/case-studies/what-would-status-current-assert.md) illustrates one ambiguity to avoid; it does not establish those constraints for every collection.
 
 ## What closes it
 

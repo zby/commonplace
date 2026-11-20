@@ -13,7 +13,7 @@ This proposal asks whether Commonplace should introduce an `artifact_function` d
 ## Current state (as of 2026-08-22)
 
 - Frontmatter `type:` identifies the artifact's type contract. Types carry structural and semantic expectations; explicit traits add independently checkable review expectations. Review criterion selection can currently narrow a catalog gate by type or trait, but not by a separate artifact-function axis.
-- A type spec wholly owns the semantics of its frontmatter fields. A collection supplies purpose, intended contribution, quality goal, title and description conventions, lifecycle, and link grammar; it cannot redefine what the same field value means in different directories.
+- ADR 044 removed ordinary note status rather than letting `current` express a different commitment in each collection. A proposed routing field faces a related question: what must its consumers be able to infer from the file alone?
 - Specialized types already imply some whole-artifact jobs. An ADR records a decision, an instruction directs behavior, a definition pins a term, and a design proposal preserves an undecided design surface. The general `note` type does not determine one function.
 - Collection placement is informative but not decisive. `kb/notes/` defaults toward composable theory claims while admitting synthesis notes; `kb/reference/` contains both bounded system accounts and composite architecture descriptions; `kb/articles/` admits self-standing, multi-claim exposition.
 - `run-full-improvement-pass-on-note` (retired by ADR 135) checks collection and type fit during synthesis, after several methods have already treated one central claim as the target's identity. Its packet records one `Update` sentence, and its compression, critique, split, reframe, merge, and delete logic mostly fit the `claim + atomic` case.
@@ -67,7 +67,7 @@ Function and composition shape form a cross-product rather than a hierarchy. The
 
 A generalized procedure should consume a **resolved artifact function**, not assume that a raw field is present. Resolution must preserve provenance: declared on the artifact, implied by an exact type, supplied as retained intent by an optional companion, inferred from authorized context, or left undetermined. An undetermined function is a valid report state. A mutating procedure that cannot safely select an artifact-level method should abstain rather than manufacture a declaration.
 
-Any persisted field must have one global, type-owned meaning. A collection may supply evidence or a default used during resolution, but it cannot redefine `description` or any other value. A declared function that contradicts a specialized type is a conflict to diagnose, not an override rule to apply silently.
+For the proposed routing field, the design assumes one type-owned meaning across participating collections. A collection may supply evidence or a default used during resolution, but it cannot redefine `description` or any other value. A declared function that contradicts a specialized type is a conflict to diagnose, not an override rule to apply silently.
 
 ## Options
 
@@ -172,7 +172,7 @@ This maximizes queryability and makes routing deterministic from artifact bytes.
 Relevant Notes:
 
 - [Document types should be verifiable](../../theory/document-types-should-be-verifiable.md) — rests-on: whole-artifact function should not become a family of types unless each distinction entails a checkable artifact contract
-- [The collection–type split is asymmetric: collections never own frontmatter semantics](../case-studies/what-would-status-current-assert.md) — evidenced-by: any persisted function field must keep one type-owned meaning across collections
+- [What would `status: current` assert?](../case-studies/what-would-status-current-assert.md) — see-also: the earlier status design illustrates the ambiguity a routing consumer would face if it lacked the collection context
 - [ADR 012: types for structure, traits for review](../adr/012-types-for-structure-traits-for-review.md) — compares-with: the existing type and trait routing surfaces that a dedicated function axis would supplement or reuse
 - [ADR 092: Write briefs are optional sidecars named by a validated pointer](../adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) — compares-with: the adopted optional brief is one possible carrier for retained function intent but cannot be assumed for every artifact
 - [Deterministic write-context assembly](./deterministic-write-context-assembly.md) — see-also: the proposed closed assembly path required if function intent is loaded from a separate artifact

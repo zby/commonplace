@@ -43,6 +43,8 @@ Scenario architecture: the [write-a-note scenario](../../../tests/scenarios/writ
 
 Workflow handoffs: [storage roles](../../reference/storage-architecture.md#storage-roles) distinguishes a named output another invocation may consume from the producer’s private replay records. The handoff test belongs there rather than on a separate page.
 
+The [ordinary-note status case](../../reference/case-studies/what-would-status-current-assert.md) records why collection-relative endorsement was rejected for `current`. It preserves the design question without turning the outcome into a rule for future fields.
+
 ## Files in this workshop
 
 - [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers).

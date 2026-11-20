@@ -49,6 +49,8 @@ For exact implementation facts, inspect `src/commonplace/` (or locate the instal
 
 ## Case studies
 
+- [What would `status: current` assert?](./case-studies/what-would-status-current-assert.md) — why the distinction between endorsing a claim and attributing it accurately mattered when Commonplace removed ordinary note status.
+
 - [Where change candidates come from in Commonplace](./case-studies/where-change-candidates-come-from-in-commonplace.md) — how a problem noticed by a check or report becomes a proposed change, and where that still needs a maintainer.
 
 ## System-coupled notes and declarations
@@ -61,7 +63,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Commonplace as an instrument](./commonplace-as-an-instrument.md) — what this KB tests in the design program
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
-- [Collections never own frontmatter semantics](./case-studies/what-would-status-current-assert.md) — why the collection/type split is asymmetric
 
 ## Decision history
 
