@@ -125,7 +125,7 @@ The old identifier meant “the target is the rationale for the source,” viola
 
 **Enforcement target:** check each formal labelled link against the permissions for its source and destination, including applicable type rules. Accept a declared local label; do not accept an unauthorised use merely because the label is in the shared catalogue. Ignore mentions, examples and unlabeled citations. Whether the evidence supports the asserted relation, or a local gloss changes a reserved meaning, requires semantic review.
 
-Before making this a deterministic failure, settle how the checker will identify formal uses and read permissions from contracts that currently use tables, per-destination blocks or prose. Test an authorised and unauthorised use of the same label, a local-only label, and a prose mention. A parser that silently skips a contract is not a KB-wide check.
+The [formal link permission check proposal](../../reference/proposals/formal-link-permission-check.md) compares two ways to declare permissions once for writers and the validator. It gives acceptance cases and distinguishes a report-only trial from a decision to make violations fail validation.
 
 ### Reciprocal-link policy is documented but only partially operationalized
 
