@@ -45,6 +45,8 @@ Workflow handoffs: [storage roles](../../reference/storage-architecture.md#stora
 
 The [ordinary-note status case](../../reference/case-studies/what-would-status-current-assert.md) records why collection-relative endorsement was rejected for `current`. It preserves the design question without turning the outcome into a rule for future fields.
 
+Design rationale: keep [the recovery guide](../../reference/design-rationale-management.md) separate from content routing. A maintainer reconsidering an implementation needs to find its reasons and distinguish a recorded choice from one inferred after the fact.
+
 ## Files in this workshop
 
 - [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers).
