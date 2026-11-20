@@ -1,12 +1,12 @@
 ---
-description: "Controlled tool responses and captured effects let instruction tests expose protocol violations that a plausible final artifact can hide; coverage depends on mock fidelity."
+description: Mock tools can record attempted writes without changing files. To rule out forbidden attempts in a test run, the test must observe every available write route.
 type: types/note.md
 brief: unit-testing-llm-instructions-requires-mocking-the-tool-boundary.brief.md
 traits: [title-as-claim]
 tags: [document-system, constraining, learning-theory]
 ---
 
-# Mocking the tool boundary makes instruction behavior testable in isolation
+# Recording attempted tool actions can expose instruction violations that output checks miss
 
 When an LLM instruction uses tools to read, search or modify external state,
 replacing those tools with controlled responses lets a test fix what the agent
@@ -20,17 +20,19 @@ not merely reproduce what an earlier run happened to do.
 
 ## Example: discovery without source modification
 
-Suppose an instruction must find connections among notes and write a report,
-without modifying the source notes. A test supplies a target and candidate notes
-through controlled reads and searches, and captures attempted writes.
+Suppose an instruction tells an agent to find connections among notes and write
+a report. It permits writing the report but forbids attempting to change any
+source note. A test supplies a target and candidate notes through controlled
+reads and searches, and captures attempted writes.
 
 The agent might produce a convincing report while also attempting to rewrite a
-source note. Checking the report alone would miss that violation. Capturing the
-attempted effects exposes it, even when the mock prevents the actual change.
+source note. Checking the report alone would miss that violation. One recorded
+attempt is enough to show the violation, even if the mock prevents the change.
 
-The test must cover every available mutation route. Checking that no editing
-tool was called is insufficient if a shell or another write tool can change the
-same files. An unobserved route is a gap in the isolation claim.
+To conclude that the agent made no forbidden attempt in that run, the test must
+observe every available way to write to the source notes. Checking that no
+editing tool was called is insufficient if a shell or another tool can write to
+the same files.
 
 ## What the checks establish
 
