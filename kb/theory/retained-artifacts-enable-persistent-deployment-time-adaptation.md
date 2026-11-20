@@ -1,11 +1,11 @@
 ---
-description: Retaining evaluated changes to behavior-shaping prompts, rules, tools, and tests gives deployed systems a persistent adaptation path outside model-weight updates
+description: A deployed system can use feedback from live runs to choose changes to prompts, rules, or tools that shape its behavior in later runs.
 type: types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory, deploy-time-learning, self-improving-systems, continual-learning, improvement-loop]
 ---
 
-# Retained system-definition artifacts enable persistent deployment-time adaptation
+# Deployed systems can learn from feedback with fixed model weights
 
 [Continual learning requires governing behaviour-changing writes, not just storing content](./continual-learning-requires-governing-behaviour-changing-writes.md) argues that deployed systems need durable behavior changes installed within their operating feedback loops. These changes need not wait for another model-weight training cycle. During deployment, a system can evaluate and retain changes to [system-definition artifacts](./definitions/system-definition-artifact.md)—prompts, rules, tools, schemas, tests, and configuration that it consumes with binding force.
 
