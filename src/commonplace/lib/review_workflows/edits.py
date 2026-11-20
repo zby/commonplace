@@ -41,7 +41,11 @@ import workjig
 from commonplace.headless.jobs import Run, run_lock
 from commonplace.lib import answers, frontmatter
 from commonplace.lib.hashing import content_sha256_for_text as sha256
-from commonplace.lib.naming import WRITE_BRIEF_TYPE, write_brief_name_for
+from commonplace.lib.naming import (
+    WRITE_BRIEF_TYPE,
+    slugify_note_filename,
+    write_brief_name_for,
+)
 from commonplace.lib.note_parser import blank_fenced_code_blocks, find_markdown_links
 from commonplace.lib.quote_matching import normalize_text
 from commonplace.lib.quote_verification import parse_prose_citations
@@ -148,11 +152,12 @@ def answered(root: Path, path: Path, text: str) -> tuple[dict, list[str]]:
     return parsed.data, list(report.fails)
 
 
-def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> list[str]:
+def bounds(root: Path, note: str, start: str, text: str, baseline: set[str], *, allow_h1: bool = False) -> list[str]:
     """The hard bounds an edited note breaks; empty when it keeps them.
 
-    The frontmatter title, type and brief declaration and the H1 are the start text's;
-    `user-verified` is gone when the body changed; and the validator finds
+    Keep the frontmatter title, type and brief declaration, and the H1 unless
+    the specialized title check allows it. Remove `user-verified` after a body
+    change. The validator finds
     no failure that the start text did not have (`baseline`).
     """
     parsed, before = frontmatter.parse(text), frontmatter.parse(start)
@@ -161,7 +166,7 @@ def bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> 
     problems = [f"frontmatter `{key}` changed; keep it as it was" for key in PRESERVED
                 if parsed.data.get(key) != before.data.get(key)]
     parts, start_parts = results.note_parts(text), results.note_parts(start)
-    if start_parts is not None and parts["title"] != start_parts["title"]:
+    if not allow_h1 and start_parts is not None and parts["title"] != start_parts["title"]:
         problems.append(f"the H1 changed; keep `# {start_parts['title']}`")
     if (start_parts is None or parts["body"] != start_parts["body"]) and "user-verified" in parsed.data:
         problems.append("the body changed, so remove `user-verified` from the frontmatter")
@@ -174,8 +179,8 @@ def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: 
 
     An artifact with frontmatter keeps the note bounds of `bounds()`. An
     artifact without frontmatter gains none, keeps its first H1 and adds no
-    validation failure. No edit may change the title: an operation that judges
-    titles proposes them in its report.
+    validation failure. This is the default check; claim title repair has its
+    own narrower check.
     """
     if not text.strip():
         return ["the revised artifact is empty"]
@@ -186,6 +191,56 @@ def artifact_bounds(root: Path, artifact: str, start: str, text: str, baseline: 
     if title.get("title") != start_title.get("title"):
         problems.append(f"the H1 changed; keep `# {start_title.get('title')}`")
     return problems + [f"validation: {fail}" for fail in added(validation_fails(root, artifact, text), baseline)]
+
+
+_DESCRIPTION_LINE = re.compile(r"^description:[^\r\n]+", re.MULTILINE)
+_NOTE_H1 = re.compile(r"\A((?:[ \t]*\r?\n)*# )([^\r\n]+)")
+
+
+def title_relocation(note: str, start: str, text: str) -> dict[str, str] | None:
+    """The session agent's move, if a published H1 change needs a different filename."""
+    before, after = results.note_parts(start), results.note_parts(text)
+    if not before or not after or before["title"] == after["title"]:
+        return None
+    title = after["title"]
+    destination = Path(note).with_name(f"{slugify_note_filename(title)}.md").as_posix()
+    if destination == note:
+        return None
+    return {"note": note, "new-title": title, "destination": destination}
+
+
+def claim_title_bounds(root: Path, note: str, start: str, text: str, baseline: set[str]) -> list[str]:
+    """Allow only a supported claim title and description edit at the same path."""
+    before, after = frontmatter.parse(start), frontmatter.parse(text)
+    if (not before.ok or not after.ok or "title-as-claim" not in (before.data.get("traits") or ())
+            or "user-verified" in before.data or "title" in before.data):
+        return ["claim title repair requires an unverified claim-titled note without a frontmatter title"]
+
+    def masked(value: str) -> str | None:
+        body = frontmatter.strip(value)
+        header, heading = value[:len(value) - len(body)], _NOTE_H1.match(body)
+        header, count = _DESCRIPTION_LINE.subn("description:", header)
+        if count != 1 or heading is None or not heading[2].strip():
+            return None
+        return header + heading[1] + body[heading.end():]
+
+    start_mask = masked(start)
+    if start_mask is None or start_mask != masked(text):
+        return ["change only the first H1 and the description line; keep all other text exactly"]
+    if ({k: v for k, v in before.data.items() if k != "description"}
+            != {k: v for k, v in after.data.items() if k != "description"}):
+        return ["keep every frontmatter field except description unchanged"]
+    old_title, new_title = results.note_parts(start)["title"], results.note_parts(text)["title"]
+    if not new_title or new_title == old_title:
+        return ["repair the H1, or return unchanged with a reason"]
+    try:
+        relocation = title_relocation(note, start, text)
+    except ValueError as error:
+        return [f"choose a title suitable for relocation: {error}"]
+    if relocation and ((root / relocation["destination"]).exists()
+                       or (root / relocation["destination"]).is_symlink()):
+        return [f"the title's relocation destination already exists: {relocation['destination']}"]
+    return bounds(root, note, start, text, baseline, allow_h1=True)
 
 
 _QUOTE_MARK = re.compile(r"^[ \t]*>[ \t]?", re.MULTILINE)
@@ -374,6 +429,7 @@ def record_publication(run_dir: Path, root: Path, note: str, before: str, text: 
     time; `decided_by` is `AUTOMATIC` or `operator`, and `revised` says that
     the operator published a revised candidate.
     """
+    relocation = title_relocation(note, before, text)
     record = published(run_dir) or {"publications": []}
     number = len(record["publications"]) + 1
     artifact = run_dir / "artifact"
@@ -385,6 +441,8 @@ def record_publication(run_dir: Path, root: Path, note: str, before: str, text: 
     entry = {"number": number, "text": path.relative_to(root).as_posix(), "sha256": sha256(text),
              "diff": changes.relative_to(root).as_posix(), "before-sha256": sha256(before), "entries": entries,
              "at": at, "decided-by": decided_by, "revised": revised}
+    if relocation is not None:
+        entry["relocation"] = relocation
     record["publications"].append(entry)
     observations.atomic_json(run_dir / PUBLISHED, record)
     return entry

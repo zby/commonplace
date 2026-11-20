@@ -19,7 +19,7 @@ from commonplace.cli.review_workflows import main, revise_main
 from commonplace.headless.harness import Harness, Profile
 from commonplace.headless.jobs import Run
 from commonplace.lib import answers as answer_files
-from commonplace.lib import library
+from commonplace.lib import library, relocation
 from commonplace.lib.review_workflows import decisions, edits, observations, results
 from commonplace.lib.review_workflows import revise as revise_module
 from commonplace.lib.review_workflows.results import make_result, write_result
@@ -91,6 +91,10 @@ if kind == "assess":
     listed = re.findall(r"^- `([^`]+)` \(criterion `[^`]+`, depth", frame, re.MULTILINE)
     if "FIXIT" in text and listed:
         plan = plan.replace("passes:\n", f"passes:\n  - pass: fix-strategy-taxonomy\n    finding: {listed[0]}\n")
+    if "REPAIRTITLE" in text:
+        finding = next(path for path in listed if path.endswith("/frontmatter/claim-strength.md"))
+        plan = ("purpose: p\nmust-keep: []\nstop: null\npasses:\n"
+                f"  - pass: repair-claim-title\n    finding: {finding}\n")
     if "STOP" in text:
         plan = "purpose: p\nmust-keep: []\npasses: []\nstop: rewrite-needed\n"
     if Path("new-proposal").exists():
@@ -107,6 +111,16 @@ elif kind == "list":
         result("unchanged")
     else:
         result("proposed", proposals=proposals)
+elif name == "repair-claim-title":
+    if "BODYCONFLICT" in text:
+        result("unchanged")
+    else:
+        revised = text.replace("\n# Alpha\n", "\n# Alpha can change\n")
+        revised = revised.replace("description: A note about alpha", "description: A concrete claim about alpha")
+        if "BODYEDIT" in text and "was rejected" not in frame:
+            revised = revised.replace("Alpha body", "Changed body")
+        outputs["candidate"].write_text(revised)
+        result("changed", changes=["Retitled Alpha"])
 else:
     if kind == "apply":
         import yaml
@@ -1345,7 +1359,8 @@ if frame.removeprefix("Task:\n").startswith("Review one note"):
         sys.exit(0)
     for output in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
         criterion = names[0] if output == "review.md" else output
-        outcome = "report" if "outcome: report" in frame else "warn" if "warned" in criterion else "pass"
+        outcome = ("report" if "outcome: report" in frame else "warn"
+                   if any(name in criterion for name in ("warned", "claim-strength")) else "pass")
         Path(listed(output)).write_text(review_text(outcome, criterion))
     sys.exit(0)
 '''
@@ -1427,6 +1442,51 @@ def test_full_reviews_then_assesses_with_findings_and_depth_one_reports(reviewed
     stale = report["continuation"]["items"][-1]
     assert stale["after"] == ["1", "2", "3"] and stale["actor"] == "worker"
     assert stale["how"]["command"] == f"commonplace-review status {NOTE_PATH} --stale"
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("marker", ["BODYEDIT", "BODYCONFLICT"])
+def test_full_claim_title_repair_cannot_change_the_body(reviewed, capsys, marker):
+    repo = reviewed
+    gate = repo[0] / "kb/instructions/review-gates/frontmatter/claim-strength.md"
+    gate.parent.mkdir(parents=True, exist_ok=True)
+    gate.write_text(review_operation(2, "frontmatter/claim-strength"))
+    original = NOTE.format(words=f"REPAIRTITLE {marker}").replace("user-verified: true", "traits: [title-as-claim]")
+    inbound = repo[0] / "kb/notes/inbound.md"
+    inbound.parent.mkdir(parents=True, exist_ok=True)
+    inbound.write_text("# Inbound\n\nSee [the example](./alpha.md).\n")
+    config = repo[0] / "properdocs.yml"
+    config.write_text("plugins:\n  - redirects:\n      redirect_maps:\n")
+    start(repo, text=original)
+
+    code, report, launches = revise(repo, capsys, NOTE_PATH, "--full")
+
+    assert code == 0
+    [state] = report["passes"]
+    assert state["name"] == "repair-claim-title/frontmatter/claim-strength"
+    if marker == "BODYCONFLICT":
+        assert state["state"] == "no-change" and not report["published"]
+        assert note_text(repo) == original
+    else:
+        assert launches.count("pass repair-claim-title big") == 2, "the first candidate changed the body"
+        assert state["state"] == "applied" and report["published"]
+        [publication] = report["publications"]
+        assert publication["relocation"] == {
+            "note": NOTE_PATH, "new-title": "Alpha can change", "destination": "kb/notes/alpha-can-change.md",
+        }
+        assert not (repo[0] / publication["relocation"]["destination"]).exists(), "the agent owns the move"
+        published = original.replace("# Alpha\n", "# Alpha can change\n").replace(
+            "description: A note about alpha", "description: A concrete claim about alpha")
+        assert note_text(repo) == published
+        move = publication["relocation"]
+        assert relocation.relocate_note(root=repo[0], note_arg=move["note"], new_name=move["new-title"]) == 0
+        assert note_text(repo) == published
+        assert relocation.relocate_note(root=repo[0], note_arg=move["note"], new_name=move["new-title"],
+                                        apply=True) == 0
+        assert not (repo[0] / NOTE_PATH).exists()
+        assert (repo[0] / move["destination"]).read_text() == published
+        assert "[the example](./alpha-can-change.md)" in inbound.read_text()
+        assert "'notes/alpha.md': 'notes/alpha-can-change.md'" in config.read_text()
 
 
 @pytest.mark.slow

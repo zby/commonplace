@@ -18,9 +18,36 @@ After each run whose report has `published: true`:
 1. Tell the operator what was published: the plan entries the new publication covers, the path of the note, and the path of the publication's `diff`.
 2. Tell the operator that the change is not committed. It is in the working tree, and `git diff` on the note shows it.
 3. Tell the operator that they reverse it with git, for example `git checkout -- NOTE` or `git restore NOTE`. The run does not reverse it.
-4. If the report has a `continuation`, continue with [continue a revise pass](./continue-a-revise-pass.md).
+4. If a publication contains `relocation`, follow [relocate a retitled note](#relocate-a-retitled-note).
+5. If the report has a `continuation`, continue with [continue a revise pass](./continue-a-revise-pass.md).
 
 Do not approve, commit or reverse a publication on your own judgment.
+
+## Relocate a retitled note
+
+A publication's `relocation` names the `note`, `new-title` and expected
+`destination`. The workflow writes the text at the old path; the session
+agent completes publication with the move tool. This applies to both
+automatic and held publications. Do not move a note for a title proposal,
+or when no relocation is listed.
+
+1. Confirm that the old path still holds the latest published text and that the
+   published title matches `new-title`. Dry-run `commonplace-relocate-note NOTE
+   "NEW TITLE"` with those values. Check that its destination matches the
+   report and that its proposed writes do not touch unrelated working changes.
+2. If pending answers, a held candidate, or other active revision work still
+   needs the old path, defer the move until that work is settled or explicitly
+   left behind. Do not move review results or run records to the new path.
+3. Make the text and relocation separate commits if the operator authorized
+   commits. Commit the text at the old path first. Then repeat the dry-run
+   invocation with `--apply`. Do not rename by hand or manually rewrite
+   backlinks or redirects. Without commit authority, the move may still be
+   applied; leave it and the text change uncommitted, and report that they
+   need separate commits. If the move is blocked, report it as pending with
+   the exact reason rather than improvising a different path.
+4. Inspect the move diff, validate the relocated note and, when the redirect
+   map changed, validate redirects. Report the old and new paths. A review
+   at the new path needs a fresh run; old results remain historical evidence.
 
 ## A held candidate
 
@@ -51,6 +78,6 @@ Use this when the operator accepts the candidate with changes.
 3. Show the operator the diff from `final.md` to the copy, and ask them to approve that exact revised text. Do not continue before the operator has seen it.
 4. On the operator's stated word for that text, run `commonplace-revise publish RUN --revised FILE`, the `revised-command` in `held`. It launches nothing. It is refused on the checks of step 4 above, and when the revised text fails the candidate checks (frontmatter, H1, validation). Read a refusal to the operator. When it publishes, the run keeps the text as `artifact/revised.md`, with `artifact/revised-from-final.diff` from the candidate and `artifact/revised.diff` from the note, and its report lists any `new-warnings` of the published text; tell the operator each one.
 
-Verification: after `publish`, its report names the publication under `published`, and the note holds `final.md` or the revised text. For a rewrite whose published text is the judged candidate, the report's `current-result` names the stored review; after a revision, `not-current` says why the review was not stored. Code writes the note only when every check of step 4 passes. Any other case writes nothing.
+Verification: after `publish`, its report names the publication under `published`, and the note holds `final.md` or the revised text. If `published.relocation` is present, follow [relocate a retitled note](#relocate-a-retitled-note). For a rewrite whose published text is the judged candidate, the report's `current-result` names the stored review; after a revision, `not-current` says why the review was not stored. Code writes the note only when every check of step 4 passes. Any other case writes nothing.
 
 Stop and leave the candidate unpublished when the operator declines to decide.

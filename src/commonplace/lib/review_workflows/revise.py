@@ -189,6 +189,8 @@ PASSES_DIR = "instructions/simplification-passes"
 FIX_REL = "instructions/fix-warnings/fix-strategy-taxonomy.md"
 """The edit operation that fixes one review finding; a plan entry for it names the finding."""
 FIX = Path(FIX_REL).stem
+CLAIM_TITLE = Path(edit_operations.CLAIM_TITLE_REL).stem
+CLAIM_STRENGTH = "frontmatter/claim-strength"
 FINDING = "finding"
 """The plan field, and the input role, that names a review result file."""
 FINDING_OUTCOMES = ("warn", "fail")
@@ -432,6 +434,11 @@ def plan_checks(data: dict, known: dict[str, Pass], root: Path, artifact: str) -
                 finding = read_finding(root, artifact, entry[FINDING])
             except ValueError as error:
                 problems.append(f"passes item {index}: {error}")
+                continue
+            if current.name == CLAIM_TITLE and (finding.criterion_id != CLAIM_STRENGTH
+                                                or finding.outcome not in FINDING_OUTCOMES):
+                problems.append(f"passes item {index}: `{CLAIM_TITLE}` requires a warn or fail "
+                                f"result from `{CLAIM_STRENGTH}`")
                 continue
         elif entry.get(FINDING) is not None:
             problems.append(f"passes item {index}: `{current.name}` takes no `{FINDING}`")

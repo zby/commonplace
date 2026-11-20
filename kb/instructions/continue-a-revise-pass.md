@@ -81,7 +81,12 @@ A command you run may end with a continuation record of its own. Its items are p
 
 **`failure`: a worker or review failure.** The report states the failure. Repair its cause when you can, and tell the operator; otherwise say what failed and where its output is. The failed entry and those after it are items of their own.
 
-**`stale-reviews`: stale reviews.** A publication makes stale the stored review results whose criterion watches the changed parts. `what` counts them and `how.command` lists them. The operator decides whether to review again.
+**`stale-reviews`: stale reviews.** A publication makes stale the stored review results whose criterion watches the changed parts. `what` counts them and `how.command` lists them. The operator decides whether to review again. If a published retitle is waiting to move, finish the move before reviewing the new path.
+
+After settling or leaving all work that needs the old path, check the run's
+publications for a pending `relocation` and follow [relocate a retitled note](./approve-a-text.md#relocate-a-retitled-note).
+If a later pass has published at that path, use its latest published text to
+verify that the title still matches the pending move.
 
 ## When to recommend a new run
 

@@ -39,8 +39,9 @@ Title:
   house learns", not "train the house").
 - Check the slug the title would produce against the 70-character limit
   before proposing it.
-- Propose the title; do not apply it. A title change also changes the file
-  slug, which is a separate pure relocation commit.
+- Propose the title; do not apply it in this operation. A file relocation is
+  separate. For a claim-strength finding that can be fixed without body edits,
+  use [Repair a claim title](./repair-claim-title.md).
 
 ## Report
 

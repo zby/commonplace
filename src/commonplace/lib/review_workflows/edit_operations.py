@@ -71,6 +71,7 @@ OUTCOMES = ("changed", "unchanged", "proposed", "problem")
 WORKER_FIELDS = frozenset({"type", "outcome", "changes", "proposals", "removed-links"})
 ANSWERS = "answers"
 """The input role of an answered list, which makes a `per-item` operation apply the approved entries."""
+CLAIM_TITLE_REL = "instructions/simplification-passes/repair-claim-title.md"
 EXECUTION_REL = "instructions/simplification-passes/execute-a-revision-pass.md"
 """The shared edit contract every worker receives as its `execution` input."""
 RESERVED = frozenset({"text", "operation", "execution"})
@@ -316,6 +317,7 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
                  for index, (_, value) in enumerate(sorted(contracts.items()))},
               **{role: item["text"] for role, item in roles.items()}}
     task = prompt(operation, note, roles)
+    claim_title = artifact_file(root, operation.identity).resolve() == (library_root() / CLAIM_TITLE_REL).resolve()
     directory, record = observations.begin(run, root, Target(note, operation.identity, job), text, operation.text,
                                            contracts, task, job, inputs, roles, criterion_input="operation", family=FAMILY,
                                            profile=profile)
@@ -372,7 +374,8 @@ def ask(run: Run, root: Path, operation: Operation, note: str, text: str, roles:
                 problems.append("the candidate equals the input text; use `outcome: unchanged`")
             else:
                 removed = data.get("removed-links") if isinstance(data.get("removed-links"), list) else []
-                problems += edits.artifact_bounds(root, note, text, candidate, baseline)
+                check = edits.claim_title_bounds if claim_title else edits.artifact_bounds
+                problems += check(root, note, text, candidate, baseline)
                 problems += edits.preserved(text, candidate, removed)
                 plain = normalize_text(candidate, "prose")
                 problems += [f"the item `{item['quote'][:60]}` is not approved but was applied; "

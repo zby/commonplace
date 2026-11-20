@@ -7,7 +7,7 @@ schema: ./edit-operation.schema.yaml
 
 # Edit operation
 
-An edit operation is an instruction that takes one text of a note and returns one text of that note, or a list of changes it proposes. It is one of three kinds of improvement atom, beside review gates and stops. Use this type when the instruction edits the note's body within the kind of change its goal names. Use [`review-gate`](./review-gate.md) for a check that judges a text and edits nothing. Use [`instruction`](./instruction.md) for a procedure that arranges several operations, writes a second file, or edits more than one note.
+An edit operation is an instruction that takes one text of a note and returns one text of that note, or a list of changes it proposes. It is one of three kinds of improvement atom, beside review gates and stops. Use this type when the instruction edits the note within the kind of change its goal names. Use [`review-gate`](./review-gate.md) for a check that judges a text and edits nothing. Use [`instruction`](./instruction.md) for a procedure that arranges several operations, writes a second file, or edits more than one note.
 
 An instance runs alone on one note. The [review command](../reference/commands.md) runs it as `commonplace-revise try OPERATION NOTE`, and its result is an [edit result](./edit-result.md).
 
@@ -17,7 +17,7 @@ These rules hold for every instance, so no instance repeats them. The worker rec
 
 - **Reads.** Files only: the text to edit, the operation, and the input files the caller names by role. An instance that needs something no file carries does not meet this contract.
 - **May change.** The note's body, within the kind of change the instance's goal names.
-- **Must preserve.** The title, the H1, the type and the brief declaration. Every link target, unless the result names its removal. Every quoted span. Every claim, qualification and example the instance does not explicitly permit changing. A needed title or claim change is reported, not applied.
+- **Must preserve.** The title, the H1, the type and the brief declaration. Every link target, unless the result names its removal. Every quoted span. Every claim, qualification and example the instance does not explicitly permit changing. A needed title or claim change is reported, not applied, except that the built-in [claim title repair](../instructions/simplification-passes/repair-claim-title.md) can edit the H1 and description without changing the claim, body, or path.
 - **Returns.** The changed text with one report line per change; or the unchanged text with a report of why nothing changed; or, for a `per-item` instance, a list of proposed changes applied to nothing. An instance that cannot proceed within these bounds reports a problem.
 
 An instance does not edit the checkout, commit, launch other work or choose another operation.

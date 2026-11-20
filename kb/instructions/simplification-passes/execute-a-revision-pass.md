@@ -52,10 +52,12 @@ Run only the assigned operation. Choose edits within its bounds, not new passes,
 a different purpose or a wider scope. Do not add claims or remove evidence.
 Preserve qualifications, contrasts, examples and links unless the commission
 explicitly permits their change; account for permitted removals in the report.
-Keep the title, type, brief declaration and H1. Keep every link target unless
-you name its removal under `removed-links`, and keep every quoted span: a
-blockquote, or a quotation cited as verbatim. Propose title changes only in
-the report. Remove `user-verified` after a substantive body change.
+Keep the title, type, brief declaration and H1. Only the built-in
+`repair-claim-title` operation may change the H1 and description, within its
+narrower bounds. Otherwise propose title changes only in the report. Keep
+every link target unless you name its removal under `removed-links`, and keep
+every quoted span: a blockquote, or a quotation cited as verbatim. Remove
+`user-verified` after a substantive body change.
 
 A `per-item` operation first proposes: return `outcome: proposed` with the
 proposals and apply nothing. Each proposal's `quote` is a passage copied from

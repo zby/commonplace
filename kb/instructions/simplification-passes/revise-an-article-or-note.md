@@ -66,7 +66,11 @@ instead of assessing again.
    order. [Fix a finding by a named strategy](../fix-warnings/fix-strategy-taxonomy.md)
    is such a pass: it changes only the passage the finding names. Recommend
    the change a finding points at only when its value against the purpose
-   is clear. List the findings you do not act on once, each with its reason.
+   is clear. For `frontmatter/claim-strength`, choose [Repair a claim title](./repair-claim-title.md)
+   only when the body already supports the sharper claim as written. If the
+   body needs clarification, report the passage rather than planning this
+   operation or treating the title finding alone as grounds for a rewrite.
+   List the findings you do not act on once, each with its reason.
 
    The operator's decisions on findings of the artifact may come as
    `earlier-decisions`: findings the operator rejected or deferred at a
@@ -131,9 +135,9 @@ instead of assessing again.
    covers a defect that one or two sentences would correct, with its
    passage, its case and the report's path; a choice you do not rank
    first, marked as a choice with no defect shown; and a proposed change
-   of title or file name. The passes cannot make these changes, because
-   they do not change claims. Scope a pass away from a passage that has an
-   open claim question.
+   of title or file name outside the bounds of `repair-claim-title`. The
+   passes do not change claims or file names. Scope a pass away from a passage
+   that has an open claim question.
 
    An extension does not stop the run. List it once among the findings not
    acted on, with the reason, and plan the passes as usual. Recommend an

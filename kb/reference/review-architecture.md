@@ -50,7 +50,11 @@ runs through the sweep.
 An edit reaches the checkout only through code. Each edited text is checked
 first; frontmatter `title`, `type` and `brief` and the H1 must be
 kept, `user-verified` removed after a body change, and no validation failure
-added. A text from an edit operation also keeps every link target the result
+added. The built-in `repair-claim-title` is the sole H1 exception: it keeps the
+path, body, and other frontmatter unchanged, and refuses to edit a verified note.
+A published H1 that changes the slug adds `relocation` to the publication
+record. The session agent then uses the [move procedure](../instructions/approve-a-text.md#relocate-a-retitled-note)
+after old-path revision work settles; the workflow does not move files. A text from an edit operation also keeps every link target the result
 does not name as removed and every quoted span. Every revision pass candidate
 comes from `edit_operations.ask()`, which also serves `commonplace-revise try`. An accepted text stays in memory and in the run's `artifact/`
 directory, and the next step works on it. Code writes a text atomically and
