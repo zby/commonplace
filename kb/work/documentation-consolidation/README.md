@@ -39,6 +39,8 @@ First case: [Where change candidates come from in Commonplace](../../reference/c
 
 Collection prototypes: authors choosing a starting contract now reach the installed templates from the add-collection skill. Readers asking what survives copying use [ADR 069](../../reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md). No separate inventory. For control-plane goals, the project’s root instructions supply the goals, the install guide tells the operator how to fill them in, and [ADR 014](../../reference/adr/014-scripts-as-python-package-one-tree-model.md#decision) carries forward the reason goals precede skill selection. No separate reference page or new ADR.
 
+Scenario architecture: the [write-a-note scenario](../../../tests/scenarios/write-a-note.md) distinguishes a write from optional link discovery. The evaluation procedure consumes that scenario directly; the reference page duplicated the worked example and installed layout.
+
 ## Files in this workshop
 
 - [reference-analysis.md](./reference-analysis.md) — empirical audit of the 30 top-level `kb/reference/` documents (duplication, unique content, stale statements, live consumers).

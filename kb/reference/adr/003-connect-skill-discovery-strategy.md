@@ -61,4 +61,4 @@ The index-first approach works while index.md is small enough to scan in one rea
 
 Relevant Notes:
 
-- [scenario-architecture](../scenario-architecture.md) — the shipped search-and-routing path this discovery strategy supports
+- [Scenario architecture at the cited revision](https://github.com/zby/commonplace/blob/a6444db2dac52172b88e1d2146ce16f3563b47e5/kb/reference/scenario-architecture.md) — the shipped search-and-routing path this discovery strategy supports

@@ -42,4 +42,4 @@ Directory-local types (`adr`, `index`, `related-system`, `source-review`, task t
 
 Relevant Notes:
 
-- [scenario-architecture](../scenario-architecture.md) — the scenario view that makes the shared load path visible
+- [Scenario architecture at the cited revision](https://github.com/zby/commonplace/blob/a6444db2dac52172b88e1d2146ce16f3563b47e5/kb/reference/scenario-architecture.md) — the scenario view that makes the shared load path visible

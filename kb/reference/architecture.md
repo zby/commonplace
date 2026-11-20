@@ -151,6 +151,5 @@ metadata, or command help.
 ## See also
 
 - [Storage](./storage-architecture.md) — authority and lifecycle after artifacts are installed
-- [Scenario architecture](./scenario-architecture.md) — the common agent path through the installed surfaces
 - [ADR 027](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — package-data and editable-source boundary
 - [Collections and types](./collections-and-types.md) — exact type identity and resolution contract
