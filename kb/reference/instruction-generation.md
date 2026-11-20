@@ -30,7 +30,7 @@ Substitution is a flat string replace in `_write_template`. Files that don't nee
 
 These outputs belong to the project. Init creates each one only when it is missing. `commonplace.scaffold_manifest` (`MANIFEST.directories`, `MANIFEST.files`, `MANIFEST.templates`) owns the exact directory and file inventory (inspect via `commonplace-source`).
 
-- **Directories and starter contracts:** user collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/reports/` with `state/` and `retained/`, `kb/work/`, and `kb/tasks/`), each collection receiving a starter `COLLECTION.md` and curated `README.md` landing. Source, snapshot, and report types produced by commands stay in the installed library rather than being copied into the project.
+- **Directories and starter contracts:** user collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/reports/` with `state/` and `retained/`, and `kb/work/`) each receive a starter `COLLECTION.md` and curated `README.md`. Init also creates `kb/tasks/` as an empty runbook directory. Source, snapshot, and report types produced by commands stay in the installed library rather than being copied into the project.
 - **Resolved templates:** `AGENTS.md.template` and `CLAUDE.md.template` (which imports `AGENTS.md` and `.commonplace/library.md`) flow through `_write_template` with the replacements dictionary. The committed control-plane files name no machine path; they point to `.commonplace/library.md`. The scaffold creates no `.envrc` or Commonplace-specific project venv; command discovery belongs to the user-level uv tool installation.
 
 ## Pointers into the library, rewritten on every run
