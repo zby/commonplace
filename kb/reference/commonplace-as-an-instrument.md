@@ -8,13 +8,13 @@ tags: []
 
 Commonplace's immediate application is an agent-operated knowledge base. The KB is not the boundary of the program. It is the first worked case in which the design's theories — about retrieval, representation, review, validation, and self-modification — meet real operating constraints *together*, rather than being invented in the abstract and checked one at a time.
 
-Everything here is indexed to one objective: more useful and better-warranted knowledge work per unit of human judgment spent. Not automation.
+The KB is where we test changes against [what Commonplace chooses to count as progress](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count). Automating a task is not, by itself, a gain.
 
 Two things follow from treating the KB as an instrument rather than as the product.
 
 ## Use tests composition
 
-The components must compose into sustained knowledge work — types, collection contracts, validators, review pairs, their result files, and skills running against each other on a live corpus, not each demonstrated on its own bench. Where they fail to compose, the failure is evidence against the design theories that produced them, not merely a defect ticket.
+The types and tools must work together in sustained use — types, collection contracts, validators, review pairs, their result files, and skills running against each other on a live corpus, not each demonstrated on its own bench. Where they fail to compose, the failure is evidence against the design theories that produced them, not merely a defect ticket.
 
 The `tag-readme` trace shows one such pathway. An `index` head grew too large to support its completeness claim; [ADR 026](./adr/026-tag-readme-type-with-completeness-and-coverage-marks.md) split the type and made `complete` an enforced mark, carrying one decision into instruction, schema, validation, and rendering; the validator then rejected artifacts it had previously accepted, and the symbolic check caught a tagged member that the documented `rg` recipe had missed, forcing the natural-language recipe to be corrected. [The commit-by-commit trace](../theory/evidence/tag-readme-trace-observed-causal-connection.md) and [the improvement-loop reading](../theory/evidence/tag-readme-trace-as-self-improving-loop.md) hold the detail; [the classification](../theory/evidence/commonplace-as-a-reflective-system.md) states what it establishes about reflectivity.
 
@@ -46,7 +46,7 @@ Two of these transfer-recovery gaps are already recorded as open questions in [d
 
 Treating the KB as an instrument is a defensible position about what the application is *for*, not a demonstrated result. Demonstrating it requires evidence of five shapes:
 
-- **Baseline comparison against the declared objective.** Evidence that using the machinery improves work quality per unit of human judgment over a simpler baseline, rather than merely working as described (one candidate design is outlined in the unadopted [ablation proposal](./proposals/ablation-baselines-for-the-declared-objective.md)).
+- **Baseline comparison in a named area.** Compare the work done with and without the machinery on the same task. A gain on that task supports a broader judgment only insofar as plausible losses elsewhere do not outweigh it (one candidate design is outlined in the unadopted [ablation proposal](./proposals/ablation-baselines-for-the-declared-objective.md)).
 - **Answers with outcomes to the open rationale questions.** An end-to-end decision trace showing what a reader recovers across skipped stages, and a reuse comparison reporting whether retained constraint distinctions actually changed a transfer judgment rather than merely being available to it.
 - **Independent-operator and cross-domain tests.** An independent operator reusing a Commonplace decomposition against its retained rationale tests operator independence; applying the practices to a different subject domain (such as a runbook or product KB) tests domain independence. The two test different things.
 - **A faithfulness test by intervention.** Varying a stated force and observing whether the decomposition's fit degrades as the rationale predicts. A retained force that survives being varied is the first real evidence that the record is about the design rather than about the author.
@@ -58,7 +58,7 @@ Until evidence of these shapes exists, this page states what the KB application 
 
 Relevant Notes:
 
-- [The declared Commonplace frame](./commonplace-declared-frame.md) — see-also: declares the system boundary and actor partition this reading assumes, and deliberately leaves the objective open — which this artifact supplies
+- [The declared Commonplace frame](./commonplace-declared-frame.md) — see-also: declares the system boundary and actor partition this reading assumes, without fixing what counts as improvement
 - [Design rationale management in Commonplace](./design-rationale-management.md) — see-also: the full survey of rationale surfaces, their state-to-surface map, and the continuity the shipped contracts do not enforce
 - [Ablation baselines for the declared objective](./proposals/ablation-baselines-for-the-declared-objective.md) — see-also: unadopted proposal sketching comparative baselines for testing whether the framework repays its human-judgment cost
 - [Commonplace as a reflective self-improving system](../theory/evidence/commonplace-as-a-reflective-system.md) — see-also: the sibling classification of the same repository, assessed for reflectivity and actor allocation rather than for what the application is for
@@ -66,7 +66,7 @@ Relevant Notes:
 - [The tag-readme trace read as a self-improving loop](../theory/evidence/tag-readme-trace-as-self-improving-loop.md) — see-also: the search, evaluation, and retention mapping of the same instance
 - [Use tests a decomposition locally; retained rationale is what makes transfer testable](../theory/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md) — rests-on: why composing successfully here supports replay rather than a rule, and why the rationale must be written at design time or be gone
 - [Derivation and inheritance give starting warrant; discriminating evidence or proof earns scope](../theory/derivation-and-inheritance-give-starting-warrant-earns-scope.md) — rests-on: the warrant grades the worked instances occupy, and the reason a free choice supports no scope claim
-- [Self-improvement is relative to a declared objective](../theory/self-improvement-is-relative-to-a-declared-objective.md) — rests-on: why the objective stated above has to be declared independently of the changes it is invoked to license
-- [Increasing computational autonomy relocates human effort](../theory/increasing-computational-autonomy-relocates-human-effort.md) — rests-on: why the measure is work per unit of human judgment rather than the removal of human judgment
+- [Self-improvement is relative to a declared objective](../theory/self-improvement-is-relative-to-a-declared-objective.md) — rests-on: why the objective has to be declared independently of the changes it is invoked to license
+- [Increasing computational autonomy relocates human effort](../theory/increasing-computational-autonomy-relocates-human-effort.md) — rests-on: why removing a human step does not establish a saving in human judgment
 - [History has one chance to become checkable](../theory/history-has-one-chance-to-become-checkable.md) — rests-on: the general claim behind retaining rationale at design time rather than expecting to recover it
 - [Selective revision needs a faithful rationale, not just a legible one](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — rests-on: the worse-than-absent asymmetry and the intervention test behind the faithfulness statement above

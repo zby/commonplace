@@ -8,10 +8,7 @@ tags: [self-improving-systems, learning-theory]
 
 ## Current state (as of 2026-10-30)
 
-- Commonplace's declared objective is more useful and better-warranted
-  knowledge work per unit of human judgment
-  ([Commonplace as an instrument](../commonplace-as-an-instrument.md)).
-  Its strategy is stated in pieces: build a theory builder and test whether
+- The question under [Commonplace's objective](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count) is whether investment in shared machinery repays its human cost across kinds of work. The strategy is stated in pieces: build a theory builder and test whether
   it learns; start from a running system because use supplies selection
   where no fixed oracle exists; invest in machinery because an improvement
   is paid once and reused. No artifact states the step from that program to

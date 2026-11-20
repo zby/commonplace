@@ -1,23 +1,23 @@
 ---
-description: "Proposal: measure the declared objective — useful and warranted work per unit of human judgment — by running matched repository tasks under ablated conditions (no curated theory, no review, episodes only, stronger bare model)"
+description: "Proposal: compare work quality and human effort on matched repository tasks with and without curated theory, review, episodic examples, or a stronger model"
 type: reference/types/design-proposal.md
 tags: [evaluation]
 ---
 
 # Ablation baselines for the declared objective
 
-Commonplace indexes everything to one objective: more useful and better-warranted knowledge work per unit of human judgment spent. Nothing measures it. The traced tag-readme episode establishes local conformance and one pathway's success, and [a successful composition episode is one bit about a whole configuration](../../theory/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md): compatible with the decomposition being right, with one component compensating for another, with the maintainer quietly repairing the result, and with the same outcome occurring without the framework. [The reach-to-objective link is a bet the loop places and never checks](../../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md). More traces of the same kind cannot separate these; only comparison can. This proposal holds the design space for that comparison, prompted by an external review of the reflective self-improvement article (2026-07-28) that named the ablation family directly.
+This proposal tests [Commonplace's objective](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md#what-commonplace-chooses-to-count) on matched tasks in a declared area. The traced tag-readme episode establishes local conformance and one pathway's success, and [a successful composition episode is one bit about a whole configuration](../../theory/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md): compatible with the decomposition being right, with one component compensating for another, with the maintainer quietly repairing the result, and with the same outcome occurring without the framework. [The reach-to-objective link is a bet the loop places and never checks](../../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md). More traces of the same kind cannot separate these; only comparison can. This proposal holds the design space for that comparison, prompted by an external review of the reflective self-improvement article (2026-07-28) that named the ablation family directly.
 
 [Commonplace as an instrument](../commonplace-as-an-instrument.md) names baseline comparison against the declared objective alongside four other evidence shapes — outcomes on the open rationale questions, independent-operator and cross-domain tests, a faithfulness test by intervention, and composition failures attributed back. Those four test whether the machinery behaves and transfers as described; this proposal develops the comparative ablation shape that tests whether having the machinery beats not having it.
 
 ## Current state (as of 2026-07-28)
 
-- The objective is declared in `commonplace-as-an-instrument.md` and consumed as an interpretive commitment; no baseline, counterfactual, or ablated comparison exists anywhere in the repository.
+- At the time of this proposal, the instrument note stated the objective; the proposed comparison had not been run.
 - One composition trace exists (the tag-readme episode), plus two worked provenance instances. All were produced and assessed inside the system.
 - The knowledge-centric self-improvement preprint (arXiv 2607.19592, ingested) demonstrates a workable protocol shape for one arm: agents held generic and disposable, the knowledge artifact frozen, transfer measured across tasks and model families.
 - The `condensation-faithfulness-experiment` workshop (named, not linked) is designing an adjacent, narrower experiment — condensation methodology against naive auto-summary under a perturbation protocol. It ablates one mechanism; this proposal ablates the framework.
 - The Commonplace repository is public. Its content, including the methodology being tested, may enter model training corpora — a live confound for any "bare stronger model" arm.
-- (2026-08-02) The later-episode compounding protocol now has its own note: [compounding is tested in later improvement, not by the accepting metric](../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — displaced measures, uptake traces, and three baselines whose stronger-model arm carries this proposal's contamination force. The two target different quantities: that note tests whether a retained benefit helps produce later improvement; this proposal measures whether the framework earns its cost at all.
+- (2026-08-02) The later-episode compounding protocol now has its own note: [compounding is tested in later improvement, not by the accepting metric](../../theory/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — displaced measures, uptake traces, and three baselines whose stronger-model arm carries this proposal's contamination force. The two target different quantities: that note tests whether a retained benefit helps produce later improvement; this proposal tests whether the framework earns its cost on the selected tasks.
 
 ## Problem
 
@@ -42,7 +42,7 @@ Free choices, marked as such: the task battery composition; metric weights acros
 
 ## Forces
 
-- **The judgment-cost denominator is the point and the hardest measurement.** Human decisions and minutes are what the objective normalizes by; uncounted operator repair is precisely what the objective was declared to expose, so any protocol that does not meter human involvement measures the wrong thing.
+- **Operator repair can hide the cost of an arm.** Record who intervened on the matched tasks, what they decided, and how long it took. Decisions and minutes describe the effort in this comparison; neither supplies a universal unit of judgment.
 - **Oracle validity.** "Useful and warranted work" has no hard oracle, and [an automated judge's warrant would be bounded by what it can assess](../../theory/warranted-autonomy-is-bounded-by-oracle-domain.md); fresh-context judge panels, downstream escaped-error counts, and human blind grading have different validity/cost profiles, and the choice is itself a proxy decision.
 - **Contamination.** The public repository, and any model trained after it, poisons arm 5 in the framework's favor or against it depending on what was absorbed; the KSI-shaped arm inherits the same problem across model families.
 - **Operator inclusion.** The declared pathway is human-inclusive; ablating the framework while keeping the same experienced operator leaves the internalized methodology in place — the operator has absorbed the theory even where the model has not.
