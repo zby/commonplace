@@ -90,6 +90,6 @@ topics yet.
 The primary research program charts the design space and seeks solutions
 useful to Commonplace; this public resource makes the resulting evidence
 reusable. Source-system findings stay separate from Commonplace adoption
-judgments, as the [research design brief](../reference/agentic-system-analysis-design-brief.md)
-requires. The [historical Agent Memory Systems collection](../agent-memory-systems/README.md)
+judgments, as the [analysis method priorities](../agentic-system-analyses/instructions/maintain-analysis-method.md)
+require. The [historical Agent Memory Systems collection](../agent-memory-systems/README.md)
 remains available; its reviews and statistics are not the current population.

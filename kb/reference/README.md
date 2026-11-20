@@ -66,7 +66,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Instruction generation](./instruction-generation.md) — build-time template substitution and `commonplace-init`
 - [Scenario architecture](./scenario-architecture.md) — scenario-derived decomposition of the installed surfaces
 - [Tag-readme trace as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — one observed trace mapped onto search, evaluation, and retention
-- [Agentic-system analysis design brief](./agentic-system-analysis-design-brief.md) — operator direction and evaluation priorities for external-system analyses
 - [Commonplace agent memory gap plan](./commonplace-agent-memory-gap-plan.md) — earlier gap-closure plan (unadopted roadmap)
 - [Harness sub-agent model selection regression](./harness-sub-agent-model-selection-regression.md) — dated July/August Codex model-attribution incident record
 

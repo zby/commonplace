@@ -19,7 +19,7 @@ Direct code-read calls were already bounded in 96% of Letta Code calls, 93% of G
 
 The audit's metadata-selected language census matched 197 cached repository identities, of which 189 contained recognized source files at their recorded committed HEADs. Python and TypeScript/JavaScript account for 88.1% of counted source files; adding Rust and Go brings the share to 95.5%. The corresponding rough non-test/example filter yields 86.1% and 96.1%. These are filename-extension counts, not historical reviewed-revision counts, complete semantic coverage, or worker-effort estimates. Markdown, SQL, and notebooks also occur.
 
-The operator allows several tools, potentially one per language. No candidate has been tested on these navigation tasks. The live analysis method still governs frozen source boundaries, worker delivery, isolation, and publication. The [analysis design brief](../agentic-system-analysis-design-brief.md) prioritizes useful learning and comparison at reasonable total cost; adding tools must earn that cost.
+The operator allows several tools, potentially one per language. No candidate has been tested on these navigation tasks. The live analysis method still governs frozen source boundaries, worker delivery, isolation, and publication. The [method-maintenance priorities](../../agentic-system-analyses/instructions/maintain-analysis-method.md) prioritize useful learning and comparison at reasonable total cost; adding tools must earn that cost.
 
 ## Candidate organization
 
