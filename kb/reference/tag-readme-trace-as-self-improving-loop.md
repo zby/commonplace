@@ -32,7 +32,7 @@ Relevant Notes:
 
 - [Commonplace as a reflective self-improving system](../theory/evidence/commonplace-as-a-reflective-system.md) — part-of: the classification and allocation profile this reading supports
 - [The tag-readme change as an observed causal-connection trace](../theory/evidence/tag-readme-trace-observed-causal-connection.md) — part-of: the trace this reading interprets
-- [Where change candidates come from in Commonplace](./where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's role in Search is one instance of
+- [Where change candidates come from in Commonplace](./case-studies/where-change-candidates-come-from-in-commonplace.md) — part-of: surveys the wider set of candidate-forming mechanisms the agent's role in Search is one instance of
 - [Methodological and computational closure track different changes](../theory/methodological-and-computational-closure-track-different-changes.md) — rests-on: why actor allocation is reported separately from the pathway's reflectivity
 - [Self-improving system](../theory/definitions/self-improving-system.md) — rests-on: the definition this trace is read against
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: the search/evaluation/retention grid used here

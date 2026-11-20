@@ -12,7 +12,7 @@ These are documentary observations and proposed research judgments. I directly r
 
 ## What the examples actually establish
 
-A's unfamiliar direction asks whether accepted changes conceal opportunities that were never noticed, never formulated, or never selected. The [candidate-generation survey](../../../../reference/where-change-candidates-come-from-in-commonplace.md) already distinguishes noticing, drafting, and subsequent incorporation. Naming these stages again is not explanatory progress. The remaining question is whether retained evidence permits a stage-specific judgment in an actual case.
+A's unfamiliar direction asks whether accepted changes conceal opportunities that were never noticed, never formulated, or never selected. The [candidate-generation survey](../../../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) already distinguishes noticing, drafting, and subsequent incorporation. Naming these stages again is not explanatory progress. The remaining question is whether retained evidence permits a stage-specific judgment in an actual case.
 
 The first trial's parked compression branch cannot answer all of that question. It was already formulated. Its absent comparative rationale limits reconstruction of selection, not discovery of never-noticed possibilities. A's proposed clarification pass remains defensible as a check of evidence coverage, with closure as a possible result. It does not yet establish a systematically distorted candidate pool.
 

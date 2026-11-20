@@ -40,7 +40,7 @@ This question matters to the commissioned purpose even if it offers no immediate
 
 ### 3. Unfamiliar direction: possibilities filtered out before proposal
 
-The [candidate-generation survey](../../../../reference/where-change-candidates-come-from-in-commonplace.md) describes several channels: drafting shaped by contracts, connection reports, mechanical checks, and agent initiative. It explicitly presents illustrations rather than a catalogue. It also distinguishes an ephemeral report from the later act that incorporates its candidates. This is a documentary opening, not proof of current coverage or a measured loss rate.
+The [candidate-generation survey](../../../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) describes several channels: drafting shaped by contracts, connection reports, mechanical checks, and agent initiative. It explicitly presents illustrations rather than a catalogue. It also distinguishes an ephemeral report from the later act that incorporates its candidates. This is a documentary opening, not proof of current coverage or a measured loss rate.
 
 The tentative question is: **does looking primarily at accepted changes hide differences between not noticing an opportunity, noticing without formulating a candidate, and formulating without selecting it?** These omissions would require different explanations. More evaluation would not help a possibility never noticed; better noticing would not settle why a developed candidate was rejected. This is initially unfamiliar within this run, not a claim of novelty in the KB or literature.
 

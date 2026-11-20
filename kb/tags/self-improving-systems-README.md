@@ -40,7 +40,7 @@ The child areas are [theory-builder](./theory-builder-README.md), [software-fact
 - [Real self-improving systems occupy combinations no single rung captures](../theory/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md) — thirteen placements from the Homeostat to Commonplace on the profile fields
 - [Six reported self-improvement paths expose bounded redesign surfaces](../theory/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — operative redesign separated from revision of governing machinery and from declared editability
 - [The declared Commonplace frame](../reference/commonplace-declared-frame.md) — the boundary under which Commonplace's own attributions are assessed
-- [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — problem-noticing and candidate-drafting beyond a maintainer's judgment
+- [Where change candidates come from in Commonplace](../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — problem-noticing and candidate-drafting beyond a maintainer's judgment
 - External systems read as whole systems: [Exo](../agentic-systems/reviews/exo.md) (a rewritable executor over a protected substrate), [Autogenesis](../agentic-systems/reviews/autogenesis.md) (versioned mutation with rollback), [Compound Engineering](../agentic-systems/reviews/compound-engineering-plugin.md) (a compounding claim separated into its parts), [Agno AgentOS](../agentic-systems/reviews/agno-agentos.md) (a control plane, not a learner), and [AI Agents in Depth](../agentic-systems/reviews/ai-agent-book.md) (book-level convergence and divergence)
 
 ## Related Tags

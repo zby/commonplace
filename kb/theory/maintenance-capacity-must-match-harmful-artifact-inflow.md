@@ -33,4 +33,4 @@ Relevant Notes:
 
 - [Notes need quality scores to scale curation](./notes-need-quality-scores-to-scale-curation.md) — extends: risk-weighted ranking is one way to spend bounded maintenance capacity on the most consequential candidates
 - [Stale self-description conceals its own staleness](./stale-self-description-conceals-its-own-staleness.md) — extends: time-driven reflexive drift can create harmful inflow even when artifact generation is low
-- [Where change candidates come from in Commonplace](../reference/where-change-candidates-come-from-in-commonplace.md) — evidenced-by: the current system has several detection channels whose outputs still require capacity and prioritization
+- [Where change candidates come from in Commonplace](../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — evidenced-by: the current system has several detection channels whose outputs still require capacity and prioritization

@@ -257,7 +257,7 @@ trigger, and a terminal disposition.
 The
 [agent-memory coverage assessment](../../reference/agent-memory-coverage.md)
 and
-[change-candidate inventory](../../reference/where-change-candidates-come-from-in-commonplace.md)
+[change-candidate inventory](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md)
 already identify validation, the log, connect reports, freshness, and agent
 initiative as noticing channels. None provides an end-to-end path from an
 observed event to a ranked candidate, governed promotion, situation-specific

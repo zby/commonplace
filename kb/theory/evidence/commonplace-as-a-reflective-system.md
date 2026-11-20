@@ -67,7 +67,7 @@ Relevant Notes:
 - [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md) — see-also: the same repository read for what its application is *for* in the design program, rather than for reflectivity and actor allocation
 - [The tag-readme change as an observed causal-connection trace](./tag-readme-trace-observed-causal-connection.md) — evidenced-by: supplies the full observed trace behind the causal-connection claim
 - [The tag-readme trace read as a self-improving loop](../../reference/tag-readme-trace-as-self-improving-loop.md) — evidenced-by: supplies the full search, evaluation, and retention mapping behind the allocation profile
-- [Where change candidates come from in Commonplace](../../reference/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of noticing and candidate-forming mechanisms
+- [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — see-also: surveys the wider set of noticing and candidate-forming mechanisms
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the boundary-parametric causal self-representation criterion discharged here
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the evidence-responsive operative self-change criterion and pathway-relative reflective distinction
 - [Methodological and computational closure track different changes](../methodological-and-computational-closure-track-different-changes.md) — rests-on: why the human-inclusive reflective attribution is paired with a computational allocation profile

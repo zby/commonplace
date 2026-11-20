@@ -67,4 +67,4 @@ status: accepted
 Relevant Notes:
 
 - [Operative change](../../theory/definitions/operative-change.md) — rests-on: the operativity-path requirement — a decided change reaches later behavior only through a consumer, channel, and force
-- [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md) — evidenced-by: instrumented ADRs are the ongoing evidence stream for how the system's organization actually changes
+- [Where change candidates come from in Commonplace](../case-studies/where-change-candidates-come-from-in-commonplace.md) — evidenced-by: instrumented ADRs are the ongoing evidence stream for how the system's organization actually changes

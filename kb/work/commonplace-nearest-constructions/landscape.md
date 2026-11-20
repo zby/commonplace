@@ -227,7 +227,7 @@ is an end-to-end recurrence-to-candidate loop. Existing mechanisms distribute
 task-local noticing and drafting across agents, skills, reports, freshness
 checks, and validators, but they neither observe operator interventions as a
 class nor close unattended triage and promotion. The [candidate-source
-survey](../../reference/where-change-candidates-come-from-in-commonplace.md)
+survey](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md)
 and [agent-memory gap
 plan](../../reference/commonplace-agent-memory-gap-plan.md) describe the
 present mechanisms and missing prerequisites.

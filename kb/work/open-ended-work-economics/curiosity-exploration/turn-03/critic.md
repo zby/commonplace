@@ -28,7 +28,7 @@ This is an inspectability safeguard, not a guarantee against persuasive rational
 
 ## Actual-incumbent checks change the opportunity ranking
 
-**A's selected opportunity risks repeating held understanding.** The [candidate-generation survey](../../../../reference/where-change-candidates-come-from-in-commonplace.md) already distinguishes noticing a gap, promoting it into a candidate, and incorporating an ephemeral report's suggestions later. It explicitly calls its mechanisms illustrations rather than a catalogue. Thus “not noticed, not formulated, not selected” is not by itself a new conceptual contribution.
+**A's selected opportunity risks repeating held understanding.** The [candidate-generation survey](../../../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) already distinguishes noticing a gap, promoting it into a candidate, and incorporating an ephemeral report's suggestions later. It explicitly calls its mechanisms illustrations rather than a catalogue. Thus “not noticed, not formulated, not selected” is not by itself a new conceptual contribution.
 
 A acknowledges this counterpressure, but its strongest remaining question is narrower: can retained cases distinguish those stages in an actual allocation, rather than merely name them? The first trial's parked compression direction was already formulated. Its missing comparative rationale establishes a limit on reconstructing selection, not evidence about opportunities never noticed. Using that case to establish invisible candidate loss would overreach. A's pass remains worthwhile only as a bounded check of evidence coverage, with a genuine no-change outcome.
 

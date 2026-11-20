@@ -6,7 +6,7 @@ tags: [kb-maintenance, curation]
 
 # Periodic connect-report mining
 
-`cp-skill-connect` writes one report per artifact and never reads the others. When several unrelated artifacts independently connect to the same hub note, or several reports hit the same maintenance gap, that convergence is real evidence for an unstated claim or a real systemic issue — but no single connect run is positioned to notice it, and nothing currently reads the reports as a set. `kb/log.md` exists to hold exactly this kind of cross-artifact observation, but it is hand-fed and, per [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md), "rarely used in practice." This proposal treats reading a window of connect reports for cross-report patterns as a recurring bulk operation, not an occasional manual exercise, and holds the design for when to run it, how to shard it, and who merges the results.
+`cp-skill-connect` writes one report per artifact and never reads the others. When several unrelated artifacts independently connect to the same hub note, or several reports hit the same maintenance gap, that convergence is real evidence for an unstated claim or a real systemic issue — but no single connect run is positioned to notice it, and nothing currently reads the reports as a set. `kb/log.md` exists to hold exactly this kind of cross-artifact observation, but it is hand-fed and, per [Where change candidates come from in Commonplace](../case-studies/where-change-candidates-come-from-in-commonplace.md), "rarely used in practice." This proposal treats reading a window of connect reports for cross-report patterns as a recurring bulk operation, not an occasional manual exercise, and holds the design for when to run it, how to shard it, and who merges the results.
 
 ## Current state (as of 2026-07-18)
 
@@ -14,7 +14,7 @@ tags: [kb-maintenance, curation]
 - `kb/log.md` is a 23-line, hand-maintained, append-only file; its oldest entries date from early June 2026.
 - One manual instance of the pattern this proposal generalizes ran today, in `kb/work/connect-report-mining/`: the 45 reports were split into 3 fixed batches of 15, one Sonnet subagent per batch extracted synthesis opportunities, recurring cross-report themes, systemic/maintenance issues, and candidate `kb/log.md` lines (~115-120k tokens and 2-2.5 minutes per batch), and the three raw-findings files were merged by hand into 10 deduped, ready-to-append log entries plus a triage table. No code was written; the pipeline was three parallel agent calls and one manual merge pass.
 - `kb/work/bulk-operations`'s case-family list already names "connect maintenance triage" — scan generated reports, extract maintenance observations, classify each as done/open/moved/watch, promote only the durable residue — but scopes it to one report's Maintenance Observations section, not cross-report synthesis mining over a time window.
-- [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md) names the gap directly: none of its four noticing channels — mechanical check, log, connect report, freshness status — "closes the loop unattended: promoting an entry from any of them into an actual candidate still needs an explicit maintenance or triage step nobody has automated."
+- [Where change candidates come from in Commonplace](../case-studies/where-change-candidates-come-from-in-commonplace.md) names the gap directly: none of its four noticing channels — mechanical check, log, connect report, freshness status — "closes the loop unattended: promoting an entry from any of them into an actual candidate still needs an explicit maintenance or triage step nobody has automated."
 
 ## The design
 
@@ -48,5 +48,5 @@ Adopt as a skill or instruction — rather than repeating the workshop shape ad 
 
 Relevant Notes:
 
-- [Where change candidates come from in Commonplace](../where-change-candidates-come-from-in-commonplace.md) — see-also: names the exact unautomated triage-step gap this proposal answers
+- [Where change candidates come from in Commonplace](../case-studies/where-change-candidates-come-from-in-commonplace.md) — see-also: names the exact unautomated triage-step gap this proposal answers
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — rests-on: this proposal is a concrete Search-stage mechanism for the loop that note defines
