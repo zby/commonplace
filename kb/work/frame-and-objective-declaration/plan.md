@@ -7,17 +7,20 @@ rebuilt around what the operator settled.
 
 ## Basis
 
+Consider adding one line to `AGENTS.md` that sends an agent to the right instructions for a task it would otherwise mishandle. Other prompts load that line too. On a task already near the limit of what the agent can use effectively, one extra line could tip a correct answer into failure. The cost on that task is failure and rework, not just the extra text. That is a possible loss, not an observed failure. How often are important tasks that close to the limit? If we cannot tell and the answer could reverse the decision, the routing gain alone does not settle it.
+
 Four points, recorded with their history in [the settlement record](./settlement.md#operator-direction-2026-11-20):
 
 1. Progress is measured on the margin, in a declared application area.
 2. A marginal claim is a conjecture about a total order that nobody specifies.
    The declared objective names that order. The evidence gives a partial order
    that approximates it.
-3. The claim is that the gain outweighs the probable losses elsewhere. The
-   weighing stays with the operator and users.
-4. A regression argument must be judgeable: it names the mechanism of the
-   loss, who bears it and what it grows with, and gives a judgment at the
-   current size. It need not give the threshold.
+3. The claim is that the change is better on balance. The operator and users
+   weigh the observed gain against losses elsewhere, considering both how
+   likely each loss is and how much it would matter. No numerical estimate is required.
+4. Name how a loss could arise, who would bear it, and under what conditions
+   it would matter. Give the judgment for current conditions, or say what is
+   unknown. A larger table or a change in the task mix can warrant another look.
 
 ## Step 1 — test the claim form on three real changes
 
@@ -34,7 +37,9 @@ the prior state it is compared with, and the regression argument with its four
 parts. Record where the form was awkward or a part could not be filled.
 
 Output: `worked-cases.md`. If a part cannot be filled in two of three cases,
-the form is revised before step 2.
+check why before step 2. Revise a question that does not fit the changes.
+Missing evidence is a different result: record “local gain shown; overall
+judgment open” when the evidence supports only that conclusion.
 
 ## Step 2 — write the claim form as a theory note
 
@@ -42,8 +47,8 @@ The form is a transferable claim, so it belongs in `kb/theory/`, written with
 `cp-skill-write` after reading the collection contract and type spec.
 
 Working title: "Improvement over an open task space is claimed on the margin".
-Content: the two relations, the claim form, the regression-argument standard
-with the routing example, and what the form assumes.
+Lead with the routing example, then explain the two relations, the claim
+form, and its assumptions.
 
 It must state its relation to
 [a better-factory claim](../../theory/a-better-factory-claim-compares-operative-states.md),
@@ -68,9 +73,9 @@ In the instrument note, at L11. Proposed wording, for the operator to change:
 > Commonplace's objective is more useful and better-warranted knowledge work
 > per unit of human judgment. The objective names what improvement claims are
 > about; it is not a measure. Progress is claimed on the margin: a gain in a
-> declared area, compared with the prior state, with an argument that probable
-> losses elsewhere do not outweigh it. Weighing gains against losses is the
-> operator's and users' judgment.
+> declared area, compared with the prior state, with an argument that the change is better
+> on balance. The operator and users weigh the gain against losses elsewhere,
+> considering how likely those losses are and how much they would matter.
 
 with a link to the step 2 note. The "not automation" sentence stays.
 
@@ -98,7 +103,8 @@ An agent other than position B's author reads the revised instrument note with
 no workshop context and answers two open questions: "What does this note claim
 the tag-readme trace shows about Commonplace?" and "How would you tell whether
 Commonplace had improved?" Score the first for overclaims and the second
-against the four basis points. Record it in `cold-reader-check.md`. A miss on
+for the reasoning, not the terminology: can the reader identify the local
+comparison and explain what would justify or withhold an overall judgment? Record it in `cold-reader-check.md`. A miss on
 the second question means step 3's wording failed, and it is revised.
 
 ## Left for the operator, not planned here

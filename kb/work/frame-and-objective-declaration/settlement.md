@@ -55,7 +55,7 @@ What it changes, as the recorder reads it:
   against every possible task; it can only be argued that non-trivial
   regressions are improbable.
 
-The claim form that results:
+The first wording of the claim was:
 
 > Commonplace got better when it improved in a declared area and non-trivial
 > regressions elsewhere are improbable.
@@ -107,22 +107,24 @@ Confirmed by the operator, 2026-11-20: the weighing of gains against losses
 stays with the operator and users, and the key property is that the
 approximation can be judged.
 
-The operator's worked example. Adding routing to `AGENTS.md` makes agents work
-worse on prompts that do not need that routing. For a small routing table the
-effect is trivial. When it becomes non-trivial is a hard question, but some
-judgments can be made.
+**Later clarification: “improbable” is not the test.** The operator wants the
+reasoning behind an expected-value judgment without a formula. Ask whether
+the change is better on balance: weigh the gain against both the likelihood
+and the consequence of losses. Do not discard a serious loss just because it
+seems unlikely.
 
-What the example shows about a regression argument, as the recorder reads it:
+The operator's routing example sharpens the distinction. A line in `AGENTS.md`
+can help agents that need those instructions. Prompts that do not need them
+still load the line. The first reading assumed that a small addition meant a
+trivial cost. The operator pointed out that even one line could push a task
+past its effective context limit. For that task the loss could be a failed
+answer and rework. This is a mechanism to investigate, not a recorded failure.
 
-- It names the **mechanism** of the loss: text loaded on every prompt.
-- It names **who bears it**: prompts that do not need the routing.
-- It names the **quantity the loss grows with**: the size of the table.
-- It gives a **judgment at the current size**, not a threshold. The clear ends
-  can be judged; the middle stays uncertain.
-- It therefore says **what to watch**. Each added line is trivial and many
-  lines are not, so the growth quantity is where accumulated regression would
-  show. An argument that names it can be judged again later; one that only
-  says "improbable" cannot.
+The practical question is which tasks benefit and how often important tasks
+are close enough to that limit for the change to hurt. Neither a probability
+nor an exact threshold is required. If the available evidence cannot support
+the trade-off, report the local gain and leave the overall judgment open.
+Revisit it if the table grows or the mix of tasks changes.
 
 Open under the direction: what counts as an acceptable regression argument.
 Candidates are that the change is not on the causal path of other areas,

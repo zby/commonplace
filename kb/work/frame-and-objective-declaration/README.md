@@ -18,7 +18,9 @@ that apply it.
 The workshop began as a question about declaring the frame. A side
 investigation and the operator's direction moved its centre to how progress is
 claimed at all: on the margin, in a declared area, as a conjecture about an
-unspecified total order that the objective names. The decision points below
+unspecified total order that the objective names. The practical question is
+whether the change is better on balance, given both how likely losses elsewhere
+are and what they would cost. The decision points below
 remain the record of the first question; [the plan](./plan.md) and the
 operator-direction section of [the settlement record](./settlement.md) state
 the current one.
