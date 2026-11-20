@@ -866,6 +866,7 @@ plugins:
         'reference/agentic-system-analysis-design-brief.md': 'agentic-system-analyses/COLLECTION.md'
         'reference/available-types.md': 'reference/collections-and-types.md'
         'reference/collection-prototypes.md': 'reference/adr/069-collection-contract-bundles-become-one-time-prototypes.md'
+        'reference/collections-never-own-frontmatter-semantics.md': 'reference/case-studies/what-would-status-current-assert.md'
         'reference/commonplace-agent-memory-gap-plan.md': 'reference/agent-memory-coverage.md'
         'reference/commonplace-as-a-reflective-system.md': 'theory/evidence/commonplace-as-a-reflective-system.md'
         'reference/control-plane-goals.md': 'reference/adr/014-scripts-as-python-package-one-tree-model.md'

@@ -145,7 +145,7 @@ Relevant documentation:
 
 - [Collection and text contract](./definitions/collection.md) — defined-in: the precise collection boundary and the binding local declaration in `COLLECTION.md`
 - [Validation contract](./validation-contract.md) — part-of: deterministic base rules, type-owned schemas, and semantic conformance review
-- [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — extends: why a type owns its fields while a collection owns text-level conventions
+- [Collections never own frontmatter semantics](./case-studies/what-would-status-current-assert.md) — extends: why a type owns its fields while a collection owns text-level conventions
 - [Architecture](./architecture.md) — part-of: where global and installed collection-local types sit in the shipped layout
 - [Type system](../tags/type-system-README.md) — see-also: theory explaining why document types exist and what they enable
 - [ADR 018](./adr/018-types-are-path-references-to-instruction-docs.md) — decided-by: the decision establishing path-valued type identity, restored for every type by the two-root search path

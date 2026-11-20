@@ -10,7 +10,7 @@ tags: [document-system]
 
 Source genre — is this a scientific paper, a practitioner report, a court opinion — is currently recorded twice in `kb/sources/`, in two vocabularies that neither agree nor defer to each other, and neither is authoritative. Snapshot `tags` carry a mixed genre/platform label; the ingest-report carries a closed `source_type` enum. The same genre appears under different names on the two sides (`academic-paper` on snapshots, `scientific-paper` in reports), so a retrieval query keyed to either vocabulary misses roughly half the corpus, and the one distinction the ingest lens machinery actually consumes — practitioner-report versus conceptual-essay — is invisible at the snapshot level, where both collapse to `blog-post` or `x-article`.
 
-This proposal collapses the two into a single open-vocabulary genre field that lives on the snapshot, where the source artifact itself is the ground truth. It stays inside the boundary that [collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md): the field's meaning is fixed and type-owned ("genre of the captured source"), and only its value list extends — the sanctioned value-set-extension operation, not meaning relativization.
+This proposal collapses the two into a single open-vocabulary genre field that lives on the snapshot, where the source artifact itself is the ground truth. It stays inside the boundary that [collections never own frontmatter semantics](../../case-studies/what-would-status-current-assert.md): the field's meaning is fixed and type-owned ("genre of the captured source"), and only its value list extends — the sanctioned value-set-extension operation, not meaning relativization.
 
 ## Current state (as of 2026-07-12)
 
@@ -63,7 +63,7 @@ Adopt together with the extensible-controlled-vocabularies workshop's mechanism 
 Relevant Notes:
 
 - [A derived copy of recomputable truth must be checked or absent](../../../theory/checking-retained-results-trades-cost-against-reliance-risk.md) — rationale: the single-ground-truth rule behind dropping the report's copy of genre
-- [The collection–type split is asymmetric: collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md) — part-of: the boundary this proposal stays inside — genre's value set extends while its meaning stays type-owned
+- [The collection–type split is asymmetric: collections never own frontmatter semantics](../../case-studies/what-would-status-current-assert.md) — part-of: the boundary this proposal stays inside — genre's value set extends while its meaning stays type-owned
 - [ADR 044: user verification replaces global note status](../../adr/044-user-verification-replaces-global-note-status.md) — see-also: the sibling resolution of an adjacent fused-field problem, fixed by deleting the field rather than relativizing it
 - [ADR 024: schema severity is per-constraint, fail by default](../../adr/024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the existing per-constraint severity machinery that makes open-vocabulary mechanism B available with no new code
 - [ADR 018: types are path references to instruction docs](../../adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the precedent for a per-value doc carrying a prose payload, if the Limitations lenses become per-genre docs

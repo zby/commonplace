@@ -136,7 +136,7 @@ Collection is therefore a binding objective and a strong prior, not a complete a
 
 The [reference contract](../../reference/COLLECTION.md) asks for fidelity to the shipped Commonplace system, economy, and topical titles by default. None of those clauses requires a reference document to be composite.
 
-- [The collection–type split is asymmetric](../../reference/collections-never-own-frontmatter-semantics.md) is organized around one bounded system invariant: collection contracts never own frontmatter semantics. Its reasoning and examples support that one reference-scoped commitment.
+- [The collection–type split is asymmetric](../../reference/case-studies/what-would-status-current-assert.md) is organized around one bounded system invariant: collection contracts never own frontmatter semantics. Its reasoning and examples support that one reference-scoped commitment.
 - [Full improvement pass closure](../../reference/full-improvement-pass-closure.md) records one shipped closure rule and its calibration boundary: reassess final bytes once, retain residual findings, and do not claim convergence.
 - An [ADR](../../reference/types/adr.md) is atomic around one implemented architectural decision even though its body also carries context, alternatives, and consequences.
 
@@ -245,7 +245,7 @@ These are analysis results, not yet a choice between one routed workflow, severa
 - [Split and rehome critique](../agent-note-improvement/case-01-llm-generation-relaxes-goals/instruction-split-rehome-critique.md) — explicit one-main-note decomposition model behind the current split pressure.
 - [Theory collection contract](../../theory/COLLECTION.md) and [note type](../../types/note.md) — body-composability default and the explicit `synthesis` exception.
 - [Article collection contract](../../articles/COLLECTION.md) — valid multi-claim, headline-titled, case-first expository shape.
-- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/collections-never-own-frontmatter-semantics.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under the reference-local contract.
+- [Reference collection contract](../../reference/COLLECTION.md), [collection–type boundary](../../reference/case-studies/what-would-status-current-assert.md), [full-pass closure](../../reference/full-improvement-pass-closure.md), and [ADR type](../../reference/types/adr.md) — atomic, system-scoped description and decision cases under the reference-local contract.
 - [Review-gate type](../../types/review-gate.md) — current positive applicability fields and self-contained freshness requirement.
 - [Collection-conformance decision](../../reference/adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — existing factored collection dependency the full pass does not request.
 - [Collections and types](../../reference/collections-and-types.md) — the orthogonal collection/type model.

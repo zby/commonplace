@@ -15,7 +15,7 @@ status: superseded
 
 Source genre was recorded twice with divergent vocabularies: snapshot `tags` carried a mixed content-family list (plus container values that duplicated `capture` and the source URL), while ingest-reports carried a closed `source_type` schema enum, and the same sources were `academic-paper` on one side and `scientific-paper` on the other. A retrieval query on either vocabulary missed roughly half the corpus, and the distinction the Limitations-lens machinery consumes (`practitioner-report` vs `conceptual-essay`) was invisible at the snapshot level.
 
-The closed enum also forced downstream KBs to extend the framework schema by PR — the epistack casework added `court-opinion`, `news-article`, and `official-statement` that way. [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) sets the guard: value lists may extend, value meanings stay fixed and type-owned.
+The closed enum also forced downstream KBs to extend the framework schema by PR — the epistack casework added `court-opinion`, `news-article`, and `official-statement` that way. [Collections never own frontmatter semantics](../case-studies/what-would-status-current-assert.md) sets the guard: value lists may extend, value meanings stay fixed and type-owned.
 
 ## Decision
 
@@ -49,7 +49,7 @@ The change is breaking: `source_type` in ingest-report frontmatter is rejected r
 
 Relevant Notes:
 
-- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — implements: values extend, meanings stay type-owned — the boundary this mechanism respects
+- [Collections never own frontmatter semantics](../case-studies/what-would-status-current-assert.md) — implements: values extend, meanings stay type-owned — the boundary this mechanism respects
 - [ADR 024: schema severity is per-constraint, fail by default](./024-schema-severity-is-per-constraint-fail-by-default.md) — implemented-by: the existing machinery that makes the enum warn instead of fail
 - [Snapshot type](../../types/snapshot.md) — implemented-by: the field, vocabulary, and correction contract
 - [Ingest-report type](../../types/ingest-report.md) — implemented-by: lens selection from the snapshot's genre and the field's removal
