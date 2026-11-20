@@ -228,8 +228,7 @@ task-local noticing and drafting across agents, skills, reports, freshness
 checks, and validators, but they neither observe operator interventions as a
 class nor close unattended triage and promotion. The [candidate-source
 survey](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md)
-and [agent-memory gap
-plan](../../reference/commonplace-agent-memory-gap-plan.md) describe the
+and [agent-memory coverage map](../../reference/agent-memory-coverage.md) describe the
 present mechanisms and missing prerequisites.
 
 The existing [bootstrap

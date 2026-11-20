@@ -553,7 +553,7 @@ creates privacy, volume, selection, and replay problems. Receipts capture the
 events most likely to improve later behavior at a fraction of the cost.
 
 This recommendation changes the order in the current
-[agent-memory gap plan](../../reference/commonplace-agent-memory-gap-plan.md):
+[agent-memory gap plan at the audit commit](https://github.com/zby/commonplace/blob/7ced7b1dd67566c138be6e74efce23fa671193ea/kb/reference/commonplace-agent-memory-gap-plan.md):
 establish receipts and their consumers before broad session-trace capture.
 Trace extraction can then be tested against receipts to determine whether the
 extra data finds additional useful candidates.
@@ -714,7 +714,7 @@ component is new.
 | [KB graph loader workshop](../../work/kb-graph-loader/README.md) | Derived topology and retrieval substrate. |
 | [Backlink surfacing](../../reference/proposals/backlink-surfacing.md) | Cheap inbound relation affordance. |
 | [Lifecycle-management workshop](../../work/lifecycle-management/README.md) | State and retirement semantics for durable artifacts. |
-| [Agent-memory coverage](../../reference/agent-memory-coverage.md) and [gap plan](../../reference/commonplace-agent-memory-gap-plan.md) | Requirements for candidates, activation, effects, and authority. |
+| [Agent-memory coverage](../../reference/agent-memory-coverage.md) and [gap plan at the audit commit](https://github.com/zby/commonplace/blob/7ced7b1dd67566c138be6e74efce23fa671193ea/kb/reference/commonplace-agent-memory-gap-plan.md) | Requirements for candidates, activation, effects, and authority. |
 | [Periodic connect-report mining](../../reference/proposals/periodic-connect-report-mining.md) | One candidate source, but only after a real queue and consumer exist. |
 | [Error-catching workshop](../../work/error-catching/README.md) | Gate calibration and failure evidence. |
 | [Agent-runtime design workshop](../../work/agent-runtime-design/README.md) | Execution, approval, and runtime-boundary constraints. |

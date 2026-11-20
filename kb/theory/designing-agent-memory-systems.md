@@ -91,9 +91,7 @@ These are real memory systems or memory subsystems. The distinction is that they
 
 ## Build Order Is Implementation-Specific
 
-[Commonplace agent memory gap plan](../reference/commonplace-agent-memory-gap-plan.md) translates these requirements into a plan for closing Commonplace's current gaps: authority for automatic memory operations, candidate queues, lifecycle scheduling, compiled-view source alignment, session-trace capture, trace extraction, situation cues, behavioral evaluation, ranking, import/reingest maturity, and retrospective episodes where they answer real queries.
-
-Each project will need its own version of that mapping. The requirements above are stable, but the order, depth, and integration of solutions depend on the host system, existing tooling, and the failure modes the project actually observes. The right sequencing comes from validated usefulness in the running system, not from working through this list top to bottom.
+The requirements above are stable, but the order, depth, and integration of solutions depend on the host system, existing tooling, and the failure modes the project actually observes. The right sequencing comes from validated usefulness in the running system, not from working through this list top to bottom.
 
 ## What Remains Open
 

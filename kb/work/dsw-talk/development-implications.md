@@ -21,7 +21,7 @@ The talk makes this gap visible because both of its worked cases had to be recon
 
 The read side has the complementary gap. Titles, descriptions, indexes, links, `rg`, and skills provide progressive routing, but [agent-memory coverage](../../reference/agent-memory-coverage.md) records that activation quality, behavioral uptake, context efficiency, and promotion economics are not first-class metrics. Commonplace can inspect whether an artifact exists and whether it passes review; it does not yet routinely test whether a fresh agent finds and uses it correctly under a context budget.
 
-The [agent-memory gap plan](../../reference/commonplace-agent-memory-gap-plan.md) already names both needs: a candidate surface between observations and durable artifacts, followed later by activation and behavioral-uptake evaluation. The talk connects them into one round trip rather than two independent features.
+The [agent-memory gap plan](https://github.com/zby/commonplace/blob/1767f25c5256ae49b6c43d70b46c5469540b2b10/kb/reference/commonplace-agent-memory-gap-plan.md) already names both needs: a candidate surface between observations and durable artifacts, followed later by activation and behavioral-uptake evaluation. The talk connects them into one round trip rather than two independent features.
 
 ## 1. Candidate-development episodes
 
@@ -108,7 +108,7 @@ The development target is therefore the thin observable loop that makes Commonpl
 
 - [DSW talk outline](./outline.md) — motivates: the two worked cases and the “write for reuse; load for the task” synthesis that expose the missing round trip
 - [Where change candidates come from in Commonplace](../../reference/case-studies/where-change-candidates-come-from-in-commonplace.md) — rests-on: current noticing channels do not themselves promote observations into explicit candidates
-- [Commonplace agent-memory gap plan](../../reference/commonplace-agent-memory-gap-plan.md) — see-also: independently proposes a candidate surface followed by activation and behavioral evaluation
+- [Commonplace agent-memory gap plan](https://github.com/zby/commonplace/blob/1767f25c5256ae49b6c43d70b46c5469540b2b10/kb/reference/commonplace-agent-memory-gap-plan.md) — see-also: independently proposes a candidate surface followed by activation and behavioral evaluation
 - [Agent memory coverage](../../reference/agent-memory-coverage.md) — evidenced-by: current activation, context-efficiency, and behavioral-uptake gaps
 - [Auditable LLM editing experiment conclusion](../auditable-llm-editing/experiment-conclusion.md) — draws-on: saved candidates, independent verification, and human-directed disposition
 - [Description-length measurement plan](../description-length-optimization/measurement-plan.md) — draws-on: the existing retrieval and context-cost measurements the cold-session assay should extend
