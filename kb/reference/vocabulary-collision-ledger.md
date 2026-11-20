@@ -1,6 +1,6 @@
 ---
 description: "Look up a term with competing uses in Commonplace and open its record for the wording decision and conditions for reconsideration."
-type: reference/types/vocabulary-ledger.md
+type: types/vocabulary-ledger.md
 ---
 
 # Vocabulary collision ledger

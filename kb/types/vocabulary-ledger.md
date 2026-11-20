@@ -15,7 +15,7 @@ A collision record gives the writing decision, its rationale and provenance, and
 
 ```markdown
 ---
-type: reference/types/vocabulary-ledger.md
+type: types/vocabulary-ledger.md
 description: "{What a reader can look up here}"
 ---
 

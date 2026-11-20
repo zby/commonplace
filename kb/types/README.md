@@ -7,6 +7,7 @@ Global structural contracts used across Commonplace collections. A type-spec doc
 - [Note](./note.md) — the base structured knowledge artifact
 - [Instruction](./instruction.md) — procedures, skills, prompts, and work packets
 - [Definition](./definition.md) — operational vocabulary definitions
+- [Vocabulary ledger](./vocabulary-ledger.md) — a compact lookup table for recorded collisions or candidate unifications
 - [Review gate](./review-gate.md) — one judgment-based quality criterion
 - [Review result](./review-result.md) — one gate, conformance or critique assessment with retained execution evidence
 - [Edit operation](./edit-operation.md) — one named edit of one note text, run alone by `commonplace-revise try`

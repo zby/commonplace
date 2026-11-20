@@ -1,6 +1,6 @@
 ---
 description: "Lookup table for vocabulary reviews and definition revisions investigating whether different Commonplace terms describe one property or mechanism."
-type: reference/types/vocabulary-ledger.md
+type: types/vocabulary-ledger.md
 ---
 
 # Vocabulary unification ledger
