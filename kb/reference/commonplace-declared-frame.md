@@ -14,6 +14,8 @@ Self-improvement, reflectivity, and autonomy attributions are frame-indexed: the
 
 **Outside:** arbitrary contributors, readers, and advisers; the model provider and its weights; inference infrastructure; hosting.
 
+If an outside adviser supplies the diagnosis a repair depends on, the adviser remains outside this frame. Credit the diagnosis to the adviser; the repair is not evidence that Commonplace diagnosed the problem unaided. An assessment of the [whole software house](../theory/definitions/software-house.md) counts that same person inside while they fill the required production role.
+
 ## The partition
 
 Within the frame, the repository, commands, validators, review store, and agents are the computational components; designated maintainers are the human components. The partition reports actor allocation and nothing else — it changes neither membership nor reflectivity.

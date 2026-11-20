@@ -7,7 +7,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 
-- [Frame and objective declaration](./frame-and-objective-declaration/README.md) — consolidate references to Commonplace’s on-balance objective and check whether a fresh reader distinguishes a design decision from a demonstrated gain
 
 - [Documentation consolidation](./documentation-consolidation/README.md) — posed 2026-11-18, refocused 2026-11-19: cut outdated documentation by tying each document to an explicit task, moving agent guidance onto its activation path, keeping short human overviews, and later pruning unnecessary skills.
 
