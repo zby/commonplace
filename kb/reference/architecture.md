@@ -150,7 +150,6 @@ metadata, or command help.
 
 ## See also
 
-- [Instruction generation](./instruction-generation.md) — what `commonplace-init` writes and how templates are resolved
 - [Storage](./storage-architecture.md) — authority and lifecycle after artifacts are installed
 - [Scenario architecture](./scenario-architecture.md) — the common agent path through the installed surfaces
 - [ADR 027](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — package-data and editable-source boundary

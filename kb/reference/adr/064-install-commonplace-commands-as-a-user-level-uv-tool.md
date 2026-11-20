@@ -67,6 +67,5 @@ The proposal's free choices were resolved as follows: explicit Python `>=3.11`; 
 Relevant Notes:
 
 - [Commonplace architecture](../architecture.md) — implemented-by: the installed command and scaffold surfaces
-- [Instruction generation](../instruction-generation.md) — implemented-by: the scaffold no longer generates command-environment state
 - [014-scripts-as-python-package-one-tree-model](./014-scripts-as-python-package-one-tree-model.md) — supersedes: project-venv and direnv command discovery
 - [027-package-scaffold-assets-without-source-tree-symlinks](./027-package-scaffold-assets-without-source-tree-symlinks.md) — supersedes: `.envrc.template` as an included root template, while retaining explicit package-data inclusion

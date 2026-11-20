@@ -869,6 +869,7 @@ plugins:
         'reference/freshness-architecture.md': 'reference/review-architecture.md'
         'reference/freshness-schemas.md': 'reference/review-architecture.md'
         'reference/full-improvement-pass-closure.md': 'reference/README-REVIEW-SYSTEM.md'
+        'reference/instruction-generation.md': 'reference/architecture.md'
         'reference/lib-modules.md': 'reference/README.md'
         'reference/navigation.md': 'tags/README.md'
         'reference/proposals/anchored-validation-checks-with-declared-dependencies.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'

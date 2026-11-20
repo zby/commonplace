@@ -7,7 +7,7 @@ tags: [architecture]
 
 # User-level uv tool installation for Commonplace commands
 
-> **Archived** (see [archive README](./README.md)). Adopted by [ADR 064](../../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md): [Commonplace architecture](../../architecture.md), [instruction generation](../../instruction-generation.md), the install guide, and the health-check skill now carry the live design. The ADR retains the alternatives and resolved free choices; what remains here is the dated pre-change state and the reported native Windows evidence.
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 064](../../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md): [Commonplace architecture](../../architecture.md), the [install guide](../../../../INSTALL.md#2-install-commonplace-as-a-user-level-tool), and the health-check skill now carry the live design. The ADR retains the alternatives and resolved free choices; what remains here is the dated pre-change state and the reported native Windows evidence.
 
 ## Current state (as of 2026-08-08)
 
@@ -36,5 +36,5 @@ Relevant Notes:
 
 - [ADR 064 — Install Commonplace commands as a user-level uv tool](../../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — adopted-by: the implemented decision
 - [Commonplace architecture](../../architecture.md) — implemented-by: current command-installation and scaffold behavior
-- [Instruction generation](../../instruction-generation.md) — implemented-by: current generated-artifact surface
+- [Project setup](../../../../INSTALL.md#3-set-up-the-project-with-commonplace-init) — implemented-by: what init writes after command installation
 - [uv tools](https://docs.astral.sh/uv/concepts/tools/) — evidenced-by: the external tool-installation mechanism evaluated

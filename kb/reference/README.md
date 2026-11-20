@@ -62,7 +62,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric
 - [Collection prototypes](./collection-prototypes.md) — clone-once starter contracts for new collections
 - [Control-plane goals](./control-plane-goals.md) — how `AGENTS.md` ships always-loaded KB goals and templates
-- [Instruction generation](./instruction-generation.md) — build-time template substitution and `commonplace-init`
 - [Scenario architecture](./scenario-architecture.md) — scenario-derived decomposition of the installed surfaces
 - [Tag-readme trace as a self-improving loop](./tag-readme-trace-as-self-improving-loop.md) — one observed trace mapped onto search, evaluation, and retention
 - [Commonplace agent memory gap plan](./commonplace-agent-memory-gap-plan.md) — earlier gap-closure plan (unadopted roadmap)

@@ -30,7 +30,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../t
 | Lifecycle | `user-verified` flags, validation failures, review staleness, build-time generated indexes, workshop closure, and log review provide partial lifecycle handling. | Retirement, supersession, relaxation, recurrence tracking, and scheduled lifecycle work are incomplete. |
 | Authority | Explicit files, version-control review, deterministic validation, and semantic review gates provide the current authority model for durable memory changes. | Authority for automatic extraction, promotion, activation, and retirement is not fully specified. |
 | Evaluation | Structural validation and semantic review evaluate artifact quality. | Activation, behavioral uptake, context efficiency, source-alignment health, and promotion economics are not first-class metrics. |
-| Native work environment | Markdown, version control, shell commands, `.claude/skills/`, `.agents/skills/`, and package commands let Claude Code, Codex, and similar agents inspect and edit memory where they already work. The shipped workflows use Git. See [architecture](./architecture.md) and [instruction generation](./instruction-generation.md). | Harness-specific execution policy differs across tools. |
+| Native work environment | Markdown, version control, shell commands, `.claude/skills/`, `.agents/skills/`, and package commands let Claude Code, Codex, and similar agents inspect and edit memory where they already work. The shipped workflows use Git. See [architecture](./architecture.md). | Harness-specific execution policy differs across tools. |
 | Reusable memory distribution | The installed package carries reusable methodology, global types, review gates, and promoted skills as one library that every project reads in place; user collections stay project-owned. `commonplace-init` writes skill stubs and a routing file that point into the library. | A library upgrade applies in place with no project-level diff to review; local project authority still requires operator judgment. |
 
 ## Boundary
@@ -46,7 +46,6 @@ It is weaker as an autonomous learning system. Automated session-trace extractio
 - [Control-plane goals](./control-plane-goals.md) — contains: always-loaded KB goals and routing context in `AGENTS.md`
 - [Collections and types](./collections-and-types.md) — implements: collection contracts plus type contracts
 - [Review system architecture](./review-architecture.md) — implements: semantic review, provenance, result-file freshness, and stale-pair detection
-- [Instruction generation](./instruction-generation.md) — implements: scaffold generation and multi-harness skill installation
 
 ---
 

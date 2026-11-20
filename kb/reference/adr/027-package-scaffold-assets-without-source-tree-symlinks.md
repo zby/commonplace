@@ -48,4 +48,3 @@ Risks:
 - [014-scripts-as-python-package-one-tree-model](./014-scripts-as-python-package-one-tree-model.md) — refines: replaces the scaffold symlink packaging mechanism while keeping the package-and-init model
 - [021-ship-library-content-under-kb-commonplace](./021-ship-library-content-under-kb-commonplace.md) — implements: preserves the installed `kb/commonplace/` library/user boundary
 - [architecture](../architecture.md) — implemented-by: current shipped layout and package/init surface
-- [instruction-generation](../instruction-generation.md) — implemented-by: scaffold source resolution and generated artifact flow
