@@ -39,9 +39,11 @@ Stop and report instead of creating anything when:
 
 Read the project's KB goals in `AGENTS.md` and the
 [collection-contract type](../../types/collection-contract.md) first. Then
-read the model contract: the one the caller named, or else the project's
-`kb/*/COLLECTION.md` closest to the new purpose. Adapt it; copying a contract
-ends any relationship with its origin, and the new file is the project's own.
+read the contract the caller named, or look for a `kb/*/COLLECTION.md` in the
+project that fits the new purpose. If none fits, list the installed starting
+contracts with `ls "$(commonplace-source)"/_data/templates/user-*-COLLECTION.md`.
+Adapt a suitable contract, or draft one directly. The project owns the new
+file; later changes to a template do not update the copy.
 
 Frontmatter:
 
