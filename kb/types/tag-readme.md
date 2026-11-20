@@ -18,7 +18,7 @@ A tag-README is understood standalone — the field names are self-describing an
 - Open with what the tag gathers, in the words a reader would search for, and name the defining note if the tag has one. State what makes an artifact qualify for the tag: the subject, question, or mechanism it must substantively address. Mentioning the topic or using it as background is insufficient. A writer must be able to justify or challenge an assignment from this opening without inferring the rule from the picks.
 - Where neighboring tags could be confused, state the boundary: what belongs here and what belongs under the neighbor. Tags may overlap when an artifact meets both inclusion conditions; a boundary is not a demand to choose only one tag. Ordinary prose is sufficient; no fixed heading or formal predicate is required.
 - Curated entries MUST have context phrases — a bare link list is an address book, not a map.
-- Be selective by default. Completeness is the build's job (the published site appends the full generated listing) and the scoped query's job (`rg` recipes in `kb/reference/navigation.md`) — not the author's, unless the `complete` mark is declared.
+- Be selective by default. The site build supplies the full listing; authors need not link every member unless they declare the `complete` mark.
 - Do not hand-write a complete listing, or claim in body text that the linked child heads cover the tag, without declaring `complete: true` — an unenforced version of that claim decays silently into the stale-index failure.
 
 Assignment fit is judged during authoring and semantic review. The deterministic validator checks head existence, structure, links, weight, and declared completeness; it does not establish that an artifact fits the tag's meaning.
@@ -27,11 +27,32 @@ Assignment fit is judged during authoring and semantic review. The deterministic
 
 Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The mark, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; membership consumers do not read them. Explicit source-scoped searches may read tags on tracked source analyses under the source collection contract. These search results are outside the head's completeness claim, even when they reuse its topic vocabulary.
 
+### Checking exact membership
+
+On the published site, the curated links and generated listing together cover the members. In a Commonplace checkout, run this from the repository root, replacing `evaluation` with the tag name:
+
+```bash
+uv run python - evaluation <<'PY'
+import sys
+from pathlib import Path
+from commonplace.lib.index_generated import collect_tag_space
+
+root = Path.cwd()
+space = collect_tag_space(root)
+if space.declaration_error:
+    sys.exit(space.declaration_error)
+for path, _, description in space.notes_by_tag.get(sys.argv[1], []):
+    print(f"{path.relative_to(root)}: {description}")
+PY
+```
+
+The validator and site build use this collector. A text search finds candidates, not exact membership: it can match ignored captures or miss multiline YAML tags.
+
 ## Frontmatter
 
-- `complete: true` (optional) — every artifact carrying the tag, across the participating collections, is linked from this head or carries a tag whose head is linked from this head: the head reaches every member in one hop. Validator-enforced; readers may skip the by-tag `rg` sweep. Children are the heads the body links; no list names them, and a link's context phrase says whether the linked head is a child or a neighbour ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
+- `complete: true` (optional) — every artifact carrying the tag, across the participating collections, is linked from this head or carries a tag whose head is linked from this head: the head reaches every member in one hop. Validator-enforced; readers may use the head instead of enumerating members. Children are the heads the body links; no list names them, and a link's context phrase says whether the linked head is a child or a neighbour ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
 
-The mark is a **validated cache** of tag membership, which the scoped `rg` sweep (`kb/reference/navigation.md`) always recovers. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping the mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md`). A mark that cannot be made true without a weak child tag or a tag created to hold a few notes is dropped, or those members are linked by hand, which satisfies it. ADR 026 is the decision record for marks; ADR 090 folded its two marks into this one; the theory combines the reuse benefit (`kb/theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) with [checking cost and reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md). Enforced-or-omitted is this contract's policy for a mark that authorizes stopping, not a universal requirement for retained results; the PKM grounding is `kb/theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
+The mark is a **validated cache** of tag membership, computed independently of the head's links. Two properties follow, and any future mark must keep both: **recomputable, therefore never load-bearing** — dropping the mark costs one recomputation, never correctness; and **enforced-or-omitted** — a false mark tells exhaustive consumers to stop looking while members are still out there (`kb/theory/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md`). A mark that cannot be made true without a weak child tag or a tag created to hold a few notes is dropped, or those members are linked by hand, which satisfies it. ADR 026 is the decision record for marks; ADR 090 folded its two marks into this one; the theory combines the reuse benefit (`kb/theory/llm-recompute-cost-inverts-the-store-vs-recompute-default.md`) with [checking cost and reliance risk](../theory/checking-retained-results-trades-cost-against-reliance-risk.md). Enforced-or-omitted is this contract's policy for a mark that authorizes stopping, not a universal requirement for retained results; the PKM grounding is `kb/theory/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md`.
 
 ## The weight contract
 
@@ -45,7 +66,7 @@ Enforcement is reactive (the two properties above are why): writing a note does 
 
 **Exits, in order of preference:**
 
-1. **Drop to selective** (default): remove the mark, trim to the editorial best-of; readers fall back to `rg`.
+1. **Drop to selective** (default): remove the mark, trim to the editorial best-of; readers needing every member use the listing or collector.
 2. **Split with overlap** (only when the groupings reveal real substructure): mint child tags with their own heads; child-tagged notes **keep the parent tag**; this head links the child heads and keeps the mark if the hop still reaches everyone. Never split so that only some members keep the parent tag — partial migration makes the structure invisible.
 3. Retiring the parent tag is a decision about the concept dissolving, never a size remedy.
 
