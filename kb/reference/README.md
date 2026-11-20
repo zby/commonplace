@@ -48,6 +48,10 @@ For exact implementation facts, inspect `src/commonplace/` (or locate the instal
 - [Vocabulary unification ledger](./vocabulary-unification-ledger.md) — candidate vocabulary unifications and current writing decisions
 - Definitions: [Answerability](./definitions/answerability.md), [Collection and text contract](./definitions/collection.md), [Commonplace doctrine](./definitions/commonplace-doctrine.md), [Directory artifact](./definitions/directory-artifact.md), [Special collection](./definitions/special-collection.md)
 
+## Case studies
+
+- [Where change candidates come from in Commonplace](./case-studies/where-change-candidates-come-from-in-commonplace.md) — how a problem noticed by a check or report becomes a proposed change, and where that still needs a maintainer.
+
 ## System-coupled notes and declarations
 
 Commonplace develops its methodology by running on itself. The notes below record this repository's own declared frames, assessments, and local historical records — too coupled to Commonplace's choices to stand as general theory, and separate from the operational contracts above.
@@ -57,7 +61,6 @@ Commonplace develops its methodology by running on itself. The notes below recor
 - [Source-adoption policy](./source-adoption-policy.md) — borrowing gates by source domain
 - [Commonplace as an instrument](./commonplace-as-an-instrument.md) — what this KB tests in the design program
 - [Design rationale management](./design-rationale-management.md) — how workshops, proposals, ADRs, contracts, and validators distribute rationale
-- [Where change candidates come from in Commonplace](./case-studies/where-change-candidates-come-from-in-commonplace.md) — noticing and candidate-drafting mechanisms in this repository
 - [Agent memory coverage](./agent-memory-coverage.md) — how shipped surfaces map onto agent-memory requirements and current limits
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric
 - [Collection prototypes](./collection-prototypes.md) — clone-once starter contracts for new collections

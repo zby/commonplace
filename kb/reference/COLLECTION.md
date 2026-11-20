@@ -71,6 +71,8 @@ to read a reference document is a warning most changers will miss.
 
 **Proposal exception.** Design proposals — finished but unadopted designs, which describe a design object rather than shipped behavior — live only under `proposals/`, and every artifact there carries the collection-local [`design-proposal`](./types/design-proposal.md) type. Every file directly under `proposals/` is a live, undecided design. Adopted and retired proposals live only under `proposals/archive/`, and no artifact outside it links into it except files under `kb/work/` ([ADR 056](./adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). What a proposal must be, and the procedure for each lifecycle transition, is stated by its type ([ADR 084](./adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
 
+**Case studies.** Use `case-studies/` for a finished explanation that answers a question about Commonplace and depends on its particular mechanisms or evidence. State the explanation in the terms the reader needs; no general theory claim is required. If another use later supports a transferable claim, write that claim in `kb/theory/` and keep the case while readers still need it. A binding rule belongs where its consumer reads it; an unfinished investigation belongs in `kb/work/`.
+
 ## Title and description conventions
 
 **Topical titles by default.** Answer "what is this about?" — "Collections and types", "Storage architecture". A link like `see [collections and types](./collections-and-types.md) for how types are resolved` reads naturally.
