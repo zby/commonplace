@@ -31,6 +31,7 @@ Current retained sets:
 - [Simplification-instruction comparison](./simplification-instruction-comparison-20260807/README.md)
 - [ASD-STE100-inspired rewrite experiment](./asd-ste100-inspired-rewrite.md)
 - [Provider treatment of operator-communication failures](./provider-treatment-of-operator-communication-failures-2026-08-29.md)
+- [Codex model-attribution incident, July–August 2026](./harness-sub-agent-model-selection-regression.md) — why 268 results labelled Luna could not count as Luna reviews.
 - [Link-vocabulary audit](./link-vocabulary.md)
 - [Review-link availability baseline](./review-link-availability.md)
 - [Agent operability audit](./agent-operability-audit-2026-08-31.md)

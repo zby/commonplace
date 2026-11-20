@@ -174,6 +174,8 @@ result adds controller-owned metadata and remains a distinct retained artifact;
 an edit's unmodified candidate bytes stay with Workjig. Current results remain
 replaceable views over that evidence.
 
+When recording which model ran a review, keep the request distinct from the harness’s execution record. A matching result label is not independent evidence if it was copied from the request. In the [July 2026 Codex incident](../reports/retained/harness-sub-agent-model-selection-regression.md), both stored labels said Luna; the incident account reports that the child traces said Sol.
+
 Fixtures are deliberately self-contained exports. Their copied inputs have a
 separate retention boundary: they must remain usable without the source run.
 Missing Workjig evidence blocks an export; it does not fall back to current KB

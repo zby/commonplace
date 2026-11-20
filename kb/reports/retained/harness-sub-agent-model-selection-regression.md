@@ -5,6 +5,8 @@ type: types/note.md
 
 # Harness sub-agent model selection regression
 
+This account records a July 2026 comparison of stored review results with child execution traces. A later investigation did not recover the original traces to repeat the comparison. The counts below are the incident’s reported observations, not a fresh audit or a failure-rate estimate for later harnesses.
+
 ## Observed regression (2026-07-17)
 
 Codex's `multi_agent_v1` spawn surface accepted an explicit `model` and `reasoning_effort`. Two retained session traces show workers launched through that surface with `model: gpt-5.6-luna`; their child `turn_context` records `gpt-5.6-luna` at low and medium effort.
@@ -19,9 +21,9 @@ The later `multi_agent_v2` collaboration surface accepts task identity, context-
 
 This is a harness regression, not model selection performed by Commonplace. The review system of the time used `model_partition` as review identity and freshness scope; selecting a partition did not cause the harness to dispatch that model. The current [review system](../../reference/README-REVIEW-SYSTEM.md) has no partitions and records the model each harness reports.
 
-## Current collaboration surface (2026-08-23)
+## Collaboration surface observed on 2026-08-23
 
-The current Codex collaboration tool again accepts explicit `model` and
+On August 23 the Codex collaboration tool again accepted explicit `model` and
 `reasoning_effort` overrides for a worker, but only when `fork_turns` is `none`
 or a positive turn count. A full-history fork inherits the parent model and
 cannot override it. This restores a model-specific dispatch path when the
@@ -44,9 +46,9 @@ The incident exposed the parent-trust boundary described by [ADR 034](../../refe
 
 ## Operational consequence
 
-A model-specific sweep is now executable through the current collaboration
-surface when the required model is available and the worker can run from a
-bounded fork. A full-history worker still inherits the parent model. In either
+The August change allowed a model-specific sweep when the requested model
+was available and the worker could run from a bounded fork. A full-history
+worker still inherited the parent model. In either
 case, a worker label, task name, requested partition, or intended model is not
 execution evidence. When a trace is available, `turn_context.payload.model` is
 the concrete execution record; `commonplace-review` reads a codex worker's
@@ -61,5 +63,5 @@ without migration, so no current result rests on them.
 
 Relevant Notes:
 
-- [Run review batches](../../instructions/run-review-batches.md) — procedure: dispatch and provenance rules affected by this harness regression
+- [Run review batches](../../instructions/run-review-batches.md) — see-also: dispatch and provenance rules affected by this harness regression
 - [OpenAI Responses API multi-agent documentation](https://developers.openai.com/api/docs/guides/responses-multi-agent) — see-also: documents the separate public surface whose subagents share the request model
