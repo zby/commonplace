@@ -42,20 +42,28 @@ particular change was learned.
 learning** by two conditions:
 
 1. **Legible, addressable store.** What is learned is held in the contents
-   of a store that can be read and pointed at. The system learns by changing
-   those contents, and its later work consumes them.
-2. **Decision in the loop.** Each change to the store is made by an
-   on-balance judgment that the system will do its later work better with
-   the change than without it. The judgment could have gone against the
-   change. A judgment by one fixed measure is the special case.
+   of a store that can be read and pointed at. The store is the system's
+   own: its later work consumes those contents.
+2. **Decision in the loop.** A change to the store is proposed, judged on
+   the evidence the system has, and can be rejected. The judgment is an
+   on-balance judgment of whether later work will go better with the change
+   than without it. A judgment that applies one fixed criterion is the
+   special case. A rule that updates the store directly from an input is
+   not a decision.
+
+A claim names the system, the store, the class of changes and the horizon.
 
 Being open to criticism was a third condition until 2026-11-21. The operator
 ruled it out after [a proposal that Neon and Astra amended](./positions/proposal-two-conditions.md).
 Two properties are reported in its place: correction from later evidence
-(none, bundle or targeted) and displacement by a higher-scoring alternative.
-A deliberative learner is, in the KB's existing terms, a self-improving
-system that works by proposal and selection over a legible, addressable
-store.
+(none, bundle or targeted) and displacement. A deliberative learner is, in
+the KB's existing terms, a self-improving system that works by proposal and
+selection over a legible, addressable store.
+
+The draft was rewritten on 2026-11-21 after three outside readings. The
+rewrite removed workshop history, settled on "criterion" as the one word for
+what a judgment applies, and stated Commonplace's conjecture in a section of
+its own.
 
 A change is an edit to the store's contents, including an edit to what
 later work loads or selects. The operator ruled on 2026-11-21 that the
@@ -108,15 +116,17 @@ learner.
   [The checks](./definition-checks.md) list which of their placements
   change, and [the discussion](./positions/fixed-measure-discussion.md)
   records how the ruling was reached.
-- **Conditions 2 and 3 revised around reliance, graded attribution, and the
-  Gödel-machine line.** Following
-  [what later evidence can overturn](./what-later-evidence-can-overturn.md),
-  the draft separates evidence against continued reliance from displacement by
-  a challenger and distinguishes bundle rollback from localized blame. Cases
-  13–16 place DGM outside on C, HGM inside as single-loop for archive parent
-  selection, the classical Gödel machine inside as double-loop capable,
-  and Schmidhuber's incremental self-improvement (outside on S, passes C at
-  coarse attribution minimum).
+- **The Gödel-machine line is placed.** After the ruling for two
+  conditions, [the checks](./definition-checks.md) place the Darwin Gödel
+  Machine inside with displacement and no correction, the Huxley-Gödel
+  Machine inside as single-loop with targeted correction, and the classical
+  Gödel machine inside as double-loop capable. Schmidhuber's incremental
+  self-improvement stays outside on the store.
+  [What later evidence can overturn](./what-later-evidence-can-overturn.md)
+  gives the background.
+- **Two more outside readings were made of the two-condition draft:**
+  [one launched by Astra](./positions/step-3-outside-reading.md) and
+  [one on Claude Opus](./positions/step-3-outside-reading-opus.md).
 - **[The rulings](./rulings.md)** record what the operator decided and how
   the definition was reached.
 
@@ -125,12 +135,13 @@ learner.
 One question is open. The others were ruled on or closed on 2026-11-21 and
 are listed with their answers.
 
-1. **Does the two-condition definition hold up under a reading from
-   outside the workshop?** [The first outside reader](./positions/step-2-outside-reading.md)
-   read the three-condition draft, agreed with every placement it could
-   decide, and found the name fitted worst where a fixed rule is admitted.
-   The operator asked for the test to be run again on the revised draft with
-   a different model.
+1. **Does the rewritten draft hold up under a further outside reading?**
+   Three outside readings were made:
+   [of the three-condition draft](./positions/step-2-outside-reading.md),
+   and of the two-condition draft by
+   [a reader Astra launched](./positions/step-3-outside-reading.md) and by
+   [a reader on Claude Opus](./positions/step-3-outside-reading-opus.md).
+   Their findings are applied. No reader has seen the rewrite.
 
 Closed:
 
@@ -148,6 +159,16 @@ Closed:
 - **The strict meaning of "learned".** Kept. The on-balance note now says
   that a measure is a whole way of scoring the work and not one dimension.
 - **Where "learned" lives.** In the definition file.
+- **A decision against a direct update.** A change must be proposed and
+  able to be rejected. A rule that updates the store directly from an input
+  is outside, which removes the click-ranking job that two readers found
+  the worst fit for the name.
+- **"Each change" against a named class.** A claim is made for a named
+  class of changes.
+- **What the two conditions had lost.** Judgment on evidence and the
+  exclusion of a work product are back in the conditions.
+- **"Without the change".** The system as it now is with that one change
+  taken out, not the system as it stood before the change.
 
 ## Other open work
 
