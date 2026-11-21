@@ -50,7 +50,10 @@ store holds library notes, instructions, types, validators, and code used
 across tasks. For a named class of edits, such as changes to routing
 instructions, the operator or an agent can reject a proposed edit, later
 tasks load what is kept, and a misleading review check can itself be
-revised for future edits of that class. That establishes capacity for a
+revised for future edits of that class—as in the
+[2026-08-30 revision](../theory/evidence/commonplace-revision-used-theory-guided-computational-search.md),
+an observed episode in which the operator selected among candidate
+revisions to Commonplace's own machinery. That establishes capacity for a
 human-assisted system—a weak claim that any engineering team maintaining a
 handbook also meets.
 
@@ -60,10 +63,13 @@ be a sound decision while its payoff is still unknown
 Whether that edit was actually **learned** is a separate verdict: compare
 fresh work with the edit against fresh work without it, leaving the rest of
 the store intact except for later edits that depend on it. Name those
-dependencies, whose gains and losses count, and the horizon across tasks.
+dependencies, whose gains and losses count, and the horizon across tasks;
+the edit was learned only if the system is better **on balance**—meaning
+every reasonable measure of the declared work favors keeping it
+([on-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)).
 Showing that later behavior changed proves only that the edit mattered
-([operative change](../theory/definitions/operative-change.md)); it does
-not show that the change was for the better.
+([operative change](../theory/definitions/operative-change.md)), not that
+it was for the better.
 
 **Autonomous judgment.** The conjecture under test is that a fixed-weight
 language model can make the admission, correction, and criterion-revision
@@ -71,7 +77,7 @@ decisions without a person making them. An episode in which the operator
 selects among candidate edits is evidence about the human–machine system,
 not a test the autonomous model either passed or failed.
 
-## Four comparisons that separate the capabilities
+## Three capabilities and one test of the whole loop
 
 To test autonomous judgment without conflating its parts, fix the model,
 task family, available evidence, and compute budget before a run, and state
@@ -88,15 +94,14 @@ counts against that configuration, not against all fixed-weight models.
 can pass locally while accumulated edits make the system worse overall.
 Compare the evolving store against an otherwise matched system running on
 the starting store over the same fresh work and horizon. Count upkeep and
-human supervision alongside task outcomes, checking specifically for costs
-local approvals miss—judgment errors,
+human supervision alongside task outcomes, checking for costs local
+approvals miss—judgment errors,
 [false-positive acceptance](../theory/false-positive-generation-is-filtered-before-retention.md),
 [unfaithful rationales](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md),
 and store accretion. When reasonable measures disagree, report the
-disagreement as open
-([on-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)).
-Neither withholding the entire store nor demonstrating one successful
-repair establishes the net benefit of continued revision.
+disagreement as open. Neither withholding the entire store nor
+demonstrating one successful repair establishes the net benefit of
+continued revision.
 
 ## A first experiment: repairing a misleading routing check
 
@@ -107,23 +112,29 @@ existing check that lets overbroad routing instructions pass.
 Give the model the current review check together with execution traces in
 which overbroad routing lines passed that check and later misdirected work.
 Supply the evidence only, not a diagnosis or a replacement rule, and let
-the model decide whether and how to revise the check. Then run both the old
-and revised checks on the same set of unseen proposals, including sound
-routing rules that should still pass. On fresh downstream tasks, record
-both misroutes prevented and useful guidance lost.
+the model decide whether and how to revise the check. To prevent a model
+that rewrites every check it sees from scoring well, pair those cases with
+at least one sound check whose accompanying failure traces have another
+cause, counting leaving the sound check unchanged as the right result. Run
+both the old and resulting checks on the same unseen proposals, including
+sound routing rules that should still pass, and record on fresh downstream
+tasks both misroutes prevented and useful guidance lost.
 
 The comparison separates three outcomes:
 
 1. **No operative revision:** later decisions on unseen proposals do not
-   change.
+   change, or the model fails to distinguish misleading checks from sound
+   ones.
 2. **Changed decisions without demonstrated gain:** misroutes drop only by
-   rejecting sound rules, or overall task outcomes do not improve.
-3. **Improved criterion:** the revised check prevents misroutes while
-   preserving sound guidance on fresh work.
+   rejecting sound rules, the model rewrites sound checks unnecessarily, or
+   overall task outcomes do not improve.
+3. **Improved criterion:** the model revises the misleading check—preventing
+   misroutes while preserving sound guidance on fresh work—and leaves the
+   sound check alone.
 
-Even outcome 3 tests only one capability—criterion revision on a single
-failure pattern—not sustained autonomous learning across a whole store.
-Other controlled designs live in the
+Even outcome 3 tests only criterion revision on one failure pattern, not
+sustained autonomous learning across a whole store. Other controlled
+designs live in the
 [testing supplement](./testing-whether-a-theory-builder-learns.md), which
 is being re-anchored from our earlier theory-builder framing.
 
@@ -163,13 +174,11 @@ The current evidence record is small and should not be overstated:
   case variant remain pending. Even completed, that comparison probes
   stated reasons for a single decision, not the downstream effect of an
   admitted edit.
-- **The 2026-08-30 revision.** One observed episode in Commonplace
-  ([theory-guided computational search](../theory/evidence/commonplace-revision-used-theory-guided-computational-search.md))
-  used retained theory to guide search while the operator selected among
-  candidate revisions. That is evidence about the human-assisted system,
-  not autonomous judgment.
+- **The 2026-08-30 revision.** That observed episode used retained theory
+  to guide search while the operator selected among candidate revisions—
+  evidence about the human-assisted system, not autonomous judgment.
 
-State rival predictions only where an experiment actually separates them.
+Rival views matter only where an experiment separates their predictions.
 Rich Sutton and Khurram Javed argue that forming genuinely new concepts
 requires continual weight updates
 ([Sutton and Javed](../sources/sutton-javed-why-ai-models-stop-learning.ingest.md));
@@ -186,8 +195,9 @@ is separated from the evidence visible only to the scorer.
 - [Deliberative Learning: Judgment in Place of a Value Function](./deliberative-learning-judgment-in-place-of-a-value-function.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
-- [Deliberative learning](../theory/definitions/deliberative-learning.md) —
-  the full definition and boundary cases.
+- [Deliberative learning](../theory/definitions/deliberative-learning.md)
+  and its [definition checks](../theory/definitions/deliberative-learning-checks.md)
+  — the full definition and the boundary cases it is tested against.
 - [Testing Whether a Theory Builder Learns](./testing-whether-a-theory-builder-learns.md)
   and
   [Bootstrapping an Autonomous Theory Builder with Commonplace](./bootstrapping-an-autonomous-theory-builder.md)
