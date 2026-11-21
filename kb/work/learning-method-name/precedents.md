@@ -2,10 +2,7 @@
 
 Written 2026-11-21 by an agent (claude-fable-5-2) from the ingests listed
 below. It tests [the draft definition](./draft-definition.md) against earlier
-traditions. The placements are the agent's readings of ingest reports, not
-of the sources themselves. No ingest has retained quotes for these points
-except Argyris. Treat each row as a claim to check, and try to find a system
-that meets the definition.
+traditions. Most placements below are readings of ingest reports, not independent checks of the sources. The EURISKO placement also uses retained passages from Lenat's H12′ episode.
 
 ## The comparison
 
@@ -22,7 +19,7 @@ a system is single-loop or double-loop, not whether it is a member.
 | IRMA ([Bratman, Israel and Pollack](../../sources/bratman-israel-pollack-1988-plans-resource-bounded-reasoning.ingest.md)) | Plans during one run. Nothing from outcomes. | A deliberation process and a filter with an override | A footnote proposes tuning the override threshold |
 | Truth maintenance, bare ([Doyle](../../sources/doyle-1979-truth-maintenance-system-aim-521.ingest.md)) | Beliefs that have a valid recorded reason | Support alone | No |
 | Truth maintenance, dialectical design (same memo) | Every argument. The current beliefs are derived from them. | Unsolved. Doyle says explicit rules for choosing what to believe are needed and defers them. | Steps and premises can be challenged. The design has one three-node example. |
-| EURISKO ([report](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md), [Lenat and Brown](../../sources/why-am-and-eurisko-appear-to-work.ingest.md)) | Concepts and heuristics with a worth | Worth, set from task results and by other heuristics | Partly. The heuristics that judge are units the system can change. People corrected it repeatedly. |
+| EURISKO ([report](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md), [Lenat and Brown](../../sources/why-am-and-eurisko-appear-to-work.ingest.md)) | Concepts and heuristics with a worth | Worth, set from task results and by other heuristics | Yes for generalizations of heuristics: after dropping H12′ the program retained a new restriction on subsequent generalizations. This is not a claim about every worth judgment. |
 | Organizations ([Zollo and Winter](../../sources/zollo-winter-routines-to-dynamic-capabilities.ingest.md)) | Changed routines, in manuals and tools | "Improved effectiveness", not defined | Not in this paper. The learning routines change; the criteria do not. |
 | Organizations ([Argyris](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)) | Corrected practice | The governing objectives and policies | Double-loop learning questions them. Argyris reports that organizations rarely manage it. |
 
@@ -33,10 +30,7 @@ a system is single-loop or double-loop, not whether it is a member.
 - **Soar's chunking is outside.** It keeps every chunk, so no judgment
   decides retention and none can be found wrong.
 - **Do not infer a survey-wide negative from this table.** The classical Gödel machine, treated separately in [case 15](./definition-checks.md), is double-loop capable.
-- **EURISKO is the nearest program and is not yet checked.** Its judging
-  heuristics are in the store and open to change. Whether it can change which alternatives it favors, rather than update their
-  worth under the same criterion, needs a
-  boundary case in [the checks](./definition-checks.md).
+- **EURISKO supplies a reported double-loop episode.** [Case 17](./definition-checks.md#case-17--eurisko-changes-how-it-judges-heuristic-generalizations) separates rejecting one unsuccessful heuristic from changing how subsequent generalizations are judged.
 - **The system together with its designers always meets the definition.**
   Minton chose and revised PRODIGY's formula. Lenat corrected EURISKO. This
   agrees with [case 4 of the checks](./definition-checks.md).
@@ -60,8 +54,7 @@ a system is single-loop or double-loop, not whether it is a member.
 
 - The BDI survey samples representative architectures. It does not show that
   no BDI system learns plans.
-- Doyle's mechanism for choosing revisions is in his thesis, which is not
-  ingested.
+- The [ingest of Doyle's 1980 dissertation](../../sources/doyle-model-for-deliberation-action-and-introspection.ingest.md) follows the memo's §8 referral. It distinguishes triggers for reconsideration from policies for choosing a revision. Do not count the proposed policy-guided choice as a demonstrated capability: the reported implementation still chose randomly among ambiguous revisions.
 - Both Doyle and Bratman snapshots have conversion damage. Quotes need
   checking against the page images.
 - Zollo and Winter is the 1999 working paper, not the 2002 article. Its

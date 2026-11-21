@@ -37,6 +37,9 @@ A Gödel machine is a universal problem solver whose entire initial software `p(
 > must ignore those self-improvements whose effectiveness it cannot prove
 > --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — Section 2.4, limitations of Gödel machines (printed p. 5; PDF p. 6).
 
+> The Gödel machine might even change its own utility function and target theorem, but can do so only if their new values are provably better according to the old ones.
+> --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — §6.1, item 4.
+
 ## Connections Found
 
 The source lands in an already-populated `kb/notes/` cluster and does not open a new one. Its durable role is **the proof-governed limit case of reflective self-modification**: the system that pays the maximum price — full axiomatization of hardware, environment, and goal — to buy a guarantee that no other self-modifying system in the casebook can offer.

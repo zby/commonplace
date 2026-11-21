@@ -27,7 +27,14 @@ EURISKO represents concepts, heuristics, control procedures, and parts of its re
 
 ## Quotes
 
-No source quotes have been retained yet.
+> When EuRISKO detected this, it eliminated H12', and i t synthesized a few new heuristics each of which—if they had only existe d earlier—would have prevented H12' from ever being allowed to survive .
+> --- `kb/sources/.snapshots/eurisko-learns-new-heuristics-and-domain-concepts.md` @ `sha256:4f25f7a6284e629ff5254079674d9278df41be1e4b174f2d51ebadbed2f4e9ee` — Heuretics, H12′ episode, printed p. 89.
+
+> of these said to never replace AND by OR in an If slot of a heuristic
+> --- `kb/sources/.snapshots/eurisko-learns-new-heuristics-and-domain-concepts.md` @ `sha256:4f25f7a6284e629ff5254079674d9278df41be1e4b174f2d51ebadbed2f4e9ee` — First of the candidate restrictions, printed p. 90.
+
+> Ultimately, the first new heuristic (and a variant of the secon d one) remained as permanent entries in EURISKO ' S knowledge base .
+> --- `kb/sources/.snapshots/eurisko-learns-new-heuristics-and-domain-concepts.md` @ `sha256:4f25f7a6284e629ff5254079674d9278df41be1e4b174f2d51ebadbed2f4e9ee` — Outcome of the trials, printed p. 90.
 
 ## Connections Found
 
