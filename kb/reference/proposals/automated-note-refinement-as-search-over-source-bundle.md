@@ -49,7 +49,7 @@ Adopt as a framework procedure when, measured against running `cp-skill-revise-a
 - the bundle loop produces **split outcomes that a human accepts** at a rate that justifies the machinery — if it never usefully splits, the single-note loop is sufficient and simpler;
 - **kill outcomes are trusted** — operators act on "this seed is not a note" rather than overriding it, evidence the anti-convergence stance pays;
 - set-valued judging ranks split/merge/drift challengers against the incumbent set without a systematic bias toward larger or smaller sets;
-- promoted notes pass `cp-skill-validate` and survive `cp-skill-connect` with no more orphaning or stale-edge debt than hand-written notes.
+- promoted notes pass `commonplace-validate` and survive `cp-skill-connect` with no more orphaning or stale-edge debt than hand-written notes.
 
 ## Risks
 

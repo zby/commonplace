@@ -90,7 +90,6 @@ MANIFEST = ScaffoldManifest(
     ),
     promoted_skills=(
         "cp-skill-write",
-        "cp-skill-validate",
         "cp-skill-connect",
         "cp-skill-convert",
         "cp-skill-health-check",
@@ -98,8 +97,6 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-snapshot-web",
         "cp-skill-review",
         "cp-skill-revise",
-        "cp-skill-revise-autoreason",
-        "cp-skill-write-multistage",
         "cp-skill-ground",
         "cp-skill-add-collection",
     ),

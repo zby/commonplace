@@ -67,7 +67,7 @@ Bulk-import the operator's existing material into the collections designed in Ph
 3. For web sources, use `/cp-skill-snapshot-web <url>`. For local files, place them in the right collection and run `/cp-skill-ingest <path>` to classify and connect.
 4. Test together. Ask the operator for three things they remember working on. Search the KB with generated indexes, `rg` over descriptions, and `rg` over note bodies. If recall is poor, improve descriptions, tags, and index membership before moving on.
 
-**Verify Phase 2**: at least one note in each populated collection passes `cp-skill-validate`. The operator can find at least 80% of the things they remember via generated indexes and `rg`.
+**Verify Phase 2**: at least one note in each populated collection passes `commonplace-validate`. The operator can find at least 80% of the things they remember via generated indexes and `rg`.
 
 ## Phase 3 — Condense context summaries
 
@@ -87,7 +87,7 @@ For each note, follow the standard Commonplace content workflow:
 3. Use `/cp-skill-write` with the appropriate type.
 4. Cite source notes with Markdown links and the link semantics authorized for the source and destination collections (`evidenced-by` / `is-evidence-for`, `derived-from`, `since`, `because` — see each `COLLECTION.md`).
 5. Flag inferences explicitly. Do not blur quotation and synthesis.
-6. Run `/cp-skill-validate <note>` before considering it done.
+6. Run `commonplace-validate <note>` before considering it done.
 
 **Verify Phase 3**: each summary cites ≥5 source notes, validates clean, and a
 fresh read-only worker receiving ambient project instructions plus only that
@@ -120,14 +120,14 @@ Three feedback loops, separately useful:
 
 **Per-session** — `.claude/skills/learn/SKILL.md`: at session end, review the conversation for mistakes, surprises, and validated approaches. Update `CLAUDE.md` with new tool gotchas or workflow preferences. Save genuinely-new context to memory files. Bias toward brevity.
 
-**Per-day** — `.claude/scripts/morning-brief.sh`: list KB notes touched yesterday (`git log --since`), surface unconnected notes and pending items in `kb/work/`, run `cp-skill-validate` on the changed set, output a 2-minute brief.
+**Per-day** — `.claude/scripts/morning-brief.sh`: list KB notes touched yesterday (`git log --since`), surface unconnected notes and pending items in `kb/work/`, run `commonplace-validate` on the changed set, output a 2-minute brief.
 
 **Per-month** — `.claude/skills/retro/SKILL.md`: ask what was attempted, how it went, what patterns emerged. Search the KB for notes created or modified this month. Update the Phase 3 context summaries with anything that shifted. Append a monthly entry to a retro log under `kb/work/retros/`.
 
 ## Verify the whole onboarding
 
 - Every new collection has a valid `COLLECTION.md` and appears in the `CLAUDE.md` routing table.
-- `cp-skill-validate` passes on a sampled note from each collection.
+- `commonplace-validate` passes on a sampled note from each collection.
 - The operator can ask a fresh Claude Code session a project-specific question and get an answer grounded in their KB, not invented.
 
 ## What this recipe is NOT

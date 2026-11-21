@@ -302,9 +302,9 @@ An agent whose runtime reads neither of those two skill directories, or has no s
 
 ### pi: add a sub-agent for the delegating skills
 
-`cp-skill-ingest`, `cp-skill-write-multistage` and `cp-skill-revise-autoreason`
+`cp-skill-ingest` and the multistage procedure reached from `cp-skill-write`
 hand work to a fresh sub-agent that the harness provides. Claude Code and Codex
-have one built in; stock pi does not, so in pi those three skills stop and report
+have one built in; stock pi does not, so in pi those procedures stop and report
 that no sub-agent is available. Everything else works without this step.
 
 To add one, copy the extension and its worker definition from a Commonplace
@@ -354,7 +354,6 @@ From inside the running runtime, confirm the skills resolve by their `cp-skill-*
 
 ```text
 cp-skill-write
-cp-skill-validate
 cp-skill-connect
 cp-skill-health-check
 cp-skill-library
@@ -489,7 +488,7 @@ my-project/
   .agents/
     skills/
       cp-skill-write/SKILL.md          stub, uncommitted
-      cp-skill-validate/SKILL.md
+      cp-skill-connect/SKILL.md
       ...
       cp-skill-library/SKILL.md
   .claude/

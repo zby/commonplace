@@ -64,7 +64,7 @@ When you commission a document — a new write, or an edit that changes what the
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 
-When those inputs already determine the choices, proceed without a formal brief. If several materially different contributions still fit, treat that as a specification gap rather than something a stronger model should guess: ask one focused question, or use an exploratory workshop when determining the contribution is itself the work. When the contribution is determined but its claims still need substantial grounding or synthesis, stop and explain why the ordinary path is insufficient. Ask whether the user wants to continue with `cp-skill-write-multistage`, and invoke it only after explicit confirmation.
+When those inputs already determine the choices, proceed without a formal brief. If several materially different contributions still fit, treat that as a specification gap rather than something a stronger model should guess: ask one focused question, or use an exploratory workshop when determining the contribution is itself the work. When the contribution is determined but its claims still need substantial grounding or synthesis, stop and explain why the ordinary path is insufficient. Offer the [multistage writing procedure](../cp-skill-write-multistage/SKILL.md) and follow it only after explicit confirmation.
 
 ### Step 5 - Search Before Writing
 
@@ -80,7 +80,7 @@ This guard is intra-KB only. Do not search the external literature for missing
 prior art and do not infer novelty from the absence of a named source. If the
 user explicitly asks whether a document duplicates, restates, or is subsumed
 by external literature, or asks for a literature disposition of the document on that basis,
-invoke `cp-skill-write-multistage` with the same target and request. That
+follow the [multistage writing procedure](../cp-skill-write-multistage/SKILL.md) with the same target and request. That
 explicit request supplies the confirmation required by Step 4; do not ask the
 user to authorize the handoff again. The multistage skill loads the specialised
 literature-disposition procedure.

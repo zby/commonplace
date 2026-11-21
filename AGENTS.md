@@ -121,8 +121,8 @@ for that term. If it appears, follow the linked record’s writing decision.
   mutable files, Git state, plan data and monkeypatches. Invalidate cached derived
   data when its inputs change. Measure before/after with the same selected suite;
   do not weaken assertions or isolation to improve timing.
-  Markdown KB data changes need relevant `commonplace-validate` checks, not
-  pytest, unless they affect test inputs or fixtures.
+  Markdown KB data changes need pytest only if they affect test inputs or fixtures.
+- After writing or editing a KB artifact, run `commonplace-validate <file-path>` unless the workflow already validated the final version.
 - Do not run `commonplace-init` in this checkout. For initial command installation
   or dependency, entry-point, build-metadata or scaffold-package changes, follow
   [editable installation](./INSTALL.md#2-install-commonplace-as-a-user-level-tool).

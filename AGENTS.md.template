@@ -146,9 +146,11 @@ To search the library as well, add the library root from `.commonplace/library.m
 
 ### Skills
 
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is available in this agent runtime as stubs that point to the real skills in the library; `cp-skill-library` indexes the library's procedures by name. In a harness without a skills mechanism, use the skill index in `.commonplace/library.md`. If a Commonplace skill is unexpectedly unavailable, use `cp-skill-health-check` to diagnose the installation.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-connect`, etc.) is available in this agent runtime as stubs that point to the real skills in the library; `cp-skill-library` indexes the library's procedures by name. In a harness without a skills mechanism, use the skill index in `.commonplace/library.md`. If a Commonplace skill is unexpectedly unavailable, use `cp-skill-health-check` to diagnose the installation.
 
 ### Commands and implementation source
+
+After writing or editing a KB artifact, run `commonplace-validate <file-path>` unless the workflow already validated the final version.
 
 The `llm-commonplace` package provides `commonplace-*` CLI commands for validation, snapshots, note operations, and the review system. See `<library>/reference/commands.md` for the command catalogue, and prefer each live command's `--help` for exact usage. For exact implementation behavior, inspect the source of the installed package rather than relying on a prose restatement; `commonplace-source` prints the package directory for the same installation that supplies the commands. Use `<library>/reference/` for architecture boundaries, invariants, rationale, and orientation that the implementation does not itself recover.
 

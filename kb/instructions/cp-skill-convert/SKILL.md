@@ -80,7 +80,9 @@ The filename should match the title. Whether the title itself is good is a seman
 - The file stays in its current directory. Rename only, no move.
 - If the title heading changed during frontmatter addition (it shouldn't — see "Do NOT modify body content"), use the original title.
 
-#### Step 4: Report
+#### Step 4: Validate and report
+
+Run `commonplace-validate <final-note-path>` after conversion, using the new path if the file was renamed. Report any diagnostics.
 
 ```
 === CONVERTED: filename.md ===
@@ -96,7 +98,6 @@ tags: []
 Next steps:
 - Run the `cp-skill-connect` skill on `new-filename.md` — report candidate
   connections without mutating the note
-- Run the `cp-skill-validate` skill on `new-filename.md` — check deterministic structure and references
 - Optionally ask the user to verify the artifact after review; only the human may add `user-verified: true`
 ===
 ```

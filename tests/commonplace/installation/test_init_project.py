@@ -245,8 +245,8 @@ def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path)
     types.mkdir(parents=True)
     shutil.copy2(root / "types" / "note.md", types / "note.md")
     (types / "my-shared-type.md").write_text("project-owned\n", encoding="utf-8")
-    old_skill = tmp_path / ".claude" / "skills" / "cp-skill-validate"
-    shutil.copytree(root / "instructions" / "cp-skill-validate", old_skill)
+    old_skill = tmp_path / ".claude" / "skills" / "cp-skill-connect"
+    shutil.copytree(root / "instructions" / "cp-skill-connect", old_skill)
 
     before = {path: path.read_bytes() for path in tmp_path.rglob("*") if path.is_file()}
 
@@ -254,44 +254,44 @@ def test_init_project_preserves_existing_library_and_skill_files(tmp_path: Path)
 
     assert all(path.read_bytes() == content for path, content in before.items())
     assert report.removed == []
-    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+    assert Path(".claude/skills/cp-skill-connect") in report.skipped_foreign
     assert not (old_skill / library.STUB_MARKER).exists()
 
 
 def test_init_project_preserves_symlinked_skill_directories(tmp_path: Path) -> None:
     root = library.library_root()
-    outside = tmp_path / "outside" / "cp-skill-validate"
-    shutil.copytree(root / "instructions" / "cp-skill-validate", outside)
+    outside = tmp_path / "outside" / "cp-skill-connect"
+    shutil.copytree(root / "instructions" / "cp-skill-connect", outside)
     project = tmp_path / "project"
     (project / ".claude" / "skills").mkdir(parents=True)
-    link = project / ".claude" / "skills" / "cp-skill-validate"
+    link = project / ".claude" / "skills" / "cp-skill-connect"
     symlink_or_skip(link, outside, directory=True)
 
     report = init_project(project)
 
-    assert (outside / "SKILL.md").read_bytes() == (root / "instructions" / "cp-skill-validate" / "SKILL.md").read_bytes()
+    assert (outside / "SKILL.md").read_bytes() == (root / "instructions" / "cp-skill-connect" / "SKILL.md").read_bytes()
     assert link.is_symlink()
-    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+    assert Path(".claude/skills/cp-skill-connect") in report.skipped_foreign
 
 
 @pytest.mark.skipif(os.name != "nt", reason="directory junctions exist only on Windows")
 def test_init_project_preserves_junctioned_skill_directories(tmp_path: Path) -> None:
     """A junction, like a symlink, points at someone else's stub; init must not write or delete through it."""
     elsewhere = tmp_path / "other-project" / ".claude" / "skills"
-    for name in ("cp-skill-validate", "cp-skill-retired"):
+    for name in ("cp-skill-connect", "cp-skill-retired"):
         (elsewhere / name).mkdir(parents=True)
         (elsewhere / name / library.STUB_MARKER).write_text("other project's stub\n", encoding="utf-8")
         (elsewhere / name / "SKILL.md").write_text("other project's text\n", encoding="utf-8")
     project = tmp_path / "project"
     (project / ".claude" / "skills").mkdir(parents=True)
-    for name in ("cp-skill-validate", "cp-skill-retired"):
+    for name in ("cp-skill-connect", "cp-skill-retired"):
         junction(project / ".claude" / "skills" / name, elsewhere / name)
 
     report = init_project(project)
 
-    for name in ("cp-skill-validate", "cp-skill-retired"):
+    for name in ("cp-skill-connect", "cp-skill-retired"):
         assert (elsewhere / name / "SKILL.md").read_text(encoding="utf-8") == "other project's text\n"
-    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+    assert Path(".claude/skills/cp-skill-connect") in report.skipped_foreign
     assert report.removed == []
 
 

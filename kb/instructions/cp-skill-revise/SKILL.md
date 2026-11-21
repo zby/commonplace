@@ -26,7 +26,7 @@ Goal: improve, triage, or rewrite a note through `commonplace-revise` while keep
 - **Never repeats or resumes a run.** Every invocation opens a new run and stops at its first stop (`plan-stop`, `triage`, per-item proposal, `held` candidate, or failed entry), leaving `continuation.json` for a session agent to handle.
 - **Refuses stale inputs and in-place edits to held candidates.** `apply` and `publish` refuse if the note, write brief, or watched parts changed since the asking/holding run. Never edit `artifact/final.md` directly (copy it outside `artifact/` and pass `--revised`). On per-item apply/`try`, code checks that unapproved proposal passages stayed unchanged, not that untouched text elsewhere in the note did.
 - **Single-note only; does not fetch sources or compute decision stats.** Every editing command targets one note; `decisions` is a read-only listing with no statistics. For `rewrite`, ground sources (`cp-skill-ground`) and write the commission before launching; gitignored/`.snapshots/` sources are referenced by hash rather than copied, and changing one mid-run stops the run.
-- **Separate routes:** use `cp-skill-review` for read-only review status and sweeps; use `cp-skill-revise-autoreason` only when explicitly testing the experimental AutoReason blind tournament.
+- Use `cp-skill-review` for read-only review status and sweeps.
 
 ## Pick the procedure
 

@@ -114,7 +114,6 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | Skill | Purpose |
 |---|---|
 | `cp-skill-write` | Write or edit an artifact under its collection and type contracts |
-| `cp-skill-validate` | Validate artifacts, collection landings, and site redirects |
 | `cp-skill-connect` | Discover connections and write a connect report |
 | `cp-skill-convert` | Convert a plain text file into a structured note |
 | `cp-skill-ingest` | Turn one URL or local snapshot into a tracked source analysis |
@@ -122,8 +121,6 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | `cp-skill-ground` | Retain the minimum quotations needed to ground a source claim |
 | `cp-skill-add-collection` | Add a new collection with its contract, landing, tag participation and routing |
 | `cp-skill-health-check` | Diagnose a broken Commonplace installation |
-| `cp-skill-revise-autoreason` | Experimentally revise a note with critic, author, synthesizer, and blind-judge agents, keeping the original as fallback |
-| `cp-skill-write-multistage` | Write or rebuild an unsettled artifact through staged authorship and independent review |
 | `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
 
 Instructions are Markdown procedures invoked explicitly rather than auto-loaded. They live under [`kb/instructions/`](./kb/instructions/README.md).
