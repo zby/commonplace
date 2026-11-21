@@ -35,6 +35,8 @@ A result is fresh while the hashes it records still match the note's watched par
 
    It asks only pairs without a fresh result. `--force` asks fresh pairs too; use it only when the user asks for a new judgment of fresh pairs. `--max-workers N` bounds concurrent workers (default 4).
 
+   This command spawns the configured headless worker CLI, which needs outbound model-API network access and writable harness state outside the workspace. If your runtime runs shell commands in a sandbox that blocks network access or writes outside the workspace, run the sweep outside that sandbox (requesting sandbox bypass or escalated execution up front) rather than probing inside the sandbox first; keep local-only commands (`status`, `show`, `retry`, `acknowledge`) in the default sandbox.
+
 4. **Read the JSON report.** It names `run-dir`, gives `counts` by pair state, `stopped`, `guard` and one entry per pair with `state`, `outcome` and `problem`. The exit code is 0 only when every pair has a current result, 1 otherwise, and 2 when the command itself failed. The guard does not change the exit code, so read `guard` in the report every time. Handle each case:
 
    - **`fresh` or `reviewed`** — the pair has a current result; `outcome` is `pass`, `warn` or `fail`, or `report` for report criteria.

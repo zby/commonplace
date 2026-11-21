@@ -135,6 +135,15 @@ for that term. If it appears, follow the linked record’s writing decision.
 - Downloads: use `curl -fsSL -o <destination> [options] '<URL>'` in a standalone
   shell call with literal paths; keep setup and extraction separate. If sandbox
   networking blocks it, request escalation for the download alone when available.
+- Headless-worker commands (`commonplace-review` sweeps/fixtures, worker-launching
+  `commonplace-revise` modes, `commonplace-analysis` execution, `commonplace-task`)
+  spawn the configured worker harness CLI, which needs outbound model-API network
+  access and writable harness state outside the workspace. If your runtime runs
+  shell commands in a sandbox that blocks network access or writes outside the
+  workspace, run these commands outside that sandbox (requesting sandbox bypass
+  or escalated execution up front) rather than probing inside the sandbox first;
+  keep local-only commands (`status`, `triage`, `publish`, `answers`, `decisions`,
+  `commonplace-validate`, `git`) in the default sandbox.
 
 ## Git
 

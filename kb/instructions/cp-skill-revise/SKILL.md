@@ -30,21 +30,26 @@ Goal: improve, triage, or rewrite a note through `commonplace-revise` while keep
 
 ## Pick the procedure
 
-| Intent | Command | Reviews launched | May write note |
+| Intent | Command | Headless workers launched | May write note |
 |---|---|---|---|
-| Fix one finding or run one pass/plan | `commonplace-revise NOTE --finding RESULT` / `--pass NAME` / `--plan FILE` | none | yes |
-| Decide fresh stored `warn`/`fail` findings first | `commonplace-revise triage NOTE` | none | no |
-| Assessor picks passes from fresh stored findings | `commonplace-revise NOTE --quick` | none | yes |
-| Review, assess, and apply simplification passes | `commonplace-revise NOTE --full` (current bare default; name `--full` when required) | all depth-declaring criteria + `type`, `collection`, `compression-synthesis`, `role` | yes |
-| Rebuild unsettled claims or synthesis from sources | `commonplace-revise rewrite NOTE --commission FILE` | rewrite candidate review | no (always holds candidate) |
-| Trial one edit operation without writing the note | `commonplace-revise try OPERATION NOTE` | none | no |
-| List operator and automatic decisions | `commonplace-revise decisions [--note NOTE] [--class NAME]` | none | no |
+| Fix one finding or run one pass/plan | `commonplace-revise NOTE --finding RESULT` / `--pass NAME` / `--plan FILE` | edit workers (no reviews) | yes |
+| Decide fresh stored `warn`/`fail` findings first | `commonplace-revise triage NOTE` | none (local only) | no |
+| Assessor picks passes from fresh stored findings | `commonplace-revise NOTE --quick` | assessor + edit workers (no reviews) | yes |
+| Review, assess, and apply simplification passes | `commonplace-revise NOTE --full` (current bare default; name `--full` when required) | reviews (all depth-declaring criteria + `type`, `collection`, `compression-synthesis`, `role`) + assessor + edit workers | yes |
+| Rebuild unsettled claims or synthesis from sources | `commonplace-revise rewrite NOTE --commission FILE` | writer + candidate review | no (always holds candidate) |
+| Trial one edit operation without writing the note | `commonplace-revise try OPERATION NOTE` | edit worker (no reviews) | no |
+| List operator and automatic decisions | `commonplace-revise decisions [--note NOTE] [--class NAME]` | none (local only) | no |
+
+## Execution environment
+
+- **Worker-launching commands** (`--full`, `--quick`, `--pass`, `--finding`, `--plan`, `apply`, `rewrite`, `try`) spawn the configured headless worker CLI, which needs outbound model-API network access and writable harness state outside the workspace. If your runtime runs shell commands in a sandbox that blocks network access or writes outside the workspace, run these commands outside that sandbox (requesting sandbox bypass or escalated execution up front) rather than probing inside the sandbox first.
+- **Local-only commands** (`triage`, `publish`, `answers`, `decisions`, `commonplace-validate`, `git`) launch no workers and need only workspace access; keep them in the default sandbox.
 
 ## Procedure
 
 Resolve relative links below from this skill's real location in the library.
 
-1. **Confirm the procedure before launching.** Tell the operator which procedure will run, whether it launches paid reviews, and whether it may write the note.
+1. **Confirm the procedure before launching.** Tell the operator which procedure will run, whether it launches headless workers or reviews, and whether it may write the note. For worker-launching commands, apply the [execution environment](#execution-environment) rule.
    - Pass `--purpose` and `--must-keep` when the operator states them (not with `--plan FILE`, which carries its own). `--must-keep` holds only additions beyond the note's sibling write brief (`brief:` in frontmatter), which every assessor and pass already reads.
    - Use `commonplace-revise` passes when the note's claims stand. Use `commonplace-revise rewrite` when claims or synthesis must be rebuilt from grounded sources; follow [cp-skill-write-multistage](../cp-skill-write-multistage/SKILL.md) to ground sources and write the commission.
 2. **Inspect the report and diff after running.** Check `outcome`, `published`, `held`, `continuation`, and `guard`. Exit 0 means `completed` or `needs-continuation`, 1 means failure or concurrent-edit conflict, and 2 means a command error. Always inspect `guard.changed` (other sessions' edits show up too; nothing is reverted) and review the actual diff rather than relying on a worker's summary.
@@ -57,12 +62,12 @@ Resolve relative links below from this skill's real location in the library.
 
 Naming a file or run to these commands **is** the operator's approval. Run them **only on the operator's stated word for that exact file or run**:
 
-| Stop output | Command |
-|---|---|
-| Decided proposals of a per-item pass (`plain-wording`, `abstractions`) | `commonplace-revise apply FILE` |
-| Decided finding answers from `triage` or `answers create --run` | `commonplace-revise apply FILE [FILE ...]` |
-| Held candidate (exact text, or operator's revision outside `artifact/`) | `commonplace-revise publish RUN` / `commonplace-revise publish RUN --revised FILE` |
-| Answers nothing consumes (none approved, plan stop, overtaken run) | `commonplace-revise answers record FILE` |
+| Stop output | Command | Headless workers launched |
+|---|---|---|
+| Decided proposals of a per-item pass (`plain-wording`, `abstractions`) | `commonplace-revise apply FILE` | edit worker |
+| Decided finding answers from `triage` or `answers create --run` | `commonplace-revise apply FILE [FILE ...]` | edit workers |
+| Held candidate (exact text, or operator's revision outside `artifact/`) | `commonplace-revise publish RUN` / `commonplace-revise publish RUN --revised FILE` | none (local only) |
+| Answers nothing consumes (none approved, plan stop, overtaken run) | `commonplace-revise answers record FILE` | none (local only) |
 
 ## Write brief and overtaken runs
 

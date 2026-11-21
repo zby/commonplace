@@ -41,12 +41,17 @@ Goal: inspect review status or produce fresh review results for selected notes w
   - Draft gate: `--criterion-file PATH` (evidence only; writes no catalog result).
   - Use `--force` only when the operator asks to re-judge fresh pairs. Under `--grouping bundle`, a pair with rejected findings is asked alone outside its bundle call.
 
+## Execution environment
+
+- **Worker-launching commands** (`commonplace-review NOTES...`, `--criterion-file`, `--fixture`, `--resume`) spawn the configured headless worker CLI, which needs outbound model-API network access and writable harness state outside the workspace. If your runtime runs shell commands in a sandbox that blocks network access or writes outside the workspace, run these commands outside that sandbox (requesting sandbox bypass or escalated execution up front) rather than probing inside the sandbox first.
+- **Local-only commands** (`status`, `show`, `fixture create`, `retry`, `acknowledge`) launch no workers and need only workspace access; keep them in the default sandbox.
+
 ## Procedure
 
 Resolve relative links below from this skill's real location in the library.
 
 1. **Count what will launch before running.** For criteria with freshness, run `commonplace-review status NOTES... [--criteria ...] --stale`. Report the missing/stale count to the operator before spending paid launches; if none, stop. Confirm before launching when the operator has not already authorized that scope or launch count (including unassessed-freshness runs such as `role` and `compression-synthesis`).
-2. **Choose grouping and run.** Use `--grouping bundle` for several catalog gates per note to share fixed context; keep the default `--grouping pair` for one or two gates or when independent contexts matter (bundle vs. pair verdict quality has not been compared).
+2. **Choose grouping and run.** Use `--grouping bundle` for several catalog gates per note to share fixed context; keep the default `--grouping pair` for one or two gates or when independent contexts matter (bundle vs. pair verdict quality has not been compared). Apply the [execution environment](#execution-environment) rule before launching.
 3. **Read the JSON report.** Check `counts`, `stopped`, `guard`, and per-pair `state`, `outcome`, and `problem`. Exit 0 means every pair has a current result, 1 means incomplete, and 2 means a command failure or another process holding the run. Always inspect `guard.changed`.
 4. **Report results accurately.** If a `role` report lists relied-on terms or claims missing from the note's sibling write brief (`brief:` in frontmatter), tell the operator and offer to add them or create the brief in a separate write step (`cp-skill-write`); never edit a brief without the operator's word.
 5. **Stops, retries, or multi-note sweeps.** Follow [run-review-batches.md](../run-review-batches.md) for `--resume`, `retry`, `acknowledge`, and stop handling.

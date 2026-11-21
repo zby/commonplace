@@ -142,6 +142,8 @@ input.
 commonplace-revise rewrite <note> --commission <file>
 ```
 
+`rewrite` spawns the configured headless worker CLI, which needs outbound model-API network access and writable harness state outside the workspace. If your runtime runs shell commands in a sandbox that blocks network access or writes outside the workspace, run it outside that sandbox (requesting sandbox bypass or escalated execution up front) rather than probing inside the sandbox first; keep local-only commands (`publish`, `triage`, `commonplace-validate`) in the default sandbox.
+
 Every invocation opens a new run under
 `kb/reports/state/review/runs/v2/rewrite/<note path without .md>/<UTC start
 stamp>/` and needs the commission. No run is repeated or resumed: to rewrite
