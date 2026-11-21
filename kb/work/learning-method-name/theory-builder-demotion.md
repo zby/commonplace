@@ -83,10 +83,11 @@ builder conditions where criticism of stated content matters.
    in that old tradition that is closer to us - so we should remain open
    about the question if our deliberative learner is a deliberative agent)."
    The draft now states the contrast and leaves the question open.
-3. **Order of work.** The agent recommends the plan below.
+3. **Order of work.** The agent recommends the plan below. Step 1 was
+   carried out on 2026-11-21; see the step 1 result.
 
-Earlier decisions also still open: where "learned" lives, and whether the
-independent reading is required before adoption.
+The questions about the definition that remain open are listed in
+[the workshop README](./README.md#open-questions-about-the-definition).
 
 ## Plan
 

@@ -209,9 +209,7 @@ ingests with no retained quotes yet.
 
 ## Notes for the operator
 
-- **One file or two.** "Learned" is drafted as a section of this definition.
-  It could instead be a section of the on-balance note.
-- **Consumers not yet listed.** The theory-builder definition, the research
-  companion, the lead article's "distinct learning paradigm" section, the
-  `AGENTS.md` vocabulary table and the collision ledger, which has no entry
-  for "deliberative".
+The open questions about this draft are listed in
+[the workshop README](./README.md#open-questions-about-the-definition).
+[The comparison of earlier systems](./precedents.md) extends the background
+above with five more ingests.

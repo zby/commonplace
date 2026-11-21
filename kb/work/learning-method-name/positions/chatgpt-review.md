@@ -1,0 +1,26 @@
+# Review of the workshop by ChatGPT
+
+The operator supplied the review on 2026-11-21. ChatGPT read the published
+workshop, the draft, the demotion proposal and the on-balance note. This file
+is a summary by an agent (claude-fable-5-2), not the review's text, and the
+reviewer has not confirmed it. The "Where it stands" column is the
+summarizing agent's assessment.
+
+The review supports deliberative learning as the central concept, supports
+keeping the name and the three-part structure for now, and agrees that the
+relation to the theory builder need not be settled first.
+
+| # | Objection or proposal | Where it stands |
+|---|---|---|
+| 1 | **Condition 2 defines deliberation by the absence of a fixed measure.** Judging by reasons and being able to reconsider the criteria are two properties. A system can deliberate at length under a fixed objective. Proposed wording: retention "through judgments about their expected contribution to future work, with those judgments open to criticism and revision". Whether a system judges generally enough would then be a question of capability, not of membership. | Open, for the operator. The proposed wording would admit PRODIGY taken alone. The operator's ruling made the unbound judgment the core. [The comparison of earlier systems](../precedents.md) finds no program that meets condition 2 alone, which each side can read its own way. |
+| 2 | **"Learned" is too strict.** Success rises from 80% to 90% with cost and reliability unchanged, and the draft would not call that learned. The Python 3.11 judgment favors a release that some reasonable measures disfavor. Proposed: separate a decision, an improvement on adequate grounds with trade-offs stated, and a robust improvement. | Partly a misreading, and the misreading is evidence. The review reads "measure" as one dimension, such as cost. The on-balance note means a whole way of scoring the work, such as one loss-to-gain ratio. On that reading the 80% to 90% case is an improvement. The note does not say this in so many words. The proposed middle category is what the note declines on purpose: it reports such a step as a decision under an open verdict. That choice is the operator's to confirm. |
+| 3 | **A property and a warranted claim are different things.** A change may improve future work before anyone has shown it. | Covered by the "open" verdict when the evidence has not arrived. The draft could say it more directly. |
+| 4 | **Legibility is not logically needed for judgment.** A model variant can be judged by its behavior. The defensible claim is that legibility makes the reasons and consequences of single changes examinable. Legibility also differs from addressability, and readable numeric parameters would pass the letter of condition 1. | Accepted as a wording problem. "In weights, only the whole model can be judged" is too strong. No ruling needed. |
+| 5 | **Condition 3 does not say whether possible criticism is enough.** Test three cases: reasons kept and never revisited; revision only on a person's instruction; contradictions detected and reconsideration started by the system. | Open. [Case 3 of the checks](../definition-checks.md) covers the first case. Doyle's memo supplies the split between being able to withdraw a judgment and having something that starts reconsideration. |
+| 6 | **"The outermost loop the system runs itself" assumes a privileged loop.** Require a declared boundary instead: which store, decision procedures, evaluations and human interventions belong to the system. Keep deliberative learning and autonomy as separate axes. | Close to the draft, which already requires a named system and store. The "outermost loop" phrase is an operator ruling. A wording change needs the operator. |
+| 7 | **Do not put the agent and learner contrast in the permanent definition as a categorical distinction.** An agent can deliberate about changing its knowledge. | Consistent with the operator's ruling that the question stays open. The contrast is in the draft's background, not its conditions. |
+| 8 | **Broaden the literature**, and look for earlier systems that meet the definition. Ten sources proposed in priority order. | In progress. Five were already ingested. Bratman, the BDI survey, Doyle and Zollo and Winter were ingested on 2026-11-21. Another agent runs the second round. The AGM belief revision paper is not planned. |
+| 9 | **Commonplace's objective should not become part of the general definition.** | Already so. The objective is in the on-balance note, not in the draft. |
+| 10 | **Reframe the conjecture as a claim about capability**: a fixed-weight language model over inspectable artifacts may have enough general judgment for open-ended improvement, including of its own learning procedures. | Compatible with the draft's autonomous claim. It belongs to the restatement of the research companion, after adoption. |
+| 11 | **Extend the probes**: a misleading criterion, an omitted benefit, an accepted change that should be reversed, and a case where more investigation is not worth its cost. | Not started. A proposal for the Python change judgment probe's successor. |
+| 12 | **A five-stage framing** from deliberative agency to autonomous deliberative learning with language models. | Not assessed. A candidate structure for an article. |
