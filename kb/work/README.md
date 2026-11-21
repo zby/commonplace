@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [When can omitted effects reverse an improvement judgment?](./bounding-omitted-effects/README.md) — posed 2026-11-21 to ask whether a range of reasonable precise meanings of “on balance” suffices for learning, and when omitted effects could change a particular verdict.
+- [Supporting the on-balance definition of improvement](./bounding-omitted-effects/README.md) — posed 2026-11-21: assemble the support that lets “improves on balance” serve as a definition of improvement and a success condition for learning; sources on open weights, uncertain sizes, omitted effects and judging a measure, with the limits the definition must state.
 
 - [Naming the learning method](./learning-method-name/README.md) — posed 2026-11-21: decide what to call the method by which a theory builder acquires its theories, whether the name may say "learning" now that improvement can be judged on balance, and whether "conjectural learning" is restored
 

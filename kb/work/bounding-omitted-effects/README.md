@@ -1,51 +1,166 @@
-# When can omitted effects reverse an improvement judgment?
+# Supporting the on-balance definition of improvement
 
-Posed by the operator on 2026-11-21. What must we establish about “improves on balance” to use it as a success condition for learning? The operator proposes that it suffices to show that the judgment admits a reasonable precise definition, and in practice a range of such definitions. We can leave the choice among them open. This question connects the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) to [Naming the learning method](../learning-method-name/README.md).
+Posed by the operator on 2026-11-21. The directory name comes from the first
+question the workshop asked, about omitted effects. The operator then set the
+goal below.
 
-A definition is reasonable insofar as its treatment of gains and losses can be defended from the purpose of the work, whoever wins the comparison. If two such definitions rank a particular change differently, each still gives “on balance” a precise meaning. The verdict on that change then depends on which trade-off we accept. Bounds on omitted effects can show when a verdict survives a range of definitions.
+## Goal
 
-The operator sees the same kind of judgment one level up. When we ask whether a measure is reasonable, we weigh how well it serves the purpose across cases, including cases where its verdict seems costly or mistaken. Two measures can each capture something we value and differ on what they sacrifice. Giving one measure an exact formula makes its verdict checkable while leaving our reasons for accepting the trade-off open to criticism. When would resolving a disagreement about those reasons change the improvement claim?
+Give the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+the support it needs to serve as a definition of improvement, and so as the
+success condition for learning. [Naming the learning method](../learning-method-name/README.md)
+depends on the result.
 
-The operator leaves a mathematical question for future work. Could the repeated assessment of a measure's reasonableness be formulated as a map for which a fixed-point theorem applies? The current argument can proceed with that question open.
+## The definition
 
-Two results bear on this question. Beisbart, Betz and Brun model alternating revisions of a theory and judgments about cases. Their Proposition 2 proves that revision reaches a fixed point under a given weighted score. Proposition 5 shows that if two choices of weights have the same set of best states, every linear mixture of those weights has the same best states, holding the rest of the model fixed. The authors leave open how to justify the weights themselves. [Making Reflective Equilibrium Precise, Appendix B](https://journals.publishing.umich.edu/ergo/article/1152/galley/144/download/)
+Stated by the operator on 2026-11-21:
 
-Koray asks what happens when a voting rule is used to choose among voting rules, including itself. In his model, among neutral and unanimous rules, only dictatorships always select themselves. This illustrates how demanding universal self-selection can be. The workshop asks about a range of reasonable measures for a particular comparison. [Self-Selective Social Choice Functions Verify Arrow and Gibbard-Satterthwaite Theorems](https://repository.bilkent.edu.tr/bitstreams/3b6fb3d1-f34e-4d09-a827-96d7d8fd13e3/download)
+> A step is an improvement on balance when, for every reasonable measure, the
+> successor scores higher than the predecessor.
 
-## The starting example
+No measure is selected. Three verdicts follow:
 
-Suppose there are at most a million omitted effects. If each can reduce the successor's advantage by at most $10^{-10}$ in the same units, their combined downside is at most $10^{-4}$, even if all go against the successor. A lower bound on the known gain above $10^{-4}$ settles the direction of this comparison. These are illustrative numbers. Applying the argument requires evidence for the number of effects and their combined reach. A small effect measured with every other input held at one baseline can grow when those inputs change together.
+- **Improvement:** every reasonable measure favours the step.
+- **Not an improvement:** every reasonable measure favours the predecessor.
+- **Open:** reasonable measures disagree.
 
-The earlier 90/10 example leaves a trade-off weight open. This example also leaves outcomes open. A comparison might hold across all defensible weights and outcomes, hold in expectation, or reverse only with a bounded probability. Which claim can Commonplace support when task frequencies, consequences, and their dependence are only partly known? Where judgments are expressed as fuzzy ranges, what does their degree of membership mean for the conclusion?
+A measure is reasonable insofar as its treatment of gains and losses can be
+defended from the purpose of the work, whoever wins the comparison.
 
-## Research leads
+Two decisions the operator made on the way:
 
-### First ingest batch
+- **"A reasonable measure exists" is not the definition.** If one reasonable
+  measure favours a step and another favours undoing it, the step and its
+  reversal would both be improvements. Existence shows only that the claim is
+  well defined.
+- **No measure over measures is needed.** A weighting over measures gives
+  their weighted average, which is one more measure, as a probability
+  distribution over probability distributions reduces to one distribution. So
+  when every reasonable measure favours the step, every weighting of them does
+  too. When they disagree, choosing weights is the same act as choosing one
+  measure: a value judgment for the people affected. The step can then be
+  taken as a decision, and is not a demonstrated improvement.
 
-1. [Beisbart, Betz and Brun, *Making Reflective Equilibrium Precise*](../../sources/making-reflective-equilibrium-precise.ingest.md) — How can revisions of judgments and principles settle, and how much depends on the choice of weights?
-2. [Semih Koray, *Self-Selective Social Choice Functions Verify Arrow and Gibbard-Satterthwaite Theorems*](../../sources/koray-self-selective-social-choice.ingest.md) — What does it mean to apply a choice rule to the choice of rules?
+The reduction needs the measures to share a scale. An exchange rate between
+units is itself a weight.
 
-### Ingest batch on omitted effects and incomplete preferences
+## Worked case
 
-| Paper | Question for the workshop |
+[Is a new Python version an improvement?](./python-release-worked-case.md)
+applies the definition to Python 3.11 over 3.10: one measure that favours the
+step, three that do not, and how deciding which are reasonable gives the
+verdict.
+
+[Four further cases](./further-cases.md) differ from that one:
+
+- **A refactoring.** The whole gain lies in future work, so the verdict rests
+  on a forecast and is confirmed later.
+- **Approving a medicine.** Gains and losses have no common scale and a loser
+  cannot opt out. An open verdict is resolved by narrowing what the claim
+  covers.
+- **A removal.** The loss is visible and the gain is not. The same measures
+  must serve additions and removals.
+- **An irreversible step.** Reversibility does not change the verdict. It
+  decides what an open verdict permits, and it bounds the effects nobody
+  listed by the time until a harm is noticed.
+
+## Support from sources
+
+The ingests were written on 2026-11-21. None has retained quotes yet, so the
+proposition numbers and figures below are unchecked against the papers.
+
+| What the definition needs | Source | What it supplies |
+|---|---|---|
+| A relation defined over all admissible measures | [Greco, Mousseau and Słowiński](../../sources/greco-ordinal-regression-revisited.ingest.md) | A preference is *necessary* if every compatible value function gives it, and *possible* if at least one does. With no judgments, the necessary relation is plain dominance; each added judgment can extend it. |
+| A test for two alternatives | [Mustajoki, Hämäläinen and Salo](../../sources/mustajoki-interval-smart-swing.ingest.md) | Compare both at the same weights and ask whether the difference stays positive across the admissible set. Separate score ranges can overlap while every shared weighting favours one side. |
+| Checking a range by its extremes | [Beisbart, Betz and Brun](../../sources/making-reflective-equilibrium-precise.ingest.md), Proposition 5 | If two choices of weights have the same best states, so does every mixture of them. |
+| Deciding which measures are in the set | Beisbart, Betz and Brun, Proposition 2 | A model of revising principles and case judgments against each other until neither changes. The authors leave the justification of their own weights open. |
+| Uncertain sizes of known effects | [Bertsimas and Sim](../../sources/the-price-of-robustness.ingest.md) | How much simultaneous adverse movement erases a measured advantage, with no probability model. |
+| Frequencies mixed with poorly known ranges | [Baudrit, Couso and Dubois](../../sources/baudrit-joint-propagation-probability-possibility.ingest.md) | Bounds that differ when one unknown value holds across all cases. This fits the `AGENTS.md` routing example, where one line loads on every prompt. |
+| The contrast case | [Angilella and colleagues](../../sources/angilella-ordinal-regression-smaa-choquet.ingest.md) | The share of sampled measures that favour an alternative. The definition does not use a share: it depends on the sampling distribution, and a share is not an average. The paper also gives a model for gains that overlap. |
+
+The on-balance note's 90/10 example fits the first three rows. The revision
+wins for every loss-to-gain ratio below nine, ties at nine, and the verdict is
+open when the admissible range crosses nine.
+
+**Sources removed on 2026-11-21** as not fitting the definition: Hoeffding's
+inequalities (they need independent effects and a known positive margin), the
+truncation-dimension paper (it needs an ordered list of variables with assumed
+decay), and Koray's self-selective voting rules (the definition does not ask a
+measure to select itself). Their ingests were deleted from `kb/sources/`.
+
+**Sources still wanted.** The first two rows of the next section rest on
+memory.
+
+| Work | Why |
 |---|---|
-| [Kritzer, Pillichshammer and Wasilkowski, *Truncation Dimension for Function Approximation*](../../sources/truncation-dimension-for-function-approximation.ingest.md) | How many variables must we retain to bound the combined error from omitting the rest? |
-| [Hoeffding, *Probability Inequalities for Sums of Bounded Random Variables*](../../sources/hoeffding-bounded-random-variables.ingest.md) | When can we bound the probability that many small effects accumulate in the same direction? |
-| [Bertsimas and Sim, *The Price of Robustness*](../../sources/the-price-of-robustness.ingest.md) | What can we conclude if the uncertain effects have a shared limit on how far they can move against a decision? |
-| [Salo and Hämäläinen, *Preference Assessment by Imprecise Ratio Statements*](https://doi.org/10.1287/opre.40.6.1053) | Which comparisons can we settle from intervals for the relative importance of outcomes? |
-| [Greco, Mousseau and Słowiński, *Ordinal Regression Revisited*](../../sources/greco-ordinal-regression-revisited.ingest.md) | Which preferences hold under some or all value functions compatible with judgments already made? |
-| [Lahdelma, Hokkanen and Salminen, *SMAA — Stochastic Multiobjective Acceptability Analysis*](https://doi.org/10.1016/S0377-2217(97)00163-X) | What assumptions let us say how much of the range of weights favors an alternative? |
-| [Baudrit, Couso and Dubois, *Joint Propagation of Probability and Possibility in Risk Analysis*](../../sources/baudrit-joint-propagation-probability-possibility.ingest.md) | How can the same comparison use observed frequencies and fuzzy ranges for poorly known inputs? |
+| Kit Fine, *Vagueness, Truth and Logic* (1975) | Truth under every admissible sharpening. |
+| Amartya Sen on intersection orderings; the specific work is not yet identified | An incomplete ordering built from what all reasonable rankings share. |
+| [Salo and Hämäläinen, *Preference Assessment by Imprecise Ratio Statements*](https://doi.org/10.1287/opre.40.6.1053) (1992) | The original of the pairwise test. Awaits full-text access. |
 
-The **1992 PAIRS** and **1998 SMAA** originals remain pending full-text access. Two later studies provide worked examples for those questions:
+## Formalisms that fit
 
-- [Mustajoki, Hämäläinen and Salo on interval SMART/SWING (2005)](../../sources/mustajoki-interval-smart-swing.ingest.md) compare alternatives under the same admissible weights. Their separate score ranges can overlap even when every shared weighting favors one alternative.
-- [Angilella and colleagues on ordinal regression and SMAA (2016)](../../sources/angilella-ordinal-regression-smaa-choquet.ingest.md) show how to sample compatible preference models when criteria can interact. The share of models favoring a change depends on the sampling distribution.
+Recorded by an agent (claude-fable-5-2).
+
+| Part of the reasoning | Formalism |
+|---|---|
+| The definition itself | Supervaluation: a vague claim is true when it holds under every admissible way of making it precise, and indeterminate when those ways disagree. |
+| The relation between versions | Sen's intersection ordering: keep only the comparisons every reasonable ranking shares. |
+| The test for one comparison | Interval weights with pairwise dominance. |
+| Names for the verdicts | Necessary and possible preference. |
+| Excluding a measure | Reflective equilibrium. |
+| When to stop investigating | Value of information: information that cannot change the decision has no value for it. |
+
+Supervaluation has a known open problem that applies here: which sharpenings
+are admissible is itself vague. For this definition that matters only when the
+boundary of the set falls near the break-even point.
+
+## Limits the support must state
+
+Raised by an agent (claude-fable-5-2); they await the operator's view.
+
+- **The definition makes a claim meaningful, not true.** Each claim that a
+  system improved needs its own evidence that the inequality holds across the
+  set.
+- **"Open" may be common.** The definition is strict. Nobody has checked how
+  often Commonplace changes would get that verdict.
+- **The judgment moves into the set.** Every method takes the criteria, the
+  bounds and the form of the score as given. Deciding which measures are
+  reasonable is where purpose enters. There is no general test for it; the
+  worked case argues each exclusion separately.
+- **Omitted effects are not bounded by these methods.** Each guarantee covers
+  only the effects it represents. The operator's starting example shows what
+  a bound would need: at most a million omitted effects, each able to reduce
+  the advantage by at most $10^{-10}$, give a combined downside of at most
+  $10^{-4}$. A count and a per-effect bound are what an omitted effect lacks.
+  Two other bounds are available. The worked case uses the channels a change
+  can act through. The irreversible-step case uses reversibility: the harm is
+  limited to what accrues before the step is undone, if the harm is noticed.
+- **Additivity is assumed almost everywhere.** If two gains overlap, or one
+  effect grows with another, an additive score misstates the balance.
+- **Shared causes defeat counting.** In the routing example every loss comes
+  through one channel, so the losses are not independent.
+
+## Set aside
+
+The operator asked whether repeated assessment of a measure's reasonableness
+could be a map with a fixed point. Since a weighting over measures reduces to
+one measure, there are no levels to iterate, and the definition does not need
+the answer.
 
 ## What closes the workshop
 
-Explain why at least one precise interpretation fits the work Commonplace values. Use a comparison to show where the choice among reasonable interpretations matters or can be left open. The existing example of adding a routing instruction to `AGENTS.md` is a candidate. The gain concerns tasks that reach the right instructions. The same line also loads on other tasks, so estimating its total cost requires knowing how often extra context matters and what failures cost. If the comparison stays open, identify the missing bound and what observation could change the judgment.
+- The on-balance note, or a theory note linked from it, states the definition:
+  improvement holds when every reasonable measure favours the step, no measure
+  has to be chosen, and a weighting over measures adds nothing.
+- One worked comparison shows the three verdicts and where the membership of
+  one measure decides between them.
+- The limits above are stated in the note or answered.
+- The claims taken from the sources are checked against the papers, with
+  quotes retained in the ingests.
+- The consequence for a learning claim is carried to the naming workshop if it
+  is still active.
 
-Check the applicable assumptions against the primary literature. Retain the resulting claim and its limits in the on-balance note or a linked theory note, or record why the calculation adds no usable criterion. Carry any consequence for a learning claim back to the naming workshop if it is still active. Then remove this directory and its active-list entry.
+Then remove this directory and its active-list entry.
 
 Commits carry `Workshop: kb/work/bounding-omitted-effects`.
