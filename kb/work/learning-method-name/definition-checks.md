@@ -2,6 +2,33 @@
 
 Tested against the [workshop draft](./draft-definition.md), not an adopted library definition. Keep the numbered cases and their assumptions stable when testing new wording. A change that flips a placement deserves an explanation. Run the checks on the named system and store; do not credit an automated loop with judgments its designers make elsewhere.
 
+## Placements changed by a later ruling
+
+Added by another agent (claude-fable-5-2) on 2026-11-21. After these checks
+were written, the operator ruled that a judgment by one fixed measure is a
+special case of J and not a failure of it. The tables below are unchanged
+and show the earlier reading. Under the ruling:
+
+- **Case 4.** The link repairer alone passes J. It is a single-loop
+  learner if later evidence can count against a kept patch inside its own
+  loop. If only the team can correct a patch, it fails C. The team with the
+  repairer is double-loop.
+- **Case 7.** The automated builder passes J. The case says it can replace
+  yesterday's winner. Whether that is criticism of the earlier retention or
+  only overwriting decides C, and the stipulation does not say. Until it
+  does, cases 6 to 8 do not witness a theory builder that is not a
+  deliberative learner. Case 6 still witnesses a deliberative learner that
+  is not a theory builder. Case 8 is double-loop.
+- **Recuris.** Passes J with a fixed gate. Placement now depends on C:
+  whether later evidence can count against an admitted skill.
+- **Cases 2, 3 and 5** are unaffected. They fail on a missing judgment, on
+  C, and on S.
+
+The discriminator "who inside the named boundary may decide otherwise" now
+separates double-loop from single-loop learners. It no longer decides
+membership. The draft's condition 3 was tightened at the same time: later
+evidence must be able to count against a particular kept change.
+
 ## Stipulated cases
 
 The three conditions are **S**: a readable store carries the change; **J**: the loop itself decides what to keep for future work, without being bound to a measure it cannot question; **C**: later rounds can find that retention judgment mistaken and change what the system does. Membership requires all three. No case assumes improved capacity unless it specifies the comparison.

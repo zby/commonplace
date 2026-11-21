@@ -20,14 +20,17 @@ learning** by three conditions:
 1. **Legible store.** What is learned is kept as changes to a store that can
    be read.
 2. **Judgment in the loop.** Each change is kept or dropped by an on-balance
-   judgment, made as a step of the learning loop and not bound to one measure
-   fixed beforehand.
+   judgment, made as a step of the learning loop. A judgment by one fixed
+   measure is the special case.
 3. **Open to criticism.** The judgment is held as a conjecture and can later
    be found wrong.
 
 The operator clarified that keeping a reversible change is not an exception to
 condition 2. The judge still expects the change to improve future work, but
 can count less future harm if the system can detect and correct a mistake.
+
+Deliberative learning is single-loop when the system cannot question its
+measure and double-loop when a loop inside the system can revise it.
 
 The term has no success condition. "Learned" is a separate claim about one
 retained change. A gain on some measures with ties on the rest is reported
@@ -61,7 +64,14 @@ learner.
 - **[A review by ChatGPT](./positions/chatgpt-review.md)** supports the
   concept and the name, and objects to two parts of the definition.
 - **[Earlier systems](./precedents.md)** from nine ingests are compared
-  against the three conditions. No program meets condition 2 alone.
+  against the three conditions.
+- **A fixed measure is no longer excluded.** The operator ruled on
+  2026-11-21 that the definition should be general, with the fixed measure
+  as a special case. The two kinds are named single-loop and double-loop.
+  PRODIGY alone is a single-loop deliberative learner. The draft is revised.
+  [The checks](./definition-checks.md) list which of their placements
+  change, and [the discussion](./positions/fixed-measure-discussion.md)
+  records how the ruling was reached.
 - **[The rulings](./rulings.md)** record what the operator decided and how
   the definition was reached.
 
@@ -69,12 +79,10 @@ learner.
 
 These are for the operator. The first four change the wording of the draft.
 
-1. **Is the exclusion of a fixed measure part of the definition?** ChatGPT
-   proposes dropping it from condition 2 and treating general judgment as a
-   capability that systems have in degrees. The draft makes it the
-   distinguishing property, following the operator's ruling that the
-   on-balance judgment is the core. PRODIGY taken alone is the test: outside
-   under the draft, inside under the proposal.
+1. **Is condition 3 now strict enough?** It carries the exclusion that
+   condition 2 used to carry. The draft requires that later evidence can
+   count against a particular kept change. Whether a score-gated search that
+   re-scores its kept variants meets that is not yet checked.
 2. **What does the judgment in condition 2 compare?** The independent reader
    holds that deciding to keep a change is not judging that it improves
    future work. The operator's ruling stands: keeping a reversible trial is

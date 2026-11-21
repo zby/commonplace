@@ -42,11 +42,14 @@ All on 2026-11-21.
 | Deterministic checks | They meet the second condition. | "on-balance judgement can contain a simple deterministic judgement as a degenerate case" |
 | Which loop | A claim names a system and its store. The conditions are checked on the outermost loop the system runs itself. | "I fully agree with your assessment" |
 | The noun for the system | Deliberative learner, contrasted with the deliberative agent. Whether a deliberative learner is a deliberative agent stays open. | "it is possible that we'll discover something in that old tradition that is closer to us" |
+| Is a fixed measure excluded? | No. A judgment by one fixed measure is a special case of condition 2. This reverses the agent's rider on deterministic checks and its reading that being bound to one measure separates Commonplace from symbolic AI. | "Exclusion of fixed measure should not be part of the definition ... our definition should be more general - the fixed measure would be a special case ... there is a kind of continuity - small changes should not get us out from the definition" |
+| Names for the two kinds | Single-loop and double-loop deliberative learning, after Argyris. The agent checked the Argyris ingest: his double-loop questions "underlying objectives and policies", so the KB's use, which requires only that measures can be questioned, is narrower. | "maybe we should use double loop deliberation?" |
 | Workshop goal | Changed from choosing a name to defining the process. | "it is about defining the learning process we are working on" |
 
 Three parts of the draft are the agent's and go beyond the rulings:
 
-- **The rider on deterministic checks.** The claim that one measure is enough
+- **The rider on deterministic checks, since reversed by the ruling on
+  fixed measures.** The claim that one measure is enough
   for a question must itself stay open. Without it, a symbolic system bound
   to one formula would meet the definition.
 - **The distinction between "on balance" and "deliberation".** "On balance"
@@ -75,5 +78,8 @@ The agent recalled three claims about symbolic learners from memory. The
 corrected two. PRODIGY did not keep every learned rule, and its utility
 estimate was revised from use. What was fixed was the measure: one formula in
 one unit. So a judgment inside the loop does not by itself separate
-Commonplace from symbolic AI. Being bound to one measure does.
+Commonplace from symbolic AI. The agent concluded that being bound to one
+measure does. The later ruling on fixed measures removed that from the
+definition: it is now a property of a learner, and what separates
+Commonplace is the conjecture about a language model's judgment.
 

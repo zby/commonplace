@@ -66,6 +66,14 @@ kinds can overlap without either being a special case of the other. Commonplace
 could still use deliberative learning as its central definition and use the
 builder conditions where criticism of stated content matters.
 
+**After the ruling on fixed measures.** On 2026-11-21 the operator ruled
+that a fixed measure is a special case of condition 2. The boundary case
+above then passes condition 2, as single-loop learning, so it no longer
+shows a theory builder that is not a deliberative learner. Whether every
+theory builder is a deliberative learner is open again, and now turns on
+condition 3. The prompt example still
+shows the other direction. The demotion does not depend on the answer.
+
 ## Decisions for the operator
 
 1. **Place in the research program.** Ruled on 2026-11-21: lead with

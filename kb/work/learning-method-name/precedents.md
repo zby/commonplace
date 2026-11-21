@@ -10,6 +10,9 @@ that meets the definition.
 ## The comparison
 
 Each row takes the system alone, without the people who built and tuned it.
+The operator ruled on 2026-11-21 that a fixed measure is a special case of
+condition 2 and not an exclusion. The last column therefore records whether
+a system is single-loop or double-loop, not whether it is a member.
 
 | System | What it keeps | What decides | Can it question that rule? |
 |---|---|---|---|
@@ -25,8 +28,11 @@ Each row takes the system alone, without the people who built and tuned it.
 
 ## What the comparison shows
 
-- **No ingested program meets condition 2 alone.** Each one keeps changes by
-  a rule it cannot question, or keeps everything.
+- **PRODIGY is a single-loop deliberative learner.** It keeps legible rules
+  by a judgment of their utility and corrects that judgment from use.
+- **Soar's chunking is outside.** It keeps every chunk, so no judgment
+  decides retention and none can be found wrong.
+- **No ingested program is a double-loop learner, except partly EURISKO.**
 - **EURISKO is the nearest program and is not yet checked.** Its judging
   heuristics are in the store and open to change. Whether that amounts to an
   on-balance judgment, or to one worth number under changing rules, needs a
