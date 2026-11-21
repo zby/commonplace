@@ -1,5 +1,5 @@
 ---
-description: "Research program article: separates membership, learned edits, and autonomous LLM judgment in Commonplace; defines comparisons for admission, targeted correction, criterion revision, and net gain, plus a proposed first routing-check experiment"
+description: "Research program article: separates membership, edit outcomes, and autonomous LLM judgment in Commonplace; defines comparisons for admission, targeted correction, criterion revision, and net gain, plus a proposed first routing-check experiment"
 type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -22,9 +22,10 @@ source_notes:
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 In [deliberative learning](../theory/definitions/deliberative-learning.md),
-a system learns by making proposed, rejectable edits to its own readable,
+a system learns by changes that are each proposed, judged inside the loop,
+and can be rejected. In Commonplace those changes are edits to a readable,
 addressable store—prose, structured text, and code consumed by its later
-work—with a judgment inside the loop deciding which edits stay. The
+work. The
 [lead article](./deliberative-learning-judgment-in-place-of-a-value-function.md)
 argues that a fixed-weight language model could serve as that judge where
 no fixed test is adequate, using on-balance judgment in place of a single
@@ -56,15 +57,15 @@ revisions to Commonplace's own machinery. That establishes capacity for a
 human-assisted system—a modest claim that any engineering team maintaining
 a handbook also meets.
 
-**Whether a particular edit was learned.** Admitting a reversible edit can
+**Whether a particular edit improved the system.** Admitting a reversible edit can
 be a sound decision while its payoff remains unknown
 ([reversibility can limit future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md)).
-Whether the edit was actually **learned** is a separate verdict, decided by
+Whether the edit actually improved the system is a separate question, decided by
 comparing fresh work with the edit against fresh work without it while
 leaving the rest of the store intact except for edits that depend on it.
 Once those dependencies, the parties whose gains and losses count, and the
-horizon across tasks are declared, the edit was learned only if the system
-is better **on balance**—meaning every reasonable measure of the declared
+horizon across tasks are declared, the edit improved the system only if the
+system is better **on balance**—meaning every reasonable measure of the declared
 work favors keeping it
 ([on-balance judgments](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)).
 Changed behavior alone proves only that the edit mattered

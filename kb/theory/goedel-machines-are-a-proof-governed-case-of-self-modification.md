@@ -67,10 +67,10 @@ does not make a useful empirical successor likely.
 
 ## The machine as a deliberative learner
 
-The construction meets both conditions of
-[deliberative learning](./definitions/deliberative-learning.md). Its code is
-a store that can be read and pointed at, and its later operation runs that
-code. A rewrite is proposed by the proof searcher and judged by a separate
+The construction meets the definition of
+[deliberative learning](./definitions/deliberative-learning.md). Its later
+operation runs its own code, and that code can be read and pointed at. A
+rewrite is proposed by the proof searcher and judged by a separate
 check, which rejects every rewrite that lacks a proof of the target theorem.
 The proof is the special case of the judgment in which one fixed criterion
 settles the matter.
@@ -127,9 +127,13 @@ modifications and restoration when they cease to qualify. These cases show why
 admission, reproduction, and continued retention should not be collapsed into
 one notion of evaluator strength.
 
-Deliberative learning names the difference as two properties. A change is
-**displaced** when a newer alternative scores higher on the same criterion.
-It is **corrected** when evidence from later use counts against it.
+Two properties name the difference. A change is **displaced** when a newer
+alternative scores higher on the same criterion, with no new evidence about
+the change itself. It is **corrected** when evidence from later use counts
+against it. Correction is **targeted** when the evidence counts against one
+change, which is reversed or weakened while the rest is kept. It is
+**bundle** correction when the system can only reverse everything since a
+baseline.
 
 - **The Darwin Gödel Machine has displacement and no correction.** An
   agent's score is measured once at admission and never updated. Its
@@ -203,7 +207,8 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates the functions instantiated by the proof route
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps admission evidence relative to what its premises and checks cover
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
-- [Deliberative learning](./definitions/deliberative-learning.md) — defined-in: the two conditions the machine meets, the double-loop kind, and the properties of correction and displacement
+- [Deliberative learning](./definitions/deliberative-learning.md) — defined-in: the definition the machine meets
+- [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
 - [On-balance judgments can guide improvement without a global measure](./on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — extends: explains how a current policy can govern its own revision

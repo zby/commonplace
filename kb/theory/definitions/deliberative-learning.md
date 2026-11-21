@@ -1,5 +1,5 @@
 ---
-description: "Definition — deliberative learning is learning in which a system changes its own legible, addressable store by changes that are proposed, judged and can be rejected; \"learned\" is the separate verdict on one change"
+description: "Definition — deliberative learning is learning in which each proposed change to what a system retains is judged and can be rejected; a fixed criterion is the degenerate judgment of the on-balance judgment, admitting one measure"
 type: types/definition.md
 tags: [self-improving-systems, learning-theory, deliberative-learning]
 ---
@@ -9,330 +9,174 @@ tags: [self-improving-systems, learning-theory, deliberative-learning]
 <!-- Maintenance: when changing this definition, please apply the checks in
 [deliberative-learning-checks.md](./deliberative-learning-checks.md). -->
 
-A team weighing whether to add a routing rule to its handbook, or an agent
-deciding whether to revise a validator in its own codebase, is doing
-**deliberative learning**. It is learning that meets two conditions:
+A team weighing whether to add a routing rule to its handbook, a team
+agreeing without writing anything down to change how it hands work over, and
+an agent deciding whether to revise a validator in its own codebase are all
+doing **deliberative learning**. It is learning in which each change is
+decided by a judgment:
 
-1. **Legible, addressable store.** What the system retains is held in the
-   contents of a store that can be read and pointed at: prose, structured
-   text and code. The store is the system's own: its later work consumes
-   those contents. The system learns by changing them.
-2. **Decision in the loop.** A change to the store is proposed, judged in
-   the learning loop, and can be rejected. Proposing and judging are
-   separate steps: something evaluates the proposed change itself rather
-   than writing automatically or on a trigger. The judgment is a decision,
-   made on the evidence the system has, that later work is expected to go
-   better with the change than without it. In the general case the judge
-   [weighs considerations for and against](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
-   A system built to keep whatever passes one fixed criterion is the special
-   case: passing is taken as settling the matter.
+> A change to what the system retains for its later work is proposed, judged
+> in the learning loop, and can be rejected.
 
-A system that learns this way is a **deliberative learner**. Like
-reinforcement learning, the term names a process rather than a successful
+- **The change** is to the system's own
+  [behavior-determining organization](./behavior-determining-organization.md),
+  and its later work consumes it: the change is
+  [operative](./operative-change.md). It may add, revise or delete, or
+  change what later work loads or selects. The definition does not restrict
+  where the change is held: a handbook, code, a team's working habits and a
+  model checkpoint all qualify.
+- **Proposing and judging are separate steps.** Something evaluates the
+  proposed change itself, and that judgment controls whether the change is
+  made. A change written automatically or on a trigger is not judged.
+- **The judgment is a decision**, made on the evidence the system has, that
+  later work is expected to go better with the change than without it. Its
+  general form is the
+  [on-balance judgment](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md):
+  the change is favored when every reasonable measure of the work favors
+  it, and the decision stays open when the measures disagree. What the
+  judgment applies to decide is its **criterion**.
+- **A fixed criterion is the degenerate judgment.** A validator, a gate, a
+  formula or a proof admits exactly one measure. With one measure nothing is
+  weighed and no decision stays open: passing settles the matter. Whoever
+  fixed the criterion chose that one measure in advance. Elsewhere in this
+  note, "on-balance judgment" means the case with more than one reasonable
+  measure.
+
+The team that agrees a practice without writing it down is already doing
+deliberative learning. When it starts writing its rules down, it stops
+relying on its members' fallible memory: the rule that later work follows is
+the rule that was agreed, a judge can read what a proposed change says, and
+a later change can point at one rule and correct it. A store that can be
+read and pointed at makes the learning more reliable. It is not required.
+
+A system that learns this way is a **deliberative learner**. Two splits
+place it in the KB's existing vocabulary:
+
+- **How a change is made.** A
+  [self-improving system](./self-improving-system.md) is the general case.
+  It makes a change either by an update that the evidence determines
+  directly, or by a
+  [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md).
+  Deliberative learning is learning by the second. The two terms cover the
+  same systems: proposal-selection names the architecture, and deliberative
+  learning names the learning.
+- **What the judgment admits.** Within deliberative learning, the judgment
+  is a fixed criterion or an on-balance judgment.
+
+Machine learning usually works with one given performance measure, on both
+sides of the first split. Gradient training updates directly. Evolutionary
+search, checkpoint selection and hyperparameter search propose and reject
+candidates, so they are deliberative learning with a fixed criterion. The
+second split is the one that leaves that setting: an on-balance judgment
+decides changes where no single measure is adequate.
+
+Like reinforcement learning, the term names a process and not a successful
 outcome: a system whose changes fail to improve its later work is still
-doing deliberative learning.
+doing deliberative learning. Whether one particular change made the system
+better is a separate question, answered by an
+[on-balance comparison](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+of the system with and without that change.
 
-Two terms run through the definition:
+## Scope
 
-- A **change** is an edit to the store's contents: adding a note, revising a
-  validator, deleting a rule, or changing what later work loads or selects
-  (such as moving an instruction out of an agent's load list or lowering an
-  archived entry's selection weight in a system that never deletes). The
-  store holds contents rather than edits; a saved proposal or diff is a
-  document in the store, not the edit itself.
-- A **criterion** is what a judgment applies to decide: a single measure, a
-  gate, a check, or an open set of considerations weighed together. A
-  criterion is applied when a change is decided. A *measure*, in the
-  on-balance note, is a whole way of scoring the work and is used when the
-  outcome is assessed; a single measure can also serve as a criterion.
-
-## When a change was learned
-
-Whether a particular change improved the system is a separate verdict. A
-change to the store was **learned** when the system is better, on balance,
-at its later work with the change than without it.
-
-[The on-balance note](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
-fixes a comparison with three choices. Because that note compares a
-successor with its predecessor when deciding a step, while this verdict is
-given afterwards to isolate one change, the alternative differs:
-
-- **The alternative** is the system as it now is with that one change taken
-  out and everything else left intact—not the earlier system before the
-  change, which also lacks every later edit. Edits that depend on the change
-  go with it, and the claim says which. Taking out a deletion means
-  restoring what was deleted.
-- **The work, and whose gains and losses count,** are declared.
-- **The period** is the declared horizon (the span of later work under
-  evaluation).
-
-"On balance" keeps its meaning from that note: every reasonable measure of
-the declared work must agree, with no single measure selected. Report the
-verdict for one change as **Learned** (every reasonable measure favors the
-system with the change), **Made worse** (every reasonable measure favors the
-system without it), **Tie** (every reasonable measure rates them equally),
-**Better on some measures, tied on the rest** (report the gain and its
-limit—and the converse for losses—rather than calling the change learned),
-or **Open** (some measures favor each system, or the evidence has not
-arrived; say which).
-
-Because the work lies in the future, **Open** is the usual verdict for a
-recent change; evidence arrives in later episodes, just as
-[compounding is tested in later improvement](../compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
-Letting a change stand while its verdict is open is a decision, and is
-reported as a decision until the verdict is in. Each verdict attaches to one
-change in a declared area of work; *"this system has learned"* is only a
-summary of those verdicts.
-
-## How the two conditions work
-
-### The store
-
-**Legibility** and **addressability** do different work. In a KB, legibility
-lets a judge read a routing instruction, while
-[addressability](./addressable-theory.md) lets a
-later edit point to that specific rule, trace its use, and revise or
-countermand it while keeping the rest of the file. In neural network
-weights, neither holds: you cannot point to one retained lesson without
-retraining or replacing the checkpoint. A deployment file that names which
-checkpoint to run sits in between—it is a readable store for *deployment
-choices*, not for what training changed inside the weights.
-
-The store belongs to the system's own
-[behavior-determining organization](./behavior-determining-organization.md),
-not its external output. A program that repairs broken links in documents
-only outside readers view has no store of its own in those documents;
-Commonplace's notes and instructions count because Commonplace's own later
-tasks use them.
-
-### The decision
-
-Condition 2 separates rejectable decisions from updates that skip judging
+The definition separates rejectable decisions from updates that skip judging
 the proposed change:
 
-- **Direct updates (outside).** A nightly job that bumps an article's rank
-  whenever it is clicked, or a readable value table updated by tabular
-  reinforcement learning, writes directly from input with no proposal and no
-  rejection. Both tables can be read and pointed at, so they pass condition
-  1; both are learning, and neither is deliberative.
+- **Direct updates (outside).** A nightly job that raises an article's rank
+  whenever it is clicked, a value table updated by tabular reinforcement
+  learning, and a gradient step under a fixed loss all write directly from
+  their input. No change is proposed and none can be rejected. All three are
+  learning, and none is deliberative.
 - **Triggers (outside).** A rule that says *when* to write is not a judgment
   of *what* is written. A bot that adds a review rule whenever a class of
-  bug has been reported five times, or rewrites an answer after three
-  unhelpful marks, is set off by a count. It is inside only if a separate
-  step then evaluates the drafted rule or rewrite and can reject it.
-- **Automatic storage (outside).** Logging every session trace is
-  automatic: nothing judges an individual trace. Appending an observation to
-  Commonplace's `kb/log.md` is different, and deliberative, because an agent
-  judges that the observation is worth recording. Deciding to introduce automatic trace logging is itself a deliberative
-  change, while the traces the logger later writes are outside the term.
-- **Fixed criterion (inside, special case).** Keeping a patch because a
-  validator passed, or keeping a rule because a utility formula scored it
-  above zero, still separates proposing from judging: the validator or
-  formula evaluates a change another step produced and can reject it. Such a
-  system does not weigh competing considerations; it qualifies as the
-  special case of condition 2: whoever set the criterion took passing it as
-  settling whether the change is for the better.
+  bug has been reported five times is set off by a count. It is inside only
+  if a separate step then evaluates the drafted rule and can reject it.
+- **Automatic storage (outside).** Logging every session trace is automatic:
+  nothing judges an individual trace. Appending an observation to
+  Commonplace's `kb/log.md` is deliberative, because an agent judges that
+  the observation is worth recording. Deciding to introduce automatic trace
+  logging is itself a deliberative change, while the traces the logger later
+  writes are outside the term.
+- **Fixed criterion (inside, degenerate case).** Keeping a patch because a
+  validator passed, keeping a rule because a utility formula scored it above
+  zero, deploying the checkpoint with the best validation score, and
+  switching to a rewrite because a target theorem was proved all evaluate a
+  change another step produced and can reject it.
+- **A score as one consideration (inside).** A team that looks at a test
+  score and can still reject the change for a reason the score does not
+  capture is making an on-balance judgment.
+- **Contents nobody can read (inside).** The checkpoint choice above, and a
+  team weighing whether to release a trained checkpoint, are inside for the
+  class *checkpoint choices*, although nobody can read the weights. The
+  gradient steps that produced the checkpoints stay outside.
 
-Whoever judges—people, language models, programs or a mix—the judgment must
-be the step that edits the store. A research team that edits code and
-configurations by judgment does deliberative learning; the same team
-deciding whether to release a trained model sits outside the gradient
-training loop because its judgment does not decide which weight updates are
-made.
+Whoever judges—people, language models, programs or a mix—the judgment
+counts only where it controls the change. The definition also does not ask
+how well the judge weighs: a judge that weighs badly is still weighing.
 
 ## What a claim names
 
-Every claim of deliberative learning fixes four parameters:
+A claim of deliberative learning names three things:
 
 - **The system**, including which people and programs are inside it.
-- **The store** it changes.
-- **The class of changes** covered, with both conditions checked on the loop
+- **The class of changes** covered, with the definition checked on the loop
   that makes changes of that class. A wiki that imports pages automatically
   and lets editors delete wrong ones is outside for imports and inside for
-  deletions. Systems also nest loops inside loops—such as gradient training
-  inside a research team's workflow, or a validator-gated repairer inside a
-  team that rewrites validators—and each loop is assessed on its own named
-  system and class. Condition 1 still applies to the system named: the
-  repairer counts only where that system's later work uses the documents it
-  repairs.
+  deletions. Loops also nest, such as gradient training inside a research
+  team's workflow, and each loop is assessed on its own named system and
+  class.
 - **The horizon** over which later work is counted, following
-  [self-improving system](./self-improving-system.md)
-  and [operative change](./operative-change.md). The
-  horizon works through condition 1: contents count when later work within
-  the horizon consumes them. Commonplace's claims span tasks, so a library
-  note, instruction or validator counts while a workshop draft or
-  single-task plan does not.
+  [operative change](./operative-change.md). Commonplace's claims span
+  tasks, so a library note, instruction or validator counts while a
+  workshop draft or single-task plan does not.
 
-By default, a claim states a **standing capacity**: how later work reads the
-store and how changes are proposed and judged. A claim that also asserts
-correction from later evidence says what brings the evidence back, what
-considers it, and what edit can follow. A claim of double-loop capacity
-says likewise what can bring the criterion into question, what considers it,
-and what edit to the criterion can follow.
-
-Claiming an **episode** requires showing the concrete sequence: the
-proposal, the judgment, and what the system did differently on later work.
-Loading alone does not show consumption. An agent can load a memory file on
-every run and ignore every lesson in it.
-
-## Single-loop and double-loop
-
-For a named class of changes, a deliberative learner is **single-loop** when
-it decides those changes under a criterion it cannot revise, and
-**double-loop** when it can revise that criterion so a different criterion
-governs later decisions of that kind. Both are deliberative learning.
-
-Contrasting examples make the boundary concrete:
-
-- **Applying or speeding up versus revising.** Dropping an instruction
-  because a validator rejects it applies the existing criterion, and making
-  the validator run faster checks the same criterion sooner. Revising what
-  the validator accepts—because instructions that passed it kept misrouting
-  agents—changes the criterion for later instructions.
-- **Open considerations.** When the criterion is an open set of
-  considerations, revising it means changing what counts, or how much, for
-  later decisions of that class—for example, a team deciding that context
-  cost now counts against every routing rule.
-- **Scoped to one class.** A team paired with a link repairer, on documents
-  the team's own later work uses, is double-loop for *link repairs* when it
-  can revise the repairer's validator; whether it can also revise how it
-  judges *validator edits* is a separate question.
-- **Nested loops versus criterion revision.** A hyperparameter search
-  wrapped around a training run has two nested loops yet stays single-loop
-  if one fixed validation score governs every pick. Conversely, in
-  [EURISKO](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md),
-  dropping one badly generalized heuristic changes one item (single-loop),
-  while retaining a restriction that penalizes future generalizations of
-  that shape before they run revises the criterion (double-loop). In
-  [Schmidhuber's Gödel machine](../../sources/goedel-machines-schmidhuber.ingest.md),
-  proving under the current utility function that a successor utility
-  function should be installed is double-loop whenever that successor ranks
-  later alternatives differently.
-
-The terms borrow from
-[Argyris](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md),
-used more narrowly. In his account, single-loop learning corrects errors
-while "the underlying program is not questioned", and double-loop learning
-questions "the underlying objectives and policies". Here double-loop
-requires only that the working criterion can be revised; Commonplace can
-keep its declared objective fixed while revising the gates and validators
-that serve it
-([objective revision](../revising-an-improvement-objective-is-licensed-from-outside-it.md)).
-
-## Correction and displacement
-
-Two independent properties describe what happens after a change is made.
-Neither is a membership condition, and a learner can have either without the
-other.
-
-**Correction from later evidence** tracks whether evidence from later use
-can change what the system does about an earlier edit, and at what grain:
-
-- *None.* A one-shot admission gate, a coding agent that decides which
-  lessons to append to a memory file without ever revising them, or a
-  first-write-wins key-value reader where a later `"disregard X"` entry has
-  no effect. An addressable store makes correction possible only when the
-  loop can write a correcting edit and the consumer gives it effect.
-- *Bundle.* Later evidence counts against an operating state, and the system
-  reverses every edit since a baseline—for example, a team returning its
-  instructions folder to last week's commit after a batch of edits proves
-  harmful, or Schmidhuber's incremental self-improvement popping a stack of
-  modifications in an opaque store when payoff drops.
-- *Targeted.* Later evidence pins the loss on one change while keeping the
-  rest—for example,
-  [PRODIGY](../../sources/minton-utility-of-ebl-aaai88.ingest.md) lowering a
-  rule's utility estimate from later use and dropping it when the estimate
-  turns negative, the Huxley-Gödel Machine lowering an archived ancestor's
-  selection weight when its descendants perform poorly, or a team reverting
-  one faulty routing rule while keeping the week's other edits. Grain
-  follows the named class: rolling back a five-edit release is *bundle* for
-  individual edits and *targeted* when the class is releases. As the
-  descendant case shows, the evidence need not come from rerunning the first
-  test.
-
-**Displacement** is separate: a newer alternative replaces an earlier one by
-scoring higher on the same criterion, with no new evidence about the earlier
-one—as in a prompt search that overwrites the incumbent whenever a new
-mutant scores higher on a fixed benchmark.
-
-## Place in the KB and Commonplace's conjecture
-
-In the KB's existing vocabulary, a deliberative learner is a
-[self-improving system](./self-improving-system.md)
-that works by
-[proposal and selection](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-over a legible, addressable store. Selection can weigh competing
-considerations rather than treating one fixed test as decisive. The
-definition also distinguishes single-loop from double-loop learning,
-correction from displacement, and selection from the verdict *learned*.
-
-The definition covers symbolic programs, people and language models alike:
-PRODIGY alone was single-loop with targeted correction, and PRODIGY together
-with Minton (who chose and revised its utility formula) was double-loop.
-**Commonplace's conjecture** is about capability within this space: that a
-language model can run double-loop deliberative learning, with targeted
-correction, for work where no fixed criterion is adequate and with no person
-inside the system making those judgments—spotting when a criterion is
-misleading and deciding what should replace it.
+By default a claim states a standing capacity: how changes are proposed and
+judged, and how later work consumes them. Claiming an episode requires
+showing the proposal, the judgment, and what the system did differently on
+later work. Loading alone does not show consumption: an agent can load a
+memory file on every run and ignore every lesson in it.
 
 ## Exclusions
 
 Deliberative learning is one kind of learning in
-[Simon's sense](../learning-is-not-only-about-generality.md),
-alongside opaque weight updates and unjudged store updates. Membership also
-excludes edits to external work products that the system's own later work
-does not consume, and implies neither correction from later evidence (a
-separate property) nor improvement (the separate verdict *learned*).
+[Simon's sense](../learning-is-not-only-about-generality.md), alongside
+learning by directly determined updates. Membership excludes edits to
+external work products that the system's own later work does not consume.
+
+Membership does not imply any of these:
+
+- **Improvement.** A judged change can make later work worse.
+- **Correction.** Membership does not require that later evidence can count
+  against an earlier change. A learner that judges every change and never
+  revisits one is still a deliberative learner.
+- **Weighing.** A learner with a fixed criterion weighs nothing. A claim
+  about weighing must say the judgment is on balance.
+- **Criterion revision.** Whether the learner can revise its own criterion
+  is the distinction between
+  [single-loop and double-loop learning](./single-loop-and-double-loop-learning.md).
 
 ## Misuse Cases
 
 - Using *deliberative learning* for the system (the system is a
-  *deliberative learner*), or citing the name as evidence that the system
-  improved or corrects itself.
-- Reporting a change as *learned* while its verdict is open, or using
-  *learned* for any retained change rather than that verdict.
-- Reading *double-loop* in Argyris's full sense (questioning the terminal
-  objective rather than the working criterion).
-- Restricting the term to prose theories (excluding code or validators), or
-  omitting the class of changes and horizon.
-
-## Background
-
-The definition above stands without this section.
-
-- **The word.** "Deliberate" comes from Latin *deliberare*, which
-  [Merriam-Webster](https://www.merriam-webster.com/dictionary/deliberate)
-  derives, with a "perhaps", from *librare* ("to balance") and *libra* ("a
-  pair of scales"). The KB uses "on balance" for the verdict and
-  "deliberation" for the process that reaches it.
-- **Deliberation.** In ordinary use, deliberation is the weighing of
-  considerations for and against alternatives, by one agent or a group.
-  Keeping the outcome in a store is what "learning" adds; revising it from
-  later evidence is the property of correction.
-- **Deliberative learner versus deliberative agent.** In agent
-  architectures, a deliberative agent holds an explicit symbolic world model
-  and decides actions by logical reasoning over it
-  ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)).
-  The agent deliberates over which action to take; the learner deliberates
-  over which changes to make to its own store. Whether a deliberative
-  learner is a deliberative agent is left open.
-- **Why symbolic systems needed a fixed criterion.** The same definition of
-  "learned" would serve a symbolic system, but applying it without a fixed
-  criterion would be unworkable: choosing reasonable measures takes
-  judgment, and even scoring a single case would demand an enormous array of
-  explicit tests.
+  *deliberative learner*).
+- Citing the name as evidence that the system improved or corrects itself.
+- Reading the name as a claim that the system weighs considerations,
+  without saying the judgment is on balance.
+- Using the term for a system because it reasons carefully about its work.
+  The term applies to how changes to what the system retains are decided.
+- Restricting the term to prose theories, or to readable stores.
+- Crediting an automated loop with judgments its designers make outside the
+  named system.
+- Omitting the class of changes or the horizon.
 
 ---
 
 Relevant Notes:
 
-- [On-balance judgments can guide improvement without a global measure](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — grounds: the form of the judgment in condition 2 and the meaning of "on balance" in the verdict "learned"
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the architecture the definition requires, and its contrast with a directly determined update
+- [On-balance judgments can guide improvement without a global measure](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — grounds: the general form of the judgment, of which a fixed criterion admits one measure, and the comparison that says whether a change made the system better
 - [Self-improving system](./self-improving-system.md) — defined-in: the wider class, with its declared boundary, horizon and objective
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the architecture condition 2 requires, and its contrast with a directly determined update
-- [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: why the store must be the system's own and a work product is excluded
-- [Operative change](./operative-change.md) — defined-in: the declared horizon the store's contents are read against
-- [Addressable theory](./addressable-theory.md) — defined-in: what being able to point at a part of the store allows
+- [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: why the change must be to the system's own retained structure and a work product is excluded
+- [Operative change](./operative-change.md) — defined-in: the declared horizon and the consumption path a change needs
+- [Single-loop and double-loop learning](./single-loop-and-double-loop-learning.md) — defined-in: whether a proposal-selection learner can revise the criterion that decides its changes
 - [Theory builder](./theory-builder.md) — contrasts: requires criticism of what a stated theory says, which deliberative learning does not
-- [Revising an improvement objective is licensed from outside it or is not improvement](../revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why double-loop revision stops at the working criterion
-- [Reversibility can favor a change by limiting future loss](../reversibility-can-favor-a-change-by-limiting-future-loss.md) — extends: how the prospect of correction enters the judgment to make a change
-- [Compounding is tested in later improvement, not by the accepting metric](../compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — extends: why the evidence for "learned" arrives in later episodes

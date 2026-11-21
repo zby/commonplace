@@ -1,20 +1,21 @@
 ---
-description: "Curated head for the deliberative-learning tag — learning by proposed, judged, rejectable changes to a system's own readable store: the definition, the judgment that decides a change, the proof-governed precedent, and the Bitter Lesson"
+description: "Curated head for the deliberative-learning tag — learning by proposed, judged, rejectable changes to what a system retains: the definition, its kinds, the judgment that decides a change, the proof-governed precedent, and the Bitter Lesson"
 type: types/tag-readme.md
 complete: true
 ---
 
 # Deliberative learning
 
-[Deliberative learning](../theory/definitions/deliberative-learning.md) is learning in which a system changes its own legible, addressable store, and each change is proposed, judged and can be rejected. Assign this tag to work on that process: the store and the decision that define it, the judgment that decides a change when no single criterion settles it, the single-loop and double-loop kinds, correction from later evidence, the verdict that one change was learned, or the claim that a fully automated deliberative learner is a machine learning paradigm. Work on a system that only retains readable artifacts is insufficient. The subject must be how a change to the store is decided, how that decision is judged later, or whether an automated deliberative loop scales as a learning paradigm. Tagging an analysis does not certify that the analyzed system learns.
+[Deliberative learning](../theory/definitions/deliberative-learning.md) is learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Assign this tag to work on that process: the decision that defines it, the judgment that decides a change when no single criterion settles it, the single-loop and double-loop kinds, correction from later evidence, whether one change made the system better, or the claim that a fully automated deliberative learner is a machine learning paradigm. Work on a system that only retains readable artifacts is insufficient. The subject must be how a change is decided, how that decision is judged later, or whether an automated deliberative loop scales as a learning paradigm. Tagging an analysis does not certify that the analyzed system learns.
 
 The draft article [Deliberative Learning: Judgment in Place of a Value Function](../articles/deliberative-learning-judgment-in-place-of-a-value-function.md) argues the thesis for outside readers, and the companion draft [Testing Autonomous Deliberative Learning](../articles/testing-autonomous-deliberative-learning.md) states the research program and comparisons that test it. Commonplace's bet is that a language model with fixed weights can make the judgment with no person judging. No end-to-end test of the bet has been run.
 
-Two neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers proposal and selection whatever form the retained result takes; this tag covers the case where the result is a readable store, and the judgment itself. [Continual-learning](./continual-learning-README.md) covers learning outside model weights whether or not a decision admits each change. A note that meets two conditions can carry both tags. This tag is a child of [self-improving-systems](./self-improving-systems-README.md).
+Two neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers proposal and selection whatever form the retained result takes; this tag covers that loop as a kind of learning: the judgment itself, its criterion, and what happens to a change afterwards. [Continual-learning](./continual-learning-README.md) covers learning outside model weights whether or not a decision admits each change. A note that meets two conditions can carry both tags. This tag is a child of [self-improving-systems](./self-improving-systems-README.md).
 
 ## Definition
 
-- [Deliberative learning](../theory/definitions/deliberative-learning.md) — the two conditions, what a claim names, the single-loop and double-loop kinds, correction and displacement, and "learned" as a separate verdict on one change
+- [Deliberative learning](../theory/definitions/deliberative-learning.md) — the decision that defines it, the cases it includes and excludes, and what a claim names
+- [Single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md) — the two kinds, separated by whether the learner can revise the criterion that decides a class of changes
 
 ## The judgment that decides a change
 

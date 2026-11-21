@@ -5,6 +5,7 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/theory/definitions/deliberative-learning.md
+  - kb/theory/definitions/single-loop-and-double-loop-learning.md
   - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
   - kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md
@@ -38,8 +39,10 @@ through that frame, an agent that edits its own instructions or code without
 a scalar benchmark looks like prompt engineering rather than learning.
 
 This article makes a two-level claim. First, **deliberative learning**—a
-system learning by making proposed, rejectable edits to its own readable,
-addressable store—is a distinct learning paradigm. When no single formula
+system learning by changes that are each proposed, judged, and can be
+rejected—is a distinct learning paradigm. The case argued here is the one
+where those changes are edits to the system's own readable, addressable
+store. When no single formula
 captures the work, an **on-balance judgment** works in place of a value
 function inside the loop, deciding edits without selecting one scalar
 weighting from the many value functions compatible with the goal. The
@@ -99,29 +102,33 @@ diffuse context load.
 
 Our knowledge base defines
 [deliberative learning](../theory/definitions/deliberative-learning.md) by
-two conditions:
-
-1. **Legible, addressable store.** What the system retains lives in
-   contents that can be read and pointed at—prose, structured text, and
-   code—belonging to the system's own behavior-determining organization and
-   consumed by its later work. The system learns by editing those contents.
-2. **Decision in the loop.** A change to the store is proposed, judged in a
-   separate step inside the learning loop, and can be rejected. The judgment
-   is a decision on available evidence that later work will go better with
-   the change than without it, weighing considerations like an on-balance
-   judgment. Treating one fixed criterion (such as a validator or utility
-   formula) as settling the matter is the special case.
+one condition: a change to what the system retains for its later work is
+proposed, judged in a separate step inside the learning loop, and can be
+rejected. The judgment is a decision on available evidence that later work
+will go better with the change than without it, weighing considerations
+like an on-balance judgment. Treating one fixed criterion (such as a
+validator or utility formula) as settling the matter is the special case.
 
 A single validator or utility formula weighs nothing—"deliberative" fits
 the general case of weighing trade-offs better than this limiting case—yet
-it still separates proposing from judging and can reject a change. By
-contrast, opaque weight updates fail the first condition, while three kinds
-of update fail the second: direct input-driven updates (such as a nightly
-click-ranking job or a readable tabular reinforcement-learning table),
-automatic trace logging, and pure triggers that write on a count without
-judging what was written.
+it still separates proposing from judging and can reject a change. Four
+kinds of update fail the condition because nothing judges a proposed
+change: gradient steps under a fixed loss, other direct input-driven
+updates (such as a nightly click-ranking job or a tabular
+reinforcement-learning table), automatic trace logging, and pure triggers
+that write on a count without judging what was written.
 
-| Axis | Training weights | Deliberative learning |
+The definition does not say where the change is held. A team that agrees a
+new practice and keeps it only in memory meets the condition. So does a
+search that trains several model checkpoints and deploys the one that
+scores best on a validation set, although the gradient steps inside each
+training run do not. A team that starts writing its rules down is not
+changing what kind of learning it does. It stops relying on fallible
+memory, and it gains rules that a judge can read and a later edit can
+correct one at a time. This article is about that case: a readable store,
+edited by judged changes. The table compares it with gradient training.
+
+| Axis | Training weights | Deliberative learning over a readable store |
 |---|---|---|
 | **Modifiable substrate** | Opaque numerical parameters | Readable, [addressable](../theory/definitions/addressable-theory.md) store (prose, structured text, code) |
 | **Role of the value / loss function** | Scalar loss, reward, or value function | Rejectable judgment in the loop—from a fixed criterion up to an on-balance judgment |
@@ -267,14 +274,14 @@ knowledge-base framework, currently is—fits the
 Bitter Lesson
 [only if automated learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-## What counts as learned, current evidence, and limits
+## Whether a change improved the system, current evidence, and limits
 
 Because deliberative learning names a process with no success condition,
 the paradigm claim stays honest only if success is judged separately. A
-change to the store was **learned** when the present system is better, on
-balance, at its later work with that one change than with that change taken
-out (leaving unrelated later edits intact), across every reasonable measure
-of the declared work over the declared horizon.
+change to the store improved the system when the present system is better,
+on balance, at its later work with that one change than with that change
+taken out (leaving unrelated later edits intact), across every reasonable
+measure of the declared work over the declared horizon.
 
 For a recent edit—like our routing line on the day it is added—the verdict
 is normally **open** until later episodes arrive, just as
@@ -323,9 +330,9 @@ those domains.
 ## Where to go next
 
 - [Deliberative learning](../theory/definitions/deliberative-learning.md) —
-  the full definition, including what a claim must name, the distinction
-  between correction and displacement, and boundary cases such as triggers
-  and direct updates.
+  the full definition, including what a claim must name and boundary cases
+  such as triggers and direct updates. A companion definition covers
+  [single-loop and double-loop learning](../theory/definitions/single-loop-and-double-loop-learning.md).
 - [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
   — what an on-balance claim asserts, how to decide under open verdicts,
   and Commonplace's declared objective; paired with

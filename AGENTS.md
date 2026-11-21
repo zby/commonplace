@@ -68,7 +68,8 @@ First-mention glossing and linking in authored artifacts is governed by
 | Commonplace doctrine | [Commonplace doctrine](./kb/reference/definitions/commonplace-doctrine.md) |
 | Constraining | [Constraining](./kb/theory/definitions/constraining.md) |
 | Context engineering | [Context engineering](./kb/theory/definitions/context-engineering.md) |
-| Deliberative learning, deliberative learner | [Deliberative learning](./kb/theory/definitions/deliberative-learning.md); "learned" is its verdict on one change, and single-loop and double-loop are its kinds. |
+| Deliberative learning, deliberative learner | [Deliberative learning](./kb/theory/definitions/deliberative-learning.md); a fixed criterion is its degenerate case. "Learned" is ordinary English. |
+| Single-loop, double-loop | [Single-loop and double-loop learning](./kb/theory/definitions/single-loop-and-double-loop-learning.md) |
 | Discovery lifecycle | [Discovery lifecycle](./kb/theory/definitions/discovery-lifecycle.md) |
 | Explanatory-reach | [Explanatory-reach](./kb/theory/first-principles-reasoning-selects-for-explanatory-reach-over.md) |
 | Frontloading | [Frontloading](./kb/theory/frontloading-spares-execution-context.md) |

@@ -5,7 +5,7 @@ type: types/note.md
 
 # Double-loop
 
-Use "single-loop" and "double-loop" only for the kinds of [deliberative learning](../../theory/definitions/deliberative-learning.md), and name the class of changes. Cite Argyris by name when his wider sense is meant.
+Use "single-loop" and "double-loop" only for the [kinds of deliberative learning](../../theory/definitions/single-loop-and-double-loop-learning.md), and name the class of changes. Cite Argyris by name when his wider sense is meant.
 
 ## Senses
 
