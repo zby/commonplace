@@ -124,11 +124,10 @@ These are for the operator. The first five change the wording of the draft.
    separate post-admission evidence from challenger displacement (DGM, static
    benchmarks) and place HGM and re-scored searches inside as single-loop.
    Whether this boundary holds up under an independent reading is still open.
-2. **What separates learning from replanning?**
-   [Case 12 of the checks](./definition-checks.md) shows that a sequencer
-   which drops a schedule when it becomes infeasible would pass all three
-   conditions if the current schedule were named as the store. The
-   definition needs to say that the kept change carries into later work.
+2. **What separates learning from replanning?** Ruled on 2026-11-21: a
+   claim declares its horizon, as the KB's existing definitions already
+   require. Claims about Commonplace use a horizon that spans tasks. The
+   workshop does not work out short-horizon cases.
 3. **What does the judgment in condition 2 compare?** The independent reader
    holds that deciding to keep a change is not judging that it improves
    future work. The operator's ruling stands: keeping a reversible trial is

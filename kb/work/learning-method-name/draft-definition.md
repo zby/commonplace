@@ -32,8 +32,8 @@ or moving something, including an edit to what later work loads or selects.
 The store holds contents, not changes. A proposal or a diff kept in the
 store is a document about a change.
 
-The conditions apply to a named system and the store it changes. They are
-checked on the outermost loop that the system runs itself.
+The conditions apply to a named system, the store it changes and a declared
+horizon. They are checked on the outermost loop that the system runs itself.
 
 The KB needs the term to put all the learning that happens in Commonplace
 under one name.
@@ -52,11 +52,24 @@ learning, as a reinforcement learning run that learns nothing is still
 reinforcement learning. Whether a particular change was learned is a separate
 claim, defined below.
 
-### The system, the store and the loop
+### The system, the store, the horizon and the loop
 
-A claim of deliberative learning names a system and the store it changes.
-Systems have loops inside loops, and the answer depends on the loop.
+A claim of deliberative learning names a system, the store it changes and
+the horizon over which later work is counted. Systems have loops inside
+loops, and the answer depends on the loop.
 
+- **Learning is relative to a declared horizon.** The KB's definitions of a
+  [self-improving system](../../theory/definitions/self-improving-system.md)
+  and of an [operative change](../../theory/definitions/operative-change.md)
+  already read a change against a declared horizon, and this definition
+  follows them. Claims about Commonplace use a horizon that spans tasks. A
+  library note, an instruction or a validator counts there. A workshop
+  draft or a task plan does not.
+- **What changes must be used by later work.** The contents of the store
+  count when the system's later operation consumes them, as the definition
+  of
+  [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md)
+  requires. An output that is delivered and not used again does not count.
 - **A team that trains models runs two loops.** Gradient training changes
   weights, which are not a legible store, and fails the first
   condition. The
@@ -97,9 +110,11 @@ Systems have loops inside loops, and the answer depends on the loop.
   on balance whether a new model version is better. That judgment does not
   decide which weight updates are made, so it is outside the training loop.
 - **A rule can be deliberated and then act automatically.** A decision is a
-  judgment that could have gone against the change. Appending every
-  interaction to a log decides nothing, so the entries are not deliberative
-  learning. Introducing the logging is a change to the store that can be
+  judgment that could have gone against the change. In Commonplace, adding
+  an entry to `kb/log.md` is deliberative: an agent decides that an
+  observation is worth recording. Storing session traces is learning but
+  not deliberative: every session is stored and nothing is decided.
+  Introducing such automatic storage is itself a change that can be
   deliberated and later revisited, like writing a validator.
 - **A change in what is used is a change to the store.** Some systems never
   delete. An instruction can be moved out of what agents load, and an
