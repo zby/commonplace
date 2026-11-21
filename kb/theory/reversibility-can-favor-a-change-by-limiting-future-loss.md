@@ -2,7 +2,7 @@
 description: "When the same expected gain justifies an internal trial but not a public commitment, check which losses correction can stop and which survive it."
 type: types/note.md
 traits: [title-as-claim]
-tags: [evaluation]
+tags: [evaluation, deliberative-learning]
 ---
 
 # Reversibility can favor a change by limiting future loss

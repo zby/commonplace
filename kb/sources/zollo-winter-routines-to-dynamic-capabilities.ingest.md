@@ -10,7 +10,7 @@ ingested: "2026-11-21"
 occasion: "Background for a workshop naming a learning method (\"deliberative learning\"), ingesting the open working-paper precursor (INSEAD WP 99/48, 1999) of Zollo & Winter (2002), \"Deliberate Learning and the Evolution of Dynamic Capabilities\", Organization Science 13(3):339-351, doi:10.1287/orsc.13.3.339.2780; record that the ingest covers the working paper, not the 2002 article. The paper's \"codification\" (written manuals, post-mortems, tools) is not the KB's registered term Codification; record the difference. Questions: how \"deliberate learning\" is defined against experience accumulation; the roles of knowledge articulation and codification; by what judgment a changed routine is kept; whether the criteria themselves are revisable."
 type: types/ingest-report.md
 domains: [organizational-learning, dynamic-capabilities, knowledge-articulation, knowledge-codification]
-tags: [learning-theory]
+tags: [learning-theory, deliberative-learning]
 learning_claims: true
 ---
 

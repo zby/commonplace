@@ -2,7 +2,7 @@
 description: "How to decide whether to keep a change when gains and losses fall on different tasks, and which uncertainties justify further investigation before acting"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [evaluation, self-improving-systems]
+tags: [evaluation, self-improving-systems, deliberative-learning]
 ---
 
 # On-balance judgments can guide improvement without a global measure

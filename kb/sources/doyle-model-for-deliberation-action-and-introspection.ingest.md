@@ -10,6 +10,7 @@ ingested: "2026-11-21"
 occasion: "What starts reconsideration, and how does a reasoner choose among competing revisions?"
 type: types/ingest-report.md
 domains: [reason maintenance, belief revision, dialectical deliberation, skill modification]
+tags: [deliberative-learning]
 learning_claims: true
 ---
 

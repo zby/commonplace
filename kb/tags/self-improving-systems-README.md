@@ -1,5 +1,5 @@
 ---
-description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and six child areas from theory builder to continual learning"
+description: "Curated head for the self-improving-systems tag — systems that make operative, evidence-responsive changes to their own organization; definition, objective, accumulation, and seven child areas from deliberative learning to continual learning"
 type: types/tag-readme.md
 complete: true
 ---
@@ -8,25 +8,24 @@ complete: true
 
 A [self-improving system](../theory/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own [behavior-determining organization](../theory/definitions/behavior-determining-organization.md), read against a declared frame of boundary, horizon, and improvement objective. Assign this tag to work on whether or how systems make such changes: their definition and classification, mechanisms, limits, or evidence of improvement. It also includes work that meets a child area's inclusion condition, as specified below. Ordinary task execution or automation alone is insufficient. Tagging an analysis does not certify that the analyzed system improves. [Deploy-time-learning](./deploy-time-learning-README.md) covers the post-release demand for change and responses to it, including human maintenance; work on self-improvement as a response may carry both tags. [Learning-theory](./learning-theory-README.md) covers learning more broadly, whether or not the learner changes its own organization.
 
-The child areas are [theory-builder](./theory-builder-README.md), [software-factory](./software-factory-README.md), [improvement-loop](./improvement-loop-README.md), [reflection](./reflection-README.md), [warranted-autonomy](./warranted-autonomy-README.md), and [continual-learning](./continual-learning-README.md). Substantive fit to any of these heads also qualifies for this parent tag. This includes their definitions, boundary cases, and evaluation questions without requiring a separate claim that a system changes itself. The hierarchy groups areas of inquiry; it does not assert that every factory, theory, or autonomous actor is a self-improving system.
+The child areas are [deliberative-learning](./deliberative-learning-README.md), [software-factory](./software-factory-README.md), [improvement-loop](./improvement-loop-README.md), [reflection](./reflection-README.md), [warranted-autonomy](./warranted-autonomy-README.md), [continual-learning](./continual-learning-README.md), and [theory-builder](./theory-builder-README.md). Substantive fit to any of these heads also qualifies for this parent tag. This includes their definitions, boundary cases, and evaluation questions without requiring a separate claim that a system changes itself. The hierarchy groups areas of inquiry; it does not assert that every factory, theory, or autonomous actor is a self-improving system.
 
 ## Child areas
 
-- [theory-builder](./theory-builder-README.md) — the theory-builder definition and its companions: tentative and addressable theory, retained theory guiding search, theory fit and warrant, the Popperian precedents; the research program Commonplace runs
+- [deliberative-learning](./deliberative-learning-README.md) — learning by proposed, judged, rejectable changes to a system's own readable store: the definition, the on-balance judgment that decides a change, the proof-governed precedent, and the Bitter Lesson argument; the thesis Commonplace tests
 - [software-factory](./software-factory-README.md) — factories and houses: family-specific production machinery, factory development and learning, universality, task versus product families
 - [improvement-loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, what to learn, oracle accumulation, diagnostic richness, false-positive filtering, omitted versus frozen loop functions
 - [reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage, retrieval misses, Gödel machines, and the Commonplace reflective-trace evidence
 - [warranted-autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over from humans, the oracle domain that bounds it, closure, and measuring autonomy
 - [continual-learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights: the readable-artifact loop, form coevolution, governing writes, and the Bitter Lesson defense of that bet
+- [theory-builder](./theory-builder-README.md) — an earlier definition and its companions, stated before deliberative learning was defined and due for rewriting
 
 ## Definition and objective
 
-- [Deliberative learning](../theory/definitions/deliberative-learning.md) — a system changes its own legible, addressable store by changes that are proposed, judged and can be rejected; single-loop or double-loop, with "learned" as a separate verdict on one change
 - [Operative change](../theory/definitions/operative-change.md) — a change counts when it affects later operation over the declared horizon through a behavioral-authority path
 - [Evidence bearing on an improvement objective](../theory/definitions/evidence-bearing-on-an-improvement-objective.md) — gradients, rewards, errors, viability signals, tests, judgments: what carries information about the criterion
 - [The definition classifies its boundary cases without ad hoc exceptions](../theory/the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases run against the criteria; the stress falls on declaring the boundary, not on the definition
 - [Self-improvement is relative to a declared objective](../theory/self-improvement-is-relative-to-a-declared-objective.md) — the objective is a declared parameter beside boundary and horizon, indexed by the analyst and antecedent in the pathway
-- [On-balance judgments can guide improvement without a global measure](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — when a gain in the KB’s own machinery supports keeping a change and when it supports only a local claim
 - [Revising an improvement objective is licensed from outside it](../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md) — objective change is improvement only against a level outside both objectives
 - [A proximate target is checked for achievement, not for warrant](../theory/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — between objective and oracle sits a target level whose linking claim no check in the loop tests
 
@@ -48,5 +47,5 @@ The child areas are [theory-builder](./theory-builder-README.md), [software-fact
 ## Related Tags
 
 - [deploy-time-learning](./deploy-time-learning-README.md) — what deployment reveals and the responses, from human maintenance to self-improvement
-- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the six children above are also its routes into self-revision
+- [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the seven children above are also its routes into self-revision
 - [computational-model](./computational-model-README.md) — the execution substrate these systems run on

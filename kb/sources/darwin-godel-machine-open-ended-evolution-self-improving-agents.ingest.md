@@ -8,6 +8,7 @@ snapshot_sha256: 9f61b1ee07ea0e4697f7d01277a67e18c6d4e67ad37d68a3803642eea0eb135
 ingested: "2026-08-02"
 type: types/ingest-report.md
 domains: [self-improvement, evolutionary-search, harness-learning, evaluation]
+tags: [deliberative-learning]
 ---
 
 # Ingest: Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents

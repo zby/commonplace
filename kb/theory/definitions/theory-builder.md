@@ -9,6 +9,8 @@ tags: [self-improving-systems, learning-theory, theory-builder]
 <!-- Maintenance: when changing this definition, please apply the checks in
 [theory-builder-checks.md](./theory-builder-checks.md). -->
 
+> **Due for rewriting.** This definition was written before [deliberative learning](./deliberative-learning.md) was defined. Commonplace's research program is now stated in terms of deliberative learning. How the theory builder relates to it has not been worked out.
+
 A **theory builder** is a system that applies Popper's method of conjecture
 and refutation to theories it keeps as objective knowledge. It works
 through Popper's schema `P1 → TT → EE → P2`: faced with a problem, it proposes a [tentative theory](./tentative-theory.md), attempts to

@@ -10,7 +10,7 @@ complete: true
 
 The draft article [Deliberative Learning: Judgment in Place of a Value Function](../articles/deliberative-learning-judgment-in-place-of-a-value-function.md) argues the thesis for outside readers. Commonplace's bet is that a language model with fixed weights can make the judgment with no person judging. No end-to-end test of the bet has been run.
 
-Three neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers proposal and selection whatever form the retained result takes; this tag covers the case where the result is a readable store, and the judgment itself. [Continual-learning](./continual-learning-README.md) covers learning outside model weights whether or not a decision admits each change. [Theory-builder](./theory-builder-README.md) covers stated theories that are criticized for what they say; how the two definitions relate is not settled. A note that meets two conditions can carry both tags. This tag is a child of [self-improving-systems](./self-improving-systems-README.md).
+Two neighbors are close. [Improvement-loop](./improvement-loop-README.md) covers proposal and selection whatever form the retained result takes; this tag covers the case where the result is a readable store, and the judgment itself. [Continual-learning](./continual-learning-README.md) covers learning outside model weights whether or not a decision admits each change. A note that meets two conditions can carry both tags. This tag is a child of [self-improving-systems](./self-improving-systems-README.md).
 
 ## Definition
 
@@ -36,4 +36,4 @@ Three neighbors are close. [Improvement-loop](./improvement-loop-README.md) cove
 - [continual-learning](./continual-learning-README.md) — learning that persists outside model weights, and the unit of learning as the deployed system
 - [reflection](./reflection-README.md) — when a learner represents its own criteria in the store, double-loop revision runs through reflection
 - [evaluation](./evaluation-README.md) — the wider work on judging whether a change helped
-- [theory-builder](./theory-builder-README.md) — the earlier definition, scoped to stated theories criticized for what they say
+- [theory-builder](./theory-builder-README.md) — an earlier definition, due for rewriting

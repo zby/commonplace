@@ -1,7 +1,7 @@
 ---
 description: "Definition — deliberative learning is learning in which a system changes its own legible, addressable store by changes that are proposed, judged and can be rejected; \"learned\" is the separate verdict on one change"
 type: types/definition.md
-tags: [self-improving-systems, learning-theory]
+tags: [self-improving-systems, learning-theory, deliberative-learning]
 ---
 
 # Deliberative learning

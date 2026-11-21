@@ -1,12 +1,12 @@
 ---
-description: "Curated head for the learning-theory tag — how systems learn, verify, and improve: accumulation, continual learning, verification, memory, and self-improvement, anchored on the theory builder, with routes through its child areas"
+description: "Curated head for the learning-theory tag — how systems learn, verify, and improve: accumulation, continual learning, verification, memory, and self-improvement, anchored on deliberative learning, with routes through its child areas"
 type: types/tag-readme.md
 complete: true
 ---
 
 # Learning theory
 
-This tag gathers theory of how systems learn, verify, and improve: accumulation and generalization, continual learning after deployment, verification and error correction, memory architecture, and self-improvement. The anchor is the [theory builder](../theory/definitions/theory-builder.md): a system that states its theories in localized units, acts on what they say, criticizes them, and lets the result shape the next round, with whether it learns left as the hypothesis under test. Its members span notes and external system analyses, and apply to any system that adapts through retained artifacts, not only to KBs. [Deploy-time learning](./deploy-time-learning-README.md) covers what deployment reveals beyond design and testing and how people or systems respond. Nearby but different: [self-improving-systems](./self-improving-systems-README.md) holds systems that make operative changes to their own organization, while this tag covers learning in general, whether or not the learner revises itself.
+This tag gathers theory of how systems learn, verify, and improve: accumulation and generalization, continual learning after deployment, verification and error correction, memory architecture, and self-improvement. The anchor is [deliberative learning](../theory/definitions/deliberative-learning.md): a system changes its own legible, addressable store by changes that are proposed, judged and can be rejected, with whether a change was learned left as a separate verdict. Its members span notes and external system analyses, and apply to any system that adapts through retained artifacts, not only to KBs. [Deploy-time learning](./deploy-time-learning-README.md) covers what deployment reveals beyond design and testing and how people or systems respond. Nearby but different: [self-improving-systems](./self-improving-systems-README.md) holds systems that make operative changes to their own organization, while this tag covers learning in general, whether or not the learner revises itself.
 
 Work also qualifies when it substantively meets the inclusion condition of a declared child: [deploy-time-learning](./deploy-time-learning-README.md), [constraining](./constraining-README.md), [discovery](./discovery-README.md), [artifact-analysis](./artifact-analysis-README.md), [agent-memory](./agent-memory-README.md), [llm-reliability](./llm-reliability-README.md), or [self-improving-systems](./self-improving-systems-README.md). Their definitions, mechanisms, and boundary analyses belong here without a separate claim of learning or retained improvement. This is inclusion in a subject area, not evidence that the system under discussion learns.
 
@@ -22,12 +22,11 @@ These child tags route major parts of the area. A few fundamentals carry only th
 - [artifact-analysis](./artifact-analysis-README.md) — the four-field vocabulary (substrate, form, lineage, authority) for retained behavior-shaping artifacts
 - [agent-memory](./agent-memory-README.md) — memory architecture: spaces, contamination, policy learnability, and the crosscutting decomposition
 - [llm-reliability](./llm-reliability-README.md) — oracle theory, error correction, and the deviation taxonomy; the area applies verification concepts to LLM output deviations
-- [self-improving-systems](./self-improving-systems-README.md) — systems that make operative, evidence-responsive changes to their own organization, from gradient learners to theory builders; its children cover the theory builder, the improvement loop, reflection, warranted autonomy, and continual learning
+- [self-improving-systems](./self-improving-systems-README.md) — systems that make operative, evidence-responsive changes to their own organization, from gradient learners to deliberative learners; its children cover deliberative learning, the improvement loop, reflection, warranted autonomy, and continual learning
 
 ## Start here
 
 - [Deliberative learning](../theory/definitions/deliberative-learning.md) — learning by decided changes to a system's own legible, addressable store; names the process Commonplace runs, with "learned" as a separate verdict on one change
-- [Theory builder](../theory/definitions/theory-builder.md) — localized theories that are consumed and criticized for what they say, with the result of criticism shaping the next conjecture; whether a builder learns is tested, not assumed. The [research companion](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) states the program's conjectures about builders
 - [Program refinement](../theory/definitions/program-refinement.md) — one artifact's permitted behaviors inside another's; a checked narrowing is a refinement step, an unchecked output a candidate
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition

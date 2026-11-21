@@ -10,7 +10,7 @@ ingested: "2026-11-21"
 occasion: "Find a source on the utility problem in symbolic learning systems. For explanation-based learning systems such as PRODIGY: what was retained and how was retention decided; what was the measured performance cost of retained rules; and exactly what utility measure did PRODIGY use (its formula, and whether the system could revise a rule estimate after retention)?"
 type: types/ingest-report.md
 domains: [utility-problem, explanation-based-learning, search-control-rules, prodigy]
-tags: [learning-theory]
+tags: [learning-theory, deliberative-learning]
 learning_claims: true
 ---
 
