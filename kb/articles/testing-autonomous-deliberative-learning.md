@@ -4,7 +4,7 @@ type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/theory/definitions/deliberative-learning.md
+  - kb/theory/definitions/judgment-governed-self-improvement.md
   - kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md
   - kb/theory/reversibility-can-favor-a-change-by-limiting-future-loss.md
   - kb/theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
@@ -21,7 +21,7 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-In [deliberative learning](../theory/definitions/deliberative-learning.md),
+In [deliberative learning](../theory/definitions/judgment-governed-self-improvement.md),
 a system learns by changes that are each proposed, judged inside the loop,
 and can be rejected. In Commonplace those changes are edits to a readable,
 addressable store—prose, structured text, and code consumed by its later
@@ -198,9 +198,9 @@ is separated from the evidence visible only to the scorer.
 - [Deliberative Learning: Judgment in Place of a Value Function](./deliberative-learning-judgment-in-place-of-a-value-function.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
-- [Deliberative learning](../theory/definitions/deliberative-learning.md)
+- [Deliberative learning](../theory/definitions/judgment-governed-self-improvement.md)
   and its
-  [definition checks](../theory/definitions/deliberative-learning-checks.md)
+  [definition checks](../theory/definitions/judgment-governed-self-improvement-checks.md)
   — the full definition and the boundary cases it is tested against.
 - [Testing Whether a Theory Builder Learns](./testing-whether-a-theory-builder-learns.md)
   and

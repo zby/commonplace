@@ -9,7 +9,7 @@ Use "deliberative" as a technical term only in "deliberative learning" and "deli
 
 ## Senses
 
-Technical: [deliberative learning](../../theory/definitions/deliberative-learning.md) is learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Agent architectures: a deliberative agent holds an explicit symbolic model of the world and decides by reasoning over it ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)). Political theory: deliberation by a group that weighs competing arguments ([Fishkin and Mansbridge](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md)). Everyday: careful or slow.
+Technical: [deliberative learning](../../theory/definitions/judgment-governed-self-improvement.md) is learning in which each change to what a system retains for its later work is proposed, judged and can be rejected. Agent architectures: a deliberative agent holds an explicit symbolic model of the world and decides by reasoning over it ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)). Political theory: deliberation by a group that weighs competing arguments ([Fishkin and Mansbridge](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md)). Everyday: careful or slow.
 
 ## Why these uses are retained
 

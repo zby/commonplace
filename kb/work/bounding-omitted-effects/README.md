@@ -8,7 +8,7 @@ goal below.
 
 Give the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 the support it needs to serve as a definition of improvement, and so as the
-success condition for learning. The definition of [deliberative learning](../../theory/definitions/deliberative-learning.md)
+success condition for learning. The definition of [deliberative learning](../../theory/definitions/judgment-governed-self-improvement.md)
 depends on the result.
 
 ## The definition
@@ -108,7 +108,7 @@ and dropping it, and the point that splitting alone buys nothing are Astra's.
   on a consequential choice. The Mustajoki ingest: direct further questions
   to the comparisons that remain open.
 
-[The definition of deliberative learning](../../theory/definitions/deliberative-learning.md) calls this
+[The definition of deliberative learning](../../theory/definitions/judgment-governed-self-improvement.md) calls this
 process deliberation, and keeps "on balance" for the verdict it reaches. It
 defines deliberative learning as learning in which this process decides
 what is retained.

@@ -1,6 +1,6 @@
 # Checks for the deliberative-learning definition
 
-Maintenance material for [deliberative learning](./deliberative-learning.md).
+Maintenance material for [deliberative learning](./judgment-governed-self-improvement.md).
 Apply the checks when changing that definition, including cross-references
 that change its meaning. Report affected cases before revising their expected
 placements. Keep case numbers stable and make changes to assumptions

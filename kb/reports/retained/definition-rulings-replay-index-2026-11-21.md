@@ -3,7 +3,7 @@
 Recorded 2026-11-21 by an agent (claude-fable-5-2) that took part in the
 work. This is an index into git history, not a copy of it. It marks five
 points in the drafting of
-[deliberative learning](../../theory/definitions/deliberative-learning.md)
+[deliberative learning](../../theory/definitions/judgment-governed-self-improvement.md)
 at which the agents held one position and the operator ruled another. Each
 row names the commit that holds the state before the ruling, so that an
 experimenter can give that state to a fresh worker and see what it proposes.

@@ -7,7 +7,7 @@ tags: [self-improving-systems, learning-theory, deliberative-learning]
 # Deliberative learning
 
 <!-- Maintenance: when changing this definition, please apply the checks in
-[deliberative-learning-checks.md](./deliberative-learning-checks.md). -->
+[deliberative-learning-checks.md](./judgment-governed-self-improvement-checks.md). -->
 
 A team weighing whether to add a routing rule to its handbook, a team
 agreeing without writing anything down to change how it hands work over, and
