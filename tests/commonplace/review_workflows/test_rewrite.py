@@ -115,7 +115,7 @@ if kind == "candidate-repair":
     candidate += "REPAIRED.\n"
 if Path("bad-bounds").exists():
     candidate = candidate.replace("\n# Alpha\n", "\n# Beta\n")
-outputs["candidate"].write_text(candidate)
+outputs["candidate"].write_text(candidate, newline="\n")
 outputs["report"].write_text("# Report\n\n## Affected citations\n\nNone.\n")
 '''
 
@@ -171,7 +171,7 @@ def repo(tmp_path, monkeypatch):
               NOTE_PATH: NOTE.format(words="")}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
-        (root / rel).write_text(text)
+        (root / rel).write_text(text, encoding="utf-8", newline="\n")
     copy_contract(root / "kb")
     for args in (("init", "-q"), ("config", "user.email", "t@example.com"), ("config", "user.name", "t")):
         subprocess.run(["git", *args], cwd=root, check=True)

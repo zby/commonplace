@@ -1,6 +1,6 @@
 ---
 name: cp-skill-health-check
-description: Diagnose Commonplace installation, skill discovery, command PATH, and workflows blocked by unavailable sub-agents, nesting depth, or context isolation.
+description: Diagnose Commonplace installation, skill discovery, command PATH, headless harness execution through Workjig, and workflows blocked by sub-agent availability, depth, or isolation.
 type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash, Task
@@ -13,18 +13,19 @@ argument-hint: "[symptom] — optional description of what is broken"
 
 Identify the installation or runtime constraint blocking a Commonplace operation and report the smallest repair supported by evidence.
 
-Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, commands that work in one shell but not in an IDE or agent runtime, or a workflow blocked on sub-agent creation or isolation. It applies both to installed projects, which read the Commonplace library from the installed package through pointers `commonplace-init` writes, and to the Commonplace source repository, whose own `kb/` is the library.
+Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, commands that work in one shell but not in an IDE or agent runtime, or a workflow blocked on sub-agent creation, isolation, or headless harness execution. It applies both to installed projects, which read the Commonplace library from the installed package through pointers `commonplace-init` writes, and to the Commonplace source repository, whose own `kb/` is the library.
 
 Target symptom: `$ARGUMENTS`
 
-Do not modify files during diagnosis. Report the evidence and the smallest repair. Apply a repair only when the user asked for one.
+Keep the project and runtime configuration unchanged during diagnosis. Step 7 permits writes to a private diagnostic directory and the harness's normal runtime state. Report the evidence and the smallest repair. Apply a repair only when the user asked for one.
 
 Run in the context being diagnosed; do not delegate the health check itself.
 If already invoked in a worker, identify that scope and do not extrapolate its
 capabilities to its parent. For a delegation symptom, run Step 3 after the
 layout and skill checks; run the package checks only if the evidence also
-points to an installation or command failure. For a general health check, run
-all steps.
+points to an installation or command failure. For a headless execution symptom,
+run Steps 4 and 7 after the layout and skill checks. For a general health
+check, run all steps and record any probe you cannot run.
 
 ## Step 1 — Locate the project and classify the layout
 
@@ -114,9 +115,9 @@ supported. Preserve any launch failure verbatim. Success establishes only
 that one child could run from this context at this time; it does not establish
 the maximum depth or prove conversation isolation. Establish isolation from
 the launch API's documented contract and the actual launch arguments; otherwise
-report it as unknown. Do not probe recursively or launch an agent CLI from
-the shell. If probing is unavailable or prohibited, report the evidence gap
-and continue diagnosis.
+report it as unknown. Do not probe recursively. Use the native launch tool for
+this step and Workjig for Step 7. If probing is unavailable or prohibited,
+report the evidence gap and continue diagnosis.
 
 Classify the evidence as missing launch capability, delegation prohibited,
 depth exhausted, concurrent capacity exhausted, isolation unavailable, another
@@ -226,6 +227,104 @@ Interpretation:
 - Validator runs: the command package is healthy; this does not establish worker availability, nesting depth, or isolation support.
 - `uv run pytest` fails before tests start: the source project's dependency environment is unhealthy. `pytest` is a development dependency, not part of the Commonplace command tool.
 
+## Step 7 — Check headless harness execution through Workjig
+
+Use the failing workflow's controller launch directory, environment and
+worker working directory. Recover its effective worker profile, including
+the model, effort, extra flags and environment overrides. For a general check
+without a failing workflow, use a configured Commonplace worker profile for
+the active harness and state which profile and directory you checked. If no
+applicable profile or environment is available, report the missing input.
+Keep the workflow's effective sandbox, permissions and approval settings.
+
+Use the installed Commonplace tool's Python. It is under
+`$(uv tool dir)/llm-commonplace/bin/python` on Linux/macOS and under
+`(uv tool dir)\llm-commonplace\Scripts\python.exe` on native Windows; use
+the interpreter verified in Step 4 if it differs. Import Workjig from that
+environment. Construct the worker as the workflow does. The standard
+constructor is `HARNESSES[profile.harness].worker(profile)` from
+`commonplace.headless.harness`, with `Profile.from_yaml_entry(entry)` for
+a YAML profile. Use the worker as constructed, including any adjustments
+the workflow applies. Report an import or profile error at this stage.
+
+Resolve `worker.argv[0]` from the controller directory using the inherited
+environment overlaid with `worker.env`. Use the installed Workjig resolver
+(`workjig.platform.resolve_command` where present) so the result follows
+Workjig's executable lookup. Follow symlinks and inspect any launcher or
+shim for the executable it forwards to. Use observed process image metadata
+when a wrapper selects its target dynamically. Record the chosen PATH entry
+and the final executable's canonical path. Obtain the active session's
+executable path from runtime metadata or a process verified to belong to
+that session. Compare canonical paths and SHA-256 digests, and record available
+version metadata for both sides. A digest match at different paths establishes
+identical contents at different locations. A version match alone leaves
+identity unresolved. If either final executable cannot be established, report
+the comparison as `unknown`. Configuration and shell command lookup cannot
+identify the active session's binary on their own.
+
+The live probe uses the configured provider and can consume credentials and
+quota. Run it only when the user has authorized a real harness call, including
+an explicit request to test live Workjig execution. Otherwise report the
+static findings and mark the live probe `not run`. Use a new private
+diagnostic directory where the configured harness may already write.
+If it is inside the project, verify that Git ignores it. Keep its records
+and logs local. Use only generated input and direct the worker to read and
+write only the paths Workjig lists in its invocation. If those paths fall
+outside the existing permissions, report the boundary. Do not widen it.
+
+Run this probe with the constructed `worker`, the workflow's
+`worker_cwd` and the fresh `diagnostic_dir` as absolute paths:
+
+```python
+from uuid import uuid4
+
+from workjig import Request, Run
+
+nonce = uuid4().hex
+request = Request(
+    call_id="harness-health",
+    task=(
+        "Read health-input.txt at the path under Inputs. Copy its entire "
+        "contents exactly to health-output.txt at the path under Required "
+        "outputs. Add no text or newline. Read no other files, write no "
+        "other files, and launch no workers."
+    ),
+    inputs={"health-input.txt": nonce},
+    required_outputs=("health-output.txt",),
+    worker=worker,
+    timeout_seconds=180,
+    max_launches=1,
+)
+records_dir = diagnostic_dir / "calls"
+with Run(records_dir, worker_cwd, retain_logs=True) as records:
+    result = records.call(request)
+
+launch_ids = tuple(launch.launch_id for launch in result.launches)
+exact = result.outputs.get("health-output.txt") == nonce
+print(result.status.value, exact, result.reused)
+for launch in result.launches:
+    print(launch.launch_id, launch.status.value, launch.returncode, launch.launch_dir)
+
+if result.status.value == "delivered" and exact and not result.reused and len(launch_ids) == 1:
+    with Run(records_dir, worker_cwd, retain_logs=True) as records:
+        replay = records.call(request)
+    print("reuse verified", (
+        replay.status.value == "delivered"
+        and replay.reused
+        and replay.outputs.get("health-output.txt") == nonce
+        and tuple(launch.launch_id for launch in replay.launches) == launch_ids
+    ))
+```
+
+Pass the probe only on exact delivery on one physical launch and verified
+reuse after reopening the records. The same request with the same one-launch
+limit must not start another worker. Keep the logs on failure and do not
+retry. Use the launch status and logs to distinguish executable lookup,
+process start, sandbox or authentication failure, timeout, output mismatch
+and terminal protocol failure where the evidence permits. Report only
+redacted error evidence and the local record path. A native worker launch
+in Step 3 supplies no evidence of Workjig delivery.
+
 ## Repair commands
 
 Published install:
@@ -246,7 +345,7 @@ After `uv tool update-shell`, fully restart the shell, IDE, desktop agent, or se
 
 One uv tool installation supplies one active Commonplace version per OS user. Switching between published and editable sources changes the command implementation for every project under that user.
 
-## Step 7 — Report
+## Step 8 — Report
 
 Use this format:
 
@@ -269,6 +368,8 @@ Commonplace health check:
 - Runtime PATH: OK / problem / not checked
 - Command ownership: uv tool / conflict / missing / not checked
 - Validator: OK / problem / not checked
+- Workjig harness: delivered and reused / failed / not run; profile, launch context and record path
+- Harness executable: PATH entry, final binary and active session binary with known paths, digests and versions; match / identical contents at different paths / different / unknown
 
 Likely cause:
 <one or two sentences>
@@ -293,6 +394,7 @@ List independent problems in this blocking order:
 5. uv's tool executable directory is absent from the consuming process's `PATH`.
 6. Another executable shadows the uv tool.
 7. Package import, dependency, or validator failure.
+8. Workjig executable mismatch or headless launch, delivery, or reuse failure.
 
 Do not claim the problem is fixed unless the failing check passes in the same
 launch class and, for delegation failures, at the same caller depth that

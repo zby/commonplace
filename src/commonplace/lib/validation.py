@@ -164,6 +164,7 @@ class ValidationRun:
     frozen_source: Mapping[str, object] | None = None
     # The run parameters and run-id that run identity fields must equal.
     run_values: Mapping[str, str] | None = None
+    _override_paths: dict[Path, Path] = field(default_factory=dict, init=False)
     _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
     _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
     _evaluating: list[Path] = field(default_factory=list, init=False)
@@ -183,10 +184,6 @@ class ValidationRun:
 
     def __post_init__(self) -> None:
         self.repo_root = self.repo_root.resolve()
-        self.paths = tuple(
-            path.parent.resolve() if path.name == MANIFEST_NAME else path.resolve()
-            for path in self.paths
-        )
         if self.collection is not None:
             self.collection = self.collection.resolve()
         self.member_snapshots = {
@@ -195,13 +192,25 @@ class ValidationRun:
         for directory, members in self.member_snapshots.items():
             member_paths(directory, names=members)  # Reject escapes before adding byte overrides.
             self.content_overrides.update({directory / name: data for name, data in members.items()})
-        self.content_overrides = {
-            path.resolve(): content for path, content in self.content_overrides.items()
-        }
+        overrides = {}
+        for path, content in self.content_overrides.items():
+            key = self._resolve(path)
+            self._override_paths[path] = self._override_paths[key] = key
+            overrides[key] = content
+        self.content_overrides = overrides
+        self.paths = tuple(
+            self._resolve(path.parent if path.name == MANIFEST_NAME else path) for path in self.paths
+        )
+
+    def _resolve(self, path: Path) -> Path:
+        # A supplied file can be absent on disk. Keep its identity fixed while
+        # validating it, even if another writer creates its parent directory.
+        key = self._override_paths.get(path)
+        return key if key is not None else path.resolve()
 
     def read_bytes(self, path: Path) -> bytes:
         """One exact-byte snapshot shared by hashing, parsing and workflow checks."""
-        key = path.resolve()
+        key = self._resolve(path)
         if key not in self._bytes:
             content = self.content_overrides.get(key)
             if content is None and self.criteria is not None:
@@ -229,7 +238,7 @@ class ValidationRun:
 
     def load_document(self, path: Path) -> LoadedDocument:
         """Read and parse one Markdown artifact at most once during this run."""
-        key = path.resolve()
+        key = self._resolve(path)
         if key in self._documents:
             return self._documents[key]
         # Windows editors and checkouts write CRLF; checks match LF text. Hashing reads exact bytes.
@@ -251,7 +260,7 @@ class ValidationRun:
 
     def parse_note(self, path: Path) -> tuple[ParsedNote | None, str | None]:
         """Resolve a cached parsed document's type for deterministic validation."""
-        key = path.resolve()
+        key = self._resolve(path)
         if key in self._notes:
             return self._notes[key]
         loaded = self.load_document(key)
@@ -468,7 +477,7 @@ class ValidationRun:
         return inbound
 
     def validate(self, path: Path) -> CheckResults:
-        key = path.resolve()
+        key = self._resolve(path)
         if key.name == MANIFEST_NAME:
             key = key.parent
         if key in self._results:

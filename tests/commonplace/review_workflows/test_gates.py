@@ -47,7 +47,7 @@ elif "outcome: report" in frame:
 else:
     result = review_text("fail" if "FAILME" in note else "pass")
 for review in re.findall(r"^- (review[^:]*\.md): ", frame, re.MULTILINE):
-    Path(listed(review)).write_text(result)
+    Path(listed(review)).write_text(result, encoding="utf-8", newline="\n")
 """
 
 PROFILES = """default: fake
@@ -94,7 +94,7 @@ def _project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, *, installed: bool
     for rel, text in FILES.items():
         target = lib / rel.removeprefix("kb/") if installed and rel.startswith(LIBRARY_FILES) else root / rel
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(text, encoding="utf-8")
+        target.write_text(text, encoding="utf-8", newline="\n")
     copy_contract(lib)
     git(root, "init", "-q")
     git(root, "config", "user.email", "t@example.com")
@@ -127,11 +127,13 @@ def review(repo, capsys, *args: str) -> tuple[int, dict, list[str]]:
     _, harnesses, log = repo
     before = log.read_text().splitlines()
     code = main([*args, "--timeout", "30"], harnesses=harnesses)
-    return code, json.loads(capsys.readouterr().out), log.read_text().splitlines()[len(before):]
+    captured = capsys.readouterr()
+    assert captured.out, captured.err
+    return code, json.loads(captured.out), log.read_text().splitlines()[len(before):]
 
 
 def write(root: Path, rel: str, text: str) -> None:
-    (root / rel).write_text(text, encoding="utf-8")
+    (root / rel).write_text(text, encoding="utf-8", newline="\n")
 
 
 @pytest.mark.slow

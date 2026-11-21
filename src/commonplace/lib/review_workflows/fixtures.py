@@ -163,7 +163,7 @@ def create(root: Path, run_path: str, observation: str, *, substitute_executor: 
 
 def load(root: Path, name: str) -> tuple[Path, dict]:
     fixture = observations.safe_path(root, name)
-    data = json.loads((fixture / "fixture.json").read_text())
+    data = json.loads((fixture / "fixture.json").read_bytes())
     if data.get("version") != VERSION:
         raise ValueError("unsupported fixture version")
     if data.get("library-policy") != observations.LIBRARY_POLICY:
@@ -191,7 +191,7 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES, 
     receipt = run_dir / "trial.json"
     identity = observations.sha((fixture / "fixture.json").read_bytes())
     if receipt.exists():
-        previous = json.loads(receipt.read_text())
+        previous = json.loads(receipt.read_bytes())
         if previous["fixture-sha256"] != identity:
             raise ValueError("resume names another fixture")
     else:
@@ -254,7 +254,7 @@ def trial(root: Path, fixture_name: str, run_dir: Path, *, harnesses=HARNESSES, 
                  for item in data["inputs"] if item["role"] == "contract"}
     from commonplace.headless.jobs import Run
     before = gates.checkout_state(tree)
-    if before != json.loads(receipt.read_text())["tree-state"]:
+    if before != json.loads(receipt.read_bytes())["tree-state"]:
         raise ValueError("trial tree changed; restore its baseline before resuming, or start a new trial")
     operational = {Path(item["path"]).stem: {
         "origin": item["origin"], "text": observations.safe_path(fixture, item["path"]).read_bytes().decode("utf-8")}

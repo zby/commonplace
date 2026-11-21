@@ -95,7 +95,8 @@ def pair(tmp_path: Path) -> tuple[Path, Path, str]:
     )
     snapshot = write(tmp_path / "kb/sources/.snapshots/paper.md", SNAPSHOT)
     checksum = snapshot_sha256(snapshot)
-    ingest = write(tmp_path / "kb/sources/paper.ingest.md", _ingest(checksum))
+    ingest = tmp_path / "kb/sources/paper.ingest.md"
+    ingest.write_bytes(_ingest(checksum).encode("utf-8"))
     return ingest, snapshot, checksum
 
 
@@ -128,7 +129,7 @@ def test_a_new_report_is_drafted_outside_the_library_and_published(
     assert record.retained_quotes_path.read_text(encoding="utf-8") == CANONICAL_EMPTY_QUOTES
     assert _failures(record) == [f"candidate: {record.candidate} is missing or empty"]
 
-    record.candidate.write_text(draft, encoding="utf-8")
+    record.candidate.write_text(draft, encoding="utf-8", newline="\n")
     assert _failures(record) == []
     assert not ingest.exists()
 
@@ -150,7 +151,7 @@ def test_a_failing_candidate_is_not_published_and_the_incumbent_is_untouched(
     record = _prepare(ingest)
     record.candidate.write_text(
         _ingest(checksum).replace("## Recommended Next Action\n\nNo action.\n", ""),
-        encoding="utf-8",
+        encoding="utf-8", newline="\n",
     )
 
     result = publish_handoff(record, repo_root=ingest.parents[2])
@@ -178,7 +179,7 @@ def test_the_record_keeps_every_check_and_prune_removes_old_published_runs(
     root = ingest.parents[2]
     record = _prepare(ingest)
     assert check_handoff(record, repo_root=root).failures
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     assert publish_handoff(record, repo_root=root).failures == []
 
     checks = yaml.safe_load(record.path.read_text(encoding="utf-8"))["checks"]
@@ -205,9 +206,9 @@ def test_an_incumbent_changed_during_drafting_is_not_overwritten(
 ) -> None:
     ingest, _snapshot, checksum = pair
     record = _prepare(ingest)
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     grounded = _ingest(checksum, quotes=_populated_quotes(checksum))
-    ingest.write_text(grounded, encoding="utf-8")
+    ingest.write_text(grounded, encoding="utf-8", newline="\n")
 
     result = publish_handoff(record, repo_root=ingest.parents[2])
 
@@ -234,7 +235,7 @@ def test_prepare_refuses_a_missing_snapshot_duplicate_quotes_and_an_open_run(
     with pytest.raises(HandoffError, match="unfinished ingest run"):
         _prepare(ingest)
 
-    ingest.write_text(_ingest(checksum, quotes=CANONICAL_EMPTY_QUOTES * 2), encoding="utf-8")
+    ingest.write_text(_ingest(checksum, quotes=CANONICAL_EMPTY_QUOTES * 2), encoding="utf-8", newline="\n")
     with pytest.raises(HandoffError, match="2 Quotes blocks"):
         _prepare(ingest)
 
@@ -246,62 +247,68 @@ def test_prepare_refuses_a_missing_snapshot_duplicate_quotes_and_an_open_run(
 def test_snapshot_bytes_changed_after_dispatch_fail(pair: tuple[Path, Path, str]) -> None:
     ingest, snapshot, checksum = pair
     record = _prepare(ingest)
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     snapshot.write_text(SNAPSHOT + "An appended line.\n", encoding="utf-8")
 
     assert any(f.startswith("snapshot: bytes changed since dispatch") for f in _failures(record))
 
     # A worker that re-pinned the candidate to the changed bytes is still refused.
-    record.candidate.write_text(_ingest(snapshot_sha256(snapshot)), encoding="utf-8")
+    record.candidate.write_text(_ingest(snapshot_sha256(snapshot)), encoding="utf-8", newline="\n")
     assert any(f.startswith("snapshot: candidate snapshot_sha256") for f in _failures(record))
 
 
+@pytest.mark.parametrize("newline", ["\n", "\r\n"], ids=["lf", "crlf"])
 def test_a_refresh_must_keep_the_incumbent_quotes_byte_for_byte(
-    pair: tuple[Path, Path, str],
+    pair: tuple[Path, Path, str], newline: str,
 ) -> None:
     ingest, _snapshot, checksum = pair
-    incumbent = _ingest(checksum, quotes=_populated_quotes(checksum))
-    ingest.write_text(incumbent, encoding="utf-8")
+    quotes = _populated_quotes(checksum).replace("\n", newline)
+    incumbent = _ingest(checksum, quotes=_populated_quotes(checksum)).replace("\n", newline)
+    ingest.write_bytes(incumbent.encode("utf-8"))
     record = _prepare(ingest)
-    assert record.retained_quotes_path.read_text(encoding="utf-8") == _populated_quotes(checksum)
+    assert record.retained_quotes_path.read_bytes() == quotes.encode("utf-8")
 
     # The worker dropped the retained quotes for the empty block.
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     assert any(f.startswith("quotes: the block does not equal") for f in _failures(record))
 
     record.candidate.write_text(
-        incumbent.replace("> Shorter contexts", ">  Shorter contexts"), encoding="utf-8"
+        incumbent.replace("> Shorter contexts", ">  Shorter contexts"), encoding="utf-8", newline="\n"
     )
     assert any(f.startswith("quotes: the block does not equal") for f in _failures(record))
 
     # Verification reads the incumbent, not the worker's convenience copy.
-    record.retained_quotes_path.write_text(CANONICAL_EMPTY_QUOTES, encoding="utf-8")
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.retained_quotes_path.write_text(CANONICAL_EMPTY_QUOTES, encoding="utf-8", newline="\n")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     assert any(f.startswith("quotes: the block does not equal") for f in _failures(record))
 
-    record.candidate.write_text(incumbent.replace("essay argues", "essay claims"), encoding="utf-8")
+    alternate = incumbent.replace(newline, "\r\n" if newline == "\n" else "\n")
+    record.candidate.write_bytes(alternate.encode("utf-8"))
+    assert any(f.startswith("quotes: the block does not equal") for f in _failures(record))
+
+    record.candidate.write_text(incumbent.replace("essay argues", "essay claims"), encoding="utf-8", newline="\n")
     assert _failures(record) == []
 
 
 def test_occasion_is_required_exactly_when_supplied(pair: tuple[Path, Path, str]) -> None:
     ingest, _snapshot, checksum = pair
     record = _prepare(ingest, occasion="Why shorten?")
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     assert any(f.startswith("occasion:") for f in _failures(record))
 
-    record.candidate.write_text(_ingest(checksum, extra='occasion: "Why shorten?"\n'), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum, extra='occasion: "Why shorten?"\n'), encoding="utf-8", newline="\n")
     assert _failures(record) == []
 
     close_handoff(record)
     without = _prepare(ingest)
-    without.candidate.write_text(_ingest(checksum, extra='occasion: "Why shorten?"\n'), encoding="utf-8")
+    without.candidate.write_text(_ingest(checksum, extra='occasion: "Why shorten?"\n'), encoding="utf-8", newline="\n")
     assert any(f.startswith("occasion:") for f in _failures(without))
 
 
 def test_code_grounding_must_match_the_run(pair: tuple[Path, Path, str]) -> None:
     ingest, _snapshot, checksum = pair
     record = _prepare(ingest, code_grounded=True)
-    record.candidate.write_text(_ingest(checksum), encoding="utf-8")
+    record.candidate.write_text(_ingest(checksum), encoding="utf-8", newline="\n")
     failures = _failures(record)
     assert "code grounding: secondary_sources is missing" in failures
     assert "code grounding: '## Code Grounding' section is missing" in failures
@@ -321,13 +328,13 @@ def test_local_only_references_warn_in_validation_and_fail_a_handoff(
     ingest, _snapshot, checksum = pair
     content = _ingest(checksum).replace("A conceptual essay.", f"A conceptual essay. {sentence}")
     record = _prepare(ingest)
-    record.candidate.write_text(content, encoding="utf-8")
+    record.candidate.write_text(content, encoding="utf-8", newline="\n")
 
     result = verify_handoff(record, repo_root=ingest.parents[2])
     assert any(expected in failure for failure in result.failures)
     assert not any(expected in warning for warning in result.warnings)
 
-    ingest.write_text(content, encoding="utf-8")
+    ingest.write_text(content, encoding="utf-8", newline="\n")
     assert any(expected in warning for warning in _contract_warnings(ingest))
 
 
@@ -338,20 +345,20 @@ def test_candidate_links_resolve_from_the_ingest_path(pair: tuple[Path, Path, st
 
     record.candidate.write_text(
         _ingest(checksum).replace("None.", "- [Neighbour](./neighbour.md) — compares-with: fixture"),
-        encoding="utf-8",
+        encoding="utf-8", newline="\n",
     )
     assert _failures(record) == []
 
     record.candidate.write_text(
         _ingest(checksum).replace("None.", "- [Missing](./missing.md) — compares-with: fixture"),
-        encoding="utf-8",
+        encoding="utf-8", newline="\n",
     )
     assert any("missing.md" in f for f in _failures(record))
 
 
 def test_quote_attributions_may_name_the_snapshot(pair: tuple[Path, Path, str]) -> None:
     ingest, _snapshot, checksum = pair
-    ingest.write_text(_ingest(checksum, quotes=_populated_quotes(checksum)), encoding="utf-8")
+    ingest.write_text(_ingest(checksum, quotes=_populated_quotes(checksum)), encoding="utf-8", newline="\n")
     assert _contract_warnings(ingest) == []
 
 
@@ -390,17 +397,17 @@ def test_contract_warns_on_quotes_position_and_uncopied_capture_metadata(
         CANONICAL_EMPTY_QUOTES + "## Connections Found\n\nNone.\n\n",
         "## Connections Found\n\nNone.\n\n" + CANONICAL_EMPTY_QUOTES,
     )
-    ingest.write_text(moved, encoding="utf-8")
+    ingest.write_text(moved, encoding="utf-8", newline="\n")
     assert any("not immediately before" in w for w in _contract_warnings(ingest))
 
-    ingest.write_text(content.replace("capture_scope: full-source\n", ""), encoding="utf-8")
+    ingest.write_text(content.replace("capture_scope: full-source\n", ""), encoding="utf-8", newline="\n")
     assert any("'capture_scope' was not copied" in w for w in _contract_warnings(ingest))
 
-    ingest.write_text(content.replace('captured: "2026-11-01"', 'captured: "2026-11-02"'), encoding="utf-8")
+    ingest.write_text(content.replace('captured: "2026-11-01"', 'captured: "2026-11-02"'), encoding="utf-8", newline="\n")
     assert any("'captured' is" in w for w in _contract_warnings(ingest))
 
     # A quoted date equals the snapshot's bare YAML date.
-    ingest.write_text(content, encoding="utf-8")
+    ingest.write_text(content, encoding="utf-8", newline="\n")
     assert _contract_warnings(ingest) == []
 
 
@@ -421,7 +428,7 @@ def test_commands_run_prepare_check_and_publish(
     assert fields["snapshot_sha256"] == checksum
 
     candidate = root / fields["candidate_path"]
-    candidate.write_text(refreshed.replace(CANONICAL_EMPTY_QUOTES, ""), encoding="utf-8")
+    candidate.write_text(refreshed.replace(CANONICAL_EMPTY_QUOTES, ""), encoding="utf-8", newline="\n")
     assert validate_main([fields["candidate_path"], "--handoff", fields["handoff_record"]]) == 1
     out = capsys.readouterr().out
     assert out.startswith("HANDOFF FAILED: kb/reports/state/ingest/paper/candidate.md for kb/sources/paper.ingest.md")
@@ -432,7 +439,7 @@ def test_commands_run_prepare_check_and_publish(
     assert validate_main(["kb/sources/paper.ingest.md", "--handoff", fields["handoff_record"]]) == 2
     capsys.readouterr()
 
-    candidate.write_text(refreshed, encoding="utf-8")
+    candidate.write_text(refreshed, encoding="utf-8", newline="\n")
     assert validate_main([fields["candidate_path"], "--handoff", fields["handoff_record"]]) == 0
     assert capsys.readouterr().out.startswith("HANDOFF CLEAN:")
     assert handoff_main(["publish", fields["handoff_record"]]) == 0

@@ -66,7 +66,7 @@ elif "The operator answered" in frame:
         if item["state"] == "approved" or defect == "applyother":
             quote = item["proposal"]["quote"]
             applied = applied.replace(quote, quote.upper())
-    outputs["candidate"].write_text(applied)
+    outputs["candidate"].write_text(applied, newline="\n")
     result("changed", changes=["applied the approved entries"])
 elif "UNCHANGED" in text:
     result("unchanged")
@@ -112,7 +112,7 @@ def repo(tmp_path, monkeypatch):
               "kb/notes/beta.md": NOTE.format(words="").replace("# Alpha", "# Beta")}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
-        (root / rel).write_text(text)
+        (root / rel).write_text(text, encoding="utf-8", newline="\n")
     for args in (("init", "-q"), ("config", "user.email", "t@example.com"), ("config", "user.name", "t"),
                  ("add", "."), ("commit", "-qm", "seed")):
         subprocess.run(["git", *args], cwd=root, check=True)
@@ -149,7 +149,7 @@ def rejections(repo, report):
 
 
 def set_note(repo, words):
-    (repo[0] / NOTE_PATH).write_text(NOTE.format(words=words))
+    (repo[0] / NOTE_PATH).write_text(NOTE.format(words=words), encoding="utf-8", newline="\n")
 
 
 @pytest.mark.parametrize("words, outcome, code", [("", "changed", 0), ("UNCHANGED", "unchanged", 0),
@@ -218,7 +218,7 @@ def test_a_named_link_removal_is_accepted(repo, capsys):
 
 def test_text_option_edits_a_saved_text_and_records_its_hash(repo, capsys):
     saved = NOTE.format(words="A saved start text.")
-    (repo[0] / "kb/notes/saved.md").write_text(saved)
+    (repo[0] / "kb/notes/saved.md").write_text(saved, encoding="utf-8", newline="\n")
     code, report, launches = edit(repo, capsys, NONE_OP, NOTE_PATH, "--text", "kb/notes/saved.md")
     assert code == 0 and launches[0]["inputs"]["text"] == saved
     data = result(repo, report).data

@@ -702,7 +702,7 @@ def sweep(root: Path, wanted: list[Pair], profile: Profile, run_dir: Path, *, ma
         snapshot_path = run_dir / "review-request.json"
         selection = [asdict(pair) for pair in wanted]
         if snapshot_path.exists():
-            snapshot = json.loads(snapshot_path.read_text())
+            snapshot = json.loads(snapshot_path.read_bytes())
             if (snapshot["pairs"] != selection or snapshot["grouping"] != grouping
                     or snapshot["publish-results"] != publish_results):
                 raise ValueError("resume selection differs from the captured request; start a new run")

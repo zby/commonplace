@@ -46,10 +46,14 @@ def safe_path(root: Path, name: str) -> Path:
     return path
 
 
+def _json_bytes(value: dict) -> bytes:
+    return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+
+
 def atomic_json(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    tmp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    tmp.write_bytes(_json_bytes(value))
     tmp.replace(path)
 
 
@@ -166,7 +170,7 @@ def prepare(run) -> dict:
     if not hasattr(run, "_review_provenance"):
         selected = getattr(run, "library_root", None) or library_root()
         value = executor(run)
-        digest = sha((json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode())
+        digest = sha(_json_bytes(value))
         name = f"provenance/{digest}.json"
         path = safe_path(run.root, name)
         if path.exists():
@@ -206,7 +210,7 @@ def read_inputs(directory: Path, data: dict | None = None) -> dict[str, bytes]:
     `path` is the name used when exporting an independent fixture, not a file
     that a caller should open under the observation directory.
     """
-    data = data if data is not None else json.loads((directory / "observation.json").read_text())
+    data = data if data is not None else json.loads((directory / "observation.json").read_bytes())
     if data["version"] not in READ_VERSIONS:
         raise ValueError("unsupported observation version")
     if data["version"] == 2:
@@ -232,7 +236,7 @@ def read_inputs(directory: Path, data: dict | None = None) -> dict[str, bytes]:
 
 
 def load(directory: Path) -> dict:
-    data = json.loads((directory / "observation.json").read_text())
+    data = json.loads((directory / "observation.json").read_bytes())
     try:
         if data["version"] not in READ_VERSIONS or data["id"] != sha(json.dumps(data["request"], sort_keys=True).encode())[:24]:
             raise ValueError("unsupported or inconsistent observation identity")

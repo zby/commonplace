@@ -117,6 +117,25 @@ def test_validation_run_threads_pinned_type_and_schema(tmp_path):
     assert good.parse_note(note)[0].note_type == "pinned"
 
 
+def test_virtual_note_keeps_its_identity_when_path_resolution_changes(tmp_path, monkeypatch):
+    note = tmp_path / "kb/notes/fixture.md"
+    data = b"---\ntype: types/fixture.md\ndescription: Fixture\n---\n# Fixture\n"
+    resolve = Path.resolve
+
+    def resolve_during_publication(path, *args, **kwargs):
+        if path == note and note.parent.is_dir():
+            return note.with_name("alternate-spelling.md")
+        return resolve(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "resolve", resolve_during_publication)
+    run = ValidationRun(tmp_path, (note,), content_overrides={note: data},
+                        criteria=snapshot(tmp_path, {"type": "object"}))
+    note.parent.mkdir(parents=True)
+
+    assert run.read_bytes(note) == data
+    assert not run.validate(note).fails
+
+
 def test_virtual_verbatim_sources_require_supplied_bytes(tmp_path):
     note = tmp_path / "kb/notes/fixture.md"
     data = (b"---\ntype: types/fixture.md\ndescription: Fixture\n---\n# Fixture\n\n"

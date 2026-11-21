@@ -463,7 +463,7 @@ def store_accepted(root: Path, run_dir: Path, published: dict) -> dict:
     """
     held = json.loads((run_dir / edits.HELD).read_text(encoding="utf-8"))
     artifact = published["artifact"]
-    text = (root / held["review"]).read_text(encoding="utf-8")
+    text = (root / held["review"]).read_bytes().decode("utf-8")
     if edits.sha256(text) != held["review-sha256"]:
         return {"current-result": None,
                 "not-current": f"{held['review']} is not the review the run accepted; it was changed after the run"}

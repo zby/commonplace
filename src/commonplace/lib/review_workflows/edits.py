@@ -88,7 +88,7 @@ def capture_brief(root: Path, note: str, text: str) -> dict[str, str]:
     if not path.resolve().is_relative_to(root.resolve()):
         raise Stop(f"write brief is outside the repository: {path}")
     try:
-        brief = path.read_text(encoding="utf-8")
+        brief = path.read_bytes().decode("utf-8")
     except (OSError, UnicodeError) as error:
         raise Stop(f"write brief cannot be read: {path}: {error}") from error
     parsed = frontmatter.parse(brief)
@@ -467,7 +467,7 @@ def hold(run: Run, root: Path, note: str, start: str, final: str, entries: list[
     changes = run.accept("final.diff", shown)
     warnings = new_warnings(root, note, start, final)
     rel = candidate.relative_to(root).as_posix()
-    reviewed = ({"review": review, "review-sha256": sha256((root / review).read_text(encoding="utf-8"))}
+    reviewed = ({"review": review, "review-sha256": observations.sha((root / review).read_bytes())}
                 if review is not None else {})
     observations.atomic_json(run.root / HELD, {"candidate": rel, "sha256": sha256(final),
                                                "before-sha256": sha256(start),
@@ -506,13 +506,13 @@ def publish_held(root: Path, run_dir: Path, revised: str | None = None, source: 
         note, record = start_record["note"], published(run_dir) or {"publications": []}
         if any(entry["decided-by"] != AUTOMATIC for entry in record["publications"]):
             raise ValueError(f"{rel} already published its held candidate; it publishes it at most once")
-        final = (root / held["candidate"]).read_text(encoding="utf-8")
+        final = (root / held["candidate"]).read_bytes().decode("utf-8")
         if sha256(final) != held["sha256"]:
             raise ValueError(f"{held['candidate']} is not the candidate the run held; it was changed after the run")
         for name in ("diff", "review"):
             path = root / held[name] if name in held else None
             if path is not None and (not path.is_file()
-                                     or sha256(path.read_text(encoding="utf-8")) != held[f"{name}-sha256"]):
+                                     or observations.sha(path.read_bytes()) != held[f"{name}-sha256"]):
                 raise ValueError(f"{held[name]} is not the file the run held; it was changed after the run. "
                                  "Nothing was written")
         start = (run_dir / "artifact" / START).read_text(encoding="utf-8")
@@ -556,6 +556,6 @@ def guarded_changes(root: Path, before: dict[str, str], note: str, final: str | 
     """The paths the checkout guard saw change since `before`, less `note` when it holds the applied `final`."""
     changed = gates.changed_paths(before, gates.checkout_state(root))
     path = root / note
-    if final is not None and path.is_file() and path.read_text(encoding="utf-8") == final:
+    if final is not None and path.is_file() and path.read_bytes() == final.encode("utf-8"):
         changed = [rel for rel in changed if rel != note]    # the workflow's own write
     return changed

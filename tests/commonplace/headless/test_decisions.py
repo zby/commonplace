@@ -24,7 +24,7 @@ if "PROBLEM" in frame:
     sys.exit(0)
 key = "RETRY:" if "was rejected" in frame else "FIRST:"
 text = frame.split(key, 1)[1].split("|", 1)[0].replace("\\n", "\n")
-Path(re.search(r"^- decision\.md: (.+)$", frame, re.MULTILINE).group(1)).write_text(text)
+Path(re.search(r"^- decision\.md: (.+)$", frame, re.MULTILINE).group(1)).write_text(text, newline="\n")
 """
 
 SCHEMA = {"disposition": ("keep", "revise"), "determined": bool, "target": (str, type(None))}

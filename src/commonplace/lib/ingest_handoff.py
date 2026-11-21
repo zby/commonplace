@@ -60,7 +60,7 @@ RETIRED_FIELDS = ("source_snapshot", "code_revisions")
 # Validation warnings that refuse a handoff: a published ingest must not carry them.
 BLOCKING_WARNING_LABELS = (f"{INGEST_CONTRACT_LABEL}:", "link health:")
 
-_CODE_GROUNDING_HEADING_RE = re.compile(r"^## Code Grounding[ \t]*$", re.MULTILINE)
+_CODE_GROUNDING_HEADING_RE = re.compile(r"^## Code Grounding[ \t]*\r?$", re.MULTILINE)
 _LABEL_PREFIX_RE = re.compile(r"^\[[^\]]+\]\s*")
 
 

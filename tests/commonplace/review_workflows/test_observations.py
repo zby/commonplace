@@ -1,6 +1,7 @@
 """Captured inputs, draft identity and independent fixture trials on a fake harness."""
 import json
 import shutil
+import sys
 import tarfile
 from pathlib import Path
 
@@ -10,6 +11,7 @@ from commonplace.cli.review_workflows import main
 from commonplace.headless.jobs import Run
 from commonplace.lib import frontmatter
 from commonplace.lib.review_workflows import fixtures, observations
+from tests.commonplace.link_helpers import junction
 from tests.commonplace.review_workflows.test_gates import (
     _project,
     git,
@@ -137,7 +139,7 @@ def test_workjig_owns_inputs_and_shared_executor_survives_run_copy(repo, capsys,
     root = repo[0]
     code, report, _ = review(repo, capsys, "kb/notes/alpha.md", "--criteria",
                              "prose/body-gate", "prose/description-gate", "--grouping", grouping)
-    assert code == 0, report
+    assert code == 0, json.dumps(report, indent=2)
     run = root / report["run-dir"]
     paths = records(root, report["run-dir"])
     assert len(paths) == 2
@@ -186,7 +188,7 @@ def test_retained_v2_observation_remains_a_fixture_source(repo, capsys):
     text = saved.read_text()
     original_capture = frontmatter.parse(text).data["target-capture"]
     legacy_capture = (path.parent / "inputs/target/kb/notes/alpha.md").relative_to(root).as_posix()
-    saved.write_text(text.replace(original_capture, legacy_capture))
+    saved.write_text(text.replace(original_capture, legacy_capture), encoding="utf-8", newline="\n")
     data["completed-result-sha256"][name] = observations.sha(saved.read_bytes())
     observations.atomic_json(path, data)
     assert observations.read_inputs(path.parent) == captured
@@ -289,7 +291,11 @@ def test_unsafe_capture_and_old_run_are_rejected(repo, capsys):
     root = repo[0]
     with pytest.raises(ValueError, match="unsafe"):
         observations.safe_path(root, "../outside")
-    (root / "escape").symlink_to(root.parent, target_is_directory=True)
+    escape = root / "escape"
+    if sys.platform == "win32":
+        junction(escape, root.parent)
+    else:
+        escape.symlink_to(root.parent, target_is_directory=True)
     with pytest.raises(ValueError, match="escapes"):
         observations.safe_path(root, "escape/file")
     old = root / "kb/reports/state/review/runs/old"
@@ -355,7 +361,8 @@ def test_rejection_replay_and_contract_freshness(repo, capsys):
     criterion = "kb/instructions/review-gates/prose/body-gate.md"
     assert results.freshness(root, "kb/notes/alpha.md", criterion).state == "fresh"
     contract = root / "kb/types/review-result.md"
-    contract.write_text(contract.read_text() + "\nA compatible contract wording change.\n")
+    contract.write_text(contract.read_text(encoding="utf-8") + "\nA compatible contract wording change.\n",
+                        encoding="utf-8", newline="\n")
     assert results.freshness(root, "kb/notes/alpha.md", criterion).changed == ("output-contract",)
     assert main(["show", report["run-dir"], "--json"], harnesses=repo[1]) == 0
     capsys.readouterr()

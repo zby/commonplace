@@ -378,7 +378,7 @@ class Run:
             raise ValueError(f"{path} is outside {self.artifact}")
         target.parent.mkdir(parents=True, exist_ok=True)
         tmp = target.with_name(f".{target.name}.{uuid.uuid4().hex[:6]}.tmp")
-        tmp.write_text(content)
+        tmp.write_bytes(content.encode("utf-8"))
         tmp.replace(target)                         # atomic: readers see old or new bytes
         self.log(event="accepted", path=path, sha256=digest(content))
         return target

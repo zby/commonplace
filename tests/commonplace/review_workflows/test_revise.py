@@ -119,7 +119,7 @@ elif name == "repair-claim-title":
         revised = revised.replace("description: A note about alpha", "description: A concrete claim about alpha")
         if "BODYEDIT" in text and "was rejected" not in frame:
             revised = revised.replace("Alpha body", "Changed body")
-        outputs["candidate"].write_text(revised)
+        outputs["candidate"].write_text(revised, newline="\n")
         result("changed", changes=["Retitled Alpha"])
 else:
     if kind == "apply":
@@ -142,7 +142,7 @@ else:
         Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
     if "TOUCH" in text and name == "opening-and-title":
         Path("kb/notes/alpha.md").write_text(text + "The operator's sentence.\n")
-    outputs["candidate"].write_text(revised)
+    outputs["candidate"].write_text(revised, newline="\n")
     result("changed", changes=[f"{name} applied"])
 '''
 PROFILES = ("default: s\neffort: {simple: s, judgment: j}\nprofiles:\n"
@@ -167,7 +167,7 @@ def repo(tmp_path, monkeypatch):
     files |= {"kb/instructions/review-profiles.yaml": PROFILES, "kb/notes/COLLECTION.md": "# Notes\n"}
     for rel, text in files.items():
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
-        (root / rel).write_text(text)
+        (root / rel).write_text(text, encoding="utf-8", newline="\n")
     for args in (("init", "-q"), ("config", "user.email", "t@example.com"), ("config", "user.name", "t")):
         subprocess.run(["git", *args], cwd=root, check=True)
     monkeypatch.setattr(library, "_library_root", lambda _override: (root / "kb").resolve())
@@ -184,7 +184,7 @@ def repo(tmp_path, monkeypatch):
 def start(repo, words="", path=NOTE_PATH, text=None):
     text = NOTE.format(words=words) if text is None else text
     (repo[0] / path).parent.mkdir(parents=True, exist_ok=True)
-    (repo[0] / path).write_text(text)
+    (repo[0] / path).write_text(text, encoding="utf-8", newline="\n")
     subprocess.run(["git", "add", "."], cwd=repo[0], check=True)
     subprocess.run(["git", "commit", "-q", "-m", "seed"], cwd=repo[0], check=True)
     return text
@@ -1361,7 +1361,8 @@ if frame.removeprefix("Task:\n").startswith("Review one note"):
         criterion = names[0] if output == "review.md" else output
         outcome = ("report" if "outcome: report" in frame else "warn"
                    if any(name in criterion for name in ("warned", "claim-strength")) else "pass")
-        Path(listed(output)).write_text(review_text(outcome, criterion))
+        newline = "\r\n" if "role-in-the-kb" in criterion else "\n"
+        Path(listed(output)).write_text(review_text(outcome, criterion), encoding="utf-8", newline=newline)
     sys.exit(0)
 '''
 
@@ -1398,7 +1399,7 @@ def reviewed(repo, tmp_path):
     """The revise repository with review operations that declare a depth, and a fake that also reviews."""
     for rel, text in REVIEW_FILES.items():
         (repo[0] / rel).parent.mkdir(parents=True, exist_ok=True)
-        (repo[0] / rel).write_text(text)
+        (repo[0] / rel).write_text(text, encoding="utf-8", newline="\n")
     copy_contract(repo[0] / "kb")
     (tmp_path / "fake.py").write_text(REVIEW_FAKE + FAKE)
     return repo

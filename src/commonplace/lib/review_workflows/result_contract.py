@@ -174,7 +174,7 @@ def validate_saved(root: Path, path: Path, text: str, *, contracts: dict[str, by
     if context is not None and (contracts is not None or context.root != root.resolve()):
         raise ControllerError("validation context belongs to another root or duplicates supplied contracts")
     context = context if context is not None else ValidationContext(root, contracts)
-    captured = {path.resolve(): text}
+    captured = {path: text}
     for key in ("target-capture", "raw-output"):
         name = parsed.data.get(key)
         if not isinstance(name, str):

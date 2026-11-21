@@ -60,7 +60,7 @@ STANDALONE_TRAILING_MARKER_RE = re.compile(
     r"^[ \t]*(?:\([^()\[\]]*\bverbatim\b[^()\[\]]*\)|,[ \t]*verbatim\b)",
     re.IGNORECASE,
 )
-INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
+INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*\r?$", re.MULTILINE)
 NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
 
 

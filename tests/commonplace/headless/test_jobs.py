@@ -19,6 +19,7 @@ repeats the previous primary output's bytes.
 import hashlib
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -190,12 +191,18 @@ def test_antigravity_rejects_unmapped_flags():
 
 @pytest.mark.parametrize("reported", ["actual-agy-model", None])
 def test_antigravity_records_only_reported_model(tmp_path, monkeypatch, reported):
-    script = tmp_path / "agy"
-    script.write_text(f"#!{sys.executable}\n" + FAKE +
+    script = tmp_path / "agy.py"
+    script.write_text(FAKE +
                       f'\nprint(json.dumps({{"event": "init", "init": {{"model": {reported!r}}}}}))\n' +
                       'print(json.dumps({"event": "result", "result": {"status": "SUCCESS"}}))\n')
-    script.chmod(0o755)
-    monkeypatch.setenv("PATH", str(tmp_path))
+    harness = HARNESSES["antigravity"]
+    original_worker = harness.worker
+
+    def fake_worker(profile):
+        worker = original_worker(profile)
+        return replace(worker, argv=(sys.executable, str(script), *worker.argv[1:]))
+
+    monkeypatch.setattr(harness, "worker", fake_worker)
     with Run(tmp_path / "run", tmp_path, Profile("antigravity", "requested", "high")) as run:
         answer = run.ask("draft", "Write GOOD things.", ["report"])
         assert answer.outputs == {"report": "report: good"}
@@ -226,6 +233,14 @@ def test_ask_records_model_and_second_ask_replays(run):
     again = run.ask("draft", "Write GOOD things.", ["report"])
     assert again.record["launches"] == a.record["launches"], "second ask must replay the record"
     assert launch_count(run.root) == 1
+
+
+def test_accepted_artifact_matches_its_digest(run):
+    content = "Café\r\nsecond line\n"
+    path = run.accept("report.md", content)
+    assert path.read_bytes() == content.encode("utf-8")
+    [accepted] = [event for event in events(run.root) if event["event"] == "accepted"]
+    assert accepted["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def test_broken_launch_raises_after_two_relaunches(run, sleeps):

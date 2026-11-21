@@ -505,7 +505,7 @@ def _run_dir(root: Path, resume: Path | None) -> Path:
         run_dir = (root / resume).resolve()
         if not (run_dir / SWEEP).is_file():
             raise ValueError(f"not a review run: {resume}")
-        if json.loads((run_dir / SWEEP).read_text()).get("format") != observations.VERSION:
+        if json.loads((run_dir / SWEEP).read_bytes()).get("format") != observations.VERSION:
             raise ValueError("old-format run cannot resume; retain it as evidence and start a new run")
         if not run_dir.is_relative_to((root / gates.RUNS).resolve()):
             raise ValueError("resume must name a run in the active review namespace")
@@ -568,12 +568,12 @@ def _gates(root: Path, arguments: argparse.Namespace, harnesses) -> int:
     selection = {"notes": arguments.notes, "criteria": arguments.criteria,
                  "criterion-file": arguments.criterion_file,
                  "all-gates": not arguments.criteria and not arguments.criterion_file, "inputs": arguments.input}
-    options = json.loads((run_dir / SWEEP).read_text())
+    options = json.loads((run_dir / SWEEP).read_bytes())
     supplied = {}
     if arguments.resume:
         if options.get("selection") != selection:
             raise ValueError("resume selection differs; start a new run")
-        snapshot = json.loads((run_dir / "review-request.json").read_text())
+        snapshot = json.loads((run_dir / "review-request.json").read_bytes())
         wanted = [gates.Pair(**pair) for pair in snapshot["pairs"]]
     else:
         wanted = _pairs(root, arguments)
@@ -770,7 +770,7 @@ def _show(root: Path, arguments: argparse.Namespace) -> int:
                 raise ValueError(f"invalid retained result: {name}")
             completed.append(parsed.data)
         records.append({**data, "results": completed})
-    trial = json.loads((run / "trial-result.json").read_text()) if (run / "trial-result.json").exists() else None
+    trial = json.loads((run / "trial-result.json").read_bytes()) if (run / "trial-result.json").exists() else None
     print(json.dumps({"run": run.relative_to(root).as_posix(), "observations": records, "trial": trial},
                      indent=2, ensure_ascii=False))
     return 0

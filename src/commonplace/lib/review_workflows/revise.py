@@ -755,7 +755,7 @@ EARLIER_FILE = "earlier-decisions.json"
 
 def role_section(report: str) -> str | None:
     """The `## Role` section of a role report's text, without its heading; None when it has none."""
-    found = re.search(r"^## Role[ \t]*\n(.*?)(?=^## |\Z)", report, re.MULTILINE | re.DOTALL)
+    found = re.search(r"^## Role[ \t]*\r?\n(.*?)(?=^## |\Z)", report, re.MULTILINE | re.DOTALL)
     return found.group(1).strip() or None if found else None
 
 
@@ -985,7 +985,7 @@ def stored_role(root: Path, artifact: str, text: str) -> Finding | None:
     pair = role_pair(root, artifact, text) if requests else None
     if pair is None:
         return None
-    criterion = results.criterion_file(root, pair.criterion).read_text(encoding="utf-8")
+    criterion = results.criterion_file(root, pair.criterion).read_bytes().decode("utf-8")
     contexts, contract = inbound.collect(root, artifact), result_contract.capture_contract(root)
     for request in requests:
         data = json.loads(request.read_text(encoding="utf-8"))
