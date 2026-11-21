@@ -39,18 +39,23 @@ particular change was learned.
 ## Result so far
 
 [The draft definition](./draft-definition.md) defines **deliberative
-learning** by three conditions:
+learning** by two conditions:
 
-1. **Legible store.** What is learned is held in the contents of a store
-   that can be read. The system learns by changing those contents.
-2. **Judgment in the loop.** Each change to the store is made by an
+1. **Legible, addressable store.** What is learned is held in the contents
+   of a store that can be read and pointed at. The system learns by changing
+   those contents, and its later work consumes them.
+2. **Decision in the loop.** Each change to the store is made by an
    on-balance judgment that the system will do its later work better with
-   the change than without it, as a step of the learning loop. A judgment by
-   one fixed measure is the special case.
-3. **Open to criticism.** The judgment is held as a conjecture. Evidence
-   from later use can count against a change that was made, and the system
-   then changes the store again. Being displaced by a higher-scoring
-   alternative is not enough.
+   the change than without it. The judgment could have gone against the
+   change. A judgment by one fixed measure is the special case.
+
+Being open to criticism was a third condition until 2026-11-21. The operator
+ruled it out after [a proposal that Neon and Astra amended](./positions/proposal-two-conditions.md).
+Two properties are reported in its place: correction from later evidence
+(none, bundle or targeted) and displacement by a higher-scoring alternative.
+A deliberative learner is, in the KB's existing terms, a self-improving
+system that works by proposal and selection over a legible, addressable
+store.
 
 A change is an edit to the store's contents, including an edit to what
 later work loads or selects. The operator ruled on 2026-11-21 that the
@@ -95,7 +100,7 @@ learner.
 - **[A review by ChatGPT](./positions/chatgpt-review.md)** supports the
   concept and the name, and objects to two parts of the definition.
 - **[Earlier systems](./precedents.md)** from two rounds of ingests are compared
-  against the three conditions.
+  against the definition.
 - **A fixed measure is no longer excluded.** The operator ruled on
   2026-11-21 that the definition should be general, with the fixed measure
   as a special case. The two kinds are named single-loop and double-loop.
@@ -120,16 +125,12 @@ learner.
 One question is open. The others were ruled on or closed on 2026-11-21 and
 are listed with their answers.
 
-1. **Does the third condition hold up under a reading from outside the
-   workshop?** It carries the exclusion that the second condition used to
-   carry: evidence from later use must be able to count against a change,
-   and being displaced by a higher-scoring alternative is not enough. Fable,
-   Astra and Neon each drew that line in the same place.
-   [An outside reader](./positions/step-2-outside-reading.md) placed six
-   cases without seeing those placements and agreed on every one it could
-   decide. It also found that condition 2 excludes nothing by itself, that
-   the name fits worst where a fixed rule is admitted, and fifteen places
-   where the draft is unclear. Those findings are not yet acted on.
+1. **Does the two-condition definition hold up under a reading from
+   outside the workshop?** [The first outside reader](./positions/step-2-outside-reading.md)
+   read the three-condition draft, agreed with every placement it could
+   decide, and found the name fitted worst where a fixed rule is admitted.
+   The operator asked for the test to be run again on the revised draft with
+   a different model.
 
 Closed:
 

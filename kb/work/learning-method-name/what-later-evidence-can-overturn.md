@@ -55,7 +55,7 @@ supplies the levels.
 
 | Level | Can later evidence overturn it? | In the draft's terms |
 |---|---|---|
-| Reliance on a kept change | Yes, relative to the measure in use | The third condition. Required for membership. |
+| Reliance on a kept change | Yes, relative to the measure in use | The property of correction from later evidence. It was the third condition, required for membership, until the operator ruled for two conditions on 2026-11-21. |
 | The measure, gate or check | Yes, as an ordinary empirical question, relative to the unchanged objective. The note calls this proxy revision. | Double-loop learning in the draft's narrowed sense |
 | The terminal objective | Evidence alone does not establish which ends to pursue. This does not make the encoded objective immutable. | A licensed replacement counts as criterion revision if future choices are judged differently. |
 

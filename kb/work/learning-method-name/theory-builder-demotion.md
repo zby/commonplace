@@ -86,6 +86,14 @@ theory is not kept in prose, structured text or code, and a builder that
 forms and discards a theory within one episode. Neon reads the boundary case
 above as case 7b. The demotion does not depend on the answer.
 
+**After the ruling for two conditions.** On 2026-11-21 the operator ruled
+that being open to criticism is not a condition. Both readings of the
+boundary case above are then inside, so the checks hold no theory builder
+that is not a deliberative learner. Neon's position stands without a
+counterexample: every continuing theory builder with a text store is a
+deliberative learner, apart from two edge cases in the builder's own checks.
+The demotion still does not depend on this.
+
 ## Decisions for the operator
 
 1. **Place in the research program.** Ruled on 2026-11-21: lead with

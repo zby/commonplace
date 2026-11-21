@@ -11,21 +11,22 @@ does not depend on them.
 
 ## Deliberative learning
 
-**Deliberative learning** is learning that meets three conditions:
+**Deliberative learning** is learning that meets two conditions:
 
-1. **Legible store.** What is learned is held in the contents of a store
-   that can be read: prose, structured text and code. The system learns by
-   changing those contents.
-2. **Judgment in the loop.** Each change to the store is made by an
+1. **Legible, addressable store.** What is learned is held in the contents
+   of a store that can be read and pointed at: prose, structured text and
+   code. The system learns by changing those contents, and its later work
+   consumes them.
+2. **Decision in the loop.** Each change to the store is made by an
    [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
    that the system will do its later work better with the change than
-   without it. The judgment is a step of the learning loop. A judgment by
-   one fixed measure is the special case.
-3. **Open to criticism.** The judgment is held as a conjecture. Evidence
-   from later use can count against a change that was made. The system then
-   changes the store again: it undoes the change where that is possible, and
-   otherwise makes a further change. Being displaced by a higher-scoring
-   alternative is not enough.
+   without it. The judgment is a step of the learning loop and could have
+   gone against the change. A judgment by one fixed measure is the special
+   case.
+
+A later change can correct an earlier one when the loop can write such an
+edit and whatever consumes the store gives it effect. An addressable store
+makes that possible. It does not guarantee it.
 
 A **change** is an edit to the store's contents: adding, revising, removing
 or moving something, including an edit to what later work loads or selects.
@@ -33,7 +34,7 @@ The store holds contents, not changes. A proposal or a diff kept in the
 store is a document about a change.
 
 The conditions apply to a named system, the store it changes and a declared
-horizon. They are checked on the outermost loop that the system runs itself.
+horizon. A claim is made for a named class of changes. They are checked on the outermost loop that the system runs itself.
 
 The KB needs the term to put all the learning that happens in Commonplace
 under one name.
@@ -45,6 +46,24 @@ cannot revise. A **double-loop** learner can also revise the criterion by
 which those changes are judged. Name the class of changes: the test is
 whether a different standard can govern later decisions of that kind. Both
 are deliberative learning. This is a capacity, not a claim about every run.
+
+Two further properties are reported for a learner and are not conditions.
+
+- **Correction from later evidence.** Can evidence from later use change
+  what the system does about an earlier change? If it can, can the system
+  identify the responsible change, or only reverse everything since a
+  baseline? The answers are *none*, *bundle* and *targeted*.
+- **Displacement.** Can a newer alternative replace an earlier change by
+  scoring higher on the same test? This is independent of correction. A
+  system can have either without the other.
+
+In the KB's existing terms, a deliberative learner is a
+[self-improving system](../../theory/definitions/self-improving-system.md)
+that works by
+[proposal and selection](../../theory/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
+over a legible, addressable store, provided its judgment responds to
+evidence that bears on its objective and its later work depends on what the
+store holds.
 
 The term names a way of learning. It has no success condition. A system whose
 changes do not improve its later work is still doing deliberative
@@ -70,6 +89,11 @@ loops, and the answer depends on the loop.
   of
   [behavior-determining organization](../../theory/definitions/behavior-determining-organization.md)
   requires. An output that is delivered and not used again does not count.
+  A claim about a system's capacity says how later work reads the store. A
+  claim about an episode shows what the system did differently because of
+  an entry. An agent can load a memory file on every task and ignore every
+  lesson in it. Whether the difference improved the work is the separate
+  verdict "learned".
 - **A team that trains models runs two loops.** Gradient training changes
   weights, which are not a legible store, and fails the first
   condition. The
@@ -92,19 +116,26 @@ loops, and the answer depends on the loop.
 
 ### Notes on the conditions
 
-**Legible store.**
+**Legible, addressable store.**
 
 - **Any kind of change counts.** Adding a theory to a note, revising an
   instruction, a type or a validator, changing code, deleting a note and
   changing what agents load are all covered.
-- **Legibility enables targeted criticism.** Later evidence indicts an
-  operating state, not one line in isolation. In an opaque store, correction
-  can only roll back a whole bundle or replace the model. A legible and
-  [addressable](../../theory/definitions/addressable-theory.md) store lets
-  later rounds point at what a particular change put in the store, trace its
-  use, and reverse that change without undoing unrelated ones.
+- **Legibility and addressability do different work.** Legibility lets a
+  judge read what is in the store. Being
+  [addressable](../../theory/definitions/addressable-theory.md) lets a later
+  change point at what an earlier change put there, trace its use, and
+  alter it or tell later work to disregard it, without undoing unrelated
+  changes. In an opaque store, correction can only roll back a whole bundle
+  or replace the model.
+- **Addressability does not guarantee correction.** Suppose whatever reads
+  the store always uses the first instruction stored under a key. A later
+  entry can name that instruction exactly and say "disregard it", and the
+  first one still governs. A team can deliberate over every new entry under
+  a rule that gives earlier entries permanent precedence. Both are
+  deliberative learners with no correction.
 
-**Judgment in the loop.**
+**Decision in the loop.**
 
 - **The judgment must be the step that makes the change.** People also judge
   on balance whether a new model version is better. That judgment does not
@@ -157,49 +188,52 @@ loops, and the answer depends on the loop.
   search over its settings has two loops. It is single-loop if the search
   keeps settings by a score that nothing in the system can question.
 
-**Open to criticism.**
-
-- **Later evidence must be able to count against a change that was made.**
-  A loop that replaces a prompt whenever a new variant scores higher on a
-  fixed test only displaces its earlier choice. No evidence from after the
-  change bears on the variant it installed. An archive whose entries keep
-  the score they were admitted with, and are chosen less often only because
-  other entries arrive, fails in the same way. PRODIGY passes: it revises its
-  estimate of one rule from later use and removes the rule when the estimate
-  turns negative. So does a system that chooses an archived variant less
-  often when its descendants perform poorly. A gate that admits a change
-  once and never lets later evidence count against it fails this condition.
-- **A claim about capacity needs an account, and a claim about an episode
-  needs the episode.** To say that a system meets this condition, say what
-  brings the later evidence back, who or what considers it, and which edit
-  can follow. To say that it happened in a particular case, show that
-  sequence.
 - **A trial and its review are two judgments.** A team tries a routing rule
   for a week, with a review on Friday. The first judgment compares trying
   the rule with carrying on as before. On Friday the second compares keeping
   the rule with removing it. Both can be sound when the second goes against
   the rule: the evidence counts against letting the change stand, not
-  against having made it. The evidence need not come from running the first
-  test again. Failures in later tasks and the results of descendants also
-  count.
-- **Attribution is graded.** At the minimum, later evidence counts against a
-  state of the store, and the system reverses all the changes made since a
-  baseline, as in Schmidhuber's incremental self-improvement. Pinning the
-  loss on one change and keeping the rest is a further capability that an
-  addressable store allows (condition 1).
-- **The condition is about the judgment, not about undoing.** It does not
-  require that a change can be undone. Commonplace deletes things, and a
-  deletion cannot always be restored. The condition requires that later
-  evidence can still show the change, or the rule that produced it, to have
-  been for the worse, so that the system can record the error and change
-  what it does next.
-- **Reversibility enters the judgment in condition 2.** Suppose a new routing
-  instruction saves searches but sometimes sends an agent to the wrong note.
-  Removing the instruction cannot recover time already lost. If the system
-  can recognize the mistake and remove the instruction, fewer later tasks
-  need suffer it. That prospect can tip the judgment in favour of keeping
-  the instruction now. It is not evidence that the instruction has improved
+  against having made it.
+- **Reversibility enters this judgment.** Suppose a new routing instruction
+  saves searches but sometimes sends an agent to the wrong note. Removing
+  the instruction cannot recover time already lost. If the system can
+  recognize the mistake and remove the instruction, fewer later tasks need
+  suffer it. That prospect can tip the judgment in favour of keeping the
+  instruction now. It is not evidence that the instruction has improved
   later work. See [how reversibility limits future loss](../../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md).
+
+**Correction from later evidence and displacement.**
+
+- **These were a third condition until 2026-11-21.** The operator ruled that
+  being open to criticism is not a condition. A coding agent that decides
+  after each task whether a lesson is worth recording, and uses it later, is
+  doing deliberative learning. Whether a later failure can lead it to
+  correct the lesson is a separate question about how well it learns.
+- **Correction: none.** A gate that admits a change once and never lets
+  later evidence count against it. A memory file that nobody revises.
+- **Correction: bundle.** Later evidence counts against a state of the
+  store, and the system reverses all the changes made since a baseline, as
+  in Schmidhuber's incremental self-improvement.
+- **Correction: targeted.** PRODIGY revises its estimate of one rule from
+  later use and removes the rule when the estimate turns negative. A system
+  that chooses an archived variant less often when its descendants perform
+  poorly does the same. The evidence need not come from running the first
+  test again. Failures in later tasks and the results of descendants count.
+- **Displacement without correction.** A loop that replaces a prompt
+  whenever a new variant scores higher on a fixed test displaces its earlier
+  choice. No evidence from after the change bears on the variant it
+  installed. An archive whose entries keep the score they were admitted
+  with, and are chosen less often only because other entries arrive, is the
+  same.
+- **A claim about capacity needs an account, and a claim about an episode
+  needs the episode.** To say that a system can correct from later evidence,
+  say what brings the evidence back, who or what considers it, and which
+  edit can follow. To say that it happened in a particular case, show that
+  sequence.
+- **Correction does not require undoing.** Commonplace deletes things, and a
+  deletion cannot always be restored. Later evidence can still show the
+  change, or the rule that produced it, to have been for the worse, so that
+  the system records the error and changes what it does next.
 
 ### When a change was learned
 
@@ -241,9 +275,12 @@ Three points govern use of the verdicts.
   [Simon's sense](../../theory/learning-is-not-only-about-generality.md) is
   any lasting change in capacity. Gradient training produces it under a fixed
   loss. Deliberative learning is one way of learning among several.
-- **Change without a judgment.** A change made by default, with no judgment
-  that later evidence could count against, is outside the term. A log that
-  appends every interaction is an example.
+- **Change without a decision.** A change made by default, with no judgment
+  that could have gone against it, is outside the term. A log that appends
+  every interaction is an example.
+- **A claim that the system corrects itself.** A deliberative learner can
+  have no correction from later evidence. That property is reported
+  separately.
 - **A claim about what Commonplace adds.** Symbolic learners that kept rules
   by a fixed formula, and corrected those judgments from use, were
   single-loop deliberative learners. Commonplace's conjecture is about
@@ -264,6 +301,7 @@ Three points govern use of the verdicts.
 - Reading "double-loop" as Argyris's full sense, in which the objective
   itself is questioned.
 - Using the term only for theories stored in language.
+- Calling a learner self-correcting because its store can be edited.
 
 ### Background
 
@@ -281,8 +319,8 @@ ingests with no retained quotes yet.
   [one agent](../../sources/sep-practical-reason.ingest.md) or
   [a group](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md).
   Neither source covers keeping the outcome or revising it from later
-  evidence. Those are the first and third conditions, and they are what
-  "learning" adds.
+  evidence. Keeping the outcome in a store is what "learning" adds.
+  Revising it from later evidence is the property of correction.
 - **The deliberative learner and the deliberative agent.** In agent
   architectures a deliberative agent has an explicitly represented, symbolic
   model of the world and decides by logical reasoning over it
@@ -322,8 +360,8 @@ ingests with no retained quotes yet.
   need an enormous array of explicit tests.
 - **The earlier name.** "Conjectural learning" was dropped because it could
   be read as saying that knowledge is stored as conjectures. The intended
-  sense, that the judgments of improvement are conjectures, is now the third
-  condition.
+  sense, that the judgments of improvement are conjectures, is now the
+  property of correction from later evidence.
 
 ---
 
