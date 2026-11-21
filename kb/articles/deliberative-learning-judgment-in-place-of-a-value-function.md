@@ -185,7 +185,7 @@ outside the system to revise the formula.
 
 **Changing heuristics.** Douglas Lenat's
 [EURISKO](../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md),
-an early-1980s symbolic program that learned new heuristics and domain
+an early-1980s symbolic program that discovered new heuristics and domain
 concepts,
 demonstrated the next step—**double-loop** criterion revision. In one
 reported episode, after a badly generalized heuristic wasted effort,
