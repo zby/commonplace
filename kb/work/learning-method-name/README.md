@@ -15,9 +15,9 @@ weights can favor it. If the judgment holds across the weights plausible for
 that work, we can recognize improvement without selecting an exact weight.
 This gives us grounds to call the process learning. The name remains open.
 
-The [workshop on omitted effects](../bounding-omitted-effects/README.md)
-investigates when the combined downside of many unknown effects could reverse
-such a judgment.
+The [definition workshop](../bounding-omitted-effects/README.md) has since
+made that premise precise. Its result is carried into the decision points
+[below](#state-after-the-definition-workshop-2026-11-21).
 
 The operator's framing, in three statements from the conversation:
 
@@ -114,6 +114,105 @@ acquired.
 - **N6 — Who performs the method.** In the bootstrap, people perform some of
   the conjecture and criticism. Decide whether the name covers the
   human-staffed case or only the automated one.
+
+## State after the definition workshop, 2026-11-21
+
+Written by the same agent after the operator settled the definition in
+[the definition workshop](../bounding-omitted-effects/README.md). The first
+paragraph reports that workshop. The consequences drawn for N1–N4 are the
+agent's and await the operator.
+
+**What was settled there.** A step is an improvement on balance when, for
+every reasonable measure, the successor scores higher than the predecessor.
+No measure is chosen. The verdict is improvement, not an improvement, or open
+when reasonable measures disagree.
+
+**Consequences for the decision points.**
+
+- **N1, the assessment objection: answered.** "The builder learned" now has a
+  stated meaning. A retained change is learning when every reasonable measure
+  of the builder's capacity for future work favours the builder that has it.
+  The objection that nothing could check the claim no longer holds. The
+  definition objection was already answered by treating the name as a method
+  name.
+- **N2: the usual verdict for a new change is "open now, settled later".** The
+  [refactoring case](../bounding-omitted-effects/further-cases.md#case-a--a-refactoring-the-whole-gain-lies-in-future-work)
+  has the shape of a learning claim: the gain lies in work not yet done, so
+  the evidence arrives in later episodes. A builder can therefore be running
+  the method correctly while most of its recent changes are not yet shown to
+  be learning.
+- **N4: keep the success condition out of the method name and state it as a
+  separate predicate.** The method name says what the builder does. "Learned"
+  is the on-balance definition applied to one retained change, with its three
+  verdicts. This keeps the September decision that membership does not
+  establish learning, and still lets the name say "learning", as
+  "reinforcement learning" does.
+- **N3: one new argument for "conjectural".** The
+  [irreversible-step case](../bounding-omitted-effects/further-cases.md#case-d--a-step-that-cannot-be-undone)
+  found that a reversible step can be taken while its verdict is open. A
+  tentative theory is such a step: it is held as revisable and can be dropped
+  when criticism counts against it. "Conjectural" is Popper's word for exactly
+  that status. So the word names the property that lets the method act before
+  improvement is shown.
+
+**The agent's recommendation.** Restore "conjectural learning" as the name of
+the method, defined with no success condition. Define "learned" separately by
+the on-balance definition. Leave the theory-builder definition as it is.
+
+**Still for the operator.** The ruling on N1 and N3. N5, the symbolic AI
+contrast, still has no source. N6, whether the name covers the human-staffed
+bootstrap, is untouched.
+
+## Operator rulings, 2026-11-21
+
+**N3, the name: conjectural learning.** The operator first wrote "I think we
+can use conjecture learning", then confirmed: "make it 'conjectural
+learning'". The retired name is restored.
+
+**N1.** Ruled with N3: the name contains "learning".
+
+**N5, the comparison with symbolic AI.** The operator: the definition from the
+definition workshop "would work for symbolic AI as a definition, but it might
+be unworkable in practice."
+
+The agent's reading of that statement, which the operator accepted as "part
+of the answer":
+
+- The definition of improvement does not mention the method. A step improves
+  when every reasonable measure favours the successor. That applies to a
+  symbolic system's retained rules as well as to a theory builder's theories.
+  So what is learned, and what counts as having learned it, can be the same in
+  both.
+- Applying the definition takes judgment: which measures are reasonable for
+  the purpose, and whether the plausible values fall on one side of the
+  break-even point. A symbolic system could not make that judgment itself. It
+  needed an evaluation function written down in advance, which is one measure
+  chosen beforehand.
+- So the new method differs in who can apply the success condition. The
+  conjecture here is that an LLM can make on-balance judgments. That is the
+  hypothesis of the
+  [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md),
+  and it is not established.
+
+The operator then added a second difficulty, lower down. A symbolic system
+would have trouble even evaluating the individual cases for a new Python
+release. It could run tests, but it would need an enormous test array. People
+use on-balance judgment inside individual cases too. The volume would
+probably be prohibitive for a symbolic system, though the operator leaves open
+whether it could be organized.
+
+So judgment enters at two levels: choosing which measures are reasonable, and
+scoring a single case under a measure.
+
+This changes what N5 needs. The definition no longer has to claim that
+symbolic AI learned the same things by other means. It needs one narrower
+claim: that symbolic learning systems required a formally specified
+evaluation. That claim still comes from memory and still needs a source.
+
+**Draft.** [The draft definition](./draft-definition.md) defines conjectural
+learning as a method with no success condition, and "learned" as the
+on-balance predicate with three verdicts. It includes the comparison with
+symbolic AI. No library file changes until the operator has read it.
 
 ## Evaluation boundary
 
