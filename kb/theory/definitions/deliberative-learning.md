@@ -18,11 +18,11 @@ deciding whether to revise a validator in its own codebase, is doing
    the learning loop, and can be rejected. Proposing and judging are
    separate steps: something evaluates the proposed change itself rather
    than writing automatically or on a trigger. The judgment is a decision,
-   made on the evidence the system has, in the expectation that later work
-   will go better with the change than without it—weighing considerations in
-   the manner of an
-   [on-balance judgment](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
-   Treating one fixed criterion as settling the matter is the special case.
+   made on the evidence the system has, that later work is expected to go
+   better with the change than without it. In the general case the judge
+   [weighs considerations for and against](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+   A system built to keep whatever passes one fixed criterion is the special
+   case: passing is taken as settling the matter.
 
 A system that learns this way is a **deliberative learner**. Like
 reinforcement learning, the term names a process rather than a successful
@@ -38,7 +38,10 @@ Two terms run through the definition:
   store holds contents rather than edits; a saved proposal or diff is a
   document in the store, not the edit itself.
 - A **criterion** is what a judgment applies to decide: a single measure, a
-  gate, a check, or an open set of considerations weighed together.
+  gate, a check, or an open set of considerations weighed together. A
+  criterion is applied when a change is decided. A *measure*, in the
+  on-balance note, is a whole way of scoring the work and is used when the
+  outcome is assessed; a single measure can also serve as a criterion.
 
 ## When a change was learned
 
@@ -114,17 +117,17 @@ the proposed change:
   bug has been reported five times, or rewrites an answer after three
   unhelpful marks, is set off by a count. It is inside only if a separate
   step then evaluates the drafted rule or rewrite and can reject it.
-- **Automatic storage (outside).** In Commonplace, appending an observation
-  to `kb/log.md` is deliberative because an agent judges that the
-  observation is worth recording; logging every session trace is automatic.
-  Deciding to introduce automatic trace logging is itself a deliberative
+- **Automatic storage (outside).** Logging every session trace is
+  automatic: nothing judges an individual trace. Appending an observation to
+  Commonplace's `kb/log.md` is different, and deliberative, because an agent
+  judges that the observation is worth recording. Deciding to introduce automatic trace logging is itself a deliberative
   change, while the traces the logger later writes are outside the term.
 - **Fixed criterion (inside, special case).** Keeping a patch because a
   validator passed, or keeping a rule because a utility formula scored it
   above zero, still separates proposing from judging: the validator or
   formula evaluates a change another step produced and can reject it. Such a
   system does not weigh competing considerations; it qualifies as the
-  special case of condition 2 because it treats one fixed criterion as
+  special case of condition 2: whoever set the criterion took passing it as
   settling whether the change is for the better.
 
 Whoever judges—people, language models, programs or a mix—the judgment must
@@ -146,7 +149,9 @@ Every claim of deliberative learning fixes four parameters:
   deletions. Systems also nest loops inside loops—such as gradient training
   inside a research team's workflow, or a validator-gated repairer inside a
   team that rewrites validators—and each loop is assessed on its own named
-  system and class.
+  system and class. Condition 1 still applies to the system named: the
+  repairer counts only where that system's later work uses the documents it
+  repairs.
 - **The horizon** over which later work is counted, following
   [self-improving system](./self-improving-system.md)
   and [operative change](./operative-change.md). The
@@ -158,7 +163,9 @@ Every claim of deliberative learning fixes four parameters:
 By default, a claim states a **standing capacity**: how later work reads the
 store and how changes are proposed and judged. A claim that also asserts
 correction from later evidence says what brings the evidence back, what
-considers it, and what edit can follow.
+considers it, and what edit can follow. A claim of double-loop capacity
+says likewise what can bring the criterion into question, what considers it,
+and what edit to the criterion can follow.
 
 Claiming an **episode** requires showing the concrete sequence: the
 proposal, the judgment, and what the system did differently on later work.
@@ -238,16 +245,12 @@ can change what the system does about an earlier edit, and at what grain:
   follows the named class: rolling back a five-edit release is *bundle* for
   individual edits and *targeted* when the class is releases. As the
   descendant case shows, the evidence need not come from rerunning the first
-  test. And correction need not restore deleted files: if a deletion in
-  Commonplace proves harmful, the system can record the error and decide
-  later deletions differently (which is also a double-loop revision if it
-  revises the criterion).
+  test.
 
 **Displacement** is separate: a newer alternative replaces an earlier one by
 scoring higher on the same criterion, with no new evidence about the earlier
 one—as in a prompt search that overwrites the incumbent whenever a new
-mutant scores higher on a fixed benchmark, or an archive whose entries keep
-static admission scores.
+mutant scores higher on a fixed benchmark.
 
 ## Place in the KB and Commonplace's conjecture
 
@@ -255,8 +258,8 @@ In the KB's existing vocabulary, a deliberative learner is a
 [self-improving system](./self-improving-system.md)
 that works by
 [proposal and selection](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-over a legible, addressable store—adding on-balance selection with no single
-criterion, the single-loop and double-loop kinds, the correction and
+over a legible, addressable store—adding selection that weighs
+considerations under no single criterion, the single-loop and double-loop kinds, the correction and
 displacement properties, and the verdict *learned*.
 
 The definition covers symbolic programs, people and language models alike:

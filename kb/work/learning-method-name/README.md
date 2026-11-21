@@ -21,7 +21,7 @@ such revisions reliably when no adequate formal test is known in advance.
 
 This [ruling](./rulings.md#settled-double-loop-ruling) governs this workshop,
 including [case 15](./definition-checks.md#cases-1316--later-evidence-graded-attribution-and-the-gödel-machine-line).
-The rest of the definition is still a draft.
+The rest of the definition was adopted on 2026-11-21.
 
 ## Commonplace and the Gödel-machine idea
 
@@ -107,7 +107,7 @@ learner.
 
 ## Where things stand
 
-- **The definition has been tested, not adopted.**
+- **The definition was tested before adoption.**
   [Boundary cases and three surveyed systems](./definition-checks.md)
   were placed against it, and
   [an independent reader](./positions/step-1-independent-reading.md) read it.
@@ -153,8 +153,8 @@ are listed with their answers.
    cases. The test reused the earlier vignettes, several of which the draft
    explains. A [reader of the subsequent revision](./positions/step-5-outside-reading.md)
    matched the same eight placements and two additional expectations about
-   triggered edits and dependent handbook changes. The operator's adoption
-   decision remains open.
+   triggered edits and dependent handbook changes. The operator then
+   adopted the definition.
 
 Closed:
 
@@ -226,8 +226,19 @@ Not done, and now permitted:
 - **Checks for the definition in the library.** The theory builder has a
   companion file of checks. [The workshop's checks](./definition-checks.md)
   could become the same for this definition.
-- **Findings of [the last outside reading](./positions/step-5-outside-reading-opus.md),**
-  which returned after the decision to adopt.
+- **Four findings of [the last outside reading](./positions/step-5-outside-reading-opus.md),**
+  deferred by the operator on 2026-11-21 until more work is attached to the
+  definition. The wording findings (5 to 12) are applied. Deferred:
+  - Findings 1 and 2: a trigger against a fixed criterion when the count is
+    evidence about the item itself, and whether the definition's correction
+    examples meet condition 2. Fable's proposal is to place the blocklist
+    additions inside as a fixed criterion, on the test that a candidate can
+    fail on evidence about the edit itself.
+  - Finding 3: whether "separate steps" means separate functions or
+    separate actors.
+  - Finding 4: a judge that has never rejected a change.
+  - The reader's open points on "learned", and the repeated statement that
+    the term names a process.
 
 The September retirement of "conjectural learning" stands, so the redirects
 in `properdocs.yml` need no change.
