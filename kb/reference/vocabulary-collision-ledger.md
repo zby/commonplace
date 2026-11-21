@@ -10,7 +10,7 @@ Follow the matching term for its writing decision.
 | Term | Uses to distinguish |
 |---|---|
 | [allocation](./vocabulary-collisions/allocation.md) | Assignment of functions, search, or effort |
-| [deliberative](./vocabulary-collisions/deliberative.md) | Deliberative learning, the deliberative agent of agent architectures, and group deliberation |
+| [deliberative](./vocabulary-collisions/deliberative.md) | The retired name deliberative learning, the deliberative agent of agent architectures, and group deliberation |
 | [double-loop](./vocabulary-collisions/double-loop.md) | Revision of a working criterion, Argyris's questioning of objectives, and nested loops |
 | [higher-order concerns / second-order lessons](./vocabulary-collisions/higher-order-concerns-second-order-lessons.md) | Revision dependencies and reflection on prior commitments |
 | [operational](./vocabulary-collisions/operational.md) | Lineage label, programming-language semantics, measurement, and practical use |

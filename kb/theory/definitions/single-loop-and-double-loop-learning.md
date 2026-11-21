@@ -1,7 +1,7 @@
 ---
 description: "Definition — for a named class of changes, a system that learns by a proposal-selection loop is single-loop when it cannot revise the criterion that decides them and double-loop when it can; narrower than Argyris's sense"
 type: types/definition.md
-tags: [self-improving-systems, learning-theory, deliberative-learning]
+tags: [self-improving-systems, learning-theory, judgment-governed-self-improvement]
 ---
 
 # Single-loop and double-loop learning
@@ -14,7 +14,7 @@ changes, the learner is **single-loop** when it decides those changes under
 a criterion it cannot revise, and **double-loop** when it can revise that
 criterion so that a different criterion governs later decisions of that
 class. Such a system is a
-[deliberative learner](./judgment-governed-self-improvement.md), and the distinction
+[judgment-governed self-improving system](./judgment-governed-self-improvement.md), and the distinction
 applies whether its criterion is fixed or an open set of considerations.
 
 The distinction matters because a single-loop learner cannot recover from a
@@ -87,5 +87,5 @@ question, what considers it, and what change to the criterion can follow.
 Relevant Notes:
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loops these two kinds divide
-- [Deliberative learning](./judgment-governed-self-improvement.md) — defined-in: the learning these two kinds divide, and what a criterion is
+- [Judgment-governed self-improvement](./judgment-governed-self-improvement.md) — defined-in: the learning these two kinds divide, and what a criterion is
 - [Revising an improvement objective is licensed from outside it or is not improvement](../revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why double-loop revision stops at the working criterion

@@ -8,7 +8,7 @@ snapshot_sha256: 53c7f6b9ccd0b87892423a2d2bf5bf42c59b55e622c5074603d5cdff17858d7
 ingested: "2026-08-26"
 type: types/ingest-report.md
 domains: [organizational-learning, action-models, information-systems, feedback]
-tags: [deliberative-learning]
+tags: [judgment-governed-self-improvement]
 ---
 
 # Ingest: Organizational Learning and Management Information Systems

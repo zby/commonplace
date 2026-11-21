@@ -8,7 +8,7 @@ snapshot_sha256: 8b7b058eb3c7e6fe68d624baf6f3016bbc7aee789a1d9db9b4d6331828e3ad9
 ingested: "2026-04-24"
 type: types/ingest-report.md
 domains: [deploy-time-learning, harness-engineering, evaluation, self-improvement]
-tags: [deliberative-learning]
+tags: [judgment-governed-self-improvement]
 ---
 
 # Ingest: Huxley-Gödel Machine

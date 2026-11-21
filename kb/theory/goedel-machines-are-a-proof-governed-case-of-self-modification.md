@@ -2,7 +2,7 @@
 description: "A Gödel machine admits self-rewrites through proof under its current formalization; this restricts admission without establishing how many useful changes are reachable or how reliably they are found"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [self-improving-systems, reflection, improvement-loop, learning-theory, deliberative-learning]
+tags: [self-improving-systems, reflection, improvement-loop, learning-theory, judgment-governed-self-improvement]
 ---
 
 # Gödel machines are a proof-governed case of reflective self-modification
@@ -65,10 +65,10 @@ formalization and few under another. No general size estimate follows from
 proof-gated admission alone. Likewise, being allowed to emit arbitrary code
 does not make a useful empirical successor likely.
 
-## The machine as a deliberative learner
+## The machine as a judgment-governed self-improving system
 
 The construction meets the definition of
-[deliberative learning](./definitions/judgment-governed-self-improvement.md). Its later
+[judgment-governed self-improvement](./definitions/judgment-governed-self-improvement.md). Its later
 operation runs its own code, and that code can be read and pointed at. A
 rewrite is proposed by the proof searcher and judged by a separate
 check, which rejects every rewrite that lacks a proof of the target theorem.
@@ -157,7 +157,7 @@ objective. A strong answer on one dimension does not supply the other.
 
 ## Grounds for change: proof against on-balance judgment
 
-The Gödel machine is one deliberative learner. Commonplace aims at another:
+The Gödel machine is one judgment-governed self-improving system. Commonplace aims at another:
 a learner whose judgment is an
 [on-balance judgment](./on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 made by a language model. The two share the readable store and the
@@ -207,7 +207,7 @@ Relevant Notes:
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: separates the functions instantiated by the proof route
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps admission evidence relative to what its premises and checks cover
 - [Reflective system](./definitions/reflective-system.md) — contrasts: reflection does not require proof-gated admission
-- [Deliberative learning](./definitions/judgment-governed-self-improvement.md) — defined-in: the definition the machine meets
+- [Judgment-governed self-improvement](./definitions/judgment-governed-self-improvement.md) — defined-in: the definition the machine meets
 - [Single-loop and double-loop learning](./definitions/single-loop-and-double-loop-learning.md) — defined-in: the double-loop kind the machine is capable of
 - [On-balance judgments can guide improvement without a global measure](./on-balance-judgments-can-guide-improvement-without-a-global-measure.md) — contrasts: the judgment Commonplace puts in the place of the proof
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a proved change of utility function replaces a stand-in and leaves the objective fixed

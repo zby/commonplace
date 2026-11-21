@@ -7,7 +7,7 @@ For current-state documentation about the live Commonplace system rather than tr
 ## Tag Indexes
 
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
-  - [Deliberative learning](./judgment-governed-self-improvement-README.md) — learning by proposed, judged, rejectable changes to a system's own readable store; the thesis Commonplace tests
+  - [Judgment-governed self-improvement](./judgment-governed-self-improvement-README.md) — self-improvement by proposed, judged, rejectable changes to what a system retains; the thesis Commonplace tests
   - [Software factory](./software-factory-README.md) — factories and houses: family-specific production machinery and factory learning
   - [Improvement loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, evaluation, retention
   - [Reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage

@@ -5,11 +5,11 @@ type: types/note.md
 
 # Double-loop
 
-Use "single-loop" and "double-loop" only for the [kinds of deliberative learning](../../theory/definitions/single-loop-and-double-loop-learning.md), and name the class of changes. Cite Argyris by name when his wider sense is meant.
+Use "single-loop" and "double-loop" only for the [kinds of judgment-governed self-improvement](../../theory/definitions/single-loop-and-double-loop-learning.md), and name the class of changes. Cite Argyris by name when his wider sense is meant.
 
 ## Senses
 
-Technical: a deliberative learner is double-loop for a class of changes when it can revise the criterion by which it decides those changes, so that a different criterion governs later decisions. The declared objective may stay fixed. Organizational learning: [Argyris](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md) uses double-loop learning for questioning underlying objectives and policies. Everyday: two loops, one inside the other.
+Technical: a judgment-governed self-improving system is double-loop for a class of changes when it can revise the criterion by which it decides those changes, so that a different criterion governs later decisions. The declared objective may stay fixed. Organizational learning: [Argyris](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md) uses double-loop learning for questioning underlying objectives and policies. Everyday: two loops, one inside the other.
 
 ## Why these uses are retained
 

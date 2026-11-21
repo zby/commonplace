@@ -8,7 +8,7 @@ snapshot_sha256: df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc34
 ingested: "2026-07-14"
 type: types/ingest-report.md
 domains: [self-modification, reflection, verification, oracle-strength]
-tags: [deliberative-learning]
+tags: [judgment-governed-self-improvement]
 ---
 
 # Ingest: Gödel Machines — Provably Optimal Self-Improvements

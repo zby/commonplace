@@ -1,19 +1,20 @@
 ---
-description: "Definition — deliberative learning is learning in which each proposed change to what a system retains is judged and can be rejected; a fixed criterion is the degenerate judgment of the on-balance judgment, admitting one measure"
+description: "Definition — judgment-governed self-improvement is learning in which each proposed change to what a system retains is judged and can be rejected; a fixed criterion is the degenerate case of the on-balance judgment"
 type: types/definition.md
-tags: [self-improving-systems, learning-theory, deliberative-learning]
+tags: [self-improving-systems, learning-theory, judgment-governed-self-improvement]
 ---
 
-# Deliberative learning
+# Judgment-governed self-improvement
 
 <!-- Maintenance: when changing this definition, please apply the checks in
-[deliberative-learning-checks.md](./judgment-governed-self-improvement-checks.md). -->
+[judgment-governed-self-improvement-checks.md](./judgment-governed-self-improvement-checks.md).
+This term was named "deliberative learning" until 2026-11-22. -->
 
 A team weighing whether to add a routing rule to its handbook, a team
 agreeing without writing anything down to change how it hands work over, and
 an agent deciding whether to revise a validator in its own codebase are all
-doing **deliberative learning**. It is learning in which each change is
-decided by a judgment:
+doing **judgment-governed self-improvement**. It is learning in which each
+change is decided by a judgment:
 
 > A change to what the system retains for its later work is proposed, judged
 > in the learning loop, and can be rejected.
@@ -42,38 +43,41 @@ decided by a judgment:
   note, "on-balance judgment" means the case with more than one reasonable
   measure.
 
-The team that agrees a practice without writing it down is already doing
-deliberative learning. When it starts writing its rules down, it stops
-relying on its members' fallible memory: the rule that later work follows is
+The team that agrees a practice without writing it down already meets the
+definition. When it starts writing its rules down, it stops relying on its
+members' fallible memory: the rule that later work follows is
 the rule that was agreed, a judge can read what a proposed change says, and
 a later change can point at one rule and correct it. A store that can be
 read and pointed at makes the learning more reliable. It is not required.
 
-A system that learns this way is a **deliberative learner**. Two splits
-place it in the KB's existing vocabulary:
+A system that learns this way is a **judgment-governed self-improving
+system**. Two splits place it in the KB's existing vocabulary:
 
 - **How a change is made.** A
   [self-improving system](./self-improving-system.md) is the general case.
   It makes a change either by an update that the evidence determines
   directly, or by a
   [proposal-selection improvement loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md).
-  Deliberative learning is learning by the second. The two terms cover the
-  same systems: proposal-selection names the architecture, and deliberative
-  learning names the learning.
-- **What the judgment admits.** Within deliberative learning, the judgment
-  is a fixed criterion or an on-balance judgment.
+  Judgment-governed self-improvement is the second. The two terms cover the
+  same systems: proposal-selection names the architecture, and
+  judgment-governed names what decides a change, in the same way a
+  [Gödel machine is proof-governed](../goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+- **What the judgment admits.** The judgment is a fixed criterion or an
+  on-balance judgment. Proof-governed and formula-governed systems are the
+  fixed-criterion case.
 
 Machine learning usually works with one given performance measure, on both
 sides of the first split. Gradient training updates directly. Evolutionary
 search, checkpoint selection and hyperparameter search propose and reject
-candidates, so they are deliberative learning with a fixed criterion. The
-second split is the one that leaves that setting: an on-balance judgment
+candidates, so they are judgment-governed self-improvement with a fixed
+criterion. The second split is the one that leaves that setting: an on-balance judgment
 decides changes where no single measure is adequate.
 
 Like reinforcement learning, the term names a process and not a successful
-outcome: a system whose changes fail to improve its later work is still
-doing deliberative learning. Whether one particular change made the system
-better is a separate question, answered by an
+outcome. "Self-improvement" here means change directed at improvement, as in
+the self-improving system definition: a system whose changes fail to improve
+its later work still meets this definition. Whether one particular change
+made the system better is a separate question, answered by an
 [on-balance comparison](../on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 of the system with and without that change.
 
@@ -86,16 +90,16 @@ the proposed change:
   whenever it is clicked, a value table updated by tabular reinforcement
   learning, and a gradient step under a fixed loss all write directly from
   their input. No change is proposed and none can be rejected. All three are
-  learning, and none is deliberative.
+  learning, and none is judgment-governed.
 - **Triggers (outside).** A rule that says *when* to write is not a judgment
   of *what* is written. A bot that adds a review rule whenever a class of
   bug has been reported five times is set off by a count. It is inside only
   if a separate step then evaluates the drafted rule and can reject it.
 - **Automatic storage (outside).** Logging every session trace is automatic:
   nothing judges an individual trace. Appending an observation to
-  Commonplace's `kb/log.md` is deliberative, because an agent judges that
+  Commonplace's `kb/log.md` is inside, because an agent judges that
   the observation is worth recording. Deciding to introduce automatic trace
-  logging is itself a deliberative change, while the traces the logger later
+  logging is itself a judged change, while the traces the logger later
   writes are outside the term.
 - **Fixed criterion (inside, degenerate case).** Keeping a patch because a
   validator passed, keeping a rule because a utility formula scored it above
@@ -116,7 +120,7 @@ how well the judge weighs: a judge that weighs badly is still weighing.
 
 ## What a claim names
 
-A claim of deliberative learning names three things:
+A claim of judgment-governed self-improvement names three things:
 
 - **The system**, including which people and programs are inside it.
 - **The class of changes** covered, with the definition checked on the loop
@@ -138,7 +142,7 @@ memory file on every run and ignore every lesson in it.
 
 ## Exclusions
 
-Deliberative learning is one kind of learning in
+Judgment-governed self-improvement is one kind of learning in
 [Simon's sense](../learning-is-not-only-about-generality.md), alongside
 learning by directly determined updates. Membership excludes edits to
 external work products that the system's own later work does not consume.
@@ -148,7 +152,7 @@ Membership does not imply any of these:
 - **Improvement.** A judged change can make later work worse.
 - **Correction.** Membership does not require that later evidence can count
   against an earlier change. A learner that judges every change and never
-  revisits one is still a deliberative learner.
+  revisits one is still a judgment-governed self-improving system.
 - **Weighing.** A learner with a fixed criterion weighs nothing. A claim
   about weighing must say the judgment is on balance.
 - **Criterion revision.** Whether the learner can revise its own criterion
@@ -157,8 +161,8 @@ Membership does not imply any of these:
 
 ## Misuse Cases
 
-- Using *deliberative learning* for the system (the system is a
-  *deliberative learner*).
+- Using *judgment-governed self-improvement* for the system (the system is a
+  *judgment-governed self-improving system*).
 - Citing the name as evidence that the system improved or corrects itself.
 - Reading the name as a claim that the system weighs considerations,
   without saying the judgment is on balance.
@@ -179,4 +183,4 @@ Relevant Notes:
 - [Behavior-determining organization](./behavior-determining-organization.md) — defined-in: why the change must be to the system's own retained structure and a work product is excluded
 - [Operative change](./operative-change.md) — defined-in: the declared horizon and the consumption path a change needs
 - [Single-loop and double-loop learning](./single-loop-and-double-loop-learning.md) — defined-in: whether a proposal-selection learner can revise the criterion that decides its changes
-- [Theory builder](./theory-builder.md) — contrasts: requires criticism of what a stated theory says, which deliberative learning does not
+- [Theory builder](./theory-builder.md) — contrasts: requires criticism of what a stated theory says, which judgment-governed self-improvement does not
