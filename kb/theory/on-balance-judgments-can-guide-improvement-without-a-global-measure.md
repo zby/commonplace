@@ -24,7 +24,7 @@ Would we take Python 3.11 as the default for continuing application development,
 | The standard library in 3.11 parsed a TOML configuration with `tomllib`; the module was absent in 3.10. | A tool that reads TOML can drop a parser dependency if it no longer targets 3.10. Parsing TOML itself is not a new capability. |
 | Calling `inspect.getargspec` on a function returned its arguments on 3.10, with a deprecation warning. The same call failed on 3.11 because the interface was gone. | An application can stop working on upgrade even if the offending call belongs to a dependency. A warning gave maintainers notice; it did not do the repair for them. |
 
-The case for 3.11 is not that the table has three gains and one loss. One indispensable broken dependency can outweigh all three gains for its users. The reason to prefer 3.11 as a **default** is that existing code can benefit repeatedly, and maintained projects gain library support they can adopt when it serves them. A loss like the removed `getargspec` can be found before moving: we can test a particular application's dependencies first. If an essential dependency cannot be repaired, keeping that application on 3.10 is consistent with preferring the 3.11 release overall. If such blockers were widespread and costly, that would challenge the default itself. These checks give reasons for the judgment, not a survey of how often each reason applies.
+The case for 3.11 is not that the table has three gains and one loss. One indispensable broken dependency can outweigh all three gains for its users. The reason to prefer 3.11 as a **default** is that existing code can benefit repeatedly, and maintained projects gain library support they can adopt when it serves them. A loss like the removed `getargspec` can be found before moving: we can test a particular application's dependencies first. If an essential dependency cannot be repaired, keeping that application on 3.10 is consistent with preferring the 3.11 release overall. If such blockers were widespread and costly, that would challenge the default itself. These checks give reasons for the judgment, not a survey of how often each reason applies. [Separating discovery cost from deployment failure](./an-objection-can-show-where-to-split-an-on-balance-judgment.md) shows what a challenge to that judgment can settle and what the tests leave open.
 
 ## What analysis can settle
 
@@ -43,6 +43,28 @@ Three choices fix the comparison:
 - **Over what period?** Porting a dependency costs effort now. A faster interpreter can save time repeatedly, but only for work the team will continue to run.
 
 **For the decision at hand, investigate an unknown only if a plausible answer could reverse the choice.** If an application depends on a library that might break on upgrade, test that dependency. A more precise timing result will not make a broken dependency run. When the preference holds across the plausible answers, we can act without settling every uncertainty.
+
+## What an on-balance claim asserts
+
+The cases above share a form. Once those three choices fix the comparison, **a step is an improvement on balance when every reasonable measure of the work scores the successor higher than the predecessor.** No measure is selected. A measure is reasonable when its treatment of gains and losses can be defended from the purpose of the work, whichever version it favors.
+
+If a little extra reading on every task counts against adding a routing line, then time saved across tasks must also count in favor of removing one. The saving need not be large enough to justify removal; it cannot be dismissed merely because no reader reports a line they no longer have to read.
+
+In the trial of the revised instruction, the reasonable measures are the loss-to-gain ratios that are plausible for the work. If all of them lie below nine, every one favors the revision. So does any weighted average of them, so nobody has to say how the measures would be combined.
+
+Report the result of the comparison:
+
+- **Improvement.** Every reasonable measure favors the successor.
+- **Loss.** Every reasonable measure favors the predecessor.
+- **Tie.** Every reasonable measure gives the versions equal scores. If nine is the only reasonable loss-to-gain ratio in the instruction trial, the ten losses exactly offset the ninety gains. Neither version is better for the declared work.
+- **Better on some measures, tied on the rest.** No reasonable measure favors the predecessor. This can justify the step, but it falls short of improvement under every measure. Report the converse just as precisely: worse on some, tied on the rest.
+- **Open.** Some measures favor each version, or the evidence does not yet establish the verdict. Say which. For example, a refactoring may make future edits cheaper without changing current behavior. Later edits can test that forecast; they cannot decide how much the team values those savings against the cost of the rewrite.
+
+It is not enough that some reasonable measure favors the step. Another reasonable measure might favor undoing it, and then the step and its reversal would both count as improvements.
+
+Purpose enters when we decide which measures are reasonable. The two purposes for the library admit different measures, and each gives a definite answer. Excluding a measure takes an argument from purpose. For the choice of a default Python release, a measure that counts only the worst-off project is not reasonable, because a project with an unrepairable dependency can stay on 3.10. The same kind of measure would be reasonable where the people harmed cannot avoid the loss.
+
+An open verdict does not forbid the step. We can still take it as a decision, as the deletion rule below shows. We should then report a decision and not a demonstrated improvement. If we can recognize and correct a mistake, [reversibility can change the judgment itself](./reversibility-can-favour-a-change-by-limiting-future-loss.md) by limiting losses to later work.
 
 ## What Commonplace chooses to count
 
