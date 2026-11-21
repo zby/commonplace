@@ -258,9 +258,10 @@ In the KB's existing vocabulary, a deliberative learner is a
 [self-improving system](./self-improving-system.md)
 that works by
 [proposal and selection](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-over a legible, addressable store—adding selection that weighs
-considerations under no single criterion, the single-loop and double-loop kinds, the correction and
-displacement properties, and the verdict *learned*.
+over a legible, addressable store. Selection can weigh competing
+considerations rather than treating one fixed test as decisive. The
+definition also distinguishes single-loop from double-loop learning,
+correction from displacement, and selection from the verdict *learned*.
 
 The definition covers symbolic programs, people and language models alike:
 PRODIGY alone was single-loop with targeted correction, and PRODIGY together

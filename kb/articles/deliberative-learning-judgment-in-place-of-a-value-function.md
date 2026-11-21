@@ -89,9 +89,9 @@ every new routing rule must declare what it excludes before acceptance.
 That sequence establishes three things. First, the system adapted across
 tasks at deployment time without changing a single model weight: the unit
 of learning is [the deployed system, not the model alone](../theory/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
-Second, an on-balance judgment played the role a scalar loss or value
-function plays in weight training—deciding admission, guiding a targeted
-fix to one line, and prompting a revision to the review check. Third, no
+Second, the judge admitted the routing line because its expected benefit
+justified a reversible trial. Whether later work was better with the line
+than without it was a separate question. Third, no
 single scalar metric had to be invented to compare saved misfilings against
 diffuse context load.
 
