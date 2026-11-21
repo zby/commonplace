@@ -26,6 +26,7 @@ These child tags route major parts of the area. A few fundamentals carry only th
 
 ## Start here
 
+- [Deliberative learning](../theory/definitions/deliberative-learning.md) — learning by decided changes to a system's own legible, addressable store; names the process Commonplace runs, with "learned" as a separate verdict on one change
 - [Theory builder](../theory/definitions/theory-builder.md) — localized theories that are consumed and criticized for what they say, with the result of criticism shaping the next conjecture; whether a builder learns is tested, not assumed. The [research companion](../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) states the program's conjectures about builders
 - [Program refinement](../theory/definitions/program-refinement.md) — one artifact's permitted behaviors inside another's; a checked narrowing is a refinement step, an unchecked output a candidate
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates

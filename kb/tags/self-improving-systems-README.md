@@ -21,6 +21,7 @@ The child areas are [theory-builder](./theory-builder-README.md), [software-fact
 
 ## Definition and objective
 
+- [Deliberative learning](../theory/definitions/deliberative-learning.md) — a system changes its own legible, addressable store by changes that are proposed, judged and can be rejected; single-loop or double-loop, with "learned" as a separate verdict on one change
 - [Operative change](../theory/definitions/operative-change.md) — a change counts when it affects later operation over the declared horizon through a behavioral-authority path
 - [Evidence bearing on an improvement objective](../theory/definitions/evidence-bearing-on-an-improvement-objective.md) — gradients, rewards, errors, viability signals, tests, judgments: what carries information about the criterion
 - [The definition classifies its boundary cases without ad hoc exceptions](../theory/the-self-improving-system-definition-classifies-its-boundary-cases.md) — ten cases run against the criteria; the stress falls on declaring the boundary, not on the definition
