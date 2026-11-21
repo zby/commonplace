@@ -141,7 +141,13 @@ are listed with their answers.
    and of the two-condition draft by
    [a reader Astra launched](./positions/step-3-outside-reading.md) and by
    [a reader on Claude Opus](./positions/step-3-outside-reading-opus.md).
-   Their findings are applied. No reader has seen the rewrite.
+   Their findings are applied. A [fresh reader of the rewrite](./positions/step-4-outside-reading.md)
+   matched all eight expected membership readings, including the conditional
+   cases. The test reused the earlier vignettes, several of which the draft
+   explains. A [reader of the subsequent revision](./positions/step-5-outside-reading.md)
+   matched the same eight placements and two additional expectations about
+   triggered edits and dependent handbook changes. The operator's adoption
+   decision remains open.
 
 Closed:
 
@@ -163,6 +169,13 @@ Closed:
   able to be rejected. A rule that updates the store directly from an input
   is outside, which removes the click-ranking job that two readers found
   the worst fit for the name.
+- **A judgment against a trigger.** Proposing and judging are separate
+  steps. A rule that says when to write is not a judgment of what is
+  written. This came from
+  [the Opus reading of Neon's revision](./positions/step-4-outside-reading-opus.md),
+  which could not place a bot that adds a rule after five reports.
+- **The judgment in condition 2 is a decision made on an expectation.** The
+  on-balance verdict "learned" comes later.
 - **"Each change" against a named class.** A claim is made for a named
   class of changes.
 - **What the two conditions had lost.** Judgment on evidence and the
