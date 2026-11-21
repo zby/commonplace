@@ -26,20 +26,39 @@ The slides show the terminology changes with strikeouts.
 
 ## In draft
 
-Five drafts make one series: a lead article and four supplements. The lead
-states the idea and stands on its own. Each supplement develops one part of
-it, so read the lead first and then whichever supplement answers your next
-question. The series proposes Commonplace's experiments; it reports no
-completed experimental result from that program. The survey discusses results
-reported by other systems.
+A new lead article is being written. Its thesis is that
+[deliberative learning](../theory/definitions/deliberative-learning.md) is a
+distinct learning paradigm, and that a fully automated deliberative learner
+is compatible with the Bitter Lesson. The earlier series is being reworked
+around it.
 
-- [Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) — the lead. It introduces the theory builder, a system that runs Popper's cycle of problem, tentative solution, error elimination, and revised problem over explicit theories, defined by four conditions: stated theories, acted on, criticized for what they say, with the result shaping the next round. It states the bet that a fully automated theory builder that learns can be built with today's fixed-weight LLMs, argues that an LLM can apply precise definitions where formal proof cannot reach, gives the payoffs and costs of explicit learned state and three conjectured advantages, argues compatibility with the Bitter Lesson, states the two-part test that would count as learning, and says how Commonplace builds one: reflective from the start, moving operations from people to computation, on the conditional case that investing in the method pays over a long horizon. Testing, bootstrapping from Commonplace, the software-house arrangement, and the survey each point to a supplement.
+### The earlier series, framed around the theory builder
+
+Five earlier drafts make one series: a lead article and four supplements.
+They were written before
+[deliberative learning](../theory/definitions/deliberative-learning.md) was
+defined, and they state their claims in terms of the theory builder. Two of
+them need rewriting:
+
+- **The earlier lead** carried the definition of learning and the argument
+  for the theory builder at once. The new lead will replace it. What the theory
+  builder adds is to be worked out again as a narrower piece.
+- **The software house supplement** rests on the argument that a house which
+  states and criticizes its program theory is a theory builder.
+
+The testing, bootstrapping and survey supplements still use the theory
+builder's vocabulary and are to be re-anchored on deliberative learning. The
+series proposes Commonplace's experiments; it reports no completed
+experimental result from that program. The survey discusses results reported
+by other systems.
+
+- [Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) — the earlier lead, to be rewritten. It introduces the theory builder, a system that runs Popper's cycle of problem, tentative solution, error elimination, and revised problem over explicit theories, defined by four conditions: stated theories, acted on, criticized for what they say, with the result shaping the next round. It states the bet that a fully automated theory builder that learns can be built with today's fixed-weight LLMs, argues that an LLM can apply precise definitions where formal proof cannot reach, gives the payoffs and costs of explicit learned state and three conjectured advantages, argues compatibility with the Bitter Lesson, states the two-part test that would count as learning, and says how Commonplace builds one: reflective from the start, moving operations from people to computation, on the conditional case that investing in the method pays over a long horizon. Testing, bootstrapping from Commonplace, the software-house arrangement, and the survey each point to a supplement.
 
 The supplements, in the order a reader is likely to want them:
 
 - [Testing Whether a Theory Builder Learns](./testing-whether-a-theory-builder-learns.md) — sets a modest first testing goal: show under controlled conditions that retained revisions causally improve later capacity and stay revisable. Gives seven tests that expose the causal role of retained state (retention, use, withholding, perturbation, reconstruction, transfer, revision), separates task success from learning, sketches controlled task families in which the revised builder is run against its declared seed on fresh instances whose answers are fixed outside it, with a declared evidence interface and controls, records what people contribute operation by operation, defers long-horizon accumulation and compounding, and quotes the three adopted whole-program hypotheses with their refuters. No run has been performed.
 - [Bootstrapping an Autonomous Theory Builder with Commonplace](./bootstrapping-an-autonomous-theory-builder.md) — develops the lead's approach to building its theory builder. Commonplace starts reflective, with an operator performing many of its operations; it retains what is learned, lets the builder build the software its knowledge needs, and moves operations to computation one at a time, recording what stays with the operator. Progress is judged by the kinds of improvement that still complete when the operator's decisions are withheld.
-- [An Automated Software House as a Second Test of a Theory Builder](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md) — a companion arrangement to the lead's knowledge base. It states the conjecture that an automated software house capable of open-ended coherent change can operate practically with models available by 2026-09-02 and held fixed; argues that a house which states, criticizes, and revises its program theory (Naur's term) is a theory builder, and how that squares with Naur's view that the theory cannot be fully written down; explains why software supplies a stronger falsifier than a knowledge base at the price of a harder claim; and defines four conditions a witness run must meet, each with what would fail it.
+- [An Automated Software House as a Second Test of a Theory Builder](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md) — to be rewritten. A companion arrangement to the lead's knowledge base. It states the conjecture that an automated software house capable of open-ended coherent change can operate practically with models available by 2026-09-02 and held fixed; argues that a house which states, criticizes, and revises its program theory (Naur's term) is a theory builder, and how that squares with Naur's view that the theory cannot be fully written down; explains why software supplies a stronger falsifier than a knowledge base at the price of a harder claim; and defines four conditions a witness run must meet, each with what would fail it.
 - [Which Existing Self-Improving Systems Are Theory Builders](./which-existing-self-improving-systems-are-theory-builders.md) — historical draft comparison of eighteen systems, starting with reported tests of retained knowledge and skill improvement. Places each against the four theory-builder conditions and judges reported learning separately: five builders (two with reported gains, three human-staffed without a measured gain), one outside, and twelve unsettled, mostly because the evidence shows an outcome gate rather than criticism of what a retained unit says; no placement turns on how far results persist. Then proposes comparisons that would settle the placements and isolate what criticism contributes.
 
 One draft stands outside the series:

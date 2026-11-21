@@ -29,6 +29,13 @@ The rest of the definition is still a draft.
 
 This describes the research aim, not a guarantee. An [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) weighs reasons for and against the rewrite. It need not reproduce the verdict of any particular Gödel machine.
 
+## Status
+
+Adopted on 2026-11-21. The definition is
+[in the library](../../theory/definitions/deliberative-learning.md). The
+sections below record how it was reached. What remains is listed under
+[Adoption](#adoption).
+
 ## Goal
 
 Set by the operator: define the learning process we are working on. The
@@ -191,35 +198,44 @@ Closed:
   [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md)
   was designed to test it.
 
-## Evaluation boundary
+## Adoption
 
-Until the operator adopts the draft, do not edit these to introduce the term:
+The operator adopted the definition on 2026-11-21: "I think this is enough
+for now on the definition - I think we should adopt it now."
 
-- `kb/theory/definitions/theory-builder.md` and its checks;
-- `kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md`;
-- the articles under `kb/articles/`, including the lead article's "distinct
-  learning paradigm" section;
-- the vocabulary table in `AGENTS.md` and the
-  [collision ledger](../../reference/vocabulary-collision-ledger.md), which
-  has no entry for "deliberative".
+Done:
+
+- The definition is
+  [in the library](../../theory/definitions/deliberative-learning.md).
+- The term is in the `AGENTS.md` vocabulary table.
+- The [collision ledger](../../reference/vocabulary-collision-ledger.md) has
+  entries for "deliberative" and "double-loop".
+- The tag pages for self-improving systems and learning theory list the
+  definition. On the learning-theory page it stands before the theory
+  builder.
+
+Not done, and now permitted:
+
+- **The theory-builder definition and its checks.** State the relation to
+  deliberative learning.
+- **The research companion,**
+  `kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md`.
+  Restate it around deliberative learning.
+- **The articles under `kb/articles/`.** The operator allows them to keep
+  the theory builder for some time. The lead article goes first.
+- **Checks for the definition in the library.** The theory builder has a
+  companion file of checks. [The workshop's checks](./definition-checks.md)
+  could become the same for this definition.
+- **Findings of [the last outside reading](./positions/step-5-outside-reading-opus.md),**
+  which returned after the decision to adopt.
 
 The September retirement of "conjectural learning" stands, so the redirects
 in `properdocs.yml` need no change.
 
 ## What closes the workshop
 
-- The operator adopts the draft, or a revision of it.
-- The definition of "learned" has an independent reader's acceptance or a
-  recorded disagreement. Done: the reader accepted it.
-- The open questions above are ruled on.
-- The definition is in the library under `kb/theory/definitions/`, and the
-  term is in the `AGENTS.md` vocabulary table.
-- The collision ledger has an entry for "deliberative" that separates this
-  sense from the group sense and from the agent-architecture sense, and an
-  entry for "double-loop" that separates this sense from Argyris's.
-- The consumers in the evaluation boundary are listed and either edited or
-  deferred with a reason.
-- The next stage is either carried out or moved to a workshop of its own.
+- The items under "Not done" are carried out, deferred with a reason, or
+  moved to a workshop of their own.
 
 Then delete this directory and remove its entry from `kb/work/README.md`.
 

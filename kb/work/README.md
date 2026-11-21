@@ -10,7 +10,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 - [Supporting the on-balance definition of improvement](./bounding-omitted-effects/README.md) — posed 2026-11-21: assemble the support that lets “improves on balance” serve as a definition of improvement and a success condition for learning; sources on open weights, uncertain sizes, omitted effects and judging a measure, with the limits the definition must state.
 
-- [Defining the learning process](./learning-method-name/README.md) — posed 2026-11-21: define the learning process Commonplace is working on, so that it covers all learning in Commonplace and is separate from the claim that a change was learned; the current draft defines "deliberative learning" by three conditions; next stage proposed: it replaces the theory builder as the central definition
+- [Defining the learning process](./learning-method-name/README.md) — posed 2026-11-21. The definition of deliberative learning was adopted that day and is in the library. Remaining: restate the theory-builder definition, the research companion and the articles around it, and act on the last outside reading.
 
 
 
