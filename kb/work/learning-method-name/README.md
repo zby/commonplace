@@ -151,8 +151,8 @@ are listed with their answers.
    Their findings are applied. A [fresh reader of the rewrite](./positions/step-4-outside-reading.md)
    matched all eight expected membership readings, including the conditional
    cases. The test reused the earlier vignettes, several of which the draft
-   explains. A [reader of the subsequent revision](./positions/step-5-outside-reading.md)
-   matched the same eight placements and two additional expectations about
+   explains. A reader of the subsequent revision, launched by Astra, whose report was
+   not kept, matched the same eight placements and two additional expectations about
    triggered edits and dependent handbook changes. The operator then
    adopted the definition.
 
@@ -237,6 +237,10 @@ Not done, and now permitted:
   - Finding 3: whether "separate steps" means separate functions or
     separate actors.
   - Finding 4: a judge that has never rejected a change.
+  - From Astra's reader of the same revision: "the judgment must be the
+    step that edits the store" can make a validator seem to write the
+    file. The reader took it to mean that the judgment controls whether
+    the edit is made.
   - The reader's open points on "learned", and the repeated statement that
     the term names a process.
 

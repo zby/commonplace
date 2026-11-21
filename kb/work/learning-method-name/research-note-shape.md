@@ -1,6 +1,6 @@
-# Shape of the research program note
+# Shape of the research program article
 
-Workshop brief requested by the operator, 2026-11-21. Write the research program note, not a second definition or an experiment report.
+Workshop brief requested by the operator, 2026-11-21. Write the research program as an article in `kb/articles/`, not a second definition or an experiment report. Below, "the note" means that article.
 
 ## What the note is for
 
@@ -18,7 +18,7 @@ Fix the model, task family, available evidence and budget before a test. State w
 
 | Capability | Comparison and interpretation |
 |---|---|
-| **Admission** | Give the model and a fixed gate the same proposals and evidence. Include useful edits the gate rejects and harmful edits it admits. Compare which edits each keeps and their consequences on fresh work; also check what admitting everything would have yielded. If the gate does as well, the test has not shown an advantage for model judgment here. A persuasive explanation alone does not establish one. |
+| **Admission** | Give the model and a fixed gate the same proposals and evidence. Include useful edits the gate rejects, harmful edits it admits, and edits the gate handles correctly. Without the last group, a judge that only inverts the gate would score well. Compare which edits each keeps and their consequences on fresh work; also check what admitting everything would have yielded. If the gate does as well, the test has not shown an advantage for model judgment here. A persuasive explanation alone does not establish one. |
 | **Targeted correction** | Put a harmful edit and an independently useful edit in the same batch. Supply evidence from later use without identifying the culprit. Can the learner remove the harm while preserving the gain? Compare its repair with leaving the batch intact and rolling it all back. If there is nothing useful to preserve, a tie with rollback cannot distinguish accurate diagnosis from indiscriminate removal. |
 | **Criterion revision** | Compare later decisions on the same proposals under the old and revised criteria. A retained revision that changes which proposals pass shows that the criterion changed in practice. Whether those decisions improved is a further test: a check that rejects everything can prevent every bad admission. |
 
@@ -45,6 +45,13 @@ Move decisions out of the operator’s hands one kind at a time. Report separate
 
 ## Deliverable and limits
 
-Write a new theory note of about 1,200 words. A working title is “Commonplace tests whether a language model can run deliberative learning with no person judging.” Put the claims and their comparisons before the experiment. Link the definition instead of restating its taxonomy. Candidate tags: `deliberative-learning`, `self-improving-systems`, `learning-theory`. Once the note exists, link it as the program from the README and landing page and list it in the deliberative-learning tag head.
+Write a new draft article of about 1,200 words in `kb/articles/`, under the [articles contract](../../articles/COLLECTION.md). Put the claims and their comparisons before the experiment. Link the definition instead of restating its taxonomy.
+
+- **Frontmatter and banner.** `type: articles/types/article.md`, `status: draft`, a `byline`, `source_notes` listing the KB notes it draws on, and no `tags:`. Open with the draft banner the lead article uses.
+- **Headline.** Reader-facing, not a claim title. Candidates: “Testing Autonomous Deliberative Learning” or “How to Test Whether a Language Model Can Run Deliberative Learning”.
+- **Reader.** Someone with no KB context who may not have read the lead. Say in a sentence or two what deliberative learning is and link the lead and the definition for the rest.
+- **Gloss the KB's own artifacts in plain words** where they first appear: the declared frame (which people and programs Commonplace counts as inside the system), the 2026-08-30 revision (one observed episode in which the operator chose among candidate revisions), and the Python judgment probe (a designed comparison of how models and practitioners reason about one change).
+- **Do not link the probe.** The contract allows onward links to `kb/agentic-systems/reports/retained/` and names other report paths and `kb/work/` as unavailable to an article's reader. Describe the probe and its follow-on comparison in prose. The links in section 5 of this brief are for the writer.
+- **After it exists.** List it under “In draft” in the articles README after the lead. Link it as the program from the README and landing page, and name it in the opening of the deliberative-learning tag head beside the lead. Say in the articles README how it relates to the testing supplement, which it links for other designs.
 
 Leave the [older theory-builder program](../../theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) in place with its rewrite notice. Criticism of theory content belongs to that program. Addressability matters here because a repair must identify an edit; persistence matters because later tasks must use it. Do not import either as a separate hierarchy or promise a [sample-efficiency advantage](../../theory/retained-theories-may-improve-sample-efficiency.md) over weight training.
