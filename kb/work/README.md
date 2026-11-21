@@ -6,6 +6,8 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Replaying operator rulings](./replaying-operator-rulings/README.md) — posed 2026-11-21: which general instructions lead a fresh worker to notice what the operator noticed while the deliberative-learning definition was drafted; experiment 1 is designed and not run
+
 - [Local and global thinking](./local-global-thinking/README.md) — posed 2026-11-21: when does shifting attention from an artifact to a connection change which problem is worth pursuing?
 
 - [Supporting the on-balance definition of improvement](./bounding-omitted-effects/README.md) — posed 2026-11-21: assemble the support that lets “improves on balance” serve as a definition of improvement and a success condition for learning; sources on open weights, uncertain sizes, omitted effects and judging a measure, with the limits the definition must state.

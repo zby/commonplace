@@ -7,6 +7,8 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Operator rulings on the deliberative-learning definition: replay index, 2026-11-21](./definition-rulings-replay-index-2026-11-21.md) — five points at which the operator reversed what three agents held, each with the commit holding the state before it; an index into git for replay experiments, with nothing replayed
+
 - [Python change judgment probe, designed 2026-11-20, not run](./python-change-judgment-probe-2026-11-20/README.md) — an experiment design, with no results, for whether LLMs judge a change on balance as people do; five design versions, known weaknesses and ideas for a better design
 
 - [Review atom machinery acceptance, 2026-11-15](./review-atom-acceptance-20261115/README.md) — bounded typed-review and fixture acceptance, two model launches, preserved blocked starts and zero-launch replay; content reconstruction with materially different tool and trust environments.
