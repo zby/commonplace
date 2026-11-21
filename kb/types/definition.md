@@ -58,6 +58,12 @@ A good definition note should answer:
 - Use examples only when they sharpen future usage.
 - Keep technique guidance subordinate to term guidance. If a section mainly says when or how to perform an operation, move it to an instruction, ADR, workshop, or ordinary note and link it.
 
+## A Bias To Correct When Revising
+
+An agent revising a definition tends to answer each objection by adding something: a clause, a condition, an exclusion, or a distinction. Each addition has a local reason, so nothing weighs it against the definition as a whole. Reviewing agents share the tendency, so more rounds of review strengthen it. The definition becomes longer and narrower than its purpose needs.
+
+Correct for this. When an objection arrives, give leaving the definition unchanged, making it more general, and removing a condition the same consideration as adding to it. Not every objection deserves an answer in the text.
+
 ## Frontmatter
 
 | Field | Required | Use |
