@@ -44,6 +44,63 @@ Two decisions the operator made on the way:
 The reduction needs the measures to share a scale. An exchange rate between
 units is itself a weight.
 
+## The process is recursive
+
+Stated by the operator on 2026-11-21. The definition describes a result. The
+way people reach it is recursive. For a Python release they say: this change
+breaks some programs and speeds up others. How to compare those two sets is
+an on-balance decision. So is each side of it: how bad the breakage is for one
+program, and whether one program's speed-up matters. In principle the whole
+tree can be unwound into single cases, and the judgment is then about just
+those cases. People do not work on the unwound list.
+
+The operator added: when people need more precision, they try to decompose.
+So the tree is not given beforehand. A judgment starts whole, and a part of it
+is split only when the whole judgment is not precise enough for the decision.
+
+What follows is the agent's (claude-fable-5-2) account of the consequences and
+awaits the operator.
+
+- **The tree is what makes the judgment possible.** The unwound list is the
+  "enormous test array" a symbolic system would need. Nobody can weigh it at
+  once. Each node of the tree is a comparison small enough to judge.
+- **The tree is what makes the judgment criticizable.** A disagreement can
+  name a node: "you underrate the breakage", not "your overall verdict is
+  wrong". This is the same property the KB calls
+  [addressability](../../theory/definitions/addressable-theory.md).
+- **A node must pass up a range, not a verdict.** If a node reports only
+  "better", "worse" or "open", its parent cannot weigh it against a sibling.
+  The parent needs to know roughly how much. So each node returns the range
+  its reasonable measures allow.
+- **Recursion and unwinding can disagree, in two directions.**
+  - *The tree can report "open" where the unwound comparison settles.* Two
+    branches may depend on the same unknown. Combining their ranges
+    separately treats them as free to vary apart. The Mustajoki paper shows
+    this effect: separate score ranges overlap while every shared weighting
+    favours one side.
+  - *The tree can report "settled" where the unwound comparison is open.* Each
+    node drops what looks negligible at its level. Losses dropped at many
+    nodes can add up. This is where omitted effects come from in practice,
+    and it is the workshop's starting example seen from the inside.
+- **Decomposition buys precision, and is used on demand.** A whole judgment
+  gives a wide range. Splitting it into parts that can each be judged or
+  observed narrows the range. People split a node when its range is too wide
+  to settle its parent, or when someone contests it. A node whose whole range
+  leaves the parent's verdict unchanged stays whole. This is the reversal
+  test seen from the other side.
+- **Decomposition has a price.** It costs effort, and it brings in the two
+  errors above: parts treated as independent when they are not, and small
+  effects dropped at each split. A finer tree is therefore not always a more
+  accurate one.
+- **Two kept sources describe refinement on demand.** The Greco ingest: ask
+  for another judgment on a familiar pair when the remaining models disagree
+  on a consequential choice. The Mustajoki ingest: direct further questions
+  to the comparisons that remain open.
+
+This recursion runs downward, into the parts of one comparison. It is
+different from the measure over measures, which would have run upward and
+which reduces to a single measure.
+
 ## Worked case
 
 [Is a new Python version an improvement?](./python-release-worked-case.md)
@@ -77,7 +134,7 @@ proposition numbers and figures below are unchecked against the papers.
 | Deciding which measures are in the set | Beisbart, Betz and Brun, Proposition 2 | A model of revising principles and case judgments against each other until neither changes. The authors leave the justification of their own weights open. |
 | Uncertain sizes of known effects | [Bertsimas and Sim](../../sources/the-price-of-robustness.ingest.md) | How much simultaneous adverse movement erases a measured advantage, with no probability model. |
 | Frequencies mixed with poorly known ranges | [Baudrit, Couso and Dubois](../../sources/baudrit-joint-propagation-probability-possibility.ingest.md) | Bounds that differ when one unknown value holds across all cases. This fits the `AGENTS.md` routing example, where one line loads on every prompt. |
-| The contrast case | [Angilella and colleagues](../../sources/angilella-ordinal-regression-smaa-choquet.ingest.md) | The share of sampled measures that favour an alternative. The definition does not use a share: it depends on the sampling distribution, and a share is not an average. The paper also gives a model for gains that overlap. |
+| Judgments arranged in a tree | [Angilella and colleagues](../../sources/angilella-ordinal-regression-smaa-choquet.ingest.md) | A hierarchy of criteria in which a judgment given at one node has consequences at the others. This is the closest source for the recursive process. The paper also models gains that overlap, and reports the share of sampled measures favouring an alternative, which the definition does not use. |
 
 The on-balance note's 90/10 example fits the first three rows. The revision
 wins for every loss-to-gain ratio below nine, ties at nine, and the verdict is
@@ -97,6 +154,7 @@ memory.
 | Kit Fine, *Vagueness, Truth and Logic* (1975) | Truth under every admissible sharpening. |
 | Amartya Sen on intersection orderings; the specific work is not yet identified | An incomplete ordering built from what all reasonable rankings share. |
 | [Salo and Hämäläinen, *Preference Assessment by Imprecise Ratio Statements*](https://doi.org/10.1287/opre.40.6.1053) (1992) | The original of the pairwise test. Awaits full-text access. |
+| Research on when decomposing a judgment improves it; the agent recalls MacGregor and Armstrong, *Judgmental decomposition: when does it work?* (1994), unverified | Whether splitting a judgment helps only when the whole judgment is very uncertain. |
 
 ## Formalisms that fit
 
