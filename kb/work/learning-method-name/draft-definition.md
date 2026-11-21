@@ -15,14 +15,18 @@ does not depend on them.
 
 1. **Legible store.** What is learned is kept as changes to a store that can
    be read: prose, structured text and code.
-2. **Judgment in the loop.** Each change is kept or dropped by an
+2. **Judgment in the loop.** Whether later work relies on a change is
+   decided by an
    [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
-   that the change improves the system's future work. The judgment is a step
-   of the learning loop. A judgment by one fixed measure is the special case.
-3. **Open to criticism.** The judgment is held as a conjecture. Later rounds
-   of the same loop can bring evidence against that particular judgment and
-   find it wrong. The system then corrects: it undoes the change where that
-   is possible, and otherwise makes a further change.
+   that relying on it improves the system's future work. The judgment is a
+   step of the learning loop. A judgment by one fixed measure is the special
+   case.
+3. **Open to criticism.** Continued reliance is held as a conjecture.
+   Evidence from later use can count against continuing to rely on a change,
+   reducing or ending reliance on it rather than merely displacing it when a
+   higher-scoring alternative appears. The system then corrects: it reduces
+   reliance or undoes the change where that is possible, and otherwise makes
+   a further change.
 
 The conditions apply to a named system and the store it changes. They are
 checked on the outermost loop that the system runs itself.
@@ -34,7 +38,8 @@ A system that learns this way is a **deliberative learner**.
 
 Deliberative learning is **single-loop** when the system cannot question the
 measure it judges by, and **double-loop** when a loop inside the system can
-criticize and revise that measure. Both are deliberative learning.
+criticize and revise the measure it judges by, or judge without a fixed one.
+Both are deliberative learning.
 
 The term names a way of learning. It has no success condition. A system whose
 retained changes do not improve its later work is still doing deliberative
@@ -74,15 +79,20 @@ Systems have loops inside loops, and the answer depends on the loop.
 
 - **Any kind of change counts.** A theory in a note, an instruction, a type,
   a validator, a code change and a deletion are all covered.
-- **Legibility makes the second condition possible.** A judgment about one
-  change can be made and contested only if the change can be read and pointed
-  at. In weights, only the whole model can be judged.
+- **Legibility enables targeted criticism.** Later evidence indicts an
+  operating state, not one line in isolation. In an opaque store, correction
+  can only roll back a whole bundle or replace the model. A legible and
+  [addressable](../../theory/definitions/addressable-theory.md) store lets
+  later rounds point at a particular change, trace its use, and reduce
+  reliance on it without undoing unrelated changes.
 
 **Judgment in the loop.**
 
-- **The judgment must be the step that retains.** People also judge on
-  balance whether a new model version is better. That judgment does not
+- **The judgment must be the step that decides reliance.** People also judge
+  on balance whether a new model version is better. That judgment does not
   decide which weight updates are kept, so it is outside the training loop.
+  Admission, reliance and continued storage are distinct: a change can remain
+  archived in the store while later work stops relying on it.
 - **A fixed measure is the special case.** When the system treats one
   measure as the only one, the on-balance judgment reduces to that measure.
   A change kept because a validator passed meets the condition. So does a
@@ -102,23 +112,65 @@ Systems have loops inside loops, and the answer depends on the loop.
   and policies". Here double-loop requires only that the measures, gates and
   checks that decide retention can be questioned. The declared objective
   they serve may stay fixed.
+- **Evidence stops at the measure, not the terminal objective.** Later
+  evidence can overturn reliance on a change (relative to the measure) and
+  can overturn a proxy measure, gate or check (relative to the declared
+  objective). It cannot overturn the terminal objective itself, which is
+  declared or licensed from outside
+  ([revising an improvement objective](../../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
+  That is why double-loop learning stops at the measure.
+- **Proxy-gate self-approval is not double-loop.** A system that can edit a
+  proxy measure or gate only when that same proxy gate scores the edit higher
+  remains single-loop. Double-loop learning requires that operating evidence
+  relative to the declared objective can challenge the proxy measure without
+  needing permission from that proxy.
+- **The Gödel machine is the proof-gated double-loop limit case.**
+  Schmidhuber's
+  [Gödel machine](../../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+  meets all three conditions as a double-loop learner: live observations
+  enter via `state2theorem` against an unknown environment prior `µ ∈ M`, it
+  can modify a sub-policy to run an experiment and revert reliance after
+  observing the outcome, and it can rewrite heuristic evaluators,
+  sub-policies and its proof searcher relative to its terminal utility `u`.
+  What separates Commonplace is the evaluator (language-model and human
+  on-balance judgment where no formal axiomatization `A` or scalar `u` is
+  available) and empirical revision of misspecified background assumptions
+  (a classical Gödel machine replaces axioms in `A` only with theorems
+  derivable from `A`).
 - **Two nested loops are not double-loop learning.** A training run inside a
   search over its settings has two loops. It is single-loop if the search
   keeps settings by a score that nothing in the system can question.
 
 **Open to criticism.**
 
-- **Later evidence must be able to count against the kept change.** A loop
-  that replaces a prompt whenever a new variant scores higher overwrites its
-  earlier choice. It does not find that choice wrong. PRODIGY does: it
-  revises its estimate of one retained rule from later use and drops the
-  rule when the estimate turns negative. A gate that admits a change once
-  and never looks at it again fails this condition. So does a system that
-  keeps everything.
-- **The condition is about the judgment, not the change.** It does not
-  require that a change can be undone. Commonplace deletes things, and a
-  deletion cannot always be restored. The condition requires that the
-  judgment can still be found wrong. The system can then record the error and
+- **Later evidence must be able to count against continued reliance.** A loop
+  that replaces a prompt whenever a new variant scores higher on a fixed test
+  only displaces its earlier choice; no post-admission evidence indicts the
+  kept variant. Likewise, an archive whose entries keep a fixed admission
+  score and lose selection weight only through dilution as new challengers
+  arrive fails this condition. PRODIGY passes: it revises its estimate of one
+  retained rule from later use and drops the rule when the estimate turns
+  negative. So does a system that reduces reliance on an admitted variant
+  when its descendants perform poorly. A gate that admits a change once and
+  never lets later evidence count against it fails this condition. So does a
+  system that keeps and relies on everything unconditionally.
+- **Correction targets continued reliance, not necessarily the original
+  decision.** A reversible trial that turns out poorly was not necessarily a
+  mistake given what was known at admission. The condition requires that
+  later evidence can end reliance on the change, not that the system condemn
+  its earlier decision to try it. The evidence need not come from re-running
+  the admission test; downstream task failures or descendant outcomes also
+  count.
+- **Attribution is graded.** At the minimum, later evidence can indict a
+  retained state and roll back a bundle or stack of changes since a baseline
+  (as in Schmidhuber's incremental self-improvement). Pinning the loss to one
+  particular change while keeping the rest is a graded capability enabled by
+  an addressable store (condition 1).
+- **The condition is about reliance and judgment, not undoability.** It does
+  not require that a change can be undone. Commonplace deletes things, and a
+  deletion cannot always be restored. The condition requires that later
+  evidence can still show that continuing to rely on the change, or on the
+  rule that produced it, is wrong, so the system can record the error and
   change what it does next.
 - **Reversibility enters the judgment in condition 2.** Suppose a new routing
   instruction saves searches but sometimes sends an agent to the wrong note.
@@ -184,6 +236,8 @@ Three points govern use of the verdicts.
 - Using "deliberative learning" for the system. The system is a
   deliberative learner.
 - Calling a system double-loop because it has two nested loops.
+- Calling self-modification double-loop when changes to a proxy gate require
+  approval from that same proxy gate.
 - Reading "double-loop" as Argyris's full sense, in which the objective
   itself is questioned.
 - Using the term only for theories stored in language.
@@ -248,4 +302,4 @@ ingests with no retained quotes yet.
 The open questions about this draft are listed in
 [the workshop README](./README.md#open-questions-about-the-definition).
 [The comparison of earlier systems](./precedents.md) extends the background
-above with five more ingests.
+above with eight more ingests.

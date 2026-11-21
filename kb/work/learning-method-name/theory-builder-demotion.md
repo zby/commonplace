@@ -68,11 +68,23 @@ builder conditions where criticism of stated content matters.
 
 **After the ruling on fixed measures.** On 2026-11-21 the operator ruled
 that a fixed measure is a special case of condition 2. The boundary case
-above then passes condition 2, as single-loop learning, so it no longer
-shows a theory builder that is not a deliberative learner. Whether every
-theory builder is a deliberative learner is open again, and now turns on
-condition 3. The prompt example still
-shows the other direction. The demotion does not depend on the answer.
+above then passes condition 2, as a fixed measure. It still fails the
+learner's conditions if its score is a fixed test that takes in nothing new:
+the kept theory is then only displaced by a higher scorer, and no later
+evidence counts against it, so condition 3 fails. If the score takes in
+later outcomes, the same builder is a single-loop deliberative learner.
+[The checks](./definition-checks.md) record both as cases 7a and 7b. On that
+reading the kinds still overlap without containment, and the excluding
+condition is the third. The prompt example still shows the other direction.
+
+**Neon's position on the relation**, relayed on 2026-11-21 and not yet
+checked against the builder's boundary cases: every continuing theory
+builder with a text store is a deliberative learner. A non-reflective
+builder corresponds to single-loop learning and a reflective builder to
+double-loop learning. Two edge cases remain: a builder whose localized
+theory is not kept in prose, structured text or code, and a builder that
+forms and discards a theory within one episode. Neon reads the boundary case
+above as case 7b. The demotion does not depend on the answer.
 
 ## Decisions for the operator
 

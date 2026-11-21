@@ -19,18 +19,24 @@ learning** by three conditions:
 
 1. **Legible store.** What is learned is kept as changes to a store that can
    be read.
-2. **Judgment in the loop.** Each change is kept or dropped by an on-balance
-   judgment, made as a step of the learning loop. A judgment by one fixed
-   measure is the special case.
-3. **Open to criticism.** The judgment is held as a conjecture and can later
-   be found wrong.
+2. **Judgment in the loop.** Whether later work relies on a change is decided
+   by an on-balance judgment, made as a step of the learning loop. A judgment
+   by one fixed measure is the special case.
+3. **Open to criticism.** Continued reliance is held as a conjecture.
+   Evidence from later use can count against continuing to rely on a change,
+   reducing or ending reliance on it rather than merely displacing it when a
+   higher-scoring alternative appears.
 
 The operator clarified that keeping a reversible change is not an exception to
 condition 2. The judge still expects the change to improve future work, but
 can count less future harm if the system can detect and correct a mistake.
 
 Deliberative learning is single-loop when the system cannot question its
-measure and double-loop when a loop inside the system can revise it.
+measure and double-loop when a loop inside the system can criticize and revise
+its proxy measures relative to its declared objective (not merely when the
+same proxy gate approves), or judge without a fixed one. Evidence reaches
+reliance on a change (condition 3) and proxy measures relative to the
+objective (double-loop), and stops at the terminal objective.
 
 The term has no success condition. "Learned" is a separate claim about one
 retained change. A gain on some measures with ties on the rest is reported
@@ -72,48 +78,67 @@ learner.
   [The checks](./definition-checks.md) list which of their placements
   change, and [the discussion](./positions/fixed-measure-discussion.md)
   records how the ruling was reached.
+- **Conditions 2 and 3 revised around reliance, graded attribution, and the
+  Gödel-machine line.** Following
+  [what later evidence can overturn](./what-later-evidence-can-overturn.md)
+  and a check of the Schmidhuber snapshot, the draft now frames conditions 2
+  and 3 around continued reliance rather than binary keep/drop, separates
+  evidence against reliance from challenger displacement, treats attribution
+  as graded (minimum stack rollback vs. localized blame enabled by an
+  addressable store), and places the classical Gödel machine **inside** as
+  the proof-gated double-loop limit case (with `state2theorem`, unknown
+  `µ ∈ M`, and reversible experiments in §6.1 Item 2). Cases 13–16 in
+  [the checks](./definition-checks.md) place DGM (outside on C), HGM
+  (inside, single-loop), the classical Gödel machine (inside, double-loop),
+  and Schmidhuber's incremental self-improvement (outside on S, passes C at
+  coarse attribution minimum).
 - **[The rulings](./rulings.md)** record what the operator decided and how
   the definition was reached.
 
 ## Open questions about the definition
 
-These are for the operator. The first four change the wording of the draft.
+These are for the operator. The first five change the wording of the draft.
 
 1. **Is condition 3 now strict enough?** It carries the exclusion that
-   condition 2 used to carry. The draft requires that later evidence can
-   count against a particular kept change. Whether a score-gated search that
-   re-scores its kept variants meets that is not yet checked.
-2. **What does the judgment in condition 2 compare?** The independent reader
+   condition 2 used to carry. The reliance wording and cases 9–11 and 13–16
+   separate post-admission evidence from challenger displacement (DGM, static
+   benchmarks) and place HGM and re-scored searches inside as single-loop.
+   Whether this boundary holds up under an independent reading is still open.
+2. **What separates learning from replanning?**
+   [Case 12 of the checks](./definition-checks.md) shows that a sequencer
+   which drops a schedule when it becomes infeasible would pass all three
+   conditions if the current schedule were named as the store. The
+   definition needs to say that the kept change carries into later work.
+3. **What does the judgment in condition 2 compare?** The independent reader
    holds that deciding to keep a change is not judging that it improves
    future work. The operator's ruling stands: keeping a reversible trial is
    itself judged better for future work than not trying it. The wording
    should name both comparisons so they are not confused.
-3. **Which writes does "each change" cover?** One surveyed system logs every
+4. **Which writes does "each change" cover?** One surveyed system logs every
    attempt and selects distilled claims. The condition should say whether it
    covers candidate learning changes or all writes to the named store.
-4. **What starts a later round in condition 3?** The draft says later rounds
+5. **What starts a later round in condition 3?** The draft says later rounds
    can criticize a judgment. It does not say whether the possibility is
    enough or whether the system must have something that starts
    reconsideration. Doyle's memo supplies the distinction.
-5. **Is the strict meaning of "learned" intended?** The independent reader
+6. **Is the strict meaning of "learned" intended?** The independent reader
    accepted it. ChatGPT finds it too strict, partly because it read
    "measure" as one dimension and not as a whole way of scoring the work.
    The on-balance note should say what a measure is. The stricter question
    is whether a defended trade-off that some reasonable measure opposes is
    an improvement or a decision. The note says a decision.
-6. **Where "learned" lives.** It is a section of the draft. It could be a
+7. **Where "learned" lives.** It is a section of the draft. It could be a
    section of the on-balance note.
 
-Two wording fixes need no ruling: the claim that in weights only the whole
-model can be judged is too strong, and legibility should be related to
-[addressability](../../theory/definitions/addressable-theory.md).
+The two earlier wording fixes (replacing the overstatement about weights and
+linking legibility to
+[addressability](../../theory/definitions/addressable-theory.md)) and the
+question of what later evidence can overturn are now applied in the draft.
 
 ## Other open work
 
 - **A boundary case for EURISKO**, the nearest program to condition 2.
 - **Quotes.** Only the Argyris ingest has retained quotes.
-- **A second round of ingests**, run by another agent: Rao and Georgeff,
-  Aamodt and Plaza, and Minton and Carbonell.
 - **The conjecture itself.** That a language model can make on-balance
   judgments well enough is not established. The
   [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md)
@@ -143,7 +168,8 @@ in `properdocs.yml` need no change.
 - The definition is in the library under `kb/theory/definitions/`, and the
   term is in the `AGENTS.md` vocabulary table.
 - The collision ledger has an entry for "deliberative" that separates this
-  sense from the group sense and from the agent-architecture sense.
+  sense from the group sense and from the agent-architecture sense, and an
+  entry for "double-loop" that separates this sense from Argyris's.
 - The consumers in the evaluation boundary are listed and either edited or
   deferred with a reason.
 - The next stage is either carried out or moved to a workshop of its own.
