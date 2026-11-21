@@ -6,6 +6,10 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [When can omitted effects reverse an improvement judgment?](./bounding-omitted-effects/README.md) — posed 2026-11-21 to ask whether a range of reasonable precise meanings of “on balance” suffices for learning, and when omitted effects could change a particular verdict.
+
+- [Naming the learning method](./learning-method-name/README.md) — posed 2026-11-21: decide what to call the method by which a theory builder acquires its theories, whether the name may say "learning" now that improvement can be judged on balance, and whether "conjectural learning" is restored
+
 
 
 - [Documentation consolidation](./documentation-consolidation/README.md) — posed 2026-11-18, refocused 2026-11-19: cut outdated documentation by tying each document to an explicit task, moving agent guidance onto its activation path, keeping short human overviews, and later pruning unnecessary skills.
