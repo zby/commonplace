@@ -169,13 +169,19 @@ loops, and the answer depends on the loop.
   turns negative. So does a system that chooses an archived variant less
   often when its descendants perform poorly. A gate that admits a change
   once and never lets later evidence count against it fails this condition.
-  So does a system that adds everything and removes nothing.
-- **The evidence counts against letting the change stand, not against having
-  made it.** A trial that turns out poorly was not necessarily a mistake
-  given what was known. The condition requires that later evidence can lead
-  the system to reverse the change, not that the system condemn its earlier
-  decision. The evidence need not come from running the first test again.
-  Failures in later tasks and the results of descendants also count.
+- **A claim about capacity needs an account, and a claim about an episode
+  needs the episode.** To say that a system meets this condition, say what
+  brings the later evidence back, who or what considers it, and which edit
+  can follow. To say that it happened in a particular case, show that
+  sequence.
+- **A trial and its review are two judgments.** A team tries a routing rule
+  for a week, with a review on Friday. The first judgment compares trying
+  the rule with carrying on as before. On Friday the second compares keeping
+  the rule with removing it. Both can be sound when the second goes against
+  the rule: the evidence counts against letting the change stand, not
+  against having made it. The evidence need not come from running the first
+  test again. Failures in later tasks and the results of descendants also
+  count.
 - **Attribution is graded.** At the minimum, later evidence counts against a
   state of the store, and the system reverses all the changes made since a
   baseline, as in Schmidhuber's incremental self-improvement. Pinning the
@@ -295,6 +301,13 @@ ingests with no retained quotes yet.
   Commonplace than the survey shows: it mentions an architecture, IRMA, with
   a "deliberation process" that chooses between options with no stated
   criterion, and Soar and PRODIGY were deliberative in its sense and learned.
+- **Single-loop and double-loop in one episode.** In an episode
+  [Lenat reports](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md),
+  EURISKO dropped a heuristic that had been generalized badly. That changed
+  the fate of one heuristic. It also kept a restriction against that kind of
+  generalization. That changed how the next proposed generalization would be
+  judged, before it had any record of its own.
+  [Case 17 of the checks](./definition-checks.md) gives the details.
 - **The closest symbolic precedent.** PRODIGY kept a learned rule only while
   its estimated utility was positive, and revised the estimate from use
   ([Minton](../../sources/minton-utility-of-ebl-aaai88.ingest.md)). It had a

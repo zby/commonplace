@@ -46,7 +46,7 @@ Three choices fix the comparison:
 
 ## What an on-balance claim asserts
 
-The cases above share a form. Once those three choices fix the comparison, **a step is an improvement on balance when every reasonable measure of the work scores the successor higher than the predecessor.** No measure is selected. A measure is reasonable when its treatment of gains and losses can be defended from the purpose of the work, whichever version it favors.
+The cases above share a form. Once those three choices fix the comparison, **a step is an improvement on balance when every reasonable measure of the work scores the successor higher than the predecessor.** No measure is selected. A measure here is a whole way of scoring the work, such as one loss-to-gain ratio. It is not one dimension of the work, such as cost: if the success rate rises while cost and reliability stay the same, every measure that gives success any weight scores the successor higher. A measure is reasonable when its treatment of gains and losses can be defended from the purpose of the work, whichever version it favors.
 
 If a little extra reading on every task counts against adding a routing line, then time saved across tasks must also count in favor of removing one. The saving need not be large enough to justify removal; it cannot be dismissed merely because no reader reports a line they no longer have to read.
 

@@ -117,42 +117,36 @@ learner.
 
 ## Open questions about the definition
 
-These are for the operator. The first five change the wording of the draft.
+One question is open. The others were ruled on or closed on 2026-11-21 and
+are listed with their answers.
 
-1. **Is condition 3 now strict enough?** It carries the exclusion that
-   condition 2 used to carry. The reliance wording and cases 9–11 and 13–16
-   separate post-admission evidence from challenger displacement (DGM, static
-   benchmarks) and place HGM and re-scored searches inside as single-loop.
-   Whether this boundary holds up under an independent reading is still open.
-2. **What separates learning from replanning?** Ruled on 2026-11-21: a
-   claim declares its horizon, as the KB's existing definitions already
-   require. Claims about Commonplace use a horizon that spans tasks. The
-   workshop does not work out short-horizon cases.
-3. **What does the judgment in condition 2 compare?** The independent reader
-   holds that deciding to keep a change is not judging that it improves
-   future work. The operator's ruling stands: keeping a reversible trial is
-   itself judged better for future work than not trying it. The wording
-   should name both comparisons so they are not confused.
-4. **Which writes does "each change" cover?** One surveyed system logs every
-   attempt and selects distilled claims. The condition should say whether it
-   covers candidate learning changes or all writes to the named store.
-5. **What starts a later round in condition 3?** The draft says later rounds
-   can criticize a judgment. It does not say whether the possibility is
-   enough or whether the system must have something that starts
-   reconsideration. Doyle's memo supplies the distinction.
-6. **Is the strict meaning of "learned" intended?** The independent reader
-   accepted it. ChatGPT finds it too strict, partly because it read
-   "measure" as one dimension and not as a whole way of scoring the work.
-   The on-balance note should say what a measure is. The stricter question
-   is whether a defended trade-off that some reasonable measure opposes is
-   an improvement or a decision. The note says a decision.
-7. **Where "learned" lives.** It is a section of the draft. It could be a
-   section of the on-balance note.
+1. **Does the third condition hold up under a reading from outside the
+   workshop?** It carries the exclusion that the second condition used to
+   carry: evidence from later use must be able to count against a change,
+   and being displaced by a higher-scoring alternative is not enough. Fable,
+   Astra and Neon each drew that line in the same place.
+   [An outside reader](./positions/step-2-outside-reading.md) placed six
+   cases without seeing those placements and agreed on every one it could
+   decide. It also found that condition 2 excludes nothing by itself, that
+   the name fits worst where a fixed rule is admitted, and fifteen places
+   where the draft is unclear. Those findings are not yet acted on.
 
-The two earlier wording fixes (replacing the overstatement about weights and
-linking legibility to
-[addressability](../../theory/definitions/addressable-theory.md)) and the
-question of what later evidence can overturn are now applied in the draft.
+Closed:
+
+- **Learning against replanning.** A claim declares its horizon. Claims
+  about Commonplace use a horizon that spans tasks.
+- **What the judgment in condition 2 compares.** The system with the change
+  against the system without it. A trial and its review are two judgments
+  with different alternatives, and the draft gives an example.
+- **Which edits count.** Those made by a decision. Automatic storage is
+  learning and not deliberative. Introducing it is a change that can be
+  deliberated.
+- **What starts a later round.** A claim about a system's capacity gives an
+  account of what brings the evidence back, who or what considers it, and
+  which edit can follow. A claim about an episode shows that sequence.
+- **The strict meaning of "learned".** Kept. The on-balance note now says
+  that a measure is a whole way of scoring the work and not one dimension.
+- **Where "learned" lives.** In the definition file.
 
 ## Other open work
 
