@@ -8,7 +8,7 @@ goal below.
 
 Give the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 the support it needs to serve as a definition of improvement, and so as the
-success condition for learning. [Defining the learning process](../learning-method-name/README.md)
+success condition for learning. The definition of [deliberative learning](../../theory/definitions/deliberative-learning.md)
 depends on the result.
 
 ## The definition
@@ -108,9 +108,9 @@ and dropping it, and the point that splitting alone buys nothing are Astra's.
   on a consequential choice. The Mustajoki ingest: direct further questions
   to the comparisons that remain open.
 
-[The learning-process workshop](../learning-method-name/README.md) calls this
-process deliberation, and keeps "on balance" for the verdict it reaches. Its
-draft defines deliberative learning as learning in which this process decides
+[The definition of deliberative learning](../../theory/definitions/deliberative-learning.md) calls this
+process deliberation, and keeps "on balance" for the verdict it reaches. It
+defines deliberative learning as learning in which this process decides
 what is retained.
 
 This recursion runs downward, into the parts of one comparison. It is

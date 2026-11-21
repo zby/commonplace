@@ -150,3 +150,15 @@ say so and move it to the table above.
 | 21 | A script adds a sender to a blocklist after ten reports about that sender. A moderator removes wrong entries. | The removals are inside. For the additions, the count is evidence about the item itself, so the case fits both the trigger entry and the fixed-criterion entry. PRODIGY dropping a rule when its utility estimate turns negative has the same structure. |
 | 22 | An agent decides, in one act, that an observation is worth recording and records it. | Whether "separate steps" requires separate actors or only separate functions. The definition treats this case as inside. |
 | 23 | A coding agent's checking prompt can reject a proposed lesson and has never done so. | Inside by the letter. Whether a capacity to reject that practice never shows is enough. |
+
+Three wording points are also open:
+
+- "The judgment must be the step that edits the store" can read as if a
+  validator writes the file. The intended meaning is that the judgment
+  controls whether the edit is made.
+- The verdict "learned" does not say what "the system as it now is" means
+  while edits keep arriving, how a change that was already reverted is
+  assessed, or what evidence can stand in for a version of the system that
+  is never run.
+- The statement that the term names a process, not an outcome, appears in
+  the opening, the exclusions and the misuse cases.
