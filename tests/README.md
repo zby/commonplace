@@ -21,6 +21,14 @@ uv run pytest -m ''
 uv run ruff check .
 ```
 
+On Windows, first create `.venv` from the signed system Python as described in [Windows development tests](../INSTALL.md#windows-development-tests), then run pytest as a module:
+
+```powershell
+uv run python -m pytest -m 'slow or not slow'
+```
+
+This uses `.venv`'s signed Python and avoids the unsigned `pytest.exe` launcher. It selects every test regardless of the `slow` marker. Windows excludes the Linux-only agentic-analysis tests at collection; it does not provide complete Linux coverage.
+
 The default test paths cover `tests/commonplace/`. Calibration, connect fixtures,
 and installed scenarios outside that directory are separate tools or exercises;
 this gate does not claim to run them. See

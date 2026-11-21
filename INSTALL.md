@@ -88,10 +88,14 @@ Git is required, not interchangeable with another version-control system. A Comm
 
 ### Optional
 
+In the Windows examples below, `$systemPython` is discovered from the Python
+launcher and verified in the prerequisite check. If the launcher is unavailable,
+set it to your installed python.org interpreter and run the same signature check.
+
 - **Trafilatura 2.2+** — lets `cp-skill-snapshot-web` save ordinary web pages as clean Markdown; no `commonplace-*` command uses it. Without it, the skill reports the missing tool and asks the user to paste the page text. Install its CLI with `uv tool install "trafilatura>=2.2"`. On Windows, build it over the signed python.org interpreter, as Commonplace is in step 2, because over a uv-managed interpreter Smart App Control refused one of its stdlib extensions and its first launch hung:
 
   ```powershell
-  uv tool install --python 'C:\Program Files\Python314\python.exe' "trafilatura>=2.2"
+  uv tool install --python $systemPython "trafilatura>=2.2"
   ```
 
   If it is already installed over another interpreter, add `--reinstall`. This gives Trafilatura its own tool environment whose `python.exe` is the signed launcher. Its `trafilatura.exe` in `uv tool dir --bin` is still an unsigned uv launcher that Smart App Control may block; the shim snippet below covers only the `commonplace-*` commands. Check it with `trafilatura --version`, on its own line on Windows. Over the signed interpreter, that check passed once on one machine with Smart App Control on (2026-10-28). Avast already had the launcher on its exception list there, so this is not yet evidence of acceptance in ordinary use.
@@ -120,7 +124,9 @@ rg --version
 curl.exe --version
 pdfinfo -v
 pdftotext -v
-(Get-AuthenticodeSignature 'C:\Program Files\Python314\python.exe') | Select-Object Status, @{n='Signer';e={$_.SignerCertificate.Subject}}
+$systemPython = py -3.14 -c "import sys; print(sys._base_executable)"
+if ($LASTEXITCODE -ne 0) { throw 'Install Python 3.14 from python.org before continuing.' }
+Get-AuthenticodeSignature $systemPython | Format-List Path, Status, SignerCertificate
 ```
 
 On Windows, `Status` must be `Valid` and the signer the Python Software Foundation. Use `curl.exe`, because Windows PowerShell 5.1 aliases `curl` to `Invoke-WebRequest`.
@@ -137,11 +143,11 @@ uv tool update-shell
 On Windows, pass the python.org interpreter from step 1 instead of a version range, then write the command shims described in [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands):
 
 ```powershell
-uv tool install --python 'C:\Program Files\Python314\python.exe' llm-commonplace
+uv tool install --python $systemPython llm-commonplace
 uv tool update-shell
 ```
 
-Use the same `--python` value in every later Windows install, `--editable` or `--reinstall` command below.
+Use the same `--python` value in every later Windows install, `--editable` or `--reinstall` command below. In a new shell, repeat the prerequisite discovery and signature check to set `$systemPython`; no installation directory is assumed.
 
 If `llm-commonplace` is already installed, `uv tool install` reports that and changes nothing, with exit status 0. To replace an existing installation, for example one built over another interpreter, add `--reinstall` to the install command above. On Windows, rerun the shim snippet afterwards. If `uv tool list` reports the existing tool as malformed, `--reinstall` fails; see [Troubleshooting command discovery](#troubleshooting-command-discovery).
 
@@ -161,11 +167,28 @@ uv tool install --python ">=3.11" --editable .
 uv tool update-shell
 ```
 
+On Windows, use the signed system interpreter explicitly:
+
+```powershell
+uv tool install --python $systemPython --editable .
+uv tool update-shell
+```
+
+Then run the [Windows shim snippet](#windows-smart-app-control-blocks-the-commands), restart the consuming shell or agent, and check the commands below. Installation and shim generation are both required for Windows; installing the package alone leaves unsigned command launchers on `PATH`.
+
 An editable install reads the library from the checkout's `kb/`, so ordinary Python, scaffold-source, and library edits are visible without reinstalling. After changing dependencies, entry points, build metadata, or which files the package includes, force a metadata refresh without changing command ownership:
 
 ```text
 uv tool install --reinstall --python ">=3.11" --editable .
 ```
+
+On Windows, refresh with the same signed interpreter:
+
+```powershell
+uv tool install --reinstall --python $systemPython --editable .
+```
+
+Rerun the [Windows shim snippet](#windows-smart-app-control-blocks-the-commands) after every refresh. A pull that adds an entry under `[project.scripts]` needs both steps: the metadata refresh registers the command, and the snippet creates its shim. For example, an older install can expose `commonplace-review` while the newly added `commonplace-revise` is missing. Ordinary source edits need neither step.
 
 Switching the user-level tool to an editable checkout changes the commands, and the library, seen by every project for that user. It also moves the library root, so rerun `commonplace-init` in each project right after the switch (see [Updating](#updating)).
 
@@ -189,6 +212,46 @@ commonplace-init --help
 ```
 
 The resolved command should be inside the directory printed by `uv tool dir --bin`. On Windows, with the shims from step 2, it resolves to `.local\commonplace-shims` instead; that is expected. Repeat the check inside each IDE or agent runtime you intend to support; an integrated terminal result does not prove that a separately launched desktop agent inherited the same environment.
+
+On Windows, also verify the interpreter behind the commands:
+
+```powershell
+$commonplacePython = Join-Path (uv tool dir) 'llm-commonplace\Scripts\python.exe'
+& $commonplacePython -c "import sys; print(sys.executable); print(sys._base_executable); print(sys.version)"
+Get-AuthenticodeSignature $commonplacePython | Format-List Path, Status, SignerCertificate
+(Get-Command commonplace-revise).Source
+commonplace-revise --help
+```
+
+The base executable should match `$systemPython`, the signature should be `Valid` from the Python Software Foundation, and the command should resolve to `commonplace-shims\commonplace-revise.cmd`. The tool environment keeps its own signed launcher and dependencies; its base interpreter must be the selected system Python. A path under uv's managed Python directory means the install used a different interpreter. Absolute paths belong in these generated, user-local shims, not in committed scripts.
+
+### Windows development tests
+
+The project test environment is separate from the user-level command environment. Installing the commands with system Python does not choose the interpreter for `uv run`. Create the project's normal `.venv` from the system interpreter verified in step 1, then install the development dependencies:
+
+```powershell
+uv venv --python $systemPython .venv
+uv sync --python $systemPython
+```
+
+On Windows, `.venv\Scripts\python.exe` is a signed launcher based on that interpreter, rather than a literal symlink. Verify both its signature and base interpreter:
+
+```powershell
+& .venv\Scripts\python.exe -c "import sys; print(sys._base_executable)"
+Get-AuthenticodeSignature .venv\Scripts\python.exe | Format-List Path, Status, SignerCertificate
+```
+
+The base executable must match `$systemPython`. Run pytest as a module through this environment:
+
+```powershell
+uv run python -m pytest -m 'slow or not slow'
+```
+
+This uses the signed Python in `.venv` and avoids the unsigned `pytest.exe` launcher. No test wrapper is needed. Without `-m`, pytest keeps its default exclusion of slow tests. Windows still excludes the Linux-only analysis tests; see [test selection](tests/README.md) for coverage.
+
+uv uses the normal `.venv`, or `UV_PROJECT_ENVIRONMENT` when explicitly set. If an existing `.venv` uses a blocked interpreter, uv may fail while inspecting it before it can replace it. Preserve that environment by moving it to an unused backup path before the setup commands above; do not overwrite a backup or discard dependencies you still need. Recreate the environment once from system Python, then keep using `.venv`.
+
+The test environment has its own dependencies and does not repair the old one. For other project Python invocations, pass `--python $systemPython` explicitly to uv and invoke tools as Python modules where supported.
 
 ## 3. Set up the project with commonplace-init
 
@@ -387,7 +450,7 @@ Use `uv tool list` to confirm installation and `uv tool dir --bin` to identify t
 - **Executable exists in uv's tool directory but bare name is missing:** run `uv tool update-shell`, then fully restart the consuming process. In CI, append the configured tool bin directory to `$GITHUB_PATH` instead of editing a profile.
 - **Bare name resolves elsewhere:** an older project venv or another install is shadowing the uv tool. Remove or reorder that `PATH` entry. Do not make `uv tool install --force` the default repair; uv's conflict is evidence that command ownership needs to be resolved.
 - **Only one IDE or agent fails:** that launch class did not inherit the updated user environment. Fix its supported environment configuration or exclude it from the support claim.
-- **Import fails after an editable metadata change:** rerun the editable install with `--reinstall` so uv refreshes the existing tool environment.
+- **A newly added command is missing, or an import fails after an editable metadata change:** rerun the editable install with `--reinstall` so uv refreshes the existing tool environment. On Windows, use the signed system interpreter and rerun the shim snippet; see step 2.
 - **A command warns that the project's Commonplace files are out of date:** a stub, `.commonplace/library.md`, or the read rule no longer matches the installed library. Rerun `commonplace-init` in the project.
 - **A command reports that the Commonplace library is not available:** the installation has no library under its shared data. Reinstall the tool with the step 2 command.
 - **Windows refuses to start a command, or a command hangs:** see [Windows: Smart App Control blocks the commands](#windows-smart-app-control-blocks-the-commands).
@@ -418,6 +481,7 @@ The executables in `uv tool dir --bin` are launchers that uv generates during in
   $tool = Join-Path (uv tool dir) 'llm-commonplace'
   $py = Join-Path $tool 'Scripts\python.exe'
   if (-not (Test-Path $py)) { throw "No llm-commonplace tool environment at $tool. Check UV_TOOL_DIR in this shell." }
+  if ((Get-AuthenticodeSignature $py).Status -ne 'Valid') { throw "The tool's Python launcher has no valid signature. Reinstall with the signed python.org interpreter before writing shims." }
   $pyPosix = '/' + $py.Substring(0,1).ToLower() + $py.Substring(2).Replace('\','/')
   $shims = Join-Path $HOME '.local\commonplace-shims'
   New-Item -ItemType Directory -Force $shims | Out-Null
@@ -444,7 +508,7 @@ Paste the snippet into a PowerShell session rather than saving it as a `.ps1` fi
 - **Argument limits:** the `.cmd` shims pass arguments through cmd.exe, so arguments containing `%`, `^`, or `"` may be altered in PowerShell and cmd. Git Bash's shims pass arguments unchanged.
 - **Undo:** remove `.local\commonplace-shims` from the user `Path` and delete the directory.
 - **`DLL load failed while importing <module>: An Application Control policy has blocked this file`:** the tool was built over a uv-managed interpreter, and Smart App Control refused one of its stdlib extensions (`_decimal`, `_asyncio` and `pyexpat` have been seen). The command may start and then fail, or silently fall back to slower code. Check with `& (Join-Path (uv tool dir) 'llm-commonplace\Scripts\python.exe') -c "import sys; print(sys._base_executable)"`; it should print the python.org path. If it does not, reinstall with the step 2 Windows command plus `--reinstall`, then rerun the snippet.
-- **No administrator rights:** without the python.org prerequisite, install with the general step 2 command (`--python ">=3.11"`), which uses a uv-managed interpreter, then run the snippet. Commands start, but with Smart App Control on, some stdlib extensions may be refused (the `DLL load failed` entry above). Move to the python.org interpreter when an administrator can install it.
+- **No administrator rights:** use a signed per-user python.org installation if your organization permits it, or ask an administrator to install the prerequisite. Discover and verify that interpreter in step 1. A uv-managed interpreter is not a substitute for the signed Python requirement when Smart App Control blocks it.
 - **Antivirus blocks the tool environment's path:** if the install fails with `Access denied` while copying `venvlauncher.exe` to `…\llm-commonplace\Scripts\python.exe`, antivirus is blocking that exact path, typically after an earlier detection there. Install into another tool directory: set the user variable `UV_TOOL_DIR` to a new folder, restart the shell, rerun the step 2 Windows command, then rerun the snippet. The snippet finds the tool through `uv tool dir`.
 - **Third-party antivirus:** products such as Avast can sandbox the launchers or delete files from the tool environment. If every command fails with `uv trampoline failed to canonicalize script path`, check the antivirus's quarantine or detection history, then repair the environment by rerunning the step 2 install command with `--reinstall`, using the same `--python` you installed with.
 - **Do not turn Smart App Control off just for this.** Windows cannot turn it back on without a reinstall.
