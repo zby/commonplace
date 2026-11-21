@@ -7,8 +7,8 @@ to choose a name.
 
 ## Settled: double-loop means the learner can revise its criterion
 
-A single-loop learner can change **which changes it relies on**. A double-loop
-learner can also change **what counts in favor of relying on them**. Name the
+A single-loop learner can make and reverse **changes to its store**. A
+double-loop learner can also change **what counts in favor of a change**. Name the
 class of changes and the criterion that governs them. Neither using a formal
 proof nor using a language model decides the classification.
 
@@ -20,7 +20,7 @@ the criterion. Commonplace's question is whether a language model can make
 such revisions reliably when no adequate formal test is known in advance.
 
 This [ruling](./rulings.md#settled-double-loop-ruling) governs this workshop,
-including [case 15](./definition-checks.md#cases-1316--reliance-graded-attribution-and-the-gödel-machine-line).
+including [case 15](./definition-checks.md#cases-1316--later-evidence-graded-attribution-and-the-gödel-machine-line).
 The rest of the definition is still a draft.
 
 ## Commonplace and the Gödel-machine idea
@@ -41,15 +41,23 @@ particular change was learned.
 [The draft definition](./draft-definition.md) defines **deliberative
 learning** by three conditions:
 
-1. **Legible store.** What is learned is kept as changes to a store that can
-   be read.
-2. **Judgment in the loop.** Whether later work relies on a change is decided
-   by an on-balance judgment, made as a step of the learning loop. A judgment
-   by one fixed measure is the special case.
-3. **Open to criticism.** Continued reliance is held as a conjecture.
-   Evidence from later use can count against continuing to rely on a change,
-   reducing or ending reliance on it rather than merely displacing it when a
-   higher-scoring alternative appears.
+1. **Legible store.** What is learned is held in the contents of a store
+   that can be read. The system learns by changing those contents.
+2. **Judgment in the loop.** Each change to the store is made by an
+   on-balance judgment that the system will do its later work better with
+   the change than without it, as a step of the learning loop. A judgment by
+   one fixed measure is the special case.
+3. **Open to criticism.** The judgment is held as a conjecture. Evidence
+   from later use can count against a change that was made, and the system
+   then changes the store again. Being displaced by a higher-scoring
+   alternative is not enough.
+
+A change is an edit to the store's contents, including an edit to what
+later work loads or selects. The operator ruled on 2026-11-21 that the
+store holds contents and not changes, and that putting something into the
+store is the change that does the learning. This replaced the wording in
+terms of reliance; see
+[the note to Neon and Astra](./positions/changes-to-the-store-not-reliance.md).
 
 The operator clarified that keeping a reversible change is not an exception to
 condition 2. The judge still expects the change to improve future work, but
@@ -149,8 +157,7 @@ question of what later evidence can overturn are now applied in the draft.
 
 ## Other open work
 
-- **A boundary case for EURISKO**, the nearest program to condition 2.
-- **Quotes.** Only the Argyris ingest has retained quotes.
+- **Source support.** [Case 17](./definition-checks.md#case-17--eurisko-changes-how-it-judges-heuristic-generalizations) now grounds EURISKO's criterion revision in Lenat's H12′ episode. The [Gödel-machine ingest](../../sources/goedel-machines-schmidhuber.ingest.md#quotes) retains §6.1 item 4 on utility-function revision. Other historical placements should be grounded individually if used in the library.
 - **The conjecture itself.** That a language model can make on-balance
   judgments well enough is not established. The
   [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md)
