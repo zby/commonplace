@@ -144,20 +144,23 @@ publishing, the team can choose any interface. Afterwards it cannot.
 
 ### What reversibility does to a decision
 
-Reversibility does not change the verdict. It changes what an open verdict
-permits.
+Compare keeping the internal change until the team detects a problem with
+publishing the same change as an interface it must support. The same loss to
+one project counts equally in both comparisons. What differs is how many
+later projects must bear it.
 
-- **Reversible and open: adopt provisionally.** Trying the step is the
-  cheapest way to get the missing evidence. If it turns out worse, the loss is
-  what accrued during the trial, plus the cost of going back.
-- **Irreversible and open: do not take the step yet.** Trying it is the same
-  as deciding. The team first needs the evidence, or a way to make the step
-  reversible, or a narrower step.
+- **Internal change.** If a failing check reveals the problem and reverting
+  stops it, the team counts the loss during the trial and the cost of going
+  back. Keeping the change on those terms can improve future work on balance
+  even when committing to it permanently would not.
+- **Published interface.** Reverting may break projects that already depend
+  on it. The same expected gain may justify an internal trial but not
+  publication.
 
-So under an open verdict a reversible step can still be the right decision.
-It remains a decision and not a demonstrated improvement, as the
-[on-balance note](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
-says of ADR 085.
+The team keeps the internal change because it judges that doing so improves
+future work. The option to revert is part of that judgment, not a substitute
+for it. Whether the retained change actually helped remains open until there
+is evidence from later work.
 
 ### Reversibility bounds the effects nobody listed
 
@@ -165,8 +168,8 @@ This answers part of the question the workshop began with. For a reversible
 step, the unlisted effects cannot do more harm than accrues before the step is
 reverted. The bound comes from time, not from counting effects:
 
-> worst case ≤ harm per unit of time × time until the harm is noticed, plus the
-> cost of reverting.
+> worst-case loss ≤ maximum loss per unit of time × maximum time until
+> correction, plus the maximum cost of reverting.
 
 No count of effects and no per-effect bound is needed. Three conditions are
 needed instead:
@@ -213,14 +216,15 @@ In each rule the support demanded rises as the step gets harder to undo.
 
 **What it shows about the definition.**
 
-- A verdict and a decision are different things, and reversibility is the
-  main ground for deciding while the verdict is open.
+- Reversibility can change the judgment to keep a change because it changes
+  the consequences of being wrong. It does not establish that the change was
+  learned.
 - Reversibility supplies the bound on omitted effects that the statistical
   sources could not, under the three conditions above.
 - A possible link to the learning-process workshop, which is the agent's reading and
   not the operator's: conjecture and criticism works because a tentative
-  theory is cheap to drop. A theory builder can act on open verdicts so long
-  as its steps stay reversible. Retention that later work builds on makes a
+  theory is cheap to drop. Being able to drop a mistaken change can favour
+  keeping it before later work has tested it. Retention that later work builds on makes a
   step harder to undo, so it should need more support.
 
 ## What the six cases cover together

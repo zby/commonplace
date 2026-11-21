@@ -26,6 +26,10 @@ learning** by three conditions:
 3. **Open to criticism.** The judgment is held as a conjecture and can later
    be found wrong.
 
+The operator clarified that keeping a reversible change is not an exception to
+condition 2. The judge still expects the change to improve future work, but
+can count less future harm if the system can detect and correct a mistake.
+
 The term has no success condition. "Learned" is a separate claim about one
 retained change, with the verdicts learned, not learned and open.
 

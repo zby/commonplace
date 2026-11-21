@@ -87,12 +87,13 @@ Systems have loops inside loops, and the answer depends on the loop.
   deletion cannot always be restored. The condition requires that the
   judgment can still be found wrong. The system can then record the error and
   change what it does next.
-- **Reversibility decides how much support a judgment needs.** A change that
-  can be undone may be kept while its verdict is open. A change that cannot
-  be undone needs more support first, as
-  [the irreversible-step case](../bounding-omitted-effects/further-cases.md#case-d--a-step-that-cannot-be-undone)
-  argues. So reversibility belongs to the practice of deliberation and is not
-  a condition of the term.
+- **Reversibility enters the judgment in condition 2.** Suppose a new routing
+  instruction saves searches but sometimes sends an agent to the wrong note.
+  Removing the instruction cannot recover time already lost. If the system
+  can recognize the mistake and remove the instruction, fewer later tasks
+  need suffer it. That prospect can tip the judgment in favour of keeping
+  the instruction now. It is not evidence that the instruction has improved
+  later work. See [the irreversible-step case](../bounding-omitted-effects/further-cases.md#case-d--a-step-that-cannot-be-undone).
 
 ### When a change was learned
 

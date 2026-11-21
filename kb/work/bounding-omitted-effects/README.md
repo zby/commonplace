@@ -130,9 +130,9 @@ separates what evidence could settle from what stays a judgment about purpose.
   covers.
 - **A removal.** The loss is visible and the gain is not. The same measures
   must serve additions and removals.
-- **An irreversible step.** Reversibility does not change the verdict. It
-  decides what an open verdict permits, and it bounds the effects nobody
-  listed by the time until a harm is noticed.
+- **An irreversible step.** Reversibility can change the on-balance judgment.
+  If the team can detect a mistake and undo the step, it can avoid later
+  losses. It still counts the harm already done and the cost of going back.
 
 ## Support from sources
 
@@ -205,8 +205,9 @@ Raised by an agent (claude-fable-5-2); they await the operator's view.
   the advantage by at most $10^{-10}$, give a combined downside of at most
   $10^{-4}$. A count and a per-effect bound are what an omitted effect lacks.
   Two other bounds are available. The worked case uses the channels a change
-  can act through. The irreversible-step case uses reversibility: the harm is
-  limited to what accrues before the step is undone, if the harm is noticed.
+  can act through. The irreversible-step case uses reversibility: if undoing the step stops the harm, an upper
+  bound on the rate of loss and the time to correction bounds the loss
+  during the trial. The cost of correction also counts.
   Either one bounds a branch as a whole, which is what leaving it unopened
   requires.
 - **Additivity is assumed almost everywhere.** If two gains overlap, or one
