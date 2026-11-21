@@ -143,14 +143,15 @@ for that term. If it appears, follow the linked record’s writing decision.
   workspace, run these commands outside that sandbox (requesting sandbox bypass
   or escalated execution up front) rather than probing inside the sandbox first;
   keep local-only commands (`status`, `triage`, `publish`, `answers`, `decisions`,
-  `commonplace-validate`, `git`) in the default sandbox.
+  `commonplace-validate`, read-only `git`) in the default sandbox.
 
 ## Git
 
 - Review status and diff. Stage explicit files; never `git add -A`.
 - Prefer atomic stage and commit: `git add <files> && git commit ...`.
-  If sandboxing blocks either, retry the whole operation with escalation when
-  available; do not leave staging for a later commit.
+  If your sandbox mounts `.git/` read-only, request escalation up front;
+  otherwise retry the whole operation with escalation if sandboxing blocks
+  either step, and do not leave staging for a later commit.
 - Prefer complete artifact commits. Do not partially stage shared indexes or
   navigation just to expose an artifact; refresh them separately unless they
   are the primary target or can be staged wholly without unrelated changes.
