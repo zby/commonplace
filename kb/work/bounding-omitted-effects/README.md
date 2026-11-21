@@ -58,8 +58,17 @@ The operator added: when people need more precision, they try to decompose.
 So the tree is not given beforehand. A judgment starts whole, and a part of it
 is split only when the whole judgment is not precise enough for the decision.
 
-What follows is the agent's (claude-fable-5-2) account of the consequences and
-awaits the operator.
+So the definition and the process are different things. "Every reasonable
+measure favours the step" says what improvement means. It does not say that a
+judge must first list the measures or the effects. A judge can start with the
+whole comparison. A challenge such as "you are understating the cost to
+blocked projects" then says where to look more closely. Criticism therefore
+does more than register disagreement: it selects what to open.
+
+What follows is the agent's (claude-fable-5-2) account of the consequences,
+revised after a comment from Astra relayed by the operator on 2026-11-21. The
+rule for what a node passes up, the difference between leaving a branch whole
+and dropping it, and the point that splitting alone buys nothing are Astra's.
 
 - **The tree is what makes the judgment possible.** The unwound list is the
   "enormous test array" a symbolic system would need. Nobody can weigh it at
@@ -68,30 +77,29 @@ awaits the operator.
   name a node: "you underrate the breakage", not "your overall verdict is
   wrong". This is the same property the KB calls
   [addressability](../../theory/definitions/addressable-theory.md).
-- **A node must pass up a range, not a verdict.** If a node reports only
-  "better", "worse" or "open", its parent cannot weigh it against a sibling.
-  The parent needs to know roughly how much. So each node returns the range
-  its reasonable measures allow.
-- **Recursion and unwinding can disagree, in two directions.**
-  - *The tree can report "open" where the unwound comparison settles.* Two
-    branches may depend on the same unknown. Combining their ranges
-    separately treats them as free to vary apart. The Mustajoki paper shows
-    this effect: separate score ranges overlap while every shared weighting
-    favours one side.
-  - *The tree can report "settled" where the unwound comparison is open.* Each
-    node drops what looks negligible at its level. Losses dropped at many
-    nodes can add up. This is where omitted effects come from in practice,
-    and it is the workshop's starting example seen from the inside.
-- **Decomposition buys precision, and is used on demand.** A whole judgment
-  gives a wide range. Splitting it into parts that can each be judged or
-  observed narrows the range. People split a node when its range is too wide
-  to settle its parent, or when someone contests it. A node whose whole range
-  leaves the parent's verdict unchanged stays whole. This is the reversal
-  test seen from the other side.
-- **Decomposition has a price.** It costs effort, and it brings in the two
-  errors above: parts treated as independent when they are not, and small
-  effects dropped at each split. A finer tree is therefore not always a more
-  accurate one.
+- **A node passes up enough to tell whether it could change its parent.**
+  That is the rule, and it does not fix a form.
+  - Sometimes a direction is enough. If one branch gives a strict gain, no
+    branch gives a loss, and the parent adds them, no size is needed.
+  - Sometimes a range is too little. Suppose one branch saves $x + 1$ hours
+    and another costs $x$ hours, with the same unknown $x$ between 0 and 10.
+    Reporting "saves 1 to 11, costs 0 to 10" makes a loss look possible.
+    Keeping the shared $x$ shows a gain of exactly one hour. The Mustajoki
+    paper shows the same effect for weights.
+- **Leaving a branch whole is not dropping it.** This is the workshop's
+  clearest answer to its original question about omitted effects.
+  - A branch can stay whole when we can defend an upper bound on its combined
+    losses, and that bound cannot erase the gain.
+  - Dismissing each loss separately, because none could erase the gain alone,
+    gives no such warrant. Many of them together might.
+- **Decomposition helps when the parts bring something new.** Splitting a
+  judgment narrows it only if the parts come with evidence or constraints
+  that the whole did not have. Splitting alone buys no precision.
+- **It is used on demand.** People split a node when what it passes up cannot
+  settle its parent, or when someone contests it. Otherwise it stays whole.
+  This is the reversal test seen from the other side.
+- **It has a price.** It costs effort, and a split can lose what the parts
+  share, as in the $x$ example.
 - **Two kept sources describe refinement on demand.** The Greco ingest: ask
   for another judgment on a familiar pair when the remaining models disagree
   on a consequential choice. The Mustajoki ingest: direct further questions
@@ -104,9 +112,9 @@ which reduces to a single measure.
 ## Worked case
 
 [Is a new Python version an improvement?](./python-release-worked-case.md)
-applies the definition to Python 3.11 over 3.10: one measure that favours the
-step, three that do not, and how deciding which are reasonable gives the
-verdict.
+runs the process on Python 3.11 over 3.10. It starts from the whole judgment,
+opens one branch after an objection, leaves one branch whole with a bound, and
+separates what evidence could settle from what stays a judgment about purpose.
 
 [Four further cases](./further-cases.md) differ from that one:
 
@@ -194,6 +202,8 @@ Raised by an agent (claude-fable-5-2); they await the operator's view.
   Two other bounds are available. The worked case uses the channels a change
   can act through. The irreversible-step case uses reversibility: the harm is
   limited to what accrues before the step is undone, if the harm is noticed.
+  Either one bounds a branch as a whole, which is what leaving it unopened
+  requires.
 - **Additivity is assumed almost everywhere.** If two gains overlap, or one
   effect grows with another, an additive score misstates the balance.
 - **Shared causes defeat counting.** In the routing example every loss comes
@@ -211,8 +221,9 @@ the answer.
 - The on-balance note, or a theory note linked from it, states the definition:
   improvement holds when every reasonable measure favours the step, no measure
   has to be chosen, and a weighting over measures adds nothing.
-- One worked comparison shows the three verdicts and where the membership of
-  one measure decides between them.
+- One worked comparison shows the process: one branch worth opening, one
+  worth leaving whole, and what remains a judgment about purpose after the
+  evidence is in.
 - The limits above are stated in the note or answered.
 - The claims taken from the sources are checked against the papers, with
   quotes retained in the ingests.

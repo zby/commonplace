@@ -1,142 +1,150 @@
 # Worked case: is a new Python version an improvement?
 
-Written 2026-11-21 by an agent (claude-fable-5-2) at the operator's request,
-to record how the definition would work on one case. The facts about Python
-3.10 and 3.11 are the four checks in the
+Written 2026-11-21 by an agent (claude-fable-5-2) at the operator's request.
+Rewritten the same day after a comment from Astra, to show the process and
+not only the result. The facts about Python 3.10 and 3.11 are the four checks
+in the
 [on-balance note](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md#a-release-judgment-python-311-over-310).
-Every number below is illustrative. Nothing here was measured.
+Every number and symbol below is illustrative. Nothing here was measured.
 
-## The definition applied
+The [workshop framing](./README.md#the-definition) gives the definition: a
+step is an improvement on balance when every reasonable measure favours the
+successor. This case shows how a judge gets there without listing the
+measures first.
 
-A step is an improvement on balance when, for every reasonable measure, the
-successor scores higher than the predecessor. No measure is selected. The
-[workshop framing](./README.md#the-definition) gives the definition
-and the reasons for it.
+## 1 — the whole judgment
 
-This case shows the definition working on one release: a measure that favours
-the step, measures that do not, and how deciding which of them are reasonable
-gives the verdict.
+Fix the comparison as the on-balance note does:
 
-## Step 1 — fix the comparison
+- **The alternative.** Python 3.11 against 3.10 as whole releases.
+- **Whose work.** People continuing application development.
+- **The period.** The time a project keeps running its code.
 
-The on-balance note asks three things before any measure is considered.
+The question is whether 3.11 is the better default. The first answer is given
+whole:
 
-- **The alternative.** Python 3.11 against 3.10 as whole releases. Nobody can
-  take the faster interpreter and keep the removed interface.
-- **Whose work.** People continuing application development. A project may
-  stay on 3.10 when it has a reason.
-- **The period.** The time the project keeps running its code.
+> Yes. Existing code runs faster without edits, and maintained projects get
+> library support they can use when they want it. Some projects are blocked
+> by a removed interface such as `inspect.getargspec`. Those projects can stay
+> on 3.10.
 
-The question is therefore: is 3.11 the better default?
+Nothing has been split yet. Three branches are visible: the gains, the blocked
+projects, and the hundreds of changes nobody listed.
 
-## Step 2 — one precise measure
+## 2 — an objection opens one branch
 
-Take one simple measure. For each project, add up what the default costs or
-saves over the period, in hours.
+The objection: "You are understating the cost to blocked projects. Staying on
+3.10 avoids a broken deployment, but finding out that you are blocked costs
+time."
 
-- A project that moves cleanly gains $g$: faster runs, and library support
-  such as `asyncio.TaskGroup` and `tomllib` when it wants them.
-- A project with a blocking dependency, such as a call to the removed
-  `inspect.getargspec`, loses $L$ if it moves and breaks.
-- A share $p$ of projects is blocked.
+This names a branch and says what is wrong with it. So that branch is opened.
+The loss to a blocked project splits into two parts:
 
-Under this measure 3.11 is the better default when $(1-p)\,g > p\,L$. The
-break-even ratio is $L/g = (1-p)/p$. With one project in ten blocked, that is
-nine: the same shape as the 90/10 example in the note.
+- **Discovery.** Every project that checks its dependencies pays a cost $c$,
+  blocked or not.
+- **Breakage.** A project that moves without checking, and is blocked, loses
+  $L$.
 
-We never have to say what $g$ is. Any $g$ and $L$ on the right side of the
-boundary give a precise measure that favours 3.11. This shows that such
-measures exist. It does not yet show an improvement.
+The split brings a constraint the whole judgment did not have: a project that
+checks first never pays $L$. With a share $p$ of projects blocked and a gain
+$g$ for a clean move, the default wins when
 
-## Step 3 — a measure that says the opposite
+- $(1-p)\,g > c$ for projects that check, and
+- $(1-p)\,g > p\,L$ for projects that do not.
 
-Existence is not enough. Other measures show that 3.11 is worse:
+The second has a break-even ratio $L/g = (1-p)/p$. With one project in ten
+blocked that is nine, the shape of the 90/10 example in the note.
 
-- **Count only the worst-off project.** One project whose essential dependency
-  cannot be repaired loses everything. Under this measure 3.10 wins.
-- **Set $L$ very high.** If a broken deployment costs a week, the boundary is
-  crossed at a small $p$.
-- **Serve a different group.** For someone running old scripts unchanged, 3.11
-  offers little and risks breakage.
+**What the split changed.** The estimated loss. For projects that check, it
+fell from $L$ to $c$. Evidence can now settle things it could not before: how
+many projects are blocked, what a check costs, and how many projects cannot
+run one.
 
-If one reasonable measure favoured 3.11 and another favoured 3.10, the
-verdict would be "open". So the next step is to ask which of these measures
-are reasonable.
+**What the split did not change.** Whether the loss of the worst-off project
+should govern the choice of a default. No measurement answers that. It is a
+judgment about purpose, taken up in step 5.
 
-## Step 4 — which measures are reasonable
+Note that $p$ appears on both sides. The gain is scaled by $1-p$ and the loss
+by $p$. Reporting "the gain is somewhere in this range" and "the loss is
+somewhere in that range" separately would hide that they move together.
 
-Each measure gets one question: is it reasonable for this purpose? Nobody
-asks how much each measure should count.
+## 3 — a branch left whole, with a bound
 
-- **The worst-off measure is not reasonable here.** The purpose is to choose a
-  default. A project with an unrepairable dependency can stay on 3.10. The
-  measure charges 3.11 with a loss that the default does not impose.
-- **The different-group measure answers a different question.** It is
-  reasonable for running archived scripts. Step 1 already said whose work
-  this comparison serves.
-- **The high-$L$ measure is reasonable only without a check before moving.**
-  The note points out that a removed interface can be found by testing the
-  application's dependencies first. With that check, a blocked project pays
-  the cost of the check, $c$, and stays. The condition becomes
-  $(1-p)\,g > c$.
+A release changes hundreds of things. The note checks four. Nobody opens this
+branch change by change. It can stay whole because its combined loss has a
+bound that does not depend on counting the changes:
 
-After these three judgments, every measure left in the set favours 3.11 unless
-almost every project is blocked or the check costs more than the gain. The
-verdict is "improvement": the inequality holds for every reasonable measure.
+- **The channel.** A changed interface can affect a project only if the
+  project, or one of its dependencies, uses it.
+- **The check.** Running the project's tests on 3.11 exercises the interfaces
+  it uses.
+- **The way back.** A project that moved can return to 3.10 until it starts
+  using features that only 3.11 has.
 
-No weighting over measures was needed. Each judgment was yes or no, and each
-was made only because it could flip the verdict. Any weighted average of the
-remaining measures also favours 3.11, so the verdict does not depend on how
-they would be combined.
+So the loss from unlisted changes is at most what slips past the project's
+tests and accrues until it is noticed. That bound is small against a gain
+that repeats on every run.
 
-## Step 5 — when membership is contested
+The contrast matters. Saying "none of these several hundred changes could
+outweigh the gain by itself" would be no warrant, because together they
+might. The warrant is the bound on the branch as a whole.
 
-Someone can contest a judgment from step 4. For example: "many projects cannot
-run a dependency check, so the high-$L$ measure stays in." That dispute matters
-because it could reverse the verdict. It is settled by evidence about those
-projects, or it leaves the verdict open for them.
+What stays open inside the branch: behaviour that changed without a listed
+removal, that no test covers, and that fails silently.
 
-A dispute that could not reverse the verdict is not pursued. There is no
-further level to climb: the dispute is about whether one measure belongs in
-the set.
+## 4 — a branch not opened at all
 
-## Step 6 — the effects nobody listed
+The gains are not split or sized. The speed-up needs no source edit, and the
+new library support is optional. No part of that branch is a loss. For the
+parent, the direction is enough, unless the loss side comes close to the
+break-even point. Then the size of $g$ would matter and the branch would be
+opened.
 
-A release changes hundreds of things. The note checks four. The omitted ones
-are handled by an argument about channels, not by counting:
+## 5 — what remains a judgment about purpose
 
-- A changed interface can affect a project only if the project or one of its
-  dependencies uses it.
-- Removals and deprecations are listed in the release notes.
-- Running the project's tests on the new version exercises the interfaces it
-  uses.
+After step 2 the evidence questions are separate from one that evidence cannot
+settle: which measures are reasonable for choosing a default. Three measures
+favour 3.10:
 
-So the reach of the unlisted changes is bounded by what the project calls, and
-most of it is found before moving. What stays open is behaviour that changed
-without a listed removal and that no test covers.
+- **Count only the worst-off project.** Not reasonable here. The purpose is to
+  choose a default, and a project with an unrepairable dependency can stay on
+  3.10. The measure charges the default with a loss the default does not
+  impose.
+- **Serve people running old scripts unchanged.** Reasonable for that purpose,
+  and a different question from the one fixed in step 1.
+- **Set $L$ very high.** Reasonable only for projects that cannot check before
+  moving. For the rest, step 2 replaced $L$ by $c$.
+
+With those judgments made, every remaining measure favours 3.11 unless almost
+every project is blocked or a check costs more than the gain. The verdict is
+"improvement". Any weighted average of the remaining measures agrees, so
+nobody has to say how they would be combined.
+
+For a team that cannot check before moving, reasonable measures split. The
+verdict for that team is "open". It can still adopt 3.11 as a decision; it
+should not report a demonstrated improvement.
 
 ## What the case shows
 
-- **No measure was defined.** The verdict needed the boundary and a judgment
-  about which side the plausible values fall on.
-- **Judgment entered in two places.** Step 1 chose whose work counts. Step 4
-  chose which measures are reasonable for that purpose.
-- **The evidence does not carry the whole verdict.** The four checks show that
-  each kind of gain and loss is real. They do not give $p$. The note says so:
-  the checks are "not a survey of how often each reason applies". The verdict
-  rests on the judgment that blockers are not widespread, and the note states
-  what would overturn it.
-- **Disagreement leaves the verdict open.** If reasonable measures split, for
-  instance for a team that cannot test before moving, weighting them is the
-  same act as choosing one measure. That is a value judgment for that team.
-  The step can be taken as a decision. It should not be reported as a
-  demonstrated improvement.
+- **The judgment started whole.** No measure and no list of effects came
+  first.
+- **One branch was worth opening.** An objection named it, and the split
+  brought a constraint that changed the estimated loss.
+- **One branch was worth leaving whole.** Its combined loss had a defensible
+  bound.
+- **One branch needed only a direction.**
+- **Evidence and purpose came apart.** After the split, it is clear what a
+  survey of projects could settle ($p$, $c$, how many cannot check) and what
+  stays a judgment (whose loss governs a default).
 
 ## Open
 
-- The measure in step 2 is additive. A project whose gains depend on each
-  other, or whose one failure blocks everything else, does not fit it.
+- The four checks in the note do not give $p$. The note says they are "not a
+  survey of how often each reason applies". The verdict rests on the judgment
+  that blockers are not widespread.
 - "Reasonable for this purpose" was argued case by case. The workshop has no
   general test for it.
-- This is one agent's reconstruction. Nobody else has checked whether a
-  different reasonable measure survives step 4 and favours 3.10.
+- The formulas add gains and losses across projects. A project whose one
+  failure blocks everything else does not fit them.
+- This is one agent's reconstruction. Nobody else has checked whether another
+  reasonable measure survives step 5 and favours 3.10.
