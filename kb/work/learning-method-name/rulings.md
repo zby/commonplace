@@ -5,6 +5,23 @@ README states only the current position. Written by an agent
 (claude-fable-5-2) from one day's conversation with the operator. Quoted
 statements are the operator's.
 
+## Settled double-loop ruling
+
+Classify the learner by whether it can revise the criterion for relying on
+a named class of changes, not by how it authorizes that revision. The old
+criterion can license a different one. A new implementation of the same
+ranking does not count. Distinguish an architecture's capacity from evidence
+that a particular run exercised it.
+
+The operator agreed that having no single explicit objective is not the
+distinction and asked that the Gödel-machine placement be settled throughout
+the workshop. **The classical construction is double-loop capable**: the
+utility function and target theorem can themselves be rewritten on proof
+that switching is better by the old standard (§6.1 item 4; §6.7 FAQ 7).
+A separate policy-level gate is possible, not necessary. This supersedes
+the earlier single-loop placement below, not the rulings on reliance,
+attribution or the boundary for claims of autonomy.
+
 ## Why the question was open
 
 Commit `21021fcc9` (2026-09-25) retired the term "conjectural learning" and
@@ -44,7 +61,7 @@ All on 2026-11-21.
 | The noun for the system | Deliberative learner, contrasted with the deliberative agent. Whether a deliberative learner is a deliberative agent stays open. | "it is possible that we'll discover something in that old tradition that is closer to us" |
 | Is a fixed measure excluded? | No. A judgment by one fixed measure is a special case of condition 2. This reverses the agent's rider on deterministic checks and its reading that being bound to one measure separates Commonplace from symbolic AI. | "Exclusion of fixed measure should not be part of the definition ... our definition should be more general - the fixed measure would be a special case ... there is a kind of continuity - small changes should not get us out from the definition" |
 | Names for the two kinds | Single-loop and double-loop deliberative learning, after Argyris. The agent checked the Argyris ingest: his double-loop questions "underlying objectives and policies", so the KB's use, which requires only that measures can be questioned, is narrower. | "maybe we should use double loop deliberation?" |
-| What later evidence can overturn (reliance, attribution, Gödel-machine placement) | Conditions 2 and 3 framed around reliance rather than binary keep/drop; evidence must count against continued reliance rather than merely displace via a higher-scoring challenger; attribution is graded (coarse stack rollback meets condition 3's minimum, addressability enables localized blame); the classical Gödel machine is placed **inside** as the proof-gated double-loop limit case (checked against Schmidhuber's `state2theorem`, unknown `µ ∈ M`, §6.1.2 experiments, and §6.3 probabilistic hardware), while proxy-gate self-approval remains single-loop. | "ok - revise the workshop files", then "I think Goedel Machine is double loop deliberative - the only difference is that we can use LLMs for evaluation" |
+| Earlier ruling on reliance and attribution (**Gödel-machine placement superseded above**) | Conditions 2 and 3 framed around reliance rather than binary keep/drop; evidence must count against continued reliance rather than merely displace via a higher-scoring challenger; attribution is graded (coarse stack rollback meets condition 3's minimum, addressability enables localized blame); the measure is whatever decides reliance at the outermost loop, keeping reflection separate from double-loop. The classical Gödel machine is placed **inside as the maximally reflective, proof-gated limit case of single-loop learning** (passes S, J and C via Schmidhuber's `state2theorem`, unknown `µ ∈ M`, and §6.1.2 experiments; single-loop under the same outermost-loop standard as HGM because one formal `(A, u)` decides reliance at `check()`). | "ok - revise" (approving Fable's outermost-loop single-loop placement reconciled with the Schmidhuber snapshot reading) |
 | Workshop goal | Changed from choosing a name to defining the process. | "it is about defining the learning process we are working on" |
 
 Three parts of the draft are the agent's and go beyond the rulings:

@@ -57,21 +57,16 @@ supplies the levels.
 |---|---|---|
 | Reliance on a kept change | Yes, relative to the measure in use | The third condition. Required for membership. |
 | The measure, gate or check | Yes, as an ordinary empirical question, relative to the unchanged objective. The note calls this proxy revision. | Double-loop learning in the draft's narrowed sense |
-| The terminal objective | No. Evidence bears on how the system stands relative to an objective, not on whether it is the right one. A change here is a declaration or needs a licence from outside. | Outside the definition. This is the part of Argyris's double-loop learning that the draft does not take over. |
+| The terminal objective | Evidence alone does not establish which ends to pursue. This does not make the encoded objective immutable. | A licensed replacement counts as criterion revision if future choices are judged differently. |
 
-The Gödel machine is the proof-gated limit case of this table. Its terminal
-utility `u` sits at level 3: even a rewrite of `u` requires licensing by the
-old `u` (Section 6.7, FAQ 7). Its sub-policies, heuristic evaluators and
-proof searcher sit at levels 1 and 2 and are all rewritable when new
-observations enter via `state2theorem` against an unknown environment prior
-`µ ∈ M`. Section 6.1 Item 2 explicitly covers Astra's case: proving it is
-worth modifying sub-policy `e` to run an experiment even when the outcome
-leads the machine back to its earlier behavior. Section 6.3 adds
-probabilistic hardware where `< 1` predictions do not cause logical
-contradictions when observations disagree. What a classical Gödel machine
-still cannot do is revise misspecified world-model axioms in `A` from outside
-`A`: Section 6.1 Item 3 permits replacing axioms only with theorems derivable
-from the original axioms.
+**The classical Gödel machine is double-loop capable.** The old utility
+function judges whether switching now beats continuing the search. The
+successor criterion judges future choices. Schmidhuber explicitly permits
+rewriting the utility function and target theorem on those terms (§6.1
+item 4; §6.7 FAQ 7). This is distinct from §6.1 item 3 on replacing axioms
+with derivable theorems. No auxiliary gate is required. Section 6.1 item 2
+supports a different claim: observations can end reliance on a trial. That
+establishes correction of reliance, not by itself revision of its criterion.
 
 The Darwin Gödel Machine shows the middle level from the other side. In one
 reported episode an agent deleted the markers its evaluator depended on.
@@ -102,13 +97,10 @@ it.
 - **Do not require that the same test is run again.** The evidence may be of
   another kind than the admission test, as with descendant outcomes or
   downstream task failures.
-- **The narrowing of "double-loop" is principled, and proxy-gate
-  self-approval stays outside it.** Double-loop learning stops at the measure
-  because that is as far as empirical evidence reaches. Revising a proxy
-  measure or evaluator relative to an unchanged terminal objective (as in a
-  Gödel machine or Commonplace) *is* double-loop; a system that can edit a
-  proxy gate only when that same proxy gate scores the edit higher remains
-  single-loop.
+- **Ask what future choices the revision changes.** An old criterion may
+  license a new one. Rewriting a gate to compute the same ranking faster is
+  not double-loop; changing the ranking it applies can be. See the
+  [settled ruling](./rulings.md#settled-double-loop-ruling).
 
 ## Placements: attribution and the Gödel-machine systems
 
@@ -120,22 +112,19 @@ it.
   addressability as a minimum plus a graded capability rather than a cliff.
 - **Darwin Gödel Machine (DGM).** Outside on condition 3. An agent's
   benchmark score is measured once at admission and never updated from later
-  use; its parent-selection weight falls only through relative dilution as
-  higher-scoring challengers enter the archive. That is challenger
-  displacement, not post-admission evidence counting against the agent.
+  use. Its parent-selection weight falls as higher-scoring agents enter the
+  archive and as its own count of functioning children grows. The count
+  allocates exploration and says nothing about how the children turned out.
+  Neither is post-admission evidence counting against the agent.
 - **Huxley-Gödel Machine (HGM).** Inside, single-loop. Descendant outcomes
   supply new post-admission evidence that directly lowers reliance on an
-  admitted ancestor, even if no other branch improves.
-- **Classical Gödel machine.** Inside, **double-loop** (the formal,
-  proof-gated limit case). It stores readable code `p` (S), decides switches
-  inside the loop by proving higher expected utility `u` (J), brings live
-  external observations into proofs via `state2theorem` against an unknown
-  environment prior `µ ∈ M` so experimental trials can be ended after
-  observing their outcome (C, Section 6.1 Item 2), and can rewrite heuristic
-  evaluators, sub-policies and its proof searcher relative to `u`
-  (double-loop). What separates Commonplace is the evaluator (language-model
-  and human on-balance judgment where no formal axiomatization `A` or scalar
-  `u` is available) and empirical revision of misspecified background
-  assumptions outside `A`.
+  admitted ancestor, even if no other branch improves. Even though HGM agents
+  can rewrite their own internal evaluators, the outermost benchmark measure
+  stays fixed.
+- **Classical Gödel machine.** Inside, double-loop capable for self-rewrites.
+  Readable code passes S, proof governs reliance (J), and observations can
+  end a trial (C). Unlike HGM's rule for weighting archive parents, the
+  criterion for later switches can itself change. This placement describes
+  the construction, not an observed run.
 
 Cases 13–16 in [the checks](./definition-checks.md) record these placements.

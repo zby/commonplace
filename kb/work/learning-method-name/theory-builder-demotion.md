@@ -23,10 +23,10 @@ standing problem for us that we could not define what learning means here".
   behind "learns". [The draft](./draft-definition.md) defines "learned".
 - **It covers all of Commonplace's learning.** The theory builder covers
   stated theories. Deliberative learning covers any retained change.
-- **It puts the distinguishing property in the definition.** A judgment
-  inside the loop that is not bound to one measure separates Commonplace from
-  model training and from symbolic learners. The theory-builder definition
-  does not say that.
+- **It separates the process from Commonplace's conjecture.** The process
+  admits both symbolic and language-model judges. What needs testing is
+  whether a language model reliably revises misleading criteria when no
+  adequate formal test is known in advance.
 - **The research question is simpler to state.** Before: can a theory builder
   running on fixed-weight LLMs learn? After: can a language model run the
   outermost loop of deliberative learning well enough?
@@ -77,7 +77,7 @@ later outcomes, the same builder is a single-loop deliberative learner.
 reading the kinds still overlap without containment, and the excluding
 condition is the third. The prompt example still shows the other direction.
 
-**Neon's position on the relation**, relayed on 2026-11-21 and not yet
+**Historical position, not the [criterion for double-loop](./rulings.md#settled-double-loop-ruling): Neon's position on the relation**, relayed on 2026-11-21 and not yet
 checked against the builder's boundary cases: every continuing theory
 builder with a text store is a deliberative learner. A non-reflective
 builder corresponds to single-loop learning and a reflective builder to

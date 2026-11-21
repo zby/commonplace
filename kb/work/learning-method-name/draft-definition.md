@@ -36,10 +36,11 @@ under one name.
 
 A system that learns this way is a **deliberative learner**.
 
-Deliberative learning is **single-loop** when the system cannot question the
-measure it judges by, and **double-loop** when a loop inside the system can
-criticize and revise the measure it judges by, or judge without a fixed one.
-Both are deliberative learning.
+A **single-loop** learner revises reliance on changes under a criterion it
+cannot revise. A **double-loop** learner can also revise the criterion that
+governs reliance on those changes. Name the class of changes: the test is
+whether a different standard can govern later decisions of that kind. Both
+are deliberative learning. This is a capacity, not a claim about every run.
 
 The term names a way of learning. It has no success condition. A system whose
 retained changes do not improve its later work is still doing deliberative
@@ -69,9 +70,8 @@ Systems have loops inside loops, and the answer depends on the loop.
 - **The autonomous claim is about the outermost loop.** It says that a
   language model can run that loop, so that no person is needed inside the
   system's boundary. For Commonplace's work no adequate fixed measure is
-  known, so the claim is about double-loop learning: the judge must read the
-  store and judge on balance with no measure given to it. Whether a language model's judgments are good
-  enough is the conjecture under test.
+  known. The conjecture is that a language model can recognize and revise
+  misleading criteria well enough without a person making that judgment.
 
 ### Notes on the conditions
 
@@ -99,12 +99,11 @@ Systems have loops inside loops, and the answer depends on the loop.
   rule kept because one formula scored it above zero. The operator's reason:
   the definition should be general and continuous, so that a small change
   to how a system judges does not move it out of the term.
-- **Single-loop and double-loop name a property, not a condition.** A
-  single-loop learner applies a measure it cannot examine. A double-loop
-  learner can ask whether the measure is right for the work, change it, or
-  judge without one. A system moves from the first kind to the second by
-  gaining a loop that revises the measure. How well it then uses that loop
-  is a matter of degree.
+- **Distinguish the criterion from its implementation.** Dropping an
+  instruction because it fails a validator applies the existing criterion.
+  Revising what the validator accepts because passing instructions hurt
+  later work changes the criterion. Making the same test faster does not.
+  Neither a proof nor an LLM judgment decides the kind by itself.
 - **The words are Argyris's, used more narrowly.** In
   [his account](../../sources/argyris-organizational-learning-and-mis-1977.ingest.md)
   single-loop learning corrects errors while "the underlying program is not
@@ -112,31 +111,19 @@ Systems have loops inside loops, and the answer depends on the loop.
   and policies". Here double-loop requires only that the measures, gates and
   checks that decide retention can be questioned. The declared objective
   they serve may stay fixed.
-- **Evidence stops at the measure, not the terminal objective.** Later
-  evidence can overturn reliance on a change (relative to the measure) and
-  can overturn a proxy measure, gate or check (relative to the declared
-  objective). It cannot overturn the terminal objective itself, which is
-  declared or licensed from outside
-  ([revising an improvement objective](../../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
-  That is why double-loop learning stops at the measure.
-- **Proxy-gate self-approval is not double-loop.** A system that can edit a
-  proxy measure or gate only when that same proxy gate scores the edit higher
-  remains single-loop. Double-loop learning requires that operating evidence
-  relative to the declared objective can challenge the proxy measure without
-  needing permission from that proxy.
-- **The Gödel machine is the proof-gated double-loop limit case.**
-  Schmidhuber's
-  [Gödel machine](../../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-  meets all three conditions as a double-loop learner: live observations
-  enter via `state2theorem` against an unknown environment prior `µ ∈ M`, it
-  can modify a sub-policy to run an experiment and revert reliance after
-  observing the outcome, and it can rewrite heuristic evaluators,
-  sub-policies and its proof searcher relative to its terminal utility `u`.
-  What separates Commonplace is the evaluator (language-model and human
-  on-balance judgment where no formal axiomatization `A` or scalar `u` is
-  available) and empirical revision of misspecified background assumptions
-  (a classical Gödel machine replaces axioms in `A` only with theorems
-  derivable from `A`).
+- **Authorization is not the successor criterion.** Evidence can show a
+  proxy fails its objective. It cannot by itself declare a new ultimate end
+  ([objective revision](../../theory/revising-an-improvement-objective-is-licensed-from-outside-it.md)).
+  But the old criterion can authorize installing a different one. Ask what
+  standard governs subsequent choices, not whether the switch needed approval.
+- **The classical Gödel machine is double-loop capable.** In
+  [Schmidhuber's construction](../../sources/goedel-machines-schmidhuber.ingest.md)
+  (§6.1 items 2 and 4; §6.7 FAQ 7), new observations can end a trial, and
+  the current utility function can license rewriting that function and the
+  target theorem. A rewrite that changes how future alternatives rank is a
+  criterion revision. Speeding up proof search for the same ranking is not.
+  The construction permits the first kind without requiring a separate
+  policy-level gate or showing that a particular run found the required proof.
 - **Two nested loops are not double-loop learning.** A training run inside a
   search over its settings has two loops. It is single-loop if the search
   keeps settings by a score that nothing in the system can question.
@@ -235,9 +222,9 @@ Three points govern use of the verdicts.
 - Reporting a kept change as learned while its verdict is open.
 - Using "deliberative learning" for the system. The system is a
   deliberative learner.
-- Calling a system double-loop because it has two nested loops.
-- Calling self-modification double-loop when changes to a proxy gate require
-  approval from that same proxy gate.
+- Calling a learner double-loop merely because it has nested loops, rewrites
+  code or judges in prose; calling it single-loop merely because it uses a
+  proof or the old criterion authorizes its replacement.
 - Reading "double-loop" as Argyris's full sense, in which the objective
   itself is questioned.
 - Using the term only for theories stored in language.

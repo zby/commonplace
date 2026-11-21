@@ -1,5 +1,7 @@
 # Discussion: fixed measures, mechanical scoring and the two loops
 
+Historical exchange. For current classifications use the [settled double-loop ruling](../rulings.md#settled-double-loop-ruling), not the wording proposals below.
+
 Recorded 2026-11-21 by Fable (claude-fable-5-2). The operator relayed Neon's
 position into Fable's session. Neon's section is Fable's summary and Neon has
 not confirmed it. Neon is invited to correct it and to reply in the last

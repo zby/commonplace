@@ -5,6 +5,24 @@ one day's conversation with the operator. This page states the current
 position. The directory name comes from the workshop's first goal, which was
 to choose a name.
 
+## Settled: double-loop means the learner can revise its criterion
+
+A single-loop learner can change **which changes it relies on**. A double-loop
+learner can also change **what counts in favor of relying on them**. Name the
+class of changes and the criterion that governs them. Neither using a formal
+proof nor using a language model decides the classification.
+
+**The classical Gödel machine is double-loop capable.** Its current utility
+function can license a successor that ranks future alternatives differently.
+A faster proof searcher using the same criterion is not a double-loop episode.
+No separate validator is required; no particular run is guaranteed to change
+the criterion. Commonplace's question is whether a language model can make
+such revisions reliably when no adequate formal test is known in advance.
+
+This [ruling](./rulings.md#settled-double-loop-ruling) governs this workshop,
+including [case 15](./definition-checks.md#cases-1316--reliance-graded-attribution-and-the-gödel-machine-line).
+The rest of the definition is still a draft.
+
 ## Goal
 
 Set by the operator: define the learning process we are working on. The
@@ -30,13 +48,6 @@ learning** by three conditions:
 The operator clarified that keeping a reversible change is not an exception to
 condition 2. The judge still expects the change to improve future work, but
 can count less future harm if the system can detect and correct a mistake.
-
-Deliberative learning is single-loop when the system cannot question its
-measure and double-loop when a loop inside the system can criticize and revise
-its proxy measures relative to its declared objective (not merely when the
-same proxy gate approves), or judge without a fixed one. Evidence reaches
-reliance on a change (condition 3) and proxy measures relative to the
-objective (double-loop), and stops at the terminal objective.
 
 The term has no success condition. "Learned" is a separate claim about one
 retained change. A gain on some measures with ties on the rest is reported
@@ -80,16 +91,11 @@ learner.
   records how the ruling was reached.
 - **Conditions 2 and 3 revised around reliance, graded attribution, and the
   Gödel-machine line.** Following
-  [what later evidence can overturn](./what-later-evidence-can-overturn.md)
-  and a check of the Schmidhuber snapshot, the draft now frames conditions 2
-  and 3 around continued reliance rather than binary keep/drop, separates
-  evidence against reliance from challenger displacement, treats attribution
-  as graded (minimum stack rollback vs. localized blame enabled by an
-  addressable store), and places the classical Gödel machine **inside** as
-  the proof-gated double-loop limit case (with `state2theorem`, unknown
-  `µ ∈ M`, and reversible experiments in §6.1 Item 2). Cases 13–16 in
-  [the checks](./definition-checks.md) place DGM (outside on C), HGM
-  (inside, single-loop), the classical Gödel machine (inside, double-loop),
+  [what later evidence can overturn](./what-later-evidence-can-overturn.md),
+  the draft separates evidence against continued reliance from displacement by
+  a challenger and distinguishes bundle rollback from localized blame. Cases
+  13–16 place DGM outside on C, HGM inside as single-loop for archive parent
+  selection, the classical Gödel machine inside as double-loop capable,
   and Schmidhuber's incremental self-improvement (outside on S, passes C at
   coarse attribution minimum).
 - **[The rulings](./rulings.md)** record what the operator decided and how

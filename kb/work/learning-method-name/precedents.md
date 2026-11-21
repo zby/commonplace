@@ -32,10 +32,10 @@ a system is single-loop or double-loop, not whether it is a member.
   by a judgment of their utility and corrects that judgment from use.
 - **Soar's chunking is outside.** It keeps every chunk, so no judgment
   decides retention and none can be found wrong.
-- **No ingested program is a double-loop learner, except partly EURISKO.**
+- **Do not infer a survey-wide negative from this table.** The classical Gödel machine, treated separately in [case 15](./definition-checks.md), is double-loop capable.
 - **EURISKO is the nearest program and is not yet checked.** Its judging
-  heuristics are in the store and open to change. Whether that amounts to an
-  on-balance judgment, or to one worth number under changing rules, needs a
+  heuristics are in the store and open to change. Whether it can change which alternatives it favors, rather than update their
+  worth under the same criterion, needs a
   boundary case in [the checks](./definition-checks.md).
 - **The system together with its designers always meets the definition.**
   Minton chose and revised PRODIGY's formula. Lenat corrected EURISKO. This
