@@ -64,7 +64,7 @@ It is not enough that some reasonable measure favors the step. Another reasonabl
 
 Purpose enters when we decide which measures are reasonable. The two purposes for the library admit different measures, and each gives a definite answer. Excluding a measure takes an argument from purpose. For the choice of a default Python release, a measure that counts only the worst-off project is not reasonable, because a project with an unrepairable dependency can stay on 3.10. The same kind of measure would be reasonable where the people harmed cannot avoid the loss.
 
-An open verdict does not forbid the step. We can still take it as a decision, as the deletion rule below shows. We should then report a decision and not a demonstrated improvement. If we can recognize and correct a mistake, [reversibility can change the judgment itself](./reversibility-can-favour-a-change-by-limiting-future-loss.md) by limiting losses to later work.
+An open verdict does not forbid the step. We can still take it as a decision, as the deletion rule below shows. We should then report a decision and not a demonstrated improvement. If we can recognize and correct a mistake, [reversibility can change the judgment itself](./reversibility-can-favor-a-change-by-limiting-future-loss.md) by limiting losses to later work.
 
 ## What Commonplace chooses to count
 

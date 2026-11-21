@@ -956,6 +956,7 @@ plugins:
         'theory/frontloading-is-partial-evaluation-not-divide-and-conquer.md': 'theory/frontloading-can-specialize-instructions-around-known-inputs.md'
         'theory/opacity-is-a-scale-threshold.md': 'theory/opacity-depends-on-the-inspection-question-and-budget.md'
         'theory/opacity-is-the-lack-of-a-known-near-decomposition-for-the-question.md': 'theory/near-decomposability-may-make-local-inspection-affordable.md'
+        'theory/reversibility-can-favour-a-change-by-limiting-future-loss.md': 'theory/reversibility-can-favor-a-change-by-limiting-future-loss.md'
         'theory/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md': 'theory/system-use-provides-evidence-of-theory-fit-not-an-independent-test.md'
         'theory/two-context-boundaries-govern-collection-operations.md': 'theory/areas-exist-because-useful-operations-require-reading-notes-together.md'
         'theory/two-context-boundaries-govern-operations-on-read-together-note-sets.md': 'theory/areas-exist-because-useful-operations-require-reading-notes-together.md'

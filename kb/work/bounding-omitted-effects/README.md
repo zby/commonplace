@@ -137,7 +137,7 @@ separates what evidence could settle from what stays a judgment about purpose.
   If the team can detect a mistake and undo the step, it can avoid later
   losses. It still counts the harm already done and the cost of going back.
 
-The library companions now cover [how an objection can direct a comparison](../../theory/an-objection-can-show-where-to-split-an-on-balance-judgment.md) and [when reversibility limits future loss](../../theory/reversibility-can-favour-a-change-by-limiting-future-loss.md). The Python companion does not claim that tests and rollback bound silent failures.
+The library companions now cover [how an objection can direct a comparison](../../theory/an-objection-can-show-where-to-split-an-on-balance-judgment.md) and [when reversibility limits future loss](../../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md). The Python companion does not claim that tests and rollback bound silent failures.
 
 ## Support from sources
 

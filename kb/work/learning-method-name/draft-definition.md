@@ -95,7 +95,7 @@ Systems have loops inside loops, and the answer depends on the loop.
   can recognize the mistake and remove the instruction, fewer later tasks
   need suffer it. That prospect can tip the judgment in favour of keeping
   the instruction now. It is not evidence that the instruction has improved
-  later work. See [how reversibility limits future loss](../../theory/reversibility-can-favour-a-change-by-limiting-future-loss.md).
+  later work. See [how reversibility limits future loss](../../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md).
 
 ### When a change was learned
 
