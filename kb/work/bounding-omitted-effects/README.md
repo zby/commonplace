@@ -8,7 +8,7 @@ goal below.
 
 Give the [on-balance account of improvement](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 the support it needs to serve as a definition of improvement, and so as the
-success condition for learning. [Naming the learning method](../learning-method-name/README.md)
+success condition for learning. [Defining the learning process](../learning-method-name/README.md)
 depends on the result.
 
 ## The definition
@@ -104,6 +104,11 @@ and dropping it, and the point that splitting alone buys nothing are Astra's.
   for another judgment on a familiar pair when the remaining models disagree
   on a consequential choice. The Mustajoki ingest: direct further questions
   to the comparisons that remain open.
+
+[The learning-process workshop](../learning-method-name/README.md) calls this
+process deliberation, and keeps "on balance" for the verdict it reaches. Its
+draft defines deliberative learning as learning in which this process decides
+what is retained.
 
 This recursion runs downward, into the parts of one comparison. It is
 different from the measure over measures, which would have run upward and
@@ -227,8 +232,10 @@ the answer.
 - The limits above are stated in the note or answered.
 - The claims taken from the sources are checked against the papers, with
   quotes retained in the ingests.
-- The consequence for a learning claim is carried to the naming workshop if it
-  is still active.
+- The consequence for a learning claim is carried to the learning-process
+  workshop if it is still active. Done on 2026-11-21: its draft defines
+  "learned" by this workshop's definition and cites the irreversible-step
+  case.
 
 Then remove this directory and its active-list entry.
 

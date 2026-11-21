@@ -217,7 +217,7 @@ In each rule the support demanded rises as the step gets harder to undo.
   main ground for deciding while the verdict is open.
 - Reversibility supplies the bound on omitted effects that the statistical
   sources could not, under the three conditions above.
-- A possible link to the naming workshop, which is the agent's reading and
+- A possible link to the learning-process workshop, which is the agent's reading and
   not the operator's: conjecture and criticism works because a tentative
   theory is cheap to drop. A theory builder can act on open verdicts so long
   as its steps stay reversible. Retention that later work builds on makes a

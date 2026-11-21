@@ -1,321 +1,162 @@
-# Naming the learning method
+# Defining the learning process
 
-Posed 2026-11-21 by the operator. The framing below was written by an agent
-(claude-fable-5-2) from one conversation with the operator. The goal and the
-operator's statements are the operator's. The options and the recommendation
-are the agent's and await adoption.
+Posed 2026-11-21 by the operator. Written by an agent (claude-fable-5-2) from
+one day's conversation with the operator. Quoted statements are the
+operator's. Everything else is the agent's wording and awaits adoption. The
+directory name comes from the workshop's first goal, which was to choose a
+name. Earlier states of this framing are in the Git history.
 
 ## Goal
 
-Decide what Commonplace calls the method by which a theory builder acquires
-its theories. The operator's premise is that an on-balance judgment supplies
-the improvement function previously missing from the account of learning.
-When one version helps on many more tasks than it harms, a range of precise
-weights can favor it. If the judgment holds across the weights plausible for
-that work, we can recognize improvement without selecting an exact weight.
-This gives us grounds to call the process learning. The name remains open.
+Set by the operator: define the learning process we are working on. The
+definition has to say what the process is, cover all the learning that
+happens in Commonplace, and separate the process from the claim that a
+particular change was learned.
 
-The [definition workshop](../bounding-omitted-effects/README.md) has since
-made that premise precise. Its result is carried into the decision points
-[below](#state-after-the-definition-workshop-2026-11-21).
+## Result so far
 
-The operator's framing, in three statements from the conversation:
+[The draft definition](./draft-definition.md) defines **deliberative
+learning** by three conditions:
 
-- "We have retired conjectural learning. What is its replacement? I think we
-  need a name for the new training paradigm."
+1. **Legible store.** What is learned is kept as changes to a store that can
+   be read.
+2. **Judgment in the loop.** Each change is kept or dropped by an on-balance
+   judgment, made as a step of the learning loop and not bound to one measure
+   fixed beforehand.
+3. **Open to criticism.** The judgment is held as a conjecture and can later
+   be found wrong.
+
+The term has no success condition. "Learned" is a separate claim about one
+retained change, with the verdicts learned, not learned and open.
+
+No library file has been changed.
+
+## Why the question was open
+
+Commit `21021fcc9` (2026-09-25) retired the term "conjectural learning" and
+moved its consumers to the redefined
+[theory builder](../../theory/definitions/theory-builder.md). The reason
+given was that the new definition "has no success condition: whether a
+builder learns is the hypothesis under test." That left the system with a
+name and the process without one.
+
+The process could not be called learning while nobody could say what
+"improved" would be checked against. The
+[on-balance note](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+and [the definition workshop](../bounding-omitted-effects/README.md) supplied
+that: a step is an improvement on balance when every reasonable measure
+favours the successor. The operator's response to the objection that a name
+ending in "learning" asserts what the program is testing: "Didn't we just
+solve this problem?"
+
+## Rulings, in the order they were made
+
+All on 2026-11-21.
+
+| Question | Ruling | The operator's words |
+|---|---|---|
+| May the name say "learning"? | Yes. The name is a process name with no success condition, as "reinforcement learning" is. | Ruled with the first name choice. |
+| First name | Conjectural learning, later replaced. | "make it 'conjectural learning'" |
+| What "conjectural" refers to | The judgments of improvement, so that the term covers every kind of retained change. | "the other is about on balance judgements being conjectures. I think we want the second one - so that all learning that happens in Commonplace was under one umbrella" |
+| What distinguishes the process from model training | Legible storage makes it possible. The on-balance judgment inside the loop is the core. | "the difference from people judging models is that this is outside of the learning loop - in our case the on-balance judgement is inside. On balance judgement seems the core here" and "The legible store is what makes the on-balance judgement possible" |
+| Final name | Deliberative learning. "On balance" stays as the qualifier of the verdict. | "on-balance would fit - but on-balance is kind of not scientific", then "revise the draft to deliberative learning, keep on-balance" |
+| Basis of the word | Deliberation as the weighing of reasons, not the deliberative agent of agent architectures. | "we don't need deliberative agent definition for us" |
+| What distinguishes Commonplace | Language models make the judgments. | "we use LLMs to make these judgements" |
+| The autonomous judge | A language model. Nothing is said about size. | "a judgement machine that understands language (and code)"; "say language model and that is enough" |
+| Role of the sources | Background. The definition stands without them. | "it is good to have this as some kind of background - but I think we can define deliberative learning precisely enough for our uses" |
+| Reversibility | Not a condition. The third condition concerns the judgment. | "we do delete stuff - so it is not that everything is reversible" |
+| Deterministic checks | They meet the second condition. | "on-balance judgement can contain a simple deterministic judgement as a degenerate case" |
+| Which loop | A claim names a system and its store. The conditions are checked on the outermost loop the system runs itself. | "I fully agree with your assessment" |
+| Workshop goal | Changed from choosing a name to defining the process. | "it is about defining the learning process we are working on" |
+
+Three parts of the draft are the agent's and go beyond the rulings:
+
+- **The rider on deterministic checks.** The claim that one measure is enough
+  for a question must itself stay open. Without it, a symbolic system bound
+  to one formula would meet the definition.
+- **The distinction between "on balance" and "deliberation".** "On balance"
+  qualifies the verdict. "Deliberation" names the process that reaches it.
+  *Deliberare* is derived from *libra*, a pair of scales, so the two words
+  share an image. The operator asked for the etymology to be checked and
+  used.
+- **What "learning" adds to deliberation.** The sources on deliberation do
+  not cover keeping the outcome or correcting it from later evidence. Those
+  are the first and third conditions.
+
+## The comparison with symbolic AI
+
+The operator's account, now background in the draft:
+
 - "What is being learned is kind of what symbolic AI did, but we have a new
   method of doing it."
-- On the objection that a name ending in "learning" asserts what the program
-  is testing: "Didn't we just solve this problem?" The reference is to
-  [on-balance judgments can guide improvement without a global measure](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+- The on-balance definition of improvement "would work for symbolic AI as a
+  definition, but it might be unworkable in practice."
+- A symbolic system would have trouble even with single cases. For a new
+  Python release it could run tests, but it would need an enormous test
+  array. People judge on balance inside single cases too.
 
-## Why the question is open now
+The agent recalled three claims about symbolic learners from memory. The
+[Minton ingest](../../sources/minton-utility-of-ebl-aaai88.ingest.md)
+corrected two. PRODIGY did not keep every learned rule, and its utility
+estimate was revised from use. What was fixed was the measure: one formula in
+one unit. So a judgment inside the loop does not by itself separate
+Commonplace from symbolic AI. Being bound to one measure does.
 
-**What the September retirement did.** Commit `21021fcc9` (2026-09-25) deleted
-`kb/notes/definitions/conjectural-learning.md` and moved its consumers to the
-redefined [theory builder](../../theory/definitions/theory-builder.md). The
-workshop that did it, `theory-builder-from-popper`, gave this reason: the new
-definition "has no success condition: whether a builder learns is the
-hypothesis under test." Its framing is readable with
-`git show 301114320^:kb/work/theory-builder-from-popper/README.md`.
+## Sources
 
-**What the retirement left without a name.** The system has a registered name.
-The method does not. The lead article calls the paradigm "theory building" in
-one section. That term is in no vocabulary table and has no entry in the
-[collision ledger](../../reference/vocabulary-collision-ledger.md).
+Four ingests were made on 2026-11-21. None has retained quotes.
 
-**What changed.** The retired definition tied the term to improved capacity
-for future action, in the sense of
-[Simon's criterion](../../theory/learning-is-not-only-about-generality.md). At
-the time, nobody could say what "improved" would be checked against without a
-ranking of versions. The on-balance note gives that question a form: a named
-gain in a declared area, and a judgment that losses elsewhere do not outweigh
-it. The operator's position is that this removes the reason for keeping
-"learning" out of the name.
+| Ingest | What the draft takes from it |
+|---|---|
+| [Practical Reason](../../sources/sep-practical-reason.ingest.md), Stanford Encyclopedia of Philosophy | Deliberation by one agent. Judging without a single measure is a recognized position and not the majority formal view. |
+| [Fishkin and Mansbridge, 2017](../../sources/fishkin-mansbridge-deliberative-democracy-intro.ingest.md) | Deliberation by a group. |
+| [Wooldridge and Jennings, 1995](../../sources/wooldridge-jennings-intelligent-agents.ingest.md) | The deliberative agent, as a use the term is not taken from. |
+| [Minton, 1988](../../sources/minton-utility-of-ebl-aaai88.ingest.md) | PRODIGY, the closest symbolic precedent. From a scanned copy of the conference version. |
 
-## Three parts that the conversation separated
+Noted and not ingested: Zollo and Winter, *Deliberate Learning and the
+Evolution of Dynamic Capabilities* (2002), which separates learning by
+accumulated experience from learning by articulated and codified knowledge.
 
-| Part | Current name | Status |
-|---|---|---|
-| What is learned: explicit theories that can be criticized | none needed | The operator holds that symbolic AI held knowledge in this form. |
-| The system | theory builder | Registered in `AGENTS.md`. |
-| The method by which theories are acquired | none | This workshop. |
+## Open
 
-The agent first placed the novelty in how theories are used: an LLM interprets
-natural-language theories where symbolic AI needed a formal interpreter. The
-operator corrected this. The novelty to be named is in how theories are
-acquired.
-
-## Decision points
-
-- **N1 — Is "learning" acceptable in the name?** Two separate objections were
-  mixed in the conversation and need separate answers.
-  - *The definition objection.* A definition with a success condition makes
-    membership depend on an outcome. A method name need not do that:
-    reinforcement learning names a method, and a run that learns nothing is
-    still reinforcement learning. The retired definition already had the
-    distinction: "Exercising the process without improvement is an attempt to
-    learn."
-  - *The assessment objection.* "It learned" needed something to be checked
-  against. The operator takes the on-balance note to answer this objection.
-- **N2 — What would warrant saying that a particular theory builder learned?**
-  Compare the builder's capacity for future work before and after it acquired
-  a theory. For Commonplace, ask whether it can now produce more useful and
-  better-warranted knowledge work for the human judgment spent. Give reasons
-  for the judgment, including whose work improved and which losses could
-  outweigh the gain. This comparison can remain open when the evidence is
-  insufficient. The note's ADR 085 example illustrates why adopting a change
-  alone cannot establish improvement.
-- **N3 — Which name?** Candidates so far:
-  - **Conjectural learning, restored.** It named this method. Eight redirects
-    in `properdocs.yml` and the archived agentic-system reviews still carry
-    the retired meaning.
-  - **LLM-run conjecture and criticism.** Popper's name for the method, with a
-    qualifier. It asserts no learning. It is accurate only for the autonomous
-    end state; during the bootstrap people perform part of the method.
-  - **Theory building.** Already used for the paradigm in the lead article. It
-    is also Naur's term, for a theory that stays unformulated and with people.
-  - **A new term.**
-
-  Rejected in conversation, with reasons that were recalled and not checked:
-  "theory-based learning", "Popperian learning", "critical learning",
-  "theory revision", "neurosymbolic".
-- **N4 — Does the success condition return to a definition?** If the method
-  name asserts nothing, the theory-builder definition stays as it is and
-  "learns" remains a separate claim. If the condition returns, say where: in a
-  restored definition, or as a qualifier beside "reflective" and "autonomous".
-- **N5 — The symbolic AI precedent.** The claim that symbolic AI learned the
-  same kind of thing by other methods is the operator's. The agent's examples
-  (hand-written rules, search in a formal hypothesis space, inductive logic
-  programming) came from memory. The
-  [precedents note](../../theory/theory-building-has-distinct-precedents.md)
-  does not cover symbolic AI. If the name or its definition relies on the
-  contrast, it needs sources.
-- **N6 — Who performs the method.** In the bootstrap, people perform some of
-  the conjecture and criticism. Decide whether the name covers the
-  human-staffed case or only the automated one.
-
-## State after the definition workshop, 2026-11-21
-
-Written by the same agent after the operator settled the definition in
-[the definition workshop](../bounding-omitted-effects/README.md). The first
-paragraph reports that workshop. The consequences drawn for N1–N4 are the
-agent's and await the operator.
-
-**What was settled there.** A step is an improvement on balance when, for
-every reasonable measure, the successor scores higher than the predecessor.
-No measure is chosen. The verdict is improvement, not an improvement, or open
-when reasonable measures disagree.
-
-**Consequences for the decision points.**
-
-- **N1, the assessment objection: answered.** "The builder learned" now has a
-  stated meaning. A retained change is learning when every reasonable measure
-  of the builder's capacity for future work favours the builder that has it.
-  The objection that nothing could check the claim no longer holds. The
-  definition objection was already answered by treating the name as a method
-  name.
-- **N2: the usual verdict for a new change is "open now, settled later".** The
-  [refactoring case](../bounding-omitted-effects/further-cases.md#case-a--a-refactoring-the-whole-gain-lies-in-future-work)
-  has the shape of a learning claim: the gain lies in work not yet done, so
-  the evidence arrives in later episodes. A builder can therefore be running
-  the method correctly while most of its recent changes are not yet shown to
-  be learning.
-- **N4: keep the success condition out of the method name and state it as a
-  separate predicate.** The method name says what the builder does. "Learned"
-  is the on-balance definition applied to one retained change, with its three
-  verdicts. This keeps the September decision that membership does not
-  establish learning, and still lets the name say "learning", as
-  "reinforcement learning" does.
-- **N3: one new argument for "conjectural".** The
-  [irreversible-step case](../bounding-omitted-effects/further-cases.md#case-d--a-step-that-cannot-be-undone)
-  found that a reversible step can be taken while its verdict is open. A
-  tentative theory is such a step: it is held as revisable and can be dropped
-  when criticism counts against it. "Conjectural" is Popper's word for exactly
-  that status. So the word names the property that lets the method act before
-  improvement is shown.
-
-**The agent's recommendation.** Restore "conjectural learning" as the name of
-the method, defined with no success condition. Define "learned" separately by
-the on-balance definition. Leave the theory-builder definition as it is.
-
-**Still for the operator.** The ruling on N1 and N3. N5, the symbolic AI
-contrast, still has no source. N6, whether the name covers the human-staffed
-bootstrap, is untouched.
-
-## Operator rulings, 2026-11-21
-
-**N3, the name: conjectural learning.** The operator first wrote "I think we
-can use conjecture learning", then confirmed: "make it 'conjectural
-learning'". The retired name is restored.
-
-**N1.** Ruled with N3: the name contains "learning".
-
-**N5, the comparison with symbolic AI.** The operator: the definition from the
-definition workshop "would work for symbolic AI as a definition, but it might
-be unworkable in practice."
-
-The agent's reading of that statement, which the operator accepted as "part
-of the answer":
-
-- The definition of improvement does not mention the method. A step improves
-  when every reasonable measure favours the successor. That applies to a
-  symbolic system's retained rules as well as to a theory builder's theories.
-  So what is learned, and what counts as having learned it, can be the same in
-  both.
-- Applying the definition takes judgment: which measures are reasonable for
-  the purpose, and whether the plausible values fall on one side of the
-  break-even point. A symbolic system could not make that judgment itself. It
-  needed an evaluation function written down in advance, which is one measure
-  chosen beforehand.
-- So the new method differs in who can apply the success condition. The
-  conjecture here is that an LLM can make on-balance judgments. That is the
-  hypothesis of the
-  [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md),
-  and it is not established.
-
-The operator then added a second difficulty, lower down. A symbolic system
-would have trouble even evaluating the individual cases for a new Python
-release. It could run tests, but it would need an enormous test array. People
-use on-balance judgment inside individual cases too. The volume would
-probably be prohibitive for a symbolic system, though the operator leaves open
-whether it could be organized.
-
-So judgment enters at two levels: choosing which measures are reasonable, and
-scoring a single case under a measure.
-
-This changes what N5 needs. The definition no longer has to claim that
-symbolic AI learned the same things by other means. It needs one narrower
-claim: that symbolic learning systems required a formally specified
-evaluation. That claim still comes from memory and still needs a source.
-
-**What "conjectural" refers to.** The operator: "there are two ways of reading
-conjectural learning - the first is about storing knowledge as conjectures -
-the other is about on balance judgements being conjectures. I think we want
-the second one - so that all learning that happens in Commonplace was under
-one umbrella."
-
-Consequences, drawn by the agent:
-
-- The term is no longer limited to theories stored in language. A code
-  change, a validator or a deletion kept on an on-balance judgment is covered.
-- The first reading is a case of the second, since "retaining this theory
-  improved the system" is itself a conjecture.
-- The contrast class changes. It was other ways of acquiring knowledge, such
-  as gradient training. It is now learning under an evaluation fixed
-  beforehand. This matches the symbolic AI comparison above.
-- The goal stated at the top, "the method by which a theory builder acquires
-  its theories", is narrower than the term now is.
-- N6 is answered in passing: the term does not fix who makes the judgments.
-- A new question: the term now also describes human teams that decide by
-  criticizable on-balance judgments. The draft's notes take this up.
-
-**Where the judgment sits.** The operator then considered naming the method
-after legible storage, since that is what separates Commonplace from
-traditional model training. The agent objected that people judge model
-releases on balance too. The operator: "the difference from people judging
-models is that this is outside of the learning loop - in our case the
-on-balance judgement is inside. On balance judgement seems the core here."
-
-So the defining property is an on-balance judgment inside the learning loop,
-as the step that decides what is retained. Legible storage is recorded in the
-draft as the precondition for it and not as what the term names.
-
-**The name is changed to deliberative learning.** With the on-balance
-judgment as the core, the operator doubted "conjecture" in the name. The
-agent proposed "on-balance learning" and "deliberative learning". The
-operator: "on-balance would fit - but on-balance is kind of not scientific",
-then: "revise the draft to deliberative learning, keep on-balance".
-
-- "On balance" stays as the qualifier of the verdict and is not renamed.
-- "Deliberation" names the process that reaches the verdict.
-- The two words share an image: *deliberare* is derived from *libra*, a pair
-  of scales. The agent checked this in Merriam-Webster, which says "perhaps",
-  and Wiktionary.
-- The agent searched for existing definitions of "deliberative learning" and
-  found no settled one. The draft first excluded two nearby uses: group
-  discussion in education, and planning agents in AI. The operator: "it
-  could kind of fit group discussions and planning agents". The draft now
-  treats both as compatible uses and says how each relates.
-- This supersedes the N3 ruling above. The September retirement of
-  "conjectural learning" stands, and the closing step about reversing it no
-  longer applies.
-
-**The basis of the name.** The agent first compared the term with the
-"deliberative agent" of agent architectures and had to extend that
-definition: Commonplace's store is neither symbolic nor a world model. The
-operator: "if their deliberative learning definition fits without extensions
-... then maybe we should use it as the basis - we don't need deliberative
-agent definition for us." The draft now bases the name on deliberation as the
-weighing of reasons, by one agent or a group. The deliberative agent is
-named only as a use the term is not taken from. PRODIGY and the agent survey
-moved to the comparison with symbolic AI. The operator also ruled that the
-autonomous judge is described as a language model, with no remark on size.
-
-**Sources are background.** After four ingests (deliberation by one agent,
-deliberation by a group, the deliberative agent, PRODIGY), the operator: "it
-is good to have this as some kind of background - but I think we can define
-deliberative learning precisely enough for our uses". The draft was cut to
-three conditions: a legible store, an on-balance judgment in the loop, and
-openness to criticism.
-
-**Reversibility is not a condition.** The agent's third condition said later
-rounds can reverse the change. The operator: "we do delete stuff - so it is
-not that everything is reversible". The condition now requires that the
-judgment can be found wrong. Reversibility decides how much support a
-judgment needs before the system acts.
-
-**Draft.** [The draft definition](./draft-definition.md) defines deliberative
-learning, with no success condition, and "learned"
-as the on-balance predicate with three verdicts. It includes the comparison
-with symbolic AI. No library file changes until the operator has read it.
+- **Where "learned" lives.** It is a section of the draft. It could be a
+  section of the on-balance note.
+- **Independent reading.** One agent wrote this framing and the draft, and
+  changed its position on the name several times in one conversation.
+  Agreement between agents is not evidence. The definition of "learned"
+  should be read by an agent or person who did not take part.
+- **Quotes.** The four ingests have none retained.
+- **The conjecture itself.** That a language model can make on-balance
+  judgments well enough is not established. The
+  [Python change judgment probe](../../reports/retained/python-change-judgment-probe-2026-11-20/README.md)
+  was designed to test it.
 
 ## Evaluation boundary
 
-While N1–N4 are open, do not edit these to adopt a name:
+Until the operator adopts the draft, do not edit these to introduce the term:
 
 - `kb/theory/definitions/theory-builder.md` and its checks;
 - `kb/theory/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md`;
-- the articles under `kb/articles/`, including the lead article's "if a fully
-  automated theory builder learns" framing;
-- the vocabulary table in `AGENTS.md` and the collision ledger;
-- the redirects in `properdocs.yml`.
+- the articles under `kb/articles/`, including the lead article's "distinct
+  learning paradigm" section;
+- the vocabulary table in `AGENTS.md` and the
+  [collision ledger](../../reference/vocabulary-collision-ledger.md), which
+  has no entry for "deliberative".
 
-Agreement between agents is not evidence here. The agent that wrote this
-framing argued against "learning" in the name, then for it, within one
-conversation. N2 should be read by an agent or person who did not take part.
+The September retirement of "conjectural learning" stands, so the redirects
+in `properdocs.yml` need no change.
 
 ## What closes the workshop
 
-- The operator rules on N1 and N3.
-- N2 has an answer that an independent reader accepts or a recorded
-  disagreement.
-- The chosen name is registered: a definition under `kb/theory/definitions/`,
-  the `AGENTS.md` vocabulary table, and a collision-ledger entry where the
-  term collides.
-- The consumers are listed and either edited or deferred with a reason.
-- If "conjectural learning" is restored, the record says that the September
-  retirement is reversed and why, and the redirects are checked.
+- The operator adopts the draft, or a revision of it.
+- The definition of "learned" has an independent reader's acceptance or a
+  recorded disagreement.
+- The definition is in the library under `kb/theory/definitions/`, and the
+  term is in the `AGENTS.md` vocabulary table.
+- The collision ledger has an entry for "deliberative" that separates this
+  sense from the group sense and from the agent-architecture sense.
+- The consumers in the evaluation boundary are listed and either edited or
+  deferred with a reason.
 
 Then delete this directory and remove its entry from `kb/work/README.md`.
 
