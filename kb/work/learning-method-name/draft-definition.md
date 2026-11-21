@@ -96,6 +96,11 @@ Systems have loops inside loops, and the answer depends on the loop.
 - **The judgment must be the step that makes the change.** People also judge
   on balance whether a new model version is better. That judgment does not
   decide which weight updates are made, so it is outside the training loop.
+- **A rule can be deliberated and then act automatically.** A decision is a
+  judgment that could have gone against the change. Appending every
+  interaction to a log decides nothing, so the entries are not deliberative
+  learning. Introducing the logging is a change to the store that can be
+  deliberated and later revisited, like writing a validator.
 - **A change in what is used is a change to the store.** Some systems never
   delete. An instruction can be moved out of what agents load, and an
   archive can lower how often an entry is selected. Each is an edit to the
