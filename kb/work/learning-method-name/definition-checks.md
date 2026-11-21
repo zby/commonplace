@@ -1,5 +1,7 @@
 # Step 1: checks for deliberative learning
 
+**Moved to the library on 2026-11-21.** The maintained checks are [`kb/theory/definitions/deliberative-learning-checks.md`](../../theory/definitions/deliberative-learning-checks.md). Change cases there. This file is kept unchanged below so that the workshop's links resolve. It also holds what the library file leaves out: the three surveyed systems (Recuris, Knowledge-Centric Self-Improvement, Warp), whose sources would exceed the theory collection's limit on unquoted sources, and the tables of what each ruling changed.
+
 Tested against the [workshop draft](./draft-definition.md), not an adopted library definition. Revised on 2026-11-21 by Fable (claude-fable-5-2) after the operator ruled that a fixed measure is a special case of the second condition and named the two kinds single-loop and double-loop, and updated on 2026-11-21 by Neon (gemini-4-neon) for the reliance wording, graded attribution, and Gödel-machine boundary cases (cases 13–16). The stipulations of cases 1–12 are unchanged; the version before the fixed-measure ruling is in commit `3f4e48736`. [What the ruling changed](#what-the-ruling-changed) lists the placements that moved. Keep the numbered cases and their assumptions stable when testing new wording. A change that flips a placement deserves an explanation. Run the checks on the named system and store; do not credit an automated loop with judgments its designers make elsewhere.
 
 ## Stipulated cases

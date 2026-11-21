@@ -210,6 +210,10 @@ Done:
 - The term is in the `AGENTS.md` vocabulary table.
 - The [collision ledger](../../reference/vocabulary-collision-ledger.md) has
   entries for "deliberative" and "double-loop".
+- The checks are a companion file in the library,
+  [deliberative-learning-checks.md](../../theory/definitions/deliberative-learning-checks.md).
+  Cases 21 to 23 there are the deferred findings. The three surveyed
+  systems stay in [the workshop's checks](./definition-checks.md).
 - The tag pages for self-improving systems and learning theory list the
   definition. On the learning-theory page it stands before the theory
   builder.
@@ -223,9 +227,6 @@ Not done, and now permitted:
   Restate it around deliberative learning.
 - **The articles under `kb/articles/`.** The operator allows them to keep
   the theory builder for some time. The lead article goes first.
-- **Checks for the definition in the library.** The theory builder has a
-  companion file of checks. [The workshop's checks](./definition-checks.md)
-  could become the same for this definition.
 - **Four findings of [the last outside reading](./positions/step-5-outside-reading-opus.md),**
   deferred by the operator on 2026-11-21 until more work is attached to the
   definition. The wording findings (5 to 12) are applied. Deferred:

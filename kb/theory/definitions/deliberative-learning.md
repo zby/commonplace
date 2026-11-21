@@ -6,6 +6,9 @@ tags: [self-improving-systems, learning-theory, deliberative-learning]
 
 # Deliberative learning
 
+<!-- Maintenance: when changing this definition, please apply the checks in
+[deliberative-learning-checks.md](./deliberative-learning-checks.md). -->
+
 A team weighing whether to add a routing rule to its handbook, or an agent
 deciding whether to revise a validator in its own codebase, is doing
 **deliberative learning**. It is learning that meets two conditions:
