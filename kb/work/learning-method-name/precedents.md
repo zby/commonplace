@@ -67,5 +67,10 @@ a system is single-loop or double-loop, not whether it is a member.
 - Zollo and Winter is the 1999 working paper, not the 2002 article. Its
   "codification" means writing manuals and tools, which the KB's
   [codification](../../theory/definitions/codification.md) excludes.
-- A second round of ingests is in progress: Rao and Georgeff, Aamodt and
-  Plaza, and Minton and Carbonell.
+- The second round adds three ingest-based comparisons below. These are readings of the reports, not independent checks of the papers.
+
+## What the second round adds
+
+- **[Rao and Georgeff (1995)](../../sources/bdi-agents-from-theory-to-practice.ingest.md):** OASIS can keep a schedule on grounds different from those for choosing it. [Case 12](./definition-checks.md#case-12--keeping-a-current-decision-the-oasis-arrival-sequencer) tests whether that can be distinguished from keeping a learned scheduling procedure. The answer depends on which store the claim names.
+- **[Aamodt and Plaza (1994)](../../sources/aamodt-plaza-1994-case-based-reasoning.ingest.md):** a retrieval failure can justify changing the cues for an existing case without changing its solution. Unlike replacing today's schedule, a changed cue can affect which case the next problem retrieves. The paper describes a family of methods, not one admission loop. Selective retention is compatible with a fixed measure; classify a particular implementation by asking whether later failures can count against a retained cue and whether the system can revise the criterion itself.
+- **[Minton and Carbonell (1987)](../../sources/minton-carbonell-learning-search-control-rules.ingest.md):** explaining a failed alternative can yield a more general rule than explaining the successful choice. Derivation does not settle continued use: a useful rule may still cost more time to check than it saves. This paper supplies the derivation and the retention criterion, not a retention experiment. The separate [1988 utility study](../../sources/minton-utility-of-ebl-aaai88.ingest.md) is the basis here for saying that PRODIGY revises its estimate from use.

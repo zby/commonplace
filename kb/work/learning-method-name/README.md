@@ -57,13 +57,13 @@ learner.
 ## Where things stand
 
 - **The definition has been tested, not adopted.**
-  [Eight boundary cases and three surveyed systems](./definition-checks.md)
+  [Boundary cases and three surveyed systems](./definition-checks.md)
   were placed against it, and
   [an independent reader](./positions/step-1-independent-reading.md) read it.
   Neither changed the wording.
 - **[A review by ChatGPT](./positions/chatgpt-review.md)** supports the
   concept and the name, and objects to two parts of the definition.
-- **[Earlier systems](./precedents.md)** from nine ingests are compared
+- **[Earlier systems](./precedents.md)** from two rounds of ingests are compared
   against the three conditions.
 - **A fixed measure is no longer excluded.** The operator ruled on
   2026-11-21 that the definition should be general, with the fixed measure
