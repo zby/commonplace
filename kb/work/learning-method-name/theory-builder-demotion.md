@@ -124,6 +124,12 @@ independent reading is required before adoption.
 About 65 library files mention the theory builder. Most need no change if the
 term keeps its present meaning in those files.
 
+## Step 1 result
+
+The [eight boundary cases and three historical survey placements](./definition-checks.md) test the draft without changing either definition. Cases 6–8 support overlap without containment on the stipulated assumptions. Only one of the three surveyed protocols demonstrably binds admission to an immutable gate. Distinguish selection of retained guidance from automatic logging and from later benchmark evaluation.
+
+The [independent reader](./positions/step-1-independent-reading.md) accepts the strict success test for “learned” but disputes the wording of condition 2. The operator's ruling stands: keeping a reversible trial is itself judged better for future work than not trying it. It is the trial that is judged worth keeping now; its later result is not established. The reader's objection is evidence that these two comparisons can still be confused, not authority to relax condition 2. Before promotion, clarify their alternatives and decide how “each change” applies to a store that also records unselected observations. No wording or placement in the library changed in this step.
+
 ## Cautions
 
 - **The new definition is one day old.** One agent wrote it in one

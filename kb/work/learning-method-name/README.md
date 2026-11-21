@@ -143,10 +143,7 @@ accumulated experience from learning by articulated and codified knowledge.
 
 - **Where "learned" lives.** It is a section of the draft. It could be a
   section of the on-balance note.
-- **Independent reading.** One agent wrote this framing and the draft, and
-  changed its position on the name several times in one conversation.
-  Agreement between agents is not evidence. The definition of "learned"
-  should be read by an agent or person who did not take part.
+- **Questions after testing.** The [independent reader](./positions/step-1-independent-reading.md) accepted the strict meaning of “learned” but read condition 2 differently from the operator. The [step 1 result](./theory-builder-demotion.md#step-1-result) records the disagreement and the mixed-store question raised by the boundary checks. Neither is an empirical finding about whether the system learns.
 - **Quotes.** The four ingests have none retained.
 - **The conjecture itself.** That a language model can make on-balance
   judgments well enough is not established. The
