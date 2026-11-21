@@ -23,6 +23,12 @@ This [ruling](./rulings.md#settled-double-loop-ruling) governs this workshop,
 including [case 15](./definition-checks.md#cases-1316--reliance-graded-attribution-and-the-gödel-machine-line).
 The rest of the definition is still a draft.
 
+## Commonplace and the Gödel-machine idea
+
+> Commonplace is an attempt to make Gödel-machine-style self-improvement practical by replacing proof that a rewrite is worthwhile with an on-balance judgment about whether to make it.
+
+This describes the research aim, not a guarantee. An [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md) weighs reasons for and against the rewrite. It need not reproduce the verdict of any particular Gödel machine.
+
 ## Goal
 
 Set by the operator: define the learning process we are working on. The
