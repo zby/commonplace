@@ -66,8 +66,9 @@ files.
 
 Suppose agents repeatedly misfile design proposals in the wrong directory.
 A change is proposed: add one routing line to the main instruction file
-loaded on every task, directing design proposals to the right folder and
-type contract. A judge evaluates the proposed edit before it enters the
+loaded on every task, directing design proposals to the right folder and to
+the spec that says how a design proposal must be written. A judge evaluates
+the proposed edit before it enters the
 store. It weighs the expected routing fix against a diffuse cost—every
 unrelated task also loads that extra line, and on a task already near the
 model's effective context limit, extra prompt text can tip a correct answer
@@ -76,7 +77,9 @@ if trouble appears, the judge approves it.
 
 On later tasks, the new line directs proposal writes accurately—until a
 longer maintenance run fails because the rule matched a migration plan that
-belonged in a temporary workshop instead. Inspecting the trace points
+belonged instead in a
+[workshop](../theory/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md),
+the system's temporary area for unfinished work. Inspecting the trace points
 directly to that routing line. A second judgment narrows its scope to
 finished design proposals while leaving the rest of the instruction file
 intact. Later still, after three similar over-broad rules pass the system's
@@ -112,14 +115,11 @@ two conditions:
 A single validator or utility formula weighs nothing—"deliberative" fits
 the general case of weighing trade-offs better than this limiting case—yet
 it still separates proposing from judging and can reject a change. By
-contrast, opaque weight updates fail the first condition, while direct
-input-driven updates (such as a nightly click-ranking job or a readable
-tabular reinforcement-learning table), automatic trace logging, and pure
-triggers that write on a count without judging what was written all fail
-the second.
-
-The structural contrast with weight training is starkest when laid side by
-side:
+contrast, opaque weight updates fail the first condition, while three kinds
+of update fail the second: direct input-driven updates (such as a nightly
+click-ranking job or a readable tabular reinforcement-learning table),
+automatic trace logging, and pure triggers that write on a count without
+judging what was written.
 
 | Axis | Training weights | Deliberative learning |
 |---|---|---|
@@ -129,23 +129,23 @@ side:
 | **Credit assignment and correction** | Backpropagation or policy gradients across parameters | Inspecting traces to edit, narrow, or revert specific entries while keeping the rest |
 | **Inspectability** | Requires interpretability probes over weights | Direct reading, diffing, testing, and version control by people or agents |
 
-Three payoffs follow directly from storing what the system retains in
-readable, addressable artifacts. Adaptation takes effect immediately at
-deployment time without waiting for a retraining run
+The last three rows are payoffs of a readable store, and two carry limits.
+"Deployment time" places a change in the lifecycle, not its speed:
+proposing, evaluating, and safely installing it still take time
 ([persistent deployment-time adaptation](../theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md)).
-Retained knowledge is inspectable now—by people or by other agents at
-volumes people could not read—whatever the pace of weight interpretability
-research
-([inspectability as a property of form](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)).
-And when a mistake occurs, an addressable store lets later rounds point at
-the faulty line and fix it without wiping out unrelated work.
+Direct reading—by people or by other agents at volumes people could not
+read—works only while each rule stays readable at an affordable cost; large
+or obscure artifacts can block it
+([inspection needs an affordable route, not just readable form](../theory/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md)).
 
 Those payoffs carry real costs that belong on the ledger of any comparison
 with weight training. Explicit artifacts need retrieval, applicability
 checks, validation, and ongoing upkeep; a false abstraction in a shared
 instruction can misdirect many tasks, while a right rule that retrieval
 misses does nothing. Worse, legibility does not guarantee faithfulness:
-[a plausible written rule need not be what actually drove the model's behavior](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
+a plausible written rule need not be what actually drove the model's
+behavior, so a rationale read from it can send repair to the wrong rule
+([revision guided by rationale needs faithfulness, not just legibility](../theory/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md)).
 Keeping episode records alongside distilled rules preserves a path to
 re-examine a rule that goes stale
 ([retaining episode evidence](../theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)),
@@ -154,20 +154,23 @@ at the cost of storing and managing more state.
 ## Proof, formula, judgment: where the bet enters
 
 If deliberative learning over readable stores is not new, why did earlier
-AI systems not turn it into a general machine learning paradigm? Looking at
-three precedents shows that the bottleneck was always **what played the
-value-function role**.
+AI systems not turn it into a general machine learning paradigm? The three
+precedents raise the same question: how does a system decide whether a
+proposed change is worth keeping?
 
 **Formal proof.** Jürgen Schmidhuber's
 [Gödel machine](../theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 represents the hard-oracle extreme. Its entire software—including its proof
 searcher and utility representation—is readable, modifiable code, and live
-observations enter proofs on the fly. Yet every self-rewrite requires a
-formal proof of higher expected utility under axiomatized hardware,
-environment priors, and scalar utility. That buys a formal optimality
-guarantee relative to those axioms at a steep price: the machine must
-ignore every useful improvement it cannot prove, and no general real-world
-domain has the full axiomatization required.
+observations enter proofs on the fly. Yet its admission route lets a
+self-rewrite take effect only through a formal proof that switching has
+higher expected utility than continuing the current search, under axioms
+describing the hardware, environment, and utility. That buys an optimality
+guarantee conditional on those axioms and that utility, at a steep price:
+the machine must ignore every useful improvement it cannot prove, and a
+valid proof does not establish that the axioms adequately describe the
+real-world domain—under an inadequate formalization, a proved switch need
+not deliver what its user wanted.
 
 **Fixed formula.** Steven Minton's
 [PRODIGY](../sources/minton-utility-of-ebl-aaai88.ingest.md) built a
@@ -181,32 +184,35 @@ saved) captured what mattered; it was **single-loop**, needing Minton
 outside the system to revise the formula.
 
 **Changing heuristics.** Douglas Lenat's
-[EURISKO](../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md)
+[EURISKO](../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md),
+an early-1980s symbolic program that learned new heuristics and domain
+concepts,
 demonstrated the next step—**double-loop** criterion revision. In one
 reported episode, after a badly generalized heuristic wasted effort,
 EURISKO did not merely drop that heuristic; it also retained a restriction
 penalizing future generalizations of that shape before they ran. Changing
-what governs later decisions of a class revises the working criterion. Yet
-EURISKO's symbolic heuristics remained brittle and repeatedly needed Lenat
-to intervene.
+what governs later decisions of a class revises the working criterion.
+EURISKO could revise its own heuristics, but it still needed Lenat to
+correct some judgments of worth. A heuristic could gain credit by
+influencing how credit was awarded, not by helping solve the task. Lenat
+could reject it on that ground without having to specify a better scoring
+formula.
 
 **On-balance judgment.** In real engineering and knowledge work, gains and
 losses fall on different tasks, and many different scalar value functions
 can be defended from the same declared goal. An
 [on-balance judgment](../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
 works in place of a single value function by leaving that choice open. Once
-the alternative, whose costs count, and the horizon are fixed, a change is
-an improvement on balance when every reasonable measure of the declared
-work—every value function defensible from its purpose—favors it. An unknown
-is worth investigating only if a plausible answer could reverse the choice.
+the alternative, the parties whose costs count, and the horizon are fixed, a
+change is an improvement on balance when every reasonable measure of the
+declared work—every value function defensible from its purpose—favors it.
 When compatible value functions pull in opposite directions or evidence has
 not yet arrived, the verdict stays open—and the system can still act as a
 bounded decision, using
 [reversibility to limit future loss](../theory/reversibility-can-favor-a-change-by-limiting-future-loss.md),
 as in the routing-line example above.
 
-This is where the second level of our thesis—the machine learning
-bet—enters. **We bet that a fixed-weight language model can fill the judge
+**We bet that a fixed-weight language model can fill the judge
 slot autonomously, running double-loop deliberative learning with targeted
 correction for work where no fixed criterion is adequate.** That requires
 the model not only to weigh proposed edits and diagnose which retained edit
@@ -256,11 +262,10 @@ criteria—all automatically generated, tested, and revised rather than
 hand-authored.
 
 One strict condition attaches. A system bootstrapped from hand-written
-instructions, types, and review gates—as Commonplace currently is—fits the
+instructions, types, and review gates—as Commonplace, our agent-operated
+knowledge-base framework, currently is—fits the
 Bitter Lesson
 [only if automated learning outgrows that starting point](../theory/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
-The initial human scaffolding must serve as a launchpad that computation
-comes to supply and revise, not a permanent ceiling of hand-crafted rules.
 
 ## What counts as learned, current evidence, and limits
 
@@ -291,8 +296,7 @@ tasks outside the episode that prompted the edit:
 **Current state of evidence.** Commonplace is an active, human-assisted
 bootstrap developing the store, review machinery, and judgment probes. We
 report **no completed end-to-end automated run** demonstrating sustained
-autonomous double-loop learning yet. Treating the paradigm as already
-validated would invert the order of proof.
+autonomous double-loop learning yet.
 
 **Material limits and failure modes.** Even if the loop runs without human
 intervention, four hazards can defeat it:
