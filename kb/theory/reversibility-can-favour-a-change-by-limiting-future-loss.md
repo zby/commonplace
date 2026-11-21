@@ -19,4 +19,12 @@ If losses accrue at most at rate `r`, correction stops them within time `t`, and
 
 Can the team get the evidence it needs before making the commitment that is hard to undo? Under the [Commonplace article lifecycle](../articles/COLLECTION.md), readers can challenge a circulating draft while the author can still rewrite it. Once published, the article is a fixed record: a correction must remain visible rather than silently replacing what readers cited. A limited rollout offers a different protection: fewer people encounter a mistake, but the smaller audience does not make harm to those people reversible.
 
+Three other practices keep a way back open while the evidence comes in:
+
+- **Warn before removing.** `inspect.getargspec` raised a deprecation warning on Python 3.10 before 3.11 removed it. Callers learned of the loss while the old call still worked.
+- **Extract before deleting.** [ADR 085](../reference/adr/085-withdrawn-proposals-are-deleted.md) deletes a withdrawn proposal only after anything still useful has been extracted from it.
+- **Work where undoing is cheap.** A [workshop](../work/COLLECTION.md) is deleted when it closes, so a step taken there costs little to undo. A library note that other notes link to costs more.
+
+Commonplace's rules follow one pattern: the harder a step is to undo, the more support it needs first. A draft may be rewritten freely. Promoting an article needs explicit approval that names the target state. `AGENTS.md` forbids a hard reset or a force-push without explicit permission, because either can destroy the history that a revert relies on.
+
 A team that keeps the internal change on these terms is judging that doing so will improve future work. Its ability to correct a mistake is a reason for that judgment today. Whether the retained change actually improved later work is a different question; rollback capability is not evidence of that gain.
