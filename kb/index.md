@@ -33,5 +33,7 @@ Commonplace packages the methodology running this site as an open-source tool fo
 
 ### Use it yourself
 
-- **Install Commonplace in a project** to get the types, conventions, skills, validators, and commands for your own knowledge base. Follow [INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md), walk through a first session in [Getting started](./reference/getting-started.md), or read the [Reference](./reference/README.md) and [installation architecture](./reference/architecture.md).
-- **Vendor the research read-only** inside a project so agents can consult this KB's methodology directly, without installing the Python package. See the [GitHub README](https://github.com/zby/commonplace).
+Commonplace is open source. Two ways to put it to work:
+
+- **Point your agent at this site** (`https://zby.github.io/commonplace/`) or the [GitHub repository](https://github.com/zby/commonplace) when designing agentic systems, context engineering, or memory architecture, so it can draw on the accumulated methodology directly without installing anything.
+- **Install `llm-commonplace` in a project** to get the types, conventions, skills, validators, and commands for your own agent-operated knowledge base: see the [GitHub README](https://github.com/zby/commonplace) and [INSTALL.md](https://github.com/zby/commonplace/blob/main/INSTALL.md) for setup, [Getting started](./reference/getting-started.md) for a first worked session, and [Reference](./reference/README.md) or [installation architecture](./reference/architecture.md) for how the system fits together.

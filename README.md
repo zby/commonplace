@@ -4,15 +4,16 @@
 
 The premise is simple. LLM-written text can be useful even when no person reads it directly, because it can improve how an LLM answers your questions. Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**.
 
-It has two goals. The practical one is an **LLM wiki**, in the sense [Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer in which agents, directed by people, turn a person's or project's work into retained, connected notes. The theoretical one is a learning paradigm, **[deliberative learning](./kb/theory/definitions/deliberative-learning.md)**: a system learns by editing a store it can read and point at, made of prose, structured text, and code, and each edit is proposed, judged, and can be rejected. The process is old: teams run it when they maintain handbooks and linters. We bet that today's LLMs, their weights held fixed, can do the judging, weighing a change on balance where no single measure settles it, so that the whole loop runs without a person. No test of the bet has been run yet.
+The project stands on two reinforcing pillars:
 
-The goals reinforce each other, because memory is always about learning: a note is worth something when it changes what the system does next. A wiki that agents read and edit is the kind of store deliberative learning needs, and [real use of the wiki supplies the problems and criticism](./kb/theory/system-use-selects-theory-fit-without-a-fixed-oracle.md) that its judgments draw on.
+- **A research direction — [deliberative learning](./kb/theory/definitions/deliberative-learning.md).** A system learns by making proposed, judged, rejectable edits to a readable, addressable store of prose, structured text, and code. Our empirical bet is that fixed-weight LLMs can perform that judgment on balance where no single scalar metric settles a change, allowing the loop to run without a person — something like a [Gödel machine](./kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) made practical by replacing formal proof with an LLM realizing the judgment function. No automated end-to-end test of that bet has been run yet.
+- **A practical system — an agent-operated LLM wiki.** In the sense [Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), a persistent, linked Markdown-and-Git layer where agents, directed by people, turn a project's work and sources into retained, connected notes, backed by installable types, skills, validators, and review workflows.
 
-[Reflection](./kb/theory/definitions/reflective-system.md) is the core of the method. Commonplace's doctrine, how it writes, connects, and revises notes, is part of the store it edits, so [an improvement to the method is reused by all later work](./kb/theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md). People still perform many of its operations; the work is moving them to computation.
+The two reinforce each other because memory is about learning: a note earns its keep when it changes what the system does next. A wiki that agents read and edit is the kind of addressable store a deliberative learner needs, and [real use supplies the problems and criticism](./kb/theory/system-use-selects-theory-fit-without-a-fixed-oracle.md) its judgments draw on. Because Commonplace's own doctrine — how it writes, links, validates, and revises notes — lives inside the store it edits ([reflection](./kb/theory/definitions/reflective-system.md)), [an improvement to the method is reused by later work](./kb/theory/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md). People still perform many of its operations; the work is moving them to computation.
 
-This repository holds the adopted doctrine, research and evidence that can challenge it, and the tool: the types, conventions, skills, schemas, validators, tests, and commands that you can install to build a knowledge base of the same kind in your own project. Research does not become doctrine merely by being stored here. This README covers the tool; the research routes below point into the rest.
+This repository holds the adopted doctrine, research and evidence that can challenge it, and the installable `llm-commonplace` package (types, conventions, skills, schemas, validators, and CLI commands) for running a knowledge base of the same kind in your own project. Research does not become doctrine merely by being stored here. Browse the theory and articles on the [rendered site](https://zby.github.io/commonplace/); this README covers installing, operating, and developing the tool.
 
-## Use it
+## Quick start
 
 ### Install Commonplace in a project
 
@@ -23,17 +24,19 @@ uv tool install --python ">=3.11" llm-commonplace
 uv tool update-shell
 ```
 
-Restart the shell or agent runtime, then scaffold the current project:
+Restart the shell or agent runtime, then scaffold the target project:
 
 ```bash
 commonplace-init --root .
 ```
 
-Fill in the generated `AGENTS.md.template` and use it as the project's `AGENTS.md`, and rename `CLAUDE.md.template` to `CLAUDE.md`. The installation supplies the Commonplace types, conventions, skills, and commands, which the project reads in place from the installed package rather than copying; the new knowledge base accumulates knowledge about its own project. The package does not include this repository's external-system reviews or source corpus. See [INSTALL.md](./INSTALL.md).
+Fill in the generated `AGENTS.md.template` and use it as the project's `AGENTS.md`, and rename `CLAUDE.md.template` to `CLAUDE.md`. Projects read Commonplace's types, conventions, and skills in place from the installed package rather than copying them; the scaffolded `kb/` accumulates knowledge about your own project. The package does not bundle this repository's source corpus.
 
-### Vendor the research read-only
+See [INSTALL.md](./INSTALL.md) for the full setup flow, [Getting started](./kb/reference/getting-started.md) for a first worked session with your agent, and [Commonplace architecture](./kb/reference/architecture.md) for the installed topology.
 
-To let agents consult the full research corpus without installing a Commonplace system, place this repository inside the project as a submodule, clone, or copy, then append `AGENTS.md.reader-fragment` to the project's agent instructions. Reader mode needs no Python; the agent runtime only needs file access and `rg`. See [Reader install](./INSTALL.md#reader-install-the-kb-as-a-vendored-reference).
+### Consult the research with your agent
+
+To draw on this KB's methodology without installing anything, point your agent at the [rendered site](https://zby.github.io/commonplace/) or this repository when designing agentic systems, context engineering, memory, or deploy-time learning (starting at [`kb/tags/README.md`](./kb/tags/README.md)).
 
 ### Develop Commonplace
 
@@ -44,25 +47,77 @@ uv tool install --python ">=3.11" --editable .
 uv tool update-shell
 ```
 
-Restart consumers of the command path. Ordinary source changes are then visible through the editable installation. After dependency, entry-point, build-metadata, or packaged-scaffold changes, reinstall with `uv tool install --reinstall --python ">=3.11" --editable .`. Run development checks with `uv run pytest` and `uv run ruff check .`. Do not run `commonplace-init` in the source checkout.
+Restart consumers of the command path. Ordinary Python edits take effect immediately through the editable install; reinstall with `uv tool install --reinstall --python ">=3.11" --editable .` after dependency, entry-point, build-metadata, or packaged-scaffold changes. Do not run `commonplace-init` in this source checkout.
 
-`uv run pytest` excludes expensive analysis workflow tests marked `slow`.
-Use `uv run pytest -m slow` for those tests, or `uv run pytest -m ""` for
-the complete suite. CI runs the complete suite. Run the slow tests when changing
-the analysis workflow or its acceptance checks.
+Run development checks with `uv run ruff check .` and `uv run pytest` (which excludes slow integration tests by default; use `uv run pytest -m slow` for slow suites or `uv run pytest -m ""` for the full CI suite).
 
-## What's in the box
+## Core design choices
+
+- **Claims form a network.** Note titles are assertions, not topics, and links state how claims relate — such as `grounds`, `extends`, `contradicts`, or `exemplifies` — turning traversal into reasoning under bounded context. See [title as claim](./kb/theory/title-as-claim-enables-traversal-as-reasoning.md) and [link methodology](./kb/tags/links-README.md).
+- **Structure is earned progressively.** A frontmatter-free Markdown file is valid `text`. Add a description and note type when material deserves a durable claim; specialize further only when extra structure enables useful checks or workflows. See [the wikiwiki principle](./kb/theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
+- **Authored knowledge and review state stay file-backed.** Markdown and Git supply a universal interface, versioning, diffs, and rollback. Derived views handle scale without replacing authored files. Review state is stored as one hash-checked result file per `(note, criterion)` pair ([ADR 127](./kb/reference/adr/127-review-runs-as-workflows-over-result-files.md)).
+- **Local contracts stay revisable.** Task-specific types and link conventions stay local to each collection so structures can evolve as questions, evidence, or model capabilities change; shared rules are reserved for cross-cutting invariants ([current task fit does not warrant costly entrenchment](./kb/theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md)).
+- **Explicit doctrine paired with deterministic code.** Skills and prose instructions direct model judgment; Python commands, schemas, and `commonplace-validate` enforce exact rules and bookkeeping ([scheduler–LLM separation](./kb/theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
+- **Separated review and editing.** `commonplace-review` runs headless criteria against notes and never modifies them; `commonplace-revise` is the only review/editing workflow that writes a note ([Review and editing system](./kb/reference/README-REVIEW-SYSTEM.md)).
+
+## Commands, skills, and instructions
+
+### CLI commands
+
+Commands are deterministic Python entry points installed on `PATH` by `llm-commonplace`. Examples:
+
+```bash
+commonplace-status
+commonplace-validate kb/notes
+commonplace-init --root .
+commonplace-github-snapshot https://github.com/owner/repo/issues/123
+```
+
+`commonplace-review` evaluates notes against criteria with headless workers without editing files; `commonplace-revise` runs simplification passes, finding fixes, triage, or source-grounded rewrites. See the full [CLI command catalogue](./kb/reference/commands.md) and the [review and editing system overview](./kb/reference/README-REVIEW-SYSTEM.md).
+
+### Installed skills
+
+Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. `commonplace-init` writes lightweight stubs into `.claude/skills/` and `.agents/skills/` pointing to the canonical skills in the installed package:
+
+| Skill | Purpose |
+|---|---|
+| `cp-skill-write` | Write or edit an artifact under its collection and type contracts |
+| `cp-skill-connect` | Discover connections and write a connect report without mutating notes |
+| `cp-skill-convert` | Convert a plain text file into a structured note |
+| `cp-skill-ingest` | Turn one URL or local snapshot into a tracked source analysis |
+| `cp-skill-snapshot-web` | Capture a URL into ignored local snapshots |
+| `cp-skill-ground` | Retain the minimum verbatim quotations needed to ground a source claim |
+| `cp-skill-review` | Review KB notes against criteria without editing them |
+| `cp-skill-revise` | Edit, improve, triage findings on, or rewrite a KB note |
+| `cp-skill-add-collection` | Add a new collection with its contract, landing, tag participation, and routing |
+| `cp-skill-health-check` | Diagnose a broken Commonplace installation |
+| `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
+
+Explicitly invoked Markdown procedures and review gates live under [`kb/instructions/`](./kb/instructions/README.md).
+
+## Research: deliberative learning
+
+Standard machine learning updates opaque weights against a scalar loss or value function. At the opposite extreme, Schmidhuber's [Gödel machine](./kb/theory/goedel-machines-are-a-proof-governed-case-of-self-modification.md) rewrites its own code only when it can formally prove higher expected utility, which leaves most real-world improvements out of reach. Commonplace explores whether fixed-weight LLMs can realize the judgment function on balance over a readable, addressable store, relying on reversibility and later evidence to catch mistakes.
+
+The [rendered site](https://zby.github.io/commonplace/) is the primary reading surface for the research. Key entry points:
+
+- **Central thesis:** [Deliberative Learning: Judgment in Place of a Value Function](./kb/articles/deliberative-learning-judgment-in-place-of-a-value-function.md) (draft), the [deliberative learning definition](./kb/theory/definitions/deliberative-learning.md), and [on-balance judgments](./kb/theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md).
+- **Test program:** [Testing Autonomous Deliberative Learning](./kb/articles/testing-autonomous-deliberative-learning.md) (draft) — discriminating comparisons for admission, targeted correction, criterion revision, and whole-loop net gain, plus a proposed first experiment.
+- **Deployment-time adaptation:** [Deploy-time learning](./kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md), the [learning theory index](./kb/tags/learning-theory-README.md), and the published ECSA 2026 paper and ASISAS 2026 slides in [Articles](./kb/articles/README.md).
+- **Self-improving and reflective systems:** the [self-improving systems index](./kb/tags/self-improving-systems-README.md), the [deliberative learning index](./kb/tags/deliberative-learning-README.md), [Commonplace as a reflective system](./kb/theory/evidence/commonplace-as-a-reflective-system.md), and [What an Automated Reviewer Should Measure](./kb/articles/what-an-automated-reviewer-should-measure.md) (draft).
+
+## Repository layout
 
 ```text
 kb/                       Knowledge base
-  theory/                 Transferable research claims and theory
-  articles/               Self-standing technical explanations
-  reference/              Current system documentation and ADRs
+  articles/               Standalone technical articles, published paper, and talks
+  theory/                 Transferable research claims, mechanisms, and definitions
+  notes/                  Short replies, examples, and comparisons
+  tags/                   Curated topic heads across collections
+  reference/              Shipped system documentation, contracts, and ADRs
   types/                  Global artifact contracts and schemas
   instructions/           Skills, review gates, and procedures
-  agent-memory-systems/   Reviews of agent-memory systems
-  agentic-systems/        Reviews of agent runtimes and harnesses
-  sources/                Snapshotted sources with analysis
+  sources/                Snapshotted external sources (local) and tracked ingests
   reports/                Operational state and retained reports
   work/                   In-flight workshops
   tasks/                  Work tracking
@@ -70,64 +125,19 @@ kb/                       Knowledge base
   index.md                Rendered-site homepage
 
 src/commonplace/          Packaged operational engine
-  cli/                    commonplace-* commands
-  headless/               Workflows over headless harness launches
-  lib/                    Shared runtime helpers
-  docs/                   ProperDocs hooks and assets
+  cli/                    commonplace-* command entry points
+  review/                 Review criteria, result files, and runners
+  headless/               Headless worker orchestration
+  freshness/              Hash-based staleness tracking
+  artifactrun/            Multi-stage artifact workflow runner
+  lib/                    Shared validation, path, and KB helpers
+  docs/                   ProperDocs build hooks and assets
+  scaffold_manifest.py    Declarative manifest executed by commonplace-init
 ```
-
-## Core design choices
-
-**Claims form a network.** Note titles are assertions, not topics, and links state how claims relate—such as `grounds`, `extends`, `contradicts`, or `exemplifies`. This makes traversal a form of reasoning rather than generic browsing. See [title as claim](./kb/theory/title-as-claim-enables-traversal-as-reasoning.md) and the [linking methodology](./kb/tags/links-README.md).
-
-**Structure is earned progressively.** A frontmatter-free file is valid `text`. Add a description and note type when the material deserves a durable claim; specialize it further only when the extra contract enables useful operations. See the [wikiwiki principle](./kb/theory/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
-
-**Authored knowledge remains file-backed.** Markdown and Git provide a universal interface, versioning, diffs, and rollback. Derived indexes handle scale without replacing authored files. Review state is files too: one result per reviewed (note, criterion) pair, carrying the hashes of the texts it judged; see [ADR 127](./kb/reference/adr/127-review-runs-as-workflows-over-result-files.md).
-
-**Local contracts stay revisable.** Different parts of the knowledge base support different kinds of work, so task-specific types and link conventions stay local to each part. Structures can also become obsolete as questions, evidence, or model capabilities change, so those local choices remain revisable. Shared rules are kept for constraints that hold across parts and over time. See why [task-fitted structure costs cross-task reuse](./kb/theory/current-task-fit-alone-does-not-warrant-costly-entrenchment.md).
-
-**Doctrine is explicit; exact operations are code.** Skills and conventions tell the model what to do and which of its capabilities to use. Code, schemas, and validators carry operations whose behavior should not depend on repeated interpretation, because code [executes them the same way every time](./kb/theory/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md). Both sides remain revisable as evidence and model capabilities change.
-
-## Research routes
-
-The [rendered site](https://zby.github.io/commonplace/) is the main route into the research. Starting points:
-
-- [Deliberative Learning: Judgment in Place of a Value Function](./kb/articles/deliberative-learning-judgment-in-place-of-a-value-function.md) (draft lead), [Testing Autonomous Deliberative Learning](./kb/articles/testing-autonomous-deliberative-learning.md) (draft research program), the [deliberative learning definition](./kb/theory/definitions/deliberative-learning.md), and the [deliberative learning index](./kb/tags/deliberative-learning-README.md) — the central thesis, the comparisons that test it, its exact terms, and the notes it rests on.
-- [Deployment-time learning](./kb/theory/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/tags/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
-- [Self-improving systems](./kb/tags/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/theory/evidence/commonplace-as-a-reflective-system.md).
-- [Agentic Systems research](./kb/agentic-systems/README.md): research topics, architectural comparisons and source-grounded system analyses. Start with [Agent Memory](./kb/agentic-systems/topics/memory.md); the [earlier memory comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md) remains a historical snapshot.
-
-## Commands, skills, and instructions
-
-Commands are deterministic Python entry points called by name. Examples:
-
-```bash
-commonplace-validate kb/theory
-commonplace-init --root .
-commonplace-github-snapshot https://github.com/owner/repo/issues/123
-```
-
-`commonplace-review` reviews notes against criteria with headless workers and never writes a note; `commonplace-revise` runs the improvement procedures and is the only command that writes one. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
-
-Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. They stay in the installed package; `commonplace-init` writes a small stub for each into a consuming project's skill directories that points the agent to the real skill.
-
-| Skill | Purpose |
-|---|---|
-| `cp-skill-write` | Write or edit an artifact under its collection and type contracts |
-| `cp-skill-connect` | Discover connections and write a connect report |
-| `cp-skill-convert` | Convert a plain text file into a structured note |
-| `cp-skill-ingest` | Turn one URL or local snapshot into a tracked source analysis |
-| `cp-skill-snapshot-web` | Capture a URL into ignored local snapshots |
-| `cp-skill-ground` | Retain the minimum quotations needed to ground a source claim |
-| `cp-skill-add-collection` | Add a new collection with its contract, landing, tag participation and routing |
-| `cp-skill-health-check` | Diagnose a broken Commonplace installation |
-| `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
-
-Instructions are Markdown procedures invoked explicitly rather than auto-loaded. They live under [`kb/instructions/`](./kb/instructions/README.md).
 
 ## Prerequisites
 
-Reader mode needs only an agent runtime with project-file access and `rg`. The full installation uses:
+Installing and operating a Commonplace knowledge base uses:
 
 | Tool | Required | Purpose |
 |---|---|---|
