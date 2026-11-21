@@ -30,6 +30,8 @@ checked on the outermost loop that the system runs itself.
 The KB needs the term to put all the learning that happens in Commonplace
 under one name.
 
+A system that learns this way is a **deliberative learner**.
+
 The term names a way of learning. It has no success condition. A system whose
 retained changes do not improve its later work is still doing deliberative
 learning, as a reinforcement learning run that learns nothing is still
@@ -93,7 +95,7 @@ Systems have loops inside loops, and the answer depends on the loop.
   can recognize the mistake and remove the instruction, fewer later tasks
   need suffer it. That prospect can tip the judgment in favour of keeping
   the instruction now. It is not evidence that the instruction has improved
-  later work. See [the irreversible-step case](../bounding-omitted-effects/further-cases.md#case-d--a-step-that-cannot-be-undone).
+  later work. See [how reversibility limits future loss](../../theory/reversibility-can-favour-a-change-by-limiting-future-loss.md).
 
 ### When a change was learned
 
@@ -102,11 +104,17 @@ balance, at its future work than the system without it. "On balance" has the
 meaning given in the on-balance note: for every reasonable measure of that
 capacity, the system with the change scores higher. No measure is selected.
 
-Three verdicts are possible for one change:
+Report the comparison for one change:
 
-- **Learned.** Every reasonable measure favours the system with the change.
-- **Not learned.** Every reasonable measure favours the system without it.
-- **Open.** Reasonable measures disagree, or the evidence has not arrived.
+- **Learned.** Every reasonable measure favors the system with the change.
+- **Made worse.** Every reasonable measure favors the system without it.
+- **Tie.** Every reasonable measure rates the two systems equally. There is
+  no gain for the declared work, but no loss either.
+- **Better on some measures, tied on the rest.** Report the gain and its
+  limit, not that the change was learned. Likewise report a loss on some
+  measures with ties on the rest without implying a loss on all measures.
+- **Open.** Some measures favor each system, or the evidence has not arrived.
+  Say which.
 
 Three points govern use of the verdicts.
 
@@ -140,8 +148,8 @@ Three points govern use of the verdicts.
 
 - Citing the name as evidence that a system improves.
 - Reporting a kept change as learned while its verdict is open.
-- Using the term for the system. The system is a
-  [theory builder](../../theory/definitions/theory-builder.md).
+- Using "deliberative learning" for the system. The system is a
+  deliberative learner.
 - Using the term only for theories stored in language.
 
 ### Background
@@ -162,11 +170,24 @@ ingests with no retained quotes yet.
   Neither source covers keeping the outcome or revising it from later
   evidence. Those are the first and third conditions, and they are what
   "learning" adds.
-- **Not the deliberative agent.** In agent architectures the term means an
-  agent that plans over a symbolic model of the world
+- **The deliberative learner and the deliberative agent.** In agent
+  architectures a deliberative agent has an explicitly represented, symbolic
+  model of the world and decides by logical reasoning over it
   ([Wooldridge and Jennings](../../sources/wooldridge-jennings-intelligent-agents.ingest.md)).
-  The term here is not taken from that use. Commonplace's store is not
-  symbolic and is not a world model.
+  The two terms are contrasted on what is known so far:
+  - the agent deliberates about which action to take, and the learner about
+    which changes to its own store to keep;
+  - the agent's representation is symbolic, and the learner's store is
+    legible prose, structured text and code;
+  - the agent's model is a world model, and the learner's store holds partial
+    theories, procedures and constraints, with most knowledge of the world
+    in a language model's weights.
+
+  Whether a deliberative learner is a deliberative agent is left open. The
+  contrast rests on one survey. That tradition may hold work closer to
+  Commonplace than the survey shows: it mentions an architecture, IRMA, with
+  a "deliberation process" that chooses between options with no stated
+  criterion, and Soar and PRODIGY were deliberative in its sense and learned.
 - **The closest symbolic precedent.** PRODIGY kept a learned rule only while
   its estimated utility was positive, and revised the estimate from use
   ([Minton](../../sources/minton-utility-of-ebl-aaai88.ingest.md)). It had a

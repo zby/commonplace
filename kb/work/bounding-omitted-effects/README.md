@@ -18,11 +18,14 @@ Stated by the operator on 2026-11-21:
 > A step is an improvement on balance when, for every reasonable measure, the
 > successor scores higher than the predecessor.
 
-No measure is selected. Three verdicts follow:
+No measure is selected. The library note distinguishes these verdicts:
 
 - **Improvement:** every reasonable measure favours the step.
-- **Not an improvement:** every reasonable measure favours the predecessor.
-- **Open:** reasonable measures disagree.
+- **Loss:** every reasonable measure favours the predecessor.
+- **Tie:** every reasonable measure scores both versions equally.
+- **Better or worse on some, tied on the rest:** report the direction. No
+  measure favors the other version, but not all strictly prefer this one.
+- **Open:** some measures favor each version, or evidence is missing.
 
 A measure is reasonable insofar as its treatment of gains and losses can be
 defended from the purpose of the work, whoever wins the comparison.
@@ -133,6 +136,8 @@ separates what evidence could settle from what stays a judgment about purpose.
 - **An irreversible step.** Reversibility can change the on-balance judgment.
   If the team can detect a mistake and undo the step, it can avoid later
   losses. It still counts the harm already done and the cost of going back.
+
+The library companions now cover [how an objection can direct a comparison](../../theory/an-objection-can-show-where-to-split-an-on-balance-judgment.md) and [when reversibility limits future loss](../../theory/reversibility-can-favour-a-change-by-limiting-future-loss.md). The Python companion does not claim that tests and rollback bound silent failures.
 
 ## Support from sources
 

@@ -31,9 +31,26 @@ condition 2. The judge still expects the change to improve future work, but
 can count less future harm if the system can detect and correct a mistake.
 
 The term has no success condition. "Learned" is a separate claim about one
-retained change, with the verdicts learned, not learned and open.
+retained change. A gain on some measures with ties on the rest is reported
+as such, not as a gain on every reasonable measure.
 
-No library file has been changed.
+The on-balance note was updated on 2026-11-21 to state the definition of
+improvement that the draft relies on. The accompanying notes explain how to
+examine a disputed judgment and how reversibility can limit future loss.
+
+## Next stage
+
+The operator proposed that deliberative learning replace the theory builder
+as Commonplace's central definition, with the theory builder kept in notes
+and articles for some time.
+[The assessment and plan](./theory-builder-demotion.md) separate two questions:
+which definition should lead the research program, and whether every theory
+builder is a deliberative learner. Moving the emphasis does not require a yes
+to the second question. The operator ruled on 2026-11-21 that the theory
+builder is demoted without deciding the second question: "I think we can
+demote theory builder without deciding if it is a special case". The relation
+and the order of work remain open. The system's name is ruled: deliberative
+learner.
 
 ## Why the question was open
 
@@ -71,6 +88,7 @@ All on 2026-11-21.
 | Reversibility | Not a condition. The third condition concerns the judgment. | "we do delete stuff - so it is not that everything is reversible" |
 | Deterministic checks | They meet the second condition. | "on-balance judgement can contain a simple deterministic judgement as a degenerate case" |
 | Which loop | A claim names a system and its store. The conditions are checked on the outermost loop the system runs itself. | "I fully agree with your assessment" |
+| The noun for the system | Deliberative learner, contrasted with the deliberative agent. Whether a deliberative learner is a deliberative agent stays open. | "it is possible that we'll discover something in that old tradition that is closer to us" |
 | Workshop goal | Changed from choosing a name to defining the process. | "it is about defining the learning process we are working on" |
 
 Three parts of the draft are the agent's and go beyond the rulings:
@@ -161,6 +179,7 @@ in `properdocs.yml` need no change.
   sense from the group sense and from the agent-architecture sense.
 - The consumers in the evaluation boundary are listed and either edited or
   deferred with a reason.
+- The next stage is either carried out or moved to a workshop of its own.
 
 Then delete this directory and remove its entry from `kb/work/README.md`.
 
