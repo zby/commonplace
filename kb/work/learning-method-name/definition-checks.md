@@ -94,13 +94,13 @@ kind and withdraws unsupported double-loop labels in cases 1, 6 and 8.
 
 | Same starting system | Applies the criterion | Revises the criterion |
 |---|---|---|
-| Gödel machine evaluating self-rewrites | Proves the same target theorems faster. | Proves it should install a utility function that ranks future alternatives differently. Both switches need proof under the old standard; only the second exercises double-loop capacity. |
+| Gödel machine evaluating self-rewrites | Proves the same target theorems faster. | Proves it should install a utility function that ranks future alternatives differently. Both switches need proof under the old standard; only the second exercises double-loop capacity. Neon's qualification: the old function licenses a successor only when the successor serves it better, for example by being cheaper to evaluate under bounded computation. So this revision is the formal counterpart of the third row: a stand-in is replaced while the objective it serves stays fixed. |
 | Commonplace judging instruction edits | Rejects a long edit under its brevity rule. | Finds that short instructions repeatedly omit necessary exceptions and changes the rule for future edits. A language model explaining the failures without authority to change the rule is not enough. |
 | Learner with a cheap policy gate and a fixed objective | Drops a routing rule because its queue-time score falls. | Replaces queue time as the test for future routing rules because short queues can still miss deadlines. The objective need not change. |
 
 ## What the checks expose
 
-- **C now does the excluding that J used to do.** Cases 4, 7a and 9 pass J and fail C. The line between overwriting a kept change and finding it wrong carries the weight, and it has one author and no independent reading.
+- **C now does the excluding that J used to do.** Cases 4, 7a and 9 pass J and fail C. The line between displacing an earlier edit and finding evidence against it carries the weight. Fable, Astra and Neon each drew it in the same place; no reader outside the workshop has checked it.
 
 - **Which writes count as changes?** The draft says “each change.” The same KSI protocol logs every attempt and selects distilled claims. If the named store is the entire KB and every write must qualify, KSI's placement changes. A claim about the distilled guidance should not silently become one about every write in the KB. Specify whether the quantifier covers candidate learning changes or all writes to the named store.
 - **Which comparison supports “learned”?** Suppose a routing rule saves search time on later matched tasks, with no change on an independently reasonable measure of answer accuracy. This is better on one measure and tied on another, not learned under the strict test. A success after a concurrent solver upgrade without a matched baseline does not even establish that limited gain. Neither case invalidates the decision to try the rule.
