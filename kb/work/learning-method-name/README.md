@@ -209,10 +209,86 @@ symbolic AI learned the same things by other means. It needs one narrower
 claim: that symbolic learning systems required a formally specified
 evaluation. That claim still comes from memory and still needs a source.
 
-**Draft.** [The draft definition](./draft-definition.md) defines conjectural
-learning as a method with no success condition, and "learned" as the
-on-balance predicate with three verdicts. It includes the comparison with
-symbolic AI. No library file changes until the operator has read it.
+**What "conjectural" refers to.** The operator: "there are two ways of reading
+conjectural learning - the first is about storing knowledge as conjectures -
+the other is about on balance judgements being conjectures. I think we want
+the second one - so that all learning that happens in Commonplace was under
+one umbrella."
+
+Consequences, drawn by the agent:
+
+- The term is no longer limited to theories stored in language. A code
+  change, a validator or a deletion kept on an on-balance judgment is covered.
+- The first reading is a case of the second, since "retaining this theory
+  improved the system" is itself a conjecture.
+- The contrast class changes. It was other ways of acquiring knowledge, such
+  as gradient training. It is now learning under an evaluation fixed
+  beforehand. This matches the symbolic AI comparison above.
+- The goal stated at the top, "the method by which a theory builder acquires
+  its theories", is narrower than the term now is.
+- N6 is answered in passing: the term does not fix who makes the judgments.
+- A new question: the term now also describes human teams that decide by
+  criticizable on-balance judgments. The draft's notes take this up.
+
+**Where the judgment sits.** The operator then considered naming the method
+after legible storage, since that is what separates Commonplace from
+traditional model training. The agent objected that people judge model
+releases on balance too. The operator: "the difference from people judging
+models is that this is outside of the learning loop - in our case the
+on-balance judgement is inside. On balance judgement seems the core here."
+
+So the defining property is an on-balance judgment inside the learning loop,
+as the step that decides what is retained. Legible storage is recorded in the
+draft as the precondition for it and not as what the term names.
+
+**The name is changed to deliberative learning.** With the on-balance
+judgment as the core, the operator doubted "conjecture" in the name. The
+agent proposed "on-balance learning" and "deliberative learning". The
+operator: "on-balance would fit - but on-balance is kind of not scientific",
+then: "revise the draft to deliberative learning, keep on-balance".
+
+- "On balance" stays as the qualifier of the verdict and is not renamed.
+- "Deliberation" names the process that reaches the verdict.
+- The two words share an image: *deliberare* is derived from *libra*, a pair
+  of scales. The agent checked this in Merriam-Webster, which says "perhaps",
+  and Wiktionary.
+- The agent searched for existing definitions of "deliberative learning" and
+  found no settled one. The draft first excluded two nearby uses: group
+  discussion in education, and planning agents in AI. The operator: "it
+  could kind of fit group discussions and planning agents". The draft now
+  treats both as compatible uses and says how each relates.
+- This supersedes the N3 ruling above. The September retirement of
+  "conjectural learning" stands, and the closing step about reversing it no
+  longer applies.
+
+**The basis of the name.** The agent first compared the term with the
+"deliberative agent" of agent architectures and had to extend that
+definition: Commonplace's store is neither symbolic nor a world model. The
+operator: "if their deliberative learning definition fits without extensions
+... then maybe we should use it as the basis - we don't need deliberative
+agent definition for us." The draft now bases the name on deliberation as the
+weighing of reasons, by one agent or a group. The deliberative agent is
+named only as a use the term is not taken from. PRODIGY and the agent survey
+moved to the comparison with symbolic AI. The operator also ruled that the
+autonomous judge is described as a language model, with no remark on size.
+
+**Sources are background.** After four ingests (deliberation by one agent,
+deliberation by a group, the deliberative agent, PRODIGY), the operator: "it
+is good to have this as some kind of background - but I think we can define
+deliberative learning precisely enough for our uses". The draft was cut to
+three conditions: a legible store, an on-balance judgment in the loop, and
+openness to criticism.
+
+**Reversibility is not a condition.** The agent's third condition said later
+rounds can reverse the change. The operator: "we do delete stuff - so it is
+not that everything is reversible". The condition now requires that the
+judgment can be found wrong. Reversibility decides how much support a
+judgment needs before the system acts.
+
+**Draft.** [The draft definition](./draft-definition.md) defines deliberative
+learning, with no success condition, and "learned"
+as the on-balance predicate with three verdicts. It includes the comparison
+with symbolic AI. No library file changes until the operator has read it.
 
 ## Evaluation boundary
 

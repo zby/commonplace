@@ -6,9 +6,11 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [Local and global thinking](./local-global-thinking/README.md) — posed 2026-11-21: when does shifting attention from an artifact to a connection change which problem is worth pursuing?
+
 - [Supporting the on-balance definition of improvement](./bounding-omitted-effects/README.md) — posed 2026-11-21: assemble the support that lets “improves on balance” serve as a definition of improvement and a success condition for learning; sources on open weights, uncertain sizes, omitted effects and judging a measure, with the limits the definition must state.
 
-- [Naming the learning method](./learning-method-name/README.md) — posed 2026-11-21: decide what to call the method by which a theory builder acquires its theories, whether the name may say "learning" now that improvement can be judged on balance, and whether "conjectural learning" is restored
+- [Naming the learning method](./learning-method-name/README.md) — posed 2026-11-21: decide what to call the method by which a theory builder acquires its theories, whether the name may say "learning" now that improvement can be judged on balance, and which name it gets; the operator's current choice is "deliberative learning"
 
 
 
