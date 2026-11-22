@@ -162,6 +162,7 @@ plugins:
         'articles/building-a-theory-builder-from-todays-llms.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
         'articles/conjectural-learning-with-fixed-models.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
         'articles/continual-learning-outside-the-weights.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
+        'articles/deliberative-learning-judgment-in-place-of-a-value-function.md': 'articles/selection-based-learning-without-a-value-function.md'
         'articles/learning-by-theory-refinement-with-fixed-models.md': 'articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md'
         'articles/moving-revision-decisions-into-the-automatic-system.md': 'articles/bootstrapping-an-autonomous-theory-builder.md'
         'articles/nearest-existing-constructions-to-a-reachability-witness.md': 'articles/which-existing-self-improving-systems-are-theory-builders.md'
