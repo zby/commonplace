@@ -53,7 +53,7 @@ Sources:
 
 Relevant Notes:
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: adds deployment-time learning as another phase that also falls between human modes; the KB's adaptation-path distinctions are its version of the spectrum Amodei describes
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: adds deployment-time learning as another phase that also falls between human modes; the KB's adaptation-path distinctions are its version of the spectrum Amodei describes
 - [human-LLM differences are load-bearing for knowledge system design](./human-llm-differences-are-load-bearing-for-knowledge-system-design.md) — foundation: argues for evaluating each convention individually; this note extends the argument to learning mechanisms themselves
 - [three-space agent memory maps to Tulving's taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) — tension: the Tulving mapping is a human-to-LLM analogy of exactly the kind this note warns about, though it may still be useful if taken as suggestive rather than structural
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — foundation: Simon's definition of learning as capacity change applies regardless of which human mode a phase maps to

@@ -20,7 +20,7 @@ The resulting problem is governance: autonomously *choosing* a behaviour-changin
 Relevant Notes:
 
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: supplies the broad learning criterion under which non-weight changes count as learning
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: the install-during-deployment requirement — persistent behaviour change through retained artifact writes
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: the install-during-deployment requirement — persistent behaviour change through retained artifact writes
 - [Scheduler-LLM separation exploits an error-correction asymmetry](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) — grounds: why symbolic writes are cheaply validated and parametric ones are not — the validation requirement
 - [First-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the reach axis — why a governing theory must be explicit to generalise beyond its source cases
 - [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the addressability axis — the form-level trade space this note defers to

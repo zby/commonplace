@@ -42,4 +42,4 @@ Relevant Notes:
 
 - [Agent memory needs discoverable, composable, trusted knowledge under bounded context](./agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — extends: develops contextual competence into minimum properties of useful retained knowledge
 - [Memory design adds operational axes to artifact analysis](./memory-design-adds-operational-axes-to-artifact-analysis.md) — extends: maps capture, activation, authority, lifecycle, and evaluation around retained artifacts
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: durable readable artifacts can change system behavior during deployment
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: durable readable artifacts can change system behavior during deployment

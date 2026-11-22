@@ -61,7 +61,7 @@ A stable natural-language instruction can remain an appropriate implementation w
 
 Relevant Notes:
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: supplies the adaptation setting in which repeated checking matters
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: supplies the adaptation setting in which repeated checking matters
 - [Codification and relaxing navigate the bitter lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: develops evidence-guided changes in how requirements are implemented
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — contrasts: explores the quality of correctness signals; reset conditions and retry costs also need separate assessment
 - [Symbolic form holds consumers to a semantic reference](./symbolic-form-holds-consumers-to-a-semantic-reference.md) — grounds: reference adoption is separate from inspection cost and from adequacy to the task

@@ -46,7 +46,7 @@ Relevant Notes:
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — grounds: the `select`/`K` decomposition whose two halves this note assigns opposite persistence economics
 - [RLM has the model write ephemeral orchestrators over sub-agents](./rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — contrasts: the system that discards both halves, losing the valuable `select`-strategies along with the task-specific state
 - [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: the accumulation cost RLM avoids and that selective promotion deliberately takes back on the promoted half
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — mechanism: the repo-mediated learning loop that test-gated promotion closes
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — mechanism: the repo-mediated learning loop that test-gated promotion closes
 - [codification](./definitions/codification.md) — contrasts: retaining already-symbolic code is distinct from committing a natural-language rule to symbolic execution
 - [the verifiability gradient](./verifiability-gradient.md) — grounds: promotion needs named checks and costs, not a ranking of REPL and library code
 - [codification and relaxing navigate the bitter-lesson boundary](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — caveat: governs which strategies are worth promoting versus left for the model to rederive

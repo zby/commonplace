@@ -28,7 +28,7 @@ These child tags route major parts of the area. A few fundamentals carry only th
 
 - [Selection-based learning](../theory/definitions/selection-based-learning.md) — learning by decided changes to what a system retains for its later work; names the process Commonplace runs, not an improved outcome
 - [Program refinement](../theory/definitions/program-refinement.md) — one artifact's permitted behaviors inside another's; a checked narrowing is a refinement step, an unchecked output a candidate
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
+- [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [Learning is not only about generality](../theory/learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition
 - [Prompting changes failure diagnosis with the semantic reference](../theory/prompting-changes-failure-diagnosis-with-the-semantic-reference.md) — reference choice separates conformance, requirement adequacy and the inspection burden
 - [The verifiability gradient](../theory/verifiability-gradient.md) — compares task-specific checks, reset conditions and retry costs

@@ -105,6 +105,6 @@ Relevant Notes:
 
 - [Discarding all experience-dependent state prevents cross-run accumulation](./ephemeral-computation-prevents-accumulation.md) — grounds: separates one artifact's lifetime from system-level retention
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: distinguishes explanatory transfer from repeated use
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: describes retained carriers that can change later production
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: describes retained carriers that can change later production
 - [Codification](./definitions/codification.md) — contrasts: assigned execution and durable storage are separate choices
 - [The Flawed Ephemeral Software Hypothesis](https://www.blackhc.net/essays/future_of_software/) — evidenced-by: supplies the production pressures this note separates by continuity requirement

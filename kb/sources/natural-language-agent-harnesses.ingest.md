@@ -44,7 +44,7 @@ No source quotes have been retained yet.
 
 - [LLM contexts interpret instructions and content through the same token medium](../theory/llm-context-interprets-instructions-and-content-through-one-medium.md) — **exemplifies**: NLAH explicitly treats NL as carrying "editable, inspectable orchestration logic" — artifacts are both content the LLM reads and programs the LLM executes.
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — **exemplifies**: NLAHs are durable symbolic artifacts (portable, versioned, ablatable) that improve system behavior without weight updates. The emphasis on ablation studies is verification methodology for deployment-time adaptation.
+- [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — **exemplifies**: NLAHs are durable symbolic artifacts (portable, versioned, ablatable) that improve system behavior without weight updates. The emphasis on ablation studies is verification methodology for deployment-time adaptation.
 
 - [ABC: Agent Behavioral Contracts](./agent-behavioral-contracts-formal-specification-runtime.ingest.md) — **complements from opposite direction**: ABC uses a formal YAML DSL with mathematical compliance guarantees; NLAH uses natural-language contracts interpreted by the LLM. ABC pushes toward full formalization; NLAH stays in the intermediate regime. Together they bracket the contract-specification design space.
 

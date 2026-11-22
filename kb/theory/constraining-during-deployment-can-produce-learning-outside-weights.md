@@ -43,7 +43,7 @@ Constraining is one possible mechanism of learning outside weights. This note do
 
 Relevant Notes:
 
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: distinguishes evidence-responsive adaptation from arbitrary durable maintenance
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — grounds: distinguishes evidence-responsive adaptation from arbitrary durable maintenance
 - [Constraining](./definitions/constraining.md) — defined-in: the commitment operation whose evaluated use this note examines
 - [Constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: benefits depend on the committed reading fitting the task
 - [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: capacity change can concern reliability, speed or cost

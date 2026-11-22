@@ -88,7 +88,7 @@ question is what survives the horizon across which learning is claimed.
 Relevant Notes:
 
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: sets the boundary over which retained effects must be checked
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: describes one useful retention path
+- [Deployed systems can learn from feedback with fixed model weights](./deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) — extends: describes one useful retention path
 - [Codification](./definitions/codification.md) — contrasts: execution form is separate from artifact lifetime
 - [Discarding software requires preserving the operational knowledge later work needs](./ephemerality-is-safe-where-embedded-operational-knowledge-has-low.md) — extends: asks which knowledge must survive regeneration
 - [The Flawed Ephemeral Software Hypothesis](https://www.blackhc.net/essays/future_of_software/) — evidenced-by: supplies the production-knowledge pressures motivating durable carriers

@@ -75,4 +75,4 @@ Finally, editable prompts or improvement policies do not make all consequential 
 
 ## Recommended Next Action
 
-Update [Retained system-definition artifacts enable persistent deployment-time adaptation](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) with Humanlaya's bounded V0/V4 case, preserving its company-reported status, fixed model/tools/budget, whole-system attribution, and human approval boundary.
+Update [Deployed systems can learn from feedback with fixed model weights](../theory/deployed-systems-can-learn-from-feedback-with-fixed-model-weights.md) with Humanlaya's bounded V0/V4 case, preserving its company-reported status, fixed model/tools/budget, whole-system attribution, and human approval boundary.
