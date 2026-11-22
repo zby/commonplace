@@ -1,0 +1,17 @@
+## 1. Narrow the quantifier in condition 2 from "each change" to the changes the loop retains as learning
+
+**Change:** Condition 2 says "Each change is kept or dropped by an on-balance judgment." Change it to say that the changes the system retains as learning are kept or dropped by such a judgment. State separately that other writes to the store, such as logs, attempt records and history, are outside the claim.
+
+**Reason:** As written, one default-retained write in the named store excludes the whole system. That would exclude Commonplace itself, which the term exists to cover. The checks file shows the problem with KSI, whose placement changes depending on whether the attempt log counts. The draft's own "retention without a judgment is outside the term" makes it worse unless the scope of the quantifier is fixed.
+
+## 2. Make condition 2 a judgment that keeping the change is the better decision, not that the change improves future work
+
+**Change:** Reword condition 2 so the judgment is that retaining the change is, on balance, the better decision for the system's future work. Drop the requirement that the change itself improves future work.
+
+**Reason:** The draft and the on-balance note both say a recent change usually has an "Open" verdict and that keeping it is a decision. Reversibility can justify keeping a change that is not evidence of improvement, and ADR 085 kept a deletion while accepting a loss. Under the current wording, those ordinary Commonplace retentions fail condition 2. The draft would then exclude its own central cases and blur the distinction between decision and verdict that it insists on elsewhere.
+
+## 3. Make the deterministic-check note depend on the boundary
+
+**Change:** Rewrite "A deterministic check is a degenerate on-balance judgment … a change kept because a validator passed meets the condition." Say that a validator-gated retention meets condition 2 only when the named system also contains a loop that can question whether that measure is sufficient.
+
+**Reason:** The current sentence contradicts the draft's own exclusion of "retention bound to a fixed measure." It also flips case 4, where the repairer alone should be outside on J. The repairer and its team together should be inside. Tying the credit to the boundary keeps validator-driven learning in Commonplace covered, because Commonplace's outer loop revises its validators, without crediting a fixed gate with judgments made elsewhere.

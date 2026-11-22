@@ -1,0 +1,19 @@
+# Three proposed changes to the deliberative learning definition
+
+## 1. Change what condition 2 quantifies over
+
+**Change:** Replace "Each change is kept or dropped by an on-balance judgment" with a condition on how the named store decides retention. A change may be kept by an on-balance judgment directly. It may also be kept by a check, provided an on-balance judgment within the same system has accepted that the check suffices for this kind of change and can revisit that acceptance. State that the condition covers the changes a learning claim is about, not every write to the store.
+
+**Reason:** As written, the term cannot cover all of Commonplace's learning. Commonplace also keeps logs, automatic writes and validator-passed patches, and the "Retention without a judgment" exclusion then disqualifies the whole store. The checks file already flags this quantifier through KSI's log versus its distilled guidance. The rewording also settles a conflict between two placements. The draft's note admits a validator-passed change outright, while check 4 places the repairer alone outside on J. Moving the sufficiency judgment into the condition makes both agree.
+
+## 2. Make the judgment about keeping, not about improvement
+
+**Change:** In condition 2, replace "a judgment… that the change improves the system's future work" with "a judgment that keeping the change is, on balance, the better decision for the system's future work."
+
+**Reason:** The draft says elsewhere that a recent change's verdict is usually Open. It also says that keeping such a change is a decision, and that reversibility can justify keeping it without being evidence of improvement. Under the current wording, a keep-under-Open decision either fails condition 2 or has to be described as a judgment of improvement. That second option is the misuse the draft itself lists: reporting a kept change as learned while its verdict is open.
+
+## 3. Drop "legible store" as a condition and make it a reported property
+
+**Change:** Remove condition 1. Keep "any kind of change counts." Report the store's legibility, and the granularity at which changes can be judged, as a property of a deliberative learner, or name a kind such as legible deliberative learning. Then adjust case 5 and "What the term does not cover," which currently rely on S.
+
+**Reason:** The stated justification, that only legible changes can be judged, is contradicted by the on-balance note. That note judges whole Python releases on balance, so legibility affects how finely changes can be judged, not whether they can be judged at all. Condition 1 never decides a check case on its own: cases 2 and 5 already fail J. Under the instruction to prefer the most general definition that does its job, a feature that only separates some systems from others belongs in a property, not in the membership conditions.

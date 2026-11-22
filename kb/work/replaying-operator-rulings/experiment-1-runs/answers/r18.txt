@@ -1,0 +1,17 @@
+**I will keep condition 2 as a membership condition and reject the proposed wording. I will add one clarification so the condition is not read as excluding a fixed objective.**
+
+Changed passage (condition 2 in the definition):
+
+> 2. **Judgment in the loop.** Each change is kept or dropped by an
+>    [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+>    that the change improves the system's future work. The judgment is a step
+>    of the learning loop. It may serve an objective declared beforehand, but
+>    it is not bound to one measure of that objective fixed beforehand: the
+>    loop itself may decline what a measure favors, for a stated reason about
+>    future work.
+
+Reason:
+1. The objection treats a fixed objective and a fixed measure as the same thing. The on-balance note keeps them apart: Commonplace has a declared objective that "bounds which measures are reasonable rather than collapsing them into one score." So deliberating under a fixed objective already passes, and the added sentence states this.
+2. The proposed wording would flip settled placements without justification. The checks treat whether the loop may overrule its measure as the J discriminator. That test excludes the lone repairer (case 4), the score-bound builder (case 7) and Recuris. It also separates case 7 from case 8, where "the additional capability changes J."
+3. The question the reviewer wants moved to capability is about authority, not quality. It asks whether the named loop is permitted to decide otherwise. The draft already treats how well a judge judges as the open conjecture, not as a membership test.
+4. "Open to criticism and revision" restates condition 3, so merging it into condition 2 would blur the S/J/C distinctions the checks rely on.

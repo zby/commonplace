@@ -1,0 +1,17 @@
+## 1. Condition 2 should require a judgment to keep the change, not a judgment that it improves the system
+
+**Change:** Reword condition 2 to: "Each change is kept or dropped by an on-balance judgment of whether keeping it serves the system's future work." Then say in the notes that this judgment may rest on an open verdict, on option value or on reversibility.
+
+**Reason:** As written, condition 2 demands a judgment that the change improves future work. By the definition's own "learned" section and the on-balance note, that means every reasonable measure favors it. So the open-verdict retentions the draft endorses would fall outside the term: the reversibility-favored routing instruction and ADR 085's deletion are kept "as a decision". This is a discontinuity. A change judged a clear improvement is inside, while the same change kept on a reversible "open" verdict is outside. The term says it has no success condition, so it should not mark that difference. The checks' gloss of J already reads "decides what to keep for future work."
+
+## 2. Scope "each change" to a named store or class of changes
+
+**Change:** State the conditions over the retained learning changes in a named store, as the checks propose. Make "deliberative learner" a claim about that store. Then qualify "all the learning that happens in Commonplace" to mean the learning in each such store.
+
+**Reason:** As written, one write kept by default, such as an automatic log entry, would push a whole system outside the term. KSI's attempt log beside its distilled guidance shows how easily that happens. A one-write difference flipping a whole system is exactly the discontinuity the criterion forbids. The checks already flag the problem but leave it unresolved.
+
+## 3. Replace the note on deterministic checks with a rule for nested loops, and align it with case 4
+
+**Change:** Delete the note that "a change kept because a validator passed meets the condition." Replace it with this rule: retention by a fixed measure counts toward J only when the named system also runs the loop that can question and revise that measure. That rule gives case 4's split placements, the Recuris exclusion and the PRODIGY+Minton verdict. Restate the team-training bullet to match: the team does run the loop that revises the loss, so training inside it fails on S (illegible weights), not on J.
+
+**Reason:** The draft and case 4 now contradict each other. The draft lets a validator pass satisfy J if the measure's sufficiency "stays open", without saying open to whom. Case 4 puts the repairer alone outside on J. Unless the boundary is stated, the same validator loop lands inside or outside depending on how charitably "open" is read.

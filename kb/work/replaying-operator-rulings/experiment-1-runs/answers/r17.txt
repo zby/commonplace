@@ -1,0 +1,23 @@
+# Three proposed changes to the deliberative-learning definition
+
+## 1. Settle when a fixed check satisfies condition 2, and state it in the condition itself
+
+**Change:** Replace the note "a change kept because a validator passed meets the condition" with a rule in condition 2. A fixed check satisfies the condition only when something inside the named boundary can do both of these:
+- reject or override a result that passes the check, for a stated reason about future work;
+- revise the check itself.
+
+Without that, retention by the check fails condition 2, however many tests the check contains.
+
+**Reason:** The draft currently contradicts itself. The notes say retention by a validator passes, while "What the term does not cover" excludes retention bound to one formula. The checks file places the link repairer alone outside the term (case 4) and Recuris outside on condition 2. When reviewing other people's systems, most automated admission gates sit exactly on this line, so an applier needs a test they can run, not two readings to choose between.
+
+## 2. Fix what "each change" ranges over
+
+**Change:** Condition 2 should apply to **retained candidate learning changes to the named store**, and a claim should declare which writes those are. Writes that no judgment is meant to select fall outside the condition, as long as the claim says so. Examples are logs, caches and attempt records.
+
+**Reason:** Almost every real system writes far more than it deliberates over. Read literally, "each change" either excludes nearly everything or lets an applier choose the boundary silently. The checks already show KSI's placement flipping on this point: the distilled guidance qualifies, but the whole store, which includes the automatic attempt log, would not.
+
+## 3. Restate condition 3 as an observable capability, not an attitude or an outcome
+
+**Change:** Drop "the judgment is held as a conjecture" and "the system then corrects." In their place, require a path inside the named boundary through which later evidence can mark a specific earlier retention judgment as mistaken and change what the system does next: undo the change, make a further change, or alter later retention decisions. Say explicitly that the path must exist; correction need not have happened yet.
+
+**Reason:** No one can inspect how an outside system "holds" a judgment. "Then corrects" could also be read as requiring that corrections have actually occurred, which would bring back the success condition the draft disclaims. The checks file already applies the capability reading (case 3, and the "traced reversal" evidence asked for Warp), so the definition should say what is actually being tested.

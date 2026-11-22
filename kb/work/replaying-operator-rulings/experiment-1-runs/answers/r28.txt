@@ -1,0 +1,23 @@
+# Three proposed changes to the deliberative learning definition
+
+## 1. Condition 2: judge whether to keep the change, not whether it improves the work
+
+**Change:** Replace "an on-balance judgment that the change improves the system's future work" with "an on-balance judgment whether to keep the change for the system's future work." This makes the condition more general.
+
+**Reason:** In the on-balance note, "improves" means that every reasonable measure favours the change. The draft says that "Open" is the usual verdict for a recent change, and that keeping such a change is a decision. So read literally, the condition excludes most of Commonplace's own retention decisions, including keeping a change because it can be undone and the ADR 085 deletion, and the definition fails its stated purpose. The checks file already states J in the more general form ("decides what to keep for future work").
+
+## 2. Remove "A deterministic check is a degenerate on-balance judgment"
+
+**Change:** Delete this note. The sentence "checked on the outermost loop that the system runs itself" does the work, together with the existing exclusion of retention bound to a fixed measure.
+
+**Reason:** The note says a change kept because a validator passed meets condition 2. This contradicts check case 4, where the repairer alone is outside on J, and the draft's own exclusion of formula-bound retention. Under the outermost-loop rule, validator-gated changes are already covered whenever the system also runs the loop that questions and revises the validator. Its one sound point, that the sufficiency of the measure must stay open, belongs to conditions 2 and 3 as they stand.
+
+## 3. Condition 2: make it about the loop's retention step, not "each change"
+
+**Change:** Replace "Each change is kept or dropped by…" with "What the loop retains is kept or dropped by…". Do not add a separate clause that lists which writes count.
+
+**Reason:** As written, a single write kept by default turns "each" against the whole system. Examples are an attempt log or a generated index. The KSI case in the checks shows that this flips placements, and Commonplace has such writes too. With this rewording, those writes are simply not part of the learning, as "Retention without a judgment" already says, and they no longer disqualify the learning around them.
+
+---
+
+**Considered and left unchanged:** Conditions 1 and 3 hold up against the cases. Case 3 shows that C does work J does not, and case 5 places weights as the draft intends. I would not add conditions for the open questions about autonomy or about the strength of builder-style criticism. Cases 6–8 are handled correctly by the existing wording.

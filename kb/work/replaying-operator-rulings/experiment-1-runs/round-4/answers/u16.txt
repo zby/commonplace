@@ -1,0 +1,41 @@
+# Three proposed changes to the deliberative learning draft
+
+## 1. Rewrite condition 2 so that it matches its own note on deterministic checks and check case 4
+
+**What to change**
+
+- Condition 2 now reads "not bound to one measure fixed beforehand." Replace this with the wording the checks file uses: retention may use a fixed measure, but the named system's own loop must be able to question whether that measure is enough for the question and to override or revise it.
+- Revise the "degenerate on-balance judgment" note to match. A change kept because a validator passed meets condition 2 only when the named system also runs the loop that can revise the validator, as in case 4 ("team plus repairer"). The link-repair example also needs fixing: case 4 points out that a check that a link resolves cannot show it resolves to the intended page, so it is a poor example of a question with only one reasonable measure.
+- Make the "autonomous claim" bullet consistent too. "No measure given to it" should become "no measure it cannot question," because the Commonplace objective does bound the judge.
+
+**Reason**
+
+The condition's text excludes validator-gated retention, while its note says such retention "meets the condition." Case 4 then puts the repairer on its own outside. Case 5 says "several tests in a fixed rule are still a fixed rule," and Recuris is placed outside on that basis, but the draft's "one measure" wording would let a fixed composite measure through.
+
+## 2. Settle what "each change" ranges over, and make the coverage claim match the exclusions
+
+**What to change**
+
+- Say explicitly that the conditions apply to *candidate learning changes* retained into the named store, not to every write the system makes. Logs, attempt records and ingests kept by default are then not candidates, rather than counter-examples.
+- Then either narrow the purpose sentence or show that every lasting change in Commonplace's capacity passes through such a judgment. A narrower version could read: "all learning that Commonplace's own loop retains by judgment."
+- Add the KSI case (attempt log versus distilled guidance) to the checks as a stable placement.
+
+**Reason**
+
+The draft says the term covers "all the learning that happens in Commonplace." It also adopts Simon's sense of learning as any lasting change in capacity, and it excludes "retention without a judgment." Commonplace surely has default-retained writes that change capacity, so as written the purpose and the exclusions contradict each other. The checks file's first finding shows the placement depends on this quantifier.
+
+## 3. Bring the note's preconditions for a comparison into the definition of "learned"
+
+**What to change**
+
+- Fix the comparison before any verdict is reported. The note says a verdict is defined only after three choices are made:
+  - the alternative compared against;
+  - whose work gains or loses;
+  - the period considered.
+- Name the declared objective that bounds which measures are "reasonable." For Commonplace this is "more useful and better-warranted knowledge work for the human judgment spent."
+- Replace "the system without it" with the declared, matched alternative.
+- Add the checks' example of a concurrent solver upgrade with no matched baseline as a check case.
+
+**Reason**
+
+Without these, "every reasonable measure of future work" has no bounds, and the bare counterfactual "system without it" is ill-defined. Both the confounded solver-upgrade case and path-dependent chains of changes show this. The draft says it borrows the note's meaning of "on balance" but drops exactly the conditions under which the note says that meaning applies.

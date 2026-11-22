@@ -1,0 +1,57 @@
+# Review: deliberative learning (draft of 2026-11-21)
+
+## What each condition keeps out
+
+**1. Legible store**
+- **Keeps out:** a team that fine-tunes a LoRA adapter, keeps or rolls it back by an on-balance judgment of later work, and can revisit that choice. Unlike case 5, this system passes J and C. The adapter is a single change that can be pointed at, judged and undone, so only S excludes it.
+- **Lost if inside:** criticism could reach only outcomes, not content. The system could say "this adapter made things worse" but not which premise was wrong or what to change, so every correction would be a rollback. The term would also stop picking out the kind of store Commonplace works on.
+- **Side note:** this case shows the draft's stated reason for S is wrong. It says "In weights, only the whole model can be judged." A checkpoint can be judged as one change. Legibility does not make a per-change judgment possible. It makes content-directed criticism and partial correction possible. That note should be rewritten.
+
+**2. Judgment in the loop**
+- **Keeps out:** Recuris. Its patches are admitted by a paired held-out gate that lies outside the surface the loop may change.
+- **Lost if inside:** the term would cover all benchmark-gated self-improvement. The autonomous claim would then have nothing to test, because a fixed gate needs no judge who reads the store and weighs it with no measure given. "Kept" would also collapse into "passed the gate," which the compounding note says is not the test of learning.
+
+**3. Open to criticism**
+- **Keeps out:** case 3, for example an editorial board that weighs each change carefully, publishes a frozen release, and never revisits it.
+- **Lost if inside:** the draft says the verdict on a recent change is usually "open" and is settled by later episodes. Without C, nothing connects that later evidence back to the store. The term would then name one-shot deliberation, which the Background section says is exactly what "learning" adds to deliberation. The reversibility argument for keeping the routing instruction would also lose its footing.
+
+**Scope rule: checked on the outermost loop the system runs itself**
+- **Keeps out:** a system whose inner proposer deliberates while an outer loop admits by a fixed gate. For example, a language model drafts each patch after weighing reasons, but a held-out score decides retention.
+- **Lost if inside:** any benchmark loop with a language model somewhere inside it would qualify. That breaks the checks' rule against crediting an automated loop with judgments made elsewhere.
+
+## What each exclusion keeps out
+
+**Learning in general**
+- **Keeps out:** an RL run or gradient training under a fixed loss. Nothing is excluded beyond what the conditions already exclude, so this item restates them.
+- **Lost if inside:** "deliberative learning" would become a synonym for "learning" and would name nothing.
+- **Tension:** if Commonplace has Simon-sense learning that fails S or J, the scope sentence ("all the learning that happens in Commonplace") is false. Examples would be session transcripts that later agents search, or attempt logs kept by default.
+
+**Retention bound to a fixed measure**
+- **Keeps out:** PRODIGY taken alone.
+- **Lost if inside:** the clause "even if it revises its estimates from use" is what separates tuning a criterion from questioning it. Without it, PRODIGY's utility updates would look like criticism, and every adaptive-threshold system would qualify.
+
+**Retention without a judgment**
+- **Keeps out:** case 2 (the append-everything log), KSI's raw attempt log, or an assistant memory that saves every stated preference.
+- **Lost if inside:** every write would count as learning. Condition 3 would become empty, since there would be no judgment to find wrong. "Learned" verdicts would also be demanded for entries nobody chose.
+
+**A claim of success**
+- **Keeps out:** no system. It stops the term from excluding a system: case 1 when later work turns out worse.
+- **Lost if success were part of the term:** membership would be unknowable for recent changes, whose verdict is usually open. The autonomous conjecture, whether a language model's judgments are good enough, could not be tested, because its failures would fall outside the term by definition.
+
+## Three changes, most important first
+
+**1. Change what condition 2's judgment is about.**
+Replace "an on-balance judgment that the change improves the system's future work" with "an on-balance judgment whether keeping the change serves the system's future work better than dropping it." Such a judgment may rest on an open verdict and on reversibility.
+
+*Reason:* As written, the condition demands a judgment of improvement. Yet the draft itself says "open" is the usual verdict for a recent change, calls keeping such a change "a decision", and keeps the routing instruction on grounds that are "not evidence that the instruction has improved later work." The condition therefore excludes the routine case, including most of Commonplace's own retained changes, and it disagrees with the checks' J, which asks what the loop *decides to keep*.
+
+**2. Make "fixed measure" mean the same thing in all three places, and fix the deterministic-check note.**
+- Condition 2 and the exclusion should both say "not bound to a rule the loop cannot question, however many tests it combines."
+- The note should say a validator pass meets J only when the same named loop can question whether the validator is enough.
+
+*Reason:* "One measure fixed beforehand" lets in Recuris's multi-test gate, which the checks place outside. The note's unqualified "a change kept because a validator passed meets the condition" puts the case-4 repairer, taken alone, inside, which contradicts both the checks and the draft's own exclusion. Its link example also fails on its own terms: a passing check shows that a link resolves, not that it resolves to the intended page, so that measure is not the only reasonable one for the retention question.
+
+**3. Fix what "each change" covers, and reconcile it with the scope sentence.**
+State whether the conditions range over changes retained as candidate learning in the named store, or over every write to it. Then either narrow "all the learning that happens in Commonplace," or name the learning that falls outside the term (logs, attempt records, other default-kept writes) and say why it does not count.
+
+*Reason:* If "each change" means every write, one default-kept write fails condition 2 for the whole store, and the checks show that KSI's placement flips on exactly this choice. Covering all of Commonplace's learning is the stated purpose of the term, and with the quantifier left open, no one can check whether the definition achieves it.

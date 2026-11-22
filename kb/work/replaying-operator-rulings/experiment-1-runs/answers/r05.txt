@@ -1,0 +1,7 @@
+**Decision:** I'll leave the definition unchanged.
+
+**Reason:**
+1. Condition 2 already has a positive core: an on-balance judgment about future work. Reconsidering that judgment is already a separate property, condition 3.
+2. The "not bound to one measure" clause excludes retention bound to a measure the loop cannot question. A fixed objective is not that: under the on-balance note, an objective only bounds which measures count as reasonable. So "deliberating at length under a fixed objective" already falls inside.
+3. The proposed wording would move that exclusion into "open to criticism and revision". But systems like case 7's builder, Recuris and PRODIGY alone can revise individual retention verdicts while still being unable to override their score or formula. Under the new wording they would flip from outside to inside, with no stated reason for the flip.
+4. That boundary is the main distinction the term exists to draw. The draft already treats *how well* a system judges as a question of capability (the autonomous claim). Whether its loop *may* overrule a score therefore has to stay a question of membership.

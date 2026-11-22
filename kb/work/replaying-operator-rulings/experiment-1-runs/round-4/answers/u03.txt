@@ -1,0 +1,33 @@
+## 1. Take "not bound to a fixed measure" out of membership and state it as the project's claim about a kind
+
+**Change in the definition**
+- Reword condition 2 as: *a step of the loop decides, for the sake of future work, which changes to keep.* That step may be a human, a language model, a validator or a benchmark gate.
+- Reword condition 3 so it does not require that the system can question its own retention rule.
+- Remove "Retention bound to a fixed measure" from *What the term does not cover*.
+- Add a section that names the kind as Commonplace's claim. In that kind, retention is an on-balance judgment, no measure is given beforehand, the judgment stays open to criticism, and a language model can run the outermost loop. This section can absorb the existing *autonomous claim* bullet.
+- Consider whether "deliberative", which means weighing, fits the kind better than the general term.
+
+**Change in the checks**
+- Recuris, case 7 and the repairer alone in case 4 move from "outside on J" to "inside the term, outside the kind". Each flip needs the explanation the checks file asks for.
+- Cases 6–8 become tests of the kind.
+
+**Reason.** The draft currently writes the project's distinctive bet into the membership conditions. That is why it needs the "degenerate judgment" clause, the outermost-loop rule and the "PRODIGY together with Minton" move. Those devices exist to readmit validator-gated learning that Commonplace actually does. With the bet stated as a kind, the general term covers all of the system's learning, and the claim becomes something that can be tested.
+
+## 2. Make the retention step a decision to keep, not a judgment that the change improves
+
+**Change in the definition.** Condition 2 currently requires a judgment "that the change improves the system's future work". The note defines improvement as "every reasonable measure scores the successor higher", so the condition demands a prediction of the strict "Learned" verdict. Reword it as a decision to keep, made on balance for the sake of future work, which may rest on an Open verdict and on reversibility.
+
+**Change in the note.** State explicitly that an *on-balance decision* (to keep, to adopt as a default, to delete) is different from an *on-balance improvement claim*. The note already practises this distinction in the Python 3.11 default and the ADR 085 deletion, but its title and its section "What an on-balance claim asserts" blur the two.
+
+**Reason.** The draft says that "Open" is the usual verdict and that keeping is not learning. Its reversibility example also says the prospect of undoing a change can tip the judgment "but is not evidence that the instruction has improved later work". As worded, condition 2 contradicts all three, and it would exclude or mislabel most of Commonplace's actual retentions.
+
+## 3. Settle the "each change" quantifier by letting a retention rule serve as the judgment for the writes it admits
+
+**Change in the definition.** Say that a change meets conditions 2 and 3 either by its own retention decision, or by being admitted under a standing rule that meets the conditions as a change in its own right. Examples of such rules are a validator, "keep the attempt log" and "commit session records".
+
+**Change in the checks**
+- Close the open bullet "Which writes count as changes?" with this rule.
+- Restate case 2's discriminator: the log is outside only if keeping everything is not a rule the named system's own loop can revisit.
+- Note how this rule places KSI's attempt log.
+
+**Reason.** Commonplace keeps many writes by default or by validator: git history, logs, and the output of the inner loops the draft itself mentions. Under "each change is kept or dropped by a judgment", those writes fall outside the term, which defeats the stated purpose of naming all of the system's learning. Treating the retention rule as the judged change also replaces the special-case "degenerate judgment" and "outermost loop" clauses with one principle.

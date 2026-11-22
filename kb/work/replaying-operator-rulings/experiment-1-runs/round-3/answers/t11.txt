@@ -1,0 +1,40 @@
+# Ten candidate changes to the deliberative learning draft
+
+**1. In condition 2, have the judgment be that keeping the change is on balance better for future work than dropping it, not that the change improves future work.**
+**Adopt.** As written, condition 2 contradicts two other passages. The reversibility note says reversibility can tip the judgment "in favour of keeping" without being "evidence that the instruction has improved later work." The verdict section also allows keeping a change whose verdict is open "as a decision."
+
+**2. In condition 2, replace "not bound to one measure fixed beforehand" with "not bound to a fixed rule the loop cannot question."**
+**Adopt.** "One measure" would let a gate built from several fixed tests pass. Recuris is exactly that case ("several tests in a fixed rule are still a fixed rule"), and the checks' J already uses the "cannot question" wording.
+
+**3. In condition 2, make "each change" range over changes the system keeps for future work, not every write to the named store.**
+**Adopt.** Otherwise a store that also logs every attempt fails. The checks show KSI's placement then depends on an unstated quantifier, and so does the claim to cover Commonplace, where most writes are not learning candidates.
+
+**4. Qualify "a change kept because a validator passed meets the condition" so it holds only when the named system also runs the loop that judges whether the validator suffices.**
+**Adopt.** Unqualified, the sentence contradicts two things: the draft's own exclusion of "retention bound to a fixed measure," and check case 4, where the repairer alone is outside on J.
+
+**5. In condition 3, state correction as a capability, and include changing how the system judges.**
+The proposed wording is "the system can respond by undoing the change, making a further change, or changing how it judges."
+**Adopt.** "The system then corrects" reads as an obligation to succeed. Undo-or-further-change also omits case 3's point: the lesson that changes the next deletion counts.
+
+**6. In "When a change was learned," require the comparison to hold the rest of the system fixed and to declare the work and the period.**
+**Adopt.** The on-balance note says three choices fix any comparison: the alternative, who gains and who loses, and the period. The checks also show that a gain observed after a concurrent solver upgrade, with no matched baseline, does not establish even a limited gain.
+
+**7. Name the system and store in the PRODIGY bullet: Minton's research program, with its rules, formula and code, rather than "PRODIGY together with Minton."**
+**Adopt.** The draft's own rule is that a claim of deliberative learning names a system and the store it changes. The checks also warn against crediting an automated loop with judgments made elsewhere.
+
+**8. Add reversibility of the change as a requirement of condition 3.**
+**Reject.** The draft deliberately puts criticism of the judgment in condition 3 and reversibility in condition 2's weighing. Commonplace's irreversible deletions (ADR 085) would otherwise fall outside the term.
+
+**9. Require an explanation of why a change works, or a measured downstream gain, for membership.**
+**Reject.** The term deliberately has no success condition. Check case 6 fixes membership without either, and that keeps the process separate from the theory-builder definition.
+
+**10. Drop "all" from "put all the learning that happens in Commonplace under one name."**
+**Reject.** Coverage is the operator's stated purpose, so the wording should stay. Learning kept by default with no judgment would still fall outside the term. That gap should be recorded as an open question for the operator rather than hidden by weakening the aim.
+
+## The three I would make
+
+1. **Change 1:** the judgment is about keeping the change, not about improvement.
+2. **Change 2:** a fixed rule the loop cannot question, not one measure.
+3. **Change 3:** the quantifier ranges over changes kept as learning candidates, not every write.
+
+Changes 1 and 2 remove contradictions inside the core condition. Change 3 settles the placement problem the checks expose. Change 4 largely follows once change 2 is made, because the validator note can then point to "a fixed rule the loop can question."

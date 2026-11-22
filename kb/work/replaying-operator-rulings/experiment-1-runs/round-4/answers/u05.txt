@@ -1,0 +1,30 @@
+## 1. Make condition 2 about a retention decision, not a claim that the change improves
+
+**Change.** Reword condition 2 from "an on-balance judgment that the change improves the system's future work" to "an on-balance judgment that keeping the change is warranted for the system's future work." Add a sentence that such a judgment may rest on an open verdict, reversibility or cost of investigation. Align the on-balance note's sentence "We can still take it as a decision" with this, so the linked note supports the wording.
+
+**Reason.**
+- Under the note, judging that a change "improves" asserts that every reasonable measure favors it. The draft says the usual verdict for a recent change is "Open", and that the reversibility reason "is not evidence that the instruction has improved later work."
+- As written, the draft's own routing example and ADR 085's deletion fail condition 2. So would most of Commonplace's retentions.
+- Whether a team says "this improves" or "this is worth keeping for now" is not the difference the term exists to mark. The boundary should not move with that wording.
+
+## 2. Replace "one measure fixed beforehand" with "a retention rule the loop cannot question," and fix the validator note to match
+
+**Change.** Condition 2 should read: "not bound to a retention rule that the named loop cannot itself question and revise." Two edits follow from this.
+- **Validator note.** "A deterministic check is a degenerate on-balance judgment" should say that a validator-gated change meets the condition only when the validator's sufficiency is itself open to judgment *within the named system*. Cite check case 4.
+- **Minton.** Reword the PRODIGY bullet to mark Minton as a change of the named system, not a property of PRODIGY.
+
+**Reason.**
+- The literal "one measure" lets a system cross the boundary by adding a second fixed test or a fixed weighted sum. The checks already reject this: "several tests in a fixed rule are still a fixed rule."
+- The validator note currently says a validator-passed change "meets the condition." That contradicts case 4, where the repairer alone is outside.
+- What the term marks is whether the criterion can be questioned inside the boundary, not how many measures it has.
+
+## 3. Restrict "each change" to the changes the learning claim is about
+
+**Change.** In condition 2, "Each change" should become "Each retained change the claim concerns." Add a note that unjudged writes to the same store neither count toward the claim nor defeat it. Examples are logs, generated indexes and caches.
+
+Also add a check case for Commonplace with an auto-regenerated index, expected inside for its judged notes. Then resolve the open question under "Which writes count as changes?" accordingly.
+
+**Reason.**
+- As written, one auto-appended log in the store would expel a system. That includes Commonplace itself, which the term is meant to cover entirely.
+- It would also flip KSI depending on whether the attempt log sits in the "named store."
+- That is a large boundary jump from a trivial change, and it marks nothing the term cares about.

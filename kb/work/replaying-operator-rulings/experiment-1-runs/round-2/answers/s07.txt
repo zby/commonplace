@@ -1,0 +1,3 @@
+**Remove the exclusion "Retention without a judgment."**
+
+The exclusion adds nothing: condition 2 already requires that each change be kept or dropped by a judgment, and condition 3 requires that the judgment can later be found wrong. Removing it changes no placement in the checks, since case 2 and the KSI attempt log are already outside on J. The other three exclusions each add something. "Learning in general" sets the scope, "Retention bound to a fixed measure" adds the PRODIGY point about revising estimates from use, and "A claim of success" says what the term does not assert.

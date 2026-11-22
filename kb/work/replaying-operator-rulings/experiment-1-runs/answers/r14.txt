@@ -1,0 +1,17 @@
+## 1. Apply the conditions to each retained change, not to every write the system makes
+
+**Change.** Condition 2 currently says "*Each* change is kept or dropped by an on-balance judgment." I would make the conditions apply to a retention decision. A system would then be a deliberative learner for the changes whose retention meets them. If the definition must keep a system-level quantifier, it should cover candidate learning changes to the named store, not all writes.
+
+**Reason.** As written, one default-kept write, such as an attempt log or an auto-committed scratch file, takes the whole system out of the term. Commonplace has writes like that, so the draft fails its own stated purpose of covering all learning in Commonplace. The checks file shows the same jump: KSI's placement flips depending on whether its attempt log counts, though nothing the term exists to mark has changed.
+
+## 2. Replace "one measure fixed beforehand" with "a retention rule the loop cannot question, however many measures it combines"
+
+**Change.** Condition 2 currently says the judgment "is not bound to one measure fixed beforehand." I would say instead that it is not bound to a retention rule, whether single or composite, that the named system cannot question or revise.
+
+**Reason.** Under the current wording, adding a second metric to a fixed gate would move a system inside the boundary. The checks reject that for Recuris: "several tests in a fixed rule are still a fixed rule." The draft itself already relies on the stronger reading. It says PRODIGY fails because it "could not ask whether time was the only thing that mattered," and the validator note says "what must stay open is the claim that this one measure is enough." The condition's text should say what the draft is actually tracking.
+
+## 3. Let criticism come from any process inside the named system, not only "later rounds of the same loop"
+
+**Change.** Condition 3 currently says "later rounds of the same loop can criticize it." I would say that some process within the named system can later find the retention judgment wrong and act on that finding.
+
+**Reason.** Suppose Commonplace moves review of a routing rule from the authoring workflow into a separate periodic audit. Under the current wording, that change takes the rule outside the term, though correctability, which is what the condition marks, is unchanged. The "same loop" wording also sits awkwardly with the instruction to check membership on the outermost loop, which contains many inner loops.

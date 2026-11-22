@@ -1,0 +1,66 @@
+# Review of the draft definition of "deliberative learning"
+
+## The five pairs
+
+**1. Link repairer with and without the validator-revising team.** Yes, the term should mark this difference. The patches are legible in both systems, so the only thing that changes is whether anything inside the system can question the validator, which is what condition 2 is about. But the draft reaches this verdict only by contradicting itself. It says both "a change kept because a validator passed meets the condition" and "retention bound to a fixed measure … fails the second condition."
+
+**2. PRODIGY-style program with and without the researcher.** Yes. This is the same distinction as pair 1. The program alone already drops rules when evidence from use turns against them, so what the pair adds is a judge who can ask whether time saved is the right measure. The draft should say whether the researcher must be an operating part of the system or merely able to intervene. Every program has an author who could in principle revise it.
+
+**3. Prompt search with and without the rejecting step.** Yes. This is the central case the term exists for. But the draft does not yet place the second system inside. The rejecting step satisfies condition 2, but nothing in the description says later rounds can find a rejection wrong, so condition 3 is unmet as stated.
+
+**4. Append-everything log with and without a judging step.** Yes, but only if the step's judgment is on-balance and open to criticism. A fixed relevance filter would leave the second system outside as well, so the pair as described does not settle it. There is also a harder problem. The reasoning that puts pair 1's second system inside treats a revisable retention rule as enough. By the same reasoning, the log service is inside whenever its operators can revise the "keep everything" policy. The draft cannot say which reading it intends.
+
+**5. Team that never revisits versus team that revises after failures.** Yes, if "never revisits" means no route exists by which failures reach the decision. No, if it means only that no failure has yet prompted a revision. The draft's word "can" points to the right reading, but nothing in the draft says how to tell the two cases apart.
+
+## The three most important changes
+
+### 1. Say where the judgment must sit, and attach the claim to a loop
+
+Pairs 1, 2 and 4 all turn on one unanswered question: must each change be judged on balance, or is it enough that the rule deciding retention is itself judged and revisable? The draft says both:
+
+- "each change is kept or dropped by an on-balance judgment"
+- a validator pass "meets the condition"
+- a fixed formula "fails"
+
+The fix is to reword condition 2 roughly as follows:
+
+> Each change is kept or dropped either by an on-balance judgment, or by a rule (a validator, a formula, a default) that is itself a change in the store, kept by such a judgment and open to criticism under condition 3.
+
+This reading gives the stated verdicts for pairs 1 and 2. For pair 4, it makes the log service fall inside or outside according to whether its keep-everything default is a judged, revisable rule within the system.
+
+It also explains the training example better than the current text does. The weights fail condition 1 because they are not legible, not because the loss was chosen by a researcher.
+
+One more conflict needs fixing. "Checked on the outermost loop" makes the research team plus its training a single deliberative system, yet the draft says the training is not deliberative learning. State instead that a claim names a system, a store and a loop. The outermost-loop check then decides whether the system as a whole is a deliberative learner.
+
+### 2. Change what condition 2 says the judgment is about
+
+Condition 2 requires a judgment "that the change improves the system's future work." The draft itself says that:
+
+- "Open" is the usual verdict for a recent change;
+- keeping a change whose verdict is open is "a decision," not a judgment of improvement.
+
+Read literally, then, the most common case fails condition 2. The alternative is to force the system to claim an improvement it cannot yet show, which is exactly the misuse the draft warns against. ADR 085's deletion rule is a decision of this kind.
+
+Reword condition 2 so the judgment is an on-balance decision to keep or drop the change, with reasons about future work. That decision may rest on an open verdict and on reversibility, as the reversibility note allows.
+
+### 3. Make condition 3 checkable and drop "the same loop"
+
+Two problems need fixing here.
+
+**"Later rounds of the same loop" is too narrow.** In pairs 1 and 2, the criticism of the validator or formula comes from the outer loop, not from the loop that applied it.
+
+**"Can criticize" is undefined.** It sits between two wrong readings:
+
+- *mere possibility.* Under this reading, any author who could in principle edit the system qualifies, which over-includes pairs 1 and 2.
+- *actual revision.* Under this reading, a sound decision that no failure has yet tested is excluded, which mishandles pair 5.
+
+Require instead that two things hold:
+
+1. The reasons for each judgment, or for the governing rule, are recorded where later work can find them.
+2. There is a standing route by which evidence from later work reaches someone in the system who can revise them.
+
+This also settles pair 3: its second system is inside once the stated reason is recorded and can be revisited.
+
+## A secondary issue
+
+"Put all the learning that happens in Commonplace under one name" is stated as a purpose, but it is really a testable claim. It may fail. For example, git history and source ingests may be append-by-default stores of the kind in pair 4. Either list the exceptions or weaken the statement to "the learning Commonplace is designed to do."

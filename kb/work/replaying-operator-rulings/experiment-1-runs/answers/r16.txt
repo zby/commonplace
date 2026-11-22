@@ -1,0 +1,35 @@
+# Review of the deliberative learning draft
+
+## Should a fixed-measure learner be outside?
+
+Yes, it should stay outside. The definition needs a precise boundary for it, though, because the draft is currently inconsistent about where that boundary falls.
+
+If a learner that retains changes by one unquestionable measure counted, then gradient training, Recuris and PRODIGY-alone would all count. The term would then mean nothing narrower than "learning that touches a readable store."
+
+But the draft must also cover all the learning in Commonplace, and Commonplace contains validator-gated loops. Condition 2 says the judgment "is not bound to one measure fixed beforehand." The degenerate-judgment note then says "a change kept because a validator passed meets the condition." Read literally, the note admits the stand-alone repairer that check case 4 excludes. It also undercuts the claim that "the judgment must be the step that retains."
+
+The right placement is the one the checks already use. A fixed-measure sub-loop is inside when the named system's own loop chose that measure for that question and can revise it. Otherwise it is outside.
+
+## Proposed changes, most important first
+
+### 1. Reword condition 2 so it governs retention policies, not only individual decisions
+
+**Change:** Each retained change must be kept either:
+- by an on-balance judgment, or
+- by a measure that the same loop judged sufficient for that kind of change and can revise or override.
+
+Replace the "degenerate judgment" bullet with this rule. Also adopt the checks' phrasing: "not bound to a measure it cannot question."
+
+**Reason:** As written, condition 2 and the validator note contradict each other. Under one reading, Commonplace's own validators fall outside the term. Under the other, the stand-alone repairer of case 4 falls inside. Placing the judgment at the level of the policy keeps fixed-measure learners outside while bringing validator-gated changes in Commonplace inside. It also makes the PRODIGY-with-Minton placement follow from the definition instead of being asserted in the background section.
+
+### 2. Make the retention judgment a decision to keep, not a claim that the change improves future work
+
+**Change:** Condition 2 should read "an on-balance judgment that keeping the change is the better course for the system's future work." It should not read "that the change improves" that work.
+
+**Reason:** The draft itself says the verdict on a recent change is usually Open. It says keeping a change is a decision, not a finding that the change was learned. It also says reversibility can rightly tip the decision without being evidence of improvement. Condition 2, as worded, requires every retention to assert what the "learned" section forbids asserting. This would push honest uses of the term toward the first listed misuse: reporting a kept change as learned while its verdict is open.
+
+### 3. Say which changes the conditions quantify over
+
+**Change:** State that the conditions apply to changes the system retains as learning for future work in the named store. They do not apply to every write. Logs, attempt records and other default-retained material either belong to a separately named store or are outside the claim.
+
+**Reason:** "Each change" combined with "retention without a judgment is outside" means that one unjudged append can disqualify the whole system. The checks identify this risk with KSI, and Commonplace also logs. Without a stated scope, a claim about curated guidance can quietly become a claim about every write, or fail because of one.

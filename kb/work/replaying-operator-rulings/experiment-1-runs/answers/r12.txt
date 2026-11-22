@@ -1,0 +1,17 @@
+## 1. Condition 2: replace "not bound to one measure fixed beforehand" with "not bound to a measure the loop cannot question"
+
+**Change:** Fold in the note's point that a fixed check may decide a retention as long as whether that check is sufficient stays open to challenge within the system.
+
+**Reason:** As written, every change kept because a validator passed fails condition 2. That contradicts the draft's own note on deterministic checks, case 4 of the checks, and the purpose of covering Commonplace, which gates many changes this way. The checks file already uses the "cannot question" wording, so the definition and its tests would then agree.
+
+## 2. Condition 2: drop "each change is kept or dropped by" and make retention *subject to* a judgment
+
+**Change:** Require that retention in the named store is subject to an on-balance judgment. That judgment may come at admission or at later review. Report as a property how much of the store passed an explicit judgment.
+
+**Reason:** Commonplace keeps most writes by default once committed (logs, drafts, routine edits), so "each change" plus the exclusion of default retention would leave much of its learning outside the term. The checks file flags this quantifier as unresolved and shows that placements flip on it. This is the same problem the KSI attempt log raises. The more general wording keeps the line against blind accretion, because a store nothing ever judges still fails.
+
+## 3. Condition 3: change "later rounds of the same loop can criticize it… The system then corrects" to "the system can find the judgment wrong and change what it does"
+
+**Change:** Remove the same-loop requirement, the stated fact of correction, and the preference for undoing.
+
+**Reason:** In Commonplace and in case 4, separate loops inside the boundary do the criticism and correction, such as review and validator revision. Requiring the same loop would wrongly exclude them. "Then corrects" makes membership depend on correction actually happening, which works against the draft's position that the term has no success condition. "Undoes where possible" contradicts the draft's own note that the condition does not concern reversal.

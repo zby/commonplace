@@ -1,0 +1,29 @@
+## 1. Let condition 2 cover changes kept under a rule the system can revise
+
+**Change.** Rewrite condition 2 as: *each retained change is kept either by an on-balance judgment, or under a rule (a validator, an append-everything default) that the named system adopted by such a judgment and can itself revise.*
+
+- In the draft, replace the bullet "a deterministic check is a degenerate on-balance judgment" with this rule-level clause.
+- Remove "retention without a judgment" from the exclusions, or reword it to cover only rules the system cannot revise.
+- In the checks, give case 2 the reason "the keep-all rule is outside what the service can revise." Rewrite the first bullet under "What the checks expose" as resolved: KSI's attempt log is covered if the curation loop can change its logging rule.
+
+**Reason.** As written, "each change" combined with "retention without a judgment is outside the term" leaves out Commonplace's default-retained writes and logs, so the term fails its stated job of covering all learning in Commonplace. The draft also contradicts itself: it says a change kept because a validator passed meets the condition, yet it excludes "retention bound to a fixed measure" and PRODIGY taken alone. The rule-level wording makes both statements depend on one thing, whether the named system can revise the rule, and that matches the checks' own J ("a measure it cannot question") and cases 4 and 7.
+
+## 2. Demote legibility from a membership condition to a reported property
+
+**Change.** Replace condition 1 with **Retained change**: *what is learned persists as a change to a store the system keeps.* Report legibility as a property, and as the kind that the autonomous claim needs.
+
+- Keep "legibility makes judgment of single changes practical" as an explanatory note, not a requirement.
+- In the checks, make case 5 "outside on J."
+- In the background, fix the sentence that calls keeping and revising "the first and third conditions." Keeping is retention, not legibility.
+
+**Reason.** Legibility excludes nothing inside Commonplace, and condition 2 already excludes gradient training: case 5 fails on J regardless of S. So S only narrows the term, for example against a team that judges each checkpoint or adapter merge on balance. The draft's own justification for S ("legibility makes the second condition possible") presents it as an enabler of judgment, which is the profile of a named kind rather than a condition of membership.
+
+## 3. Make "learned" mean no reasonable measure is worse and at least one is better
+
+**Change.** In the note, the draft and the checks, define improvement or "learned" as *no reasonable measure favors the predecessor and at least one favors the successor*.
+
+- Rename the strict "every measure higher" verdict, for example to **strict improvement**, and keep it.
+- Merge "better on some, tied on the rest" into "learned," and report the measures on which it is tied.
+- Reverse the placement of the routing-rule example in the checks, which currently says "not learned under the strict test."
+
+**Reason.** The reasonable set usually includes measures that ignore the dimension a change affects, such as an accuracy-only measure for a routing rule. Under the strict test, almost no real change could ever be called "learned," including one that saves time and costs nothing. Weak dominance keeps the properties the note depends on: chains of improvements still compose, a step and its reversal can never both count, and it still rules out any change that loses on some reasonable measure.

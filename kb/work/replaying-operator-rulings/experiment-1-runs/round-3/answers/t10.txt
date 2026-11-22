@@ -1,0 +1,56 @@
+# Review of the draft definition of "deliberative learning"
+
+## The five pairs
+
+**1. Link repairer, alone and with a team that can change the validator.**
+Yes, the term should mark this difference. The outer loop that revises validators is what makes Commonplace's validator work more than a fixed check. But the draft gives two incompatible reasons for excluding the repairer alone:
+
+- The "degenerate on-balance judgment" note says a change kept because a validator passed meets condition 2.
+- "What the term does not cover" puts fixed-measure retention outside condition 2.
+
+The real ground is that nothing in the repairer can find the validator wrong, which is condition 3. Also, in the composite each patch is still kept by the validator, not by "an on-balance judgment" as condition 2 literally requires.
+
+**2. Rule-keeping program, alone and with the researcher who chose the formula.**
+Yes. This is the same distinction as pair 1, and the term should handle it the same way. The draft reaches the right outcome but treats it differently from pair 1. Here a single fixed measure fails condition 2 because time is not the only reasonable measure. In pair 1 a single fixed measure passes condition 2 because it is the only reasonable one. Whether a measure is uniquely reasonable should not decide membership: neither system alone can revise its measure.
+
+Two smaller points:
+
+- The program alone already corrects itself. It drops rules when evidence turns, so a weak reading of condition 3 would admit it.
+- The draft's PRODIGY treatment ("taken together with Minton, it was deliberative learning") conflicts with the model-training example. There the composite is deliberative but "the training inside it is not."
+
+**3. Prompt search, alone and with a step that can reject the score winner.**
+Yes. This is the core contrast of condition 2. But the second system qualifies under the draft only if later rounds can revisit the stated reasons, and the pair does not say they can. The draft never requires a judgment's reasons to be recorded. A veto whose reasons vanish cannot be criticized later. A veto that is never exercised would also flip the classification at no cost.
+
+**4. Log that appends everything, and the same log with a judging step.**
+Partly. Excluding the first system is right, but per-entry judgment is the wrong mark. By the logic of pairs 1 and 2, a "keep everything" policy that the system itself holds open and can revise should count, just as patches kept under a revisable validator do. The first system is outside because nothing in it can question its retention rule, not because entries aren't judged one by one. The second is inside only if its keep judgments are themselves open to later criticism.
+
+**5. Team that never revisits decisions, and a team that revises after failures.**
+Yes. Correction is what the draft's own Background says "learning" adds to deliberation. But condition 3 is modal ("can criticize"). A team that *could* revisit but never does would pass it, so the draft does not actually separate this pair unless "never revisits" means "is unable to." The definition must say whether condition 3 concerns a capability, a mechanism or a practice.
+
+## The three most important changes
+
+**1. Restate condition 2 as a judgment to keep, not a judgment of improvement.**
+As written, condition 2 says the judgment is "that the change improves the system's future work," and it links to the note that defines improvement as unanimity across every reasonable measure. Yet the draft itself says the usual verdict for a recent change is Open. It also says keeping is "a decision" and that reversibility can justify keeping without being evidence of improvement. Under the current wording, almost no actual retention meets condition 2.
+
+Suggested wording: *"Each change is kept or dropped by a judgment that keeping it is, on balance, the better decision for the system's future work."* That covers Open-verdict keeps and reversibility-based keeps.
+
+**2. Add one composition rule and use it everywhere.**
+Suggested rule: *"A change retained under a rule (a validator, a formula, a keep-all policy) meets condition 2 when the rule is part of the store and the system itself keeps it by an open judgment."*
+
+This rule does several things:
+
+- It replaces the "degenerate judgment" note, which currently lets the fixed repairer through condition 2.
+- It treats pairs 1, 2 and 4 alike.
+- It settles the training/research and PRODIGY/Minton cases the same way.
+- It makes the stated purpose achievable. As drafted, the term cannot "put all the learning that happens in Commonplace under one name," because it explicitly excludes inner fixed-measure loops and judgment-free retention. Under the rule, those inner changes count as the outer system's deliberative learning.
+
+The rule should also say that classification depends on the system boundary the claim names. Widening the boundary to include a system's designers is always possible, so a claim that does so must name the people included.
+
+**3. Make condition 3 concrete.**
+Three edits are needed:
+
+- Require that the reason for each keep or drop is recorded legibly. Condition 1 makes the change readable, but criticizing a judgment needs its reasons too.
+- Require that a route exists by which later outcomes come back to that judgment, so that "can be found wrong" means a working mechanism rather than a bare possibility.
+- Replace "later rounds of the same loop" with "the system's own later work." In every composite case (pairs 1 and 2, the validator-writing loop), the criticism comes from an outer loop, not the loop that retained the change.
+
+These edits separate pair 5. They also put pair 3's veto inside only when its reasons survive to be criticized.

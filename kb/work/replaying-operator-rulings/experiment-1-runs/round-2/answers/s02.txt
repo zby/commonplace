@@ -1,0 +1,3 @@
+**Remove the exclusion "Retention without a judgment."**
+
+It excludes nothing that condition 2 does not already exclude. A change kept by default has no judgment, so condition 2 already fails it, and the exclusion's phrase "that could later be found wrong" only restates condition 3. Removing it changes no placement in the checks; case 2, for example, already fails on J by condition 2 alone. The fixed-measure exclusion, by contrast, adds a point the conditions do not make on their own: revising estimates from use does not rescue a system bound to one formula, which is what decides PRODIGY and Recuris.

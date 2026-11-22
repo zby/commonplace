@@ -1,0 +1,118 @@
+{
+ "r01": {
+  "condition": "G4",
+  "rep": 2
+ },
+ "r02": {
+  "condition": "G1",
+  "rep": 1
+ },
+ "r03": {
+  "condition": "BT2",
+  "rep": 0
+ },
+ "r04": {
+  "condition": "G4",
+  "rep": 1
+ },
+ "r05": {
+  "condition": "BT2",
+  "rep": 2
+ },
+ "r06": {
+  "condition": "B0",
+  "rep": 0
+ },
+ "r07": {
+  "condition": "G2",
+  "rep": 1
+ },
+ "r08": {
+  "condition": "G1",
+  "rep": 0
+ },
+ "r09": {
+  "condition": "R0",
+  "rep": 1
+ },
+ "r10": {
+  "condition": "B0",
+  "rep": 2
+ },
+ "r11": {
+  "condition": "G4",
+  "rep": 0
+ },
+ "r12": {
+  "condition": "G2",
+  "rep": 0
+ },
+ "r13": {
+  "condition": "G5",
+  "rep": 0
+ },
+ "r14": {
+  "condition": "G3",
+  "rep": 0
+ },
+ "r15": {
+  "condition": "B0",
+  "rep": 1
+ },
+ "r16": {
+  "condition": "P2",
+  "rep": 0
+ },
+ "r17": {
+  "condition": "G5",
+  "rep": 2
+ },
+ "r18": {
+  "condition": "BT1",
+  "rep": 2
+ },
+ "r19": {
+  "condition": "BT1",
+  "rep": 1
+ },
+ "r20": {
+  "condition": "BT2",
+  "rep": 1
+ },
+ "r21": {
+  "condition": "R0",
+  "rep": 0
+ },
+ "r22": {
+  "condition": "BT1",
+  "rep": 0
+ },
+ "r23": {
+  "condition": "G3",
+  "rep": 1
+ },
+ "r24": {
+  "condition": "R0",
+  "rep": 2
+ },
+ "r25": {
+  "condition": "P2",
+  "rep": 1
+ },
+ "r26": {
+  "condition": "G3",
+  "rep": 2
+ },
+ "r27": {
+  "condition": "G2",
+  "rep": 2
+ },
+ "r28": {
+  "condition": "G1",
+  "rep": 2
+ },
+ "r29": {
+  "condition": "G5",
+  "rep": 1
+ }
+}

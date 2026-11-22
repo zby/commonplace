@@ -1,0 +1,9 @@
+**Adopt Version 1.**
+
+1. Version 1 keeps condition 2 consistent with the on-balance note. A single measure counts only "where one measure is the only reasonable one" for the question, and "what must stay open is the claim that this one measure is enough."
+2. Version 2 instead admits any measure a system merely "treats … as the only one." The note calls that move narrowing the set of reasonable measures "to force agreement," which "smuggles a weighting back in without defending it."
+3. Once fixed measures are a special case, Version 2's three conditions mostly ask for a legible store and revisable verdicts. Weighing drops out, so a lone PRODIGY, which balances nothing, becomes a deliberative learner. That breaks the link the Background draws between "deliberative" and "on balance."
+4. Version 2 needs a second vocabulary (single-loop and double-loop, a narrowed Argyris, two new misuse entries) to say what Version 1's condition 2 already says. Its body also leans on Argyris and PRODIGY, although the header says the definition does not depend on its sources.
+5. Version 1 already covers Commonplace's validators and the PRODIGY-plus-Minton case by checking the outermost loop the system runs, so the term still puts all of Commonplace's learning under one name.
+
+**What to keep from Version 2:** its sharper condition 3, from the note "Later evidence must be able to count against the kept change." This includes the contrast between a loop that merely overwrites its earlier choice when a new variant scores higher and one that finds that particular judgment wrong. It also includes the rule that a gate which admits a change once and never looks at it again fails, as does a system that keeps everything. Version 1's condition 3 does not draw that line, and it remains valid under Version 1. The PRODIGY example would then show a system that passes condition 3 but fails condition 2.

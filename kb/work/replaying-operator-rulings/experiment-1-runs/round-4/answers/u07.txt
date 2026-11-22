@@ -1,0 +1,40 @@
+**On the question:** Yes. A learner that keeps or drops changes by one fixed measure should stay outside the definition when it is the named system. The reason is not that the measure is fixed. The reason is that nothing inside the system's boundary can question whether that measure is enough. The draft currently gives two different grounds for the exclusion, and they conflict:
+
+- Condition 2 says the judgment is "not bound to one measure fixed beforehand."
+- The notes say "a change kept because a validator passed meets the condition."
+
+The checks already use the better criterion ("without being bound to a measure it cannot question"). The draft should adopt it.
+
+## 1. Restate condition 2 around "a measure the loop cannot question," and ground the validator case in the note
+
+**Change**
+
+- **Definition, condition 2:** replace "It is not bound to one measure fixed beforehand" with "It is not bound to a measure that the named loop cannot question or override."
+- **Definition, "degenerate on-balance judgment" bullet:** add that a validator-gated keep counts only when the enclosing named loop can revise the validator or override its verdict. This matches case 4: the repairer alone is outside; the team plus the repairer is inside.
+- **Note:** add a short paragraph stating that when only one measure is reasonable for a question, the on-balance judgment reduces to that measure. The claim that it is the only reasonable measure is itself an on-balance judgment.
+
+**Reason**
+
+As written, every validator-gated loop in Commonplace fails the condition's text while passing its gloss, so the term cannot do its stated job of covering all of Commonplace's learning. The draft also attributes the reduction to the on-balance note, but the note never says it. The note only defines "every reasonable measure," so the draft's key move is currently ungrounded.
+
+## 2. Fix the quantifier "each change" and settle it in the checks
+
+**Change**
+
+- **Definition, condition 2:** change "Each change is kept or dropped by…" to apply to the changes claimed as learning in the named store. Add a sentence that other writes to the same system, such as logs and attempt records, neither qualify nor disqualify it.
+- **Checks:** turn the open "Which writes count as changes?" item into a stipulated case. For example, a KB that appends unjudged logs but judges its distilled guidance is inside for the guidance.
+
+**Reason**
+
+Commonplace itself writes unjudged material. Read literally, "each change" together with "Retention without a judgment … is outside the term" excludes the very system the term was coined to cover. The checks have already found this problem in the KSI case, but they leave it unresolved, so placements can flip silently with the choice of store.
+
+## 3. Make the PRODIGY/Minton background obey the checks' boundary rule
+
+**Change**
+
+- **Definition, background:** replace "Taken together with Minton … it was deliberative learning" with this: PRODIGY's rule-retention loop is outside on condition 2. Minton's research loop, which changed the utility formula and the code, is deliberative learning done by a person, on that store and not on the learned rules.
+- **Checks:** add PRODIGY as a numbered case parallel to cases 4 and 5.
+
+**Reason**
+
+The checks forbid crediting "an automated loop with judgments its designers make elsewhere." The draft's own team-and-training example splits the loops in exactly this way, but the PRODIGY sentence merges them. Merging them also gives a counterexample to answer 1: any fixed-measure learner would become "inside" once its designer is added to the boundary, so the exclusion stops meaning anything.

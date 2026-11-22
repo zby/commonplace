@@ -1,0 +1,11 @@
+**Adopt Version 1.**
+
+1. Condition 2 links to the on-balance note, which says a step is an improvement only when every reasonable measure favors it and "no measure is selected." Version 1 keeps faith with that: a single check counts only where one measure is the only reasonable one for the question.
+2. Version 2 instead says a judgment by "one fixed measure is the special case" whenever the system *treats* one measure as the only one. That lets an unexamined, selected formula count as an on-balance judgment, which the linked note rules out.
+3. With condition 2 loosened that far, it no longer excludes much. Version 2 has to move the exclusion of gradient training to condition 1. A score-driven hyperparameter search whose settings sit in a readable config file would then become deliberative learning, which empties out the word "deliberative."
+4. The single-loop/double-loop vocabulary in Version 2 exists mainly to manage the cases its loosening let in. It also borrows Argyris's terms in a narrowed sense that needs two extra misuse warnings. That cuts against the operator's instruction that the definition not depend on sources.
+5. Version 1 still makes the distinction that matters: PRODIGY alone fails, PRODIGY with Minton passes, and the autonomous claim concerns a judge with no measure given to it. It does this without a second axis of terms.
+
+**What to keep from Version 2:** its sharper reading of condition 3, the bullet "Later evidence must be able to count against the kept change." It says that a loop which overwrites its earlier choice whenever a higher-scoring variant appears has not found that choice wrong. It also says that a gate which admits a change once and never revisits it fails the condition, and so does a system that keeps everything.
+
+Version 1's condition 3 only says later rounds "can criticize" the judgment. That is loose enough to let those cases through, so the bullet should be added under "Open to criticism." Its PRODIGY example should be reworded: under Version 1, PRODIGY meets condition 3 but still fails condition 2 on its own.

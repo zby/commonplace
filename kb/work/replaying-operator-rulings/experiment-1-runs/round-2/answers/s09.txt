@@ -1,0 +1,10 @@
+Here are the three removals, most important first.
+
+**1. Condition 2: delete "that the change improves the system's future work".**
+The condition would then read "Each change is kept or dropped by an on-balance judgment." The draft says "Open" is the usual verdict for a recent change and that keeping such a change "is reported as a decision". The reversibility bullet says the prospect of correction can favour keeping a change without being evidence that it improves later work. As written, condition 2 demands a judgment of improvement that those passages deny is usually available, which excludes ADR 085's deletion rule (adopted while accepting a loss) and most recent changes in Commonplace.
+
+**2. Notes on "Judgment in the loop": delete "So a change kept because a validator passed meets the condition."**
+This sentence contradicts condition 2's "not bound to one measure fixed beforehand" and case 4, where the repairer alone fails J. The rest of the bullet already says the right thing: the change is covered only while the claim that one measure suffices stays open to the system. That is how "team plus repairer" passes.
+
+**3. Condition 3: delete "The system then corrects: it undoes the change where that is possible, and otherwise makes a further change."**
+This makes actual correction a membership condition, which conflicts with "It has no success condition." It also departs from the notes and case 3, which require only that the judgment can be found wrong and can change what the system does next. Its preference for undoing over other responses also bypasses the judgment the reversibility bullet places in condition 2, since undoing is itself a change.

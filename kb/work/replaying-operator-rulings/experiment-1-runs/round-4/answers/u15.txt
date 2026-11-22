@@ -1,0 +1,27 @@
+# Three proposed changes, most important first
+
+## 1. Condition 2 should require a retention decision, not a judgment that the change improves
+
+**Change:** Reword condition 2 as: "Each change is kept or dropped by an on-balance judgment, made as a step of the loop, about whether keeping it serves the system's future work." Add that the judgment may be an explicit decision taken under an Open verdict. This matches the checks' own summary of J ("decides what to keep for future work").
+
+**Reason:**
+- As written, the condition borrows "improves on balance" from the note, where it means *every* reasonable measure favors the change. But the draft itself says a recent change is usually Open, and that reversibility can justify keeping a change without being "evidence that the instruction has improved later work."
+- So Commonplace's own reversibility-based retentions and ADR 085's deletion would fail condition 2. Two teams with identical loops would also land on opposite sides of the boundary depending only on whether they called their keep a decision or an improvement.
+- That contradicts the stated purpose of covering all learning in Commonplace, and it collapses the draft's own distinction between keeping a change and having learned it.
+
+## 2. Scope the quantifier to retained learning changes in a named store, and make membership per store
+
+**Change:** Replace "each change" with "each change the system retains for its future work in the named store." State that a system is a deliberative learner *for* a given store, not across all its writes. Then settle the checks' open question accordingly: KSI is inside for distilled guidance, and its attempt log is simply not the store under test.
+
+**Reason:**
+- Under the current wording, adding one unjudged write (an automatic log, a cache, a default-kept file) to a system's store flips the whole system out. That is a small change crossing the boundary for no reason the term exists to mark.
+- Commonplace itself mixes judged and automatic writes, so it would likely fail its own definition.
+- The checks already reason per store. The definition should say so.
+
+## 3. Rewrite the "deterministic check" note so it agrees with the fixed-measure exclusion and case 4
+
+**Change:** Replace "a change kept because a validator passed meets the condition" with: such a change meets condition 2 only when the outermost loop within the named boundary can question whether that measure suffices, and can revise it. Add case 4 and PRODIGY as the paired examples.
+
+**Reason:**
+- The note as written admits the link repairer on its own. That contradicts "Retention bound to a fixed measure… fails the second condition," case 4 ("Repairer alone: outside on J"), and the PRODIGY background.
+- The clause "what must stay open" gestures at the fix but never says who must be able to open it. The boundary rule ("the outermost loop the system runs itself") should do that work explicitly.

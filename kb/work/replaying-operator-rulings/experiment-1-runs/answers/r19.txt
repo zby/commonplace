@@ -1,0 +1,16 @@
+**Decision:** I will not adopt the proposed wording. I will rewrite the last sentence of condition 2 so it states positively what the loop can do, instead of defining the condition by the absence of a fixed measure. No other passage changes, and every placement in the checks file stays where it was.
+
+**Changed text (condition 2):**
+
+> 2. **Judgment in the loop.** Each change is kept or dropped by an
+>    [on-balance judgment](../../theory/on-balance-judgments-can-guide-improvement-without-a-global-measure.md)
+>    that the change improves the system's future work. The judgment is a step
+>    of the learning loop. It may rely on a measure, but the loop can judge that
+>    the measure does not settle a case and keep or drop the change for a
+>    stated reason about future work.
+
+**Reason:**
+1. The reviewer is right that "not bound to one measure fixed beforehand" reads as a pure absence. It is also misleading, because the validator in case 4 is fixed beforehand, yet the team plus repairer is inside.
+2. The proposed wording would remove the boundary the term exists to draw. A loop that criticizes and revises content but must keep the score winner would become a member. That flips case 7, the repairer alone in case 4, Recuris and PRODIGY taken alone, all of which the checks file says should stay stable.
+3. The draft already treats the quality of judgment as a matter of capability ("whether a language model's judgments are good enough is the conjecture under test"). Whether the loop may decide against its measure is a different thing: it is a structural fact about the named system, so it belongs to membership.
+4. The clause "open to criticism and revision" would repeat condition 3 inside condition 2.

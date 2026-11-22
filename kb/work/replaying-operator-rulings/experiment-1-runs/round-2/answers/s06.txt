@@ -1,0 +1,17 @@
+## 1. Condition 2 should require a judgment that the change is worth keeping, not that it improves future work
+
+**Change:** Rewrite condition 2 as "each change is kept or dropped by a judgment, made within the loop, that keeping it is worth it for the system's future work." Move the on-balance standard ("every reasonable measure favors it") out of the membership condition. Use it only in "When a change was learned," and state the project's bet as a claim about a kind of deliberative learning.
+
+**Reason:** The draft says "open" is the usual verdict for a recent change and that keeping such a change "is a decision." Read literally, then, most of Commonplace's retentions fail condition 2, including the ADR 085 deletion, which accepted a known loss. Requiring a judgment in the linked note's every-measure sense also makes the project's own evaluation theory a condition of membership. That narrows the general term.
+
+## 2. Change "fixed beforehand" to "cannot question or override," and fix the deterministic-check note to match
+
+**Change:** In condition 2, replace "not bound to one measure fixed beforehand" with "not bound to a measure that the loop can neither question nor override." In the bullet "A deterministic check is a degenerate on-balance judgment," say that a change kept because a validator passed meets the condition only when the same named loop can question whether that validator is enough.
+
+**Reason:** As written, condition 2 excludes measures fixed before development, such as the factory comparisons the on-balance note endorses. Meanwhile the bullet's flat statement that "a change kept because a validator passed meets the condition" admits the bare link repairer. That contradicts check case 4 and the draft's own "Retention bound to a fixed measure" exclusion. The checks use the right line: what matters is whether the measure can be questioned, not when it was fixed.
+
+## 3. Define which changes condition 2 quantifies over
+
+**Change:** Replace "each change" with wording that limits condition 2 to the changes the named loop retains as learning, such as candidate notes, instructions, rules and deletions. Say explicitly that automatic writes the loop does not treat as candidates, such as attempt logs, are not tested. Put this next to the sentence about the outermost loop.
+
+**Reason:** If every write to the store must pass, any store that also holds logs fails. KSI's placement flips on exactly this point, as the checks show. Commonplace's own store holds such writes, so the term would fail its stated purpose of covering all the learning in Commonplace.

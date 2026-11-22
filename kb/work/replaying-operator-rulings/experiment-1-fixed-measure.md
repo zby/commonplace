@@ -224,3 +224,189 @@ two of the three proposals add to the definition.
   hint counts as general only if it also helps on the other rulings.
 - **The operator's ruling was itself preceded by an outside review** that
   raised the same point, so "unprompted" overstates the original event.
+
+## Round 2: hints about removing
+
+Added 2026-11-21 after [the first results](./experiment-1-results.md), at the
+operator's request. No hint in round 1 reached the target. Round 2 tests
+hints that tell the worker to remove, starting with a direct command.
+
+The materials and the Part A frame are unchanged, including the checks file,
+so that the rounds can be compared. Three workers for each hint: 12 runs on
+Claude Opus.
+
+| Code | Kind | Hint |
+|---|---|---|
+| D1 | A direct command, in place of the task | "Remove one condition or one exclusion from the definition. Say which one you remove, and give your reason in at most three sentences." |
+| D2 | A constraint on the three changes | "Each of your three changes must remove something from the definition. None may add a condition, an exclusion or a qualification." |
+| D3 | Advice to remove first | "Before proposing any addition, look for what can be removed. A definition usually improves more by losing a condition or an exclusion than by gaining one." |
+| D4 | Purpose | "The term should be the general one. What distinguishes this project can be stated as a claim about a kind within the term, not as a condition of membership." |
+
+D1 replaces the request for three changes. D2, D3 and D4 are placed before
+it, as the round 1 hints were.
+
+**Scoring.** The same grades. A removal counts as reaching the target only
+if fixed-measure learners end up inside the definition. Deleting the
+exclusion's bullet as a restatement of condition 2, while condition 2 still
+keeps them out, is graded N. For D1, the thing removed is also recorded.
+
+**Predictions,** recorded by the designing agent before the runs:
+
+| Hint | Predicted hits | Reason |
+|---|---|---|
+| D1 | 1 of 3 | A worker told to remove one thing will look for the cheapest removal. "Learning in general" and "a claim of success" exclude no system, so they are likelier picks. |
+| D2 | 1 of 3 | Three forced removals reach further down the list. The deterministic-check note is a likely removal, and removing it tightens the exclusion. |
+| D3 | 0 or 1 | Advice, like G1, which moved direction and not the target. |
+| D4 | 2 of 3 | It states the choice of purpose that the round 1 results suggest the ruling was. |
+
+## Round 3: proposing against choosing, and cases
+
+Added 2026-11-21 after two rounds with no hit in 41 runs. Round 3 asks
+whether workers fail to think of the ruling or think of it and reject it,
+and whether cases lead to it where advice did not. Sixteen runs on Claude
+Opus.
+
+### C: choose between the two versions
+
+The worker receives two versions of the draft, labelled only "Version 1" and
+"Version 2", and the on-balance note:
+
+- the draft at `a6bdbb508`, before the ruling;
+- the draft at `b940a86dd`, after it, with "The operator's reason:" changed
+  to "The reason:".
+
+> You are advising on a definition written for a knowledge base about
+> agent-operated knowledge systems. The definition names the learning
+> process the project works on. Two versions of the draft follow, and a note
+> both rely on. {checks sentence} Links to other files will not resolve.
+>
+> Say which version the project should adopt, and give your reasons in at
+> most five sentences. Then name the one thing in the other version that you
+> would keep.
+
+| Code | Checks file | Runs |
+|---|---|---|
+| C0 | Not given | 4, two with each order of the versions |
+| C1 | Given, as it stood before the ruling, described as "a file of checks written for the earlier version" | 4, two with each order |
+
+The later version also names single-loop and double-loop learning and adds
+several notes, so it is not a minimal change. It is the ruling as it was
+actually applied.
+
+**Grade:** which version is chosen, and whether the reason concerns the
+fixed measure.
+
+### L: ten candidates
+
+The Part A materials and frame, with this task in place of the request for
+three changes. Four runs.
+
+> List ten candidate changes to the definition, including ones you would
+> reject. For each, state the change in one sentence and give a verdict,
+> adopt or reject, with a one-sentence reason. Then name the three you would
+> make.
+
+**Grade:** whether admitting fixed-measure learners appears among the ten,
+at what position, and with which verdict.
+
+### M: minimal pairs
+
+The draft and the on-balance note, without the checks file. Four runs. The
+frame is the Part A frame, followed by:
+
+> Under the draft, the first system in each pair below is outside the
+> definition and the second is inside.
+>
+> 1. A link repairer that keeps a patch exactly when its fixed validator
+>    passes. The same repairer together with a team that can change the
+>    validator after bad repairs.
+> 2. A program that keeps a learned rule while one fixed formula estimates
+>    that the rule saves time, and drops it when the estimate turns
+>    negative. The same program together with the researcher who chose and
+>    can revise the formula.
+> 3. A prompt search that keeps the variant scoring highest on a fixed
+>    benchmark. The same search with a step that can reject the score winner
+>    for a stated reason about future work.
+> 4. A service that appends every interaction to a searchable log. The same
+>    service with a step that judges which entries to keep.
+> 5. A team that weighs each change and never revisits a decision. The same
+>    team when later failures can lead it to revise a decision.
+>
+> For each pair, say whether the difference between the two systems is one
+> the term should mark, in one or two sentences. Then propose the three
+> changes to the definition that you consider most important.
+
+Pairs 1 to 3 cross the fixed-measure boundary. Pairs 4 and 5 cross the
+other two boundaries and are controls: a worker that says no difference
+should be marked anywhere is not discriminating.
+
+**Grade:** the Part A grades for the three changes, and for each pair
+whether the worker says the term should mark the difference.
+
+### Predictions
+
+Recorded by the designing agent before the runs.
+
+| Test | Prediction | Reason |
+|---|---|---|
+| C0 | 2 of 4 choose the later version | It is longer and names kinds, which reads as more developed. Without the checks nothing ties the worker to the old boundary. |
+| C1 | 1 of 4 choose the later version | The checks agree with the earlier version. |
+| L | The target appears in 3 of 4 lists, rejected each time | The idea is available. The draft and checks give reasons to reject it. |
+| M | 1 of 4 reaches the target; most say pairs 1 to 3 should be marked | The draft's stated purpose for the boundary is still in front of the worker. |
+
+## Round 4: all three files open to change
+
+Added 2026-11-22 at the operator's suggestion. In rounds 1 to 3 the workers
+looked for a change that left the checks and the on-balance note intact, and
+they rejected the ruling because it is inconsistent with both. The ruling as
+the operator made it also changed the checks, and later rulings changed how
+the definition relies on the note. Round 4 tells the worker that all three
+files may change. Nineteen runs on Claude Opus.
+
+### W: review with all three files open
+
+> You are reviewing a draft definition written for a knowledge base about
+> agent-operated knowledge systems. The draft names the learning process the
+> project works on. It is meant to cover all the learning that happens in
+> the project's own system. Three files follow: the draft, a file of checks
+> that places cases against it, and a note the draft relies on. All three
+> are working drafts by the same authors and none is settled: the expected
+> placements in the checks and the text of the note may be changed along
+> with the definition. Links to other files will not resolve.
+>
+> {hint}
+>
+> Propose the three changes that you consider most important, most
+> important first. A change may alter the definition, the checks, the note,
+> or several of them together. For each, say what you would change and give
+> your reason in at most three sentences.
+
+| Code | Hint | Runs |
+|---|---|---|
+| W0 | None | 3 |
+| WG2 | The generality hint G2 | 3 |
+| WG3 | The continuity hint G3 | 3 |
+| WD4 | The purpose hint D4 | 3 |
+| WP2 | The calibration hint P2 | 3 |
+
+### CW: choosing, with the other files open
+
+The C1 materials and task, with one sentence added to the frame: "The checks
+file and the note are working drafts and can be changed to fit whichever
+version is adopted." Four runs, two with each order.
+
+### Scoring and predictions
+
+The grades are unchanged. For W, a hit requires that fixed-measure learners
+end up inside the definition, whatever files the worker changes to get
+there.
+
+| Test | Prediction | Reason |
+|---|---|---|
+| W0 | 0 of 3 | Permission to change the checks removes an obstacle. It supplies no reason to move the boundary. |
+| WG2 | 1 of 3 | |
+| WG3 | 1 of 3 | |
+| WD4 | 1 of 3 | In round 2 this hint moved other features into kinds. With the checks open, the fixed measure is a candidate too. |
+| WP2 | 1 of 3 | In round 1 both workers answered the question with "stay outside" and cited the checks. |
+| CW | 1 of 4 choose the later version | The argument from the on-balance note remains. |
+

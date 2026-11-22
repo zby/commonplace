@@ -1,0 +1,24 @@
+# Three proposed changes to the deliberative learning definition
+
+## 1. Make the deterministic-check note depend on the system's boundary
+
+**Change:** Replace "a change kept because a validator passed meets the condition" with this: a change kept by a fixed check meets condition 2 only when the named system includes the loop that chose the check and can override it. Then apply the same rule to the model-training example.
+
+**Reason:** As written, the note contradicts three other parts of the draft:
+- the draft's own exclusion of "retention bound to a fixed measure";
+- check case 4, where the repairer alone is outside on J;
+- the team example, where training "fails" even though the researchers can revise the loss.
+
+The draft's own logic says team-level training should fail only on the legible-store condition. Without one rule for changes kept by an inner fixed-measure loop, the placement of Commonplace's validator-gated changes depends on which paragraph you read.
+
+## 2. Say what "each change" quantifies over
+
+**Change:** State that the conditions apply to the changes the system keeps as learning in the named store, not to every write. Say explicitly that logs, drafts and other writes kept by default are outside the term rather than disqualifying the system.
+
+**Reason:** Commonplace makes many writes that no judgment selects. Read literally, "each change is kept or dropped by an on-balance judgment" could exclude Commonplace from its own term. The checks show the same problem with KSI: its placement changes if every logged attempt must qualify.
+
+## 3. Widen condition 2 from "one measure fixed beforehand" to any fixed admission rule the loop cannot override
+
+**Change:** Reword condition 2 to say: "not bound to a fixed admission rule (one measure, several tests, or a combined score) that the loop cannot question or override for a stated reason about future work."
+
+**Reason:** As written, the condition lets Recuris through, because its gate uses several tests ("several tests in a fixed rule are still a fixed rule"). It also lets through case 7's builder, which may revise its score estimates but must keep the score winner. Cases 7 and 8 show that what actually separates the inside from the outside is the ability to reject the winner for a reason. The condition should name that ability.

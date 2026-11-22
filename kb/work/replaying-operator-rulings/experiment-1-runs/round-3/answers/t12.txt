@@ -1,0 +1,68 @@
+# Review of "deliberative learning" draft
+
+## The five pairs
+
+**1. Link repairer, alone vs. with a team that can change the validator.**
+The term should mark this difference. The two systems keep patches the same way, so what differs is whether the system contains a loop that can find the validator wrong. The draft gets the second system inside only by stretching condition 3. That condition says "later rounds of the same loop", but the team's criticism comes from a different, outer loop.
+
+**2. PRODIGY, alone vs. with Minton.**
+The term should mark this difference, in the same way as the training-team example: Minton's research loop is deliberative learning, and PRODIGY's rule retention inside it is not. The Background section says the combination "was deliberative learning". That wording contradicts the draft's own ruling that "the training inside it is not".
+
+**3. Prompt search, fixed benchmark vs. a step that can reject the score winner.**
+The term should mark this difference. It is the clearest case of what condition 2 is for: retention that can override its measure with a contestable reason about future work. The veto alone does not supply condition 3, though. The draft also does not say whether a veto that exists but is never used counts.
+
+**4. Log that keeps everything vs. a step that judges which entries to keep.**
+The term should mark the difference between accumulating by default and selecting. The on-balance note's warning about accretion is about exactly this. However, the draft gives no reason why "keep everything" is "no judgment" while "keep whatever passes the validator" is a "degenerate judgment". Both are fixed rules applied to each change.
+
+**5. Team that never revisits vs. team that can revise after failures.**
+The term should mark this difference, since it is what condition 3 exists for. But "never revisits" can mean two things:
+- a rule that decisions are final, or
+- a history in which no failure has yet prompted a revision.
+
+The term should exclude the first and not the second. The draft's "can criticize" does not say which it means.
+
+## Three most important changes
+
+### 1. Replace the degenerate-judgment clause and choose one rule for nested loops
+
+A validator settles a narrow question, such as whether the link resolves. Condition 2 asks a different question: whether the change improves future work. A patch that resolves to the wrong note passes the validator. The on-balance note makes the same distinction itself: the better error message "resolves the choice between messages, not the choice between releases". The clause also contradicts condition 2's "not bound to one measure fixed beforehand".
+
+The clause is also the only thing that separates two structurally identical cases:
+- validator-gated patches inside Commonplace, which the draft puts inside, and
+- gradient training inside a research team, which it puts outside.
+
+Both are fixed-measure loops whose measure an outer loop can revise. Pick one rule and apply it to both:
+
+- **(a) Nested fixed-measure loops are not deliberative learning.** Then the scope sentence must change, for example: "the term names the learning Commonplace does at its outermost loop; fixed-measure loops nested in it are learning of another kind that this loop governs."
+- **(b) A nested loop is covered when its store is legible and its measure is itself a change the outer loop judges.** Then training is excluded by condition 1 (weights are not legible), not by condition 2. The team example would need rewriting to say so.
+
+Option (b) keeps the stated aim of covering all learning in Commonplace. Under either option:
+- Replace the clause with: "A fixed check counts as the judgment only when the question it settles is the question the judgment asks. Otherwise it is evidence for the judgment."
+- Align the PRODIGY background with whichever rule is chosen.
+
+### 2. Make condition 3 structural and allow criticism from any enclosing loop
+
+Suggested text: "Later outcomes can reach the retention decision. At any loop up to the outermost one the system runs, the system can find the judgment, or the criterion it relied on, wrong, and then correct."
+
+Add: "This requires a route from later evidence to the decision. It does not require that any decision has in fact been revised."
+
+This change does three things:
+- It makes the inside verdicts in pairs 1 and 2 follow from the text.
+- It settles the ambiguity in pair 5.
+- It removes the conflict between "same loop" and the draft's own statement that "the loop that writes and revises validators is part of the system".
+
+### 3. Define what makes a retention decision a judgment rather than a rule
+
+Add to the notes on condition 2:
+
+> A retention decision is a judgment when three things hold. It is about this change's effect on future work. Its reasons can be stated and contested. It can override any measure it consults. A rule fixed in advance is not a judgment, however simple it is. This covers "keep all", "keep what passes" and "keep the top score". A judgment that adopts a rule for a class of changes covers those changes only while the rule itself stays open under condition 3.
+
+This change does three things:
+- It separates pair 4's two systems on a stated ground.
+- It explains why pair 3's veto changes the verdict.
+- It answers a question that "each change" currently leaves open: whether a decision about a policy can stand in for decisions about individual changes.
+
+## Smaller points
+
+- **Background mislabels the conditions.** It says keeping and revising "are the first and third conditions". Keeping is in condition 2; condition 1 is the legible store.
+- **"Learned" omits part of the on-balance note's comparison.** The note fixes three choices before comparing: the alternative, who gains and who bears the loss, and over what period. The draft's definition of "learned" carries over only "declared area of work". It should state all three, or cite the note for them explicitly.
