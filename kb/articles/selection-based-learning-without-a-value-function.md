@@ -25,7 +25,7 @@ source_notes:
   - kb/theory/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
 ---
 
-# Deliberative Learning: Judgment in Place of a Value Function
+# Selection-Based Learning Without a Value Function
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on

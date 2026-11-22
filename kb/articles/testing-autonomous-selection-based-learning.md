@@ -15,7 +15,7 @@ source_notes:
   - kb/reference/commonplace-declared-frame.md
 ---
 
-# Testing Autonomous Deliberative Learning
+# Testing Autonomous Selection-Based Learning
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
@@ -195,7 +195,7 @@ is separated from the evidence visible only to the scorer.
 
 ## Where to go next
 
-- [Deliberative Learning: Judgment in Place of a Value Function](./selection-based-learning-without-a-value-function.md)
+- [Selection-Based Learning Without a Value Function](./selection-based-learning-without-a-value-function.md)
   — the lead article stating the paradigm, the weight-training contrast,
   and the Bitter Lesson argument.
 - [Selection-based learning](../theory/definitions/selection-based-learning.md)

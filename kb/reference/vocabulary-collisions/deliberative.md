@@ -13,7 +13,7 @@ Retired technical sense: "deliberative learning" named what is now [selection-ba
 
 ## Why the technical sense was retired
 
-"Deliberative" was chosen for the shared image of weighing. The definition also covers a system with one fixed measure, which applies it and weighs nothing, so the name promised more than the definition required. "Selection-based" names the mechanism and does not tie the term to self-improvement. The two draft articles on the thesis still carry "deliberative learning" in their titles.
+"Deliberative" was chosen for the shared image of weighing. The definition also covers a system with one fixed measure, which applies it and weighs nothing, so the name promised more than the definition required. "Selection-based" names the mechanism and does not tie the term to self-improvement.
 
 ## When to reconsider
 
